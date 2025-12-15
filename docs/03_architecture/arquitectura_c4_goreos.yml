@@ -1,0 +1,336 @@
+# C4 Architecture Model: GORE OS
+# Extracted and refactored from kb_gn_054_bpmn_c4_koda.yml
+# Level 1: Context | Level 2: Container | Level 3: Component
+# Generated: 2025-12-15
+---
+_manifest:
+  urn: "urn:knowledge:goreos:architecture:c4:1.0.0"
+  purpose: "Dedicated C4 architecture model for GORE OS"
+  source: "Refactored from gorenuble/kb_gn_054_bpmn_c4_koda.yml"
+
+# =============================================================================
+# LEVEL 1: SYSTEM CONTEXT
+# =============================================================================
+Level_1_Context:
+  System:
+    id: GORE-OS
+    name: "GORE OS - Sistema Operativo Cognitivo Regional"
+    description: "Plataforma integral de gestión del Gobierno Regional de Ñuble"
+
+  Actors:
+    Internal:
+      - id: ACT-GOBERNADOR
+        name: "Gobernador Regional"
+        domain_ref: GOB-REG
+
+      - id: ACT-CONSEJERO
+        name: "Consejero Regional"
+        domain_ref: CONSEJERO
+        count: 16
+
+      - id: ACT-ADMIN-REG
+        name: "Administrador Regional"
+        domain_ref: ROL-ADM-REG
+
+      - id: ACT-JEFE-DIPIR
+        name: "Jefatura DIPIR"
+        domain_ref: DIV-DIPIR
+
+      - id: ACT-JEFE-DAF
+        name: "Jefatura DAF"
+        domain_ref: DIV-DAF
+
+      - id: ACT-ANALISTA
+        name: "Analistas (Preinversión, Gestión, Presupuesto)"
+        domain_ref: [ROL-ANAL-PREINV, ROL-RTF]
+
+    External:
+      - id: ACT-FORMULADOR
+        name: "Formulador Externo (Municipios, Servicios)"
+        domain_ref: ROL-FORMULADOR
+
+      - id: ACT-EJECUTOR
+        name: "Entidad Ejecutora"
+        domain_ref: ENT-EJECUTOR
+
+      - id: ACT-CIUDADANO
+        name: "Ciudadano"
+        domain_ref: ENT-CIUDADANO
+
+  External_Systems:
+    - id: SYS-BIP
+      name: "Banco Integrado de Proyectos (MDSF)"
+      type: Government
+      integration: API/Web
+
+    - id: SYS-SIGFE
+      name: "Sistema de Gestión Financiera del Estado"
+      type: Government
+      integration: API
+
+    - id: SYS-SISREC
+      name: "Sistema de Rendición de Cuentas (CGR)"
+      type: Government
+      integration: Web/Manual
+
+    - id: SYS-DOCDIGITAL
+      name: "DocDigital (FirmaGob)"
+      type: Government
+      integration: API
+
+    - id: SYS-CLAVEUNICA
+      name: "ClaveÚnica"
+      type: Government
+      integration: OIDC
+
+    - id: SYS-MERCADOPUBLICO
+      name: "Mercado Público (ChileCompra)"
+      type: Government
+      integration: API
+
+    - id: SYS-CGR
+      name: "Contraloría General de la República"
+      type: Government
+      integration: Oficios/Digital
+
+    - id: SYS-DIPRES
+      name: "Dirección de Presupuestos"
+      type: Government
+      integration: API/SIGFE
+
+# =============================================================================
+# LEVEL 2: CONTAINERS
+# =============================================================================
+Level_2_Container:
+  Containers:
+    - id: CONT-PORTAL-EXTERNO
+      name: "Portal de Postulación"
+      technology: "Web Application (Next.js)"
+      purpose: "Formulación y seguimiento de IPR para externos"
+      actors: [ACT-FORMULADOR, ACT-EJECUTOR, ACT-CIUDADANO]
+
+    - id: CONT-BACKOFFICE
+      name: "Sistema de Gestión Interno"
+      technology: "Web Application (React/TypeScript)"
+      purpose: "Gestión de IPR, presupuesto, convenios y CORE"
+      actors:
+        [
+          ACT-GOBERNADOR,
+          ACT-CONSEJERO,
+          ACT-ADMIN-REG,
+          ACT-JEFE-DIPIR,
+          ACT-JEFE-DAF,
+          ACT-ANALISTA,
+        ]
+
+    - id: CONT-API-GATEWAY
+      name: "API Gateway"
+      technology: "Node.js/Express or API Gateway"
+      purpose: "Orquestación de servicios internos y externos"
+
+    - id: CONT-INTEGRACIONES
+      name: "Motor de Integraciones"
+      technology: "Integration Layer (PISEE/Custom)"
+      purpose: "Conectar con BIP, SIGFE, SISREC, DocDigital"
+      external_systems:
+        [SYS-BIP, SYS-SIGFE, SYS-SISREC, SYS-DOCDIGITAL, SYS-CLAVEUNICA]
+
+    - id: CONT-DATABASE
+      name: "Base de Datos Principal"
+      technology: "PostgreSQL"
+      purpose: "Persistencia de IPR, convenios, presupuesto, usuarios"
+
+    - id: CONT-EXPEDIENTE
+      name: "Gestor Documental"
+      technology: "Document Management (DocDigital/Custom)"
+      purpose: "Expediente electrónico, IUIe, trazabilidad DS10"
+
+# =============================================================================
+# LEVEL 3: COMPONENTS (por Container)
+# =============================================================================
+Level_3_Component:
+  CONT-BACKOFFICE:
+    components:
+      # --- Módulo IPR ---
+      - id: COMP-SELECTOR-MECANISMO
+        name: "Selector de Mecanismo de Financiamiento"
+        purpose: "Árbol de decisión SNI/FRIL/FRPD/8%/Glosa06"
+        stories: [FE-IPR-001]
+        domain_ref: Selector_Mecanismo
+
+      - id: COMP-IPR-INTAKE
+        name: "Ingreso de Postulaciones"
+        purpose: "Recepción y registro inicial de IPR"
+        stories: [FE-IPR-003, OP-01, OP-02]
+        domain_ref: F1_INGRESO
+
+      - id: COMP-IPR-TRACKING
+        name: "Seguimiento de Estado IPR"
+        purpose: "Timeline visual, consulta de estado, alertas"
+        stories: [FE-IPR-006, AD-GEST-001]
+        domain_ref: FSM_IPR_Unificada
+
+      - id: COMP-ADMISIBILIDAD
+        name: "Evaluación de Admisibilidad"
+        purpose: "Checklist documental, validación formal"
+        stories: [DIPIR-PRE-01]
+        domain_ref: F2_ADMISIBILIDAD
+
+      - id: COMP-EVALUACION
+        name: "Evaluación Técnica"
+        purpose: "Registro de RATE, tracks A/B/C"
+        stories: [DIPIR-PRE-02, DIPIR-PRE-03, DIPIR-PRE-07]
+        domain_ref: F3_EVALUACION
+
+      - id: COMP-CARTERA-CORE
+        name: "Gestión de Cartera CORE"
+        purpose: "Preparación de cartera para sesiones CORE"
+        stories: [AD-IPR-009, AD-IPR-010]
+        domain_ref: [CORE, SESION-CORE]
+
+      # --- Módulo Presupuesto ---
+      - id: COMP-CDP
+        name: "Gestión de CDP"
+        purpose: "Certificados de Disponibilidad Presupuestaria"
+        stories: [PD-PPTO-001, PPTO-ADMIN-01]
+        domain_ref: Cadena_Presupuestaria_SIGFE
+
+      - id: COMP-FORMULACION-PPTO
+        name: "Formulación Presupuestaria"
+        purpose: "ARI, PROPIR, proyecto de presupuesto"
+        stories: [PPTO-FORM-01, PPTO-FORM-02]
+        domain_ref: [FNDR, Ciclo_Presupuestario_Regional]
+
+      - id: COMP-EJECUCION-SIGFE
+        name: "Ejecución Presupuestaria"
+        purpose: "Cadena CDP→Compromiso→Devengo→Pago"
+        stories: [PPTO-EJEC-01, PD-PPTO-003]
+        domain_ref: Cadena_Presupuestaria_SIGFE
+
+      - id: COMP-APROBACION-CORE
+        name: "Aprobación CORE"
+        purpose: "Presentación y votación en CORE"
+        stories: [PPTO-APR-01, CR-001]
+        domain_ref: CORE
+
+      # --- Módulo Convenios ---
+      - id: COMP-CONVENIOS
+        name: "Gestión de Convenios"
+        purpose: "Creación, firma, CGR, transferencias"
+        stories: [PD-CONV-001, PD-CONV-004]
+        domain_ref: FSM_Convenio
+
+      - id: COMP-RENDICIONES
+        name: "Control de Rendiciones"
+        purpose: "Revisión SISREC, aprobación, observaciones"
+        stories: [RTF-002, RTF-003, UCR-001]
+        domain_ref: [ROL-RTF, ROL-UCR]
+
+      # --- Módulo CORE ---
+      - id: COMP-SESION-CORE
+        name: "Gestión de Sesiones CORE"
+        purpose: "Carpetas, votaciones, acuerdos"
+        stories: [CR-001, GR-EST-07]
+        domain_ref: [SESION-CORE, Estados_Sesion]
+
+      # --- Módulo TIC ---
+      - id: COMP-IAM
+        name: "Identidad y Acceso"
+        purpose: "ClaveÚnica, roles, permisos"
+        stories: [tic-002, tic-006]
+        domain_ref: [ROL-CISO, ROL-CTD]
+
+      - id: COMP-EXPEDIENTE
+        name: "Expediente Electrónico"
+        purpose: "IUIe, índice, trazabilidad DS10"
+        stories: [CTD-03, AS-009]
+        domain_ref: IUIe
+
+  CONT-INTEGRACIONES:
+    components:
+      - id: COMP-INT-BIP
+        name: "Integración BIP"
+        purpose: "Consulta y actualización de códigos BIP"
+        external_system: SYS-BIP
+
+      - id: COMP-INT-SIGFE
+        name: "Integración SIGFE"
+        purpose: "Sincronización presupuestaria"
+        external_system: SYS-SIGFE
+
+      - id: COMP-INT-SISREC
+        name: "Integración SISREC"
+        purpose: "Gestión de rendiciones CGR"
+        external_system: SYS-SISREC
+
+      - id: COMP-INT-DOCDIGITAL
+        name: "Integración DocDigital/FirmaGob"
+        purpose: "FEA, expediente electrónico"
+        external_system: SYS-DOCDIGITAL
+
+# =============================================================================
+# DEPENDENCIAS ENTRE COMPONENTES (Morfismos en Categoría S)
+# =============================================================================
+Dependencies:
+  - from: COMP-IPR-INTAKE
+    to: COMP-SELECTOR-MECANISMO
+    type: uses
+
+  - from: COMP-ADMISIBILIDAD
+    to: COMP-IPR-INTAKE
+    type: consumes
+
+  - from: COMP-EVALUACION
+    to: COMP-ADMISIBILIDAD
+    type: follows
+
+  - from: COMP-CARTERA-CORE
+    to: COMP-EVALUACION
+    type: aggregates
+
+  - from: COMP-CDP
+    to: COMP-CARTERA-CORE
+    type: enables
+
+  - from: COMP-CONVENIOS
+    to: COMP-CDP
+    type: requires
+
+  - from: COMP-RENDICIONES
+    to: COMP-CONVENIOS
+    type: validates
+
+  - from: COMP-EJECUCION-SIGFE
+    to: COMP-INT-SIGFE
+    type: syncs_with
+
+# =============================================================================
+# DIAGRAMA MERMAID (Context Level)
+# =============================================================================
+Diagrams:
+  Context:
+    mermaid: |
+      C4Context
+        title Sistema GORE OS - Diagrama de Contexto
+        
+        Person(formulador, "Formulador Externo", "Municipios, Servicios Públicos")
+        Person(consejero, "Consejero Regional", "16 consejeros")
+        Person(gobernador, "Gobernador Regional", "Autoridad regional")
+        Person(analista, "Analistas GORE", "DIPIR, DAF, RTF")
+        
+        System(goreos, "GORE OS", "Sistema Operativo Cognitivo Regional")
+        
+        System_Ext(bip, "BIP", "Banco Integrado de Proyectos")
+        System_Ext(sigfe, "SIGFE", "Gestión Financiera")
+        System_Ext(sisrec, "SISREC", "Rendiciones CGR")
+        System_Ext(docdigital, "DocDigital", "Firma Electrónica")
+        
+        Rel(formulador, goreos, "Postula IPR")
+        Rel(consejero, goreos, "Aprueba cartera")
+        Rel(gobernador, goreos, "Preside, firma")
+        Rel(analista, goreos, "Gestiona IPR, presupuesto")
+        
+        Rel(goreos, bip, "Consulta/Actualiza")
+        Rel(goreos, sigfe, "Sincroniza")
+        Rel(goreos, sisrec, "Rinde cuentas")
+        Rel(goreos, docdigital, "Firma FEA")

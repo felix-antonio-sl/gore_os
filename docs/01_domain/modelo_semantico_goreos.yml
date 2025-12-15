@@ -1,0 +1,293 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# GORE OS — Modelo Semántico Categórico
+# Nivel: Conceptual (significado, no IDs)
+# ══════════════════════════════════════════════════════════════════════════════
+
+_meta:
+  paradigma: "Teoría de Categorías aplicada a Gobierno Regional"
+  pregunta_central: "¿Cómo fluye el VALOR desde una Necesidad hasta un Beneficio?"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PARTE I: CATEGORÍA FUNDAMENTAL — EL CICLO DEL VALOR PÚBLICO
+# ══════════════════════════════════════════════════════════════════════════════
+
+Ciclo_Valor_Publico:
+  descripcion: |
+    Todo el quehacer del GORE puede modelarse como una categoría donde:
+    - OBJETOS = Estados del valor (desde problema hasta beneficio)
+    - MORFISMOS = Transformaciones que agregan/verifican/materializan valor
+
+  objetos:
+    NECESIDAD:
+      significado: "Brecha o problema territorial identificado"
+      ejemplos:
+        [
+          "Falta de agua potable",
+          "Infraestructura deportiva deficiente",
+          "Desempleo juvenil",
+        ]
+      pregunta: "¿Qué duele?"
+
+    OPORTUNIDAD:
+      significado: "Necesidad priorizada con voluntad política de abordarla"
+      ejemplos:
+        [
+          "Proyecto priorizado en ERD",
+          "Compromiso de Gobernador",
+          "Demanda ciudadana organizada",
+        ]
+      pregunta: "¿Vale la pena invertir recursos públicos?"
+
+    INICIATIVA:
+      significado: "Propuesta concreta para abordar la oportunidad"
+      tipos:
+        IDI: "Inversión de capital (construir, equipar)"
+        PPR: "Programa de transferencia (capacitar, fomentar, subvencionar)"
+      pregunta: "¿Qué hacemos específicamente?"
+
+    EVALUACION:
+      significado: "Juicio técnico-económico sobre la factibilidad"
+      dimensiones:
+        tecnica: "¿Es realizable?"
+        economica: "¿Los beneficios superan los costos?"
+        social: "¿Genera impacto positivo?"
+      pregunta: "¿Es una buena inversión?"
+
+    FINANCIAMIENTO:
+      significado: "Recursos disponibles y comprometidos"
+      fuentes: ["FNDR", "FRIL", "FRPD", "8%", "Glosa 06"]
+      pregunta: "¿Con qué plata?"
+
+    EJECUCION:
+      significado: "Materialización física/operativa de la iniciativa"
+      hitos: ["Licitación", "Contrato", "Obras", "Entrega"]
+      pregunta: "¿Se está haciendo bien?"
+
+    BENEFICIO:
+      significado: "Valor público realizado en los ciudadanos"
+      tipos:
+        directo: "Usuarios del servicio/infraestructura"
+        indirecto: "Comunidad beneficiada por externalidades"
+      pregunta: "¿Quién vive mejor?"
+
+  morfismos:
+    - nombre: "Priorizar"
+      origen: NECESIDAD
+      destino: OPORTUNIDAD
+      actor: "Gobernador + CORE + Comunidad"
+      significado: "Decidir que esta necesidad merece atención pública"
+      artefacto: "ERD, PROT, Acuerdo CORE"
+
+    - nombre: "Formular"
+      origen: OPORTUNIDAD
+      destino: INICIATIVA
+      actor: "Formulador (Municipio, Servicio, GORE)"
+      significado: "Diseñar una solución concreta"
+      artefacto: "Ficha BIP, Perfil, Marco Lógico"
+
+    - nombre: "Evaluar"
+      origen: INICIATIVA
+      destino: EVALUACION
+      actor: "MDSF (SNI) o DIPRES (Glosa 06)"
+      significado: "Verificar que la solución es técnica y económicamente viable"
+      artefacto: "RS, RF, AD, OT"
+
+    - nombre: "Asignar"
+      origen: EVALUACION
+      destino: FINANCIAMIENTO
+      actor: "CORE + DAF"
+      significado: "Comprometer recursos presupuestarios"
+      artefacto: "Acuerdo CORE, CDP, Resolución"
+
+    - nombre: "Ejecutar"
+      origen: FINANCIAMIENTO
+      destino: EJECUCION
+      actor: "Ejecutor (Municipio, GORE, Servicio)"
+      significado: "Materializar la inversión"
+      artefacto: "Convenio, Contrato, Estados de Pago"
+
+    - nombre: "Impactar"
+      origen: EJECUCION
+      destino: BENEFICIO
+      actor: "Ciudadanos"
+      significado: "Recibir y usar el valor creado"
+      artefacto: "Recepción, Evaluación Ex-Post"
+
+  composicion:
+    descripcion: "Los morfismos COMPONEN: Priorizar ∘ Formular ∘ Evaluar ∘ Asignar ∘ Ejecutar ∘ Impactar"
+    invariante: "Ninguna etapa puede saltarse; cada una agrega información verificable"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PARTE II: PRODUCTOS Y COPRODUCTOS — COMPOSICIONES SEMÁNTICAS
+# ══════════════════════════════════════════════════════════════════════════════
+
+Estructuras_Categoricas:
+  Coproductos_XOR:
+    descripcion: "Estados mutuamente excluyentes (uno u otro, nunca ambos)"
+    ejemplos:
+      Tipo_Iniciativa:
+        opciones: ["IDI (Capital)", "PPR (Corriente)"]
+        significado: "Una iniciativa ES inversión XOR ES programa"
+
+      Resultado_Evaluacion:
+        opciones:
+          [
+            "RS (Satisfactorio)",
+            "FI (Con condiciones)",
+            "OT (Objetado)",
+            "IN (Inadmisible)",
+          ]
+        significado: "La evaluación produce exactamente UNO de estos resultados"
+
+      Mecanismo_Financiamiento:
+        opciones: ["FNDR", "FRIL", "FRPD", "8%", "Glosa 06"]
+        significado: "Una iniciativa usa UN mecanismo principal"
+
+  Productos_AND:
+    descripcion: "Componentes que deben existir JUNTOS (todos requeridos)"
+    ejemplos:
+      Iniciativa_Completa:
+        componentes:
+          ["Formulación técnica", "Evaluación favorable", "Respaldo político"]
+        significado: "Sin TODOS estos, la iniciativa no avanza"
+
+      Convenio_Formalizado:
+        componentes:
+          [
+            "Acuerdo CORE",
+            "CDP",
+            "Firma GORE",
+            "Firma Ejecutor",
+            "Toma Razón CGR",
+          ]
+        significado: "Sin TODOS estos, no hay transferencia"
+
+      Rendicion_Valida:
+        componentes:
+          ["Documentos de gasto", "Certificación Ministro Fe", "Aprobación RTF"]
+        significado: "Sin TODOS estos, no se aprueba la rendición"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PARTE III: INVARIANTES — REGLAS DE NEGOCIO COMO ECUACIONES
+# ══════════════════════════════════════════════════════════════════════════════
+
+Invariantes:
+  INV_VALOR_01:
+    nombre: "Principio de Beneficio"
+    enunciado: "Toda inversión pública debe producir beneficio social demostrable"
+    formal: "∀ IPR: BENEFICIO(IPR) > COSTO(IPR)"
+    consecuencia: "Sin demostración de beneficio → sin evaluación favorable"
+
+  INV_VALOR_02:
+    nombre: "Principio de Trazabilidad"
+    enunciado: "Todo peso gastado debe ser rastreable desde origen hasta destino"
+    formal: "∀ gasto: ORIGEN(gasto) → COMPROMISO(gasto) → DEVENGO(gasto) → PAGO(gasto)"
+    consecuencia: "Sin CDP → sin compromiso; sin Recepción Conforme → sin devengo"
+
+  INV_VALOR_03:
+    nombre: "Principio de Separación de Poderes"
+    enunciado: "Quien propone no aprueba; quien aprueba no ejecuta; quien ejecuta rinde"
+    formal: "GOBERNADOR propone ∧ CORE aprueba ∧ EJECUTOR ejecuta ∧ RTF verifica"
+    consecuencia: "Segregación de funciones es invariante, no opcional"
+
+  INV_VALOR_04:
+    nombre: "Principio de Complementariedad ERD"
+    enunciado: "Toda inversión debe alinearse con la Estrategia Regional de Desarrollo"
+    formal: "∀ IPR: ∃ eje ∈ ERD: ALINEADO(IPR, eje)"
+    consecuencia: "Sin alineamiento → sin priorización política"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PARTE IV: FUNCTORES — MAPEOS ENTRE CATEGORÍAS
+# ══════════════════════════════════════════════════════════════════════════════
+
+Functores:
+  F_Dominio_a_Datos:
+    descripcion: "Cómo los conceptos del dominio se materializan en datos del sistema"
+    mapeo:
+      NECESIDAD: "Registro en ERD/PROT, indicadores de brecha"
+      OPORTUNIDAD: "Ficha de priorización CDR, acta de pertinencia"
+      INICIATIVA: "Ficha BIP, código 8 dígitos, expediente electrónico"
+      EVALUACION: "RATE (RS/FI/OT), informe técnico favorable"
+      FINANCIAMIENTO: "CDP, acuerdo CORE, asignación SIGFE"
+      EJECUCION: "Convenio, estados de pago, informe avance"
+      BENEFICIO: "Indicadores de resultado, evaluación ex-post"
+
+  F_Roles_a_Responsabilidades:
+    descripcion: "Cómo los roles organizacionales se mapean a responsabilidades sobre estados"
+    mapeo:
+      Gobernador: "Priorizar, Proponer, Presidir, Firmar"
+      CORE: "Aprobar, Fiscalizar"
+      DIPIR: "Formular, Evaluar, Gestionar"
+      DAF: "Financiar, Controlar, Rendir"
+      Ejecutor: "Ejecutar, Rendir"
+      Ciudadano: "Demandar, Beneficiarse"
+
+  F_Tiempo_a_Fases:
+    descripcion: "Cómo el tiempo se estructura en fases del ciclo de vida"
+    mapeo:
+      año_t-1: "Formulación, Evaluación, Priorización"
+      año_t: "Financiamiento (Ley Presupuestos), Formalización"
+      año_t+n: "Ejecución (puede ser multianual)"
+      año_t+n+1: "Cierre, Evaluación ex-post"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PARTE V: DIAGRAMA CONCEPTUAL (Mermaid)
+# ══════════════════════════════════════════════════════════════════════════════
+
+Diagrama:
+  mermaid: |
+    graph LR
+      subgraph "Categoría del Valor Público"
+        N[🎯 NECESIDAD<br/>¿Qué duele?]
+        O[💡 OPORTUNIDAD<br/>¿Vale la pena?]
+        I[📋 INICIATIVA<br/>¿Qué hacemos?]
+        E[✅ EVALUACIÓN<br/>¿Es viable?]
+        F[💰 FINANCIAMIENTO<br/>¿Con qué plata?]
+        X[🏗️ EJECUCIÓN<br/>¿Se hace bien?]
+        B[🎉 BENEFICIO<br/>¿Quién vive mejor?]
+        
+        N -->|Priorizar| O
+        O -->|Formular| I
+        I -->|Evaluar| E
+        E -->|Asignar| F
+        F -->|Ejecutar| X
+        X -->|Impactar| B
+      end
+      
+      subgraph "Coproductos"
+        I --- I1[IDI]
+        I --- I2[PPR]
+        E --- E1[RS]
+        E --- E2[FI/OT]
+      end
+      
+      subgraph "Actores"
+        A1[Ciudadano] -.->|demanda| N
+        A2[Gobernador] -.->|propone| O
+        A3[CORE] -.->|aprueba| F
+        A4[Ejecutor] -.->|materializa| X
+        B -.->|impacta| A1
+      end
+
+# ══════════════════════════════════════════════════════════════════════════════
+# PARTE VI: GLOSARIO SEMÁNTICO MÍNIMO
+# ══════════════════════════════════════════════════════════════════════════════
+
+Glosario:
+  Valor_Publico:
+    definicion: "Mejora en la calidad de vida de los ciudadanos producida por intervención estatal"
+
+  Iniciativa:
+    definicion: "Propuesta de intervención con presupuesto, plazo y resultado esperado"
+
+  Ciclo_de_Vida:
+    definicion: "Secuencia de estados por los que transita una iniciativa desde idea hasta cierre"
+
+  Morfismo:
+    definicion: "Transformación que lleva una iniciativa de un estado a otro, agregando información verificable"
+
+  Invariante:
+    definicion: "Regla de negocio que SIEMPRE debe cumplirse, sin excepciones"
+
+  Functor:
+    definicion: "Mapeo que preserva estructura entre dos categorías (ej: dominio → datos)"
