@@ -1,0 +1,410 @@
+# GOS-107: GORE_OS - Especificación D-TDE (Transformación Digital)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:107:especificacion:d_tde"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Especificación D-TDE (Transformación Digital)"
+  Description: "Casos de uso, flujos y APIs del dominio TDE"
+  Domain: GORE_OS
+  Subdomain: D-TDE
+  Created: "2024-12-14"
+  Compliance: [DS-10, DS-12, Ley-21719]
+  Tags: [goreos, d_tde, expediente, interoperabilidad, datos_personales]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISIÓN DEL DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision_Dominio:
+  Proposito: >
+    Gestionar los componentes de transformación digital del GORE: expediente 
+    electrónico, interoperabilidad, protección de datos personales y sesiones.
+  
+  Marco_Normativo:
+    - "DS 10: Expediente electrónico y documentos"
+    - "DS 12: Interoperabilidad del Estado"
+    - "Ley 21.719: Protección de datos personales"
+  
+  Objetivos:
+    - "Gestionar expedientes electrónicos según DS 10"
+    - "Administrar servicios de interoperabilidad"
+    - "Cumplir registro de tratamiento de datos personales"
+    - "Auditar sesiones y accesos"
+  
+  Actores:
+    - actor: "Encargado TDE"
+      rol: "Administrador del dominio, gestiona compliance"
+    - actor: "Delegado Datos Personales"
+      rol: "Responsable cumplimiento Ley 21.719"
+    - actor: "Funcionario"
+      rol: "Usuario que gestiona expedientes"
+    - actor: "Administrador TI"
+      rol: "Gestiona integraciones y servicios"
+  
+  KPIs:
+    - nombre: "Expedientes digitalizados"
+      formula: "Expedientes electrónicos / Total * 100"
+      meta: ">= 80%"
+    - nombre: "Tiempo respuesta interop"
+      formula: "P95 latencia servicios consumidos"
+      meta: "<= 2 segundos"
+    - nombre: "Cobertura registro tratamiento DP"
+      formula: "Tratamientos registrados / Identificados * 100"
+      meta: "100%"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CASOS DE USO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Casos_Uso:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXPEDIENTE ELECTRÓNICO (DS 10)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_TDE_001:
+    nombre: "Crear expediente electrónico"
+    actor_principal: "Funcionario"
+    descripcion: "Iniciar nuevo expediente administrativo"
+    compliance: "DS 10"
+    flujo_principal:
+      1: "Usuario accede a módulo de expedientes"
+      2: "Usuario selecciona tipo de procedimiento"
+      3: "Sistema genera IUIE (Identificador Único)"
+      4: "Usuario ingresa materia y descripción"
+      5: "Sistema crea expediente en estado ABIERTO"
+      6: "Sistema asigna folio inicial = 0"
+    postcondiciones:
+      - "Expediente creado con IUIE único"
+      - "Listo para agregar documentos"
+
+  CU_TDE_002:
+    nombre: "Agregar documento a expediente"
+    actor_principal: "Funcionario"
+    descripcion: "Incorporar documento al expediente"
+    compliance: "DS 10 - foliación automática"
+    flujo_principal:
+      1: "Usuario selecciona expediente"
+      2: "Usuario sube archivo (PDF, etc.)"
+      3: "Sistema valida formato y tamaño"
+      4: "Sistema calcula hash SHA-256"
+      5: "Sistema asigna folio correlativo"
+      6: "Sistema registra metadatos (fecha, tipo, asunto)"
+      7: "Documento queda vinculado al expediente"
+    validaciones:
+      - "Formato permitido: PDF, DOCX, XLSX, JPG, PNG"
+      - "Tamaño máximo: 20 MB por documento"
+      - "Expediente debe estar ABIERTO o EN_TRAMITE"
+
+  CU_TDE_003:
+    nombre: "Cerrar expediente"
+    actor_principal: "Funcionario"
+    descripcion: "Finalizar tramitación del expediente"
+    flujo_principal:
+      1: "Usuario solicita cierre"
+      2: "Sistema valida que tenga resolución final"
+      3: "Sistema cambia estado a CERRADO"
+      4: "Sistema registra fecha de cierre"
+      5: "Expediente queda en solo lectura"
+    reglas:
+      - "Debe tener al menos 1 documento"
+      - "No puede modificarse después de cerrado"
+
+  CU_TDE_004:
+    nombre: "Consultar expediente"
+    actor_principal: "Funcionario"
+    descripcion: "Visualizar expediente y sus documentos"
+    flujo_principal:
+      1: "Usuario busca por IUIE, materia o fecha"
+      2: "Sistema muestra resultados"
+      3: "Usuario accede al expediente"
+      4: "Sistema muestra timeline de documentos"
+      5: "Usuario puede descargar documentos"
+    permisos:
+      - "Expedientes de su unidad: todos los funcionarios"
+      - "Expedientes de otras unidades: con autorización"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # INTEROPERABILIDAD (DS 12)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_TDE_010:
+    nombre: "Registrar servicio de interoperabilidad"
+    actor_principal: "Administrador TI"
+    descripcion: "Configurar servicio consumido o expuesto"
+    compliance: "DS 12"
+    flujo_principal:
+      1: "Usuario accede a catálogo de servicios"
+      2: "Usuario crea nuevo servicio"
+      3: "Usuario configura tipo (consumidor/proveedor)"
+      4: "Usuario ingresa endpoint y autenticación"
+      5: "Sistema valida conectividad"
+      6: "Sistema registra en catálogo"
+
+  CU_TDE_011:
+    nombre: "Monitorear servicios de interoperabilidad"
+    actor_principal: "Administrador TI"
+    descripcion: "Dashboard de estado de servicios"
+    flujo_principal:
+      1: "Usuario accede a dashboard"
+      2: "Sistema muestra estado por servicio"
+      3: "Sistema muestra métricas (latencia, errores)"
+      4: "Sistema alerta si servicio caído"
+
+  CU_TDE_012:
+    nombre: "Consumir servicio externo"
+    actor_principal: "Sistema"
+    descripcion: "Invocar API de otro organismo"
+    flujo_principal:
+      1: "Módulo interno requiere dato externo"
+      2: "Sistema busca servicio en catálogo"
+      3: "Sistema invoca endpoint con credenciales"
+      4: "Sistema registra en log de trazabilidad"
+      5: "Sistema retorna resultado al módulo"
+    manejo_errores:
+      timeout: "Reintentar 3 veces, luego alertar"
+      no_disponible: "Usar cache si existe, alertar"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DATOS PERSONALES (LEY 21.719)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_TDE_020:
+    nombre: "Registrar tratamiento de datos personales"
+    actor_principal: "Delegado Datos Personales"
+    descripcion: "Documentar tratamiento según Ley 21.719"
+    compliance: "Ley 21.719 Art. 8"
+    flujo_principal:
+      1: "Usuario accede a registro de tratamientos"
+      2: "Usuario crea nuevo registro"
+      3: "Usuario documenta:"
+      4: "  - Finalidad del tratamiento"
+      5: "  - Base legal"
+      6: "  - Categorías de datos tratados"
+      7: "  - Categorías de titulares"
+      8: "  - Destinatarios"
+      9: "  - Plazo de conservación"
+      10: "  - Medidas de seguridad"
+      11: "Sistema valida completitud"
+      12: "Sistema registra con código único"
+
+  CU_TDE_021:
+    nombre: "Atender solicitud ARCO+"
+    actor_principal: "Delegado Datos Personales"
+    descripcion: "Gestionar derechos del titular de datos"
+    compliance: "Ley 21.719 Art. 9-16"
+    derechos_ARCO:
+      A: "Acceso - Saber qué datos tenemos"
+      R: "Rectificación - Corregir datos inexactos"
+      C: "Cancelación/Supresión - Eliminar datos"
+      O: "Oposición - Negarse al tratamiento"
+      P: "Portabilidad - Obtener datos en formato estructurado"
+      B: "Bloqueo - Suspender tratamiento"
+    flujo_principal:
+      1: "Titular presenta solicitud"
+      2: "Sistema registra solicitud"
+      3: "Delegado verifica identidad del titular"
+      4: "Delegado evalúa procedencia"
+      5: "Delegado ejecuta acción correspondiente"
+      6: "Sistema notifica al titular"
+    plazos:
+      respuesta: "10 días hábiles"
+      prorroga: "10 días adicionales justificados"
+
+  CU_TDE_022:
+    nombre: "Evaluar impacto en protección de datos"
+    actor_principal: "Delegado Datos Personales"
+    descripcion: "EIPD para nuevos tratamientos de alto riesgo"
+    compliance: "Ley 21.719 Art. 34"
+    cuando_aplica:
+      - "Tratamiento a gran escala"
+      - "Datos sensibles"
+      - "Evaluación sistemática de aspectos personales"
+      - "Nuevas tecnologías"
+    flujo_principal:
+      1: "Identificar necesidad de EIPD"
+      2: "Describir el tratamiento propuesto"
+      3: "Evaluar necesidad y proporcionalidad"
+      4: "Identificar riesgos para titulares"
+      5: "Definir medidas de mitigación"
+      6: "Documentar y aprobar"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SESIONES Y AUDITORÍA
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_TDE_030:
+    nombre: "Auditar sesiones de usuario"
+    actor_principal: "Administrador TI"
+    descripcion: "Revisar sesiones activas e históricas"
+    flujo_principal:
+      1: "Usuario accede a módulo de auditoría"
+      2: "Sistema muestra sesiones activas"
+      3: "Usuario puede filtrar por fecha, usuario"
+      4: "Usuario puede forzar cierre de sesión"
+      5: "Sistema registra acción de auditoría"
+
+  CU_TDE_031:
+    nombre: "Consultar logs de acceso a datos sensibles"
+    actor_principal: "Delegado Datos Personales"
+    descripcion: "Revisar quién accedió a datos sensibles"
+    flujo_principal:
+      1: "Usuario selecciona tipo de dato"
+      2: "Sistema muestra log de accesos"
+      3: "Usuario puede exportar para auditoría"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REGLAS DE NEGOCIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Reglas_Negocio:
+
+  # Expediente
+  RN-EXP-01:
+    descripcion: "IUIE debe ser único en todo el sistema"
+    validacion: "UNIQUE(iuie)"
+    severidad: "ERROR"
+
+  RN-EXP-02:
+    descripcion: "Folio es correlativo dentro del expediente"
+    validacion: "MAX(folio) + 1 para nuevo documento"
+    severidad: "ERROR"
+
+  RN-EXP-03:
+    descripcion: "Expediente cerrado es inmutable"
+    validacion: "IF estado='CERRADO' THEN no UPDATE/INSERT"
+    severidad: "ERROR"
+
+  RN-EXP-04:
+    descripcion: "Hash del documento no puede cambiar"
+    validacion: "SHA-256 calculado al subir, verificable siempre"
+    severidad: "ERROR"
+
+  # Datos Personales
+  RN-DP-01:
+    descripcion: "Todo tratamiento debe tener base legal"
+    validacion: "base_legal IS NOT NULL"
+    severidad: "ERROR"
+
+  RN-DP-02:
+    descripcion: "Respuesta ARCO en máximo 10 días hábiles"
+    validacion: "fecha_respuesta - fecha_solicitud <= 10 días hábiles"
+    severidad: "WARNING"
+
+  RN-DP-03:
+    descripcion: "Acceso a datos sensibles debe registrarse"
+    validacion: "Log automático con motivo"
+    severidad: "ERROR"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# API ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+API_Endpoints:
+
+  Expedientes:
+    base_path: "/api/v1/tde/expedientes"
+    endpoints:
+      - method: GET
+        path: "/"
+        descripcion: "Listar expedientes"
+        query_params: [estado, unidad_id, fecha_desde, fecha_hasta]
+      - method: GET
+        path: "/{id}"
+        descripcion: "Detalle de expediente"
+      - method: POST
+        path: "/"
+        descripcion: "Crear expediente"
+        permisos: ["tde:expediente:create"]
+      - method: POST
+        path: "/{id}/documentos"
+        descripcion: "Agregar documento"
+        content_type: "multipart/form-data"
+        permisos: ["tde:expediente:update"]
+      - method: POST
+        path: "/{id}/cerrar"
+        descripcion: "Cerrar expediente"
+        permisos: ["tde:expediente:close"]
+      - method: GET
+        path: "/{id}/documentos/{doc_id}/download"
+        descripcion: "Descargar documento"
+
+  Interoperabilidad:
+    base_path: "/api/v1/tde/interop"
+    endpoints:
+      - method: GET
+        path: "/servicios"
+        descripcion: "Catálogo de servicios"
+      - method: GET
+        path: "/servicios/{id}/status"
+        descripcion: "Estado del servicio"
+      - method: GET
+        path: "/dashboard"
+        descripcion: "Métricas de interoperabilidad"
+
+  DatosPersonales:
+    base_path: "/api/v1/tde/datos-personales"
+    endpoints:
+      - method: GET
+        path: "/tratamientos"
+        descripcion: "Registro de tratamientos"
+      - method: POST
+        path: "/tratamientos"
+        descripcion: "Registrar tratamiento"
+        permisos: ["tde:dp:admin"]
+      - method: GET
+        path: "/solicitudes-arco"
+        descripcion: "Solicitudes ARCO pendientes"
+      - method: POST
+        path: "/solicitudes-arco/{id}/responder"
+        descripcion: "Responder solicitud ARCO"
+        permisos: ["tde:dp:admin"]
+
+  Auditoria:
+    base_path: "/api/v1/tde/auditoria"
+    endpoints:
+      - method: GET
+        path: "/sesiones"
+        descripcion: "Sesiones activas e históricas"
+        permisos: ["admin:auditoria:read"]
+      - method: DELETE
+        path: "/sesiones/{id}"
+        descripcion: "Forzar cierre de sesión"
+        permisos: ["admin:auditoria:admin"]
+      - method: GET
+        path: "/accesos-sensibles"
+        descripcion: "Log de acceso a datos sensibles"
+        permisos: ["tde:dp:admin"]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EVENTOS DE DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Eventos_Dominio:
+  - evento: "ExpedienteCreado"
+    payload: [expediente_id, iuie, tipo_procedimiento]
+    consumidores: [Auditoria]
+
+  - evento: "DocumentoAgregado"
+    payload: [expediente_id, documento_id, folio, hash]
+    consumidores: [Auditoria]
+
+  - evento: "ExpedienteCerrado"
+    payload: [expediente_id, fecha_cierre]
+    consumidores: [Auditoria, Notificaciones]
+
+  - evento: "SolicitudARCORecibida"
+    payload: [solicitud_id, tipo, titular_rut]
+    consumidores: [Notificaciones, D-GESTION]
+
+  - evento: "AccesoDatosSensibles"
+    payload: [usuario_id, recurso, motivo, timestamp]
+    consumidores: [Auditoria, Seguridad]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN ESPECIFICACIÓN D-TDE
+# ═══════════════════════════════════════════════════════════════════════════════

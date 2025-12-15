@@ -1,0 +1,391 @@
+# GOS-200e: GORE_OS - Modelo de Datos: Dominios Coordinación y Normativo
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:200e:modelo_datos:d_coord_norm"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Modelo de Datos: D-COORD + D-NORM"
+  Description: "Detalle de entidades de Coordinación (5) y Normativo (3)"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Ref: "kb_goreos_200_modelo_datos_esqueleto_koda.yml"
+  Tags: [goreos, modelo_datos, d_coord, d_norm, indicador, reglamento]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-COORD: COORDINACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ContactoActor ya definido en 200a (Entidades Maestras)
+
+CompromisoInterinstitucional:
+  _meta:
+    dominio: D-COORD
+    tabla: compromisos_interinstitucionales
+    descripcion: "Compromiso entre GORE y otros actores"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    codigo: { tipo: String(30), unique: true, not_null: true }
+    titulo: { tipo: String(300), not_null: true }
+    descripcion: { tipo: Text, nullable: true }
+    actor_id: { tipo: "FK(actores.id)", not_null: true }
+    origen:
+      tipo: Enum
+      valores: [GABINETE, MESA_TRABAJO, CONVENIO, VISITA_TERRENO, SOLICITUD_FORMAL, OTRO]
+      not_null: true
+    sesion_gabinete_id: { tipo: "FK(sesiones_gabinete.id)", nullable: true }
+    fecha_compromiso: { tipo: Date, not_null: true }
+    fecha_limite: { tipo: Date, not_null: true }
+    responsable_gore_id: { tipo: "FK(funcionarios.id)", not_null: true }
+    unidad_responsable_id: { tipo: "FK(unidades_organicas.id)", nullable: true }
+    prioridad:
+      tipo: Enum
+      valores: [CRITICA, ALTA, MEDIA, BAJA]
+      default: MEDIA
+    estado:
+      tipo: Enum
+      valores: [PENDIENTE, EN_PROCESO, CUMPLIDO, INCUMPLIDO, CANCELADO, REPROGRAMADO]
+      not_null: true
+      default: PENDIENTE
+    avance_pct: { tipo: Decimal(5,2), default: 0 }
+    fecha_cumplimiento: { tipo: Date, nullable: true }
+    evidencia_url: { tipo: String(500), nullable: true }
+    observaciones: { tipo: Text, nullable: true }
+    dias_atraso: { tipo: Integer, default: 0 }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [codigo], tipo: unique }
+    - { campos: [actor_id], tipo: btree }
+    - { campos: [responsable_gore_id], tipo: btree }
+    - { campos: [estado], tipo: btree }
+    - { campos: [fecha_limite], tipo: btree }
+  
+  relaciones:
+    actor: { tipo: "N:1", entidad: Actor, fk: "compromisos_interinstitucionales.actor_id" }
+    responsable: { tipo: "N:1", entidad: Funcionario, fk: "compromisos_interinstitucionales.responsable_gore_id" }
+    unidad: { tipo: "N:1", entidad: UnidadOrganica, fk: "compromisos_interinstitucionales.unidad_responsable_id" }
+    sesion: { tipo: "N:1", entidad: SesionGabinete, fk: "compromisos_interinstitucionales.sesion_gabinete_id" }
+    seguimientos: { tipo: "1:N", entidad: SeguimientoCompromiso, fk: "seguimientos_compromiso.compromiso_id" }
+  
+  reglas:
+    - id: RN-COMP-01
+      regla: "fecha_limite >= fecha_compromiso"
+    - id: RN-COMP-02
+      regla: "dias_atraso se calcula si fecha_actual > fecha_limite y estado != CUMPLIDO"
+    - id: RN-COMP-03
+      regla: "Estado CUMPLIDO requiere evidencia_url o aprobación manual"
+
+IndicadorRegional:
+  _meta:
+    dominio: D-COORD
+    tabla: indicadores_regionales
+    descripcion: "Indicador de desarrollo regional"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    codigo: { tipo: String(30), unique: true, not_null: true }
+    nombre: { tipo: String(300), not_null: true }
+    descripcion: { tipo: Text, nullable: true }
+    objetivo_erd_id: { tipo: "FK(objetivos_estrategicos.id)", nullable: true }
+    dimension:
+      tipo: Enum
+      valores: [ECONOMICA, SOCIAL, AMBIENTAL, INSTITUCIONAL, TERRITORIAL]
+      nullable: true
+    unidad: { tipo: String(50), not_null: true }
+    tipo_valor:
+      tipo: Enum
+      valores: [NUMERO, PORCENTAJE, INDICE, TASA, RAZON]
+      default: NUMERO
+    fuente: { tipo: String(200), not_null: true }
+    metodologia: { tipo: Text, nullable: true }
+    frecuencia:
+      tipo: Enum
+      valores: [MENSUAL, TRIMESTRAL, SEMESTRAL, ANUAL, BIANUAL, CENSAL]
+      not_null: true
+    polaridad:
+      tipo: Enum
+      valores: [MAYOR_MEJOR, MENOR_MEJOR, OPTIMO]
+      default: MAYOR_MEJOR
+    valor_optimo: { tipo: Decimal(18,4), nullable: true }
+    linea_base: { tipo: Decimal(18,4), nullable: true }
+    anio_linea_base: { tipo: Integer, nullable: true }
+    meta_erd: { tipo: Decimal(18,4), nullable: true }
+    anio_meta_erd: { tipo: Integer, nullable: true }
+    activo: { tipo: Boolean, default: true }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [codigo], tipo: unique }
+    - { campos: [objetivo_erd_id], tipo: btree }
+    - { campos: [dimension], tipo: btree }
+    - { campos: [activo], tipo: btree }
+  
+  relaciones:
+    objetivo_erd: { tipo: "N:1", entidad: ObjetivoEstrategico, fk: "indicadores_regionales.objetivo_erd_id" }
+    valores: { tipo: "1:N", entidad: ValorIndicadorRegional, fk: "valores_indicador_regional.indicador_id" }
+
+ValorIndicadorRegional:
+  _meta:
+    dominio: D-COORD
+    tabla: valores_indicador_regional
+    descripcion: "Valor de indicador en un período"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    indicador_id: { tipo: "FK(indicadores_regionales.id)", not_null: true }
+    periodo_id: { tipo: "FK(periodos.id)", not_null: true }
+    territorio_id: { tipo: "FK(territorios.id)", nullable: true }
+    valor: { tipo: Decimal(18,4), not_null: true }
+    valor_anterior: { tipo: Decimal(18,4), nullable: true }
+    variacion_absoluta: { tipo: Decimal(18,4), nullable: true }
+    variacion_porcentual: { tipo: Decimal(8,4), nullable: true }
+    fecha_medicion: { tipo: Date, not_null: true }
+    fuente_dato: { tipo: String(255), nullable: true }
+    observaciones: { tipo: Text, nullable: true }
+    verificado: { tipo: Boolean, default: false }
+    verificado_por: { tipo: "FK(usuarios.id)", nullable: true }
+    created_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [indicador_id, periodo_id, territorio_id], tipo: unique }
+    - { campos: [territorio_id], tipo: btree }
+  
+  relaciones:
+    indicador: { tipo: "N:1", entidad: IndicadorRegional, fk: "valores_indicador_regional.indicador_id" }
+    periodo: { tipo: "N:1", entidad: Periodo, fk: "valores_indicador_regional.periodo_id" }
+    territorio: { tipo: "N:1", entidad: Territorio, fk: "valores_indicador_regional.territorio_id" }
+
+SesionGabinete:
+  _meta:
+    dominio: D-COORD
+    tabla: sesiones_gabinete
+    descripcion: "Sesión de gabinete regional"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    numero: { tipo: Integer, not_null: true }
+    anio: { tipo: Integer, not_null: true }
+    fecha: { tipo: Date, not_null: true }
+    hora_inicio: { tipo: Time, nullable: true }
+    hora_termino: { tipo: Time, nullable: true }
+    tipo:
+      tipo: Enum
+      valores: [ORDINARIA, EXTRAORDINARIA, AMPLIADA]
+      default: ORDINARIA
+    lugar: { tipo: String(200), nullable: true }
+    modalidad:
+      tipo: Enum
+      valores: [PRESENCIAL, VIRTUAL, HIBRIDA]
+      default: PRESENCIAL
+    estado:
+      tipo: Enum
+      valores: [PROGRAMADA, EN_CURSO, REALIZADA, SUSPENDIDA, CANCELADA]
+      default: PROGRAMADA
+    tabla: { tipo: JSONB, nullable: true, descripcion: "Puntos de tabla" }
+    acta_url: { tipo: String(500), nullable: true }
+    grabacion_url: { tipo: String(500), nullable: true }
+    asistentes: { tipo: JSONB, nullable: true }
+    cantidad_acuerdos: { tipo: Integer, default: 0 }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [anio, numero], tipo: unique }
+    - { campos: [fecha], tipo: btree }
+    - { campos: [estado], tipo: btree }
+  
+  relaciones:
+    acuerdos: { tipo: "1:N", entidad: AcuerdoGabinete, fk: "acuerdos_gabinete.sesion_id" }
+    compromisos: { tipo: "1:N", entidad: CompromisoInterinstitucional, fk: "compromisos_interinstitucionales.sesion_gabinete_id" }
+
+AcuerdoGabinete:
+  _meta:
+    dominio: D-COORD
+    tabla: acuerdos_gabinete
+    descripcion: "Acuerdo de sesión de gabinete"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    sesion_id: { tipo: "FK(sesiones_gabinete.id)", not_null: true }
+    numero: { tipo: Integer, not_null: true }
+    punto_tabla: { tipo: String(10), nullable: true }
+    materia: { tipo: String(300), not_null: true }
+    acuerdo: { tipo: Text, not_null: true }
+    responsable_id: { tipo: "FK(funcionarios.id)", nullable: true }
+    fecha_limite: { tipo: Date, nullable: true }
+    estado:
+      tipo: Enum
+      valores: [PENDIENTE, EN_PROCESO, CUMPLIDO, NO_CUMPLIDO]
+      default: PENDIENTE
+    observaciones: { tipo: Text, nullable: true }
+    created_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [sesion_id, numero], tipo: unique }
+  
+  relaciones:
+    sesion: { tipo: "N:1", entidad: SesionGabinete, fk: "acuerdos_gabinete.sesion_id" }
+    responsable: { tipo: "N:1", entidad: Funcionario, fk: "acuerdos_gabinete.responsable_id" }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-NORM: NORMATIVO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+ReglamentoRegional:
+  _meta:
+    dominio: D-NORM
+    tabla: reglamentos_regionales
+    descripcion: "Reglamento regional aprobado por CORE"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    numero: { tipo: String(20), unique: true, not_null: true }
+    nombre: { tipo: String(300), not_null: true }
+    materia:
+      tipo: Enum
+      valores: [ORGANIZACION, FUNCIONAMIENTO, PROGRAMAS, FONDOS, PROCEDIMIENTOS, OTRO]
+      not_null: true
+    descripcion: { tipo: Text, nullable: true }
+    fecha_aprobacion_core: { tipo: Date, nullable: true }
+    acuerdo_core: { tipo: String(50), nullable: true }
+    fecha_publicacion: { tipo: Date, nullable: true }
+    fecha_vigencia: { tipo: Date, nullable: true }
+    estado:
+      tipo: Enum
+      valores: [ELABORACION, EN_TRAMITE, APROBADO, VIGENTE, MODIFICACION, DEROGADO]
+      not_null: true
+      default: ELABORACION
+    version: { tipo: String(10), default: "1.0" }
+    reglamento_anterior_id: { tipo: "FK(reglamentos_regionales.id)", nullable: true }
+    documento_url: { tipo: String(500), nullable: true }
+    expediente_id: { tipo: "FK(expedientes_electronicos.id)", nullable: true }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [numero], tipo: unique }
+    - { campos: [materia], tipo: btree }
+    - { campos: [estado], tipo: btree }
+  
+  relaciones:
+    reglamento_anterior: { tipo: "N:1", entidad: ReglamentoRegional, fk: "reglamentos_regionales.reglamento_anterior_id" }
+    procesos: { tipo: "1:N", entidad: ProcesoNormativo, fk: "procesos_normativos.reglamento_id" }
+  
+  reglas:
+    - id: RN-REG-01
+      regla: "Solo un reglamento VIGENTE por materia específica"
+    - id: RN-REG-02
+      regla: "Al aprobar nuevo, anterior pasa a DEROGADO"
+
+ProcesoNormativo:
+  _meta:
+    dominio: D-NORM
+    tabla: procesos_normativos
+    descripcion: "Proceso de elaboración normativa"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    reglamento_id: { tipo: "FK(reglamentos_regionales.id)", not_null: true }
+    etapa:
+      tipo: Enum
+      valores: [INICIATIVA, ELABORACION, REVISION_JURIDICA, CONSULTA_PUBLICA, REVISION_OBSERVACIONES, SESION_CORE, PUBLICACION]
+      not_null: true
+    fecha_inicio: { tipo: Date, not_null: true }
+    fecha_termino: { tipo: Date, nullable: true }
+    responsable_id: { tipo: "FK(funcionarios.id)", nullable: true }
+    observaciones: { tipo: Text, nullable: true }
+    documentos: { tipo: JSONB, nullable: true }
+    orden: { tipo: Integer, not_null: true }
+    created_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [reglamento_id, etapa], tipo: unique }
+    - { campos: [etapa], tipo: btree }
+  
+  relaciones:
+    reglamento: { tipo: "N:1", entidad: ReglamentoRegional, fk: "procesos_normativos.reglamento_id" }
+    responsable: { tipo: "N:1", entidad: Funcionario, fk: "procesos_normativos.responsable_id" }
+    consultas: { tipo: "1:N", entidad: ConsultaPublica, fk: "consultas_publicas.proceso_id" }
+
+BibliotecaNormativa:
+  _meta:
+    dominio: D-NORM
+    tabla: biblioteca_normativa
+    descripcion: "Documento normativo de referencia"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    tipo:
+      tipo: Enum
+      valores: [LEY, DFL, DL, DS, RESOLUCION, CIRCULAR, INSTRUCTIVO, OTRO]
+      not_null: true
+    numero: { tipo: String(50), not_null: true }
+    nombre: { tipo: String(500), not_null: true }
+    organismo_emisor: { tipo: String(200), nullable: true }
+    fecha_publicacion: { tipo: Date, nullable: true }
+    fecha_vigencia: { tipo: Date, nullable: true }
+    resumen: { tipo: Text, nullable: true }
+    materias: { tipo: JSONB, nullable: true }
+    url_bcn: { tipo: String(500), nullable: true }
+    url_documento: { tipo: String(500), nullable: true }
+    vigente: { tipo: Boolean, default: true }
+    relevancia_gore:
+      tipo: Enum
+      valores: [ALTA, MEDIA, BAJA]
+      default: MEDIA
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [tipo, numero], tipo: unique }
+    - { campos: [vigente], tipo: btree }
+    - { campos: [relevancia_gore], tipo: btree }
+
+ConsultaPublica:
+  _meta:
+    dominio: D-NORM
+    tabla: consultas_publicas
+    descripcion: "Consulta pública de proceso normativo"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    proceso_id: { tipo: "FK(procesos_normativos.id)", not_null: true }
+    titulo: { tipo: String(300), not_null: true }
+    descripcion: { tipo: Text }
+    fecha_inicio: { tipo: Date, not_null: true }
+    fecha_termino: { tipo: Date, not_null: true }
+    estado:
+      tipo: Enum
+      valores: [PROGRAMADA, ACTIVA, CERRADA, CANCELADA]
+      default: PROGRAMADA
+    documento_consulta_url: { tipo: String(500) }
+    total_observaciones: { tipo: Integer, default: 0 }
+    informe_resultado_url: { tipo: String(500), nullable: true }
+    created_at: { tipo: DateTime, auto: true }
+
+SeguimientoCompromiso:
+  _meta:
+    dominio: D-COORD
+    tabla: seguimientos_compromiso
+    descripcion: "Seguimiento de compromiso interinstitucional"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    compromiso_id: { tipo: "FK(compromisos_interinstitucionales.id)", not_null: true }
+    fecha: { tipo: Date, not_null: true }
+    avance_pct: { tipo: Decimal(5,2), not_null: true }
+    descripcion: { tipo: Text }
+    acciones_realizadas: { tipo: Text, nullable: true }
+    proximos_pasos: { tipo: Text, nullable: true }
+    registrado_por: { tipo: "FK(usuarios.id)", not_null: true }
+    created_at: { tipo: DateTime, auto: true }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN D-COORD + D-NORM
+# ═══════════════════════════════════════════════════════════════════════════════

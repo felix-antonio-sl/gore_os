@@ -1,0 +1,487 @@
+# GOS-400: GORE_OS - Matriz de Roles y Permisos
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:400:matriz_roles_permisos"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Matriz de Roles y Permisos (RBAC)"
+  Description: "Definición de roles, permisos y políticas de acceso"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Tags: [goreos, seguridad, rbac, roles, permisos]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MODELO DE SEGURIDAD
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Modelo_Seguridad:
+  tipo: "RBAC (Role-Based Access Control)"
+
+  principios:
+    - "Mínimo privilegio: solo permisos necesarios"
+    - "Separación de funciones: evitar conflictos de interés"
+    - "Trazabilidad: auditar todas las acciones"
+    - "Defense in depth: múltiples capas de control"
+
+  capas:
+    Autenticacion:
+      metodos: [ClaveÚnica, SSO_Interno, LDAP]
+      mfa: "Requerido para roles administrativos"
+
+    Autorizacion:
+      modelo: "RBAC + ABAC para reglas específicas"
+      niveles: [Global, Dominio, Unidad, Recurso]
+
+    Auditoria:
+      alcance: "Todas las operaciones de escritura"
+      retención: "5 años mínimo"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CATÁLOGO DE PERMISOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Permisos:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # D-PLAN
+  # ─────────────────────────────────────────────────────────────────────────────
+  plan:
+    erd:
+      - { codigo: "plan:erd:read", descripcion: "Ver ERD" }
+      - { codigo: "plan:erd:create", descripcion: "Crear ERD" }
+      - { codigo: "plan:erd:update", descripcion: "Editar ERD" }
+      - { codigo: "plan:erd:publish", descripcion: "Publicar para consulta" }
+      - { codigo: "plan:erd:approve", descripcion: "Aprobar y activar ERD" }
+    objetivo:
+      - { codigo: "plan:objetivo:read", descripcion: "Ver objetivos" }
+      - { codigo: "plan:objetivo:create", descripcion: "Crear objetivo" }
+      - { codigo: "plan:objetivo:update", descripcion: "Editar objetivo" }
+      - { codigo: "plan:objetivo:delete", descripcion: "Eliminar objetivo" }
+    prot:
+      - { codigo: "plan:prot:read", descripcion: "Ver PROT" }
+      - {
+          codigo: "plan:prot:edit",
+          descripcion: "Editar PROT y zonificaciones",
+        }
+      - { codigo: "plan:prot:approve", descripcion: "Aprobar PROT" }
+    cp:
+      - { codigo: "plan:cp:read", descripcion: "Ver convenios programación" }
+      - { codigo: "plan:cp:create", descripcion: "Crear CP" }
+      - { codigo: "plan:cp:edit", descripcion: "Editar CP" }
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # D-FIN
+  # ─────────────────────────────────────────────────────────────────────────────
+  fin:
+    iniciativa:
+      - { codigo: "fin:iniciativa:read", descripcion: "Ver iniciativas" }
+      - {
+          codigo: "fin:iniciativa:read_own",
+          descripcion: "Ver iniciativas propias",
+        }
+      - { codigo: "fin:iniciativa:create", descripcion: "Crear iniciativa" }
+      - { codigo: "fin:iniciativa:update", descripcion: "Editar iniciativa" }
+      - { codigo: "fin:iniciativa:delete", descripcion: "Eliminar iniciativa" }
+    solicitud:
+      - { codigo: "fin:solicitud:read", descripcion: "Ver solicitudes" }
+      - {
+          codigo: "fin:solicitud:read_own",
+          descripcion: "Ver solicitudes propias",
+        }
+      - { codigo: "fin:solicitud:create", descripcion: "Crear solicitud" }
+      - { codigo: "fin:solicitud:submit", descripcion: "Enviar solicitud" }
+      - { codigo: "fin:solicitud:evaluate", descripcion: "Evaluar solicitudes" }
+      - { codigo: "fin:solicitud:prioritize", descripcion: "Priorizar cartera" }
+      - {
+          codigo: "fin:solicitud:approve",
+          descripcion: "Registrar acuerdo CORE",
+        }
+    presupuesto:
+      - { codigo: "fin:presupuesto:read", descripcion: "Ver presupuesto" }
+      - {
+          codigo: "fin:presupuesto:admin",
+          descripcion: "Administrar presupuesto",
+        }
+    instrumento:
+      - { codigo: "fin:instrumento:read", descripcion: "Ver instrumentos" }
+      - {
+          codigo: "fin:instrumento:admin",
+          descripcion: "Administrar instrumentos",
+        }
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # D-EJEC
+  # ─────────────────────────────────────────────────────────────────────────────
+  ejec:
+    convenio:
+      - { codigo: "ejec:convenio:read", descripcion: "Ver convenios" }
+      - {
+          codigo: "ejec:convenio:read_own",
+          descripcion: "Ver convenios propios",
+        }
+      - { codigo: "ejec:convenio:create", descripcion: "Crear convenio" }
+      - { codigo: "ejec:convenio:update", descripcion: "Editar convenio" }
+      - { codigo: "ejec:convenio:modify", descripcion: "Crear addendum" }
+      - { codigo: "ejec:convenio:liquidate", descripcion: "Liquidar convenio" }
+    hito:
+      - { codigo: "ejec:hito:read", descripcion: "Ver hitos" }
+      - { codigo: "ejec:hito:verify", descripcion: "Verificar cumplimiento" }
+    desembolso:
+      - { codigo: "ejec:desembolso:read", descripcion: "Ver desembolsos" }
+      - {
+          codigo: "ejec:desembolso:request",
+          descripcion: "Solicitar desembolso",
+        }
+      - { codigo: "ejec:desembolso:approve", descripcion: "Aprobar desembolso" }
+      - {
+          codigo: "ejec:desembolso:transfer",
+          descripcion: "Registrar transferencia",
+        }
+    rendicion:
+      - { codigo: "ejec:rendicion:read", descripcion: "Ver rendiciones" }
+      - {
+          codigo: "ejec:rendicion:read_own",
+          descripcion: "Ver rendiciones propias",
+        }
+      - { codigo: "ejec:rendicion:create", descripcion: "Crear rendición" }
+      - { codigo: "ejec:rendicion:submit", descripcion: "Enviar rendición" }
+      - { codigo: "ejec:rendicion:review", descripcion: "Revisar rendición" }
+    pmo:
+      - { codigo: "ejec:pmo:read", descripcion: "Ver dashboard PMO" }
+      - { codigo: "ejec:pmo:update", descripcion: "Actualizar avance" }
+      - { codigo: "ejec:pmo:admin", descripcion: "Administrar PMO" }
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # D-GESTION
+  # ─────────────────────────────────────────────────────────────────────────────
+  gestion:
+    okr:
+      - { codigo: "gestion:okr:read", descripcion: "Ver OKRs" }
+      - { codigo: "gestion:okr:create", descripcion: "Crear OKR" }
+      - { codigo: "gestion:okr:update", descripcion: "Editar OKR" }
+      - { codigo: "gestion:okr:checkin", descripcion: "Registrar check-in" }
+    hgore:
+      - { codigo: "gestion:hgore:read", descripcion: "Ver H_gore" }
+      - { codigo: "gestion:hgore:admin", descripcion: "Configurar indicadores" }
+    alerta:
+      - { codigo: "gestion:alerta:read", descripcion: "Ver alertas" }
+      - { codigo: "gestion:alerta:manage", descripcion: "Gestionar alertas" }
+    playbook:
+      - { codigo: "gestion:playbook:read", descripcion: "Ver playbooks" }
+      - { codigo: "gestion:playbook:execute", descripcion: "Ejecutar playbook" }
+      - {
+          codigo: "gestion:playbook:admin",
+          descripcion: "Administrar playbooks",
+        }
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # D-EVOL
+  # ─────────────────────────────────────────────────────────────────────────────
+  evol:
+    dataset:
+      - { codigo: "evol:dataset:read", descripcion: "Ver catálogo datos" }
+      - { codigo: "evol:dataset:admin", descripcion: "Administrar datasets" }
+    automatizacion:
+      - { codigo: "evol:auto:read", descripcion: "Ver automatizaciones" }
+      - { codigo: "evol:auto:execute", descripcion: "Ejecutar manualmente" }
+      - {
+          codigo: "evol:auto:admin",
+          descripcion: "Administrar automatizaciones",
+        }
+    agente:
+      - { codigo: "evol:agente:use", descripcion: "Usar agentes" }
+      - { codigo: "evol:agente:admin", descripcion: "Administrar agentes" }
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ADMINISTRACIÓN
+  # ─────────────────────────────────────────────────────────────────────────────
+  admin:
+    usuario:
+      - { codigo: "admin:usuario:read", descripcion: "Ver usuarios" }
+      - { codigo: "admin:usuario:create", descripcion: "Crear usuario" }
+      - { codigo: "admin:usuario:update", descripcion: "Editar usuario" }
+      - { codigo: "admin:usuario:roles", descripcion: "Asignar roles" }
+    rol:
+      - { codigo: "admin:rol:read", descripcion: "Ver roles" }
+      - { codigo: "admin:rol:admin", descripcion: "Administrar roles" }
+    auditoria:
+      - { codigo: "admin:auditoria:read", descripcion: "Ver logs auditoría" }
+    config:
+      - { codigo: "admin:config:read", descripcion: "Ver configuración" }
+      - {
+          codigo: "admin:config:update",
+          descripcion: "Modificar configuración",
+        }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DEFINICIÓN DE ROLES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Roles:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ROLES DE SISTEMA
+  # ─────────────────────────────────────────────────────────────────────────────
+  SUPER_ADMIN:
+    descripcion: "Administrador total del sistema"
+    es_sistema: true
+    permisos: ["*"]
+    usuarios_tipicos: ["Administrador TI"]
+
+  ADMIN_DOMINIO:
+    descripcion: "Administrador de un dominio específico"
+    es_sistema: true
+    permisos_por_dominio: true
+    usuarios_tipicos: ["Jefe de División"]
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ROLES FUNCIONALES GORE
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  GOBERNADOR:
+    descripcion: "Máxima autoridad regional"
+    permisos:
+      - "plan:*:read"
+      - "fin:*:read"
+      - "ejec:*:read"
+      - "gestion:*:read"
+      - "gestion:okr:create"
+      - "gestion:okr:update"
+    dashboard: "Ejecutivo"
+
+  JEFE_DIPLADE:
+    descripcion: "Jefe División de Planificación"
+    permisos:
+      - "plan:*"
+      - "fin:iniciativa:read"
+      - "fin:solicitud:read"
+      - "gestion:okr:*"
+      - "gestion:hgore:read"
+    ambito: "D-PLAN"
+
+  JEFE_DAF:
+    descripcion: "Jefe División Administración y Finanzas"
+    permisos:
+      - "fin:*"
+      - "ejec:convenio:read"
+      - "ejec:desembolso:*"
+      - "ejec:rendicion:read"
+      - "gestion:okr:*"
+      - "gestion:hgore:read"
+    ambito: "D-FIN, D-EJEC"
+
+  JEFE_FOMENTO:
+    descripcion: "Jefe División Fomento"
+    permisos:
+      - "fin:iniciativa:read"
+      - "fin:solicitud:read"
+      - "ejec:convenio:read"
+      - "ejec:pmo:read"
+      - "gestion:okr:*"
+    ambito: "Unidad"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ROLES OPERACIONALES
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  PROFESIONAL_PLANIFICACION:
+    descripcion: "Profesional de DIPLADE"
+    permisos:
+      - "plan:erd:read"
+      - "plan:erd:update"
+      - "plan:objetivo:*"
+      - "plan:cp:read"
+      - "plan:cp:edit"
+      - "fin:iniciativa:read"
+
+  ANALISTA_TERRITORIAL:
+    descripcion: "Analista de ordenamiento territorial"
+    permisos:
+      - "plan:prot:*"
+      - "plan:erd:read"
+
+  ANALISTA_IPR:
+    descripcion: "Analista de inversión pública"
+    permisos:
+      - "fin:iniciativa:*"
+      - "fin:solicitud:read"
+      - "fin:solicitud:evaluate"
+      - "fin:instrumento:read"
+      - "ejec:convenio:create"
+      - "ejec:convenio:update"
+
+  PROFESIONAL_PRESUPUESTO:
+    descripcion: "Profesional de presupuesto"
+    permisos:
+      - "fin:presupuesto:*"
+      - "fin:solicitud:read"
+      - "ejec:desembolso:read"
+
+  SUPERVISOR_TECNICO:
+    descripcion: "Supervisor técnico de proyectos"
+    permisos:
+      - "ejec:convenio:read"
+      - "ejec:convenio:update"
+      - "ejec:hito:*"
+      - "ejec:pmo:update"
+
+  ANALISTA_RENDICIONES:
+    descripcion: "Analista de rendición de cuentas"
+    permisos:
+      - "ejec:convenio:read"
+      - "ejec:rendicion:*"
+      - "ejec:desembolso:read"
+
+  SECRETARIO_CORE:
+    descripcion: "Secretario del Consejo Regional"
+    permisos:
+      - "fin:solicitud:read"
+      - "fin:solicitud:approve"
+      - "plan:erd:read"
+
+  CONTROLLER_GESTION:
+    descripcion: "Controller de gestión institucional"
+    permisos:
+      - "gestion:*"
+      - "fin:presupuesto:read"
+      - "ejec:pmo:read"
+
+  PMO_MANAGER:
+    descripcion: "Gerente de proyectos PMO"
+    permisos:
+      - "ejec:convenio:read"
+      - "ejec:pmo:*"
+      - "gestion:alerta:manage"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ROLES EXTERNOS
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  USUARIO_MUNICIPAL:
+    descripcion: "Usuario de municipalidad"
+    permisos:
+      - "fin:iniciativa:read_own"
+      - "fin:iniciativa:create"
+      - "fin:iniciativa:update"
+      - "fin:solicitud:read_own"
+      - "fin:solicitud:create"
+      - "fin:solicitud:submit"
+      - "ejec:convenio:read_own"
+      - "ejec:rendicion:read_own"
+      - "ejec:rendicion:create"
+      - "ejec:rendicion:submit"
+      - "ejec:desembolso:request"
+    restriccion: "Solo datos de su actor"
+
+  USUARIO_SERVICIO:
+    descripcion: "Usuario de servicio público"
+    permisos:
+      - "fin:iniciativa:read_own"
+      - "ejec:convenio:read_own"
+      - "ejec:rendicion:read_own"
+    restriccion: "Solo datos de su actor"
+
+  CONSULTA:
+    descripcion: "Solo consulta (ciudadano o invitado)"
+    permisos:
+      - "plan:erd:read"
+      - "plan:prot:read"
+      - "fin:presupuesto:read"
+    restriccion: "Datos públicos únicamente"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MATRIZ ROL-PERMISO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Matriz_Resumen:
+  formato: "Rol vs Módulo (C=Create, R=Read, U=Update, D=Delete, X=Execute, A=Approve)"
+
+  tabla: |
+    ┌─────────────────────────┬──────┬──────┬──────┬──────┬──────┬──────┬──────┐
+    │ ROL                     │ ERD  │ IPR  │ SOL  │ CONV │ REND │ OKR  │ PMO  │
+    ├─────────────────────────┼──────┼──────┼──────┼──────┼──────┼──────┼──────┤
+    │ SUPER_ADMIN             │CRUDA │CRUDA │CRUDA │CRUDA │CRUDA │CRUDA │CRUDA │
+    │ GOBERNADOR              │ R    │ R    │ R    │ R    │ R    │ CRU  │ R    │
+    │ JEFE_DIPLADE            │CRUDA │ R    │ R    │ -    │ -    │ CRU  │ R    │
+    │ JEFE_DAF                │ R    │CRUD  │CRUA  │ R    │ R    │ CRU  │ R    │
+    │ PROFESIONAL_PLANIF      │ RU   │ R    │ -    │ -    │ -    │ RU   │ -    │
+    │ ANALISTA_IPR            │ R    │CRUD  │ RU   │ CRU  │ R    │ -    │ R    │
+    │ ANALISTA_RENDICIONES    │ -    │ -    │ -    │ R    │CRUA  │ -    │ -    │
+    │ SUPERVISOR_TECNICO      │ -    │ R    │ -    │ RU   │ R    │ -    │ RU   │
+    │ SECRETARIO_CORE         │ R    │ -    │ RA   │ -    │ -    │ -    │ -    │
+    │ PMO_MANAGER             │ -    │ -    │ -    │ R    │ R    │ R    │CRUD  │
+    │ CONTROLLER_GESTION      │ R    │ R    │ R    │ R    │ R    │CRUD  │ R    │
+    │ USUARIO_MUNICIPAL       │ -    │ CRU* │ CRU* │ R*   │ CRU* │ -    │ -    │
+    │ CONSULTA                │ R    │ -    │ -    │ -    │ -    │ -    │ -    │
+    └─────────────────────────┴──────┴──────┴──────┴──────┴──────┴──────┴──────┘
+    * = Solo recursos propios (filtrado por actor_id)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# POLÍTICAS DE ACCESO ESPECIALES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Politicas_ABAC:
+  POL_001:
+    nombre: "Acceso a datos propios (externos)"
+    descripcion: "Usuarios externos solo ven datos de su organización"
+    condicion: "usuario.tipo IN (EXTERNO_*)"
+    filtro: "recurso.actor_id = usuario.actor_id"
+    aplica_a: [Iniciativa, Solicitud, Convenio, Rendicion]
+
+  POL_002:
+    nombre: "Edición de convenios vigentes"
+    descripcion: "Solo via addendum si estado = VIGENTE"
+    condicion: "convenio.estado = 'VIGENTE'"
+    accion: "Redirigir a flujo de addendum"
+
+  POL_003:
+    nombre: "Aprobación de desembolsos"
+    descripcion: "Requiere doble firma sobre cierto monto"
+    condicion: "desembolso.monto > 100.000.000"
+    requerimiento: "Aprobación Jefe DAF + Gobernador"
+
+  POL_004:
+    nombre: "Datos sensibles"
+    descripcion: "Datos personales requieren justificación"
+    condicion: "recurso.clasificacion_dp IN (SENSIBLE, RESERVADO)"
+    requerimiento: "Log de acceso con motivo"
+
+  POL_005:
+    nombre: "Horario de operaciones críticas"
+    descripcion: "Operaciones financieras solo en horario hábil"
+    condicion: "operacion IN (aprobar_desembolso, registrar_transferencia)"
+    restriccion: "Lun-Vie 08:00-18:00"
+    excepcion: "SUPER_ADMIN con justificación"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# AUDITORÍA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Auditoria:
+  eventos_auditados:
+    - "Autenticación (login/logout/fallido)"
+    - "Cambios de estado en entidades"
+    - "Operaciones financieras"
+    - "Asignación de roles"
+    - "Acceso a datos sensibles"
+    - "Exportación de datos"
+    - "Modificaciones de configuración"
+
+  campos_log:
+    - timestamp
+    - usuario_id
+    - ip_origen
+    - user_agent
+    - accion
+    - recurso_tipo
+    - recurso_id
+    - datos_antes
+    - datos_despues
+    - resultado
+    - motivo
+
+  retención: "5 años (según normativa CGR)"
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN GOS-400
+# ═══════════════════════════════════════════════════════════════════════════════

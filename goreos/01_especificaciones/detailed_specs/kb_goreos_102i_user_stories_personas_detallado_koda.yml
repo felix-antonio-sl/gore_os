@@ -1,0 +1,608 @@
+# KODA Knowledge Base — User Stories Gestión de Personas Detallado
+# Derivadas de Manuales M03: Ciclo de Vida, Remuneraciones, Tiempo, Desarrollo, Bienestar
+# ID: KB-GOREOS-102I-US-PERSONAS-DETALLADO
+---
+_manifest:
+  urn: "urn:knowledge:goreos:especificaciones:user-stories-personas-detallado:1.0.0"
+  title: "User Stories Gestión de Personas Detallado — GORE OS"
+  federation:
+    visibility: internal
+  provenance:
+    created_by: "INGENIERO-SOFTWARE-COMPOSICIONAL-02"
+    created_at: "2025-12-15"
+    knowledge_sources:
+      - file: "manual_3_1_ciclo_vida.md"
+      - file: "manual_3_2_remuneraciones.md"
+      - file: "manual_3_3_tiempo_ausentismo.md"
+      - file: "manual_3_4_desarrollo_organizacional.md"
+      - file: "manual_3_5_bienestar.md"
+
+ID: KB-GOREOS-102I
+Status: Active
+
+resumen:
+  total_user_stories: 68
+  bloques_tematicos: 18
+  distribucion:
+    ciclo_vida: 18
+    remuneraciones: 14
+    tiempo_ausentismo: 14
+    desarrollo_org: 12
+    bienestar: 10
+
+# ============================================================================
+# BLOQUE 1: DOTACIÓN Y CALIDAD JURÍDICA (Manual 3.1, Sección I)
+# ============================================================================
+
+bloque_01_dotacion:
+  user_stories:
+    - id: CV-DOT-01
+      actor: Jefe de Gestión de Personas
+      titulo: "Controlar Dotación Máxima de Personal"
+      quiero: "verificar cupos disponibles por calidad jurídica (Planta, Contrata, Honorarios)"
+      para: "asegurar que ningún ingreso supere la dotación autorizada en Ley de Presupuestos"
+      prioridad: Crítica
+
+    - id: CV-DOT-02
+      actor: Sistema
+      titulo: "Aplicar Tasa de Reemplazo"
+      quiero: "calcular cupos habilitados por vacantes de retiro (1 por cada 3)"
+      para: "cumplir restricción de Ley de Presupuestos 2026"
+      prioridad: Crítica
+
+    - id: CV-DOT-03
+      actor: DAF
+      titulo: "Certificar Disponibilidad Presupuestaria (Subtítulo 21)"
+      quiero: "verificar recursos antes de autorizar ingreso de personal"
+      para: "evitar compromisos sin respaldo financiero"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 2: RECLUTAMIENTO Y SELECCIÓN (Manual 3.1, Sección I)
+# ============================================================================
+
+bloque_02_reclutamiento:
+  user_stories:
+    - id: CV-REC-01
+      actor: Jefatura Requirente
+      titulo: "Levantar Perfil de Cargo"
+      quiero: "definir competencias, requisitos DFL y funciones del cargo"
+      para: "iniciar proceso de reclutamiento con perfil claro"
+      prioridad: Alta
+
+    - id: CV-REC-02
+      actor: Jefe de Gestión de Personas
+      titulo: "Gestionar Concurso Público (Planta)"
+      quiero: "publicar en DO y web, conformar comité, evaluar ternas"
+      para: "proveer cargos de planta según normativa"
+      prioridad: Crítica
+
+    - id: CV-REC-03
+      actor: Jefe de Gestión de Personas
+      titulo: "Gestionar Selección Contrata/Honorarios"
+      quiero: "publicar oferta, evaluar currículos, aplicar pruebas"
+      para: "contratar personal transitoriocon mérito técnico"
+      prioridad: Alta
+
+    - id: CV-REC-04
+      actor: Gobernador Regional
+      titulo: "Resolver Nombramiento"
+      quiero: "aprobar terna y emitir decreto de nombramiento"
+      para: "formalizar ingreso del funcionario"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 3: FORMALIZACIÓN DEL INGRESO (Manual 3.1, Sección I)
+# ============================================================================
+
+bloque_03_formalizacion:
+  user_stories:
+    - id: CV-ING-01
+      actor: Analista de Personas
+      titulo: "Tramitar Decreto de Nombramiento"
+      quiero: "registrar en SIAPER y enviar a CGR (Toma de Razón o Registro)"
+      para: "formalizar legalmente el ingreso"
+      prioridad: Crítica
+
+    - id: CV-ING-02
+      actor: Analista de Personas
+      titulo: "Gestionar Contrato de Honorarios"
+      quiero: "generar contrato con labores, productos, monto y vigencia"
+      para: "formalizar prestación a honorarios"
+      prioridad: Alta
+
+    - id: CV-ING-03
+      actor: Funcionario Nuevo
+      titulo: "Completar Declaraciones Juradas"
+      quiero: "presentar DJ de intereses, patrimonio e inhabilidades"
+      para: "cumplir Art. 12 Ley 19.653 de probidad"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 4: INDUCCIÓN (Manual 3.1, Sección II)
+# ============================================================================
+
+bloque_04_induccion:
+  user_stories:
+    - id: CV-IND-01
+      actor: Analista de Personas
+      titulo: "Ejecutar Programa de Inducción"
+      quiero: "coordinar bienvenida, inducción general y específica"
+      para: "integrar al funcionario en su primer mes"
+      prioridad: Alta
+
+    - id: CV-IND-02
+      actor: Sistema
+      titulo: "Registrar Cumplimiento de Inducción"
+      quiero: "trackear avance del checklist de inducción por funcionario"
+      para: "asegurar completitud del proceso"
+      prioridad: Alta
+
+    - id: CV-IND-03
+      actor: Analista de Personas
+      titulo: "Difundir Protocolos de Prevención"
+      quiero: "entregar protocolos de violencia, acoso laboral y sexual"
+      para: "cumplir Art. 14 Ley 18.575"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 5: MOVILIDAD Y DESARROLLO (Manual 3.1, Sección III)
+# ============================================================================
+
+bloque_05_movilidad:
+  user_stories:
+    - id: CV-MOV-01
+      actor: Jefe de Gestión de Personas
+      titulo: "Gestionar Ascenso/Promoción"
+      quiero: "tramitar movimiento a grado superior por concurso o promoción automática"
+      para: "desarrollo de carrera funcionaria"
+      prioridad: Alta
+
+    - id: CV-MOV-02
+      actor: Jefe de Gestión de Personas
+      titulo: "Tramitar Traspaso Honorarios a Contrata"
+      quiero: "gestionar conversión según cupos Art. 15 Ley Presupuestos"
+      para: "regularizar personal con funciones habituales"
+      prioridad: Alta
+
+    - id: CV-MOV-03
+      actor: Jefe de Gestión de Personas
+      titulo: "Gestionar Suplencia y Reemplazo"
+      quiero: "contratar reemplazo por ausencias >30 días con autorización DIPRES"
+      para: "mantener continuidad operativa"
+      prioridad: Crítica
+
+    - id: CV-MOV-04
+      actor: Funcionario
+      titulo: "Solicitar Comisión de Servicio"
+      quiero: "registrar destinación temporal con decreto exento previo"
+      para: "formalizar desplazamiento a otra institución"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 6: EGRESO Y DESVINCULACIÓN (Manual 3.1, Sección IV)
+# ============================================================================
+
+bloque_06_egreso:
+  user_stories:
+    - id: CV-EGR-01
+      actor: Jefe de Gestión de Personas
+      titulo: "Tramitar Renuncia Voluntaria"
+      quiero: "recepcionar, evaluar retención (máx 30 días) y aceptar"
+      para: "formalizar egreso por voluntad del funcionario"
+      prioridad: Alta
+
+    - id: CV-EGR-02
+      actor: Jefe de Gestión de Personas
+      titulo: "Evaluar Declaración de Salud Incompatible"
+      quiero: "analizar licencias >6 meses en 2 años para declarar incompatibilidad"
+      para: "cumplir Art. 151 Estatuto y Art. 11 Ley Presupuestos"
+      prioridad: Crítica
+
+    - id: CV-EGR-03
+      actor: Analista de Personas
+      titulo: "Ejecutar Procedimiento de Cierre"
+      quiero: "gestionar entrega cargo, revocar accesos, emitir certificados"
+      para: "cierre formal de la relación laboral"
+      prioridad: Crítica
+
+    - id: CV-EGR-04
+      actor: Analista de Remuneraciones
+      titulo: "Calcular Liquidación Final"
+      quiero: "pagar haberes pendientes y feriado proporcional"
+      para: "finiquitar obligaciones económicas"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 7: ESTRUCTURA DE REMUNERACIONES (Manual 3.2, Sección I)
+# ============================================================================
+
+bloque_07_estructura_rem:
+  user_stories:
+    - id: REM-EST-01
+      actor: Analista de Remuneraciones
+      titulo: "Configurar Escala de Sueldos (EUS)"
+      quiero: "mantener sueldo base por grado y asignaciones permanentes"
+      para: "cálculo correcto según Escala Única"
+      prioridad: Crítica
+
+    - id: REM-EST-02
+      actor: Sistema
+      titulo: "Calcular Asignación de Antigüedad (Bienios)"
+      quiero: "incrementar automáticamente al cumplir 2 años"
+      para: "reconocimiento de trayectoria"
+      prioridad: Alta
+
+    - id: REM-EST-03
+      actor: Analista de Remuneraciones
+      titulo: "Gestionar Asignación de Modernización"
+      quiero: "calcular componente base y desempeño institucional/colectivo"
+      para: "cumplir Ley 19.553"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 8: PROCESO DE CÁLCULO Y PAGO (Manual 3.2, Sección II)
+# ============================================================================
+
+bloque_08_calculo_rem:
+  user_stories:
+    - id: REM-CIC-01
+      actor: Analista de Remuneraciones
+      titulo: "Cargar Novedades del Mes"
+      quiero: "incorporar contratos, renuncias, licencias, horas extras"
+      para: "iniciar cálculo mensual con datos actualizados"
+      prioridad: Crítica
+
+    - id: REM-CIC-02
+      actor: Analista de Remuneraciones
+      titulo: "Ejecutar Cálculo Pre-Cierre"
+      quiero: "procesar liquidaciones de prueba y revisar descuentos"
+      para: "detectar errores antes del pago"
+      prioridad: Crítica
+
+    - id: REM-CIC-03
+      actor: Jefe de Finanzas
+      titulo: "Aprobar y Generar Archivos de Pago"
+      quiero: "validar cierre y generar archivo banco + PREVIRED"
+      para: "ejecutar pago el día 24 o hábil anterior"
+      prioridad: Crítica
+
+    - id: REM-HE-01
+      actor: Jefatura Directa
+      titulo: "Autorizar Horas Extraordinarias"
+      quiero: "aprobar resolución previa indicando cantidad y horario"
+      para: "habilitar pago de horas extras con recargo"
+      prioridad: Alta
+
+    - id: REM-VIA-01
+      actor: Analista de Remuneraciones
+      titulo: "Procesar Viáticos"
+      quiero: "calcular monto según grado y destino, controlar rendición"
+      para: "compensar gastos de comisiones de servicio"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 9: DESCUENTOS Y OBLIGACIONES (Manual 3.2, Sección III)
+# ============================================================================
+
+bloque_09_descuentos:
+  user_stories:
+    - id: REM-DES-01
+      actor: Sistema
+      titulo: "Aplicar Descuentos Legales Automáticos"
+      quiero: "calcular Impuesto, AFP, Salud, Cesantía"
+      para: "cumplimiento tributario y previsional"
+      prioridad: Crítica
+
+    - id: REM-DES-02
+      actor: Funcionario
+      titulo: "Solicitar Descuento Voluntario"
+      quiero: "autorizar descuentos de bienestar, cooperativas, ahorro"
+      para: "facilitar pago de compromisos personales"
+      prioridad: Alta
+
+    - id: REM-INF-01
+      actor: Jefe de Gestión de Personas
+      titulo: "Generar Informe Semestral a Cámara de Diputados"
+      quiero: "reportar gastos, calidades, estamentos, género, duraciones"
+      para: "cumplir Art. 14 N°10 Ley Presupuestos"
+      prioridad: Crítica
+
+    - id: REM-TRA-01
+      actor: Sistema
+      titulo: "Publicar Dotación en Transparencia Activa"
+      quiero: "exponer planta, contrata, honorarios con remuneraciones"
+      para: "cumplir Ley 20.285 mensualmente"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 10: JORNADA Y ASISTENCIA (Manual 3.3, Sección I)
+# ============================================================================
+
+bloque_10_jornada:
+  user_stories:
+    - id: TIE-JOR-01
+      actor: Funcionario
+      titulo: "Registrar Asistencia Biométrica"
+      quiero: "marcar entrada y salida en sistema"
+      para: "control de cumplimiento de jornada"
+      prioridad: Crítica
+
+    - id: TIE-JOR-02
+      actor: Sistema
+      titulo: "Calcular Atrasos y Descuentos"
+      quiero: "contabilizar tiempos no trabajados sobre tolerancia"
+      para: "informar descuentos a Remuneraciones"
+      prioridad: Alta
+
+    - id: TIE-JOR-03
+      actor: Jefe de Gestión de Personas
+      titulo: "Configurar Horarios y Excepciones"
+      quiero: "definir jornadas fijas/flexibles y exenciones de marcaje"
+      para: "adaptar control a estructuras organizacionales"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 11: FERIADOS Y PERMISOS (Manual 3.3, Sección II)
+# ============================================================================
+
+bloque_11_permisos:
+  user_stories:
+    - id: TIE-FER-01
+      actor: Funcionario
+      titulo: "Solicitar Feriado Legal (Vacaciones)"
+      quiero: "requerir días de vacaciones vía workflow"
+      para: "ejercer derecho a descanso anual"
+      prioridad: Alta
+
+    - id: TIE-FER-02
+      actor: Jefatura Directa
+      titulo: "Aprobar Solicitud de Feriado"
+      quiero: "autorizar vacaciones verificando cobertura del servicio"
+      para: "control jerárquico del ausentismo planificado"
+      prioridad: Alta
+
+    - id: TIE-PER-01
+      actor: Funcionario
+      titulo: "Solicitar Permiso Administrativo"
+      quiero: "usar días administrativos (6 anuales) para fines particulares"
+      para: "flexibilidad laboral con goce de sueldo"
+      prioridad: Alta
+
+    - id: TIE-COM-01
+      actor: Funcionario
+      titulo: "Solicitar Compensación de Horas"
+      quiero: "recuperar tiempo por trabajos extraordinarios"
+      para: "alternativa al pago de horas extras"
+      prioridad: Media
+
+    - id: TIE-SAL-01
+      actor: Sistema
+      titulo: "Calcular Saldo de Días Disponibles"
+      quiero: "mostrar días de feriado, administrativos y compensación"
+      para: "autoservicio y transparencia para el funcionario"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 12: LICENCIAS MÉDICAS (Manual 3.3, Sección III)
+# ============================================================================
+
+bloque_12_licencias:
+  user_stories:
+    - id: TIE-LIC-01
+      actor: Sistema
+      titulo: "Recepcionar Licencia Electrónica (I-MED)"
+      quiero: "importar automáticamente desde portal de salud"
+      para: "registro oportuno sin intervención manual"
+      prioridad: Crítica
+
+    - id: TIE-LIC-02
+      actor: Analista de Personas
+      titulo: "Procesar Licencia Médica Manual"
+      quiero: "registrar licencias en papel dentro de plazo legal"
+      para: "mantener control de ausencias médicas"
+      prioridad: Alta
+
+    - id: TIE-LIC-03
+      actor: Analista de Personas
+      titulo: "Tramitar Licencia a COMPIN/Isapre"
+      quiero: "enviar a entidad aseguradora en 3 días"
+      para: "gestión de subsidio de incapacidad laboral"
+      prioridad: Crítica
+
+    - id: TIE-LIC-04
+      actor: Analista de Remuneraciones
+      titulo: "Gestionar Recuperación de Subsidio (SIL)"
+      quiero: "registrar pago del GORE y recuperar desde aseguradora"
+      para: "flujo de caja correcto por licencias"
+      prioridad: Crítica
+
+    - id: TIE-LIC-05
+      actor: Sistema
+      titulo: "Alertar Licencia Rechazada/Reducida"
+      quiero: "notificar para gestionar descuento o reintegro"
+      para: "regularizar pago indebido por licencia rechazada"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 13: CAPACITACIÓN (Manual 3.4, Sección I)
+# ============================================================================
+
+bloque_13_capacitacion:
+  user_stories:
+    - id: DO-CAP-01
+      actor: Jefe de Gestión de Personas
+      titulo: "Ejecutar Detección de Necesidades (DNC)"
+      quiero: "consultar jefaturas y funcionarios sobre brechas"
+      para: "identificar requerimientos de capacitación"
+      prioridad: Alta
+
+    - id: DO-CAP-02
+      actor: Jefe de Gestión de Personas
+      titulo: "Elaborar Plan Anual de Capacitación (PAC)"
+      quiero: "consolidar DNC y presentar a Comité Bipartito"
+      para: "planificar acciones formativas del año"
+      prioridad: Crítica
+
+    - id: DO-CAP-03
+      actor: Comité Bipartito
+      titulo: "Revisar y Sugerir Modificaciones al PAC"
+      quiero: "opinar sobre plan de capacitación"
+      para: "participación de funcionarios en la decisión"
+      prioridad: Alta
+
+    - id: DO-CAP-04
+      actor: Funcionario
+      titulo: "Inscribirse en Curso de Capacitación"
+      quiero: "postular a cursos del PAC según mi perfil"
+      para: "desarrollo de competencias"
+      prioridad: Alta
+
+    - id: DO-CAP-05
+      actor: Sistema
+      titulo: "Registrar Certificación y Réplica"
+      quiero: "trackear aprobación del curso y transferencia de conocimiento"
+      para: "evaluar impacto de la capacitación"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 14: GESTIÓN DEL DESEMPEÑO (Manual 3.4, Sección II)
+# ============================================================================
+
+bloque_14_desempeno:
+  user_stories:
+    - id: DO-CAL-01
+      actor: Jefe Directo
+      titulo: "Registrar Precalificación"
+      quiero: "evaluar factores del período sep-ago"
+      para: "iniciar proceso de calificación anual"
+      prioridad: Crítica
+
+    - id: DO-CAL-02
+      actor: Junta Calificadora
+      titulo: "Revisar y Asignar Nota Final"
+      quiero: "consolidar precalificaciones y asignar Lista"
+      para: "calificación oficial del funcionario"
+      prioridad: Crítica
+
+    - id: DO-CAL-03
+      actor: Funcionario
+      titulo: "Apelar Calificación"
+      quiero: "impugnar nota ante Junta y luego CGR"
+      para: "ejercer derecho a revisión"
+      prioridad: Alta
+
+    - id: DO-PMG-01
+      actor: Jefe de División
+      titulo: "Definir Metas de Desempeño Colectivo"
+      quiero: "establecer objetivos anuales del equipo"
+      para: "determinar pago de componente de desempeño"
+      prioridad: Crítica
+
+    - id: DO-PMG-02
+      actor: Sistema
+      titulo: "Calcular Componente de Desempeño Trimestral"
+      quiero: "evaluar cumplimiento de metas y calcular asignación"
+      para: "pago de Modernización según resultados"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 15: CLIMA Y CALIDAD LABORAL (Manual 3.4, Sección III)
+# ============================================================================
+
+bloque_15_clima:
+  user_stories:
+    - id: DO-CLI-01
+      actor: Jefe de Gestión de Personas
+      titulo: "Aplicar Encuesta de Clima Laboral"
+      quiero: "medir percepción de funcionarios bianualmente"
+      para: "diagnosticar ambiente organizacional"
+      prioridad: Alta
+
+    - id: DO-TLT-01
+      actor: Jefe de Gestión de Personas
+      titulo: "Gestionar Solicitudes de Teletrabajo"
+      quiero: "evaluar factibilidad técnica y aprobar modalidad"
+      para: "flexibilidad laboral según normativa"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 16: AFILIACIÓN Y APORTES BIENESTAR (Manual 3.5, Sección I)
+# ============================================================================
+
+bloque_16_bienestar_afiliacion:
+  user_stories:
+    - id: BIE-AFI-01
+      actor: Funcionario
+      titulo: "Solicitar Afiliación a Bienestar"
+      quiero: "incorporarme al servicio de bienestar voluntariamente"
+      para: "acceder a beneficios sociales"
+      prioridad: Alta
+
+    - id: BIE-AFI-02
+      actor: Sistema
+      titulo: "Descontar Aporte de Bienestar por Planilla"
+      quiero: "aplicar porcentaje automático mensualmente"
+      para: "financiamiento del servicio"
+      prioridad: Crítica
+
+    - id: BIE-CON-01
+      actor: Consejo Administrativo
+      titulo: "Aprobar Presupuesto y Beneficios Anuales"
+      quiero: "definir montos y coberturas del año"
+      para: "gobernanza del servicio de bienestar"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 17: BENEFICIOS Y PRESTACIONES (Manual 3.5, Sección II)
+# ============================================================================
+
+bloque_17_beneficios:
+  user_stories:
+    - id: BIE-MED-01
+      actor: Socio
+      titulo: "Solicitar Reembolso Médico/Dental"
+      quiero: "presentar boletas para bonificación del copago"
+      para: "reducir gasto de salud personal"
+      prioridad: Alta
+
+    - id: BIE-SUB-01
+      actor: Socio
+      titulo: "Solicitar Subsidio por Evento Vital"
+      quiero: "recibir ayuda por nacimiento, matrimonio, fallecimiento"
+      para: "apoyo económico en momentos importantes"
+      prioridad: Alta
+
+    - id: BIE-ESC-01
+      actor: Socio
+      titulo: "Solicitar Bono Escolar"
+      quiero: "recibir aporte anual por escolaridad de hijos"
+      para: "apoyo a educación familiar"
+      prioridad: Alta
+
+    - id: BIE-PRE-01
+      actor: Socio
+      titulo: "Solicitar Préstamo de Bienestar"
+      quiero: "acceder a crédito médico, auxilio, escolar o habitacional"
+      para: "financiamiento a bajo interés"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 18: CALIDAD DE VIDA (Manual 3.5, Sección III)
+# ============================================================================
+
+bloque_18_calidad_vida:
+  user_stories:
+    - id: BIE-REC-01
+      actor: Unidad de Bienestar
+      titulo: "Organizar Actividades Recreativas"
+      quiero: "gestionar eventos de camaradería y talleres"
+      para: "promover integración institucional"
+      prioridad: Media
+
+    - id: BIE-SSO-01
+      actor: Unidad de Bienestar
+      titulo: "Coordinar con Mutualidad"
+      quiero: "gestionar evaluación de puestos y prevención de riesgos"
+      para: "seguridad y salud ocupacional"
+      prioridad: Alta

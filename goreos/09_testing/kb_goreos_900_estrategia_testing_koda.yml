@@ -1,0 +1,648 @@
+# GOS-900: GORE_OS - Estrategia de Testing
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:900:estrategia_testing"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Estrategia de Testing y Aseguramiento de Calidad"
+  Description: "Plan de pruebas, criterios de calidad y automatización"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Tags: [goreos, testing, qa, calidad, automatizacion]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRINCIPIOS DE CALIDAD
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Principios:
+  filosofia: "Shift-left testing + Continuous Quality"
+  
+  objetivos:
+    - "Detectar defectos lo más temprano posible"
+    - "Automatizar pruebas repetitivas"
+    - "Mantener cobertura > 80% en código crítico"
+    - "Zero defectos críticos en producción"
+  
+  metricas_calidad:
+    - { metrica: "Cobertura de código", objetivo: ">= 80%" }
+    - { metrica: "Cobertura de casos de uso", objetivo: "100%" }
+    - { metrica: "Defectos escapados a prod", objetivo: "< 2/sprint" }
+    - { metrica: "Tiempo medio de resolución", objetivo: "< 4 horas (crítico)" }
+    - { metrica: "Tasa de regresión", objetivo: "< 5%" }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PIRÁMIDE DE TESTING
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Piramide_Testing:
+  descripcion: "Distribución de esfuerzo de pruebas"
+  
+  diagrama: |
+                    ▲
+                   /E2E\           5%  - Playwright
+                  /─────\
+                 /Integr.\        20%  - API tests, DB tests
+                /─────────\
+               /  Unitarios \     75%  - Vitest, Jest
+              ───────────────
+  
+  niveles:
+    Unitarios:
+      porcentaje: 75
+      herramientas: [Vitest, Jest]
+      alcance: "Funciones, componentes, hooks"
+      responsable: "Desarrollador"
+      cuando: "Cada commit"
+      
+    Integracion:
+      porcentaje: 20
+      herramientas: [Supertest, Prisma-test]
+      alcance: "APIs, servicios, base de datos"
+      responsable: "Desarrollador + QA"
+      cuando: "Cada PR"
+      
+    E2E:
+      porcentaje: 5
+      herramientas: [Playwright]
+      alcance: "Flujos críticos de usuario"
+      responsable: "QA"
+      cuando: "Pre-deploy a staging/prod"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRUEBAS UNITARIAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pruebas_Unitarias:
+  
+  framework: "Vitest"
+  
+  convenciones:
+    ubicacion: "*.test.ts junto al archivo fuente"
+    nomenclatura: "describe('Módulo') → it('should...')"
+    patron: "AAA (Arrange-Act-Assert)"
+  
+  cobertura_minima:
+    global: 80
+    por_carpeta:
+      "src/lib/": 90
+      "src/services/": 85
+      "src/utils/": 95
+      "src/components/": 70
+  
+  ejemplo: |
+    // iniciativa.service.test.ts
+    import { describe, it, expect, beforeEach } from 'vitest'
+    import { IniciativaService } from './iniciativa.service'
+    
+    describe('IniciativaService', () => {
+      let service: IniciativaService
+      
+      beforeEach(() => {
+        service = new IniciativaService(mockPrisma)
+      })
+      
+      describe('cambiarEstado', () => {
+        it('should transition from IDEA to PERFIL', async () => {
+          // Arrange
+          const iniciativa = createMockIniciativa({ estado: 'IDEA' })
+          
+          // Act
+          const result = await service.cambiarEstado(iniciativa.id, 'PERFIL')
+          
+          // Assert
+          expect(result.estado).toBe('PERFIL')
+        })
+        
+        it('should reject invalid state transition', async () => {
+          const iniciativa = createMockIniciativa({ estado: 'IDEA' })
+          
+          await expect(
+            service.cambiarEstado(iniciativa.id, 'CON_RS')
+          ).rejects.toThrow('Transición no permitida')
+        })
+      })
+    })
+  
+  mocking:
+    base_datos: "Prisma mock con @prisma/client/testing"
+    servicios_externos: "MSW (Mock Service Worker)"
+    fechas: "vi.useFakeTimers()"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRUEBAS DE INTEGRACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pruebas_Integracion:
+  
+  tipos:
+    API_Tests:
+      herramienta: "Supertest"
+      alcance: "Endpoints REST completos"
+      base_datos: "PostgreSQL de prueba (Docker)"
+      
+    Database_Tests:
+      herramienta: "Prisma + pg-mem"
+      alcance: "Queries complejas, transacciones"
+      
+    Service_Integration:
+      herramienta: "Vitest"
+      alcance: "Interacción entre servicios"
+  
+  configuracion_bd:
+    estrategia: "Base de datos efímera por suite"
+    setup: |
+      1. Levantar PostgreSQL en Docker
+      2. Ejecutar migraciones Prisma
+      3. Seed de datos de prueba
+      4. Ejecutar tests
+      5. Limpiar y destruir contenedor
+  
+  ejemplo_api: |
+    // convenios.api.test.ts
+    import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+    import request from 'supertest'
+    import { app } from '../app'
+    import { setupTestDB, teardownTestDB, seedTestData } from '../test-utils'
+    
+    describe('API /api/v1/ejec/convenios', () => {
+      beforeAll(async () => {
+        await setupTestDB()
+        await seedTestData()
+      })
+      
+      afterAll(async () => {
+        await teardownTestDB()
+      })
+      
+      describe('GET /', () => {
+        it('should return paginated list of convenios', async () => {
+          const res = await request(app)
+            .get('/api/v1/ejec/convenios')
+            .set('Authorization', `Bearer ${testToken}`)
+            .query({ page: 1, size: 10 })
+          
+          expect(res.status).toBe(200)
+          expect(res.body.data).toHaveLength(10)
+          expect(res.body.pagination.total).toBeGreaterThan(0)
+        })
+        
+        it('should filter by estado', async () => {
+          const res = await request(app)
+            .get('/api/v1/ejec/convenios')
+            .set('Authorization', `Bearer ${testToken}`)
+            .query({ estado: 'VIGENTE' })
+          
+          expect(res.status).toBe(200)
+          res.body.data.forEach(conv => {
+            expect(conv.estado).toBe('VIGENTE')
+          })
+        })
+      })
+      
+      describe('POST /', () => {
+        it('should create convenio from approved solicitud', async () => {
+          const res = await request(app)
+            .post('/api/v1/ejec/convenios')
+            .set('Authorization', `Bearer ${testToken}`)
+            .send({
+              solicitudId: approvedSolicitudId,
+              fechaInicio: '2025-01-01',
+              plazoMeses: 12
+            })
+          
+          expect(res.status).toBe(201)
+          expect(res.body.estado).toBe('BORRADOR')
+        })
+      })
+    })
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRUEBAS E2E
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pruebas_E2E:
+  
+  framework: "Playwright"
+  
+  configuracion:
+    browsers: [chromium, firefox, webkit]
+    devices: [Desktop Chrome, iPhone 13, Pixel 5]
+    parallel: true
+    retries: 2
+  
+  flujos_criticos:
+    - id: "E2E-001"
+      nombre: "Login con ClaveÚnica"
+      prioridad: P0
+      pasos:
+        - "Navegar a /login"
+        - "Click en 'Ingresar con ClaveÚnica'"
+        - "Completar flujo OAuth (mock)"
+        - "Verificar redirección a dashboard"
+        - "Verificar datos de usuario en header"
+    
+    - id: "E2E-002"
+      nombre: "Crear y enviar solicitud"
+      prioridad: P0
+      pasos:
+        - "Login como usuario municipal"
+        - "Navegar a Solicitudes → Nueva"
+        - "Seleccionar iniciativa"
+        - "Completar formulario"
+        - "Adjuntar documentos"
+        - "Enviar solicitud"
+        - "Verificar estado PRESENTADA"
+        - "Verificar notificación"
+    
+    - id: "E2E-003"
+      nombre: "Flujo de rendición"
+      prioridad: P0
+      pasos:
+        - "Login como usuario municipal"
+        - "Navegar a convenio asignado"
+        - "Crear nueva rendición"
+        - "Agregar movimientos"
+        - "Subir documentos"
+        - "Enviar rendición"
+        - "Verificar estado RECIBIDA"
+    
+    - id: "E2E-004"
+      nombre: "Dashboard PMO"
+      prioridad: P1
+      pasos:
+        - "Login como PMO Manager"
+        - "Navegar a /ejec/pmo"
+        - "Verificar carga de KPIs"
+        - "Filtrar por semáforo ROJO"
+        - "Abrir detalle de proyecto"
+        - "Verificar timeline de hitos"
+    
+    - id: "E2E-005"
+      nombre: "Check-in OKR"
+      prioridad: P1
+      pasos:
+        - "Login como owner de KR"
+        - "Navegar a OKRs"
+        - "Seleccionar KR asignado"
+        - "Registrar check-in"
+        - "Verificar actualización de progreso"
+  
+  ejemplo: |
+    // tests/e2e/solicitud.spec.ts
+    import { test, expect } from '@playwright/test'
+    
+    test.describe('Flujo de Solicitud', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.goto('/login')
+        await mockClaveUnicaLogin(page, 'usuario_municipal')
+      })
+      
+      test('crear y enviar solicitud de financiamiento', async ({ page }) => {
+        // Navegar a nueva solicitud
+        await page.click('text=Solicitudes')
+        await page.click('text=Nueva solicitud')
+        
+        // Seleccionar iniciativa
+        await page.fill('[data-testid="iniciativa-search"]', 'Estadio')
+        await page.click('[data-testid="iniciativa-option-0"]')
+        
+        // Completar formulario
+        await page.selectOption('[name="instrumento"]', 'FNDR')
+        await page.fill('[name="montoSolicitado"]', '850000000')
+        
+        // Adjuntar documento
+        await page.setInputFiles(
+          '[data-testid="file-upload"]',
+          'tests/fixtures/documento.pdf'
+        )
+        
+        // Enviar
+        await page.click('text=Enviar solicitud')
+        
+        // Verificar
+        await expect(page.locator('[data-testid="estado-badge"]'))
+          .toHaveText('PRESENTADA')
+        await expect(page.locator('.toast-success'))
+          .toContainText('Solicitud enviada correctamente')
+      })
+    })
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRUEBAS DE REGLAS DE NEGOCIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pruebas_Negocio:
+  
+  descripcion: "Validación de reglas de negocio críticas"
+  
+  casos_por_dominio:
+    D_FIN:
+      - regla: "RN-INI-02: RS vence a los 3 años"
+        test: "Verificar que iniciativa cambia a RS_VENCIDA después de vigencia"
+      - regla: "RN-SOL-01: Una solicitud por iniciativa/instrumento/año"
+        test: "Rechazar creación de solicitud duplicada"
+      - regla: "RN-SOL-03: Requiere RS vigente si instrumento lo exige"
+        test: "Validar RS antes de permitir solicitud"
+    
+    D_EJEC:
+      - regla: "RN-CON-01: Monto total = gore + ejecutor + terceros"
+        test: "Validar suma de aportes al crear convenio"
+      - regla: "RN-DES-02: Desembolso requiere hito cumplido"
+        test: "Bloquear solicitud si hito no está cumplido"
+      - regla: "RN-REN-02: Mora si > 90 días sin rendición"
+        test: "Verificar cálculo automático de mora"
+    
+    D_GESTION:
+      - regla: "RN-HG-02: Estado según umbrales"
+        test: "Verificar clasificación CRITICO/ALERTA/ACEPTABLE/SALUDABLE"
+  
+  ejemplo: |
+    // tests/business-rules/rendicion.rules.test.ts
+    describe('Reglas de Negocio - Rendiciones', () => {
+      describe('RN-REN-02: Cálculo de mora', () => {
+        it('should mark convenio en mora after 90 days', async () => {
+          // Crear convenio con transferencia hace 91 días
+          const convenio = await createConvenioWithTransfer({
+            fechaTransferencia: subDays(new Date(), 91),
+            montoTransferido: 100000000,
+            montoAprobado: 0
+          })
+          
+          // Ejecutar job de mora
+          await calcularMoraJob()
+          
+          // Verificar
+          const updated = await getConvenio(convenio.id)
+          expect(updated.enMora).toBe(true)
+          expect(updated.diasMora).toBeGreaterThanOrEqual(1)
+        })
+        
+        it('should not mark mora if rendicion approved', async () => {
+          const convenio = await createConvenioWithTransfer({
+            fechaTransferencia: subDays(new Date(), 91),
+            montoTransferido: 100000000,
+            montoAprobado: 100000000 // Todo rendido
+          })
+          
+          await calcularMoraJob()
+          
+          const updated = await getConvenio(convenio.id)
+          expect(updated.enMora).toBe(false)
+        })
+      })
+    })
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRUEBAS DE INTEGRACIÓN EXTERNA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pruebas_Integracion_Externa:
+  
+  estrategia: "Contract testing + Mocks"
+  
+  sistemas:
+    BIP:
+      mock_server: "MSW"
+      contract: "OpenAPI spec"
+      tests:
+        - "Consulta de proyecto existente"
+        - "Proyecto no encontrado (404)"
+        - "Validación de RS vigente"
+        - "Timeout handling"
+    
+    SII:
+      mock_server: "MSW"
+      tests:
+        - "RUT válido activo"
+        - "RUT válido inactivo"
+        - "RUT inválido"
+        - "Rate limiting"
+    
+    ClaveUnica:
+      mock_server: "Mock OAuth server"
+      tests:
+        - "Flujo autorización exitoso"
+        - "Token expirado"
+        - "Usuario cancela"
+  
+  ejemplo_mock: |
+    // tests/mocks/handlers/bip.ts
+    import { rest } from 'msw'
+    
+    export const bipHandlers = [
+      rest.get('https://api.bip.gob.cl/v1/proyectos/:codigo', (req, res, ctx) => {
+        const { codigo } = req.params
+        
+        if (codigo === '30123456-0') {
+          return res(ctx.json({
+            codigo_bip: '30123456-0',
+            nombre: 'Proyecto de prueba',
+            estado: 'EJECUCION',
+            rs_vigente: true,
+            fecha_rs: '2024-01-15',
+            monto_rs: 850000000
+          }))
+        }
+        
+        return res(ctx.status(404), ctx.json({ error: 'Proyecto no encontrado' }))
+      })
+    ]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRUEBAS DE RENDIMIENTO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pruebas_Rendimiento:
+  
+  herramienta: "k6"
+  
+  escenarios:
+    Carga_Normal:
+      usuarios: 50
+      duracion: "10m"
+      endpoints:
+        - "GET /api/v1/fin/iniciativas (list)"
+        - "GET /api/v1/ejec/convenios/:id (detail)"
+        - "GET /api/v1/gestion/h-gore/actual"
+      sla:
+        p95_latency: "< 500ms"
+        error_rate: "< 1%"
+    
+    Carga_Pico:
+      usuarios: 200
+      duracion: "5m"
+      descripcion: "Simular día de cierre de priorización"
+      sla:
+        p95_latency: "< 2000ms"
+        error_rate: "< 5%"
+    
+    Stress:
+      usuarios_max: 500
+      ramp_up: "5m"
+      descripcion: "Encontrar punto de quiebre"
+  
+  ejemplo_k6: |
+    // tests/performance/load-test.js
+    import http from 'k6/http'
+    import { check, sleep } from 'k6'
+    
+    export const options = {
+      stages: [
+        { duration: '2m', target: 50 },
+        { duration: '5m', target: 50 },
+        { duration: '2m', target: 0 }
+      ],
+      thresholds: {
+        http_req_duration: ['p(95)<500'],
+        http_req_failed: ['rate<0.01']
+      }
+    }
+    
+    export default function () {
+      const res = http.get('https://staging.goreos.cl/api/v1/fin/iniciativas', {
+        headers: { Authorization: `Bearer ${__ENV.TOKEN}` }
+      })
+      
+      check(res, {
+        'status is 200': (r) => r.status === 200,
+        'response time < 500ms': (r) => r.timings.duration < 500
+      })
+      
+      sleep(1)
+    }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRUEBAS DE SEGURIDAD
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pruebas_Seguridad:
+  
+  tipos:
+    SAST:
+      herramienta: "SonarQube + ESLint security"
+      frecuencia: "Cada PR"
+      
+    DAST:
+      herramienta: "OWASP ZAP"
+      frecuencia: "Semanal en staging"
+      
+    Dependency_Scan:
+      herramienta: "npm audit + Snyk"
+      frecuencia: "Diaria"
+  
+  casos_manuales:
+    - "Verificar que usuario no puede acceder a datos de otro actor"
+    - "Verificar expiración de sesión"
+    - "Verificar rate limiting"
+    - "Verificar sanitización de inputs"
+    - "Verificar headers de seguridad (CSP, HSTS)"
+  
+  owasp_top10:
+    - "A01: Broken Access Control → Tests de autorización por rol"
+    - "A02: Cryptographic Failures → Verificar TLS, hashing passwords"
+    - "A03: Injection → Tests de SQL injection, XSS"
+    - "A07: Auth Failures → Tests de sesión, MFA"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CI/CD PIPELINE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Pipeline:
+  
+  stages:
+    PR_Check:
+      trigger: "Pull Request"
+      jobs:
+        - "Lint + Format check"
+        - "Type check"
+        - "Unit tests"
+        - "Integration tests"
+        - "Coverage report"
+      gate: "All pass + Coverage >= 80%"
+    
+    Staging_Deploy:
+      trigger: "Merge to main"
+      jobs:
+        - "Build"
+        - "Deploy to staging"
+        - "E2E tests"
+        - "Security scan"
+      gate: "All pass"
+    
+    Production_Deploy:
+      trigger: "Manual + Tag"
+      jobs:
+        - "Deploy to production"
+        - "Smoke tests"
+        - "Health check"
+      rollback: "Automático si health check falla"
+  
+  github_actions: |
+    # .github/workflows/ci.yml
+    name: CI
+    on: [push, pull_request]
+    
+    jobs:
+      test:
+        runs-on: ubuntu-latest
+        services:
+          postgres:
+            image: postgres:15
+            env:
+              POSTGRES_PASSWORD: test
+        steps:
+          - uses: actions/checkout@v4
+          - uses: actions/setup-node@v4
+            with:
+              node-version: '20'
+          - run: npm ci
+          - run: npm run lint
+          - run: npm run typecheck
+          - run: npm run test:unit
+          - run: npm run test:integration
+          - uses: codecov/codecov-action@v3
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GESTIÓN DE DEFECTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Gestion_Defectos:
+  
+  clasificacion:
+    P0_Blocker:
+      descripcion: "Sistema caído o datos corruptos"
+      sla_resolucion: "4 horas"
+      ejemplo: "Login no funciona, pérdida de datos"
+    
+    P1_Critical:
+      descripcion: "Funcionalidad core no funciona"
+      sla_resolucion: "24 horas"
+      ejemplo: "No se pueden crear convenios"
+    
+    P2_Major:
+      descripcion: "Funcionalidad afectada con workaround"
+      sla_resolucion: "1 semana"
+      ejemplo: "Filtros no funcionan correctamente"
+    
+    P3_Minor:
+      descripcion: "Molestia menor, cosmético"
+      sla_resolucion: "Próximo sprint"
+      ejemplo: "Alineación de texto incorrecta"
+  
+  workflow:
+    estados: [Nuevo, Triaged, En_Progreso, En_Review, Verificado, Cerrado]
+    
+  retrospectiva:
+    frecuencia: "Por cada P0/P1 en producción"
+    template:
+      - "¿Qué falló?"
+      - "¿Por qué no se detectó antes?"
+      - "¿Qué test agregaremos?"
+      - "¿Qué proceso mejoraremos?"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN GOS-900
+# ═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,469 @@
+# GOS-200a: GORE_OS - Modelo de Datos: Entidades Maestras
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:200a:modelo_datos:maestras"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Modelo de Datos: Entidades Maestras"
+  Description: "Detalle completo de las 6 entidades maestras compartidas"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Ref: "kb_goreos_200_modelo_datos_esqueleto_koda.yml"
+  Tags: [goreos, modelo_datos, maestras, usuario, actor, territorio]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# USUARIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Usuario:
+  _meta:
+    dominio: D-TDE
+    tabla: usuarios
+    descripcion: "Persona que interactúa con GORE_OS"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    rut: { tipo: String(12), unique: true, not_null: true, validacion: "mod11" }
+    nombres: { tipo: String(100), not_null: true }
+    apellido_paterno: { tipo: String(100), not_null: true }
+    apellido_materno: { tipo: String(100), nullable: true }
+    email: { tipo: String(255), unique: true, not_null: true }
+    email_alternativo: { tipo: String(255), nullable: true }
+    telefono: { tipo: String(20), nullable: true }
+    tipo:
+      tipo: Enum
+      valores: [FUNCIONARIO, EXTERNO_MUNICIPIO, EXTERNO_SERVICIO, EXTERNO_OTRO, CIUDADANO]
+      not_null: true
+    estado:
+      tipo: Enum
+      valores: [ACTIVO, INACTIVO, BLOQUEADO, PENDIENTE]
+      default: PENDIENTE
+    actor_id: { tipo: "FK(actores.id)", nullable: true }
+    fecha_ultimo_acceso: { tipo: DateTime, nullable: true }
+    intentos_fallidos: { tipo: Integer, default: 0 }
+    preferencias: { tipo: JSONB, nullable: true }
+    created_at: { tipo: DateTime, auto: true }
+    created_by: { tipo: "FK(usuarios.id)", nullable: true }
+    updated_at: { tipo: DateTime, auto: true }
+    updated_by: { tipo: "FK(usuarios.id)", nullable: true }
+    deleted_at: { tipo: DateTime, nullable: true }
+  
+  indices:
+    - { campos: [rut], tipo: unique }
+    - { campos: [email], tipo: unique }
+    - { campos: [tipo, estado], tipo: btree }
+    - { campos: [actor_id], tipo: btree }
+  
+  relaciones:
+    funcionario: { tipo: "1:0..1", entidad: Funcionario, fk: "funcionarios.usuario_id" }
+    actor: { tipo: "N:1", entidad: Actor, fk: "usuarios.actor_id" }
+    roles: { tipo: "1:N", entidad: RolUsuario, fk: "roles_usuario.usuario_id" }
+    sesiones: { tipo: "1:N", entidad: SesionUsuario, fk: "sesiones_usuario.usuario_id" }
+  
+  reglas:
+    - id: RN-USR-01
+      regla: "RUT debe ser único y válido (módulo 11)"
+    - id: RN-USR-02
+      regla: "Email debe ser único en el sistema"
+    - id: RN-USR-03
+      regla: "Si tipo=FUNCIONARIO, debe existir registro en Funcionario"
+    - id: RN-USR-04
+      regla: "Si tipo IN (EXTERNO_*), debe tener actor_id asignado"
+    - id: RN-USR-05
+      regla: "Después de 5 intentos_fallidos, estado→BLOQUEADO"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FUNCIONARIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Funcionario:
+  _meta:
+    dominio: D-BACK
+    tabla: funcionarios
+    descripcion: "Extensión de Usuario para funcionarios del GORE"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    usuario_id: { tipo: "FK(usuarios.id)", unique: true, not_null: true }
+    unidad_id: { tipo: "FK(unidades_organicas.id)", not_null: true }
+    cargo: { tipo: String(200), not_null: true }
+    grado: { tipo: String(10), nullable: true }
+    estamento:
+      tipo: Enum
+      valores: [DIRECTIVO, PROFESIONAL, TECNICO, ADMINISTRATIVO, AUXILIAR]
+      nullable: true
+    calidad_juridica:
+      tipo: Enum
+      valores: [PLANTA, CONTRATA, HONORARIOS, CODIGO_TRABAJO]
+      not_null: true
+    fecha_ingreso: { tipo: Date, not_null: true }
+    fecha_termino: { tipo: Date, nullable: true }
+    jefatura: { tipo: Boolean, default: false }
+    subrogante_id: { tipo: "FK(funcionarios.id)", nullable: true }
+    jefe_id: { tipo: "FK(funcionarios.id)", nullable: true }
+    firma_electronica: { tipo: Boolean, default: false }
+    nivel_firma:
+      tipo: Enum
+      valores: [NINGUNO, SIMPLE, AVANZADA]
+      default: NINGUNO
+    activo: { tipo: Boolean, default: true }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [usuario_id], tipo: unique }
+    - { campos: [unidad_id, activo], tipo: btree }
+    - { campos: [jefe_id], tipo: btree }
+  
+  relaciones:
+    usuario: { tipo: "1:1", entidad: Usuario, fk: "funcionarios.usuario_id" }
+    unidad: { tipo: "N:1", entidad: UnidadOrganica, fk: "funcionarios.unidad_id" }
+    jefe: { tipo: "N:1", entidad: Funcionario, fk: "funcionarios.jefe_id" }
+    subordinados: { tipo: "1:N", entidad: Funcionario, fk: "funcionarios.jefe_id" }
+  
+  reglas:
+    - id: RN-FUN-01
+      regla: "Usuario asociado debe tener tipo=FUNCIONARIO"
+    - id: RN-FUN-02
+      regla: "Si jefatura=true, puede tener subordinados"
+    - id: RN-FUN-03
+      regla: "fecha_termino debe ser >= fecha_ingreso"
+    - id: RN-FUN-04
+      regla: "Solo un jefe por unidad puede tener jefatura=true"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ACTOR
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Actor:
+  _meta:
+    dominio: D-COORD
+    tabla: actores
+    descripcion: "Organización del ecosistema regional"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    rut: { tipo: String(12), unique: true, not_null: true }
+    nombre: { tipo: String(255), not_null: true }
+    nombre_corto: { tipo: String(50), nullable: true }
+    tipo:
+      tipo: Enum
+      valores: [MUNICIPALIDAD, SERVICIO_PUBLICO, UNIVERSIDAD, ONG, FUNDACION, CORPORACION, EMPRESA_PUBLICA, EMPRESA_PRIVADA, COOPERATIVA, OTRO]
+      not_null: true
+    subtipo: { tipo: String(100), nullable: true }
+    territorio_id: { tipo: "FK(territorios.id)", nullable: true }
+    direccion: { tipo: String(500), nullable: true }
+    telefono: { tipo: String(20), nullable: true }
+    email_institucional: { tipo: String(255), nullable: true }
+    sitio_web: { tipo: String(255), nullable: true }
+    representante_legal: { tipo: String(200), nullable: true }
+    rut_representante: { tipo: String(12), nullable: true }
+    es_unidad_ejecutora: { tipo: Boolean, default: false }
+    es_beneficiario: { tipo: Boolean, default: true }
+    clasificacion_ue:
+      tipo: Enum
+      valores: [A, B, C, D, SIN_CLASIFICAR]
+      default: SIN_CLASIFICAR
+    convenios_ejecutados: { tipo: Integer, default: 0 }
+    monto_historico_ejecutado: { tipo: Decimal(18,0), default: 0 }
+    activo: { tipo: Boolean, default: true }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [rut], tipo: unique }
+    - { campos: [tipo, activo], tipo: btree }
+    - { campos: [territorio_id], tipo: btree }
+    - { campos: [es_unidad_ejecutora, clasificacion_ue], tipo: btree }
+  
+  relaciones:
+    territorio: { tipo: "N:1", entidad: Territorio, fk: "actores.territorio_id" }
+    contactos: { tipo: "1:N", entidad: ContactoActor, fk: "contactos_actor.actor_id" }
+    usuarios: { tipo: "1:N", entidad: Usuario, fk: "usuarios.actor_id" }
+    convenios_ejecutor: { tipo: "1:N", entidad: Convenio, fk: "convenios.unidad_ejecutora_id" }
+    iniciativas_beneficiario: { tipo: "1:N", entidad: Iniciativa, fk: "iniciativas.beneficiario_id" }
+  
+  reglas:
+    - id: RN-ACT-01
+      regla: "RUT debe ser válido (módulo 11)"
+    - id: RN-ACT-02
+      regla: "Si tipo=MUNICIPALIDAD, territorio_id debe ser de tipo COMUNA"
+    - id: RN-ACT-03
+      regla: "Para ser unidad ejecutora, es_unidad_ejecutora debe ser true"
+    - id: RN-ACT-04
+      regla: "clasificacion_ue se recalcula trimestralmente según desempeño"
+    - id: RN-ACT-05
+      regla: "convenios_ejecutados y monto_historico se actualizan al cerrar convenio"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# UNIDAD ORGÁNICA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+UnidadOrganica:
+  _meta:
+    dominio: D-BACK
+    tabla: unidades_organicas
+    descripcion: "División/Departamento/Unidad del GORE (jerárquica)"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    codigo: { tipo: String(20), unique: true, not_null: true }
+    nombre: { tipo: String(200), not_null: true }
+    nombre_corto: { tipo: String(50), nullable: true }
+    sigla: { tipo: String(10), nullable: true }
+    tipo:
+      tipo: Enum
+      valores: [GABINETE, DIVISION, DEPARTAMENTO, UNIDAD, SECCION, OFICINA]
+      not_null: true
+    nivel: { tipo: Integer, not_null: true }
+    parent_id: { tipo: "FK(unidades_organicas.id)", nullable: true }
+    jefe_id: { tipo: "FK(funcionarios.id)", nullable: true }
+    email: { tipo: String(255), nullable: true }
+    telefono: { tipo: String(20), nullable: true }
+    ubicacion: { tipo: String(200), nullable: true }
+    funcion: { tipo: Text, nullable: true }
+    orden: { tipo: Integer, default: 0 }
+    path: { tipo: String(500), nullable: true, descripcion: "Materializado: /abuelo/padre/hijo" }
+    activo: { tipo: Boolean, default: true }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [codigo], tipo: unique }
+    - { campos: [parent_id, orden], tipo: btree }
+    - { campos: [tipo, activo], tipo: btree }
+    - { campos: [path], tipo: btree }
+  
+  relaciones:
+    padre: { tipo: "N:1", entidad: UnidadOrganica, fk: "unidades_organicas.parent_id" }
+    hijos: { tipo: "1:N", entidad: UnidadOrganica, fk: "unidades_organicas.parent_id" }
+    jefe: { tipo: "N:1", entidad: Funcionario, fk: "unidades_organicas.jefe_id" }
+    funcionarios: { tipo: "1:N", entidad: Funcionario, fk: "funcionarios.unidad_id" }
+    okrs: { tipo: "1:N", entidad: OKR, fk: "okrs.unidad_id" }
+  
+  reglas:
+    - id: RN-UNI-01
+      regla: "No puede ser padre de sí misma"
+    - id: RN-UNI-02
+      regla: "nivel se calcula: parent=null→1, sino parent.nivel+1"
+    - id: RN-UNI-03
+      regla: "GABINETE y DIVISION no tienen parent (nivel=1)"
+    - id: RN-UNI-04
+      regla: "path se actualiza automáticamente al cambiar parent"
+    - id: RN-UNI-05
+      regla: "Solo un jefe activo por unidad"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# TERRITORIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Territorio:
+  _meta:
+    dominio: D-TERR
+    tabla: territorios
+    descripcion: "División territorial (Región→Provincia→Comuna→Localidad)"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    codigo_cut: { tipo: String(10), unique: true, not_null: true }
+    nombre: { tipo: String(100), not_null: true }
+    nombre_oficial: { tipo: String(200), nullable: true }
+    tipo:
+      tipo: Enum
+      valores: [PAIS, REGION, PROVINCIA, COMUNA, DISTRITO, LOCALIDAD]
+      not_null: true
+    parent_id: { tipo: "FK(territorios.id)", nullable: true }
+    geometria: { tipo: "Geometry(MultiPolygon, 4326)", nullable: true }
+    centroide: { tipo: "Geometry(Point, 4326)", nullable: true }
+    bbox: { tipo: "Geometry(Polygon, 4326)", nullable: true }
+    superficie_km2: { tipo: Decimal(12,2), nullable: true }
+    poblacion: { tipo: Integer, nullable: true }
+    anio_poblacion: { tipo: Integer, nullable: true }
+    densidad: { tipo: Decimal(10,2), nullable: true }
+    es_urbano: { tipo: Boolean, nullable: true }
+    es_capital_regional: { tipo: Boolean, default: false }
+    es_capital_provincial: { tipo: Boolean, default: false }
+    activo: { tipo: Boolean, default: true }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [codigo_cut], tipo: unique }
+    - { campos: [tipo, parent_id], tipo: btree }
+    - { campos: [geometria], tipo: gist }
+    - { campos: [centroide], tipo: gist }
+  
+  relaciones:
+    padre: { tipo: "N:1", entidad: Territorio, fk: "territorios.parent_id" }
+    hijos: { tipo: "1:N", entidad: Territorio, fk: "territorios.parent_id" }
+    actores: { tipo: "1:N", entidad: Actor, fk: "actores.territorio_id" }
+    iniciativas: { tipo: "1:N", entidad: Iniciativa, fk: "iniciativas.territorio_id" }
+    indicadores: { tipo: "1:N", entidad: SerieTemporal, fk: "series_temporales.territorio_id" }
+  
+  reglas:
+    - id: RN-TER-01
+      regla: "codigo_cut debe seguir formato INE"
+    - id: RN-TER-02
+      regla: "Jerarquía: PAIS→REGION→PROVINCIA→COMUNA→DISTRITO→LOCALIDAD"
+    - id: RN-TER-03
+      regla: "densidad = poblacion / superficie_km2"
+    - id: RN-TER-04
+      regla: "Solo una capital regional por región"
+  
+  datos_region_nuble:
+    codigo_cut: "16"
+    nombre: "Ñuble"
+    provincias: ["Diguillín", "Itata", "Punilla"]
+    comunas: 21
+    superficie_km2: 13178.5
+    poblacion_2017: 480609
+    capital: "Chillán"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PERIODO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Periodo:
+  _meta:
+    dominio: D-GESTION
+    tabla: periodos
+    descripcion: "Período temporal para agregación de datos"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    codigo: { tipo: String(20), unique: true, not_null: true }
+    tipo:
+      tipo: Enum
+      valores: [ANUAL, SEMESTRE, TRIMESTRE, MES, SEMANA]
+      not_null: true
+    anio: { tipo: Integer, not_null: true }
+    semestre: { tipo: Integer, nullable: true, check: "IN (1,2)" }
+    trimestre: { tipo: Integer, nullable: true, check: "IN (1,2,3,4)" }
+    mes: { tipo: Integer, nullable: true, check: "BETWEEN 1 AND 12" }
+    semana: { tipo: Integer, nullable: true, check: "BETWEEN 1 AND 53" }
+    fecha_inicio: { tipo: Date, not_null: true }
+    fecha_fin: { tipo: Date, not_null: true }
+    es_actual: { tipo: Boolean, default: false }
+    cerrado: { tipo: Boolean, default: false }
+    fecha_cierre: { tipo: DateTime, nullable: true }
+    cerrado_por: { tipo: "FK(usuarios.id)", nullable: true }
+    created_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [codigo], tipo: unique }
+    - { campos: [tipo, anio], tipo: btree }
+    - { campos: [fecha_inicio, fecha_fin], tipo: btree }
+    - { campos: [es_actual, tipo], tipo: btree }
+  
+  relaciones:
+    presupuestos: { tipo: "1:N", entidad: Presupuesto, fk: "presupuestos.periodo_id" }
+    okrs: { tipo: "1:N", entidad: OKR, fk: "okrs.periodo_id" }
+    mediciones: { tipo: "1:N", entidad: MedicionIndicador, fk: "mediciones_indicador.periodo_id" }
+    snapshots: { tipo: "1:N", entidad: SnapshotHGore, fk: "snapshots_hgore.periodo_id" }
+  
+  reglas:
+    - id: RN-PER-01
+      regla: "fecha_fin debe ser >= fecha_inicio"
+    - id: RN-PER-02
+      regla: "Solo un período puede tener es_actual=true por tipo"
+    - id: RN-PER-03
+      regla: "Período cerrado no acepta nuevas transacciones"
+    - id: RN-PER-04
+      regla: "codigo se genera: ANUAL→'2024', TRIMESTRE→'2024-Q1', MES→'2024-01'"
+  
+  generacion_codigo:
+    ANUAL: "{anio}"
+    SEMESTRE: "{anio}-S{semestre}"
+    TRIMESTRE: "{anio}-Q{trimestre}"
+    MES: "{anio}-{mes:02d}"
+    SEMANA: "{anio}-W{semana:02d}"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENTIDADES AUXILIARES DE MAESTRAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+RolUsuario:
+  _meta:
+    dominio: D-TDE
+    tabla: roles_usuario
+    descripcion: "Asignación de roles a usuarios"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    usuario_id: { tipo: "FK(usuarios.id)", not_null: true }
+    rol_id: { tipo: "FK(roles.id)", not_null: true }
+    ambito:
+      tipo: Enum
+      valores: [GLOBAL, DOMINIO, UNIDAD]
+      default: GLOBAL
+    ambito_id: { tipo: UUID, nullable: true, descripcion: "ID de dominio o unidad" }
+    fecha_desde: { tipo: Date, not_null: true }
+    fecha_hasta: { tipo: Date, nullable: true }
+    activo: { tipo: Boolean, default: true }
+    created_at: { tipo: DateTime, auto: true }
+    created_by: { tipo: "FK(usuarios.id)" }
+  
+  indices:
+    - { campos: [usuario_id, rol_id, ambito, ambito_id], tipo: unique }
+
+Rol:
+  _meta:
+    dominio: D-TDE
+    tabla: roles
+    descripcion: "Definición de roles del sistema"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    codigo: { tipo: String(50), unique: true, not_null: true }
+    nombre: { tipo: String(100), not_null: true }
+    descripcion: { tipo: Text, nullable: true }
+    permisos: { tipo: JSONB, not_null: true }
+    es_sistema: { tipo: Boolean, default: false }
+    activo: { tipo: Boolean, default: true }
+  
+  roles_base:
+    - { codigo: ADMIN_SISTEMA, nombre: "Administrador del Sistema" }
+    - { codigo: ADMIN_DOMINIO, nombre: "Administrador de Dominio" }
+    - { codigo: JEFE_DIVISION, nombre: "Jefe de División" }
+    - { codigo: PROFESIONAL, nombre: "Profesional" }
+    - { codigo: TECNICO, nombre: "Técnico" }
+    - { codigo: CONSULTA, nombre: "Solo Consulta" }
+    - { codigo: EXTERNO_MUNICIPIO, nombre: "Usuario Municipal" }
+    - { codigo: EXTERNO_SERVICIO, nombre: "Usuario Servicio Público" }
+    - { codigo: CIUDADANO, nombre: "Ciudadano" }
+
+ContactoActor:
+  _meta:
+    dominio: D-COORD
+    tabla: contactos_actor
+    descripcion: "Persona de contacto de un actor"
+  
+  atributos:
+    id: { tipo: UUID, pk: true }
+    actor_id: { tipo: "FK(actores.id)", not_null: true }
+    nombre: { tipo: String(200), not_null: true }
+    cargo: { tipo: String(200), nullable: true }
+    email: { tipo: String(255), not_null: true }
+    telefono: { tipo: String(20), nullable: true }
+    celular: { tipo: String(20), nullable: true }
+    es_principal: { tipo: Boolean, default: false }
+    es_tecnico: { tipo: Boolean, default: false }
+    es_financiero: { tipo: Boolean, default: false }
+    activo: { tipo: Boolean, default: true }
+    created_at: { tipo: DateTime, auto: true }
+    updated_at: { tipo: DateTime, auto: true }
+  
+  indices:
+    - { campos: [actor_id, es_principal], tipo: btree }
+    - { campos: [email], tipo: btree }
+  
+  reglas:
+    - id: RN-CON-01
+      regla: "Solo un contacto principal por actor"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN ENTIDADES MAESTRAS
+# ═══════════════════════════════════════════════════════════════════════════════

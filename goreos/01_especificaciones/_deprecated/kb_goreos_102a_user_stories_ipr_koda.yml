@@ -1,0 +1,562 @@
+# GOS-102a: GORE_OS - User Stories Gestión IPR (D-FIN)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:102a:user_stories:ipr"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - User Stories Gestión IPR"
+  Description: "User Stories derivadas del proceso operacional de Intervenciones Públicas Regionales"
+  Domain: GORE_OS
+  Subdomain: D-FIN
+  Created: "2024-12-15"
+  Sources:
+    - urn: "urn:knowledge:gorenuble:gn:gestion-ipr:1.0.0"
+      file: "kb_gn_019_gestion_ipr_koda.yml"
+    - urn: "urn:knowledge:gorenuble:gn:selector-ipr:3.1.0"
+      file: "kb_gn_011_selector_ipr_koda.yml"
+  Tags: [goreos, user-stories, ipr, financiamiento, d_fin]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 1: INGRESO Y ADMISIBILIDAD
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Fase_1:
+  titulo: "Ingreso y Admisibilidad"
+  descripcion: "Recepción, registro y filtrado de postulaciones IPR"
+  source_ref: GN-IPR-FASE1-INGRESO
+
+  US_FIN_001:
+    nombre: "Registro de Postulación IPR"
+    actor: "Unidad Formuladora (externa)"
+    accion: "postular una IPR mediante oficio conductor firmado y antecedentes completos"
+    beneficio: "mi iniciativa ingrese formalmente al sistema de gestión del GORE"
+    acceptance_criteria:
+      - "Oficio firmado por máxima autoridad de entidad postulante"
+      - "Antecedentes cargados según guía del mecanismo"
+      - "Número de ingreso único asignado (SGDOC)"
+      - "Derivación automática a DIPIR"
+    priority: ALTA
+    source_ref: GN-IPR-F1-RECEPCION-REGISTRO
+
+  US_FIN_002:
+    nombre: "Recepción Documental"
+    actor: "Oficina de Partes GORE"
+    accion: "registrar y derivar postulaciones IPR a DIPIR"
+    beneficio: "exista trazabilidad documental desde el ingreso"
+    acceptance_criteria:
+      - "Asignación de número único de ingreso"
+      - "Registro en sistema de gestión documental"
+      - "Derivación formal a Jefatura DIPIR"
+    priority: ALTA
+    source_ref: GN-IPR-F1-RECEPCION-REGISTRO
+
+  US_FIN_003:
+    nombre: "Registro en Sistema de Seguimiento"
+    actor: "Jefatura DIPIR"
+    accion: "registrar datos básicos de la IPR en el sistema de seguimiento"
+    beneficio: "la postulación quede disponible para el CDR"
+    acceptance_criteria:
+      - "Datos básicos registrados (nombre, monto, tipo, ejecutor)"
+      - "Estado inicial asignado: PRE-ADMISIBLE CDR"
+      - "IPR visible para convocatoria CDR"
+    priority: ALTA
+    source_ref: GN-IPR-F1-RECEPCION-REGISTRO
+
+  US_FIN_004:
+    nombre: "Convocatoria CDR"
+    actor: "Jefatura DIPLADE"
+    accion: "convocar sesión del CDR con listado de postulaciones ingresadas"
+    beneficio: "se evalúe la pertinencia estratégica de cada IPR"
+    acceptance_criteria:
+      - "Listado de IPR pendientes de evaluación CDR"
+      - "Convocatoria emitida con fecha/hora"
+      - "Cartera de IPR adjunta"
+    priority: MEDIA
+    source_ref: GN-IPR-F1-PERTINENCIA-CDR
+
+  US_FIN_005:
+    nombre: "Análisis de Pertinencia CDR"
+    actor: "Comité Directivo Regional (CDR)"
+    accion: "analizar coherencia de cada IPR con ERD y prioridades GORE"
+    beneficio: "solo avancen las IPR estratégicamente pertinentes"
+    acceptance_criteria:
+      - "Acta de sesión generada automáticamente"
+      - "Estado asignado: PRE-ADMISIBLE CDR o NO PRE-ADMISIBLE CDR"
+      - "Observaciones registradas por IPR"
+    priority: ALTA
+    source_ref: GN-IPR-F1-PERTINENCIA-CDR
+
+  US_FIN_006:
+    nombre: "Priorización para Revisión Técnica"
+    actor: "Jefatura DIPIR"
+    accion: "evaluar marco presupuestario y priorizar IPR pre-admisibles"
+    beneficio: "se inicie revisión técnica de las más relevantes"
+    acceptance_criteria:
+      - "Verificación de disponibilidad presupuestaria"
+      - "Estado: PARA REVISIÓN TÉCNICA o EN CARTERA PRE-ADMISIBLE"
+      - "Asignación a analista competente"
+    priority: MEDIA
+    source_ref: GN-IPR-F1-PERTINENCIA-CDR
+
+  US_FIN_007:
+    nombre: "Revisión de Admisibilidad Formal"
+    actor: "Analista de Preinversión (DIPIR)"
+    accion: "verificar requisitos documentales según guía operativa"
+    beneficio: "solo pasen a evaluación técnica las IPR completas"
+    acceptance_criteria:
+      - "Checklist de requisitos por mecanismo"
+      - "Estado: ADMISIBLE, ADMISIBLE CON OBSERVACIONES, o INADMISIBLE"
+      - "Verificación de Carpeta Digital BIP (cuando aplique)"
+    priority: ALTA
+    source_ref: GN-IPR-F1-ADMISIBILIDAD-FORMAL
+
+  US_FIN_008:
+    nombre: "Subsanación de Observaciones"
+    actor: "Unidad Formuladora"
+    accion: "corregir antecedentes observados dentro del plazo"
+    beneficio: "mi IPR no sea declarada inadmisible"
+    acceptance_criteria:
+      - "Notificación de observaciones con plazo"
+      - "Tracking de subsanaciones"
+      - "Alerta de vencimiento de plazo"
+    priority: MEDIA
+    source_ref: GN-IPR-F1-ADMISIBILIDAD-FORMAL
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 2: EVALUACIÓN TÉCNICA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Fase_2:
+  titulo: "Evaluación Técnica"
+  descripcion: "Análisis técnico-económico según track (SNI, PPR, Especiales)"
+  source_ref: GN-IPR-FASE2-EVAL
+
+  US_FIN_009:
+    nombre: "Evaluación Track SNI"
+    actor: "Analista GORE (DIPIR)"
+    accion: "revisar cumplimiento de RIS y metodologías SNI"
+    beneficio: "la IDI esté lista para envío a MDSF"
+    acceptance_criteria:
+      - "Acta de Admisibilidad interna GORE"
+      - "Estado: ADMISIBLE PARA ENVÍO A MDSF"
+      - "Calidad de estudios preinversionales verificada"
+    priority: ALTA
+    source_ref: GN-IPR-F2-TRACK-A-SNI
+
+  US_FIN_010:
+    nombre: "Solicitud Evaluación MDSF"
+    actor: "Jefatura DIPIR"
+    accion: "enviar oficio a SEREMI MDSF solicitando evaluación ex ante"
+    beneficio: "la IDI obtenga RATE (RS/FI/OT)"
+    acceptance_criteria:
+      - "Oficio despachado con V°B° Gobernador/a"
+      - "Registro Informar Postulación en BIP"
+      - "Estado: ENVIADO A MDSF"
+    priority: ALTA
+    source_ref: GN-IPR-F2-TRACK-A-SNI
+
+  US_FIN_011:
+    nombre: "Monitoreo Resultado MDSF"
+    actor: "Jefatura de Preinversión (DIPIR)"
+    accion: "monitorear BIP para obtener resultado de MDSF"
+    beneficio: "pueda informar cartera RS al Gobernador/a"
+    acceptance_criteria:
+      - "Alerta automática al recibir RATE"
+      - "Estado actualizado: APROBADO TÉCNICAMENTE (RS) o pendiente subsanación"
+      - "Cartera RS disponible para priorización"
+    priority: ALTA
+    source_ref: GN-IPR-F2-TRACK-A-SNI
+
+  US_FIN_012:
+    nombre: "Evaluación Track PPR (Glosa 06)"
+    actor: "División Proponente GORE"
+    accion: "elaborar Formulario de Perfil de Programa Público"
+    beneficio: "DIPRES/SES evalúe pertinencia del programa"
+    acceptance_criteria:
+      - "Formulario de Perfil enviado"
+      - "Contraparte única definida"
+      - "Respuesta DIPRES/SES registrada"
+    priority: MEDIA
+    source_ref: GN-IPR-F2-TRACK-B-PPR
+
+  US_FIN_013:
+    nombre: "Diseño de Programa PPR"
+    actor: "División Proponente GORE"
+    accion: "elaborar Formulario de Diseño con Marco Lógico"
+    beneficio: "el programa obtenga Recomendación Favorable (RF)"
+    acceptance_criteria:
+      - "Diseño elaborado según MML"
+      - "Iteración de observaciones registrada"
+      - "Estado: APROBADO TÉCNICAMENTE (RF)"
+    priority: MEDIA
+    source_ref: GN-IPR-F2-TRACK-B-PPR
+
+  US_FIN_014:
+    nombre: "Vía Simplificada <5.000 UTM"
+    actor: "DIPIR GORE"
+    accion: "evaluar proyectos menores a 5.000 UTM internamente"
+    beneficio: "se agilice aprobación sin RS de MDSF"
+    acceptance_criteria:
+      - "Verificación de descriptor Proyecto menor a 5.000 UTM"
+      - "Sin causales de exclusión (fraccionamiento, EIA/CMN)"
+      - "Estado: APROBADO TÉCNICAMENTE (Exento RS)"
+    priority: MEDIA
+    source_ref: GN-IPR-F2-C-5000UTM
+
+  US_FIN_015:
+    nombre: "Evaluación Conservación"
+    actor: "Analista GORE (DIPIR)"
+    accion: "revisar coherencia de IDI de conservación con instructivo"
+    beneficio: "obtenga estado AD de MDSF"
+    acceptance_criteria:
+      - "Costo ≤30% del costo de reposición"
+      - "Estado: APROBADO TÉCNICAMENTE (AD)"
+    priority: BAJA
+    source_ref: GN-IPR-F2-C-CONSERVACION
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 3: FINANCIAMIENTO Y APROBACIÓN PRESUPUESTARIA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Fase_3:
+  titulo: "Financiamiento y Aprobación Presupuestaria"
+  descripcion: "Gestión de asignación de recursos y aprobación CORE"
+  source_ref: GN-IPR-FASE3-FINANC
+
+  US_FIN_016:
+    nombre: "Solicitud de CDP"
+    actor: "Jefatura DIPIR"
+    accion: "solicitar CDP al Depto. Presupuesto"
+    beneficio: "se acredite disponibilidad de fondos"
+    acceptance_criteria:
+      - "Solicitud formal enviada"
+      - "CDP emitido con monto y línea presupuestaria"
+      - "Estado: ENVIADO A FINANCIAMIENTO"
+    priority: ALTA
+    source_ref: GN-IPR-F3-SIN-CORE
+
+  US_FIN_017:
+    nombre: "Preparación Cartera CORE"
+    actor: "Jefatura de Preinversión (DIPIR)"
+    accion: "elaborar carpeta CORE con oficios, fichas y antecedentes"
+    beneficio: "la cartera esté lista para presentación"
+    acceptance_criteria:
+      - "Carpeta CORE completa"
+      - "Estado: CARTERA DISPONIBLE PARA ENVÍO A CORE"
+    priority: ALTA
+    source_ref: GN-IPR-F3-CON-CORE
+
+  US_FIN_018:
+    nombre: "Envío a CORE"
+    actor: "Jefatura DIPIR / Gobernador/a"
+    accion: "presentar cartera al CORE con V°B° del Gobernador/a"
+    beneficio: "el CORE vote aprobación de financiamiento"
+    acceptance_criteria:
+      - "Oficio firmado por Gobernador/a"
+      - "Estado: CARTERA ENVIADA A CORE"
+      - "Tracking de presentación"
+    priority: ALTA
+    source_ref: GN-IPR-F3-CON-CORE
+
+  US_FIN_019:
+    nombre: "Votación CORE"
+    actor: "CORE"
+    accion: "analizar y votar aprobación/rechazo de financiamiento"
+    beneficio: "las IPR reciban asignación presupuestaria"
+    acceptance_criteria:
+      - "Resultado de votación registrado"
+      - "Estado: IPR APROBADAS o IPR RECHAZADAS"
+      - "Certificado de Acuerdo CORE emitido"
+    priority: CRÍTICA
+    source_ref: GN-IPR-F3-CON-CORE
+
+  US_FIN_020:
+    nombre: "Comunicación Resultado CORE"
+    actor: "Secretario/a Ejecutivo CORE"
+    accion: "emitir Certificado de Acuerdo CORE"
+    beneficio: "se habilite la creación de asignación presupuestaria"
+    acceptance_criteria:
+      - "Certificado en formato Anexo 1 Of. Circ. N°11 DIPRES"
+      - "Estado: CERTIFICADO CORE OK"
+    priority: ALTA
+    source_ref: GN-IPR-F3-CON-CORE
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 4: GESTIÓN PRESUPUESTARIA Y FORMALIZACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Fase_4:
+  titulo: "Gestión Presupuestaria y Formalización"
+  descripcion: "Tramitación de actos administrativos y convenios"
+  source_ref: GN-IPR-FASE4-GESTION-PPT
+
+  US_FIN_021:
+    nombre: "Tramitación Resolución/Decreto"
+    actor: "Profesional Depto. Presupuesto"
+    accion: "elaborar borrador de Resolución o solicitud de Decreto"
+    beneficio: "la modificación presupuestaria quede formalizada"
+    acceptance_criteria:
+      - "V°B° internos (Jurídico, Presupuesto, DIPIR, Adm. Regional)"
+      - "Firma del Gobernador/a"
+      - "Estado: RESOLUCIÓN/DECRETO CON TOMA DE RAZÓN"
+    priority: ALTA
+    source_ref: GN-IPR-F4-ACTOS-ADMIN
+
+  US_FIN_022:
+    nombre: "Elaboración de Convenio"
+    actor: "Profesional Depto. Presupuesto"
+    accion: "elaborar Convenio de Transferencia"
+    beneficio: "se formalice la relación GORE-Receptor"
+    acceptance_criteria:
+      - "Contenido mínimo: partes, objeto, monto, plazos, rendición"
+      - "V°B° internos (DIPIR, Jurídico, UT Receptora)"
+      - "Estado: CONVENIO FIRMADO"
+    priority: ALTA
+    source_ref: GN-IPR-F4-CONVENIO
+
+  US_FIN_023:
+    nombre: "Formalización y Devengo"
+    actor: "Profesional Depto. Presupuesto"
+    accion: "tramitar resolución que aprueba convenio"
+    beneficio: "la obligación sea exigible y se programe transferencia"
+    acceptance_criteria:
+      - "Resolución de aprobación firmada"
+      - "Toma de Razón CGR (si monto >5.000 UTM)"
+      - "Estado: CONVENIO FORMALIZADO (TRAMITADO)"
+      - "Transferencia programada según regla de devengo"
+    priority: ALTA
+    source_ref: GN-IPR-F4-FORMALIZACION-DEVENGO
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 5: EJECUCIÓN Y SEGUIMIENTO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Fase_5:
+  titulo: "Ejecución y Seguimiento"
+  descripcion: "Monitoreo de desarrollo de IPR"
+  source_ref: GN-IPR-FASE5-EJECUCION
+
+  US_FIN_024:
+    nombre: "Inicio de Proyecto"
+    actor: "División Patrocinante / Depto. Inversiones"
+    accion: "verificar documentación técnica aprobada antes del inicio"
+    beneficio: "la ejecución comience con antecedentes conformes"
+    acceptance_criteria:
+      - "Revisión de EE.TT., planos, etc."
+      - "Acta de reunión GORE-UT"
+      - "Carpeta de seguimiento creada"
+    priority: MEDIA
+    source_ref: GN-IPR-F5-INICIO-COORDINACION
+
+  US_FIN_025:
+    nombre: "Licitación y Adjudicación"
+    actor: "Unidad Técnica Receptora"
+    accion: "gestionar licitación en Mercado Público"
+    beneficio: "se contrate la ejecución del proyecto"
+    acceptance_criteria:
+      - "Bases publicadas en Mercado Público"
+      - "Licitación adjudicada"
+      - "Contrato firmado"
+    priority: MEDIA
+    source_ref: GN-IPR-F5-LICITACION
+
+  US_FIN_026:
+    nombre: "Seguimiento Técnico"
+    actor: "Supervisor/a del Proyecto (GORE)"
+    accion: "realizar visitas a terreno y revisar informes de avance"
+    beneficio: "se monitoree el cumplimiento técnico"
+    acceptance_criteria:
+      - "Informes de visita y supervisión generados"
+      - "% avance físico actualizado en BIP"
+      - "Estados de Pago gestionados"
+    priority: MEDIA
+    source_ref: GN-IPR-F5-SEGUIMIENTO
+
+  US_FIN_027:
+    nombre: "Seguimiento Financiero"
+    actor: "Analista Financiero (DAF/DIPIR)"
+    accion: "monitorear ejecución en SIGFE y rendiciones en SISREC"
+    beneficio: "se detecten desviaciones presupuestarias"
+    acceptance_criteria:
+      - "Informes de ejecución financiera"
+      - "Alertas de sub-ejecución"
+      - "Rendiciones parciales revisadas"
+    priority: MEDIA
+    source_ref: GN-IPR-F5-SEGUIMIENTO
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 6: GESTIÓN DE MODIFICACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Fase_6:
+  titulo: "Gestión de Modificaciones"
+  descripcion: "Cambios durante ejecución"
+  source_ref: GN-IPR-FASE6-MODIFICACIONES
+
+  US_FIN_028:
+    nombre: "Solicitud de Modificación"
+    actor: "Unidad Técnica Receptora"
+    accion: "solicitar modificación (sobrecosto, obra adicional)"
+    beneficio: "se evalúe y apruebe el cambio necesario"
+    acceptance_criteria:
+      - "Informe técnico-financiero de justificación"
+      - "Oficio formal al Gobernador/a"
+      - "Estado: SOLICITUD DE MODIFICACIÓN"
+    priority: MEDIA
+    source_ref: GN-IPR-F6-SOLICITUD
+
+  US_FIN_029:
+    nombre: "Evaluación de Modificación"
+    actor: "Supervisor/a GORE / Analista DIPIR"
+    accion: "analizar pertinencia y justificación de modificación"
+    beneficio: "se determine si procede aprobarla"
+    acceptance_criteria:
+      - "Informe técnico GORE sobre modificación"
+      - "Verificación de umbrales (nuevo CORE/SNI)"
+      - "Decisión formal: aprobada/rechazada"
+    priority: MEDIA
+    source_ref: GN-IPR-F6-REEVALUACION
+
+  US_FIN_030:
+    nombre: "Tramitación de Modificación"
+    actor: "DAF / Depto. Presupuesto"
+    accion: "tramitar modificación presupuestaria y convenio"
+    beneficio: "los fondos adicionales estén disponibles"
+    acceptance_criteria:
+      - "Resolución/Decreto de modificación"
+      - "Convenio modificado y tramitado"
+    priority: MEDIA
+    source_ref: GN-IPR-F6-TRAMITACION
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 7: CIERRE Y EVALUACIÓN EX-POST
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Fase_7:
+  titulo: "Cierre y Evaluación Ex-Post"
+  descripcion: "Formalización de finalización y lecciones aprendidas"
+  source_ref: GN-IPR-FASE7-CIERRE
+
+  US_FIN_031:
+    nombre: "Recepción de Obras"
+    actor: "Unidad Técnica Receptora"
+    accion: "realizar recepción provisoria y definitiva"
+    beneficio: "las obras queden formalmente entregadas"
+    acceptance_criteria:
+      - "Acta de Recepción Provisoria"
+      - "Acta de Recepción Definitiva (post garantía)"
+    priority: MEDIA
+    source_ref: GN-IPR-F7-CIERRE-TECNICO
+
+  US_FIN_032:
+    nombre: "Informe Final de Ejecución"
+    actor: "Unidad Técnica / Supervisor GORE"
+    accion: "elaborar y validar informe final de ejecución"
+    beneficio: "se documente productos, metas y resultados"
+    acceptance_criteria:
+      - "Informe final técnico aprobado"
+      - "Validación por Supervisor GORE"
+    priority: MEDIA
+    source_ref: GN-IPR-F7-CIERRE-TECNICO
+
+  US_FIN_033:
+    nombre: "Rendición Final de Cuentas"
+    actor: "Unidad Técnica Receptora"
+    accion: "presentar rendición final en SISREC CGR"
+    beneficio: "se cierre el convenio sin saldos por rendir"
+    acceptance_criteria:
+      - "Rendición final presentada en SISREC"
+      - "Sin saldos pendientes"
+      - "Revisión DAF conforme"
+    priority: ALTA
+    source_ref: GN-IPR-F7-CIERRE-FINANCIERO
+
+  US_FIN_034:
+    nombre: "Cierre de Convenio"
+    actor: "Profesional Depto. Presupuesto"
+    accion: "elaborar resolución que aprueba rendición y cierra convenio"
+    beneficio: "el convenio quede formalmente cerrado"
+    acceptance_criteria:
+      - "Resolución de Cierre de Convenio"
+      - "Saldos reintegrados (si aplica)"
+      - "Garantías devueltas"
+    priority: ALTA
+    source_ref: GN-IPR-F7-CIERRE-FINANCIERO
+
+  US_FIN_035:
+    nombre: "Evaluación Ex-Post"
+    actor: "GORE / MDSF"
+    accion: "evaluar IPR relevantes comparando con proyecto vs sin proyecto"
+    beneficio: "se generen lecciones aprendidas"
+    acceptance_criteria:
+      - "Muestra de IPR seleccionada"
+      - "Informe de Evaluación Ex-Post"
+      - "Lecciones incorporadas al ciclo de inversión"
+    priority: BAJA
+    source_ref: GN-IPR-F7-EVAL-EXPOST
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SELECTOR DE MECANISMOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Selector:
+  titulo: "Selector de Mecanismos"
+  descripcion: "Asistente para identificar vía de financiamiento adecuada"
+  source_ref: TREE-SELECTOR-IPR
+
+  US_FIN_036:
+    nombre: "Asistente de Selección de Vía"
+    actor: "Formulador/Planificador"
+    accion: "responder preguntas guiadas sobre mi IPR"
+    beneficio: "identifique el mecanismo de financiamiento adecuado"
+    acceptance_criteria:
+      - "Árbol de decisión: Proyecto vs Programa"
+      - "Sub-árbol Proyectos: FRIL, C33, SNI, FRPD"
+      - "Sub-árbol Programas: Glosa 06, Transferencia, Subvención 8%"
+      - "Resultado con referencias a guías operativas"
+    priority: MEDIA
+    source_ref: TREE-SELECTOR-IPR
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN Y ESTADÍSTICAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  total_user_stories: 36
+  por_fase:
+    Fase_1_Ingreso: 8
+    Fase_2_Evaluacion: 7
+    Fase_3_Financiamiento: 5
+    Fase_4_Formalizacion: 3
+    Fase_5_Ejecucion: 4
+    Fase_6_Modificaciones: 3
+    Fase_7_Cierre: 5
+    Selector: 1
+  por_prioridad:
+    CRÍTICA: 1
+    ALTA: 17
+    MEDIA: 15
+    BAJA: 3
+  actores_identificados:
+    - Unidad Formuladora (externa)
+    - Oficina de Partes GORE
+    - Jefatura DIPIR
+    - Jefatura DIPLADE
+    - Comité Directivo Regional (CDR)
+    - Analista de Preinversión (DIPIR)
+    - División Proponente GORE
+    - Gobernador/a
+    - CORE
+    - Secretario/a Ejecutivo CORE
+    - Profesional Depto. Presupuesto
+    - División Patrocinante
+    - Unidad Técnica Receptora
+    - Supervisor/a del Proyecto (GORE)
+    - Analista Financiero (DAF/DIPIR)
+    - MDSF
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN USER STORIES IPR
+# ═══════════════════════════════════════════════════════════════════════════════

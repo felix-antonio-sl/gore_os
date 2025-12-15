@@ -1,0 +1,863 @@
+# yaml-language-server: $schema=../schemas/koda-schema.json
+# KODA: Knowledge-Oriented Document Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
+# GOS-001: GORE_OS - Arquitectura General
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:001:arquitectura_general"
+  Version: "1.0.0"
+  Status: Draft
+  Classification: Reference
+  Stability: Evolving
+
+Metadata:
+  Title: "GORE_OS - Arquitectura General del Sistema"
+  Description: >
+    Especificación de la arquitectura técnica del GORE_OS, incluyendo capas,
+    dominios, componentes, integraciones y stack tecnológico.
+  Domain: GORE_OS
+  Subdomain: Arquitectura
+  Author: "Equipo Transformación Digital GORE Ñuble"
+  Created: "2024-12-14"
+  Updated: "2024-12-14"
+  Ctx: >
+    Arquitectura técnica que materializa la visión GORE_OS en componentes
+    implementables, siguiendo principios de ORKO y cumplimiento TDE.
+  LLM_Parsing_Instructions: >
+    Este documento define la arquitectura técnica del GORE_OS. Úsalo para
+    entender la estructura de capas, dominios y componentes. Referencia para
+    decisiones técnicas y de integración.
+  Tags:
+    - goreos
+    - arquitectura
+    - dominios
+    - integraciones
+    - stack
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 1: ARQUITECTURA DE CAPAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Arquitectura_Capas:
+  Descripcion: >
+    GORE_OS se estructura en 5 capas horizontales que proveen separación de
+    concerns y permiten evolución independiente de cada nivel.
+
+  Diagrama: |
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │                        CAPA 5: EXPERIENCIA (UX)                             │
+    │  Portal Web │ Apps Móviles │ Dashboards │ Chatbots │ APIs Públicas          │
+    ├─────────────────────────────────────────────────────────────────────────────┤
+    │                        CAPA 4: APLICACIÓN (BIZ)                             │
+    │  D-PLAN │ D-FIN │ D-EJEC │ D-COORD │ D-NORM │ D-BACK │ D-GESTION │ D-EVOL  │
+    ├─────────────────────────────────────────────────────────────────────────────┤
+    │                        CAPA 3: SERVICIOS (API)                              │
+    │  API Gateway │ Orquestación │ Eventos │ Workflows │ Notificaciones          │
+    ├─────────────────────────────────────────────────────────────────────────────┤
+    │                        CAPA 2: DATOS (DATA)                                 │
+    │  Lakehouse │ Cache │ Search │ Vectores │ Archivos │ Expediente              │
+    ├─────────────────────────────────────────────────────────────────────────────┤
+    │                        CAPA 1: PLATAFORMA (INFRA)                           │
+    │  Compute │ Storage │ Network │ Security │ Observability │ CI/CD            │
+    └─────────────────────────────────────────────────────────────────────────────┘
+
+  Capas:
+    L1_Plataforma:
+      Nombre: "Capa de Plataforma (Infrastructure)"
+      Proposito: "Fundamentos de infraestructura y operaciones"
+      Componentes:
+        Compute:
+          Descripcion: "Capacidad de cómputo"
+          Opciones: ["Kubernetes", "Serverless", "VMs"]
+
+        Storage:
+          Descripcion: "Almacenamiento persistente"
+          Tipos: ["Object Storage", "Block Storage", "File Storage"]
+
+        Network:
+          Descripcion: "Conectividad y seguridad de red"
+          Componentes: ["VPC", "Load Balancer", "WAF", "CDN"]
+
+        Security:
+          Descripcion: "Seguridad de infraestructura"
+          Componentes: ["IAM", "Secrets Management", "Encryption"]
+
+        Observability:
+          Descripcion: "Monitoreo y observabilidad"
+          Componentes: ["Logs", "Metrics", "Traces", "Alerting"]
+
+        CI_CD:
+          Descripcion: "Integración y despliegue continuo"
+          Componentes: ["Pipeline", "Registry", "GitOps"]
+
+    L2_Datos:
+      Nombre: "Capa de Datos (Data Layer)"
+      Proposito: "Gestión unificada de datos como activo estratégico"
+      Componentes:
+        Lakehouse:
+          Descripcion: "Arquitectura unificada de datos"
+          Capas:
+            Bronze: "Datos crudos de fuentes"
+            Silver: "Datos limpios y conformados"
+            Gold: "Agregados y métricas"
+            Semantic: "Embeddings y conocimiento"
+          Tecnologias: ["Delta Lake", "Apache Iceberg", "DuckDB"]
+
+        Cache:
+          Descripcion: "Caché distribuido"
+          Usos: ["Sesiones", "Datos frecuentes", "Rate limiting"]
+          Tecnologias: ["Redis", "Valkey"]
+
+        Search:
+          Descripcion: "Motor de búsqueda"
+          Usos: ["Full-text search", "Faceted search"]
+          Tecnologias: ["Elasticsearch", "Meilisearch", "Typesense"]
+
+        Vectores:
+          Descripcion: "Base de datos vectorial para RAG"
+          Usos: ["Embeddings", "Semantic search", "RAG"]
+          Tecnologias: ["pgvector", "Qdrant", "Pinecone"]
+
+        Archivos:
+          Descripcion: "Gestión de documentos y archivos"
+          Cumplimiento: "DS 10 - Documentos electrónicos"
+          Componentes: ["Almacenamiento", "Versionamiento", "Metadatos"]
+
+        Expediente:
+          Descripcion: "Expediente electrónico administrativo"
+          Cumplimiento: "DS 10 - Expediente electrónico"
+          Atributos: ["IUIe", "Trazabilidad", "Firma", "Foliado"]
+
+    L3_Servicios:
+      Nombre: "Capa de Servicios (Service Layer)"
+      Proposito: "Orquestación, integración y servicios transversales"
+      Componentes:
+        API_Gateway:
+          Descripcion: "Punto de entrada único para APIs"
+          Funciones: ["Routing", "Auth", "Rate Limiting", "Throttling"]
+          Tecnologias: ["Kong", "Traefik", "AWS API Gateway"]
+
+        Orquestacion:
+          Descripcion: "Orquestación de servicios y sagas"
+          Usos: ["Transacciones distribuidas", "Compensaciones"]
+          Tecnologias: ["Temporal", "Camunda", "AWS Step Functions"]
+
+        Eventos:
+          Descripcion: "Bus de eventos y mensajería"
+          Patrones: ["Event Sourcing", "CQRS", "Pub/Sub"]
+          Tecnologias: ["Apache Kafka", "RabbitMQ", "NATS"]
+
+        Workflows:
+          Descripcion: "Motor de workflows de negocio"
+          Usos: ["Aprobaciones", "Procesos BPM", "Automatizaciones"]
+          Tecnologias: ["Camunda", "n8n", "Temporal"]
+
+        Notificaciones:
+          Descripcion: "Servicio de notificaciones multicanal"
+          Canales: ["Email", "SMS", "Push", "In-app", "Webhook"]
+          Integracion: "Notificador Estado (cuando disponible)"
+
+    L4_Aplicacion:
+      Nombre: "Capa de Aplicación (Business Layer)"
+      Proposito: "Lógica de negocio organizada en dominios"
+      Estructura: "10 dominios con módulos internos"
+      Patron: "Domain-Driven Design (DDD)"
+      Comunicacion:
+        Interna: "Eventos de dominio, APIs internas"
+        Externa: "API Gateway, Webhooks"
+
+    L5_Experiencia:
+      Nombre: "Capa de Experiencia (Experience Layer)"
+      Proposito: "Interfaces de usuario y APIs públicas"
+      Componentes:
+        Portal_Web:
+          Descripcion: "Aplicación web principal"
+          Usuarios: ["Funcionarios", "Municipios", "Ciudadanos"]
+          Tecnologias: ["React", "Next.js", "Vue"]
+
+        Apps_Moviles:
+          Descripcion: "Aplicaciones móviles (futuro)"
+          Usuarios: ["Supervisores terreno", "Ejecutores"]
+          Tecnologias: ["React Native", "Flutter"]
+
+        Dashboards:
+          Descripcion: "Tableros de control y BI"
+          Usuarios: ["Directivos", "Analistas"]
+          Tecnologias: ["Apache Superset", "Metabase", "Custom"]
+
+        Chatbots:
+          Descripcion: "Agentes conversacionales"
+          Usuarios: ["Todos los usuarios"]
+          Tecnologias: ["LangChain", "Custom agents"]
+
+        APIs_Publicas:
+          Descripcion: "APIs para terceros"
+          Consumidores: ["Municipios", "Servicios", "Apps externas"]
+          Estandar: "OpenAPI 3.x"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 2: ARQUITECTURA DE DOMINIOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Arquitectura_Dominios:
+  Descripcion: >
+    GORE_OS se organiza en 10 dominios de negocio, cada uno con responsabilidades
+    claras, límites definidos y contratos de integración explícitos.
+
+  Diagrama: |
+    ┌─────────────────────────────────────────────────────────────────────────────────────┐
+    │                      GORE_OS - ARQUITECTURA DE DOMINIOS                             │
+    ├─────────────────────────────────────────────────────────────────────────────────────┤
+    │                                                                                     │
+    │  ╔═══════════════════════════════════════════════════════════════════════════════╗ │
+    │  ║ D-EVOL: EVOLUCIÓN (Digitalización → Automatización → Inteligenciación)        ║ │
+    │  ╚═══════════════════════════════════════════════════════════════════════════════╝ │
+    │                                      ▲                                              │
+    │  ╔═══════════════════════════════════════════════════════════════════════════════╗ │
+    │  ║ D-GESTION: GESTIÓN INSTITUCIONAL (H_gore, OKRs, Playbooks, Mejora)            ║ │
+    │  ╚═══════════════════════════════════════════════════════════════════════════════╝ │
+    │                                      ▲                                              │
+    │  ╔═══════════════════════════════════════════════════════════════════════════════╗ │
+    │  ║ DOMINIOS FUNCIONALES                                                          ║ │
+    │  ║ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐                   ║ │
+    │  ║ │ D-PLAN  │ │ D-FIN   │ │ D-EJEC  │ │ D-COORD │ │ D-NORM  │                   ║ │
+    │  ║ │Planific.│ │Financ.  │ │Ejecución│ │Coordinac│ │Normativo│                   ║ │
+    │  ║ └─────────┘ └─────────┘ └─────────┘ └─────────┘ └─────────┘                   ║ │
+    │  ╚═══════════════════════════════════════════════════════════════════════════════╝ │
+    │                                      ▲                                              │
+    │  ╔═══════════════════════════════════════════════════════════════════════════════╗ │
+    │  ║ DOMINIOS HABILITANTES                                                         ║ │
+    │  ║ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐                         ║ │
+    │  ║ │ D-BACK        │ │ D-TDE         │ │ D-TERR        │                         ║ │
+    │  ║ │ Back-Office   │ │ Cumplimiento  │ │ Territorio    │                         ║ │
+    │  ║ └───────────────┘ └───────────────┘ └───────────────┘                         ║ │
+    │  ╚═══════════════════════════════════════════════════════════════════════════════╝ │
+    │                                                                                     │
+    └─────────────────────────────────────────────────────────────────────────────────────┘
+
+  Dominios:
+    D_PLAN:
+      ID: "D-PLAN"
+      Nombre: "Planificación"
+      Tipo: "Funcional"
+      Funcion_GORE: "Planificar"
+      Responsabilidad: >
+        Gestión del ciclo de planificación regional: ERD, PROT, políticas,
+        convenios de programación, inteligencia territorial.
+      Modulos:
+        - id: "PLAN-001"
+          nombre: "ERD Digital"
+          descripcion: "Gestión de Estrategia Regional de Desarrollo"
+        - id: "PLAN-002"
+          nombre: "PROT Digital"
+          descripcion: "Plan Regional de Ordenamiento Territorial"
+        - id: "PLAN-003"
+          nombre: "ARI y Convenios de Programación"
+          descripcion: "Agenda Regional de Inversiones"
+        - id: "PLAN-004"
+          nombre: "Inteligencia Territorial"
+          descripcion: "Observatorio y prospectiva regional"
+      Entidades_Core:
+        - "ERD"
+        - "Objetivo_Estrategico"
+        - "Lineamiento"
+        - "Politica_Regional"
+        - "PROT"
+        - "Zonificacion"
+        - "Convenio_Programacion"
+      Integraciones:
+        Consume: ["D-TERR.Indicadores", "D-FIN.Cartera"]
+        Expone: ["ERD.Objetivos", "PROT.Zonificacion"]
+
+    D_FIN:
+      ID: "D-FIN"
+      Nombre: "Financiamiento"
+      Tipo: "Funcional"
+      Funcion_GORE: "Financiar"
+      Responsabilidad: >
+        Gestión del portafolio de inversión pública regional, instrumentos
+        de financiamiento, presupuesto y ciclo de priorización.
+      Modulos:
+        - id: "FIN-001"
+          nombre: "Portafolio IPR"
+          descripcion: "Cartera de iniciativas de inversión"
+        - id: "FIN-002"
+          nombre: "Selector de Instrumentos"
+          descripcion: "Elegibilidad y matching de fondos"
+        - id: "FIN-003"
+          nombre: "Presupuesto Regional"
+          descripcion: "Ciclo presupuestario y ejecución"
+        - id: "FIN-004"
+          nombre: "Rendiciones"
+          descripcion: "Control de rendiciones y mora"
+      Entidades_Core:
+        - "Iniciativa"
+        - "Instrumento_Financiamiento"
+        - "Solicitud_Financiamiento"
+        - "Asignacion_Presupuestaria"
+        - "Item_Presupuestario"
+        - "Rendicion"
+        - "Movimiento_Rendicion"
+      Integraciones:
+        Consume: ["BIP/SNI", "SIGFE", "D-PLAN.ERD"]
+        Expone: ["Cartera.Estado", "Presupuesto.Ejecucion"]
+
+    D_EJEC:
+      ID: "D-EJEC"
+      Nombre: "Ejecución"
+      Tipo: "Funcional"
+      Funcion_GORE: "Ejecutar"
+      Responsabilidad: >
+        Gestión de convenios de transferencia, supervisión de ejecución,
+        torre de control PMO, programas de ejecución directa.
+      Modulos:
+        - id: "EJEC-001"
+          nombre: "Convenios"
+          descripcion: "Ciclo de vida de convenios"
+        - id: "EJEC-002"
+          nombre: "PMO Regional"
+          descripcion: "Torre de control de proyectos"
+        - id: "EJEC-003"
+          nombre: "Programas Directos"
+          descripcion: "Ejecución directa GORE"
+      Entidades_Core:
+        - "Convenio"
+        - "Tipo_Convenio"
+        - "Hito_Convenio"
+        - "Addendum"
+        - "Proyecto_PMO"
+        - "Alerta_Proyecto"
+        - "Programa_Directo"
+      Integraciones:
+        Consume: ["D-FIN.Iniciativas", "SISREC", "ChileCompra"]
+        Expone: ["Convenios.Estado", "PMO.Semaforos"]
+
+    D_COORD:
+      ID: "D-COORD"
+      Nombre: "Coordinación"
+      Tipo: "Funcional"
+      Funcion_GORE: "Coordinar"
+      Responsabilidad: >
+        Articulación con actores regionales, tablero de indicadores
+        compartido, gobernanza CPAT regional, gabinete virtual.
+      Modulos:
+        - id: "COORD-001"
+          nombre: "Mapa de Actores"
+          descripcion: "Directorio de actores regionales"
+        - id: "COORD-002"
+          nombre: "Tablero Regional"
+          descripcion: "Indicadores compartidos"
+        - id: "COORD-003"
+          nombre: "CPAT Regional"
+          descripcion: "Catálogo de trámites regional"
+        - id: "COORD-004"
+          nombre: "Gabinete Virtual"
+          descripcion: "Coordinación intersectorial"
+      Entidades_Core:
+        - "Actor"
+        - "Tipo_Actor"
+        - "Contacto_Actor"
+        - "Compromiso_Interinstitucional"
+        - "Indicador_Regional"
+        - "Tramite_CPAT"
+        - "Sesion_Gabinete"
+        - "Acuerdo_Gabinete"
+      Integraciones:
+        Consume: ["SINIM", "CPAT_Nacional", "D-TERR"]
+        Expone: ["Actores.Directorio", "Indicadores.Dashboard"]
+
+    D_NORM:
+      ID: "D-NORM"
+      Nombre: "Normativo"
+      Tipo: "Funcional"
+      Funcion_GORE: "Normar"
+      Responsabilidad: >
+        Gestión de potestad normativa regional: reglamentos, resoluciones,
+        biblioteca normativa, proceso de consulta.
+      Modulos:
+        - id: "NORM-001"
+          nombre: "Reglamentos Regionales"
+          descripcion: "Ciclo normativo regional"
+        - id: "NORM-002"
+          nombre: "Biblioteca Normativa"
+          descripcion: "Repositorio de normativa aplicable"
+      Entidades_Core:
+        - "Reglamento_Regional"
+        - "Proceso_Normativo"
+        - "Consulta_Publica"
+        - "Observacion"
+        - "Documento_Normativo"
+      Integraciones:
+        Consume: ["BCN", "CGR"]
+        Expone: ["Biblioteca.Documentos", "Reglamentos.Vigentes"]
+
+    D_BACK:
+      ID: "D-BACK"
+      Nombre: "Back-Office"
+      Tipo: "Habilitante"
+      Responsabilidad: >
+        Servicios de soporte institucional: finanzas, RRHH, abastecimiento,
+        gestión documental, mesa de ayuda.
+      Modulos:
+        - id: "BACK-001"
+          nombre: "Finanzas"
+          descripcion: "Contabilidad, tesorería, control"
+        - id: "BACK-002"
+          nombre: "Abastecimiento"
+          descripcion: "Compras, inventarios, activo fijo"
+        - id: "BACK-003"
+          nombre: "RRHH"
+          descripcion: "Dotación, remuneraciones"
+        - id: "BACK-004"
+          nombre: "Gestión Documental"
+          descripcion: "Oficina partes, archivo"
+      Entidades_Core:
+        - "Documento_Oficial"
+        - "Orden_Compra"
+        - "Factura"
+        - "Funcionario"
+        - "Activo_Fijo"
+      Integraciones:
+        Consume: ["SIGFE", "ChileCompra", "SIGPER"]
+        Expone: ["Documentos.Expediente", "OC.Estado"]
+
+    D_TDE:
+      ID: "D-TDE"
+      Nombre: "Transformación Digital"
+      Tipo: "Habilitante"
+      Responsabilidad: >
+        Cumplimiento normativo TDE: expediente electrónico, autenticación,
+        interoperabilidad, seguridad, protección de datos.
+      Modulos:
+        - id: "TDE-001"
+          nombre: "Expediente Electrónico"
+          descripcion: "Gestión de expedientes DS 10"
+        - id: "TDE-002"
+          nombre: "Autenticación"
+          descripcion: "ClaveÚnica, FirmaGob"
+        - id: "TDE-003"
+          nombre: "Interoperabilidad"
+          descripcion: "Nodo PISEE, servicios"
+        - id: "TDE-004"
+          nombre: "Seguridad"
+          descripcion: "Ciberseguridad DS 7"
+        - id: "TDE-005"
+          nombre: "Protección Datos"
+          descripcion: "Cumplimiento Ley 21.719"
+      Entidades_Core:
+        - "Expediente_Electronico"
+        - "Documento_Expediente"
+        - "Sesion_Usuario"
+        - "Servicio_Interop"
+        - "Registro_Tratamiento_DP"
+      Integraciones:
+        Consume: ["ClaveÚnica", "FirmaGob", "PISEE", "DocDigital"]
+        Expone: ["Auth.Tokens", "Expediente.IUIe"]
+
+    D_TERR:
+      ID: "D-TERR"
+      Nombre: "Territorio"
+      Tipo: "Habilitante"
+      Responsabilidad: >
+        Información territorial: datos geoespaciales, indicadores comunales,
+        capas de análisis, bases de datos de referencia.
+      Modulos:
+        - id: "TERR-001"
+          nombre: "Geoespacial"
+          descripcion: "Capas, zonificación, proyectos"
+        - id: "TERR-002"
+          nombre: "Indicadores Comunales"
+          descripcion: "SINIM, CASEN, sectoriales"
+      Entidades_Core:
+        - "Capa_Geografica"
+        - "Indicador_Comunal"
+        - "Serie_Temporal"
+        - "Zona"
+        - "Localidad"
+      Integraciones:
+        Consume: ["SINIM", "INE", "IDE_Chile", "SNIT"]
+        Expone: ["Capas.GeoJSON", "Indicadores.Series"]
+
+    D_GESTION:
+      ID: "D-GESTION"
+      Nombre: "Gestión Institucional"
+      Tipo: "Transversal"
+      Responsabilidad: >
+        Meta-gestión del GORE: gobernanza estratégica (OKRs, PMG), monitoreo
+        de salud institucional (H_gore), playbooks de remedio, mejora continua.
+      Modulos:
+        - id: "GEST-001"
+          nombre: "Gobernanza Estratégica"
+          descripcion: "OKRs, PMG, compromisos, comités"
+        - id: "GEST-002"
+          nombre: "Monitoreo H_gore"
+          descripcion: "Salud institucional, alertas"
+        - id: "GEST-003"
+          nombre: "Playbooks"
+          descripcion: "Remedio y recuperación"
+        - id: "GEST-004"
+          nombre: "Mejora Continua"
+          descripcion: "Optimización y quick wins"
+      Entidades_Core:
+        - "OKR"
+        - "Key_Result"
+        - "Compromiso_PMG"
+        - "Indicador_Gestion"
+        - "Snapshot_H_gore"
+        - "Alerta_Gestion"
+        - "Playbook"
+        - "Ejecucion_Playbook"
+      Integraciones:
+        Consume: ["Todos los dominios (métricas)"]
+        Expone: ["H_gore.Dashboard", "Alertas.Stream"]
+
+    D_EVOL:
+      ID: "D-EVOL"
+      Nombre: "Evolución"
+      Tipo: "Estratégico"
+      Responsabilidad: >
+        Motor de evolución institucional: digitalización profunda (lakehouse),
+        automatización inteligente, inteligenciación (agentes AI), gobernanza AI.
+      Modulos:
+        - id: "EVOL-001"
+          nombre: "Digitalización"
+          descripcion: "Lakehouse, APIs, gemelo digital"
+        - id: "EVOL-002"
+          nombre: "Automatización"
+          descripcion: "RPA, orquestación, validadores"
+        - id: "EVOL-003"
+          nombre: "Inteligenciación"
+          descripcion: "Agentes AI, RAG"
+        - id: "EVOL-004"
+          nombre: "Gobernanza AI"
+          descripcion: "HAIC, políticas, auditoría"
+      Entidades_Core:
+        - "Dataset"
+        - "Servicio_Datos"
+        - "Automatizacion"
+        - "Agente_AI"
+        - "Coleccion_RAG"
+        - "Politica_AI"
+        - "Incidente_AI"
+      Integraciones:
+        Consume: ["Todos los dominios (datos, eventos)"]
+        Expone: ["APIs.Catalogo", "Agentes.Endpoints"]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 3: PATRONES DE INTEGRACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Patrones_Integracion:
+  Descripcion: >
+    Patrones estándar para comunicación entre dominios y con sistemas externos.
+
+  Interno:
+    Sincrono:
+      Patron: "Request-Response via API Gateway"
+      Uso: "Consultas, operaciones inmediatas"
+      Protocolo: "REST/gRPC"
+      Ejemplo: "D-EJEC consulta estado iniciativa en D-FIN"
+
+    Asincrono:
+      Patron: "Event-Driven via Message Bus"
+      Uso: "Notificaciones, cambios de estado, sagas"
+      Protocolo: "CloudEvents sobre Kafka/NATS"
+      Ejemplo: "D-FIN publica evento IniciativaAprobada, D-EJEC reacciona"
+
+    Datos:
+      Patron: "Shared Data Lake (Read Replicas)"
+      Uso: "Analítica, reportes, BI"
+      Protocolo: "SQL sobre Delta Lake"
+      Ejemplo: "D-GESTION lee métricas de todos los dominios"
+
+  Externo:
+    PISEE:
+      Patron: "Nodo de Interoperabilidad"
+      Protocolo: "SOAP/REST según servicio"
+      Servicios:
+        - "Consulta RUT (SII)"
+        - "Verificación ClaveÚnica"
+        - "Estado proyecto BIP"
+
+    APIs_Directas:
+      Patron: "REST API con OAuth2"
+      Sistemas:
+        - sistema: "SIGFE"
+          operaciones: ["Consulta ejecución", "Movimientos"]
+        - sistema: "BIP/SNI"
+          operaciones: ["Consulta RS", "Estado proyecto"]
+        - sistema: "ChileCompra"
+          operaciones: ["Consulta OC", "Estado licitación"]
+
+    DocDigital:
+      Patron: "API REST DocDigital"
+      Operaciones: ["Envío oficios", "Recepción", "Estado"]
+
+    Webhooks:
+      Patron: "Webhook con firma HMAC"
+      Uso: "Notificaciones desde sistemas externos"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 4: STACK TECNOLÓGICO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Stack_Tecnologico:
+  Descripcion: >
+    Stack tecnológico recomendado para GORE_OS. Las decisiones finales
+    se documentarán en ADRs específicos.
+
+  Frontend:
+    Framework: "Next.js 14+ (App Router)"
+    UI_Library: "React 18+"
+    Styling: "Tailwind CSS"
+    Components: "shadcn/ui"
+    State: "Zustand / React Query"
+    Forms: "React Hook Form + Zod"
+    Charts: "Recharts / Apache ECharts"
+    Maps: "Leaflet / MapLibre"
+    Justificacion: >
+      Stack moderno, SSR para SEO, componentes accesibles, 
+      amplia comunidad y documentación.
+
+  Backend:
+    Runtime: "Node.js 20+ LTS"
+    Framework: "NestJS / Fastify"
+    ORM: "Prisma / Drizzle"
+    Validation: "Zod / class-validator"
+    API_Spec: "OpenAPI 3.1"
+    Alternativa_Python:
+      Framework: "FastAPI"
+      ORM: "SQLAlchemy 2.0"
+      Uso: "Servicios de ML/AI"
+    Justificacion: >
+      TypeScript end-to-end para type safety, NestJS para 
+      arquitectura modular, FastAPI para servicios de AI.
+
+  Base_Datos:
+    Principal: "PostgreSQL 16+"
+    Extensiones:
+      - "pgvector (embeddings)"
+      - "PostGIS (geoespacial)"
+      - "pg_cron (scheduling)"
+    Cache: "Redis / Valkey"
+    Search: "Meilisearch"
+    Lakehouse: "DuckDB + Delta Lake / Iceberg"
+    Justificacion: >
+      PostgreSQL como base sólida y extensible, DuckDB para 
+      analítica local, extensiones para casos especializados.
+
+  Mensajeria:
+    Eventos: "Apache Kafka / Redpanda"
+    Colas: "RabbitMQ (si no Kafka)"
+    Realtime: "Socket.io / SSE"
+    Justificacion: >
+      Kafka para event sourcing y alta escala, 
+      Socket.io para notificaciones realtime.
+
+  Workflows:
+    BPM: "Camunda 8 / Temporal"
+    Automatizacion: "n8n / Temporal"
+    Justificacion: >
+      Camunda para workflows complejos de negocio,
+      n8n para automatizaciones de integración.
+
+  AI_ML:
+    Framework: "LangChain / LlamaIndex"
+    LLM: "OpenAI API / Anthropic / Local (Ollama)"
+    Embeddings: "OpenAI / Cohere / Local"
+    Vector_Store: "pgvector / Qdrant"
+    Orchestration: "LangGraph"
+    Justificacion: >
+      LangChain como framework maduro para agentes,
+      pgvector para simplicidad inicial, migrar si escala.
+
+  Infraestructura:
+    Container: "Docker"
+    Orchestration: "Kubernetes (si escala) / Docker Compose"
+    CI_CD: "GitHub Actions / GitLab CI"
+    IaC: "Terraform / Pulumi"
+    Secrets: "HashiCorp Vault / SOPS"
+    Cloud: "GCP / AWS / Azure (según disponibilidad)"
+    Justificacion: >
+      Contenedores para portabilidad, Kubernetes si escala 
+      justifica complejidad, cloud según convenios Estado.
+
+  Observabilidad:
+    Logs: "Loki + Grafana"
+    Metrics: "Prometheus + Grafana"
+    Traces: "Jaeger / Tempo"
+    APM: "OpenTelemetry"
+    Alerting: "Grafana Alerting / PagerDuty"
+    Justificacion: >
+      Stack open source, OpenTelemetry como estándar,
+      Grafana para unificación de visualización.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 5: SEGURIDAD Y CUMPLIMIENTO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Seguridad:
+  Principios:
+    - "Security by Design"
+    - "Privacy by Default"
+    - "Defense in Depth"
+    - "Least Privilege"
+    - "Zero Trust"
+
+  Autenticacion:
+    Externa:
+      Metodo: "ClaveÚnica (OIDC)"
+      Cumplimiento: "DS 11"
+      Niveles: ["Básico", "Avanzado con firma"]
+
+    Interna:
+      Metodo: "SSO interno + MFA"
+      Proveedor: "Keycloak / Auth0"
+
+    Servicios:
+      Metodo: "mTLS + API Keys"
+
+  Autorizacion:
+    Modelo: "RBAC + ABAC"
+    Implementacion: "Casbin / OPA"
+    Roles_Base:
+      - "admin_sistema"
+      - "admin_dominio"
+      - "operador"
+      - "consulta"
+      - "externo_municipio"
+      - "externo_servicio"
+      - "ciudadano"
+
+  Datos_Personales:
+    Cumplimiento: "Ley 21.719"
+    Controles:
+      - "Registro de tratamiento"
+      - "Consentimiento explícito"
+      - "Derechos ARCO+"
+      - "Minimización de datos"
+      - "Retención controlada"
+      - "Anonimización/Seudonimización"
+
+  Cifrado:
+    En_Transito: "TLS 1.3"
+    En_Reposo: "AES-256"
+    Claves: "KMS / Vault"
+
+  Auditoria:
+    Eventos: "Todas las operaciones CUD"
+    Retencion: "5 años mínimo"
+    Integridad: "Hash chain / firma"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 6: MODELO DE DESPLIEGUE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Despliegue:
+  Ambientes:
+    Desarrollo:
+      Proposito: "Desarrollo activo"
+      Datos: "Sintéticos / Anonimizados"
+      Acceso: "Equipo desarrollo"
+
+    Staging:
+      Proposito: "QA, pruebas de integración"
+      Datos: "Copia anonimizada de producción"
+      Acceso: "Equipo + QA + PO"
+
+    Produccion:
+      Proposito: "Operación real"
+      Datos: "Datos reales"
+      Acceso: "Usuarios finales"
+      SLA: "99.5% disponibilidad"
+
+  Estrategia:
+    Tipo: "Blue-Green / Canary"
+    Rollback: "Automático ante errores"
+    Feature_Flags: "Activación gradual de funcionalidades"
+
+  Monitoreo:
+    SLIs:
+      - "Latencia p99 < 500ms"
+      - "Error rate < 0.1%"
+      - "Disponibilidad > 99.5%"
+
+    Alertas:
+      - "Error rate > 1%"
+      - "Latencia p99 > 2s"
+      - "Saturación recursos > 80%"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 7: CONTRATOS DE DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Contratos_Dominio:
+  Descripcion: >
+    Cada dominio expone contratos bien definidos para integración.
+    Formato estándar basado en ORKO Contracts C1-C5.
+
+  Formato_Contrato:
+    Nombre: "String"
+    Version: "SemVer"
+    Dominio: "ID Dominio"
+    Tipo: "Query | Command | Event"
+    Schema_Entrada: "JSON Schema / Zod"
+    Schema_Salida: "JSON Schema / Zod"
+    Errores: "Catálogo de errores"
+    SLA:
+      Latencia: "p99 en ms"
+      Disponibilidad: "porcentaje"
+    Ejemplo: "Request/Response de ejemplo"
+
+  Eventos_Estandar:
+    Formato: "CloudEvents 1.0"
+    Atributos:
+      - "id: UUID"
+      - "source: urn:goreos:{dominio}"
+      - "type: {dominio}.{entidad}.{accion}"
+      - "time: ISO 8601"
+      - "datacontenttype: application/json"
+      - "data: payload específico"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REFERENCIAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Referencias:
+  Internas:
+    - id: "GOS-000"
+      titulo: "GORE_OS Visión Estratégica"
+      relacion: "Define el contexto estratégico"
+
+    - id: "GOS-002"
+      titulo: "Principios de Diseño"
+      relacion: "Detalla principios arquitectónicos"
+
+    - id: "GOS-200"
+      titulo: "Modelo de Datos Conceptual"
+      relacion: "Define entidades y relaciones"
+
+    - id: "GOS-210"
+      titulo: "Mapa de Integraciones"
+      relacion: "Detalla integraciones externas"
+
+  Externas:
+    - id: "ORKO-L1"
+      titulo: "ORKO Arquitectura - Layer 1"
+      urn: "urn:knowledge:orko:core:001"
+
+    - id: "ORKO-L2"
+      titulo: "ORKO Tejidos - Layer 2"
+      urn: "urn:knowledge:orko:core:002"
+
+    - id: "C4-MODEL"
+      titulo: "C4 Model for Software Architecture"
+      url: "https://c4model.com/"
+
+    - id: "DDD"
+      titulo: "Domain-Driven Design"
+      autor: "Eric Evans"
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN DEL DOCUMENTO
+# ═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,555 @@
+# GOS-800: GORE_OS - Roadmap de Implementación
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:800:roadmap_implementacion"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Roadmap de Implementación"
+  Description: "Plan de implementación por fases, entregables y dependencias"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Tags: [goreos, roadmap, implementacion, proyecto]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISIÓN GENERAL DEL PROYECTO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision_Proyecto:
+  nombre: "GORE_OS - Sistema Operativo del GORE Ñuble"
+  duracion_estimada: "18-24 meses"
+  inicio_sugerido: "Q1 2025"
+  
+  objetivos:
+    - "Digitalizar ciclo completo de inversión pública regional"
+    - "Integrar los 10 dominios funcionales del GORE"
+    - "Implementar monitoreo de salud institucional (H_gore)"
+    - "Habilitar evolución mediante automatización e IA"
+  
+  criterios_exito:
+    - "100% de iniciativas gestionadas en el sistema"
+    - "Reducción 50% tiempo de tramitación de convenios"
+    - "H_gore medido y monitoreado semanalmente"
+    - "80% adopción por usuarios internos"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASES DE IMPLEMENTACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Fases:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FASE 0: PREPARACIÓN
+  # ─────────────────────────────────────────────────────────────────────────────
+  Fase_0:
+    nombre: "Preparación y Fundamentos"
+    duracion: "2 meses"
+    periodo: "Q1 2025 (Ene-Feb)"
+    
+    objetivos:
+      - "Establecer equipo y gobernanza del proyecto"
+      - "Configurar infraestructura base"
+      - "Validar modelo de datos con usuarios clave"
+    
+    entregables:
+      E0.1:
+        nombre: "Equipo conformado"
+        descripcion: "Product Owner, Tech Lead, 2-3 desarrolladores, 1 UX"
+      E0.2:
+        nombre: "Infraestructura cloud"
+        descripcion: "Ambiente de desarrollo y staging configurado"
+      E0.3:
+        nombre: "Repositorio y CI/CD"
+        descripcion: "Monorepo con pipelines de build/test/deploy"
+      E0.4:
+        nombre: "Base de datos inicial"
+        descripcion: "Schema Prisma migrado, datos maestros cargados"
+      E0.5:
+        nombre: "Integración ClaveÚnica"
+        descripcion: "Autenticación funcionando en sandbox"
+    
+    hitos:
+      - fecha: "Semana 2"
+        hito: "Kick-off con stakeholders"
+      - fecha: "Semana 4"
+        hito: "Infraestructura lista"
+      - fecha: "Semana 8"
+        hito: "Modelo de datos validado"
+    
+    riesgos:
+      - riesgo: "Demora en contratación de equipo"
+        mitigacion: "Iniciar proceso de selección anticipadamente"
+      - riesgo: "Acceso a ClaveÚnica demorado"
+        mitigacion: "Iniciar gestión de credenciales desde día 1"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FASE 1: MVP CORE
+  # ─────────────────────────────────────────────────────────────────────────────
+  Fase_1:
+    nombre: "MVP Core - Ciclo IPR"
+    duracion: "4 meses"
+    periodo: "Q1-Q2 2025 (Mar-Jun)"
+    
+    alcance:
+      dominios: [D-FIN, D-EJEC]
+      descripcion: "Ciclo completo desde iniciativa hasta convenio vigente"
+    
+    funcionalidades:
+      F1.1:
+        modulo: "Gestión de Iniciativas"
+        features:
+          - "CRUD de iniciativas"
+          - "Estados y transiciones"
+          - "Registro de RS"
+          - "Vinculación a objetivo ERD"
+        prioridad: MUST
+      
+      F1.2:
+        modulo: "Solicitudes de Financiamiento"
+        features:
+          - "Crear solicitud"
+          - "Adjuntar documentos"
+          - "Workflow de evaluación"
+          - "Priorización y ranking"
+        prioridad: MUST
+      
+      F1.3:
+        modulo: "Convenios"
+        features:
+          - "Crear convenio desde solicitud aprobada"
+          - "Definir hitos y desembolsos"
+          - "Estados del convenio"
+          - "Generar documento desde plantilla"
+        prioridad: MUST
+      
+      F1.4:
+        modulo: "Dashboard Cartera"
+        features:
+          - "Vista de cartera con filtros"
+          - "Métricas básicas"
+          - "Exportación Excel"
+        prioridad: SHOULD
+    
+    integraciones:
+      - sistema: "ClaveÚnica"
+        alcance: "Autenticación producción"
+      - sistema: "BIP"
+        alcance: "Consulta y validación de RS"
+    
+    entregables:
+      E1.1: "Módulo Iniciativas en producción"
+      E1.2: "Módulo Solicitudes en producción"
+      E1.3: "Módulo Convenios (creación) en producción"
+      E1.4: "Manual de usuario v1"
+      E1.5: "Capacitación a analistas IPR"
+    
+    usuarios_piloto:
+      - "5 analistas IPR de DAF"
+      - "2 municipios piloto"
+    
+    metricas_exito:
+      - "50 iniciativas migradas"
+      - "10 solicitudes procesadas end-to-end"
+      - "5 convenios creados en el sistema"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FASE 2: EJECUCIÓN Y RENDICIONES
+  # ─────────────────────────────────────────────────────────────────────────────
+  Fase_2:
+    nombre: "Ejecución y Control"
+    duracion: "4 meses"
+    periodo: "Q3-Q4 2025 (Jul-Oct)"
+    
+    alcance:
+      dominios: [D-EJEC]
+      descripcion: "Completar ciclo de ejecución: desembolsos, rendiciones, PMO"
+    
+    funcionalidades:
+      F2.1:
+        modulo: "Desembolsos"
+        features:
+          - "Solicitud de desembolso"
+          - "Aprobación y registro de transferencia"
+          - "Integración bancaria (archivo)"
+        prioridad: MUST
+      
+      F2.2:
+        modulo: "Rendiciones"
+        features:
+          - "Ingreso de rendición con movimientos"
+          - "Carga de documentos"
+          - "Validación RUT SII"
+          - "Workflow de revisión"
+          - "Estados y observaciones"
+        prioridad: MUST
+      
+      F2.3:
+        modulo: "PMO"
+        features:
+          - "Dashboard torre de control"
+          - "Semáforos automáticos"
+          - "Alertas de desviación"
+          - "Actualización de avance"
+        prioridad: MUST
+      
+      F2.4:
+        modulo: "Addendums"
+        features:
+          - "Crear addendum de convenio"
+          - "Tipos: prórroga, aumento, disminución"
+          - "Workflow de aprobación"
+        prioridad: SHOULD
+    
+    integraciones:
+      - sistema: "SII"
+        alcance: "Validación RUT proveedores"
+      - sistema: "SIGFE"
+        alcance: "Importación ejecución presupuestaria"
+    
+    entregables:
+      E2.1: "Módulo Desembolsos en producción"
+      E2.2: "Módulo Rendiciones en producción"
+      E2.3: "Dashboard PMO en producción"
+      E2.4: "Capacitación a unidades ejecutoras"
+    
+    usuarios:
+      - "Todos los analistas DAF"
+      - "21 municipios de la región"
+      - "Servicios públicos ejecutores"
+    
+    metricas_exito:
+      - "100% convenios vigentes migrados"
+      - "50 rendiciones procesadas"
+      - "Dashboard PMO con 100% cobertura"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FASE 3: PLANIFICACIÓN Y GESTIÓN
+  # ─────────────────────────────────────────────────────────────────────────────
+  Fase_3:
+    nombre: "Planificación y Gestión Institucional"
+    duracion: "3 meses"
+    periodo: "Q4 2025 - Q1 2026 (Nov-Ene)"
+    
+    alcance:
+      dominios: [D-PLAN, D-GESTION]
+      descripcion: "Instrumentos de planificación y monitoreo institucional"
+    
+    funcionalidades:
+      F3.1:
+        modulo: "ERD Digital"
+        features:
+          - "Gestión de estructura ERD"
+          - "Ejes, objetivos, lineamientos"
+          - "Vinculación con iniciativas"
+          - "Dashboard de alineación"
+        prioridad: MUST
+      
+      F3.2:
+        modulo: "OKRs"
+        features:
+          - "Definición de OKRs por nivel"
+          - "Check-ins semanales"
+          - "Cálculo de progreso"
+          - "Vista de cascada"
+        prioridad: MUST
+      
+      F3.3:
+        modulo: "H_gore"
+        features:
+          - "Cálculo automático diario"
+          - "Dashboard de salud"
+          - "Desglose por dominio"
+          - "Tendencias históricas"
+        prioridad: MUST
+      
+      F3.4:
+        modulo: "Alertas"
+        features:
+          - "Generación automática"
+          - "Asignación y seguimiento"
+          - "Escalamiento"
+        prioridad: SHOULD
+    
+    entregables:
+      E3.1: "ERD digitalizada"
+      E3.2: "Sistema OKR en producción"
+      E3.3: "Dashboard H_gore"
+      E3.4: "Capacitación a jefaturas"
+    
+    metricas_exito:
+      - "ERD vigente 100% cargada"
+      - "OKRs Q1 2026 definidos en sistema"
+      - "H_gore calculándose diariamente"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FASE 4: EVOLUCIÓN E IA
+  # ─────────────────────────────────────────────────────────────────────────────
+  Fase_4:
+    nombre: "Evolución e Inteligencia"
+    duracion: "4 meses"
+    periodo: "Q1-Q2 2026 (Feb-May)"
+    
+    alcance:
+      dominios: [D-EVOL, D-TDE]
+      descripcion: "Automatización, datos y primeros agentes AI"
+    
+    funcionalidades:
+      F4.1:
+        modulo: "Lakehouse"
+        features:
+          - "Capas Bronze/Silver/Gold"
+          - "ETL automatizado"
+          - "Catálogo de datos"
+        prioridad: MUST
+      
+      F4.2:
+        modulo: "Automatizaciones"
+        features:
+          - "Cálculo H_gore automatizado"
+          - "Alertas automáticas"
+          - "Notificaciones de vencimiento"
+          - "Reportes programados"
+        prioridad: MUST
+      
+      F4.3:
+        modulo: "GORE Assistant"
+        features:
+          - "Agente conversacional"
+          - "RAG con normativa"
+          - "Consultas de estado"
+        prioridad: SHOULD
+      
+      F4.4:
+        modulo: "Validador Rendiciones"
+        features:
+          - "Validación automática de documentos"
+          - "Detección de anomalías"
+          - "Sugerencias de clasificación"
+        prioridad: COULD
+    
+    entregables:
+      E4.1: "Lakehouse operativo"
+      E4.2: "5 automatizaciones core"
+      E4.3: "GORE Assistant en piloto"
+      E4.4: "Documentación técnica completa"
+    
+    metricas_exito:
+      - "Datos Gold actualizados diariamente"
+      - "0 reportes manuales recurrentes"
+      - "100 interacciones/mes con GORE Assistant"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FASE 5: CONSOLIDACIÓN
+  # ─────────────────────────────────────────────────────────────────────────────
+  Fase_5:
+    nombre: "Consolidación y Optimización"
+    duracion: "3 meses"
+    periodo: "Q2-Q3 2026 (Jun-Ago)"
+    
+    alcance:
+      dominios: [Todos]
+      descripcion: "Completar dominios pendientes, optimizar, estabilizar"
+    
+    funcionalidades:
+      F5.1:
+        modulo: "Dominios complementarios"
+        features:
+          - "D-COORD: Compromisos, indicadores"
+          - "D-NORM: Reglamentos"
+          - "D-BACK: Documentos, compras"
+          - "PROT: Zonificaciones"
+        prioridad: SHOULD
+      
+      F5.2:
+        modulo: "Playbooks"
+        features:
+          - "Catálogo de playbooks"
+          - "Ejecución guiada"
+          - "Métricas de efectividad"
+        prioridad: SHOULD
+      
+      F5.3:
+        modulo: "Optimización"
+        features:
+          - "Performance tuning"
+          - "UX refinements"
+          - "Deuda técnica"
+        prioridad: MUST
+    
+    entregables:
+      E5.1: "Sistema completo 10 dominios"
+      E5.2: "Documentación final"
+      E5.3: "Transferencia a equipo TI GORE"
+    
+    metricas_exito:
+      - "100% funcionalidades especificadas"
+      - "< 3s tiempo de carga promedio"
+      - "NPS usuarios > 40"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CRONOGRAMA VISUAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Cronograma: |
+  
+  2025                                              2026
+  ─────────────────────────────────────────────────────────────────────────
+  E F M A M J J A S O N D │ E F M A M J J A
+  ─────────────────────────────────────────────────────────────────────────
+  ███                     │                           FASE 0: Preparación
+      █████████           │                           FASE 1: MVP Core
+              █████████   │                           FASE 2: Ejecución
+                      ████│███                        FASE 3: Planificación
+                          │   █████████               FASE 4: Evolución
+                          │           ███████         FASE 5: Consolidación
+  ─────────────────────────────────────────────────────────────────────────
+  
+  Hitos clave:
+  • Mar 2025: Go-live MVP (Iniciativas + Solicitudes)
+  • Jul 2025: Go-live Rendiciones
+  • Nov 2025: ERD + OKRs + H_gore
+  • Feb 2026: GORE Assistant piloto
+  • Ago 2026: Sistema completo
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EQUIPO Y RECURSOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Equipo:
+  core:
+    - rol: "Product Owner"
+      dedicacion: "100%"
+      perfil: "Conocimiento profundo de procesos GORE"
+    - rol: "Tech Lead"
+      dedicacion: "100%"
+      perfil: "Senior Full-stack, experiencia en sistemas públicos"
+    - rol: "Desarrollador Backend"
+      dedicacion: "100%"
+      cantidad: 2
+    - rol: "Desarrollador Frontend"
+      dedicacion: "100%"
+      cantidad: 1
+    - rol: "UX Designer"
+      dedicacion: "50%"
+    - rol: "QA Engineer"
+      dedicacion: "50%"
+  
+  apoyo:
+    - rol: "DBA / DevOps"
+      dedicacion: "25%"
+    - rol: "Especialista Integraciones"
+      dedicacion: "Por demanda"
+    - rol: "AI Engineer"
+      dedicacion: "Fase 4 en adelante"
+  
+  gore:
+    - rol: "Sponsor ejecutivo"
+      perfil: "Jefe DAF o DIPLADE"
+    - rol: "Key users por dominio"
+      cantidad: "1-2 por área"
+    - rol: "Enlace TI"
+      dedicacion: "50%"
+
+Infraestructura:
+  cloud: "AWS / GCP / Azure (a definir)"
+  ambientes:
+    - nombre: "Development"
+      proposito: "Desarrollo activo"
+    - nombre: "Staging"
+      proposito: "Testing y validación"
+    - nombre: "Production"
+      proposito: "Usuarios finales"
+  
+  servicios:
+    - "PostgreSQL + PostGIS"
+    - "Redis (cache/queue)"
+    - "S3-compatible storage"
+    - "CDN"
+    - "Monitoring (Datadog/Grafana)"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GESTIÓN DE RIESGOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Riesgos:
+  R01:
+    descripcion: "Resistencia al cambio de usuarios"
+    probabilidad: Alta
+    impacto: Alto
+    mitigacion:
+      - "Involucrar usuarios desde diseño"
+      - "Capacitación intensiva"
+      - "Quick wins visibles"
+      - "Sponsors internos"
+  
+  R02:
+    descripcion: "Integraciones con sistemas externos demoradas"
+    probabilidad: Media
+    impacto: Alto
+    mitigacion:
+      - "Iniciar gestiones desde Fase 0"
+      - "Mocks para desarrollo paralelo"
+      - "Plan B manual si demora"
+  
+  R03:
+    descripcion: "Calidad de datos de migración"
+    probabilidad: Alta
+    impacto: Medio
+    mitigacion:
+      - "Auditoría de datos temprana"
+      - "Scripts de limpieza"
+      - "Validación con usuarios"
+  
+  R04:
+    descripcion: "Scope creep"
+    probabilidad: Alta
+    impacto: Alto
+    mitigacion:
+      - "Backlog priorizado estricto"
+      - "Revisión de alcance por fase"
+      - "Documentar requests fuera de scope"
+  
+  R05:
+    descripcion: "Rotación de equipo"
+    probabilidad: Media
+    impacto: Alto
+    mitigacion:
+      - "Documentación exhaustiva"
+      - "Pair programming"
+      - "Knowledge sharing sessions"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GOBERNANZA DEL PROYECTO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Gobernanza:
+  comites:
+    Comite_Directivo:
+      frecuencia: "Mensual"
+      participantes: [Gobernador, Jefe_DAF, Jefe_DIPLADE, Sponsor]
+      agenda: "Avance general, decisiones estratégicas, riesgos"
+    
+    Comite_Tecnico:
+      frecuencia: "Quincenal"
+      participantes: [Tech_Lead, PO, Enlace_TI]
+      agenda: "Arquitectura, integraciones, blockers técnicos"
+    
+    Steering_Semanal:
+      frecuencia: "Semanal"
+      participantes: [PO, Tech_Lead, Key_Users]
+      agenda: "Sprint review, priorización, feedback"
+  
+  metodologia: "Scrum adaptado"
+  sprints: "2 semanas"
+  
+  metricas_proyecto:
+    - "Velocity del equipo"
+    - "Burndown por sprint"
+    - "Defectos en producción"
+    - "Satisfacción de usuarios"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN GOS-800
+# ═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,259 @@
+# GOS-108: GORE_OS - Especificación D-TERR (Territorio)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:108:especificacion:d_terr"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Especificación D-TERR (Territorio)"
+  Description: "Casos de uso, flujos y APIs del dominio Territorio"
+  Domain: GORE_OS
+  Subdomain: D-TERR
+  Created: "2024-12-14"
+  Tags: [goreos, d_terr, territorio, indicadores, geoespacial, ide]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISIÓN DEL DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision_Dominio:
+  Proposito: >
+    Gestionar la información territorial de la región: capas geográficas,
+    indicadores comunales, series temporales y análisis espacial.
+  
+  Objetivos:
+    - "Mantener IDE regional actualizada"
+    - "Monitorear indicadores de desarrollo comunal"
+    - "Proveer análisis territorial para decisiones"
+    - "Integrar con IDE Chile"
+  
+  Actores:
+    - actor: "Analista Territorial"
+      rol: "Gestiona capas e indicadores"
+    - actor: "Planificador"
+      rol: "Consume información territorial"
+    - actor: "Ciudadano"
+      rol: "Consulta información pública"
+  
+  KPIs:
+    - nombre: "Capas actualizadas"
+      formula: "Capas actualizadas último año / Total * 100"
+      meta: ">= 80%"
+    - nombre: "Cobertura indicadores"
+      formula: "Comunas con datos / 21 * 100"
+      meta: "100%"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CASOS DE USO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Casos_Uso:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CAPAS GEOGRÁFICAS
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_TERR_001:
+    nombre: "Registrar capa geográfica"
+    actor_principal: "Analista Territorial"
+    descripcion: "Incorporar nueva capa a la IDE regional"
+    flujo_principal:
+      1: "Usuario crea entrada de capa"
+      2: "Usuario define metadatos (nombre, categoría, fuente)"
+      3: "Usuario configura tipo de geometría"
+      4: "Usuario publica servicio WMS/WFS"
+      5: "Sistema registra capa como ACTIVA"
+
+  CU_TERR_002:
+    nombre: "Actualizar capa geográfica"
+    actor_principal: "Analista Territorial"
+    flujo_principal:
+      1: "Usuario selecciona capa"
+      2: "Usuario sube nuevos datos"
+      3: "Sistema valida geometrías"
+      4: "Sistema actualiza capa"
+      5: "Sistema registra fecha de actualización"
+
+  CU_TERR_003:
+    nombre: "Visualizar mapa territorial"
+    actor_principal: "Planificador"
+    flujo_principal:
+      1: "Usuario accede a visor de mapas"
+      2: "Usuario selecciona capas a visualizar"
+      3: "Sistema renderiza mapa con capas"
+      4: "Usuario puede hacer zoom, pan, identificar"
+      5: "Usuario puede exportar mapa como imagen"
+
+  CU_TERR_004:
+    nombre: "Análisis espacial"
+    actor_principal: "Analista Territorial"
+    descripcion: "Realizar análisis geoespacial"
+    flujo_principal:
+      1: "Usuario selecciona tipo de análisis"
+      2: "Usuario define parámetros (buffer, intersección, etc.)"
+      3: "Sistema ejecuta análisis"
+      4: "Sistema muestra resultados en mapa"
+      5: "Usuario puede exportar resultados"
+    tipos_analisis:
+      - "Buffer (área de influencia)"
+      - "Intersección de capas"
+      - "Densidad de puntos"
+      - "Agregación por polígono"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # INDICADORES COMUNALES
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_TERR_010:
+    nombre: "Gestionar indicadores comunales"
+    actor_principal: "Analista Territorial"
+    descripcion: "CRUD de indicadores de desarrollo"
+    flujo_principal:
+      1: "Usuario accede a catálogo de indicadores"
+      2: "Usuario crea/edita indicador"
+      3: "Usuario define dimensión, fuente, metodología"
+      4: "Sistema guarda indicador"
+
+  CU_TERR_011:
+    nombre: "Cargar datos de indicador"
+    actor_principal: "Analista Territorial"
+    flujo_principal:
+      1: "Usuario selecciona indicador"
+      2: "Usuario sube archivo con datos por comuna/año"
+      3: "Sistema valida estructura"
+      4: "Sistema incorpora a serie temporal"
+      5: "Sistema calcula ranking regional"
+
+  CU_TERR_012:
+    nombre: "Dashboard territorial"
+    actor_principal: "Planificador"
+    descripcion: "Visualizar indicadores en contexto territorial"
+    flujo_principal:
+      1: "Usuario accede a dashboard"
+      2: "Sistema muestra mapa de la región"
+      3: "Usuario selecciona indicador"
+      4: "Sistema colorea comunas según valor"
+      5: "Usuario puede ver detalle por comuna"
+      6: "Sistema muestra gráfico de evolución"
+
+  CU_TERR_013:
+    nombre: "Comparar comunas"
+    actor_principal: "Planificador"
+    flujo_principal:
+      1: "Usuario selecciona comunas a comparar"
+      2: "Usuario selecciona indicadores"
+      3: "Sistema genera tabla comparativa"
+      4: "Sistema genera gráfico radar"
+      5: "Usuario puede exportar comparación"
+
+  CU_TERR_014:
+    nombre: "Ficha comunal"
+    actor_principal: "Ciudadano"
+    descripcion: "Ver información consolidada de una comuna"
+    flujo_principal:
+      1: "Usuario selecciona comuna"
+      2: "Sistema muestra ficha con datos demográficos"
+      3: "Sistema muestra indicadores principales"
+      4: "Sistema muestra proyectos de inversión"
+      5: "Usuario puede descargar ficha PDF"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # INTEGRACIÓN IDE
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_TERR_020:
+    nombre: "Consumir capas IDE Chile"
+    actor_principal: "Sistema"
+    descripcion: "Integrar capas nacionales"
+    flujo_principal:
+      1: "Sistema consulta catálogo IDE Chile"
+      2: "Sistema descarga metadatos de capas"
+      3: "Sistema configura proxy WMS/WFS"
+      4: "Capas disponibles para visualización"
+
+  CU_TERR_021:
+    nombre: "Publicar capa en IDE Chile"
+    actor_principal: "Analista Territorial"
+    descripcion: "Compartir capa regional al nivel nacional"
+    flujo_principal:
+      1: "Usuario selecciona capa a publicar"
+      2: "Usuario completa metadatos ISO 19115"
+      3: "Sistema registra en catálogo nacional"
+      4: "Capa disponible para otros organismos"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DIMENSIONES DE INDICADORES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Dimensiones_Indicadores:
+  DEMOGRAFIA:
+    ejemplos: [Población, Densidad, Crecimiento, Índice de envejecimiento]
+  ECONOMIA:
+    ejemplos: [PIB comunal, Desempleo, Empresas activas, Ventas]
+  EDUCACION:
+    ejemplos: [SIMCE, PSU/PAES, Matrícula, Deserción]
+  SALUD:
+    ejemplos: [Esperanza de vida, Mortalidad infantil, Camas hospitalarias]
+  VIVIENDA:
+    ejemplos: [Déficit habitacional, Hacinamiento, Acceso a servicios]
+  SEGURIDAD:
+    ejemplos: [Tasa de delitos, VIF, Accidentes de tránsito]
+  AMBIENTE:
+    ejemplos: [Calidad del aire, Áreas verdes, Residuos]
+  CONECTIVIDAD:
+    ejemplos: [Acceso a internet, Cobertura móvil, Caminos pavimentados]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# API ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+API_Endpoints:
+
+  Capas:
+    base_path: "/api/v1/terr/capas"
+    endpoints:
+      - { method: GET, path: "/", desc: "Catálogo de capas" }
+      - { method: GET, path: "/{id}", desc: "Metadatos de capa" }
+      - { method: POST, path: "/", desc: "Registrar capa", permisos: ["terr:capa:admin"] }
+      - { method: GET, path: "/{id}/wms", desc: "Proxy WMS" }
+      - { method: GET, path: "/{id}/wfs", desc: "Proxy WFS" }
+
+  Indicadores:
+    base_path: "/api/v1/terr/indicadores"
+    endpoints:
+      - { method: GET, path: "/", desc: "Catálogo indicadores" }
+      - { method: GET, path: "/{id}", desc: "Detalle indicador" }
+      - { method: GET, path: "/{id}/serie", desc: "Serie temporal" }
+      - { method: POST, path: "/{id}/datos", desc: "Cargar datos", permisos: ["terr:indicador:admin"] }
+      - { method: GET, path: "/dashboard", desc: "Dashboard territorial" }
+
+  Comunas:
+    base_path: "/api/v1/terr/comunas"
+    endpoints:
+      - { method: GET, path: "/", desc: "Listar comunas" }
+      - { method: GET, path: "/{codigo}", desc: "Detalle comuna" }
+      - { method: GET, path: "/{codigo}/ficha", desc: "Ficha comunal" }
+      - { method: GET, path: "/{codigo}/indicadores", desc: "Indicadores de comuna" }
+      - { method: GET, path: "/comparar", desc: "Comparar comunas" }
+
+  Visor:
+    base_path: "/api/v1/terr/visor"
+    endpoints:
+      - { method: GET, path: "/config", desc: "Configuración del visor" }
+      - { method: POST, path: "/analisis", desc: "Ejecutar análisis espacial" }
+      - { method: POST, path: "/exportar", desc: "Exportar mapa" }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EVENTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Eventos:
+  - { evento: "CapaActualizada", payload: [capa_id, fecha] }
+  - { evento: "IndicadorActualizado", payload: [indicador_id, anio, comunas_actualizadas] }
+  - { evento: "NuevoDatoDisponible", payload: [indicador_id, dimension] }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN ESPECIFICACIÓN D-TERR
+# ═══════════════════════════════════════════════════════════════════════════════

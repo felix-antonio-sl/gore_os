@@ -1,0 +1,249 @@
+# GOS-106: GORE_OS - Especificación D-BACK (Back-Office)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:106:especificacion:d_back"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Especificación D-BACK (Back-Office)"
+  Description: "Casos de uso, flujos y APIs del dominio Back-Office"
+  Domain: GORE_OS
+  Subdomain: D-BACK
+  Created: "2024-12-14"
+  Tags: [goreos, d_back, documentos, compras, activos]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISIÓN DEL DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision_Dominio:
+  Proposito: >
+    Gestionar las operaciones administrativas internas: documentos oficiales,
+    órdenes de compra, facturas, activos fijos e inventario.
+  
+  Objetivos:
+    - "Digitalizar gestión documental interna"
+    - "Controlar órdenes de compra y facturas"
+    - "Administrar activos fijos e inventario"
+    - "Integrar con Mercado Público"
+  
+  Actores:
+    - actor: "Secretaria Ejecutiva"
+      rol: "Gestiona documentos oficiales"
+    - actor: "Encargado Compras"
+      rol: "Gestiona órdenes de compra"
+    - actor: "Encargado Activos"
+      rol: "Administra inventario y activos"
+    - actor: "Jefe Administrativo"
+      rol: "Aprueba y supervisa"
+  
+  KPIs:
+    - nombre: "Documentos digitalizados"
+      formula: "Docs electrónicos / Total * 100"
+      meta: ">= 95%"
+    - nombre: "OC pagadas a tiempo"
+      formula: "OC pagadas en plazo / Total vencidas * 100"
+      meta: ">= 90%"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CASOS DE USO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Casos_Uso:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # DOCUMENTOS OFICIALES
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_BACK_001:
+    nombre: "Crear documento oficial"
+    actor_principal: "Secretaria Ejecutiva"
+    descripcion: "Generar nuevo documento oficial (oficio, memo, resolución)"
+    flujo_principal:
+      1: "Usuario selecciona tipo de documento"
+      2: "Sistema genera número correlativo"
+      3: "Usuario completa datos (asunto, destinatario, cuerpo)"
+      4: "Usuario selecciona firmante"
+      5: "Sistema crea documento en estado BORRADOR"
+
+  CU_BACK_002:
+    nombre: "Enviar documento a firma"
+    actor_principal: "Secretaria Ejecutiva"
+    flujo_principal:
+      1: "Usuario revisa documento"
+      2: "Usuario envía a firma electrónica"
+      3: "Sistema notifica al firmante"
+      4: "Sistema cambia estado a PARA_FIRMA"
+
+  CU_BACK_003:
+    nombre: "Firmar documento"
+    actor_principal: "Firmante (Jefatura)"
+    flujo_principal:
+      1: "Firmante recibe notificación"
+      2: "Firmante revisa documento"
+      3: "Firmante aplica firma electrónica avanzada"
+      4: "Sistema registra firma y timestamp"
+      5: "Sistema cambia estado a FIRMADO"
+
+  CU_BACK_004:
+    nombre: "Distribuir documento"
+    actor_principal: "Secretaria Ejecutiva"
+    flujo_principal:
+      1: "Usuario selecciona destinatarios"
+      2: "Sistema envía por DocDigital (si externo)"
+      3: "Sistema notifica internamente (si interno)"
+      4: "Sistema cambia estado a DISTRIBUIDO"
+      5: "Sistema vincula a expediente si corresponde"
+
+  CU_BACK_005:
+    nombre: "Buscar documentos"
+    actor_principal: "Funcionario"
+    flujo_principal:
+      1: "Usuario accede a buscador"
+      2: "Usuario filtra por tipo, fecha, número, asunto"
+      3: "Sistema muestra resultados"
+      4: "Usuario puede ver/descargar documento"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ÓRDENES DE COMPRA
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_BACK_010:
+    nombre: "Registrar orden de compra"
+    actor_principal: "Encargado Compras"
+    flujo_principal:
+      1: "Usuario ingresa datos de OC desde Mercado Público"
+      2: "Sistema valida proveedor (RUT)"
+      3: "Usuario asigna ítem presupuestario"
+      4: "Sistema crea OC en estado EMITIDA"
+      5: "Sistema actualiza compromiso presupuestario"
+
+  CU_BACK_011:
+    nombre: "Registrar recepción de bienes/servicios"
+    actor_principal: "Encargado Compras"
+    flujo_principal:
+      1: "Usuario selecciona OC"
+      2: "Usuario registra recepción conforme"
+      3: "Usuario indica fecha y responsable recepción"
+      4: "Sistema cambia estado a RECIBIDA"
+
+  CU_BACK_012:
+    nombre: "Registrar factura"
+    actor_principal: "Encargado Compras"
+    flujo_principal:
+      1: "Usuario ingresa datos de factura"
+      2: "Sistema valida contra SII (si electrónica)"
+      3: "Usuario vincula a OC"
+      4: "Sistema crea factura en estado RECIBIDA"
+
+  CU_BACK_013:
+    nombre: "Aprobar factura para pago"
+    actor_principal: "Jefe Administrativo"
+    flujo_principal:
+      1: "Usuario revisa factura y OC asociada"
+      2: "Usuario verifica recepción conforme"
+      3: "Usuario aprueba para pago"
+      4: "Sistema cambia estado a APROBADA"
+
+  CU_BACK_014:
+    nombre: "Registrar pago de factura"
+    actor_principal: "Encargado Compras"
+    flujo_principal:
+      1: "Usuario registra datos de pago"
+      2: "Sistema actualiza factura a PAGADA"
+      3: "Sistema actualiza devengado presupuestario"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ACTIVOS FIJOS E INVENTARIO
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_BACK_020:
+    nombre: "Registrar activo fijo"
+    actor_principal: "Encargado Activos"
+    flujo_principal:
+      1: "Usuario ingresa datos del activo"
+      2: "Sistema genera código de inventario"
+      3: "Usuario asigna ubicación y responsable"
+      4: "Sistema crea activo en estado OPERATIVO"
+
+  CU_BACK_021:
+    nombre: "Dar de baja activo"
+    actor_principal: "Encargado Activos"
+    flujo_principal:
+      1: "Usuario selecciona activo"
+      2: "Usuario indica motivo de baja"
+      3: "Usuario adjunta resolución de baja"
+      4: "Sistema cambia estado a DADO_DE_BAJA"
+
+  CU_BACK_022:
+    nombre: "Realizar inventario"
+    actor_principal: "Encargado Activos"
+    flujo_principal:
+      1: "Usuario crea proceso de inventario"
+      2: "Usuario registra conteo físico"
+      3: "Sistema compara contra sistema"
+      4: "Sistema genera informe de diferencias"
+
+  CU_BACK_023:
+    nombre: "Gestionar stock de insumos"
+    actor_principal: "Encargado Activos"
+    flujo_principal:
+      1: "Usuario registra entrada/salida"
+      2: "Sistema actualiza stock"
+      3: "Sistema alerta si bajo mínimo"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# API ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+API_Endpoints:
+
+  Documentos:
+    base_path: "/api/v1/back/documentos"
+    endpoints:
+      - { method: GET, path: "/", desc: "Buscar documentos" }
+      - { method: POST, path: "/", desc: "Crear documento" }
+      - { method: GET, path: "/{id}", desc: "Detalle documento" }
+      - { method: POST, path: "/{id}/enviar-firma", desc: "Enviar a firma" }
+      - { method: POST, path: "/{id}/firmar", desc: "Firmar documento" }
+      - { method: POST, path: "/{id}/distribuir", desc: "Distribuir" }
+
+  OrdenesCompra:
+    base_path: "/api/v1/back/ordenes-compra"
+    endpoints:
+      - { method: GET, path: "/", desc: "Listar OC" }
+      - { method: POST, path: "/", desc: "Registrar OC" }
+      - { method: POST, path: "/{id}/recepcion", desc: "Registrar recepción" }
+
+  Facturas:
+    base_path: "/api/v1/back/facturas"
+    endpoints:
+      - { method: GET, path: "/", desc: "Listar facturas" }
+      - { method: POST, path: "/", desc: "Registrar factura" }
+      - { method: POST, path: "/{id}/aprobar", desc: "Aprobar para pago" }
+      - { method: POST, path: "/{id}/pago", desc: "Registrar pago" }
+
+  Activos:
+    base_path: "/api/v1/back/activos"
+    endpoints:
+      - { method: GET, path: "/", desc: "Listar activos" }
+      - { method: POST, path: "/", desc: "Registrar activo" }
+      - { method: POST, path: "/{id}/baja", desc: "Dar de baja" }
+      - { method: GET, path: "/inventario", desc: "Proceso inventario" }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EVENTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Eventos:
+  - { evento: "DocumentoFirmado", payload: [documento_id, tipo, numero] }
+  - { evento: "DocumentoDistribuido", payload: [documento_id, destinatarios] }
+  - { evento: "OrdenCompraRecibida", payload: [oc_id, monto] }
+  - { evento: "FacturaPagada", payload: [factura_id, monto, proveedor] }
+  - { evento: "StockBajoMinimo", payload: [item_id, stock_actual, minimo] }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN ESPECIFICACIÓN D-BACK
+# ═══════════════════════════════════════════════════════════════════════════════

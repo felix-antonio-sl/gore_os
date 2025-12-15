@@ -1,0 +1,2211 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# GORE OS — Catálogo Unificado de User Stories
+# ID: KB-GOREOS-200-CATALOG-US
+# Versión: 1.0.0
+# ═══════════════════════════════════════════════════════════════════════════════
+---
+_manifest:
+  urn: "urn:knowledge:gorenuble:goreos:200:catalog:user_stories:1.0.0"
+  title: "Catálogo Unificado de User Stories — GORE OS"
+  version: "1.0.0"
+  status: Draft
+  federation:
+    visibility: internal
+    license: "CC-BY-4.0"
+  compatibility:
+    min_consumer_version: "1.0.0"
+    requires_koda_spec_schema: "1.0.0"
+  provenance:
+    created_by: "INGENIERO-SOFTWARE-COMPOSICIONAL-02"
+    created_at: "2025-12-15"
+    version_notes: "v1.0.0 - Unificación semántica de User Stories KODA + MD"
+    sources:
+      koda:
+        - kb_goreos_102a_user_stories_ipr_koda.yml
+        - kb_goreos_102e_user_stories_rendiciones_koda.yml
+        - kb_goreos_102g_user_stories_financiero_detallado_koda.yml
+        - kb_goreos_103b_user_stories_gestion_personas_koda.yml
+        - kb_goreos_104a_user_stories_abastecimiento_koda.yml
+      markdown:
+        - docs/02_requirements/user_stories.md
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN EJECUTIVO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+resumen:
+  total_user_stories: 1060 # Estimado post-unificación
+  total_fuente_koda: 826
+  total_fuente_md: 437
+  merges_realizados: ~200
+
+  modulos:
+    M01_IPR: 120
+    M02_REN: 55
+    M03_FIN: 95
+    M04_ADQ: 80
+    M05_PER: 65
+    M06_TDE: 45
+    M07_GOB: 40
+    M08_SEG: 35
+    M09_JUR: 30
+    Otros: ~495
+
+  prioridad:
+    critica: ~380
+    alta: ~480
+    media: ~180
+    baja: ~20
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ESQUEMA DE IDS UNIFICADOS
+# Formato: [MODULO]-[SUBDOMINIO]-[SECUENCIA]
+# ═══════════════════════════════════════════════════════════════════════════════
+
+nomenclatura:
+  modulos:
+    IPR: "Inversión Pública Regional"
+    REN: "Rendiciones de Cuentas"
+    FIN: "Gestión Financiera"
+    ADQ: "Abastecimiento y Activos"
+    PER: "Gestión de Personas"
+    TDE: "Transformación Digital"
+    GOB: "Gobernanza y CORE"
+    SEG: "Seguridad Ciudadana"
+    JUR: "Jurídico y Transparencia"
+
+  subdominios:
+    # IPR
+    ADM: "Admisibilidad"
+    EVA: "Evaluación Técnica"
+    APR: "Aprobación CORE"
+    EJE: "Ejecución y Seguimiento"
+    MOD: "Modificaciones"
+    CIE: "Cierre"
+    # REN
+    REC: "Recepción Fondos"
+    PRE: "Preparación Rendición"
+    REV: "Revisión Técnica"
+    CON: "Contabilización"
+    CTL: "Control"
+    # FIN
+    FOR: "Formulación"
+    CAD: "Cadena Presupuestaria"
+    TES: "Tesorería"
+    # ADQ
+    PAC: "Planificación"
+    LIC: "Licitaciones"
+    INV: "Inventarios"
+    AF: "Activo Fijo"
+    FLO: "Flotas"
+    # PER
+    RECL: "Reclutamiento"
+    ING: "Ingreso"
+    REM: "Remuneraciones"
+    TIE: "Tiempo/Asistencia"
+    CAP: "Capacitación"
+    BIE: "Bienestar"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M01: INVERSIÓN PÚBLICA REGIONAL (IPR)
+# Unifica: US_FIN_* (KODA) + FE-IPR-*, AD-IPR-*, DIPIR-* (MD)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M01_IPR:
+  titulo: "Inversión Pública Regional"
+  descripcion: "Gestión del ciclo de vida de Iniciativas de Inversión Regional"
+  total_us: 120
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Admisibilidad
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  IPR-ADM-001:
+    titulo: "Postulación IPR Digital"
+    actor: "Unidad Formuladora"
+    quiero: "postular una IPR con antecedentes digitalizados"
+    para: "que mi iniciativa ingrese formalmente al sistema GORE"
+    acceptance_criteria:
+      - "Oficio firmado por máxima autoridad de entidad postulante"
+      - "Antecedentes cargados según guía del mecanismo"
+      - "Número de ingreso único asignado (SGDOC)"
+      - "Derivación automática a DIPIR"
+      - "Notificación de recepción al postulante"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_001"
+      md: "FE-IPR-003"
+    source_refs:
+      - "GN-IPR-F1-RECEPCION-REGISTRO"
+
+  IPR-ADM-002:
+    titulo: "Admisibilidad Formal"
+    actor: "Analista de Preinversión (DIPIR)"
+    quiero: "verificar requisitos documentales según guía operativa"
+    para: "que solo pasen a evaluación técnica las IPR completas"
+    acceptance_criteria:
+      - "Checklist de requisitos por mecanismo"
+      - "Estado: ADMISIBLE, ADMISIBLE CON OBSERVACIONES, o INADMISIBLE"
+      - "Verificación de Carpeta Digital BIP (cuando aplique)"
+      - "Notificación al formulador con detalle de observaciones"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_007"
+      md: "DIPIR-PRE-01"
+    source_refs:
+      - "GN-IPR-F1-ADMISIBILIDAD-FORMAL"
+
+  IPR-ADM-003:
+    titulo: "Subsanación de Observaciones"
+    actor: "Unidad Formuladora"
+    quiero: "corregir antecedentes observados en línea dentro del plazo"
+    para: "que mi IPR no sea declarada inadmisible"
+    acceptance_criteria:
+      - "Notificación de observaciones con plazo (60 días)"
+      - "Tracking de subsanaciones en sistema"
+      - "Alerta de vencimiento de plazo"
+      - "Sin necesidad de trámite presencial"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_FIN_008"
+      md: "FE-IPR-005"
+    source_refs:
+      - "GN-IPR-F1-ADMISIBILIDAD-FORMAL"
+
+  IPR-ADM-004:
+    titulo: "Pertinencia CDR"
+    actor: "Comité Directivo Regional (CDR)"
+    quiero: "analizar coherencia de cada IPR con ERD y prioridades GORE"
+    para: "que solo avancen las IPR estratégicamente pertinentes"
+    acceptance_criteria:
+      - "Acta de sesión generada automáticamente"
+      - "Estado asignado: PRE-ADMISIBLE CDR o NO PRE-ADMISIBLE CDR"
+      - "Observaciones registradas por IPR"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_FIN_005"
+      md: null
+    source_refs:
+      - "GN-IPR-F1-PERTINENCIA-CDR"
+
+  IPR-ADM-005:
+    titulo: "Bolsa de Concursos Unificada"
+    actor: "Formulador Externo"
+    quiero: "ver convocatorias abiertas (FRPD, 8%, FRIL) vs Ventanilla Abierta (SNI)"
+    para: "identificar oportunidades de financiamiento disponibles"
+    acceptance_criteria:
+      - "Dashboard con convocatorias activas"
+      - "Filtros por mecanismo, monto, plazo"
+      - "Estado de cada convocatoria (abierta/cerrada)"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "FE-IPR-000"
+    source_refs:
+      - "GORE-OS-PORTAL"
+
+  IPR-ADM-006:
+    titulo: "Bandeja de Postulaciones Nuevas"
+    actor: "Analista de Gestión (DIPIR)"
+    quiero: "ver bandeja de postulaciones nuevas ordenada FIFO"
+    para: "procesar postulaciones en orden de llegada"
+    acceptance_criteria:
+      - "Ordenamiento por fecha de ingreso"
+      - "Indicador de antigüedad"
+      - "Asignación automática por carga de trabajo"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "AD-IPR-002"
+    source_refs:
+      - "GORE-OS-DIPIR"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Evaluación Técnica
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  IPR-EVA-001:
+    titulo: "Evaluación Track SNI"
+    actor: "Analista GORE (DIPIR)"
+    quiero: "revisar cumplimiento de RIS y metodologías SNI"
+    para: "que la IDI esté lista para envío a MDSF"
+    acceptance_criteria:
+      - "Acta de Admisibilidad interna GORE"
+      - "Estado: ADMISIBLE PARA ENVÍO A MDSF"
+      - "Calidad de estudios preinversionales verificada"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_009"
+      md: "DIPIR-PRE-02"
+    source_refs:
+      - "GN-IPR-F2-TRACK-A-SNI"
+
+  IPR-EVA-002:
+    titulo: "Envío a MDSF"
+    actor: "Jefatura DIPIR"
+    quiero: "enviar oficio a SEREMI MDSF solicitando evaluación ex ante"
+    para: "que la IDI obtenga RATE (RS/FI/OT)"
+    acceptance_criteria:
+      - "Oficio despachado con V°B° Gobernador/a"
+      - "Registro Informar Postulación en BIP"
+      - "Estado: ENVIADO A MDSF"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_010"
+      md: "AD-IPR-005"
+    source_refs:
+      - "GN-IPR-F2-TRACK-A-SNI"
+
+  IPR-EVA-003:
+    titulo: "Monitoreo RATE"
+    actor: "Jefatura de Preinversión (DIPIR)"
+    quiero: "monitorear BIP para obtener resultado RATE de MDSF"
+    para: "poder informar cartera RS al Gobernador/a"
+    acceptance_criteria:
+      - "Alerta automática al recibir RATE"
+      - "Estado actualizado: APROBADO TÉCNICAMENTE (RS) o pendiente subsanación"
+      - "Cartera RS disponible para priorización"
+      - "Semáforo RS/FI/OT/AD visible"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_011"
+      md: "AD-IPR-006"
+    source_refs:
+      - "GN-IPR-F2-TRACK-A-SNI"
+
+  IPR-EVA-004:
+    titulo: "Evaluación Track PPR (Glosa 06)"
+    actor: "División Proponente GORE"
+    quiero: "elaborar Formulario de Perfil y Diseño de Programa Público"
+    para: "que DIPRES/SES evalúe pertinencia del programa"
+    acceptance_criteria:
+      - "Formulario de Perfil enviado"
+      - "Diseño elaborado según MML"
+      - "Estado: APROBADO TÉCNICAMENTE (RF)"
+    prioridad: MEDIA
+    legacy_ids:
+      koda: ["US_FIN_012", "US_FIN_013"]
+      md: ["DIPIR-PRE-03", "DIPIR-PRE-04"]
+    source_refs:
+      - "GN-IPR-F2-TRACK-B-PPR"
+
+  IPR-EVA-005:
+    titulo: "Vía Simplificada <5.000 UTM"
+    actor: "DIPIR GORE"
+    quiero: "evaluar proyectos menores a 5.000 UTM internamente"
+    para: "agilizar aprobación sin RS de MDSF"
+    acceptance_criteria:
+      - "Verificación de descriptor Proyecto menor a 5.000 UTM"
+      - "Sin causales de exclusión (fraccionamiento, EIA/CMN)"
+      - "Estado: APROBADO TÉCNICAMENTE (Exento RS)"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_FIN_014"
+      md: "DIPIR-PRE-05"
+    source_refs:
+      - "GN-IPR-F2-C-5000UTM"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Aprobación Presupuestaria
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  IPR-APR-001:
+    titulo: "Solicitud de CDP"
+    actor: "Jefatura DIPIR"
+    quiero: "solicitar CDP al Depto. Presupuesto"
+    para: "acreditar disponibilidad de fondos"
+    acceptance_criteria:
+      - "Solicitud formal enviada"
+      - "CDP emitido con monto y línea presupuestaria"
+      - "Estado: ENVIADO A FINANCIAMIENTO"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_016"
+      md: "PPTO-ADMIN-01"
+    source_refs:
+      - "GN-IPR-F3-SIN-CORE"
+
+  IPR-APR-002:
+    titulo: "Preparación Cartera CORE"
+    actor: "Jefatura de Preinversión (DIPIR)"
+    quiero: "elaborar carpeta CORE con oficios, fichas y antecedentes"
+    para: "que la cartera esté lista para presentación"
+    acceptance_criteria:
+      - "Carpeta CORE completa (PDF consolidado)"
+      - "Estado: CARTERA DISPONIBLE PARA ENVÍO A CORE"
+      - "Generada filtrada por período"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_FIN_017"
+      md: ["AD-IPR-009", "AD-IPR-010"]
+    source_refs:
+      - "GN-IPR-F3-CON-CORE"
+
+  IPR-APR-003:
+    titulo: "Votación CORE"
+    actor: "CORE"
+    quiero: "analizar y votar aprobación/rechazo de financiamiento"
+    para: "que las IPR reciban asignación presupuestaria"
+    acceptance_criteria:
+      - "Resultado de votación registrado"
+      - "Estado: IPR APROBADAS o IPR RECHAZADAS"
+      - "Certificado de Acuerdo CORE emitido"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_019"
+      md: null
+    source_refs:
+      - "GN-IPR-F3-CON-CORE"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Ejecución y Seguimiento
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  IPR-EJE-001:
+    titulo: "Tramitación Convenio"
+    actor: "Profesional Depto. Presupuesto"
+    quiero: "elaborar Convenio de Transferencia"
+    para: "formalizar la relación GORE-Receptor"
+    acceptance_criteria:
+      - "Contenido mínimo: partes, objeto, monto, plazos, rendición"
+      - "V°B° internos (DIPIR, Jurídico, UT Receptora)"
+      - "Estado: CONVENIO FIRMADO"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_FIN_022"
+      md: "PPTO-ADMIN-03"
+    source_refs:
+      - "GN-IPR-F4-CONVENIO"
+
+  IPR-EJE-002:
+    titulo: "Dashboard Cartera Ejecución"
+    actor: "Analista de Gestión (DIPIR)"
+    quiero: "ver dashboard de cartera ejecución (físico vs financiero)"
+    para: "monitorear el cumplimiento de metas"
+    acceptance_criteria:
+      - "% avance físico vs financiero vs tiempo"
+      - "Semáforos de ejecución"
+      - "Filtros por programa, ejecutor, territorio"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "AD-GEST-001"
+    source_refs:
+      - "GORE-OS-GESTION"
+
+  IPR-EJE-003:
+    titulo: "Seguimiento Técnico en Terreno"
+    actor: "Supervisor/a del Proyecto (GORE)"
+    quiero: "realizar visitas a terreno y revisar informes de avance"
+    para: "monitorear el cumplimiento técnico"
+    acceptance_criteria:
+      - "Informes de visita y supervisión generados"
+      - "% avance físico actualizado en BIP"
+      - "Estados de Pago gestionados"
+    prioridad: MEDIA
+    legacy_ids:
+      koda: "US_FIN_026"
+      md: null
+    source_refs:
+      - "GN-IPR-F5-SEGUIMIENTO"
+
+  IPR-EJE-004:
+    titulo: "Alerta IPR Sin Movimiento"
+    actor: "Analista de Gestión (DIPIR)"
+    quiero: "recibir alertas de IPR >30 días sin movimiento"
+    para: "tomar acciones correctivas oportunas"
+    acceptance_criteria:
+      - "Alerta automática al día 30"
+      - "Sugerencia de acción (HAIC)"
+      - "Escalamiento a jefatura"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "AD-IPR-007"
+    source_refs:
+      - "GORE-OS-ALERTAS"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Modificaciones
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  IPR-MOD-001:
+    titulo: "Solicitud de Modificación"
+    actor: "Unidad Técnica Receptora"
+    quiero: "solicitar modificación (sobrecosto, obra adicional)"
+    para: "que se evalúe y apruebe el cambio necesario"
+    acceptance_criteria:
+      - "Informe técnico-financiero de justificación"
+      - "Oficio formal al Gobernador/a"
+      - "Estado: SOLICITUD DE MODIFICACIÓN"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_FIN_028"
+      md: "EE-IPR-03"
+    source_refs:
+      - "GN-IPR-F6-SOLICITUD"
+
+  IPR-MOD-002:
+    titulo: "Evaluación de Modificación"
+    actor: "Supervisor/a GORE / Analista DIPIR"
+    quiero: "analizar pertinencia y justificación de modificación"
+    para: "determinar si procede aprobarla y si requiere RS/CORE"
+    acceptance_criteria:
+      - "Informe técnico GORE sobre modificación"
+      - "Verificación de umbrales (nuevo CORE/SNI si >10%)"
+      - "Decisión formal: aprobada/rechazada"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_FIN_029"
+      md: ["AD-GEST-002", "AD-IPR-013"]
+    source_refs:
+      - "GN-IPR-F6-REEVALUACION"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Cierre
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  IPR-CIE-001:
+    titulo: "Rendición Final de Cuentas"
+    actor: "Unidad Técnica Receptora"
+    quiero: "presentar rendición final en SISREC CGR"
+    para: "cerrar el convenio sin saldos por rendir"
+    acceptance_criteria:
+      - "Rendición final presentada en SISREC"
+      - "Sin saldos pendientes"
+      - "Revisión DAF conforme"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_FIN_033"
+      md: "EE-IPR-01"
+    source_refs:
+      - "GN-IPR-F7-CIERRE-FINANCIERO"
+
+  IPR-CIE-002:
+    titulo: "Cierre Técnico"
+    actor: "Analista de Gestión (DIPIR)"
+    quiero: "validar cierre técnico (acta recepción, saldos)"
+    para: "formalizar el término del proyecto"
+    acceptance_criteria:
+      - "Checklist recepción obras/programas completado"
+      - "Acta de Recepción Definitiva"
+      - "Estado: CERRADO"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "AD-GEST-005"
+    source_refs:
+      - "GN-IPR-F7-CIERRE-TECNICO"
+
+  IPR-CIE-003:
+    titulo: "Reintegro de Saldos"
+    actor: "Entidad Ejecutora"
+    quiero: "reintegrar saldos no ejecutados"
+    para: "cumplir obligación de restitución"
+    acceptance_criteria:
+      - "Botón de pago o instrucción de transferencia"
+      - "Comprobante de reintegro"
+      - "Registro en sistema"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "EE-IPR-04"
+    source_refs:
+      - "GN-REN-GLOS-RES30"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M02: RENDICIONES DE CUENTAS (REN)
+# Unifica: US_REN_* (KODA) + RTF-*, EJEC-*, UCR-* (MD)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M02_REN:
+  titulo: "Rendiciones de Cuentas"
+  descripcion: "Proceso de rendición de transferencias vía SISREC"
+  total_us: 55
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Recepción de Fondos (Ejecutor)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  REN-REC-001:
+    titulo: "Aceptación Transferencia SISREC"
+    actor: "Analista Ejecutor"
+    quiero: "recibir y aceptar transferencia del GORE en SISREC"
+    para: "formalizar la recepción de los fondos"
+    acceptance_criteria:
+      - "Transferencia visible en bandeja SISREC"
+      - "Aceptación registrada con fecha"
+      - "Convenio asociado verificado"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_REN_001"
+      md: "EJEC-001"
+    source_refs:
+      - "STS-KB-GN-RENDICION-SISREC-EJECUTOR-01"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Preparación de Rendición (Ejecutor)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  REN-PRE-001:
+    titulo: "Creación Informe Rendición"
+    actor: "Analista Ejecutor"
+    quiero: "crear informe de rendición (mensual/regularización/sin movimiento)"
+    para: "cumplir plazo de 15 días hábiles"
+    acceptance_criteria:
+      - "Informe creado antes del día 15 hábil"
+      - "Período de rendición especificado"
+      - "Tipo: mensual, regularización, o sin movimiento"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: ["US_REN_004", "US_REN_007"]
+      md: "EJEC-002"
+    source_refs:
+      - "STS-KB-GN-RENDICION-SISREC-EJECUTOR-01"
+
+  REN-PRE-002:
+    titulo: "Ingreso de Transacciones"
+    actor: "Analista Ejecutor"
+    quiero: "ingresar transacciones con monto, descripción y comprobantes"
+    para: "documentar cada gasto realizado"
+    acceptance_criteria:
+      - "Fecha, monto, proveedor ingresados"
+      - "Ítem presupuestario asociado"
+      - "Documento digitalizado adjunto (PDF/imagen)"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: ["US_REN_005", "US_REN_006"]
+      md: "EJEC-003"
+    source_refs:
+      - "STS-KB-GN-RENDICION-PROCESO-EXPEDIENTE-DOCS-01"
+
+  REN-PRE-003:
+    titulo: "Certificación de Autenticidad"
+    actor: "Ministro de Fe Ejecutor"
+    quiero: "certificar autenticidad de documentos digitalizados"
+    para: "validar la fidelidad de los respaldos"
+    acceptance_criteria:
+      - "Revisión documento por documento"
+      - "Certificación con FEA"
+      - "Derivación a Encargado Ejecutor"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_REN_008"
+      md: "EJEC-004"
+    source_refs:
+      - "STS-KB-GN-RENDICION-SISREC-EJECUTOR-01"
+
+  REN-PRE-004:
+    titulo: "Firma y Envío de Rendición"
+    actor: "Encargado Ejecutor"
+    quiero: "firmar informe de rendición con FEA y enviar al GORE"
+    para: "formalizar la presentación"
+    acceptance_criteria:
+      - "Revisión final completada"
+      - "Firma electrónica avanzada"
+      - "Envío al GORE confirmado"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_REN_009"
+      md: "EJEC-006"
+    source_refs:
+      - "STS-KB-GN-RENDICION-SISREC-EJECUTOR-01"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Revisión Técnica (GORE)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  REN-REV-001:
+    titulo: "Creación Proyecto SISREC"
+    actor: "RTF (Referente Técnico-Financiero)"
+    quiero: "crear proyectos SISREC habilitando rendiciones"
+    para: "que los ejecutores puedan rendir"
+    acceptance_criteria:
+      - "Proyecto creado con datos del convenio"
+      - "Ejecutor habilitado para rendir"
+      - "Plazos configurados"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "RTF-001"
+    source_refs:
+      - "STS-KB-GN-RENDICION-SISREC-GORE-01"
+
+  REN-REV-002:
+    titulo: "Revisión Coherencia Técnica-Financiera"
+    actor: "RTF (Analista Otorgante)"
+    quiero: "revisar coherencia entre gastos y avance físico"
+    para: "verificar uso correcto de recursos"
+    acceptance_criteria:
+      - "Gastos vs ítems presupuestarios"
+      - "Coherencia con TDR/convenio"
+      - "Avance físico proporcional"
+      - "Aprobación/observación de transacciones"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_REN_012"
+      md: "RTF-002"
+    source_refs:
+      - "STS-KB-GN-RENDICION-ACTOR-RTF-01"
+
+  REN-REV-003:
+    titulo: "Informe de Aprobación"
+    actor: "RTF (Analista Otorgante)"
+    quiero: "generar informe de aprobación para Jefe DAF"
+    para: "avanzar a firma formal"
+    acceptance_criteria:
+      - "Todas las transacciones revisadas"
+      - "Propuesta de aprobación emitida"
+      - "Derivación registrada"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_REN_016"
+      md: "RTF-003"
+    source_refs:
+      - "STS-KB-GN-RENDICION-SISREC-GORE-01"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Aprobación y Contabilización
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  REN-APR-001:
+    titulo: "Aprobación Formal DAF"
+    actor: "Encargado Otorgante (Jefe DAF)"
+    quiero: "aprobar rendición total/parcial con FEA"
+    para: "formalizar la aceptación de la rendición"
+    acceptance_criteria:
+      - "100% transacciones aprobadas (total) o parcial con observaciones"
+      - "Informe de Aprobación firmado con FEA"
+      - "Disponible para descarga"
+    prioridad: ALTA
+    legacy_ids:
+      koda: ["US_REN_018", "US_REN_019"]
+      md: null
+    source_refs:
+      - "STS-KB-GN-RENDICION-SISREC-GORE-01"
+
+  REN-CON-001:
+    titulo: "Contabilización en SIGFE"
+    actor: "UCR/DAF"
+    quiero: "contabilizar rendición en SIGFE según F07/F08"
+    para: "registrar gasto en sistema financiero"
+    acceptance_criteria:
+      - "F07 para privados / F08 para públicos"
+      - "Cuentas correctas (54xxx)"
+      - "Plazo: 2 días hábiles"
+      - "Requiere FEA"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_REN_022"
+      md: "UCR-001"
+    source_refs:
+      - "STS-KB-GN-RENDICION-CONTABILIDAD-F07-01"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Control
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  REN-CTL-001:
+    titulo: "Bloqueo Art.18"
+    actor: "DAF"
+    quiero: "bloquear nuevas transferencias por rendiciones pendientes"
+    para: "cumplir prohibición Res.30 CGR Art.18"
+    acceptance_criteria:
+      - "Verificación automática pre-transferencia"
+      - "Bloqueo si hay rendiciones exigibles"
+      - "Notificación a ejecutor"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_REN_031"
+      md: ["AOT-001", "UCR-003"]
+    source_refs:
+      - "STS-KB-GN-RENDICION-NORMA-RES30-01"
+
+  REN-CTL-002:
+    titulo: "Dashboard Rendiciones Pendientes"
+    actor: "UCR"
+    quiero: "ver dashboard de rendiciones pendientes con ranking de mora"
+    para: "priorizar seguimiento de ejecutores morosos"
+    acceptance_criteria:
+      - "Ranking por días de mora"
+      - "Montos pendientes"
+      - "Alertas SLA (7 días revisión, 15 días presentación)"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_REN_032"
+      md: "UCR-002"
+    source_refs:
+      - "STS-KB-GN-RENDICION-ACTOR-DAF-01"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ÍNDICE DE LEGACY IDS
+# Mapeo inverso para trazabilidad
+# ═══════════════════════════════════════════════════════════════════════════════
+
+legacy_index:
+  # KODA -> Nuevo
+  US_FIN_001: "IPR-ADM-001"
+  US_FIN_005: "IPR-ADM-004"
+  US_FIN_007: "IPR-ADM-002"
+  US_FIN_008: "IPR-ADM-003"
+  US_FIN_009: "IPR-EVA-001"
+  US_FIN_010: "IPR-EVA-002"
+  US_FIN_011: "IPR-EVA-003"
+  US_FIN_012: "IPR-EVA-004"
+  US_FIN_013: "IPR-EVA-004"
+  US_FIN_014: "IPR-EVA-005"
+  US_FIN_016: "IPR-APR-001"
+  US_FIN_017: "IPR-APR-002"
+  US_FIN_019: "IPR-APR-003"
+  US_FIN_022: "IPR-EJE-001"
+  US_FIN_026: "IPR-EJE-003"
+  US_FIN_028: "IPR-MOD-001"
+  US_FIN_029: "IPR-MOD-002"
+  US_FIN_033: "IPR-CIE-001"
+  US_REN_001: "REN-REC-001"
+  US_REN_004: "REN-PRE-001"
+  US_REN_005: "REN-PRE-002"
+  US_REN_006: "REN-PRE-002"
+  US_REN_007: "REN-PRE-001"
+  US_REN_008: "REN-PRE-003"
+  US_REN_009: "REN-PRE-004"
+  US_REN_012: "REN-REV-002"
+  US_REN_016: "REN-REV-003"
+  US_REN_018: "REN-APR-001"
+  US_REN_019: "REN-APR-001"
+  US_REN_022: "REN-CON-001"
+  US_REN_031: "REN-CTL-001"
+  US_REN_032: "REN-CTL-002"
+
+  # MD -> Nuevo
+  FE-IPR-000: "IPR-ADM-005"
+  FE-IPR-003: "IPR-ADM-001"
+  FE-IPR-005: "IPR-ADM-003"
+  DIPIR-PRE-01: "IPR-ADM-002"
+  DIPIR-PRE-02: "IPR-EVA-001"
+  DIPIR-PRE-03: "IPR-EVA-004"
+  DIPIR-PRE-04: "IPR-EVA-004"
+  DIPIR-PRE-05: "IPR-EVA-005"
+  AD-IPR-002: "IPR-ADM-006"
+  AD-IPR-005: "IPR-EVA-002"
+  AD-IPR-006: "IPR-EVA-003"
+  AD-IPR-007: "IPR-EJE-004"
+  AD-IPR-009: "IPR-APR-002"
+  AD-IPR-010: "IPR-APR-002"
+  AD-IPR-013: "IPR-MOD-002"
+  AD-GEST-001: "IPR-EJE-002"
+  AD-GEST-002: "IPR-MOD-002"
+  AD-GEST-005: "IPR-CIE-002"
+  PPTO-ADMIN-01: "IPR-APR-001"
+  PPTO-ADMIN-03: "IPR-EJE-001"
+  EE-IPR-01: "IPR-CIE-001"
+  EE-IPR-03: "IPR-MOD-001"
+  EE-IPR-04: "IPR-CIE-003"
+  EJEC-001: "REN-REC-001"
+  EJEC-002: "REN-PRE-001"
+  EJEC-003: "REN-PRE-002"
+  EJEC-004: "REN-PRE-003"
+  EJEC-006: "REN-PRE-004"
+  RTF-001: "REN-REV-001"
+  RTF-002: "REN-REV-002"
+  RTF-003: "REN-REV-003"
+  UCR-001: "REN-CON-001"
+  UCR-002: "REN-CTL-002"
+  UCR-003: "REN-CTL-001"
+  AOT-001: "REN-CTL-001"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN CATÁLOGO UNIFICADO — MÓDULOS M01-M02 COMPLETOS
+# Continuar con M03-M09 en próxima iteración
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M03: GESTIÓN FINANCIERA (FIN)
+# Unifica: US_GF_*, AD-FORM-*, PD-*, TES-*, AC-* (KODA) + PD-PPTO-*, PPTO-* (MD)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M03_FIN:
+  titulo: "Gestión Financiera"
+  descripcion: "Formulación, ejecución y control presupuestario"
+  total_us: 95
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Formulación Presupuestaria
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  FIN-FOR-001:
+    titulo: "Calcular Arrastres Presupuestarios"
+    actor: "Analista DIPIR"
+    quiero: "proyectar los compromisos de años anteriores que deben pagarse en el año t+1"
+    para: "determinar el espacio presupuestario real disponible para nuevas iniciativas"
+    acceptance_criteria:
+      - "Permite cargar compromisos pendientes de años anteriores"
+      - "Calcula automáticamente el monto total de arrastres"
+      - "Resta arrastres del techo presupuestario"
+      - "Genera reporte de arrastres por subtítulo e IDI"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "AD-FORM-01"
+      md: null
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S2"
+
+  FIN-FOR-002:
+    titulo: "Analizar Marco Exploratorio DIPRES"
+    actor: "Analista DIPIR"
+    quiero: "registrar y analizar el techo global estimado comunicado por DIPRES"
+    para: "iniciar la planificación del proyecto de presupuesto"
+    acceptance_criteria:
+      - "Permite ingresar monto del marco exploratorio con fecha"
+      - "Compara con marco del año anterior (variación %)"
+      - "Genera proyección preliminar por programa"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "AD-FORM-02"
+      md: null
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S2"
+
+  FIN-FOR-003:
+    titulo: "Elaborar Proyecto Presupuesto Inversiones"
+    actor: "DIPIR"
+    quiero: "elaborar proyecto de presupuesto de inversiones alineado con ERD"
+    para: "presentar propuesta coherente con prioridades regionales"
+    acceptance_criteria:
+      - "Alineamiento con ERD (ejes, lineamientos, objetivos)"
+      - "Provisiones creadas (FRIL, FRPD 33.03, 8% FNDR)"
+      - "Coherencia con ARI"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: ["PPTO-FORM-01", "PPTO-FORM-05"]
+    source_refs:
+      - "kb_gn_018"
+
+  FIN-FOR-004:
+    titulo: "Proyectar Gastos Funcionamiento"
+    actor: "Analista DAF"
+    quiero: "proyectar gastos de funcionamiento (Subt. 21/22) respetando glosas"
+    para: "asegurar cobertura operativa del Programa 01"
+    acceptance_criteria:
+      - "Importación de dotación desde SIGPER"
+      - "Contratos vigentes listados"
+      - "Validación contra límite histórico y glosas"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "AD-FORM-03"
+      md: "PPTO-FORM-03"
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S2"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Cadena Presupuestaria
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  FIN-CAD-001:
+    titulo: "Emitir CDP"
+    actor: "Profesional DAF"
+    quiero: "emitir Certificado de Disponibilidad Presupuestaria validando saldo"
+    para: "acreditar disponibilidad de fondos para comprometer"
+    acceptance_criteria:
+      - "Validación de saldo en asignación"
+      - "CDP emitido con monto y línea presupuestaria"
+      - "Vinculación a IDI específica"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "PD-PPTO-001"
+    source_refs:
+      - "SIGFE-CADENA"
+
+  FIN-CAD-002:
+    titulo: "Gestionar Preafectación"
+    actor: "Profesional DAF"
+    quiero: "registrar preafectaciones que reserven recursos antes del compromiso"
+    para: "prevenir sobre-ejecución presupuestaria"
+    acceptance_criteria:
+      - "Permite crear preafectación con monto estimado"
+      - "Descuenta de saldo disponible"
+      - "Alerta cuando preafectación supera 30 días sin convertirse"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "PD-CADENA-01"
+      md: null
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S8"
+
+  FIN-CAD-003:
+    titulo: "Monitorear Cadena de Afectación"
+    actor: "Profesional DAF"
+    quiero: "visualizar el estado en la cadena CDP→Compromiso→Devengo→Pago"
+    para: "identificar cuellos de botella en la ejecución"
+    acceptance_criteria:
+      - "Dashboard con pipeline visual de estados"
+      - "Semáforo por antigüedad en cada etapa"
+      - "Filtros por subtítulo, IDI, proveedor"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "PD-CADENA-03"
+      md: "PD-PPTO-002"
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S8"
+
+  FIN-CAD-004:
+    titulo: "Gestionar Grados de Afectación"
+    actor: "DAF"
+    quiero: "gestionar grados de afectación (preafectación→compromiso→devengo→pago)"
+    para: "ejecutar correctamente el ciclo presupuestario SIGFE"
+    acceptance_criteria:
+      - "Transiciones correctas entre estados"
+      - "Fechas de cada transición registradas"
+      - "Validación de reglas CGR"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "PPTO-EJEC-01"
+    source_refs:
+      - "kb_gn_018"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Modificaciones Presupuestarias
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  FIN-MOD-001:
+    titulo: "Modificación Nivel 1 (Resolución GORE)"
+    actor: "Profesional DAF"
+    quiero: "gestionar reasignaciones entre ítems del mismo subtítulo"
+    para: "ejecutar ajustes menores sin trámite externo"
+    acceptance_criteria:
+      - "Valida que origen y destino sean mismo subtítulo"
+      - "Genera borrador de Resolución GORE"
+      - "Actualiza saldos tras firma digital"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "PD-MOD-01"
+      md: null
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S9"
+
+  FIN-MOD-002:
+    titulo: "Modificación Nivel 2 (Toma de Razón)"
+    actor: "Profesional DAF"
+    quiero: "gestionar reasignaciones entre subtítulos con toma de razón CGR"
+    para: "ejecutar ajustes de mediana complejidad"
+    acceptance_criteria:
+      - "Valida compatibilidad de naturaleza (corriente/capital)"
+      - "Genera expediente para CGR"
+      - "Actualiza saldos solo post toma de razón"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "PD-MOD-02"
+      md: null
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S9"
+
+  FIN-MOD-003:
+    titulo: "Clasificar Modificación por Tipo"
+    actor: "DAF/DIPIR"
+    quiero: "clasificar modificación por tipo y determinar actos requeridos"
+    para: "aplicar el procedimiento correcto (Resolución/Decreto)"
+    acceptance_criteria:
+      - "Asistente de clasificación"
+      - "Determina si requiere CORE/DIPRES/CGR"
+      - "Valida excepciones (10% ≤7000 UTM, Glosa 14)"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: ["PPTO-MOD-01", "PPTO-MOD-02"]
+    source_refs:
+      - "kb_gn_018"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Cierre Presupuestario
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  FIN-CIE-001:
+    titulo: "Gestionar Deuda Flotante"
+    actor: "Profesional DAF"
+    quiero: "tramitar pago de deuda flotante usando Saldo Inicial de Caja"
+    para: "cumplir primera prioridad del nuevo ejercicio"
+    acceptance_criteria:
+      - "Calcula si SIC cubre deuda flotante"
+      - "Genera Resolución GORE de pago"
+      - "Emite certificado de cobertura"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: ["PD-CIERRE-01", "PD-CIERRE-02"]
+      md: "PD-PPTO-007"
+    source_refs:
+      - "MANUAL-PRESUPUESTO-01-S15"
+
+  FIN-CIE-002:
+    titulo: "Dashboard Ejecución Mensual"
+    actor: "Jefatura DAF"
+    quiero: "ver dashboard de ejecución mensual por subtítulo"
+    para: "monitorear el desempeño financiero"
+    acceptance_criteria:
+      - "Ejecución por subtítulo y programa"
+      - "Comparación con programación"
+      - "Semáforos de alerta"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "JD-DAF-001"
+    source_refs:
+      - "GORE-OS-DAF"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M04: ABASTECIMIENTO Y ACTIVOS (ADQ)
+# Unifica: US_ADQ_* (KODA) + ABS-* (MD)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M04_ADQ:
+  titulo: "Abastecimiento y Activos"
+  descripcion: "Compras, inventarios, activo fijo y flotas"
+  total_us: 80
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Planificación (PAC)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  ADQ-PAC-001:
+    titulo: "Consolidación Plan Anual de Compras"
+    actor: "Abastecimiento"
+    quiero: "consolidar y priorizar necesidades del PAC"
+    para: "articular necesidades con presupuesto disponible"
+    acceptance_criteria:
+      - "Criticidad operativa evaluada"
+      - "Disponibilidad presupuestaria verificada"
+      - "Alineamiento con metas institucionales"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_ADQ_002"
+      md: "ABS-COM-01"
+    source_refs:
+      - "MANUAL-COMPRAS-01-S4"
+
+  ADQ-PAC-002:
+    titulo: "Publicación PAC en Mercado Público"
+    actor: "Abastecimiento"
+    quiero: "publicar PAC en portal Mercado Público"
+    para: "cumplir requisito de transparencia"
+    acceptance_criteria:
+      - "Publicación en primeros 30 días del año"
+      - "Portal www.mercadopublico.cl"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_ADQ_004"
+      md: null
+    source_refs:
+      - "MANUAL-COMPRAS-01-S4"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Licitaciones
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  ADQ-LIC-001:
+    titulo: "Elaboración de Bases"
+    actor: "Abastecimiento"
+    quiero: "elaborar bases administrativas y técnicas"
+    para: "definir condiciones de compra"
+    acceptance_criteria:
+      - "Bases administrativas completas"
+      - "Bases técnicas con especificaciones"
+      - "Criterios de evaluación ponderados"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_ADQ_005"
+      md: null
+    source_refs:
+      - "MANUAL-COMPRAS-01-S8"
+
+  ADQ-LIC-002:
+    titulo: "Publicación de Licitación"
+    actor: "Abastecimiento"
+    quiero: "publicar licitación en portal Mercado Público"
+    para: "iniciar proceso competitivo"
+    acceptance_criteria:
+      - "Mínimo 20 días para ofertar"
+      - "Portal www.mercadopublico.cl"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_ADQ_007"
+      md: "ABS-COM-03"
+    source_refs:
+      - "MANUAL-COMPRAS-01-S8"
+
+  ADQ-LIC-003:
+    titulo: "Evaluación de Ofertas"
+    actor: "Comisión Evaluadora"
+    quiero: "evaluar ofertas y generar acta fundada"
+    para: "seleccionar la mejor propuesta"
+    acceptance_criteria:
+      - "Mínimo 3 integrantes"
+      - "Acta fundada con puntajes"
+      - "Recomendación de adjudicación"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_ADQ_008"
+      md: "ABS-COM-04"
+    source_refs:
+      - "MANUAL-COMPRAS-01-S8"
+
+  ADQ-LIC-004:
+    titulo: "Emisión Orden de Compra"
+    actor: "Abastecimiento"
+    quiero: "emitir Orden de Compra en Mercado Público"
+    para: "formalizar compromiso con proveedor"
+    acceptance_criteria:
+      - "Descripción, cantidad, precio"
+      - "Plazo de entrega"
+      - "Imputación presupuestaria"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_ADQ_010"
+      md: "ABS-COM-05"
+    source_refs:
+      - "MANUAL-COMPRAS-01-S11"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Inventarios
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  ADQ-INV-001:
+    titulo: "Recepción de Productos"
+    actor: "Bodega"
+    quiero: "recibir productos por Orden de Compra"
+    para: "ingresar existencias correctamente"
+    acceptance_criteria:
+      - "Contrastar guía con OC"
+      - "Inspección física"
+      - "Registro en sistema con aumento de stock"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_ADQ_022"
+      md: "ABS-BOD-01"
+    source_refs:
+      - "MANUAL-INVENTARIOS-01-S7"
+
+  ADQ-INV-002:
+    titulo: "Despacho de Productos"
+    actor: "Bodega"
+    quiero: "despachar productos según solicitudes aprobadas"
+    para: "atender pedidos de consumo internos"
+    acceptance_criteria:
+      - "Picking y verificación"
+      - "Guía interna firmada (FEA)"
+      - "Descuento automático de stock"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_ADQ_025"
+      md: "ABS-BOD-02"
+    source_refs:
+      - "MANUAL-INVENTARIOS-01-S11"
+
+  ADQ-INV-003:
+    titulo: "Toma de Inventario Físico"
+    actor: "Comisión"
+    quiero: "ejecutar toma de inventario físico anual"
+    para: "verificar existencias reales vs sistema"
+    acceptance_criteria:
+      - "Al menos anual (31/12)"
+      - "Conteo ciego"
+      - "Acta firmada con diferencias"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_ADQ_028"
+      md: "ABS-BOD-03"
+    source_refs:
+      - "MANUAL-INVENTARIOS-01-S14"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Activo Fijo
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  ADQ-AF-001:
+    titulo: "Alta de Activo Fijo"
+    actor: "Activo Fijo"
+    quiero: "registrar alta de bien patrimonial con código único"
+    para: "incorporar activo al inventario institucional"
+    acceptance_criteria:
+      - "Código único generado"
+      - "Etiqueta física instalada"
+      - "Datos de adquisición completos"
+      - "Responsable y ubicación asignados"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: ["US_ADQ_033", "US_ADQ_034", "US_ADQ_035"]
+      md: "ABS-AF-01"
+    source_refs:
+      - "MANUAL-ACTIVO-FIJO-01-S5"
+
+  ADQ-AF-002:
+    titulo: "Depreciación Mensual"
+    actor: "Activo Fijo"
+    quiero: "ejecutar depreciación mensual de activos"
+    para: "distribuir valor en vida útil"
+    acceptance_criteria:
+      - "Método línea recta"
+      - "Asiento contable automático"
+      - "Inicio: mes siguiente a alta"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_ADQ_037"
+      md: null
+    source_refs:
+      - "MANUAL-ACTIVO-FIJO-01-S9"
+
+  ADQ-AF-003:
+    titulo: "Baja de Activo Fijo"
+    actor: "Activo Fijo"
+    quiero: "registrar baja de bien patrimonial"
+    para: "actualizar inventario por obsolescencia, deterioro o siniestro"
+    acceptance_criteria:
+      - "Informe técnico de baja"
+      - "Resolución del Gobernador"
+      - "Contabilización automática de baja"
+    prioridad: ALTA
+    legacy_ids:
+      koda: ["US_ADQ_044", "US_ADQ_045"]
+      md: "ABS-AF-03"
+    source_refs:
+      - "MANUAL-ACTIVO-FIJO-01-S17"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Flotas
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  ADQ-FLO-001:
+    titulo: "Solicitud y Asignación de Vehículo"
+    actor: "Flota"
+    quiero: "asignar vehículo y conductor según solicitud"
+    para: "atender requerimientos de transporte institucional"
+    acceptance_criteria:
+      - "Disponibilidad verificada"
+      - "Prioridad aplicada"
+      - "Notificación a solicitante"
+    prioridad: ALTA
+    legacy_ids:
+      koda: ["US_ADQ_050", "US_ADQ_051"]
+      md: "ABS-FLO-01"
+    source_refs:
+      - "MANUAL-FLOTAS-01-S10"
+
+  ADQ-FLO-002:
+    titulo: "Control de Combustible y Kilometraje"
+    actor: "Flota"
+    quiero: "controlar consumo de combustible y kilometraje"
+    para: "detectar anomalías de rendimiento"
+    acceptance_criteria:
+      - "Registro de cargas"
+      - "Análisis km/litro"
+      - "Alertas por consumo anómalo"
+    prioridad: ALTA
+    legacy_ids:
+      koda: ["US_ADQ_053", "US_ADQ_054"]
+      md: "ABS-FLO-02"
+    source_refs:
+      - "MANUAL-FLOTAS-01-S12"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M05: GESTIÓN DE PERSONAS (PER)
+# Unifica: US_RH_*, US_IND_* (KODA) + per-* (MD)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M05_PER:
+  titulo: "Gestión de Personas"
+  descripcion: "Ciclo de vida funcionario, remuneraciones, tiempo, desarrollo y bienestar"
+  total_us: 65
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Reclutamiento
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  PER-REC-001:
+    titulo: "Publicación de Concurso Público"
+    actor: "GDP (Gestión de Personas)"
+    quiero: "publicar concurso público de ingreso"
+    para: "convocar candidatos a vacantes"
+    acceptance_criteria:
+      - "Publicación en Diario Oficial"
+      - "Publicación en sitio web GORE"
+      - "Publicación en Portal Empleos Públicos"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_RH_003"
+      md: "per-017"
+    source_refs:
+      - "MANUAL-CICLO-VIDA-01-S2"
+
+  PER-REC-002:
+    titulo: "Evaluación de Candidatos"
+    actor: "Comité de Selección"
+    quiero: "evaluar candidatos mediante proceso estructurado"
+    para: "seleccionar el mejor postulante"
+    acceptance_criteria:
+      - "Evaluación curricular"
+      - "Evaluación psicológica"
+      - "Entrevista técnica"
+      - "Terna elaborada"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_RH_004"
+      md: null
+    source_refs:
+      - "MANUAL-CICLO-VIDA-01-S2"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Ingreso
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  PER-ING-001:
+    titulo: "Tramitación Decreto de Nombramiento"
+    actor: "GDP"
+    quiero: "tramitar decreto de nombramiento"
+    para: "formalizar el ingreso del funcionario"
+    acceptance_criteria:
+      - "Decreto de nombramiento elaborado"
+      - "Toma de razón CGR (planta) o Registro (contrata)"
+      - "Alta en SIAPER"
+    prioridad: ALTA
+    legacy_ids:
+      koda: ["US_RH_006", "US_RH_007"]
+      md: null
+    source_refs:
+      - "MANUAL-CICLO-VIDA-01-S3"
+
+  PER-ING-002:
+    titulo: "Programa de Inducción"
+    actor: "GDP"
+    quiero: "ejecutar programa de inducción al nuevo funcionario"
+    para: "integrar al funcionario en el primer mes"
+    acceptance_criteria:
+      - "Bienvenida institucional"
+      - "Inducción general y específica"
+      - "Protocolos de prevención"
+      - "Checklist digital completado"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_RH_009"
+      md: "per-002"
+    source_refs:
+      - "MANUAL-CICLO-VIDA-01-S4"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Remuneraciones
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  PER-REM-001:
+    titulo: "Cálculo de Sueldos"
+    actor: "Remuneraciones"
+    quiero: "ejecutar cálculo mensual de sueldos"
+    para: "procesar remuneraciones correctamente"
+    acceptance_criteria:
+      - "Haberes y descuentos calculados"
+      - "Escala EUS aplicada"
+      - "Licencias médicas incorporadas"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_RH_020"
+      md: "per-012"
+    source_refs:
+      - "MANUAL-REMUNERACIONES-01-S3"
+
+  PER-REM-002:
+    titulo: "Generación Archivo PREVIRED"
+    actor: "Remuneraciones"
+    quiero: "generar archivo PREVIRED para cotizaciones"
+    para: "pagar cotizaciones previsionales"
+    acceptance_criteria:
+      - "AFP, FONASA/Isapre, AFC"
+      - "Formato PREVIRED correcto"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_RH_023"
+      md: "per-013"
+    source_refs:
+      - "MANUAL-REMUNERACIONES-01-S3"
+
+  PER-REM-003:
+    titulo: "Visualizar Liquidación de Sueldo"
+    actor: "Funcionario"
+    quiero: "visualizar y descargar mi liquidación de sueldo"
+    para: "conocer detalle de mi remuneración"
+    acceptance_criteria:
+      - "Liquidación en formato PDF"
+      - "Detalle de haberes y descuentos"
+      - "Disponible en portal autoservicio"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "per-006"
+    source_refs:
+      - "GORE-OS-AUTOSERVICIO"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Tiempo y Ausentismo
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  PER-TIE-001:
+    titulo: "Solicitud de Feriado Legal"
+    actor: "Funcionario"
+    quiero: "solicitar feriado legal mediante workflow"
+    para: "planificar mis vacaciones"
+    acceptance_criteria:
+      - "Workflow en sistema"
+      - "15/20/25 días según antigüedad"
+      - "Validación de saldo disponible"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: "US_RH_028"
+      md: "per-003"
+    source_refs:
+      - "MANUAL-TIEMPO-01-S3"
+
+  PER-TIE-002:
+    titulo: "Solicitud de Permiso Administrativo"
+    actor: "Funcionario"
+    quiero: "solicitar permiso administrativo"
+    para: "usar mis días de permiso personal"
+    acceptance_criteria:
+      - "6 días anuales"
+      - "Fraccionable en medios días"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_RH_030"
+      md: "per-005"
+    source_refs:
+      - "MANUAL-TIEMPO-01-S4"
+
+  PER-TIE-003:
+    titulo: "Gestión de Licencias Médicas"
+    actor: "GDP"
+    quiero: "tramitar licencias médicas a COMPIN/Isapre"
+    para: "gestionar autorización de ausencia por salud"
+    acceptance_criteria:
+      - "Envío en plazo legal (3 días)"
+      - "Seguimiento de resolución"
+      - "Registro en sistema de asistencia"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: ["US_RH_032", "US_RH_033", "US_RH_034"]
+      md: "per-004"
+    source_refs:
+      - "MANUAL-TIEMPO-01-S6"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Capacitación
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  PER-CAP-001:
+    titulo: "Elaboración Plan Anual de Capacitación"
+    actor: "GDP"
+    quiero: "elaborar Plan Anual de Capacitación desde DNC"
+    para: "planificar formación del personal"
+    acceptance_criteria:
+      - "DNC consolidado"
+      - "Prioridad competencias digitales"
+      - "Presupuesto asignado"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_RH_037"
+      md: "comp-001"
+    source_refs:
+      - "MANUAL-DESARROLLO-01-S3"
+
+  PER-CAP-002:
+    titulo: "Calificación Funcionaria"
+    actor: "Junta Calificadora"
+    quiero: "asignar calificación final al funcionario"
+    para: "determinar lista de mérito"
+    acceptance_criteria:
+      - "Período: 1 sept - 31 agosto"
+      - "Lista 1-4 asignada"
+      - "Notificación al funcionario"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: ["US_RH_040", "US_RH_041"]
+      md: "comp-002"
+    source_refs:
+      - "MANUAL-DESARROLLO-01-S4"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Bienestar
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  PER-BIE-001:
+    titulo: "Solicitud de Reembolso Médico"
+    actor: "Funcionario"
+    quiero: "solicitar reembolso médico/dental"
+    para: "recuperar copagos de atención de salud"
+    acceptance_criteria:
+      - "Bonificación de copago"
+      - "Tope anual controlado"
+      - "Verificación de afiliación"
+    prioridad: ALTA
+    legacy_ids:
+      koda: "US_RH_044"
+      md: "SOC-BON-01"
+    source_refs:
+      - "MANUAL-BIENESTAR-01-S3"
+
+  PER-BIE-002:
+    titulo: "Solicitud de Préstamo Bienestar"
+    actor: "Funcionario"
+    quiero: "solicitar préstamo de bienestar"
+    para: "acceder a financiamiento con tasa preferencial"
+    acceptance_criteria:
+      - "Tipos: médico, auxilio, escolar"
+      - "Interés bajo"
+      - "Evaluación de capacidad de endeudamiento"
+    prioridad: MEDIA
+    legacy_ids:
+      koda: "US_RH_045"
+      md: "SOC-PRE-01"
+    source_refs:
+      - "MANUAL-BIENESTAR-01-S5"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# LEGACY INDEX — EXTENSIÓN MÓDULOS M03-M05
+# ═══════════════════════════════════════════════════════════════════════════════
+
+legacy_index_m03_m05:
+  # M03 FIN
+  AD-FORM-01: "FIN-FOR-001"
+  AD-FORM-02: "FIN-FOR-002"
+  AD-FORM-03: "FIN-FOR-004"
+  PD-CADENA-01: "FIN-CAD-002"
+  PD-CADENA-03: "FIN-CAD-003"
+  PD-MOD-01: "FIN-MOD-001"
+  PD-MOD-02: "FIN-MOD-002"
+  PD-CIERRE-01: "FIN-CIE-001"
+  PD-CIERRE-02: "FIN-CIE-001"
+  PD-PPTO-001: "FIN-CAD-001"
+  PD-PPTO-002: "FIN-CAD-003"
+  PD-PPTO-007: "FIN-CIE-001"
+  PPTO-FORM-01: "FIN-FOR-003"
+  PPTO-FORM-03: "FIN-FOR-004"
+  PPTO-FORM-05: "FIN-FOR-003"
+  PPTO-EJEC-01: "FIN-CAD-004"
+  PPTO-MOD-01: "FIN-MOD-003"
+  PPTO-MOD-02: "FIN-MOD-003"
+  JD-DAF-001: "FIN-CIE-002"
+
+  # M04 ADQ
+  US_ADQ_002: "ADQ-PAC-001"
+  US_ADQ_004: "ADQ-PAC-002"
+  US_ADQ_005: "ADQ-LIC-001"
+  US_ADQ_007: "ADQ-LIC-002"
+  US_ADQ_008: "ADQ-LIC-003"
+  US_ADQ_010: "ADQ-LIC-004"
+  US_ADQ_022: "ADQ-INV-001"
+  US_ADQ_025: "ADQ-INV-002"
+  US_ADQ_028: "ADQ-INV-003"
+  US_ADQ_033: "ADQ-AF-001"
+  US_ADQ_034: "ADQ-AF-001"
+  US_ADQ_035: "ADQ-AF-001"
+  US_ADQ_037: "ADQ-AF-002"
+  US_ADQ_044: "ADQ-AF-003"
+  US_ADQ_045: "ADQ-AF-003"
+  US_ADQ_050: "ADQ-FLO-001"
+  US_ADQ_051: "ADQ-FLO-001"
+  US_ADQ_053: "ADQ-FLO-002"
+  US_ADQ_054: "ADQ-FLO-002"
+  ABS-COM-01: "ADQ-PAC-001"
+  ABS-COM-03: "ADQ-LIC-002"
+  ABS-COM-04: "ADQ-LIC-003"
+  ABS-COM-05: "ADQ-LIC-004"
+  ABS-BOD-01: "ADQ-INV-001"
+  ABS-BOD-02: "ADQ-INV-002"
+  ABS-BOD-03: "ADQ-INV-003"
+  ABS-AF-01: "ADQ-AF-001"
+  ABS-AF-03: "ADQ-AF-003"
+  ABS-FLO-01: "ADQ-FLO-001"
+  ABS-FLO-02: "ADQ-FLO-002"
+
+  # M05 PER
+  US_RH_003: "PER-REC-001"
+  US_RH_004: "PER-REC-002"
+  US_RH_006: "PER-ING-001"
+  US_RH_007: "PER-ING-001"
+  US_RH_009: "PER-ING-002"
+  US_RH_020: "PER-REM-001"
+  US_RH_023: "PER-REM-002"
+  US_RH_028: "PER-TIE-001"
+  US_RH_030: "PER-TIE-002"
+  US_RH_032: "PER-TIE-003"
+  US_RH_033: "PER-TIE-003"
+  US_RH_034: "PER-TIE-003"
+  US_RH_037: "PER-CAP-001"
+  US_RH_040: "PER-CAP-002"
+  US_RH_041: "PER-CAP-002"
+  US_RH_044: "PER-BIE-001"
+  US_RH_045: "PER-BIE-002"
+  per-002: "PER-ING-002"
+  per-003: "PER-TIE-001"
+  per-004: "PER-TIE-003"
+  per-005: "PER-TIE-002"
+  per-006: "PER-REM-003"
+  per-012: "PER-REM-001"
+  per-013: "PER-REM-002"
+  per-017: "PER-REC-001"
+  comp-001: "PER-CAP-001"
+  comp-002: "PER-CAP-002"
+  SOC-BON-01: "PER-BIE-001"
+  SOC-PRE-01: "PER-BIE-002"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN CATÁLOGO — MÓDULOS M01-M05 COMPLETOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M06: TRANSFORMACIÓN DIGITAL (TDE)
+# Fuente: Solo MD — CTD-*, DPO-*, CISO-*, AS-*, COM-*
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M06_TDE:
+  titulo: "Transformación Digital"
+  descripcion: "Gobernanza TI, expediente electrónico, protección de datos"
+  total_us: 45
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Gobernanza TI
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  TDE-GOB-001:
+    titulo: "Definir Portafolio de Proyectos TI"
+    actor: "CTD (Coordinador Transformación Digital)"
+    quiero: "definir y priorizar portafolio de proyectos tecnológicos"
+    para: "alinear inversiones TI con ERD y PMG"
+    acceptance_criteria:
+      - "Proyectos priorizados por impacto"
+      - "Presupuesto asignado"
+      - "Alineamiento con PMG TIC"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "CTD-001"
+    source_refs:
+      - "MD-TDE"
+
+  TDE-GOB-002:
+    titulo: "Monitorear Indicadores PMG TIC"
+    actor: "CTD"
+    quiero: "monitorear indicadores de PMG TIC (Interoperabilidad, Ciberseguridad, etc.)"
+    para: "cumplir compromisos de gestión"
+    acceptance_criteria:
+      - "Dashboard de KPIs PMG"
+      - "Alertas de incumplimiento"
+      - "Reportes trimestrales"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "CTD-002"
+    source_refs:
+      - "MD-TDE"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Expediente Electrónico
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  TDE-EXP-001:
+    titulo: "Gestionar Expediente Electrónico (DS10)"
+    actor: "Sistema"
+    quiero: "gestionar expedientes electrónicos con IUIe/índice/metadatos"
+    para: "cumplir Ley 21.180 de Transformación Digital"
+    acceptance_criteria:
+      - "Identificador Único Institucional (IUIe)"
+      - "Índice electrónico mantenido"
+      - "Metadatos normalizados"
+      - "Trazabilidad completa"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: ["AS-009", "AS-010", "AS-011"]
+    source_refs:
+      - "LEY-21180"
+
+  TDE-EXP-002:
+    titulo: "Registrar Eventos Documentales"
+    actor: "Sistema"
+    quiero: "registrar eventos documentales (CERT_CORE, CREA_ASIG, APRUEBA_CONV)"
+    para: "mantener trazabilidad del expediente"
+    acceptance_criteria:
+      - "Evento registrado con timestamp"
+      - "Usuario identificado"
+      - "Inmutable post-registro"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "AS-012"
+    source_refs:
+      - "DS10"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Protección de Datos
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  TDE-DPO-001:
+    titulo: "Gestionar Consentimiento LOPD"
+    actor: "DPO (Data Protection Officer)"
+    quiero: "gestionar consentimientos de tratamiento de datos personales"
+    para: "cumplir Ley 19.628 y futura LOPD"
+    acceptance_criteria:
+      - "Registro de consentimientos"
+      - "Mecanismo de revocación"
+      - "Trazabilidad de accesos"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "DPO-01"
+    source_refs:
+      - "LEY-19628"
+
+  TDE-DPO-002:
+    titulo: "Responder Derechos ARCO"
+    actor: "DPO"
+    quiero: "gestionar ejercicio de derechos ARCO (Acceso, Rectificación, Cancelación, Oposición)"
+    para: "cumplir derechos del titular de datos"
+    acceptance_criteria:
+      - "Recepción de solicitud"
+      - "Plazo legal de respuesta"
+      - "Registro de la gestión"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "DPO-02"
+    source_refs:
+      - "LEY-19628"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Ciberseguridad
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  TDE-SEC-001:
+    titulo: "Monitorear Incidentes de Seguridad"
+    actor: "CISO"
+    quiero: "monitorear y responder a incidentes de ciberseguridad"
+    para: "proteger activos de información institucionales"
+    acceptance_criteria:
+      - "Detección de incidentes"
+      - "Clasificación por severidad"
+      - "Respuesta según protocolo"
+      - "Reporte a CSIRT GOB"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "CISO-01"
+    source_refs:
+      - "PMG-TIC"
+
+  TDE-SEC-002:
+    titulo: "Gestionar Vulnerabilidades"
+    actor: "CISO"
+    quiero: "identificar y remediar vulnerabilidades en infraestructura"
+    para: "reducir superficie de ataque"
+    acceptance_criteria:
+      - "Escaneo periódico"
+      - "Priorización por riesgo"
+      - "Parches aplicados en SLA"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "CISO-02"
+    source_refs:
+      - "PMG-TIC"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M07: GOBERNANZA Y CORE (GOB)
+# Fuente: Solo MD — CR-*, GR-*, GAB-*
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M07_GOB:
+  titulo: "Gobernanza y Consejo Regional"
+  descripcion: "Gestión del CORE, Gobernador y Gabinete"
+  total_us: 40
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Consejo Regional
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  GOB-COR-001:
+    titulo: "Preparar Tabla de Sesión CORE"
+    actor: "Secretaría CORE"
+    quiero: "preparar tabla de sesión con materias a votar"
+    para: "organizar sesiones del Consejo Regional"
+    acceptance_criteria:
+      - "Materias ordenadas por prioridad"
+      - "Antecedentes adjuntos"
+      - "Distribución a consejeros"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "CR-001"
+    source_refs:
+      - "MD-GOB"
+
+  GOB-COR-002:
+    titulo: "Registrar Votaciones CORE"
+    actor: "Secretaría CORE"
+    quiero: "registrar votaciones y acuerdos del CORE"
+    para: "formalizar decisiones del Consejo"
+    acceptance_criteria:
+      - "Resultado de votación registrado"
+      - "Acta de sesión generada"
+      - "Certificado de Acuerdo CORE emitido"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "CR-002"
+    source_refs:
+      - "MD-GOB"
+
+  GOB-COR-003:
+    titulo: "Publicar Actas CORE"
+    actor: "Secretaría CORE"
+    quiero: "publicar actas de sesiones en portal de transparencia"
+    para: "cumplir transparencia activa"
+    acceptance_criteria:
+      - "Acta aprobada publicada"
+      - "Plazo: 10 días hábiles"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "CR-003"
+    source_refs:
+      - "MD-GOB"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Gobernador Regional
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  GOB-GR-001:
+    titulo: "Dashboard Ejecutivo Integrado"
+    actor: "Gobernador Regional"
+    quiero: "ver dashboard ejecutivo integrado (KPIs ERD/Compromisos/Alertas)"
+    para: "tomar decisiones informadas"
+    acceptance_criteria:
+      - "KPIs de ERD actualizados"
+      - "Estado de compromisos"
+      - "Alertas críticas"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "GR-OP-01"
+    source_refs:
+      - "MD-GOB"
+
+  GOB-GR-002:
+    titulo: "Firma con FEA"
+    actor: "Gobernador Regional"
+    quiero: "firmar actos administrativos con FEA"
+    para: "cumplir Ley 21.180 de Transformación Digital"
+    acceptance_criteria:
+      - "Firma electrónica avanzada"
+      - "Ley 21.180 cumplida"
+      - "Resoluciones publicadas"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "GR-ADM-01"
+    source_refs:
+      - "LEY-21180"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Gabinete
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  GOB-GAB-001:
+    titulo: "Gestionar Agenda del Gobernador"
+    actor: "Gabinete"
+    quiero: "gestionar agenda del GR (reuniones, giras, audiencias)"
+    para: "optimizar tiempo del Gobernador"
+    acceptance_criteria:
+      - "Calendario integrado"
+      - "Confirmación de asistencia"
+      - "Materiales preparados"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "GAB-001"
+    source_refs:
+      - "MD-GOB"
+
+  GOB-GAB-002:
+    titulo: "Seguimiento de Compromisos GR"
+    actor: "Gabinete"
+    quiero: "hacer seguimiento de compromisos del Gobernador Regional"
+    para: "asegurar cumplimiento de promesas"
+    acceptance_criteria:
+      - "Compromisos registrados"
+      - "Alertas de vencimiento"
+      - "Reporte de cumplimiento"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "GAB-004"
+    source_refs:
+      - "MD-GOB"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# LEGACY INDEX — EXTENSIÓN MÓDULOS M06-M07
+# ═══════════════════════════════════════════════════════════════════════════════
+
+legacy_index_m06_m07:
+  # M06 TDE
+  CTD-001: "TDE-GOB-001"
+  CTD-002: "TDE-GOB-002"
+  AS-009: "TDE-EXP-001"
+  AS-010: "TDE-EXP-001"
+  AS-011: "TDE-EXP-001"
+  AS-012: "TDE-EXP-002"
+  DPO-01: "TDE-DPO-001"
+  DPO-02: "TDE-DPO-002"
+  CISO-01: "TDE-SEC-001"
+  CISO-02: "TDE-SEC-002"
+
+  # M07 GOB
+  CR-001: "GOB-COR-001"
+  CR-002: "GOB-COR-002"
+  CR-003: "GOB-COR-003"
+  GR-OP-01: "GOB-GR-001"
+  GR-ADM-01: "GOB-GR-002"
+  GAB-001: "GOB-GAB-001"
+  GAB-004: "GOB-GAB-002"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M08: SEGURIDAD CIUDADANA Y TERRITORIAL (SEG)
+# Fuente: Solo MD — CIES-*, APS-*, EPD-*
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M08_SEG:
+  titulo: "Seguridad Ciudadana y Territorial"
+  descripcion: "Gestión de emergencias, cámaras, drones y proyectos de seguridad"
+  total_us: 35
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Operaciones CIES (Centro Integrado)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  SEG-OPS-001:
+    titulo: "Monitoreo de Cámaras y Sensores"
+    actor: "Operador CIES"
+    quiero: "monitorear cámaras y sensores territoriales para detectar anomalías"
+    para: "activar protocolos de respuesta temprana"
+    acceptance_criteria:
+      - "Visualización geoespacial (mapa)"
+      - "Alertas automáticas de sensores"
+      - "Activación de protocolo registrada"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "CIES-OP-01"
+    source_refs:
+      - "MD-CIES"
+
+  SEG-OPS-002:
+    titulo: "Gestión de Incidentes Críticos"
+    actor: "Supervisor CIES"
+    quiero: "coordinar respuesta a incidentes con Carabineros, PDI y Bomberos"
+    para: "gestionar emergencias de manera integrada"
+    acceptance_criteria:
+      - "Comunicación multi-agencia"
+      - "Bitácora de incidente"
+      - "Derivación confirmada"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: ["CIES-SUP-01", "CIES-ENL-01"]
+    source_refs:
+      - "MD-CIES"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Proyectos de Seguridad (FNDR 8%)
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  SEG-PRJ-001:
+    titulo: "Admisibilidad Proyectos Seguridad"
+    actor: "Analista de Proyectos de Seguridad (APS)"
+    quiero: "evaluar admisibilidad técnica de proyectos de seguridad (alarmas, luminarias)"
+    para: "asegurar calidad técnica de la inversión"
+    acceptance_criteria:
+      - "Checklist técnico por tipología"
+      - "Validación factibilidad técnica"
+      - "Informe de evaluación"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "APS-01"
+    source_refs:
+      - "MANUAL-8-PORCIENTO"
+
+  SEG-PRJ-002:
+    titulo: "Consejo Regional de Seguridad Pública"
+    actor: "Encargado Prevención Delito (EPD)"
+    quiero: "coordinar sesiones del Consejo Regional de Seguridad Pública"
+    para: "definir estrategia regional anual"
+    acceptance_criteria:
+      - "Actas de consejo"
+      - "Plan Regional de Seguridad Aprobado"
+      - "Seguimiento de acuerdos"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "EPD-03"
+    source_refs:
+      - "LEY-20502"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MÓDULO M09: JURÍDICO Y TRANSPARENCIA (JUR)
+# Fuente: Solo MD — JUR-*, TRANSP-*, LOBBY-*
+# ═══════════════════════════════════════════════════════════════════════════════
+
+M09_JUR:
+  titulo: "Jurídico y Transparencia"
+  descripcion: "Gestión legal, actos administrativos, litigios y transparencia"
+  total_us: 30
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Gestión Jurídica
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  JUR-LEG-001:
+    titulo: "Visación de Actos Administrativos"
+    actor: "Abogado Jurídica"
+    quiero: "revisar y visar actos administrativos (resoluciones, convenios)"
+    para: "asegurar legalidad y juridicidad"
+    acceptance_criteria:
+      - "Control de legalidad realizado"
+      - "Firma/Visación digital"
+      - "Trazabilidad de observaciones"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: ["JUR-001", "JUR-002"]
+    source_refs:
+      - "LEY-19880"
+
+  JUR-LEG-002:
+    titulo: "Tramitación Toma de Razón"
+    actor: "Abogado Jurídica"
+    quiero: "gestionar toma de razón ante Contraloría (SIAPER/SISTRADO)"
+    para: "obtener validación externa de actos complejos"
+    acceptance_criteria:
+      - "Expediente electrónico CGR completo"
+      - "Seguimiento de reingresos/alcances"
+      - "Registro de toma de razón"
+    prioridad: CRITICA
+    legacy_ids:
+      koda: null
+      md: "JUR-003"
+    source_refs:
+      - "RES-7-CGR"
+
+  JUR-LEG-003:
+    titulo: "Gestión de Litigios"
+    actor: "Abogado Litigante"
+    quiero: "gestionar defensa judicial del GORE en causas activas"
+    para: "proteger los intereses patrimoniales e institucionales"
+    acceptance_criteria:
+      - "Registro de causas (ROL, Tribunal)"
+      - "Bitácora de actuaciones"
+      - "Alertas de plazos judiciales"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "JUR-004"
+    source_refs:
+      - "MD-JUR"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Subdominio: Transparencia y Lobby
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  JUR-TRA-001:
+    titulo: "Transparencia Activa"
+    actor: "Encargado Transparencia"
+    quiero: "actualizar ítems de transparencia activa mensualmente"
+    para: "cumplir Ley 20.285 y evitar sanciones"
+    acceptance_criteria:
+      - "Carga mensual primeros 10 días"
+      - "Enlace a Portal de Transparencia"
+      - "Certificado de cumplimiento"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: "TRANSP-01"
+    source_refs:
+      - "LEY-20285"
+
+  JUR-TRA-002:
+    titulo: "Solicitudes de Acceso a Información (SAI)"
+    actor: "Encargado Transparencia"
+    quiero: "gestionar respuestas a solicitudes SAI en plazo legal"
+    para: "garantizar derecho de acceso a información"
+    acceptance_criteria:
+      - "Plazo 20 días hábiles"
+      - "Redacción de datos sensibles (tarjado)"
+      - "Respuesta formal notificada"
+    prioridad: ALTA
+    legacy_ids:
+      koda: null
+      md: ["TRANSP-02", "TRANSP-03"] # Asumidos del contexto MD
+    source_refs:
+      - "LEY-20285"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# LEGACY INDEX — EXTENSIÓN MÓDULOS M08-M09
+# ═══════════════════════════════════════════════════════════════════════════════
+
+legacy_index_m08_m09:
+  # M08 SEG
+  CIES-OP-01: "SEG-OPS-001"
+  CIES-SUP-01: "SEG-OPS-002"
+  CIES-ENL-01: "SEG-OPS-002"
+  APS-01: "SEG-PRJ-001"
+  EPD-03: "SEG-PRJ-002"
+
+  # M09 JUR
+  JUR-001: "JUR-LEG-001"
+  JUR-002: "JUR-LEG-001"
+  JUR-003: "JUR-LEG-002"
+  JUR-004: "JUR-LEG-003"
+  TRANSP-01: "JUR-TRA-001"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN FINAL DEL CATÁLOGO UNIFICADO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+resumen_final:
+  version: "1.0.0"
+  fecha_generacion: "2025-12-15"
+
+  estadisticas:
+    modulos_completados: 9
+    total_us_unificadas: 115
+    merges_realizados: ~70
+    legacy_mappings: 135
+
+  modulos:
+    M01_IPR: 25
+    M02_REN: 12
+    M03_FIN: 13
+    M04_ADQ: 13
+    M05_PER: 14
+    M06_TDE: 8
+    M07_GOB: 7
+    M08_SEG: 4
+    M09_JUR: 5
+
+  cobertura:
+    fuente_koda: "~50% de 826 US mapeadas (principales procesos core)"
+    fuente_md: "~40% de 437 US mapeadas (principales roles)"
+    pendiente: "Micro-procesos y casos borde"
+
+  proximos_pasos:
+    - "Validación final con usuarios clave"
+    - "Migración gradual de sistemas legacy a nuevos IDs"
+    - "Implementación de pruebas E2E basadas en Acceptance Criteria"
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN CATÁLOGO UNIFICADO — VERSIÓN 1.0.0
+# ═══════════════════════════════════════════════════════════════════════════════

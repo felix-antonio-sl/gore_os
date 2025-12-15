@@ -1,0 +1,761 @@
+# GOS-102d: GORE_OS - User Stories Mecanismos Especiales FNDR (D-FIN)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:102d:user_stories:mecanismos"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - User Stories Mecanismos Especiales FNDR"
+  Description: "User Stories para FRIL, FRPD, Subvención 8% y Circular 33"
+  Domain: GORE_OS
+  Subdomain: D-FIN
+  Created: "2024-12-15"
+  Sources:
+    - file: "kb_gn_026_guia_fril_koda.yml"
+    - file: "kb_gn_027_guia_frpd_koda.yml"
+    - file: "kb_gn_028_instructivo_subvencion_8_koda.yml"
+    - file: "kb_gn_029_guia_circ33_koda.yml"
+  Tags: [goreos, user-stories, fril, frpd, subvencion8, circular33, d_fin]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FRIL - FONDO REGIONAL DE INICIATIVA LOCAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_FRIL:
+  titulo: "FRIL - Fondo Regional de Iniciativa Local"
+  descripcion: "Proyectos infraestructura comunal menor escala"
+  source_ref: GN-GUIA-FRIL-STS-2025-01
+
+  US_FRIL_001:
+    nombre: "Formulación Iniciativa FRIL"
+    actor: "SECPLA Municipal"
+    accion: "formular proyecto FRIL según instructivo regional"
+    beneficio: "presente iniciativas elegibles al concurso"
+    acceptance_criteria:
+      - "Monto entre $100.000.000 y 4.545 UTM"
+      - "Categoría única definida (A/B/C/D)"
+      - "Máximo 5 iniciativas por comuna (excepto A2/A3)"
+    priority: ALTA
+    source_ref: GN-FRIL-SEC-3-MONTO-MARCO
+
+  US_FRIL_002:
+    nombre: "Selección Categoría Proyecto"
+    actor: "SECPLA Municipal"
+    accion: "seleccionar categoría y subcategoría del proyecto"
+    beneficio: "clasifique correctamente la iniciativa"
+    acceptance_criteria:
+      - "Una sola categoría por proyecto"
+      - "Al menos 1 proyecto por comuna en Salud/Seguridad/Reactivación"
+    priority: ALTA
+    source_ref: GN-FRIL-CATEGORIAS-01
+
+  US_FRIL_003:
+    nombre: "Preparación Documentación FRIL"
+    actor: "SECPLA Municipal"
+    accion: "preparar documentación según checklist obligatorio"
+    beneficio: "cumpla requisitos de admisibilidad"
+    acceptance_criteria:
+      - "Oficio conductor con vinculación ERD/PLADECO"
+      - "Ficha IDI año 2025, Subtítulo 33"
+      - "EETT, presupuesto, certificaciones"
+      - "Fotografías ≤6 meses, KMZ"
+    priority: ALTA
+    source_ref: GN-FRIL-SEC-9-DOC-POSTULACION
+
+  US_FRIL_004:
+    nombre: "Certificación Propiedad/BNUP"
+    actor: "DOM Municipal"
+    accion: "certificar situación legal del terreno"
+    beneficio: "acredite disponibilidad para la intervención"
+    acceptance_criteria:
+      - "Certificado dominio vigente (≤60 días)"
+      - "BNUP: certificado DOM"
+      - "Comodato: inscripción CBR ≥ vida útil"
+    priority: ALTA
+    source_ref: GN-FRIL-DOC-PROPIEDAD-01
+
+  US_FRIL_005:
+    nombre: "Obtención Pertinencia Técnica"
+    actor: "SECPLA Municipal"
+    accion: "obtener pertinencia del servicio competente"
+    beneficio: "valide alcance técnico con sectorialista"
+    acceptance_criteria:
+      - "Deporte formativo: IND"
+      - "Salud: SEREMI Salud"
+      - "Educación: SEREMI Educación"
+      - "Vial urbano: SERVIU"
+    priority: MEDIA
+    source_ref: GN-FRIL-TABLA-PERT-01
+
+  US_FRIL_006:
+    nombre: "Ingreso Iniciativa GESDOC"
+    actor: "SECPLA Municipal"
+    accion: "ingresar iniciativa vía banner FRIL en web GORE"
+    beneficio: "formalice postulación con trazabilidad"
+    acceptance_criteria:
+      - "Oficio y Ficha IDI cargados"
+      - "Antecedentes completos en BIP"
+      - "Ingreso dentro de plazo convocatoria"
+    priority: ALTA
+    source_ref: GN-FRIL-PROC-INGRESO-01
+
+  US_FRIL_007:
+    nombre: "Evaluación Admisibilidad FRIL"
+    actor: "Analista DIPIR"
+    accion: "verificar completitud y cumplimiento instructivo"
+    beneficio: "filtre iniciativas que cumplen requisitos mínimos"
+    acceptance_criteria:
+      - "Documentación completa"
+      - "Cumple prohibiciones instructivo"
+      - "Montos dentro de rango"
+    priority: ALTA
+    source_ref: GN-FRIL-PROC-ADMISIBILIDAD-01
+
+  US_FRIL_008:
+    nombre: "Evaluación Técnica RATE"
+    actor: "Analista DIPIR"
+    accion: "evaluar técnicamente y asignar calificación RATE"
+    beneficio: "determine viabilidad técnica de la iniciativa"
+    acceptance_criteria:
+      - "Emisión RATE en ≤60 días hábiles"
+      - "RS: certificado, acta, presupuesto final"
+      - "FI: observaciones subsanables"
+      - "OT: problemas insubsanables"
+    priority: CRÍTICA
+    source_ref: GN-FRIL-PROC-REVISION-01
+
+  US_FRIL_009:
+    nombre: "Subsanación Observaciones FI"
+    actor: "SECPLA Municipal"
+    accion: "subsanar observaciones dentro de plazo"
+    beneficio: "avance hacia calificación RS"
+    acceptance_criteria:
+      - "Plazo: ≤30 días hábiles (prorrogable)"
+      - "Correcciones cargadas en BIP"
+      - "Reingreso vía GESDOC"
+    priority: ALTA
+    source_ref: GN-FRIL-PROC-NR-01
+
+  US_FRIL_010:
+    nombre: "Transferencia Recursos FRIL"
+    actor: "Depto. Presupuesto GORE"
+    accion: "transferir recursos según convenio"
+    beneficio: "habilite al municipio para licitar"
+    acceptance_criteria:
+      - "Resolución de financiamiento emitida"
+      - "Convenio firmado"
+      - "Cuenta bancaria exclusiva informada"
+    priority: ALTA
+    source_ref: GN-FRIL-SEC-12-TRANSFERENCIAS
+
+  US_FRIL_011:
+    nombre: "Licitación Obra FRIL"
+    actor: "Municipalidad"
+    accion: "licitar obra en Mercado Público"
+    beneficio: "inicie ejecución del proyecto"
+    acceptance_criteria:
+      - "Publicación en ≤90 días desde convenio"
+      - "Bases coherentes con RS"
+      - "Sin modificaciones no autorizadas"
+    priority: ALTA
+    source_ref: GN-FRIL-SEC-13-EJECUCION
+
+  US_FRIL_012:
+    nombre: "Ejecución y Rendición FRIL"
+    actor: "Municipalidad"
+    accion: "ejecutar obra y rendir cuentas"
+    beneficio: "justifique uso de recursos FNDR"
+    acceptance_criteria:
+      - "Rendición según Res. 30/2015 CGR"
+      - "Informes de avance al ITO GORE"
+      - "Recepción definitiva de obras"
+    priority: ALTA
+    source_ref: GN-FRIL-SEC-14-RENDICIONES-INFORMES
+
+  US_FRIL_013:
+    nombre: "Solicitud Reevaluación FRIL"
+    actor: "Municipalidad"
+    accion: "solicitar reevaluación por cambios significativos"
+    beneficio: "formalice modificaciones durante ejecución"
+    acceptance_criteria:
+      - "Desde 60 días post-RS hasta 30 días antes término"
+      - "Resumen ejecutivo e informe ITO"
+      - "Aumento ≤10% del monto original"
+    priority: MEDIA
+    source_ref: GN-FRIL-SEC-11-REEVALUACIONES
+
+  US_FRIL_014:
+    nombre: "Modificación Contrato FRIL"
+    actor: "Municipalidad"
+    accion: "solicitar modificación de contrato de obras"
+    beneficio: "ajuste ejecución a condiciones reales"
+    acceptance_criteria:
+      - "Justificación técnica documentada"
+      - "Autorización GORE previa"
+      - "Sin cambio de objetivo del proyecto"
+    priority: MEDIA
+    source_ref: GN-FRIL-SEC-15-MODIFICACIONES-TERMINO
+
+  US_FRIL_015:
+    nombre: "Cierre Proyecto FRIL"
+    actor: "Depto. Inversiones GORE"
+    accion: "cerrar proyecto en BIP y SIGFE"
+    beneficio: "libere saldos y documente resultados"
+    acceptance_criteria:
+      - "Rendición aprobada"
+      - "Recepción definitiva"
+      - "Registro en BIP actualizado"
+    priority: ALTA
+    source_ref: GN-FRIL-SEC-15-MODIFICACIONES-TERMINO
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FRPD - FONDO REGIONAL PRODUCTIVIDAD Y DESARROLLO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_FRPD:
+  titulo: "FRPD - Fondo Regional Productividad y Desarrollo"
+  descripcion: "Concurso para instituciones habilitadas CTCI/Fomento"
+  source_ref: GN-FRPD-GUIA-OPERATIVA-2025-01
+
+  US_FRPD_001:
+    nombre: "Verificación Elegibilidad SUBCTCI"
+    actor: "Institución postulante"
+    accion: "verificar habilitación según Res. Exenta 33/2024 SUBCTCI"
+    beneficio: "confirme que puede postular al FRPD"
+    acceptance_criteria:
+      - "Institución en listado oficial"
+      - "Objeto social relacionado"
+      - "Sin conflictos de interés (parentesco)"
+    priority: ALTA
+    source_ref: GN-FRPD-SEC-4-POSTULANTES
+
+  US_FRPD_002:
+    nombre: "Formulación Iniciativa FRPD"
+    actor: "Institución postulante"
+    accion: "formular iniciativa con MML y alineación estratégica"
+    beneficio: "fundamente problema y solución"
+    acceptance_criteria:
+      - "Alineación con ERD y ER-CTCI"
+      - "Sector y foco prioritario definido"
+      - "Problema regional identificable y medible"
+    priority: ALTA
+    source_ref: GN-FRPD-SEC-3-PILARES
+
+  US_FRPD_003:
+    nombre: "Completar Formulario Postulación"
+    actor: "Institución postulante"
+    accion: "completar formulario online en web GORE"
+    beneficio: "presente la iniciativa al concurso"
+    acceptance_criteria:
+      - "Todos los campos obligatorios"
+      - "Anexos cargados correctamente"
+      - "Envío dentro de plazo"
+    priority: ALTA
+    source_ref: GN-FRPD-SEC-5-PRESENTACION
+
+  US_FRPD_004:
+    nombre: "Preparación Anexos FRPD"
+    actor: "Institución postulante"
+    accion: "preparar anexos obligatorios del concurso"
+    beneficio: "cumpla requisitos documentales"
+    acceptance_criteria:
+      - "Oficio conductor, Ficha IDI"
+      - "Anexo 1 (Formulario MML)"
+      - "Anexo 2 (Presupuesto), Anexo 3 (Perfiles)"
+      - "Declaraciones juradas"
+    priority: ALTA
+    source_ref: GN-FRPD-EVAL-ANTECEDENTES-01
+
+  US_FRPD_005:
+    nombre: "Evaluación Admisibilidad Administrativa"
+    actor: "Comisión GORE"
+    accion: "verificar cumplimiento criterios A-L"
+    beneficio: "filtre iniciativas formalmente correctas"
+    acceptance_criteria:
+      - "Registro completo"
+      - "Máximo 2 iniciativas por postulante"
+      - "Remuneraciones ≤30% del monto"
+      - "Plazo ejecución ≤30 meses"
+    priority: ALTA
+    source_ref: GN-FRPD-SEC-6-ADM-ADMIN
+
+  US_FRPD_006:
+    nombre: "Evaluación Admisibilidad Técnica"
+    actor: "Comisión territorial"
+    accion: "evaluar variables técnicas y asignar puntaje"
+    beneficio: "priorice iniciativas con mayor mérito"
+    acceptance_criteria:
+      - "Comisión ≤11 representantes, quórum 6"
+      - "Variables: coherencia, alineación, mérito innovador"
+      - "Puntaje mínimo elegibilidad: 5"
+    priority: ALTA
+    source_ref: GN-FRPD-SEC-7-ADM-TEC
+
+  US_FRPD_007:
+    nombre: "Evaluación Técnica RATE FRPD"
+    actor: "DAE"
+    accion: "evaluar técnicamente y asignar calificación"
+    beneficio: "determine ejecutabilidad de la iniciativa"
+    acceptance_criteria:
+      - "RS: certificado con contenido estándar"
+      - "Vigencia RS: año obtención + 2 años"
+      - "FI/OT/NV documentados"
+    priority: CRÍTICA
+    source_ref: GN-FRPD-EVAL-PROCEDIMIENTO-01
+
+  US_FRPD_008:
+    nombre: "Subsanación Observaciones FRPD"
+    actor: "Institución postulante"
+    accion: "subsanar observaciones dentro de plazo"
+    beneficio: "avance hacia calificación RS"
+    acceptance_criteria:
+      - "Correcciones en BIP"
+      - "Reingreso por canal oficial"
+    priority: ALTA
+    source_ref: GN-FRPD-RATE-FI-01
+
+  US_FRPD_009:
+    nombre: "Aprobación Financiamiento CORE"
+    actor: "CORE"
+    accion: "aprobar o tomar conocimiento del financiamiento"
+    beneficio: "autorice uso de recursos regionales"
+    acceptance_criteria:
+      - ">7.000 UTM: aprobación CORE"
+      - "≤7.000 UTM: toma de conocimiento"
+    priority: ALTA
+    source_ref: GN-FRPD-EJEC-SOLICITUD-01
+
+  US_FRPD_010:
+    nombre: "Elaboración Convenio FRPD"
+    actor: "Depto. Presupuestos"
+    accion: "elaborar convenio de transferencia"
+    beneficio: "formalice obligaciones de las partes"
+    acceptance_criteria:
+      - "Post resolución DIPRES"
+      - "Firma representante legal beneficiado"
+    priority: ALTA
+    source_ref: GN-FRPD-EJEC-CONVENIO-01
+
+  US_FRPD_011:
+    nombre: "Seguimiento Iniciativa FRPD"
+    actor: "División patrocinante"
+    accion: "realizar seguimiento técnico y financiero"
+    beneficio: "verifique avance y cumplimiento"
+    acceptance_criteria:
+      - "Informes de avance según convenio"
+      - "Verificación de indicadores"
+    priority: MEDIA
+    source_ref: GN-FRPD-EJEC-SEGUIMIENTO-01
+
+  US_FRPD_012:
+    nombre: "Rendición Vía SISREC"
+    actor: "Institución beneficiaria"
+    accion: "rendir cuentas obligatoriamente en SISREC"
+    beneficio: "cumpla Art. 24 Ley 21.722"
+    acceptance_criteria:
+      - "Cuenta corriente exclusiva FNDR"
+      - "Rendición en plataforma SISREC"
+      - "Gastos admin ≤5%"
+    priority: ALTA
+    source_ref: GN-FRPD-EJEC-TRANSFERENCIAS-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SUBVENCIÓN 8% - VINCULACIÓN CON LA COMUNIDAD
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_8Porciento:
+  titulo: "Subvención 8% - Vinculación con la Comunidad"
+  descripcion: "Concurso para organizaciones SFL y municipios"
+  source_ref: GN-CONC8-INSTRUCTIVO-01
+
+  US_8P_001:
+    nombre: "Verificación Requisitos Postulante"
+    actor: "Organización SFL"
+    accion: "verificar cumplimiento de requisitos de postulación"
+    beneficio: "confirme elegibilidad al concurso"
+    acceptance_criteria:
+      - "Antigüedad ≥2 años"
+      - "Domicilio en Ñuble"
+      - "Sin rendiciones pendientes GORE"
+      - "Experiencia en área de postulación"
+    priority: ALTA
+    source_ref: GN-CONC8-REQ-POSTULANTES-PRIV-01
+
+  US_8P_002:
+    nombre: "Selección Fondo Temático"
+    actor: "Organización SFL"
+    accion: "seleccionar fondo y área de postulación"
+    beneficio: "identifique línea de financiamiento adecuada"
+    acceptance_criteria:
+      - "Fondo definido: Cultura/Social/Género/Deporte/AM/MedioAmb/Seguridad"
+      - "Área específica seleccionada"
+      - "Monto tope según tipo organización"
+    priority: ALTA
+    source_ref: GN-CONC8-DESC-FONDOS-01
+
+  US_8P_003:
+    nombre: "Completar Formulario Online"
+    actor: "Organización SFL"
+    accion: "completar formulario de postulación en web GORE"
+    beneficio: "presente la iniciativa al concurso"
+    acceptance_criteria:
+      - "7 secciones completadas"
+      - "Documentos digitalizados (PDF/JPG)"
+      - "Envío antes de las 23:59 del cierre"
+    priority: ALTA
+    source_ref: GN-CONC8-GUIA-FORM-ONLINE-PRIV-01
+
+  US_8P_004:
+    nombre: "Preparación Documentación 8%"
+    actor: "Organización SFL"
+    accion: "preparar documentación obligatoria del concurso"
+    beneficio: "cumpla requisitos de admisibilidad"
+    acceptance_criteria:
+      - "Carta solicitud, aceptación términos"
+      - "RUT, CI representante legal"
+      - "Directorio vigente (≤30 días)"
+      - "Inscripción Registro 19.862"
+    priority: ALTA
+    source_ref: GN-CONC8-DOC-OBLIG-PRIV-01
+
+  US_8P_005:
+    nombre: "Elaboración Presupuesto 8%"
+    actor: "Organización SFL"
+    accion: "elaborar presupuesto según estructura del fondo"
+    beneficio: "costee correctamente la iniciativa"
+    acceptance_criteria:
+      - "Ítems: Equipamiento, Gestión, Difusión (3-10%), Honorarios"
+      - "Cotizaciones por ítem"
+      - "Monto coherente en formulario/carta/planilla"
+    priority: ALTA
+    source_ref: GN-CONC8-FC-GASTOS-01
+
+  US_8P_006:
+    nombre: "Evaluación Admisibilidad 8%"
+    actor: "DIDESOH"
+    accion: "verificar cumplimiento requisitos formales"
+    beneficio: "filtre iniciativas documentalmente correctas"
+    acceptance_criteria:
+      - "Documentación completa"
+      - "Postulante elegible"
+      - "Montos dentro de topes"
+    priority: ALTA
+    source_ref: GN-CONC8-REQ-ADMIS-PRIV-01
+
+  US_8P_007:
+    nombre: "Evaluación Técnica 8%"
+    actor: "DIDESOH"
+    accion: "evaluar técnicamente y asignar puntaje"
+    beneficio: "priorice iniciativas con mayor impacto"
+    acceptance_criteria:
+      - "Puntaje de corte mínimo"
+      - "Ranking por puntaje"
+      - "Selección según presupuesto disponible"
+    priority: ALTA
+    source_ref: GN-CONC8-CRIT-ADJ-PRIV-01
+
+  US_8P_008:
+    nombre: "Subsanación Observaciones 8%"
+    actor: "Organización SFL"
+    accion: "subsanar observaciones dentro de plazo"
+    beneficio: "complete requisitos faltantes"
+    acceptance_criteria:
+      - "Correcciones en plataforma"
+      - "Plazo según notificación"
+    priority: MEDIA
+    source_ref: GN-CONC8-SEC-2-REGLAS-TRANSVERSALES
+
+  US_8P_009:
+    nombre: "Adjudicación Subvención"
+    actor: "GORE"
+    accion: "adjudicar subvención a organizaciones seleccionadas"
+    beneficio: "formalice el financiamiento"
+    acceptance_criteria:
+      - "Resolución de adjudicación"
+      - "Publicación en web GORE"
+      - "Notificación a beneficiarios"
+    priority: ALTA
+    source_ref: GN-CONC8-DIST-FONDOS-PRIV-01
+
+  US_8P_010:
+    nombre: "Ejecución Iniciativa 8%"
+    actor: "Organización SFL"
+    accion: "ejecutar actividades según proyecto aprobado"
+    beneficio: "materialice los objetivos propuestos"
+    acceptance_criteria:
+      - "Plazo: ≤8 meses desde transferencia"
+      - "Gratuidad si financiamiento 100%"
+      - "Coordinación eventos con DIDESOH (10 días)"
+    priority: ALTA
+    source_ref: GN-CONC8-PLAZO-EJEC-GRAL-01
+
+  US_8P_011:
+    nombre: "Rendición Cuentas 8%"
+    actor: "Organización SFL"
+    accion: "rendir cuentas de la subvención"
+    beneficio: "justifique uso de recursos públicos"
+    acceptance_criteria:
+      - "Dentro de plazo de ejecución"
+      - "Según Res. 30/2015 CGR"
+      - "Material editado: 10% al GORE"
+    priority: ALTA
+    source_ref: GN-CONC8-SEC-11-SEGUIMIENTO-RENDICION
+
+  US_8P_012:
+    nombre: "Postulación Línea Municipal"
+    actor: "Municipalidad"
+    accion: "postular iniciativas en línea exclusiva municipal"
+    beneficio: "acceda a recursos 8% para proyectos comunales"
+    acceptance_criteria:
+      - "Requisitos específicos municipales"
+      - "Rendición vía SISREC"
+    priority: MEDIA
+    source_ref: GN-CONC8-SEC-10-MUNICIPIOS
+
+  US_8P_013:
+    nombre: "Gestión Fondo Seguridad Ciudadana"
+    actor: "CIES"
+    accion: "gestionar línea de seguridad ciudadana"
+    beneficio: "coordine iniciativas de prevención"
+    acceptance_criteria:
+      - "Equipamiento comunitario"
+      - "Prevención situacional"
+      - "Recuperación espacios públicos"
+    priority: MEDIA
+    source_ref: GN-CONC8-FONDO-SEG-01
+
+  US_8P_014:
+    nombre: "Renuncia Recursos 8%"
+    actor: "Organización SFL"
+    accion: "renunciar a recursos por fuerza mayor"
+    beneficio: "libere recursos para redistribución"
+    acceptance_criteria:
+      - "Oficio al Gobernador"
+      - "Voucher de reintegro adjunto"
+      - "Motivos documentados"
+    priority: BAJA
+    source_ref: GN-CONC8-RENUNCIA-REC-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CIRCULAR 33 - ESTUDIOS, ANF, CONSERVACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Circular33:
+  titulo: "Circular 33 - Estudios, ANF, Conservación"
+  descripcion: "Procedimiento expedito para categorías especiales"
+  source_ref: GN-GUIA-CIRC33-STS-2025-01
+
+  US_C33_001:
+    nombre: "Identificación Categoría C33"
+    actor: "Servicio/Municipio"
+    accion: "identificar categoría aplicable al proyecto"
+    beneficio: "determine vía correcta de financiamiento"
+    acceptance_criteria:
+      - "Estudio del giro / ANF / Conservación caminos / Conservación infra / Emergencia"
+      - "Cumple condiciones específicas de categoría"
+    priority: ALTA
+    source_ref: C33-CAT-POSTULABLES-01
+
+  US_C33_002:
+    nombre: "Formulación Estudio del Giro"
+    actor: "Servicio Público"
+    accion: "formular estudio propio del giro institucional"
+    beneficio: "financie estudios sin RATE MIDESO"
+    acceptance_criteria:
+      - "Subtítulo 22, ítem 11"
+      - "Formulario Estudios (Anexo 2)"
+      - "TDR detallados"
+    priority: MEDIA
+    source_ref: C33-CAT-ESTUDIOS-GIRO-01
+
+  US_C33_003:
+    nombre: "Formulación Adquisición ANF"
+    actor: "Servicio/Municipio"
+    accion: "formular adquisición o reposición de activos"
+    beneficio: "adquiera equipos/vehículos sin proyecto mayor"
+    acceptance_criteria:
+      - "Aporte propio ≥20%"
+      - "3 cotizaciones/tasaciones"
+      - "Subtítulo 29"
+      - "Formulario ANF (Anexo 3)"
+    priority: ALTA
+    source_ref: C33-CAT-ANF-01
+
+  US_C33_004:
+    nombre: "Formulación Conservación Caminos"
+    actor: "Municipalidad"
+    accion: "formular proyecto de conservación vial"
+    beneficio: "mantenga infraestructura vial comunal"
+    acceptance_criteria:
+      - "Sin modificar capacidad/geometría"
+      - "Informe MANVU SIMP (vial urbano)"
+      - "Formulario Conservación (Anexo 4)"
+    priority: ALTA
+    source_ref: C33-CAT-CONS-CAMINOS-01
+
+  US_C33_005:
+    nombre: "Formulación Conservación Infraestructura"
+    actor: "Servicio/Municipio"
+    accion: "formular conservación de infraestructura pública"
+    beneficio: "repare activos sin RATE MIDESO"
+    acceptance_criteria:
+      - "Costo ≤30% reposición"
+      - "Equipamiento ≤20% del total"
+      - "Gastos admin ≤5%"
+    priority: ALTA
+    source_ref: C33-CAT-CONS-INFRA-01
+
+  US_C33_006:
+    nombre: "Preparación Documentación C33"
+    actor: "Formulador"
+    accion: "preparar documentación según matriz del instructivo"
+    beneficio: "cumpla requisitos por tipo de iniciativa"
+    acceptance_criteria:
+      - "Oficio conductor con vinculación ERD"
+      - "Ficha IDI año presupuestario"
+      - "Antecedentes específicos según categoría"
+    priority: ALTA
+    source_ref: C33-MATRIZ-DOC-01
+
+  US_C33_007:
+    nombre: "Certificación Cumplimiento 30%"
+    actor: "Formulador"
+    accion: "certificar que costo de conservación ≤30% de reposición"
+    beneficio: "acredite exención de RATE MIDESO"
+    acceptance_criteria:
+      - "Anexo 4B completado"
+      - "Cálculo documentado"
+    priority: ALTA
+    source_ref: C33-DOC-31-CERT-30
+
+  US_C33_008:
+    nombre: "Evaluación Costo Marginal ANF"
+    actor: "Formulador"
+    accion: "calcular costo marginal de mantener activo actual"
+    beneficio: "justifique reposición vs mantención"
+    acceptance_criteria:
+      - "Planilla Excel con cálculo"
+      - "Bitácora de fallas del activo"
+      - "Certificado mal estado técnico"
+    priority: MEDIA
+    source_ref: C33-DOC-13-COSTO-MARGINAL
+
+  US_C33_009:
+    nombre: "Ingreso Iniciativa GESDOC/OP"
+    actor: "Servicio/Municipio"
+    accion: "ingresar iniciativa por GESDOC o Oficina de Partes"
+    beneficio: "formalice postulación con trazabilidad"
+    acceptance_criteria:
+      - "Oficio y antecedentes cargados en BIP"
+      - "Ingreso hasta 31 octubre cada año"
+    priority: ALTA
+    source_ref: C33-PROC-FASE2-01
+
+  US_C33_010:
+    nombre: "Evaluación Admisibilidad C33"
+    actor: "DAE"
+    accion: "verificar completitud y coherencia de antecedentes"
+    beneficio: "filtre iniciativas formalmente correctas"
+    acceptance_criteria:
+      - "Admisible / Admisible con observaciones / Inadmisible"
+      - "Subsanación en 5 días hábiles"
+    priority: ALTA
+    source_ref: C33-PROC-FASE3-ADM-01
+
+  US_C33_011:
+    nombre: "Evaluación Técnica RATE C33"
+    actor: "DAE"
+    accion: "evaluar técnicamente y asignar calificación"
+    beneficio: "determine viabilidad de la iniciativa"
+    acceptance_criteria:
+      - "RS: certificado emitido"
+      - "FI: observaciones subsanables"
+      - "OT: problemas insubsanables"
+      - "NV: incumplimiento de plazos"
+    priority: CRÍTICA
+    source_ref: C33-PROC-FASE4-REV-01
+
+  US_C33_012:
+    nombre: "Subsanación Observaciones C33"
+    actor: "Servicio/Municipio"
+    accion: "subsanar observaciones dentro de plazo"
+    beneficio: "avance hacia calificación RS"
+    acceptance_criteria:
+      - "Correcciones cargadas en BIP"
+      - "Reingreso formal"
+    priority: ALTA
+    source_ref: C33-PROC-FASE3-ADM-01
+
+  US_C33_013:
+    nombre: "Gestión Reconstrucción Emergencia"
+    actor: "GORE"
+    accion: "gestionar iniciativas de reconstrucción post-desastre"
+    beneficio: "agilice inversión en zonas de catástrofe"
+    acceptance_criteria:
+      - "Decreto de emergencia adjunto"
+      - "Zona de catástrofe declarada"
+      - "Proceso agilizado SNI"
+    priority: ALTA
+    source_ref: C33-CAT-EMERGENCIA-01
+
+  US_C33_014:
+    nombre: "Cierre Iniciativa C33"
+    actor: "DIPIR"
+    accion: "cerrar iniciativa en BIP y sistemas financieros"
+    beneficio: "documente resultados y libere recursos"
+    acceptance_criteria:
+      - "Rendición aprobada"
+      - "Actualización BIP"
+      - "Registro SIGFE"
+    priority: MEDIA
+    source_ref: C33-SEC-4-PROCESOS
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  total_user_stories: 55
+  por_mecanismo:
+    FRIL: 15
+    FRPD: 12
+    Subvencion_8: 14
+    Circular_33: 14
+  por_prioridad:
+    CRÍTICA: 3
+    ALTA: 40
+    MEDIA: 10
+    BAJA: 2
+  actores_identificados:
+    FRIL:
+      - SECPLA Municipal
+      - DOM Municipal
+      - Analista DIPIR
+      - Depto. Presupuesto GORE
+      - Depto. Inversiones GORE
+      - Municipalidad
+    FRPD:
+      - Institución postulante
+      - Comisión GORE
+      - Comisión territorial
+      - DAE
+      - CORE
+      - División patrocinante
+    Subvencion_8:
+      - Organización SFL
+      - DIDESOH
+      - CIES
+      - Municipalidad
+      - GORE
+    Circular_33:
+      - Servicio Público
+      - Municipio
+      - Formulador
+      - DAE
+      - DIPIR
+      - GORE
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN USER STORIES MECANISMOS ESPECIALES
+# ═══════════════════════════════════════════════════════════════════════════════

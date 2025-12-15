@@ -1,0 +1,448 @@
+# GOS-999: GORE_OS - Catálogo Maestro de Artefactos
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:999:catalogo_maestro"
+  Version: "1.0.0"
+  Status: Active
+
+Metadata:
+  Title: "GORE_OS - Catálogo Maestro de Artefactos KODA"
+  Description: "Índice central de todos los artefactos de conocimiento del GORE_OS"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Tags: [goreos, catalogo, indice, koda]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN EJECUTIVO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  proyecto: "GORE_OS - Sistema Operativo del GORE Ñuble"
+  proposito: "Digital twin del GORE para gestión integral de inversión pública regional"
+  total_artefactos: 31
+  dominios_cubiertos: 10
+  dominios_especificados: "10/10 (100%)"
+  entidades_modeladas: 66
+  casos_uso_especificados: 108
+  fecha_creacion: "2024-12-14"
+  ultima_actualizacion: "2024-12-14"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CATÁLOGO DE ARTEFACTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Catalogo:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERIE 000: FUNDACIONALES
+  # ─────────────────────────────────────────────────────────────────────────────
+  Fundacionales:
+    descripcion: "Artefactos base que definen visión, arquitectura y vocabulario"
+    
+    GOS-000:
+      archivo: "kb_goreos_000_vision_estrategica_koda.yml"
+      titulo: "Visión Estratégica GORE_OS"
+      contenido:
+        - "Propósito y alcance del sistema"
+        - "Principios rectores"
+        - "Funciones motor del GORE (5)"
+        - "Roadmap de alto nivel"
+      audiencia: [Gobernador, Directivos, Stakeholders]
+      
+    GOS-001:
+      archivo: "kb_goreos_001_arquitectura_general_koda.yml"
+      titulo: "Arquitectura General"
+      contenido:
+        - "Arquitectura de 10 dominios"
+        - "Capas del sistema"
+        - "Patrones de integración"
+        - "Stack tecnológico propuesto"
+      audiencia: [Arquitectos, Desarrolladores, TI]
+      
+    GOS-005:
+      archivo: "kb_goreos_005_glosario_goreos_koda.yml"
+      titulo: "Glosario GORE_OS"
+      contenido:
+        - "Términos institucionales"
+        - "Términos técnicos"
+        - "Acrónimos"
+        - "Enumeraciones"
+      audiencia: [Todos]
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERIE 100: ESPECIFICACIONES FUNCIONALES
+  # ─────────────────────────────────────────────────────────────────────────────
+  Especificaciones:
+    descripcion: "Especificaciones detalladas por dominio con casos de uso y APIs"
+    
+    GOS-101:
+      archivo: "kb_goreos_101_especificacion_d_plan_koda.yml"
+      titulo: "Especificación D-PLAN"
+      dominio: "Planificación"
+      contenido:
+        - "10 casos de uso (ERD, PROT, CP)"
+        - "Flujos de proceso"
+        - "Reglas de negocio"
+        - "Endpoints API"
+      casos_uso: 10
+      
+    GOS-102:
+      archivo: "kb_goreos_102_especificacion_d_fin_koda.yml"
+      titulo: "Especificación D-FIN"
+      dominio: "Financiamiento"
+      contenido:
+        - "15 casos de uso (IPR, solicitudes, presupuesto)"
+        - "Ciclo de priorización"
+        - "Flujo aprobación CORE"
+        - "Integración BIP/SIGFE"
+      casos_uso: 15
+      
+    GOS-103:
+      archivo: "kb_goreos_103_especificacion_d_ejec_koda.yml"
+      titulo: "Especificación D-EJEC"
+      dominio: "Ejecución"
+      contenido:
+        - "12 casos de uso (convenios, rendiciones, PMO)"
+        - "Flujo de desembolsos"
+        - "Gestión de rendiciones"
+        - "Integración SII"
+      casos_uso: 12
+      
+    GOS-110:
+      archivo: "kb_goreos_110_especificacion_d_gestion_koda.yml"
+      titulo: "Especificación D-GESTION"
+      dominio: "Gestión Institucional"
+      contenido:
+        - "Gestión OKRs"
+        - "Cálculo H_gore"
+        - "Sistema de alertas"
+        - "Playbooks de respuesta"
+      casos_uso: 8
+      
+    GOS-111:
+      archivo: "kb_goreos_111_especificacion_d_evol_koda.yml"
+      titulo: "Especificación D-EVOL"
+      dominio: "Evolución Institucional"
+      contenido:
+        - "Arquitectura Lakehouse"
+        - "Automatizaciones"
+        - "Agentes AI propuestos"
+        - "Gobernanza AI"
+      casos_uso: 6
+
+    GOS-104:
+      archivo: "kb_goreos_104_especificacion_d_coord_koda.yml"
+      titulo: "Especificación D-COORD"
+      dominio: "Coordinación"
+      contenido:
+        - "Compromisos interinstitucionales"
+        - "Indicadores regionales"
+        - "Gabinete regional"
+      casos_uso: 9
+
+    GOS-105:
+      archivo: "kb_goreos_105_especificacion_d_norm_koda.yml"
+      titulo: "Especificación D-NORM"
+      dominio: "Normativo"
+      contenido:
+        - "Proceso normativo"
+        - "Consultas públicas"
+        - "Biblioteca normativa"
+      casos_uso: 11
+
+    GOS-107:
+      archivo: "kb_goreos_107_especificacion_d_tde_koda.yml"
+      titulo: "Especificación D-TDE"
+      dominio: "Transformación Digital"
+      compliance: [DS-10, DS-12, Ley-21719]
+      contenido:
+        - "Expediente electrónico"
+        - "Interoperabilidad"
+        - "Datos personales (ARCO+)"
+        - "Auditoría de sesiones"
+      casos_uso: 12
+
+    GOS-106:
+      archivo: "kb_goreos_106_especificacion_d_back_koda.yml"
+      titulo: "Especificación D-BACK"
+      dominio: "Back-Office"
+      contenido:
+        - "Documentos oficiales"
+        - "Órdenes de compra"
+        - "Facturas y pagos"
+        - "Activos fijos e inventario"
+      casos_uso: 14
+
+    GOS-108:
+      archivo: "kb_goreos_108_especificacion_d_terr_koda.yml"
+      titulo: "Especificación D-TERR"
+      dominio: "Territorio"
+      contenido:
+        - "Capas geográficas (IDE)"
+        - "Indicadores comunales"
+        - "Dashboard territorial"
+        - "Ficha comunal"
+      casos_uso: 11
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERIE 200: MODELO DE DATOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  Modelo_Datos:
+    descripcion: "Modelo de datos conceptual y lógico del sistema"
+    
+    GOS-200:
+      archivo: "kb_goreos_200_modelo_datos_esqueleto_koda.yml"
+      titulo: "Modelo de Datos - Esqueleto"
+      contenido:
+        - "Índice de 66 entidades"
+        - "Diagrama general"
+        - "Distribución por dominio"
+      tipo: "Índice"
+      
+    GOS-200a:
+      archivo: "kb_goreos_200a_entidades_maestras_koda.yml"
+      titulo: "Entidades Maestras"
+      entidades: [Usuario, Funcionario, Actor, UnidadOrganica, Territorio, Periodo]
+      cantidad: 6
+      
+    GOS-200b:
+      archivo: "kb_goreos_200b_dominio_plan_koda.yml"
+      titulo: "Modelo D-PLAN"
+      entidades: [ERD, EjeTematico, ObjetivoEstrategico, Lineamiento, PROT, Zonificacion, ConvenioProgramacion]
+      cantidad: 7
+      
+    GOS-200c:
+      archivo: "kb_goreos_200c_dominio_fin_koda.yml"
+      titulo: "Modelo D-FIN"
+      entidades: [Iniciativa, InstrumentoFinanciamiento, SolicitudFinanciamiento, Presupuesto, ItemPresupuestario, Priorizacion]
+      cantidad: 6
+      
+    GOS-200d:
+      archivo: "kb_goreos_200d_dominio_ejec_koda.yml"
+      titulo: "Modelo D-EJEC"
+      entidades: [Convenio, HitoConvenio, Desembolso, Addendum, Rendicion, MovimientoRendicion, ProyectoPMO]
+      cantidad: 7
+      
+    GOS-200e:
+      archivo: "kb_goreos_200e_dominio_coord_norm_koda.yml"
+      titulo: "Modelo D-COORD + D-NORM"
+      entidades: [CompromisoInterinstitucional, IndicadorRegional, SesionGabinete, ReglamentoRegional, ProcesoNormativo]
+      cantidad: 8
+      
+    GOS-200f:
+      archivo: "kb_goreos_200f_dominio_back_tde_koda.yml"
+      titulo: "Modelo D-BACK + D-TDE"
+      entidades: [DocumentoOficial, OrdenCompra, Factura, ExpedienteElectronico, SesionUsuario]
+      cantidad: 10
+      
+    GOS-200g:
+      archivo: "kb_goreos_200g_dominio_terr_gestion_koda.yml"
+      titulo: "Modelo D-TERR + D-GESTION"
+      entidades: [CapaGeografica, IndicadorComunal, OKR, KeyResult, AlertaGestion, Playbook]
+      cantidad: 12
+      
+    GOS-200h:
+      archivo: "kb_goreos_200h_dominio_evol_koda.yml"
+      titulo: "Modelo D-EVOL"
+      entidades: [Dataset, ServicioDatos, Automatizacion, AgenteAI, ColeccionRAG]
+      cantidad: 10
+      
+    GOS-201:
+      archivo: "kb_goreos_201_modelo_logico_prisma_koda.yml"
+      titulo: "Modelo Lógico (Prisma)"
+      contenido:
+        - "Enums completos"
+        - "Models Maestras"
+        - "Models D-FIN"
+        - "Models D-EJEC"
+      formato: "Prisma Schema"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERIE 300: PROCESOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  Procesos:
+    descripcion: "Catálogo de procesos de negocio en notación BPMN"
+    
+    GOS-300:
+      archivo: "kb_goreos_300_catalogo_procesos_bpmn_koda.yml"
+      titulo: "Catálogo de Procesos BPMN"
+      contenido:
+        - "14 procesos documentados"
+        - "Diagramas ASCII BPMN"
+        - "Actividades y participantes"
+        - "Reglas y automatizaciones"
+      procesos_principales:
+        - "PROC-FIN-001: Ciclo Vida Iniciativa"
+        - "PROC-FIN-002: Priorización Anual"
+        - "PROC-EJEC-001: Formalización Convenio"
+        - "PROC-EJEC-003: Gestión Rendiciones"
+        - "PROC-GEST-001: Ciclo OKR"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERIE 400: SEGURIDAD
+  # ─────────────────────────────────────────────────────────────────────────────
+  Seguridad:
+    descripcion: "Modelo de seguridad y control de acceso"
+    
+    GOS-400:
+      archivo: "kb_goreos_400_matriz_roles_permisos_koda.yml"
+      titulo: "Matriz de Roles y Permisos"
+      contenido:
+        - "Modelo RBAC"
+        - "Catálogo de permisos por dominio"
+        - "15 roles definidos"
+        - "Políticas ABAC especiales"
+        - "Requisitos de auditoría"
+      roles_principales:
+        - SUPER_ADMIN
+        - GOBERNADOR
+        - JEFE_DIPLADE
+        - JEFE_DAF
+        - ANALISTA_IPR
+        - USUARIO_MUNICIPAL
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERIE 500: INTEGRACIONES
+  # ─────────────────────────────────────────────────────────────────────────────
+  Integraciones:
+    descripcion: "Especificación de integraciones con sistemas externos"
+    
+    GOS-500:
+      archivo: "kb_goreos_500_integraciones_externas_koda.yml"
+      titulo: "Integraciones Externas"
+      contenido:
+        - "8 integraciones especificadas"
+        - "Endpoints y operaciones"
+        - "Flujos de datos"
+      sistemas:
+        - { id: "INT-001", nombre: "ClaveÚnica", tipo: "OpenID Connect" }
+        - { id: "INT-002", nombre: "BIP", tipo: "API REST" }
+        - { id: "INT-003", nombre: "SIGFE", tipo: "Archivos + API" }
+        - { id: "INT-004", nombre: "SII", tipo: "API REST" }
+        - { id: "INT-005", nombre: "PISEE", tipo: "Nodo Interop" }
+        - { id: "INT-006", nombre: "DocDigital", tipo: "API + Webhooks" }
+        - { id: "INT-007", nombre: "IDE Chile", tipo: "WMS/WFS" }
+        - { id: "INT-008", nombre: "Bancos", tipo: "Archivos" }
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERIE 600: DISEÑO UI
+  # ─────────────────────────────────────────────────────────────────────────────
+  Diseño:
+    descripcion: "Especificaciones de interfaz de usuario"
+    
+    GOS-600:
+      archivo: "kb_goreos_600_diseno_ui_wireframes_koda.yml"
+      titulo: "Diseño UI/UX y Wireframes"
+      contenido:
+        - "Principios de diseño"
+        - "Estructura de navegación"
+        - "5 wireframes principales"
+        - "Componentes reutilizables"
+      wireframes:
+        - "WF-001: Dashboard Ejecutivo"
+        - "WF-002: Listado Iniciativas"
+        - "WF-003: Detalle Convenio"
+        - "WF-004: Dashboard PMO"
+        - "WF-005: Formulario Rendición"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MATRIZ DE TRAZABILIDAD
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Trazabilidad:
+  descripcion: "Relación entre artefactos"
+  
+  dependencias:
+    GOS-101: [GOS-000, GOS-001, GOS-005, GOS-200b]
+    GOS-102: [GOS-000, GOS-001, GOS-005, GOS-200c]
+    GOS-103: [GOS-000, GOS-001, GOS-005, GOS-200d]
+    GOS-110: [GOS-000, GOS-001, GOS-005, GOS-200g]
+    GOS-111: [GOS-000, GOS-001, GOS-005, GOS-200h]
+    GOS-201: [GOS-200, "GOS-200a-h"]
+    GOS-300: [GOS-101, GOS-102, GOS-103]
+    GOS-400: [GOS-001, GOS-005]
+    GOS-500: [GOS-001, GOS-102, GOS-103]
+    GOS-600: [GOS-101, GOS-102, GOS-103, GOS-110]
+
+  por_dominio:
+    D-PLAN: [GOS-101, GOS-200b, GOS-300]
+    D-FIN: [GOS-102, GOS-200c, GOS-300, GOS-500]
+    D-EJEC: [GOS-103, GOS-200d, GOS-300, GOS-500, GOS-600]
+    D-COORD: [GOS-200e]
+    D-NORM: [GOS-200e]
+    D-BACK: [GOS-200f]
+    D-TDE: [GOS-200f, GOS-400, GOS-500]
+    D-TERR: [GOS-200g]
+    D-GESTION: [GOS-110, GOS-200g, GOS-300, GOS-600]
+    D-EVOL: [GOS-111, GOS-200h]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ESTADÍSTICAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Estadisticas:
+  artefactos:
+    total: 22
+    por_serie:
+      "000-Fundacionales": 3
+      "100-Especificaciones": 5
+      "200-Modelo_Datos": 10
+      "300-Procesos": 1
+      "400-Seguridad": 1
+      "500-Integraciones": 1
+      "600-Diseño": 1
+  
+  modelo_datos:
+    entidades_total: 66
+    por_dominio:
+      Maestras: 6
+      D-PLAN: 7
+      D-FIN: 6
+      D-EJEC: 7
+      D-COORD: 5
+      D-NORM: 3
+      D-BACK: 5
+      D-TDE: 5
+      D-TERR: 3
+      D-GESTION: 9
+      D-EVOL: 10
+  
+  especificaciones:
+    casos_uso_total: 51
+    procesos_bpmn: 14
+    roles: 15
+    integraciones: 8
+    wireframes: 5
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PRÓXIMOS ARTEFACTOS SUGERIDOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Roadmap_Artefactos:
+  pendientes_sugeridos:
+    - id: "GOS-104"
+      titulo: "Especificación D-COORD"
+      prioridad: Media
+    - id: "GOS-105"
+      titulo: "Especificación D-NORM"
+      prioridad: Baja
+    - id: "GOS-106"
+      titulo: "Especificación D-BACK"
+      prioridad: Baja
+    - id: "GOS-107"
+      titulo: "Especificación D-TDE"
+      prioridad: Alta
+    - id: "GOS-700"
+      titulo: "Plan de Migración de Datos"
+      prioridad: Alta
+    - id: "GOS-800"
+      titulo: "Roadmap de Implementación"
+      prioridad: Alta
+    - id: "GOS-900"
+      titulo: "Estrategia de Testing"
+      prioridad: Media
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN CATÁLOGO MAESTRO
+# ═══════════════════════════════════════════════════════════════════════════════

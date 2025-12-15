@@ -1,0 +1,649 @@
+# GOS-102e: GORE_OS - User Stories Gestión de Rendiciones (D-FIN)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:102e:user_stories:rendiciones"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - User Stories Gestión de Rendiciones de Cuentas"
+  Description: "User Stories para el proceso de rendición de cuentas SISREC"
+  Domain: GORE_OS
+  Subdomain: D-FIN
+  Created: "2024-12-15"
+  Sources:
+    - file: "kb_gn_020_gestion_rendiciones_koda.yml"
+  Tags: [goreos, user-stories, rendiciones, sisrec, sigfe, d_fin]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 1: RECEPCIÓN DE TRANSFERENCIAS (EJECUTOR)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Recepcion:
+  titulo: "Recepción de Transferencias"
+  descripcion: "Proceso de aceptación de fondos por entidad ejecutora"
+  source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+  US_REN_001:
+    nombre: "Aceptación Transferencia SISREC"
+    actor: "Analista Ejecutor"
+    accion: "recibir y aceptar transferencia del GORE en SISREC"
+    beneficio: "formalice la recepción de los fondos"
+    acceptance_criteria:
+      - "Transferencia visible en bandeja SISREC"
+      - "Aceptación registrada con fecha"
+      - "Convenio asociado verificado"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+  US_REN_002:
+    nombre: "Verificación Condiciones Convenio"
+    actor: "Encargado Ejecutor"
+    accion: "verificar monto y condiciones del convenio de transferencia"
+    beneficio: "confirme coherencia con lo aprobado"
+    acceptance_criteria:
+      - "Monto transferido = monto convenido"
+      - "Plazos de ejecución verificados"
+      - "Obligaciones de rendición claras"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-PROCESO-EXPEDIENTE-01
+
+  US_REN_003:
+    nombre: "Configuración Cuenta Bancaria FNDR"
+    actor: "Entidad Ejecutora"
+    accion: "configurar cuenta bancaria exclusiva para fondos FNDR"
+    beneficio: "asegure trazabilidad de los recursos"
+    acceptance_criteria:
+      - "Cuenta corriente exclusiva"
+      - "Titular: entidad ejecutora"
+      - "Datos bancarios informados al GORE"
+    priority: ALTA
+    source_ref: GN-REN-GLOS-FNDR
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 2: PREPARACIÓN DE RENDICIÓN (EJECUTOR)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Preparacion:
+  titulo: "Preparación de Rendición"
+  descripcion: "Elaboración del informe y documentación de respaldo"
+  source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+  US_REN_004:
+    nombre: "Creación Informe Mensual"
+    actor: "Analista Ejecutor"
+    accion: "crear informe de rendición mensual en SISREC"
+    beneficio: "cumpla plazo de 15 días hábiles"
+    acceptance_criteria:
+      - "Informe creado antes del día 15 hábil"
+      - "Período de rendición especificado"
+      - "Tipo: mensual"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+  US_REN_005:
+    nombre: "Ingreso de Transacciones"
+    actor: "Analista Ejecutor"
+    accion: "ingresar transacciones con monto y descripción"
+    beneficio: "documente cada gasto realizado"
+    acceptance_criteria:
+      - "Fecha, monto, proveedor ingresados"
+      - "Descripción del gasto clara"
+      - "Ítem presupuestario asociado"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-PROCESO-EXPEDIENTE-DOCS-01
+
+  US_REN_006:
+    nombre: "Adjuntar Comprobantes Digitalizados"
+    actor: "Analista Ejecutor"
+    accion: "digitalizar y adjuntar comprobantes de respaldo"
+    beneficio: "acredite cada transacción"
+    acceptance_criteria:
+      - "Documento legible"
+      - "Formato PDF/imagen"
+      - "Vinculado a transacción específica"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-PROCESO-EXPEDIENTE-DOCS-01
+
+  US_REN_007:
+    nombre: "Creación Informe Sin Movimiento"
+    actor: "Analista Ejecutor"
+    accion: "crear informe sin movimiento cuando no hay gastos"
+    beneficio: "mantenga la rendición al día"
+    acceptance_criteria:
+      - "Declaración de no movimiento"
+      - "Saldo disponible informado"
+      - "Justificación opcional"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+  US_REN_008:
+    nombre: "Certificación Autenticidad"
+    actor: "Ministro de Fe Ejecutor"
+    accion: "certificar autenticidad de documentos digitalizados"
+    beneficio: "valide la fidelidad de los respaldos"
+    acceptance_criteria:
+      - "Revisión documento por documento"
+      - "Certificación con FEA"
+      - "Derivación a Encargado Ejecutor"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+  US_REN_009:
+    nombre: "Firma Informe de Rendición"
+    actor: "Encargado Ejecutor"
+    accion: "firmar informe de rendición con FEA"
+    beneficio: "formalice la presentación al GORE"
+    acceptance_criteria:
+      - "Revisión final completada"
+      - "Firma electrónica avanzada"
+      - "Envío al GORE confirmado"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+  US_REN_010:
+    nombre: "Creación Informe Regularización"
+    actor: "Analista Ejecutor"
+    accion: "crear informe de regularización para corregir observaciones"
+    beneficio: "subsane observaciones del GORE"
+    acceptance_criteria:
+      - "Transacciones observadas corregidas"
+      - "Documentación complementaria adjunta"
+      - "Reenvío por flujo estándar"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-EJECUTOR-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 3: REVISIÓN TÉCNICA (GORE)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Revision_Tecnica:
+  titulo: "Revisión Técnica RTF"
+  descripcion: "Análisis técnico-financiero por Referente del GORE"
+  source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_011:
+    nombre: "Recepción Rendición SISREC"
+    actor: "RTF (Analista Otorgante)"
+    accion: "recibir rendición del ejecutor en SISREC"
+    beneficio: "inicie proceso de revisión"
+    acceptance_criteria:
+      - "Rendición en bandeja de entrada"
+      - "Plazo de revisión: 7 días hábiles"
+      - "Asignación automática por proyecto"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_012:
+    nombre: "Revisión Coherencia Técnica-Financiera"
+    actor: "RTF (Analista Otorgante)"
+    accion: "revisar coherencia entre gastos y avance físico"
+    beneficio: "verifique uso correcto de recursos"
+    acceptance_criteria:
+      - "Gastos vs ítems presupuestarios"
+      - "Coherencia con TDR/convenio"
+      - "Avance físico proporcional"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-ACTOR-RTF-01
+
+  US_REN_013:
+    nombre: "Aprobación de Transacciones"
+    actor: "RTF (Analista Otorgante)"
+    accion: "aprobar transacciones individualmente en SISREC"
+    beneficio: "valide cada gasto rendido"
+    acceptance_criteria:
+      - "Transacción con respaldo completo"
+      - "Monto correcto"
+      - "Marca de aprobación en sistema"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_014:
+    nombre: "Observación de Transacciones"
+    actor: "RTF (Analista Otorgante)"
+    accion: "observar transacciones con fundamentación"
+    beneficio: "solicite corrección específica"
+    acceptance_criteria:
+      - "Motivo de observación registrado"
+      - "Transacción marcada como observada"
+      - "Detalle subsanable especificado"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_015:
+    nombre: "Devolución para Subsanación"
+    actor: "RTF (Analista Otorgante)"
+    accion: "devolver rendición al ejecutor para subsanación"
+    beneficio: "permita corrección de observaciones"
+    acceptance_criteria:
+      - "Lista de observaciones clara"
+      - "Plazo de subsanación indicado"
+      - "Estado: devuelta"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-PROCESO-SIN-SISREC-01
+
+  US_REN_016:
+    nombre: "Derivación a Encargado Otorgante"
+    actor: "RTF (Analista Otorgante)"
+    accion: "derivar rendición aprobada al Encargado Otorgante"
+    beneficio: "avance a firma formal"
+    acceptance_criteria:
+      - "Todas las transacciones revisadas"
+      - "Propuesta de aprobación emitida"
+      - "Derivación registrada"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 4: APROBACIÓN FORMAL (GORE)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Aprobacion:
+  titulo: "Aprobación Formal DAF"
+  descripcion: "Firma del Encargado Otorgante (Jefe DAF)"
+  source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_017:
+    nombre: "Revisión Propuesta RTF"
+    actor: "Encargado Otorgante (Jefe DAF)"
+    accion: "revisar propuesta de aprobación del RTF"
+    beneficio: "valide la revisión técnica"
+    acceptance_criteria:
+      - "Propuesta recibida del RTF"
+      - "Verificación de criterios"
+      - "Decisión documentada"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_018:
+    nombre: "Aprobación Total con FEA"
+    actor: "Encargado Otorgante (Jefe DAF)"
+    accion: "aprobar rendición total con firma electrónica avanzada"
+    beneficio: "formalice la aceptación de la rendición"
+    acceptance_criteria:
+      - "100% transacciones aprobadas"
+      - "Informe de Aprobación firmado con FEA"
+      - "Disponible para descarga"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_019:
+    nombre: "Aprobación Parcial con FEA"
+    actor: "Encargado Otorgante (Jefe DAF)"
+    accion: "aprobar parcialmente rendición con observaciones"
+    beneficio: "avance con lo correcto, pida subsanación del resto"
+    acceptance_criteria:
+      - "Transacciones aprobadas identificadas"
+      - "Transacciones observadas detalladas"
+      - "Informe de Aprobación Parcial firmado"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_020:
+    nombre: "Devolución Rendición con FEA"
+    actor: "Encargado Otorgante (Jefe DAF)"
+    accion: "devolver rendición al ejecutor con firma electrónica"
+    beneficio: "formalice el rechazo para corrección"
+    acceptance_criteria:
+      - "Todas las transacciones observadas"
+      - "Fundamentación del rechazo"
+      - "Devolución en 1 día hábil"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 5: CONTABILIZACIÓN (GORE)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Contabilizacion:
+  titulo: "Contabilización SIGFE"
+  descripcion: "Registro contable de rendiciones aprobadas"
+  source_ref: STS-KB-GN-RENDICION-CONTABILIDAD-01
+
+  US_REN_021:
+    nombre: "Recepción Informe Aprobado"
+    actor: "UCR/DAF"
+    accion: "recibir informe de aprobación firmado del RTF"
+    beneficio: "inicie proceso contable"
+    acceptance_criteria:
+      - "Informe con FEA válida"
+      - "Descarga desde SISREC"
+      - "Registro en base interna"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-SISREC-GORE-01
+
+  US_REN_022:
+    nombre: "Contabilización en SIGFE"
+    actor: "UCR/DAF"
+    accion: "contabilizar rendición en SIGFE según F07/F08"
+    beneficio: "registre gasto en sistema financiero"
+    acceptance_criteria:
+      - "F07 para privados / F08 para públicos"
+      - "Cuentas correctas (54xxx)"
+      - "Plazo: 2 días hábiles"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-CONTABILIDAD-F07-01
+
+  US_REN_023:
+    nombre: "Registro Devengo de Gasto"
+    actor: "UCR/DAF"
+    accion: "registrar reconocimiento del gasto en SIGFE"
+    beneficio: "actualice la situación financiera"
+    acceptance_criteria:
+      - "Debe: 54101/54103/54201/54203"
+      - "Haber: 12106 Deudores Transf. Reintegrables"
+      - "Comprobante contable generado"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-CONTABILIDAD-F07-01
+
+  US_REN_024:
+    nombre: "Archivo Expediente Electrónico"
+    actor: "UCR/DAF"
+    accion: "archivar expediente electrónico de la rendición"
+    beneficio: "preserve documentación para auditoría"
+    acceptance_criteria:
+      - "Expediente completo en repositorio"
+      - "Metadatos correctos"
+      - "Plazo: 2 días hábiles post-contabilización"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-PROCESO-SIN-SISREC-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 6: GESTIÓN DE REINTEGROS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Reintegros:
+  titulo: "Gestión de Reintegros"
+  descripcion: "Devolución de fondos no utilizados"
+  source_ref: STS-KB-GN-RENDICION-RESPONSABILIDAD-01
+
+  US_REN_025:
+    nombre: "Cálculo Saldo No Utilizado"
+    actor: "Entidad Ejecutora"
+    accion: "calcular saldo de fondos no ejecutados"
+    beneficio: "determine monto a reintegrar"
+    acceptance_criteria:
+      - "Monto transferido - monto rendido aprobado"
+      - "Actualizado con última resolución"
+      - "Documentado en informe final"
+    priority: ALTA
+    source_ref: GN-REN-GLOS-RES30
+
+  US_REN_026:
+    nombre: "Reintegro a Cuenta GORE"
+    actor: "Entidad Ejecutora"
+    accion: "transferir saldo no utilizado a cuenta del GORE"
+    beneficio: "cumpla obligación de restitución Art.31 Res.30"
+    acceptance_criteria:
+      - "Transferencia a cuenta GORE"
+      - "Comprobante de transferencia"
+      - "Comunicación formal al GORE"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-NORMA-RES30-01
+
+  US_REN_027:
+    nombre: "Registro Reintegro en SIGFE"
+    actor: "UCR/DAF"
+    accion: "contabilizar reintegro en SIGFE"
+    beneficio: "actualice situación financiera del proyecto"
+    acceptance_criteria:
+      - "Debe: 11508 Ctas por Cobrar"
+      - "Haber: 12106 Deudores"
+      - "Recepción: Debe 11102 / Haber 11508"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-CONTABILIDAD-F07-01
+
+  US_REN_028:
+    nombre: "Emisión Certificado Reintegro"
+    actor: "UCR/DAF"
+    accion: "emitir certificado de reintegro recibido"
+    beneficio: "documente cierre financiero"
+    acceptance_criteria:
+      - "Monto reintegrado confirmado"
+      - "Fecha de recepción"
+      - "Certificado firmado"
+    priority: MEDIA
+    source_ref: GN-REN-GLOS-RES30
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 7: CONTROL Y FISCALIZACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Control:
+  titulo: "Control y Fiscalización"
+  descripcion: "Mecanismos de control interno y externo"
+  source_ref: STS-KB-GN-RENDICION-CONTROL-01
+
+  US_REN_029:
+    nombre: "Auditoría Selectiva Rendiciones"
+    actor: "Control Interno GORE"
+    accion: "auditar selectivamente procesos de rendición"
+    beneficio: "identifique riesgos y desviaciones"
+    acceptance_criteria:
+      - "Muestra seleccionada por riesgo"
+      - "Checklist de auditoría aplicado"
+      - "Informe a Gobernador y CORE"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-CONTROL-INTERNO-01
+
+  US_REN_030:
+    nombre: "Fiscalización Ejecución Presupuestaria"
+    actor: "CORE"
+    accion: "fiscalizar ejecución presupuestaria y uso de fondos"
+    beneficio: "ejerza control político sobre inversiones"
+    acceptance_criteria:
+      - "Informe de estado de rendiciones"
+      - "Análisis de rendiciones pendientes"
+      - "Recomendaciones a Gobernador"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-ACTOR-CORE-01
+
+  US_REN_031:
+    nombre: "Aplicación Bloqueo Art.18"
+    actor: "DAF"
+    accion: "bloquear nuevas transferencias por rendiciones pendientes"
+    beneficio: "cumpla prohibición Res.30 CGR Art.18"
+    acceptance_criteria:
+      - "Verificación automática pre-transferencia"
+      - "Bloqueo si hay rendiciones exigibles"
+      - "Notificación a ejecutor"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-NORMA-RES30-01
+
+  US_REN_032:
+    nombre: "Informe Estado Rendiciones"
+    actor: "DAF"
+    accion: "informar estado consolidado de rendiciones"
+    beneficio: "facilite fiscalización y gestión"
+    acceptance_criteria:
+      - "Rendiciones aprobadas/observadas/pendientes"
+      - "Montos por estado"
+      - "Periodicidad mensual"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-ACTOR-DAF-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 8: TRANSPARENCIA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Transparencia:
+  titulo: "Transparencia y Acceso a Información"
+  descripcion: "Obligaciones de publicación y respuesta"
+  source_ref: STS-KB-GN-RENDICION-CONTROL-TRANSPARENCIA-01
+
+  US_REN_033:
+    nombre: "Publicación Convenios Mensual"
+    actor: "DAF"
+    accion: "publicar convenios de transferencia mensualmente"
+    beneficio: "cumpla transparencia activa"
+    acceptance_criteria:
+      - "Publicación en web GORE"
+      - "Detalle de montos y beneficiarios"
+      - "Actualización mensual"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-CONTROL-TRANSPARENCIA-01
+
+  US_REN_034:
+    nombre: "Publicación Nómina Beneficiarios"
+    actor: "DAF"
+    accion: "publicar nómina de beneficiarios de transferencias"
+    beneficio: "facilite control ciudadano"
+    acceptance_criteria:
+      - "Nombre/RUT entidad"
+      - "Monto transferido"
+      - "Proyecto/programa"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-TRANSP-PPTO-2026-P31-GLO16-01
+
+  US_REN_035:
+    nombre: "Informe Trimestral Uso Recursos"
+    actor: "DAF"
+    accion: "informar trimestralmente uso de recursos a instancias definidas"
+    beneficio: "cumpla glosas presupuestarias"
+    acceptance_criteria:
+      - "Beneficiarios, comunas, montos"
+      - "Productos del convenio"
+      - "Publicación web 30 días post-trimestre"
+    priority: ALTA
+    source_ref: STS-KB-GN-RENDICION-TRANSP-PPTO-2026-P31-GLO16-01
+
+  US_REN_036:
+    nombre: "Respuesta Solicitudes Transparencia"
+    actor: "DAF"
+    accion: "responder solicitudes de acceso a información"
+    beneficio: "cumpla transparencia pasiva"
+    acceptance_criteria:
+      - "Plazo legal de respuesta"
+      - "Resguardo datos personales"
+      - "Documentación de la respuesta"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-CONTROL-TRANSPARENCIA-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FASE 9: GESTIÓN DE CONTINGENCIAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Contingencias:
+  titulo: "Gestión de Contingencias"
+  descripcion: "Manejo de situaciones excepcionales"
+  source_ref: STS-KB-GN-RENDICION-GESTION-CONTINGENCIAS-01
+
+  US_REN_037:
+    nombre: "Manejo Pérdida de Rendición"
+    actor: "UCR"
+    accion: "gestionar pérdida de documentación de rendición"
+    beneficio: "recupere trazabilidad del proceso"
+    acceptance_criteria:
+      - "Consulta a libros de correspondencia"
+      - "Solicitud de copia a ejecutor"
+      - "Registro del incidente"
+    priority: BAJA
+    source_ref: STS-KB-GN-RENDICION-GESTION-CONTINGENCIAS-01
+
+  US_REN_038:
+    nombre: "Gestión Solicitud Cuota sin Rendir"
+    actor: "DAF"
+    accion: "gestionar solicitud de nueva cuota con rendición pendiente"
+    beneficio: "evalúe excepciones según Art.18"
+    acceptance_criteria:
+      - "Verificación de prohibición Art.18"
+      - "Evaluación de garantía disponible"
+      - "Decisión documentada"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-GESTION-CONTINGENCIAS-01
+
+  US_REN_039:
+    nombre: "Autorización Adelanto con Garantía"
+    actor: "DAF"
+    accion: "autorizar adelanto contra garantía por monto no rendido"
+    beneficio: "permita continuidad cuando convenio lo permite"
+    acceptance_criteria:
+      - "Convenio con cláusula de adelanto"
+      - "Garantía: vale vista o póliza"
+      - "Plazo perentorio para rendir"
+    priority: BAJA
+    source_ref: STS-KB-GN-RENDICION-GESTION-CONTINGENCIAS-01
+
+  US_REN_040:
+    nombre: "Gestión Demoras en Revisión"
+    actor: "UCR"
+    accion: "gestionar demoras en revisión por alta carga de trabajo"
+    beneficio: "priorice rendiciones críticas"
+    acceptance_criteria:
+      - "Reasignación de revisores"
+      - "Priorización por criticidad"
+      - "Anticipación con planificación anual"
+    priority: MEDIA
+    source_ref: STS-KB-GN-RENDICION-GESTION-CONTINGENCIAS-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MODALIDAD LEGADO (SIN SISREC)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Legado:
+  titulo: "Modalidad Legado (sin SISREC)"
+  descripcion: "Proceso manual para convenios antiguos"
+  source_ref: STS-KB-GN-RENDICION-PROCESO-SIN-SISREC-01
+
+  US_REN_041:
+    nombre: "Presentación Rendición en Papel"
+    actor: "Entidad Ejecutora"
+    accion: "presentar rendición en papel/digital a Oficina de Partes"
+    beneficio: "rinda cuentas en convenios pre-SISREC"
+    acceptance_criteria:
+      - "Informe físico o PDF"
+      - "Comprobantes originales o copias autentificadas"
+      - "Plazo: 15 días hábiles mes siguiente"
+    priority: BAJA
+    source_ref: STS-KB-GN-RENDICION-PROCESO-SIN-SISREC-01
+
+  US_REN_042:
+    nombre: "Recepción y Derivación OP"
+    actor: "Oficina de Partes"
+    accion: "recepcionar, registrar y derivar rendición a UCR/DAF"
+    beneficio: "inicie proceso de revisión interna"
+    acceptance_criteria:
+      - "Registro en libro de correspondencia"
+      - "Derivación en 2 días hábiles"
+      - "Cargo de recepción emitido"
+    priority: BAJA
+    source_ref: STS-KB-GN-RENDICION-PROCESO-SIN-SISREC-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  total_user_stories: 42
+  por_fase:
+    Recepcion_Transferencias: 3
+    Preparacion_Rendicion: 7
+    Revision_Tecnica: 6
+    Aprobacion_Formal: 4
+    Contabilizacion: 4
+    Gestion_Reintegros: 4
+    Control_Fiscalizacion: 4
+    Transparencia: 4
+    Contingencias: 4
+    Modalidad_Legado: 2
+  por_prioridad:
+    ALTA: 26
+    MEDIA: 12
+    BAJA: 4
+  actores_identificados:
+    GORE:
+      - "RTF (Referente Técnico-Financiero / Analista Otorgante)"
+      - "Encargado Otorgante (Jefe DAF)"
+      - "UCR/DAF (Unidad Control Rendiciones)"
+      - "Control Interno GORE"
+      - "CORE"
+      - "Oficina de Partes"
+    Ejecutores:
+      - "Analista Ejecutor"
+      - "Ministro de Fe Ejecutor"
+      - "Encargado Ejecutor"
+      - "Entidad Ejecutora (genérico)"
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN USER STORIES GESTIÓN DE RENDICIONES
+# ═══════════════════════════════════════════════════════════════════════════════

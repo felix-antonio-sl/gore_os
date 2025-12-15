@@ -1,0 +1,760 @@
+# KODA Knowledge Base — User Stories Abastecimiento Detallado
+# Derivadas de Manuales M02: Compras, Inventarios, Activo Fijo, Servicios/Flotas
+# ID: KB-GOREOS-102H-US-ABASTECIMIENTO-DETALLADO
+---
+_manifest:
+  urn: "urn:knowledge:goreos:especificaciones:user-stories-abastecimiento-detallado:1.0.0"
+  title: "User Stories Abastecimiento Detallado — GORE OS"
+  federation:
+    visibility: internal
+  provenance:
+    created_by: "INGENIERO-SOFTWARE-COMPOSICIONAL-02"
+    created_at: "2025-12-15"
+    knowledge_sources:
+      - file: "manual_2_1_compras.md"
+      - file: "manual_2_2_inventarios.md"
+      - file: "manual_2_3_activo_fijo.md"
+      - file: "manual_2_4_servicios_flotas.md"
+
+ID: KB-GOREOS-102H
+Status: Active
+
+resumen:
+  total_user_stories: 89
+  bloques_tematicos: 24
+  distribucion:
+    compras: 24
+    inventarios: 22
+    activo_fijo: 25
+    servicios_flotas: 18
+
+# ============================================================================
+# BLOQUE 1: PLANIFICACIÓN DE COMPRAS (Manual 2.1, Sección II)
+# ============================================================================
+
+bloque_01_planificacion_compras:
+  user_stories:
+    - id: COM-PAC-01
+      actor: Jefe de Abastecimiento
+      titulo: "Consolidar Plan Anual de Compras (PAC)"
+      quiero: "integrar y priorizar requerimientos de todas las divisiones según criticidad, presupuesto y metas"
+      para: "generar PAC consolidado antes del 15 de noviembre"
+      prioridad: Crítica
+      acceptance_criteria:
+        - Recibe requerimientos de cada División
+        - Prioriza por criticidad, presupuesto y alineamiento a metas
+        - Genera PAC consolidado para aprobación
+
+    - id: COM-PAC-02
+      actor: Administrador Regional
+      titulo: "Aprobar PAC mediante Resolución Exenta"
+      quiero: "revisar y aprobar el PAC consolidado"
+      para: "formalizar el plan anual de compras institucional"
+      prioridad: Crítica
+
+    - id: COM-PAC-03
+      actor: Jefe de Abastecimiento
+      titulo: "Publicar PAC en Mercado Público"
+      quiero: "publicar el PAC aprobado dentro de los primeros 30 días del año"
+      para: "cumplir obligación de transparencia en contrataciones"
+      prioridad: Crítica
+
+    - id: COM-PAC-04
+      actor: Usuario Solicitante
+      titulo: "Gestionar Requerimiento Extraordinario"
+      quiero: "solicitar compra no planificada con justificación escrita"
+      para: "cubrir necesidades imprevistas con visación DAF"
+      prioridad: Alta
+
+    - id: COM-PAC-05
+      actor: Jefe de Abastecimiento
+      titulo: "Tramitar Compra Urgente (Art. 43)"
+      quiero: "gestionar adquisiciones de emergencia con plazos abreviados"
+      para: "responder a situaciones críticas según Reglamento"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 2: MECANISMOS DE COMPRA (Manual 2.1, Sección III)
+# ============================================================================
+
+bloque_02_mecanismos_compra:
+  user_stories:
+    - id: COM-CM-01
+      actor: Comprador
+      titulo: "Comprar vía Convenio Marco"
+      quiero: "seleccionar productos del catálogo ChileCompra y emitir OC"
+      para: "adquirir bienes estandarizados sin proceso licitatorio"
+      prioridad: Crítica
+
+    - id: COM-LIC-01
+      actor: Jefe de Abastecimiento
+      titulo: "Gestionar Licitación Pública (>1000 UTM)"
+      quiero: "preparar bases, publicar, evaluar y adjudicar licitaciones"
+      para: "adquirir bienes/servicios cumpliendo Ley 19.886"
+      prioridad: Crítica
+
+    - id: COM-LIC-02
+      actor: Jefe de Abastecimiento
+      titulo: "Configurar Comisión Evaluadora"
+      quiero: "designar mínimo 3 integrantes por resolución incluyendo área técnica"
+      para: "evaluar ofertas con imparcialidad"
+      prioridad: Crítica
+
+    - id: COM-LIC-03
+      actor: Comisión Evaluadora
+      titulo: "Elaborar Acta de Evaluación Fundada"
+      quiero: "documentar puntuación de cada oferente con justificación"
+      para: "transparentar la decisión de adjudicación"
+      prioridad: Crítica
+
+    - id: COM-TD-01
+      actor: Jefe de Abastecimiento
+      titulo: "Tramitar Trato Directo (Art. 8)"
+      quiero: "gestionar compra excepcional con resolución fundada"
+      para: "adquirir en casos de proveedor único, emergencia o montos <10 UTM"
+      prioridad: Alta
+
+    - id: COM-GRAN-01
+      actor: División Jurídica
+      titulo: "Visar Bases de Grandes Compras (>5000 UTM)"
+      quiero: "revisar legalidad de bases antes de publicación"
+      para: "asegurar cumplimiento normativo en licitaciones mayores"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 3: EJECUCIÓN DE ÓRDENES DE COMPRA (Manual 2.1, Sección IV)
+# ============================================================================
+
+bloque_03_ordenes_compra:
+  user_stories:
+    - id: COM-OC-01
+      actor: Comprador
+      titulo: "Emitir OC con Contenido Obligatorio"
+      quiero: "generar OC con descripción, cantidad, precio, plazo, lugar e imputación"
+      para: "formalizar compromiso con proveedor en Mercado Público"
+      prioridad: Crítica
+
+    - id: COM-OC-02
+      actor: Sistema
+      titulo: "Controlar Aceptación de OC (48 hrs)"
+      quiero: "alertar si proveedor no acepta OC en 48 horas hábiles"
+      para: "permitir re-adjudicación oportuna"
+      prioridad: Alta
+
+    - id: COM-REC-01
+      actor: Encargado de Bodega
+      titulo: "Registrar Recepción Conforme de Bienes"
+      quiero: "verificar cantidad/calidad y generar Acta de Recepción"
+      para: "habilitar devengo y pago al proveedor"
+      prioridad: Crítica
+
+    - id: COM-REC-02
+      actor: Administrador de Contrato
+      titulo: "Certificar Cumplimiento de Servicios"
+      quiero: "emitir Informe de Conformidad validando prestación"
+      para: "habilitar pago de servicios recibidos"
+      prioridad: Crítica
+
+    - id: COM-DEV-01
+      actor: Comprador
+      titulo: "Gestionar Devolución por No Conformidad"
+      quiero: "documentar rechazo con Acta indicando causales"
+      para: "exigir subsanación o reemplazo al proveedor"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 4: GESTIÓN DE CONTRATOS (Manual 2.1, Sección V)
+# ============================================================================
+
+bloque_04_contratos:
+  user_stories:
+    - id: CON-ADM-01
+      actor: Administrador de Contrato
+      titulo: "Gestionar Libro de Obra/Bitácora"
+      quiero: "registrar incidencias, instrucciones y acuerdos durante ejecución"
+      para: "documentar trazabilidad en contratos de obra"
+      prioridad: Alta
+
+    - id: CON-ADM-02
+      actor: Administrador de Contrato
+      titulo: "Gestionar Estados de Pago por Hitos"
+      quiero: "certificar avance para liberar pagos parciales"
+      para: "control financiero según avance físico"
+      prioridad: Crítica
+
+    - id: CON-MOD-01
+      actor: Jefe de Abastecimiento
+      titulo: "Tramitar Modificación de Contrato (±30%)"
+      quiero: "gestionar aumentos/disminuciones hasta 30% con resolución fundada"
+      para: "ajustar contratos sin nueva licitación"
+      prioridad: Alta
+
+    - id: CON-MUL-01
+      actor: Administrador de Contrato
+      titulo: "Aplicar Multas Contractuales"
+      quiero: "notificar, recibir descargos y resolver aplicación de multa"
+      para: "sancionar incumplimientos según bases"
+      prioridad: Alta
+
+    - id: CON-TER-01
+      actor: Jefe de Abastecimiento
+      titulo: "Gestionar Término y Recepción Final"
+      quiero: "cerrar contrato con acta y liberar garantías"
+      para: "finalizar formalmente la relación contractual"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 5: EVALUACIÓN Y CONTROL (Manual 2.1, Sección VI)
+# ============================================================================
+
+bloque_05_evaluacion_proveedores:
+  user_stories:
+    - id: COM-EVAL-01
+      actor: Administrador de Contrato
+      titulo: "Evaluar Proveedor al Cierre de Contrato"
+      quiero: "calificar cumplimiento de plazos, calidad y respuesta"
+      para: "alimentar historial de proveedores institucional"
+      prioridad: Alta
+
+    - id: COM-EVAL-02
+      actor: Sistema
+      titulo: "Alertar Proveedores con Evaluación Deficiente"
+      quiero: "identificar proveedores con bajo desempeño"
+      para: "considerar exclusión en futuras licitaciones"
+      prioridad: Media
+
+    - id: COM-REP-01
+      actor: Jefe de Abastecimiento
+      titulo: "Generar Informe Mensual de Compras"
+      quiero: "reportar OC emitidas, montos y mecanismos utilizados"
+      para: "control de gestión y transparencia"
+      prioridad: Alta
+
+    - id: COM-KPI-01
+      actor: Jefe de Abastecimiento
+      titulo: "Monitorear KPIs de Compras"
+      quiero: "medir % CM, % desiertas, tiempo adjudicación, cumplimiento 30 días"
+      para: "evaluar eficiencia del proceso de compras"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 6: CATÁLOGO DE ARTÍCULOS (Manual 2.2, Sección II)
+# ============================================================================
+
+bloque_06_catalogo_articulos:
+  user_stories:
+    - id: INV-CAT-01
+      actor: Encargado de Bodega
+      titulo: "Gestionar Catálogo Maestro de Artículos"
+      quiero: "mantener código, clasificación, unidad de medida y conversiones"
+      para: "habilitar cualquier movimiento de inventario"
+      prioridad: Crítica
+
+    - id: INV-CAT-02
+      actor: Encargado de Bodega
+      titulo: "Configurar Atributos de Artículo"
+      quiero: "asociar cuenta contable, concepto gasto, control lote, vencimiento"
+      para: "automatizar contabilización y control de existencias"
+      prioridad: Alta
+
+    - id: INV-CAT-03
+      actor: Encargado de Bodega
+      titulo: "Definir Stock Mínimo/Máximo por Artículo"
+      quiero: "configurar parámetros de reposición"
+      para: "generar alertas automáticas de punto de reorden"
+      prioridad: Alta
+
+    - id: INV-CAT-04
+      actor: Sistema
+      titulo: "Clasificar Bien por Umbral de Capitalización"
+      quiero: "derivar bienes >3 UTM a Activo Fijo y ≤3 UTM a Existencias"
+      para: "aplicar tratamiento contable correcto automaticamente"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 7: INGRESOS A BODEGA (Manual 2.2, Sección III)
+# ============================================================================
+
+bloque_07_ingresos_bodega:
+  user_stories:
+    - id: INV-ING-01
+      actor: Encargado de Bodega
+      titulo: "Recepcionar Productos por OC (7 pasos)"
+      quiero: "verificar guía, inspeccionar, registrar, asociar factura, ubicar, firmar"
+      para: "ingresar existencias con trazabilidad completa"
+      prioridad: Crítica
+
+    - id: INV-ING-02
+      actor: Encargado de Bodega
+      titulo: "Recepcionar con Capturador de Datos"
+      quiero: "leer códigos de barras y validar automáticamente contra OC"
+      para: "agilizar recepción y detectar discrepancias"
+      prioridad: Alta
+
+    - id: INV-ING-03
+      actor: Encargado de Bodega
+      titulo: "Gestionar Otros Ingresos"
+      quiero: "registrar devoluciones, préstamos, donaciones, canjes, ajustes"
+      para: "cubrir todos los tipos de entrada de existencias"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 8: EGRESOS DE BODEGA (Manual 2.2, Sección IV)
+# ============================================================================
+
+bloque_08_egresos_bodega:
+  user_stories:
+    - id: INV-SOL-01
+      actor: Usuario Solicitante
+      titulo: "Crear Solicitud de Consumo"
+      quiero: "pedir artículos indicando cantidades y justificación de uso"
+      para: "iniciar flujo de despacho desde bodega"
+      prioridad: Crítica
+
+    - id: INV-SOL-02
+      actor: Jefatura
+      titulo: "Aprobar Solicitud de Consumo"
+      quiero: "autorizar pedidos según monto o tipo de artículo"
+      para: "control jerárquico de egresos de bodega"
+      prioridad: Alta
+
+    - id: INV-DES-01
+      actor: Encargado de Bodega
+      titulo: "Ejecutar Despacho (Picking)"
+      quiero: "preparar pedido, verificar, entregar con guía firmada"
+      para: "descontar stock con trazabilidad"
+      prioridad: Crítica
+
+    - id: INV-DES-02
+      actor: Encargado de Bodega
+      titulo: "Despachar con Capturador de Datos"
+      quiero: "leer códigos al armar pedido y generar guía electrónica"
+      para: "minimizar errores de despacho"
+      prioridad: Alta
+
+    - id: INV-EGR-01
+      actor: Encargado de Bodega
+      titulo: "Gestionar Otros Egresos"
+      quiero: "registrar préstamos, mermas, donaciones, devoluciones a proveedor"
+      para: "cubrir todos los tipos de salida de existencias"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 9: CONTROL DE INVENTARIOS (Manual 2.2, Sección V)
+# ============================================================================
+
+bloque_09_control_inventarios:
+  user_stories:
+    - id: INV-TOM-01
+      actor: Jefe de Bodega
+      titulo: "Ejecutar Toma de Inventario Físico"
+      quiero: "planificar, ejecutar conteo ciego, conciliar y ajustar"
+      para: "verificar existencias al menos anualmente (31/12)"
+      prioridad: Crítica
+
+    - id: INV-AJU-01
+      actor: Jefe de Bodega
+      titulo: "Gestionar Ajuste de Inventario"
+      quiero: "registrar sobrantes/faltantes con acta firmada"
+      para: "regularizar diferencias y generar asiento contable"
+      prioridad: Crítica
+
+    - id: INV-VEN-01
+      actor: Sistema
+      titulo: "Alertar Vencimientos (90/60/30 días)"
+      quiero: "notificar artículos próximos a vencer"
+      para: "priorizar FEFO y evitar pérdidas"
+      prioridad: Alta
+
+    - id: INV-REP-01
+      actor: Sistema
+      titulo: "Alertar Punto de Reorden"
+      quiero: "notificar a Abastecimiento cuando se alcanza stock mínimo"
+      para: "iniciar reposición oportuna"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 10: VALORIZACIÓN Y CIERRE (Manual 2.2, Sección VI)
+# ============================================================================
+
+bloque_10_valorizacion_bodega:
+  user_stories:
+    - id: INV-VAL-01
+      actor: Analista Contable
+      titulo: "Configurar Método de Valorización"
+      quiero: "definir PPP, FIFO o Costo Identificado por artículo/familia"
+      para: "cumplir NICSP de valorización de existencias"
+      prioridad: Crítica
+
+    - id: INV-CIE-01
+      actor: Jefe de Bodega
+      titulo: "Ejecutar Cierre Mensual de Bodega"
+      quiero: "cortar movimientos, valorizar stock, generar asiento de consumo"
+      para: "cuadrar existencias con cuenta contable"
+      prioridad: Crítica
+
+    - id: INV-CIE-02
+      actor: Jefe de Bodega
+      titulo: "Ejecutar Cierre Anual de Bodega"
+      quiero: "inventario físico, ajustes, informe para CGR"
+      para: "cierre patrimonial de existencias"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 11: ALTA DE ACTIVOS FIJOS (Manual 2.3, Sección II)
+# ============================================================================
+
+bloque_11_alta_activo_fijo:
+  user_stories:
+    - id: AF-PRE-01
+      actor: Encargado de Activos
+      titulo: "Registrar Prealta de Bien"
+      quiero: "capturar datos preliminares: tipología, valor, ubicación, responsable"
+      para: "preparar alta formal de activo fijo"
+      prioridad: Crítica
+
+    - id: AF-COD-01
+      actor: Encargado de Activos
+      titulo: "Codificar y Etiquetar Bien"
+      quiero: "asignar código único y generar etiqueta con código de barras/QR"
+      para: "identificación física del activo"
+      prioridad: Crítica
+
+    - id: AF-ALT-01
+      actor: Encargado de Activos
+      titulo: "Completar Alta con Datos Obligatorios"
+      quiero: "registrar adquisición, técnicos, gestión y documentos adjuntos"
+      para: "alta patrimonial completa del bien"
+      prioridad: Crítica
+
+    - id: AF-ALT-02
+      actor: Encargado de Activos
+      titulo: "Gestionar Alta por Donación"
+      quiero: "registrar bien donado con resolución y valorización por perito"
+      para: "incorporar bienes sin costo de adquisición"
+      prioridad: Alta
+
+    - id: AF-ALT-03
+      actor: Encargado de Activos
+      titulo: "Gestionar Alta por Traspaso"
+      quiero: "recibir bien de otra entidad con valor libro informado"
+      para: "incorporar bienes transferidos del sector público"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 12: DEPRECIACIÓN Y VALORIZACIÓN (Manual 2.3, Sección III)
+# ============================================================================
+
+bloque_12_depreciacion:
+  user_stories:
+    - id: AF-DEP-01
+      actor: Sistema
+      titulo: "Calcular Depreciación Mensual Automática"
+      quiero: "aplicar línea recta según vida útil desde puesta en marcha"
+      para: "distribuir valor del activo en el tiempo"
+      prioridad: Crítica
+
+    - id: AF-DEP-02
+      actor: Encargado de Activos
+      titulo: "Configurar Vida Útil por Tipología"
+      quiero: "definir años según tablas NICSP (edificios 50-80, vehículos 7-10, TIC 3-5)"
+      para: "cálculo correcto de depreciación"
+      prioridad: Alta
+
+    - id: AF-REV-01
+      actor: Jefe de Finanzas
+      titulo: "Ejecutar Revalorización de Bienes Significativos"
+      quiero: "ajustar a valor razonable cada 5 años con tasación"
+      para: "reflejar valor real de inmuebles y terrenos"
+      prioridad: Alta
+
+    - id: AF-DET-01
+      actor: Encargado de Activos
+      titulo: "Evaluar y Registrar Deterioro (Impairment)"
+      quiero: "reconocer pérdida de valor por daño, obsolescencia o cambio de uso"
+      para: "cumplir NICSP 21 de deterioro de activos"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 13: MOVIMIENTOS DE ACTIVOS (Manual 2.3, Sección IV)
+# ============================================================================
+
+bloque_13_movimientos_af:
+  user_stories:
+    - id: AF-TRA-01
+      actor: Encargado de Activos
+      titulo: "Gestionar Traslado de Bien"
+      quiero: "registrar cambio de ubicación, centro de costo o responsable"
+      para: "mantener trazabilidad con acta de entrega-recepción"
+      prioridad: Alta
+
+    - id: AF-COM-01
+      actor: Jefe de Finanzas
+      titulo: "Gestionar Comodato Externo"
+      quiero: "ceder bien a tercero con resolución y contrato"
+      para: "control de bienes en uso externo sin baja patrimonial"
+      prioridad: Alta
+
+    - id: AF-MAN-01
+      actor: Encargado de Activos
+      titulo: "Capitalizar Mantención Mayor"
+      quiero: "sumar al valor del activo si extiende vida útil o mejora rendimiento"
+      para: "tratamiento NICSP de mejoras capitalizables"
+      prioridad: Alta
+
+    - id: AF-DES-01
+      actor: Encargado de Activos
+      titulo: "Descomponetizar Bien Significativo"
+      quiero: "separar bien en componentes con depreciación diferenciada"
+      para: "reflejar consumo de valor por componente (inmuebles)"
+      prioridad: Media
+
+# ============================================================================
+# BLOQUE 14: BAJA DE ACTIVOS (Manual 2.3, Sección V)
+# ============================================================================
+
+bloque_14_baja_af:
+  user_stories:
+    - id: AF-BAJ-01
+      actor: Encargado de Activos
+      titulo: "Tramitar Baja de Bien"
+      quiero: "generar informe técnico, resolución y contabilizar reverso"
+      para: "dar de baja por obsolescencia, deterioro, siniestro o término vida útil"
+      prioridad: Crítica
+
+    - id: AF-REM-01
+      actor: Jefe de Abastecimiento
+      titulo: "Gestionar Remate de Bienes"
+      quiero: "publicar, adjudicar al mejor postor, registrar ingreso"
+      para: "enajenar bienes según normativa CGR"
+      prioridad: Alta
+
+    - id: AF-DON-01
+      actor: Gobernador Regional
+      titulo: "Autorizar Donación de Bienes"
+      quiero: "aprobar cesión gratuita con resolución fundada"
+      para: "transferir bienes a municipalidades u organizaciones"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 15: INVENTARIO DE ACTIVOS (Manual 2.3, Sección VI)
+# ============================================================================
+
+bloque_15_inventario_af:
+  user_stories:
+    - id: AF-INV-01
+      actor: Encargado de Activos
+      titulo: "Ejecutar Inventario Físico de Activos"
+      quiero: "leer códigos, verificar estado, conciliar con sistema"
+      para: "verificar patrimonio al menos anualmente"
+      prioridad: Crítica
+
+    - id: AF-DIF-01
+      actor: Encargado de Activos
+      titulo: "Gestionar Diferencias de Inventario"
+      quiero: "investigar sobrantes/faltantes y regularizar"
+      para: "ajustar patrimonio con sumario si corresponde"
+      prioridad: Crítica
+
+    - id: AF-RES-01
+      actor: Encargado de Activos
+      titulo: "Gestionar Asignación de Responsables"
+      quiero: "formalizar custodia con acta por cada bien"
+      para: "responsabilidad administrativa por bienes asignados"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 16: CIERRE Y REPORTERÍA AF (Manual 2.3, Sección VII)
+# ============================================================================
+
+bloque_16_cierre_af:
+  user_stories:
+    - id: AF-CIE-01
+      actor: Analista Contable
+      titulo: "Ejecutar Cierre Mensual de Activo Fijo"
+      quiero: "correr depreciación, generar asiento, cuadrar con contabilidad"
+      para: "integridad patrimonial mensual"
+      prioridad: Crítica
+
+    - id: AF-CIE-02
+      actor: Analista Contable
+      titulo: "Ejecutar Cierre Anual de Activo Fijo"
+      quiero: "inventario, deterioro, informe CGR, traspaso de saldos"
+      para: "cierre patrimonial anual"
+      prioridad: Crítica
+
+    - id: AF-REP-01
+      actor: Encargado de Activos
+      titulo: "Generar Reportes de Activo Fijo"
+      quiero: "emitir inventario valorizado, por responsable, depreciación, movimientos"
+      para: "control de gestión patrimonial"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 17: CASOS ESPECIALES AF (Manual 2.3, Sección VIII)
+# ============================================================================
+
+bloque_17_casos_especiales_af:
+  user_stories:
+    - id: AF-INM-01
+      actor: Encargado de Activos
+      titulo: "Gestionar Registro de Inmuebles"
+      quiero: "registrar rol avalúo, superficie, inscripción CBR, seguros"
+      para: "control especializado de bienes raíces"
+      prioridad: Alta
+
+    - id: AF-TIC-01
+      actor: Unidad TIC
+      titulo: "Gestionar Equipamiento TIC"
+      quiero: "registrar licencias asociadas, garantías, sanitización pre-baja"
+      para: "control de activos tecnológicos con vida útil acelerada"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 18: SERVICIOS GENERALES (Manual 2.4, Sección I-II)
+# ============================================================================
+
+bloque_18_servicios_generales:
+  user_stories:
+    - id: SG-CON-01
+      actor: Jefe Servicios Generales
+      titulo: "Administrar Contratos de Servicios"
+      quiero: "verificar dotaciones, horarios, aplicar multas, evaluar servicio"
+      para: "gestionar aseo, seguridad, jardines externalizados"
+      prioridad: Alta
+
+    - id: SG-MAN-01
+      actor: Supervisor Mantención
+      titulo: "Elaborar Plan de Mantención Preventiva"
+      quiero: "programar intervenciones por equipo/instalación"
+      para: "evitar fallas con mantenimiento programado"
+      prioridad: Alta
+
+    - id: SG-OT-01
+      actor: Usuario
+      titulo: "Generar Orden de Trabajo de Mantención"
+      quiero: "reportar falla indicando ubicación, prioridad, descripción"
+      para: "solicitar reparación formal"
+      prioridad: Crítica
+
+    - id: SG-OT-02
+      actor: Técnico Mantención
+      titulo: "Ejecutar y Cerrar Orden de Trabajo"
+      quiero: "registrar trabajos, materiales, horas, validar con solicitante"
+      para: "documentar mantención realizada"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 19: REGISTRO DE FLOTA (Manual 2.4, Sección III)
+# ============================================================================
+
+bloque_19_registro_flota:
+  user_stories:
+    - id: FLO-REG-01
+      actor: Encargado de Flota
+      titulo: "Mantener Ficha Completa de Vehículo"
+      quiero: "registrar identificación, administrativos, documentación, equipamiento"
+      para: "control integral de cada vehículo institucional"
+      prioridad: Crítica
+
+    - id: FLO-CON-01
+      actor: Encargado de Flota
+      titulo: "Gestionar Registro de Conductores"
+      quiero: "mantener nómina con licencia vigente y autorización"
+      para: "habilitar solo conductores autorizados"
+      prioridad: Crítica
+
+    - id: FLO-DOC-01
+      actor: Sistema
+      titulo: "Alertar Vencimiento de Documentos Vehiculares"
+      quiero: "notificar permiso, revisión técnica, SOAP, seguro antes de vencer"
+      para: "mantener flota legalmente operativa"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 20: ASIGNACIÓN Y USO DE VEHÍCULOS (Manual 2.4, Sección III)
+# ============================================================================
+
+bloque_20_asignacion_vehiculos:
+  user_stories:
+    - id: FLO-SOL-01
+      actor: Funcionario
+      titulo: "Solicitar Vehículo Institucional"
+      quiero: "requerir vehículo indicando fecha, hora, destino, propósito"
+      para: "iniciar flujo de asignación"
+      prioridad: Crítica
+
+    - id: FLO-ASI-01
+      actor: Encargado de Flota
+      titulo: "Asignar Vehículo y Conductor"
+      quiero: "verificar disponibilidad y confirmar asignación"
+      para: "coordinar uso de flota según prioridades"
+      prioridad: Crítica
+
+    - id: FLO-BIT-01
+      actor: Conductor
+      titulo: "Registrar Bitácora de Uso"
+      quiero: "documentar salida/retorno, km inicial/final, destino, observaciones"
+      para: "trazabilidad de cada viaje institucional"
+      prioridad: Crítica
+
+    - id: FLO-COM-01
+      actor: Conductor
+      titulo: "Registrar Carga de Combustible"
+      quiero: "documentar fecha, estación, litros, monto, km"
+      para: "control de consumo y rendimiento"
+      prioridad: Alta
+
+# ============================================================================
+# BLOQUE 21: MANTENCIÓN VEHICULAR (Manual 2.4, Sección IV)
+# ============================================================================
+
+bloque_21_mantencion_vehicular:
+  user_stories:
+    - id: FLO-MAN-01
+      actor: Encargado de Flota
+      titulo: "Gestionar Plan de Mantención Vehicular"
+      quiero: "programar mantenciones preventivas por km (5k, 10k, 20k)"
+      para: "extender vida útil de vehículos"
+      prioridad: Alta
+
+    - id: FLO-OT-01
+      actor: Encargado de Flota
+      titulo: "Gestionar Orden de Trabajo Vehicular"
+      quiero: "asignar a taller interno/externo, registrar trabajos y costos"
+      para: "documentar mantenciones y reparaciones"
+      prioridad: Alta
+
+    - id: FLO-SIN-01
+      actor: Conductor
+      titulo: "Reportar Siniestro o Accidente"
+      quiero: "documentar incidente, notificar, gestionar seguro"
+      para: "procedimiento formal ante accidentes"
+      prioridad: Crítica
+
+# ============================================================================
+# BLOQUE 22: CONTROL Y KPIs DE FLOTA (Manual 2.4, Sección V)
+# ============================================================================
+
+bloque_22_control_flota:
+  user_stories:
+    - id: FLO-KPI-01
+      actor: Encargado de Flota
+      titulo: "Monitorear KPIs de Flota"
+      quiero: "medir disponibilidad, utilización, costo/km, incidentes"
+      para: "evaluar eficiencia de la flota"
+      prioridad: Alta
+
+    - id: FLO-REP-01
+      actor: Encargado de Flota
+      titulo: "Generar Informe Mensual de Flota"
+      quiero: "reportar estado, km, combustible, mantenciones, costos"
+      para: "control de gestión vehicular"
+      prioridad: Alta
+
+    - id: FLO-AUD-01
+      actor: Auditor Interno
+      titulo: "Auditar Uso de Flota"
+      quiero: "cruzar bitácora, combustible, km y comisiones autorizadas"
+      para: "detectar usos no autorizados"
+      prioridad: Alta

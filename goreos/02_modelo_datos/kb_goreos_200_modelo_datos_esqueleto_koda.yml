@@ -1,0 +1,545 @@
+# GOS-200: GORE_OS - Modelo de Datos Conceptual (ESQUELETO)
+# ═══════════════════════════════════════════════════════════════════════════════
+# Este archivo contiene la estructura completa del modelo de datos.
+# Los detalles de cada entidad se documentan en archivos separados (200a-200h).
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:200:modelo_datos_esqueleto"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Modelo de Datos Conceptual (Esqueleto)"
+  Description: "Estructura completa del modelo - índice de todas las entidades"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Tags: [goreos, modelo_datos, esqueleto, indice]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ÍNDICE DE ARCHIVOS DE DETALLE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Archivos_Detalle:
+  - archivo: "kb_goreos_200a_entidades_maestras_koda.yml"
+    contenido: "Usuario, Funcionario, Actor, UnidadOrganica, Territorio, Periodo"
+  - archivo: "kb_goreos_200b_dominio_plan_koda.yml"
+    contenido: "ERD, ObjetivoEstrategico, Lineamiento, PROT, Zonificacion, ConvenioProgramacion"
+  - archivo: "kb_goreos_200c_dominio_fin_koda.yml"
+    contenido: "Iniciativa, Instrumento, SolicitudFinanciamiento, Presupuesto, ItemPresupuestario"
+  - archivo: "kb_goreos_200d_dominio_ejec_koda.yml"
+    contenido: "Convenio, Hito, Desembolso, Addendum, Rendicion, MovimientoRendicion"
+  - archivo: "kb_goreos_200e_dominio_coord_norm_koda.yml"
+    contenido: "ContactoActor, Compromiso, IndicadorRegional, Reglamento, Normativa"
+  - archivo: "kb_goreos_200f_dominio_back_tde_koda.yml"
+    contenido: "DocumentoOficial, OrdenCompra, Expediente, SesionUsuario"
+  - archivo: "kb_goreos_200g_dominio_terr_gestion_koda.yml"
+    contenido: "CapaGeografica, IndicadorComunal, OKR, KeyResult, Alerta, Playbook"
+  - archivo: "kb_goreos_200h_dominio_evol_koda.yml"
+    contenido: "Dataset, ServicioDatos, Automatizacion, AgenteAI, ColeccionRAG"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DIAGRAMA GENERAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Diagrama: |
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                    GORE_OS - MODELO DE DATOS CONCEPTUAL                     │
+  ├─────────────────────────────────────────────────────────────────────────────┤
+  │                                                                             │
+  │  ╔═════════════════════════════════════════════════════════════════════╗   │
+  │  ║                    ENTIDADES MAESTRAS                               ║   │
+  │  ║  Usuario ─┬─ Funcionario                                            ║   │
+  │  ║           └─ Actor ─── ContactoActor                                ║   │
+  │  ║  UnidadOrganica (jerárquica)                                        ║   │
+  │  ║  Territorio (jerárquica: Región→Provincia→Comuna→Localidad)         ║   │
+  │  ║  Periodo (Año, Trimestre, Mes)                                      ║   │
+  │  ╚═════════════════════════════════════════════════════════════════════╝   │
+  │                                    │                                        │
+  │    ┌───────────────────────────────┼───────────────────────────────┐       │
+  │    ▼                               ▼                               ▼       │
+  │  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐        │
+  │  │    D-PLAN       │    │     D-FIN       │    │    D-EJEC       │        │
+  │  │─────────────────│    │─────────────────│    │─────────────────│        │
+  │  │ ERD             │    │ Iniciativa      │    │ Convenio        │        │
+  │  │ EjeTematico     │◄──►│ Instrumento     │◄──►│ HitoConvenio    │        │
+  │  │ ObjetivoEstrat. │    │ SolicitudFin.   │    │ Desembolso      │        │
+  │  │ Lineamiento     │    │ Presupuesto     │    │ Addendum        │        │
+  │  │ PROT            │    │ ItemPresup.     │    │ Rendicion       │        │
+  │  │ Zonificacion    │    │ Priorizacion    │    │ MovimientoRend. │        │
+  │  │ ConvenioProg.   │    │                 │    │ ProyectoPMO     │        │
+  │  └─────────────────┘    └─────────────────┘    └─────────────────┘        │
+  │                                                                             │
+  │  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐        │
+  │  │   D-COORD       │    │    D-NORM       │    │    D-BACK       │        │
+  │  │─────────────────│    │─────────────────│    │─────────────────│        │
+  │  │ CompromisoInter.│    │ ReglamentoReg.  │    │ DocumentoOfic.  │        │
+  │  │ IndicadorRegion.│    │ ProcesoNormativo│    │ OrdenCompra     │        │
+  │  │ ValorIndicador  │    │ BibliotecaNorm. │    │ Factura         │        │
+  │  │ SesionGabinete  │    │                 │    │ ActivoFijo      │        │
+  │  │ AcuerdoGabinete │    │                 │    │ Inventario      │        │
+  │  └─────────────────┘    └─────────────────┘    └─────────────────┘        │
+  │                                                                             │
+  │  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐        │
+  │  │    D-TDE        │    │    D-TERR       │    │   D-GESTION     │        │
+  │  │─────────────────│    │─────────────────│    │─────────────────│        │
+  │  │ ExpedienteElec. │    │ CapaGeografica  │    │ OKR             │        │
+  │  │ DocumentoExp.   │    │ IndicadorComunal│    │ KeyResult       │        │
+  │  │ SesionUsuario   │    │ SerieTemporal   │    │ CheckInOKR      │        │
+  │  │ ServicioInterop.│    │                 │    │ IndicadorGestion│        │
+  │  │ RegistroDP      │    │                 │    │ MedicionIndic.  │        │
+  │  │                 │    │                 │    │ SnapshotHGore   │        │
+  │  │                 │    │                 │    │ AlertaGestion   │        │
+  │  │                 │    │                 │    │ Playbook        │        │
+  │  │                 │    │                 │    │ EjecucionPB     │        │
+  │  └─────────────────┘    └─────────────────┘    └─────────────────┘        │
+  │                                                                             │
+  │  ┌─────────────────────────────────────────────────────────────────┐       │
+  │  │                         D-EVOL                                  │       │
+  │  │─────────────────────────────────────────────────────────────────│       │
+  │  │ Dataset │ ServicioDatos │ Automatizacion │ EjecucionAut.       │       │
+  │  │ AgenteAI │ ColeccionRAG │ DocumentoRAG │ InteraccionAgente    │       │
+  │  │ TareaAgente │ PoliticaAI │ IncidenteAI │ AuditoriaAI          │       │
+  │  └─────────────────────────────────────────────────────────────────┘       │
+  │                                                                             │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENTIDADES MAESTRAS (6 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Maestras:
+  Usuario:
+    dominio: D-TDE
+    descripcion: "Persona que usa el sistema"
+    atributos_clave: [id, rut, nombres, apellidos, email, tipo, estado]
+    relaciones: [Funcionario, Actor, RolUsuario, SesionUsuario]
+  
+  Funcionario:
+    dominio: D-BACK
+    descripcion: "Extensión de Usuario para funcionarios GORE"
+    atributos_clave: [id, usuario_id, unidad_id, cargo, calidad_juridica]
+    relaciones: [Usuario, UnidadOrganica]
+  
+  Actor:
+    dominio: D-COORD
+    descripcion: "Organización del ecosistema regional"
+    atributos_clave: [id, rut, nombre, tipo, territorio_id, es_unidad_ejecutora]
+    relaciones: [Territorio, ContactoActor, Usuario, Convenio, Iniciativa]
+  
+  UnidadOrganica:
+    dominio: D-BACK
+    descripcion: "División/Departamento/Unidad del GORE"
+    atributos_clave: [id, codigo, nombre, tipo, parent_id, jefe_id]
+    relaciones: [UnidadOrganica(padre), Funcionario, OKR]
+  
+  Territorio:
+    dominio: D-TERR
+    descripcion: "División territorial (Región→Provincia→Comuna→Localidad)"
+    atributos_clave: [id, codigo_cut, nombre, tipo, parent_id, geometria]
+    relaciones: [Territorio(padre), Actor, Iniciativa, IndicadorComunal]
+  
+  Periodo:
+    dominio: D-GESTION
+    descripcion: "Período temporal para agregación"
+    atributos_clave: [id, codigo, tipo, anio, trimestre, mes, fecha_inicio, fecha_fin]
+    relaciones: [Presupuesto, OKR, MedicionIndicador, SnapshotHGore]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-PLAN: PLANIFICACIÓN (7 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_PLAN:
+  ERD:
+    descripcion: "Estrategia Regional de Desarrollo"
+    atributos_clave: [id, codigo, nombre, periodo_inicio, periodo_fin, vision, estado]
+    relaciones: [EjeTematico, ObjetivoEstrategico, Iniciativa]
+  
+  EjeTematico:
+    descripcion: "Eje temático de la ERD"
+    atributos_clave: [id, erd_id, codigo, nombre, descripcion]
+    relaciones: [ERD, ObjetivoEstrategico]
+  
+  ObjetivoEstrategico:
+    descripcion: "Objetivo de alto nivel de la ERD"
+    atributos_clave: [id, erd_id, eje_id, codigo, nombre, tipo, parent_id]
+    relaciones: [ERD, EjeTematico, Lineamiento, Iniciativa, IndicadorRegional]
+  
+  Lineamiento:
+    descripcion: "Directriz para alcanzar un objetivo"
+    atributos_clave: [id, objetivo_id, codigo, descripcion, tipo]
+    relaciones: [ObjetivoEstrategico]
+  
+  PROT:
+    descripcion: "Plan Regional de Ordenamiento Territorial"
+    atributos_clave: [id, codigo, nombre, fecha_aprobacion, estado]
+    relaciones: [Zonificacion]
+  
+  Zonificacion:
+    descripcion: "Zona definida en el PROT"
+    atributos_clave: [id, prot_id, codigo, nombre, tipo, geometria, usos]
+    relaciones: [PROT]
+  
+  ConvenioProgramacion:
+    descripcion: "Acuerdo plurianual GORE-Ministerio"
+    atributos_clave: [id, codigo, ministerio, monto_total, aporte_gore, aporte_sectorial, estado]
+    relaciones: [ObjetivoEstrategico, Iniciativa, ProgramacionAnualCP]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-FIN: FINANCIAMIENTO (6 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_FIN:
+  Iniciativa:
+    descripcion: "Proyecto/Programa/Estudio de inversión"
+    atributos_clave: [id, codigo_interno, codigo_bip, nombre, tipo, sector, costo_total, estado]
+    relaciones: [Actor, Territorio, ObjetivoEstrategico, ConvenioProgramacion, SolicitudFinanciamiento, Convenio]
+  
+  InstrumentoFinanciamiento:
+    descripcion: "Fondo o programa de financiamiento"
+    atributos_clave: [id, codigo, nombre, tipo, requiere_rs, monto_maximo, elegibilidad]
+    relaciones: [SolicitudFinanciamiento, ItemPresupuestario]
+  
+  SolicitudFinanciamiento:
+    descripcion: "Solicitud de financiamiento de una iniciativa"
+    atributos_clave: [id, iniciativa_id, instrumento_id, anio, monto_solicitado, monto_aprobado, estado]
+    relaciones: [Iniciativa, InstrumentoFinanciamiento]
+  
+  Presupuesto:
+    descripcion: "Presupuesto regional por período"
+    atributos_clave: [id, periodo_id, tipo, monto_total, fecha_aprobacion]
+    relaciones: [Periodo, ItemPresupuestario]
+  
+  ItemPresupuestario:
+    descripcion: "Línea de presupuesto"
+    atributos_clave: [id, presupuesto_id, instrumento_id, subtitulo, item, monto_inicial, monto_vigente, monto_devengado]
+    relaciones: [Presupuesto, InstrumentoFinanciamiento]
+  
+  Priorizacion:
+    descripcion: "Proceso de priorización de cartera"
+    atributos_clave: [id, anio, fecha_inicio, fecha_cierre, estado, criterios]
+    relaciones: [SolicitudFinanciamiento]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-EJEC: EJECUCIÓN (7 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_EJEC:
+  Convenio:
+    descripcion: "Convenio de transferencia de recursos"
+    atributos_clave: [id, numero, iniciativa_id, unidad_ejecutora_id, tipo, monto_total, estado]
+    relaciones: [Iniciativa, Actor, HitoConvenio, Desembolso, Addendum, Rendicion]
+  
+  HitoConvenio:
+    descripcion: "Hito de control del convenio"
+    atributos_clave: [id, convenio_id, numero, descripcion, fecha_programada, fecha_cumplimiento, estado]
+    relaciones: [Convenio, Desembolso]
+  
+  Desembolso:
+    descripcion: "Transferencia de recursos al ejecutor"
+    atributos_clave: [id, convenio_id, hito_id, numero_cuota, monto, fecha_programada, fecha_transferencia, estado]
+    relaciones: [Convenio, HitoConvenio]
+  
+  Addendum:
+    descripcion: "Modificación a convenio vigente"
+    atributos_clave: [id, convenio_id, numero, tipo, motivo, fecha_suscripcion]
+    relaciones: [Convenio]
+  
+  Rendicion:
+    descripcion: "Rendición de cuentas"
+    atributos_clave: [id, convenio_id, numero, periodo_desde, periodo_hasta, monto_rendido, estado]
+    relaciones: [Convenio, MovimientoRendicion]
+  
+  MovimientoRendicion:
+    descripcion: "Línea de gasto en una rendición"
+    atributos_clave: [id, rendicion_id, tipo_documento, numero_documento, proveedor, monto_total, estado]
+    relaciones: [Rendicion]
+  
+  ProyectoPMO:
+    descripcion: "Proyecto en torre de control PMO"
+    atributos_clave: [id, convenio_id, semaforo, avance_fisico, avance_financiero, alertas]
+    relaciones: [Convenio, AlertaProyecto]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-COORD: COORDINACIÓN (5 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_COORD:
+  ContactoActor:
+    descripcion: "Persona de contacto de un actor"
+    atributos_clave: [id, actor_id, nombre, cargo, email, telefono, es_principal]
+    relaciones: [Actor]
+  
+  CompromisoInterinstitucional:
+    descripcion: "Compromiso entre GORE y otros actores"
+    atributos_clave: [id, titulo, actor_id, origen, fecha_compromiso, fecha_limite, responsable_gore_id, estado]
+    relaciones: [Actor, Usuario]
+  
+  IndicadorRegional:
+    descripcion: "Indicador de desarrollo regional"
+    atributos_clave: [id, codigo, nombre, unidad, fuente, frecuencia, objetivo_erd_id]
+    relaciones: [ValorIndicadorRegional, ObjetivoEstrategico]
+  
+  ValorIndicadorRegional:
+    descripcion: "Valor de indicador en un período"
+    atributos_clave: [id, indicador_id, periodo_id, territorio_id, valor, fecha_medicion]
+    relaciones: [IndicadorRegional, Periodo, Territorio]
+  
+  SesionGabinete:
+    descripcion: "Sesión de gabinete regional"
+    atributos_clave: [id, numero, fecha, tipo, estado, acta_url]
+    relaciones: [AcuerdoGabinete]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-NORM: NORMATIVO (3 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_NORM:
+  ReglamentoRegional:
+    descripcion: "Reglamento regional"
+    atributos_clave: [id, numero, nombre, materia, fecha_publicacion, estado]
+    relaciones: [ProcesoNormativo]
+  
+  ProcesoNormativo:
+    descripcion: "Proceso de elaboración normativa"
+    atributos_clave: [id, reglamento_id, etapa, fecha_inicio, fecha_termino, observaciones]
+    relaciones: [ReglamentoRegional, ConsultaPublica]
+  
+  BibliotecaNormativa:
+    descripcion: "Documento normativo de referencia"
+    atributos_clave: [id, tipo, numero, nombre, fecha, url, vigente]
+    relaciones: []
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-BACK: BACK-OFFICE (5 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_BACK:
+  DocumentoOficial:
+    descripcion: "Documento oficial del GORE"
+    atributos_clave: [id, tipo, numero, fecha, asunto, estado, expediente_id]
+    relaciones: [ExpedienteElectronico]
+  
+  OrdenCompra:
+    descripcion: "Orden de compra"
+    atributos_clave: [id, numero, proveedor_id, monto, fecha_emision, estado]
+    relaciones: [Actor]
+  
+  Factura:
+    descripcion: "Factura recibida"
+    atributos_clave: [id, numero, proveedor_rut, monto_neto, monto_iva, fecha, estado]
+    relaciones: [OrdenCompra]
+  
+  ActivoFijo:
+    descripcion: "Bien inventariable"
+    atributos_clave: [id, codigo, descripcion, valor, fecha_adquisicion, ubicacion, responsable_id]
+    relaciones: [Funcionario]
+  
+  Inventario:
+    descripcion: "Artículo de inventario"
+    atributos_clave: [id, codigo, descripcion, stock, unidad, ubicacion]
+    relaciones: []
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-TDE: TRANSFORMACIÓN DIGITAL (5 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_TDE:
+  ExpedienteElectronico:
+    descripcion: "Expediente administrativo electrónico"
+    atributos_clave: [id, iuie, tipo_procedimiento, materia, fecha_creacion, estado, unidad_id]
+    relaciones: [DocumentoExpediente, UnidadOrganica]
+  
+  DocumentoExpediente:
+    descripcion: "Documento parte de un expediente"
+    atributos_clave: [id, expediente_id, folio, tipo, numero, fecha, asunto, hash, firmado]
+    relaciones: [ExpedienteElectronico]
+  
+  SesionUsuario:
+    descripcion: "Sesión de usuario autenticado"
+    atributos_clave: [id, usuario_id, metodo_auth, fecha_inicio, fecha_fin, ip, activa]
+    relaciones: [Usuario]
+  
+  ServicioInteroperabilidad:
+    descripcion: "Servicio de interoperabilidad consumido/expuesto"
+    atributos_clave: [id, codigo, nombre, tipo, proveedor, estado, ultima_consulta]
+    relaciones: []
+  
+  RegistroTratamientoDP:
+    descripcion: "Registro de tratamiento de datos personales"
+    atributos_clave: [id, nombre, finalidad, base_legal, categorias_datos, plazo_conservacion]
+    relaciones: []
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-TERR: TERRITORIO (3 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_TERR:
+  CapaGeografica:
+    descripcion: "Capa de información geográfica"
+    atributos_clave: [id, codigo, nombre, tipo, fuente, fecha_actualizacion, geometria_tipo]
+    relaciones: []
+  
+  IndicadorComunal:
+    descripcion: "Indicador a nivel comunal"
+    atributos_clave: [id, codigo, nombre, fuente, unidad, metodologia]
+    relaciones: [SerieTemporal]
+  
+  SerieTemporal:
+    descripcion: "Serie de valores de un indicador"
+    atributos_clave: [id, indicador_id, territorio_id, anio, valor]
+    relaciones: [IndicadorComunal, Territorio]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-GESTION: GESTIÓN INSTITUCIONAL (9 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_GESTION:
+  OKR:
+    descripcion: "Objetivo y resultados clave"
+    atributos_clave: [id, periodo_id, tipo, unidad_id, objetivo, parent_id, owner_id, estado]
+    relaciones: [Periodo, UnidadOrganica, Usuario, KeyResult]
+  
+  KeyResult:
+    descripcion: "Resultado clave de un OKR"
+    atributos_clave: [id, okr_id, descripcion, metrica, linea_base, meta, actual, estado]
+    relaciones: [OKR, CheckInOKR]
+  
+  CheckInOKR:
+    descripcion: "Actualización periódica de Key Result"
+    atributos_clave: [id, key_result_id, fecha, valor_reportado, confianza, comentario]
+    relaciones: [KeyResult]
+  
+  IndicadorGestion:
+    descripcion: "Indicador operacional del GORE"
+    atributos_clave: [id, codigo, nombre, dominio, formula, frecuencia, meta_anual, umbrales]
+    relaciones: [MedicionIndicador]
+  
+  MedicionIndicador:
+    descripcion: "Valor medido de un indicador"
+    atributos_clave: [id, indicador_id, periodo_id, valor, estado, tendencia]
+    relaciones: [IndicadorGestion, Periodo]
+  
+  SnapshotHGore:
+    descripcion: "Instantánea de salud institucional"
+    atributos_clave: [id, fecha, h_gore, scores_por_dominio, estado, tendencia]
+    relaciones: []
+  
+  AlertaGestion:
+    descripcion: "Alerta del sistema de monitoreo"
+    atributos_clave: [id, tipo, severidad, dominio, titulo, descripcion, estado, asignado_a_id]
+    relaciones: [Usuario]
+  
+  Playbook:
+    descripcion: "Procedimiento de respuesta estructurado"
+    atributos_clave: [id, codigo, nombre, tipo, dominio, trigger, duracion_estimada, activo]
+    relaciones: [PasoPlaybook, EjecucionPlaybook]
+  
+  EjecucionPlaybook:
+    descripcion: "Instancia de ejecución de un playbook"
+    atributos_clave: [id, playbook_id, alerta_id, fecha_inicio, fecha_fin, estado, resultado]
+    relaciones: [Playbook, AlertaGestion]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# D-EVOL: EVOLUCIÓN (10 entidades)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+D_EVOL:
+  Dataset:
+    descripcion: "Conjunto de datos en el Lakehouse"
+    atributos_clave: [id, codigo, nombre, dominio, capa, tipo, clasificacion_dp, esquema]
+    relaciones: [ServicioDatos]
+  
+  ServicioDatos:
+    descripcion: "API o servicio que expone datos"
+    atributos_clave: [id, codigo, nombre, tipo, dataset_id, endpoint, estado]
+    relaciones: [Dataset]
+  
+  Automatizacion:
+    descripcion: "Proceso automatizado"
+    atributos_clave: [id, codigo, nombre, tipo, dominio, trigger, estado]
+    relaciones: [EjecucionAutomatizacion]
+  
+  EjecucionAutomatizacion:
+    descripcion: "Ejecución de una automatización"
+    atributos_clave: [id, automatizacion_id, fecha_inicio, fecha_fin, estado, items_procesados]
+    relaciones: [Automatizacion]
+  
+  AgenteAI:
+    descripcion: "Agente de inteligencia artificial"
+    atributos_clave: [id, codigo, nombre, tipo, dominio, modelo_base, autonomia, estado]
+    relaciones: [ColeccionRAG, InteraccionAgente]
+  
+  ColeccionRAG:
+    descripcion: "Colección de conocimiento para RAG"
+    atributos_clave: [id, nombre, tipo, documentos, chunks, embedding_model, estado]
+    relaciones: [DocumentoRAG, AgenteAI]
+  
+  DocumentoRAG:
+    descripcion: "Documento indexado para RAG"
+    atributos_clave: [id, coleccion_id, titulo, fuente, tipo, chunks_generados, vigente]
+    relaciones: [ColeccionRAG]
+  
+  InteraccionAgente:
+    descripcion: "Interacción con agente AI"
+    atributos_clave: [id, agente_id, usuario_id, fecha, mensajes, resultado, satisfaccion]
+    relaciones: [AgenteAI, Usuario]
+  
+  TareaAgente:
+    descripcion: "Tarea ejecutada por agente"
+    atributos_clave: [id, agente_id, tipo_tarea, entrada, salida, estado, confianza]
+    relaciones: [AgenteAI]
+  
+  PoliticaAI:
+    descripcion: "Política de gobernanza AI"
+    atributos_clave: [id, nombre, tipo, contenido, version, fecha_vigencia, estado]
+    relaciones: []
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN DE ENTIDADES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  Total_Entidades: 66
+  Por_Categoria:
+    Maestras: 6
+    D_PLAN: 7
+    D_FIN: 6
+    D_EJEC: 7
+    D_COORD: 5
+    D_NORM: 3
+    D_BACK: 5
+    D_TDE: 5
+    D_TERR: 3
+    D_GESTION: 9
+    D_EVOL: 10
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RELACIONES PRINCIPALES ENTRE DOMINIOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Relaciones_Interdominio:
+  D_PLAN_to_D_FIN:
+    - "ObjetivoEstrategico ←── Iniciativa (alineación ERD)"
+    - "ConvenioProgramacion ←── Iniciativa"
+  
+  D_FIN_to_D_EJEC:
+    - "Iniciativa ←── Convenio"
+    - "SolicitudFinanciamiento → aprobación → Convenio"
+  
+  D_EJEC_to_D_COORD:
+    - "Actor ←── Convenio (unidad_ejecutora)"
+  
+  D_GESTION_to_ALL:
+    - "IndicadorGestion ← métricas de todos los dominios"
+    - "SnapshotHGore agrega scores de dominios"
+    - "AlertaGestion puede referir a cualquier dominio"
+  
+  D_EVOL_to_ALL:
+    - "Dataset puede contener datos de cualquier dominio"
+    - "AgenteAI puede operar sobre cualquier dominio"
+    - "Automatizacion puede procesar cualquier entidad"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN DEL ESQUELETO
+# ═══════════════════════════════════════════════════════════════════════════════

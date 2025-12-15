@@ -1,0 +1,565 @@
+# GOS-103: GORE_OS - Especificación Dominio Ejecución (D-EJEC)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:103:especificacion:d_ejec"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Especificación D-EJEC (Ejecución)"
+  Description: "Casos de uso, flujos, reglas y APIs del dominio Ejecución"
+  Domain: GORE_OS
+  Subdomain: D-EJEC
+  Created: "2024-12-14"
+  Tags: [goreos, especificacion, d_ejec, convenio, rendicion, pmo]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISIÓN DEL DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision_Dominio:
+  Proposito: >
+    Gestionar la ejecución de iniciativas aprobadas: convenios de transferencia,
+    control de hitos, desembolsos, rendiciones y monitoreo PMO.
+  
+  Objetivos:
+    - "Formalizar convenios con unidades ejecutoras"
+    - "Controlar transferencias y desembolsos"
+    - "Gestionar rendiciones de cuentas"
+    - "Monitorear avance físico y financiero (PMO)"
+    - "Detectar alertas y desviaciones"
+  
+  Actores:
+    - actor: "Jefe DAF"
+      rol: "Aprueba convenios y desembolsos"
+    - actor: "Supervisor Técnico"
+      rol: "Verifica hitos y avance físico"
+    - actor: "Analista Rendiciones"
+      rol: "Revisa rendiciones de cuentas"
+    - actor: "Unidad Ejecutora"
+      rol: "Ejecuta proyecto, presenta rendiciones"
+    - actor: "PMO Manager"
+      rol: "Monitorea cartera de proyectos"
+  
+  KPIs:
+    - nombre: "Avance financiero cartera"
+      formula: "Transferido / Monto convenios vigentes * 100"
+      meta: "Según cronograma"
+    - nombre: "Mora en rendiciones"
+      formula: "Convenios con mora > 90 días / Total vigentes * 100"
+      meta: "<= 10%"
+    - nombre: "Proyectos en semáforo rojo"
+      formula: "Proyectos ROJO / Total PMO * 100"
+      meta: "<= 15%"
+    - nombre: "Tiempo revisión rendición"
+      formula: "Promedio días desde recepción hasta cierre"
+      meta: "<= 15 días"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CASOS DE USO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Casos_Uso:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GESTIÓN DE CONVENIOS
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_EJEC_001:
+    nombre: "Crear convenio de transferencia"
+    actor_principal: "Analista IPR"
+    descripcion: "Crear convenio a partir de solicitud aprobada por CORE"
+    precondiciones:
+      - "Solicitud en estado APROBADA_CORE"
+      - "Actor beneficiario es unidad ejecutora válida"
+    flujo_principal:
+      1: "Sistema pre-carga datos desde solicitud aprobada"
+      2: "Usuario completa datos del convenio"
+      3: "Usuario define calendario de hitos"
+      4: "Usuario define calendario de desembolsos"
+      5: "Sistema valida consistencia montos"
+      6: "Sistema genera número de convenio"
+      7: "Sistema crea convenio en estado BORRADOR"
+    postcondiciones:
+      - "Convenio creado vinculado a iniciativa"
+      - "Hitos y desembolsos programados"
+
+  CU_EJEC_002:
+    nombre: "Tramitar convenio"
+    actor_principal: "Analista IPR"
+    descripcion: "Proceso de revisión y firma del convenio"
+    flujo_principal:
+      1: "Usuario envía a revisión jurídica"
+      2: "Sistema cambia estado a EN_REVISION_JURIDICA"
+      3: "Jurídica aprueba/observa"
+      4: "Usuario corrige observaciones (si hay)"
+      5: "Sistema cambia a PARA_FIRMA"
+      6: "Usuario registra firma de partes"
+      7: "Sistema cambia a VIGENTE"
+      8: "Sistema notifica a unidad ejecutora"
+    transiciones_estado:
+      - BORRADOR → EN_REVISION_JURIDICA
+      - EN_REVISION_JURIDICA → EN_REVISION_TECNICA
+      - EN_REVISION_TECNICA → PARA_FIRMA
+      - PARA_FIRMA → VIGENTE
+
+  CU_EJEC_003:
+    nombre: "Registrar addendum"
+    actor_principal: "Supervisor Técnico"
+    descripcion: "Modificar convenio vigente (prórroga, aumento, etc.)"
+    precondiciones:
+      - "Convenio en estado VIGENTE"
+    flujo_principal:
+      1: "Usuario selecciona convenio"
+      2: "Usuario crea addendum indicando tipo"
+      3: "Usuario ingresa cambios (nueva fecha, monto, etc.)"
+      4: "Sistema valida cambios"
+      5: "Addendum pasa por flujo de aprobación"
+      6: "Al aprobar, sistema actualiza convenio"
+    tipos_addendum:
+      - PRORROGA: "Extiende fecha término"
+      - AUMENTO_RECURSOS: "Incrementa monto"
+      - DISMINUCION_RECURSOS: "Reduce monto"
+      - CAMBIO_ALCANCE: "Modifica objeto"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CONTROL DE HITOS Y DESEMBOLSOS
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_EJEC_010:
+    nombre: "Verificar cumplimiento de hito"
+    actor_principal: "Supervisor Técnico"
+    descripcion: "Validar que un hito fue cumplido"
+    precondiciones:
+      - "Convenio VIGENTE"
+      - "Hito en estado PENDIENTE o EN_PROCESO"
+    flujo_principal:
+      1: "Unidad ejecutora notifica cumplimiento"
+      2: "Usuario revisa evidencia adjunta"
+      3: "Usuario visita terreno (si corresponde)"
+      4: "Usuario registra verificación"
+      5: "Sistema actualiza estado hito a CUMPLIDO"
+      6: "Sistema habilita desembolso asociado (si hay)"
+      7: "Sistema actualiza avance físico del convenio"
+
+  CU_EJEC_011:
+    nombre: "Solicitar desembolso"
+    actor_principal: "Unidad Ejecutora"
+    descripcion: "Solicitar transferencia de cuota"
+    precondiciones:
+      - "Convenio VIGENTE"
+      - "Hito asociado cumplido (si corresponde)"
+      - "Rendiciones anteriores aprobadas (según regla convenio)"
+    flujo_principal:
+      1: "Usuario selecciona desembolso programado"
+      2: "Sistema valida precondiciones"
+      3: "Usuario adjunta documentos de respaldo"
+      4: "Sistema cambia estado a SOLICITADO"
+      5: "Sistema notifica a DAF"
+
+  CU_EJEC_012:
+    nombre: "Aprobar y ejecutar desembolso"
+    actor_principal: "Jefe DAF"
+    descripcion: "Aprobar transferencia de recursos"
+    precondiciones:
+      - "Desembolso en estado SOLICITADO"
+      - "Disponibilidad presupuestaria"
+    flujo_principal:
+      1: "Usuario revisa solicitud de desembolso"
+      2: "Usuario verifica disponibilidad presupuestaria"
+      3: "Usuario aprueba desembolso"
+      4: "Sistema genera orden de transferencia"
+      5: "Usuario registra fecha y comprobante de transferencia"
+      6: "Sistema actualiza estado a TRANSFERIDO"
+      7: "Sistema actualiza monto_transferido del convenio"
+      8: "Sistema notifica a unidad ejecutora"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GESTIÓN DE RENDICIONES
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_EJEC_020:
+    nombre: "Presentar rendición"
+    actor_principal: "Unidad Ejecutora"
+    descripcion: "Presentar rendición de gastos"
+    precondiciones:
+      - "Convenio VIGENTE"
+      - "Existen recursos transferidos no rendidos"
+    flujo_principal:
+      1: "Usuario crea nueva rendición"
+      2: "Sistema calcula período y saldo por rendir"
+      3: "Usuario ingresa movimientos (facturas, boletas)"
+      4: "Sistema valida RUT proveedores"
+      5: "Sistema calcula total rendido"
+      6: "Usuario adjunta documentos digitalizados"
+      7: "Usuario envía rendición"
+      8: "Sistema cambia estado a RECIBIDA"
+      9: "Sistema notifica a analista"
+
+  CU_EJEC_021:
+    nombre: "Revisar rendición"
+    actor_principal: "Analista Rendiciones"
+    descripcion: "Revisión técnica de rendición"
+    precondiciones:
+      - "Rendición en estado RECIBIDA"
+    flujo_principal:
+      1: "Usuario accede a bandeja de rendiciones"
+      2: "Usuario selecciona rendición"
+      3: "Sistema muestra movimientos"
+      4: "Usuario revisa cada movimiento"
+      5: "Usuario marca como VALIDO, OBSERVADO o RECHAZADO"
+      6: "Sistema calcula totales por estado"
+      7: "Usuario genera informe de revisión"
+      8: "Sistema actualiza estado rendición"
+    decisiones:
+      - "Si todo VALIDO → APROBADA"
+      - "Si hay OBSERVADO → OBSERVADA (devuelve para corrección)"
+      - "Si hay RECHAZADO significativo → RECHAZADA"
+
+  CU_EJEC_022:
+    nombre: "Subsanar observaciones"
+    actor_principal: "Unidad Ejecutora"
+    descripcion: "Corregir observaciones de rendición"
+    precondiciones:
+      - "Rendición en estado OBSERVADA"
+    flujo_principal:
+      1: "Usuario visualiza observaciones"
+      2: "Usuario corrige o reemplaza documentos"
+      3: "Usuario responde cada observación"
+      4: "Usuario reenvía rendición"
+      5: "Sistema notifica a analista"
+
+  CU_EJEC_023:
+    nombre: "Liquidar convenio"
+    actor_principal: "Analista Rendiciones"
+    descripcion: "Cierre final del convenio"
+    precondiciones:
+      - "Avance físico = 100%"
+      - "Todas las rendiciones aprobadas"
+      - "Saldo por rendir = 0 (o reintegro procesado)"
+    flujo_principal:
+      1: "Usuario verifica condiciones de cierre"
+      2: "Usuario genera informe de liquidación"
+      3: "Usuario registra fecha de liquidación"
+      4: "Sistema cambia estado a LIQUIDADO"
+      5: "Sistema actualiza clasificación de unidad ejecutora"
+      6: "Sistema notifica a partes"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # MONITOREO PMO
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_EJEC_030:
+    nombre: "Dashboard PMO"
+    actor_principal: "PMO Manager"
+    descripcion: "Monitorear cartera de proyectos"
+    flujo_principal:
+      1: "Usuario accede a dashboard PMO"
+      2: "Sistema muestra resumen de cartera"
+      3: "Sistema muestra distribución por semáforo"
+      4: "Usuario filtra por división, sector, ejecutor"
+      5: "Usuario accede a detalle de proyecto"
+
+  CU_EJEC_031:
+    nombre: "Actualizar estado proyecto PMO"
+    actor_principal: "Supervisor Técnico"
+    descripcion: "Reportar avance de proyecto"
+    flujo_principal:
+      1: "Usuario selecciona proyecto"
+      2: "Usuario actualiza avance físico"
+      3: "Sistema calcula avance financiero"
+      4: "Sistema calcula semáforo automáticamente"
+      5: "Usuario registra observaciones"
+      6: "Sistema genera alerta si semáforo ROJO"
+
+  CU_EJEC_032:
+    nombre: "Gestionar alerta de proyecto"
+    actor_principal: "PMO Manager"
+    descripcion: "Atender alerta de desviación"
+    precondiciones:
+      - "Existe alerta activa"
+    flujo_principal:
+      1: "Usuario visualiza alerta"
+      2: "Usuario asigna responsable"
+      3: "Responsable analiza causa"
+      4: "Responsable define acción correctiva"
+      5: "Usuario registra acción tomada"
+      6: "Sistema actualiza estado alerta"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJOS DE PROCESO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Flujos_Proceso:
+
+  FLOW_EJEC_001:
+    nombre: "Ciclo de vida Convenio"
+    diagrama: |
+      ┌─────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌─────────┐
+      │BORRADOR │──►│REV_JURID.│──►│REV_TECN. │──►│PARA_FIRMA│──►│ VIGENTE │
+      └─────────┘   └──────────┘   └──────────┘   └──────────┘   └─────────┘
+                                                                      │
+                    ┌───────────────────────────────────────────────────┤
+                    │                                                   │
+                    ▼                                                   ▼
+              ┌───────────┐                                      ┌───────────┐
+              │MODIFICAC. │◄─────────────────────────────────────│EN_LIQUID. │
+              └───────────┘                                      └───────────┘
+                    │                                                   │
+                    └───────────────────────┬───────────────────────────┘
+                                            ▼
+                                      ┌───────────┐
+                                      │ LIQUIDADO │
+                                      └───────────┘
+
+  FLOW_EJEC_002:
+    nombre: "Ciclo Rendición"
+    diagrama: |
+      ┌──────────┐   ┌──────────┐   ┌──────────┐
+      │PENDIENTE │──►│ RECIBIDA │──►│EN_REVISION│
+      └──────────┘   └──────────┘   └──────────┘
+                                          │
+                    ┌─────────────────────┼─────────────────────┐
+                    ▼                     ▼                     ▼
+              ┌──────────┐         ┌──────────┐         ┌──────────┐
+              │ APROBADA │         │OBSERVADA │         │RECHAZADA │
+              └──────────┘         └──────────┘         └──────────┘
+                                         │
+                                         ▼
+                                   ┌──────────┐
+                                   │(Subsanar)│──► EN_REVISION
+                                   └──────────┘
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REGLAS DE NEGOCIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Reglas_Negocio:
+
+  # Convenios
+  RN-CON-01:
+    descripcion: "Monto total = aporte_gore + aporte_ejecutor + aporte_terceros"
+    validacion: "monto_total = aporte_gore + aporte_ejecutor + aporte_terceros"
+    severidad: "ERROR"
+
+  RN-CON-02:
+    descripcion: "Actor debe ser unidad ejecutora habilitada"
+    validacion: "actor.es_unidad_ejecutora = TRUE"
+    severidad: "ERROR"
+
+  RN-CON-03:
+    descripcion: "Convenio no puede modificarse si está LIQUIDADO"
+    validacion: "estado != 'LIQUIDADO' para UPDATE"
+    severidad: "ERROR"
+
+  # Desembolsos
+  RN-DES-01:
+    descripcion: "Suma desembolsos no puede exceder aporte GORE"
+    validacion: "SUM(desembolsos.monto) <= convenio.aporte_gore"
+    severidad: "ERROR"
+
+  RN-DES-02:
+    descripcion: "Desembolso requiere hito cumplido (si está vinculado)"
+    validacion: "IF hito_id THEN hito.estado = 'CUMPLIDO'"
+    severidad: "ERROR"
+
+  RN-DES-03:
+    descripcion: "Desembolso posterior requiere rendición anterior (según convenio)"
+    validacion: "Configurable por convenio"
+    severidad: "WARNING"
+
+  # Rendiciones
+  RN-REN-01:
+    descripcion: "Monto rendido no puede exceder transferido menos aprobado"
+    validacion: "monto_rendido <= (convenio.monto_transferido - convenio.monto_aprobado)"
+    severidad: "ERROR"
+
+  RN-REN-02:
+    descripcion: "Mora si días desde última transferencia > 90 sin rendición"
+    validacion: "Calculado automáticamente"
+    accion: "Generar alerta"
+
+  RN-REN-03:
+    descripcion: "Documento no puede duplicarse en rendiciones del convenio"
+    validacion: "UNIQUE(convenio_id, tipo_doc, numero_doc)"
+    severidad: "WARNING"
+
+  # PMO
+  RN-PMO-01:
+    descripcion: "Semáforo ROJO si avance < programado - 20%"
+    validacion: "avance_fisico < avance_programado - 20"
+    accion: "semaforo = ROJO, generar alerta"
+
+  RN-PMO-02:
+    descripcion: "Semáforo AMARILLO si avance < programado - 10%"
+    validacion: "avance_fisico < avance_programado - 10"
+    accion: "semaforo = AMARILLO"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ESPECIFICACIÓN API
+# ═══════════════════════════════════════════════════════════════════════════════
+
+API_Endpoints:
+
+  Convenios:
+    base_path: "/api/v1/ejec/convenios"
+    endpoints:
+      - method: GET
+        path: "/"
+        query_params: [estado, ejecutor_id, supervisor_id, semaforo]
+        response: "PaginatedList<Convenio>"
+      - method: GET
+        path: "/{id}"
+        response: "Convenio con hitos, desembolsos, rendiciones"
+      - method: GET
+        path: "/{id}/timeline"
+        descripcion: "Línea de tiempo del convenio"
+      - method: POST
+        path: "/"
+        permisos: ["ejec:convenio:create"]
+      - method: POST
+        path: "/{id}/cambiar-estado"
+        permisos: ["ejec:convenio:update"]
+      - method: POST
+        path: "/{id}/addendum"
+        permisos: ["ejec:convenio:modify"]
+
+  Hitos:
+    base_path: "/api/v1/ejec/convenios/{convenio_id}/hitos"
+    endpoints:
+      - method: GET
+        path: "/"
+        response: "List<Hito>"
+      - method: POST
+        path: "/{hito_id}/verificar"
+        permisos: ["ejec:hito:verify"]
+
+  Desembolsos:
+    base_path: "/api/v1/ejec/convenios/{convenio_id}/desembolsos"
+    endpoints:
+      - method: GET
+        path: "/"
+        response: "List<Desembolso>"
+      - method: POST
+        path: "/{id}/solicitar"
+        permisos: ["ejec:desembolso:request"]
+      - method: POST
+        path: "/{id}/aprobar"
+        permisos: ["ejec:desembolso:approve"]
+      - method: POST
+        path: "/{id}/registrar-transferencia"
+        permisos: ["ejec:desembolso:transfer"]
+
+  Rendiciones:
+    base_path: "/api/v1/ejec/rendiciones"
+    endpoints:
+      - method: GET
+        path: "/"
+        query_params: [convenio_id, estado, en_mora]
+        response: "PaginatedList<Rendicion>"
+      - method: GET
+        path: "/{id}"
+        response: "Rendicion con movimientos"
+      - method: POST
+        path: "/"
+        body: "CreateRendicionRequest"
+        permisos: ["ejec:rendicion:create"]
+      - method: POST
+        path: "/{id}/enviar"
+        permisos: ["ejec:rendicion:submit"]
+      - method: POST
+        path: "/{id}/revisar"
+        body: "RevisarRendicionRequest"
+        permisos: ["ejec:rendicion:review"]
+      - method: GET
+        path: "/dashboard-mora"
+        descripcion: "Dashboard de mora"
+
+  PMO:
+    base_path: "/api/v1/ejec/pmo"
+    endpoints:
+      - method: GET
+        path: "/dashboard"
+        response: "DashboardPMO"
+      - method: GET
+        path: "/proyectos"
+        query_params: [semaforo, division_id]
+        response: "List<ProyectoPMO>"
+      - method: GET
+        path: "/proyectos/{id}"
+        response: "ProyectoPMO con alertas"
+      - method: POST
+        path: "/proyectos/{id}/actualizar-avance"
+        permisos: ["ejec:pmo:update"]
+      - method: GET
+        path: "/alertas"
+        query_params: [estado, severidad]
+        response: "List<AlertaProyecto>"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EVENTOS DE DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Eventos_Dominio:
+  - evento: "ConvenioCreado"
+    payload: [convenio_id, iniciativa_id, ejecutor_id, monto]
+    consumidores: [Auditoria, D-GESTION]
+
+  - evento: "ConvenioVigente"
+    payload: [convenio_id, fecha_inicio, fecha_termino]
+    consumidores: [PMO, Notificaciones]
+
+  - evento: "DesembolsoTransferido"
+    payload: [convenio_id, desembolso_id, monto, fecha]
+    consumidores: [Auditoria, Presupuesto]
+
+  - evento: "RendicionAprobada"
+    payload: [convenio_id, rendicion_id, monto_aprobado]
+    consumidores: [Auditoria, D-GESTION]
+
+  - evento: "ConvenioEnMora"
+    payload: [convenio_id, dias_mora]
+    consumidores: [AlertasGestion, Notificaciones]
+
+  - evento: "SemaforoRojo"
+    payload: [convenio_id, proyecto_pmo_id, causa]
+    consumidores: [AlertasGestion, Notificaciones]
+
+  - evento: "ConvenioLiquidado"
+    payload: [convenio_id, fecha_liquidacion]
+    consumidores: [D-FIN, D-GESTION, Auditoria]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INTEGRACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Integraciones:
+  Internas:
+    - dominio: D-FIN
+      tipo: "Evento"
+      descripcion: "Recibe aprobación CORE para crear convenio"
+      evento: "SolicitudAprobadaCORE"
+
+    - dominio: D-FIN
+      tipo: "Síncrona"
+      descripcion: "Actualiza ejecución presupuestaria"
+      endpoint: "POST /api/v1/fin/presupuesto/registrar-devengado"
+
+    - dominio: D-GESTION
+      tipo: "Evento"
+      descripcion: "Alimenta indicadores de ejecución"
+      eventos: [DesembolsoTransferido, RendicionAprobada, SemaforoRojo]
+
+  Externas:
+    - sistema: "SII"
+      descripcion: "Validar RUT proveedores en rendiciones"
+      tipo: "API REST"
+
+    - sistema: "Banco Estado / Tesorería"
+      descripcion: "Confirmar transferencias realizadas"
+      tipo: "Consulta archivo"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN ESPECIFICACIÓN D-EJEC
+# ═══════════════════════════════════════════════════════════════════════════════

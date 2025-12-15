@@ -1,0 +1,716 @@
+# GOS-103b: GORE_OS - User Stories Gestión de Personas (D-RH)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:103b:user_stories:gestion_personas"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - User Stories Gestión de Personas"
+  Description: "User Stories para ciclo de vida funcionario, remuneraciones, tiempo, desarrollo y bienestar"
+  Domain: GORE_OS
+  Subdomain: D-RH
+  Created: "2024-12-15"
+  Sources:
+    - file: "manual_3_1_ciclo_vida.md"
+    - file: "manual_3_2_remuneraciones.md"
+    - file: "manual_3_3_tiempo_ausentismo.md"
+    - file: "manual_3_4_desarrollo_organizacional.md"
+    - file: "manual_3_5_bienestar.md"
+  Tags:
+    [
+      goreos,
+      user-stories,
+      rrhh,
+      ciclo-vida,
+      remuneraciones,
+      capacitacion,
+      bienestar,
+      d_rh,
+    ]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 1: RECLUTAMIENTO Y SELECCIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Reclutamiento:
+  titulo: "Reclutamiento y Selección"
+  descripcion: "Proceso de provisión de cargos"
+  source_ref: MANUAL-CICLO-VIDA-01
+
+  US_RH_001:
+    nombre: "Levantamiento Perfil"
+    actor: "Jefatura"
+    accion: "levantar perfil de cargo"
+    beneficio: "defina competencias y requisitos"
+    acceptance_criteria:
+      - "Competencias técnicas definidas"
+      - "Requisitos DFL especificados"
+      - "Perfil documentado"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S2
+
+  US_RH_002:
+    nombre: "Certificación Presupuestaria"
+    actor: "DAF"
+    accion: "certificar disponibilidad presupuestaria"
+    beneficio: "asegure cupo y recursos"
+    acceptance_criteria:
+      - "Disponibilidad Subtítulo 21"
+      - "Cupo en dotación máxima"
+      - "Tasa de reemplazo cumplida"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S2
+
+  US_RH_003:
+    nombre: "Publicación Concurso"
+    actor: "GDP"
+    accion: "publicar concurso público"
+    beneficio: "convoque candidatos"
+    acceptance_criteria:
+      - "Diario Oficial"
+      - "Sitio web GORE"
+      - "Portal Empleos Públicos"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S2
+
+  US_RH_004:
+    nombre: "Evaluación Candidatos"
+    actor: "Comité Selección"
+    accion: "evaluar candidatos"
+    beneficio: "seleccione mejor postulante"
+    acceptance_criteria:
+      - "Evaluación curricular"
+      - "Evaluación psicológica"
+      - "Entrevista técnica"
+      - "Terna elaborada"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S2
+
+  US_RH_005:
+    nombre: "Resolución Nombramiento"
+    actor: "Gobernador"
+    accion: "resolver nombramiento"
+    beneficio: "formalice selección"
+    acceptance_criteria:
+      - "Resolución firmada"
+      - "Candidato notificado"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 2: INGRESO Y FORMALIZACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Ingreso:
+  titulo: "Ingreso y Formalización"
+  descripcion: "Formalización del vínculo funcionario"
+  source_ref: MANUAL-CICLO-VIDA-01
+
+  US_RH_006:
+    nombre: "Tramitación Decreto"
+    actor: "GDP"
+    accion: "tramitar decreto de nombramiento"
+    beneficio: "formalice ingreso"
+    acceptance_criteria:
+      - "Decreto de nombramiento"
+      - "Toma de razón CGR (planta)"
+      - "Registro (contrata)"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S3
+
+  US_RH_007:
+    nombre: "Registro SIAPER"
+    actor: "GDP"
+    accion: "registrar ingreso en SIAPER"
+    beneficio: "actualice base central"
+    acceptance_criteria:
+      - "Alta en sistema central"
+      - "Datos personales y cargo"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S3
+
+  US_RH_008:
+    nombre: "Declaraciones Juradas"
+    actor: "Funcionario"
+    accion: "completar declaraciones juradas"
+    beneficio: "cumpla Ley 19.653"
+    acceptance_criteria:
+      - "Declaración de intereses"
+      - "Declaración de patrimonio"
+      - "Inhabilidades e incompatibilidades"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S3
+
+  US_RH_009:
+    nombre: "Programa Inducción"
+    actor: "GDP"
+    accion: "ejecutar programa de inducción"
+    beneficio: "integre al nuevo funcionario"
+    acceptance_criteria:
+      - "Bienvenida institucional"
+      - "Inducción general y específica"
+      - "Protocolos de prevención"
+      - "Plazo: primer mes"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S4
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 3: MOVILIDAD FUNCIONARIA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Movilidad:
+  titulo: "Movilidad Funcionaria"
+  descripcion: "Ascensos, traspasos y comisiones"
+  source_ref: MANUAL-CICLO-VIDA-01
+
+  US_RH_010:
+    nombre: "Gestión Ascenso"
+    actor: "GDP"
+    accion: "gestionar ascenso o promoción"
+    beneficio: "avance en carrera funcionaria"
+    acceptance_criteria:
+      - "Concurso interno o promoción automática"
+      - "Resolución de ascenso"
+    priority: MEDIA
+    source_ref: MANUAL-CICLO-VIDA-01-S5
+
+  US_RH_011:
+    nombre: "Traspaso Honorarios a Contrata"
+    actor: "GDP"
+    accion: "gestionar traspaso honorarios a contrata"
+    beneficio: "regularice vínculo laboral"
+    acceptance_criteria:
+      - "Antigüedad cumplida"
+      - "Funciones habituales"
+      - "Autorización DIPRES"
+      - "Sin aumento gasto líquido"
+    priority: MEDIA
+    source_ref: MANUAL-CICLO-VIDA-01-S5
+
+  US_RH_012:
+    nombre: "Solicitud Suplencia"
+    actor: "Jefatura"
+    accion: "solicitar suplencia o reemplazo"
+    beneficio: "cubra ausencias prolongadas"
+    acceptance_criteria:
+      - "Ausencia >30 días"
+      - "Contrato máximo 6 meses"
+      - "Autorización DIPRES (salvo maternales)"
+    priority: MEDIA
+    source_ref: MANUAL-CICLO-VIDA-01-S6
+
+  US_RH_013:
+    nombre: "Registro Comisión Servicio"
+    actor: "GDP"
+    accion: "registrar comisión de servicio"
+    beneficio: "formalice destinación temporal"
+    acceptance_criteria:
+      - "Decreto Exento previo"
+      - "Viáticos asociados"
+    priority: MEDIA
+    source_ref: MANUAL-CICLO-VIDA-01-S7
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 4: EGRESO Y DESVINCULACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Egreso:
+  titulo: "Egreso y Desvinculación"
+  descripcion: "Término del vínculo funcionario"
+  source_ref: MANUAL-CICLO-VIDA-01
+
+  US_RH_014:
+    nombre: "Renuncia Voluntaria"
+    actor: "Funcionario"
+    accion: "presentar renuncia voluntaria"
+    beneficio: "inicie proceso de egreso"
+    acceptance_criteria:
+      - "Renuncia escrita"
+      - "Aceptación por autoridad (máx 30 días)"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S8
+
+  US_RH_015:
+    nombre: "Gestión Jubilación"
+    actor: "GDP"
+    accion: "gestionar jubilación"
+    beneficio: "acompañe proceso previsional"
+    acceptance_criteria:
+      - "Requisitos de edad cumplidos"
+      - "Coordinación con AFP/IPS"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S8
+
+  US_RH_016:
+    nombre: "Cierre de Accesos"
+    actor: "GDP"
+    accion: "tramitar cierre de accesos"
+    beneficio: "revoque credenciales"
+    acceptance_criteria:
+      - "Accesos informáticos revocados"
+      - "Firma electrónica deshabilitada"
+      - "Credencial física devuelta"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S9
+
+  US_RH_017:
+    nombre: "Certificado Servicios"
+    actor: "GDP"
+    accion: "emitir certificado de servicios"
+    beneficio: "documente trayectoria"
+    acceptance_criteria:
+      - "Relación de servicios"
+      - "Fines previsionales"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S9
+
+  US_RH_018:
+    nombre: "Liquidación Final"
+    actor: "Remuneraciones"
+    accion: "calcular liquidación final"
+    beneficio: "pague haberes pendientes"
+    acceptance_criteria:
+      - "Haberes devengados"
+      - "Feriado proporcional"
+      - "Descuentos pendientes"
+    priority: ALTA
+    source_ref: MANUAL-CICLO-VIDA-01-S9
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 5: REMUNERACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Remuneraciones:
+  titulo: "Proceso de Remuneraciones"
+  descripcion: "Cálculo y pago de sueldos"
+  source_ref: MANUAL-REMUNERACIONES-01
+
+  US_RH_019:
+    nombre: "Carga Novedades"
+    actor: "Remuneraciones"
+    accion: "cargar novedades del mes"
+    beneficio: "actualice datos para cálculo"
+    acceptance_criteria:
+      - "Contratos nuevos"
+      - "Renuncias"
+      - "Licencias médicas"
+      - "Horas extras"
+    priority: ALTA
+    source_ref: MANUAL-REMUNERACIONES-01-S3
+
+  US_RH_020:
+    nombre: "Cálculo Sueldos"
+    actor: "Remuneraciones"
+    accion: "ejecutar cálculo de sueldos"
+    beneficio: "procese remuneraciones"
+    acceptance_criteria:
+      - "Haberes y descuentos calculados"
+      - "Escala EUS aplicada"
+    priority: ALTA
+    source_ref: MANUAL-REMUNERACIONES-01-S3
+
+  US_RH_021:
+    nombre: "Validación Liquidaciones"
+    actor: "Remuneraciones"
+    accion: "validar liquidaciones"
+    beneficio: "asegure exactitud"
+    acceptance_criteria:
+      - "Liquidaciones de prueba revisadas"
+      - "Descuentos verificados"
+    priority: ALTA
+    source_ref: MANUAL-REMUNERACIONES-01-S3
+
+  US_RH_022:
+    nombre: "Generación Archivo Banco"
+    actor: "Remuneraciones"
+    accion: "generar archivo de banco"
+    beneficio: "habilite pago masivo"
+    acceptance_criteria:
+      - "Formato banco cumplido"
+      - "Integración con Tesorería"
+    priority: ALTA
+    source_ref: MANUAL-REMUNERACIONES-01-S3
+
+  US_RH_023:
+    nombre: "Generación PREVIRED"
+    actor: "Remuneraciones"
+    accion: "generar archivo PREVIRED"
+    beneficio: "pague cotizaciones"
+    acceptance_criteria:
+      - "AFP, FONASA/Isapre, AFC"
+      - "Formato PREVIRED"
+    priority: ALTA
+    source_ref: MANUAL-REMUNERACIONES-01-S3
+
+  US_RH_024:
+    nombre: "Pago Masivo Sueldos"
+    actor: "Tesorero"
+    accion: "ejecutar pago masivo de sueldos"
+    beneficio: "pague remuneraciones"
+    acceptance_criteria:
+      - "Plazo: día 24 o hábil anterior"
+      - "Pago electrónico exclusivo"
+    priority: ALTA
+    source_ref: MANUAL-REMUNERACIONES-01-S3
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 6: CONTROL DE ASISTENCIA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Asistencia:
+  titulo: "Control de Asistencia"
+  descripcion: "Registro y control de jornada"
+  source_ref: MANUAL-TIEMPO-AUSENTISMO-01
+
+  US_RH_025:
+    nombre: "Marcaje Biométrico"
+    actor: "Funcionario"
+    accion: "registrar marcaje biométrico"
+    beneficio: "cumpla control de asistencia"
+    acceptance_criteria:
+      - "Entrada y salida registradas"
+      - "44 horas semanales"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S2
+
+  US_RH_026:
+    nombre: "Control Atrasos"
+    actor: "GDP"
+    accion: "controlar atrasos mensual"
+    beneficio: "detecte incumplimientos"
+    acceptance_criteria:
+      - "Tolerancia aplicada"
+      - "Informe mensual generado"
+    priority: MEDIA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S2
+
+  US_RH_027:
+    nombre: "Reporte Descuentos"
+    actor: "GDP"
+    accion: "reportar descuentos a Remuneraciones"
+    beneficio: "aplique descuentos por atrasos"
+    acceptance_criteria:
+      - "Tiempos no trabajados"
+      - "Integración con nómina"
+    priority: MEDIA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 7: PERMISOS Y FERIADO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Permisos:
+  titulo: "Permisos y Feriado Legal"
+  descripcion: "Gestión de ausencias planificadas"
+  source_ref: MANUAL-TIEMPO-AUSENTISMO-01
+
+  US_RH_028:
+    nombre: "Solicitud Feriado"
+    actor: "Funcionario"
+    accion: "solicitar feriado legal"
+    beneficio: "planifique vacaciones"
+    acceptance_criteria:
+      - "Workflow en sistema"
+      - "15/20/25 días según antigüedad"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S3
+
+  US_RH_029:
+    nombre: "Aprobación Feriado"
+    actor: "Jefatura"
+    accion: "aprobar feriado legal"
+    beneficio: "autorice ausencia planificada"
+    acceptance_criteria:
+      - "Cobertura de servicio asegurada"
+      - "Aprobación en sistema"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S3
+
+  US_RH_030:
+    nombre: "Solicitud Permiso Administrativo"
+    actor: "Funcionario"
+    accion: "solicitar permiso administrativo"
+    beneficio: "use días personales"
+    acceptance_criteria:
+      - "6 días anuales"
+      - "Fraccionable en medios días"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S4
+
+  US_RH_031:
+    nombre: "Solicitud Compensación Horas"
+    actor: "Funcionario"
+    accion: "solicitar compensación de horas"
+    beneficio: "devuelva tiempo extra trabajado"
+    acceptance_criteria:
+      - "Horas autorizadas previamente"
+      - "En lugar de pago"
+    priority: MEDIA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S5
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 8: LICENCIAS MÉDICAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Licencias:
+  titulo: "Gestión de Licencias Médicas"
+  descripcion: "Tramitación de ausencias por salud"
+  source_ref: MANUAL-TIEMPO-AUSENTISMO-01
+
+  US_RH_032:
+    nombre: "Presentación Licencia"
+    actor: "Funcionario"
+    accion: "presentar licencia médica"
+    beneficio: "formalice ausencia por salud"
+    acceptance_criteria:
+      - "Electrónica o papel"
+      - "Plazo 2-3 días hábiles"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S6
+
+  US_RH_033:
+    nombre: "Tramitación Externa"
+    actor: "GDP"
+    accion: "tramitar licencia a COMPIN/Isapre"
+    beneficio: "gestione autorización"
+    acceptance_criteria:
+      - "Envío en plazo legal (3 días)"
+      - "Seguimiento de resolución"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S6
+
+  US_RH_034:
+    nombre: "Registro en Asistencia"
+    actor: "GDP"
+    accion: "registrar impacto en asistencia"
+    beneficio: "actualice ausencias"
+    acceptance_criteria:
+      - "Fechas de vigencia"
+      - "Estado en sistema"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S6
+
+  US_RH_035:
+    nombre: "Recupero Subsidio SIL"
+    actor: "Remuneraciones"
+    accion: "gestionar recupero subsidio SIL"
+    beneficio: "reintegre fondos"
+    acceptance_criteria:
+      - "Pago íntegro al funcionario"
+      - "Recuperación del asegurador"
+    priority: ALTA
+    source_ref: MANUAL-TIEMPO-AUSENTISMO-01-S7
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 9: CAPACITACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Capacitacion:
+  titulo: "Capacitación y Formación"
+  descripcion: "Desarrollo de competencias"
+  source_ref: MANUAL-DESARROLLO-ORG-01
+
+  US_RH_036:
+    nombre: "Detección Necesidades"
+    actor: "GDP"
+    accion: "ejecutar Detección de Necesidades (DNC)"
+    beneficio: "identifique brechas"
+    acceptance_criteria:
+      - "Consulta anual"
+      - "Fuentes: evaluación, normativas, ERD"
+    priority: ALTA
+    source_ref: MANUAL-DESARROLLO-ORG-01-S2
+
+  US_RH_037:
+    nombre: "Elaboración PAC"
+    actor: "GDP"
+    accion: "elaborar Plan Anual de Capacitación"
+    beneficio: "planifique formación"
+    acceptance_criteria:
+      - "DNC consolidado"
+      - "Prioridad competencias digitales"
+    priority: ALTA
+    source_ref: MANUAL-DESARROLLO-ORG-01-S3
+
+  US_RH_038:
+    nombre: "Revisión PAC"
+    actor: "Comité Bipartito"
+    accion: "revisar Plan Anual de Capacitación"
+    beneficio: "valide con representantes"
+    acceptance_criteria:
+      - "Instancia consultiva"
+      - "Sugerencias incorporadas"
+    priority: MEDIA
+    source_ref: MANUAL-DESARROLLO-ORG-01-S3
+
+  US_RH_039:
+    nombre: "Participación Capacitación"
+    actor: "Funcionario"
+    accion: "participar en capacitación"
+    beneficio: "desarrolle competencias"
+    acceptance_criteria:
+      - "Asistencia completa"
+      - "Certificado obtenido"
+      - "Réplica de conocimientos"
+    priority: ALTA
+    source_ref: MANUAL-DESARROLLO-ORG-01-S3
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 10: CALIFICACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Calificaciones:
+  titulo: "Sistema de Calificaciones"
+  descripcion: "Evaluación anual de desempeño"
+  source_ref: MANUAL-DESARROLLO-ORG-01
+
+  US_RH_040:
+    nombre: "Precalificación"
+    actor: "Jefe Directo"
+    accion: "realizar precalificación"
+    beneficio: "evalúe desempeño del período"
+    acceptance_criteria:
+      - "Período: 1 sept - 31 agosto"
+      - "Factores cuali/cuantitativos"
+    priority: ALTA
+    source_ref: MANUAL-DESARROLLO-ORG-01-S4
+
+  US_RH_041:
+    nombre: "Calificación Final"
+    actor: "Junta Calificadora"
+    accion: "asignar calificación final"
+    beneficio: "determine lista de mérito"
+    acceptance_criteria:
+      - "Revisión de precalificaciones"
+      - "Lista 1-4 asignada"
+    priority: ALTA
+    source_ref: MANUAL-DESARROLLO-ORG-01-S4
+
+  US_RH_042:
+    nombre: "Apelación Calificación"
+    actor: "Funcionario"
+    accion: "apelar calificación"
+    beneficio: "ejerza derecho de revisión"
+    acceptance_criteria:
+      - "Ante Junta Calificadora"
+      - "CGR en segunda instancia"
+    priority: MEDIA
+    source_ref: MANUAL-DESARROLLO-ORG-01-S4
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROCESO 11: BIENESTAR
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Bienestar:
+  titulo: "Servicio de Bienestar"
+  descripcion: "Beneficios y prestaciones sociales"
+  source_ref: MANUAL-BIENESTAR-01
+
+  US_RH_043:
+    nombre: "Afiliación Bienestar"
+    actor: "Funcionario"
+    accion: "solicitar afiliación a Bienestar"
+    beneficio: "acceda a beneficios"
+    acceptance_criteria:
+      - "Afiliación voluntaria"
+      - "Cuota de incorporación"
+      - "Descuento mensual"
+    priority: MEDIA
+    source_ref: MANUAL-BIENESTAR-01-S1
+
+  US_RH_044:
+    nombre: "Reembolso Médico"
+    actor: "Funcionario"
+    accion: "solicitar reembolso médico/dental"
+    beneficio: "recupere copagos"
+    acceptance_criteria:
+      - "Bonificación de copago"
+      - "Tope anual"
+    priority: ALTA
+    source_ref: MANUAL-BIENESTAR-01-S3
+
+  US_RH_045:
+    nombre: "Solicitud Préstamo"
+    actor: "Funcionario"
+    accion: "solicitar préstamo de bienestar"
+    beneficio: "acceda a financiamiento"
+    acceptance_criteria:
+      - "Tipos: médico, auxilio, escolar"
+      - "Interés bajo"
+      - "Codeudor si corresponde"
+    priority: MEDIA
+    source_ref: MANUAL-BIENESTAR-01-S5
+
+  US_RH_046:
+    nombre: "Procesamiento Beneficio"
+    actor: "Bienestar"
+    accion: "procesar solicitud de beneficio"
+    beneficio: "atienda requerimientos"
+    acceptance_criteria:
+      - "Verificación de requisitos"
+      - "Aprobación/rechazo"
+    priority: ALTA
+    source_ref: MANUAL-BIENESTAR-01-S3
+
+  US_RH_047:
+    nombre: "Descuento por Planilla"
+    actor: "Bienestar"
+    accion: "gestionar descuento por planilla"
+    beneficio: "recupere préstamos"
+    acceptance_criteria:
+      - "Integración con Remuneraciones"
+      - "Cuotas mensuales"
+    priority: ALTA
+    source_ref: MANUAL-BIENESTAR-01-S5
+
+  US_RH_048:
+    nombre: "Presupuesto Bienestar"
+    actor: "Consejo Administrativo"
+    accion: "aprobar presupuesto de bienestar"
+    beneficio: "planifique beneficios"
+    acceptance_criteria:
+      - "Órgano colegiado"
+      - "Presupuesto anual"
+    priority: MEDIA
+    source_ref: MANUAL-BIENESTAR-01-S2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  total_user_stories: 48
+  por_proceso:
+    Reclutamiento_Seleccion: 5
+    Ingreso_Formalizacion: 4
+    Movilidad_Funcionaria: 4
+    Egreso_Desvinculacion: 5
+    Remuneraciones: 6
+    Control_Asistencia: 3
+    Permisos_Feriado: 4
+    Licencias_Medicas: 4
+    Capacitacion: 4
+    Calificaciones: 3
+    Bienestar: 6
+  por_prioridad:
+    ALTA: 37
+    MEDIA: 11
+  actores_identificados:
+    - "Jefatura"
+    - "DAF"
+    - "GDP (Gestión de Personas)"
+    - "Comité Selección"
+    - "Gobernador"
+    - "Funcionario"
+    - "Remuneraciones"
+    - "Tesorero"
+    - "Jefe Directo"
+    - "Junta Calificadora"
+    - "Comité Bipartito"
+    - "Bienestar"
+    - "Consejo Administrativo"
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN USER STORIES GESTIÓN DE PERSONAS
+# ═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,460 @@
+# GOS-500: GORE_OS - Especificación de Integraciones Externas
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:500:integraciones_externas"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Integraciones con Sistemas Externos"
+  Description: "Especificación de interfaces con BIP, SIGFE, SII, ClaveÚnica y otros"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Compliance: [DS-12-Interoperabilidad, DS-10-Expediente]
+  Tags: [goreos, integraciones, api, interoperabilidad]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MAPA DE INTEGRACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Mapa_Integraciones: |
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │                            GORE_OS                                          │
+  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐          │
+  │  │ D-PLAN  │  │  D-FIN  │  │ D-EJEC  │  │ D-TDE   │  │ D-EVOL  │          │
+  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘          │
+  └───────┼────────────┼────────────┼────────────┼────────────┼────────────────┘
+          │            │            │            │            │
+          ▼            ▼            ▼            ▼            ▼
+  ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐ ┌───────────┐
+  │  IDE/BCN  │ │   BIP     │ │   SII     │ │ClaveÚnica │ │  PISEE    │
+  └───────────┘ └───────────┘ └───────────┘ └───────────┘ └───────────┘
+                ┌───────────┐ ┌───────────┐ ┌───────────┐
+                │  SIGFE    │ │  BANCOS   │ │ DocDigital│
+                └───────────┘ └───────────┘ └───────────┘
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-001: CLAVE ÚNICA (Autenticación)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_001_ClaveUnica:
+  nombre: "ClaveÚnica"
+  proveedor: "SEGPRES - Gobierno Digital"
+  proposito: "Autenticación ciudadana mediante identidad digital del Estado"
+  dominios: [D-TDE]
+  criticidad: ALTA
+  
+  especificacion:
+    protocolo: "OpenID Connect"
+    flujo: "Authorization Code Flow"
+    endpoints:
+      authorization: "https://accounts.claveunica.gob.cl/openid/authorize"
+      token: "https://accounts.claveunica.gob.cl/openid/token"
+      userinfo: "https://accounts.claveunica.gob.cl/openid/userinfo"
+    scopes: [openid, run, name, email]
+    
+  datos_obtenidos:
+    - { campo: "sub", descripcion: "RUN del usuario" }
+    - { campo: "name", descripcion: "Nombre completo" }
+    - { campo: "given_name", descripcion: "Nombres" }
+    - { campo: "family_name", descripcion: "Apellidos" }
+    - { campo: "email", descripcion: "Email (si disponible)" }
+  
+  implementacion:
+    ambiente_sandbox: "https://accounts.claveunica.gob.cl/openid/authorize"
+    ambiente_produccion: "Requiere certificación"
+    biblioteca: "@adonisjs/ally o passport-claveunica"
+    
+  flujo_integracion: |
+    1. Usuario hace clic en "Ingresar con ClaveÚnica"
+    2. Redirigir a authorization endpoint con client_id y redirect_uri
+    3. Usuario se autentica en portal ClaveÚnica
+    4. Callback recibe authorization_code
+    5. Backend intercambia code por access_token
+    6. Backend consulta userinfo para obtener datos
+    7. Crear/actualizar usuario en GORE_OS
+    8. Establecer sesión local
+    
+  requisitos:
+    - "Certificado SSL válido"
+    - "Credenciales de integración (client_id, client_secret)"
+    - "Dominio registrado en ChileAtiende"
+    - "Cumplir guía de UX ClaveÚnica"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-002: BIP (Banco Integrado de Proyectos)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_002_BIP:
+  nombre: "Banco Integrado de Proyectos (BIP)"
+  proveedor: "Ministerio de Desarrollo Social"
+  proposito: "Consultar y validar iniciativas de inversión pública"
+  dominios: [D-FIN]
+  criticidad: ALTA
+  
+  especificacion:
+    tipo: "API REST"
+    autenticacion: "API Key + Certificado institucional"
+    formato: "JSON"
+    base_url: "https://api.bip.gob.cl/v1"
+    
+  operaciones:
+    consultar_proyecto:
+      endpoint: "GET /proyectos/{codigo_bip}"
+      descripcion: "Obtener ficha de proyecto"
+      request:
+        path_params:
+          codigo_bip: "Código BIP (ej: 30123456-0)"
+      response:
+        nombre: String
+        codigo_bip: String
+        estado: String
+        etapa: String
+        costo_total: Number
+        region: String
+        sector: String
+        rs_vigente: Boolean
+        fecha_rs: Date
+        monto_rs: Number
+    
+    validar_rs:
+      endpoint: "GET /proyectos/{codigo_bip}/rs"
+      descripcion: "Validar vigencia de RS"
+      response:
+        vigente: Boolean
+        fecha_emision: Date
+        fecha_vencimiento: Date
+        monto: Number
+        numero_rs: String
+    
+    buscar_proyectos:
+      endpoint: "GET /proyectos"
+      descripcion: "Buscar proyectos con filtros"
+      query_params:
+        region: "Código región (ej: 16)"
+        estado: "Estado BIP"
+        sector: "Código sector"
+        beneficiario_rut: "RUT beneficiario"
+      response: "PaginatedList<Proyecto>"
+  
+  mapeo_datos:
+    BIP_Estado_to_GOREOS:
+      "EN EJECUCION": "EN_EJECUCION"
+      "TERMINADO": "FINALIZADA"
+      "EVALUACION": "EN_EVALUACION_RS"
+  
+  sincronizacion:
+    tipo: "Bajo demanda + Batch nocturno"
+    frecuencia_batch: "Diaria 02:00"
+    estrategia: "Actualizar iniciativas con código BIP"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-003: SIGFE (Sistema de Información de Gestión Financiera)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_003_SIGFE:
+  nombre: "SIGFE 2.0"
+  proveedor: "DIPRES - Ministerio de Hacienda"
+  proposito: "Sincronizar ejecución presupuestaria"
+  dominios: [D-FIN, D-EJEC]
+  criticidad: ALTA
+  
+  especificacion:
+    tipo: "Intercambio de archivos + API"
+    formato_archivos: "CSV con estructura DIPRES"
+    frecuencia: "Diaria"
+    
+  operaciones:
+    importar_ejecucion:
+      descripcion: "Importar ejecución presupuestaria"
+      archivo: "EJEC_PRES_GORE_YYYYMMDD.csv"
+      campos:
+        - subtitulo
+        - item
+        - asignacion
+        - inicial
+        - vigente
+        - comprometido
+        - devengado
+        - pagado
+      procesamiento: |
+        1. SFTP obtiene archivo de SIGFE
+        2. Validar estructura y totales de control
+        3. Parsear y transformar a formato interno
+        4. Actualizar items presupuestarios
+        5. Generar log de diferencias
+        6. Notificar si hay discrepancias > 1%
+    
+    exportar_compromiso:
+      descripcion: "Informar compromisos de convenios"
+      archivo: "COMP_CONV_GORE_YYYYMMDD.csv"
+      campos:
+        - numero_convenio
+        - beneficiario_rut
+        - monto_comprometido
+        - subtitulo
+        - item
+      frecuencia: "Semanal"
+  
+  reconciliacion:
+    frecuencia: "Mensual"
+    proceso: |
+      1. Comparar devengado SIGFE vs transferido GORE_OS
+      2. Identificar diferencias
+      3. Generar informe de reconciliación
+      4. Alertar si diferencia > umbral
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-004: SII (Servicio de Impuestos Internos)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_004_SII:
+  nombre: "SII - Validación de documentos tributarios"
+  proveedor: "Servicio de Impuestos Internos"
+  proposito: "Validar RUT y documentos tributarios en rendiciones"
+  dominios: [D-EJEC]
+  criticidad: MEDIA
+  
+  especificacion:
+    tipo: "API REST"
+    autenticacion: "Certificado digital institucional"
+    base_url: "https://api.sii.cl/v1"
+    
+  operaciones:
+    validar_rut:
+      endpoint: "GET /contribuyentes/{rut}/validar"
+      descripcion: "Verificar que RUT existe y está vigente"
+      response:
+        valido: Boolean
+        razon_social: String
+        actividad_economica: String
+        inicio_actividades: Date
+        termino_giro: Date
+    
+    consultar_factura:
+      endpoint: "GET /dte/{tipo}/{folio}"
+      descripcion: "Verificar existencia de DTE"
+      request:
+        tipo: "33 (factura), 34 (factura exenta), 61 (nota crédito)"
+        folio: "Número de folio"
+        rut_emisor: "RUT del emisor"
+      response:
+        existe: Boolean
+        fecha_emision: Date
+        monto_total: Number
+        estado: String
+    
+    validar_boleta_honorarios:
+      endpoint: "GET /boletas-honorarios/{folio}"
+      descripcion: "Verificar boleta de honorarios"
+      response:
+        valida: Boolean
+        monto_bruto: Number
+        retencion: Number
+  
+  uso_en_rendiciones:
+    automatico: true
+    proceso: |
+      1. Al ingresar movimiento de rendición
+      2. Validar RUT proveedor contra SII
+      3. Si es factura electrónica, verificar existencia
+      4. Marcar documento como VALIDADO_SII o PENDIENTE_VALIDACION
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-005: PISEE / Red de Interoperabilidad
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_005_PISEE:
+  nombre: "Plataforma de Interoperabilidad del Estado (PISEE)"
+  proveedor: "SEGPRES - Gobierno Digital"
+  proposito: "Interoperabilidad con otros organismos del Estado"
+  dominios: [D-TDE, D-COORD]
+  criticidad: MEDIA
+  compliance: "DS-12 Interoperabilidad"
+  
+  especificacion:
+    tipo: "Nodo de interoperabilidad"
+    protocolos: [REST, SOAP]
+    componentes:
+      - "Catálogo de servicios"
+      - "Registro de trazabilidad"
+      - "Gestor de acuerdos"
+    
+  servicios_consumidos:
+    - servicio: "Registro Civil - Datos persona"
+      uso: "Validar identidad"
+    - servicio: "SII - Validación RUT"
+      uso: "Validar contribuyentes"
+    - servicio: "ChileAtiende - Estado trámites"
+      uso: "Consultar trámites ciudadanos"
+  
+  servicios_expuestos:
+    - servicio: "Estado de convenios"
+      consumidores: [Municipalidades, Servicios]
+      endpoint: "/gore-nuble/convenios/{numero}/estado"
+    - servicio: "Cartera de proyectos"
+      consumidores: [SUBDERE, MDS]
+      endpoint: "/gore-nuble/proyectos"
+  
+  implementacion:
+    tipo_nodo: "Nodo liviano"
+    tecnologia: "Kong API Gateway"
+    registro: "Catálogo de servicios de Red de Interoperabilidad"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-006: DocDigital (Comunicaciones Oficiales)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_006_DocDigital:
+  nombre: "DocDigital"
+  proveedor: "SEGPRES - Gobierno Digital"
+  proposito: "Envío y recepción de documentos oficiales"
+  dominios: [D-BACK, D-TDE]
+  criticidad: ALTA
+  compliance: "DS-10 Expediente Electrónico"
+  
+  especificacion:
+    tipo: "API REST + Webhooks"
+    autenticacion: "OAuth2 + Certificado institucional"
+    
+  operaciones:
+    enviar_oficio:
+      endpoint: "POST /documentos/oficios"
+      descripcion: "Enviar oficio a otro organismo"
+      request:
+        tipo_documento: "OFICIO"
+        asunto: String
+        cuerpo: String
+        destinatario_codigo: "Código organismo destino"
+        firmante_rut: String
+        adjuntos: "Array<File>"
+      response:
+        id_docdigital: String
+        folio_interno: String
+        estado: "ENVIADO"
+    
+    recibir_documentos:
+      tipo: "Webhook"
+      endpoint_local: "POST /webhooks/docdigital"
+      evento: "documento.recibido"
+      payload:
+        id_docdigital: String
+        tipo: String
+        remitente: String
+        asunto: String
+        fecha_envio: DateTime
+        adjuntos_urls: "Array<String>"
+    
+    consultar_estado:
+      endpoint: "GET /documentos/{id}/estado"
+      response:
+        estado: "ENVIADO|RECIBIDO|LEIDO"
+        fecha_cambio: DateTime
+  
+  integracion_expediente:
+    automatico: true
+    proceso: |
+      1. Documento enviado/recibido se registra en GORE_OS
+      2. Se vincula a expediente electrónico correspondiente
+      3. Se actualiza folio del expediente
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-007: IDE Chile (Infraestructura de Datos Espaciales)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_007_IDE:
+  nombre: "IDE Chile"
+  proveedor: "SNIT - Ministerio de Bienes Nacionales"
+  proposito: "Capas geográficas oficiales para PROT y proyectos"
+  dominios: [D-PLAN, D-TERR]
+  criticidad: MEDIA
+  
+  especificacion:
+    tipo: "OGC Services (WMS/WFS)"
+    
+  servicios:
+    wms:
+      descripcion: "Visualización de capas"
+      url: "https://www.ide.cl/geoserver/wms"
+      capas_utilizadas:
+        - "division_politica_administrativa"
+        - "red_vial"
+        - "hidrografia"
+        - "areas_protegidas"
+    
+    wfs:
+      descripcion: "Descarga de features"
+      url: "https://www.ide.cl/geoserver/wfs"
+      operaciones:
+        - GetCapabilities
+        - DescribeFeatureType
+        - GetFeature
+  
+  uso_en_goreos:
+    - "Capas base para visualización de zonificaciones PROT"
+    - "Validación de geometrías de proyectos"
+    - "Análisis de cobertura territorial"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INT-008: Bancos (Transferencias)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+INT_008_Bancos:
+  nombre: "Integración Bancaria"
+  proveedores: [BancoEstado, Tesorería]
+  proposito: "Registro de transferencias realizadas"
+  dominios: [D-EJEC]
+  criticidad: ALTA
+  
+  especificacion:
+    tipo: "Archivo + Consulta manual"
+    frecuencia: "Diaria"
+    
+  operaciones:
+    importar_cartola:
+      descripcion: "Importar movimientos bancarios"
+      formato: "CSV o MT940"
+      campos:
+        - fecha_operacion
+        - numero_operacion
+        - tipo_movimiento
+        - monto
+        - glosa
+        - cuenta_destino
+      procesamiento: |
+        1. Importar archivo de cartola
+        2. Parsear movimientos
+        3. Matching con desembolsos por glosa/monto
+        4. Actualizar estado desembolso a TRANSFERIDO
+        5. Alertar desembolsos sin match
+  
+  conciliacion:
+    frecuencia: "Semanal"
+    proceso: "Comparar desembolsos TRANSFERIDO vs movimientos banco"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN DE INTEGRACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  total_integraciones: 8
+  
+  por_criticidad:
+    ALTA: [ClaveUnica, BIP, SIGFE, DocDigital, Bancos]
+    MEDIA: [SII, PISEE, IDE]
+  
+  por_tipo:
+    API_REST: [ClaveUnica, BIP, SII, DocDigital]
+    Archivos: [SIGFE, Bancos]
+    OGC_Services: [IDE]
+    Nodo_Interop: [PISEE]
+  
+  roadmap_implementacion:
+    Fase_1: [ClaveUnica, BIP]
+    Fase_2: [SIGFE, SII, DocDigital]
+    Fase_3: [PISEE, IDE, Bancos]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN GOS-500
+# ═══════════════════════════════════════════════════════════════════════════════

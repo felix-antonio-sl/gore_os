@@ -1,0 +1,538 @@
+# GOS-102f: GORE_OS - User Stories Flujos de Aprobación (D-FIN)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:102f:user_stories:aprobaciones"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - User Stories Flujos de Aprobación de Documentos"
+  Description: "User Stories para flujos de aprobación, visación y firma"
+  Domain: GORE_OS
+  Subdomain: D-FIN
+  Created: "2024-12-15"
+  Sources:
+    - file: "kb_gn_015_aprobaciones_koda.yml"
+  Tags: [goreos, user-stories, aprobaciones, fea, core, cgr, d_fin]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJO 1: RESOLUCIONES EXENTAS (TRÁMITE GENERAL)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Resoluciones_Exentas:
+  titulo: "Resoluciones Exentas - Trámite General"
+  descripcion: "Flujo para actos sin imputación presupuestaria directa"
+  source_ref: KB-GN-102-FLUJO-RES-EXENTA-01
+
+  US_APR_001:
+    nombre: "Elaboración Borrador Resolución"
+    actor: "Unidad GORE competente"
+    accion: "elaborar borrador de resolución fundamentando razones de hecho y derecho"
+    beneficio: "inicie el flujo de aprobación del acto"
+    acceptance_criteria:
+      - "Fundamentación de razones de hecho"
+      - "Fundamentación de razones de derecho"
+      - "Formato según plantilla institucional"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-RES-EXENTA-01
+
+  US_APR_002:
+    nombre: "Revisión Legalidad Acto"
+    actor: "Asesoría Jurídica"
+    accion: "revisar control de legalidad del borrador"
+    beneficio: "asegure conformidad con normativa vigente"
+    acceptance_criteria:
+      - "Verificación de competencias GORE"
+      - "Conformidad con Ley 19.880"
+      - "Observaciones documentadas si aplica"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-RES-EXENTA-01
+
+  US_APR_003:
+    nombre: "Visación Conformidad Procedimental"
+    actor: "Unidad de Control"
+    accion: "revisar conformidad con procedimientos internos"
+    beneficio: "verifique principios de buena administración"
+    acceptance_criteria:
+      - "Checklist procedimental aplicado"
+      - "V°B° registrado en expediente"
+      - "Observaciones si aplica"
+    priority: MEDIA
+    source_ref: KB-GN-102-FLUJO-RES-EXENTA-01
+
+  US_APR_004:
+    nombre: "Visación Jefatura División"
+    actor: "Jefatura División iniciadora"
+    accion: "visar acto como responsable de la unidad"
+    beneficio: "valide contenido técnico del acto"
+    acceptance_criteria:
+      - "V°B° de jefatura registrado"
+      - "Responsabilidad asumida"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-RES-EXENTA-01
+
+  US_APR_005:
+    nombre: "Visación Administrador Regional"
+    actor: "Administrador/a Regional"
+    accion: "visar como filtro final de coordinación administrativa"
+    beneficio: "asegure coherencia institucional"
+    acceptance_criteria:
+      - "V°B° final antes de firma"
+      - "Verificación de cadena de vistos buenos"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-RES-EXENTA-01
+
+  US_APR_006:
+    nombre: "Firma Resolución con FEA"
+    actor: "Gobernador/a Regional"
+    accion: "firmar resolución con Firma Electrónica Avanzada"
+    beneficio: "otorgue validez legal ejecutiva al acto"
+    acceptance_criteria:
+      - "FEA válida aplicada"
+      - "Todos los V°B° previos completados"
+      - "Acto ejecutorio"
+    priority: ALTA
+    source_ref: KB-GN-102-EXPEDIENTE-FEA-01
+
+  US_APR_007:
+    nombre: "Notificación y Archivo"
+    actor: "Oficina de Partes"
+    accion: "notificar a interesados y archivar en expediente electrónico"
+    beneficio: "complete el ciclo del acto administrativo"
+    acceptance_criteria:
+      - "Notificación a interesados"
+      - "Archivo en expediente electrónico"
+      - "Trazabilidad asegurada"
+    priority: MEDIA
+    source_ref: KB-GN-102-EXPEDIENTE-FEA-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJO 2: EVALUACIÓN SNI ESTÁNDAR
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_SNI_Estandar:
+  titulo: "Evaluación SNI Estándar"
+  descripcion: "Flujo para obtención de RS del MDSF"
+  source_ref: KB-GN-102-FLUJO-SNI-ESTANDAR-01
+
+  US_APR_008:
+    nombre: "Revisión Admisibilidad IDI"
+    actor: "Analista DIPIR"
+    accion: "revisar admisibilidad de IDI según metodologías SNI"
+    beneficio: "determine si proyecto puede enviarse a MDSF"
+    acceptance_criteria:
+      - "Revisión de fondo completada"
+      - "Cumplimiento metodologías SNI"
+      - "Acta de Admisibilidad interna"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-SNI-ESTANDAR-01
+
+  US_APR_009:
+    nombre: "Envío Formal a MDSF"
+    actor: "Jefatura DIPIR"
+    accion: "enviar formalmente IDI a SEREMI MDSF"
+    beneficio: "inicie evaluación técnico-económica externa"
+    acceptance_criteria:
+      - "Oficio conductor elaborado"
+      - "Cadena de V°B° completada"
+      - "Documentación completa adjunta"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-SNI-ESTANDAR-01
+
+  US_APR_010:
+    nombre: "Firma Oficio Conductor"
+    actor: "Gobernador/a Regional"
+    accion: "firmar oficio solicitando evaluación ex-ante MDSF"
+    beneficio: "formalice solicitud de evaluación"
+    acceptance_criteria:
+      - "Oficio con FEA"
+      - "Despacho a SEREMI MDSF"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-SNI-ESTANDAR-01
+
+  US_APR_011:
+    nombre: "Gestión Resultado RATE"
+    actor: "Analista GORE (DIPIR)"
+    accion: "gestionar resultado de evaluación MDSF"
+    beneficio: "avance proyecto según calificación"
+    acceptance_criteria:
+      - "RS: avanza a financiamiento"
+      - "FI/OT: subsanar en ≤60 días hábiles"
+      - "Registro en BIP actualizado"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-SNI-ESTANDAR-01
+
+  US_APR_012:
+    nombre: "Priorización Cartera RS"
+    actor: "Jefatura DIPIR"
+    accion: "comunicar cartera RS para priorización"
+    beneficio: "habilite presentación al CORE"
+    acceptance_criteria:
+      - "Monitoreo BIP actualizado"
+      - "Cartera RS documentada"
+      - "Informe a Gobernador"
+    priority: MEDIA
+    source_ref: KB-GN-102-FLUJO-SNI-ESTANDAR-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJO 3: SNI SIMPLIFICADO (<5000 UTM)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_SNI_Simplificado:
+  titulo: "SNI Simplificado (<5000 UTM)"
+  descripcion: "Flujo expedito para proyectos menores"
+  source_ref: KB-GN-102-FLUJO-SNI-SIMPLIFICADO-01
+
+  US_APR_013:
+    nombre: "Verificación Requisitos Exención"
+    actor: "Analista DIPIR"
+    accion: "verificar cumplimiento de requisitos para exención de RS"
+    beneficio: "aplique vía simplificada"
+    acceptance_criteria:
+      - "Costo total < 5000 UTM"
+      - "Sin fraccionamiento"
+      - "Sin impedimentos detectados"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-SNI-SIMPLIFICADO-01
+
+  US_APR_014:
+    nombre: "Firma Carta Responsabilidad"
+    actor: "Gobernador/a Regional"
+    accion: "firmar carta de responsabilidad para MDSF"
+    beneficio: "informe que proyecto no presenta impedimentos"
+    acceptance_criteria:
+      - "Declaración de no fraccionamiento"
+      - "Firma con FEA"
+      - "Envío a MDSF"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-SNI-SIMPLIFICADO-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJO 4: PPR GLOSA 06 (DIPRES/SES)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_PPR_Glosa06:
+  titulo: "PPR Glosa 06 - Evaluación DIPRES/SES"
+  descripcion: "Flujo de dos etapas para programas regionales"
+  source_ref: KB-GN-102-FLUJO-PPR-GLOSA06-01
+
+  US_APR_015:
+    nombre: "Elaboración Formulario Perfil"
+    actor: "Formulador GORE"
+    accion: "elaborar formulario de perfil conciso"
+    beneficio: "presente iniciativa para evaluación de pertinencia"
+    acceptance_criteria:
+      - "Formulario de Perfil completado"
+      - "Problema y solución descritos"
+      - "Alineación con ERD"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-PPR-GLOSA06-01
+
+  US_APR_016:
+    nombre: "Evaluación Pertinencia Perfil"
+    actor: "DIPRES/SES"
+    accion: "evaluar pertinencia del perfil presentado"
+    beneficio: "determine si avanza a diseño"
+    acceptance_criteria:
+      - "Pertinencia evaluada"
+      - "Aprobado: solicita diseño"
+      - "Rechazado: observaciones comunicadas"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-PPR-GLOSA06-01
+
+  US_APR_017:
+    nombre: "Elaboración Formulario Diseño"
+    actor: "Formulador GORE"
+    accion: "elaborar formulario de diseño con MML"
+    beneficio: "presente diseño detallado para evaluación"
+    acceptance_criteria:
+      - "Metodología de Marco Lógico aplicada"
+      - "Componentes, actividades, indicadores"
+      - "Presupuesto detallado"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-PPR-GLOSA06-01
+
+  US_APR_018:
+    nombre: "Evaluación Fondo Diseño"
+    actor: "DIPRES/SES"
+    accion: "realizar evaluación iterativa del diseño"
+    beneficio: "apruebe programa para financiamiento"
+    acceptance_criteria:
+      - "Revisión iterativa con observaciones"
+      - "RF (Recomendado Favorablemente)"
+      - "Habilita financiamiento"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-PPR-GLOSA06-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJO 5: MODIFICACIONES PRESUPUESTARIAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Mod_Presupuestarias:
+  titulo: "Modificaciones Presupuestarias"
+  descripcion: "Flujo para ajustes al presupuesto regional"
+  source_ref: KB-GN-102-FLUJOS-MOD-PPTO-01
+
+  US_APR_019:
+    nombre: "Elaboración Propuesta Modificación"
+    actor: "DIPIR/DAF"
+    accion: "elaborar propuesta de modificación presupuestaria"
+    beneficio: "documente ajuste requerido"
+    acceptance_criteria:
+      - "Tipo de modificación identificado"
+      - "Fundamentación técnica"
+      - "Impacto en Partida 31 evaluado"
+    priority: ALTA
+    source_ref: KB-GN-102-MODPPTO-TIPOLOGIA-01
+
+  US_APR_020:
+    nombre: "Presentación Modificación al CORE"
+    actor: "Gobernador/a Regional"
+    accion: "presentar propuesta de modificación al CORE"
+    beneficio: "someta a votación del Consejo"
+    acceptance_criteria:
+      - "Propuesta preparada por DIPIR/DAF"
+      - "Presentación formal al CORE"
+      - "Documentación de respaldo"
+    priority: ALTA
+    source_ref: KB-GN-102-MODPPTO-CORE-01
+
+  US_APR_021:
+    nombre: "Aprobación Modificación CORE"
+    actor: "CORE"
+    accion: "aprobar modificación presupuestaria"
+    beneficio: "autorice el ajuste al presupuesto"
+    acceptance_criteria:
+      - "Votación favorable"
+      - "Acuerdo CORE registrado"
+      - "Acta de sesión"
+    priority: ALTA
+    source_ref: KB-GN-102-MODPPTO-CORE-01
+
+  US_APR_022:
+    nombre: "Aplicación Excepción 10% sin CORE"
+    actor: "Gobernador/a Regional"
+    accion: "aplicar excepción de aumento ≤10% sin aprobación CORE"
+    beneficio: "agilice ajustes menores según Glosa 01"
+    acceptance_criteria:
+      - "Aumento ≤10% del costo aprobado"
+      - "Tope 7.000 UTM"
+      - "Informe mensual al CORE"
+    priority: MEDIA
+    source_ref: KB-GN-102-MODPPTO-CORE-01
+
+  US_APR_023:
+    nombre: "Visación DIPRES"
+    actor: "DIPRES"
+    accion: "visar modificación presupuestaria"
+    beneficio: "valide cumplimiento normativo"
+    acceptance_criteria:
+      - "Resolución enviada a DIPRES"
+      - "Revisión de cumplimiento"
+      - "Devolución si hay observaciones"
+    priority: ALTA
+    source_ref: KB-GN-102-MODPPTO-EXTERNO-01
+
+  US_APR_024:
+    nombre: "Toma de Razón Modificación"
+    actor: "CGR"
+    accion: "tomar razón de modificación presupuestaria"
+    beneficio: "otorgue vigencia legal al ajuste"
+    acceptance_criteria:
+      - "Control preventivo de legalidad"
+      - "Toma de Razón emitida"
+      - "Acto entra en vigencia"
+    priority: ALTA
+    source_ref: KB-GN-102-MODPPTO-EXTERNO-01
+
+  US_APR_025:
+    nombre: "Ajuste Presupuesto SIGFE"
+    actor: "DAF"
+    accion: "ajustar presupuesto en SIGFE post Toma de Razón"
+    beneficio: "actualice sistema financiero"
+    acceptance_criteria:
+      - "Toma de Razón confirmada"
+      - "Ajuste en SIGFE ejecutado"
+      - "Coherencia con resolución"
+    priority: ALTA
+    source_ref: KB-GN-102-MODPPTO-EXTERNO-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJO 6: CONVENIOS Y TRANSFERENCIAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Convenios:
+  titulo: "Convenios y Transferencias"
+  descripcion: "Flujo para formalización de entrega de recursos"
+  source_ref: KB-GN-102-FLUJOS-CONVENIOS-01
+
+  US_APR_026:
+    nombre: "Elaboración Borrador Convenio"
+    actor: "División técnica proponente"
+    accion: "redactar borrador de convenio de transferencia"
+    beneficio: "defina marco para uso de fondos"
+    acceptance_criteria:
+      - "Objeto, monto, plazos definidos"
+      - "Productos esperados"
+      - "Mecanismos de rendición"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-CONVENIO-01
+
+  US_APR_027:
+    nombre: "Revisión Legalidad Convenio"
+    actor: "Asesoría Jurídica"
+    accion: "revisar legalidad del convenio"
+    beneficio: "asegure cumplimiento Ley de Presupuestos"
+    acceptance_criteria:
+      - "Verificación según Art 23-26 Ley Ppto"
+      - "Concurso si aplica"
+      - "Garantías si aplica"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-CONVENIO-01
+
+  US_APR_028:
+    nombre: "Revisión Cláusulas Financieras"
+    actor: "DAF"
+    accion: "revisar cláusulas financieras y de rendición"
+    beneficio: "asegure control de recursos"
+    acceptance_criteria:
+      - "Cláusulas de rendición verificadas"
+      - "Coherencia con normativa CGR"
+      - "SISREC establecido"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-CONVENIO-01
+
+  US_APR_029:
+    nombre: "Firma Convenio"
+    actor: "Gobernador/a Regional"
+    accion: "firmar convenio de transferencia"
+    beneficio: "formalice acuerdo con entidad receptora"
+    acceptance_criteria:
+      - "Firma Gobernador"
+      - "Firma representante legal receptor"
+      - "Acuerdo de voluntades"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-CONVENIO-01
+
+  US_APR_030:
+    nombre: "Emisión Resolución Aprobatoria"
+    actor: "GORE"
+    accion: "emitir resolución que aprueba convenio y autoriza transferencia"
+    beneficio: "habilite el desembolso de fondos"
+    acceptance_criteria:
+      - "Resolución redactada"
+      - "Convenio aprobado"
+      - "Envío a CGR"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-CONVENIO-01
+
+  US_APR_031:
+    nombre: "Toma de Razón Transferencia"
+    actor: "CGR"
+    accion: "tomar razón de resolución de transferencia"
+    beneficio: "habilite legalmente el pago"
+    acceptance_criteria:
+      - "Control preventivo de legalidad"
+      - "Toma de Razón emitida"
+      - "Transferencia habilitada"
+    priority: ALTA
+    source_ref: KB-GN-102-FLUJO-CONVENIO-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJO 7: EXPEDIENTE ELECTRÓNICO Y FEA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+User_Stories_Expediente_FEA:
+  titulo: "Expediente Electrónico y FEA"
+  descripcion: "Instrumentos de procedimiento administrativo digital"
+  source_ref: KB-GN-102-EXPEDIENTE-FEA-01
+
+  US_APR_032:
+    nombre: "Creación Expediente Electrónico"
+    actor: "Usuario GORE"
+    accion: "crear expediente electrónico único para el procedimiento"
+    beneficio: "asegure trazabilidad según Ley 21.180"
+    acceptance_criteria:
+      - "Expediente en sistema institucional"
+      - "Todas las actuaciones registradas"
+      - "Accesible para interesados"
+    priority: ALTA
+    source_ref: KB-GN-102-EXPEDIENTE-FEA-01
+
+  US_APR_033:
+    nombre: "Firma Documento con FEA"
+    actor: "Usuario GORE autorizado"
+    accion: "firmar documento con Firma Electrónica Avanzada"
+    beneficio: "otorgue validez legal equivalente a firma manuscrita"
+    acceptance_criteria:
+      - "FEA válida aplicada"
+      - "Documento electrónico ejecutorio"
+      - "Integridad garantizada"
+    priority: ALTA
+    source_ref: KB-GN-102-EXPEDIENTE-FEA-01
+
+  US_APR_034:
+    nombre: "Registro Ingreso SGDOC"
+    actor: "Oficina de Partes"
+    accion: "registrar ingreso de documentación en SGDOC"
+    beneficio: "asigne número de registro formal"
+    acceptance_criteria:
+      - "Número SGDOC asignado"
+      - "Fecha y hora de ingreso"
+      - "Derivación a unidad competente"
+    priority: ALTA
+    source_ref: KB-GN-102-ACTORES-MATRIZ-01
+
+  US_APR_035:
+    nombre: "Evaluación Pertinencia CDR"
+    actor: "Comité Directivo Regional"
+    accion: "evaluar pertinencia de IPR en filtro estratégico"
+    beneficio: "priorice iniciativas alineadas con política regional"
+    acceptance_criteria:
+      - "Revisión político-técnica"
+      - "Jefaturas de División + Administrador"
+      - "Decisión de continuidad"
+    priority: MEDIA
+    source_ref: KB-GN-102-ACTORES-MATRIZ-01
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  total_user_stories: 35
+  por_flujo:
+    Resoluciones_Exentas: 7
+    SNI_Estandar: 5
+    SNI_Simplificado: 2
+    PPR_Glosa_06: 4
+    Modificaciones_Presupuestarias: 7
+    Convenios_Transferencias: 6
+    Expediente_FEA: 4
+  por_prioridad:
+    ALTA: 30
+    MEDIA: 5
+  actores_identificados:
+    Internos_GORE:
+      - "Gobernador/a Regional"
+      - "Administrador/a Regional"
+      - "CORE"
+      - "Jefatura DIPIR"
+      - "Analista DIPIR"
+      - "DAF"
+      - "Asesoría Jurídica"
+      - "Unidad de Control"
+      - "Oficina de Partes"
+      - "CDR (Comité Directivo Regional)"
+      - "División técnica proponente"
+      - "Formulador GORE"
+      - "Usuario GORE"
+    Externos:
+      - "DIPRES"
+      - "SES (Subsecretaría de Evaluación Social)"
+      - "CGR (Contraloría General de la República)"
+      - "MDSF (SEREMI)"
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN USER STORIES FLUJOS DE APROBACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════

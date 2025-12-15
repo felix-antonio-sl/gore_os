@@ -1,0 +1,484 @@
+# GOS-101: GORE_OS - Especificación Dominio Planificación (D-PLAN)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:101:especificacion:d_plan"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Especificación D-PLAN (Planificación Regional)"
+  Description: "Casos de uso, flujos, reglas de negocio y APIs del dominio Planificación"
+  Domain: GORE_OS
+  Subdomain: D-PLAN
+  Created: "2024-12-14"
+  Tags: [goreos, especificacion, d_plan, erd, prot, casos_uso]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISIÓN DEL DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision_Dominio:
+  Proposito: >
+    Gestionar los instrumentos de planificación regional (ERD, PROT, políticas)
+    y asegurar la alineación estratégica de todas las iniciativas de inversión.
+  
+  Objetivos:
+    - "Digitalizar ciclo de vida de ERD y PROT"
+    - "Vincular iniciativas con objetivos estratégicos"
+    - "Monitorear cumplimiento de metas ERD"
+    - "Gestionar convenios de programación"
+  
+  Actores:
+    - actor: "Jefe DIPLADE"
+      rol: "Administrador del dominio, aprueba ERD/PROT"
+    - actor: "Profesional Planificación"
+      rol: "Elabora y actualiza instrumentos"
+    - actor: "Analista Territorial"
+      rol: "Gestiona PROT y zonificaciones"
+    - actor: "Coordinador CP"
+      rol: "Gestiona convenios de programación"
+  
+  KPIs:
+    - nombre: "Cobertura alineación ERD"
+      formula: "Iniciativas alineadas / Total iniciativas * 100"
+      meta: ">= 90%"
+    - nombre: "Avance objetivos ERD"
+      formula: "Promedio avance indicadores OE"
+      meta: ">= 70%"
+    - nombre: "Ejecución convenios programación"
+      formula: "Monto ejecutado CP / Monto programado CP * 100"
+      meta: ">= 85%"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CASOS DE USO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Casos_Uso:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GESTIÓN ERD
+  # ─────────────────────────────────────────────────────────────────────────────
+  
+  CU_PLAN_001:
+    nombre: "Crear nueva ERD"
+    actor_principal: "Jefe DIPLADE"
+    descripcion: "Crear estructura de nueva Estrategia Regional de Desarrollo"
+    precondiciones:
+      - "Usuario autenticado con rol Jefe DIPLADE"
+      - "No existe ERD en estado ELABORACION o CONSULTA"
+    flujo_principal:
+      1: "Sistema muestra formulario de nueva ERD"
+      2: "Usuario ingresa datos básicos (nombre, período, visión)"
+      3: "Sistema valida período no se traslape con ERD vigente"
+      4: "Sistema crea ERD en estado ELABORACION"
+      5: "Sistema registra evento en historial"
+    postcondiciones:
+      - "ERD creada en estado ELABORACION"
+      - "Usuario puede agregar ejes y objetivos"
+    reglas_negocio: [RN-ERD-01, RN-ERD-02]
+
+  CU_PLAN_002:
+    nombre: "Gestionar objetivos estratégicos"
+    actor_principal: "Profesional Planificación"
+    descripcion: "CRUD de objetivos estratégicos de la ERD"
+    precondiciones:
+      - "ERD existe en estado ELABORACION"
+    flujo_principal:
+      1: "Usuario selecciona ERD"
+      2: "Sistema muestra estructura de ejes y objetivos"
+      3: "Usuario agrega/edita/elimina objetivo"
+      4: "Sistema valida código único"
+      5: "Sistema actualiza estructura"
+    alternativas:
+      - "3a: Si objetivo tiene iniciativas vinculadas, no permite eliminar"
+    validaciones:
+      - "Código OE único dentro de la ERD"
+      - "Objetivo específico debe tener padre"
+
+  CU_PLAN_003:
+    nombre: "Publicar ERD para consulta"
+    actor_principal: "Jefe DIPLADE"
+    descripcion: "Cambiar estado de ERD a CONSULTA para recibir observaciones"
+    precondiciones:
+      - "ERD en estado ELABORACION"
+      - "ERD tiene al menos 1 objetivo estratégico"
+    flujo_principal:
+      1: "Usuario solicita publicar para consulta"
+      2: "Sistema valida completitud mínima"
+      3: "Sistema cambia estado a CONSULTA"
+      4: "Sistema notifica a stakeholders"
+    postcondiciones:
+      - "ERD visible públicamente (solo lectura)"
+      - "Se habilita módulo de observaciones"
+
+  CU_PLAN_004:
+    nombre: "Aprobar y activar ERD"
+    actor_principal: "Jefe DIPLADE"
+    descripcion: "Aprobar ERD y establecerla como vigente"
+    precondiciones:
+      - "ERD en estado APROBADA (por CORE)"
+      - "Existe resolución de aprobación"
+    flujo_principal:
+      1: "Usuario ingresa datos de resolución"
+      2: "Sistema valida resolución"
+      3: "Sistema cambia ERD anterior a HISTORICA"
+      4: "Sistema cambia nueva ERD a VIGENTE"
+      5: "Sistema actualiza referencias de iniciativas"
+    postcondiciones:
+      - "Nueva ERD es la vigente"
+      - "Anterior ERD queda como histórica"
+
+  CU_PLAN_005:
+    nombre: "Consultar alineación de iniciativas"
+    actor_principal: "Profesional Planificación"
+    descripcion: "Ver iniciativas vinculadas a cada objetivo estratégico"
+    flujo_principal:
+      1: "Usuario selecciona objetivo estratégico"
+      2: "Sistema muestra iniciativas vinculadas"
+      3: "Sistema muestra métricas de alineación"
+      4: "Sistema permite exportar reporte"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GESTIÓN PROT
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_PLAN_010:
+    nombre: "Crear/Editar PROT"
+    actor_principal: "Analista Territorial"
+    descripcion: "Gestionar Plan Regional de Ordenamiento Territorial"
+    precondiciones:
+      - "Usuario con rol Analista Territorial"
+    flujo_principal:
+      1: "Usuario crea/selecciona PROT"
+      2: "Sistema muestra editor de PROT"
+      3: "Usuario edita metadatos y documentos"
+      4: "Sistema guarda cambios"
+
+  CU_PLAN_011:
+    nombre: "Gestionar zonificaciones"
+    actor_principal: "Analista Territorial"
+    descripcion: "CRUD de zonas del PROT con geometrías"
+    precondiciones:
+      - "PROT existe en estado ELABORACION"
+    flujo_principal:
+      1: "Usuario accede a editor cartográfico"
+      2: "Sistema muestra mapa con capas base"
+      3: "Usuario dibuja/edita geometría de zona"
+      4: "Usuario asigna atributos (tipo, usos)"
+      5: "Sistema valida no superposición"
+      6: "Sistema calcula superficie automáticamente"
+    validaciones:
+      - "Geometría válida (sin auto-intersecciones)"
+      - "Sin superposición con otras zonas"
+      - "Dentro de límites regionales"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # CONVENIOS DE PROGRAMACIÓN
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_PLAN_020:
+    nombre: "Crear convenio de programación"
+    actor_principal: "Coordinador CP"
+    descripcion: "Registrar nuevo convenio de programación con ministerio"
+    flujo_principal:
+      1: "Usuario ingresa datos del convenio"
+      2: "Sistema valida montos (gore + sectorial = total)"
+      3: "Sistema crea convenio en estado NEGOCIACION"
+      4: "Sistema permite agregar iniciativas"
+
+  CU_PLAN_021:
+    nombre: "Programar iniciativas del CP"
+    actor_principal: "Coordinador CP"
+    descripcion: "Asociar iniciativas al convenio de programación"
+    precondiciones:
+      - "Convenio existe"
+      - "Iniciativas tienen RS vigente (si requerido)"
+    flujo_principal:
+      1: "Usuario busca iniciativas elegibles"
+      2: "Sistema muestra iniciativas con RS vigente"
+      3: "Usuario selecciona y asigna montos por año"
+      4: "Sistema valida no exceder monto total CP"
+      5: "Sistema actualiza programación"
+
+  CU_PLAN_022:
+    nombre: "Monitorear ejecución CP"
+    actor_principal: "Coordinador CP"
+    descripcion: "Dashboard de avance de convenios de programación"
+    flujo_principal:
+      1: "Usuario accede a dashboard CP"
+      2: "Sistema muestra resumen por convenio"
+      3: "Sistema muestra avance físico y financiero"
+      4: "Sistema alerta desviaciones"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJOS DE PROCESO (BPMN simplificado)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Flujos_Proceso:
+
+  FLOW_PLAN_001:
+    nombre: "Ciclo de vida ERD"
+    diagrama: |
+      ┌─────────┐    ┌───────────┐    ┌──────────┐    ┌──────────┐    ┌─────────┐
+      │ INICIO  │───►│ELABORACION│───►│ CONSULTA │───►│ APROBADA │───►│ VIGENTE │
+      └─────────┘    └───────────┘    └──────────┘    └──────────┘    └─────────┘
+                           │                │               │               │
+                           ▼                ▼               │               ▼
+                     ┌──────────┐    ┌──────────┐          │         ┌──────────┐
+                     │  Editar  │    │Observac. │          │         │HISTORICA │
+                     │  Ejes/OE │    │ Públicas │          │         └──────────┘
+                     └──────────┘    └──────────┘          │
+                                           │               │
+                                           ▼               │
+                                     ┌──────────┐         │
+                                     │ Ajustar  │─────────┘
+                                     └──────────┘
+    
+    transiciones:
+      - origen: ELABORACION
+        destino: CONSULTA
+        condicion: "Tiene al menos 1 OE"
+        accion: "Notificar stakeholders"
+      - origen: CONSULTA
+        destino: APROBADA
+        condicion: "Aprobación CORE"
+        accion: "Registrar acuerdo"
+      - origen: APROBADA
+        destino: VIGENTE
+        condicion: "Resolución firmada"
+        accion: "Desactivar ERD anterior"
+      - origen: VIGENTE
+        destino: HISTORICA
+        condicion: "Nueva ERD vigente"
+        accion: "Preservar vínculos históricos"
+
+  FLOW_PLAN_002:
+    nombre: "Gestión Convenio Programación"
+    diagrama: |
+      ┌─────────┐    ┌───────────┐    ┌──────────┐    ┌──────────┐
+      │NEGOCIAC.│───►│FORMULACION│───►│ REVISION │───►│ SUSCRITO │
+      └─────────┘    └───────────┘    └──────────┘    └──────────┘
+                                                            │
+                                                            ▼
+                     ┌──────────┐    ┌──────────┐    ┌──────────┐
+                     │ CERRADO  │◄───│MODIFICAC.│◄───│EN_EJECUC.│
+                     └──────────┘    └──────────┘    └──────────┘
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REGLAS DE NEGOCIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Reglas_Negocio:
+
+  RN-ERD-01:
+    descripcion: "Solo una ERD puede estar VIGENTE a la vez"
+    tipo: "Invariante"
+    validacion: "COUNT(ERD WHERE estado='VIGENTE') <= 1"
+    severidad: "ERROR"
+
+  RN-ERD-02:
+    descripcion: "Período de ERD no puede traslaparse con otra"
+    tipo: "Validación"
+    validacion: "No existe ERD con período solapado"
+    severidad: "ERROR"
+
+  RN-ERD-03:
+    descripcion: "ERD debe tener al menos 1 OE para pasar a CONSULTA"
+    tipo: "Precondición"
+    validacion: "COUNT(OE WHERE erd_id=X) >= 1"
+    severidad: "ERROR"
+
+  RN-OE-01:
+    descripcion: "Objetivo específico requiere objetivo padre"
+    tipo: "Invariante"
+    validacion: "IF tipo='ESPECIFICO' THEN parent_id IS NOT NULL"
+    severidad: "ERROR"
+
+  RN-PROT-01:
+    descripcion: "Solo un PROT puede estar VIGENTE"
+    tipo: "Invariante"
+    validacion: "COUNT(PROT WHERE estado='VIGENTE') <= 1"
+    severidad: "ERROR"
+
+  RN-ZON-01:
+    descripcion: "Zonas del mismo PROT no pueden superponerse"
+    tipo: "Validación espacial"
+    validacion: "ST_Intersects(z1.geom, z2.geom) = FALSE para z1 != z2"
+    severidad: "ERROR"
+
+  RN-CP-01:
+    descripcion: "Monto total = aporte_gore + aporte_sectorial + aporte_otro"
+    tipo: "Invariante"
+    validacion: "monto_total = aporte_gore + aporte_sectorial + aporte_otro"
+    severidad: "ERROR"
+
+  RN-CP-02:
+    descripcion: "Suma iniciativas no puede exceder monto total CP"
+    tipo: "Validación"
+    validacion: "SUM(iniciativas.monto) <= convenio.monto_total"
+    severidad: "ERROR"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ESPECIFICACIÓN API
+# ═══════════════════════════════════════════════════════════════════════════════
+
+API_Endpoints:
+
+  ERD:
+    base_path: "/api/v1/plan/erd"
+    endpoints:
+      - method: GET
+        path: "/"
+        descripcion: "Listar ERDs"
+        query_params: [estado, anio]
+        response: "PaginatedList<ERD>"
+      - method: GET
+        path: "/{id}"
+        descripcion: "Obtener ERD por ID"
+        response: "ERD con ejes y objetivos"
+      - method: GET
+        path: "/vigente"
+        descripcion: "Obtener ERD vigente"
+        response: "ERD"
+      - method: POST
+        path: "/"
+        descripcion: "Crear ERD"
+        body: "CreateERDRequest"
+        response: "ERD"
+        permisos: ["plan:erd:create"]
+      - method: PUT
+        path: "/{id}"
+        descripcion: "Actualizar ERD"
+        body: "UpdateERDRequest"
+        permisos: ["plan:erd:update"]
+      - method: POST
+        path: "/{id}/publicar-consulta"
+        descripcion: "Publicar para consulta"
+        permisos: ["plan:erd:publish"]
+      - method: POST
+        path: "/{id}/aprobar"
+        descripcion: "Aprobar y activar"
+        body: "AprobarERDRequest"
+        permisos: ["plan:erd:approve"]
+
+  Objetivos:
+    base_path: "/api/v1/plan/objetivos"
+    endpoints:
+      - method: GET
+        path: "/"
+        query_params: [erd_id, eje_id, tipo]
+        response: "List<ObjetivoEstrategico>"
+      - method: GET
+        path: "/{id}"
+        response: "ObjetivoEstrategico con lineamientos"
+      - method: GET
+        path: "/{id}/iniciativas"
+        descripcion: "Iniciativas vinculadas al objetivo"
+        response: "PaginatedList<Iniciativa>"
+      - method: POST
+        path: "/"
+        body: "CreateObjetivoRequest"
+        permisos: ["plan:objetivo:create"]
+      - method: PUT
+        path: "/{id}"
+        permisos: ["plan:objetivo:update"]
+
+  PROT:
+    base_path: "/api/v1/plan/prot"
+    endpoints:
+      - method: GET
+        path: "/vigente"
+        response: "PROT"
+      - method: GET
+        path: "/{id}/zonificaciones"
+        response: "GeoJSON FeatureCollection"
+      - method: POST
+        path: "/{id}/zonificaciones"
+        body: "GeoJSON Feature"
+        permisos: ["plan:prot:edit"]
+
+  ConveniosProgramacion:
+    base_path: "/api/v1/plan/convenios-programacion"
+    endpoints:
+      - method: GET
+        path: "/"
+        query_params: [estado, ministerio, anio]
+        response: "PaginatedList<ConvenioProgramacion>"
+      - method: GET
+        path: "/{id}"
+        response: "ConvenioProgramacion con iniciativas"
+      - method: GET
+        path: "/{id}/dashboard"
+        descripcion: "Métricas de avance"
+        response: "DashboardCP"
+      - method: POST
+        path: "/"
+        permisos: ["plan:cp:create"]
+      - method: POST
+        path: "/{id}/iniciativas"
+        descripcion: "Agregar iniciativa al CP"
+        permisos: ["plan:cp:edit"]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EVENTOS DE DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Eventos_Dominio:
+  - evento: "ERDCreada"
+    payload: [erd_id, codigo, nombre]
+    consumidores: [Auditoria, Notificaciones]
+  
+  - evento: "ERDPublicadaConsulta"
+    payload: [erd_id]
+    consumidores: [Notificaciones, PortalTransparencia]
+  
+  - evento: "ERDAprobada"
+    payload: [erd_id, acuerdo_core, fecha]
+    consumidores: [Notificaciones, D-FIN]
+  
+  - evento: "ERDActivada"
+    payload: [erd_id, erd_anterior_id]
+    consumidores: [D-FIN, D-COORD, Dashboard]
+  
+  - evento: "ObjetivoCreado"
+    payload: [objetivo_id, erd_id, codigo]
+    consumidores: [Auditoria]
+  
+  - evento: "ConvenioProgramacionSuscrito"
+    payload: [cp_id, ministerio, monto_total]
+    consumidores: [D-FIN, Notificaciones]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INTEGRACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Integraciones:
+  Internas:
+    - dominio: D-FIN
+      tipo: "Síncrona"
+      descripcion: "Consulta ERD vigente para alineación de iniciativas"
+      endpoint: "GET /api/v1/plan/erd/vigente"
+    
+    - dominio: D-COORD
+      tipo: "Evento"
+      descripcion: "Notifica cuando ERD cambia para actualizar indicadores"
+      evento: "ERDActivada"
+    
+    - dominio: D-TERR
+      tipo: "Síncrona"
+      descripcion: "Consulta zonificaciones PROT para validar localización"
+      endpoint: "GET /api/v1/plan/prot/vigente/zonificaciones"
+
+  Externas:
+    - sistema: "IDE Chile"
+      descripcion: "Capas base para PROT"
+      tipo: "WMS/WFS"
+    
+    - sistema: "BCN"
+      descripcion: "Referencia normativa para PROT"
+      tipo: "Consulta manual"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN ESPECIFICACIÓN D-PLAN
+# ═══════════════════════════════════════════════════════════════════════════════

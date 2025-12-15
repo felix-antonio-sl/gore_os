@@ -1,0 +1,629 @@
+# GOS-300: GORE_OS - Catálogo de Procesos BPMN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:300:catalogo_procesos_bpmn"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Catálogo de Procesos de Negocio (BPMN)"
+  Description: "Procesos principales del GORE modelados en notación BPMN"
+  Domain: GORE_OS
+  Created: "2024-12-14"
+  Tags: [goreos, bpmn, procesos, flujos]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ÍNDICE DE PROCESOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Indice_Procesos:
+  D_PLAN:
+    - { id: "PROC-PLAN-001", nombre: "Elaboración ERD", nivel: "Estratégico" }
+    - { id: "PROC-PLAN-002", nombre: "Gestión PROT", nivel: "Estratégico" }
+    - { id: "PROC-PLAN-003", nombre: "Gestión Convenio Programación", nivel: "Táctico" }
+  
+  D_FIN:
+    - { id: "PROC-FIN-001", nombre: "Ciclo de Vida Iniciativa", nivel: "Core" }
+    - { id: "PROC-FIN-002", nombre: "Priorización Anual", nivel: "Core" }
+    - { id: "PROC-FIN-003", nombre: "Aprobación CORE", nivel: "Core" }
+    - { id: "PROC-FIN-004", nombre: "Gestión Presupuestaria", nivel: "Soporte" }
+  
+  D_EJEC:
+    - { id: "PROC-EJEC-001", nombre: "Formalización Convenio", nivel: "Core" }
+    - { id: "PROC-EJEC-002", nombre: "Control de Desembolsos", nivel: "Core" }
+    - { id: "PROC-EJEC-003", nombre: "Gestión de Rendiciones", nivel: "Core" }
+    - { id: "PROC-EJEC-004", nombre: "Monitoreo PMO", nivel: "Táctico" }
+    - { id: "PROC-EJEC-005", nombre: "Liquidación Convenio", nivel: "Core" }
+  
+  D_GESTION:
+    - { id: "PROC-GEST-001", nombre: "Ciclo OKR", nivel: "Estratégico" }
+    - { id: "PROC-GEST-002", nombre: "Gestión de Alertas", nivel: "Operacional" }
+    - { id: "PROC-GEST-003", nombre: "Ejecución Playbook", nivel: "Operacional" }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROC-FIN-001: CICLO DE VIDA INICIATIVA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+PROC_FIN_001:
+  id: "PROC-FIN-001"
+  nombre: "Ciclo de Vida de Iniciativa de Inversión"
+  dominio: D-FIN
+  nivel: Core
+  owner: "Jefe DAF"
+  descripcion: "Gestión completa desde idea hasta ejecución de una iniciativa"
+  
+  participantes:
+    - { lane: "Beneficiario", actores: [Municipalidad, ServicioPúblico] }
+    - { lane: "GORE-Analista", actores: [AnalistaIPR] }
+    - { lane: "SNI", actores: [EvaluadorMDS] }
+    - { lane: "CORE", actores: [ConsejoRegional] }
+  
+  diagrama_ascii: |
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ BENEFICIARIO                                                                │
+    │  ●──►[Identificar    ]──►[Elaborar   ]──►[Presentar  ]                     │
+    │      [necesidad     ]    [perfil     ]    [al GORE   ]                     │
+    └──────────────────────────────────┬──────────────────────────────────────────┘
+                                       ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ GORE - ANALISTA IPR                                                         │
+    │      [Recepcionar   ]──►[Evaluar    ]──►<Viable?>──►[Gestionar ]──►[...]   │
+    │      [iniciativa    ]    [pertinencia]      │        [en BIP    ]           │
+    │                                             │NO                             │
+    │                                             ▼                               │
+    │                                        [Rechazar   ]                        │
+    │                                        [con motivo ]                        │
+    └─────────────────────────────────────────────────────────────────────────────┘
+                                       │SI
+                                       ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ SNI (Externo)                                                               │
+    │      [Evaluar      ]──►<Favorable?>──►[Emitir RS   ]                       │
+    │      [admisibilidad]        │                                               │
+    │                             │NO                                             │
+    │                             ▼                                               │
+    │                        [Devolver con ]                                      │
+    │                        [observaciones]                                      │
+    └─────────────────────────────────────────────────────────────────────────────┘
+                                       │SI
+                                       ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ CORE                                                                        │
+    │      [Revisar      ]──►<Aprueba?>──►[Registrar   ]──►◎                     │
+    │      [en sesión    ]       │         [acuerdo    ]                          │
+    │                            │NO                                              │
+    │                            ▼                                                │
+    │                       [Rechazar    ]                                        │
+    └─────────────────────────────────────────────────────────────────────────────┘
+  
+  actividades:
+    A1_Identificar:
+      nombre: "Identificar necesidad"
+      tipo: UserTask
+      lane: Beneficiario
+      entrada: "Necesidad territorial"
+      salida: "Idea de proyecto"
+    
+    A2_Elaborar_Perfil:
+      nombre: "Elaborar perfil"
+      tipo: UserTask
+      lane: Beneficiario
+      entrada: "Idea de proyecto"
+      salida: "Ficha de perfil"
+      documentos: [FichaPerfil, AntecedentesTécnicos]
+    
+    A3_Presentar:
+      nombre: "Presentar al GORE"
+      tipo: UserTask
+      lane: Beneficiario
+      salida: "Iniciativa registrada"
+      sistema: "GORE_OS → Crear iniciativa"
+    
+    A4_Evaluar_Pertinencia:
+      nombre: "Evaluar pertinencia"
+      tipo: UserTask
+      lane: GORE-Analista
+      criterios:
+        - "Alineación con ERD"
+        - "Competencia GORE"
+        - "Factibilidad técnica preliminar"
+      decision: "Viable / No viable"
+    
+    A5_Gestionar_BIP:
+      nombre: "Gestionar en BIP"
+      tipo: UserTask
+      lane: GORE-Analista
+      actividades:
+        - "Crear ficha IDI en BIP"
+        - "Completar antecedentes"
+        - "Solicitar evaluación"
+      integracion: "INT-002 BIP"
+    
+    A6_Evaluacion_SNI:
+      nombre: "Evaluación SNI"
+      tipo: ServiceTask
+      lane: SNI
+      entrada: "Ficha IDI completa"
+      salida: "RS Favorable / Desfavorable"
+      plazo: "30 días hábiles"
+    
+    A7_Sesion_CORE:
+      nombre: "Sesión CORE"
+      tipo: UserTask
+      lane: CORE
+      entrada: "Iniciativa con RS + Ficha resumen"
+      salida: "Acuerdo CORE"
+  
+  metricas:
+    - { kpi: "Tiempo ciclo completo", meta: "< 180 días" }
+    - { kpi: "Tasa aprobación RS", meta: "> 70%" }
+    - { kpi: "Tasa aprobación CORE", meta: "> 80%" }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROC-FIN-002: PRIORIZACIÓN ANUAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+PROC_FIN_002:
+  id: "PROC-FIN-002"
+  nombre: "Proceso de Priorización Anual"
+  dominio: D-FIN
+  nivel: Core
+  owner: "Jefe DAF"
+  frecuencia: "Anual (Agosto-Noviembre)"
+  
+  participantes:
+    - { lane: "GORE-DAF", actores: [JefeDAF, AnalistaIPR] }
+    - { lane: "Beneficiarios", actores: [Municipios, Servicios] }
+    - { lane: "CORE", actores: [ConsejoRegional] }
+  
+  diagrama_ascii: |
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │ GORE-DAF                                                             │
+    │  ●──►[Definir    ]──►[Publicar   ]──►[Recepcionar]──►[Evaluar    ]  │
+    │      [marco y    ]    [convocatoria]   [solicitudes]   [técnicamente]│
+    │      [criterios  ]                                                   │
+    └──────────────────────────┬───────────────────────────────────────────┘
+                               │
+    ┌──────────────────────────┼───────────────────────────────────────────┐
+    │ BENEFICIARIOS            ▼                                           │
+    │                    [Preparar y  ]                                    │
+    │                    [presentar   ]                                    │
+    │                    [solicitudes ]                                    │
+    └──────────────────────────────────────────────────────────────────────┘
+                               │
+    ┌──────────────────────────▼───────────────────────────────────────────┐
+    │ GORE-DAF (cont.)                                                     │
+    │      [Priorizar  ]──►[Preparar   ]                                  │
+    │      [ranking    ]    [tabla CORE ]                                  │
+    └──────────────────────────┬───────────────────────────────────────────┘
+                               │
+    ┌──────────────────────────▼───────────────────────────────────────────┐
+    │ CORE                                                                 │
+    │      [Sesión de  ]──►[Votar      ]──►[Registrar  ]──►◎              │
+    │      [priorización]   [solicitudes]   [acuerdos  ]                   │
+    └──────────────────────────────────────────────────────────────────────┘
+  
+  fases:
+    F1_Apertura:
+      actividades:
+        - "Definir marco presupuestario por instrumento"
+        - "Definir criterios de evaluación y pesos"
+        - "Definir calendario del proceso"
+      plazo: "1 semana"
+      sistema: "GORE_OS → Crear Priorización"
+    
+    F2_Convocatoria:
+      actividades:
+        - "Publicar bases y formularios"
+        - "Realizar jornadas informativas"
+        - "Habilitar módulo de postulación"
+      plazo: "2 semanas"
+      sistema: "GORE_OS → Estado RECEPCION"
+    
+    F3_Recepcion:
+      actividades:
+        - "Recepcionar solicitudes"
+        - "Validar requisitos formales"
+        - "Registrar en sistema"
+      plazo: "4-6 semanas"
+      sistema: "GORE_OS → Solicitudes PRESENTADA"
+    
+    F4_Evaluacion:
+      actividades:
+        - "Evaluar técnicamente cada solicitud"
+        - "Aplicar pauta de evaluación"
+        - "Calcular puntaje"
+        - "Determinar elegibilidad"
+      plazo: "3-4 semanas"
+      sistema: "GORE_OS → Solicitudes ELEGIBLE/NO_ELEGIBLE"
+    
+    F5_Priorizacion:
+      actividades:
+        - "Generar ranking por puntaje"
+        - "Aplicar criterios de ajuste"
+        - "Definir corte según marco"
+        - "Validar con jefatura"
+      plazo: "1-2 semanas"
+      sistema: "GORE_OS → Solicitudes PRIORIZADA"
+    
+    F6_Sesion_CORE:
+      actividades:
+        - "Preparar tabla de sesión"
+        - "Presentar cartera priorizada"
+        - "Votación por solicitud"
+        - "Registrar acuerdos"
+      plazo: "1 sesión"
+      sistema: "GORE_OS → Solicitudes APROBADA_CORE/RECHAZADA_CORE"
+    
+    F7_Cierre:
+      actividades:
+        - "Notificar a beneficiarios"
+        - "Publicar resultados"
+        - "Iniciar formalización de convenios"
+      plazo: "1 semana"
+  
+  criterios_evaluacion_ejemplo:
+    - { criterio: "Alineación ERD", peso: 20 }
+    - { criterio: "Impacto territorial", peso: 20 }
+    - { criterio: "Población beneficiaria", peso: 15 }
+    - { criterio: "Costo-beneficio", peso: 15 }
+    - { criterio: "Capacidad del ejecutor", peso: 15 }
+    - { criterio: "Estado de avance", peso: 15 }
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROC-EJEC-001: FORMALIZACIÓN CONVENIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+PROC_EJEC_001:
+  id: "PROC-EJEC-001"
+  nombre: "Formalización de Convenio de Transferencia"
+  dominio: D-EJEC
+  nivel: Core
+  owner: "Jefe DAF"
+  trigger: "Solicitud aprobada por CORE"
+  
+  participantes:
+    - { lane: "Analista", actores: [AnalistaIPR] }
+    - { lane: "Jurídica", actores: [AbogadoGORE] }
+    - { lane: "DAF", actores: [JefeDAF] }
+    - { lane: "Ejecutor", actores: [UnidadEjecutora] }
+    - { lane: "Autoridades", actores: [Gobernador, RepresentanteEjecutor] }
+  
+  diagrama_ascii: |
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ ANALISTA                                                                    │
+    │  ●──►[Elaborar   ]──►[Definir    ]──►[Enviar a   ]                         │
+    │      [borrador   ]    [hitos y    ]    [revisión   ]                        │
+    │      [convenio   ]    [desembolsos]    [jurídica   ]                        │
+    └──────────────────────────────────────────┬──────────────────────────────────┘
+                                               ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ JURÍDICA                                                                    │
+    │      [Revisar    ]──►<Observa?>──►[Visar      ]                            │
+    │      [legalidad  ]       │         [conforme   ]                            │
+    │                          │SI                                                │
+    │                          ▼                                                  │
+    │                     [Devolver con]──► (vuelve a Analista)                  │
+    │                     [observaciones]                                         │
+    └──────────────────────────────────────────┬──────────────────────────────────┘
+                                               ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ DAF                                                                         │
+    │      [Revisar    ]──►[Aprobar    ]──►[Enviar a   ]                         │
+    │      [técnico    ]    [para firma ]    [ejecutor   ]                        │
+    └──────────────────────────────────────────┬──────────────────────────────────┘
+                                               ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ EJECUTOR                                                                    │
+    │      [Revisar    ]──►<Acepta?>──►[Firmar     ]                             │
+    │      [términos   ]       │                                                  │
+    │                          │NO                                                │
+    │                          ▼                                                  │
+    │                     [Solicitar   ]──► (negociación)                        │
+    │                     [ajustes     ]                                          │
+    └──────────────────────────────────────────┬──────────────────────────────────┘
+                                               ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ AUTORIDADES                                                                 │
+    │      [Firmar     ]──►[Dictar     ]──►[Convenio  ]──►◎                      │
+    │      [GORE +     ]    [resolución ]    [VIGENTE   ]                         │
+    │      [Ejecutor   ]    [aprobatoria]                                         │
+    └─────────────────────────────────────────────────────────────────────────────┘
+  
+  actividades:
+    A1_Elaborar_Borrador:
+      tipo: UserTask
+      lane: Analista
+      entrada: "Solicitud APROBADA_CORE"
+      salida: "Borrador convenio"
+      sistema: "GORE_OS → Crear convenio BORRADOR"
+      checklist:
+        - "Datos partes (GORE + Ejecutor)"
+        - "Objeto del convenio"
+        - "Montos y aportes"
+        - "Plazo de ejecución"
+        - "Obligaciones de las partes"
+    
+    A2_Definir_Hitos:
+      tipo: UserTask
+      lane: Analista
+      salida: "Calendario de hitos"
+      sistema: "GORE_OS → Crear HitoConvenio"
+    
+    A3_Definir_Desembolsos:
+      tipo: UserTask
+      lane: Analista
+      salida: "Calendario de desembolsos"
+      sistema: "GORE_OS → Crear Desembolso"
+      regla: "Suma desembolsos = aporte_gore"
+    
+    A4_Revision_Juridica:
+      tipo: UserTask
+      lane: Jurídica
+      plazo: "5 días hábiles"
+      sistema: "GORE_OS → Estado EN_REVISION_JURIDICA"
+    
+    A5_Revision_DAF:
+      tipo: UserTask
+      lane: DAF
+      plazo: "3 días hábiles"
+      sistema: "GORE_OS → Estado EN_REVISION_TECNICA"
+    
+    A6_Firma:
+      tipo: UserTask
+      lane: Autoridades
+      sistema: "GORE_OS → Estado VIGENTE"
+      integracion: "Firma electrónica avanzada"
+  
+  documentos:
+    - { doc: "Convenio", plantilla: "TPL-CONV-001" }
+    - { doc: "Resolución aprobatoria", plantilla: "TPL-RES-001" }
+    - { doc: "Acuerdo CORE", referencia: true }
+  
+  sla:
+    tiempo_total: "15 días hábiles desde aprobación CORE"
+    revision_juridica: "5 días hábiles"
+    firma: "5 días hábiles"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROC-EJEC-003: GESTIÓN DE RENDICIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+PROC_EJEC_003:
+  id: "PROC-EJEC-003"
+  nombre: "Gestión de Rendiciones de Cuentas"
+  dominio: D-EJEC
+  nivel: Core
+  owner: "Jefe DAF"
+  
+  participantes:
+    - { lane: "Ejecutor", actores: [UnidadEjecutora] }
+    - { lane: "Analista", actores: [AnalistaRendiciones] }
+    - { lane: "DAF", actores: [JefeDAF] }
+  
+  diagrama_ascii: |
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ EJECUTOR                                                                    │
+    │  ●──►[Preparar   ]──►[Digitalizar]──►[Cargar en  ]──►[Enviar    ]          │
+    │      [documentos ]    [facturas   ]    [sistema   ]    [rendición ]         │
+    └──────────────────────────────────────────┬──────────────────────────────────┘
+                                               ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ ANALISTA RENDICIONES                                                        │
+    │      [Recepcionar]──►[Validar    ]──►[Revisar c/ ]──►<OK?>                 │
+    │      [rendición  ]    [RUT en SII ]    [documento  ]     │                  │
+    │                                                          │                  │
+    │                       ┌───────────────────────────────────┤                  │
+    │                       │                                   │                  │
+    │                       ▼                                   ▼                  │
+    │                  [Observar   ]                      [Aprobar    ]           │
+    │                  [movimientos]                      [rendición  ]           │
+    │                       │                                   │                  │
+    │                       ▼                                   │                  │
+    │                  [Devolver a ]──► (vuelve a Ejecutor)    │                  │
+    │                  [ejecutor   ]                            │                  │
+    └──────────────────────────────────────────────────────────┼──────────────────┘
+                                                               ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ DAF                                                                         │
+    │      [Visar      ]──►[Actualizar ]──►◎                                     │
+    │      [rendición  ]    [convenio   ]                                         │
+    └─────────────────────────────────────────────────────────────────────────────┘
+  
+  subproceso_revision:
+    por_cada_movimiento:
+      - "Verificar tipo documento válido"
+      - "Verificar fecha dentro del período"
+      - "Verificar RUT proveedor (SII)"
+      - "Verificar monto correcto"
+      - "Verificar categoría de gasto elegible"
+      - "Verificar no duplicidad"
+      - "Marcar: VALIDO / OBSERVADO / RECHAZADO"
+  
+  estados_rendicion:
+    PENDIENTE: "Rendición programada, no presentada"
+    RECIBIDA: "Documentación recibida, pendiente revisión"
+    EN_REVISION: "Analista revisando movimientos"
+    OBSERVADA: "Devuelta con observaciones"
+    APROBADA: "100% movimientos aprobados"
+    APROBADA_CON_OBSERVACIONES: "Aprobada con monto menor"
+    RECHAZADA: "Rechazada por incumplimiento grave"
+  
+  reglas_negocio:
+    - "Rendición debe presentarse máximo 90 días post-transferencia"
+    - "Mora > 90 días bloquea nuevos desembolsos"
+    - "Documentos observados tienen 15 días para subsanar"
+    - "Monto rechazado debe reintegrarse"
+  
+  automatizaciones:
+    - trigger: "Rendición recibida"
+      accion: "Validar RUT proveedores vs SII"
+      integracion: "INT-004 SII"
+    
+    - trigger: "Rendición aprobada"
+      accion: "Actualizar monto_aprobado del convenio"
+      
+    - trigger: "Mora > 90 días"
+      accion: "Generar alerta + bloquear desembolsos"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROC-GEST-001: CICLO OKR
+# ═══════════════════════════════════════════════════════════════════════════════
+
+PROC_GEST_001:
+  id: "PROC-GEST-001"
+  nombre: "Ciclo de Gestión OKR"
+  dominio: D-GESTION
+  nivel: Estratégico
+  owner: "Controller Gestión"
+  frecuencia: "Trimestral"
+  
+  fases:
+    F1_Planificacion:
+      semana: "1-2 del trimestre"
+      actividades:
+        - "Gobernador define OKRs organizacionales"
+        - "Divisiones cascadean OKRs"
+        - "Unidades definen OKRs operacionales"
+        - "Validar alineación vertical"
+      sistema: "GORE_OS → OKRs en BORRADOR → ACTIVO"
+    
+    F2_Ejecucion:
+      semana: "3-11"
+      actividades:
+        - "Equipos trabajan hacia KRs"
+        - "Check-ins semanales/quincenales"
+        - "Identificar bloqueadores"
+        - "Ajustar acciones"
+      sistema: "GORE_OS → CheckInOKR"
+    
+    F3_Revision:
+      semana: "12"
+      actividades:
+        - "Calcular % cumplimiento por KR"
+        - "Determinar estado final OKR"
+        - "Documentar aprendizajes"
+        - "Preparar inputs para siguiente ciclo"
+      sistema: "GORE_OS → OKRs CERRADO"
+  
+  checkin_semanal:
+    frecuencia: "Cada lunes"
+    duracion: "15 min por KR"
+    campos:
+      - valor_actual: "Número actualizado"
+      - confianza: "0.1 a 1.0"
+      - bloqueadores: "Texto libre"
+      - acciones: "Próximos pasos"
+    automatizacion: |
+      1. Sistema notifica check-in pendiente
+      2. Owner actualiza KR
+      3. Sistema recalcula progreso OKR
+      4. Si confianza < 0.3, generar alerta
+  
+  scoring:
+    por_kr:
+      formula: "(actual - linea_base) / (meta - linea_base)"
+      estados:
+        EN_RIESGO: "progreso < 30% al 50% del tiempo"
+        EN_TRACK: "progreso proporcional al tiempo"
+        LOGRADO: "progreso >= 70%"
+        NO_LOGRADO: "progreso < 70% al cierre"
+    
+    por_okr:
+      formula: "promedio(progreso_krs)"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PROC-GEST-002: GESTIÓN DE ALERTAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+PROC_GEST_002:
+  id: "PROC-GEST-002"
+  nombre: "Gestión de Alertas"
+  dominio: D-GESTION
+  nivel: Operacional
+  owner: "Controller Gestión"
+  
+  diagrama_ascii: |
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ SISTEMA (Automático)                                                        │
+    │  ●──►[Monitorear ]──►<Umbral?>──►[Generar    ]──►[Notificar  ]             │
+    │      [indicadores]       │        [alerta     ]    [responsable]            │
+    │                          │NO                                                │
+    │                          ▼                                                  │
+    │                     (continuar)                                             │
+    └──────────────────────────────────────────┬──────────────────────────────────┘
+                                               ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │ RESPONSABLE                                                                 │
+    │      [Revisar    ]──►[Analizar   ]──►[Tomar     ]──►[Registrar ]──►◎       │
+    │      [alerta     ]    [causa raíz ]    [acción    ]    [resolución]         │
+    │                                             │                               │
+    │                                             ▼                               │
+    │                                   <¿Playbook?>──►[Ejecutar   ]             │
+    │                                                   [playbook   ]             │
+    └─────────────────────────────────────────────────────────────────────────────┘
+  
+  tipos_alerta:
+    H_GORE:
+      trigger: "H_gore cruza umbral"
+      umbrales:
+        CRITICAL: "<40"
+        WARNING: "<60"
+      asignacion: "Gobernador + Controller"
+    
+    INDICADOR:
+      trigger: "Indicador específico cruza umbral"
+      asignacion: "Owner del indicador"
+    
+    VENCIMIENTO:
+      trigger: "RS por vencer en 30 días"
+      asignacion: "Analista IPR"
+    
+    MORA_RENDICION:
+      trigger: "Convenio > 90 días sin rendición"
+      asignacion: "Analista Rendiciones + Supervisor"
+    
+    SEMAFORO_ROJO:
+      trigger: "Proyecto PMO en ROJO"
+      asignacion: "PMO Manager + Supervisor"
+  
+  ciclo_vida_alerta:
+    ACTIVA: "Recién generada"
+    EN_ATENCION: "Asignada y en análisis"
+    RESUELTA: "Acción tomada, situación normalizada"
+    ESCALADA: "Requiere nivel superior"
+    IGNORADA: "Descartada con justificación"
+  
+  sla_atencion:
+    CRITICAL: "4 horas"
+    WARNING: "24 horas"
+    INFO: "48 horas"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# RESUMEN CATÁLOGO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Resumen:
+  total_procesos: 14
+  por_nivel:
+    Estratégico: 3
+    Core: 7
+    Táctico: 2
+    Operacional: 2
+  
+  procesos_automatizables:
+    - "Cálculo H_gore (batch)"
+    - "Validación RUT en rendiciones"
+    - "Generación de alertas"
+    - "Notificaciones de vencimiento"
+    - "Check-in reminder OKR"
+  
+  integraciones_proceso:
+    PROC-FIN-001: [BIP]
+    PROC-EJEC-003: [SII]
+    PROC-GEST-002: [Notificaciones]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN GOS-300
+# ═══════════════════════════════════════════════════════════════════════════════

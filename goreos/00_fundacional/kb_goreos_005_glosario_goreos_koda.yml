@@ -1,0 +1,777 @@
+# yaml-language-server: $schema=../schemas/koda-schema.json
+# KODA: Knowledge-Oriented Document Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
+# GOS-005: GORE_OS - Glosario y Vocabulario Controlado
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:005:glosario"
+  Version: "1.0.0"
+  Status: Draft
+  Classification: Reference
+  Stability: Evolving
+
+Metadata:
+  Title: "GORE_OS - Glosario Técnico"
+  Description: >
+    Vocabulario controlado del proyecto GORE_OS. Define términos, acrónimos,
+    y conceptos clave para asegurar comunicación precisa y consistente.
+  Domain: GORE_OS
+  Subdomain: Fundamentos
+  Author: "Equipo Transformación Digital GORE Ñuble"
+  Created: "2024-12-14"
+  Updated: "2024-12-14"
+  Ctx: >
+    Glosario maestro que establece el lenguaje común del proyecto GORE_OS.
+    Debe ser referenciado por todos los artefactos y comunicaciones.
+  LLM_Parsing_Instructions: >
+    Este documento define el vocabulario oficial del GORE_OS. Usa estas 
+    definiciones para mantener consistencia terminológica. Cuando encuentres
+    un término ambiguo, consulta este glosario.
+  Tags:
+    - goreos
+    - glosario
+    - terminos
+    - koda
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 1: TÉRMINOS INSTITUCIONALES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Terminos_Institucionales:
+  
+  GORE:
+    Termino: "Gobierno Regional"
+    Definicion: >
+      Órgano descentralizado territorialmente que tiene a su cargo la 
+      administración superior de una región, con personalidad jurídica de 
+      derecho público y patrimonio propio.
+    Sinonimos: ["Gobierno Regional", "GR"]
+    Contexto: "LOC GORE - Ley 19.175"
+  
+  Gobernador_Regional:
+    Termino: "Gobernador Regional"
+    Definicion: >
+      Órgano ejecutivo del Gobierno Regional, elegido por sufragio universal.
+      Preside el Consejo Regional y representa al GORE.
+    Sinonimos: ["Gobernador", "GR"]
+    Contexto: "Constitución Política, LOC GORE"
+  
+  CORE:
+    Termino: "Consejo Regional"
+    Definicion: >
+      Órgano de carácter normativo, resolutivo y fiscalizador del GORE,
+      encargado de hacer efectiva la participación ciudadana regional.
+    Sinonimos: ["Consejo Regional"]
+    Contexto: "LOC GORE"
+  
+  DIPLADE:
+    Termino: "División de Planificación y Desarrollo Regional"
+    Definicion: >
+      División del GORE responsable de elaborar políticas, planes y programas
+      de desarrollo regional, y coordinar con servicios públicos.
+    Sinonimos: []
+    Contexto: "Estructura orgánica GORE"
+  
+  DAF:
+    Termino: "División de Administración y Finanzas"
+    Definicion: >
+      División del GORE responsable de la gestión administrativa, financiera
+      y presupuestaria del servicio.
+    Sinonimos: []
+    Contexto: "Estructura orgánica GORE"
+  
+  DAPLA:
+    Termino: "División de Análisis y Control de Gestión"
+    Definicion: >
+      División del GORE responsable del control de gestión, seguimiento de
+      convenios y supervisión de ejecución de proyectos.
+    Sinonimos: ["División Control"]
+    Contexto: "Estructura orgánica GORE"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 2: TÉRMINOS DE INVERSIÓN PÚBLICA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Terminos_Inversion:
+  
+  IPR:
+    Termino: "Inversión Pública Regional"
+    Definicion: >
+      Conjunto de recursos financieros destinados a proyectos de inversión
+      que son decididos a nivel regional, financiados con presupuesto GORE.
+    Sinonimos: ["Inversión Regional"]
+    Contexto: "Presupuesto regional"
+  
+  Iniciativa:
+    Termino: "Iniciativa de Inversión"
+    Definicion: >
+      Proyecto, programa o estudio que busca crear, ampliar o recuperar
+      la capacidad productora de bienes o prestadora de servicios del Estado.
+    Sinonimos: ["Proyecto", "Programa", "Estudio"]
+    Contexto: "Sistema Nacional de Inversiones"
+  
+  RS:
+    Termino: "Recomendación de Inversión (Rate)"
+    Definicion: >
+      Pronunciamiento técnico-económico favorable emitido por MDSF sobre
+      una iniciativa de inversión, requisito para su financiamiento.
+    Sinonimos: ["Rate", "Recomendación Favorable"]
+    Contexto: "MDSF - Sistema Nacional de Inversiones"
+  
+  FNDR:
+    Termino: "Fondo Nacional de Desarrollo Regional"
+    Definicion: >
+      Principal instrumento de inversión pública regional, de libre 
+      disposición del GORE para financiar proyectos de desarrollo.
+    Sinonimos: []
+    Contexto: "Ley de Presupuestos"
+  
+  FRIL:
+    Termino: "Fondo Regional de Inversión Local"
+    Definicion: >
+      Fondo destinado a financiar proyectos de infraestructura menor
+      de inversión local presentados por municipios.
+    Sinonimos: []
+    Contexto: "Ley de Presupuestos"
+  
+  PMU:
+    Termino: "Programa de Mejoramiento Urbano"
+    Definicion: >
+      Instrumento de inversión para proyectos de mejoramiento de espacios
+      públicos y equipamiento urbano.
+    Sinonimos: []
+    Contexto: "SUBDERE"
+  
+  PMB:
+    Termino: "Programa de Mejoramiento de Barrios"
+    Definicion: >
+      Instrumento de inversión para proyectos de mejoramiento de barrios
+      con déficit de infraestructura.
+    Sinonimos: []
+    Contexto: "SUBDERE"
+  
+  FRPD:
+    Termino: "Fondo Regional de Productividad y Diversificación"
+    Definicion: >
+      Fondo para financiar iniciativas de fomento productivo y
+      diversificación económica regional.
+    Sinonimos: []
+    Contexto: "Ley de Presupuestos"
+  
+  BIP:
+    Termino: "Banco Integrado de Proyectos"
+    Definicion: >
+      Sistema de información que registra todas las iniciativas de inversión
+      pública en sus distintas etapas del ciclo de vida.
+    Sinonimos: []
+    Contexto: "MDSF"
+  
+  SNI:
+    Termino: "Sistema Nacional de Inversiones"
+    Definicion: >
+      Marco institucional y metodológico para la formulación, evaluación
+      y seguimiento de la inversión pública en Chile.
+    Sinonimos: []
+    Contexto: "MDSF"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 3: TÉRMINOS DE EJECUCIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Terminos_Ejecucion:
+  
+  Convenio:
+    Termino: "Convenio de Transferencia"
+    Definicion: >
+      Acto administrativo bilateral mediante el cual el GORE transfiere
+      recursos a una unidad ejecutora para materializar una iniciativa.
+    Sinonimos: ["Convenio de Transferencia de Recursos"]
+    Contexto: "Ejecución presupuestaria"
+  
+  Unidad_Ejecutora:
+    Termino: "Unidad Ejecutora"
+    Definicion: >
+      Entidad pública o privada que recibe recursos del GORE mediante
+      convenio para ejecutar una iniciativa de inversión.
+    Sinonimos: ["Ejecutor", "Entidad Ejecutora"]
+    Contexto: "Convenios de transferencia"
+  
+  Mandato:
+    Termino: "Convenio Mandato"
+    Definicion: >
+      Convenio donde la unidad ejecutora actúa como mandatario del GORE
+      para la ejecución de una obra o servicio.
+    Sinonimos: []
+    Contexto: "Tipos de convenio"
+  
+  Rendicion:
+    Termino: "Rendición de Cuentas"
+    Definicion: >
+      Proceso mediante el cual la unidad ejecutora justifica el uso de
+      los recursos transferidos mediante documentación de gastos.
+    Sinonimos: ["Rendición"]
+    Contexto: "Control de recursos transferidos"
+  
+  Hito:
+    Termino: "Hito de Convenio"
+    Definicion: >
+      Punto de control definido en el convenio que marca el cumplimiento
+      de una etapa y habilita el siguiente desembolso.
+    Sinonimos: ["Milestone"]
+    Contexto: "Seguimiento de convenios"
+  
+  Desembolso:
+    Termino: "Desembolso"
+    Definicion: >
+      Transferencia efectiva de recursos desde el GORE a la unidad
+      ejecutora, asociada al cumplimiento de hitos.
+    Sinonimos: ["Transferencia", "Cuota"]
+    Contexto: "Ejecución financiera"
+  
+  Addendum:
+    Termino: "Addendum"
+    Definicion: >
+      Modificación formal a un convenio vigente que altera plazos,
+      montos, alcance u otras condiciones.
+    Sinonimos: ["Modificación de convenio"]
+    Contexto: "Gestión de convenios"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 4: TÉRMINOS DE PLANIFICACIÓN
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Terminos_Planificacion:
+  
+  ERD:
+    Termino: "Estrategia Regional de Desarrollo"
+    Definicion: >
+      Instrumento rector del desarrollo regional que define la visión,
+      objetivos estratégicos y lineamientos para el territorio.
+    Sinonimos: []
+    Contexto: "LOC GORE"
+  
+  PROT:
+    Termino: "Plan Regional de Ordenamiento Territorial"
+    Definicion: >
+      Instrumento de planificación que establece condiciones de localización
+      de infraestructuras y actividades productivas en el territorio.
+    Sinonimos: []
+    Contexto: "LOC GORE"
+  
+  ARI:
+    Termino: "Agenda Regional de Inversiones"
+    Definicion: >
+      Programación plurianual de inversiones regionales alineada con
+      la ERD y los convenios de programación.
+    Sinonimos: []
+    Contexto: "Planificación regional"
+  
+  Convenio_Programacion:
+    Termino: "Convenio de Programación"
+    Definicion: >
+      Acuerdo plurianual entre GORE y ministerios/servicios para
+      financiar conjuntamente un programa de inversiones.
+    Sinonimos: ["CP"]
+    Contexto: "LOC GORE"
+  
+  OE:
+    Termino: "Objetivo Estratégico"
+    Definicion: >
+      Meta de alto nivel definida en la ERD que orienta las políticas
+      y acciones del desarrollo regional.
+    Sinonimos: []
+    Contexto: "ERD"
+  
+  Lineamiento:
+    Termino: "Lineamiento Estratégico"
+    Definicion: >
+      Directriz que especifica el camino para alcanzar un objetivo
+      estratégico de la ERD.
+    Sinonimos: []
+    Contexto: "ERD"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 5: TÉRMINOS TDE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Terminos_TDE:
+  
+  TDE:
+    Termino: "Transformación Digital del Estado"
+    Definicion: >
+      Marco normativo y estratégico que establece la digitalización de
+      procedimientos administrativos del Estado (Ley 21.180).
+    Sinonimos: []
+    Contexto: "Ley 21.180"
+  
+  STD:
+    Termino: "Sistema de Transformación Digital"
+    Definicion: >
+      Plan anual que cada órgano del Estado debe presentar con la
+      programación de digitalización de sus procedimientos.
+    Sinonimos: []
+    Contexto: "Ley 21.180"
+  
+  CPAT:
+    Termino: "Catálogo de Procedimientos Administrativos y Trámites"
+    Definicion: >
+      Registro oficial de todos los trámites y procedimientos de los
+      órganos del Estado, con su nivel de madurez digital.
+    Sinonimos: []
+    Contexto: "Ley 21.180"
+  
+  Expediente_Electronico:
+    Termino: "Expediente Electrónico"
+    Definicion: >
+      Conjunto ordenado de documentos electrónicos que conforman un
+      procedimiento administrativo, identificado por IUIe.
+    Sinonimos: []
+    Contexto: "DS 10 TDE"
+  
+  IUIe:
+    Termino: "Identificador Único de Expediente Electrónico"
+    Definicion: >
+      Código único que identifica un expediente electrónico en todo
+      el Estado, compuesto por código órgano + año + correlativo.
+    Sinonimos: []
+    Contexto: "DS 10 TDE"
+  
+  ClaveUnica:
+    Termino: "ClaveÚnica"
+    Definicion: >
+      Sistema de autenticación único del Estado de Chile que permite
+      a ciudadanos acceder a servicios digitales con una sola credencial.
+    Sinonimos: ["CU"]
+    Contexto: "DS 11 TDE"
+  
+  FirmaGob:
+    Termino: "FirmaGob"
+    Definicion: >
+      Servicio de firma electrónica avanzada del Estado para funcionarios
+      públicos y ciudadanos.
+    Sinonimos: []
+    Contexto: "TDE"
+  
+  PISEE:
+    Termino: "Plataforma Integrada de Servicios Electrónicos del Estado"
+    Definicion: >
+      Red de interoperabilidad del Estado que permite el intercambio
+      de datos entre órganos públicos.
+    Sinonimos: []
+    Contexto: "DS 12 TDE"
+  
+  DocDigital:
+    Termino: "DocDigital"
+    Definicion: >
+      Plataforma compartida del Estado para el envío y recepción de
+      comunicaciones oficiales entre órganos públicos.
+    Sinonimos: []
+    Contexto: "TDE"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 6: TÉRMINOS GORE_OS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Terminos_GOREOS:
+  
+  GORE_OS:
+    Termino: "Sistema Operativo del GORE"
+    Definicion: >
+      Plataforma integral que digitaliza, automatiza e inteligencializa
+      las operaciones del GORE, funcionando como su gemelo digital.
+    Sinonimos: []
+    Contexto: "Proyecto de transformación digital GORE Ñuble"
+  
+  Dominio:
+    Termino: "Dominio de Negocio"
+    Definicion: >
+      Área funcional del GORE_OS que agrupa módulos relacionados con
+      una función o capacidad específica.
+    Sinonimos: []
+    Contexto: "Arquitectura GORE_OS"
+  
+  Modulo:
+    Termino: "Módulo"
+    Definicion: >
+      Componente funcional dentro de un dominio que implementa un
+      conjunto cohesivo de funcionalidades.
+    Sinonimos: []
+    Contexto: "Arquitectura GORE_OS"
+  
+  H_gore:
+    Termino: "Índice de Salud Institucional del GORE"
+    Definicion: >
+      Métrica compuesta que mide el estado de salud operacional del
+      GORE, agregando indicadores de todos los dominios.
+    Sinonimos: ["Health Score", "Salud GORE"]
+    Contexto: "D-GESTION"
+  
+  Playbook:
+    Termino: "Playbook"
+    Definicion: >
+      Procedimiento estructurado de respuesta ante una situación
+      específica (alerta, crisis, optimización) con pasos definidos.
+    Sinonimos: ["Runbook"]
+    Contexto: "D-GESTION"
+  
+  Quick_Win:
+    Termino: "Quick Win"
+    Definicion: >
+      Acción de mejora de alto impacto y bajo esfuerzo que puede
+      implementarse rápidamente.
+    Sinonimos: ["Ganancia rápida"]
+    Contexto: "D-GESTION"
+  
+  Lakehouse:
+    Termino: "Lakehouse"
+    Definicion: >
+      Arquitectura de datos que combina las ventajas de data lakes
+      (flexibilidad) y data warehouses (estructura).
+    Sinonimos: []
+    Contexto: "D-EVOL"
+  
+  RAG:
+    Termino: "Retrieval-Augmented Generation"
+    Definicion: >
+      Técnica de IA que aumenta la generación de texto con información
+      recuperada de una base de conocimiento.
+    Sinonimos: []
+    Contexto: "D-EVOL"
+  
+  HAIC:
+    Termino: "Human-AI Collaboration"
+    Definicion: >
+      Principio de colaboración humano-IA donde la supervisión humana
+      es proporcional al riesgo de la tarea automatizada.
+    Sinonimos: ["HITL - Human in the Loop"]
+    Contexto: "D-EVOL"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 7: TÉRMINOS ORKO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Terminos_ORKO:
+  
+  ORKO:
+    Termino: "Framework ORKO"
+    Definicion: >
+      Meta-framework de gestión organizacional basado en axiomas, primitivas
+      y tejidos que provee los fundamentos teóricos de GORE_OS.
+    Sinonimos: []
+    Contexto: "Framework metodológico"
+  
+  WSLC:
+    Termino: "Work System Lifecycle"
+    Definicion: >
+      Ciclo de vida de sistemas de trabajo en ORKO, compuesto por
+      18 fases desde iniciación hasta evolución.
+    Sinonimos: []
+    Contexto: "ORKO Layer 3"
+  
+  Primitiva:
+    Termino: "Primitiva ORKO"
+    Definicion: >
+      Concepto fundamental irreducible del framework ORKO: Capacidad (P1),
+      Flujo (P2), Información (P3), Restricción (P4), Propósito (P5).
+    Sinonimos: []
+    Contexto: "ORKO Layer 0"
+  
+  Tejido:
+    Termino: "Tejido Tecnológico"
+    Definicion: >
+      Capa tecnológica que operacionaliza las primitivas ORKO:
+      Tejido de Capacidad (TF1), Flujo (TF2), Información (TF3).
+    Sinonimos: ["Fabric"]
+    Contexto: "ORKO Layer 2"
+  
+  Health_Gate:
+    Termino: "Health Gate"
+    Definicion: >
+      Umbral de salud organizacional que dispara acciones específicas
+      (playbooks, trayectorias) cuando se cruza.
+    Sinonimos: []
+    Contexto: "ORKO Layer 3"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 8: ACRÓNIMOS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Acronimos:
+  # Institucionales
+  GORE: "Gobierno Regional"
+  CORE: "Consejo Regional"
+  DIPLADE: "División de Planificación y Desarrollo"
+  DAF: "División de Administración y Finanzas"
+  DAPLA: "División de Análisis y Control de Gestión"
+  CGR: "Contraloría General de la República"
+  MDSF: "Ministerio de Desarrollo Social y Familia"
+  SUBDERE: "Subsecretaría de Desarrollo Regional y Administrativo"
+  
+  # Inversión
+  IPR: "Inversión Pública Regional"
+  FNDR: "Fondo Nacional de Desarrollo Regional"
+  FRIL: "Fondo Regional de Inversión Local"
+  PMU: "Programa de Mejoramiento Urbano"
+  PMB: "Programa de Mejoramiento de Barrios"
+  FRPD: "Fondo Regional de Productividad y Diversificación"
+  BIP: "Banco Integrado de Proyectos"
+  SNI: "Sistema Nacional de Inversiones"
+  RS: "Recomendación de Inversión (Rate)"
+  
+  # Planificación
+  ERD: "Estrategia Regional de Desarrollo"
+  PROT: "Plan Regional de Ordenamiento Territorial"
+  ARI: "Agenda Regional de Inversiones"
+  CP: "Convenio de Programación"
+  
+  # TDE
+  TDE: "Transformación Digital del Estado"
+  STD: "Sistema de Transformación Digital"
+  CPAT: "Catálogo de Procedimientos Administrativos y Trámites"
+  IUIe: "Identificador Único de Expediente Electrónico"
+  PISEE: "Plataforma Integrada de Servicios Electrónicos del Estado"
+  OIDC: "OpenID Connect"
+  
+  # Sistemas
+  SIGFE: "Sistema de Información para la Gestión Financiera del Estado"
+  SIGPER: "Sistema de Información y Control del Personal del Estado"
+  SISREC: "Sistema de Seguimiento de Recomendaciones"
+  SINIM: "Sistema Nacional de Información Municipal"
+  
+  # Gestión
+  OKR: "Objectives and Key Results"
+  PMG: "Programa de Mejoramiento de Gestión"
+  KPI: "Key Performance Indicator"
+  SLA: "Service Level Agreement"
+  PMO: "Project Management Office"
+  
+  # Técnicos
+  API: "Application Programming Interface"
+  REST: "Representational State Transfer"
+  SQL: "Structured Query Language"
+  ETL: "Extract, Transform, Load"
+  CI/CD: "Continuous Integration / Continuous Deployment"
+  SSO: "Single Sign-On"
+  MFA: "Multi-Factor Authentication"
+  RBAC: "Role-Based Access Control"
+  ABAC: "Attribute-Based Access Control"
+  
+  # IA
+  AI: "Artificial Intelligence"
+  ML: "Machine Learning"
+  LLM: "Large Language Model"
+  RAG: "Retrieval-Augmented Generation"
+  NLP: "Natural Language Processing"
+  
+  # KODA/ORKO
+  KODA: "Knowledge-Oriented Document Architecture"
+  WSLC: "Work System Lifecycle"
+  ADR: "Architecture Decision Record"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 9: ESTADOS Y ENUMERACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Enumeraciones:
+  
+  Estado_Iniciativa:
+    Descripcion: "Estados del ciclo de vida de una iniciativa de inversión"
+    Valores:
+      - codigo: "IDEA"
+        nombre: "Idea"
+        descripcion: "Iniciativa en fase de conceptualización"
+      - codigo: "PERFIL"
+        nombre: "Perfil"
+        descripcion: "En elaboración de perfil técnico"
+      - codigo: "PREFACTIBILIDAD"
+        nombre: "Prefactibilidad"
+        descripcion: "En estudio de prefactibilidad"
+      - codigo: "FACTIBILIDAD"
+        nombre: "Factibilidad"
+        descripcion: "En estudio de factibilidad"
+      - codigo: "DISEÑO"
+        nombre: "Diseño"
+        descripcion: "En elaboración de diseño"
+      - codigo: "CON_RS"
+        nombre: "Con RS"
+        descripcion: "Con recomendación favorable MDSF"
+      - codigo: "PRIORIZADA"
+        nombre: "Priorizada"
+        descripcion: "Priorizada en cartera regional"
+      - codigo: "APROBADA_CORE"
+        nombre: "Aprobada CORE"
+        descripcion: "Aprobada por Consejo Regional"
+      - codigo: "EN_EJECUCION"
+        nombre: "En Ejecución"
+        descripcion: "Con convenio vigente en ejecución"
+      - codigo: "FINALIZADA"
+        nombre: "Finalizada"
+        descripcion: "Ejecución completada"
+      - codigo: "SUSPENDIDA"
+        nombre: "Suspendida"
+        descripcion: "Temporalmente detenida"
+      - codigo: "CANCELADA"
+        nombre: "Cancelada"
+        descripcion: "Definitivamente cancelada"
+  
+  Estado_Convenio:
+    Descripcion: "Estados del ciclo de vida de un convenio"
+    Valores:
+      - codigo: "BORRADOR"
+        nombre: "Borrador"
+        descripcion: "En elaboración"
+      - codigo: "EN_REVISION"
+        nombre: "En Revisión"
+        descripcion: "En revisión jurídica"
+      - codigo: "PARA_FIRMA"
+        nombre: "Para Firma"
+        descripcion: "Listo para firma"
+      - codigo: "VIGENTE"
+        nombre: "Vigente"
+        descripcion: "Suscrito y vigente"
+      - codigo: "EN_MODIFICACION"
+        nombre: "En Modificación"
+        descripcion: "Con addendum en proceso"
+      - codigo: "EN_LIQUIDACION"
+        nombre: "En Liquidación"
+        descripcion: "Terminado, pendiente liquidación"
+      - codigo: "LIQUIDADO"
+        nombre: "Liquidado"
+        descripcion: "Completamente liquidado"
+      - codigo: "CADUCADO"
+        nombre: "Caducado"
+        descripcion: "Venció sin ejecutarse completamente"
+  
+  Estado_Rendicion:
+    Descripcion: "Estados de una rendición de cuentas"
+    Valores:
+      - codigo: "PENDIENTE"
+        nombre: "Pendiente"
+        descripcion: "No recibida aún"
+      - codigo: "RECIBIDA"
+        nombre: "Recibida"
+        descripcion: "Recibida, pendiente revisión"
+      - codigo: "EN_REVISION"
+        nombre: "En Revisión"
+        descripcion: "En proceso de revisión"
+      - codigo: "OBSERVADA"
+        nombre: "Observada"
+        descripcion: "Con observaciones a subsanar"
+      - codigo: "APROBADA"
+        nombre: "Aprobada"
+        descripcion: "Aprobada conforme"
+      - codigo: "RECHAZADA"
+        nombre: "Rechazada"
+        descripcion: "Rechazada definitivamente"
+  
+  Semaforo_Proyecto:
+    Descripcion: "Estado semafórico de un proyecto en PMO"
+    Valores:
+      - codigo: "VERDE"
+        nombre: "Verde"
+        descripcion: "En tiempo, sin alertas"
+      - codigo: "AMARILLO"
+        nombre: "Amarillo"
+        descripcion: "Con riesgo de atraso"
+      - codigo: "ROJO"
+        nombre: "Rojo"
+        descripcion: "Atrasado o con problemas críticos"
+      - codigo: "GRIS"
+        nombre: "Gris"
+        descripcion: "Sin información actualizada"
+  
+  Nivel_Madurez_CPAT:
+    Descripcion: "Niveles de madurez digital de trámites"
+    Valores:
+      - codigo: "0"
+        nombre: "Nivel 0 - Sin presencia"
+        descripcion: "Sin información digital"
+      - codigo: "1"
+        nombre: "Nivel 1 - Información"
+        descripcion: "Información disponible en web"
+      - codigo: "2"
+        nombre: "Nivel 2 - Interacción"
+        descripcion: "Formularios descargables"
+      - codigo: "3"
+        nombre: "Nivel 3 - Transacción"
+        descripcion: "Trámite completo en línea"
+      - codigo: "4"
+        nombre: "Nivel 4 - Transformación"
+        descripcion: "Automatizado y proactivo"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 10: CONVENCIONES DE NOMENCLATURA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Convenciones:
+  
+  Identificadores:
+    Artefactos_KODA:
+      Patron: "kb_goreos_{numero}_{nombre}_koda.yml"
+      Ejemplo: "kb_goreos_001_arquitectura_general_koda.yml"
+    
+    Dominios:
+      Patron: "D-{CODIGO}"
+      Ejemplo: "D-FIN, D-EJEC, D-PLAN"
+    
+    Modulos:
+      Patron: "{DOMINIO}-{NNN}"
+      Ejemplo: "FIN-001, EJEC-002"
+    
+    Entidades:
+      Patron: "PascalCase singular"
+      Ejemplo: "Iniciativa, Convenio, Rendicion"
+    
+    Atributos:
+      Patron: "snake_case"
+      Ejemplo: "fecha_inicio, monto_total, estado_actual"
+    
+    APIs:
+      Patron: "/api/v{N}/{dominio}/{recurso}"
+      Ejemplo: "/api/v1/financiamiento/iniciativas"
+    
+    Eventos:
+      Patron: "{dominio}.{entidad}.{accion}"
+      Ejemplo: "financiamiento.iniciativa.aprobada"
+  
+  Versionamiento:
+    Patron: "SemVer (MAJOR.MINOR.PATCH)"
+    Reglas:
+      - "MAJOR: Cambios incompatibles"
+      - "MINOR: Funcionalidad nueva compatible"
+      - "PATCH: Correcciones compatibles"
+  
+  Fechas:
+    Formato_ISO: "YYYY-MM-DD"
+    Formato_DateTime: "YYYY-MM-DDTHH:mm:ssZ"
+    Zona_Horaria: "America/Santiago"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REFERENCIAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Referencias:
+  Internas:
+    - id: "GOS-000"
+      titulo: "GORE_OS Visión Estratégica"
+    - id: "GOS-001"
+      titulo: "GORE_OS Arquitectura General"
+    - id: "GOS-204"
+      titulo: "Catálogo de Enumeraciones"
+  
+  Externas:
+    - id: "LOC_GORE"
+      titulo: "Ley Orgánica Constitucional de Gobiernos Regionales"
+      ley: "Ley 19.175"
+    - id: "LEY_21180"
+      titulo: "Ley de Transformación Digital del Estado"
+    - id: "DS_10"
+      titulo: "Norma Técnica de Documentos Electrónicos"
+    - id: "ORKO"
+      titulo: "Framework ORKO - Toolkit"
+      urn: "urn:knowledge:orko:core:004"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN DEL DOCUMENTO
+# ═══════════════════════════════════════════════════════════════════════════════

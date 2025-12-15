@@ -1,0 +1,666 @@
+# yaml-language-server: $schema=../schemas/koda-schema.json
+# KODA: Knowledge-Oriented Document Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
+# GOS-000: GORE_OS - Visión Estratégica
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:000:vision_estrategica"
+  Version: "1.0.0"
+  Status: Draft
+  Classification: Strategic
+  Stability: Evolving
+
+Metadata:
+  Title: "GORE_OS - Visión Estratégica del Sistema Operativo del Gobierno Regional"
+  Description: >
+    Documento fundacional que establece la visión, propósito, alcance y principios 
+    rectores del GORE_OS como gemelo digital del Gobierno Regional de Ñuble.
+  Domain: GORE_OS
+  Subdomain: Fundamentos
+  Author: "Equipo Transformación Digital GORE Ñuble"
+  Created: "2024-12-14"
+  Updated: "2024-12-14"
+  Ctx: >
+    GORE_OS es la plataforma integral que digitaliza, automatiza e inteligencializa
+    las operaciones del GORE Ñuble, habilitando la transición hacia el GORE 4.0.
+  LLM_Parsing_Instructions: >
+    Este documento establece el marco estratégico del GORE_OS. Úsalo para entender
+    el propósito, alcance y principios que guían todo el sistema. Referencia este
+    documento cuando necesites justificar decisiones arquitectónicas o de diseño.
+  Tags:
+    - goreos
+    - vision
+    - estrategia
+    - gore_4.0
+    - gemelo_digital
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 1: VISIÓN Y PROPÓSITO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision:
+  Statement: >
+    GORE_OS es el sistema nervioso digital del Gobierno Regional de Ñuble:
+    una plataforma inteligente que potencia las cinco funciones motoras del GORE
+    —Planificar, Financiar, Ejecutar, Coordinar, Normar— hacia el desarrollo
+    exponencial de la región, mediante digitalización profunda, automatización
+    inteligente y agentes de IA que amplifican las capacidades institucionales.
+
+  Proposito:
+    Primario: >
+      Ser el gemelo digital del GORE que permite operar, monitorear, optimizar
+      y evolucionar la gestión institucional de forma continua y basada en datos.
+
+    Secundarios:
+      - Cumplir integralmente la normativa TDE (Ley 21.180)
+      - Reducir fricción operativa y tiempos de respuesta
+      - Habilitar decisiones informadas basadas en datos
+      - Coordinar efectivamente el ecosistema regional
+      - Acelerar el impacto del desarrollo en el territorio
+
+  Horizonte_Temporal:
+    Corto_Plazo_2025: "Cumplimiento TDE + Core IPR digitalizado"
+    Mediano_Plazo_2027: "Automatización operacional + Gestión institucional integrada"
+    Largo_Plazo_2029: "GORE 4.0 - Gobernanza inteligente como servicio"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 2: CONTEXTO INSTITUCIONAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Contexto:
+  GORE_Identidad:
+    Descripcion: >
+      El Gobierno Regional de Ñuble es un órgano descentralizado territorialmente
+      que administra el desarrollo de la región, con personalidad jurídica de
+      derecho público y patrimonio propio.
+
+    Pilares:
+      - Pilar_1: "Órgano de administración del desarrollo regional"
+      - Pilar_2: "Personalidad jurídica de derecho público"
+      - Pilar_3: "Patrimonio propio"
+      - Pilar_4: "Funciones de gobierno y administración"
+      - Pilar_5: "Sujeción a principios de probidad y transparencia"
+
+  Funciones_Motoras:
+    Descripcion: >
+      Las cinco funciones que constituyen el motor operacional del GORE,
+      cada una con roles, límites y productos específicos.
+
+    Funciones:
+      Planificar:
+        Descripcion: "Definir la hoja de ruta del desarrollo regional"
+        Productos:
+          - "Estrategia Regional de Desarrollo (ERD)"
+          - "Plan Regional de Ordenamiento Territorial (PROT)"
+          - "Políticas públicas regionales"
+          - "Convenios de Programación"
+        Limites:
+          - "ERD debe ser coherente con política nacional"
+          - "PROT es indicativo, no vinculante para privados"
+
+      Financiar:
+        Descripcion: "Canalizar recursos de inversión pública regional"
+        Productos:
+          - "Priorización de cartera de inversión"
+          - "Distribución presupuesto regional"
+          - "Aprobación proyectos CORE"
+        Limites:
+          - "RS de proyectos desde MDSF"
+          - "Aprobación CORE requerida para inversión"
+          - "Ejecución presupuestaria controlada por CGR"
+
+      Ejecutar:
+        Descripcion: "Materializar inversiones y programas aprobados"
+        Productos:
+          - "Convenios de transferencia suscritos"
+          - "Supervisión de ejecución"
+          - "Rendiciones aprobadas"
+        Limites:
+          - "Ejecución mediante terceros (convenios)"
+          - "Control ex-post por CGR"
+          - "Unidades ejecutoras determinan modalidad"
+
+      Coordinar:
+        Descripcion: "Articular actores del ecosistema regional"
+        Productos:
+          - "Acuerdos interinstitucionales"
+          - "Gabinete regional operativo"
+          - "Mesas de trabajo sectoriales"
+        Limites:
+          - "Servicios públicos dependientes de Ministerios"
+          - "Municipios autónomos (coordinación voluntaria)"
+
+      Normar:
+        Descripcion: "Ejercer potestad normativa regional"
+        Productos:
+          - "Reglamentos regionales"
+          - "Resoluciones del Gobernador"
+          - "Ordenanzas regionales"
+        Limites:
+          - "Supeditado a Constitución y leyes"
+          - "Toma de razón CGR para actos administrativos"
+          - "Control jurisdiccional de legalidad"
+
+  Drivers_Transformacion:
+    Normativos:
+      - codigo: "LEY_21180"
+        nombre: "Ley de Transformación Digital del Estado"
+        impacto: "Obligatoriedad de digitalización de procedimientos"
+
+      - codigo: "DS_7"
+        nombre: "Norma Técnica de Seguridad y Ciberseguridad"
+        impacto: "Requisitos de seguridad para plataformas"
+
+      - codigo: "DS_10"
+        nombre: "Norma Técnica de Documentos y Expedientes Electrónicos"
+        impacto: "Estándares de gestión documental"
+
+      - codigo: "DS_12"
+        nombre: "Norma Técnica de Interoperabilidad"
+        impacto: "Integración con plataformas del Estado"
+
+      - codigo: "LEY_21719"
+        nombre: "Ley de Protección de Datos Personales"
+        impacto: "Gobernanza de datos personales"
+
+    Estrategicos:
+      - "Necesidad de información para decisiones"
+      - "Demanda ciudadana de servicios digitales"
+      - "Complejidad creciente de la gestión"
+      - "Oportunidad de inteligencia artificial"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 3: PRINCIPIOS RECTORES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Principios:
+  Descripcion: >
+    Principios que guían todas las decisiones de diseño, desarrollo y operación
+    del GORE_OS. Derivados de ORKO Layer 0 y adaptados al contexto institucional.
+
+  Principios_Arquitectonicos:
+    P01_Dominio_Primero:
+      Enunciado: "El dominio de negocio define la arquitectura, no al revés"
+      Implicacion: "Modelar primero los procesos GORE, luego el software"
+
+    P02_Datos_Como_Activo:
+      Enunciado: "Los datos son un activo estratégico, no un subproducto"
+      Implicacion: "Diseñar para calidad, gobernanza y explotación de datos"
+
+    P03_API_First:
+      Enunciado: "Toda capacidad se expone como servicio"
+      Implicacion: "Diseñar APIs antes de interfaces, habilitar integración"
+
+    P04_Autonomia_Acotada:
+      Enunciado: "Módulos autónomos dentro de contratos claros"
+      Implicacion: "Desacoplamiento con interfaces bien definidas"
+
+    P05_Evolucion_Continua:
+      Enunciado: "El sistema está diseñado para evolucionar"
+      Implicacion: "Arquitectura modular, versionamiento, extensibilidad"
+
+  Principios_Operacionales:
+    P06_TDE_Compliant:
+      Enunciado: "Cumplimiento normativo TDE como línea base"
+      Implicacion: "Toda funcionalidad debe satisfacer normas técnicas"
+
+    P07_Usuario_Centro:
+      Enunciado: "Diseño centrado en usuarios internos y externos"
+      Implicacion: "UX research, feedback continuo, mejora iterativa"
+
+    P08_Trazabilidad_Total:
+      Enunciado: "Toda acción queda registrada y es auditable"
+      Implicacion: "Audit logs, expediente electrónico, no repudio"
+
+    P09_Resiliencia:
+      Enunciado: "El sistema se recupera de fallos de forma autónoma"
+      Implicacion: "Redundancia, backups, playbooks de recuperación"
+
+    P10_Seguridad_Diseño:
+      Enunciado: "La seguridad se incorpora desde el diseño"
+      Implicacion: "Security by design, privacy by default"
+
+  Principios_Evolucion:
+    P11_Automatizacion_Progresiva:
+      Enunciado: "Automatizar gradualmente, comenzando por lo de alto valor"
+      Implicacion: "Priorizar automatizaciones por impacto/esfuerzo"
+
+    P12_AI_Responsable:
+      Enunciado: "IA con supervisión humana proporcional al riesgo"
+      Implicacion: "HAIC (Human-AI Collaboration), gobernanza AI"
+
+    P13_Aprendizaje_Continuo:
+      Enunciado: "El sistema aprende y mejora con el uso"
+      Implicacion: "Feedback loops, métricas, retrospectivas"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 4: ALCANCE DEL SISTEMA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Alcance:
+  Dominios:
+    Descripcion: "GORE_OS se estructura en 10 dominios complementarios"
+
+    Dominios_Funcionales:
+      D_PLAN:
+        Nombre: "Planificación"
+        Funcion_GORE: "Planificar"
+        Proposito: "Gestión de ERD, PROT, políticas, prospectiva"
+
+      D_FIN:
+        Nombre: "Financiamiento"
+        Funcion_GORE: "Financiar"
+        Proposito: "Cartera IPR, instrumentos, presupuesto, priorización"
+
+      D_EJEC:
+        Nombre: "Ejecución"
+        Funcion_GORE: "Ejecutar"
+        Proposito: "Convenios, seguimiento, rendiciones, PMO"
+
+      D_COORD:
+        Nombre: "Coordinación"
+        Funcion_GORE: "Coordinar"
+        Proposito: "Actores, compromisos, CPAT regional, gabinete"
+
+      D_NORM:
+        Nombre: "Normativo"
+        Funcion_GORE: "Normar"
+        Proposito: "Reglamentos, resoluciones, biblioteca normativa"
+
+    Dominios_Habilitantes:
+      D_BACK:
+        Nombre: "Back-Office"
+        Proposito: "Finanzas, RRHH, abastecimiento, gestión documental"
+
+      D_TDE:
+        Nombre: "Transformación Digital"
+        Proposito: "Cumplimiento TDE, expediente, autenticación, interop"
+
+      D_TERR:
+        Nombre: "Territorio"
+        Proposito: "Datos geoespaciales, indicadores comunales, capas"
+
+    Dominios_Transversales:
+      D_GESTION:
+        Nombre: "Gestión Institucional"
+        Proposito: "OKRs, H_gore, playbooks, mejora continua, aceleración"
+
+      D_EVOL:
+        Nombre: "Evolución"
+        Proposito: "Digitalización, automatización, inteligenciación, AI"
+
+  Dentro_Alcance:
+    - "Procesos core de inversión pública regional (IPR)"
+    - "Gestión de convenios y rendiciones"
+    - "Seguimiento de ejecución presupuestaria"
+    - "Coordinación con actores regionales"
+    - "Cumplimiento normativo TDE"
+    - "Gestión documental y expediente electrónico"
+    - "Monitoreo de salud institucional (H_gore)"
+    - "Automatización de procesos operativos"
+    - "Agentes AI de asistencia y operación"
+    - "Integraciones con sistemas del Estado"
+
+  Fuera_Alcance:
+    - "Sistemas internos de unidades ejecutoras"
+    - "Plataformas de gestión municipal (competencia municipal)"
+    - "Sistemas sectoriales ministeriales"
+    - "Infraestructura de redes y telecomunicaciones"
+    - "Hardware de usuario final"
+
+  Usuarios:
+    Internos:
+      - rol: "Gobernador Regional"
+        uso: "Dashboard ejecutivo, decisiones estratégicas"
+
+      - rol: "Jefes de División"
+        uso: "Gestión de dominios, aprobaciones, monitoreo"
+
+      - rol: "Analistas y profesionales"
+        uso: "Operación diaria, carga de datos, seguimiento"
+
+      - rol: "Secretaría CORE"
+        uso: "Preparación de sesiones, acuerdos, seguimiento"
+
+    Externos:
+      - rol: "Municipios"
+        uso: "Postulación, seguimiento proyectos, rendiciones"
+
+      - rol: "Servicios públicos"
+        uso: "Coordinación, reporte de avances"
+
+      - rol: "Beneficiarios y ciudadanos"
+        uso: "Consulta estado, postulaciones programas"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 5: MODELO DE VALOR
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Modelo_Valor:
+  Value_Streams:
+    VS1_Inversion_Regional:
+      Descripcion: "Desde idea de proyecto hasta impacto en territorio"
+      Indicador_Clave: "Tiempo idea→ejecución, % ejecución presupuestaria"
+
+    VS2_Coordinacion_Territorial:
+      Descripcion: "Articulación efectiva con actores regionales"
+      Indicador_Clave: "% compromisos cumplidos, satisfacción actores"
+
+    VS3_Cumplimiento_Institucional:
+      Descripcion: "Satisfacción de obligaciones legales y de gestión"
+      Indicador_Clave: "% cumplimiento TDE, PMG, CGR"
+
+    VS4_Evolucion_Capacidades:
+      Descripcion: "Mejora continua de la gestión institucional"
+      Indicador_Clave: "H_gore, automatizaciones activas, satisfacción usuarios"
+
+  Beneficios_Esperados:
+    Eficiencia:
+      - beneficio: "Reducción 50% tiempo ciclo convenios"
+        horizonte: "Año 2"
+      - beneficio: "Reducción 70% tareas manuales repetitivas"
+        horizonte: "Año 3"
+      - beneficio: "Eliminación papel en procesos core"
+        horizonte: "Año 1"
+
+    Efectividad:
+      - beneficio: "100% trazabilidad de inversiones"
+        horizonte: "Año 1"
+      - beneficio: "Decisiones basadas en datos actualizados"
+        horizonte: "Año 2"
+      - beneficio: "Alerta temprana de riesgos"
+        horizonte: "Año 2"
+
+    Cumplimiento:
+      - beneficio: "100% cumplimiento TDE"
+        horizonte: "Año 1"
+      - beneficio: "Auditorías sin observaciones críticas"
+        horizonte: "Año 2"
+
+    Innovacion:
+      - beneficio: "GORE referente en gestión digital regional"
+        horizonte: "Año 3"
+      - beneficio: "Modelo replicable para otros GOREs"
+        horizonte: "Año 4"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 6: RELACIÓN CON MARCOS DE REFERENCIA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Marcos_Referencia:
+  ORKO:
+    Descripcion: >
+      ORKO es el meta-framework de gestión organizacional que provee los
+      fundamentos teóricos, arquitectura y metodología para GORE_OS.
+
+    Aplicacion:
+      Layer_0_Fundamentos:
+        - "Axiomas de transformación organizacional"
+        - "Primitivas: Capacidad, Flujo, Información, Restricción, Propósito"
+
+      Layer_1_Arquitectura:
+        - "Contratos canónicos C1-C5"
+        - "Principios de diseño PD1-PD76"
+
+      Layer_2_Tejidos:
+        - "Tejido de Capacidad → Estructura GORE"
+        - "Tejido de Flujo → Procesos GORE"
+        - "Tejido de Información → Datos GORE"
+
+      Layer_3_Metodologia:
+        - "WSLC (Work System Lifecycle) adaptado"
+        - "Playbooks P01-P15 contextualizados"
+        - "Health Gates G1-G4 para H_gore"
+
+      Layer_4_Toolkit:
+        - "Calculadoras de salud"
+        - "Templates de documentación"
+        - "Checklists operacionales"
+
+  TDE:
+    Descripcion: >
+      Marco normativo de Transformación Digital del Estado que establece
+      los requisitos legales de cumplimiento obligatorio.
+
+    Componentes:
+      - "Ley 21.180 - Marco general"
+      - "DS 7 - Seguridad y ciberseguridad"
+      - "DS 10 - Documentos y expedientes"
+      - "DS 11 - Autenticación (ClaveÚnica)"
+      - "DS 12 - Interoperabilidad (PISEE)"
+      - "Plataformas compartidas"
+
+  GORE_Ideal:
+    Descripcion: >
+      Visión del GORE 4.0 que establece el estado objetivo de madurez
+      institucional hacia el cual GORE_OS contribuye.
+
+    Caracteristicas:
+      - "Planificación basada en datos y prospectiva"
+      - "Financiamiento estratégico con impacto medible"
+      - "Ejecución orquestada y supervisada en tiempo real"
+      - "Coordinación como plataforma de servicios"
+      - "Normativa basada en evidencia"
+      - "Gemelo digital del territorio"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 7: GOBERNANZA DEL PROYECTO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Gobernanza_Proyecto:
+  Estructura:
+    Sponsor: "Gobernador Regional"
+    Comite_Directivo:
+      - "Gobernador Regional (preside)"
+      - "Jefe DIPLADE"
+      - "Jefe DAF"
+      - "Jefe División Control"
+      - "Asesor TDE"
+
+    Equipo_Core:
+      Product_Owner: "Designado por DIPLADE"
+      Tech_Lead: "Coordinador TI GORE"
+      Arquitecto: "Experto externo/interno"
+      Scrum_Masters: "Por dominio"
+
+  Rituales:
+    - ritual: "Comité Directivo"
+      frecuencia: "Mensual"
+      proposito: "Decisiones estratégicas, priorización, bloqueos"
+
+    - ritual: "Review de Dominio"
+      frecuencia: "Quincenal"
+      proposito: "Demo avances, feedback, ajustes"
+
+    - ritual: "Standup Técnico"
+      frecuencia: "Diario"
+      proposito: "Coordinación equipo desarrollo"
+
+    - ritual: "Retrospectiva"
+      frecuencia: "Fin de sprint"
+      proposito: "Mejora continua del proceso"
+
+  Toma_Decisiones:
+    Arquitectonicas: "ADR (Architecture Decision Records)"
+    Producto: "User Stories priorizadas en backlog"
+    Operacionales: "Runbooks y playbooks documentados"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 8: ROADMAP DE ALTO NIVEL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Roadmap:
+  Descripcion: >
+    Fases de implementación del GORE_OS, desde fundamentos hasta GORE 4.0.
+
+  Fases:
+    Fase_0_Fundamentos:
+      Periodo: "Q1 2025"
+      Objetivo: "Base documental y arquitectónica sólida"
+      Entregables:
+        - "Artefactos KODA fundacionales"
+        - "Modelo de datos conceptual"
+        - "ADRs de stack y arquitectura"
+        - "Entorno de desarrollo"
+
+    Fase_1_Core_IPR:
+      Periodo: "Q2-Q3 2025"
+      Objetivo: "Digitalización del ciclo de inversión regional"
+      Entregables:
+        - "Módulo Portafolio IPR"
+        - "Módulo Convenios"
+        - "Módulo Rendiciones"
+        - "Integración BIP/SNI"
+
+    Fase_2_TDE_Compliance:
+      Periodo: "Q3-Q4 2025"
+      Objetivo: "Cumplimiento integral TDE"
+      Entregables:
+        - "Expediente electrónico"
+        - "Integración ClaveÚnica"
+        - "Nodo PISEE operativo"
+        - "Seguridad certificada"
+
+    Fase_3_Gestion:
+      Periodo: "Q1-Q2 2026"
+      Objetivo: "Gestión institucional integrada"
+      Entregables:
+        - "Dashboard H_gore"
+        - "Módulo OKRs/PMG"
+        - "PMO Regional"
+        - "Alertas y playbooks"
+
+    Fase_4_Automatizacion:
+      Periodo: "Q3-Q4 2026"
+      Objetivo: "Automatización operacional"
+      Entregables:
+        - "15+ automatizaciones RPA"
+        - "Validadores inteligentes"
+        - "Orquestación de workflows"
+
+    Fase_5_Inteligenciacion:
+      Periodo: "2027-2028"
+      Objetivo: "Agentes AI operativos"
+      Entregables:
+        - "Agentes conversacionales (5+)"
+        - "Agentes operacionales (5+)"
+        - "RAG institucional"
+        - "Gobernanza AI"
+
+    Fase_6_GORE_4_0:
+      Periodo: "2029"
+      Objetivo: "GORE 4.0 - Gobernanza inteligente"
+      Entregables:
+        - "Gemelo digital territorial"
+        - "Simulación de políticas"
+        - "Gobernanza como servicio"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 9: FACTORES CRÍTICOS DE ÉXITO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Factores_Criticos:
+  FCE_1:
+    Factor: "Sponsorship ejecutivo sostenido"
+    Mitigacion: "Gobernanza formal, comunicación constante de valor"
+
+  FCE_2:
+    Factor: "Adopción por usuarios"
+    Mitigacion: "Diseño centrado en usuario, capacitación, change management"
+
+  FCE_3:
+    Factor: "Calidad de datos"
+    Mitigacion: "Gobernanza de datos, limpieza, validaciones"
+
+  FCE_4:
+    Factor: "Integración con sistemas legados"
+    Mitigacion: "APIs bien diseñadas, migración gradual"
+
+  FCE_5:
+    Factor: "Continuidad ante cambios políticos"
+    Mitigacion: "Documentación robusta, institucionalización"
+
+  FCE_6:
+    Factor: "Capacidad técnica del equipo"
+    Mitigacion: "Formación continua, apoyo externo inicial"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECCIÓN 10: MÉTRICAS DE ÉXITO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Metricas:
+  Indicadores_Clave:
+    - nombre: "H_gore (Salud Institucional)"
+      meta_y1: "≥ 60"
+      meta_y3: "≥ 80"
+      meta_y5: "≥ 90"
+
+    - nombre: "% Procesos digitalizados"
+      meta_y1: "40%"
+      meta_y3: "80%"
+      meta_y5: "100%"
+
+    - nombre: "% Cumplimiento TDE"
+      meta_y1: "100%"
+      meta_y3: "100%"
+      meta_y5: "100%"
+
+    - nombre: "Satisfacción usuarios internos"
+      meta_y1: "3.5/5"
+      meta_y3: "4.0/5"
+      meta_y5: "4.5/5"
+
+    - nombre: "Tiempo ciclo convenio (días)"
+      meta_y1: "90"
+      meta_y3: "45"
+      meta_y5: "30"
+
+    - nombre: "% Ejecución presupuestaria"
+      meta_y1: "85%"
+      meta_y3: "92%"
+      meta_y5: "95%"
+
+    - nombre: "Automatizaciones activas"
+      meta_y1: "5"
+      meta_y3: "25"
+      meta_y5: "50"
+
+    - nombre: "Agentes AI en producción"
+      meta_y1: "1"
+      meta_y3: "8"
+      meta_y5: "15"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REFERENCIAS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Referencias:
+  Internas:
+    - id: "GOS-001"
+      titulo: "GORE_OS Arquitectura General"
+      relacion: "Detalla arquitectura técnica"
+
+    - id: "GOS-010"
+      titulo: "Mapeo Funciones GORE"
+      relacion: "Detalla mapping funciones→dominios"
+
+    - id: "KB-GN-900"
+      titulo: "GORE Ideal / GORE 4.0"
+      relacion: "Visión objetivo institucional"
+
+  Externas:
+    - id: "ORKO"
+      titulo: "Framework ORKO"
+      urn: "urn:knowledge:orko:core:*"
+
+    - id: "TDE"
+      titulo: "Normativa TDE"
+      urn: "urn:knowledge:tde:lineamientos:*"
+
+    - id: "LOC_GORE"
+      titulo: "Ley Orgánica Constitucional de Gobiernos Regionales"
+      ley: "Ley 19.175"
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN DEL DOCUMENTO
+# ═══════════════════════════════════════════════════════════════════════════════

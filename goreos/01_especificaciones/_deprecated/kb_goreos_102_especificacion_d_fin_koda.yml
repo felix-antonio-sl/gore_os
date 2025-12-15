@@ -1,0 +1,543 @@
+# GOS-102: GORE_OS - Especificación Dominio Financiamiento (D-FIN)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Manifest:
+  URN: "urn:knowledge:gorenuble:goreos:102:especificacion:d_fin"
+  Version: "1.0.0"
+  Status: Draft
+
+Metadata:
+  Title: "GORE_OS - Especificación D-FIN (Financiamiento)"
+  Description: "Casos de uso, flujos, reglas de negocio y APIs del dominio Financiamiento"
+  Domain: GORE_OS
+  Subdomain: D-FIN
+  Created: "2024-12-14"
+  Tags: [goreos, especificacion, d_fin, iniciativa, presupuesto, priorizacion]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# VISIÓN DEL DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Vision_Dominio:
+  Proposito: >
+    Gestionar el ciclo completo de financiamiento de la inversión pública regional:
+    desde la identificación de iniciativas hasta su aprobación por el CORE.
+  
+  Objetivos:
+    - "Administrar cartera de iniciativas de inversión"
+    - "Gestionar instrumentos de financiamiento (FNDR, FRIL, etc.)"
+    - "Ejecutar proceso de priorización anual"
+    - "Controlar presupuesto regional"
+    - "Preparar sesiones CORE de aprobación"
+  
+  Actores:
+    - actor: "Jefe DAF"
+      rol: "Administrador presupuesto, aprueba solicitudes"
+    - actor: "Analista IPR"
+      rol: "Gestiona cartera de iniciativas"
+    - actor: "Profesional Presupuesto"
+      rol: "Control presupuestario"
+    - actor: "Secretario CORE"
+      rol: "Prepara sesiones de aprobación"
+    - actor: "Usuario Municipal"
+      rol: "Presenta iniciativas de su comuna"
+  
+  KPIs:
+    - nombre: "Ejecución presupuestaria"
+      formula: "Devengado / Vigente * 100"
+      meta: ">= 90%"
+    - nombre: "Tasa aprobación CORE"
+      formula: "Solicitudes aprobadas / Solicitudes presentadas * 100"
+      meta: ">= 80%"
+    - nombre: "Tiempo promedio evaluación"
+      formula: "Promedio días desde presentación hasta resolución"
+      meta: "<= 30 días"
+    - nombre: "Cartera con RS vigente"
+      formula: "Iniciativas con RS / Total cartera * 100"
+      meta: ">= 70%"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CASOS DE USO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Casos_Uso:
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GESTIÓN DE INICIATIVAS
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_FIN_001:
+    nombre: "Registrar nueva iniciativa"
+    actor_principal: "Analista IPR"
+    descripcion: "Ingresar nueva iniciativa a la cartera regional"
+    precondiciones:
+      - "Usuario autenticado con permisos"
+    flujo_principal:
+      1: "Usuario accede a módulo de iniciativas"
+      2: "Sistema muestra formulario de nueva iniciativa"
+      3: "Usuario ingresa datos básicos (nombre, tipo, sector, costo)"
+      4: "Usuario selecciona beneficiario y territorio"
+      5: "Usuario vincula a objetivo ERD (opcional)"
+      6: "Sistema genera código interno automático"
+      7: "Sistema valida datos y crea iniciativa en estado IDEA"
+    postcondiciones:
+      - "Iniciativa creada con código único"
+      - "Disponible para seguimiento y solicitud"
+    validaciones:
+      - "Beneficiario debe existir y estar activo"
+      - "Territorio debe ser válido (comuna de la región)"
+      - "Costo total > 0"
+
+  CU_FIN_002:
+    nombre: "Actualizar estado de iniciativa"
+    actor_principal: "Analista IPR"
+    descripcion: "Registrar avance en el ciclo de preinversión"
+    flujo_principal:
+      1: "Usuario busca iniciativa"
+      2: "Sistema muestra ficha con estado actual"
+      3: "Usuario selecciona nuevo estado"
+      4: "Sistema valida transición permitida"
+      5: "Usuario adjunta documentos de respaldo"
+      6: "Sistema actualiza estado y registra historial"
+    validaciones:
+      - "Transición de estado debe ser válida según máquina de estados"
+      - "Documentos requeridos según estado destino"
+
+  CU_FIN_003:
+    nombre: "Registrar RS de iniciativa"
+    actor_principal: "Analista IPR"
+    descripcion: "Registrar recomendación favorable del SNI"
+    precondiciones:
+      - "Iniciativa en estado EN_EVALUACION_RS o similar"
+    flujo_principal:
+      1: "Usuario accede a iniciativa"
+      2: "Usuario ingresa datos de RS (número, fecha, monto)"
+      3: "Sistema calcula fecha de vigencia (3 años)"
+      4: "Sistema cambia estado a CON_RS"
+      5: "Sistema habilita para solicitud de financiamiento"
+    postcondiciones:
+      - "Iniciativa con RS vigente"
+      - "Puede ser incluida en priorización"
+
+  CU_FIN_004:
+    nombre: "Consultar cartera de iniciativas"
+    actor_principal: "Analista IPR"
+    descripcion: "Dashboard de cartera con filtros y métricas"
+    flujo_principal:
+      1: "Usuario accede a dashboard de cartera"
+      2: "Sistema muestra resumen por estado, sector, territorio"
+      3: "Usuario aplica filtros"
+      4: "Sistema actualiza visualización"
+      5: "Usuario puede exportar a Excel"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SOLICITUDES DE FINANCIAMIENTO
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_FIN_010:
+    nombre: "Crear solicitud de financiamiento"
+    actor_principal: "Usuario Municipal"
+    descripcion: "Presentar solicitud de financiamiento para una iniciativa"
+    precondiciones:
+      - "Iniciativa existe y tiene RS vigente (si instrumento lo requiere)"
+      - "Proceso de priorización abierto para el instrumento"
+    flujo_principal:
+      1: "Usuario selecciona iniciativa"
+      2: "Sistema verifica elegibilidad"
+      3: "Usuario selecciona instrumento de financiamiento"
+      4: "Sistema valida requisitos del instrumento"
+      5: "Usuario ingresa monto solicitado"
+      6: "Usuario adjunta documentos requeridos"
+      7: "Sistema crea solicitud en estado BORRADOR"
+    alternativas:
+      - "3a: Si iniciativa no tiene RS y instrumento lo requiere, mostrar error"
+      - "6a: Si faltan documentos obligatorios, no permite enviar"
+
+  CU_FIN_011:
+    nombre: "Enviar solicitud"
+    actor_principal: "Usuario Municipal"
+    descripcion: "Enviar solicitud para evaluación"
+    precondiciones:
+      - "Solicitud en estado BORRADOR"
+      - "Todos los documentos obligatorios adjuntos"
+    flujo_principal:
+      1: "Usuario revisa solicitud"
+      2: "Sistema valida completitud"
+      3: "Usuario confirma envío"
+      4: "Sistema cambia estado a PRESENTADA"
+      5: "Sistema notifica a evaluadores"
+      6: "Sistema genera comprobante de recepción"
+
+  CU_FIN_012:
+    nombre: "Evaluar solicitud"
+    actor_principal: "Analista IPR"
+    descripcion: "Evaluar técnicamente una solicitud"
+    precondiciones:
+      - "Solicitud en estado PRESENTADA"
+    flujo_principal:
+      1: "Usuario accede a bandeja de evaluación"
+      2: "Sistema muestra solicitudes pendientes"
+      3: "Usuario selecciona solicitud"
+      4: "Usuario revisa documentación"
+      5: "Usuario completa pauta de evaluación"
+      6: "Sistema calcula puntaje"
+      7: "Usuario determina elegibilidad"
+      8: "Sistema actualiza estado (ELEGIBLE/NO_ELEGIBLE)"
+    alternativas:
+      - "7a: Si no elegible, registrar motivo de rechazo"
+
+  CU_FIN_013:
+    nombre: "Priorizar solicitudes"
+    actor_principal: "Jefe DAF"
+    descripcion: "Ordenar solicitudes elegibles por prioridad"
+    precondiciones:
+      - "Existen solicitudes ELEGIBLES en el proceso"
+    flujo_principal:
+      1: "Sistema muestra ranking automático por puntaje"
+      2: "Usuario puede ajustar prioridades manualmente"
+      3: "Sistema valida no exceder marco presupuestario"
+      4: "Usuario confirma priorización"
+      5: "Sistema marca solicitudes como PRIORIZADA/NO_PRIORIZADA"
+
+  CU_FIN_014:
+    nombre: "Preparar sesión CORE"
+    actor_principal: "Secretario CORE"
+    descripcion: "Preparar tabla de sesión con solicitudes priorizadas"
+    flujo_principal:
+      1: "Usuario selecciona proceso de priorización"
+      2: "Sistema muestra solicitudes PRIORIZADAS"
+      3: "Usuario genera tabla de sesión"
+      4: "Sistema crea documento con fichas resumen"
+      5: "Usuario programa fecha de sesión"
+      6: "Sistema cambia estado solicitudes a EN_SESION_CORE"
+
+  CU_FIN_015:
+    nombre: "Registrar acuerdo CORE"
+    actor_principal: "Secretario CORE"
+    descripcion: "Registrar resultado de votación CORE"
+    precondiciones:
+      - "Solicitudes en estado EN_SESION_CORE"
+      - "Sesión CORE realizada"
+    flujo_principal:
+      1: "Usuario accede a sesión"
+      2: "Usuario registra acuerdo por solicitud (aprobada/rechazada)"
+      3: "Usuario ingresa número de acuerdo CORE"
+      4: "Sistema actualiza estado solicitudes"
+      5: "Sistema notifica a solicitantes"
+      6: "Sistema actualiza presupuesto comprometido"
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GESTIÓN PRESUPUESTARIA
+  # ─────────────────────────────────────────────────────────────────────────────
+
+  CU_FIN_020:
+    nombre: "Cargar presupuesto inicial"
+    actor_principal: "Profesional Presupuesto"
+    descripcion: "Cargar presupuesto aprobado del año"
+    flujo_principal:
+      1: "Usuario carga archivo de presupuesto"
+      2: "Sistema valida formato y estructura"
+      3: "Sistema crea items presupuestarios"
+      4: "Sistema vincula con instrumentos"
+      5: "Usuario confirma carga"
+
+  CU_FIN_021:
+    nombre: "Registrar modificación presupuestaria"
+    actor_principal: "Profesional Presupuesto"
+    descripcion: "Registrar decreto de modificación"
+    flujo_principal:
+      1: "Usuario ingresa datos del decreto"
+      2: "Usuario ingresa movimientos (aumentos/disminuciones)"
+      3: "Sistema valida saldos"
+      4: "Sistema actualiza montos vigentes"
+      5: "Sistema registra historial"
+
+  CU_FIN_022:
+    nombre: "Consultar ejecución presupuestaria"
+    actor_principal: "Profesional Presupuesto"
+    descripcion: "Dashboard de ejecución por instrumento"
+    flujo_principal:
+      1: "Usuario accede a dashboard presupuesto"
+      2: "Sistema muestra inicial vs vigente vs devengado vs pagado"
+      3: "Usuario filtra por instrumento/subtítulo"
+      4: "Sistema genera gráficos de avance"
+      5: "Usuario puede exportar reportes"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FLUJOS DE PROCESO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Flujos_Proceso:
+
+  FLOW_FIN_001:
+    nombre: "Ciclo de vida Iniciativa"
+    diagrama: |
+      ┌──────┐    ┌────────┐    ┌─────────────┐    ┌───────────┐
+      │ IDEA │───►│ PERFIL │───►│PREFACTIBIL. │───►│FACTIBILID.│
+      └──────┘    └────────┘    └─────────────┘    └───────────┘
+                                                         │
+                        ┌────────────────────────────────┘
+                        ▼
+                  ┌──────────┐    ┌─────────┐    ┌──────────┐
+                  │  DISEÑO  │───►│ SIN_RS  │───►│EVAL_RS   │
+                  └──────────┘    └─────────┘    └──────────┘
+                                                      │
+                        ┌─────────────────────────────┤
+                        ▼                             ▼
+                  ┌──────────┐                 ┌───────────┐
+                  │ CON_RS   │                 │RS_VENCIDA │
+                  └──────────┘                 └───────────┘
+                        │
+                        ▼
+      ┌──────────────────────────────────────────────────────────┐
+      │              CICLO DE FINANCIAMIENTO                     │
+      │  PRIORIZADA → EN_SESION → APROBADA → EN_EJECUCION       │
+      └──────────────────────────────────────────────────────────┘
+
+  FLOW_FIN_002:
+    nombre: "Proceso de Priorización Anual"
+    diagrama: |
+      ┌─────────────┐
+      │  APERTURA   │ Definir marco, fechas, criterios
+      └──────┬──────┘
+             ▼
+      ┌─────────────┐
+      │  RECEPCIÓN  │ Municipios presentan solicitudes
+      └──────┬──────┘
+             ▼
+      ┌─────────────┐
+      │ EVALUACIÓN  │ Revisión técnica, puntaje
+      └──────┬──────┘
+             ▼
+      ┌─────────────┐
+      │PRIORIZACIÓN │ Ranking, ajustes, corte presupuestario
+      └──────┬──────┘
+             ▼
+      ┌─────────────┐
+      │ SESIÓN CORE │ Votación y aprobación
+      └──────┬──────┘
+             ▼
+      ┌─────────────┐
+      │   CIERRE    │ Notificación, convenios
+      └─────────────┘
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REGLAS DE NEGOCIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Reglas_Negocio:
+
+  # Iniciativas
+  RN-INI-01:
+    descripcion: "Código BIP obligatorio para estados >= EN_EVALUACION_RS"
+    validacion: "IF estado IN (...) THEN codigo_bip IS NOT NULL"
+    severidad: "ERROR"
+
+  RN-INI-02:
+    descripcion: "RS vence a los 3 años"
+    validacion: "vigencia_rs = fecha_rs + 3 años"
+    accion: "Job diario verifica y marca RS_VENCIDA"
+
+  RN-INI-03:
+    descripcion: "Monto convenios no puede exceder costo total"
+    validacion: "SUM(convenios.monto) <= iniciativa.costo_total"
+    severidad: "ERROR"
+
+  # Solicitudes
+  RN-SOL-01:
+    descripcion: "Una solicitud por iniciativa/instrumento/año"
+    validacion: "UNIQUE(iniciativa_id, instrumento_id, anio)"
+    severidad: "ERROR"
+
+  RN-SOL-02:
+    descripcion: "Monto aprobado no puede exceder solicitado"
+    validacion: "monto_aprobado <= monto_solicitado"
+    severidad: "ERROR"
+
+  RN-SOL-03:
+    descripcion: "Iniciativa debe tener RS vigente si instrumento lo requiere"
+    validacion: "IF instrumento.requiere_rs THEN iniciativa.fecha_rs IS NOT NULL AND iniciativa.vigencia_rs >= TODAY"
+    severidad: "ERROR"
+
+  RN-SOL-04:
+    descripcion: "Solo solicitudes ELEGIBLES pueden priorizarse"
+    validacion: "Para PRIORIZADA, estado_anterior debe ser ELEGIBLE"
+    severidad: "ERROR"
+
+  # Presupuesto
+  RN-PRE-01:
+    descripcion: "Devengado no puede exceder vigente"
+    validacion: "item.monto_devengado <= item.monto_vigente"
+    severidad: "ERROR"
+
+  RN-PRE-02:
+    descripcion: "Pagado no puede exceder devengado"
+    validacion: "item.monto_pagado <= item.monto_devengado"
+    severidad: "ERROR"
+
+  RN-PRE-03:
+    descripcion: "Total aprobado en priorización no puede exceder marco"
+    validacion: "SUM(solicitudes_aprobadas.monto) <= priorizacion.marco_presupuestario"
+    severidad: "WARNING"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ESPECIFICACIÓN API
+# ═══════════════════════════════════════════════════════════════════════════════
+
+API_Endpoints:
+
+  Iniciativas:
+    base_path: "/api/v1/fin/iniciativas"
+    endpoints:
+      - method: GET
+        path: "/"
+        descripcion: "Listar iniciativas con filtros"
+        query_params: [estado, sector, territorio_id, beneficiario_id, con_rs, page, size]
+        response: "PaginatedList<Iniciativa>"
+      - method: GET
+        path: "/{id}"
+        response: "Iniciativa completa con historial"
+      - method: GET
+        path: "/dashboard"
+        descripcion: "Métricas de cartera"
+        response: "DashboardCartera"
+      - method: POST
+        path: "/"
+        body: "CreateIniciativaRequest"
+        permisos: ["fin:iniciativa:create"]
+      - method: PUT
+        path: "/{id}"
+        permisos: ["fin:iniciativa:update"]
+      - method: POST
+        path: "/{id}/cambiar-estado"
+        body: "CambiarEstadoRequest"
+        permisos: ["fin:iniciativa:update"]
+      - method: POST
+        path: "/{id}/registrar-rs"
+        body: "RegistrarRSRequest"
+        permisos: ["fin:iniciativa:update"]
+
+  Solicitudes:
+    base_path: "/api/v1/fin/solicitudes"
+    endpoints:
+      - method: GET
+        path: "/"
+        query_params: [estado, instrumento_id, anio, priorizacion_id]
+        response: "PaginatedList<Solicitud>"
+      - method: GET
+        path: "/{id}"
+        response: "Solicitud con documentos"
+      - method: POST
+        path: "/"
+        body: "CreateSolicitudRequest"
+        permisos: ["fin:solicitud:create"]
+      - method: POST
+        path: "/{id}/enviar"
+        permisos: ["fin:solicitud:submit"]
+      - method: POST
+        path: "/{id}/evaluar"
+        body: "EvaluarSolicitudRequest"
+        permisos: ["fin:solicitud:evaluate"]
+      - method: POST
+        path: "/priorizar"
+        body: "PriorizarRequest"
+        permisos: ["fin:solicitud:prioritize"]
+      - method: POST
+        path: "/registrar-acuerdo-core"
+        body: "AcuerdoCORERequest"
+        permisos: ["fin:solicitud:approve"]
+
+  Presupuesto:
+    base_path: "/api/v1/fin/presupuesto"
+    endpoints:
+      - method: GET
+        path: "/vigente"
+        query_params: [anio]
+        response: "Presupuesto con items"
+      - method: GET
+        path: "/ejecucion"
+        query_params: [anio, instrumento_id]
+        response: "ReporteEjecucion"
+      - method: POST
+        path: "/cargar"
+        body: "CargarPresupuestoRequest"
+        permisos: ["fin:presupuesto:admin"]
+      - method: POST
+        path: "/modificacion"
+        body: "ModificacionPresupuestariaRequest"
+        permisos: ["fin:presupuesto:admin"]
+
+  Instrumentos:
+    base_path: "/api/v1/fin/instrumentos"
+    endpoints:
+      - method: GET
+        path: "/"
+        response: "List<Instrumento>"
+      - method: GET
+        path: "/{codigo}"
+        response: "Instrumento con requisitos"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# EVENTOS DE DOMINIO
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Eventos_Dominio:
+  - evento: "IniciativaCreada"
+    payload: [iniciativa_id, codigo, beneficiario_id, territorio_id]
+    consumidores: [Auditoria, D-COORD]
+
+  - evento: "RSRegistrada"
+    payload: [iniciativa_id, numero_rs, monto_rs, vigencia_rs]
+    consumidores: [Auditoria, Notificaciones]
+
+  - evento: "SolicitudPresentada"
+    payload: [solicitud_id, iniciativa_id, instrumento_id, monto]
+    consumidores: [Auditoria, Notificaciones, D-GESTION]
+
+  - evento: "SolicitudAprobadaCORE"
+    payload: [solicitud_id, acuerdo_core, monto_aprobado]
+    consumidores: [D-EJEC, Notificaciones, Presupuesto]
+
+  - evento: "RSPorVencer"
+    payload: [iniciativa_id, dias_restantes]
+    consumidores: [Notificaciones, AlertasGestion]
+
+  - evento: "PresupuestoActualizado"
+    payload: [presupuesto_id, tipo_movimiento]
+    consumidores: [D-GESTION, Dashboard]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INTEGRACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+
+Integraciones:
+  Internas:
+    - dominio: D-PLAN
+      tipo: "Síncrona"
+      descripcion: "Obtener ERD vigente para alineación"
+      endpoint: "GET /api/v1/plan/erd/vigente"
+
+    - dominio: D-EJEC
+      tipo: "Evento"
+      descripcion: "Notificar aprobación para crear convenio"
+      evento: "SolicitudAprobadaCORE"
+
+    - dominio: D-GESTION
+      tipo: "Evento"
+      descripcion: "Alimentar indicadores de gestión"
+      eventos: [SolicitudPresentada, SolicitudAprobadaCORE]
+
+  Externas:
+    - sistema: "BIP (Banco Integrado de Proyectos)"
+      descripcion: "Consultar ficha IDI, validar código BIP"
+      tipo: "API REST"
+      operaciones: ["Consultar proyecto", "Validar RS"]
+
+    - sistema: "SIGFE"
+      descripcion: "Sincronizar ejecución presupuestaria"
+      tipo: "Batch/Archivo"
+      frecuencia: "Diaria"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FIN ESPECIFICACIÓN D-FIN
+# ═══════════════════════════════════════════════════════════════════════════════
