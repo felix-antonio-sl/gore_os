@@ -1,12 +1,17 @@
-# GORE OS
+# gore_os
 
-Sistema Operativo Cognitivo Regional para un **GORE 4.0**.
+Espacio de trabajo destinado a **desarrollar el sistema operativo del GORE**.
 
-Este repositorio contiene la visión, arquitectura y artefactos de diseño para un sistema de **gestión y gobernanza regional de nueva generación**, pensado como:
+Este proyecto busca centralizar y orquestar las operaciones del Gobierno Regional, integrando funcionalidades de gestión, administración y visualización de datos.
 
-- **Sistema de Inteligencia** (no solo de registro)
-- **Gemelo Digital del territorio** como núcleo de datos
-- **Motor cognitivo** que predice, simula y orquesta
-- **Cockpit de gobernanza** para Gobernador, DIPIR, DAF, CORE y ciudadanía
+**Nota Arquitectónica**: `gore_os` se monta y construye sobre la base de conocimientos y ontología definida en **`data-gore`**.
 
-La implementación se hace desde cero, totalmente desacoplada de `/para_titi`.
+## Propósito
+
+El objetivo es construir una plataforma integral que sirva como el "Sistema Operativo" para la gestión regional, subsumiendo funcionalidades previas y proporcionando nuevas capacidades para la toma de decisiones.
+
+## Componentes
+
+- **Núcleo del Sistema**: Gestión de procesos y entidades fundamentales.
+- **Interfaz Administrativa**: Herramientas para la administración regional.
+- **Visualización de Datos**: Dashboards y reportes para DIPIR y otras áreas.
