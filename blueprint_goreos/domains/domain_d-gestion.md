@@ -60,12 +60,19 @@ H_gore = Σ (peso_i × indicador_normalizado_i)
 Escala: 0-100 | Meta: ≥80 (zona verde)
 ```
 
+**Umbrales de Activación FÉNIX:**
+
+| Umbral | Acción |
+|--------|--------|
+| H_gore < 60 sostenido 2 semanas | Notificación automática a Jefatura, candidato intervención Nivel IV |
+| H_gore < 50 | Activación obligatoria FÉNIX Nivel IV (Mejora Institucional) |
+
 **Funcionalidades:**
 
 - Dashboard H_gore en tiempo real
 - Drill-down por dimensión
 - Tendencia histórica
-- Alertas de degradación
+- Alertas de degradación (con escalamiento a FÉNIX)
 - Benchmark con otros GOREs
 
 ### 3. Playbooks Operativos
@@ -107,7 +114,8 @@ PLAN → DO → CHECK → ACT → (repetir)
 - Priorización y asignación de iniciativas
 - Seguimiento de implementación
 - Medición de impacto
-- Lecciones aprendidas
+- Lecciones aprendidas (incluye aprendizajes de intervenciones FÉNIX)
+- Actualización de procedimientos post-intervención
 
 ---
 
@@ -130,9 +138,17 @@ PLAN → DO → CHECK → ACT → (repetir)
 |---------|----------|
 | **D-PLAN** | OKRs alineados con ERD |
 | **D-FIN** | Indicadores de ejecución presupuestaria |
+| **D-EJEC** | Indicadores de ejecución de convenios |
+| **D-COORD** | Indicadores de satisfacción ciudadana |
+| **D-NORM** | Indicadores de cumplimiento normativo |
+| **D-BACK** | Indicadores de gestión de recursos |
 | **D-TDE** | Indicadores de cumplimiento TDE |
+| **D-TERR** | Indicadores territoriales |
+| **D-SEG** | Indicadores de seguridad pública |
+| **D-EVOL** | Métricas de madurez organizacional |
+| **D-GINT (FÉNIX)** | H_gore como indicador de activación; Aprendizajes institucionales |
 | **Todos** | H_gore integra métricas de todos los dominios |
 
 ---
 
-*Documento parte de GORE_OS v3.1*
+*Documento parte de GORE_OS v4.1*

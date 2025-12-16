@@ -1,0 +1,318 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-terr:1.0.0"
+  domain: D-TERR
+  domain_name: Inteligencia Territorial
+  legacy_modules:
+    - M7
+    - M9
+    - M31
+  total_stories: 22
+  priority_distribution:
+    critica: 6
+    alta: 14
+    media: 2
+stories:
+  - id: US-TERR-PLAN-001
+    legacy_ids:
+      - DIPL-001
+    title: Brechas territoriales
+    as_a:
+      - Analista Planificación
+    i_want: Visualizar brechas territoriales (brecha vs meta con mapa)
+    so_that: Identifico necesidades territoriales
+    priority: Crítica
+    module: Planificacion
+    acceptance_criteria:
+      - Mapa de brechas
+      - Indicadores por comuna
+    source_ref: "user_stories_legacy.md:L786"
+  - id: US-TERR-PLAN-002
+    legacy_ids:
+      - DIPL-002
+    title: Alineamiento IPR a ERD
+    as_a:
+      - Analista Planificación
+    i_want: Ver alineamiento de IPR a ERD (score)
+    so_that: Verifico coherencia estratégica
+    priority: Crítica
+    module: Planificacion
+    acceptance_criteria:
+      - Score de alineamiento
+      - Vinculación a objetivos ERD
+    source_ref: "user_stories_legacy.md:L787"
+  - id: US-TERR-PLAN-003
+    legacy_ids:
+      - DIPL-003
+    title: Avance metas ERD
+    as_a:
+      - Analista Planificación
+    i_want: "Ver avance de metas ERD (tendencia, proyección)"
+    so_that: Monitoreo cumplimiento estratégico
+    priority: Alta
+    module: Planificacion
+    acceptance_criteria:
+      - Progreso por meta
+      - Proyección temporal
+    source_ref: "user_stories_legacy.md:L788"
+  - id: US-TERR-PLAN-004
+    legacy_ids:
+      - DIPL-004
+    title: Proceso ARI/PROPIR
+    as_a:
+      - Analista Planificación
+    i_want: "Gestionar proceso ARI/PROPIR (convocar, revisar, aprobar)"
+    so_that: Consolido inversión regional
+    priority: Alta
+    module: Planificacion
+    acceptance_criteria:
+      - Flujo de convocatoria
+      - Consolidación de propuestas
+    source_ref: "user_stories_legacy.md:L789"
+  - id: US-TERR-PLAN-005
+    legacy_ids:
+      - GORE-AUTO-01
+    title: Política Regional propia
+    as_a:
+      - GORE
+    i_want: Gestionar Política Regional propia (instrumento normativo)
+    so_that: Defino políticas sectoriales
+    priority: Alta
+    module: Planificacion
+    acceptance_criteria:
+      - Instrumento aprobado
+      - Publicación oficial
+    source_ref: "user_stories_legacy.md:L790"
+  - id: US-TERR-PLAN-006
+    legacy_ids:
+      - GORE-AUTO-02
+    title: Instrumentos planificación
+    as_a:
+      - GORE
+    i_want: Gestionar instrumentos de planificación (seguimiento metas)
+    so_that: Monitoreo cumplimiento de instrumentos
+    priority: Alta
+    module: Planificacion
+    acceptance_criteria:
+      - Estado por instrumento
+      - Metas de seguimiento
+    source_ref: "user_stories_legacy.md:L791"
+  - id: US-TERR-PLAN-007
+    legacy_ids:
+      - PRG-01
+    title: Mapear programas públicos
+    as_a:
+      - Gestor Programas Públicos
+    i_want: Mapear programas públicos vigentes por beneficiario/objetivo
+    so_that: Visualizo oferta programática
+    priority: Alta
+    module: Planificacion
+    acceptance_criteria:
+      - Catálogo de programas
+      - Cobertura por territorio
+    source_ref: "user_stories_legacy.md:L799"
+  - id: US-TERR-PLAN-008
+    legacy_ids:
+      - PRG-03
+    title: Alertar ventanas postulación
+    as_a:
+      - Planificador
+    i_want: Alertar sobre ventanas de postulación a programas con plazos
+    so_that: Gestiono postulaciones a tiempo
+    priority: Media
+    module: Planificacion
+    acceptance_criteria:
+      - Alerta automática
+      - Calendario de plazos
+    source_ref: "user_stories_legacy.md:L1012"
+  - id: US-TERR-IDE-001
+    legacy_ids:
+      - IDE-01
+    title: Definir política geoespacial
+    as_a:
+      - Coordinador IDE
+    i_want: Definir política geoespacial (documentada)
+    so_that: Gobierno los datos espaciales
+    priority: Alta
+    module: IDE
+    acceptance_criteria:
+      - Política aprobada
+      - Roles definidos
+    source_ref: "user_stories_legacy.md:L821"
+  - id: US-TERR-IDE-002
+    legacy_ids:
+      - IDE-02
+    title: Federar catálogos IDE Chile
+    as_a:
+      - Coordinador IDE
+    i_want: Federar catálogos IDE Chile (CSW)
+    so_that: Integro datos nacionales
+    priority: Alta
+    module: IDE
+    acceptance_criteria:
+      - Cosecha CSW activa
+      - Catálogo federado
+    source_ref: "user_stories_legacy.md:L822"
+  - id: US-TERR-IDE-003
+    legacy_ids:
+      - UGIT-01
+    title: Modelar datos ISO 19110
+    as_a:
+      - Administrador Geonodo
+    i_want: Modelar datos ISO 19110 (catálogo objetos)
+    so_that: Estandarizo estructura de datos
+    priority: Alta
+    module: IDE
+    acceptance_criteria:
+      - Catálogo de objetos
+      - Atributos definidos
+    source_ref: "user_stories_legacy.md:L823"
+  - id: US-TERR-IDE-004
+    legacy_ids:
+      - UGIT-02
+    title: Metadatos ISO 19115
+    as_a:
+      - Administrador Geonodo
+    i_want: Gestionar metadatos ISO 19115-1 (Perfil Chileno)
+    so_that: Documento los datos
+    priority: Alta
+    module: IDE
+    acceptance_criteria:
+      - Ficha de metadatos
+      - Campos obligatorios
+    source_ref: "user_stories_legacy.md:L824"
+  - id: US-TERR-IDE-005
+    legacy_ids:
+      - UGIT-03
+      - IDE-ADM-001
+    title: Publicar WMS/WFS/WCS
+    as_a:
+      - Administrador Geonodo
+    i_want: Publicar servicios WMS/WFS/WCS en Geonodo
+    so_that: Comparto datos espaciales
+    priority: Crítica
+    module: IDE
+    note: Unificada de UGIT-03 y IDE-ADM-001
+    acceptance_criteria:
+      - Servicio OGC operativo
+      - URL pública
+    source_ref: "user_stories_legacy.md:L825"
+  - id: US-TERR-IDE-006
+    legacy_ids:
+      - UGIT-05
+    title: Gestionar catastro bienes fiscales
+    as_a:
+      - Analista Territorial
+    i_want: Gestionar capas de catastro de propiedad fiscal y bienes nacionales
+    so_that: Apoyo ordenamiento territorial
+    priority: Media
+    module: GestionTerritorial
+    acceptance_criteria:
+      - Capa actualizada
+      - Cruce con proyectos
+    source_ref: "user_stories_legacy.md:L500"
+  - id: US-TERR-ANL-001
+    legacy_ids:
+      - IDI-01
+    title: Consultar histórico inversiones
+    as_a:
+      - Analista Planificación
+    i_want: "Consultar histórico de inversiones por tipología, comuna y año"
+    so_that: Analizo tendencias
+    priority: Alta
+    module: Analitica
+    acceptance_criteria:
+      - Filtros multidimensionales
+      - Gráficos evolución
+    source_ref: "user_stories_legacy.md:L1000"
+  - id: US-TERR-ANL-002
+    legacy_ids:
+      - IDI-02
+    title: Mapa de calor inversión
+    as_a:
+      - Analista Planificación
+    i_want: Visualizar mapa de calor de inversión (FNDR/BIP) en el territorio
+    so_that: Identifico zonas rezagadas
+    priority: Alta
+    module: Analitica
+    acceptance_criteria:
+      - Mapa coroplético
+      - Drill-down comunal
+    source_ref: "user_stories_legacy.md:L1001"
+  - id: US-TERR-ANL-003
+    legacy_ids:
+      - IDI-03
+    title: Benchmarking proyectos similares
+    as_a:
+      - Analista Planificación
+    i_want: Comparar proyectos similares por código BIP o nombre
+    so_that: Realizo benchmarking de costos
+    priority: Media
+    module: Analitica
+    acceptance_criteria:
+      - Búsqueda por similitud
+      - Comparativo de montos
+    source_ref: "user_stories_legacy.md:L1002"
+  - id: US-TERR-ANL-004
+    legacy_ids:
+      - IDI-04
+    title: Alertar duplicidades inversión
+    as_a:
+      - Analista Planificación
+    i_want: Recibir alertas de posibles duplicidades de inversión en misma ubicación
+    so_that: Evito doble financiamiento
+    priority: Alta
+    module: Analitica
+    acceptance_criteria:
+      - Alerta geoespacial
+      - Reporte de coincidencia
+    source_ref: "user_stories_legacy.md:L1003"
+  - id: US-TERR-ANL-005
+    legacy_ids:
+      - IDI-05
+    title: Clasificar tipología BIP
+    as_a:
+      - Analista Planificación
+    i_want: Clasificar automáticamente tipología BIP usando NLP del nombre
+    so_that: Normalizo la cartera
+    priority: Media
+    module: Analitica
+    acceptance_criteria:
+      - Clasificador IA
+      - Sugerencia de etiqueta
+    source_ref: "user_stories_legacy.md:L1004"
+  - id: US-TERR-PLAN-006
+    legacy_ids:
+      - PRG-01
+    title: Mapear programas públicos
+    as_a:
+      - Planificador
+    i_want: Mapear programas públicos vigentes por beneficiario y objetivo
+    so_that: Diseño oferta integrada
+    priority: Alta
+    module: Planificacion
+    acceptance_criteria:
+      - Mapa de oferta pública
+      - Ficha de programa
+    source_ref: "user_stories_legacy.md:L1010"
+  - id: US-TERR-PLAN-007
+    legacy_ids:
+      - PRG-02
+    title: Complementariedad programas
+    as_a:
+      - Planificador
+    i_want: Identificar complementariedad entre programas y proyectos IDI
+    so_that: Maximizo impacto
+    priority: Media
+    module: Planificacion
+    acceptance_criteria:
+      - Matriz de sinergias
+      - Recomendación de cruce
+    source_ref: "user_stories_legacy.md:L1011"
+_summary:
+  total_stories: 32
+  modules_covered:
+    - Planificacion
+    - IDE
+    - Analitica
+    - GestionTerritorial
+  added_in_audit_3: 14

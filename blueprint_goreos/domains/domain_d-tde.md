@@ -81,11 +81,12 @@ MUNICIPIOS      SERV. PÚBLICOS        OTROS ORG.
 
 ### Servicios Compartidos
 
-- Nodo PISEE Regional
+- Nodo PISEE Regional (incluye intercambio con SITIA)
 - Hub DocDigital regional
 - Broker ClaveÚnica
 - Lago de datos regional
-- SOC regional (ciberseguridad)
+- SOC regional (ciberseguridad, incluye monitoreo CIES)
+- Backup Offsite (respaldo de grabaciones críticas)
 
 ---
 
@@ -107,6 +108,15 @@ Catálogo de Procedimientos Administrativos y Trámites (obligatorio DS 11)
 - Gestor de Autorizaciones: Datos sensibles
 - Monitoreo disponibilidad y métricas de uso
 
+**Servicios SITIA (Seguridad Pública):**
+
+| Plataforma | Tipo | Protocolo | Gestión |
+|------------|------|-----------|----------|
+| SITIA-Patentes | Consumo | API REST | Acuerdo PISEE con SPD |
+| SITIA-Evidencia | Publicación | Genetec Clearance | Convenio Marco SPD-GORE |
+| SITIA-Armas | Consumo | Streaming + Webhook | Acuerdo PISEE con SPD |
+| SITIA-Unificación | Publicación | RTSP/ONVIF | Convenio Marco SPD-GORE |
+
 ### 3. Ciberseguridad
 
 Marco NIST: Identificar → Proteger → Detectar → Responder → Recuperar
@@ -116,6 +126,27 @@ Marco NIST: Identificar → Proteger → Detectar → Responder → Recuperar
 - Responsable Institucional de Seguridad designado
 - Plan continuidad operativa (BCP) y recuperación (DRP)
 - Gestión de incidentes con notificación CSIRT
+
+**Controles CIES (Infraestructura Crítica):**
+
+| Control | Descripción | Normativa |
+|---------|-------------|------------|
+| Cifrado | TLS 1.2+ en tránsito, cifrado en reposo | DS 7/2022 |
+| Autenticación | MFA para acceso a VMS y grabaciones | DS 9/2022 |
+| Trazabilidad | Log de accesos y acciones sobre grabaciones | Ley 19.628 |
+| Notificación | Incidentes reportados a CSIRT | Ley 21.663 |
+| Continuidad | UPS 60 min, generador, plan BCP/DRP | DS 7/2022 |
+
+### 4. Infraestructura de Red
+
+**Red CIES (Televigilancia Regional):**
+
+| Componente | Especificación |
+|------------|----------------|
+| Red de Transporte | 316 nodos, 80% fibra óptica (100Mbps), 20% inalámbrica (50Mbps) |
+| Segmentación | Red CIES aislada de red corporativa GORE |
+| Redundancia | Doble enlace en nodos críticos, ANR en cámaras |
+| Monitoreo | NOC para disponibilidad de red y equipos |
 
 ---
 
@@ -154,9 +185,12 @@ Marco NIST: Identificar → Proteger → Detectar → Responder → Recuperar
 | Dominio | Relación |
 |---------|----------|
 | **D-NORM** | Expediente electrónico, interoperabilidad |
+| **D-BACK** | Integraciones con sistemas estatales (SIAPER, SIGPER, PREVIRED, Mercado Público) |
 | **D-GESTION** | Indicadores de cumplimiento TDE en H_gore |
 | **D-EVOL** | D-TDE es piso normativo, D-EVOL es techo estratégico |
+| **D-SEG** | Infraestructura CIES, Ciberseguridad, Interoperabilidad SITIA |
+| **D-GINT (FÉNIX)** | Fallas críticas de infraestructura TDE activan intervención Nivel I-II |
 
 ---
 
-*Documento parte de GORE_OS v3.1*
+*Documento parte de GORE_OS v4.1*

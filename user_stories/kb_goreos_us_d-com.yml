@@ -1,0 +1,133 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-com:1.0.0"
+  domain: D-COM
+  domain_name: Comunicación Institucional
+  legacy_modules:
+    - M6
+  total_stories: 6
+  priority_distribution:
+    critica: 0
+    alta: 6
+    media: 0
+stories:
+  - id: US-COM-ESTR-001
+    legacy_ids:
+      - COM-001
+    title: Gestionar estrategia comunicacional
+    as_a:
+      - Encargado Comunicaciones
+    i_want: "Gestionar estrategia comunicacional (web, RRSS)"
+    so_that: Posiciono al GORE en medios
+    priority: Alta
+    module: Estrategia
+    acceptance_criteria:
+      - Plan de medios
+      - KPIs de alcance
+    source_ref: "user_stories_legacy.md:L603"
+  - id: US-COM-ESTR-002
+    legacy_ids:
+      - COM-002
+    title: Publicar noticias oficiales
+    as_a:
+      - Encargado Comunicaciones
+    i_want: Publicar noticias oficiales en portal y RRSS
+    so_that: Informo a la ciudadanía
+    priority: Alta
+    module: Contenido
+    acceptance_criteria:
+      - Flujo de aprobación
+      - Publicación multicanal
+    source_ref: "user_stories_legacy.md:L604"
+  - id: US-COM-ESTR-003
+    legacy_ids:
+      - COM-003
+    title: Gestionar repositorio audiovisual
+    as_a:
+      - Encargado Comunicaciones
+    i_want: Gestionar repositorio de material audiovisual
+    so_that: Centralizo recursos de comunicación
+    priority: Alta
+    module: Contenido
+    acceptance_criteria:
+      - Repositorio centralizado
+      - Metadatos y búsqueda
+    source_ref: "user_stories_legacy.md:L605"
+  - id: US-COM-ESTR-004
+    legacy_ids:
+      - COM-004
+    title: Monitoreo medios y crisis
+    as_a:
+      - Encargado Comunicaciones
+    i_want: Monitorear menciones en medios y gestionar crisis
+    so_that: Respondo a contingencias comunicacionales
+    priority: Alta
+    module: Monitoreo
+    acceptance_criteria:
+      - Alertas de menciones
+      - Protocolo de respuesta
+    source_ref: "user_stories_legacy.md:L606"
+  - id: US-COM-ESTR-005
+    legacy_ids:
+      - COM-005
+    title: Difusión estado proyectos
+    as_a:
+      - Encargado Comunicaciones
+    i_want: Difundir estado de avance de proyectos emblemáticos
+    so_that: Informo logros de gestión
+    priority: Alta
+    module: Contenido
+    acceptance_criteria:
+      - Material visual
+      - Indicadores de avance
+    source_ref: "user_stories_legacy.md:L607"
+  - id: US-COM-ESTR-006
+    legacy_ids:
+      - COM-006
+    title: Comunicación interna
+    as_a:
+      - Encargado Comunicaciones
+    i_want: Gestionar comunicación interna institucional
+    so_that: Mantengo informados a funcionarios
+    priority: Alta
+    module: Interna
+    acceptance_criteria:
+      - Canales internos
+      - Boletines periódicos
+    source_ref: "user_stories_legacy.md:L608"
+  - id: US-COM-SEC-001
+    legacy_ids:
+      - S-ALC-001
+    title: Difusión conjunta municipio
+    as_a:
+      - Encargado Comunicaciones
+    i_want: Coordinar difusión conjunta con municipios
+    so_that: Potencio alcance local
+    priority: Alta
+    module: Estrategia
+    acceptance_criteria:
+      - Plan conjunto
+      - Material compartido
+    source_ref: "user_stories_legacy.md:L609"
+  - id: US-COM-SEC-002
+    legacy_ids:
+      - S-ALC-002
+    title: Gestión marca regional
+    as_a:
+      - Encargado Comunicaciones
+    i_want: Gestionar uso correcto de marca regional en terceros
+    so_that: Cuido imagen institucional
+    priority: Alta
+    module: Estrategia
+    acceptance_criteria:
+      - Manual de marca
+      - Validación de piezas
+    source_ref: "user_stories_legacy.md:L610"
+_summary:
+  total_stories: 8
+  modules_covered:
+    - Estrategia
+    - Contenido
+    - Monitoreo
+    - Interna
+  added_in_audit_2: 2
+  note: Nuevo dominio creado durante auditoría de cobertura

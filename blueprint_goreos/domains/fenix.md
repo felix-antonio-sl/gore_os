@@ -6,7 +6,7 @@
 
 ---
 
-## 1. Propósito
+## Propósito
 
 Unidad especializada del GORE de Ñuble responsable de diagnosticar, intervenir y resolver situaciones críticas institucionales, gestionar procesos estancados y acelerar iniciativas estratégicas cuando las circunstancias lo requieren.
 
@@ -14,7 +14,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ---
 
-## 2. Principios Rectores
+## Principios Rectores
 
 | Principio | Descripción |
 |-----------|-------------|
@@ -27,9 +27,9 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ---
 
-## 3. Estructura del Equipo
+## Estructura del Equipo
 
-### 3.1 Equipo Base (3-4 funcionarios)
+### Equipo Base (3-4 funcionarios)
 
 | Rol | Responsabilidades |
 |-----|-------------------|
@@ -38,7 +38,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 | **Asesor Jurídico** | Evaluación de viabilidad legal y alternativas normativas |
 | **Especialista en Procesos** | Diseño e implementación de soluciones operativas |
 
-### 3.2 Especialistas de Apoyo (según intervención)
+### Especialistas de Apoyo (según intervención)
 
 | Área | Criterio de Incorporación |
 |------|---------------------------|
@@ -51,27 +51,29 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ---
 
-## 4. Categorías de Intervención
+## Categorías de Intervención
 
-### 4.1 Nivel I: Contingencia Crítica
+### Nivel I: Contingencia Crítica
 
 - Emergencias o catástrofes regionales
 - Riesgo de pérdida de recursos por incumplimiento de plazos
 - Conflictos críticos con ejecutores o contratistas
 - Observaciones de CGR con plazo inminente
+- Crisis de seguridad regional (coordinación con FFOO, Fiscalía, Municipios)
+- Falla crítica del CIES (caída >4 horas o pérdida de evidencia)
 
 **Activación:** Inmediata | **Duración estimada:** 1-4 semanas
 
-### 4.2 Nivel II: Gestión de Procesos Estancados
+### Nivel II: Gestión de Procesos Estancados
 
-- IPR sin avance por más de 90 días
+- IPR sin avance por más de 90 días (incluye Proyecto_Seguridad)
 - Rendiciones en mora superior a 180 días
 - Procesos administrativos detenidos
-- Convenios en riesgo de caducidad
+- Convenios en riesgo de caducidad (incluye convenios de seguridad municipal)
 
 **Activación:** Programada | **Duración estimada:** 2-6 semanas
 
-### 4.3 Nivel III: Aceleración de Iniciativas
+### Nivel III: Aceleración de Iniciativas
 
 - Proyectos prioritarios con plazos comprometidos
 - Oportunidades de financiamiento con ventana limitada
@@ -80,7 +82,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 **Activación:** Por requerimiento | **Duración estimada:** 2-8 semanas
 
-### 4.4 Nivel IV: Mejora Institucional
+### Nivel IV: Mejora Institucional
 
 - Rediseño de procesos críticos
 - Implementación de nuevos módulos de gestión
@@ -91,7 +93,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ---
 
-## 5. Ciclo de Intervención
+## Ciclo de Intervención
 
 ```
 DETECCIÓN → DIAGNÓSTICO → PLANIFICACIÓN → EJECUCIÓN → CIERRE
@@ -109,21 +111,27 @@ DETECCIÓN → DIAGNÓSTICO → PLANIFICACIÓN → EJECUCIÓN → CIERRE
 
 ---
 
-## 6. Condiciones de Activación Automática
+## Condiciones de Activación Automática
 
 | Condición | Nivel | Acción |
 |-----------|-------|--------|
 | Índice H_gore < 60 sostenido por 2 semanas | IV | Notificación automática a Jefatura |
+| Índice H_gore < 50 | IV | Activación obligatoria FÉNIX |
+| Objetivos ERD sin avance >180 días | III | Candidata a intervención |
 | IPR en estado ESTANCADA >90 días | II | Candidata a intervención |
 | Rendición en mora >180 días | II | Escalamiento para evaluación |
 | Convenio a <30 días de vencimiento sin cierre | I | Alerta prioritaria |
 | Anomalía detectada por sistema | Variable | Recomendación de evaluación |
+| Crisis de seguridad regional (D-SEG) | I | Coordinación urgente con FFOO, Fiscalía |
+| Falla crítica CIES >4 horas (D-SEG) | II | Recuperación operativa |
+| Proyecto_Seguridad estancado >90 días (D-SEG) | III | Desbloqueo de proyecto |
+| Incumplimiento convenio municipal seguridad (D-SEG) | III | Mediación institucional |
 
 ---
 
-## 7. Entidades de Datos
+## Entidades de Datos
 
-### 7.1 Intervención
+### Intervención
 
 | Atributo | Tipo | Descripción |
 |----------|------|-------------|
@@ -139,7 +147,7 @@ DETECCIÓN → DIAGNÓSTICO → PLANIFICACIÓN → EJECUCIÓN → CIERRE
 | dominios_involucrados | array | Dominios afectados |
 | indicadores_exito | json | Métricas de éxito definidas |
 
-### 7.2 Equipo de Intervención
+### Equipo de Intervención
 
 | Atributo | Tipo | Descripción |
 |----------|------|-------------|
@@ -149,7 +157,7 @@ DETECCIÓN → DIAGNÓSTICO → PLANIFICACIÓN → EJECUCIÓN → CIERRE
 | area_especialidad | enum | D-FIN, D-EJEC, D-NORM, etc. |
 | horas_asignadas | int | Horas dedicadas a la intervención |
 
-### 7.3 Bitácora de Intervención
+### Bitácora de Intervención
 
 | Atributo | Tipo | Descripción |
 |----------|------|-------------|
@@ -159,7 +167,7 @@ DETECCIÓN → DIAGNÓSTICO → PLANIFICACIÓN → EJECUCIÓN → CIERRE
 | descripcion | text | Detalle de la actividad o evento |
 | responsable_id | FK | Funcionario que registra |
 
-### 7.4 Aprendizaje Institucional
+### Aprendizaje Institucional
 
 | Atributo | Tipo | Descripción |
 |----------|------|-------------|
@@ -171,7 +179,7 @@ DETECCIÓN → DIAGNÓSTICO → PLANIFICACIÓN → EJECUCIÓN → CIERRE
 
 ---
 
-## 8. Diagrama de Integración
+## Diagrama de Integración
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
@@ -220,18 +228,24 @@ DETECCIÓN → DIAGNÓSTICO → PLANIFICACIÓN → EJECUCIÓN → CIERRE
 
 ---
 
-## 9. Referencias Cruzadas
+## Referencias Cruzadas
 
 | Dominio | Tipo de Integración |
 |---------|---------------------|
-| **D-GESTION** | Procedimientos actualizados con aprendizajes institucionales |
-| **D-GESTION** | Índice H_gore como indicador de activación |
-| **D-FIN** | Intervención en IPR con estado problemático |
-| **D-EJEC** | Gestión de convenios con riesgo de incumplimiento |
+| **D-PLAN** | Objetivos ERD sin avance >180 días activan intervención Nivel III |
+| **D-FIN** | IPR Problemáticas activan intervención Nivel I-III |
+| **D-EJEC** | Convenios en riesgo de incumplimiento activan intervención Nivel I-II |
+| **D-COORD** | Conflictos críticos con actores/ejecutores activan intervención Nivel I-II |
+| **D-NORM** | Actos administrativos vencidos o con observaciones CGR activan intervención Nivel I-II |
+| **D-BACK** | Incumplimientos críticos de proveedores activan intervención Nivel II |
+| **D-TDE** | Fallas críticas de infraestructura TDE activan intervención Nivel I-II |
+| **D-TERR** | Anomalías territoriales críticas activan intervención Nivel III |
+| **D-GESTION** | H_gore como indicador de activación; Aprendizajes institucionales |
 | **D-EVOL** | Detección automatizada de condiciones de activación |
+| **D-SEG** | Crisis de seguridad pública activan intervención Nivel I |
 | **Todos** | Capacidad de intervención transversal según requerimiento |
 
 ---
 
-*Documento parte de GORE_OS v4.0*  
+*Documento parte de GORE_OS v4.1*  
 *Departamento de Gestión Institucional - GORE Ñuble*

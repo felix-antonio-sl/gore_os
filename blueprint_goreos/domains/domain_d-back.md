@@ -41,6 +41,8 @@ SELECCIÓN → INGRESO → DESARROLLO → MOVILIDAD → EGRESO
 
 **Integraciones:** SIAPER, SIGPER, PREVIRED, I-MED (licencias electrónicas)
 
+**Personal CIES (D-SEG):** Operadores, supervisores y personal de mantenimiento del Centro Integrado de Emergencia y Seguridad
+
 ### 3. Abastecimiento y Patrimonio
 
 **Compras Públicas (Ley 19.886):**
@@ -69,7 +71,9 @@ SELECCIÓN → INGRESO → DESARROLLO → MOVILIDAD → EGRESO
 - Contratos externalizados: Aseo, seguridad, jardines, ascensores
 - Flota vehicular: Registro, conductores, solicitud/asignación
 - Bitácora de uso, control combustible, kilometraje
-- Indicadores: Disponibilidad, utilización, costo por kilómetro
+- **Indicadores:** Disponibilidad, utilización, costo por kilómetro
+
+**Equipamiento CIES (D-SEG):** Gestión de activos de televigilancia (cámaras, servidores, video wall), contratos de mantenimiento preventivo/correctivo
 
 **Integración:** Mercado Público (OC, adjudicaciones, proveedores)
 
@@ -79,46 +83,50 @@ SELECCIÓN → INGRESO → DESARROLLO → MOVILIDAD → EGRESO
 
 ### Gestión de Personas
 
-| Entidad | Atributos Clave | Relaciones |
-|---------|-----------------|------------|
-| `Funcionario` | id, rut, nombre, cargo, division, calidad_juridica, grado, fecha_ingreso | → Contrato[], Liquidacion[], Asistencia[], Capacitacion[] |
-| `Contrato` | id, funcionario_id, tipo, grado, fecha_inicio, fecha_termino, decreto | → Funcionario |
-| `Liquidacion` | id, funcionario_id, periodo, sueldo_base, asignaciones[], descuentos[], liquido | → Funcionario |
-| `Asistencia` | id, funcionario_id, fecha, hora_entrada, hora_salida, tipo_marca | → Funcionario |
-| `PermisoLicencia` | id, funcionario_id, tipo, fecha_inicio, fecha_fin, estado | → Funcionario |
-| `Capacitacion` | id, funcionario_id, curso, fecha, horas, evaluacion, costo | → Funcionario |
-| `Calificacion` | id, funcionario_id, periodo, nota, lista, junta_id | → Funcionario |
-| `AfiliacionBienestar` | id, funcionario_id, fecha_afiliacion, aporte_mensual, estado | → Funcionario |
+| Entidad                 | Atributos Clave                                                                                                   | Relaciones                                                |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `Funcionario`           | id, rut, nombre, cargo, division, calidad_juridica, grado, fecha_ingreso                                          | → Contrato[], Liquidacion[], Asistencia[], Capacitacion[] |
+| `Contrato`              | id, funcionario_id, tipo, grado, fecha_inicio, fecha_termino, decreto                                             | → Funcionario                                             |
+| `Liquidacion`           | id, funcionario_id, periodo, sueldo_base, asignaciones[], descuentos[], liquido                                   | → Funcionario                                             |
+| `Asistencia`            | id, funcionario_id, fecha, hora_entrada, hora_salida, tipo_marca                                                  | → Funcionario                                             |
+| `PermisoLicencia`       | id, funcionario_id, tipo, fecha_inicio, fecha_fin, estado                                                         | → Funcionario                                             |
+| `Capacitacion`          | id, funcionario_id, curso, fecha, horas, evaluacion, costo                                                        | → Funcionario                                             |
+| `Calificacion`          | id, funcionario_id, periodo, nota, lista, junta_id                                                                | → Funcionario                                             |
+| `AfiliacionBienestar`   | id, funcionario_id, fecha_afiliacion, aporte_mensual, estado                                                      | → Funcionario                                             |
+| `PrestamoFuncionario`   | id, funcionario_id, tipo (AUXILIO/HABITACIONAL/MEDICO/EDUCACIONAL), monto, cuotas, tasa_interes, saldo, estado    | → Funcionario, AfiliacionBienestar                        |
+| `BonificacionBienestar` | id, funcionario_id, tipo (NACIMIENTO/MATRIMONIO/FALLECIMIENTO/ESCOLARIDAD/VACACIONES), monto, fecha_pago, periodo | → Funcionario, AfiliacionBienestar                        |
+| `ConvenioBienestar`     | id, nombre, proveedor, tipo_beneficio, descuento_%, vigencia_inicio, vigencia_fin, estado                         | → Proveedor (D-COORD)                                     |
+| `SolicitudBeneficio`    | id, funcionario_id, tipo_beneficio, convenio_id, fecha_solicitud, estado, monto_aprobado                          | → Funcionario, ConvenioBienestar                          |
 
 ### Abastecimiento y Compras
 
-| Entidad | Atributos Clave | Relaciones |
-|---------|-----------------|------------|
-| `PlanCompras` | id, año, estado, fecha_publicacion, monto_total | → ItemPAC[] |
-| `ProcesoCompra` | id, numero, tipo, monto_estimado, estado, fecha_adjudicacion | → Proveedor (D-COORD), OrdenCompra[] |
-| `OrdenCompra` | id, proceso_id, numero_oc, monto, estado, fecha_emision | → ProcesoCompra, ItemOC[] |
+| Entidad          | Atributos Clave                                                      | Relaciones                                |
+| ---------------- | -------------------------------------------------------------------- | ----------------------------------------- |
+| `PlanCompras`    | id, año, estado, fecha_publicacion, monto_total                      | → ItemPAC[]                               |
+| `ProcesoCompra`  | id, numero, tipo, monto_estimado, estado, fecha_adjudicacion         | → Proveedor (D-COORD), OrdenCompra[]      |
+| `OrdenCompra`    | id, proceso_id, numero_oc, monto, estado, fecha_emision              | → ProcesoCompra, ItemOC[]                 |
 | `ContratoCompra` | id, proceso_id, administrador_id, monto, fecha_inicio, fecha_termino | → ProcesoCompra, EstadoPago[], Garantia[] |
-| `Garantia` | id, contrato_id, tipo, monto, vencimiento, estado | → ContratoCompra |
+| `Garantia`       | id, contrato_id, tipo, monto, vencimiento, estado                    | → ContratoCompra                          |
 
 ### Inventarios y Activo Fijo
 
-| Entidad | Atributos Clave | Relaciones |
-|---------|-----------------|------------|
-| `Articulo` | id, codigo, nombre, familia, unidad_medida, cuenta_contable | → MovimientoInventario[] |
-| `Bodega` | id, nombre, tipo, ubicacion, encargado_id | → MovimientoInventario[] |
-| `MovimientoInventario` | id, articulo_id, bodega_id, tipo, cantidad, costo_unitario, fecha | → Articulo, Bodega |
-| `ActivoFijo` | id, codigo, descripcion, tipo_bien, valor_adquisicion, valor_libro, vida_util_meses | → Depreciacion[], MovimientoActivo[] |
-| `Depreciacion` | id, activo_id, periodo, monto_mensual, acumulada | → ActivoFijo |
+| Entidad                | Atributos Clave                                                                     | Relaciones                           |
+| ---------------------- | ----------------------------------------------------------------------------------- | ------------------------------------ |
+| `Articulo`             | id, codigo, nombre, familia, unidad_medida, cuenta_contable                         | → MovimientoInventario[]             |
+| `Bodega`               | id, nombre, tipo, ubicacion, encargado_id                                           | → MovimientoInventario[]             |
+| `MovimientoInventario` | id, articulo_id, bodega_id, tipo, cantidad, costo_unitario, fecha                   | → Articulo, Bodega                   |
+| `ActivoFijo`           | id, codigo, descripcion, tipo_bien, valor_adquisicion, valor_libro, vida_util_meses | → Depreciacion[], MovimientoActivo[] |
+| `Depreciacion`         | id, activo_id, periodo, monto_mensual, acumulada                                    | → ActivoFijo                         |
 
 ### Flota Vehicular
 
-| Entidad | Atributos Clave | Relaciones |
-|---------|-----------------|------------|
-| `Vehiculo` | id, patente, marca, modelo, año, activo_fijo_id, estado, km_actual | → ActivoFijo, BitacoraVehiculo[] |
-| `Conductor` | id, funcionario_id, licencia_clase, licencia_vencimiento, autorizado | → Funcionario |
-| `BitacoraVehiculo` | id, vehiculo_id, conductor_id, fecha_salida, fecha_retorno, km_inicial, km_final | → Vehiculo, Conductor |
-| `CargaCombustible` | id, vehiculo_id, fecha, litros, monto, km_odometro | → Vehiculo |
-| `OrdenTrabajoMant` | id, vehiculo_id, tipo, descripcion, fecha, costo, proveedor_id | → Vehiculo |
+| Entidad            | Atributos Clave                                                                  | Relaciones                       |
+| ------------------ | -------------------------------------------------------------------------------- | -------------------------------- |
+| `Vehiculo`         | id, patente, marca, modelo, año, activo_fijo_id, estado, km_actual               | → ActivoFijo, BitacoraVehiculo[] |
+| `Conductor`        | id, funcionario_id, licencia_clase, licencia_vencimiento, autorizado             | → Funcionario                    |
+| `BitacoraVehiculo` | id, vehiculo_id, conductor_id, fecha_salida, fecha_retorno, km_inicial, km_final | → Vehiculo, Conductor            |
+| `CargaCombustible` | id, vehiculo_id, fecha, litros, monto, km_odometro                               | → Vehiculo                       |
+| `OrdenTrabajoMant` | id, vehiculo_id, tipo, descripcion, fecha, costo, proveedor_id                   | → Vehiculo                       |
 
 ---
 
@@ -131,12 +139,18 @@ SELECCIÓN → INGRESO → DESARROLLO → MOVILIDAD → EGRESO
 
 ## Referencias Cruzadas
 
-| Dominio | Relación |
-|---------|----------|
-| **D-NORM** | Gestión documental, expediente electrónico |
-| **D-COORD** | Proveedor (directorio unificado) |
-| **D-TDE** | Integraciones con sistemas estatales |
+| Dominio            | Relación                                                                  |
+| ------------------ | ------------------------------------------------------------------------- |
+| **D-FIN**          | Gestión financiera/tesorería vinculada con rendiciones IPR                |
+| **D-NORM**         | Gestión documental, expediente electrónico                                |
+| **D-COORD**        | Proveedor (directorio unificado)                                          |
+| **D-PLAN**         | Plan de Compras (PAC) alineado con ARI                                    |
+| **D-TDE**          | Integraciones con sistemas estatales                                      |
+| **D-GESTION**      | Indicadores de gestión de recursos para H_gore                            |
+| **D-SEG**          | Personal CIES, Equipamiento televigilancia, Mantenimiento infraestructura |
+| **D-EVOL**         | Predicción de necesidades de recursos                                     |
+| **D-GINT (FÉNIX)** | Incumplimientos críticos de proveedores activan intervención Nivel II     |
 
 ---
 
-*Documento parte de GORE_OS v3.1*
+*Documento parte de GORE_OS v4.1*

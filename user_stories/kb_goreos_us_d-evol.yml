@@ -1,0 +1,245 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-evol:1.0.0"
+  domain: D-EVOL
+  domain_name: Evolución e Inteligencia del Sistema
+  legacy_modules:
+    - M19
+  total_stories: 16
+  priority_distribution:
+    critica: 4
+    alta: 12
+    media: 0
+stories:
+  - id: US-EVOL-H-001
+    legacy_ids:
+      - HO-EVO-001
+    title: Dashboard salud del sistema
+    as_a:
+      - Operador de Sistema
+    i_want: Ver dashboard de salud del sistema (H_org)
+    so_that: Monitoreo estado general
+    priority: Crítica
+    module: HealthOrg
+    acceptance_criteria:
+      - Indicador H_gore
+      - Componentes del índice
+    source_ref: "user_stories_legacy.md:L1017"
+  - id: US-EVOL-H-002
+    legacy_ids:
+      - HO-EVO-002
+    title: Declarar cambio Estado de Salud
+    as_a:
+      - Operador de Sistema
+    i_want: Declarar cambio de Estado de Salud (Gate)
+    so_that: Formalizo transiciones
+    priority: Crítica
+    module: HealthOrg
+    acceptance_criteria:
+      - Gate de transición
+      - Justificación documentada
+    source_ref: "user_stories_legacy.md:L1018"
+  - id: US-EVOL-H-003
+    legacy_ids:
+      - HO-EVO-003
+    title: Simular impacto configuración
+    as_a:
+      - Operador de Sistema
+    i_want: Simular impacto de configuración (What-if)
+    so_that: Evalúo cambios antes de aplicar
+    priority: Alta
+    module: HealthOrg
+    acceptance_criteria:
+      - Simulación de escenarios
+      - Impacto proyectado
+    source_ref: "user_stories_legacy.md:L1019"
+  - id: US-EVOL-TRAY-001
+    legacy_ids:
+      - TO-EVO-001
+    title: Configurar trayectoria (Feature Flags)
+    as_a:
+      - Operador de Sistema
+    i_want: Configurar trayectoria del sistema (Feature Flags)
+    so_that: Habilito funcionalidades gradualmente
+    priority: Alta
+    module: Trayectoria
+    acceptance_criteria:
+      - Feature flags activos
+      - Rollout controlado
+    source_ref: "user_stories_legacy.md:L1020"
+  - id: US-EVOL-TRAY-002
+    legacy_ids:
+      - TO-EVO-002
+    title: Ajustar umbrales de riesgo
+    as_a:
+      - Operador de Sistema
+    i_want: Ajustar umbrales de riesgo
+    so_that: Calibro sensibilidad de alertas
+    priority: Alta
+    module: Trayectoria
+    acceptance_criteria:
+      - Umbrales configurables
+      - Historial de cambios
+    source_ref: "user_stories_legacy.md:L1021"
+  - id: US-EVOL-TRAY-003
+    legacy_ids:
+      - TO-EVO-003
+    title: Revisar brechas de capacidad
+    as_a:
+      - Operador de Sistema
+    i_want: Revisar reporte de brechas de capacidad
+    so_that: Identifico necesidades de evolución
+    priority: Alta
+    module: Trayectoria
+    acceptance_criteria:
+      - Reporte de brechas
+      - Recomendaciones
+    source_ref: "user_stories_legacy.md:L1022"
+  - id: US-EVOL-PILOT-001
+    legacy_ids:
+      - TL-EVO-001
+    title: Activar pilotos de autonomía
+    as_a:
+      - Líder Técnico
+    i_want: Activar pilotos de autonomía (M6)
+    so_that: Pruebo nuevas capacidades
+    priority: Alta
+    module: Pilotos
+    acceptance_criteria:
+      - Piloto activado
+      - Métricas de seguimiento
+    source_ref: "user_stories_legacy.md:L1023"
+  - id: US-EVOL-PILOT-002
+    legacy_ids:
+      - TL-EVO-002
+    title: Escalar configuración
+    as_a:
+      - Líder Técnico
+    i_want: Escalar configuración a nueva división
+    so_that: Expando funcionalidades
+    priority: Alta
+    module: Pilotos
+    acceptance_criteria:
+      - Configuración replicada
+      - Validación de funcionamiento
+    source_ref: "user_stories_legacy.md:L1024"
+  - id: US-EVOL-PILOT-003
+    legacy_ids:
+      - TL-EVO-003
+    title: Crear retrospectiva de sistema
+    as_a:
+      - Líder Técnico
+    i_want: Crear retrospectiva de sistema
+    so_that: Documento aprendizajes
+    priority: Alta
+    module: Pilotos
+    acceptance_criteria:
+      - Retrospectiva documentada
+      - Acciones de mejora
+    source_ref: "user_stories_legacy.md:L1025"
+  - id: US-EVOL-PLAY-001
+    legacy_ids:
+      - PL-EVO-001
+    title: Ejecutar playbook de remediación
+    as_a:
+      - Operador de Sistema
+    i_want: Ejecutar playbook de remediación
+    so_that: Respondo a problemas conocidos
+    priority: Alta
+    module: Playbooks
+    acceptance_criteria:
+      - Playbook ejecutado
+      - Resultados registrados
+    source_ref: "user_stories_legacy.md:L1026"
+  - id: US-EVOL-PLAY-002
+    legacy_ids:
+      - PL-EVO-002
+    title: Monitor progreso playbooks
+    as_a:
+      - Operador de Sistema
+    i_want: Ver monitor de progreso de playbooks
+    so_that: Sigo ejecución de remediaciones
+    priority: Alta
+    module: Playbooks
+    acceptance_criteria:
+      - Estado por playbook
+      - Pasos completados
+    source_ref: "user_stories_legacy.md:L1027"
+  - id: US-EVOL-GOV-001
+    legacy_ids:
+      - CAP-EVO-01
+    title: Aprobar cambios críticos
+    as_a:
+      - Comité de Gobierno
+    i_want: Aprobar cambios críticos (Gobierno)
+    so_that: Controlo cambios mayores
+    priority: Crítica
+    module: Gobierno
+    acceptance_criteria:
+      - Aprobación formal
+      - Documentación de riesgos
+    source_ref: "user_stories_legacy.md:L1028"
+  - id: US-EVOL-GOV-002
+    legacy_ids:
+      - CAP-EVO-02
+    title: Arbitraje de prioridades
+    as_a:
+      - Comité de Gobierno
+    i_want: Realizar arbitraje de prioridades (RICE)
+    so_that: Optimizo recursos
+    priority: Alta
+    module: Gobierno
+    acceptance_criteria:
+      - Priorización RICE
+      - Decisión documentada
+    source_ref: "user_stories_legacy.md:L1029"
+  - id: US-EVOL-DT-001
+    legacy_ids:
+      - EVOL-01
+    title: Gestionar deuda técnica
+    as_a:
+      - Líder Técnico
+    i_want: Gestionar deuda técnica (inventario)
+    so_that: Controlo pasivos técnicos
+    priority: Alta
+    module: DeudaTecnica
+    acceptance_criteria:
+      - Inventario de deuda
+      - Plan de pago
+    source_ref: "user_stories_legacy.md:L1030"
+  - id: US-EVOL-DT-002
+    legacy_ids:
+      - EVOL-02
+    title: Planificar evolución schema
+    as_a:
+      - Líder Técnico
+    i_want: Planificar evolución de schema (migraciones)
+    so_that: Evoluciono el modelo de datos
+    priority: Alta
+    module: DeudaTecnica
+    acceptance_criteria:
+      - Plan de migración
+      - Scripts de migración
+    source_ref: "user_stories_legacy.md:L1031"
+  - id: US-EVOL-DT-003
+    legacy_ids:
+      - EVOL-03
+    title: Monitorear KPIs sistema
+    as_a:
+      - Líder Técnico
+    i_want: Monitorear KPIs del sistema (técnicos)
+    so_that: Aseguro calidad técnica
+    priority: Crítica
+    module: DeudaTecnica
+    acceptance_criteria:
+      - KPIs técnicos
+      - Alertas de degradación
+    source_ref: "user_stories_legacy.md:L1032"
+_summary:
+  total_stories: 16
+  modules_covered:
+    - HealthOrg
+    - Trayectoria
+    - Pilotos
+    - Playbooks
+    - Gobierno
+    - DeudaTecnica

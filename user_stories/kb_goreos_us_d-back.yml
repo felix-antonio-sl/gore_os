@@ -1,0 +1,768 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-back:1.0.0"
+  domain: D-BACK
+  domain_name: Gestión de Recursos Institucionales
+  legacy_modules:
+    - M15
+    - M16
+    - M17
+    - M18
+  total_stories: 58
+  priority_distribution:
+    critica: 22
+    alta: 28
+    media: 8
+stories:
+  - id: US-BACK-PER-001
+    legacy_ids:
+      - per-001
+    title: Visualizar ficha funcionario
+    as_a:
+      - Funcionario
+    i_want: Visualizar mi ficha de funcionario (hoja de vida)
+    so_that: Consulto mi información laboral
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Datos personales y laborales
+      - Historial de cargos
+    source_ref: "user_stories_legacy.md:L917"
+  - id: US-BACK-PER-002
+    legacy_ids:
+      - per-002
+    title: Proceso de inducción digital
+    as_a:
+      - Funcionario
+    i_want: Completar proceso de inducción digital (checklist)
+    so_that: Me integro correctamente a la institución
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Checklist de inducción
+      - Progreso visible
+    source_ref: "user_stories_legacy.md:L918"
+  - id: US-BACK-PER-003
+    legacy_ids:
+      - per-003
+    title: Solicitar feriado/permiso
+    as_a:
+      - Funcionario
+    i_want: Solicitar feriado/permiso validando saldo
+    so_that: Gestiono mi tiempo libre
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Validación de saldo
+      - Flujo de aprobación
+    source_ref: "user_stories_legacy.md:L919"
+  - id: US-BACK-PER-004
+    legacy_ids:
+      - per-004
+    title: Declarar licencia médica
+    as_a:
+      - Funcionario
+    i_want: Declarar licencia médica (IMED/Medipass)
+    so_that: Registro mi ausencia justificada
+    priority: Crítica
+    module: Personas
+    integration: IMED/Medipass
+    acceptance_criteria:
+      - Carga de licencia
+      - Estado de tramitación
+    source_ref: "user_stories_legacy.md:L920"
+  - id: US-BACK-PER-005
+    legacy_ids:
+      - per-005
+    title: Solicitar permiso administrativo
+    as_a:
+      - Funcionario
+    i_want: Solicitar permiso administrativo (máx 6 días/año)
+    so_that: Uso mis días administrativos
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Control de cuota anual
+      - Aprobación jefatura
+    source_ref: "user_stories_legacy.md:L921"
+  - id: US-BACK-PER-006
+    legacy_ids:
+      - per-006
+    title: Visualizar liquidación de sueldo
+    as_a:
+      - Funcionario
+    i_want: Visualizar mi liquidación de sueldo (PDF)
+    so_that: Consulto mis remuneraciones
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - PDF descargable
+      - Detalle de haberes y descuentos
+    source_ref: "user_stories_legacy.md:L922"
+  - id: US-BACK-PER-007
+    legacy_ids:
+      - per-007
+    title: Solicitar certificado antigüedad/renta
+    as_a:
+      - Funcionario
+    i_want: Solicitar certificado de antigüedad/renta (FEA)
+    so_that: Obtengo documentos oficiales
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Generación automática
+      - Firma FEA
+    source_ref: "user_stories_legacy.md:L923"
+  - id: US-BACK-PER-008
+    legacy_ids:
+      - per-010
+    title: Dashboard ausentismo
+    as_a:
+      - Gestor de Personas
+    i_want: Ver dashboard de ausentismo por tipo y unidad
+    so_that: Monitoreo ausencias del personal
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Gráficos por tipo de ausencia
+      - Filtros por unidad
+    source_ref: "user_stories_legacy.md:L925"
+  - id: US-BACK-PER-009
+    legacy_ids:
+      - per-011
+    title: Procesar licencias médicas
+    as_a:
+      - Gestor de Personas
+    i_want: Procesar licencias médicas (COMPIN/ISAPRE)
+    so_that: Gestiono el flujo de licencias
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Estados de licencia
+      - Integración COMPIN/ISAPRE
+    source_ref: "user_stories_legacy.md:L926"
+  - id: US-BACK-PER-010
+    legacy_ids:
+      - per-012
+    title: Calcular liquidaciones mensuales
+    as_a:
+      - Gestor de Personas
+    i_want: Calcular liquidaciones mensuales (EUS)
+    so_that: Proceso remuneraciones
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Cálculo según escala EUS
+      - Validación de asignaciones
+    source_ref: "user_stories_legacy.md:L927"
+  - id: US-BACK-PER-011
+    legacy_ids:
+      - per-013
+    title: Generar planilla Previred
+    as_a:
+      - Gestor de Personas
+    i_want: Generar planilla Previred
+    so_that: Cumplo con obligaciones previsionales
+    priority: Crítica
+    module: Personas
+    integration: Previred
+    acceptance_criteria:
+      - Archivo en formato Previred
+      - Validación de datos
+    source_ref: "user_stories_legacy.md:L928"
+  - id: US-BACK-PER-012
+    legacy_ids:
+      - per-014
+    title: Gestionar horas extraordinarias
+    as_a:
+      - Gestor de Personas
+    i_want: Gestionar horas extraordinarias (F2)
+    so_that: Controlo sobretiempo
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Registro de horas
+      - Aprobación jefatura
+    source_ref: "user_stories_legacy.md:L929"
+  - id: US-BACK-PER-013
+    legacy_ids:
+      - per-015
+    title: Gestionar cometidos funcionarios
+    as_a:
+      - Gestor de Personas
+    i_want: Gestionar cometidos funcionarios (viático)
+    so_that: Proceso comisiones de servicio
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Solicitud y aprobación
+      - Cálculo de viático
+    source_ref: "user_stories_legacy.md:L930"
+  - id: US-BACK-PER-014
+    legacy_ids:
+      - per-016
+    title: Registrar accidente trabajo
+    as_a:
+      - Gestor de Personas
+    i_want: Registrar accidente de trabajo (DIAT)
+    so_that: Cumplo con normativa de seguridad
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Formulario DIAT
+      - Notificación a Mutual
+    source_ref: "user_stories_legacy.md:L931"
+  - id: US-BACK-PER-015
+    legacy_ids:
+      - per-017
+    title: Gestionar concursos públicos
+    as_a:
+      - Gestor de Personas
+    i_want: Gestionar concursos públicos
+    so_that: Recluto personal
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Publicación de bases
+      - Etapas del concurso
+    source_ref: "user_stories_legacy.md:L932"
+  - id: US-BACK-PER-016
+    legacy_ids:
+      - per-020
+    title: Registrar precalificación
+    as_a:
+      - Junta Calificadora
+    i_want: Registrar precalificación (factores/sub)
+    so_that: Inicio proceso de calificación
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Factores de evaluación
+      - Puntajes por subfactor
+    source_ref: "user_stories_legacy.md:L933"
+  - id: US-BACK-PER-017
+    legacy_ids:
+      - per-021
+    title: Consolidar calificaciones
+    as_a:
+      - Junta Calificadora
+    i_want: Consolidar calificaciones (junta anual)
+    so_that: Cierro proceso de calificación
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Consolidación de puntajes
+      - Lista de mérito
+    source_ref: "user_stories_legacy.md:L934"
+  - id: US-BACK-PER-018
+    legacy_ids:
+      - per-022
+    title: Notificar resultado calificación
+    as_a:
+      - Junta Calificadora
+    i_want: Notificar resultado de calificación
+    so_that: Informo a funcionarios
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Notificación individual
+      - Plazo de apelación
+    source_ref: "user_stories_legacy.md:L935"
+  - id: US-BACK-ABS-001
+    legacy_ids:
+      - ABS-COM-01
+    title: Plan Anual de Compras
+    as_a:
+      - Encargado Abastecimiento
+    i_want: Gestionar Plan Anual de Compras (PAC) consolidado
+    so_that: Planifico adquisiciones
+    priority: Alta
+    module: Abastecimiento
+    acceptance_criteria:
+      - PAC por unidad
+      - Consolidación institucional
+    source_ref: "user_stories_legacy.md:L943"
+  - id: US-BACK-ABS-002
+    legacy_ids:
+      - ABS-COM-02
+    title: Tramitar solicitudes de compra
+    as_a:
+      - Encargado Abastecimiento
+    i_want: Tramitar solicitudes verificando CDP
+    so_that: Proceso requerimientos
+    priority: Alta
+    module: Abastecimiento
+    acceptance_criteria:
+      - Validación de CDP
+      - Flujo de aprobación
+    source_ref: "user_stories_legacy.md:L944"
+  - id: US-BACK-ABS-003
+    legacy_ids:
+      - ABS-COM-03
+    title: Publicar licitaciones
+    as_a:
+      - Encargado Abastecimiento
+    i_want: Publicar licitaciones en Mercado Público
+    so_that: Cumplo con Ley 19.886
+    priority: Crítica
+    module: Abastecimiento
+    integration: Mercado Público (DS12)
+    acceptance_criteria:
+      - Publicación en portal
+      - Bases adjuntas
+    source_ref: "user_stories_legacy.md:L945"
+  - id: US-BACK-ABS-004
+    legacy_ids:
+      - ABS-COM-04
+    title: Evaluar ofertas
+    as_a:
+      - Encargado Abastecimiento
+    i_want: Evaluar ofertas (criterios técnico-económicos)
+    so_that: Selecciono mejor propuesta
+    priority: Crítica
+    module: Abastecimiento
+    acceptance_criteria:
+      - Pauta de evaluación
+      - Acta de evaluación
+    source_ref: "user_stories_legacy.md:L946"
+  - id: US-BACK-ABS-005
+    legacy_ids:
+      - ABS-COM-05
+    title: Emitir Orden de Compra
+    as_a:
+      - Encargado Abastecimiento
+    i_want: Emitir OC (compromiso de gasto)
+    so_that: Formalizo la adquisición
+    priority: Crítica
+    module: Abastecimiento
+    acceptance_criteria:
+      - OC en Mercado Público
+      - Compromiso presupuestario
+    source_ref: "user_stories_legacy.md:L947"
+  - id: US-BACK-ABS-006
+    legacy_ids:
+      - ABS-COM-06
+    title: Gestionar contratos
+    as_a:
+      - Encargado Abastecimiento
+    i_want: "Gestionar contratos (hitos, garantías)"
+    so_that: Administro ejecución contractual
+    priority: Alta
+    module: Abastecimiento
+    acceptance_criteria:
+      - Estados de pago
+      - Control de garantías
+    source_ref: "user_stories_legacy.md:L948"
+  - id: US-BACK-CONT-001
+    legacy_ids:
+      - CONT-01
+    title: Contabilizar devengado SISREC en SIGFE
+    as_a:
+      - Contador
+    i_want: Contabilizar devengado SISREC en SIGFE automáticamente
+    so_that: Registro contable de rendiciones
+    priority: Crítica
+    module: Contabilidad
+    integration: SIGFE/SISREC (DS12)
+    acceptance_criteria:
+      - Asiento automático
+      - Conciliación de montos
+    source_ref: "user_stories_legacy.md:L954"
+  - id: US-BACK-CONT-002
+    legacy_ids:
+      - CONT-02
+    title: Conciliar cartola bancaria
+    as_a:
+      - Contador
+    i_want: Conciliar cartola bancaria con movimientos SISREC
+    so_that: Verifico consistencia
+    priority: Crítica
+    module: Contabilidad
+    acceptance_criteria:
+      - Comparativo automático
+      - Identificación de diferencias
+    source_ref: "user_stories_legacy.md:L955"
+  - id: US-BACK-CONT-003
+    legacy_ids:
+      - CONT-03
+    title: Emitir certificado deuda flotante
+    as_a:
+      - Contador
+    i_want: Emitir certificado de deuda flotante
+    so_that: Documento compromisos pendientes
+    priority: Alta
+    module: Contabilidad
+    acceptance_criteria:
+      - Cálculo automático
+      - Certificado firmado
+    source_ref: "user_stories_legacy.md:L956"
+  - id: US-BACK-BOD-001
+    legacy_ids:
+      - ABS-BOD-01
+    title: Registrar ingresos a bodega
+    as_a:
+      - Encargado Bodega
+    i_want: Registrar ingresos (aumenta stock)
+    so_that: Actualizo inventario
+    priority: Crítica
+    module: Inventarios
+    acceptance_criteria:
+      - Ingreso documentado
+      - Stock actualizado
+    source_ref: "user_stories_legacy.md:L962"
+  - id: US-BACK-BOD-002
+    legacy_ids:
+      - ABS-BOD-02
+    title: Despachar solicitudes
+    as_a:
+      - Encargado Bodega
+    i_want: "Despachar solicitudes (disminuye stock, FEA)"
+    so_that: Entrego materiales
+    priority: Crítica
+    module: Inventarios
+    acceptance_criteria:
+      - Guía de despacho
+      - Firma FEA
+    source_ref: "user_stories_legacy.md:L963"
+  - id: US-BACK-BOD-003
+    legacy_ids:
+      - ABS-BOD-03
+    title: Inventario físico
+    as_a:
+      - Encargado Bodega
+    i_want: Realizar inventario físico (ajustes diferencia)
+    so_that: Concilio existencias
+    priority: Alta
+    module: Inventarios
+    acceptance_criteria:
+      - Conteo físico
+      - Ajustes documentados
+    source_ref: "user_stories_legacy.md:L964"
+  - id: US-BACK-AF-001
+    legacy_ids:
+      - ABS-AF-01
+    title: Alta activo fijo
+    as_a:
+      - Encargado Activo Fijo
+    i_want: "Registrar alta de activo fijo (código, depreciación)"
+    so_that: Incorporo bienes al patrimonio
+    priority: Crítica
+    module: ActivoFijo
+    acceptance_criteria:
+      - Código único
+      - Cálculo de depreciación
+    source_ref: "user_stories_legacy.md:L965"
+  - id: US-BACK-AF-002
+    legacy_ids:
+      - ABS-AF-02
+    title: Traslado de bienes
+    as_a:
+      - Encargado Activo Fijo
+    i_want: Registrar traslado de bienes (cambio ubicación)
+    so_that: Actualizo ubicación de activos
+    priority: Alta
+    module: ActivoFijo
+    acceptance_criteria:
+      - Nueva ubicación
+      - Responsable actualizado
+    source_ref: "user_stories_legacy.md:L966"
+  - id: US-BACK-AF-003
+    legacy_ids:
+      - ABS-AF-03
+    title: Baja de bienes
+    as_a:
+      - Encargado Activo Fijo
+    i_want: "Registrar baja de bienes (resolución, causal)"
+    so_that: Elimino activos del inventario
+    priority: Alta
+    module: ActivoFijo
+    acceptance_criteria:
+      - Causal de baja
+      - Resolución aprobatoria
+    source_ref: "user_stories_legacy.md:L967"
+  - id: US-BACK-AF-004
+    legacy_ids:
+      - ABS-AF-04
+    title: Inventario anual AF
+    as_a:
+      - Encargado Activo Fijo
+    i_want: Realizar inventario anual de activo fijo
+    so_that: Cumplo con normativa contable
+    priority: Alta
+    module: ActivoFijo
+    acceptance_criteria:
+      - Verificación física
+      - Acta de inventario
+    source_ref: "user_stories_legacy.md:L968"
+  - id: US-BACK-FLO-001
+    legacy_ids:
+      - ABS-MAN-01
+    title: Órdenes trabajo mantención
+    as_a:
+      - Encargado Servicios Generales
+    i_want: Gestionar órdenes de trabajo de mantención (asignar técnico)
+    so_that: Mantengo infraestructura
+    priority: Alta
+    module: Servicios
+    acceptance_criteria:
+      - OT con asignación
+      - Estados de la OT
+    source_ref: "user_stories_legacy.md:L974"
+  - id: US-BACK-FLO-002
+    legacy_ids:
+      - ABS-FLO-01
+    title: Solicitudes de vehículos
+    as_a:
+      - Encargado Flota
+    i_want: Gestionar solicitudes de vehículos (asignar conductor)
+    so_that: Administro uso de flota
+    priority: Alta
+    module: Flota
+    acceptance_criteria:
+      - Disponibilidad de vehículos
+      - Asignación de conductor
+    source_ref: "user_stories_legacy.md:L975"
+  - id: US-BACK-FLO-003
+    legacy_ids:
+      - ABS-FLO-02
+    title: Control km/combustible
+    as_a:
+      - Encargado Flota
+    i_want: Controlar km/combustible (bitácora)
+    so_that: Monitoreo uso de vehículos
+    priority: Alta
+    module: Flota
+    acceptance_criteria:
+      - Registro de kilometraje
+      - Consumo de combustible
+    source_ref: "user_stories_legacy.md:L976"
+  - id: US-BACK-BIEN-001
+    legacy_ids:
+      - BIEN-AF-01
+    title: Registrar afiliaciones bienestar
+    as_a:
+      - Profesional Bienestar
+    i_want: Registrar afiliaciones (socio con descuento)
+    so_that: Gestiono membresía
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Alta de socio
+      - Descuento automático
+    source_ref: "user_stories_legacy.md:L984"
+  - id: US-BACK-BIEN-002
+    legacy_ids:
+      - BIEN-AF-02
+    title: Gestionar grupo familiar
+    as_a:
+      - Profesional Bienestar
+    i_want: Gestionar grupo familiar (cargas)
+    so_that: Registro beneficiarios
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Cargas familiares
+      - Documentos de respaldo
+    source_ref: "user_stories_legacy.md:L985"
+  - id: US-BACK-BIEN-003
+    legacy_ids:
+      - BIEN-BON-01
+    title: Gestionar bonificación médica
+    as_a:
+      - Profesional Bienestar
+    i_want: "Gestionar bonificación médica (tope anual, SIGBIE)"
+    so_that: Proceso reembolsos de salud
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Control de tope anual
+      - Integración SIGBIE
+    source_ref: "user_stories_legacy.md:L986"
+  - id: US-BACK-BIEN-004
+    legacy_ids:
+      - BIEN-SUB-01
+    title: Otorgar subsidios eventos
+    as_a:
+      - Profesional Bienestar
+    i_want: Otorgar subsidios por eventos (natalidad/pérdida)
+    so_that: Apoyo en momentos especiales
+    priority: Media
+    module: Bienestar
+    acceptance_criteria:
+      - Tipos de subsidio
+      - Montos definidos
+    source_ref: "user_stories_legacy.md:L987"
+  - id: US-BACK-BIEN-005
+    legacy_ids:
+      - BIEN-PRE-01
+    title: Evaluar préstamos
+    as_a:
+      - Profesional Bienestar
+    i_want: Evaluar préstamos (capacidad endeudamiento)
+    so_that: Otorgo préstamos responsablemente
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Cálculo de capacidad
+      - Aprobación/rechazo
+    source_ref: "user_stories_legacy.md:L988"
+  - id: US-BACK-BIEN-006
+    legacy_ids:
+      - BIEN-PRE-02
+    title: Descuento cuotas préstamo
+    as_a:
+      - Profesional Bienestar
+    i_want: Aplicar descuento de cuotas (automático planilla)
+    so_that: Recupero préstamos
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Descuento en liquidación
+      - Control de saldos
+    source_ref: "user_stories_legacy.md:L989"
+  - id: US-BACK-BIEN-007
+    legacy_ids:
+      - BIEN-CON-01
+    title: Gestionar convenios terceros
+    as_a:
+      - Profesional Bienestar
+    i_want: "Gestionar convenios con terceros (farmacias, etc)"
+    so_that: Amplío beneficios
+    priority: Media
+    module: Bienestar
+    acceptance_criteria:
+      - Registro de convenios
+      - Condiciones y vigencia
+    source_ref: "user_stories_legacy.md:L990"
+  - id: US-BACK-BIEN-008
+    legacy_ids:
+      - BIEN-SSO-01
+    title: Coordinar con Mutual
+    as_a:
+      - Profesional Bienestar
+    i_want: Coordinar con Mutual (accidente laboral)
+    so_that: Gestiono atención de accidentados
+    priority: Crítica
+    module: Bienestar
+    acceptance_criteria:
+      - Derivación a Mutual
+      - Seguimiento de caso
+    source_ref: "user_stories_legacy.md:L991"
+  - id: US-BACK-BIEN-009
+    legacy_ids:
+      - BIEN-SSO-02
+    title: Apoyar CPHS
+    as_a:
+      - Profesional Bienestar
+    i_want: Apoyar CPHS (investigación accidentes)
+    so_that: Prevengo futuros accidentes
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Participación en investigación
+      - Medidas preventivas
+    source_ref: "user_stories_legacy.md:L992"
+  - id: US-BACK-BIEN-010
+    legacy_ids:
+      - SOC-BON-01
+    title: Solicitar bonificación (socio)
+    as_a:
+      - Socio Bienestar
+    i_want: Solicitar bonificación (adjuntar boletas)
+    so_that: Obtengo reembolso
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Formulario de solicitud
+      - Documentos adjuntos
+    source_ref: "user_stories_legacy.md:L993"
+  - id: US-BACK-BIEN-011
+    legacy_ids:
+      - SOC-PRE-01
+    title: Solicitar préstamo (socio)
+    as_a:
+      - Socio Bienestar
+    i_want: Solicitar préstamo (ver condiciones)
+    so_that: Accedo a financiamiento
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Condiciones visibles
+      - Simulador de cuotas
+    source_ref: "user_stories_legacy.md:L994"
+  - id: US-BACK-BIEN-012
+    legacy_ids:
+      - SOC-CTA-01
+    title: Ver cuenta corriente bienestar
+    as_a:
+      - Socio Bienestar
+    i_want: Ver cuenta corriente bienestar (saldos)
+    so_that: Consulto mi estado
+    priority: Alta
+    module: Bienestar
+    acceptance_criteria:
+      - Saldo disponible
+      - Historial de movimientos
+    source_ref: "user_stories_legacy.md:L995"
+  - id: US-BACK-COMP-001
+    legacy_ids:
+      - comp-001
+    title: Plan Anual de Capacitación
+    as_a:
+      - Encargado Capacitación
+    i_want: Gestionar Plan Anual de Capacitación (PAC)
+    so_that: Desarrollo al personal
+    priority: Alta
+    module: Competencias
+    acceptance_criteria:
+      - DNC consolidado
+      - Plan con actividades
+    source_ref: "user_stories_legacy.md:L1003"
+  - id: US-BACK-COMP-002
+    legacy_ids:
+      - comp-002
+    title: Proceso calificaciones Junta
+    as_a:
+      - Encargado Capacitación
+    i_want: Gestionar proceso de calificaciones Junta
+    so_that: Cumplo con ciclo de evaluación
+    priority: Crítica
+    module: Competencias
+    acceptance_criteria:
+      - Cronograma de calificación
+      - Etapas del proceso
+    source_ref: "user_stories_legacy.md:L1004"
+  - id: US-BACK-COMP-003
+    legacy_ids:
+      - comp-003
+    title: Metas de desempeño
+    as_a:
+      - Encargado Capacitación
+    i_want: Gestionar metas de desempeño (CDC/PMG)
+    so_that: Cumplo con compromisos institucionales
+    priority: Alta
+    module: Competencias
+    acceptance_criteria:
+      - Metas definidas
+      - Seguimiento de avance
+    source_ref: "user_stories_legacy.md:L1005"
+_summary:
+  total_stories: 52
+  modules_covered:
+    - Personas
+    - Abastecimiento
+    - Contabilidad
+    - Inventarios
+    - ActivoFijo
+    - Servicios
+    - Flota
+    - Bienestar
+    - Competencias
+  integrations:
+    - IMED
+    - Medipass
+    - Previred
+    - Mercado Público
+    - SIGFE
+    - SISREC
+    - SIGBIE
+  next_file: kb_goreos_us_d-tde.yml

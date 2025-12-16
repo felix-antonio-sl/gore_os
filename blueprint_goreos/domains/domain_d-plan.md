@@ -27,7 +27,7 @@ Gestionar los instrumentos de planificación regional y su conexión con la ejec
 │   │   ═══════════════════════════════════════════════                          │   │
 │   │   ERD 2024-2034                                                            │   │
 │   │   └── Visión Regional                                                       │   │
-│   │       └── Eje Estratégico (4-6)                                            │   │
+│   │       └── Eje Estratégico (4-6) - incluye Eje Seguridad Pública            │   │
 │   │           └── Lineamiento (2-4 por eje)                                    │   │
 │   │               └── Objetivo Estratégico (1-3 por lineamiento)               │   │
 │   │                   └── Indicador + Meta (1-n por objetivo)                  │   │
@@ -35,7 +35,7 @@ Gestionar los instrumentos de planificación regional y su conexión con la ejec
 │   │                                                                             │   │
 │   │   FUNCIONALIDADES                                                           │   │
 │   │   • Árbol navegable de ERD                                                  │   │
-│   │   • Vinculación IPR → Objetivo ERD (obligatorio)                           │   │
+│   │   • Vinculación IPR → Objetivo ERD (obligatorio, incluye Proyecto_Seguridad)│  │
 │   │   • Dashboard de avance por eje/lineamiento                                │   │
 │   │   • Alertas de objetivos sin iniciativas                                   │   │
 │   │   • Reportes de coherencia ERD-Presupuesto                                 │   │
@@ -109,7 +109,7 @@ Gestionar los instrumentos de planificación regional y su conexión con la ejec
 | Entidad | Atributos Clave | Relaciones |
 |---------|-----------------|------------|
 | `ERD` | id, nombre, periodo_inicio, periodo_fin, estado | → EjeEstrategico[] |
-| `EjeEstrategico` | id, erd_id, codigo, nombre, descripcion | → Lineamiento[] |
+| `EjeEstrategico` | id, erd_id, codigo, nombre, descripcion | → Lineamiento[], PoliticaRegionalSeguridad |
 | `Lineamiento` | id, eje_id, codigo, nombre | → ObjetivoEstrategico[] |
 | `ObjetivoEstrategico` | id, lineamiento_id, codigo, nombre, descripcion | → Indicador[], IPR[] |
 | `IndicadorERD` | id, objetivo_id, nombre, formula, linea_base, meta, año_meta | → MedicionIndicador[] |
@@ -123,9 +123,16 @@ Gestionar los instrumentos de planificación regional y su conexión con la ejec
 | Dominio | Relación |
 |---------|----------|
 | **D-TERR** | ZonaPROT se define en D-TERR como parte de la IDE |
-| **D-FIN** | IPR vinculadas a objetivos ERD |
+| **D-FIN** | IPR vinculadas a objetivos ERD (incluye Proyecto_Seguridad) |
+| **D-EJEC** | IPR priorizadas en ARI se ejecutan vía convenios |
+| **D-COORD** | Compromisos de Gobernador vinculados a objetivos ERD |
+| **D-NORM** | Reglamentos regionales vinculados con ERD |
+| **D-BACK** | Plan de Compras (PAC) alineado con ARI |
 | **D-GESTION** | OKRs institucionales alineados con ERD |
+| **D-EVOL** | Proyección de cumplimiento ERD |
+| **D-SEG** | Política Regional de Seguridad → Eje Seguridad en ERD |
+| **D-GINT (FÉNIX)** | Objetivos ERD sin avance >180 días activan intervención Nivel III |
 
 ---
 
-*Documento parte de GORE_OS v3.1*
+*Documento parte de GORE_OS v4.1*

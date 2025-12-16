@@ -1,8 +1,8 @@
 # GORE_OS: Visión General
 
-> **Versión:** 4.0 (Modular)  
+> **Versión:** 4.2 (Modular)  
 > **Fecha:** Diciembre 2024  
-> **Estructura:** Documento principal + 10 archivos de dominio
+> **Estructura:** Documento principal + 12 archivos de dominio
 
 ---
 
@@ -34,14 +34,14 @@ El GORE de Ñuble opera hoy como un **sistema fragmentado**:
 
 **Síntomas específicos:**
 
-| Área | Síntoma | Impacto |
-|------|---------|---------|
-| **IPR** | No hay visibilidad de cartera completa | Proyectos duplicados, mal priorizados |
-| **Presupuesto** | Información desfasada con SIGFE | Subejecución ~15-20% anual |
-| **Rendiciones** | Seguimiento manual en Excel | Mora crónica, reparos CGR |
-| **Convenios** | Sin alertas de vencimiento | Caducidades, pérdida de recursos |
-| **Coordinación** | Sin fuente única de verdad | Actores desalineados |
-| **Planificación** | ERD sin conexión con ejecución | Estrategia desconectada |
+| Área              | Síntoma                                | Impacto                               |
+| ----------------- | -------------------------------------- | ------------------------------------- |
+| **IPR**           | No hay visibilidad de cartera completa | Proyectos duplicados, mal priorizados |
+| **Presupuesto**   | Información desfasada con SIGFE        | Subejecución ~15-20% anual            |
+| **Rendiciones**   | Seguimiento manual en Excel            | Mora crónica, reparos CGR             |
+| **Convenios**     | Sin alertas de vencimiento             | Caducidades, pérdida de recursos      |
+| **Coordinación**  | Sin fuente única de verdad             | Actores desalineados                  |
+| **Planificación** | ERD sin conexión con ejecución         | Estrategia desconectada               |
 
 ---
 
@@ -65,16 +65,16 @@ No es un sistema de información tradicional. Es una **plataforma unificada** qu
 
 ### 3. Principios Rectores
 
-| Principio | Descripción | Implicancia de Diseño |
-|-----------|-------------|----------------------|
-| **Fuente Única de Verdad** | Un dato, una fuente, muchos consumidores | No duplicar datos; integrar sistemas |
-| **Automatización Progresiva** | Primero visibilidad, luego alertas, luego automatización | Capas incrementales de valor |
-| **Humano en el Centro** | AI aumenta capacidad, no reemplaza juicio | Decisiones finales siempre humanas |
-| **Cumplimiento Embebido** | Normativa como reglas del sistema | Compliance by design (ver nota) |
-| **Trazabilidad Total** | Cada acción tiene autor, fecha, razón | Auditoría automática |
-| **Interoperabilidad Nativa** | APIs primero, UI después | Ecosistema abierto |
-| **Conocimiento Estructurado** | Normativa, procesos y reglas como KB | Agentes consultan KB antes de actuar |
-| **Agentes Especializados** | Cada dominio tiene agentes que asisten | Delegación de tareas repetitivas |
+| Principio                     | Descripción                                              | Implicancia de Diseño                |
+| ----------------------------- | -------------------------------------------------------- | ------------------------------------ |
+| **Fuente Única de Verdad**    | Un dato, una fuente, muchos consumidores                 | No duplicar datos; integrar sistemas |
+| **Automatización Progresiva** | Primero visibilidad, luego alertas, luego automatización | Capas incrementales de valor         |
+| **Humano en el Centro**       | AI aumenta capacidad, no reemplaza juicio                | Decisiones finales siempre humanas   |
+| **Cumplimiento Embebido**     | Normativa como reglas del sistema                        | Compliance by design (ver nota)      |
+| **Trazabilidad Total**        | Cada acción tiene autor, fecha, razón                    | Auditoría automática                 |
+| **Interoperabilidad Nativa**  | APIs primero, UI después                                 | Ecosistema abierto                   |
+| **Conocimiento Estructurado** | Normativa, procesos y reglas como KB                     | Agentes consultan KB antes de actuar |
+| **Agentes Especializados**    | Cada dominio tiene agentes que asisten                   | Delegación de tareas repetitivas     |
 
 > **Nota sobre Cumplimiento:** GORE_OS distingue tres dimensiones:
 >
@@ -147,9 +147,10 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                  │
 │  NÚCLEOS TÁCTICOS (Motor de Desarrollo)                                          │
-│  ┌─────────────────────────┐ ┌─────────────────────────┐ ┌─────────────────────┐  │
-│  │ FINANCIAR (D-FIN)       │ │ EJECUTAR (D-EJEC)       │ │ COORDINAR (D-COORD) │  │
-│  └─────────────────────────┘ └─────────────────────────┘ └─────────────────────┘  │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐          │
+│  │ FINANCIAR     │ │ EJECUTAR      │ │ COORDINAR     │ │ PROTEGER      │          │
+│  │ (D-FIN)       │ │ (D-EJEC)      │ │ (D-COORD)     │ │ (D-SEG)       │          │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └───────────────┘          │
 │                                                                                  │
 ├───────────────────────────────────────────────────────────────────────────────┤
 │                                                                                  │
@@ -169,35 +170,37 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 
 ### 6. Mapa de Dominios
 
-| # | Dominio | Código | Capa | Función | Detalle |
-|---|---------|--------|------|---------|---------|
-| 1 | Planificación Estratégica | D-PLAN | Habilitante | PLANIFICAR | [Ver detalle](domains/domain_d-plan.md) |
-| 2 | Financiamiento | D-FIN | Núcleo | FINANCIAR | [Ver detalle](domains/domain_d-fin.md) |
-| 3 | Ejecución | D-EJEC | Núcleo | EJECUTAR | [Ver detalle](domains/domain_d-ejec.md) |
-| 4 | Coordinación | D-COORD | Núcleo | COORDINAR | [Ver detalle](domains/domain_d-coord.md) |
-| 5 | Gestión Jurídico-Administrativa | D-NORM | Habilitante | NORMAR | [Ver detalle](domains/domain_d-norm.md) |
-| 6 | Gestión de Recursos | D-BACK | Habilitante | ADMINISTRAR | [Ver detalle](domains/domain_d-back.md) |
-| 7 | Gobernanza Digital | D-TDE | Habilitante | - | [Ver detalle](domains/domain_d-tde.md) |
-| 8 | Inteligencia Territorial | D-TERR | Habilitante | - | [Ver detalle](domains/domain_d-terr.md) |
-| 9 | Gestión Institucional | D-GESTION | Transversal | - | [Ver detalle](domains/domain_d-gestion.md) |
-| 10 | Evolución e Inteligencia | D-EVOL | Estratégica | - | [Ver detalle](domains/domain_d-evol.md) |
-| 11 | Gestión Institucional (FÉNIX) | D-GINT | Transversal | Intervención | [Ver detalle](domains/fenix.md) |
+| #   | Dominio                         | Código    | Capa        | Función      | Detalle                                    |
+| --- | ------------------------------- | --------- | ----------- | ------------ | ------------------------------------------ |
+| 1   | Planificación Estratégica       | D-PLAN    | Habilitante | PLANIFICAR   | [Ver detalle](domains/domain_d-plan.md)    |
+| 2   | Financiamiento                  | D-FIN     | Núcleo      | FINANCIAR    | [Ver detalle](domains/domain_d-fin.md)     |
+| 3   | Ejecución                       | D-EJEC    | Núcleo      | EJECUTAR     | [Ver detalle](domains/domain_d-ejec.md)    |
+| 4   | Coordinación                    | D-COORD   | Núcleo      | COORDINAR    | [Ver detalle](domains/domain_d-coord.md)   |
+| 5   | Gestión Jurídico-Administrativa | D-NORM    | Habilitante | NORMAR       | [Ver detalle](domains/domain_d-norm.md)    |
+| 6   | Gestión de Recursos             | D-BACK    | Habilitante | ADMINISTRAR  | [Ver detalle](domains/domain_d-back.md)    |
+| 7   | Gobernanza Digital              | D-TDE     | Habilitante | -            | [Ver detalle](domains/domain_d-tde.md)     |
+| 8   | Inteligencia Territorial        | D-TERR    | Habilitante | -            | [Ver detalle](domains/domain_d-terr.md)    |
+| 9   | Gestión Institucional           | D-GESTION | Transversal | -            | [Ver detalle](domains/domain_d-gestion.md) |
+| 10  | Evolución e Inteligencia        | D-EVOL    | Estratégica | -            | [Ver detalle](domains/domain_d-evol.md)    |
+| 11  | Gestión Institucional (FÉNIX)   | D-GINT    | Transversal | Intervención | [Ver detalle](domains/fenix.md)            |
+| 12  | Seguridad Pública Regional      | D-SEG     | Núcleo      | PROTEGER     | [Ver detalle](domains/domain_d-seg.md)     |
 
 ### 7. Resumen de Módulos por Dominio
 
-| Dominio | Módulos Principales |
-|---------|---------------------|
-| **D-PLAN** | ERD Digital, PROT Digital, ARI/PROPIR Digital, Inteligencia Territorial |
-| **D-FIN** | Captación Oportunidades, Capital Base, Portafolio IPR, Selector Mecanismos, Presupuesto, Rendiciones, Gestión Ejecutores, Evaluación Continua, IPR Problemáticas, Retorno IDR |
-| **D-EJEC** | Convenios, PMO Regional |
-| **D-COORD** | Directorio Actores, Ejecutores (ref), Proveedores, Participación Ciudadana, Gabinete Regional |
-| **D-NORM** | Actos Administrativos, Procedimientos, Expediente Electrónico, Cumplimiento/Control, Convenios (SSOT), Reglamentos, Biblioteca Normativa |
-| **D-BACK** | Gestión Financiera/Tesorería, RRHH, Abastecimiento/Patrimonio, Inventarios, Activo Fijo, Flota |
-| **D-TDE** | CPAT Institucional, Interoperabilidad, Ciberseguridad, Gobernanza Regional TDE |
-| **D-TERR** | IDE Regional, Observatorio Regional, Visor Geoespacial |
-| **D-GESTION** | OKRs Institucionales, H_gore, Playbooks Operativos, Mejora Continua |
-| **D-EVOL** | Niveles Madurez, Gobierno Datos, Automatizaciones, Agentes IA, Analytics Avanzado |
-| **D-GINT (FÉNIX)** | Intervenciones Nivel I-IV, Diagnóstico, Gestión de Contingencias, Aceleración |
+| Dominio            | Módulos Principales                                                                                                                                                           |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **D-PLAN**         | ERD Digital, PROT Digital, ARI/PROPIR Digital, Inteligencia Territorial                                                                                                       |
+| **D-FIN**          | Captación Oportunidades, Capital Base, Portafolio IPR, Selector Mecanismos, Presupuesto, Rendiciones, Gestión Ejecutores, Evaluación Continua, IPR Problemáticas, Retorno IDR |
+| **D-EJEC**         | Convenios, PMO Regional                                                                                                                                                       |
+| **D-COORD**        | Directorio Actores, Ejecutores (ref), Proveedores, Participación Ciudadana, Gabinete Regional                                                                                 |
+| **D-NORM**         | Actos Administrativos, Procedimientos, Expediente Electrónico, Cumplimiento/Control, Convenios (SSOT), Reglamentos, Biblioteca Normativa                                      |
+| **D-BACK**         | Gestión Financiera/Tesorería, RRHH, Abastecimiento/Patrimonio, Inventarios, Activo Fijo, Flota                                                                                |
+| **D-TDE**          | CPAT Institucional, Interoperabilidad, Ciberseguridad, Gobernanza Regional TDE                                                                                                |
+| **D-TERR**         | IDE Regional, Observatorio Regional, Visor Geoespacial                                                                                                                        |
+| **D-GESTION**      | OKRs Institucionales, H_gore, Playbooks Operativos, Mejora Continua                                                                                                           |
+| **D-EVOL**         | Niveles Madurez, Gobierno Datos, Automatizaciones, Agentes IA, Analytics Avanzado                                                                                             |
+| **D-GINT (FÉNIX)** | Intervenciones Nivel I-IV, Diagnóstico, Gestión de Contingencias, Aceleración                                                                                                 |
+| **D-SEG**          | Gobernanza Seguridad, Cartera Proyectos Seguridad, Operaciones CIES, Integración SITIA                                                                                        |
 
 ---
 
@@ -216,23 +219,23 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 
 ### 9. Catálogo de Agentes Especializados
 
-| Agente | Dominio | Función Principal | Interacción |
-|--------|---------|-------------------|-------------|
-| **Analista de Ejecución** | D-FIN | Monitorea ejecución presupuestaria, proyecta cierre, identifica riesgos | Alertas proactivas, dashboards |
-| **Monitor de Inversiones** | D-FIN + D-EJEC | Seguimiento de cartera IPR, alertas de estancamiento | Notificaciones, reportes |
-| **Verificador de Cumplimiento** | D-NORM | Valida cumplimiento normativo en actos, procedimientos y documentos | Checklist automático |
-| **Asesor de Mecanismos** | D-FIN | Recomienda mecanismo de financiamiento apropiado según características del proyecto | Chat interactivo |
-| **Generador de Reportes** | Transversal | Produce informes para CORE, CGR, DIPRES en formatos requeridos | Generación automática |
-| **Asistente Documental** | D-NORM | Ayuda en redacción de actos administrativos, resoluciones, convenios | Plantillas SFD/STS |
+| Agente                          | Dominio        | Función Principal                                                                   | Interacción                    |
+| ------------------------------- | -------------- | ----------------------------------------------------------------------------------- | ------------------------------ |
+| **Analista de Ejecución**       | D-FIN          | Monitorea ejecución presupuestaria, proyecta cierre, identifica riesgos             | Alertas proactivas, dashboards |
+| **Monitor de Inversiones**      | D-FIN + D-EJEC | Seguimiento de cartera IPR, alertas de estancamiento                                | Notificaciones, reportes       |
+| **Verificador de Cumplimiento** | D-NORM         | Valida cumplimiento normativo en actos, procedimientos y documentos                 | Checklist automático           |
+| **Asesor de Mecanismos**        | D-FIN          | Recomienda mecanismo de financiamiento apropiado según características del proyecto | Chat interactivo               |
+| **Generador de Reportes**       | Transversal    | Produce informes para CORE, CGR, DIPRES en formatos requeridos                      | Generación automática          |
+| **Asistente Documental**        | D-NORM         | Ayuda en redacción de actos administrativos, resoluciones, convenios                | Plantillas SFD/STS             |
 
 ### 10. Gobernanza del Conocimiento
 
-| Rol | Responsabilidad |
-|-----|-----------------|
-| **Knowledge Owner** | Define estructura y prioridades de la KB |
-| **Domain Expert** | Valida contenido técnico por área |
-| **Content Curator** | Mantiene actualizado el contenido |
-| **Agent Trainer** | Ajusta comportamiento de agentes según feedback |
+| Rol                 | Responsabilidad                                 |
+| ------------------- | ----------------------------------------------- |
+| **Knowledge Owner** | Define estructura y prioridades de la KB        |
+| **Domain Expert**   | Valida contenido técnico por área               |
+| **Content Curator** | Mantiene actualizado el contenido               |
+| **Agent Trainer**   | Ajusta comportamiento de agentes según feedback |
 
 ---
 
@@ -240,15 +243,15 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 
 ### 11. Integraciones Obligatorias
 
-| Sistema | Función | Prioridad |
-|---------|---------|-----------|
-| SIGFE | Contabilidad gubernamental, devengado, pagado | P0 |
-| BIP/SNI | Banco Integrado de Proyectos, RS, estados | P0 |
-| SISREC | Rendiciones de cuentas a CGR | P0 |
-| Mercado Público | Órdenes de compra, contratos, proveedores | P0 |
-| DocDigital | Gestión documental, expediente electrónico | P1 |
-| ClaveÚnica | Autenticación ciudadana | P1 |
-| SIAPER/SIGPER | Gestión de personal del Estado | P1 |
+| Sistema         | Función                                       | Prioridad |
+| --------------- | --------------------------------------------- | --------- |
+| SIGFE           | Contabilidad gubernamental, devengado, pagado | P0        |
+| BIP/SNI         | Banco Integrado de Proyectos, RS, estados     | P0        |
+| SISREC          | Rendiciones de cuentas a CGR                  | P0        |
+| Mercado Público | Órdenes de compra, contratos, proveedores     | P0        |
+| DocDigital      | Gestión documental, expediente electrónico    | P1        |
+| ClaveÚnica      | Autenticación ciudadana                       | P1        |
+| SIAPER/SIGPER   | Gestión de personal del Estado                | P1        |
 
 ### 12. Dependencias Críticas
 
@@ -259,11 +262,21 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 │                                                                                  │
 │  D-PLAN ──────────────────────────────────────────────────────────────────────▶ │
 │    │  ERD, PROT, ARI alimentan priorización de IPR                              │
+│    │  ◀───── D-SEG (Política Regional Seguridad → Eje Seguridad ERD)            │
 │    ▼                                                                             │
 │  D-FIN ◀──────────────────────────────────────────────────────────────────────▶ │
 │    │  IPR, Presupuesto, Rendiciones, Rating Ejecutores                          │
 │    │  ◀───── D-EJEC (Convenios operativos)                                      │
 │    │  ◀───── D-COORD (Actor como ejecutor)                                      │
+│    │  ◀───── D-SEG (Proyectos Seguridad heredan IPR con reglas especiales)      │
+│    ▼                                                                             │
+│  D-SEG ◀─────────────────────────────────────────────────────────────────────▶  │
+│    │  Seguridad Pública Regional (División Prevención del Delito + CIES)        │
+│    │  ───▶ D-COORD (Consejo Regional Seguridad, Municipios)                     │
+│    │  ───▶ D-NORM (Convenios Seguridad, Cadena Custodia → Expediente)           │
+│    │  ───▶ D-TDE (Infraestructura CIES, Ciberseguridad, Interop. SITIA)         │
+│    │  ───▶ D-TERR (Georreferenciación incidentes, Mapas calor delictual)        │
+│    │  ───▶ D-GINT (Crisis seguridad activan intervención Nivel I)               │
 │    ▼                                                                             │
 │  D-NORM ─────────────────────────────────────────────────────────────────────▶  │
 │    │  Convenio SSOT, Actos aprobatorios                                         │
@@ -272,14 +285,17 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 │  D-BACK ─────────────────────────────────────────────────────────────────────▶  │
 │    │  Recursos institucionales (personas, finanzas, bienes)                     │
 │    │  ◀───── D-COORD (Proveedor)                                                │
+│    │  ◀───── D-SEG (Personal CIES, Equipamiento, Mantenimiento)                 │
 │    ▼                                                                             │
 │  D-TERR ─────────────────────────────────────────────────────────────────────▶  │
 │    │  Capas GIS, indicadores territoriales                                      │
 │    │  ───▶ D-PLAN (validación PROT, indicadores ERD)                            │
 │    │  ───▶ D-FIN (localización IPR)                                             │
+│    │  ◀───── D-SEG (Capa incidentes, cobertura cámaras)                         │
 │    ▼                                                                             │
 │  D-TDE ◀─────────────────────────────────────────────────────────────────────── │
 │    │  Cumplimiento Ley TDE (piso normativo)                                     │
+│    │  ◀───── D-SEG (Red CIES 316 nodos, Interoperabilidad SITIA)                │
 │    ▼                                                                             │
 │  D-EVOL ◀────────────────────────────────────────────────────────────────────── │
 │       Evolución nativa (techo estratégico)                                      │
@@ -290,23 +306,23 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 
 ### 13. Metas a 5 Años
 
-| Indicador | Año 1 | Año 3 | Año 5 |
-|-----------|-------|-------|-------|
-| Ejecución presupuestaria | 85% | 92% | 97% |
-| Mora rendiciones | <15% | <5% | <2% |
-| Convenios sin alertas de vencimiento | 0% | 100% | 100% |
-| Proyectos con seguimiento automatizado | 30% | 80% | 100% |
-| Nivel madurez (L0-L5) | L1 | L3 | L4 |
+| Indicador                              | Año 1 | Año 3 | Año 5 |
+| -------------------------------------- | ----- | ----- | ----- |
+| Ejecución presupuestaria               | 85%   | 92%   | 97%   |
+| Mora rendiciones                       | <15%  | <5%   | <2%   |
+| Convenios sin alertas de vencimiento   | 0%    | 100%  | 100%  |
+| Proyectos con seguimiento automatizado | 30%   | 80%   | 100%  |
+| Nivel madurez (L0-L5)                  | L1    | L3    | L4    |
 
 ### 14. Próximos Pasos
 
-| Paso | Descripción | Artefacto Esperado |
-|------|-------------|-------------------|
-| **1** | Detallar integraciones con sistemas externos | Documento de integraciones |
-| **2** | Definir arquitectura técnica (stack, capas, APIs) | Documento de arquitectura |
-| **3** | Especificar modelo de datos unificado | Diagrama ER consolidado |
-| **4** | Diseñar MVP (alcance Fase 1) | Backlog priorizado |
-| **5** | Validar con stakeholders GORE | Acta de validación |
+| Paso  | Descripción                                       | Artefacto Esperado         |
+| ----- | ------------------------------------------------- | -------------------------- |
+| **1** | Detallar integraciones con sistemas externos      | Documento de integraciones |
+| **2** | Definir arquitectura técnica (stack, capas, APIs) | Documento de arquitectura  |
+| **3** | Especificar modelo de datos unificado             | Diagrama ER consolidado    |
+| **4** | Diseñar MVP (alcance Fase 1)                      | Backlog priorizado         |
+| **5** | Validar con stakeholders GORE                     | Acta de validación         |
 
 ---
 
@@ -327,11 +343,12 @@ docs/01_domain/
     ├── domain_d-terr.md       ← D-TERR detallado
     ├── domain_d-gestion.md    ← D-GESTION detallado
     ├── domain_d-evol.md       ← D-EVOL detallado
-    └── fenix.md               ← Dpto. Gestión Institucional (FÉNIX)
+    ├── fenix.md               ← Dpto. Gestión Institucional (FÉNIX)
+    └── domain_d-seg.md        ← D-SEG detallado (Seguridad Pública Regional)
 ```
 
 ---
 
 *Documento generado como parte del proceso de diseño de GORE_OS.*
-*Versión: 4.0 (Modular) | Fecha: Diciembre 2024*
-*Última revisión: 15-12-2024 | Cambios: Refactorización modular + FÉNIX (Dpto. Gestión Institucional)*
+*Versión: 4.1 (Modular) | Fecha: Diciembre 2024*
+*Última revisión: 15-12-2024 | Cambios: Integración D-SEG (División Prevención del Delito + CIES/SITIA)*

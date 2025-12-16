@@ -1,7 +1,21 @@
 # 📋 User Stories Unificadas — GORE OS
 
+> [!CAUTION]
+> ## ⚠️ ARCHIVO DEPRECATED
+> Este archivo ha sido **refactorizado** y migrado a formato KODA YAML estructurado.
+> 
+> **Nueva ubicación:** `gore_os/specs/`
+> - `_manifest.yml` (índice maestro)
+> - `kb_goreos_us_d-{dominio}.yml` (9 archivos por dominio)
+> 
+> **Total migrado:** 322 User Stories en 9 dominios
+> 
+> **Para consultas use:** El catálogo KODA en `/specs/` es ahora la fuente de verdad.
+
+---
+
 > **Sistema Operativo Cognitivo Regional**  
-> **Versión**: 6.4.0 REN-COMPLETE  
+> **Versión**: 6.4.0 REN-COMPLETE (LEGACY)  
 > **Paradigma**: Ingeniería de Software Composicional  
 > **Ontología**: `data-gore/ontology` v6.0.0
 

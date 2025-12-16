@@ -67,8 +67,10 @@ DETECTADA (100%) → CALIFICADA (60%) → PRIORIZADA (35%) → EN NURTURING (20%
 IPR (Término paraguas)
 ├── IDI (Iniciativa de Inversión) - Gasto de capital: obras, activos (S.31, S.33)
 │   └── Requiere RS/AD de MDSF, Registro obligatorio en BIP
-└── PPR (Programa Público Regional) - Gasto corriente/mixto (S.24)
-    └── Requiere RF de DIPRES/SES (Glosa 06), Metodología Marco Lógico
+├── PPR (Programa Público Regional) - Gasto corriente/mixto (S.24)
+│   └── Requiere RF de DIPRES/SES (Glosa 06), Metodología Marco Lógico
+└── Proyecto_Seguridad - Prevención del delito y seguridad pública
+    └── Hereda de IPR (puede ser IDI o PPR según mecanismo) + reglas especiales (validación SPD, convenio municipal)
 ```
 
 **Roles de Actores en IPR:**
@@ -156,13 +158,13 @@ ENE-DIC (n+1): Ejecución año n+1
 
 **Clasificación:**
 
-| Categoría | Criterio |
-|-----------|----------|
-| ESTANCADA | Sin avance >90 días |
-| EN MORA | Rendiciones vencidas >30 días |
-| SOBRECOSTO | Incremento >10% sobre RS |
-| ATRASO CRÍTICO | Avance físico <50% |
-| RIESGO LEGAL | Controversias, incumplimientos |
+| Categoría | Criterio | Activación FÉNIX |
+|-----------|----------|------------------|
+| ESTANCADA | Sin avance >90 días | Nivel II (automático) |
+| EN MORA | Rendiciones vencidas >180 días | Nivel II (automático) |
+| SOBRECOSTO | Incremento >10% sobre RS | Nivel III (evaluación) |
+| ATRASO CRÍTICO | Avance físico <50% del plan | Nivel II (evaluación) |
+| RIESGO LEGAL | Controversias, incumplimientos | Nivel I (si crítico) |
 
 ### 10. Retorno en Desarrollo (IDR)
 
@@ -191,6 +193,7 @@ ENE-DIC (n+1): Ejecución año n+1
 | Entidad | Atributos Clave | Relaciones |
 |---------|-----------------|------------|
 | `IPR` | id, codigo_bip, nombre, naturaleza, mecanismo_id, estado | → Oportunidad, Mecanismo, ObjetivoERD, Convenio[] |
+| `Proyecto_Seguridad` | hereda IPR + tipo_prevencion, alineamiento_politica, validacion_spd, convenio_municipal | → IPR, PoliticaRegionalSeguridad |
 | `ActorIPR` | id, ipr_id, actor_id, rol, fase, activo | → IPR, Actor |
 | `RatingEjecutor` | id, actor_id, score_total, nivel (A/B/C/D) | → Actor |
 | `EvaluacionIPR` | id, ipr_id, tipo, resultado, observaciones | → IPR |
@@ -209,6 +212,7 @@ ENE-DIC (n+1): Ejecución año n+1
 - **FRPD**: Bifurcación post-selección: CTCI puro (exento RF) vs Fomento (requiere RF); máx 30% remuneraciones
 - **Subvención 8%**: Plazo ejecución 8 meses; 10% puede ser asignación directa excepcional
 - **PPR Transfer**: Exento evaluación DIPRES/SES; rendición vía SISREC; máx 5% gastos personal
+- **Proyecto_Seguridad**: Fast-track emergencia (24-48h); validación SPD >1000 UTM; convenio municipal obligatorio para proyectos situacionales
 
 ---
 
@@ -220,7 +224,13 @@ ENE-DIC (n+1): Ejecución año n+1
 | **D-EJEC** | Convenios (ejecución operativa) |
 | **D-COORD** | Actor (entidad base de ejecutores) |
 | **D-NORM** | Convenio (SSOT del acto administrativo) |
+| **D-TERR** | Localización geoespacial de IPR |
+| **D-GESTION** | Indicadores de ejecución presupuestaria para H_gore |
+| **D-BACK** | Gestión financiera/tesorería vinculada con rendiciones |
+| **D-EVOL** | Analytics predictivo para proyección de ejecución |
+| **D-SEG** | Proyecto_Seguridad como subtipo de IPR |
+| **D-GINT (FÉNIX)** | IPR Problemáticas activan intervención Nivel I-III |
 
 ---
 
-*Documento parte de GORE_OS v3.1*
+*Documento parte de GORE_OS v4.1*

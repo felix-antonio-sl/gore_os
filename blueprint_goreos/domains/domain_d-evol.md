@@ -73,6 +73,8 @@ datos      priorizar  transformación
 
 **GATE:** Transformación estructural requiere H_org ≥ 70
 
+**Integración FÉNIX:** Anomalías detectadas por agentes IA o analytics pueden activar intervención (nivel variable según severidad)
+
 ### 2. Gobierno de Datos
 
 **Pilares:** Calidad • Seguridad (Ley 21.719) • Disponibilidad • Linaje
@@ -152,10 +154,19 @@ datos      priorizar  transformación
 
 | Dominio | Relación |
 |---------|----------|
+| **D-PLAN** | Proyección de cumplimiento ERD |
+| **D-FIN** | Analytics predictivo para IPR (ejecución, mora, riesgos) |
+| **D-EJEC** | Automatización de alertas de convenios |
+| **D-COORD** | Scoring predictivo de actores/ejecutores |
+| **D-NORM** | Automatización de expedientes y alertas normativas |
+| **D-BACK** | Predicción de necesidades de recursos |
 | **D-TDE** | D-TDE es piso normativo, D-EVOL es techo estratégico |
+| **D-TERR** | Analytics geoespacial avanzado |
 | **D-GESTION** | H_gore integra métricas de madurez |
+| **D-SEG** | Analytics predictivo de incidentes de seguridad |
+| **D-GINT (FÉNIX)** | Detección automatizada de condiciones de activación |
 | **Todos** | Agentes IA operan sobre todos los dominios |
 
 ---
 
-*Documento parte de GORE_OS v3.1*
+*Documento parte de GORE_OS v4.1*

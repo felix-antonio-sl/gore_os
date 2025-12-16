@@ -1,0 +1,597 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-norm:1.0.0"
+  domain: D-NORM
+  domain_name: Gestión Jurídico-Administrativa y Cumplimiento
+  legacy_modules:
+    - M6
+    - M11
+    - M28
+    - M32
+  total_stories: 52
+  priority_distribution:
+    critica: 28
+    alta: 18
+    media: 6
+stories:
+  - id: US-NORM-ACTO-001
+    legacy_ids:
+      - JUR-001
+    title: Gestionar actos administrativos
+    as_a:
+      - Abogado Unidad Jurídica
+    i_want: Gestionar actos administrativos (decretos/resoluciones)
+    so_that: Aseguro validez jurídica de los actos
+    priority: Crítica
+    module: Actos
+    acceptance_criteria:
+      - "Tipos: Decreto, Resolución Exenta, Resolución Afecta"
+      - Flujo de visación y firma
+    source_ref: "user_stories_legacy.md:L840"
+  - id: US-NORM-ACTO-002
+    legacy_ids:
+      - JUR-002
+    title: Asesorar y revisar bases/convenios
+    as_a:
+      - Abogado Unidad Jurídica
+    i_want: Asesorar legalmente y revisar bases/convenios
+    so_that: Prevengo riesgos legales
+    priority: Crítica
+    module: Actos
+    acceptance_criteria:
+      - Checklist de revisión legal
+      - Observaciones estructuradas
+    source_ref: "user_stories_legacy.md:L841"
+  - id: US-NORM-ACTO-003
+    legacy_ids:
+      - JUR-003
+      - AD-CONV-001
+    title: Tramitar ante CGR
+    as_a:
+      - Abogado Unidad Jurídica
+    i_want: Tramitar actos ante CGR (toma de razón)
+    so_that: Cumplo con control preventivo
+    priority: Crítica
+    module: Actos
+    acceptance_criteria:
+      - Envío electrónico a CGR
+      - Seguimiento de estado
+      - Registro de representaciones/observaciones
+    source_ref: "user_stories_legacy.md:L842"
+    note: Unificada de JUR-003 y AD-CONV-001 (duplicado)
+  - id: US-NORM-ACTO-004
+    legacy_ids:
+      - JUR-004
+    title: Gestionar litigios y defensa judicial
+    as_a:
+      - Abogado Unidad Jurídica
+    i_want: Gestionar litigios y defensa judicial regional
+    so_that: Defiendo intereses del GORE
+    priority: Alta
+    module: Actos
+    acceptance_criteria:
+      - Registro de causas activas
+      - Plazos judiciales con alertas
+    source_ref: "user_stories_legacy.md:L843"
+  - id: US-NORM-ACTO-005
+    legacy_ids:
+      - JUR-005
+    title: Supervisar cumplimiento normativo
+    as_a:
+      - Abogado Unidad Jurídica
+    i_want: Supervisar cumplimiento normativo (sumarios)
+    so_that: Mantengo disciplina administrativa
+    priority: Alta
+    module: Actos
+    acceptance_criteria:
+      - Inventario de sumarios
+      - Estados y plazos
+    source_ref: "user_stories_legacy.md:L844"
+  - id: US-NORM-ACTO-006
+    legacy_ids:
+      - AD-CONV-002
+    title: Clasificar convenio AFECTA/EXENTA
+    as_a:
+      - Analista Gestión DIPIR
+    i_want: Clasificar convenio AFECTA/EXENTA según normativa CGR
+    so_that: Determino flujo de aprobación correcto
+    priority: Alta
+    module: Actos
+    acceptance_criteria:
+      - Criterios de clasificación
+      - Fundamentación automática
+    source_ref: "user_stories_legacy.md:L164"
+  - id: US-NORM-ACTO-007
+    legacy_ids:
+      - ADM-JUR-001
+    title: Revisión legal de borrador
+    as_a:
+      - Abogado Unidad Jurídica
+    i_want: Visar borrador de acto administrativo (check atribuciones y presupuesto)
+    so_that: Valido antes de firma
+    priority: Crítica
+    module: Actos
+    acceptance_criteria:
+      - Checklist de visación
+      - Atribuciones verificadas
+    source_ref: "user_stories_legacy.md:L1194"
+  - id: US-NORM-ACTO-008
+    legacy_ids:
+      - ADM-JUR-002
+    title: Devolver trámite con observaciones
+    as_a:
+      - Abogado Unidad Jurídica
+    i_want: Devolver trámite con observaciones jurídicas para corrección
+    so_that: Corrijo antes de firma
+    priority: Alta
+    module: Actos
+    acceptance_criteria:
+      - Observaciones estructuradas
+      - Notificación al área
+    source_ref: "user_stories_legacy.md:L1195"
+  - id: US-NORM-ACTO-009
+    legacy_ids:
+      - ADM-GEST-001
+    title: Numerar y fechar actos
+    as_a:
+      - Centro de Gestión / Oficina de Partes
+    i_want: Asignar folio único a Resolución/Decreto tras total tramitación
+    so_that: Formalizo el acto
+    priority: Crítica
+    module: Actos
+    acceptance_criteria:
+      - Folio correlativo por tipo
+      - Fecha de emisión
+    source_ref: "user_stories_legacy.md:L1201"
+  - id: US-NORM-ACTO-010
+    legacy_ids:
+      - ADM-GEST-002
+    title: Distribución de actos
+    as_a:
+      - Centro de Gestión / Oficina de Partes
+    i_want: Notificar digitalmente a interesados y publicar en Transparencia
+    so_that: Cumplo con notificación y publicidad
+    priority: Alta
+    module: Actos
+    acceptance_criteria:
+      - Notificación electrónica
+      - Publicación automática
+    source_ref: "user_stories_legacy.md:L1202"
+  - id: US-NORM-ACTO-011
+    legacy_ids:
+      - ADM-GEST-003
+    title: Control de plazos de firma
+    as_a:
+      - Centro de Gestión / Oficina de Partes
+    i_want: Recibir alerta de actos pendientes de firma >5 días
+    so_that: Gestiono demoras
+    priority: Media
+    module: Actos
+    acceptance_criteria:
+      - Alerta automática
+      - Dashboard de pendientes
+    source_ref: "user_stories_legacy.md:L1203"
+  - id: US-NORM-ACTO-012
+    legacy_ids:
+      - ADM-MFE-001
+    title: Certificar copia fiel
+    as_a:
+      - Ministro de Fe
+    i_want: Generar copia auténtica digital de actos originales
+    so_that: Proveo copias oficiales
+    priority: Alta
+    module: Actos
+    acceptance_criteria:
+      - Firma FEA del Ministro de Fe
+      - Marca de autenticidad
+    source_ref: "user_stories_legacy.md:L1209"
+  - id: US-NORM-EXP-001
+    legacy_ids:
+      - AS-009
+    title: Gestionar Expediente Electrónico (DS10)
+    as_a:
+      - Administrador Sistema
+    i_want: Gestionar Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
+    so_that: Cumplo con Ley TDE
+    priority: Crítica
+    module: Expediente
+    integration: DocDigital (DS10)
+    acceptance_criteria:
+      - IUIe único por expediente
+      - Índice electrónico automático
+    source_ref: "user_stories_legacy.md:L576"
+  - id: US-NORM-EXP-002
+    legacy_ids:
+      - AS-010
+    title: Mantener índice electrónico
+    as_a:
+      - Administrador Sistema
+    i_want: Mantener índice electrónico del expediente (DS10)
+    so_that: Documento todas las actuaciones
+    priority: Crítica
+    module: Expediente
+    acceptance_criteria:
+      - Foliación automática
+      - Metadatos por documento
+    source_ref: "user_stories_legacy.md:L577"
+  - id: US-NORM-EXP-003
+    legacy_ids:
+      - AS-011
+    title: Registrar trazabilidad expediente
+    as_a:
+      - Administrador Sistema
+    i_want: Registrar trazabilidad de acciones sobre expediente (DS10)
+    so_that: Garantizo auditoría
+    priority: Alta
+    module: Expediente
+    acceptance_criteria:
+      - Log de todas las acciones
+      - "Usuario, fecha, acción"
+    source_ref: "user_stories_legacy.md:L578"
+  - id: US-NORM-EXP-004
+    legacy_ids:
+      - AS-012
+    title: Registrar eventos documentales
+    as_a:
+      - Administrador Sistema
+    i_want: "Registrar eventos documentales (CERT_CORE, CREA_ASIG, APRUEBA_CONV, etc.)"
+    so_that: Documento hitos del expediente
+    priority: Alta
+    module: Expediente
+    acceptance_criteria:
+      - Tipología de eventos
+      - Vinculación a documentos
+    source_ref: "user_stories_legacy.md:L579"
+  - id: US-NORM-TRANS-001
+    legacy_ids:
+      - TRANSP-01
+    title: Verificar transparencia activa
+    as_a:
+      - Encargado Transparencia
+    i_want: Verificar transparencia activa mensual
+    so_that: Cumplo con Ley 20.285
+    priority: Alta
+    module: Transparencia
+    acceptance_criteria:
+      - Checklist de ítems obligatorios
+      - Estado de actualización
+    source_ref: "user_stories_legacy.md:L850"
+  - id: US-NORM-TRANS-002
+    legacy_ids:
+      - TRANSP-02
+      - TRANS-002
+    title: Gestionar solicitudes SAI/OIRS
+    as_a:
+      - Encargado Transparencia
+    i_want: Gestionar solicitudes OIRS/SAI integradas (respuesta 20 días hábiles)
+    so_that: Respondo en plazo legal
+    priority: Crítica
+    module: Transparencia
+    acceptance_criteria:
+      - Portal unificado
+      - Control de plazos
+    source_ref: "user_stories_legacy.md:L851"
+    note: Unificada de TRANSP-02 y TRANS-002 (duplicado)
+  - id: US-NORM-TRANS-003
+    legacy_ids:
+      - TRANSP-03
+      - TRANS-003
+    title: Gestionar amparos CPLT
+    as_a:
+      - Encargado Transparencia
+    i_want: Gestionar amparos ante CPLT (preparar descargos)
+    so_that: Defiendo decisiones de denegación
+    priority: Alta
+    module: Transparencia
+    acceptance_criteria:
+      - Registro de amparos
+      - Plazos de respuesta
+    source_ref: "user_stories_legacy.md:L852"
+    note: Unificada de TRANSP-03 y TRANS-003 (duplicado)
+  - id: US-NORM-LOBBY-001
+    legacy_ids:
+      - LOBBY-01
+    title: Verificar registros audiencias/donativos
+    as_a:
+      - Encargado Transparencia
+    i_want: Verificar registros de audiencias y donativos
+    so_that: Cumplo con Ley de Lobby
+    priority: Crítica
+    module: Lobby
+    acceptance_criteria:
+      - Registro de audiencias
+      - Registro de donativos
+    source_ref: "user_stories_legacy.md:L853"
+  - id: US-NORM-LOBBY-002
+    legacy_ids:
+      - LOBBY-02
+    title: Coordinar nómina sujetos pasivos
+    as_a:
+      - Encargado Transparencia
+    i_want: Coordinar nómina de sujetos pasivos
+    so_that: Identifico obligados a registrar
+    priority: Alta
+    module: Lobby
+    acceptance_criteria:
+      - Lista actualizada
+      - Notificación de obligaciones
+    source_ref: "user_stories_legacy.md:L854"
+  - id: US-NORM-DIP-001
+    legacy_ids:
+      - DIP-01
+      - PRO-001
+    title: Alertas vencimiento DIP
+    as_a:
+      - Encargado Transparencia
+      - Unidad Control Interno
+    i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
+    so_that: Aseguro cumplimiento de funcionarios
+    priority: Crítica
+    module: Probidad
+    acceptance_criteria:
+      - Alerta automática
+      - Lista de pendientes
+    source_ref: "user_stories_legacy.md:L855"
+    note: Unificada de DIP-01 y PRO-001
+  - id: US-NORM-CTRL-001
+    legacy_ids:
+      - PRO-003
+    title: Alertar conflicto de interés
+    as_a:
+      - Unidad Control Interno
+    i_want: Recibir notificaciones de cruces entre evaluadores y postulantes
+    so_that: Prevengo conflictos de interés
+    priority: Crítica
+    module: Control
+    acceptance_criteria:
+      - Cruce automático RUT
+      - Alerta inmediata
+    source_ref: "user_stories_legacy.md:L1079"
+  - id: US-NORM-CTRL-002
+    legacy_ids:
+      - PRO-004
+    title: Auditoría de procesos
+    as_a:
+      - Unidad Control Interno
+    i_want: Revisar muestreo de adjudicaciones y pagos
+    so_that: Detecto irregularidades
+    priority: Alta
+    module: Control
+    acceptance_criteria:
+      - Muestreo aleatorio
+      - Registro de revisiones
+    source_ref: "user_stories_legacy.md:L1080"
+  - id: US-NORM-CTRL-003
+    legacy_ids:
+      - UCI-001
+    title: Auditar selectivamente transferencias
+    as_a:
+      - Unidad Control Interno
+    i_want: Auditar selectivamente procesos de transferencia y rendición
+    so_that: Verifico cumplimiento de procedimientos
+    priority: Alta
+    module: Control
+    acceptance_criteria:
+      - Plan de auditoría
+      - Hallazgos documentados
+    source_ref: "user_stories_legacy.md:L424"
+  - id: US-NORM-CTRL-004
+    legacy_ids:
+      - UCI-002
+    title: Informar hallazgos al Gobernador
+    as_a:
+      - Unidad Control Interno
+    i_want: Informar hallazgos y recomendaciones al Gobernador y CORE
+    so_that: Escalo temas relevantes
+    priority: Alta
+    module: Control
+    acceptance_criteria:
+      - Informe estructurado
+      - Clasificación de hallazgos
+    source_ref: "user_stories_legacy.md:L425"
+  - id: US-NORM-CTRL-005
+    legacy_ids:
+      - PRO-004_2
+    title: Instruir sumario administrativo
+    as_a:
+      - Fiscal Sumariante
+    i_want: Gestionar expediente disciplinario con reserva y plazos
+    so_that: Investigo faltas administrativas
+    priority: Media
+    module: Control
+    acceptance_criteria:
+      - Expediente reservado
+      - Control de plazos legales
+    source_ref: "user_stories_legacy.md:L1086"
+  - id: US-NORM-CGR-001
+    legacy_ids:
+      - PRO-002
+    title: Toma de Razón Digital
+    as_a:
+      - CGR (Externo)
+    i_want: Recibir actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
+    so_that: Ejerzo control preventivo
+    priority: Crítica
+    module: CGR
+    is_external: true
+    acceptance_criteria:
+      - Recepción electrónica
+      - Pronunciamiento en plazo
+    source_ref: "user_stories_legacy.md:L1072"
+  - id: US-NORM-CGR-002
+    legacy_ids:
+      - CGR-01
+    title: Verificar rendiciones SISREC
+    as_a:
+      - CGR (Externo)
+    i_want: Verificar rendiciones SISREC fiscalizando fondos
+    so_that: Controlo uso de recursos públicos
+    priority: Crítica
+    module: CGR
+    is_external: true
+    acceptance_criteria:
+      - Acceso a rendiciones
+      - Registro de observaciones
+    source_ref: "user_stories_legacy.md:L864"
+  - id: US-NORM-CGR-003
+    legacy_ids:
+      - CGR-02
+    title: Fiscalizar DIP
+    as_a:
+      - CGR (Externo)
+    i_want: Fiscalizar DIP detectando incumplimientos
+    so_that: Aseguro probidad
+    priority: Alta
+    module: CGR
+    is_external: true
+    acceptance_criteria:
+      - Cruce de declaraciones
+      - Detección de inconsistencias
+    source_ref: "user_stories_legacy.md:L865"
+  - id: US-NORM-CPLT-001
+    legacy_ids:
+      - CPLT-01
+    title: Requerir información amparo
+    as_a:
+      - CPLT (Externo)
+    i_want: Requerir información en amparo (plazo legal)
+    so_that: Ejerzo tutela de acceso a información
+    priority: Alta
+    module: CPLT
+    is_external: true
+    acceptance_criteria:
+      - Notificación formal
+      - Plazo de respuesta
+    source_ref: "user_stories_legacy.md:L866"
+  - id: US-NORM-ADMIN-001
+    legacy_ids:
+      - AS-001
+    title: Crear/editar divisiones
+    as_a:
+      - Administrador Sistema
+    i_want: Crear/editar divisiones con jefe asignado
+    so_that: Configuro estructura organizacional
+    priority: Alta
+    module: Admin
+    acceptance_criteria:
+      - CRUD de divisiones
+      - Asignación de jefatura
+    source_ref: "user_stories_legacy.md:L568"
+  - id: US-NORM-ADMIN-002
+    legacy_ids:
+      - AS-002
+    title: Crear usuarios
+    as_a:
+      - Administrador Sistema
+    i_want: "Crear usuarios (email, división, rol)"
+    so_that: Habilito acceso al sistema
+    priority: Crítica
+    module: Admin
+    acceptance_criteria:
+      - Datos mínimos requeridos
+      - Asignación de rol
+    source_ref: "user_stories_legacy.md:L569"
+  - id: US-NORM-ADMIN-003
+    legacy_ids:
+      - AS-003
+    title: Cambiar rol/división usuario
+    as_a:
+      - Administrador Sistema
+    i_want: Cambiar rol/división actualizando permisos
+    so_that: Gestiono movilidad de usuarios
+    priority: Alta
+    module: Admin
+    acceptance_criteria:
+      - Actualización de permisos
+      - Historial de cambios
+    source_ref: "user_stories_legacy.md:L570"
+  - id: US-NORM-ADMIN-004
+    legacy_ids:
+      - AS-004
+    title: Desactivar usuarios
+    as_a:
+      - Administrador Sistema
+    i_want: Desactivar usuarios manteniendo historial
+    so_that: Gestiono bajas sin perder trazabilidad
+    priority: Alta
+    module: Admin
+    acceptance_criteria:
+      - "Usuario inactivo, no eliminado"
+      - Historial preservado
+    source_ref: "user_stories_legacy.md:L571"
+  - id: US-NORM-ADMIN-005
+    legacy_ids:
+      - AS-005
+    title: Importar IPR desde Excel
+    as_a:
+      - Administrador Sistema
+    i_want: Importar IPR desde Excel validando errores
+    so_that: Migro datos históricos
+    priority: Alta
+    module: Admin
+    acceptance_criteria:
+      - Validación de formato
+      - Reporte de errores
+    source_ref: "user_stories_legacy.md:L572"
+  - id: US-NORM-ADMIN-006
+    legacy_ids:
+      - AS-006
+    title: Configurar reglas de alerta
+    as_a:
+      - Administrador Sistema
+    i_want: Configurar reglas de alerta (disparo automático)
+    so_that: Personalizo notificaciones
+    priority: Alta
+    module: Admin
+    acceptance_criteria:
+      - Condiciones configurables
+      - Destinatarios por regla
+    source_ref: "user_stories_legacy.md:L573"
+  - id: US-NORM-ADMIN-007
+    legacy_ids:
+      - AS-007
+    title: Ver logs de actividad
+    as_a:
+      - Administrador Sistema
+    i_want: Ver logs de actividad (filtro usuario/acción)
+    so_that: Audito uso del sistema
+    priority: Alta
+    module: Admin
+    acceptance_criteria:
+      - Filtros avanzados
+      - Exportación de logs
+    source_ref: "user_stories_legacy.md:L574"
+  - id: US-NORM-ADMIN-008
+    legacy_ids:
+      - AS-008
+    title: Estado backups
+    as_a:
+      - Administrador Sistema
+    i_want: Ver estado de backups con ejecución manual
+    so_that: Aseguro recuperabilidad
+    priority: Alta
+    module: Admin
+    acceptance_criteria:
+      - Historial de backups
+      - Ejecución manual disponible
+    source_ref: "user_stories_legacy.md:L575"
+_summary:
+  total_stories: 40
+  modules_covered:
+    - Actos
+    - Expediente
+    - Transparencia
+    - Lobby
+    - Probidad
+    - Control
+    - CGR
+    - CPLT
+    - Admin
+  deduplications:
+    - JUR-003 + AD-CONV-001 → US-NORM-ACTO-003
+    - TRANSP-02 + TRANS-002 → US-NORM-TRANS-002
+    - TRANSP-03 + TRANS-003 → US-NORM-TRANS-003
+    - DIP-01 + PRO-001 → US-NORM-DIP-001
+  external_actors:
+    - CGR
+    - CPLT
+  next_file: kb_goreos_us_d-back.yml

@@ -1,0 +1,355 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-seg:1.0.0"
+  domain: D-SEG
+  domain_name: Seguridad Pública Regional
+  legacy_modules:
+    - M8
+    - M20
+    - M30
+  total_stories: 28
+  priority_distribution:
+    critica: 18
+    alta: 8
+    media: 2
+stories:
+  - id: US-SEG-PREV-001
+    legacy_ids:
+      - EPD-01
+    title: Visualizar mapa de calor delictual
+    as_a:
+      - Encargado Prevención
+    i_want: Visualizar mapa de calor delictual (integración STOP/SPD)
+    so_that: Focalizo intervenciones
+    priority: Crítica
+    module: Prevencion
+    integration: STOP/SPD
+    acceptance_criteria:
+      - Mapa con concentración de delitos
+      - Filtros por tipo y período
+    source_ref: "user_stories_legacy.md:L32"
+  - id: US-SEG-PREV-002
+    legacy_ids:
+      - EPD-02
+    title: Gestionar cartera proyectos preventivos
+    as_a:
+      - Encargado Prevención
+    i_want: "Gestionar cartera de proyectos preventivos (iluminación, cámaras, social)"
+    so_that: Administro inversión en seguridad
+    priority: Crítica
+    module: Prevencion
+    acceptance_criteria:
+      - Cartera por tipo
+      - Estado de ejecución
+    source_ref: "user_stories_legacy.md:L33"
+  - id: US-SEG-PREV-003
+    legacy_ids:
+      - EPD-03
+    title: Coordinar Consejo Regional Seguridad
+    as_a:
+      - Encargado Prevención
+    i_want: Coordinar sesiones del Consejo Regional de Seguridad Pública
+    so_that: Articulo gobernanza de seguridad
+    priority: Alta
+    module: Prevencion
+    acceptance_criteria:
+      - Convocatoria y tabla
+      - Acta de sesión
+    source_ref: "user_stories_legacy.md:L34"
+  - id: US-SEG-PREV-004
+    legacy_ids:
+      - EPD-04
+    title: Emitir informes impacto
+    as_a:
+      - Encargado Prevención
+    i_want: Emitir informes de impacto de inversiones en seguridad
+    so_that: Demuestro resultados
+    priority: Alta
+    module: Prevencion
+    acceptance_criteria:
+      - Indicadores de impacto
+      - Comparativo antes/después
+    source_ref: "user_stories_legacy.md:L35"
+  - id: US-SEG-PREV-005
+    legacy_ids:
+      - APS-01
+    title: Evaluar admisibilidad técnica proyectos seguridad
+    as_a:
+      - Analista Proyectos Seguridad
+    i_want: Evaluar admisibilidad técnica de proyectos de seguridad
+    so_that: Verifico requisitos técnicos
+    priority: Alta
+    module: Prevencion
+    acceptance_criteria:
+      - Checklist técnico
+      - Validación SPD si >1000 UTM
+    source_ref: "user_stories_legacy.md:L41"
+  - id: US-SEG-PREV-006
+    legacy_ids:
+      - APS-02
+    title: Monitorear ejecución convenios municipales
+    as_a:
+      - Analista Proyectos Seguridad
+    i_want: Monitorear ejecución financiera de convenios con municipios
+    so_that: Controlo uso de recursos
+    priority: Alta
+    module: Prevencion
+    acceptance_criteria:
+      - Avance financiero
+      - Alertas de desviación
+    source_ref: "user_stories_legacy.md:L42"
+  - id: US-SEG-PREV-007
+    legacy_ids:
+      - APS-03
+    title: Gestionar programa asistencia víctimas
+    as_a:
+      - Analista Proyectos Seguridad
+    i_want: Gestionar programa de asistencia a víctimas
+    so_that: Apoyo a afectados por delitos
+    priority: Media
+    module: Prevencion
+    acceptance_criteria:
+      - Registro de atenciones
+      - Derivaciones
+    source_ref: "user_stories_legacy.md:L43"
+  - id: US-SEG-CIES-001
+    legacy_ids:
+      - CIES-OP-01
+      - CIES-OP-001
+    title: Gestionar incidente
+    as_a:
+      - Operador CIES
+    i_want: "Registrar alertas de cámaras, sensores o llamados (tipo, georreferencia)"
+    so_that: Inicio respuesta coordinada
+    priority: Crítica
+    module: CIES
+    acceptance_criteria:
+      - Registro de incidente
+      - Georreferenciación
+      - Clasificación de prioridad
+    source_ref: "user_stories_legacy.md:L809"
+    note: Unificada de CIES-OP-01 y CIES-OP-001
+  - id: US-SEG-CIES-002
+    legacy_ids:
+      - CIES-OP-02
+    title: Seguir trayectorias geoespaciales
+    as_a:
+      - Operador CIES
+    i_want: Seguir trayectorias geoespaciales en mapa
+    so_that: Monitoreo movimiento de sospechosos
+    priority: Alta
+    module: CIES
+    acceptance_criteria:
+      - Mapa en tiempo real
+      - Historial de trayectoria
+    source_ref: "user_stories_legacy.md:L810"
+  - id: US-SEG-CIES-003
+    legacy_ids:
+      - CIES-OP-002
+    title: Control PTZ cámara prioritaria
+    as_a:
+      - Operador CIES
+    i_want: Tomar control manual de cámara PTZ ante incidente flagrante
+    so_that: Enfoco el evento
+    priority: Crítica
+    module: CIES
+    acceptance_criteria:
+      - Control PTZ remoto
+      - Prioridad sobre automático
+    source_ref: "user_stories_legacy.md:L1137"
+  - id: US-SEG-CIES-004
+    legacy_ids:
+      - CIES-OP-003
+    title: Alerta LPR/Prófugos
+    as_a:
+      - Operador CIES
+    i_want: >-
+      Recibir notificación automática de pórticos (patente robada) o
+      reconocimiento
+    so_that: Activo protocolo de búsqueda
+    priority: Crítica
+    module: CIES
+    integration: SITIA-Patentes
+    acceptance_criteria:
+      - Alerta automática
+      - Datos del vehículo/persona
+    source_ref: "user_stories_legacy.md:L1138"
+  - id: US-SEG-CIES-005
+    legacy_ids:
+      - CIES-OP-004
+    title: Bitácora digital
+    as_a:
+      - Operador CIES
+    i_want: >-
+      Registrar acciones tomadas secuencialmente (despacho móviles, cierre
+      visual)
+    so_that: Documento la respuesta
+    priority: Alta
+    module: CIES
+    acceptance_criteria:
+      - Registro cronológico
+      - Asociado a incidente
+    source_ref: "user_stories_legacy.md:L1139"
+  - id: US-SEG-CIES-006
+    legacy_ids:
+      - CIES-SUP-01
+      - CIES-SUP-001
+    title: Gestión sala crisis
+    as_a:
+      - Supervisor CIES
+    i_want: Asignar roles y escenarios en Videowall durante emergencia mayor
+    so_that: Coordino respuesta masiva
+    priority: Crítica
+    module: CIES
+    acceptance_criteria:
+      - Asignación de pantallas
+      - Roles definidos
+    source_ref: "user_stories_legacy.md:L811"
+    note: Unificada de CIES-SUP-01 y CIES-SUP-001
+  - id: US-SEG-CIES-007
+    legacy_ids:
+      - CIES-SUP-02
+      - CIES-SUP-002
+    title: Derivación multi-agencia
+    as_a:
+      - Supervisor CIES
+    i_want: Despachar incidente a Carabineros/Bomberos/SAMU según protocolo
+    so_that: Activo respuesta especializada
+    priority: Crítica
+    module: CIES
+    acceptance_criteria:
+      - Protocolo por tipo
+      - Registro de despacho
+    source_ref: "user_stories_legacy.md:L812"
+    note: Unificada de CIES-SUP-02 y CIES-SUP-002
+  - id: US-SEG-CIES-008
+    legacy_ids:
+      - CIES-SUP-003
+    title: Reporte operativo CIES
+    as_a:
+      - Supervisor CIES
+    i_want: Generar estadística de incidentes/horarios/zonas calientes
+    so_that: Analizo patrones
+    priority: Alta
+    module: CIES
+    acceptance_criteria:
+      - Dashboard estadístico
+      - Exportable
+    source_ref: "user_stories_legacy.md:L1147"
+  - id: US-SEG-CIES-009
+    legacy_ids:
+      - CIES-ENL-01
+    title: Alertas y respuesta terreno
+    as_a:
+      - Enlace CIES
+    i_want: Confirmar alertas en terreno
+    so_that: Valido información visual
+    priority: Alta
+    module: CIES
+    acceptance_criteria:
+      - Confirmación registrada
+      - Actualización de estado
+    source_ref: "user_stories_legacy.md:L813"
+  - id: US-SEG-EVID-001
+    legacy_ids:
+      - CIES-EVID-001
+    title: Extracción segura de video
+    as_a:
+      - Custodio Evidencia
+    i_want: Generar clip de video con marca de agua y hash de integridad
+    so_that: Preservo evidencia
+    priority: Crítica
+    module: Evidencia
+    acceptance_criteria:
+      - Marca de agua GORE
+      - Hash SHA-256
+    source_ref: "user_stories_legacy.md:L1153"
+  - id: US-SEG-EVID-002
+    legacy_ids:
+      - CIES-EVID-002
+    title: Compartir con Fiscalía
+    as_a:
+      - Custodio Evidencia
+    i_want: Habilitar link seguro (Genetec Clearance) por oficio judicial
+    so_that: Entrego evidencia formalmente
+    priority: Crítica
+    module: Evidencia
+    integration: SITIA-Evidencia / Genetec Clearance
+    acceptance_criteria:
+      - Link seguro generado
+      - Registro de entrega
+    source_ref: "user_stories_legacy.md:L1154"
+  - id: US-SEG-EVID-003
+    legacy_ids:
+      - CIES-EVID-003
+    title: Cadena de custodia
+    as_a:
+      - Custodio Evidencia
+    i_want: "Trazar quién accedió, visualizó o descargó evidencia (Logs inalterables)"
+    so_that: Mantengo cadena de custodia
+    priority: Crítica
+    module: Evidencia
+    acceptance_criteria:
+      - Log inmutable
+      - Identidad verificada
+    source_ref: "user_stories_legacy.md:L1155"
+  - id: US-SEG-GOB-001
+    legacy_ids:
+      - COL-01
+    title: Dashboard transparencia GORE
+    as_a:
+      - COSOC / Comités
+    i_want: Acceder a dashboard de transparencia activa del GORE
+    so_that: Ejerzo control ciudadano
+    priority: Alta
+    module: Gobernanza
+    acceptance_criteria:
+      - Acceso público
+      - Información actualizada
+    source_ref: "user_stories_legacy.md:L52"
+  - id: US-SEG-GOB-002
+    legacy_ids:
+      - COL-02
+    title: Responder consultas instrumentos planificación
+    as_a:
+      - COSOC / Comités
+    i_want: >-
+      Recibir y responder consultas sobre instrumentos de planificación (ERD,
+      PROT)
+    so_that: Participo en planificación regional
+    priority: Media
+    module: Gobernanza
+    acceptance_criteria:
+      - Canal de consulta
+      - Respuestas documentadas
+    source_ref: "user_stories_legacy.md:L53"
+  - id: US-SEG-GOB-003
+    legacy_ids:
+      - COL-03
+    title: Visualizar ejecución presupuestaria
+    as_a:
+      - COSOC / Comités
+    i_want: Visualizar estado de ejecución presupuestaria agregada
+    so_that: Monitoreo uso de recursos
+    priority: Media
+    module: Gobernanza
+    acceptance_criteria:
+      - Vista agregada
+      - Actualización mensual
+    source_ref: "user_stories_legacy.md:L54"
+_summary:
+  total_stories: 24
+  modules_covered:
+    - Prevencion
+    - CIES
+    - Evidencia
+    - Gobernanza
+  deduplications:
+    - CIES-OP-01 + CIES-OP-001 → US-SEG-CIES-001
+    - CIES-SUP-01 + CIES-SUP-001 → US-SEG-CIES-006
+    - CIES-SUP-02 + CIES-SUP-002 → US-SEG-CIES-007
+  integrations:
+    - STOP/SPD
+    - SITIA-Patentes
+    - SITIA-Evidencia
+    - Genetec Clearance
+  next_file: kb_goreos_us_d-gob.yml
