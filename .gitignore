@@ -1,24 +1,43 @@
-cat > .gitignore << 'EOF'
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
+# Dependencies
+node_modules/
+.turbo/
 
-# Entornos virtuales
-.venv/
-venv/
-env/
+# Build
+dist/
+.next/
+out/
 
-# Sistema / IDE
-.DS_Store
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# IDE
 .idea/
 .vscode/
+*.swp
+*.swo
 
-# Archivos de entorno / secretos
-.env
-.env.*
-*.env
+# OS
+.DS_Store
+Thumbs.db
 
-# Otros
+# Logs
+logs/
 *.log
-EOF
+npm-debug.log*
+
+# Test
+coverage/
+
+# Database
+*.db
+*.sqlite
+
+# Docker
+docker-compose.override.yml
+
+# Misc
+*.tgz
+.cache/

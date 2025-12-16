@@ -1,17 +1,82 @@
-# gore_os
+# GORE OS
 
-Espacio de trabajo destinado a **desarrollar el sistema operativo del GORE**.
+> Sistema Operativo del Gobierno Regional de Ñuble
 
-Este proyecto busca centralizar y orquestar las operaciones del Gobierno Regional, integrando funcionalidades de gestión, administración y visualización de datos.
+**Stack**: Bun + Hono + Effect + tRPC + Drizzle + XState  
+**Paradigma**: Ingeniería Composicional (Functorial Pipeline)
 
-**Nota Arquitectónica**: `gore_os` se monta y construye sobre la base de conocimientos y ontología definida en **`data-gore`**.
+---
 
-## Propósito
+## Quick Start
 
-El objetivo es construir una plataforma integral que sirva como el "Sistema Operativo" para la gestión regional, subsumiendo funcionalidades previas y proporcionando nuevas capacidades para la toma de decisiones.
+```bash
+# 1. Clonar e instalar
+git clone git@github.com:gore-nuble/gore-os.git
+cd gore-os
+bun install
 
-## Componentes
+# 2. Levantar servicios
+docker compose up -d
 
-- **Núcleo del Sistema**: Gestión de procesos y entidades fundamentales.
-- **Interfaz Administrativa**: Herramientas para la administración regional.
-- **Visualización de Datos**: Dashboards y reportes para DIPIR y otras áreas.
+# 3. Aplicar migraciones
+bun db:migrate
+
+# 4. Desarrollo
+bun dev
+```
+
+## Estructura del Proyecto
+
+```
+gore-os/
+├── apps/                    # Aplicaciones
+│   ├── api/                 # Backend (Hono + tRPC + Effect)
+│   └── web/                 # Frontend (React + Vite)
+├── packages/                # Paquetes compartidos
+│   ├── db/                  # Drizzle schemas + migraciones
+│   ├── core/                # Lógica de dominio pura
+│   └── ui/                  # Componentes React compartidos
+├── docs/                    # Documentación
+│   ├── blueprint/           # Dominios y visión del sistema
+│   ├── user-stories/        # Historias de usuario por dominio
+│   └── architecture/        # Stack y arquitectura técnica
+└── .agent/workflows/        # Workflows de desarrollo
+```
+
+## Servicios Locales
+
+| Servicio   | URL                   | Credenciales      |
+| ---------- | --------------------- | ----------------- |
+| API        | http://localhost:3000 | -                 |
+| Frontend   | http://localhost:5173 | -                 |
+| Keycloak   | http://localhost:8080 | admin/admin       |
+| PostgreSQL | localhost:5432        | postgres/postgres |
+| Redis      | localhost:6379        | -                 |
+
+## Comandos
+
+```bash
+bun dev              # Desarrollo (todos los servicios)
+bun build            # Build de producción
+bun test             # Tests
+bun lint             # Linting (Biome)
+bun db:generate      # Generar migración Drizzle
+bun db:migrate       # Aplicar migraciones
+bun db:studio        # Drizzle Studio
+```
+
+## Documentación
+
+- [Stack Tecnológico](docs/architecture/stack.md)
+- [Blueprint del Sistema](docs/blueprint/vision_general.md)
+- [Reglas de Desarrollo](AGENTS.md)
+
+## Workflows
+
+- `/setup-desarrollo` — Configurar entorno local
+- `/nuevo-modulo-backend` — Crear módulo Hono + tRPC + Effect
+- `/nueva-entidad-dominio` — Crear entidad Drizzle + XState
+
+---
+
+*Gobierno Regional de Ñuble © 2025*

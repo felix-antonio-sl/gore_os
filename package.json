@@ -1,0 +1,31 @@
+{
+  "name": "gore-os",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Sistema Operativo del Gobierno Regional de Ñuble",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "biome format --write .",
+    "typecheck": "turbo run typecheck",
+    "db:generate": "turbo run db:generate --filter=@gore-os/db",
+    "db:migrate": "turbo run db:migrate --filter=@gore-os/db",
+    "db:studio": "turbo run db:studio --filter=@gore-os/db"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "bun@1.1.0",
+  "engines": {
+    "node": ">=20",
+    "bun": ">=1.1"
+  }
+}
