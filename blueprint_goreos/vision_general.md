@@ -77,6 +77,7 @@ No es un sistema de información tradicional. Es una **plataforma unificada** qu
 | **Agentes Especializados** | Cada dominio tiene agentes que asisten | Delegación de tareas repetitivas |
 
 > **Nota sobre Cumplimiento:** GORE_OS distingue tres dimensiones:
+>
 > - **Cumplimiento Normativo General (D-NORM):** Probidad, Transparencia, Ley de Lobby, control CGR
 > - **Cumplimiento Ley TDE (D-TDE):** DS 7-12, Ley 21.180, plazos cero papel, ciberseguridad
 > - **Cumplimiento Embebido:** Principio transversal que integra ambos en las reglas del sistema
@@ -180,6 +181,7 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 | 8 | Inteligencia Territorial | D-TERR | Habilitante | - | [Ver detalle](domains/domain_d-terr.md) |
 | 9 | Gestión Institucional | D-GESTION | Transversal | - | [Ver detalle](domains/domain_d-gestion.md) |
 | 10 | Evolución e Inteligencia | D-EVOL | Estratégica | - | [Ver detalle](domains/domain_d-evol.md) |
+| 11 | Gestión Institucional (FÉNIX) | D-GINT | Transversal | Intervención | [Ver detalle](domains/fenix.md) |
 
 ### 7. Resumen de Módulos por Dominio
 
@@ -195,6 +197,7 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 | **D-TERR** | IDE Regional, Observatorio Regional, Visor Geoespacial |
 | **D-GESTION** | OKRs Institucionales, H_gore, Playbooks Operativos, Mejora Continua |
 | **D-EVOL** | Niveles Madurez, Gobierno Datos, Automatizaciones, Agentes IA, Analytics Avanzado |
+| **D-GINT (FÉNIX)** | Intervenciones Nivel I-IV, Diagnóstico, Gestión de Contingencias, Aceleración |
 
 ---
 
@@ -205,6 +208,7 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 GORE_OS incorpora una **base de conocimiento estructurada** que permite a los agentes y al sistema operar con contexto institucional completo.
 
 **Categorías de Conocimiento:**
+
 - **Normativo:** Leyes, reglamentos, circulares, oficios interpretativos
 - **Procedimental:** Flujos de trabajo, playbooks, checklists
 - **Institucional:** Estructura orgánica, roles, responsabilidades
@@ -322,11 +326,12 @@ docs/01_domain/
     ├── domain_d-tde.md        ← D-TDE detallado
     ├── domain_d-terr.md       ← D-TERR detallado
     ├── domain_d-gestion.md    ← D-GESTION detallado
-    └── domain_d-evol.md       ← D-EVOL detallado
+    ├── domain_d-evol.md       ← D-EVOL detallado
+    └── fenix.md               ← Dpto. Gestión Institucional (FÉNIX)
 ```
 
 ---
 
 *Documento generado como parte del proceso de diseño de GORE_OS.*
 *Versión: 4.0 (Modular) | Fecha: Diciembre 2024*
-*Última revisión: 15-12-2024 | Cambios: Refactorización modular - documento principal (~400 líneas) + 10 archivos de dominio independientes*
+*Última revisión: 15-12-2024 | Cambios: Refactorización modular + FÉNIX (Dpto. Gestión Institucional)*
