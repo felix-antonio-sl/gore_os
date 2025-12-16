@@ -1,0 +1,106 @@
+# GORE OS Blueprint Manifest v5.0
+# Índice Maestro de Dominios
+
+_manifest:
+  urn: "urn:goreos:blueprint:manifest:5.0.0"
+  created_at: "2025-12-16"
+  status: "Consolidated"
+  total_domains: 12
+
+domains:
+  - id: D-FIN
+    name: Gestión Financiera
+    file: domain_d-fin.md
+    layer: Núcleo (Transaccional)
+    bpmn_count: 18
+    us_count: 181
+
+  - id: D-NORM
+    name: Gestión Normativa
+    file: domain_d-norm.md
+    layer: Núcleo (Jurídica)
+    bpmn_count: 4
+    us_count: 52
+
+  - id: D-BACK
+    name: Gestión Administrativa
+    file: domain_d-back.md
+    layer: Habilitante (Soporte)
+    bpmn_count: 14
+    us_count: 52
+
+  - id: D-PLAN
+    name: Planificación Estratégica
+    file: domain_d-plan.md
+    layer: Habilitante (Estratégica)
+    bpmn_count: 6
+    us_count: 27
+
+  - id: D-EJEC
+    name: Ejecución y Seguimiento
+    file: domain_d-ejec.md
+    layer: Núcleo (Táctica)
+    bpmn_count: 4
+    us_count: 43
+
+  - id: D-COORD
+    name: Coordinación y OIRS
+    file: domain_d-coord.md
+    layer: Habilitante (Relacional)
+    bpmn_count: 4
+    us_count: 14
+
+  - id: D-SEG
+    name: Seguridad Pública
+    file: domain_d-seg.md
+    layer: Temática (Estratégica)
+    bpmn_count: 4
+    us_count: 24
+
+  - id: D-TERR
+    name: Inteligencia Territorial
+    file: domain_d-terr.md
+    layer: Temática (Geoespacial)
+    bpmn_count: 4
+    us_count: 24
+
+  - id: D-TDE
+    name: Gobernanza Digital
+    file: domain_d-tde.md
+    layer: Habilitante (Tecnológica)
+    bpmn_count: 5
+    us_count: 56
+
+  - id: D-GOB
+    name: Gobernanza Regional
+    file: domain_d-gob.md
+    layer: Estratégica (Política)
+    bpmn_count: 4
+    us_count: 49
+
+  - id: D-GESTION
+    name: Gestión Institucional
+    file: domain_d-gestion.md
+    layer: Operativa (Transversal)
+    bpmn_count: 3
+    us_count: 20
+
+  - id: D-EVOL
+    name: Evolución e Inteligencia
+    file: domain_d-evol.md
+    layer: Estratégica (Evolutiva)
+    bpmn_count: 4
+    us_count: 32
+
+  - id: FENIX
+    name: Sistema de Intervención
+    file: domain_fenix.md
+    layer: Transversal (Metasistema)
+    type: Subsystem
+    bpmn_count: 2
+    us_count: 12
+
+metrics:
+  total_bpmn_processes: 76
+  total_user_stories: 586
+  completion_status: 100%

@@ -3,12 +3,47 @@
 > **Parte de:** [GORE_OS Vision General](../vision_general.md)  
 > **Capa:** Núcleo (Dimensión Táctica)  
 > **Función GORE:** COORDINAR  
+> **Procesos BPMN:** 3 | **Subprocesos:** ~9 | **User Stories:** 8 (referenciadas de D-GOB)
+
+---
+
+## Glosario D-COORD
+
+| Término              | Definición                                                                                                |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Actor**            | Entidad externa o interna que interactúa con el GORE: municipios, servicios, universidades, ONG, personas |
+| **Ejecutor**         | Actor con rol de ejecución de proyectos/convenios. Es un `tipo` de Actor                                  |
+| **Proveedor**        | Actor habilitado para suministrar bienes/servicios. Es un `tipo` de Actor                                 |
+| **SSOT**             | Single Source of Truth. Fuente única de datos maestros                                                    |
+| **OIRS**             | Oficina de Información, Reclamos y Sugerencias (Ley 19.880, 20.285)                                       |
+| **COSOC**            | Consejo de Organizaciones de la Sociedad Civil                                                            |
+| **Gabinete**         | División del GORE que coordina agenda y relaciones del Gobernador Regional                                |
+| **ChileProveedores** | Plataforma estatal de registro de proveedores                                                             |
+| **ActorIPR**         | Rol de un Actor en una IPR (ver D-FIN)                                                                    |
+| **H_org**            | Dashboard de Estado de Salud Organizacional (ver D-EVOL)                                                  |
+| **DIPLADE**          | División de Planificación y Desarrollo Regional                                                           |
+| **DAF**              | División de Administración y Finanzas                                                                     |
 
 ---
 
 ## Propósito
 
-Gestionar las relaciones con actores territoriales, ejecutores, proveedores, ciudadanos y la gobernanza regional.
+Gestionar las relaciones con actores territoriales, ejecutores, proveedores, ciudadanos y la gobernanza regional, actuando como **SSOT del directorio de entidades externas**.
+
+> **Principio Core:** D-COORD gestiona los **datos maestros** de actores (quién es, contacto, historial). Otros dominios consumen esa información para sus procesos específicos (D-FIN: rating financiero, D-BACK: operación de compras).
+
+---
+
+## Cuatro Módulos del Dominio
+
+| Módulo                      | Función                                           | SSOT de                            |
+| --------------------------- | ------------------------------------------------- | ---------------------------------- |
+| **Directorio de Actores**   | Registro y mantenimiento de actores territoriales | Actor, Ejecutor, Proveedor         |
+| **Participación Ciudadana** | Consultas públicas, transparencia                 | ConsultaPublica                    |
+| **Gabinete**                | Sesiones, compromisos, seguimiento                | CompromisoGabinete, SesionGabinete |
+| **Gobernanza Regional**     | Consejos, articulación multiactor                 | InstanciaGobernanza                |
+
+> **Nota de Diseño:** La gestión de OIRS (solicitudes ciudadanas) se centraliza en **D-NORM** como proceso administrativo reglado.
 
 ---
 
@@ -18,77 +53,48 @@ Gestionar las relaciones con actores territoriales, ejecutores, proveedores, ciu
 
 **Tipos de Actores:**
 
-- Municipalidades (21 comunas) - incluye rol en convenios de seguridad y salas de monitoreo federadas
-- Servicios públicos regionales (SEREMIs, Direcciones) - incluye SEREMI de Seguridad Pública
-- Universidades e instituciones de educación superior
-- Corporaciones y fundaciones
-- Organizaciones de la sociedad civil
-- Personas naturales (beneficiarios, consultores)
-- Fuerzas de Orden y Seguridad Pública (Carabineros, PDI) - coordinación operativa
+| Tipo             | Descripción                                   | Ejemplo                        |
+| ---------------- | --------------------------------------------- | ------------------------------ |
+| Municipalidad    | 21 comunas de Ñuble                           | I. Municipalidad de Chillán    |
+| Servicio Público | SEREMIs, Direcciones regionales               | SEREMI Salud, Vialidad         |
+| Universidad      | IES públicas y privadas                       | UBB, UCSC                      |
+| Corporación      | Entidades sin fines de lucro                  | CORFO, CONAF Regional          |
+| ONG              | Sociedad civil organizada                     | Fundaciones, ONG territoriales |
+| Persona          | Beneficiarios, consultores                    | RUT individual                 |
+| Ejecutor         | Actor habilitado para ejecutar proyectos      | Muni + Rating D-FIN            |
+| Proveedor        | Actor habilitado para vender bienes/servicios | Proveedor ChileProveedores     |
 
 **Funcionalidades:**
 
-- Directorio de actores con contactos
-- Historial de interacciones
-- Convenios vigentes por actor
-- Compromisos pendientes
-- Mapa georreferenciado de actores
+- Directorio centralizado con contactos y representantes legales
+- Historial de interacciones (reuniones, convenios, compromisos)
+- Convenios vigentes por actor (referencia a D-NORM)
+- Compromisos pendientes con alertas de vencimiento
+- Mapa georreferenciado de actores (integración D-TERR)
+- Scoring de relación (frecuencia, cumplimiento, conflictos)
 
-### 2. Ejecutores (Referencia)
+### 2. Participación Ciudadana
 
-> **→ Ver D-FIN:** Módulo Gestión de Ejecutores (SSOT)  
-> Ficha 360°, Rating, Historial, Capacidades
-
-**Nota de Diseño:** Ejecutor no es una entidad separada; es un `Actor` con `tipo = EJECUTOR`. La entidad base `Actor` se define en D-COORD (directorio y relaciones), mientras que el scoring financiero (`RatingEjecutor`) se gestiona en D-FIN.
-
-**Tipos de Ejecutores (clasificación en Actor):**
-
-- Municipalidades (21 comunas) - Entidades Ejecutoras principales para FNDR, FRIL
-- Servicios públicos regionales - SERVIU, Vialidad, etc.
-- Universidades - Proyectos de I+D, FRPD
-- Corporaciones y fundaciones - Programas sociales, 8% FNDR
-- Organizaciones comunitarias - Subvenciones, programas participativos
-
-**Integración:**
-
-- `Actor.tipo = EJECUTOR` vincula con `RatingEjecutor` en D-FIN
-- D-COORD: Directorio, historial relacional, contactos, interacciones
-- D-FIN: Scoring financiero, historial de rendiciones, capacidad técnica
-
-### 3. Gestión de Proveedores
-
-> **Nota de Diseño:** D-COORD gestiona el **directorio** de proveedores (datos maestros, contactos, evaluación de desempeño). D-BACK gestiona la **operación de compras** (procesos de adquisición, contratos, órdenes de compra).
+> **Nota de Diseño:** La gestión de solicitudes OIRS (Información, Reclamos, Sugerencias) se centraliza en **D-NORM** como proceso administrativo con SLA de 20 días hábiles. D-COORD gestiona las **consultas públicas y participación** no reglada.
 
 **Funcionalidades:**
 
-- Directorio de proveedores habilitados (SSOT de datos maestros)
-- Evaluación de desempeño post-contrato
-- Historial de compras y contratos (referencia a D-BACK)
-- Integración ChileProveedores
-- Alertas de incumplimiento
+- Gestión de consultas públicas (convocatoria, participación, resultados)
+- Coordinación con COSOC Regional
+- Métricas de satisfacción ciudadana
+- Integración con portal de transparencia
 
-### 4. Participación Ciudadana
-
-**Funcionalidades:**
-
-- Registro de solicitudes ciudadanas (OIRS)
-- Gestión de consultas públicas
-- Trazabilidad de respuestas
-- Métricas de satisfacción
-
-### 5. Gabinete Regional Virtual
+### 3. Gabinete
 
 **Funcionalidades:**
 
-- Agenda de sesiones
-- Registro de compromisos
-- Seguimiento de acuerdos
-- Alertas de vencimiento
-- Reportes de cumplimiento
+- Agenda de sesiones (programación, convocatoria, asistencia)
+- Registro de compromisos del Gobernador
+- Seguimiento de acuerdos con estados y alertas
+- Minutas y documentación de reuniones
+- Reportes de cumplimiento para H_org (D-EVOL)
 
-### 6. Instancias de Gobernanza Regional
-
-**Gabinete Regional** (ver módulo 5)
+### 4. Instancias de Gobernanza Regional
 
 **Consejo Regional de Seguridad Pública** (Ley 21.730):
 
@@ -98,51 +104,195 @@ Gestionar las relaciones con actores territoriales, ejecutores, proveedores, ciu
 | Comité Prevención del Delito | Instancia técnica               | Jefe División Prevención del Delito |
 | Consejos Comunales           | Instancias locales (Art. 12)    | Representante designado             |
 
+**Otras Instancias:**
+
+- COSOC Regional (Ley 20.500)
+- Mesas territoriales temáticas
+- Comités de emergencia (GRD)
+
 **Funcionalidades:**
 
-- Agenda de sesiones (Gabinete + Consejo Seguridad)
-- Registro unificado de compromisos
-- Seguimiento de acuerdos con alertas de vencimiento
+- Calendario unificado de instancias
+- Registro de participantes y representantes
+- Actas y acuerdos de cada sesión
+- Seguimiento de compromisos multiactor
 - Coordinación con SEREMI de Seguridad Pública
-- Articulación con Planes Comunales de Seguridad
+
+---
+
+## 📋 Procesos BPMN
+
+### Mapa General D-COORD
+
+```mermaid
+flowchart TB
+    subgraph ACTORES["🏢 Gestión de Actores"]
+        A1["P1: Registro/Actualización<br/>de Actor"]
+        A2["P2: Vinculación de<br/>Roles (Ejecutor/Proveedor)"]
+    end
+
+    subgraph GOBERNANZA["🏛️ Gobernanza"]
+        G1["P3: Seguimiento de<br/>Compromisos Gabinete"]
+    end
+
+    A1 --> A2
+    A2 -.-> G1
+```
+
+---
+
+### P1: Registro y Actualización de Actor
+
+```mermaid
+flowchart TD
+    A["Solicitud de registro<br/>(interno o externo)"] --> B{"¿Actor existe<br/>en sistema?"}
+    B -->|"No"| C["Crear ficha Actor:<br/>• RUT/Razón Social<br/>• Tipo<br/>• Contactos<br/>• Comuna"]
+    B -->|"Sí"| D["Actualizar datos"]
+    C --> E["Validar RUT con<br/>SII/ChileProveedores"]
+    D --> E
+    E --> F{"¿Validación OK?"}
+    F -->|"Sí"| G["Actor Activo"]
+    F -->|"No"| H["Revisar datos"]
+    H --> C
+    G --> I["Notificar a dominios<br/>consumidores"]
+```
+
+---
+
+### P2: Vinculación de Roles (Ejecutor/Proveedor)
+
+```mermaid
+flowchart TD
+    A["Actor registrado"] --> B{"¿Qué rol<br/>adicional?"}
+    B -->|"Ejecutor"| C["Verificar capacidades:<br/>• PJ vigente<br/>• Directorio actualizado<br/>• Sin deuda GORE"]
+    B -->|"Proveedor"| D["Verificar en<br/>ChileProveedores"]
+    C --> E{"¿Habilitado?"}
+    D --> F{"¿Habilitado?"}
+    E -->|"Sí"| G["Asignar rol EJECUTOR<br/>+ crear enlace D-FIN"]
+    E -->|"No"| H["Rechazar con motivo"]
+    F -->|"Sí"| I["Asignar rol PROVEEDOR<br/>+ habilitar para OC"]
+    F -->|"No"| J["Solicitar registro MP"]
+    G --> K["Actor con roles<br/>múltiples habilitados"]
+    I --> K
+```
+
+---
+
+### P3: Seguimiento de Compromisos de Gabinete
+
+```mermaid
+flowchart TD
+    A["Sesión de Gabinete"] --> B["Registrar compromisos<br/>con responsables y fechas"]
+    B --> C["Notificar a<br/>responsables"]
+    C --> D["Monitoreo continuo"]
+    D --> E{"¿Estado?"}
+    E -->|"En plazo"| F["Semáforo Verde"]
+    E -->|"Por vencer (7d)"| G["Alerta Amarilla"]
+    E -->|"Vencido"| H["Escalamiento<br/>a Gabinete"]
+    F --> I["Responsable reporta<br/>avance/cierre"]
+    G --> I
+    H --> J["Revisión en<br/>próxima sesión"]
+    I --> K{"¿Cumplido?"}
+    K -->|"Sí"| L["Cerrar compromiso<br/>con evidencia"]
+    K -->|"No"| M["Reprogramar o<br/>escalar"]
+```
+
+---
+
+## 📝 User Stories Relacionadas
+
+> **Nota:** D-COORD no tiene archivo de US propio. Las historias relevantes provienen de **D-GOB** (Gabinete, actores).
+
+### Resumen por Origen
+
+| Dominio Fuente | Módulo     | US Aplicables | Prioridad             |
+| -------------- | ---------- | ------------- | --------------------- |
+| D-GOB          | Gabinete   | 6             | 2 Crítica, 4 Alta     |
+| D-GOB          | Gobernador | 2             | 2 Crítica             |
+| **Total**      |            | **8**         | **4 Crítica, 4 Alta** |
+
+### Catálogo de US Relevantes
+
+#### Gabinete y Actores (de D-GOB)
+
+| ID             | Título                          | Actor    | Prioridad |
+| -------------- | ------------------------------- | -------- | --------- |
+| US-GOB-GAB-001 | Gestionar agenda Gobernador     | Gabinete | Alta      |
+| US-GOB-GAB-002 | Seguimiento compromisos GR      | Gabinete | Crítica   |
+| US-GOB-GAB-004 | Coordinar articulación política | Gabinete | Alta      |
+| US-GOB-GAB-005 | Preparar minutas                | Gabinete | Alta      |
+| US-GOB-GAB-006 | Coordinar relación COSOC        | Gabinete | Alta      |
+| US-GOB-DEL-001 | Coordinar Gabinete Regional     | Delegado | Alta      |
 
 ---
 
 ## Entidades de Datos
 
-| Entidad                    | Atributos Clave                                                                                                                        | Relaciones                                    |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `Actor`                    | id, tipo (municipalidad/servicio_publico/universidad/corporacion/ong/persona), rut, razon_social, contacto, comuna_id, scoring, estado | → ActorIPR[], Interaccion[], HistorialActor[] |
-| `HistorialActor`           | id, actor_id, evento, fecha, detalle                                                                                                   | → Actor                                       |
-| `Proveedor`                | id, rut, razon_social, rubro, evaluacion, estado_chileproveedores                                                                      | → Compra[], Contrato[]                        |
-| `SolicitudCiudadana`       | id, fecha, solicitante, asunto, estado, respuesta                                                                                      | → Funcionario                                 |
-| `ConsultaPublica`          | id, titulo, fecha_inicio, fecha_fin, participantes, resultados                                                                         | → Documento                                   |
-| `CompromisoGabinete`       | id, sesion_id, descripcion, responsable_id, fecha_limite, estado                                                                       | → Funcionario                                 |
-| `Sesion_Consejo_Seguridad` | id, fecha, tipo, asistentes, acuerdos, compromisos                                                                                     | → CompromisoGabinete                          |
+### Entidades Core
+
+| Entidad            | Atributos Clave                                                                                                                                                                                                    | Relaciones                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `Actor`            | id, rut, razon_social, tipo (enum: municipalidad\|servicio_publico\|universidad\|corporacion\|ong\|persona), contacto_principal, email, telefono, direccion, comuna_id, estado, scoring_relacional, fecha_registro | → HistorialActor[], ActorIPR[] (D-FIN), InteraccionActor[] |
+| `HistorialActor`   | id, actor_id, evento_tipo, descripcion, fecha, funcionario_id                                                                                                                                                      | → Actor                                                    |
+| `InteraccionActor` | id, actor_id, tipo (reunion/llamada/email/convenio), fecha, resumen, participantes                                                                                                                                 | → Actor                                                    |
+
+### Participación Ciudadana
+
+| Entidad           | Atributos Clave                                                                           | Relaciones           |
+| ----------------- | ----------------------------------------------------------------------------------------- | -------------------- |
+| `ConsultaPublica` | id, titulo, descripcion, fecha_inicio, fecha_fin, participantes_count, estado, resultados | → DocumentoAdjunto[] |
+
+> **Nota:** La entidad `SolicitudCiudadana` (OIRS) se gestiona en **D-NORM**.
+
+### Gobernanza
+
+| Entidad               | Atributos Clave                                                                                                        | Relaciones                    |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `SesionGabinete`      | id, fecha, tipo (ordinaria/extraordinaria), asistentes, acta_url                                                       | → CompromisoGabinete[]        |
+| `CompromisoGabinete`  | id, sesion_id, descripcion, responsable_id, fecha_limite, estado (pendiente/cumplido/vencido/cancelado), evidencia_url | → Funcionario, SesionGabinete |
+| `InstanciaGobernanza` | id, nombre, tipo (consejo/comite/mesa), normativa_base, periodicidad                                                   | → SesionInstancia[]           |
 
 ---
 
-## Notas de Diseño
+## Sistemas Involucrados
 
-Los roles de un `Actor` en una IPR (Postulante, Formulador, Patrocinador, Evaluador, Aprobador, Unidad_Financiera, Unidad_Tecnica, Entidad_Ejecutora, Contraparte, Beneficiario) se gestionan a través de la entidad `ActorIPR` en **D-FIN**, con indicación de fase del ciclo de vida.
+| Sistema                | Función                            | Integración                   |
+| ---------------------- | ---------------------------------- | ----------------------------- |
+| `ORG-CHILEPROVEEDORES` | Registro de proveedores            | API verificación habilitación |
+| `SYS-OIRS`             | Solicitudes ciudadanas             | Portal + workflow D-NORM      |
+| `SYS-SIGFE`            | Validación RUT servicios públicos  | Consulta                      |
+| `SYS-SII`              | Validación RUT empresas/personas   | API verificación              |
+| `INT-GOREOS`           | Directorio centralizado de actores | SSOT interno                  |
+
+---
+
+## Normativa Aplicable
+
+| Norma          | Alcance                                               |
+| -------------- | ----------------------------------------------------- |
+| **Ley 19.880** | Procedimientos administrativos, plazos de respuesta   |
+| **Ley 20.285** | Transparencia, acceso a información pública           |
+| **Ley 20.500** | Participación ciudadana, COSOC                        |
+| **Ley 21.730** | Sistema de Seguridad Pública, Consejos Regionales     |
+| **Ley 21.074** | Fortalecimiento regional, competencias del Gobernador |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio            | Relación                                                                    |
-| ------------------ | --------------------------------------------------------------------------- |
-| **D-PLAN**         | Compromisos de Gobernador vinculados a objetivos ERD                        |
-| **D-FIN**          | ActorIPR (roles en IPR), RatingEjecutor                                     |
-| **D-EJEC**         | Convenios (actor como ejecutor)                                             |
-| **D-NORM**         | Actores como partes en convenios y actos administrativos                    |
-| **D-BACK**         | Proveedor (gestión de compras y contratos)                                  |
-| **D-TERR**         | Mapa georreferenciado de actores                                            |
-| **D-GESTION**      | Indicadores de satisfacción ciudadana para H_gore                           |
-| **D-SEG**          | Consejo Regional de Seguridad Pública, Municipios en convenios de seguridad |
-| **D-EVOL**         | Scoring predictivo de actores/ejecutores                                    |
-| **D-GINT (FÉNIX)** | Conflictos críticos con actores/ejecutores activan intervención Nivel I-II  |
+| Dominio    | Relación                                | Entidades Compartidas                  |
+| ---------- | --------------------------------------- | -------------------------------------- |
+| **D-FIN**  | ActorIPR (roles en IPR), RatingEjecutor | Actor → RatingEjecutor                 |
+| **D-BACK** | Proveedor para operación de compras     | Actor.tipo=PROVEEDOR → OrdenCompra     |
+| **D-EJEC** | Ejecutor para convenios                 | Actor.tipo=EJECUTOR → Convenio         |
+| **D-NORM** | OIRS, actores en convenios              | SolicitudCiudadana, ActoAdministrativo |
+| **D-PLAN** | Compromisos vinculados a ERD            | CompromisoGabinete → ObjetivoERD       |
+| **D-TERR** | Georreferenciación de actores           | Actor → Ubicacion                      |
+| **D-SEG**  | Consejo Regional de Seguridad           | InstanciaGobernanza, Actor (FFOO)      |
+| **D-EVOL** | Scoring predictivo de actores           | Actor.scoring_relacional               |
+| **FÉNIX**  | Escalamiento de conflictos críticos     | AlertaFenix                            |
 
 ---
 
-*Documento parte de GORE_OS v4.1*
+*Documento parte de GORE_OS Blueprint Integral v5.0*  
+*Última actualización: 2025-12-16*

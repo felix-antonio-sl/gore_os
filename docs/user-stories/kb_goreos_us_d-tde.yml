@@ -4,7 +4,7 @@ _manifest:
   domain_name: Gobernanza Digital y Transformación
   legacy_modules:
     - M10
-  total_stories: 48
+  total_stories: 54
   priority_distribution:
     critica: 22
     alta: 24
@@ -798,7 +798,57 @@ stories:
     acceptance_criteria:
       - API disponible
       - Acuerdo formalizado
-    source_ref: "user_stories_legacy.md:L642"
+    source_ref: "user_stories_legacy.md:L700"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M6: VINCULACIÓN TERRITORIAL DIGITAL
+  # ═══════════════════════════════════════════════════════════════
+
+  - id: US-TDE-VINC-001
+    legacy_ids: []
+    title: Gestionar firmas municipales
+    as_a:
+      - CTD
+      - Alcalde
+    i_want: Gestionar enrolamiento y soporte de Firmas Electrónicas Avanzadas para funcionarios municipales (vía convenio GORE)
+    so_that: Habilito la transformación digital en comunas
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Enrolamiento centralizado
+      - Soporte de primer nivel GORE
+      - Reporte de uso
+    source_ref: "new:standardization-municipal"
+
+  - id: US-TDE-VINC-002
+    legacy_ids: []
+    title: Acceso a API Gateway Regional
+    as_a:
+      - Desarrollador Municipal
+    i_want: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE) y del GORE
+    so_that: Integro mis sistemas locales (DOM, Tránsito) sin gestionar convenios individuales
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Credenciales developer
+      - Documentación API
+      - Logs de consumo
+    source_ref: "new:standardization-municipal"
+
+  - id: US-TDE-VINC-003
+    legacy_ids: []
+    title: Solicitar soporte infraestructura crítica
+    as_a:
+      - Encargado Informática Municipal
+    i_want: Solicitar soporte técnico o evaluación de proyectos de infraestructura crítica (enlaces, servidores)
+    so_that: Mejoro la conectividad en zonas rezagadas
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Ticket de requerimiento
+      - Evaluación técnica GORE
+      - Recomendación de inversión
+    source_ref: "new:standardization-municipal"
   - id: US-TDE-MUNI-002
     legacy_ids:
       - S-CTD-MUNI-002

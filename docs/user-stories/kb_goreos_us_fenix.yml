@@ -1,0 +1,166 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:fenix:1.0.0"
+  domain: FENIX
+  domain_name: Sistema de Intervención
+  total_stories: 12
+  priority_distribution:
+    critica: 4
+    alta: 6
+    media: 2
+stories:
+  - id: US-FNX-ACT-001
+    title: Alerta automática H_gore
+    as_a:
+      - Jefe FENIX
+    i_want: Recibir alertas automáticas cuando el índice H_gore baje de 60
+    so_that: Puedo iniciar la evaluación de intervención proactiva
+    priority: Crítica
+    module: Activacion
+    acceptance_criteria:
+      - Notificación push/email
+      - Detalle de métricas degradadas
+      - Enlace a dashboard de diagnóstico
+
+  - id: US-FNX-ACT-002
+    title: Solicitar intervención manual
+    as_a:
+      - Jefe de División
+    i_want: Solicitar formalmente una intervención FENIX para un proceso crítico estancado
+    so_that: Desbloqueo situaciones que exceden mi capacidad operativa
+    priority: Alta
+    module: Activacion
+    acceptance_criteria:
+      - Formulario de solicitud (Causa, Impacto)
+      - Flujo de aprobación por Gobernador (si aplica)
+
+  - id: US-FNX-GES-001
+    title: Crear expediente de intervención
+    as_a:
+      - Jefe FENIX
+    i_want: Crear un expediente digital de intervención (ID, Objetivo, Equipo)
+    so_that: Centralizo la gestión y documentación del caso
+    priority: Crítica
+    module: Gestion
+    acceptance_criteria:
+      - Asignación de código único
+      - Selección de dominios afectados
+      - Definición de equipo base
+
+  - id: US-FNX-GES-002
+    title: Gestionar bitácora de intervención
+    as_a:
+      - Interventor
+    i_want: Registrar hitos, decisiones y acciones en una bitácora inmutable
+    so_that: Mantengo la trazabilidad y rendición de cuentas
+    priority: Crítica
+    module: Gestion
+    acceptance_criteria:
+      - Registro con timestamp
+      - Tipificación de entradas (Acción, Decisión, Bloqueo)
+
+  - id: US-FNX-GES-003
+    title: Tablero de control de intervenciones
+    as_a:
+      - Gobernador
+    i_want: Visualizar el estado de todas las intervenciones activas y su progreso
+    so_that: Monitoreo la salud institucional crítica
+    priority: Alta
+    module: Gestion
+    acceptance_criteria:
+      - Vista kanban o lista
+      - Semáforos de avance
+      - Filtros por nivel de criticidad
+
+  - id: US-FNX-OPE-001
+    title: Permisos de superusuario temporal
+    as_a:
+      - Interventor
+    i_want: Recibir permisos temporales sobre los objetos intervenidos (IPR, Convenios)
+    so_that: Puedo ejecutar acciones correctivas directamente en el sistema
+    priority: Crítica
+    module: Operacion
+    acceptance_criteria:
+      - Delegación de roles auditada
+      - Expiración automática de permisos al cerrar caso
+
+  - id: US-FNX-CIE-001
+    title: Generar informe de cierre
+    as_a:
+      - Jefe FENIX
+    i_want: Generar automáticamente un informe de cierre con bitácora y resultados
+    so_that: Formalizo el fin de la intervención y documento aprendizajes
+    priority: Alta
+    module: Cierre
+    acceptance_criteria:
+      - Plantilla estándar
+      - Inclusión automática de métricas antes/después
+
+  - id: US-FNX-CIE-002
+    title: Registrar lección aprendida
+    as_a:
+      - Interventor
+    i_want: Registrar hallazgos y recomendaciones estructuradas (People, Process, Tech)
+    so_that: Alimento la base de conocimiento institucional (D-GESTION)
+    priority: Alta
+    module: Cierre
+    acceptance_criteria:
+      - Categorización del hallazgo
+      - Vinculación a activos de conocimiento
+
+  - id: US-FNX-ANA-001
+    title: Análisis de recurrencia
+    as_a:
+      - Analista D-GESTION
+    i_want: Analizar patrones de intervenciones pasadas
+    so_that: Identifico debilidades estructurales sistémicas
+    priority: Media
+    module: Analitica
+    acceptance_criteria:
+      - Reporte de frecuencia por dominio
+      - Análisis de causas raíz comunes
+
+  - id: US-FNX-ANA-002
+    title: Simular impacto de intervención
+    as_a:
+      - Jefe FENIX
+    i_want: Simular el impacto proyectado de una intervención en el H_gore
+    so_that: Priorizo recursos donde más aportan
+    priority: Media
+    module: Analitica
+    acceptance_criteria:
+      - Modelo predictivo básico
+      - Escenarios what-if
+
+  - id: US-FNX-INT-001
+    title: Integración D-EVOL (Sensores)
+    as_a:
+      - Sistema
+    i_want: Consumir métricas de D-EVOL en tiempo real
+    so_that: Detecto condiciones de activación
+    priority: Alta
+    module: Integracion
+    acceptance_criteria:
+      - API webhook
+      - Latencia baja
+
+  - id: US-FNX-INT-002
+    title: Integración D-SEG (Crisis)
+    as_a:
+      - Sistema
+    i_want: Recibir alertas críticas de seguridad pública (D-SEG)
+    so_that: Activo protocolos de crisis nivel I
+    priority: Alta
+    module: Integracion
+    acceptance_criteria:
+      - Canal prioritario
+      - Notificación inmediata a Gobernador
+
+_summary:
+  total_stories: 12
+  modules_covered:
+    - Activacion
+    - Gestion
+    - Operacion
+    - Cierre
+    - Analitica
+    - Integracion

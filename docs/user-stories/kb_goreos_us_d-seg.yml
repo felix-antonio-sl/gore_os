@@ -6,11 +6,11 @@ _manifest:
     - M8
     - M20
     - M30
-  total_stories: 28
+  total_stories: 24
   priority_distribution:
-    critica: 18
-    alta: 8
-    media: 2
+    critica: 12
+    alta: 9
+    media: 3
 stories:
   - id: US-SEG-PREV-001
     legacy_ids:
@@ -18,7 +18,7 @@ stories:
     title: Visualizar mapa de calor delictual
     as_a:
       - Encargado Prevención
-    i_want: Visualizar mapa de calor delictual (integración STOP/SPD)
+    i_want: Visualizar mapa de calor delictual (integración STOP/SPD + Indicadores KB)
     so_that: Focalizo intervenciones
     priority: Crítica
     module: Prevencion
@@ -26,6 +26,7 @@ stories:
     acceptance_criteria:
       - Mapa con concentración de delitos
       - Filtros por tipo y período
+      - Cruce con KB Indicadores (Abigeato, etc.)
     source_ref: "user_stories_legacy.md:L32"
   - id: US-SEG-PREV-002
     legacy_ids:
@@ -103,14 +104,42 @@ stories:
     title: Gestionar programa asistencia víctimas
     as_a:
       - Analista Proyectos Seguridad
-    i_want: Gestionar programa de asistencia a víctimas
-    so_that: Apoyo a afectados por delitos
-    priority: Media
+    i_want: Gestionar programa de asistencia a víctimas (División Prevención)
+    so_that: Apoyo a afectados por delitos con recursos legales/psicosociales
+    priority: Crítica
     module: Prevencion
     acceptance_criteria:
       - Registro de atenciones
-      - Derivaciones
+      - Derivaciones red asistencia
+      - Seguimiento casos
     source_ref: "user_stories_legacy.md:L43"
+  - id: US-SEG-PREV-008
+    legacy_ids: []
+    title: Asesorar formulación planes comunales
+    as_a:
+      - Asesor Técnico
+    i_want: Asesorar a municipios en la formulación de sus planes comunales de seguridad
+    so_that: Cumplo mandato legal de apoyo técnico
+    priority: Crítica
+    module: Prevencion
+    acceptance_criteria:
+      - Registro de asesorías
+      - Validación de planes comunales
+      - Alineamiento con política nacional
+    source_ref: "Ley Prevención Delito Art 2"
+  - id: US-SEG-PREV-009
+    legacy_ids: []
+    title: Coordinar con SPD
+    as_a:
+      - Jefe División Prevención
+    i_want: Mantener coordinación permanente con la Subsecretaría de Prevención del Delito
+    so_that: Aseguro coherencia con política nacional
+    priority: Alta
+    module: Prevencion
+    acceptance_criteria:
+      - Registro de reuniones/acuerdos
+      - Transferencia de directrices técnicas
+    source_ref: "Ley Prevención Delito Art 1e"
   - id: US-SEG-CIES-001
     legacy_ids:
       - CIES-OP-01
@@ -337,7 +366,7 @@ stories:
       - Actualización mensual
     source_ref: "user_stories_legacy.md:L54"
 _summary:
-  total_stories: 24
+  total_stories: 22
   modules_covered:
     - Prevencion
     - CIES

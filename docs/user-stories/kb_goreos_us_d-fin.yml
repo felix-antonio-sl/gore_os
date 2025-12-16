@@ -11,7 +11,7 @@ _manifest:
     - M24
     - M25
     - M26
-  total_stories: 178
+  total_stories: 181
   priority_distribution:
     critica: 98
     alta: 62
@@ -878,18 +878,72 @@ stories:
     source_ref: "user_stories_legacy.md:L156"
   - id: US-FIN-GEST-008
     legacy_ids:
-      - AD-IPR-012
+      - AD-GEST-008
     title: Semáforos de ejecución
     as_a:
       - Analista Gestión DIPIR
-    i_want: Ver semáforos de ejecución (% físico vs financiero vs tiempo)
-    so_that: Identifico desviaciones rápidamente
+    i_want: Ver semáforos de ejecución (alerta temprana)
+    so_that: Identifico proyectos en riesgo
     priority: Crítica
-    module: IPR
+    module: Sistemas
     acceptance_criteria:
-      - Tres dimensiones de semáforo
-      - Umbrales configurables
-    source_ref: "user_stories_legacy.md:L157"
+      - Indicadores de riesgo configurables
+      - Notificación automática
+    source_ref: "user_stories_legacy.md:L147"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M8: ACOMPAÑAMIENTO A EJECUTORES
+  # ═══════════════════════════════════════════════════════════════
+
+  - id: US-FIN-SUP-001
+    legacy_ids: []
+    title: Agendar hora de soporte financiero
+    as_a:
+      - Municipio
+      - Ejecutor
+    i_want: Agendar una hora de soporte con un analista contable (virtual/presencial)
+    so_that: Aclare dudas complejas sobre rendiciones y evite rechazos
+    priority: Alta
+    module: Acompañamiento
+    acceptance_criteria:
+      - Calendario de disponibilidad integrado
+      - Selección de tema (SISREC, Glosa, etc.)
+      - Confirmación y link de videollamada
+      - Registro de acta de atención
+    source_ref: "new:standardization-municipal"
+
+  - id: US-FIN-SUP-002
+    legacy_ids: []
+    title: Consultar FAQ Dinámica de Rendiciones
+    as_a:
+      - Municipio
+    i_want: Consultar una base de conocimiento con errores frecuentes y soluciones
+    so_that: Resuelva dudas comunes sin contactar a soporte
+    priority: Alta
+    module: Acompañamiento
+    acceptance_criteria:
+      - Buscador semántico (IA)
+      - Ranking de preguntas más consultadas
+      - Ejemplos de documentos aceptados/rechazados
+      - Feedback de utilidad
+    source_ref: "new:standardization-municipal"
+
+  - id: US-FIN-SUP-003
+    legacy_ids: []
+    title: Simular rendición en Sandbox
+    as_a:
+      - Municipio
+      - Ejecutor
+    i_want: Simular una carga de rendición en un entorno de pruebas
+    so_that: Verifique si mis documentos cumplen validaciones antes del envío real
+    priority: Alta
+    module: Acompañamiento
+    acceptance_criteria:
+      - Entorno réplica de SISREC
+      - Validación automática de archivos
+      - Reporte de pre-validación con errores detectados
+      - Sin efectos legales ni contables
+    source_ref: "new:standardization-municipal"
   - id: US-FIN-GEST-009
     legacy_ids:
       - AD-IPR-016

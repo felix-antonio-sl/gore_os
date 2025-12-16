@@ -1,8 +1,8 @@
 # GORE_OS: Visión General
 
-> **Versión:** 4.2 (Modular)  
-> **Fecha:** Diciembre 2024  
-> **Estructura:** Documento principal + 12 archivos de dominio
+> **Versión:** 5.0 (Consolidad)  
+> **Fecha:** 16 Diciembre 2025  
+> **Estructura:** Blueprint Integral Unificado (12 dominios)
 
 ---
 
@@ -168,22 +168,24 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 
 ## C. DOMINIOS GORE_OS
 
-### 6. Mapa de Dominios
+### 6. Mapa de Dominios (Blueprint v5.0)
 
-| #   | Dominio                         | Código    | Capa        | Función      | Detalle                                    |
-| --- | ------------------------------- | --------- | ----------- | ------------ | ------------------------------------------ |
-| 1   | Planificación Estratégica       | D-PLAN    | Habilitante | PLANIFICAR   | [Ver detalle](domains/domain_d-plan.md)    |
-| 2   | Financiamiento                  | D-FIN     | Núcleo      | FINANCIAR    | [Ver detalle](domains/domain_d-fin.md)     |
-| 3   | Ejecución                       | D-EJEC    | Núcleo      | EJECUTAR     | [Ver detalle](domains/domain_d-ejec.md)    |
-| 4   | Coordinación                    | D-COORD   | Núcleo      | COORDINAR    | [Ver detalle](domains/domain_d-coord.md)   |
-| 5   | Gestión Jurídico-Administrativa | D-NORM    | Habilitante | NORMAR       | [Ver detalle](domains/domain_d-norm.md)    |
-| 6   | Gestión de Recursos             | D-BACK    | Habilitante | ADMINISTRAR  | [Ver detalle](domains/domain_d-back.md)    |
-| 7   | Gobernanza Digital              | D-TDE     | Habilitante | -            | [Ver detalle](domains/domain_d-tde.md)     |
-| 8   | Inteligencia Territorial        | D-TERR    | Habilitante | -            | [Ver detalle](domains/domain_d-terr.md)    |
-| 9   | Gestión Institucional           | D-GESTION | Transversal | -            | [Ver detalle](domains/domain_d-gestion.md) |
-| 10  | Evolución e Inteligencia        | D-EVOL    | Estratégica | -            | [Ver detalle](domains/domain_d-evol.md)    |
-| 11  | Gestión Institucional (FÉNIX)   | D-GINT    | Transversal | Intervención | [Ver detalle](domains/fenix.md)            |
-| 12  | Seguridad Pública Regional      | D-SEG     | Núcleo      | PROTEGER     | [Ver detalle](domains/domain_d-seg.md)     |
+| #   | Dominio                    | Código    | Capa        | Función     | BPMN   | US      | Estado       |
+| --- | -------------------------- | --------- | ----------- | ----------- | ------ | ------- | ------------ |
+| 1   | Gestión Financiera         | D-FIN     | Núcleo      | FINANCIAR   | 18     | 181     | ✅ 100%       |
+| 2   | Gestión Normativa          | D-NORM    | Habilitante | NORMAR      | 4      | 52      | ✅ 100%       |
+| 3   | Gestión Administrativa     | D-BACK    | Habilitante | ADMINISTRAR | 14     | 52      | ✅ 100%       |
+| 4   | Planificación Estratégica  | D-PLAN    | Habilitante | PLANIFICAR  | 6      | 27      | ✅ 100%       |
+| 5   | Ejecución y Seguimiento    | D-EJEC    | Núcleo      | EJECUTAR    | 4      | 43      | ✅ 100%       |
+| 6   | Coordinación y OIRS        | D-COORD   | Núcleo      | COORDINAR   | 4      | 14      | ✅ 100%       |
+| 7   | Seguridad Pública Regional | D-SEG     | Núcleo      | PROTEGER    | 4      | 24      | ✅ 100%       |
+| 8   | Inteligencia Territorial   | D-TERR    | Habilitante | -           | 4      | 24      | ✅ 100%       |
+| 9   | Gobernanza Digital         | D-TDE     | Habilitante | -           | 5      | 56      | ✅ 100%       |
+| 10  | Gobernanza Regional        | D-GOB     | Estratégica | GOBERNAR    | 4      | 49      | ✅ 100%       |
+| 11  | Gestión Institucional      | D-GESTION | Transversal | GESTIONAR   | 3      | 20      | ✅ 100%       |
+| 12  | Evolución e Inteligencia   | D-EVOL    | Estratégica | EVOLUCIONAR | 4      | 32      | ✅ 100%       |
+| 13  | Sistema FÉNIX              | FENIX     | Transversal | INTERVENIR  | 2      | 12      | ✅ 100%       |
+| -   | **TOTAL BLUEPRINT INT.**   | -         | -           | -           | **76** | **586** | **COMPLETO** |
 
 ### 7. Resumen de Módulos por Dominio
 
