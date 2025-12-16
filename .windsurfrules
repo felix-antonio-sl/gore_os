@@ -1,0 +1,40 @@
+# GORE OS Development Rules
+
+> Reglas de desarrollo para el stack composicional GORE OS.
+> Referencia: [stack_tecnologias.md](./stack_tecnologias.md)
+
+## Patrón Composicional Obligatorio
+
+```
+FRONTERA (Zod) → PUENTE (tRPC Handler) → NÚCLEO (Effect Program)
+```
+
+- Zod valida SOLO en frontera (inputs tRPC, forms React)
+- Effect maneja TODA la lógica de dominio
+- tRPC handlers ejecutan `Effect.runPromise(program)`
+
+## Reglas de Oro
+
+1. **Schema First**: Drizzle schema = fuente de verdad
+2. **Validate at Boundary**: Zod en tRPC, no en dominio
+3. **Pure Core**: `packages/core` sin I/O
+4. **No Raw SQL**: Todo por Drizzle
+5. **FSM Explícita**: Estados en XState, no flags
+
+## Estructura de Módulo
+
+```
+modules/{nombre}/
+├── router.ts      # tRPC (Puente)
+├── service.ts     # Effect (Núcleo)
+├── schemas.ts     # Zod (Frontera)
+└── *.test.ts
+```
+
+## Anti-Patterns
+
+- ❌ `any` o `unknown` sin refinar
+- ❌ SQL crudo
+- ❌ Flags booleanos para estado
+- ❌ Zod en services
+- ❌ `console.log` (usar Pino)
