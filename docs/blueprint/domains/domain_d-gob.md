@@ -2,7 +2,7 @@
 
 > Parte de: [GORE_OS Vision General](../vision_general.md)  
 > Capa: Estratégica (Dimensión Política)  
-> Función GORE: GOBERNAR / COORDINAR  
+> Función GORE: GOBERNAR  
 > División: Gobernación / Secretaría Ejecutiva CORE / Gabinete
 
 ---
@@ -24,6 +24,8 @@
 | Actor                     | -     | Entidad externa o interna (Municipio, Servicio, ONG, Persona) que interactúa con el GORE.     |
 | SSOT de Actores           | -     | Single Source of Truth. Directorio maestro de todos los actores del ecosistema regional.      |
 | COSOC                     | -     | Consejo de Organizaciones de la Sociedad Civil.                                               |
+| CTCI                      | -     | Comité Regional de Ciencia, Tecnología, Conocimiento e Innovación.                            |
+| AM                        | -     | Área Metropolitana. Conurbación con gobernanza coordinada (Art. 104 bis LOC).                 |
 
 ---
 
@@ -115,6 +117,7 @@ Funcionalidades:
 - Flujo de solicitud de competencias (Art. 21)
 - Monitoreo de indicadores de desempeño servicios traspasados
 - Plan de instalación de competencias (recursos, personas)
+- **Gobernanza Metropolitana**: Gestión de la conurbación (e.g. Chillán-Chillán Viejo) en transporte, residuos y medio ambiente.
 
 ### M4: Coordinación & Emergencias
 
@@ -141,6 +144,7 @@ Funcionalidades:
 - Registro Único de Actores: SSOT para D-FIN (Ejecutores), D-BACK (Proveedores).
 - Historial de Interacciones: Trazabilidad de reuniones, convenios y conflictos.
 - Scoring Relacional: Nivel de vinculación y cumplimiento.
+- **Mesa CTCI**: Articulación con universidades y centros de investigación para la estrategia regional.
 
 ### M6: Participación Ciudadana *(Integrado desde D-COORD)*
 
@@ -307,6 +311,10 @@ flowchart TD
     M -->|"No"| Q["Solicitar registro MP"]
     N --> R["Actor con roles<br/>múltiples habilitados"]
     P --> R
+    I -->|"Socio/Mandante"| S["Verificar Convenio Mandato<br/>o Protocolo Colaboración"]
+    S --> T{"¿OK?"}
+    T -->|"Sí"| U["Asignar rol MANDANTE / SOCIO<br/>+ crear vínculo D-EJEC"]
+    U --> R
 ```
 
 Actores: Gabinete, División que requiere, Actor externo  
@@ -352,12 +360,14 @@ Frecuencia: A demanda
 
 ### Relacionamiento (CRM)
 
-| Entidad            | Atributos Clave                                                                                         | Relaciones                             |
-| ------------------ | ------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `Actor`            | id, rut, razon_social, tipo, contacto_principal, email, telefono, comuna_id, estado, scoring_relacional | → HistorialActor[], ActorIPR[] (D-FIN) |
-| `HistorialActor`   | id, actor_id, evento_tipo, descripcion, fecha, funcionario_id                                           | → Actor                                |
-| `InteraccionActor` | id, actor_id, tipo (reunion/llamada/email/convenio), fecha, resumen                                     | → Actor                                |
-| `RolActor`         | id, actor_id, rol (EJECUTOR/PROVEEDOR), estado, fecha_habilitacion                                      | → Actor                                |
+| Entidad             | Atributos Clave                                                                                         | Relaciones                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `Actor`             | id, rut, razon_social, tipo, contacto_principal, email, telefono, comuna_id, estado, scoring_relacional | → HistorialActor[], ActorIPR[] (D-FIN), ConvenioMandato[] |
+| `HistorialActor`    | id, actor_id, evento_tipo, descripcion, fecha, funcionario_id                                           | → Actor                                                   |
+| `InteraccionActor`  | id, actor_id, tipo (reunion/llamada/email/convenio), fecha, resumen                                     | → Actor                                                   |
+| `RolActor`          | id, actor_id, rol (EJECUTOR/PROVEEDOR/MANDANTE/SOCIO), estado, fecha_habilitacion                       | → Actor                                                   |
+| `ConvenioMandato`   | id, mandante_id, mandatario_id, hito_inicio, presupuesto, estado                                        | → Actor (Mandante)                                        |
+| `AreaMetropolitana` | id, nombre, comunas_constituyentes[], director_am_id, estado                                            | → Comuna[]                                                |
 
 ### Participación Ciudadana
 

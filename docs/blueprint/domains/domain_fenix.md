@@ -16,14 +16,15 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ## Principios Rectores
 
-| Principio                | Descripción                                                             |
-| ------------------------ | ----------------------------------------------------------------------- |
-| Orientación a Resultados | Objetivos específicos, medibles y con plazos definidos                  |
-| Multidisciplinariedad    | Integración de especialistas de múltiples áreas según requerimiento     |
-| Facultades Delegadas     | Autoridad para tomar decisiones operativas sin escalamiento innecesario |
-| Agilidad Operativa       | Ciclos de gestión abreviados respecto a procesos regulares              |
-| Responsabilidad Directa  | Rendición de cuentas sobre los resultados de cada intervención          |
-| Transferencia Ordenada   | Traspaso documentado a operación regular post-intervención              |
+| Principio                 | Descripción                                                                        |
+| ------------------------- | ---------------------------------------------------------------------------------- |
+| Orientación a Resultados  | Objetivos específicos, medibles y con plazos definidos                             |
+| Multidisciplinariedad     | Integración de especialistas de múltiples áreas según requerimiento                |
+| Facultades Delegadas      | Autoridad para tomar decisiones operativas sin escalamiento innecesario            |
+| Agilidad Operativa        | Ciclos de gestión abreviados respecto a procesos regulares                         |
+| Responsabilidad Directa   | Rendición de cuentas sobre los resultados de cada intervención                     |
+| Transferencia Ordenada    | Traspaso documentado a operación regular post-intervención                         |
+| **Excepción Burocrática** | El incumplimiento administrativo (TDE) NO activa FÉNIX salvo riesgo legal crítico. |
 
 ---
 
@@ -31,23 +32,25 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ### Equipo Base (3-4 funcionarios)
 
-| Rol                      | Responsabilidades                                                     |
-| ------------------------ | --------------------------------------------------------------------- |
-| Jefe de Intervención     | Coordinación general y toma de decisiones operativas                  |
-| Analista de Gestión      | Diagnóstico situacional, análisis de datos e identificación de causas |
-| Asesor Jurídico          | Evaluación de viabilidad legal y alternativas normativas              |
-| Especialista en Procesos | Diseño e implementación de soluciones operativas                      |
+| Rol                      | Responsabilidades                                                              |
+| ------------------------ | ------------------------------------------------------------------------------ |
+| Jefe de Intervención     | Coordinación general y toma de decisiones operativas                           |
+| Analista de Gestión      | Diagnóstico situacional, análisis de datos e identificación de causas          |
+| Asesor Jurídico          | Evaluación de viabilidad legal y alternativas normativas                       |
+| **Base ORKO**            | Contratos C1-C5, Inventario Maestro (Toolkit 1.1), E6_Estado_Arquitectónico.   |
+| **Diferencia TDE**       | D-TDE es el piso normativo; D-EVOL M10 es capacidad estratégica **ilimitada**. |
+| Especialista en Procesos | Diseño e implementación de soluciones operativas                               |
 
 ### Especialistas de Apoyo (según intervención)
 
-| Área    | Criterio de Incorporación                                |
-| ------- | -------------------------------------------------------- |
-| D-FIN   | Materias presupuestarias, rendiciones, inversión pública |
-| D-EJEC  | Convenios, seguimiento de obras                          |
-| D-COORD | Gestión de actores externos                              |
-| D-NORM  | Materias jurídico-administrativas                        |
-| D-TDE   | Soluciones tecnológicas                                  |
-| D-EVOL  | Automatización y analítica                               |
+| Área   | Criterio de Incorporación                                |
+| ------ | -------------------------------------------------------- |
+| D-FIN  | Materias presupuestarias, rendiciones, inversión pública |
+| D-EJEC | Convenios, seguimiento de obras                          |
+| D-GOB  | Gestión de actores externos                              |
+| D-NORM | Materias jurídico-administrativas                        |
+| D-TDE  | Soluciones tecnológicas                                  |
+| D-EVOL | Automatización y analítica                               |
 
 ---
 
@@ -98,7 +101,7 @@ Activación: Por diagnóstico | Duración estimada: 4-12 semanas
 ```mermaid
 flowchart LR
     subgraph SENSORS["📡 Detección"]
-        S1["Monitoreo H_gore<br/>(D-EVOL)"]
+        S1["Monitoreo H_gore<br/>(D-GESTION)"]
         S2["Solicitud Manual<br/>(Divisiones)"]
         S3["Alerta Externa<br/>(D-SEG/Crisis)"]
     end
@@ -122,10 +125,10 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph TRIGGER["Gatillador"]
-        A{"¿Origen?"}
-        A -->|"Automático"| B["Alerta H_gore<br/>(D-EVOL)"]
-        A -->|"Manual"| C["Solicitud Jefatura"]
+    subgraph TRIGGER["Trigger"]
+        A{"Origin?"}
+        A -->|"Automatic"| B["H_gore Alert<br/>(D-GESTION)"]
+        A -->|"Manual"| C["Management Request"]
     end
 
     subgraph FENIX_UNIT["🔥 Unidad FÉNIX"]
@@ -139,12 +142,14 @@ flowchart TD
     subgraph AUTORIDAD["🏛️ Gobernador/a"]
         I{"¿Autoriza?"}
         J["✅ Activar Protocolo"]
+        K["📢 Notificar Comisión<br/>de Control CORE<br/>(Nivel I y II)"]
     end
 
     B & C --> D --> E
     E -->|"No"| H
     E -->|"Sí"| F --> G --> I
     I -->|"Sí"| J
+    J --> K
     I -->|"No"| H
 ```
 
@@ -171,26 +176,26 @@ flowchart LR
 
     A --> B --> C --> D --> E --> F
     F -->|"No"| C
-    F -->|"Sí"| G --> H
+    F -->|"Sí"| G --> H --> I
 ```
 
 ---
 
 ## Condiciones de Activación Automática
 
-| Condición                                           | Nivel    | Acción                                  |
-| --------------------------------------------------- | -------- | --------------------------------------- |
-| Índice H_gore < 60 sostenido por 2 semanas          | IV       | Notificación automática a Jefatura      |
-| Índice H_gore < 50                                  | IV       | Activación obligatoria FÉNIX            |
-| Objetivos ERD sin avance >180 días                  | III      | Candidata a intervención                |
-| IPR en estado ESTANCADA >90 días                    | II       | Candidata a intervención                |
-| Rendición en mora >180 días                         | II       | Escalamiento para evaluación            |
-| Convenio a <30 días de vencimiento sin cierre       | I        | Alerta prioritaria                      |
-| Anomalía detectada por sistema                      | Variable | Recomendación de evaluación             |
-| Crisis de seguridad regional (D-SEG)                | I        | Coordinación urgente con FFOO, Fiscalía |
-| Falla crítica CIES >4 horas (D-SEG)                 | II       | Recuperación operativa                  |
-| Proyecto_Seguridad estancado >90 días (D-SEG)       | III      | Desbloqueo de proyecto                  |
-| Incumplimiento convenio municipal seguridad (D-SEG) | III      | Mediación institucional                 |
+| Condition                                         | Level    | Action                            |
+| ------------------------------------------------- | -------- | --------------------------------- |
+| H_gore Score < 60 sustained for 2 weeks           | IV       | Automatic Management Notification |
+| H_gore Score < 50                                 | IV       | Mandatory FÉNIX Activation        |
+| ERD Objectives without progress >180 days         | III      | Intervention Candidate            |
+| IPR in STAGNANT status >90 days                   | II       | Intervention Candidate            |
+| Accountabilities in mora >180 days                | II       | Escalation for evaluation         |
+| Agreement at <30 days from expiration w/o closure | I        | Priority Alert                    |
+| System-detected anomaly                           | Variable | Evaluation Recommendation         |
+| Regional Security crisis (D-SEG)                  | I        | Urgent Coordination with FFOO, DA |
+| CIES Critical failure >4 hours (D-SEG)            | II       | Operational Recovery              |
+| Stagnant Security Project >90 days (D-SEG)        | III      | Project Unblocking                |
+| Municipal Security agreement breach (D-SEG)       | III      | Institutional Mediation           |
 
 ---
 
@@ -202,13 +207,18 @@ flowchart LR
 
 ### Intervención
 
-| Atributo              | Tipo   | Descripción                                                              |
-| --------------------- | ------ | ------------------------------------------------------------------------ |
-| id                    | uuid   | Identificador único                                                      |
-| codigo                | string | Código de intervención (ej: "INT-2024-001")                              |
-| nivel                 | enum   | I, II, III, IV                                                           |
-| estado                | enum   | DETECTADA, EN_DIAGNOSTICO, PLANIFICADA, EN_EJECUCION, EN_CIERRE, CERRADA |
-| criticidad            | int    | Escala 1-5                                                               |
+| Atributo       | Tipo                          | Descripción                                                              |
+| -------------- | ----------------------------- | ------------------------------------------------------------------------ |
+| id             | uuid                          | Identificador único                                                      |
+| codigo         | string                        | Código de intervención (ej: "INT-2024-001")                              |
+| nivel          | enum                          | I, II, III, IV                                                           |
+| estado         | enum                          | DETECTADA, EN_DIAGNOSTICO, PLANIFICADA, EN_EJECUCION, EN_CIERRE, CERRADA |
+| criticidad     | int                           | Escala 1-5                                                               |
+| Agreements     | % active OK, near expirations | 10%                                                                      |
+| TDE Compliance | % norms met (Basal Floor)     | 10%                                                                      |
+| Satisfaction   | Internal NPS, response times  | 5%                                                                       |
+
+> **Nota:** El cumplimiento TDE indica higiene normativa. Un bajo puntaje aquí no invalida el alto desempeño en dimensiones operativas (Presupuesto/IPR), reflejando el principio de "Evolución Paralela".
 | objetivo              | text   | Objetivo específico y medible                                            |
 | fecha_inicio          | date   | Fecha de activación                                                      |
 | autoriza_id           | FK     | Directivo que autoriza la intervención                                   |
@@ -256,7 +266,7 @@ flowchart LR
 ├─────────────────────────────────────────────────────────────────────────────────────┤
 │   OPERACIÓN REGULAR                                                                  │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
-│   D-PLAN → D-FIN → D-EJEC → D-COORD (flujo continuo)                                │
+│   D-PLAN → D-FIN → D-EJEC → D-GOB (flujo continuo)                                  │
 │                                                                                      │
 │   ANTE CONTINGENCIA / PROCESO ESTANCADO / PRIORIDAD ESTRATÉGICA                     │
 │   ━━━━━━━━━━━━━━━━━━━▓▓▓▓▓▓▓▓▓━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
@@ -288,7 +298,7 @@ flowchart LR
 │                                     │ Interviene en                                  │
 │                                     ▼                                                │
 │   ┌─────────────────────────────────────────────────────────────────────────────┐   │
-│   │  D-FIN       │  D-EJEC        │  D-COORD       │  D-NORM       │  D-BACK    │   │
+│   │  D-FIN       │  D-EJEC        │  D-GOB         │  D-NORM       │  D-BACK    │   │
 │   │  (IPR)       │  (Convenios)   │  (Actores)     │  (Normativa)  │  (Recursos)│   │
 │   └─────────────────────────────────────────────────────────────────────────────┘   │
 │                                                                                      │
@@ -302,7 +312,7 @@ flowchart LR
 | D-PLAN    | Objetivos ERD sin avance >180 días activan intervención Nivel III                      |
 | D-FIN     | IPR Problemáticas activan intervención Nivel I-III                                     |
 | D-EJEC    | Convenios en riesgo de incumplimiento activan intervención Nivel I-II                  |
-| D-COORD   | Conflictos críticos con actores/ejecutores activan intervención Nivel I-II             |
+| D-GOB     | Conflictos críticos con actores/ejecutores activan intervención Nivel I-II             |
 | D-NORM    | Actos administrativos vencidos o con observaciones CGR activan intervención Nivel I-II |
 | D-BACK    | Incumplimientos críticos de proveedores activan intervención Nivel II                  |
 | D-TDE     | Fallas críticas de infraestructura TDE activan intervención Nivel I-II                 |
@@ -314,5 +324,5 @@ flowchart LR
 
 ---
 
-*Documento parte de GORE_OS v4.1*  
+*Documento parte de GORE_OS Blueprint v5.0*  
 *Departamento de Gestión Institucional - GORE Ñuble*

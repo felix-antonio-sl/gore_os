@@ -4,7 +4,6 @@
 > Capa: Núcleo (Dimensión Táctica)  
 > Función GORE: EJECUTAR  
 
-
 ---
 
 ## Glosario D-EJEC
@@ -12,7 +11,7 @@
 | Término  | Definición                                                                                     |
 | -------- | ---------------------------------------------------------------------------------------------- |
 | Convenio | Acto administrativo formal que establece obligaciones entre GORE y un ejecutor. SSOT en D-NORM |
-| Ejecutor | Actor habilitado para materializar proyectos. Ver D-COORD.Actor                                |
+| Ejecutor | Actor habilitado para materializar proyectos. Ver D-GOB.Actor                                  |
 | PMO      | Project Management Office. Torre de control de proyectos regional                              |
 | EP       | Estado de Pago. Documento que autoriza transferencia parcial o final                           |
 | UT       | Unidad Técnica. Equipo ejecutor responsable de la obra                                         |
@@ -41,12 +40,19 @@ Gestionar la materialización de las iniciativas de inversión a través de conv
 ### 1. Supervisión de Obras
 
 Funcionalidades:
+
 - Carpeta de seguimiento por IPR (visitas, informes)
 - Registro de visitas a terreno con fotos geolocalizadas
 - Revisión de informes de Unidad Técnica
+- **Control Normativo Circular 33** (para adquisición de equipamiento y vehículos)
 - Gestión de estados de pago
 - Alertas de desviaciones >10%
 - Validación de actas de recepción
+
+> **⚠️ Triángulo de Integración Presupuestaria**:
+> 1. D-EJEC **valida técnicamente** el Estado de Pago (EP) basado en avance físico
+> 2. EP aprobado se envía a [D-BACK (Contabilidad)](domain_d-back.md#contabilidad-operativa) para Devengo → Pago
+> 3. D-FIN **consume** el % de ejecución presupuestaria como indicador de SaludIPR
 
 ### 2. Gestión de Convenios
 
@@ -63,11 +69,13 @@ Tipos de Convenio: (→ Ver D-NORM para definición formal)
 | PROGRAMACIÓN  | Convenio plurianual con Ministerio           | CP de infraestructura con MOP |
 
 Ciclo de Vida:
-```
+
+```text
 ELABORACIÓN → REVISIÓN JURÍDICA → FIRMA → EJECUCIÓN → LIQUIDACIÓN
 ```
 
 Estados:
+
 - BORRADOR → EN_REVISION_JURIDICA → PARA_FIRMA → VIGENTE
 - PRORROGA_SOLICITADA, ADDENDUM_EN_PROCESO
 - TERMINADO → LIQUIDADO
@@ -96,20 +104,23 @@ Semáforo de Proyecto:
 ### 4. Gestión de Compromisos
 
 Actores:
+
 - Administrador Regional
 - Jefaturas de División
 - Encargados Operativos
 
 Funcionalidades:
+
 - Dashboard ejecutivo con alertas
 - Creación y asignación de compromisos
 - Seguimiento con semáforo de vencimiento
-- Validación de cumplimiento
+- **Validación de Percepción Ciudadana**: Registro de feedback social durante la obra.
 - Reportes semanales automáticos
 
 ### 5. Coordinación Municipal
 
 Funcionalidades:
+
 - Guías por mecanismo de financiamiento
 - Wizard de vía de financiamiento
 - Verificación de elegibilidad FRIL
@@ -120,6 +131,7 @@ Funcionalidades:
 ### 6. Relaciones Sectoriales
 
 Funcionalidades:
+
 - Gestión de convenios marco sectoriales
 - Dashboard de relaciones sectoriales
 - Coordinación con ministerios
@@ -186,7 +198,7 @@ flowchart TD
     G --> D
     F -->|"Sí"| H["Aprobar informe"]
     H --> I["Generar Estado<br/>de Pago"]
-    I --> J["Validación DAF"]
+    I --> J["Validación DAF & Rendición SISREC (si aplica)"]
     J --> K["Autorizar pago<br/>(D-FIN)"]
     K --> L{"¿Último EP?"}
     L -->|"No"| D
@@ -234,6 +246,11 @@ flowchart TD
 ```
 
 ---
+
+> **Umbrales sin Reevaluación MDSyF** (Glosa 01, Circular 11):
+> - Incremento costo total proyecto: hasta 10%, tope 7.000 UTM
+> - Adjudicación sobre monto recomendado: hasta 10%, tope 7.000 UTM
+> - Si excede estos límites: requiere reevaluación MDSyF y nuevo acuerdo CORE obligatorio.
 
 ## 📝 User Stories por Módulo
 
@@ -329,6 +346,7 @@ flowchart TD
 | `EstadoPago`           | id, convenio_id, numero, monto, fecha_solicitud, fecha_aprobacion, estado                  | → Convenio (D-NORM)                               |
 | `Riesgo`               | id, convenio_id, descripcion, probabilidad, impacto, mitigacion, estado                    | → Convenio (D-NORM)                               |
 | `VisitaTerreno`        | id, convenio_id, fecha, inspector_id, hallazgos, fotografias[], ubicacion_gps, estado      | → Convenio, Funcionario, CapaGeoespacial (D-TERR) |
+| `BitacoraObra`         | id, convenio_id, fecha_hora, tipo_evento, descripcion, adjuntos[]                          | → Convenio                                        |
 | `ActaRecepcion`        | id, convenio_id, tipo (PARCIAL/DEFINITIVA), fecha, observaciones, conformidad, firmantes[] | → Convenio, ActoAdministrativo (D-NORM)           |
 | `ModificacionConvenio` | id, convenio_id, tipo (ADDENDUM/PRORROGA/CAMBIO_MONTO), justificacion, acto_id, fecha      | → Convenio (D-NORM)                               |
 | `InformeAvance`        | id, convenio_id, periodo, avance_fisico_pct, avance_financiero_pct, observaciones          | → Convenio (D-NORM)                               |
@@ -371,8 +389,9 @@ flowchart TD
 | ------- | ------------------------------------------------ | ---------------------------- |
 | D-PLAN  | IPR priorizadas en ARI se ejecutan vía convenios | IPR, ObjetivoERD             |
 | D-NORM  | Convenio (SSOT del acto administrativo)          | Convenio, ActoAdministrativo |
-| D-FIN   | IPR, Transferencias, Rating Ejecutores           | IPR, CDP, Transferencia      |
-| D-COORD | Actor (entidad base del ejecutor)                | Actor.tipo=EJECUTOR          |
+| D-FIN   | IPR, Transferencias, Calificación Ejecutores     | IPR, CDP, Transferencia      |
+| D-BACK  | EP aprobado → Devengo → Pago (cadena contable)   | EstadoPago, Devengo, Pago    |
+| D-GOB   | Actor (entidad base del ejecutor)                | Actor.tipo=EJECUTOR          |
 | D-TERR  | Geolocalización de obras en ejecución            | CapaGeoespacial, Ubicacion   |
 | D-EVOL  | Indicadores de ejecución para H_org              | Metrica, Alerta              |
 | D-SEG   | PMO para proyectos de seguridad                  | Proyecto_Seguridad           |
@@ -380,5 +399,5 @@ flowchart TD
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.0*  
-*Última actualización: 2025-12-16*
+*Documento parte de GORE_OS Blueprint Integral v5.3*  
+*Última actualización: 2025-12-18*

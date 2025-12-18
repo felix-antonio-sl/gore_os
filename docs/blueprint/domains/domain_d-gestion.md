@@ -12,8 +12,8 @@
 
 | Término            | Definición                                                                                   |
 | ------------------ | -------------------------------------------------------------------------------------------- |
-| H_gore             | Health Score Institucional GORE. Índice operativo de salud diaria del GORE                   |
-| H_org              | Health Score Organizacional. Índice estratégico de madurez sistémica (ver D-EVOL)            |
+| H_gore             | Tactical Health Score. Daily/weekly operational health of the GORE.                          |
+| H_org              | Organizational Health Score. Strategic systemic maturity index (see D-EVOL).                 |
 | SCG                | Sistema de Control de Gestión. Conecta estrategia (ERD), presupuesto y resultados operativos |
 | OKRs               | Objectives & Key Results. Metodología de gestión por objetivos implementada vía POA          |
 | UCI                | Unidad de Control Interno. Gestión de riesgos, controles y contraparte técnica CGR           |
@@ -22,7 +22,8 @@
 | Playbook Operativo | Procedimiento estructurado para tareas recurrentes, crisis o onboarding                      |
 | DPR                | Delegado Presidencial Regional. Representante del gobierno central en la región              |
 | COSOC              | Consejo de la Sociedad Civil Regional. Órgano consultivo de participación                    |
-| CCTID              | Comité Regional de Ciencia, Tecnología e Innovación para el Desarrollo                       |
+| CTCI               | Comité Regional de Ciencia, Tecnología, Conocimiento e Innovación para el Desarrollo         |
+| LDP                | Ley de Protección de Datos Personales (Ley 21.719)                                           |
 | NPS                | Net Promoter Score. Indicador de satisfacción y lealtad de usuarios/funcionarios             |
 | RACI               | Responsible, Accountable, Consulted, Informed. Matriz de asignación de responsabilidades     |
 | SMART              | Specific, Measurable, Achievable, Relevant, Time-bound. Criterios para indicadores           |
@@ -106,28 +107,31 @@ Tabla Comparativa H_gore vs H_org:
 
 Dimensiones H_gore:
 
-| Dimensión                | Indicadores                          | Peso |
-| ------------------------ | ------------------------------------ | ---- |
-| Ejecución Presupuestaria | % ejecución, desvío vs plan          | 25%  |
-| Cartera IPR              | % avance, proyectos en riesgo        | 20%  |
-| Rendiciones              | % mora, días promedio revisión       | 20%  |
-| Convenios                | % vigentes OK, vencimientos próximos | 15%  |
-| Cumplimiento TDE         | % normas cumplidas, brechas          | 10%  |
-| Satisfacción             | NPS interno, tiempos respuesta       | 10%  |
+| Dimension             | Indicators                        | Weight |
+| --------------------- | --------------------------------- | ------ |
+| Budget Execution      | % execution, deviation vs plan    | 20%    |
+| IPR Portfolio         | % progress, projects at risk      | 20%    |
+| Accountabilities      | % mora, avg review days           | 20%    |
+| Regulatory Compliance | UCI/CGR findings, timely sumaries | 15%    |
+| Agreements            | % active OK, near expirations     | 10%    |
+| TDE Compliance        | % norms met (Basal Floor)         | 10%    |
+| Satisfaction          | Internal NPS, response times      | 5%     |
 
-Cálculo:
+> **Nota:** El cumplimiento TDE indica higiene normativa. Un bajo puntaje aquí no invalida el alto desempeño en dimensiones operativas (Presupuesto/IPR), reflejando el principio de "Evolución Paralela".
+
+Calculation:
 
 ```javascript
-H_gore = Σ (peso_i × indicador_normalizado_i)
-Escala: 0-100 | Meta: ≥80 (zona verde)
+H_gore = Σ (weight_i × normalized_indicator_i)
+Scale: 0-100 | Target: ≥80 (green zone)
 ```
 
-Umbrales de Escalamiento:
+Escalation Thresholds:
 
-| Umbral                  | Acción                                 |
-| ----------------------- | -------------------------------------- |
-| H_gore < 60 (2 semanas) | Notificación a Jefatura + Playbook P01 |
-| H_gore < 50             | Activación FÉNIX Nivel IV              |
+| Threshold             | Action                                 |
+| --------------------- | -------------------------------------- |
+| H_gore < 60 (2 weeks) | Management Notification + Playbook P01 |
+| H_gore < 50           | FÉNIX Level IV Activation              |
 
 Funcionalidades:
 
@@ -434,33 +438,33 @@ flowchart TD
 | `IndicadorPOA`   | id, poa_id, nombre, meta, valor_actual, tendencia            | → POA, Medicion[] |
 | `ReporteGestion` | id, periodo, tipo (mensual/trimestral), contenido, aprobador | → POA[]           |
 
-### E: Salud Institucional
+### Entities: Tactical Health (H_gore)
 
-| Entidad           | Atributos Clave                                             | Relaciones |
-| ----------------- | ----------------------------------------------------------- | ---------- |
-| `H_gore`          | id, fecha, valor_compuesto, dimension_scores (JSON), estado | → Alerta[] |
-| `DimensionH_gore` | id, nombre, peso, indicadores[], umbral_alerta              | → H_gore   |
+| Entity            | Key Attributes                                             | Relationships |
+| ----------------- | ---------------------------------------------------------- | ------------- |
+| `HScoreGore`      | id, date, composite_value, dimension_scores (JSON), status | → Alert[]     |
+| `HScoreDimension` | id, name, weight, indicators[], alert_threshold            | → HScoreGore  |
 
 ### E: Playbooks
 
-| Entidad             | Atributos Clave                                             | Relaciones                     |
-| ------------------- | ----------------------------------------------------------- | ------------------------------ |
-| `Playbook`          | id, codigo, nombre, categoria, trigger_condition, pasos[]   | → EjecucionPlaybook[]          |
-| `EjecucionPlaybook` | id, playbook_id, fecha_inicio, fecha_fin, estado, resultado | → Playbook, LeccionAprendida[] |
+| Entity              | Attributes                                                | Relationships               |
+| ------------------- | --------------------------------------------------------- | --------------------------- |
+| `Playbook`          | id, codigo, nombre, categoria, trigger_condition, pasos[] | → PlaybookExecution[]       |
+| `PlaybookExecution` | id, playbook_id, start_date, end_date, status, outcome    | → Playbook, LessonLearned[] |
 
 ### E: Control Interno
 
-| Entidad   | Atributos Clave                                                       | Relaciones  |
-| --------- | --------------------------------------------------------------------- | ----------- |
-| `Riesgo`  | id, categoria, descripcion, probabilidad, impacto, nivel, responsable | → Control[] |
-| `Control` | id, riesgo_id, descripcion, efectividad, evidencia                    | → Riesgo    |
+| Entity    | Key Attributes                                                        | Relationships |
+| --------- | --------------------------------------------------------------------- | ------------- |
+| `Risk`    | id, category, description, probability, impact, level, accountable_id | → Control[]   |
+| `Control` | id, risk_id, description, effectiveness, evidence                     | → Risk        |
 
 ### E: Mejora Continua
 
-| Entidad             | Atributos Clave                                            | Relaciones          |
-| ------------------- | ---------------------------------------------------------- | ------------------- |
-| `OportunidadMejora` | id, descripcion, origen, area, estado, responsable_id      | → IniciativaMejora  |
-| `IniciativaMejora`  | id, oportunidad_id, plan_pdca, metricas_impacto, resultado | → OportunidadMejora |
+| Entity               | Key Attributes                                         | Relationships        |
+| -------------------- | ------------------------------------------------------ | -------------------- |
+| `ImprovementOpp`     | id, description, source, area, status, accountable_id  | → ImprovementProject |
+| `ImprovementProject` | id, opportunity_id, pdca_plan, impact_metrics, outcome | → ImprovementOpp     |
 
 ---
 
@@ -469,7 +473,7 @@ flowchart TD
 | Sistema      | Función                       | Integración         |
 | ------------ | ----------------------------- | ------------------- |
 | `SYS-SCG`    | Control de gestión y POA      | Dashboards internos |
-| `SYS-RRHH`   | Gestión de personas           | SIGPER              |
+| `SYS-RRHH`   | Gestión de personas           | SIAPER              |
 | `SYS-GESDOC` | Gestión documental            | Expediente digital  |
 | `SYS-OIRS`   | Atención ciudadana            | Portal regional     |
 | `INT-H_GORE` | Dashboard salud institucional | Cálculo diario      |
@@ -511,17 +515,17 @@ flowchart LR
 
 Tabla de Referencias:
 
-| Dominio | Relación                                           | Entidades Compartidas   |
-| ------- | -------------------------------------------------- | ----------------------- |
-| D-EVOL  | Lecciones de mejora alimentan pilotos de evolución | IniciativaMejora        |
-| D-FIN   | Indicadores ejecución presupuestaria para H_gore   | Ejecucion, CDP          |
-| D-EJEC  | Estado convenios como dimensión H_gore             | Convenio                |
-| D-BACK  | Procesos RRHH detallados                           | Funcionario, Ausentismo |
-| D-NORM  | Expedientes digitales, OIRS                        | ActoAdministrativo      |
-| D-TDE   | Cumplimiento TDE como dimensión H_gore             | Indicador TDE           |
-| D-COORD | Relación con actores externos                      | Actor, Stakeholder      |
-| D-GOB   | Sesiones CORE, Acuerdos para POA, Informes Gob.    | Acuerdo, Sesion         |
-| FÉNIX   | Escalamiento por H_gore crítico                    | AlertaFenix             |
+| Dominio | Relación                                           | Entidades Compartidas |
+| ------- | -------------------------------------------------- | --------------------- |
+| D-EVOL  | Lecciones de mejora alimentan pilotos de evolución | ImprovementOpp        |
+| D-FIN   | Indicadores ejecución presupuestaria para H_gore   | Execution, CDP        |
+| D-EJEC  | Estado convenios como dimensión H_gore             | Agreement             |
+| D-BACK  | Procesos RRHH detallados                           | Official, Absence     |
+| D-NORM  | Expedientes digitales, OIRS                        | AdministrativeAct     |
+| D-TDE   | Cumplimiento TDE como dimensión H_gore             | TDEIndicator          |
+| D-GOB   | Relación con actores externos                      | Actor, Stakeholder    |
+| D-GOB   | Sesiones CORE, Acuerdos para POA, Informes Gob.    | Agreement, Session    |
+| FÉNIX   | Escalamiento por H_gore crítico                    | FenixAlert            |
 
 ---
 
@@ -538,5 +542,5 @@ Tabla de Referencias:
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.0*  
-*Última actualización: 2025-12-16*
+*Documento parte de GORE_OS Blueprint Integral v5.2*  
+*Última actualización: 2025-12-18*

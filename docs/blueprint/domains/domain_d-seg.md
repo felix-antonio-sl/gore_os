@@ -20,6 +20,9 @@
 | COSOC   | Consejo de la Sociedad Civil. Instancia de participación ciudadana.                               |
 | STOP    | Sistema Táctico de Operación Policial. Fuente de datos de delitos.                                |
 | ENUSC   | Encuesta Nacional Urbana de Seguridad Ciudadana. Fuente de percepción.                            |
+| ANCI    | Agencia Nacional de Ciberseguridad (Ley 21.663).                                                  |
+| COGRID  | Comité para Gestión del Riesgo de Desastres (ex-COE).                                             |
+| L21730  | Ley 21.730 de Atribuciones en Seguridad para Gobiernos Regionales (2024).                         |
 
 ---
 
@@ -175,7 +178,8 @@ flowchart TD
     
     D & E & F & G --> H["Confirmar recepción"]
     H --> I["Seguimiento tiempo real"]
-    I --> J["Cierre de incidente"]
+    I --> K["Activar COGRID / Mesa Operativa (si amerita)"]
+    K --> J["Cierre de incidente"]
 ```
 
 #### Protocolos de Comunicación
@@ -354,13 +358,14 @@ flowchart TD
 
 ## Normativa Aplicable
 
-| Norma        | Alcance                    |
-| ------------ | -------------------------- |
-| Ley 21.427   | Sistema Nacional Seguridad |
-| Ley 20.965   | Cámaras vigilancia         |
-| Ley 20.502   | ONEMI/funcionamiento       |
-| Ley 19.628   | Protección vida privada    |
-| Proyecto Ley | Funciones Prevención GORE  |
+| Norma      | Alcance                                   |
+| ---------- | ----------------------------------------- |
+| Ley 21.427 | Sistema Nacional Seguridad                |
+| Ley 20.965 | Cámaras vigilancia                        |
+| Ley 20.502 | ONEMI/funcionamiento                      |
+| Ley 19.628 | Protección vida privada                   |
+| Ley 21.730 | Atribuciones en Seguridad GORE (Nov 2024) |
+| Ley 21.663 | Marco de Ciberseguridad (ANCI)            |
 
 ---
 
@@ -371,7 +376,7 @@ flowchart TD
 | D-FIN   | Proyecto_Seguridad hereda de IPR              |
 | D-NORM  | Convenios con municipios, evidencias          |
 | D-TERR  | Georreferenciación cámaras e incidentes       |
-| D-COORD | Actores de respuesta (Carabineros, PDI, etc.) |
+| D-GOB   | Actores de respuesta (Carabineros, PDI, etc.) |
 
 ---
 

@@ -1,6 +1,5 @@
 # D-PLAN: Dominio de Planificación Estratégica
 
-
 > Parte de: [GORE_OS Vision General](../vision_general.md)  
 > Capa: Habilitante (Dimensión Estratégica)  
 > Función GORE: PLANIFICAR  
@@ -24,6 +23,9 @@
 | PLADECO                                   | PLADECO | Plan de Desarrollo Comunal. Instrumento rector del desarrollo vecinal.                                                                               |
 | SECPLA                                    | SECPLA  | Secretaría Comunal de Planificación. Unidad municipal técnica.                                                                                       |
 | División de Planificación y Desarrollo    | DIPLADE | División del GORE responsable de diseñar y monitorear instrumentos de planificación                                                                  |
+| Objetivos de Desarrollo Sostenible        | ODS     | Marco de 17 objetivos globales de la ONU (Agenda 2030) vinculados a las ERD.                                                                         |
+| Zona de Interés Turístico                 | ZOIT    | Área declarada por SERNATUR con valor turístico especial para planificación territorial.                                                             |
+| Evaluación Ambiental Estratégica          | EAE     | Procedimiento de evaluación ambiental para políticas, planes y programas (Ley 19.300 Art. 7 bis).                                                    |
 
 ---
 
@@ -85,7 +87,7 @@ Funcionalidades:
 
 - Editor colaborativo de ERD (Objetivos, Lineamientos, Indicadores)
 - Vinculación con ODS y Programas de Gobierno
-- Repositorio documental de versiones ERDctos de seguridad)
+- Repositorio documental de versiones (productos de seguridad)
 - Dashboard de avance por eje estratégico con semáforos
 - Alertas de objetivos sin iniciativas vinculadas (>180 días)
 
@@ -99,12 +101,13 @@ Funcionalidades:
 | Estructura | PROT → Macrozona(3-5) → Zona(n) → Uso(permitido/condicionado/prohibido)  |
 
 Funcionalidades:
+
 - Visor geoespacial de zonificación PROT integrado con D-TERR
 
 - Validador automático de compatibilidad IPR ↔ Zona territorial
 
 - Alertas de proyectos en zonas de uso incompatible
-
+- Gestión de consulta pública (60 días hábiles) Art. 17 bis LOC
 - Consulta pública de aptitud territorial para ciudadanos
 
 ### M3: ARI / PROPIR
@@ -115,11 +118,12 @@ Funcionalidades:
 | Ciclo     | Mayo-Agosto: solicitud → priorización → consolidación → presentación CORE |
 
 Funcionalidades:
+
 - Formulario digital de solicitud de iniciativas (divisiones)
 
 - Scoring multicriterio de priorización (alineamiento ERD, impacto, factibilidad)
 
-- Consolidación automática por fuente/fondo (FNDR, FRPD, ISAR)
+- Consolidación automática por fuente/fondo (FNDR, FRPD, ISAR - Inversión Sectorial)
 
 - Simulación de escenarios presupuestarios
 
@@ -133,13 +137,14 @@ Funcionalidades:
 | Tipos     | MOP, MINVU, MINSAL, CORFO, otros                            |
 
 Funcionalidades:
+
 - Registro de convenios con hitos y cronograma
 
 - Seguimiento financiero (comprometido/pagado)
 
 - Alertas de vencimiento y renovación
-
 - Vinculación con IPR correspondientes
+- Trazabilidad de Toma de Razón ante Contraloría
 
 ### M5: Observatorio Territorial
 
@@ -168,12 +173,13 @@ Funcionalidades:
 | Referencia | Ñuble250: 64 instancias, 2.297 participantes, 9 trazos    |
 
 Funcionalidades:
+
 - Registro de cabildos y consultas territoriales
 
 - Síntesis asistida por IA de aportes ciudadanos
 
 - Trazabilidad de propuestas ciudadanas → iniciativas
-
+- Integración con Consejo de la Sociedad Civil (COSOC) Regional
 - Reportes de participación acumulada
 
 ### M7: Apoyo a Planificación Comunal
@@ -184,6 +190,7 @@ Funcionalidades:
 | Beneficiario | SECPLAN de 21 comunas de Ñuble                                        |
 
 Funcionalidades:
+
 - Mesa de ayuda para formulación de iniciativas (MIDESO)
 
 - Repositorio de proyectos tipo y buenas prácticas
@@ -191,6 +198,20 @@ Funcionalidades:
 - Asistente de alineamiento PLADECO ↔ ERD
 
 - Reporte de cartera comunal en proceso
+
+### M8: Planificación de Emergencias Regionales
+
+| Atributo   | Descripción                                                                             |
+| ---------- | --------------------------------------------------------------------------------------- |
+| Propósito  | Vincular la gestión del riesgo de desastres (SENAPRED) con la planificación estratégica |
+| Referencia | Ley 21.364 (SENAPRED), LOC GORE Art. 16 literal h (gestión del riesgo)                  |
+
+Funcionalidades:
+
+- Integración de mapas de riesgo SENAPRED con ERD y PROT
+- Planificación de inversiones preventivas (infraestructura crítica)
+- Coordinación con COGRID regional (ex COE)
+- Simulación de impacto de desastres en objetivos ERD
 
 ---
 
@@ -239,7 +260,7 @@ flowchart TB
 ```
 
 Actores: DIPLADE, Consejeros CORE, Ciudadanía, Servicios Públicos  
-Frecuencia: Cada 10 años (actualización periódica según Art. 16 LOC)
+Frecuencia: Ciclo decenal (práctica habitual), con actualizaciones parciales según evaluación de indicadores (Art. 16 LOC)
 
 ---
 
@@ -286,6 +307,28 @@ flowchart TB
 
 Actores: Proponente (división/municipio), DIPLADE, D-TERR  
 Frecuencia: Por demanda
+
+---
+
+### P3-bis: Elaboración y Aprobación PROT
+
+```mermaid
+flowchart TB
+    subgraph P3bis["P3-bis: Elaboración y Aprobación PROT"]
+        A["3b.1 Diagnóstico<br/>Territorial"]
+        B["3b.2 Consulta Pública<br/>(60 días hábiles)"]
+        C["3b.3 Evaluación<br/>Ambiental (EAE)"]
+        D["3b.4 Aprobación<br/>CORE"]
+        E["3b.5 Toma de Razón<br/>CGR"]
+        F["3b.6 Publicación<br/>Diario Oficial"]
+    end
+    
+    A --> B --> C --> D --> E --> F
+    
+    B -.- N1["Participación ciudadana<br/>Art. 17 bis LOC"]
+    C -.- N2["Ley 19.300<br/>Párrafo 1 bis"]
+    D -.- N3["Votación CORE<br/>Art. 36 literal b)"]
+```
 
 ---
 
@@ -363,6 +406,30 @@ flowchart TD
 
 ---
 
+### P7: Evaluación Ex-Post de Proyectos
+
+```mermaid
+flowchart TD
+    subgraph P7["P7: Evaluación Ex-Post"]
+        P7_1["7.1 Selección<br/>Muestra"]
+        P7_2["7.2 Recopilación<br/>Datos"]
+        P7_3["7.3 Análisis<br/>Impacto"]
+        P7_4["7.4 Informe y<br/>Lecciones"]
+    end
+
+    P7_1 --> P7_2 --> P7_3 --> P7_4
+
+    P7_1 -.- N1["Proyectos cerrados<br/>>MM$500 o estratégicos"]
+    P7_2 -.- N2["Encuestas beneficiarios<br/>Indicadores objetivos"]
+    P7_3 -.- N3["Comparación con RS<br/>Impacto real vs esperado"]
+    P7_4 -.- N4["Retroalimentación a<br/>ARI y ERD"]
+```
+
+Actores: DIPLADE, D-EJEC, Observatorio  
+Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
+
+---
+
 ## Catálogo por Proceso
 
 ### US Módulo ERD Digital
@@ -434,6 +501,18 @@ flowchart TD
 
 ---
 
+### US Módulo CDP (Convenios de Programación)
+
+| ID              | User Story                                                                                                  | Prioridad |
+| --------------- | ----------------------------------------------------------------------------------------------------------- | --------- |
+| US-PLAN-CDP-001 | Como Analista DIPLADE quiero registrar nuevo convenio con ministerio para iniciar seguimiento formal        | Alta      |
+| US-PLAN-CDP-002 | Como Jefe DIPLADE quiero visualizar dashboard de convenios activos y sus hitos para monitorear cumplimiento | Alta      |
+| US-PLAN-CDP-003 | Como Sistema quiero alertar convenios a 90 días de vencimiento sin renovación para activar gestión          | Alta      |
+| US-PLAN-CDP-004 | Como DIPIR quiero vincular IPR a convenio de programación para trazabilidad financiera                      | Alta      |
+| US-PLAN-CDP-005 | Como Jefe DIPLADE quiero generar informe de ejecución CDP para reunión con ministerio sectorial             | Media     |
+
+---
+
 ## Matriz de Trazabilidad
 
 | Proceso                    | User Stories                | Entidades                                             |
@@ -449,20 +528,23 @@ flowchart TD
 
 ## Entidades de Datos
 
-| Entidad                | Atributos Clave                                                    | Relaciones                      |
-| ---------------------- | ------------------------------------------------------------------ | ------------------------------- |
-| `ERD`                  | id, nombre, periodo_inicio, periodo_fin, estado                    | → EjeEstrategico[]              |
-| `EjeEstrategico`       | id, erd_id, codigo, nombre, descripcion                            | → Lineamiento[]                 |
-| `Lineamiento`          | id, eje_id, codigo, nombre                                         | → ObjetivoEstrategico[]         |
-| `ObjetivoEstrategico`  | id, lineamiento_id, codigo, nombre, indicador, meta                | → IPR[], ActividadEstrategica[] |
-| `IndicadorERD`         | id, objetivo_id, nombre, formula, linea_base, meta, año            | → MedicionIndicador[]           |
-| `MedicionIndicador`    | id, indicador_id, periodo, valor_real, fuente                      |                                 |
-| `ZonaPROT`             | id, macrozona, tipo_uso, condiciones_vinculantes, geometria        | → Territorio                    |
-| `ARI`                  | id, año, estado, fecha_presentacion, monto_total                   | → LineaARI[]                    |
-| `LineaARI`             | id, ari_id, ipr_id, prioridad, monto_solicitado, monto_asignado    | → IPR                           |
-| `ConvenioProgramacion` | id, ministerio, monto_total, vigencia_inicio, vigencia_fin, estado | → HitoCDP[]                     |
-| `HitoCDP`              | id, convenio_id, descripcion, fecha_comprometida, monto, estado    |                                 |
-| `CabildoTerritorial`   | id, fecha, comuna, participantes, propuestas_count                 | → PropuestaCiudadana[]          |
+| Entidad                | Atributos Clave                                                           | Relaciones                      |
+| ---------------------- | ------------------------------------------------------------------------- | ------------------------------- |
+| `ERD`                  | id, nombre, periodo_inicio, periodo_fin, estado                           | → EjeEstrategico[]              |
+| `EjeEstrategico`       | id, erd_id, codigo, nombre, descripcion                                   | → Lineamiento[]                 |
+| `Lineamiento`          | id, eje_id, codigo, nombre                                                | → ObjetivoEstrategico[]         |
+| `ObjetivoEstrategico`  | id, lineamiento_id, codigo, nombre, indicador, meta, ods_vinculados[]     | → IPR[], ActividadEstrategica[] |
+| `IndicadorERD`         | id, objetivo_id, nombre, formula, linea_base, meta, año                   | → MedicionIndicador[]           |
+| `PropuestaCiudadana`   | id, cabildo_id, descripcion, estado_trazabilidad, iniciativa_vinculada_id | → CabildoTerritorial, IPR       |
+| `MedicionIndicador`    | id, indicador_id, periodo, valor_real, fuente                             |                                 |
+| `ZonaPROT`             | id, macrozona, tipo_uso, condiciones_vinculantes, geometria               | → Territorio                    |
+| `ARI`                  | id, año, estado, fecha_presentacion, monto_total                          | → LineaARI[]                    |
+| `LineaARI`             | id, ari_id, ipr_id, prioridad, monto_solicitado, monto_asignado           | → IPR                           |
+| `ConvenioProgramacion` | id, ministerio, monto_total, vigencia_inicio, vigencia_fin, estado        | → HitoCDP[]                     |
+| `HitoCDP`              | id, convenio_id, descripcion, fecha_comprometida, monto, estado           |                                 |
+| `CabildoTerritorial`   | id, fecha, comuna, participantes, propuestas_count                        | → PropuestaCiudadana[]          |
+| `ZUBC`                 | id, sector_costero, uso_preferente, condiciones, geometria                | Zonificación Borde Costero      |
+| `ConsultaPublica`      | id, instrumento_id, tipo, fecha_inicio, fecha_fin, observaciones          | Registro Art. 17 bis LOC        |
 
 ---
 
@@ -479,30 +561,45 @@ flowchart TD
 
 ## Normativa Aplicable
 
-| Norma                   | Artículos  | Contenido                                                               |
-| ----------------------- | ---------- | ----------------------------------------------------------------------- |
-| LOC GORE (DFL 1-19.175) | Art. 16    | Funciones: diseñar, elaborar, aprobar políticas, planes, programas      |
-| LOC GORE                | Art. 17    | PROT obligatorio: macrozonificación, condiciones vinculantes            |
-| LOC GORE                | Art. 20    | Atribuciones CORE: aprobar ERD, PROT, planes reguladores metropolitanos |
-| LOC GORE                | Art. 21    | Transferencia de competencias en ordenamiento territorial               |
-| LOC GORE                | Art. 75-81 | Fondos regionales: FNDR, ISAR, convenios                                |
-| Ley 20.500              | -          | Participación ciudadana en gestión pública                              |
+| Norma                   | Artículos   | Contenido                                                               |
+| ----------------------- | ----------- | ----------------------------------------------------------------------- |
+| LOC GORE (DFL 1-19.175) | Art. 16     | Funciones: diseñar, elaborar, aprobar políticas, planes, programas      |
+| LOC GORE                | Art. 17     | PROT obligatorio: macrozonificación, condiciones vinculantes            |
+| LOC GORE                | Art. 36     | Atribuciones CORE: aprobar ERD, PROT, planes reguladores metropolitanos |
+| LOC GORE                | Art. 21 bis | Transferencia de competencias en ordenamiento territorial               |
+| LOC GORE                | Art. 73-79  | Fondos regionales: FNDR, ISAR (Sectorial), convenios, FRPD              |
+| Ley 20.500              | -           | Participación ciudadana en gestión pública                              |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio   | Relación                                                          |
-| --------- | ----------------------------------------------------------------- |
-| D-TERR    | ZonaPROT definida en IDE; visor geoespacial compartido            |
-| D-FIN     | IPR vinculadas a objetivos ERD; rendiciones de convenios          |
-| D-EJEC    | Iniciativas priorizadas en ARI se ejecutan vía convenios          |
-| D-COORD   | Compromisos Gobernador vinculados a objetivos ERD                 |
-| D-GESTION | OKRs institucionales alineados con ejes ERD                       |
-| D-EVOL    | Proyección de cumplimiento ERD; alimenta KB regional              |
-| D-SEG     | Política Regional Seguridad → Eje Seguridad en ERD                |
-| FÉNIX     | Objetivos ERD sin avance >180 días activan intervención Nivel III |
+| Dominio   | Relación                                                           |
+| --------- | ------------------------------------------------------------------ |
+| D-TERR    | ZonaPROT definida en IDE; visor geoespacial compartido             |
+| D-FIN     | IPR vinculadas a objetivos ERD; rendiciones de convenios           |
+| D-EJEC    | Iniciativas priorizadas en ARI se ejecutan vía convenios           |
+| D-GOB     | Compromisos Gobernador vinculados a objetivos ERD                  |
+| D-GESTION | OKRs institucionales alineados con ejes ERD                        |
+| D-EVOL    | Proyección de cumplimiento ERD; alimenta KB regional               |
+| D-SEG     | Política Regional Seguridad → Eje Seguridad en ERD                 |
+| FÉNIX     | Objetivos ERD sin avance >180 días activan intervención Nivel III  |
+| D-NORM    | Toma de Razón de PROT y CDP; resoluciones aprobatorias ERD         |
+| D-TDE     | Sistemas digitales para ERD, PROT Digital; cumplimiento Ley 21.180 |
 
 ---
 
-*Documento parte de GORE_OS v5.0*
+## Indicadores D-PLAN
+
+| KPI                                      | Descripción                                                   | Meta        |
+| ---------------------------------------- | ------------------------------------------------------------- | ----------- |
+| % Objetivos ERD con Iniciativa Vinculada | Proporción de OE del ERD que tienen al menos una IPR asociada | ≥ 90%       |
+| % Ejecución PROPIR                       | Grado de ejecución del presupuesto aprobado en PROPIR         | ≥ 85% anual |
+| Tiempo Promedio Validación PROT          | Días hábiles desde solicitud hasta dictamen de compatibilidad | ≤ 10 días   |
+| % Convenios con Hitos al Día             | Proporción de CDP activos sin hitos atrasados                 | ≥ 80%       |
+| Participantes en Cabildos por Año        | Número acumulado de ciudadanos en instancias participativas   | ≥ 3.000     |
+| % Propuestas Ciudadanas Trazadas         | Proporción de propuestas con iniciativa vinculada registrada  | ≥ 50%       |
+
+---
+
+*Documento parte de GORE_OS Blueprint v5.2*

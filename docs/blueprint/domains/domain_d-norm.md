@@ -64,6 +64,7 @@ Tipos de Actos:
 | Certificado  | Constancia de hechos o estados                                     |
 
 Estructura Formal (Ley 19.880):
+
 - VISTOS → Competencia y antecedentes que habilitan el acto
 
 - CONSIDERANDO → Fundamentos de hecho y de derecho (Art. 11, 41)
@@ -82,20 +83,21 @@ INICIACIÓN → INSTRUCCIÓN → FINALIZACIÓN → IMPUGNACIÓN (eventual)
 
 Plazos Legales Críticos:
 
-| Plazo           | Aplicación                               |
-| --------------- | ---------------------------------------- |
-| 5 días hábiles  | Recurso de reposición                    |
-| 5 días hábiles  | Recurso jerárquico                       |
-| 10 días hábiles | Respuesta a solicitudes ciudadanas       |
-| 30 días hábiles | Silencio administrativo positivo         |
-| 6 meses         | Plazo máximo procedimiento (prorrogable) |
-| 2 años          | Invalidación de oficio                   |
+| Plazo           | Aplicación                                 |
+| --------------- | ------------------------------------------ |
+| 5 días hábiles  | Recurso de reposición                      |
+| 5 días hábiles  | Recurso jerárquico                         |
+| 10 días hábiles | Respuesta a solicitudes ciudadanas         |
+| 30 días hábiles | Silencio administrativo negativo (rechazo) |
+| 6 meses         | Plazo máximo procedimiento (prorrogable)   |
+| 2 años          | Invalidación de oficio                     |
 
 ### 3. Expediente Electrónico
 
 #### Marco: Ley 21.180 (TDE)
 
 Principios:
+
 - Expediente único por procedimiento
 
 - Foliación automática y correlativa
@@ -111,6 +113,7 @@ Integraciones: DocDigital, Cero Papel, ClaveÚnica
 ### 4. Cumplimiento y Control Interno
 
 Probidad y Transparencia (Leyes 20.285, 20.880):
+
 - Declaraciones de intereses y patrimonio
 
 - Inhabilidades e incompatibilidades
@@ -120,6 +123,7 @@ Probidad y Transparencia (Leyes 20.285, 20.880):
 - Solicitudes de acceso a información
 
 Ley de Lobby (Ley 20.730):
+
 - Registro de audiencias
 
 - Gestiones de interés particular
@@ -127,6 +131,7 @@ Ley de Lobby (Ley 20.730):
 - Viajes pagados por terceros
 
 Control Interno:
+
 - Sumarios administrativos
 
 - Investigaciones sumarias
@@ -318,6 +323,7 @@ flowchart TD
     end
 
     subgraph FASE7["7️⃣ Publicación y Archivo"]
+        Q0["Anonimizar<br/>datos personales"]
         Q["Publicar en<br/>Transparencia"]
         R["Registrar en SIGFE"]
         S["Archivar expediente"]
@@ -380,7 +386,7 @@ flowchart TD
         N{"¿Recurso?"}
         O["Reposición<br/>(5 días)"]
         P["Jerárquico<br/>(5 días)"]
-        Q["Silencio<br/>positivo"]
+        Q["Silencio<br/>negativo"]
     end
 
     E --> F --> G --> H --> I --> J --> K --> L --> M --> N
@@ -397,7 +403,7 @@ flowchart TD
 | Procedimiento total    | 6 meses (prorrogable) |
 | Recurso reposición     | 5 días hábiles        |
 | Recurso jerárquico     | 5 días hábiles        |
-| Silencio positivo      | 30 días hábiles       |
+| Silencio negativo      | 30 días hábiles       |
 | Invalidación de oficio | 2 años                |
 
 ---
@@ -588,12 +594,13 @@ flowchart TD
 
 ### Cumplimiento y Control
 
-| Entidad              | Atributos Clave                                                  | Relaciones    |
-| -------------------- | ---------------------------------------------------------------- | ------------- |
-| `DeclaracionInteres` | id, funcionario_id, tipo, fecha, estado_verificacion             | → Funcionario |
-| `AudienciaLobby`     | id, funcionario_id, fecha, solicitante, materia, resultado       | → Funcionario |
-| `SumarioAdmin`       | id, tipo, fecha_inicio, inculpado_id, fiscal_id, estado, sancion | → Funcionario |
-| `Auditoria_CGR`      | id, oficio_inicio, tipo, alcance, estado, observaciones[]        | → Plan_Mejora |
+| Entidad              | Atributos Clave                                                  | Relaciones                   |
+| -------------------- | ---------------------------------------------------------------- | ---------------------------- |
+| `DeclaracionInteres` | id, funcionario_id, tipo, fecha, estado_verificacion             | → Funcionario                |
+| `AudienciaLobby`     | id, funcionario_id, fecha, solicitante, materia, resultado       | → Funcionario                |
+| `SumarioAdmin`       | id, tipo, fecha_inicio, inculpado_id, fiscal_id, estado, sancion | → Funcionario, FiscalSumario |
+| `FiscalSumario`      | id, funcionario_id, carga_actual, especialidad, estado           | → Funcionario                |
+| `Auditoria_CGR`      | id, oficio_inicio, tipo, alcance, estado, observaciones[]        | → Plan_Mejora                |
 
 ### Convenios
 
@@ -627,6 +634,7 @@ flowchart TD
 | Ley 20.880             | Probidad                     |
 | Ley 20.730             | Lobby                        |
 | Resolución 30/2015 CGR | Rendiciones                  |
+| Resolución 7/2019 CGR  | Toma de Razón                |
 | Ley 19.886             | Contratación pública         |
 
 ---
@@ -638,7 +646,7 @@ flowchart TD
 | D-PLAN    | Reglamentos regionales vinculados con ERD                          |
 | D-FIN     | Convenios → Rendiciones                                            |
 | D-EJEC    | Convenio (SSOT) → Ejecución operativa                              |
-| D-COORD   | Actores como partes en convenios                                   |
+| D-GOB     | Actores como partes en convenios                                   |
 | D-BACK    | Gestión documental, expediente electrónico                         |
 | D-TDE     | Expediente electrónico, interoperabilidad, Admin Sistema (migrado) |
 | D-SEG     | Convenios de Seguridad Municipal, Solicitud_Evidencia → Expediente |

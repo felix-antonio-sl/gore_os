@@ -8,35 +8,42 @@
 
 ## Glosario D-FIN
 
-| Término | Definición                                                                                                                                                  |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| IPR     | Intervención Pública Regional (término interno GORE Ñuble). Paragua operativo que agrupa IDI, PPR y tipologías específicas regionales                       |
-| IDI     | Iniciativa de Inversión. Gasto de capital (S.31/S.33). Puede requerir RS/AD de MDSF y registro obligatorio en BIP                                           |
-| PPR     | Programa Público Regional. Gasto corriente/mixto (S.24). En ejecución directa (Glosa 06) requiere RF DIPRES/SES; en transferencia a entidad pública usa ITF |
-| RS      | Recomendación Satisfactoria (MDSF/SNI). Resultado favorable para IDI                                                                                        |
-| AD      | Admisible (MDSF/SNI). Resultado favorable para proyectos de conservación (cuando aplica)                                                                    |
-| RF      | Resultado Favorable (DIPRES/SES). Resultado favorable para programas (p. ej., PPR Glosa 06)                                                                 |
-| ITF     | Informe Técnico Favorable. Evaluación interna GORE para PPR Transferencia                                                                                   |
-| FI      | Favorable con Indicaciones. Aprobado con ajustes requeridos previo financiamiento                                                                           |
-| OT      | Objetado Técnicamente. Rechazado, requiere reformulación completa                                                                                           |
-| RATE    | Resultado de Admisibilidad Técnico-Económica (genérico): RS, AD, RF, ITF, FI, OT                                                                            |
-| CDP     | Certificado de Disponibilidad Presupuestaria. Primer paso cadena SIGFE                                                                                      |
-| BIP     | Banco Integrado de Proyectos. Registro SNI de iniciativas de inversión                                                                                      |
-| SISREC  | Sistema de Rendición Electrónica de Cuentas (CGR). Obligatorio desde 2023                                                                                   |
-| DAF     | División de Administración y Finanzas                                                                                                                       |
-| UCR     | Unidad de Control de Rendiciones (DAF)                                                                                                                      |
-| RTF     | Referente Técnico-Financiero (revisor otorgante)                                                                                                            |
-| UT      | Unidad Técnica (equipo ejecutor responsable de la obra/ejecución)                                                                                           |
-| ARI     | Anteproyecto Regional de Inversiones. Priorización anual de IPR                                                                                             |
-| CDR     | Comité de Desarrollo Regional. Órgano consultivo que evalúa pertinencia estratégica de IPR                                                                  |
-| FNDR    | Fondo Nacional de Desarrollo Regional. Principal fuente de inversión                                                                                        |
-| FRPD    | Fondo Regional de Productividad y Desarrollo (Royalty minero)                                                                                               |
-| FRIL    | Fondo Regional de Iniciativa Local. Infraestructura municipal ≤5.000 UTM                                                                                    |
-| ISAR    | Instrumento/Sistema de seguridad pública regional (vía especial para cartera de seguridad; requiere reglas específicas)                                     |
-| SPD     | Subsecretaría de Prevención del Delito (validaciones y reglas asociadas a tipologías de seguridad cuando aplique)                                           |
-| MDSF    | Ministerio de Desarrollo Social y Familia                                                                                                                   |
-| DIPRES  | Dirección de Presupuestos                                                                                                                                   |
-| SES     | Subsecretaría de Evaluación Social (MDSF) / evaluación de programas cuando aplique                                                                          |
+| Término                  | Definición                                                                                                                                                  |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| IPR                      | Intervención Pública Regional (término interno GORE Ñuble). Paragua operativo que agrupa IDI, PPR y tipologías específicas regionales                       |
+| IDI                      | Iniciativa de Inversión. Gasto de capital (S.31/S.33). Puede requerir RS/AD de MDSF y registro obligatorio en BIP                                           |
+| PPR                      | Programa Público Regional. Gasto corriente/mixto (S.24). En ejecución directa (Glosa 06) requiere RF DIPRES/SES; en transferencia a entidad pública usa ITF |
+| RS                       | Recomendación Satisfactoria (MDSF/SNI). Resultado favorable para IDI                                                                                        |
+| AD                       | Admisible (MDSF/SNI). Resultado favorable para proyectos de conservación (cuando aplica)                                                                    |
+| RF                       | Resultado Favorable (DIPRES/SES). Resultado favorable para programas (p. ej., PPR Glosa 06)                                                                 |
+| ITF                      | Informe Técnico Favorable. Evaluación interna GORE para PPR Transferencia                                                                                   |
+| FI                       | Favorable con Indicaciones. Aprobado con ajustes requeridos previo financiamiento                                                                           |
+| OT                       | Objetado Técnicamente. Rechazado, requiere reformulación completa                                                                                           |
+| RATE                     | Resultado de Admisibilidad Técnico-Económica (genérico): RS, AD, RF, ITF, FI, OT                                                                            |
+| CDP                      | Certificado de Disponibilidad Presupuestaria. Primer paso cadena SIGFE                                                                                      |
+| BIP                      | Banco Integrado de Proyectos. Registro SNI de iniciativas de inversión                                                                                      |
+| SISREC                   | Sistema de Rendición Electrónica de Cuentas (CGR). Obligatorio desde 2023                                                                                   |
+| DAF                      | División de Administración y Finanzas                                                                                                                       |
+| UCR                      | Unidad de Control de Rendiciones (DAF)                                                                                                                      |
+| RTF                      | Referente Técnico-Financiero (revisor otorgante)                                                                                                            |
+| UT                       | Unidad Técnica (equipo ejecutor responsable de la obra/ejecución)                                                                                           |
+| ARI                      | Anteproyecto Regional de Inversiones. Priorización anual de IPR                                                                                             |
+| CDR                      | Comité de Desarrollo Regional. Órgano consultivo que evalúa pertinencia estratégica de IPR                                                                  |
+| FNDR                     | Fondo Nacional de Desarrollo Regional. Principal fuente de inversión                                                                                        |
+| FRPD                     | Fondo Regional de Productividad y Desarrollo (Royalty minero)                                                                                               |
+| FRIL                     | Fondo Regional de Iniciativa Local. Infraestructura municipal ≤5.000 UTM                                                                                    |
+| ISAR                     | Inversión Sectorial de Asignación Regional. Recursos de ministerios (MOP, MINVU) priorizados por el GORE                                                    |
+| SPD                      | Subsecretaría de Prevención del Delito (validaciones y reglas asociadas a tipologías de seguridad cuando aplique)                                           |
+| MDSF                     | Ministerio de Desarrollo Social y Familia                                                                                                                   |
+| DIPRES                   | Dirección de Presupuestos                                                                                                                                   |
+| SES                      | Subsecretaría de Evaluación Social (MDSF) / evaluación de programas cuando aplique                                                                          |
+| MML                      | Marco de Metodología Lógica. Herramienta de diseño y evaluación de programas públicos (requerido para Glosa 06).                                            |
+| SNI                      | Sistema Nacional de Inversiones. Plataforma del Estado para la evaluación y seguimiento de iniciativas de inversión pública (BIP, RS, etc.)                 |
+| Retorno Territorial      | Impacto medible de una inversión en indicadores de desarrollo regional (empleos, productividad, calidad de vida, sostenibilidad).                           |
+| Cultivo de Oportunidades | Proceso de maduración de una iniciativa desde su detección hasta que cumple los requisitos para ser admisible o priorizada.                                 |
+| Teoría de Cambio         | Hipótesis causal que explica cómo una intervención produce el resultado esperado en desarrollo regional.                                                    |
+| PuntajeImpacto           | Puntuación 0-100 que mide el retorno territorial esperado de una IPR, ponderando dimensiones social, económica, ambiental e institucional.                  |
+| Proyecto Emblemático     | Iniciativa de alto impacto regional incluida en la agenda Ñuble 250 o equivalente, con seguimiento priorizado.                                              |
 
 ---
 
@@ -58,19 +65,26 @@ Gestión integral 360° del ciclo de vida de las inversiones públicas regionale
 ### 1. Captación de Oportunidades
 
 Fuentes de Captación:
+
 - ERD/Brechas - Brechas identificadas en Estrategia Regional
 - Diagnósticos - Estudios territoriales, sectoriales, comunales
 - Demanda ciudadana - OIRS, cabildos, consultas públicas
 - Compromisos - Compromisos de Gobernador, CORE, autoridades
-- Ejecutores - Propuestas de municipios, servicios, universidades
 - Fondos disponibles - Convocatorias sectoriales, cofinanciamientos
-- Emergencias - Situaciones de emergencia declarada
+- Emergencias - Situaciones de emergencia declarada (Glosa 02, Inciso 4)
+- Ejecutores - Propuestas de municipios, servicios, universidades
 
 Embudo de Oportunidades:
 
 ```text
-DETECTADA (100%) → CALIFICADA (60%) → PRIORIZADA (35%) → EN NURTURING (20%) → CONVERTIDA (15%)
+DETECTADA (100%) → CALIFICADA (60%) → PRIORIZADA (35%) → EN CULTIVO (20%) → CONVERTIDA (15%)
 ```
+
+Funcionalidades Adicionales M1:
+
+- **Lista de Documentos por Mecanismo**: Lista de verificación dinámica de requisitos según FRIL/FRPD/FNDR/PPR
+- **Gestión de Oportunidades en Cultivo**: Seguimiento de iniciativas en maduración con próximos pasos
+- **Vista 360° de Oportunidad**: Panel integrado con ejecutor, alineamiento ERD y potencial de conversión
 
 ### 2. Capital Base
 
@@ -116,16 +130,16 @@ Estados Transversales: `SUSPENDIDA`, `CANCELADA`
 
 ### 4. Selector de Mecanismos
 
-| Código | Nombre              | Tope UTM  | Eval.     | Ejecutor      | Guía KODA   |
-| ------ | ------------------- | --------- | --------- | ------------- | ----------- |
-| SNI    | IDI General         | Sin tope  | RS MDSF   | Público       | kb_gn_024   |
-| FRIL   | Fondo Reg.Inf.Local | 5.000     | GORE      | Municipios    | kb_gn_026   |
-| FRPD   | Royalty (I+D+i)     | Variable¹ | SNI/GORE¹ | Habilitados   | kb_gn_027   |
-| C33    | Circular 33         | ≤30%²     | GORE      | Público       | kb_gn_029   |
-| G06    | PPR Glosa 06        | Sin tope  | RF DIPRES | GORE directo  | kb_gn_025   |
-| TRANSF | PPR Transferencia   | Sin tope  | ITF GORE  | Entidad Públ. | kb_gn_001   |
-| S8%    | Subvención 8%       | Variable  | GORE      | ONG/OSC/Muni  | kb_gn_028   |
-| ISAR   | Seguridad Pública   | Variable  | Variable  | Variable      | (pendiente) |
+| Código | Nombre              | Tope UTM  | Eval.     | Ejecutor      | Guía KODA |
+| ------ | ------------------- | --------- | --------- | ------------- | --------- |
+| SNI    | IDI General         | Sin tope  | RS MDSF   | Público       | kb_gn_024 |
+| FRIL   | Fondo Reg.Inf.Local | 5.000     | GORE      | Municipios    | kb_gn_026 |
+| FRPD   | Royalty (I+D+i)     | Variable¹ | SNI/GORE¹ | Habilitados   | kb_gn_027 |
+| C33    | Circular 33         | ≤30%²     | GORE      | Público       | kb_gn_029 |
+| G06    | PPR Glosa 06        | Sin tope  | RF DIPRES | GORE directo  | kb_gn_025 |
+| TRANSF | PPR Transferencia   | Sin tope  | ITF GORE  | Entidad Públ. | kb_gn_001 |
+| S8%    | Subvención 8%       | Variable  | GORE      | ONG/OSC/Muni  | kb_gn_028 |
+| ISAR   | Inv. Sectorial Reg. | Variable  | Sectorial | MOP/MINVU/Etc | kb_gn_030 |
 
 > Notas:  
 > ¹ FRPD bifurca: la evaluación puede requerir evaluación externa (SNI/MDSF) o evaluación simplificada GORE según tipo/umbral de iniciativa; ver `kb_gn_027_guia_frpd_koda.yml`  
@@ -133,30 +147,30 @@ Estados Transversales: `SUSPENDIDA`, `CANCELADA`
 
 #### Tabla Comparativa Expandida de Mecanismos
 
-| Mecanismo | Naturaleza         | Ejecutor Elegible                      | Evaluador                      | Tope Presup.                   | Plazo Ciclo Típico           | Tipo Rendición          | Convocatoria             |
-| --------- | ------------------ | -------------------------------------- | ------------------------------ | ------------------------------ | ---------------------------- | ----------------------- | ------------------------ |
-| SNI       | IDI (Capital)      | Entidad pública (Muni, Servicio, GORE) | MDSF/SNI → RS                  | Sin tope                       | 6-18 meses (según etapa BIP) | SISREC                  | Ventanilla abierta       |
-| FRIL      | IDI (Capital)      | Municipios exclusivamente              | GORE (interno)                 | ≤5.000 UTM                     | 4-8 meses                    | SISREC                  | Concurso anual (feb-mar) |
-| FRPD      | IDI/PPR (Variable) | Público o privado habilitado           | SNI o GORE (según umbral/tipo) | Variable por línea             | 6-12 meses                   | SISREC                  | Concurso o ventanilla    |
-| C33       | IDI (Capital)      | Entidad pública                        | GORE (interno)                 | ≤30% reposición / Sin tope ANF | 3-6 meses                    | SISREC                  | Ventanilla abierta       |
-| G06       | PPR (Corriente)    | GORE (ejecución directa)               | DIPRES/SES → RF                | Sin tope                       | 8-14 meses (incluye SES)     | N/A (ejecución directa) | Programación anual       |
-| TRANSF    | PPR (Corriente)    | Entidad pública (Muni, Servicio)       | GORE (interno) → ITF           | Sin tope                       | 3-6 meses                    | SISREC                  | Ventanilla abierta       |
-| S8%       | PPR (Corriente)    | ONG, OSC, Fundaciones, Municipios      | GORE (interno)                 | Variable (% FNDR)              | 4-6 meses                    | SISREC                  | Concurso anual (mar-abr) |
-| ISAR      | IDI/PPR (Variable) | Variable (según instrumento)           | Variable                       | Variable                       | Variable                     | SISREC                  | Según política regional  |
+| Mecanismo | Naturaleza         | Ejecutor Elegible                      | Evaluador                       | Tope Presup.                   | Plazo Ciclo Típico           | Tipo Rendición          | Convocatoria             |
+| --------- | ------------------ | -------------------------------------- | ------------------------------- | ------------------------------ | ---------------------------- | ----------------------- | ------------------------ |
+| SNI       | IDI (Capital)      | Entidad pública (Muni, Servicio, GORE) | MDSF/SNI → RS                   | Sin tope                       | 6-18 meses (según etapa BIP) | SISREC                  | Ventanilla abierta       |
+| FRIL      | IDI (Capital)      | Municipios exclusivamente              | GORE (interno)                  | ≤5.000 UTM                     | 4-8 meses                    | SISREC                  | Concurso anual (feb-mar) |
+| FRPD      | IDI/PPR (Variable) | Público o privado habilitado           | SNI o GORE (según umbral/tipo)  | Variable por línea             | 6-12 meses                   | SISREC                  | Concurso o ventanilla    |
+| C33       | IDI (Capital)      | Entidad pública                        | GORE (interno)                  | ≤30% reposición / Sin tope ANF | 3-6 meses                    | SISREC                  | Ventanilla abierta       |
+| G06       | PPR (Corriente)    | GORE (ejecución directa)               | DIPRES/SES → RF                 | Sin tope                       | 8-14 meses (incluye SES)     | N/A (ejecución directa) | Programación anual       |
+| TRANSF    | PPR (Corriente)    | Entidad pública (Muni, Servicio)       | GORE (interno) → ITF            | Sin tope                       | 3-6 meses                    | SISREC                  | Ventanilla abierta       |
+| S8%       | PPR (Corriente)    | ONG, OSC, Fundaciones, Municipios      | GORE (interno)                  | Variable (% FNDR)              | 4-6 meses                    | SISREC                  | Concurso anual (mar-abr) |
+| ISAR      | IDI Sectorial      | MOP, MINVU, Servicios Públicos         | Sectorial + GORE (Priorización) | Según Sector                   | Anual (Ley Ppto)             | Sectorial               | Decretos Sectoriales     |
 
 Criterios de Selección Rápida:
 
-| Pregunta Clave                            | Si la respuesta es... | Mecanismo Sugerido   |
-| ----------------------------------------- | --------------------- | -------------------- |
-| ¿Es infraestructura municipal <5.000 UTM? | Sí                    | FRIL                 |
-| ¿Es conservación de activo existente?     | Sí                    | C33 (Conservación)   |
-| ¿Es estudio o diseño sin obra?            | Sí                    | C33 (Estudios) o SNI |
-| ¿Es I+D+i o productividad regional?       | Sí                    | FRPD                 |
-| ¿Es programa ejecutado por el GORE?       | Sí                    | G06 (Glosa 06)       |
-| ¿Es transferencia a entidad pública?      | Sí                    | TRANSF               |
-| ¿Es apoyo a ONG/OSC sin fines de lucro?   | Sí                    | S8%                  |
-| ¿Es inversión tradicional >5.000 UTM?     | Sí                    | SNI                  |
-| ¿Es seguridad pública regional?           | Sí                    | ISAR                 |
+| Pregunta Clave                               | Si la respuesta es... | Mecanismo Sugerido   |
+| -------------------------------------------- | --------------------- | -------------------- |
+| ¿Es infraestructura municipal <5.000 UTM?    | Sí                    | FRIL                 |
+| ¿Es conservación de activo existente?        | Sí                    | C33 (Conservación)   |
+| ¿Es estudio o diseño sin obra?               | Sí                    | C33 (Estudios) o SNI |
+| ¿Es I+D+i o productividad regional?          | Sí                    | FRPD                 |
+| ¿Es programa ejecutado por el GORE?          | Sí                    | G06 (Glosa 06)       |
+| ¿Es transferencia a entidad pública?         | Sí                    | TRANSF               |
+| ¿Es apoyo a ONG/OSC sin fines de lucro?      | Sí                    | S8%                  |
+| ¿Es inversión tradicional >5.000 UTM?        | Sí                    | SNI                  |
+| ¿Es inversión sectorial priorizada por GORE? | Sí                    | ISAR                 |
 
 Antipatrones Frecuentes:
 
@@ -215,7 +229,7 @@ flowchart TD
     Q8 -->|"🏠 Privado<br/>con fines lucro"| INADM2["❌ No elegible<br/>como PPR"]
     
     %% === RAMA ESPECIAL: SEGURIDAD ===
-    Q1 -->|"🛡️ Seguridad<br/>Pública"| ISAR["🛡️ ISAR"]
+    Q1 -->|"🏗️ Inversión<br/>Sectorial"| ISAR["🏗️ ISAR"]
     
     %% === ESTILOS ===
     classDef mecanismo fill:#2ecc71,stroke:#27ae60,color:#fff
@@ -227,8 +241,11 @@ flowchart TD
     class INADM1,INADM2 inadmisible
     class MML_REQ alerta
     class Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10 decision
-    
-### 5. Presupuesto Regional
+```
+
+### 5. Presupuesto Regional (Dimensión Estratégica)
+
+> **⚠️ Nota de Diseño**: Este módulo cubre la **distribución estratégica** de recursos (ARI, CORE, fondos regionales). La **ejecución contable** (cadena CDP→Compromiso→Devengo→Pago) se gestiona operativamente en [D-BACK (Tesorería y Contabilidad)](domain_d-back.md#contabilidad-operativa). D-FIN **consume** el % de ejecución presupuestaria como KPI de salud del portafolio.
 
 Ciclo Presupuestario:
 
@@ -239,6 +256,24 @@ JUL-SEP: Ley Presupuesto (agosto)
 OCT-DIC: Aprobación CORE (diciembre)
 ENE-DIC (n+1): Ejecución año n+1
 ```
+
+#### Glosas Presupuestarias 2025 (Circular 11 DIPRES)
+
+| Glosa | Asunto                                | Restricción/Habilitación Principal                           |
+| ----- | ------------------------------------- | ------------------------------------------------------------ |
+| 01    | Distribución inicial y modificaciones | Define 6 excepciones que no requieren acuerdo CORE           |
+| 03    | Prohibiciones recursos inversión      | Prohibición de financiar personal (ST.21) receptoras         |
+| 04    | Reasignaciones entre subtítulos       | Flexibilidad para cambios excepto subtítulo 22               |
+| 05    | Transferencias universidades          | Limitado a DFL N°4 de 1981 y casa central en la región       |
+| 06    | Transferencias corrientes             | Gastos de administración tope 5% de la transferencia         |
+| 07    | Subsidios 8%                          | 10% del fondo disponible para asignación directa emblemática |
+| 08    | Corporaciones art.101                 | Tope 5% presupuesto inversión y 50% cofinanciamiento         |
+| 09    | ST.29 Activos no financieros          | Exclusivamente para reposición; 90 días para transferir      |
+| 10    | ST.31 Iniciativas Inversión           | Sujetas a normativa SNI y evaluación MDSyF                   |
+| 11    | ST.33 Transferencias Capital          | Normas para subsidios a empresas en áreas rurales            |
+| 12    | FRIL                                  | Montos <5000 UTM no requieren MDSyF (solo Ficha IDI)         |
+| 13    | Fondo Productividad y Desarrollo      | Tipologías priorizadas de Innovación y Competitividad        |
+
 
 ### 6. Rendiciones
 
@@ -251,7 +286,7 @@ Estados de Rendición:
 
 ### 7. Gestión de Ejecutores (SSOT)
 
-Rating de Ejecutor:
+Calificación de Ejecutor:
 
 | Dimensión             | Peso | Indicadores                         |
 | --------------------- | ---- | ----------------------------------- |
@@ -264,16 +299,67 @@ Niveles: A (≥85) Confiable | B (70-84) Estándar | C (55-69) Observación | D 
 
 ### 8. Acompañamiento a Ejecutores (Mesa de Ayuda)
 
-| Atributo  | Descripción                                                         |
-| --------- | ------------------------------------------------------------------- |
-| Propósito | Prevenir rechazos en rendiciones mediante capacitación y asistencia |
-| Canales   | Ticketera, Chatbot, Videollamada, Capacitación E-learning           |
+| Atributo  | Descripción                                                                 |
+| --------- | --------------------------------------------------------------------------- |
+| Propósito | Prevenir rechazos en rendiciones mediante capacitación y asistencia         |
+| Canales   | Mesa de Solicitudes, Asistente Virtual, Videollamada, Capacitación en Línea |
 
 Funcionalidades:
-- Base de conocimiento de errores frecuentes en rendiciones (FAQ Dinámica)
-- Simulador de rendiciones (Sandbox)
+
+- Base de conocimiento de errores frecuentes en rendiciones (Preguntas Frecuentes Dinámica)
+- Simulador de rendiciones (Entorno de Pruebas)
 - Agendamiento de horas con analista contable
-- Cursos certificados en normativa financiera GORE
+- Cursos certificados en normativa financiera GORE (Res. 30 CGR)
+
+### 9. Portafolio Estratégico (Banca de Inversión Regional)
+
+| Atributo   | Descripción                                                                            |
+| ---------- | -------------------------------------------------------------------------------------- |
+| Propósito  | Gestionar el portafolio IPR como un fondo de inversión con enfoque en retorno regional |
+| Paradigma  | El GORE como Banca de Inversión para el desarrollo territorial de Ñuble                |
+| Referencia | Agente `banca_inversion` (KODA), ERD 2024-2030, Ñuble 250                              |
+
+Funcionalidades:
+
+- **Panel de Portafolio**: Visión consolidada IPR por eje ERD, riesgo y retorno esperado
+- **Teoría de Cambio**: Registro de hipótesis causal y supuestos clave por IPR estratégica
+- **PuntajeImpacto**: Puntuación ponderada de retorno territorial (Social 30% + Económico 30% + Ambiental 25% + Institucional 15%)
+- **Análisis de Diversificación**: Alertas de concentración por eje, territorio o ejecutor
+- **Proyectos Emblemáticos**: Seguimiento priorizado para iniciativas Ñuble 250
+- **Simulador de Escenarios**: Proyección de impacto ante reasignación de recursos
+
+Dimensiones PuntajeImpacto:
+
+| Dimensión     | Peso | Indicadores Clave                           |
+| ------------- | ---- | ------------------------------------------- |
+| Social        | 30%  | Beneficiarios, equidad, vulnerabilidad      |
+| Económico     | 30%  | Empleos, productividad, encadenamientos     |
+| Ambiental     | 25%  | Sostenibilidad, huella carbono, resiliencia |
+| Institucional | 15%  | Gobernanza, transparencia, capacidad local  |
+
+### 10. Alertas Proactivas por Ciclo (Gestión 360° IPR)
+
+| Atributo  | Descripción                                                                         |
+| --------- | ----------------------------------------------------------------------------------- |
+| Propósito | Proporcionar alertas inteligentes diferenciadas según la fase del ciclo de vida IPR |
+| Paradigma | Cada fase del ciclo tiene necesidades de información y alertas específicas          |
+
+Alertas por Fase:
+
+| Fase           | Tipo de Alerta                                      | Destinatario   | Umbral                |
+| -------------- | --------------------------------------------------- | -------------- | --------------------- |
+| Formulación    | Documentación incompleta, vencimiento pre-inversión | Formulador     | 15 días sin avance    |
+| Evaluación     | RS/ITF pendiente, observaciones SNI sin respuesta   | Analista DIPIR | 10 días sin respuesta |
+| Financiamiento | Sesión CORE próxima, CDP pendiente                  | Jefe DIPIR     | 5 días antes sesión   |
+| Ejecución      | Hito atrasado, EP sin validar, visita pendiente     | Supervisor     | 7 días de atraso      |
+| Rendición      | Vencimiento plazo SISREC, observaciones CGR         | Ejecutor/UCR   | 30/15/7 días          |
+
+Funcionalidades:
+
+- **Panel de Alertas por Fase**: Vista consolidada filtrable por fase del ciclo
+- **Salud de IPR (SaludIPR)**: Indicador 0-100 que consolida avance, rendiciones, riesgos y observaciones
+- **Historial de Interacciones**: Registro de consultas, capacitaciones y observaciones subsanadas por ejecutor
+- **Próximos Pasos Automáticos**: Sugerencias de acciones según fase y estado actual
 
 ---
 
@@ -345,7 +431,7 @@ flowchart TD
     E -->|"Municipio + <5.000 UTM"| F["🏘️ FRIL"]
     E -->|"Conservación/ANF/Estudio"| G["📜 Circular 33"]
     E -->|"Foco productivo"| H["🚀 FRPD"]
-    E -->|"Seguridad pública"| O["🛡️ ISAR"]
+    E -->|"Priorización Sectorial"| O["🏗️ ISAR"]
     E -->|"Default"| I["📐 SNI General"]
     
     D --> J{"Tipo<br/>Ejecutor"}
@@ -466,7 +552,10 @@ flowchart TD
     C & D --> E["Visaciones internas<br/>(DAF, DIPIR, Jurídica)"]
     E --> F["Firma Gobernador/a"]
     F --> G["Control externo<br/>(DIPRES/CGR)"]
-    G --> H{"¿Requiere<br/>convenio?"}
+    G --> G1{"¿Monto > Tranche<br/>Res. 7 CGR?"}
+    G1 -->|"Sí"| G2["Toma de Razón CGR"]
+    G1 -->|"No"| H
+    G2 --> H
     H -->|"Sí"| I["Elaborar Convenio<br/>de Transferencia"]
     I --> J["Revisión Jurídica"]
     J --> K["Firma GORE +<br/>Entidad Receptora"]
@@ -475,6 +564,29 @@ flowchart TD
     H -->|"No"| N["Formalización<br/>ejecución directa"]
     N --> O["Programar ejecución<br/>presupuestaria"]
 ```
+
+#### P4-bis: Inducción de Ejecutor
+
+```mermaid
+flowchart TD
+    subgraph INDUCCION["📋 Inducción Ejecutor Post-Aprobación"]
+        A["Convenio<br/>Formalizado"]
+        B["Reunión Inicial<br/>GORE-Ejecutor"]
+        C["Entrega Carpeta<br/>de Proyecto"]
+        D["Cronograma<br/>Acordado"]
+        E["Designar<br/>Contraparte GORE"]
+        F["Capacitación<br/>SISREC (si aplica)"]
+    end
+
+    A --> B --> C --> D --> E --> F
+
+    B -.- N1["Expectativas<br/>y Roles"]
+    C -.- N2["Convenio, TDR<br/>Cronograma base"]
+    D -.- N3["Hitos, plazos<br/>EP programados"]
+```
+
+Actores: Jefe DIPIR, Supervisor GORE, Ejecutor  
+Frecuencia: Por cada IPR aprobada con convenio
 
 #### P5: Ejecución y Supervisión
 
@@ -549,7 +661,9 @@ flowchart TD
 
 ---
 
-### D02: Ciclo Presupuestario
+### D02: Ciclo Presupuestario (Vista Estratégica)
+
+> **⚠️ Nota de Integración**: Esta sección describe el ciclo **desde la perspectiva de inversión regional**. Los procesos operativos de contabilización, devengos y pagos se ejecutan en [D-BACK (Contabilidad Operativa)](domain_d-back.md#contabilidad-operativa). D-FIN solicita CDP y monitorea ejecución; D-BACK procesa la cadena contable.
 
 | Campo      | Valor                                    |
 | ---------- | ---------------------------------------- |
@@ -592,6 +706,17 @@ flowchart LR
     A --> B --> C --> D
 ```
 
+#### Modificaciones sin Acuerdo CORE (Excepciones Glosa 01)
+
+Según la Circular 11 de DIPRES, el Ejecutivo Regional puede realizar las siguientes modificaciones mediante Resolución Exenta sin consulta al Consejo Regional:
+
+1.  **Aumentos por mayores ingresos propios** (excepto Ley de Rentas Regionales).
+2.  **Incorporación de Saldos Iniciales de Caja** (arrastre) debidamente validados por DIPRES.
+3.  **Transferencias consolidadas** (ingresos provenientes de otros servicios públicos).
+4.  **Uso de la Glosa 02 (Inciso 4)** para emergencias declaradas.
+5.  **Reasignaciones internas** que no alteren el monto total del Subtítulo ni la asignación presupuestaria.
+6.  **Actualizaciones de moneda extranjera** (tipo de cambio) sin afectar el presupuesto total en pesos.
+
 #### Modificaciones Presupuestarias
 
 ```mermaid
@@ -631,10 +756,9 @@ flowchart TD
 | Criticidad | 🔴 Crítica         |
 | Dueño      | UCR/DAF           |
 
-> Tipología de Rendiciones (según `kb_gn_020_gestion_rendiciones_koda.yml`):
-> - Por Fondo: FNDR, FRIL, FRPD, 8%, Sectoriales
 > - Por Canal: SISREC (obligatorio desde 2023), Tradicional (legado)
 > - Por Estado: PENDIENTE → EN_REVISIÓN → APROBADA | OBSERVADA | EN_MORA | RECHAZADA
+> - Refrendación: Requiere Certificado de Refrendación Presupuestaria electrónico vía SISREC
 
 #### REND-P1: Rendición vía SISREC (Obligatorio)
 
@@ -710,9 +834,9 @@ Umbrales de Mora:
 ```mermaid
 flowchart LR
     A["Municipio con<br/>Dudas"] --> B{"Tipo Consulta"}
-    B -->|"Normativa"| C["Bot Jurídico<br/>(Res. 30)"]
+    B -->|"Normativa"| C["Asistente Virtual<br/>Jurídico (Res. 30)"]
     B -->|"Plataforma"| D["Mesa Ayuda<br/>SISREC"]
-    B -->|"Compleja"| E["Ticket a<br/>Analista DAF"]
+    B -->|"Compleja"| E["Solicitud a<br/>Analista DAF"]
     
     C & D --> F["Respuesta<br/>Automática"]
     E --> G["Videollamada<br/>Soporte"]
@@ -767,7 +891,7 @@ flowchart LR
 | US-FIN-IPR-011  | Reportar avance mensual           | Crítica   | Entidad Ejecutora |
 | US-FIN-IPR-016  | Registrar adjudicación y contrato | Alta      | Entidad Ejecutora |
 | US-FIN-IPR-017  | Subir acta de inicio de obras     | Crítica   | Entidad Ejecutora |
-| US-FIN-GEST-001 | Dashboard cartera ejecución       | Crítica   | Analista Gestión  |
+| US-FIN-GEST-001 | Panel cartera ejecución           | Crítica   | Analista Gestión  |
 | US-FIN-GEST-004 | Validar estado de pago            | Crítica   | Analista Gestión  |
 | US-FIN-GEST-008 | Semáforos de ejecución            | Crítica   | Analista Gestión  |
 
@@ -784,7 +908,6 @@ flowchart LR
 | US-FIN-PPTO-015 | Monitor rendiciones vencidas             | Crítica   | Jefatura DAF            |
 | US-FIN-REND-008 | Alertas bloqueo Art.18                   | Crítica   | UCR                     |
 
-
 *Ver catálogo completo en [kb_goreos_us_d-fin.yml](../user-stories/kb_goreos_us_d-fin.yml)*
 
 > Nota: La Matriz de Trazabilidad puede referenciar IDs de US que no están listadas en este resumen Markdown; el SSOT del catálogo es el archivo YAML enlazado.
@@ -793,29 +916,104 @@ flowchart LR
 
 ## 🔗 Matriz de Trazabilidad
 
-| Proceso BPMN       | Subproceso           | User Stories Relacionadas                                         |
-| ------------------ | -------------------- | ----------------------------------------------------------------- |
-| P0: Selector Vías  | Decisión estratégica | US-FIN-IPR-001, US-FIN-IPR-002                                    |
-| P1: Ingreso        | Recepción            | US-FIN-IPR-004, US-FIN-GOB-004                                    |
-| P1: Ingreso        | Pertinencia CDR      | US-FIN-GOB-001, US-FIN-GOB-002                                    |
-| P1: Ingreso        | Admisibilidad        | US-FIN-IPR-003, US-FIN-IPR-019                                    |
-| P2: Evaluación     | Track A SNI          | US-FIN-IPR-020, US-FIN-IPR-024, US-FIN-IPR-025                    |
-| P2: Evaluación     | Track B Glosa 06     | US-FIN-IPR-021, US-FIN-IPR-022, US-FIN-PPR-001, US-FIN-PPR-002    |
-| P2: Evaluación     | Track C Simplificado | US-FIN-IPR-023, US-FIN-FRIL-001, US-FIN-FRIL-002, US-FIN-FRIL-003 |
-| P3: Financiamiento | CDP                  | US-FIN-PPTO-001, US-FIN-PPTO-006                                  |
-| P3: Financiamiento | Acuerdo CORE         | US-FIN-APR-001, US-FIN-IPR-030, US-FIN-IPR-031                    |
-| P4: Formalización  | Convenio             | US-FIN-PPTO-003, US-FIN-PPTO-004, US-FIN-CONV-001-005             |
-| P5: Ejecución      | Seguimiento          | US-FIN-IPR-011, US-FIN-GEST-001, US-FIN-GEST-008                  |
-| P5: Ejecución      | Estados de Pago      | US-FIN-GEST-004, US-FIN-IPR-016                                   |
-| P6: Modificaciones | Solicitud            | US-FIN-IPR-014, US-FIN-GEST-002, US-FIN-GEST-003                  |
-| P7: Cierre         | Rendición SISREC     | US-FIN-IPR-012, US-FIN-REND-001-008, US-FIN-SISREC-001-003        |
-| P7: Cierre         | Reintegro            | US-FIN-IPR-015                                                    |
-| P7: Cierre         | Garantías            | US-FIN-IPR-026                                                    |
-| Presupuesto        | Formulación          | US-FIN-FORM-001-005                                               |
-| Presupuesto        | Ejecución            | US-FIN-PPTO-005-013                                               |
-| Presupuesto        | Modificaciones       | US-FIN-PPTO-010, US-FIN-MOD-002                                   |
-| Presupuesto        | Cierre               | US-FIN-PPTO-012, US-FIN-PPTO-019                                  |
-| Acompañamiento     | Soporte              | US-FIN-SUP-001 a 003                                              |
+| Proceso BPMN       | Subproceso                 | User Stories Relacionadas                                         |
+| ------------------ | -------------------------- | ----------------------------------------------------------------- |
+| P0: Selector Vías  | Decisión estratégica       | US-FIN-IPR-001, US-FIN-IPR-002                                    |
+| P1: Ingreso        | Recepción                  | US-FIN-IPR-004, US-FIN-GOB-004                                    |
+| P1: Ingreso        | Pertinencia CDR            | US-FIN-GOB-001, US-FIN-GOB-002                                    |
+| P1: Ingreso        | Admisibilidad              | US-FIN-IPR-003, US-FIN-IPR-019                                    |
+| P2: Evaluación     | Track A SNI                | US-FIN-IPR-020, US-FIN-IPR-024, US-FIN-IPR-025                    |
+| P2: Evaluación     | Track B Glosa 06           | US-FIN-IPR-021, US-FIN-IPR-022, US-FIN-PPR-001, US-FIN-PPR-002    |
+| P2: Evaluación     | Track C Simplificado       | US-FIN-IPR-023, US-FIN-FRIL-001, US-FIN-FRIL-002, US-FIN-FRIL-003 |
+| P3: Financiamiento | CDP                        | US-FIN-PPTO-001, US-FIN-PPTO-006                                  |
+| P3: Financiamiento | Acuerdo CORE               | US-FIN-APR-001, US-FIN-IPR-030, US-FIN-IPR-031                    |
+| P4: Formalización  | Convenio                   | US-FIN-PPTO-003, US-FIN-PPTO-004, US-FIN-CONV-001-005             |
+| P5: Ejecución      | Seguimiento                | US-FIN-IPR-011, US-FIN-GEST-001, US-FIN-GEST-008                  |
+| P5: Ejecución      | Estados de Pago            | US-FIN-GEST-004, US-FIN-IPR-016                                   |
+| P6: Modificaciones | Solicitud                  | US-FIN-IPR-014, US-FIN-GEST-002, US-FIN-GEST-003                  |
+| P7: Cierre         | Rendición SISREC           | US-FIN-IPR-012, US-FIN-REND-001-008, US-FIN-SISREC-001-003        |
+| P7: Cierre         | Reintegro                  | US-FIN-IPR-015                                                    |
+| P7: Cierre         | Garantías                  | US-FIN-IPR-026                                                    |
+| Presupuesto        | Formulación                | US-FIN-FORM-001-005                                               |
+| Presupuesto        | Ejecución                  | US-FIN-PPTO-005-013                                               |
+| Presupuesto        | Modificaciones             | US-FIN-PPTO-010, US-FIN-MOD-002                                   |
+| Presupuesto        | Cierre                     | US-FIN-PPTO-012, US-FIN-PPTO-019                                  |
+| Acompañamiento     | Soporte                    | US-FIN-SUP-001 a 003                                              |
+| Ejecutores         | Calificación y Seguimiento | US-FIN-EJEC-001 a 004                                             |
+| P8: Asistencia     | Mesa de Ayuda              | US-FIN-ASIST-001 a 004                                            |
+| M9: Portafolio     | Estrategia                 | US-FIN-PORT-001 a 006, US-FIN-EXPOST-001 a 003                    |
+| M10: Gestión 360°  | Ciclo y Relación           | US-FIN-360-001 a 009                                              |
+
+---
+
+## 📊 Matriz de Concordancia (Módulo ↔ Proceso ↔ US ↔ Entidades)
+
+| Módulo                         | Proceso BPMN                | User Stories                             | Entidades de Datos                          |
+| ------------------------------ | --------------------------- | ---------------------------------------- | ------------------------------------------- |
+| **M1: Captación**              | P0: Selector de Vías        | US-FIN-IPR-001, 002, US-FIN-360-001, 002 | `Oportunidad`, `FaseEmbudo`, `Mecanismo`    |
+| **M2: Capital Base**           | PP1: Formulación (D02)      | US-FIN-FORM-001 a 005                    | `AsignacionPresupuestaria`                  |
+| **M3: Portafolio IPR**         | P1: Ingreso, P2: Evaluación | US-FIN-IPR-003 a 025, US-FIN-GOB-001     | `IPR`, `EvaluacionIPR`, `ActorIPR`          |
+| **M4: Selector Mecanismos**    | P0: Selector de Vías        | US-FIN-IPR-001, 002                      | `Mecanismo`                                 |
+| **M5: Presupuesto**            | PP1-PP5 (D02), P3           | US-FIN-PPTO-001 a 019                    | `CDP`, `Compromiso`, `Devengo`              |
+| **M6: Rendiciones**            | REND-P1, P2, P3 (D08)       | US-FIN-REND-001 a 008                    | `Transferencia`, `Rendicion`, `Observacion` |
+| **M7: Gestión Ejecutores**     | P4-bis: Inducción           | US-FIN-EJEC-001 a 004                    | `CalificacionEjecutor`, `RelacionEjecutor`  |
+| **M8: Mesa Ayuda**             | P8: Asistencia Financiera   | US-FIN-ASIST-001 a 004                   | `InteraccionEjecutor`                       |
+| **M9: Portafolio Estratégico** | (Transversal)               | US-FIN-PORT-001 a 006, EXPOST-001 a 003  | `TeoriaCambio`, `PuntajeImpacto`            |
+| **M10: Alertas 360°**          | P1-P7 (Alertas)             | US-FIN-360-003 a 009                     | `SaludIPR`, `AlertaCiclo`                   |
+
+### ✅ Verificación de Cobertura
+
+| Componente | Total | Con Proceso | Con US | Con Entidad |
+| ---------- | ----- | ----------- | ------ | ----------- |
+| Módulos    | 10    | 10 ✓        | 10 ✓   | 10 ✓        |
+
+> **Resultado**: Concordancia completa. Todo módulo tiene proceso, user stories y entidades asociadas.
+
+### US Módulo Gestión de Ejecutores (M7)
+
+| ID              | Título                                                                                      | Prioridad | Actor          |
+| --------------- | ------------------------------------------------------------------------------------------- | --------- | -------------- |
+| US-FIN-EJEC-001 | Como Analista DIPIR quiero actualizar la calificación de un ejecutor basado en su historial | Alta      | Analista DIPIR |
+| US-FIN-EJEC-002 | Como Jefe DIPIR quiero ver el ranking de ejecutores ordenados por nivel                     | Alta      | Jefe DIPIR     |
+| US-FIN-EJEC-003 | Como Sistema quiero alertar cuando un ejecutor baje a nivel C o D                           | Alta      | Sistema        |
+| US-FIN-EJEC-004 | Como Analista DAF quiero consultar el historial de rendiciones de un ejecutor               | Alta      | Analista DAF   |
+
+### US Módulo Asistencia Financiera (P8)
+
+| ID               | Título                                                                                          | Prioridad | Actor             |
+| ---------------- | ----------------------------------------------------------------------------------------------- | --------- | ----------------- |
+| US-FIN-ASIST-001 | Como Municipio quiero acceder al simulador de rendiciones para prevenir errores                 | Alta      | Entidad Ejecutora |
+| US-FIN-ASIST-002 | Como Municipio quiero agendar sesión de capacitación en normativa financiera                    | Media     | Entidad Ejecutora |
+| US-FIN-ASIST-003 | Como Analista DAF quiero registrar consultas frecuentes para alimentar las Preguntas Frecuentes | Media     | Analista DAF      |
+| US-FIN-ASIST-004 | Como Sistema quiero medir tiempo de respuesta promedio de la mesa de ayuda                      | Media     | Sistema           |
+
+### US Portafolio Estratégico (M9 - Banca de Inversión)
+
+| ID                | Título                                                                                           | Prioridad | Actor          |
+| ----------------- | ------------------------------------------------------------------------------------------------ | --------- | -------------- |
+| US-FIN-PORT-001   | Como Gobernador quiero ver el Panel de Portafolio con distribución por eje ERD                   | Crítica   | Gobernador     |
+| US-FIN-PORT-002   | Como DIPIR quiero registrar la Teoría de Cambio de una IPR estratégica                           | Alta      | Analista DIPIR |
+| US-FIN-PORT-003   | Como Sistema quiero calcular el PuntajeImpacto de cada IPR basado en sus indicadores             | Crítica   | Sistema        |
+| US-FIN-PORT-004   | Como Jefe DIPIR quiero ver alertas de concentración de inversiones por eje o territorio          | Alta      | Jefe DIPIR     |
+| US-FIN-PORT-005   | Como DIPLADE quiero marcar una IPR como Proyecto Emblemático (Ñuble 250)                         | Alta      | DIPLADE        |
+| US-FIN-PORT-006   | Como Analista quiero simular escenarios de reasignación y ver el impacto en el portafolio        | Media     | Analista DIPIR |
+| US-FIN-EXPOST-001 | Como Jefe DIPIR quiero seleccionar proyectos cerrados para evaluación ex-post de impacto         | Alta      | Jefe DIPIR     |
+| US-FIN-EXPOST-002 | Como Observatorio quiero medir indicadores de impacto 1-3 años después del cierre                | Alta      | Observatorio   |
+| US-FIN-EXPOST-003 | Como Sistema quiero comparar el PuntajeImpacto proyectado vs real para aprendizaje institucional | Alta      | Sistema        |
+
+### US Gestión 360° de IPR
+
+| ID             | Título                                                                                       | Prioridad | Actor          |
+| -------------- | -------------------------------------------------------------------------------------------- | --------- | -------------- |
+| US-FIN-360-001 | Como Analista DIPIR quiero ver el pipeline de oportunidades por fase del embudo              | Crítica   | Analista DIPIR |
+| US-FIN-360-002 | Como Sistema quiero mover automáticamente oportunidades entre fases según criterios          | Alta      | Sistema        |
+| US-FIN-360-003 | Como Supervisor quiero programar reunión de inducción con ejecutor post-aprobación           | Crítica   | Supervisor     |
+| US-FIN-360-004 | Como Ejecutor quiero ver la lista de verificación de documentos requeridos para mi mecanismo | Crítica   | Ejecutor       |
+| US-FIN-360-005 | Como Sistema quiero calcular la Salud (SaludIPR) de cada IPR consolidando sus indicadores    | Crítica   | Sistema        |
+| US-FIN-360-006 | Como Analista quiero registrar una interacción con ejecutor (consulta, capacitación, alerta) | Alta      | Analista DIPIR |
+| US-FIN-360-007 | Como Jefe DIPIR quiero ver el estado de la relación con cada ejecutor activo                 | Alta      | Jefe DIPIR     |
+| US-FIN-360-008 | Como Sistema quiero emitir alertas diferenciadas según la fase del ciclo de la IPR           | Crítica   | Sistema        |
+| US-FIN-360-009 | Como Analista quiero ver los próximos pasos sugeridos para cada IPR según su fase            | Alta      | Analista DIPIR |
 
 ---
 
@@ -823,14 +1021,34 @@ flowchart LR
 
 ### Portafolio y Ciclo de Vida
 
-| Entidad              | Atributos Clave                                                                          | Relaciones                                        |
-| -------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| `IPR`                | id, codigo_bip, nombre, naturaleza, mecanismo_id, estado                                 | → Oportunidad, Mecanismo, ObjetivoERD, Convenio[] |
-| `Proyecto_Seguridad` | hereda IPR + tipo_prevencion, validacion_spd, convenio_municipal                         | → IPR, PoliticaRegionalSeguridad                  |
-| `ActorIPR`           | id, ipr_id, actor_id, rol, fase, activo                                                  | → IPR, Actor                                      |
-| `RatingEjecutor`     | id, actor_id, score_total, nivel (A/B/C/D)                                               | → Actor                                           |
-| `EvaluacionIPR`      | id, ipr_id, tipo, resultado, observaciones                                               | → IPR                                             |
-| `Mecanismo`          | id, codigo, nombre, tope_utm, tipo_evaluacion, ejecutor_tipo, requiere_rs, guia_koda_ref | → IPR[]                                           |
+| Entidad                | Atributos Clave                                                                          | Relaciones                                        |
+| ---------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| `IPR`                  | id, codigo_bip, codigo_sisrec_prog, nombre, naturaleza, mecanismo_id, estado             | → Oportunidad, Mecanismo, ObjetivoERD, Convenio[] |
+| `Proyecto_Seguridad`   | hereda IPR + tipo_prevencion, validacion_spd, convenio_municipal                         | → IPR, PoliticaRegionalSeguridad                  |
+| `ActorIPR`             | id, ipr_id, actor_id, rol, fase, activo                                                  | → IPR, Actor                                      |
+| `CalificacionEjecutor` | id, actor_id, puntaje_total, nivel (A/B/C/D)                                             | → Actor                                           |
+| `EvaluacionIPR`        | id, ipr_id, tipo, resultado, observaciones                                               | → IPR                                             |
+| `Mecanismo`            | id, codigo, nombre, tope_utm, tipo_evaluacion, ejecutor_tipo, requiere_rs, guia_koda_ref | → IPR[]                                           |
+| `Oportunidad`          | id, fuente, descripcion, estado_embudo, fecha_deteccion, ipr_vinculada_id                | → IPR (una vez convertida)                        |
+
+### Gestión 360° de IPR
+
+| Entidad               | Atributos Clave                                                                                                  | Relaciones                     |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `FaseEmbudo`          | id, nombre (DETECTADA/CALIFICADA/PRIORIZADA/EN_CULTIVO/CONVERTIDA), orden, criterios_avance                      | → Oportunidad[]                |
+| `RelacionEjecutor`    | id, actor_id, estado_relacion (ACTIVO/SUSPENDIDO/EGRESADO), nivel_compromiso, fecha_ultimo_contacto              | → Actor, InteraccionEjecutor[] |
+| `InteraccionEjecutor` | id, relacion_id, tipo (CONSULTA/CAPACITACION/ALERTA/OBSERVACION), fecha, canal, resumen, resultado               | → RelacionEjecutor             |
+| `SaludIPR`            | id, ipr_id, puntaje_avance, puntaje_rendicion, puntaje_riesgo, puntaje_observaciones, salud_total, fecha_calculo | → IPR                          |
+| `AlertaCiclo`         | id, ipr_id, fase_ciclo, tipo_alerta, fecha_emision, fecha_vencimiento, estado, destinatario_id                   | → IPR, Funcionario             |
+
+### Portafolio Estratégico (Banca de Inversión)
+
+| Entidad              | Atributos Clave                                                                                        | Relaciones               |
+| -------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------ |
+| `TeoriaCambio`       | id, ipr_id, hipotesis, supuestos_clave[], riesgos_logicos[], fecha_registro                            | → IPR                    |
+| `PuntajeImpacto`     | id, ipr_id, puntaje_social, puntaje_economico, puntaje_ambiental, puntaje_institucional, puntaje_total | → IPR                    |
+| `EvaluacionImpacto`  | id, ipr_id, tipo (EX_ANTE/EX_POST), fecha, indicadores_resultado[], puntaje_atribucion                 | → IPR, TeoriaCambio      |
+| `RetornoTerritorial` | id, ipr_id, indicador, linea_base, meta, valor_real, horizonte_anios, fecha_medicion                   | → IPR, EvaluacionImpacto |
 
 ### Presupuesto
 
@@ -870,16 +1088,23 @@ flowchart LR
 
 ## KPIs del Dominio
 
-| Indicador                  | Fórmula                                         | Meta     | Responsable |
-| -------------------------- | ----------------------------------------------- | -------- | ----------- |
-| Tasa de conversión IPR     | IPR financiadas / IPR ingresadas                | ≥25%     | DIPIR       |
-| Tiempo ciclo admisibilidad | Días promedio desde ingreso hasta RATE          | ≤45 días | DIPIR       |
-| Ejecución presupuestaria   | Devengado / Presupuesto vigente                 | ≥90%     | DAF         |
-| Mora rendiciones           | Rendiciones >60 días / Total activas            | ≤5%      | UCR         |
-| Rating ejecutores A/B      | Ejecutores nivel A+B / Total activos            | ≥70%     | DIPIR       |
-| Modificaciones IPR         | IPR con modificación / Total en ejecución       | ≤20%     | DIPIR       |
-| Cumplimiento ARI           | IPR ejecutadas / IPR priorizadas ARI            | ≥80%     | DIPIR       |
-| Reintegros pendientes      | Monto reintegros pendientes / Total transferido | ≤2%      | DAF         |
+| Indicador                       | Fórmula                                              | Meta     | Responsable |
+| ------------------------------- | ---------------------------------------------------- | -------- | ----------- |
+| Tasa de conversión IPR          | IPR financiadas / IPR ingresadas                     | ≥25%     | DIPIR       |
+| Tiempo ciclo admisibilidad      | Días promedio desde ingreso hasta RATE               | ≤45 días | DIPIR       |
+| Ejecución presupuestaria        | Devengado / Presupuesto vigente                      | ≥90%     | DAF         |
+| Mora rendiciones                | Rendiciones >60 días / Total activas                 | ≤5%      | UCR         |
+| Calificación ejecutores A/B     | Ejecutores nivel A+B / Total activos                 | ≥70%     | DIPIR       |
+| Modificaciones IPR              | IPR con modificación / Total en ejecución            | ≤20%     | DIPIR       |
+| Cumplimiento ARI                | IPR ejecutadas / IPR priorizadas ARI                 | ≥80%     | DIPIR       |
+| Reintegros pendientes           | Monto reintegros pendientes / Total transferido      | ≤2%      | DAF         |
+| % Rendiciones vía SISREC        | Rendiciones SISREC / Total rendiciones               | ≥95%     | UCR         |
+| PuntajeImpacto Promedio Cartera | Promedio PuntajeImpacto de IPR en ejecución          | ≥70      | DIPIR       |
+| % Diversificación por Eje       | Ningún eje concentra >35% del presupuesto            | ≤35%     | DIPIR       |
+| Proyectos Emblemáticos %        | IPR emblemáticas en ejecución según plan             | ≥80%     | DIPLADE     |
+| Tasa Conversión Oportunidades   | Oportunidades convertidas / Oportunidades detectadas | ≥15%     | DIPIR       |
+| Salud Promedio Cartera          | Promedio SaludIPR de IPR activas                     | ≥75      | DIPIR       |
+| % Inducciones Completadas       | Ejecutores con inducción formal / Total nuevos       | 100%     | DIPIR       |
 
 ---
 
@@ -906,17 +1131,19 @@ flowchart LR
 
 ## Referencias Cruzadas
 
-| Dominio | Relación                                               | Entidades Compartidas     |
-| ------- | ------------------------------------------------------ | ------------------------- |
-| D-PLAN  | IPR vinculadas a objetivos ERD                         | ObjetivoERD, Brecha       |
-| D-EJEC  | Convenios (ejecución operativa)                        | Convenio, Hito            |
-| D-COORD | Actor (entidad base de ejecutores), CIES/SITIA         | Actor, Proyecto_Seguridad |
-| D-NORM  | Convenio SSOT, Actos aprobatorios                      | ActoAdministrativo        |
-| D-TERR  | Localización geoespacial de IPR                        | Ubicacion, Territorio     |
-| D-BACK  | Gestión financiera/tesorería vinculada con rendiciones | Pago, Tesoreria           |
-| FÉNIX   | IPR Problemáticas activan intervención Nivel I-III     | Alerta, Intervencion      |
+| Dominio       | Relación                                               | Entidades Compartidas        |
+| ------------- | ------------------------------------------------------ | ---------------------------- |
+| D-PLAN        | IPR vinculadas a objetivos ERD                         | ObjetivoERD, Brecha          |
+| D-EJEC        | EP validado técnicamente → D-BACK para pago            | Convenio, Hito, EstadoPago   |
+| D-GOB         | Actor (entidad base de ejecutores), CIES/SITIA         | Actor, Proyecto_Seguridad    |
+| D-NORM        | Convenio SSOT, Actos aprobatorios                      | ActoAdministrativo           |
+| D-TERR        | Localización geoespacial de IPR                        | Ubicacion, Territorio        |
+| D-BACK        | Cadena contable CDP→Devengo→Pago, % Ejecución como KPI | CDP, Compromiso, Devengo     |
+| D-PLAN (N250) | Proyectos Emblemáticos Ñuble 250 como IPR estratégicas | ObjetivoERD, ProyEmblematico |
+| D-GESTION     | Indicadores de ejecución y mora alimentan H_gore       | KPI, IndicadorGestion        |
+| FÉNIX         | IPR Problemáticas activan intervención Nivel I-III     | Alerta, Intervencion         |
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.0*  
-*Última actualización: 2025-12-16*
+*Documento parte de GORE_OS Blueprint Integral v5.3*  
+*Última actualización: 2025-12-18*

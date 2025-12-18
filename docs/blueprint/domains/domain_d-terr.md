@@ -1,7 +1,7 @@
 # D-TERR: Dominio de Inteligencia Territorial
 
 > Parte de: [GORE_OS Vision General](../vision_general.md)  
-> Capa: Núcleo (Dimensión Estratégica)  
+> Capa: Habilitante (Dimensión Geoespacial)  
 > Función GORE: PLANIFICAR  
 
 ---
@@ -31,7 +31,7 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 Instrumentos:
 
-- ERD (Estrategia Regional de Desarrollo)
+- PROT (Plan Regional de Ordenamiento Territorial): **Vinculante según Art. 17 LOC**.
 - ARI (Anteproyecto Regional de Inversiones)
 - PROPIR (Programa Público de Inversión Regional)
 - Políticas regionales sectoriales
@@ -40,12 +40,13 @@ Instrumentos:
 
 Servicios OGC:
 
-| Servicio | Función                |
-| -------- | ---------------------- |
-| WMS      | Visualización de capas |
-| WFS      | Descarga de entidades  |
-| WCS      | Coberturas raster      |
-| CSW      | Catálogo de metadatos  |
+| Servicio | Función                                                      |
+| -------- | ------------------------------------------------------------ |
+| WMS      | Visualización de capas                                       |
+| WFS      | Descarga de entidades                                        |
+| WCS      | Coberturas raster                                            |
+| CSW      | Catálogo de metadatos                                        |
+| SENAPRED | Interoperabilidad con Visor Nacional de Riesgos (Ley 21.364) |
 
 ### 3. Analítica Territorial
 
@@ -311,12 +312,15 @@ flowchart LR
 
 ## Entidades de Datos
 
-| Entidad                | Atributos Clave                                     | Relaciones              |
-| ---------------------- | --------------------------------------------------- | ----------------------- |
-| `CapaGeoespacial`      | id, nombre, geometria, fecha_publicacion, licencia  | → Metadato, ServicioOGC |
-| `Metadato`             | id, capa_id, titulo, resumen, palabras_clave, fecha | → CapaGeoespacial       |
-| `IndicadorTerritorial` | id, nombre, valor, comuna_id, fecha                 | → Comuna                |
-| `BrechaERD`            | id, objetivo_erd_id, meta, avance, gap              | → ObjetivoERD           |
+| Entidad                | Atributos Clave                                           | Relaciones              |
+| ---------------------- | --------------------------------------------------------- | ----------------------- |
+| `CapaGeoespacial`      | id, nombre, geometria, fecha_publicacion, licencia        | → Metadato, ServicioOGC |
+| `Metadato`             | id, capa_id, titulo, resumen, palabras_clave, fecha       | → CapaGeoespacial       |
+| `PROT`                 | id, nombre, estado (Vigente/Borrador), actos_relacionados | → CapaGeoespacial       |
+| `IPT`                  | id, nombre, tipo (PRC/PRI), comuna_id, estado             | → Comuna                |
+| `ZonaRiesgo`           | id, tipo (Inundación/Incendio), severidad, fuente_id      | → CapaGeoespacial       |
+| `IndicadorTerritorial` | id, nombre, valor, comuna_id, fecha                       | → Comuna                |
+| `BrechaERD`            | id, objetivo_erd_id, meta, avance, gap                    | → ObjetivoERD           |
 
 ---
 

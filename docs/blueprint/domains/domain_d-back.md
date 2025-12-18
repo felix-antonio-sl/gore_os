@@ -20,9 +20,7 @@
 | PPP               | Precio Promedio Ponderado. Método de valorización de inventarios             |
 | FIFO              | First In, First Out. Método de valorización                                  |
 | FEFO              | First Expired, First Out. Para productos perecibles                          |
-| SIGPER            | Sistema de Gestión de Personal del Estado                                    |
-| SIAPER            | Sistema de Información y Control del Personal de la Administración           |
-| SIGAS             | Sistema de Gestión de Activos y Suministros                                  |
+| SIAPER            | Sistema de Información y Control del Personal de la Administración (CGR)     |
 | PREVIRED          | Plataforma de pago de cotizaciones previsionales                             |
 | TEF               | Transferencia Electrónica de Fondos. Pago bancario electrónico               |
 | SIC               | Saldo Inicial de Caja. Recursos de arrastre del ejercicio anterior           |
@@ -33,6 +31,10 @@
 | Ítem 34.07        | Asignación presupuestaria para pago de deuda flotante del ejercicio anterior |
 | Cartola Bancaria  | Extracto de movimientos de cuenta corriente emitido por el banco             |
 | Partida Pendiente | Diferencia temporal entre registro SIGFE y movimiento bancario               |
+| UCR               | Unidad Control de Rendiciones. Encargada de auditar rendiciones de terceros  |
+| Compra Ágil       | Modalidad de compra competitiva para montos menores o iguales a 100 UTM      |
+| Fondos Globales   | Fondos en efectivo o cta. corriente para gastos menores (caja chica) ≤3 UTM  |
+
 
 ---
 
@@ -88,12 +90,14 @@ PAC-Compras → REQUERIMIENTO → CDP → LICITACIÓN/CM → OC → RECEPCIÓN �
 
 Mecanismos:
 
-| Mecanismo          | Umbral        | Plataforma      |
-| ------------------ | ------------- | --------------- |
-| Convenio Marco     | Sin límite    | Mercado Público |
-| Licitación Pública | > 1.000 UTM   | Mercado Público |
-| Licitación Privada | 100-1.000 UTM | Mercado Público |
-| Compra Directa     | < 100 UTM     | Mercado Público |
+| Mecanismo          | Umbral        | Normativa / Plataforma        |
+| ------------------ | ------------- | ----------------------------- |
+| Fondos Globales    | < 3 UTM       | Res. Exenta / Caja Chica      |
+| Compra Ágil        | ≤ 100 UTM     | Decreto 661 / Mercado Público |
+| Convenio Marco     | Sin límite    | Mercado Público               |
+| Licitación Pública | > 1.000 UTM   | Ley 19.886 / Mercado Público  |
+| Licitación Privada | 100-1.000 UTM | Mercado Público               |
+| Compra Directa     | < 100 UTM     | Mercado Público               |
 
 ### 3. Inventarios y Bodega
 
@@ -150,7 +154,7 @@ Ciclo:
 REGISTRO → CONCILIACIÓN → CONTABILIZACIÓN → CIERRE → DEUDA FLOTANTE
 ```
 
-> Nota: Este módulo gestiona las operaciones financieras internas del GORE como organización, distintas del ciclo de inversión pública regional (D-FIN).
+> **⚠️ Triángulo de Integración Presupuestaria**:  \n> - **D-FIN** define distribución estratégica (ARI, CORE) y monitorea % ejecución como KPI de portafolio  \n> - **D-EJEC** valida técnicamente Estados de Pago (EP) y envía a D-BACK para procesamiento  \n> - **D-BACK** ejecuta la cadena contable: CDP → Compromiso → Devengo → Pago en SIGFE  \n>   \n> Este módulo gestiona las operaciones financieras internas del GORE como organización.
 
 ---
 
@@ -253,6 +257,17 @@ flowchart TD
     F -->|"Sí"| G["🛒 Convenio<br/>Marco"]
 ```
 
+#### Umbrales y Modalidades (Decreto N° 661/2024)
+
+| Rango (UTM)    | Modalidad                   | Requisitos Mínimos                      |
+| -------------- | --------------------------- | --------------------------------------- |
+| < 3 UTM        | Fondos Globales Menores     | Sin OC obligatoria, boleta directa      |
+| 3 - 100 UTM    | Compra Ágil                 | Mínimo 3 cotizaciones en plataforma     |
+| 100 - 1000 UTM | Convenio Marco / Licitación | Bases administrativas, CDP previo       |
+| > 1000 UTM     | Licitación Pública          | Comisión evaluadora, Resolución fundada |
+| > 5000 UTM     | Licitación Pública          | Boleta de garantía de seriedad (≤3%)    |
+
+
 #### P3: Órdenes de Compra
 
 ```mermaid
@@ -304,7 +319,7 @@ flowchart TD
     C --> D{"¿Conforme?"}
     D -->|"Sí"| E["Firmar guía"]
     D -->|"No"| F["Rechazar"]
-    E --> G["Ingresar en SIGAS"]
+    E --> G["Ingresar en Sistema"]
     G --> H["Actualizar stock"]
 ```
 
@@ -317,7 +332,7 @@ flowchart TD
     B -->|"No"| D["Gasto del período"]
     C --> E["Asignar N° inventario"]
     E --> F["Plaquetear bien"]
-    F --> G["Registrar en SIGAS"]
+    F --> G["Registrar en Sistema"]
     G --> H["Contabilizar SIGFE"]
 ```
 
@@ -331,7 +346,7 @@ flowchart TD
     B -->|"Pérdida/Hurto"| E["Denuncia + Sumario"]
     B -->|"Donación"| F["Autorización"]
     C & D & E & F --> G["Resolución de baja"]
-    G --> H["Baja en SIGAS"]
+    G --> H["Baja en Sistema"]
     H --> I["Contabilizar SIGFE"]
 ```
 
@@ -407,7 +422,7 @@ flowchart LR
     D --> E["Entrevista"]
     E --> F["Selección"]
     F --> G["Contratación"]
-    G --> H["Alta SIGPER"]
+    G --> H["Integración con ERP RRHH (e.g. SIAPER)"]
 ```
 
 #### Tipos de Contrato
@@ -431,6 +446,22 @@ flowchart TD
     G --> H["Transferir a funcionarios"]
     H --> I["Contabilizar SIGFE"]
 ```
+
+#### Ciclo Mensual de Remuneraciones
+
+| Periodo | Actividad                                                    | Responsable               |
+| ------- | ------------------------------------------------------------ | ------------------------- |
+| 01 - 14 | Recopilación de novedades (Licencias, Permisos, Horas Extra) | Profesional GDP           |
+| 15 - 17 | Cálculo, liquidación y registro en sistema                   | Gestora de Remuneraciones |
+| 18      | Visación técnica, jurídica y de finanzas                     | GDP / Jurídica / Finanzas |
+| 19      | Pago de Remuneraciones (Fecha legal)                         | Tesorería                 |
+| 19 - 25 | Procesamiento de Reliquidaciones y Planilla Suplementaria    | Gestora de Remuneraciones |
+| 20 - 30 | Pago de Cotizaciones Previsionales (PREVIRED)                | Tesorería                 |
+
+> **Tope Institucional Horas Extraordinarias** (PR-DAF-0005):
+> - Diurnas: Máximo 20 horas mensuales.
+> - Nocturnas/Festivas: Máximo 16 horas mensuales.
+> - *Excepción: Conductores institucionales y situaciones de emergencia.*
 
 #### P3: Capacitación y Calificaciones
 
@@ -633,6 +664,24 @@ flowchart TD
     I --> J["Priorizar pagos<br/>enero/febrero"]
 ```
 
+#### P6: Fondos Globales Menores (Caja Chica)
+
+| Atributo           | Valor                  | Norma GORE            |
+| ------------------ | ---------------------- | --------------------- |
+| Monto Máximo Fondo | 15 UTM                 | PR-DAF-0080           |
+| Límite Gasto Único | 3 UTM                  | Res. Exenta           |
+| Plazo Rendición    | 10 a 15 días hábiles   | Procedimiento Interno |
+| Clasificación      | ST.22 Item 12 Asig 002 | Gastos Menores        |
+
+```mermaid
+flowchart LR
+    A["Solicitud<br/>Fondo"] --\u003e B["Cheque bancario/<br/>Efectivo"]
+    B --\u003e C["Gasto (Boleta/<br/>Factura)"]
+    C --\u003e D["Rendición a<br/>Finanzas"]
+    D --\u003e E["Reposición<br/>Fondo"]
+```
+
+
 ---
 
 ### Catálogo por Proceso
@@ -811,12 +860,13 @@ Flujos Principales:
 
 ### Personas
 
-| Entidad           | Atributos Clave                                                       | Relaciones                                   |
-| ----------------- | --------------------------------------------------------------------- | -------------------------------------------- |
-| `Funcionario`     | id, rut, nombre, cargo, grado_eus, division_id, fecha_ingreso, estado | → ContratoLaboral, Liquidacion[], Licencia[] |
-| `ContratoLaboral` | id, funcionario_id, tipo, fecha_inicio, fecha_termino                 | → Funcionario                                |
-| `Liquidacion`     | id, funcionario_id, periodo, bruto, descuentos, liquido               | → Funcionario                                |
-| `Licencia`        | id, funcionario_id, tipo, dias, fecha_inicio, estado                  | → Funcionario                                |
+| Entidad                 | Atributos Clave                                                           | Relaciones                                   |
+| ----------------------- | ------------------------------------------------------------------------- | -------------------------------------------- |
+| `Funcionario`           | id, rut, nombre, cargo, grado_eus, division_id, fecha_ingreso, estado     | → ContratoLaboral, Liquidacion[], Licencia[] |
+| `DeclaracionPatrimonio` | id, funcionario_id, fecha_presentacion, periodo, estado                   | → Funcionario                                |
+| `ContratoLaboral`       | id, funcionario_id, tipo, fecha_inicio, fecha_termino                     | → Funcionario                                |
+| `Liquidacion`           | id, funcionario_id, periodo, bruto, descuentos, liquido                   | → Funcionario                                |
+| `Licencia`              | id, funcionario_id, tipo, dias, fecha_inicio, estado, subsidio_recuperado | → Funcionario                                |
 
 ### Abastecimiento
 
@@ -825,6 +875,7 @@ Flujos Principales:
 | `OrdenCompra`         | id, numero_mp, proveedor_id, monto, estado, fecha            | → Proveedor, ItemOC[]   |
 | `Licitacion`          | id, numero_mp, tipo, estado, fecha_publicacion, fecha_cierre | → OrdenCompra           |
 | `ContratoAdquisicion` | id, licitacion_id, proveedor_id, monto, vigencia             | → Licitacion, Proveedor |
+| `GarantiaContrato`    | id, contrato_id, tipo, monto, vencimiento, estado custody    | → ContratoAdquisicion   |
 
 ### Inventarios
 
@@ -848,14 +899,12 @@ Flujos Principales:
 
 ## Sistemas Involucrados
 
-| Sistema           | Función                             |
-| ----------------- | ----------------------------------- |
-| `SYS-SIGPER`      | Gestión de personas, remuneraciones |
-| `SYS-SIAPER`      | Control personal Estado             |
-| `SYS-PREVIRED`    | Cotizaciones previsionales          |
-| `ORG-CHILECOMPRA` | Mercado Público, licitaciones, OC   |
-| `SYS-SIGAS`       | Inventarios y activo fijo           |
-| `SYS-SIGFE`       | Contabilización                     |
+| Sistema           | Función                           |
+| ----------------- | --------------------------------- |
+| `SYS-SIAPER`      | Control personal Estado           |
+| `SYS-PREVIRED`    | Cotizaciones previsionales        |
+| `ORG-CHILECOMPRA` | Mercado Público, licitaciones, OC |
+| `SYS-SIGFE`       | Contabilización                   |
 
 ---
 
@@ -876,14 +925,15 @@ Flujos Principales:
 
 ## Referencias Cruzadas
 
-| Dominio | Relación                                     | Entidades Compartidas      |
-| ------- | -------------------------------------------- | -------------------------- |
-| D-FIN   | CDP requerido para OC, cadena presupuestaria | CDP, Compromiso            |
-| D-NORM  | Resoluciones de adjudicación, contratos      | ActoAdministrativo         |
-| D-TDE   | Interoperabilidad SIGFE, Mercado Público     | IntegracionPISEE           |
-| D-COORD | Proveedores como actores                     | Actor                      |
-| D-SEG   | Equipamiento CIES, vehículos seguridad       | Vehiculo, ActivoFijo       |
-| D-TERR  | Geolocalización bienes fiscales, flota       | Ubicacion, CapaGeoespacial |
+| Dominio | Relación                                       | Entidades Compartidas      |
+| ------- | ---------------------------------------------- | -------------------------- |
+| D-FIN   | % Ejecución como KPI, distribución estratégica | CDP, AsignacionPpto        |
+| D-EJEC  | EP validado → Devengo → Pago                   | EstadoPago, Hito           |
+| D-NORM  | Resoluciones de adjudicación, contratos        | ActoAdministrativo         |
+| D-TDE   | Interoperabilidad SIGFE, Mercado Público       | IntegracionPISEE           |
+| D-GOB   | Proveedores como actores                       | Actor                      |
+| D-SEG   | Equipamiento CIES, vehículos seguridad         | Vehiculo, ActivoFijo       |
+| D-TERR  | Geolocalización bienes fiscales, flota         | Ubicacion, CapaGeoespacial |
 
 ---
 
@@ -915,5 +965,5 @@ Flujos Principales:
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.2*  
-*Última actualización: 2025-12-16*
+*Documento parte de GORE_OS Blueprint Integral v5.3*  
+*Última actualización: 2025-12-18*

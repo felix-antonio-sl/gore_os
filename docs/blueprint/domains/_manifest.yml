@@ -1,70 +1,97 @@
-# GORE OS Blueprint Manifest v5.0
+# GORE OS Blueprint Manifest v5.2
 # Índice Maestro de Dominios
+# Sincronizado con vision_general.md
 
 _manifest:
-  urn: "urn:goreos:blueprint:manifest:5.0.0"
+  urn: "urn:goreos:blueprint:manifest:5.2.0"
   created_at: "2025-12-16"
+  last_sync: "2025-12-18"
   status: "Consolidated"
-  total_domains: 11
+  total_domains: 12
 
 domains:
+  # === NÚCLEOS TÁCTICOS (Motor de Desarrollo) ===
   - id: D-FIN
-    name: Gestión Financiera
+    name: Gestión Financiera e Inversión Pública
     file: domain_d-fin.md
     layer: Núcleo (Transaccional)
-
-  - id: D-NORM
-    name: Gestión Jurídico-Administrativa y Cumplimiento
-    file: domain_d-norm.md
-    layer: Habilitante (Jurídico-Administrativa)
-
-  - id: D-BACK
-    name: Gestión de Recursos Institucionales
-    file: domain_d-back.md
-    layer: Habilitante (Soporte)
-
-  - id: D-PLAN
-    name: Planificación Estratégica
-    file: domain_d-plan.md
-    layer: Habilitante (Estratégica)
+    function: FINANCIAR
 
   - id: D-EJEC
     name: Ejecución y Seguimiento
     file: domain_d-ejec.md
     layer: Núcleo (Táctica)
+    function: EJECUTAR
 
   - id: D-SEG
-    name: Seguridad Pública
+    name: Seguridad Pública Regional
     file: domain_d-seg.md
-    layer: Temática (Estratégica)
+    layer: Núcleo (Táctica)
+    function: COORDINAR
 
-  - id: D-TERR
-    name: Inteligencia Territorial
-    file: domain_d-terr.md
-    layer: Temática (Geoespacial)
+  # === CAPAS HABILITANTES (Soporte Operativo) ===
+  - id: D-PLAN
+    name: Planificación Estratégica
+    file: domain_d-plan.md
+    layer: Habilitante (Estratégica)
+    function: PLANIFICAR
+
+  - id: D-NORM
+    name: Gestión Jurídico-Administrativa y Cumplimiento
+    file: domain_d-norm.md
+    layer: Habilitante (Jurídico-Administrativa)
+    function: NORMAR
+
+  - id: D-BACK
+    name: Gestión de Recursos Institucionales
+    file: domain_d-back.md
+    layer: Habilitante (Soporte)
+    function: ADMINISTRAR
 
   - id: D-TDE
     name: Gobernanza Digital
     file: domain_d-tde.md
     layer: Habilitante (Tecnológica)
+    function: GESTIONAR
 
+  - id: D-TERR
+    name: Inteligencia Territorial
+    file: domain_d-terr.md
+    layer: Habilitante (Geoespacial)
+    function: PLANIFICAR
+
+  # === CAPAS ESTRATÉGICAS ===
   - id: D-GOB
-    name: Gobernanza Regional
+    name: Gobernanza y Relacionamiento Regional
     file: domain_d-gob.md
     layer: Estratégica (Política)
+    function: GOBERNAR
 
   - id: D-GESTION
     name: Gestión Institucional
     file: domain_d-gestion.md
     layer: Operativa
+    function: GESTIONAR
 
   - id: D-EVOL
     name: Evolución e Inteligencia
     file: domain_d-evol.md
     layer: Estratégica (Evolutiva)
+    function: EVOLUCIONAR
 
+  # === CAPA TRANSVERSAL ===
   - id: FENIX
-    name: Sistema de Intervención
+    name: Departamento de Gestión Institucional
     file: domain_fenix.md
     layer: Transversal (Metasistema)
+    function: INTERVENIR
     type: Subsystem
+
+statistics:
+  total_domains: 12
+  nucleo_tactico: 3
+  habilitante: 5
+  estrategica: 3
+  transversal: 1
+  last_updated: "2025-12-18"
+  notes: "Synchronized with vision_general.md v5.2. Deep audit of all domains complete. Integrated Ley 21.730, ANCI (L21.663), ISAR redefinition, and SIGPER removal."
