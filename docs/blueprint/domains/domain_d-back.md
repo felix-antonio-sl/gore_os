@@ -1,30 +1,38 @@
 # D-BACK: Dominio de Gestión de Recursos Institucionales
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Habilitante (Soporte Operativo)  
-> **Función GORE:** ADMINISTRAR  
-> **Procesos BPMN:** 14 | **Subprocesos:** ~49 | **User Stories:** 58
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Habilitante (Soporte Operativo)  
+> Función GORE: ADMINISTRAR  
 
 ---
 
 ## Glosario D-BACK
 
-| Término              | Definición                                                                 |
-| -------------------- | -------------------------------------------------------------------------- |
-| **EUS**              | Escala Única de Sueldos. Tabla de grados y asignaciones del sector público |
-| **PAC-Compras**      | Plan Anual de Compras. Programación de adquisiciones en Mercado Público    |
-| **PAC-Capacitación** | Plan Anual de Capacitación. Programa de formación funcionaria              |
-| **DNC**              | Detección de Necesidades de Capacitación. Insumo para PAC-Capacitación     |
-| **CDP**              | Certificado de Disponibilidad Presupuestaria. Ver D-FIN                    |
-| **OC**               | Orden de Compra. Documento que formaliza adquisición                       |
-| **CM**               | Convenio Marco. Mecanismo de compra pre-negociado en ChileCompra           |
-| **PPP**              | Precio Promedio Ponderado. Método de valorización de inventarios           |
-| **FIFO**             | First In, First Out. Método de valorización                                |
-| **FEFO**             | First Expired, First Out. Para productos perecibles                        |
-| **SIGPER**           | Sistema de Gestión de Personal del Estado                                  |
-| **SIAPER**           | Sistema de Información y Control del Personal de la Administración         |
-| **SIGAS**            | Sistema de Gestión de Activos y Suministros                                |
-| **PREVIRED**         | Plataforma de pago de cotizaciones previsionales                           |
+| Término           | Definición                                                                   |
+| ----------------- | ---------------------------------------------------------------------------- |
+| EUS               | Escala Única de Sueldos. Tabla de grados y asignaciones del sector público   |
+| PAC-Compras       | Plan Anual de Compras. Programación de adquisiciones en Mercado Público      |
+| PAC-Capacitación  | Plan Anual de Capacitación. Programa de formación funcionaria                |
+| DNC               | Detección de Necesidades de Capacitación. Insumo para PAC-Capacitación       |
+| CDP               | Certificado de Disponibilidad Presupuestaria. Ver D-FIN                      |
+| OC                | Orden de Compra. Documento que formaliza adquisición                         |
+| CM                | Convenio Marco. Mecanismo de compra pre-negociado en ChileCompra             |
+| PPP               | Precio Promedio Ponderado. Método de valorización de inventarios             |
+| FIFO              | First In, First Out. Método de valorización                                  |
+| FEFO              | First Expired, First Out. Para productos perecibles                          |
+| SIGPER            | Sistema de Gestión de Personal del Estado                                    |
+| SIAPER            | Sistema de Información y Control del Personal de la Administración           |
+| SIGAS             | Sistema de Gestión de Activos y Suministros                                  |
+| PREVIRED          | Plataforma de pago de cotizaciones previsionales                             |
+| TEF               | Transferencia Electrónica de Fondos. Pago bancario electrónico               |
+| SIC               | Saldo Inicial de Caja. Recursos de arrastre del ejercicio anterior           |
+| Deuda Flotante    | Obligaciones devengadas no pagadas al cierre del ejercicio (Ítem 34.07)      |
+| Conciliación      | Proceso de cuadrar movimientos bancarios (cartola) con registros SIGFE       |
+| Devengado         | Obligación contable exigible. Momento en que se reconoce el gasto            |
+| Compromiso        | Obligación presupuestaria contraída formalmente (OC, contrato)               |
+| Ítem 34.07        | Asignación presupuestaria para pago de deuda flotante del ejercicio anterior |
+| Cartola Bancaria  | Extracto de movimientos de cuenta corriente emitido por el banco             |
+| Partida Pendiente | Diferencia temporal entre registro SIGFE y movimiento bancario               |
 
 ---
 
@@ -32,18 +40,19 @@
 
 Gestionar el ciclo de vida de todos los recursos institucionales del GORE: personas, bienes, servicios, infraestructura y presupuesto operativo, asegurando eficiencia, transparencia y cumplimiento normativo.
 
-> **Visión:** Los recursos institucionales —humanos, materiales, financieros y tecnológicos— se gestionan como un sistema integrado que maximiza la eficiencia operativa y minimiza los riesgos de incumplimiento.
+> Visión: Los recursos institucionales —humanos, materiales, financieros y tecnológicos— se gestionan como un sistema integrado que maximiza la eficiencia operativa y minimiza los riesgos de incumplimiento.
 
 ---
 
-## Cuatro Pilares del Dominio
+## Cinco Pilares del Dominio
 
-| Pilar              | Componentes                                          |
-| ------------------ | ---------------------------------------------------- |
-| **Personas**       | Ciclo de vida funcionario, remuneraciones, bienestar |
-| **Abastecimiento** | Compras, contratos, proveedores                      |
-| **Patrimonio**     | Inventarios, activo fijo, bodegas                    |
-| **Servicios**      | Flota vehicular, mantención, infraestructura         |
+| Pilar            | Componentes                                          |
+| ---------------- | ---------------------------------------------------- |
+| Personas         | Ciclo de vida funcionario, remuneraciones, bienestar |
+| Abastecimiento   | Compras, contratos, proveedores                      |
+| Patrimonio       | Inventarios, activo fijo, bodegas                    |
+| Servicios        | Flota vehicular, mantención, infraestructura         |
+| Contabilidad Op. | Caja, conciliación bancaria, contabilidad, cierre    |
 
 ---
 
@@ -51,12 +60,14 @@ Gestionar el ciclo de vida de todos los recursos institucionales del GORE: perso
 
 ### 1. Gestión de Personas (RRHH)
 
-**Ciclo de Vida:**
-```
+Ciclo de Vida:
+
+```text
 INGRESO → INDUCCIÓN → DESARROLLO → EVALUACIÓN → EGRESO
 ```
 
-**Subsistemas:**
+Subsistemas:
+
 - Reclutamiento y selección
 - Contratación y nombramiento
 - Remuneraciones (EUS)
@@ -67,14 +78,16 @@ INGRESO → INDUCCIÓN → DESARROLLO → EVALUACIÓN → EGRESO
 
 ### 2. Abastecimiento y Compras
 
-**Cadena de Adquisición:**
-```
+Cadena de Adquisición:
+
+```text
 PAC-Compras → REQUERIMIENTO → CDP → LICITACIÓN/CM → OC → RECEPCIÓN → PAGO
 ```
 
-> **Nota:** CDP (Certificado de Disponibilidad Presupuestaria) se gestiona en [D-FIN](domain_d-fin.md#cadena-presupuestaria-sigfe).
+> Nota: CDP (Certificado de Disponibilidad Presupuestaria) se gestiona en [D-FIN](domain_d-fin.md#cadena-presupuestaria).
 
-**Mecanismos:**
+Mecanismos:
+
 | Mecanismo          | Umbral        | Plataforma      |
 | ------------------ | ------------- | --------------- |
 | Convenio Marco     | Sin límite    | Mercado Público |
@@ -84,7 +97,8 @@ PAC-Compras → REQUERIMIENTO → CDP → LICITACIÓN/CM → OC → RECEPCIÓN �
 
 ### 3. Inventarios y Bodega
 
-**Métodos de Valorización:**
+Métodos de Valorización:
+
 | Método | Uso                                   |
 | ------ | ------------------------------------- |
 | PPP    | Precio Promedio Ponderado (default)   |
@@ -93,31 +107,65 @@ PAC-Compras → REQUERIMIENTO → CDP → LICITACIÓN/CM → OC → RECEPCIÓN �
 
 ### 4. Activo Fijo
 
-**Criterio de Capitalización:** Valor ≥ 3 UTM y vida útil > 1 año
+Criterio de Capitalización: Valor ≥ 3 UTM y vida útil > 1 año
 
-**Ciclo:**
-```
+Ciclo:
+
+```text
 ALTA → VALORIZACIÓN → DEPRECIACIÓN → MOVIMIENTOS → BAJA
 ```
 
 ### 5. Flota Vehicular
 
-**Restricciones D.L. 799:**
+Restricciones D.L. 799:
+
 - Uso solo en horario laboral
 - Prohibido uso particular
 - Autorización para fines de semana
 
 ### 6. Bienestar Funcionario
 
-**Prestaciones:**
+Prestaciones:
+
 - Bonificaciones médicas
 - Préstamos
 - Subsidios por eventos
 - Convenios con terceros
 
+### 7. Contabilidad Operativa
+
+Procesos:
+
+| Proceso               | Descripción                                           |
+| --------------------- | ----------------------------------------------------- |
+| Gestión de Caja       | Saldos bancarios, programación de pagos, TEF          |
+| Conciliación Bancaria | Cartolas vs SIGFE, partidas pendientes                |
+| Contabilización       | Ingresos propios, gastos operativos, devengos         |
+| Cierre Anual          | Corte compromisos, estados financieros, SIC           |
+| Deuda Flotante        | Identificación, certificado, incorporación Ítem 34.07 |
+
+Ciclo:
+
+```text
+REGISTRO → CONCILIACIÓN → CONTABILIZACIÓN → CIERRE → DEUDA FLOTANTE
+```
+
+> Nota: Este módulo gestiona las operaciones financieras internas del GORE como organización, distintas del ciclo de inversión pública regional (D-FIN).
+
 ---
 
 ## 📋 Procesos BPMN
+
+### Índice de Procesos
+
+| Dominio      | ID    | Nombre                               | Líneas  |
+| ------------ | ----- | ------------------------------------ | ------- |
+| Compras      | D04   | Compras Públicas y Contrataciones    | 200-278 |
+| Inventarios  | D05   | Gestión de Inventarios y Activo Fijo | 281-328 |
+| Flota        | D06   | Gestión de Flota Vehicular           | 332-381 |
+| Personas     | D07   | Gestión de Personas                  | 385-453 |
+| Bienestar    | D07.B | Bienestar Funcionario                | 457-519 |
+| Contabilidad | D08   | Contabilidad Operativa               | 523-629 |
 
 ### Mapa General Integrado
 
@@ -161,12 +209,11 @@ flowchart TB
 
 ### D04: Compras Públicas y Contrataciones
 
-| Campo          | Valor                    |
-| -------------- | ------------------------ |
-| **ID**         | `DOM-COMPRAS`            |
-| **Criticidad** | 🟠 Alta                   |
-| **Dueño**      | Unidad de Abastecimiento |
-| **Procesos**   | 4                        |
+| Campo      | Valor                    |
+| ---------- | ------------------------ |
+| ID         | `DOM-COMPRAS`            |
+| Criticidad | 🟠 Alta                   |
+| Dueño      | Unidad de Abastecimiento |
 
 #### P1: Plan Anual de Compras (PAC)
 
@@ -242,12 +289,11 @@ flowchart TD
 
 ### D05: Gestión de Inventarios y Activo Fijo
 
-| Campo          | Valor                |
-| -------------- | -------------------- |
-| **ID**         | `DOM-INVENTARIOS-AF` |
-| **Criticidad** | 🟡 Media              |
-| **Dueño**      | DAF                  |
-| **Procesos**   | 2                    |
+| Campo      | Valor                |
+| ---------- | -------------------- |
+| ID         | `DOM-INVENTARIOS-AF` |
+| Criticidad | 🟡 Media              |
+| Dueño      | DAF                  |
 
 #### Recepción de Bienes
 
@@ -293,12 +339,11 @@ flowchart TD
 
 ### D06: Gestión de Flota Vehicular
 
-| Campo           | Valor                    |
-| --------------- | ------------------------ |
-| **ID**          | `DOM-FLOTA`              |
-| **Criticidad**  | 🟡 Media                  |
-| **Dueño**       | Jefe Servicios Generales |
-| **Subprocesos** | 6                        |
+| Campo      | Valor                    |
+| ---------- | ------------------------ |
+| ID         | `DOM-FLOTA`              |
+| Criticidad | 🟡 Media                  |
+| Dueño      | Jefe Servicios Generales |
 
 #### Solicitud y Asignación
 
@@ -346,12 +391,11 @@ flowchart LR
 
 ### D07: Gestión de Personas
 
-| Campo          | Valor                       |
-| -------------- | --------------------------- |
-| **ID**         | `DOM-RRHH`                  |
-| **Criticidad** | 🟠 Alta                      |
-| **Dueño**      | Área de Gestión de Personas |
-| **Procesos**   | 7                           |
+| Campo      | Valor                       |
+| ---------- | --------------------------- |
+| ID         | `DOM-RRHH`                  |
+| Criticidad | 🟠 Alta                      |
+| Dueño      | Área de Gestión de Personas |
 
 #### P1: Ingreso y Contratación
 
@@ -368,13 +412,13 @@ flowchart LR
 
 #### Tipos de Contrato
 
-| Tipo           | Descripción                        |
-| -------------- | ---------------------------------- |
-| **Planta**     | Cargo titular, carrera funcionaria |
-| **Contrata**   | Transitorio, renovación anual      |
-| **Honorarios** | Servicios específicos              |
+| Tipo       | Descripción                        |
+| ---------- | ---------------------------------- |
+| Planta     | Cargo titular, carrera funcionaria |
+| Contrata   | Transitorio, renovación anual      |
+| Honorarios | Servicios específicos              |
 
-#### P3: Remuneraciones
+#### P2: Remuneraciones
 
 ```mermaid
 flowchart TD
@@ -388,7 +432,7 @@ flowchart TD
     H --> I["Contabilizar SIGFE"]
 ```
 
-#### P5: Capacitación y Calificaciones
+#### P3: Capacitación y Calificaciones
 
 ```mermaid
 flowchart LR
@@ -402,7 +446,7 @@ flowchart LR
     end
 ```
 
-#### P7: Egreso
+#### P4: Egreso
 
 ```mermaid
 flowchart TD
@@ -416,23 +460,180 @@ flowchart TD
 
 ---
 
-## 📝 User Stories por Módulo
+### D07.B: Bienestar Funcionario
 
-### Resumen
+| Campo      | Valor                 |
+| ---------- | --------------------- |
+| ID         | `DOM-BIENESTAR`       |
+| Criticidad | 🟡 Media               |
+| Dueño      | Servicio de Bienestar |
 
-| Módulo          | US Críticas | US Altas | US Medias | Total  |
-| --------------- | ----------- | -------- | --------- | ------ |
-| Personas        | 8           | 8        | 2         | 18     |
-| Abastecimiento  | 4           | 4        | 0         | 8      |
-| Contabilidad    | 2           | 1        | 0         | 3      |
-| Inventarios     | 2           | 1        | 0         | 3      |
-| Activo Fijo     | 1           | 3        | 0         | 4      |
-| Flota/Servicios | 2           | 3        | 2         | 7      |
-| Bienestar       | 1           | 6        | 2         | 9      |
-| Competencias    | 2           | 2        | 2         | 6      |
-| **Total**       | **22**      | **28**   | **8**     | **58** |
+#### Afiliación y Grupo Familiar
 
-> **Fuente:** [kb_goreos_us_d-back.yml](../user-stories/kb_goreos_us_d-back.yml)
+```mermaid
+flowchart TD
+    A["Funcionario solicita<br/>afiliación"] --> B["Verificar requisitos"]
+    B --> C["Registrar socio"]
+    C --> D["Configurar descuento<br/>automático"]
+    D --> E["Alta en sistema<br/>bienestar"]
+    
+    E --> F["Gestionar grupo<br/>familiar"]
+    F --> G["Registrar cargas"]
+    G --> H["Validar documentos"]
+```
+
+#### Prestaciones y Bonificaciones
+
+```mermaid
+flowchart TD
+    subgraph MEDICAS["🏥 Bonificaciones Médicas"]
+        M1["Socio presenta<br/>boletas/bonos"]
+        M2["Verificar tope anual"]
+        M3["Calcular reembolso"]
+        M4["Aprobar/Rechazar"]
+        M5["Pagar bonificación"]
+    end
+    
+    subgraph PRESTAMOS["💰 Préstamos"]
+        P1["Solicitar préstamo"]
+        P2["Evaluar capacidad<br/>de endeudamiento"]
+        P3["Aprobar préstamo"]
+        P4["Desembolsar"]
+        P5["Descuento cuotas<br/>en liquidación"]
+    end
+    
+    M1 --> M2 --> M3 --> M4 --> M5
+    P1 --> P2 --> P3 --> P4 --> P5
+```
+
+#### Seguridad y Salud Ocupacional
+
+```mermaid
+flowchart LR
+    A["Accidente<br/>laboral"] --> B["DIAT"]
+    B --> C["Derivar a<br/>Mutual"]
+    C --> D["Seguimiento<br/>tratamiento"]
+    D --> E["Reintegro"]
+    
+    F["CPHS"] --> G["Investigación"]
+    G --> H["Medidas<br/>preventivas"]
+```
+
+---
+
+### D08: Contabilidad Operativa
+
+| Campo      | Valor           |
+| ---------- | --------------- |
+| ID         | `DOM-CONTAB-OP` |
+| Criticidad | 🔴 Crítica       |
+| Dueño      | DAF             |
+
+#### Mapa de Procesos D08
+
+```mermaid
+flowchart TB
+    subgraph TESORO["💰 Tesorería (D08)"]
+        T1["P1: Gestión de Caja"]
+        T2["P2: Conciliación Bancaria"]
+        T3["P3: Contabilización Operativa"]
+        T4["P4: Cierre Contable Anual"]
+        T5["P5: Deuda Flotante"]
+    end
+    
+    T1 --> T2
+    T2 --> T3
+    T3 --> T4
+    T4 --> T5
+```
+
+#### P1: Gestión de Caja Institucional
+
+```mermaid
+flowchart TD
+    A["Inicio día hábil"] --> B["Revisar saldos bancarios"]
+    B --> C{"¿Fondos suficientes?"}
+    C -->|"Sí"| D["Programar pagos del día"]
+    C -->|"No"| E["Gestionar aporte fiscal<br/>con DIPRES"]
+    D --> F["Ejecutar pagos (TEF)"]
+    F --> G["Registrar en SIGFE"]
+    G --> H["Actualizar libro de caja"]
+```
+
+#### P2: Conciliación Bancaria
+
+```mermaid
+flowchart TD
+    A["Obtener cartola<br/>bancaria"] --> B["Descargar movimientos<br/>SIGFE"]
+    B --> C["Comparar registros"]
+    C --> D{"¿Diferencias?"}
+    D -->|"No"| E["Cuadrar período"]
+    D -->|"Sí"| F["Identificar<br/>partidas pendientes"]
+    F --> G{"Tipo de<br/>diferencia"}
+    G -->|"Timing"| H["Documentar<br/>y esperar"]
+    G -->|"Error"| I["Regularizar<br/>asiento"]
+    G -->|"Fraude/Anomalía"| J["Escalar a<br/>Auditoría"]
+    E & H & I --> K["Firmar conciliación<br/>mensual"]
+```
+
+#### P3: Contabilización Operativa
+
+```mermaid
+flowchart TD
+    subgraph INGRESOS["📥 Ingresos"]
+        I1["Aporte fiscal recibido"]
+        I2["Ingresos propios"]
+        I3["Recuperaciones"]
+    end
+    
+    subgraph GASTOS["📤 Gastos"]
+        G1["Remuneraciones"]
+        G2["Bienes y servicios"]
+        G3["Transferencias"]
+    end
+    
+    subgraph CONTAB["📊 Contabilización"]
+        C1["Verificar documentación"]
+        C2["Clasificar según<br/>clasificador DIPRES"]
+        C3["Registrar en SIGFE"]
+        C4["Generar comprobante"]
+    end
+    
+    I1 & I2 & I3 --> C1
+    G1 & G2 & G3 --> C1
+    C1 --> C2 --> C3 --> C4
+```
+
+#### P4: Cierre Contable Anual
+
+```mermaid
+flowchart TD
+    A["Noviembre: Alerta<br/>de cierre"] --> B["Corte de compromisos<br/>(fecha límite)"]
+    B --> C["Calcular devengos<br/>pendientes"]
+    C --> D["Generar deuda<br/>flotante"]
+    D --> E["Ajustes contables<br/>de cierre"]
+    E --> F["Balance de<br/>comprobación"]
+    F --> G["Estados financieros<br/>anuales"]
+    G --> H["Remitir a CGR"]
+    H --> I["Generar Saldo<br/>Inicial de Caja (SIC)"]
+```
+
+#### P5: Gestión de Deuda Flotante (Subt. 34)
+
+```mermaid
+flowchart TD
+    A["31 Diciembre:<br/>Cierre ejercicio"] --> B["Identificar compromisos<br/>devengados no pagados"]
+    B --> C["Calcular monto<br/>total deuda flotante"]
+    C --> D{"¿SIC >= <br/>Deuda flotante?"}
+    D -->|"Sí"| E["Financiar 100%<br/>con SIC"]
+    D -->|"No"| F["Usar SIC + solicitar<br/>mayor aporte fiscal"]
+    E --> G["Tramitar Resolución<br/>GORE"]
+    F --> H["Tramitar Resolución<br/>+ Decreto DIPRES"]
+    G & H --> I["Crear asignación<br/>Ítem 34.07"]
+    I --> J["Priorizar pagos<br/>enero/febrero"]
+```
+
+---
 
 ### Catálogo por Proceso
 
@@ -441,6 +642,7 @@ flowchart TD
 | ID              | Título                 | Prioridad | Actor               |
 | --------------- | ---------------------- | --------- | ------------------- |
 | US-BACK-ABS-001 | Plan Anual de Compras  | Alta      | Enc. Abastecimiento |
+| US-BACK-ABS-002 | Tramitar solicitudes   | Alta      | Enc. Abastecimiento |
 | US-BACK-ABS-003 | Publicar licitaciones  | Crítica   | Enc. Abastecimiento |
 | US-BACK-ABS-004 | Evaluar ofertas        | Crítica   | Enc. Abastecimiento |
 | US-BACK-ABS-005 | Emitir Orden de Compra | Crítica   | Enc. Abastecimiento |
@@ -452,15 +654,19 @@ flowchart TD
 | --------------- | --------------------------- | --------- | ---------------- |
 | US-BACK-BOD-001 | Registrar ingresos a bodega | Crítica   | Enc. Bodega      |
 | US-BACK-BOD-002 | Despachar solicitudes       | Crítica   | Enc. Bodega      |
+| US-BACK-BOD-003 | Inventario físico           | Alta      | Enc. Bodega      |
 | US-BACK-AF-001  | Alta activo fijo            | Crítica   | Enc. Activo Fijo |
+| US-BACK-AF-002  | Traslado de bienes          | Alta      | Enc. Activo Fijo |
 | US-BACK-AF-003  | Baja de bienes              | Alta      | Enc. Activo Fijo |
+| US-BACK-AF-004  | Inventario anual AF         | Alta      | Enc. Activo Fijo |
 
 #### D06: Flota
 
-| ID              | Título                   | Prioridad | Actor      |
-| --------------- | ------------------------ | --------- | ---------- |
-| US-BACK-FLO-002 | Solicitudes de vehículos | Alta      | Enc. Flota |
-| US-BACK-FLO-003 | Control km/combustible   | Alta      | Enc. Flota |
+| ID              | Título                     | Prioridad | Actor                |
+| --------------- | -------------------------- | --------- | -------------------- |
+| US-BACK-FLO-001 | Órdenes trabajo mantención | Alta      | Enc. Serv. Generales |
+| US-BACK-FLO-002 | Solicitudes de vehículos   | Alta      | Enc. Flota           |
+| US-BACK-FLO-003 | Control km/combustible     | Alta      | Enc. Flota           |
 
 #### D07: Personas
 
@@ -475,7 +681,7 @@ flowchart TD
 | US-BACK-PER-016 | Registrar precalificación    | Crítica   | Junta Calificadora |
 | US-BACK-PER-017 | Consolidar calificaciones    | Crítica   | Junta Calificadora |
 
-#### Bienestar
+#### Bienestar (D07)
 
 | ID               | Título                        | Prioridad | Actor           |
 | ---------------- | ----------------------------- | --------- | --------------- |
@@ -483,31 +689,121 @@ flowchart TD
 | US-BACK-BIEN-003 | Gestionar bonificación médica | Alta      | Prof. Bienestar |
 | US-BACK-BIEN-005 | Evaluar préstamos             | Alta      | Prof. Bienestar |
 
+#### Contabilidad Operativa (D08)
+
+| ID              | Título                               | Prioridad | Actor    |
+| --------------- | ------------------------------------ | --------- | -------- |
+| US-BACK-TES-001 | Consultar saldos bancarios           | Crítica   | Tesorero |
+| US-BACK-TES-002 | Programar pagos diarios              | Crítica   | Tesorero |
+| US-BACK-TES-006 | Importar cartolas bancarias          | Crítica   | Contador |
+| US-BACK-TES-007 | Conciliar movimientos SIGFE vs banco | Crítica   | Contador |
+| US-BACK-TES-010 | Registrar ingresos propios           | Crítica   | Contador |
+| US-BACK-TES-011 | Contabilizar gastos operativos       | Crítica   | Contador |
+| US-BACK-TES-014 | Ejecutar corte de compromisos        | Crítica   | Jefe DAF |
+| US-BACK-TES-015 | Calcular devengos pendientes         | Crítica   | Contador |
+| US-BACK-TES-018 | Identificar deuda flotante           | Crítica   | Contador |
+| US-BACK-TES-019 | Emitir certificado deuda flotante    | Crítica   | Contador |
+
 *Ver catálogo completo en [kb_goreos_us_d-back.yml](../user-stories/kb_goreos_us_d-back.yml)*
 
 ---
 
 ## 🔗 Matriz de Trazabilidad
 
-| Proceso BPMN           | Subproceso    | User Stories           |
-| ---------------------- | ------------- | ---------------------- |
-| D04 P1: PAC            | Consolidación | US-BACK-ABS-001        |
-| D04 P2: Licitación     | Publicación   | US-BACK-ABS-003        |
-| D04 P2: Licitación     | Evaluación    | US-BACK-ABS-004        |
-| D04 P3: OC             | Emisión       | US-BACK-ABS-005        |
-| D04 P4: Contratos      | Gestión       | US-BACK-ABS-006        |
-| D05 P1: Bodegas        | Recepción     | US-BACK-BOD-001        |
-| D05 P1: Bodegas        | Despacho      | US-BACK-BOD-002        |
-| D05 P2: AF             | Alta          | US-BACK-AF-001         |
-| D05 P2: AF             | Baja          | US-BACK-AF-003         |
-| D06: Flota             | Asignación    | US-BACK-FLO-002        |
-| D06: Flota             | Control       | US-BACK-FLO-003        |
-| D07 P1: Ingreso        | Selección     | US-BACK-PER-015        |
-| D07 P3: Remuneraciones | Liquidación   | US-BACK-PER-010, 011   |
-| D07 P4: Tiempo         | Feriados      | US-BACK-PER-003        |
-| D07 P4: Tiempo         | Licencias     | US-BACK-PER-004, 009   |
-| D07 P5: Desarrollo     | Calificación  | US-BACK-PER-016, 017   |
-| D07 P6: Bienestar      | Prestaciones  | US-BACK-BIEN-001 a 012 |
+| Proceso BPMN            | Subproceso    | User Stories           |
+| ----------------------- | ------------- | ---------------------- |
+| D04 P1: PAC             | Consolidación | US-BACK-ABS-001        |
+| D04 P2: Licitación      | Publicación   | US-BACK-ABS-003        |
+| D04 P2: Licitación      | Evaluación    | US-BACK-ABS-004        |
+| D04 P3: OC              | Emisión       | US-BACK-ABS-005        |
+| D04 P4: Contratos       | Gestión       | US-BACK-ABS-006        |
+| D05 P1: Bodegas         | Recepción     | US-BACK-BOD-001        |
+| D05 P1: Bodegas         | Despacho      | US-BACK-BOD-002        |
+| D05 P2: AF              | Alta          | US-BACK-AF-001         |
+| D05 P2: AF              | Baja          | US-BACK-AF-003         |
+| D06: Flota              | Asignación    | US-BACK-FLO-002        |
+| D06: Flota              | Control       | US-BACK-FLO-003        |
+| D07 P1: Ingreso         | Selección     | US-BACK-PER-015        |
+| D07 P2: Remuneraciones  | Liquidación   | US-BACK-PER-010, 011   |
+| D07 P2: Remuneraciones  | Tiempo        | US-BACK-PER-003, 004   |
+| D07 P3: Capacitación    | Calificación  | US-BACK-PER-016, 017   |
+| D07 Bienestar           | Prestaciones  | US-BACK-BIEN-001 a 012 |
+| D08 P1: Caja            | Saldos/Pagos  | US-BACK-TES-001 a 005  |
+| D08 P2: Conciliación    | Bancaria      | US-BACK-TES-006 a 009  |
+| D08 P3: Contabilización | Devengos      | US-BACK-TES-010 a 013  |
+| D08 P4: Cierre          | Anual         | US-BACK-TES-014 a 017  |
+| D08 P5: Deuda Flotante  | Ítem 34.07    | US-BACK-TES-018 a 021  |
+
+---
+
+## Roles y Actores
+
+| Rol                 | Descripción                      | Módulo            | US Principales   |
+| ------------------- | -------------------------------- | ----------------- | ---------------- |
+| Funcionario         | Empleado del GORE (autoservicio) | Personas          | PER-001 a 007    |
+| Gestor Personas     | Profesional RRHH/Remuneraciones  | Personas          | PER-008 a 015    |
+| Junta Calificadora  | Órgano evaluador anual           | Personas          | PER-016 a 018    |
+| Enc. Abastecimiento | Jefe/Profesional Compras         | Abastecimiento    | ABS-001 a 006    |
+| Enc. Bodega         | Responsable almacén/stock        | Inventarios       | BOD-001 a 003    |
+| Enc. Activo Fijo    | Gestor patrimonio institucional  | Activo Fijo       | AF-001 a 004     |
+| Enc. Flota          | Gestor vehículos institucionales | Flota             | FLO-001 a 003    |
+| Prof. Bienestar     | Profesional Servicio Bienestar   | Bienestar         | BIEN-001 a 009   |
+| Socio Bienestar     | Funcionario afiliado al servicio | Bienestar         | BIEN-010 a 012   |
+| Tesorero            | Responsable pagos y caja         | Contab. Operativa | TES-001 a 005    |
+| Contador            | Profesional contable DAF         | Contab. Operativa | TES-006 a 017    |
+| Jefe DAF            | Director Admin. y Finanzas       | Contab. Operativa | TES-014, TES-020 |
+| Enc. Capacitación   | Profesional desarrollo personas  | Competencias      | COMP-001 a 003   |
+
+---
+
+## Integración D-BACK ↔ D-FIN
+
+```mermaid
+flowchart TB
+    subgraph D_BACK["🏛️ D-BACK: Gestión Recursos Institucionales"]
+        direction TB
+        OC["📄 Orden de Compra"]
+        PAG["💳 Pagos TEF"]
+        LIQ["📋 Liquidaciones"]
+        DEV["📊 Devengos"]
+        DF["⏳ Deuda Flotante"]
+    end
+    
+    subgraph D_FIN["💰 D-FIN: Gestión Financiera"]
+        direction TB
+        CDP["🔒 CDP"]
+        COMP["📌 Compromiso"]
+        PPTO["📈 Presupuesto"]
+        SIGFE["🏦 SIGFE"]
+    end
+    
+    OC -->|"1. Requiere"| CDP
+    CDP -->|"2. Genera"| COMP
+    OC -->|"3. Afecta"| COMP
+    COMP -->|"4. Consume"| PPTO
+    
+    DEV -->|"5. Registra en"| SIGFE
+    PAG -->|"6. Actualiza"| SIGFE
+    LIQ -->|"7. Contabiliza"| SIGFE
+    
+    DF -->|"8. Ítem 34.07"| PPTO
+    
+    style D_BACK fill:#e8f5e9,stroke:#2e7d32
+    style D_FIN fill:#fff3e0,stroke:#ef6c00
+```
+
+Flujos Principales:
+
+| #   | Flujo                          | Origen        | Destino     | Descripción                                        |
+| --- | ------------------------------ | ------------- | ----------- | -------------------------------------------------- |
+| 1   | CDP Requerido                  | OC            | CDP         | Toda compra requiere certificado de disponibilidad |
+| 2   | Generación Compromiso          | CDP           | Compromiso  | CDP aprobado genera compromiso presupuestario      |
+| 3   | Afectación Compromiso          | OC            | Compromiso  | OC emitida afecta el compromiso                    |
+| 4   | Consumo Presupuesto            | Compromiso    | Presupuesto | Compromiso consume asignación                      |
+| 5   | Registro Devengos              | Devengos      | SIGFE       | Obligaciones exigibles se contabilizan             |
+| 6   | Actualización Pagos            | Pagos TEF     | SIGFE       | Transferencias actualizan el pagado                |
+| 7   | Contabilización Remuneraciones | Liquidaciones | SIGFE       | Planilla mensual genera asientos                   |
+| 8   | Deuda Flotante                 | DF            | Presupuesto | Se incorpora al presupuesto siguiente              |
 
 ---
 
@@ -538,6 +834,16 @@ flowchart TD
 | `ActivoFijo`     | id, codigo, descripcion, valor_compra, vida_util, depreciacion_acum | → Funcionario (responsable) |
 | `Vehiculo`       | id, patente, modelo, año, km_actual, estado                         | → Bitacora[], Mantencion[]  |
 
+### Contabilidad Operativa
+
+| Entidad                | Atributos Clave                                          | Relaciones                   |
+| ---------------------- | -------------------------------------------------------- | ---------------------------- |
+| `CuentaBancaria`       | id, banco, numero, tipo, saldo_actual, activa            | → MovimientoBanco[]          |
+| `MovimientoBanco`      | id, cuenta_id, fecha, monto, tipo, concepto, conciliado  | → CuentaBancaria             |
+| `ConciliacionBancaria` | id, cuenta_id, periodo, saldo_libro, saldo_banco, estado | → CuentaBancaria, Partidas[] |
+| `DeudaFlotante`        | id, ejercicio, acreedor, monto, subtitulo, fecha_devengo | → Compromiso (D-FIN)         |
+| `CierreContable`       | id, ejercicio, tipo, fecha_corte, sic_calculado, estado  | → DeudaFlotante[]            |
+
 ---
 
 ## Sistemas Involucrados
@@ -555,29 +861,59 @@ flowchart TD
 
 ## Normativa Aplicable
 
-| Norma                | Alcance                     |
-| -------------------- | --------------------------- |
-| **Ley 18.834**       | Estatuto Administrativo     |
-| **Ley 19.886**       | Compras públicas            |
-| **D.S. 250**         | Reglamento Ley 19.886       |
-| **D.L. 799**         | Uso vehículos fiscales      |
-| **NICSP 17, 21, 31** | Activo fijo, depreciación   |
-| **Ley 18.575**       | Bases Administración Estado |
+| Norma            | Alcance                            |
+| ---------------- | ---------------------------------- |
+| Ley 18.834       | Estatuto Administrativo            |
+| Ley 19.886       | Compras públicas                   |
+| D.S. 250         | Reglamento Ley 19.886              |
+| D.L. 799         | Uso vehículos fiscales             |
+| D.L. 1.263       | Ley Org. Administración Financiera |
+| Res. CGR 30/2015 | Normas sobre rendición de cuentas  |
+| NICSP 17, 21, 31 | Activo fijo, depreciación          |
+| Ley 18.575       | Bases Administración Estado        |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio     | Relación                                     | Entidades Compartidas      |
-| ----------- | -------------------------------------------- | -------------------------- |
-| **D-FIN**   | CDP requerido para OC, cadena presupuestaria | CDP, Compromiso            |
-| **D-NORM**  | Resoluciones de adjudicación, contratos      | ActoAdministrativo         |
-| **D-TDE**   | Interoperabilidad SIGFE, Mercado Público     | IntegracionPISEE           |
-| **D-COORD** | Proveedores como actores                     | Actor                      |
-| **D-SEG**   | Equipamiento CIES, vehículos seguridad       | Vehiculo, ActivoFijo       |
-| **D-TERR**  | Geolocalización bienes fiscales, flota       | Ubicacion, CapaGeoespacial |
+| Dominio | Relación                                     | Entidades Compartidas      |
+| ------- | -------------------------------------------- | -------------------------- |
+| D-FIN   | CDP requerido para OC, cadena presupuestaria | CDP, Compromiso            |
+| D-NORM  | Resoluciones de adjudicación, contratos      | ActoAdministrativo         |
+| D-TDE   | Interoperabilidad SIGFE, Mercado Público     | IntegracionPISEE           |
+| D-COORD | Proveedores como actores                     | Actor                      |
+| D-SEG   | Equipamiento CIES, vehículos seguridad       | Vehiculo, ActivoFijo       |
+| D-TERR  | Geolocalización bienes fiscales, flota       | Ubicacion, CapaGeoespacial |
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.0*  
+## Indicadores de Gestión (KPIs)
+
+| KPI                        | Meta      | Fórmula                                            | Módulo            |
+| -------------------------- | --------- | -------------------------------------------------- | ----------------- |
+| % Conciliaciones al día    | 100%      | (Conciliaciones completadas / Total cuentas) × 100 | Contab. Operativa |
+| Mora pago proveedores      | < 30 días | Promedio días desde factura hasta pago             | Contab. Operativa |
+| Cobertura PAC              | > 90%     | (Compras ejecutadas / PAC planificado) × 100       | Abastecimiento    |
+| Rotación inventario        | > 4x/año  | (Salidas anuales / Stock promedio)                 | Inventarios       |
+| % Activos inventariados    | 100%      | (AF verificados / Total AF registrados) × 100      | Activo Fijo       |
+| Disponibilidad flota       | > 85%     | (Vehículos operativos / Total flota) × 100         | Flota             |
+| Mora rendiciones bienestar | < 15 días | Promedio días hasta reembolso                      | Bienestar         |
+| Dotación efectiva          | 95-100%   | (Dotación actual / Dotación autorizada) × 100      | Personas          |
+
+---
+
+## Changelog
+
+| Versión | Fecha      | Cambios                                                                             |
+| ------- | ---------- | ----------------------------------------------------------------------------------- |
+| 5.2     | 2025-12-16 | Añadido D07.B Bienestar (+3 procesos BPMN). Tabla índice BPMN. US completas D05/D06 |
+| 5.1     | 2025-12-16 | Renombre módulo Tesorería → Contabilidad Operativa. +6 términos glosario            |
+| 5.1     | 2025-12-16 | +5 entidades datos Contab. Operativa. +8 KPIs. +13 roles documentados               |
+| 5.1     | 2025-12-16 | Diagrama integración D-BACK ↔ D-FIN. Normativa ampliada (D.L. 1.263)                |
+| 5.0     | 2025-12-15 | Añadido módulo Tesorería (21 US nuevas). Migración US-BACK-CONT a Tesorería         |
+| 4.0     | 2025-12-10 | Versión inicial consolidada. 7 módulos, 49 US                                       |
+
+---
+
+*Documento parte de GORE_OS Blueprint Integral v5.2*  
 *Última actualización: 2025-12-16*

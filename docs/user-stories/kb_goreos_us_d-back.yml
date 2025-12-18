@@ -1,5 +1,5 @@
 _manifest:
-  urn: "urn:goreos:specs:user-stories:d-back:1.0.0"
+  urn: "urn:goreos:specs:user-stories:d-back:2.0.0"
   domain: D-BACK
   domain_name: Gestión de Recursos Institucionales
   legacy_modules:
@@ -7,11 +7,17 @@ _manifest:
     - M16
     - M17
     - M18
-  total_stories: 58
+  total_stories: 70
   priority_distribution:
-    critica: 22
-    alta: 28
-    media: 8
+    critica: 28
+    alta: 38
+    media: 4
+  changelog:
+    - version: 2.0.0
+      date: "2025-12-16"
+      changes:
+        - Añadido módulo Tesorería (21 US nuevas)
+        - Migradas US-BACK-CONT-001/002/003 a Tesorería
 stories:
   - id: US-BACK-PER-001
     legacy_ids:
@@ -352,49 +358,6 @@ stories:
       - Estados de pago
       - Control de garantías
     source_ref: "user_stories_legacy.md:L948"
-  - id: US-BACK-CONT-001
-    legacy_ids:
-      - CONT-01
-    title: Contabilizar devengado SISREC en SIGFE
-    as_a:
-      - Contador
-    i_want: Contabilizar devengado SISREC en SIGFE automáticamente
-    so_that: Registro contable de rendiciones
-    priority: Crítica
-    module: Contabilidad
-    integration: SIGFE/SISREC (DS12)
-    acceptance_criteria:
-      - Asiento automático
-      - Conciliación de montos
-    source_ref: "user_stories_legacy.md:L954"
-  - id: US-BACK-CONT-002
-    legacy_ids:
-      - CONT-02
-    title: Conciliar cartola bancaria
-    as_a:
-      - Contador
-    i_want: Conciliar cartola bancaria con movimientos SISREC
-    so_that: Verifico consistencia
-    priority: Crítica
-    module: Contabilidad
-    acceptance_criteria:
-      - Comparativo automático
-      - Identificación de diferencias
-    source_ref: "user_stories_legacy.md:L955"
-  - id: US-BACK-CONT-003
-    legacy_ids:
-      - CONT-03
-    title: Emitir certificado deuda flotante
-    as_a:
-      - Contador
-    i_want: Emitir certificado de deuda flotante
-    so_that: Documento compromisos pendientes
-    priority: Alta
-    module: Contabilidad
-    acceptance_criteria:
-      - Cálculo automático
-      - Certificado firmado
-    source_ref: "user_stories_legacy.md:L956"
   - id: US-BACK-BOD-001
     legacy_ids:
       - ABS-BOD-01
@@ -745,24 +708,282 @@ stories:
       - Metas definidas
       - Seguimiento de avance
     source_ref: "user_stories_legacy.md:L1005"
-_summary:
-  total_stories: 52
-  modules_covered:
-    - Personas
-    - Abastecimiento
-    - Contabilidad
-    - Inventarios
-    - ActivoFijo
-    - Servicios
-    - Flota
-    - Bienestar
-    - Competencias
-  integrations:
-    - IMED
-    - Medipass
-    - Previred
-    - Mercado Público
-    - SIGFE
-    - SISREC
-    - SIGBIE
-  next_file: kb_goreos_us_d-tde.yml
+  - id: US-BACK-TES-001
+    title: Consultar saldos bancarios en línea
+    as_a:
+      - Tesorero
+    i_want: Consultar saldos bancarios institucionales del GORE en tiempo real
+    so_that: Tomo decisiones de pago informadas
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Saldos actualizados en línea
+      - Múltiples cuentas bancarias
+      - Histórico de movimientos
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-002
+    title: Programar pagos diarios
+    as_a:
+      - Tesorero
+    i_want: Programar la ejecución de pagos del día validando disponibilidad de fondos
+    so_that: Aseguro cobertura de compromisos sin sobregiros
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Validación de saldo disponible
+      - Priorización de pagos
+      - Alerta de fondos insuficientes
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-003
+    title: Ejecutar transferencias electrónicas
+    as_a:
+      - Tesorero
+    i_want: Ejecutar transferencias electrónicas de fondos (TEF) masivas
+    so_that: Pago a proveedores y funcionarios eficientemente
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - TEF masivo por lotes
+      - Confirmación bancaria
+      - Registro automático en SIGFE
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-004
+    title: Mantener libro de caja
+    as_a:
+      - Tesorero
+    i_want: Mantener el libro de caja institucional actualizado
+    so_that: Tengo control cronológico de movimientos de efectivo
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Registro cronológico
+      - Saldo al día
+      - Cuadre con bancos
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-005
+    title: Gestionar fondo fijo caja chica
+    as_a:
+      - Tesorero
+    i_want: Gestionar el fondo fijo de caja chica (arqueos y reposición)
+    so_that: Atiendo gastos menores con control adecuado
+    priority: Media
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Tope definido
+      - Arqueos periódicos
+      - Solicitud de reposición
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-006
+    title: Importar cartolas bancarias
+    as_a:
+      - Contador
+    i_want: Importar cartolas bancarias de múltiples bancos en formato electrónico
+    so_that: Automatizo el proceso de conciliación
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Múltiples bancos soportados
+      - Formato electrónico estándar
+      - Carga automática
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-007
+    title: Conciliar movimientos SIGFE vs banco
+    as_a:
+      - Contador
+    i_want: Conciliar automáticamente movimientos SIGFE con cartola bancaria
+    so_that: Identifico diferencias y partidas pendientes
+    priority: Crítica
+    module: ContabilidadOperativa
+    integration: SIGFE
+    acceptance_criteria:
+      - Match automático por monto y fecha
+      - Diferencias identificadas
+      - Partidas pendientes clasificadas
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-008
+    title: Documentar partidas pendientes
+    as_a:
+      - Contador
+    i_want: Documentar y clasificar partidas pendientes de conciliación
+    so_that: Mantengo trazabilidad de diferencias
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - "Clasificación por tipo (timing, error, otro)"
+      - Edad de la partida
+      - Responsable de regularización
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-009
+    title: Emitir informe conciliación mensual
+    as_a:
+      - Contador
+    i_want: Emitir informe de conciliación bancaria mensual firmado
+    so_that: Cumplo con control interno y normativa
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Firma Jefe DAF
+      - Archivo digital
+      - Anexos de respaldo
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-010
+    title: Registrar ingresos propios
+    as_a:
+      - Contador
+    i_want: Registrar ingresos propios del GORE según clasificador DIPRES
+    so_that: Mantengo contabilidad actualizada
+    priority: Crítica
+    module: ContabilidadOperativa
+    integration: SIGFE
+    acceptance_criteria:
+      - Clasificación según normativa
+      - Comprobante generado
+      - Conciliación con banco
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-011
+    title: Contabilizar gastos operativos
+    as_a:
+      - Contador
+    i_want: "Contabilizar gastos operativos del GORE (Subt. 21, 22)"
+    so_that: Registro correctamente el devengo en SIGFE
+    priority: Crítica
+    module: ContabilidadOperativa
+    integration: SIGFE
+    acceptance_criteria:
+      - CDP previo validado
+      - Devengo en SIGFE
+      - Documentación de respaldo
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-012
+    title: Contabilizar devengado SISREC en SIGFE
+    as_a:
+      - Contador
+    i_want: >-
+      Contabilizar el devengado de rendiciones aprobadas en SISREC
+      automáticamente en SIGFE
+    so_that: Mantengo sincronización entre sistemas
+    priority: Alta
+    module: ContabilidadOperativa
+    integration: SIGFE/SISREC (DS12)
+    acceptance_criteria:
+      - Automatización del asiento
+      - Conciliación de montos
+      - Trazabilidad SISREC-SIGFE
+    source_ref: fusiona_US-BACK-CONT-001
+  - id: US-BACK-TES-013
+    title: Generar reportes contables periódicos
+    as_a:
+      - Contador
+    i_want: "Generar reportes contables mensuales (balance, comparativo)"
+    so_that: Tengo visibilidad de situación financiera
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Balance de comprobación
+      - Comparativo presupuesto vs ejecución
+      - Exportable a Excel/PDF
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-014
+    title: Ejecutar corte de compromisos
+    as_a:
+      - Jefe DAF
+    i_want: Ejecutar corte de compromisos de fin de año con notificación a unidades
+    so_that: Cierro ordenadamente el ejercicio
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Fecha límite comunicada
+      - Notificación a todas las unidades
+      - Bloqueo de nuevos compromisos
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-015
+    title: Calcular devengos pendientes
+    as_a:
+      - Contador
+    i_want: Calcular devengos pendientes por subtítulo al cierre del ejercicio
+    so_that: Identifico obligaciones para deuda flotante
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Detalle por subtítulo
+      - Identificación de acreedores
+      - Monto total calculado
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-016
+    title: Generar estados financieros anuales
+    as_a:
+      - Contador
+    i_want: Generar estados financieros anuales del GORE
+    so_that: Cumplo con normativa y remito a CGR
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Balance general
+      - Estado de resultados
+      - Notas explicativas
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-017
+    title: Calcular Saldo Inicial de Caja (SIC)
+    as_a:
+      - Contador
+    i_want: Calcular el Saldo Inicial de Caja para el presupuesto del año siguiente
+    so_that: Incorporo recursos de arrastre correctamente
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Cálculo según normativa
+      - Documento oficial
+      - Incorporación en formulación
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-018
+    title: Identificar deuda flotante
+    as_a:
+      - Contador
+    i_want: Identificar todos los componentes de la deuda flotante al cierre
+    so_that: Documento compromisos pendientes de pago
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Detalle por acreedor
+      - Clasificación por subtítulo
+      - Antigüedad de la deuda
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-019
+    title: Emitir certificado deuda flotante
+    as_a:
+      - Contador
+    i_want: Emitir certificado oficial de deuda flotante con FEA
+    so_that: Documento formalmente los compromisos pendientes
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Certificado con FEA
+      - Detalle de obligaciones
+      - Fecha de emisión
+    source_ref: fusiona_US-BACK-CONT-003
+  - id: US-BACK-TES-020
+    title: Tramitar incorporación deuda flotante
+    as_a:
+      - Profesional DAF
+    i_want: Tramitar la incorporación de deuda flotante en presupuesto (Ítem 34.07)
+    so_that: Habilito el pago de obligaciones del año anterior
+    priority: Alta
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Resolución GORE
+      - Decreto DIPRES si aplica
+      - Creación asignación Ítem 34.07
+    source_ref: nuevo_modulo_tesoreria
+  - id: US-BACK-TES-021
+    title: Priorizar pago deuda flotante
+    as_a:
+      - Tesorero
+    i_want: Priorizar el pago de deuda flotante en enero-febrero
+    so_that: Cumplo con acreedores del ejercicio anterior
+    priority: Media
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Priorización por antigüedad
+      - Priorización por criticidad
+      - Seguimiento de pagos
+    source_ref: nuevo_modulo_tesoreria

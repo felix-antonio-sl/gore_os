@@ -1,30 +1,30 @@
 # D-EJEC: Dominio de Ejecución y Seguimiento
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Núcleo (Dimensión Táctica)  
-> **Función GORE:** EJECUTAR  
-> **Procesos BPMN:** 4 | **Subprocesos:** ~16 | **User Stories:** 43
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Núcleo (Dimensión Táctica)  
+> Función GORE: EJECUTAR  
+
 
 ---
 
 ## Glosario D-EJEC
 
-| Término      | Definición                                                                                     |
-| ------------ | ---------------------------------------------------------------------------------------------- |
-| **Convenio** | Acto administrativo formal que establece obligaciones entre GORE y un ejecutor. SSOT en D-NORM |
-| **Ejecutor** | Actor habilitado para materializar proyectos. Ver D-COORD.Actor                                |
-| **PMO**      | Project Management Office. Torre de control de proyectos regional                              |
-| **EP**       | Estado de Pago. Documento que autoriza transferencia parcial o final                           |
-| **UT**       | Unidad Técnica. Equipo ejecutor responsable de la obra                                         |
-| **UJ**       | Unidad Jurídica. Área encargada de visación de actos administrativos                           |
-| **DIPIR**    | División de Presupuesto e Inversión Regional                                                   |
-| **ARI**      | Anteproyecto Regional de Inversión. Priorización anual de IPR                                  |
-| **IPR**      | Iniciativa/Proyecto Regional. Ver D-FIN                                                        |
-| **H_org**    | Dashboard de Salud Organizacional. Ver D-EVOL                                                  |
-| **FÉNIX**    | Sistema de intervención para proyectos críticos. Ver fenix.md                                  |
-| **SISREC**   | Sistema de Rendición de Cuentas SUBDERE                                                        |
-| **FRIL**     | Fondo Regional de Iniciativa Local                                                             |
-| **DAF**      | División de Administración y Finanzas                                                          |
+| Término  | Definición                                                                                     |
+| -------- | ---------------------------------------------------------------------------------------------- |
+| Convenio | Acto administrativo formal que establece obligaciones entre GORE y un ejecutor. SSOT en D-NORM |
+| Ejecutor | Actor habilitado para materializar proyectos. Ver D-COORD.Actor                                |
+| PMO      | Project Management Office. Torre de control de proyectos regional                              |
+| EP       | Estado de Pago. Documento que autoriza transferencia parcial o final                           |
+| UT       | Unidad Técnica. Equipo ejecutor responsable de la obra                                         |
+| UJ       | Unidad Jurídica. Área encargada de visación de actos administrativos                           |
+| DIPIR    | División de Presupuesto e Inversión Regional                                                   |
+| ARI      | Anteproyecto Regional de Inversión. Priorización anual de IPR                                  |
+| IPR      | Iniciativa/Proyecto Regional. Ver D-FIN                                                        |
+| H_org    | Dashboard de Salud Organizacional. Ver D-EVOL                                                  |
+| FÉNIX    | Sistema de intervención para proyectos críticos. Ver fenix.md                                  |
+| SISREC   | Sistema de Rendición de Cuentas SUBDERE                                                        |
+| FRIL     | Fondo Regional de Iniciativa Local                                                             |
+| DAF      | División de Administración y Finanzas                                                          |
 
 ---
 
@@ -32,7 +32,7 @@
 
 Gestionar la materialización de las iniciativas de inversión a través de convenios, supervisión de obras y seguimiento de compromisos, asegurando el cumplimiento de plazos, costos y alcance.
 
-> **Principio Core:** D-EJEC es el dominio de *ejecución operativa*. Consume definiciones formales de D-NORM (Convenio) y D-FIN (IPR), y produce información de avance para H_org (D-EVOL).
+> Principio Core: D-EJEC es el dominio de *ejecución operativa*. Consume definiciones formales de D-NORM (Convenio) y D-FIN (IPR), y produce información de avance para H_org (D-EVOL).
 
 ---
 
@@ -40,7 +40,7 @@ Gestionar la materialización de las iniciativas de inversión a través de conv
 
 ### 1. Supervisión de Obras
 
-**Funcionalidades:**
+Funcionalidades:
 - Carpeta de seguimiento por IPR (visitas, informes)
 - Registro de visitas a terreno con fotos geolocalizadas
 - Revisión de informes de Unidad Técnica
@@ -50,9 +50,9 @@ Gestionar la materialización de las iniciativas de inversión a través de conv
 
 ### 2. Gestión de Convenios
 
-> **Nota de Diseño:** La entidad `Convenio` (SSOT) se define en **D-NORM**. D-EJEC gestiona la *ejecución operativa* (hitos, pagos, riesgos).
+> Nota de Diseño: La entidad `Convenio` (SSOT) se define en D-NORM. D-EJEC gestiona la *ejecución operativa* (hitos, pagos, riesgos).
 
-**Tipos de Convenio:** (→ Ver D-NORM para definición formal)
+Tipos de Convenio: (→ Ver D-NORM para definición formal)
 
 | Tipo          | Descripción                                  | Ejemplo                       |
 | ------------- | -------------------------------------------- | ----------------------------- |
@@ -62,12 +62,12 @@ Gestionar la materialización de las iniciativas de inversión a través de conv
 | MARCO         | Convenio paraguas para múltiples iniciativas | Marco con universidad         |
 | PROGRAMACIÓN  | Convenio plurianual con Ministerio           | CP de infraestructura con MOP |
 
-**Ciclo de Vida:**
+Ciclo de Vida:
 ```
 ELABORACIÓN → REVISIÓN JURÍDICA → FIRMA → EJECUCIÓN → LIQUIDACIÓN
 ```
 
-**Estados:**
+Estados:
 - BORRADOR → EN_REVISION_JURIDICA → PARA_FIRMA → VIGENTE
 - PRORROGA_SOLICITADA, ADDENDUM_EN_PROCESO
 - TERMINADO → LIQUIDADO
@@ -75,14 +75,14 @@ ELABORACIÓN → REVISIÓN JURÍDICA → FIRMA → EJECUCIÓN → LIQUIDACIÓN
 
 ### 3. PMO Regional (Torre de Control)
 
-**Dimensiones de Monitoreo:**
+Dimensiones de Monitoreo:
 
 | Tiempo           | Costo                    | Alcance                   | Riesgo         |
 | ---------------- | ------------------------ | ------------------------- | -------------- |
 | % avance vs plan | Presupuesto vs ejecución | Cambios de especificación | Identificación |
 | Hitos cumplidos  | Desvío %                 | EP estados                | Matriz riesgos |
 
-**Semáforo de Proyecto:**
+Semáforo de Proyecto:
 
 | Semáforo   | Condición                    | Acción                       |
 | ---------- | ---------------------------- | ---------------------------- |
@@ -91,16 +91,16 @@ ELABORACIÓN → REVISIÓN JURÍDICA → FIRMA → EJECUCIÓN → LIQUIDACIÓN
 | 🔴 ROJO     | Desviación crítica (>15%)    | Candidato FÉNIX Nivel II-III |
 | ⚫ NEGRO    | Proyecto detenido/suspendido | Activación FÉNIX Nivel I-II  |
 
-> **Ver:** [fenix.md](fenix.md) para detalle de niveles de intervención.
+> Ver: [fenix.md](fenix.md) para detalle de niveles de intervención.
 
 ### 4. Gestión de Compromisos
 
-**Actores:**
+Actores:
 - Administrador Regional
 - Jefaturas de División
 - Encargados Operativos
 
-**Funcionalidades:**
+Funcionalidades:
 - Dashboard ejecutivo con alertas
 - Creación y asignación de compromisos
 - Seguimiento con semáforo de vencimiento
@@ -109,7 +109,7 @@ ELABORACIÓN → REVISIÓN JURÍDICA → FIRMA → EJECUCIÓN → LIQUIDACIÓN
 
 ### 5. Coordinación Municipal
 
-**Funcionalidades:**
+Funcionalidades:
 - Guías por mecanismo de financiamiento
 - Wizard de vía de financiamiento
 - Verificación de elegibilidad FRIL
@@ -119,7 +119,7 @@ ELABORACIÓN → REVISIÓN JURÍDICA → FIRMA → EJECUCIÓN → LIQUIDACIÓN
 
 ### 6. Relaciones Sectoriales
 
-**Funcionalidades:**
+Funcionalidades:
 - Gestión de convenios marco sectoriales
 - Dashboard de relaciones sectoriales
 - Coordinación con ministerios
@@ -236,21 +236,6 @@ flowchart TD
 ---
 
 ## 📝 User Stories por Módulo
-
-### Resumen
-
-| Módulo                | US Críticas | US Altas | US Medias | Total  |
-| --------------------- | ----------- | -------- | --------- | ------ |
-| Supervision           | 4           | 2        | 0         | 6      |
-| AdministradorRegional | 6           | 3        | 0         | 9      |
-| JefaturaDivision      | 4           | 3        | 0         | 7      |
-| EncargadoOperativo    | 4           | 2        | 1         | 7      |
-| Municipal             | 3           | 3        | 0         | 6      |
-| Sectorial             | 0           | 3        | 1         | 4      |
-| Ejecucion             | 1           | 3        | 0         | 4      |
-| **Total**             | **24**      | **17**   | **2**     | **43** |
-
-> **Fuente:** [kb_goreos_us_d-ejec.yml](../user-stories/kb_goreos_us_d-ejec.yml)
 
 ### Catálogo por Módulo
 
@@ -371,27 +356,27 @@ flowchart TD
 
 ## Normativa Aplicable
 
-| Norma                | Alcance                      |
-| -------------------- | ---------------------------- |
-| **Ley 19.175**       | Orgánica Regional, convenios |
-| **D.S. 148**         | Reglamento convenios GORE    |
-| **Ley 19.886**       | Contratos públicos           |
-| **Res. CGR 30/2015** | Rendición de cuentas         |
+| Norma            | Alcance                      |
+| ---------------- | ---------------------------- |
+| Ley 19.175       | Orgánica Regional, convenios |
+| D.S. 148         | Reglamento convenios GORE    |
+| Ley 19.886       | Contratos públicos           |
+| Res. CGR 30/2015 | Rendición de cuentas         |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio     | Relación                                         | Entidades Compartidas        |
-| ----------- | ------------------------------------------------ | ---------------------------- |
-| **D-PLAN**  | IPR priorizadas en ARI se ejecutan vía convenios | IPR, ObjetivoERD             |
-| **D-NORM**  | Convenio (SSOT del acto administrativo)          | Convenio, ActoAdministrativo |
-| **D-FIN**   | IPR, Transferencias, Rating Ejecutores           | IPR, CDP, Transferencia      |
-| **D-COORD** | Actor (entidad base del ejecutor)                | Actor.tipo=EJECUTOR          |
-| **D-TERR**  | Geolocalización de obras en ejecución            | CapaGeoespacial, Ubicacion   |
-| **D-EVOL**  | Indicadores de ejecución para H_org              | Metrica, Alerta              |
-| **D-SEG**   | PMO para proyectos de seguridad                  | Proyecto_Seguridad           |
-| **FÉNIX**   | Convenios en riesgo activan intervención         | AlertaFenix, CasoFenix       |
+| Dominio | Relación                                         | Entidades Compartidas        |
+| ------- | ------------------------------------------------ | ---------------------------- |
+| D-PLAN  | IPR priorizadas en ARI se ejecutan vía convenios | IPR, ObjetivoERD             |
+| D-NORM  | Convenio (SSOT del acto administrativo)          | Convenio, ActoAdministrativo |
+| D-FIN   | IPR, Transferencias, Rating Ejecutores           | IPR, CDP, Transferencia      |
+| D-COORD | Actor (entidad base del ejecutor)                | Actor.tipo=EJECUTOR          |
+| D-TERR  | Geolocalización de obras en ejecución            | CapaGeoespacial, Ubicacion   |
+| D-EVOL  | Indicadores de ejecución para H_org              | Metrica, Alerta              |
+| D-SEG   | PMO para proyectos de seguridad                  | Proyecto_Seguridad           |
+| FÉNIX   | Convenios en riesgo activan intervención         | AlertaFenix, CasoFenix       |
 
 ---
 

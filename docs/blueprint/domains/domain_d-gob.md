@@ -1,35 +1,37 @@
-# D-GOB: Dominio de Gobernanza Regional
+# D-GOB: Dominio de Gobernanza y Relacionamiento Regional
 
-> **Procesos BPMN:** 4 | **Subprocesos:** ~18 | **User Stories:** 49
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Estratégica (Dimensión Política)  
-> **Función GORE:** GOBERNAR / COORDINAR  
-> **División:** Gobernación / Secretaría Ejecutiva CORE
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Estratégica (Dimensión Política)  
+> Función GORE: GOBERNAR / COORDINAR  
+> División: Gobernación / Secretaría Ejecutiva CORE / Gabinete
 
 ---
 
 ## Glosario D-GOB
 
-| Término                       | Sigla | Definición                                                                                    |
-| ----------------------------- | ----- | --------------------------------------------------------------------------------------------- |
-| **Consejo Regional**          | CORE  | Órgano colegiado normativo, resolutivo y fiscalizador del Gobierno Regional.                  |
-| **Gobernador Regional**       | GR    | Órgano ejecutivo del Gobierno Regional, electo por votación popular.                          |
-| **Gabinete Regional**         | GAB   | Equipo asesor directo del Gobernador para coordinación política y comunicacional.             |
-| **Comité de Coordinación**    | CIG   | Instancia de coordinación entre servicios públicos regionales (ex Gabinete Regional).         |
-| **Transferencia Competencia** | TC    | Proceso administrativo de traspaso de facultades desde nivel central a regional (Ley 19.175). |
-| **Glosa 02/16**               | -     | Disposiciones de Ley de Presupuestos sobre transparencia y gastos de funcionamiento CORE.     |
-| **Circunscripción**           | -     | División electoral territorial de la región (Diguillín, Punilla, Itata).                      |
-| **Tabla de Sesión**           | -     | Agenda oficial de temas a tratar en una sesión del CORE.                                      |
-| **Voto Dirimente**            | -     | Facultad del Gobernador para resolver empates en votaciones del CORE.                         |
-| **Comité GRD**                | GRD   | Comité Regional para la Gestión del Riesgo de Desastres (SENAPRED).                           |
+| Término                   | Sigla | Definición                                                                                    |
+| ------------------------- | ----- | --------------------------------------------------------------------------------------------- |
+| Consejo Regional          | CORE  | Órgano colegiado normativo, resolutivo y fiscalizador del Gobierno Regional.                  |
+| Gobernador Regional       | GR    | Órgano ejecutivo del Gobierno Regional, electo por votación popular.                          |
+| Gabinete Regional         | GAB   | Equipo asesor directo del Gobernador para coordinación política y comunicacional.             |
+| Comité de Coordinación    | CIG   | Instancia de coordinación entre servicios públicos regionales (ex Gabinete Regional).         |
+| Transferencia Competencia | TC    | Proceso administrativo de traspaso de facultades desde nivel central a regional (Ley 19.175). |
+| Glosa 02/16               | -     | Disposiciones de Ley de Presupuestos sobre transparencia y gastos de funcionamiento CORE.     |
+| Circunscripción           | -     | División electoral territorial de la región (Diguillín, Punilla, Itata).                      |
+| Tabla de Sesión           | -     | Agenda oficial de temas a tratar en una sesión del CORE.                                      |
+| Voto Dirimente            | -     | Facultad del Gobernador para resolver empates en votaciones del CORE.                         |
+| Comité GRD                | GRD   | Comité Regional para la Gestión del Riesgo de Desastres (SENAPRED).                           |
+| Actor                     | -     | Entidad externa o interna (Municipio, Servicio, ONG, Persona) que interactúa con el GORE.     |
+| SSOT de Actores           | -     | Single Source of Truth. Directorio maestro de todos los actores del ecosistema regional.      |
+| COSOC                     | -     | Consejo de Organizaciones de la Sociedad Civil.                                               |
 
 ---
 
 ## Propósito
 
-Facilitar la gobernanza política de la región, gestionando el funcionamiento del Consejo Regional, la agenda estratégica del Gobernador, el proceso de descentralización (transferencia de competencias) y la coordinación con el gobierno interior (Delegación) y la sociedad civil.
+Facilitar la gobernanza política de la región y gestionar el relacionamiento integral con todos los actores del territorio (ciudadanía, municipios, gobierno central, privados). Centraliza el funcionamiento del CORE, la agenda del Gobernador, el Directorio de Actores y la participación ciudadana.
 
-**Fundamento Legal:** Ley 19.175 (LOC GORE), Ley 21.074 (Fortalecimiento Regional), Ley 21.364 (SENAPRED).
+Fundamento Legal: Ley 19.175 (LOC GORE), Ley 21.074 (Fortalecimiento Regional), Ley 21.364 (SENAPRED), Ley 20.500 (Participación).
 
 ---
 
@@ -49,16 +51,21 @@ flowchart TB
         SEC["Secretaría<br/>Ejecutiva"]
     end
 
-    subgraph EXT["🤝 Relacionamiento"]
+    subgraph RELACIONES["🤝 Relacionamiento (CRM)"]
+        ACTOR["Directorio<br/>Actores"]
+        PART["Participación<br/>COSOC"]
+    end
+
+    subgraph EXT["🔗 Externos"]
         DPR["Delegado<br/>Presidencial"]
-        COSOC["Sociedad<br/>Civil"]
         GRD["Comité<br/>Desastres"]
     end
 
     GR --> CORE : "Preside"
     CORE --> GR : "Fiscaliza"
     GR --> GAB : "Dirige"
-    GAB --> COSOC : "Coordina"
+    GAB --> ACTOR : "Gestiona Relaciones"
+    GAB --> PART : "Coordina"
     DESC --> GR : "Asesora TC"
     GR --> DPR : "Coordina"
     GR --> GRD : "Lidera"
@@ -70,53 +77,84 @@ flowchart TB
 
 ### M1: Consejo Regional (CORE)
 
-| Atributo        | Descripción                                                               |
-| --------------- | ------------------------------------------------------------------------- |
-| **Propósito**   | Gestionar el funcionamiento normativo y fiscalizador del órgano colegiado |
-| **Componentes** | Gestión de Tablas, Votaciones, Comisiones, Transparencia                  |
+| Atributo    | Descripción                                                               |
+| ----------- | ------------------------------------------------------------------------- |
+| Propósito   | Gestionar el funcionamiento normativo y fiscalizador del órgano colegiado |
+| Componentes | Gestión de Tablas, Votaciones, Comisiones, Transparencia                  |
 
-**Funcionalidades:**
+Funcionalidades:
+
 - Carpeta digital de consejero (documentos, citaciones)
 - Mapa de inversiones por circunscripción
 - Registro de votaciones y acuerdos
 - Portal de transparencia Glosa 16 (gastos funcionamiento)
 
-### M2: Despacho Gobernador
+### M2: Despacho Gobernador y Gabinete
 
-| Atributo        | Descripción                                                      |
-| --------------- | ---------------------------------------------------------------- |
-| **Propósito**   | Apoyar la labor ejecutiva y estratégica de la autoridad regional |
-| **Componentes** | Agenda, Gabinete, Comunicaciones, Protocolo                      |
+| Atributo    | Descripción                                                      |
+| ----------- | ---------------------------------------------------------------- |
+| Propósito   | Apoyar la labor ejecutiva y estratégica de la autoridad regional |
+| Componentes | Agenda, Gabinete, Comunicaciones, Protocolo, Compromisos         |
 
-**Funcionalidades:**
+Funcionalidades:
+
 - Dashboard ejecutivo integrado (KPIs regionales)
-- Gestión de compromisos de autoridad
+- Gestión de compromisos de autoridad (Semáforo de cumplimiento)
 - Firma electrónica avanzada de actos
 - Coordinación de relaciones internacionales (URAI)
 
 ### M3: Descentralización
 
-| Atributo        | Descripción                                                  |
-| --------------- | ------------------------------------------------------------ |
-| **Propósito**   | Gestionar la transferencia de nuevas competencias y recursos |
-| **Componentes** | Expedientes TC, Negociación, Instalación                     |
+| Atributo    | Descripción                                                  |
+| ----------- | ------------------------------------------------------------ |
+| Propósito   | Gestionar la transferencia de nuevas competencias y recursos |
+| Componentes | Expedientes TC, Negociación, Instalación                     |
 
-**Funcionalidades:**
+Funcionalidades:
+
 - Flujo de solicitud de competencias (Art. 21)
 - Monitoreo de indicadores de desempeño servicios traspasados
 - Plan de instalación de competencias (recursos, personas)
 
 ### M4: Coordinación & Emergencias
 
-| Atributo        | Descripción                                                                     |
-| --------------- | ------------------------------------------------------------------------------- |
-| **Propósito**   | Articular la respuesta regional ante crisis y la relación con niveles centrales |
-| **Componentes** | Comité GRD, Relación DPR, Seguridad Pública                                     |
+| Atributo    | Descripción                                                                     |
+| ----------- | ------------------------------------------------------------------------------- |
+| Propósito   | Articular la respuesta regional ante crisis y la relación con niveles centrales |
+| Componentes | Comité GRD, Relación DPR, Seguridad Pública                                     |
 
-**Funcionalidades:**
+Funcionalidades:
+
 - Activación de Comité de Gestión de Riesgos
 - Coordinación con Delegación Presidencial
 - Gestión de crisis comunicacionales
+
+### M5: Gestión Relacional (CRM) *(Integrado desde D-COORD)*
+
+| Atributo    | Descripción                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| Propósito   | Directorio maestro de actores territoriales (SSOT)                  |
+| Componentes | Registro de Actores, Roles (Ejecutor/Proveedor), Historial, Scoring |
+
+Funcionalidades:
+
+- Registro Único de Actores: SSOT para D-FIN (Ejecutores), D-BACK (Proveedores).
+- Historial de Interacciones: Trazabilidad de reuniones, convenios y conflictos.
+- Scoring Relacional: Nivel de vinculación y cumplimiento.
+
+### M6: Participación Ciudadana *(Integrado desde D-COORD)*
+
+| Atributo    | Descripción                                     |
+| ----------- | ----------------------------------------------- |
+| Propósito   | Vinculación con la sociedad civil               |
+| Componentes | Consultas Públicas, COSOC, Transparencia Activa |
+
+Funcionalidades:
+
+- Gestión de consultas públicas (convocatoria, participación, resultados)
+- Coordinación con COSOC Regional
+- Métricas de satisfacción ciudadana
+- Integración con portal de transparencia
 
 ---
 
@@ -126,14 +164,16 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    subgraph DGOB["D-GOB: Gobernanza Regional"]
+    subgraph DGOB["D-GOB: Gobernanza Regional Integrada"]
         P1["P1: Sesión CORE<br/>(Tabla/Acuerdo)"]
         P2["P2: Transferencia<br/>Competencias"]
         P3["P3: Gestión<br/>Crisis/GRD"]
-        P4["P4: Agenda<br/>Estratégica"]
+        P4["P4: Agenda &<br/>Compromisos"]
+        P5["P5: Registro<br/>Actores (CRM)"]
     end
 
     P4 --> P1
+    P5 -.-> P4
     P1 --> P2
     P3 -.-> P4
 ```
@@ -159,8 +199,8 @@ flowchart TB
     P1_4 -.- N4["Certificado acuerdo<br/>Notificación ejecutivo"]
 ```
 
-**Actores:** Gobernador, Consejeros, Secretario Ejecutivo  
-**Frecuencia:** Bimensual (Ordinaria) / A demanda (Extraordinaria)
+Actores: Gobernador, Consejeros, Secretario Ejecutivo  
+Frecuencia: Bimensual (Ordinaria) / A demanda (Extraordinaria)
 
 ---
 
@@ -185,8 +225,8 @@ flowchart TB
     P2_5 -.- N5["KPIs servicio<br/>Reporte subdere"]
 ```
 
-**Actores:** Unidad Descentralización, Gobernador, SUBDERE  
-**Frecuencia:** Anual / Por ventana de solicitud
+Actores: Unidad Descentralización, Gobernador, SUBDERE  
+Frecuencia: Anual / Por ventana de solicitud
 
 ---
 
@@ -209,48 +249,70 @@ flowchart TB
     P3_4 -.- N4["Catastro daños<br/>Plan reconstrucción"]
 ```
 
-**Actores:** Gobernador, SENAPRED, Delegado Presidencial  
-**Frecuencia:** Eventual (Emergencias)
+Actores: Gobernador, SENAPRED, Delegado Presidencial  
+Frecuencia: Eventual (Emergencias)
 
 ---
 
-### P4: Coordinación Gabinete
+### P4: Gestión Agenda & Compromisos
+
+*Integra Agenda (ex D-GOB) y Seguimiento (ex D-COORD).*
 
 ```mermaid
-flowchart TB
-    subgraph P4["P4: Coordinación de Gabinete"]
-        P4_1["4.1 Planificación<br/>Semanal"]
-        P4_2["4.2 Gestión<br/>Audiencias"]
-        P4_3["4.3 Seguimiento<br/>Compromisos"]
-        P4_4["4.4 Articulación<br/>Política"]
-    end
-
-    P4_1 --> P4_2
-    P4_1 --> P4_4
-    P4_2 --> P4_3
-    P4_4 --> P4_3
-
-    P4_1 -.- N1["Prioridades agenda<br/>Hitos comunicacionales"]
-    P4_2 -.- N2["Ley del Lobby<br/>Registro público"]
-    P4_3 -.- N3["Tablero semáforo<br/>Alertas dev. cumplimiento"]
+flowchart TD
+    A["Solicitud Audiencia<br/>o Hito Agenda"] --> B["Agendar en<br/>Calendario Unificado"]
+    B --> C["Realización Evento"]
+    C --> D["Registrar Compromisos<br/>(Responsable/Plazo)"]
+    D --> E["Monitoreo Continuo"]
+    E --> F{"¿Estado?"}
+    F -->|"En plazo"| G["Semáforo Verde"]
+    F -->|"Por vencer (7d)"| H["Alerta Amarilla"]
+    F -->|"Vencido"| I["Escalamiento<br/>a Gabinete"]
+    G --> J["Responsable reporta<br/>avance/cierre"]
+    H --> J
+    I --> K["Revisión en<br/>próxima sesión"]
+    J --> L{"¿Cumplido?"}
+    L -->|"Sí"| M["Cerrar compromiso<br/>con evidencia"]
+    L -->|"No"| N["Reprogramar o<br/>escalar"]
 ```
 
-**Actores:** Jefatura Gabinete, Asesores, Periodistas  
-**Frecuencia:** Diaria/Semanal
+Actores: Jefatura Gabinete, Asesores, Periodistas  
+Frecuencia: Diaria/Semanal
 
 ---
 
-## Catálogo por Proceso
+### P5: Registro y Vinculación de Actores *(Nuevo)*
 
-### Resumen de User Stories
+*Centraliza la creación de actores para todo el GORE.*
 
-| Proceso               | Módulo                | US Total |
-| --------------------- | --------------------- | -------- |
-| P1: Sesión CORE       | M1: CORE              | 12       |
-| P2: Descentralización | M3: Descentralización | 7        |
-| P3: Gestión Crisis    | M4: GRD/Delegado      | 6        |
-| P4: Gabinete/Agenda   | M2: Gobernador/Gab    | 18       |
-| **Total**             |                       | **~43**  |
+```mermaid
+flowchart TD
+    A["Solicitud de registro<br/>(interno o externo)"] --> B{"¿Actor existe<br/>en sistema?"}
+    B -->|"No"| C["Crear ficha Actor:<br/>• RUT/Razón Social<br/>• Tipo<br/>• Contactos<br/>• Comuna"]
+    B -->|"Sí"| D["Actualizar datos"]
+    C --> E["Validar RUT con<br/>SII/ChileProveedores"]
+    D --> E
+    E --> F{"¿Validación OK?"}
+    F -->|"Sí"| G["Actor Activo"]
+    F -->|"No"| H["Revisar datos"]
+    H --> C
+    G --> I{"¿Qué rol<br/>adicional?"}
+    I -->|"Ejecutor"| J["Verificar capacidades:<br/>• PJ vigente<br/>• Directorio actualizado<br/>• Sin deuda GORE"]
+    I -->|"Proveedor"| K["Verificar en<br/>ChileProveedores"]
+    J --> L{"¿Habilitado?"}
+    K --> M{"¿Habilitado?"}
+    L -->|"Sí"| N["Asignar rol EJECUTOR<br/>+ crear enlace D-FIN"]
+    L -->|"No"| O["Rechazar con motivo"]
+    M -->|"Sí"| P["Asignar rol PROVEEDOR<br/>+ habilitar para OC"]
+    M -->|"No"| Q["Solicitar registro MP"]
+    N --> R["Actor con roles<br/>múltiples habilitados"]
+    P --> R
+```
+
+Actores: Gabinete, División que requiere, Actor externo  
+Frecuencia: A demanda
+
+---
 
 ### Selección de US Clave
 
@@ -262,8 +324,10 @@ flowchart TB
 | US-GOB-GRD-001  | Aprobar Plan RRD              | P3      | Alta      |
 | US-GOB-GR-006   | Dashboard ejecutivo integrado | P4      | Crítica   |
 | US-GOB-GAB-002  | Seguimiento compromisos GR    | P4      | Crítica   |
+| US-GOB-ACT-001  | Registrar nuevo actor         | P5      | Alta      |
+| US-GOB-ACT-003  | Habilitar rol ejecutor        | P5      | Crítica   |
 
-> *Para el detalle completo de las 49 historias, ver catálogo YAML adjunto.*
+> *Para el detalle completo de las 57 historias, ver catálogo YAML adjunto.*
 
 ---
 
@@ -282,44 +346,69 @@ flowchart TB
 
 | Entidad        | Atributos Clave                                                         | Relaciones             |
 | -------------- | ----------------------------------------------------------------------- | ---------------------- |
-| `CompromisoGR` | id, descripcion, origen (audiencia/terreno), fecha, estado, responsable | → Audiencia            |
+| `CompromisoGR` | id, descripcion, origen (audiencia/terreno), fecha, estado, responsable | → Audiencia, Actor     |
 | `Competencia`  | id, nombre, ministerio_origen, estado_TC, fecha_traspaso                | → IndicadorDesempeño[] |
 | `Emergencia`   | id, tipo, zona_afectada, nivel_alerta, fecha_inicio                     | → AccionRespuesta[]    |
+
+### Relacionamiento (CRM)
+
+| Entidad            | Atributos Clave                                                                                         | Relaciones                             |
+| ------------------ | ------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `Actor`            | id, rut, razon_social, tipo, contacto_principal, email, telefono, comuna_id, estado, scoring_relacional | → HistorialActor[], ActorIPR[] (D-FIN) |
+| `HistorialActor`   | id, actor_id, evento_tipo, descripcion, fecha, funcionario_id                                           | → Actor                                |
+| `InteraccionActor` | id, actor_id, tipo (reunion/llamada/email/convenio), fecha, resumen                                     | → Actor                                |
+| `RolActor`         | id, actor_id, rol (EJECUTOR/PROVEEDOR), estado, fecha_habilitacion                                      | → Actor                                |
+
+### Participación Ciudadana
+
+| Entidad               | Atributos Clave                                                                   | Relaciones           |
+| --------------------- | --------------------------------------------------------------------------------- | -------------------- |
+| `ConsultaPublica`     | id, titulo, descripcion, fecha_inicio, fecha_fin, participantes_count, resultados | → DocumentoAdjunto[] |
+| `InstanciaGobernanza` | id, nombre, tipo (consejo/comite/mesa), normativa_base, periodicidad              | → SesionInstancia[]  |
+| `SesionGabinete`      | id, fecha, tipo (ordinaria/extraordinaria), asistentes, acta_url                  | → CompromisoGR[]     |
 
 ---
 
 ## Sistemas Involucrados
 
-| Sistema            | Rol                                  | Dominio   |
-| ------------------ | ------------------------------------ | --------- |
-| **SGC (Sesiones)** | Gestión de sesiones y actas CORE     | D-GOB     |
-| **Lobby**          | Registro de audiencias (Infolobby)   | D-GOB     |
-| **Transparencia**  | Portal de transparencia activa       | D-GESTION |
-| **SENAPRED**       | Plataforma de gestión de emergencias | Externo   |
+| Sistema              | Rol                                  | Dominio   |
+| -------------------- | ------------------------------------ | --------- |
+| SGC (Sesiones)       | Gestión de sesiones y actas CORE     | D-GOB     |
+| Lobby                | Registro de audiencias (Infolobby)   | D-GOB     |
+| Transparencia        | Portal de transparencia activa       | D-GESTION |
+| SENAPRED             | Plataforma de gestión de emergencias | Externo   |
+| ORG-CHILEPROVEEDORES | Registro de proveedores              | Externo   |
+| SYS-SII              | Validación RUT empresas/personas     | Externo   |
+| INT-GOREOS           | Directorio centralizado de actores   | SSOT      |
 
 ---
 
 ## Normativa Aplicable
 
-| Norma          | Descripción                                              |
-| -------------- | -------------------------------------------------------- |
-| **Ley 19.175** | Orgánica Constitucional (Funcionamiento CORE/Gobernador) |
-| **Ley 20.730** | Ley del Lobby (Agenda pública)                           |
-| **Ley 20.285** | Transparencia (Actas y acuerdos públicos)                |
-| **Ley 21.074** | Fortalecimiento de la Regionalización (Competencias)     |
+| Norma      | Descripción                                              |
+| ---------- | -------------------------------------------------------- |
+| Ley 19.175 | Orgánica Constitucional (Funcionamiento CORE/Gobernador) |
+| Ley 20.730 | Ley del Lobby (Agenda pública)                           |
+| Ley 20.285 | Transparencia (Actas y acuerdos públicos)                |
+| Ley 21.074 | Fortalecimiento de la Regionalización (Competencias)     |
+| Ley 20.500 | Participación Ciudadana (COSOC)                          |
+| Ley 21.364 | Sistema Nacional de Emergencia (SENAPRED)                |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio       | Relación                                         |
-| ------------- | ------------------------------------------------ |
-| **D-PLAN**    | CORE aprueba instrumentos (ERD, PROT, ARI)       |
-| **D-FIN**     | CORE aprueba presupuesto y distribución FNDR     |
-| **D-GESTION** | Seguimiento operativo de acuerdos CORE           |
-| **D-COORD**   | Relación con alcaldes y servicios (actores)      |
-| **D-EVOL**    | Gobernanza de la transformación digital regional |
+| Dominio   | Relación                                               |
+| --------- | ------------------------------------------------------ |
+| D-PLAN    | CORE aprueba instrumentos (ERD, PROT, ARI)             |
+| D-FIN     | CORE aprueba presupuesto; consume Actor (rol Ejecutor) |
+| D-BACK    | Consume Actor (rol Proveedor) para compras             |
+| D-NORM    | Vincula Actor a Actos Administrativos y Convenios      |
+| D-GESTION | Seguimiento operativo de acuerdos CORE                 |
+| D-EVOL    | Gobernanza de la transformación digital regional       |
+| D-SEG     | Consejo Regional de Seguridad Pública                  |
 
 ---
 
-*Documento parte de GORE_OS v5.0*
+*Documento parte de GORE_OS Blueprint v5.0 (Consolidado)*  
+*Última actualización: 2025-12-17*

@@ -1,41 +1,44 @@
 # D-NORM: Dominio de Gestión Jurídico-Administrativa y Cumplimiento
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Habilitante (Soporte Operativo)  
-> **Función GORE:** NORMAR  
-> **Procesos BPMN:** 4 | **Subprocesos:** ~20 | **User Stories:** 52
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Habilitante (Jurídico-Administrativa)  
+> Función GORE: NORMAR  
 
 ---
 
 ## Glosario D-NORM
 
-| Término  | Definición                                                                                    |
-| -------- | --------------------------------------------------------------------------------------------- |
-| **LBPA** | Ley de Bases de Procedimientos Administrativos (19.880). Marco de actuación formal del Estado |
-| **TDE**  | Transformación Digital del Estado (Ley 21.180). Protocolo digital obligatorio                 |
-| **FEA**  | Firma Electrónica Avanzada. Equivalente legal a firma óloga                                   |
-| **SSOT** | Single Source of Truth. Fuente única de verdad (Convenios viven en D-NORM)                    |
-| **DIP**  | Declaración de Intereses y Patrimonio. Obligación anual de probidad                           |
-| **SAI**  | Solicitud de Acceso a Información (Ley 20.285)                                                |
-| **SGD**  | Sistema de Gestión Documental. Plataforma de trámites electrónicos                            |
-| **CDP**  | Certificado de Disponibilidad Presupuestaria. Requisito para compromisos                      |
-| **CPLT** | Consejo para la Transparencia. Órgano autónomo de tutela de acceso                            |
+| Término | Definición                                                                                    |
+| ------- | --------------------------------------------------------------------------------------------- |
+| LBPA    | Ley de Bases de Procedimientos Administrativos (19.880). Marco de actuación formal del Estado |
+| TDE     | Transformación Digital del Estado (Ley 21.180). Protocolo digital obligatorio                 |
+| FEA     | Firma Electrónica Avanzada. Equivalente legal a firma óloga                                   |
+| SSOT    | Single Source of Truth. Fuente única de verdad (Convenios viven en D-NORM)                    |
+| DIP     | Declaración de Intereses y Patrimonio. Obligación anual de probidad                           |
+| SAI     | Solicitud de Acceso a Información (Ley 20.285)                                                |
+| SGD     | Sistema de Gestión Documental. Plataforma de trámites electrónicos                            |
+| CDP     | Certificado de Disponibilidad Presupuestaria. Requisito para compromisos                      |
+| CPLT    | Consejo para la Transparencia. Órgano autónomo de tutela de acceso                            |
+| OIRS    | Oficina de Información, Reclamos y Sugerencias. Canal ciudadano                               |
+| CORE    | Consejo Regional. Órgano colegiado con facultades normativas y fiscalizadoras                 |
+| RS      | Recomendación Satisfactoria. Evaluación técnico-económica MDSF para proyectos                 |
+| LOC     | Ley Orgánica Constitucional. Norma de rango cuasiconstitucional (quorum 4/7)                  |
 
 ## Propósito
 
 Gestionar el ciclo completo de actos administrativos, procedimientos formales, cumplimiento normativo y control interno, asegurando la validez jurídica y trazabilidad de las actuaciones del GORE.
 
-> **Visión:** Toda actuación formal del GORE —resoluciones, convenios, procedimientos— debe ser jurídicamente válida, trazable y verificable. Este dominio garantiza que los procesos jurídico-administrativos se ejecuten con rigor, cumpliendo plazos legales, fundamentación adecuada y control preventivo.
+> Visión: Toda actuación formal del GORE —resoluciones, convenios, procedimientos— debe ser jurídicamente válida, trazable y verificable. Este dominio garantiza que los procesos jurídico-administrativos se ejecuten con rigor, cumpliendo plazos legales, fundamentación adecuada y control preventivo.
 
 ---
 
 ## Tres Dimensiones Integradas
 
-| Dimensión          | Componentes                                          |
-| ------------------ | ---------------------------------------------------- |
-| **Actos Formales** | Resoluciones, Convenios, Reglamentos, Oficios        |
-| **Procedimientos** | Ley 19.880, Plazos legales, Recursos, Notificaciones |
-| **Cumplimiento**   | Probidad, Transparencia, Control CGR, Auditoría      |
+| Dimensión      | Componentes                                          |
+| -------------- | ---------------------------------------------------- |
+| Actos Formales | Resoluciones, Convenios, Reglamentos, Oficios        |
+| Procedimientos | Ley 19.880, Plazos legales, Recursos, Notificaciones |
+| Cumplimiento   | Probidad, Transparencia, Control CGR, Auditoría      |
 
 ---
 
@@ -43,12 +46,13 @@ Gestionar el ciclo completo de actos administrativos, procedimientos formales, c
 
 ### 1. Actos Administrativos
 
-**Ciclo de Vida:**
-```
+Ciclo de Vida:
+
+```text
 BORRADOR → VISACIÓN Jurídica → FIRMA FEA → TOMA RAZÓN (si aplica) → NOTIFICACIÓN → VIGENTE
 ```
 
-**Tipos de Actos:**
+Tipos de Actos:
 
 | Tipo         | Características                                                    |
 | ------------ | ------------------------------------------------------------------ |
@@ -59,21 +63,24 @@ BORRADOR → VISACIÓN Jurídica → FIRMA FEA → TOMA RAZÓN (si aplica) → N
 | Acuerdo CORE | Decisiones colegiadas del Consejo Regional                         |
 | Certificado  | Constancia de hechos o estados                                     |
 
-**Estructura Formal (Ley 19.880):**
-- **VISTOS** → Competencia y antecedentes que habilitan el acto
-- **CONSIDERANDO** → Fundamentos de hecho y de derecho (Art. 11, 41)
-- **RESUELVO** → Decisión formal con articulado
+Estructura Formal (Ley 19.880):
+- VISTOS → Competencia y antecedentes que habilitan el acto
+
+- CONSIDERANDO → Fundamentos de hecho y de derecho (Art. 11, 41)
+
+- RESUELVO → Decisión formal con articulado
 
 ### 2. Procedimientos Administrativos
 
-**Marco: Ley 19.880**
+#### Marco: Ley 19.880
 
-**Etapas:**
-```
+Etapas:
+
+```text
 INICIACIÓN → INSTRUCCIÓN → FINALIZACIÓN → IMPUGNACIÓN (eventual)
 ```
 
-**Plazos Legales Críticos:**
+Plazos Legales Críticos:
 
 | Plazo           | Aplicación                               |
 | --------------- | ---------------------------------------- |
@@ -86,64 +93,77 @@ INICIACIÓN → INSTRUCCIÓN → FINALIZACIÓN → IMPUGNACIÓN (eventual)
 
 ### 3. Expediente Electrónico
 
-**Marco: Ley 21.180 (TDE)**
+#### Marco: Ley 21.180 (TDE)
 
-**Principios:**
+Principios:
 - Expediente único por procedimiento
+
 - Foliación automática y correlativa
+
 - Trazabilidad completa de actuaciones
+
 - Firma electrónica avanzada (FEA)
+
 - Interoperabilidad con DocDigital
 
-**Integraciones:** DocDigital, Cero Papel, ClaveÚnica
+Integraciones: DocDigital, Cero Papel, ClaveÚnica
 
 ### 4. Cumplimiento y Control Interno
 
-**Probidad y Transparencia (Leyes 20.285, 20.880):**
+Probidad y Transparencia (Leyes 20.285, 20.880):
 - Declaraciones de intereses y patrimonio
+
 - Inhabilidades e incompatibilidades
+
 - Transparencia activa (portal institucional)
+
 - Solicitudes de acceso a información
 
-**Ley de Lobby (Ley 20.730):**
+Ley de Lobby (Ley 20.730):
 - Registro de audiencias
+
 - Gestiones de interés particular
+
 - Viajes pagados por terceros
 
-**Control Interno:**
+Control Interno:
 - Sumarios administrativos
+
 - Investigaciones sumarias
+
 - Auditoría interna
+
 - Plan de integridad institucional
 
 ### 5. Convenios Institucionales (SSOT)
 
-**Ciclo de Vida:**
-```
+Ciclo de Vida:
+
+```text
 NEGOCIACIÓN → REDACCIÓN → VISACIÓN Jurídica → APROBACIÓN (Res.+CGR) → EJECUCIÓN → TÉRMINO
 ```
 
-**Tipos de Convenio (SSOT):**
+Tipos de Convenio (SSOT):
 
-| Tipo              | Descripción                                     | Ejemplo                             | Control CGR |
-| ----------------- | ----------------------------------------------- | ----------------------------------- | ----------- |
-| **MANDATO**       | GORE encarga ejecución a otro órgano del Estado | MOP ejecuta obra vial               | Afecto      |
-| **TRANSFERENCIA** | GORE transfiere recursos a ejecutor externo     | Municipio ejecuta multicancha       | Afecto      |
-| **COLABORACIÓN**  | Ejecución conjunta con aportes de ambas partes  | GORE+CORFO programa fomento         | Exento      |
-| **MARCO**         | Convenio paraguas para múltiples iniciativas    | Marco con universidad para estudios | Exento      |
-| **PROGRAMACIÓN**  | Convenio plurianual con Ministerio sectorial    | CP de infraestructura con MOP       | Afecto      |
+| Tipo          | Descripción                                     | Ejemplo                             | Control CGR |
+| ------------- | ----------------------------------------------- | ----------------------------------- | ----------- |
+| MANDATO       | GORE encarga ejecución a otro órgano del Estado | MOP ejecuta obra vial               | Afecto      |
+| TRANSFERENCIA | GORE transfiere recursos a ejecutor externo     | Municipio ejecuta multicancha       | Afecto      |
+| COLABORACIÓN  | Ejecución conjunta con aportes de ambas partes  | GORE+CORFO programa fomento         | Exento      |
+| MARCO         | Convenio paraguas para múltiples iniciativas    | Marco con universidad para estudios | Exento      |
+| PROGRAMACIÓN  | Convenio plurianual con Ministerio sectorial    | CP de infraestructura con MOP       | Afecto      |
 
-> **Nota:** La *ejecución operativa* de convenios (hitos, pagos, riesgos) se gestiona en **D-EJEC**.
+> Nota: La *ejecución operativa* de convenios (hitos, pagos, riesgos) se gestiona en D-EJEC.
 
 ### 6. Control Externo
 
-**Órganos de Control:**
+Órganos de Control:
 
-| Órgano                  | Función                                        | Marco Legal             |
-| ----------------------- | ---------------------------------------------- | ----------------------- |
-| **CGR**                 | Control de legalidad, fiscalización, auditoría | Ley 10.336, Art. 98 CPR |
-| **CPLT**                | Acceso a información pública                   | Ley 20.285              |
-| **Tribunal de Cuentas** | Responsabilidad funcionaria                    | Ley 10.336 Art. 107     |
+| Órgano              | Función                                        | Marco Legal             |
+| ------------------- | ---------------------------------------------- | ----------------------- |
+| CGR                 | Control de legalidad, fiscalización, auditoría | Ley 10.336, Art. 98 CPR |
+| CPLT                | Acceso a información pública                   | Ley 20.285              |
+| Tribunal de Cuentas | Responsabilidad funcionaria                    | Ley 10.336 Art. 107     |
 
 ---
 
@@ -151,12 +171,11 @@ NEGOCIACIÓN → REDACCIÓN → VISACIÓN Jurídica → APROBACIÓN (Res.+CGR) �
 
 ### Mapa General del Dominio (D01)
 
-| Campo          | Valor             |
-| -------------- | ----------------- |
-| **ID**         | `DOM-ACTOS-ADMIN` |
-| **Criticidad** | 🟠 Alta            |
-| **Dueño**      | Unidad Jurídica   |
-| **Procesos**   | 4                 |
+| Campo      | Valor             |
+| ---------- | ----------------- |
+| ID         | `DOM-ACTOS-ADMIN` |
+| Criticidad | 🟠 Alta            |
+| Dueño      | Unidad Jurídica   |
 
 ```mermaid
 flowchart TB
@@ -186,11 +205,10 @@ flowchart TB
 
 ### P1: Flujo de Resoluciones Exentas
 
-| Campo     | Valor                          |
-| --------- | ------------------------------ |
-| **ID**    | `BPMN-GN-RES-EXENTAS-FLUJO-01` |
-| **Fases** | 7                              |
-| **SLA**   | 15 días hábiles                |
+| Campo | Valor                          |
+| ----- | ------------------------------ |
+| ID    | `BPMN-GN-RES-EXENTAS-FLUJO-01` |
+| SLA   | 15 días hábiles                |
 
 ```mermaid
 flowchart TD
@@ -258,11 +276,10 @@ flowchart TD
 
 ### P2: Aprobación de Transferencias y Convenios
 
-| Campo     | Valor                                     |
-| --------- | ----------------------------------------- |
-| **ID**    | `PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01` |
-| **Fases** | 7                                         |
-| **SLA**   | 30 días hábiles                           |
+| Campo | Valor                                     |
+| ----- | ----------------------------------------- |
+| ID    | `PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01` |
+| SLA   | 30 días hábiles                           |
 
 ```mermaid
 flowchart TD
@@ -316,26 +333,25 @@ flowchart TD
 
 #### Contenido Mínimo del Convenio
 
-| Elemento         | Descripción                       |
-| ---------------- | --------------------------------- |
-| **Partes**       | GORE + Entidad receptora          |
-| **Objeto**       | Descripción del programa/proyecto |
-| **Monto**        | Valor total y calendario          |
-| **Plazos**       | Duración y fechas clave           |
-| **Obligaciones** | Deberes de cada parte             |
-| **Rendición**    | Modalidad, plazos, SISREC         |
-| **Restitución**  | Condiciones de devolución         |
-| **Probidad**     | Cláusulas anticorrupción          |
+| Elemento     | Descripción                       |
+| ------------ | --------------------------------- |
+| Partes       | GORE + Entidad receptora          |
+| Objeto       | Descripción del programa/proyecto |
+| Monto        | Valor total y calendario          |
+| Plazos       | Duración y fechas clave           |
+| Obligaciones | Deberes de cada parte             |
+| Rendición    | Modalidad, plazos, SISREC         |
+| Restitución  | Condiciones de devolución         |
+| Probidad     | Cláusulas anticorrupción          |
 
 ---
 
 ### P3: Procedimientos Administrativos (Ley 19.880)
 
-| Campo     | Valor                   |
-| --------- | ----------------------- |
-| **ID**    | `BPMN-GN-PROC-ADMIN-01` |
-| **Fases** | 4                       |
-| **SLA**   | 6 meses (máximo)        |
+| Campo | Valor                   |
+| ----- | ----------------------- |
+| ID    | `BPMN-GN-PROC-ADMIN-01` |
+| SLA   | 6 meses (máximo)        |
 
 ```mermaid
 flowchart TD
@@ -388,11 +404,11 @@ flowchart TD
 
 ### P4: Auditorías CGR
 
-| Campo     | Valor                   |
-| --------- | ----------------------- |
-| **ID**    | `BPMN-GN-AUDITORIAS-01` |
-| **Fases** | 5                       |
-| **SLA**   | Variable según alcance  |
+| Campo | Valor                   |
+| ----- | ----------------------- |
+| ID    | `BPMN-GN-AUDITORIAS-01` |
+| Fases | 5                       |
+| SLA   | Variable según alcance  |
 
 ```mermaid
 flowchart TD
@@ -433,54 +449,22 @@ flowchart TD
 
 ### Expediente Electrónico (Ley 21.180)
 
-```mermaid
-flowchart LR
-    A["📄 Borrador<br/>resolución"] --> B["📎 Antecedentes<br/>de respaldo"]
-    B --> C["📝 Visaciones<br/>electrónicas"]
-    C --> D["✍️ Firma FEA<br/>Gobernador/a"]
-    D --> E["📬 Notificación<br/>electrónica"]
+```text
+📄 Borrador<br/>resolución → 📎 Antecedentes<br/>de respaldo → 📝 Visaciones<br/>electrónicas → ✍️ Firma FEA<br/>Gobernador/a → 📬 Notificación<br/>electrónica
 ```
 
 #### Principios TDE
 
-| Principio                   | Aplicación                           |
-| --------------------------- | ------------------------------------ |
-| **Equivalencia funcional**  | Documento digital = papel            |
-| **Neutralidad tecnológica** | Sin dependencia de proveedor         |
-| **Interoperabilidad**       | Comunicación entre sistemas          |
-| **Seguridad**               | Integridad, autenticidad, no repudio |
-
----
-
-### Flujo de Auditorías CGR
-
-```
-NOTIFICACIÓN ──▶ PLANIFICACIÓN ──▶ EJECUCIÓN ──▶ PREINFORME ──▶ INFORME FINAL
-     │                │                │              │              │
-     ▼                ▼                ▼              ▼              ▼
- • Oficio CGR     • Designación    • Entrevistas  • Observaciones • Publicación
- • Alcance          contraparte    • Revisión     • Plazo resp.   • Seguimiento
- • Plazo          • Recopilación     documental   • Descargos     • Plan mejora
-```
+| Principio               | Aplicación                           |
+| ----------------------- | ------------------------------------ |
+| Equivalencia funcional  | Documento digital = papel            |
+| Neutralidad tecnológica | Sin dependencia de proveedor         |
+| Interoperabilidad       | Comunicación entre sistemas          |
+| Seguridad               | Integridad, autenticidad, no repudio |
 
 ---
 
 ## 📝 User Stories por Módulo
-
-### Resumen
-
-| Módulo        | US Críticas | US Altas | US Medias | Total  |
-| ------------- | ----------- | -------- | --------- | ------ |
-| Actos         | 6           | 5        | 1         | 12     |
-| Expediente    | 2           | 2        | 0         | 4      |
-| Transparencia | 1           | 2        | 0         | 3      |
-| Lobby         | 1           | 1        | 0         | 2      |
-| Probidad      | 1           | 0        | 0         | 1      |
-| Control       | 1           | 3        | 1         | 5      |
-| CGR           | 2           | 1        | 0         | 3      |
-| Admin         | 1           | 7        | 0         | 8      |
-| CPLT          | 0           | 1        | 0         | 1      |
-| **Total**     | **28**      | **18**   | **6**     | **52** |
 
 ### Catálogo por Proceso
 
@@ -634,33 +618,65 @@ NOTIFICACIÓN ──▶ PLANIFICACIÓN ──▶ EJECUCIÓN ──▶ PREINFORME
 
 ## Normativa Aplicable
 
-| Norma                      | Alcance                      |
-| -------------------------- | ---------------------------- |
-| **Ley 19.880 LBPA**        | Procedimiento administrativo |
-| **Ley 21.180 TDE**         | Expediente electrónico       |
-| **Ley 19.799**             | Firma electrónica            |
-| **Ley 20.285**             | Transparencia                |
-| **Ley 20.880**             | Probidad                     |
-| **Ley 20.730**             | Lobby                        |
-| **Resolución 30/2015 CGR** | Rendiciones                  |
-| **Ley 19.886**             | Contratación pública         |
+| Norma                  | Alcance                      |
+| ---------------------- | ---------------------------- |
+| Ley 19.880 LBPA        | Procedimiento administrativo |
+| Ley 21.180 TDE         | Expediente electrónico       |
+| Ley 19.799             | Firma electrónica            |
+| Ley 20.285             | Transparencia                |
+| Ley 20.880             | Probidad                     |
+| Ley 20.730             | Lobby                        |
+| Resolución 30/2015 CGR | Rendiciones                  |
+| Ley 19.886             | Contratación pública         |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio     | Relación                                                           |
-| ----------- | ------------------------------------------------------------------ |
-| **D-PLAN**  | Reglamentos regionales vinculados con ERD                          |
-| **D-FIN**   | Convenios → Rendiciones                                            |
-| **D-EJEC**  | Convenio (SSOT) → Ejecución operativa                              |
-| **D-COORD** | Actores como partes en convenios                                   |
-| **D-BACK**  | Gestión documental, expediente electrónico                         |
-| **D-TDE**   | Expediente electrónico, interoperabilidad                          |
-| **D-SEG**   | Convenios de Seguridad Municipal, Solicitud_Evidencia → Expediente |
-| **FÉNIX**   | Actos vencidos o con observaciones CGR activan intervención        |
+| Dominio   | Relación                                                           |
+| --------- | ------------------------------------------------------------------ |
+| D-PLAN    | Reglamentos regionales vinculados con ERD                          |
+| D-FIN     | Convenios → Rendiciones                                            |
+| D-EJEC    | Convenio (SSOT) → Ejecución operativa                              |
+| D-COORD   | Actores como partes en convenios                                   |
+| D-BACK    | Gestión documental, expediente electrónico                         |
+| D-TDE     | Expediente electrónico, interoperabilidad, Admin Sistema (migrado) |
+| D-SEG     | Convenios de Seguridad Municipal, Solicitud_Evidencia → Expediente |
+| D-GOB     | Reglamentos CORE, Sesiones formales, Acuerdos                      |
+| D-GESTION | Plan de Integridad Institucional, OKRs de cumplimiento             |
+| D-EVOL    | Agentes de cumplimiento automatizado, alertas predictivas          |
+| FÉNIX     | Actos vencidos o con observaciones CGR activan intervención        |
+
+---
+
+## Roles por Módulo
+
+| Rol                | Responsabilidad Principal                  | US Asociadas                              |
+| ------------------ | ------------------------------------------ | ----------------------------------------- |
+| Abogado UJ         | Visación legal, tramitación CGR, litigios  | ACTO-001 a 008, PROC-003/006, AUD-003     |
+| Enc. Transparencia | SAI/OIRS, Lobby, DIP, Transparencia Activa | TRANS-001/002/003, LOBBY-001/002, DIP-001 |
+| Centro Gestión     | Numeración, fechamiento, distribución      | ACTO-009, ACTO-010, ACTO-011              |
+| Unidad Control     | Auditoría interna, conflictos de interés   | CTRL-001 a 005, AUD-001 a 006             |
+| Ministro de Fe     | Certificación de copias fieles             | ACTO-012                                  |
+| Fiscal Sumariante  | Expedientes disciplinarios                 | CTRL-005                                  |
+| CGR (Externo)      | Toma de razón, fiscalización               | CGR-001, CGR-002, CGR-003                 |
+| CPLT (Externo)     | Tutela acceso a información                | CPLT-001                                  |
+
+---
+
+## Indicadores D-NORM
+
+| KPI                         | Definición                                     | Meta   |
+| --------------------------- | ---------------------------------------------- | ------ |
+| % Actos tramitados en plazo | Actos firmados ≤ SLA / Total actos             | ≥ 95%  |
+| Tasa de representación CGR  | Actos representados / Total enviados a TDR     | ≤ 5%   |
+| Tiempo promedio TDR         | Días desde envío hasta pronunciamiento CGR     | ≤ 25 d |
+| % SAI respondidas en plazo  | SAI respondidas ≤ 20 días / Total SAI          | 100%   |
+| Índice de cumplimiento DIP  | Funcionarios con DIP vigente / Total obligados | 100%   |
+| Auditorías sin hallazgos    | Auditorías CGR sin observaciones / Total       | ≥ 80%  |
 
 ---
 
 *Documento parte de GORE_OS Blueprint Integral v5.0*  
-*Última actualización: 2025-12-16*
+*Última actualización: 2025-12-16*  
+*Auditoría aplicada: Fase 1-3 completadas (migración Admin, glosario, roles, indicadores)*

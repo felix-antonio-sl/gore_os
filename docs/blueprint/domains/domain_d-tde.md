@@ -1,35 +1,34 @@
 # D-TDE: Dominio de Gobernanza Digital
 
-> **Procesos BPMN:** 5 | **Subprocesos:** 20 | **User Stories:** ~54
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Habilitante (Dimensión Tecnológica)  
-> **Función GORE:** GESTIONAR (Soporte Digital)  
-> **División:** DAF (Departamento Informática) / Unidad de Transformación Digital
+> Parte de: [GORE_OS Vision General](../vision_general.md)
+> Capa: Habilitante (Dimensión Tecnológica)  
+> Función GORE: GESTIONAR (Soporte Digital)  
+> División: DAF (Departamento Informática) / Unidad de Transformación Digital
 
 ---
 
 ## Glosario D-TDE
 
-| Término                               | Sigla | Definición                                                                             |
-| ------------------------------------- | ----- | -------------------------------------------------------------------------------------- |
-| **Transformación Digital del Estado** | TDE   | Proceso de cambio cultural y tecnológico para mejorar servicios públicos (Ley 21.180). |
-| **Plataforma Integ. Serv. Estado**    | PISEE | Bus de interoperabilidad del Estado para intercambio de datos entre instituciones.     |
-| **Coord. Transformación Digital**     | CTD   | Rol encargado de liderar la implementación de la Ley TDE en la institución.            |
-| **Oficial Seguridad Información**     | CISO  | Responsable de la gestión de riesgos de seguridad de la información.                   |
-| **Delegado Protección Datos**         | DPO   | Rol responsable de garantizar el cumplimiento de la Ley de Protección de Datos.        |
-| **Equipo Resp. Incidentes**           | CSIRT | Centro de Respuesta ante Incidentes de Seguridad Informática del Gobierno.             |
-| **Catálogo Procedimientos**           | CPAT  | Inventario oficial de trámites y procedimientos administrativos de la institución.     |
-| **Identidad Única Estado**            | IUIe  | Código único que identifica un expediente electrónico en el Estado.                    |
-| **Derechos ARCO**                     | ARCO  | Derechos de Acceso, Rectificación, Cancelación y Oposición sobre datos personales.     |
-| **Esquema Nac. Seguridad Inf.**       | ENSI  | Conjunto de normas y estándares de seguridad (DS 7) basados en ISO 27001/NIST.         |
+| Término                           | Sigla | Definición                                                                             |
+| --------------------------------- | ----- | -------------------------------------------------------------------------------------- |
+| Transformación Digital del Estado | TDE   | Proceso de cambio cultural y tecnológico para mejorar servicios públicos (Ley 21.180). |
+| Plataforma Integ. Serv. Estado    | PISEE | Bus de interoperabilidad del Estado para intercambio de datos entre instituciones.     |
+| Coord. Transformación Digital     | CTD   | Rol encargado de lider### Notas de Implementación de la Ley TDE en la institución.     |
+| Oficial Seguridad Información     | CISO  | Responsable de la gestión de riesgos de seguridad de la información.                   |
+| Delegado Protección Datos         | DPO   | Rol responsable de garantizar el cumplimiento de la Ley de Protección de Datos.        |
+| Equipo Resp. Incidentes           | CSIRT | Centro de Respuesta ante Incidentes de Seguridad Informática del Gobierno.             |
+| Catálogo Procedimientos           | CPAT  | Inventario oficial de trámites y procedimientos administrativos de la institución.     |
+| Identidad Única Estado            | IUIe  | Código único que identifica un expediente electrónico en el Estado.                    |
+| Derechos ARCO                     | ARCO  | Derechos de Acceso, Rectificación, Cancelación y Oposición sobre datos personales.     |
+| Esquema Nac. Seguridad Inf.       | ENSI  | Conjunto de normas y estándares de seguridad (DS 7) basados en ISO 27001/NIST.         |
 
 ---
 
 ## Propósito
 
-Gestionar la gobernanza digital y el cumplimiento normativo (Ley TDE, Ciberseguridad) del GORE, y **liderar la articulación del ecosistema digital regional**, facilitando capacidades tecnológicas y estándares comunes para municipios y servicios públicos de la región, posicionando al GORE como motor de modernización territorial.
+Gestionar la gobernanza digital y el cumplimiento normativo (Ley TDE, Ciberseguridad) del GORE, y liderar la articulación del ecosistema digital regional, facilitando capacidades tecnológicas y estándares comunes para municipios y servicios públicos de la región, posicionando al GORE como motor de modernización territorial.
 
-**Fundamento Legal:** Ley 21.180 (TDE), Ley 21.663 (Ciberseguridad), Ley 21.719 (Datos Personales), Decreto Supremo 4/2020 (Reglamento TDE).
+Fundamento Legal: Ley 21.180 (TDE), Ley 21.663 (Ciberseguridad), Ley 21.719 (Datos Personales), Decreto Supremo 4/2020 (Reglamento TDE).
 
 ---
 
@@ -77,12 +76,12 @@ flowchart TB
 
 ### M1: Cumplimiento TDE
 
-| Atributo        | Descripción                                                                    |
-| --------------- | ------------------------------------------------------------------------------ |
-| **Propósito**   | Gestionar el ciclo de vida de digitalización de trámites y calidad de servicio |
-| **Componentes** | CPAT, Medición de Satisfacción, Plan de Mejora Continua                        |
+| Atributo    | Descripción                                                                    |
+| ----------- | ------------------------------------------------------------------------------ |
+| Propósito   | Gestionar el ciclo de vida de digitalización de trámites y calidad de servicio |
+| Componentes | CPAT, Medición de Satisfacción, Plan de Mejora Continua                        |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Gestión del Catálogo de Procedimientos (CPAT) nivel 0-5
 - Dashboard de cumplimiento decretos DS 7-12
@@ -90,12 +89,12 @@ flowchart TB
 
 ### M2: Servicios Digitales Habilitantes
 
-| Atributo        | Descripción                                                             |
-| --------------- | ----------------------------------------------------------------------- |
-| **Propósito**   | Proveer capacidades transversales de identidad y gestión administrativa |
-| **Componentes** | Broker ClaveÚnica, Integrador DocDigital, Motor Notificaciones          |
+| Atributo    | Descripción                                                             |
+| ----------- | ----------------------------------------------------------------------- |
+| Propósito   | Proveer capacidades transversales de identidad y gestión administrativa |
+| Componentes | Broker ClaveÚnica, Integrador DocDigital, Motor Notificaciones          |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Autenticación centralizada (SSO) con ClaveÚnica (OIDC)
 - Firma electrónica avanzada y simple (FirmaGob)
@@ -103,12 +102,12 @@ flowchart TB
 
 ### M3: Interoperabilidad Regional
 
-| Atributo        | Descripción                                                 |
-| --------------- | ----------------------------------------------------------- |
-| **Propósito**   | Facilitar el intercambio de datos con el ecosistema público |
-| **Componentes** | Nodo PISEE, Gestor de Convenios, API Gateway                |
+| Atributo    | Descripción                                                 |
+| ----------- | ----------------------------------------------------------- |
+| Propósito   | Facilitar el intercambio de datos con el ecosistema público |
+| Componentes | Nodo PISEE, Gestor de Convenios, API Gateway                |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Consumo y publicación de servicios web SOAP/REST
 - Gestión de acuerdos de intercambio de información
@@ -116,12 +115,12 @@ flowchart TB
 
 ### M4: Ciberseguridad & Protección de Datos
 
-| Atributo        | Descripción                                                                 |
-| --------------- | --------------------------------------------------------------------------- |
-| **Propósito**   | Proteger la confidencialidad, integridad y disponibilidad de la información |
-| **Componentes** | ISMS, Gestión Incidentes, Privacy Hub                                       |
+| Atributo    | Descripción                                                                 |
+| ----------- | --------------------------------------------------------------------------- |
+| Propósito   | Proteger la confidencialidad, integridad y disponibilidad de la información |
+| Componentes | ISMS, Gestión Incidentes, Privacy Hub                                       |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Gestión de activos de información y análisis de riesgos
 - Reporte automático de incidentes a CSIRT
@@ -131,12 +130,13 @@ flowchart TB
 
 ### M5: Liderazgo Digital Regional (Gobernanza Expandida)
 
-| Atributo        | Descripción                                                                         |
-| --------------- | ----------------------------------------------------------------------------------- |
-| **Propósito**   | Liderar y articular el ecosistema digital regional (Municipios, Servicios Públicos) |
-| **Componentes** | Mesa Regional TDE, Kit Digital Municipal, CSIRT Regional (Coordinación)             |
+| Atributo    | Descripción                                                                         |
+| ----------- | ----------------------------------------------------------------------------------- |
+| Propósito   | Liderar y articular el ecosistema digital regional (Municipios, Servicios Públicos) |
+| Componentes | Mesa Regional TDE, Kit Digital Municipal, CSIRT Regional (Coordinación)             |
 
-**Funcionalidades:**
+Funcionalidades:
+
 - Transferencia de capacidades y estándares TDE a municipios (especialmente zonas rezagadas)
 - Coordinación de Mesa Regional de Transformación Digital
 - Articulación de respuestas ante ciberataques a nivel regional (Red de CISO regionales)
@@ -144,12 +144,13 @@ flowchart TB
 
 ### M6: Vinculación Territorial Digital
 
-| Atributo         | Descripción                                                                    |
-| ---------------- | ------------------------------------------------------------------------------ |
-| **Propósito**    | Proveer soluciones tecnológicas compartidas a los municipios (Economía Escala) |
-| **Beneficiario** | Municipios y Servicios Públicos Locales                                        |
+| Atributo     | Descripción                                                                    |
+| ------------ | ------------------------------------------------------------------------------ |
+| Propósito    | Proveer soluciones tecnológicas compartidas a los municipios (Economía Escala) |
+| Beneficiario | Municipios y Servicios Públicos Locales                                        |
 
-**Funcionalidades:**
+Funcionalidades:
+
 - Gestión centralizada de Firmas Electrónicas Municipales (Convenio Marco)
 - API Gateway Regional para interoperabilidad municipal (DIDECO, DOM, Tránsito)
 - Soporte de infraestructura crítica y conectividad (Zonas Rezagadas)
@@ -199,8 +200,8 @@ flowchart TB
     P1_4 -.- N4["Reporte anual SGD<br/>Compromisos"]
 ```
 
-**Actores:** CTD, Comité TDE, Unidades de Negocio  
-**Frecuencia:** Semestral (Reporte SGD) / Por proyecto
+Actores: CTD, Comité TDE, Unidades de Negocio  
+Frecuencia: Semestral (Reporte SGD) / Por proyecto
 
 ---
 
@@ -223,8 +224,8 @@ flowchart TB
     P2_4 -.- N4["Switch Prod<br/>Monitoreo"]
 ```
 
-**Actores:** Desarrolladores, Administrador TI, CTD  
-**Frecuencia:** A demanda (nuevos sistemas)
+Actores: Desarrolladores, Administrador TI, CTD  
+Frecuencia: A demanda (nuevos sistemas)
 
 ---
 
@@ -250,8 +251,8 @@ flowchart TB
     P3_5 -.- N4["Solicitudes ARCO<br/>Registro Tratamiento"]
 ```
 
-**Actores:** CISO, DPO, NOC/SOC, CSIRT Nacional  
-**Frecuencia:** Continua (Monitoreo) / Incidentes
+Actores: CISO, DPO, NOC/SOC, CSIRT Nacional  
+Frecuencia: Continua (Monitoreo) / Incidentes
 
 ---
 
@@ -274,8 +275,8 @@ flowchart TB
     P4_4 -.- N4["Log transaccional<br/>SLA disponibilidad"]
 ```
 
-**Actores:** CTD, Contraparte (Institución), Jurídica  
-**Frecuencia:** A demanda
+Actores: CTD, Contraparte (Institución), Jurídica  
+Frecuencia: A demanda
 
 ---
 
@@ -298,26 +299,12 @@ flowchart TB
     P5_4 -.- N4["Índice TDE Regional<br/>Reporte avance"]
 ```
 
-**Actores:** Gobernador, CTD GORE, Alcaldes, Jefes Servicios  
-**Frecuencia:** Trimestral (Mesa) / Continua (Apoyo)
+Actores: Gobernador, CTD GORE, Alcaldes, Jefes Servicios  
+Frecuencia: Trimestral (Mesa) / Continua (Apoyo)
 
 ---
 
 ## Catálogo por Proceso
-
-### Resumen de User Stories
-
-| Proceso                      | Módulo                  | US Total |
-| ---------------------------- | ----------------------- | -------- |
-| P1: Gestión Cumplimiento TDE | M1: Cumplimiento        | 6        |
-| P2: Habilitación Servicios   | M2: Servicios Digitales | 14       |
-| P3: Ciberseguridad & Datos   | M4: Ciberseguridad      | 20       |
-| P4: Interoperabilidad        | M3: Interoperabilidad   | 6        |
-| P5: Liderazgo Regional       | M5: Liderazgo Digital   | 5        |
-| P5: Liderazgo Regional       | M6: Vinculación Digital | 3        |
-| **Total**                    |                         | **~54**  |
-
-*(Nota: US de Activos TI distribuidas en P1 y P3)*
 
 ### Selección de US Clave
 
@@ -369,36 +356,36 @@ flowchart TB
 
 ## Sistemas Involucrados
 
-| Sistema                | Rol                                              | Dominio |
-| ---------------------- | ------------------------------------------------ | ------- |
-| **GORE OS**            | Plataforma central de gestión                    | D-TDE   |
-| **Plataformas Estado** | ClaveÚnica, DocDigital, FirmaGob, Notificaciones | Externo |
-| **PISEE**              | Bus de interoperabilidad                         | Externo |
-| **CSIRT**              | Plataforma de reporte de incidentes              | Externo |
+| Sistema            | Rol                                              | Dominio |
+| ------------------ | ------------------------------------------------ | ------- |
+| GORE OS            | Plataforma central de gestión                    | D-TDE   |
+| Plataformas Estado | ClaveÚnica, DocDigital, FirmaGob, Notificaciones | Externo |
+| PISEE              | Bus de interoperabilidad                         | Externo |
+| CSIRT              | Plataforma de reporte de incidentes              | Externo |
 
 ---
 
 ## Normativa Aplicable
 
-| Norma          | Descripción                       |
-| -------------- | --------------------------------- |
-| **Ley 21.180** | Transformación Digital del Estado |
-| **Ley 21.663** | Ley Marco de Ciberseguridad       |
-| **Ley 21.719** | Protección de Datos Personales    |
-| **DS 83/2020** | Norma Técnica de Ciberseguridad   |
+| Norma      | Descripción                       |
+| ---------- | --------------------------------- |
+| Ley 21.180 | Transformación Digital del Estado |
+| Ley 21.663 | Ley Marco de Ciberseguridad       |
+| Ley 21.719 | Protección de Datos Personales    |
+| DS 83/2020 | Norma Técnica de Ciberseguridad   |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio    | Relación                                               |
-| ---------- | ------------------------------------------------------ |
-| **D-NORM** | Expediente electrónico debe cumplir DS 10 del TDE      |
-| **FÉNIX**  | Fallas críticas de ciberseguridad activan intervención |
-| **D-BACK** | Integración de sistemas administrativos con ClaveÚnica |
-| **D-SEG**  | Infraestructura de red CIES gestionada bajo normas TDE |
-| **D-GOB**  | Liderazgo político del Gobernador en Mesa Regional TDE |
+| Dominio | Relación                                               |
+| ------- | ------------------------------------------------------ |
+| D-NORM  | Expediente electrónico debe cumplir DS 10 del TDE      |
+| FÉNIX   | Fallas críticas de ciberseguridad activan intervención |
+| D-BACK  | Integración de sistemas administrativos con ClaveÚnica |
+| D-SEG   | Infraestructura de red CIES gestionada bajo normas TDE |
+| D-GOB   | Liderazgo político del Gobernador en Mesa Regional TDE |
 
 ---
 
-*Documento parte de GORE_OS v5.0*
+Documento parte de GORE_OS v5.0

@@ -12,7 +12,7 @@
 
 El GORE de Ñuble opera hoy como un **sistema fragmentado**:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                           ESTADO ACTUAL: FRAGMENTACIÓN                               │
 ├─────────────────────────────────────────────────────────────────────────────────────┤
@@ -90,7 +90,7 @@ No es un sistema de información tradicional. Es una **plataforma unificada** qu
 
 El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimensiones:
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                   MODELO DE FUNCIONES GORE: MOTOR + SOPORTE                          │
 ├─────────────────────────────────────────────────────────────────────────────────────┤
@@ -103,13 +103,13 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 │           │                                                               │          │
 │           ▼                                                               ▼          │
 │   DIMENSIÓN TÁCTICA (El Motor de Desarrollo)                                         │
-│   ┌───────────────────┐     ┌───────────────────┐     ┌───────────────────┐          │
-│   │   2. FINANCIAR    │     │    3. EJECUTAR    │     │   4. COORDINAR    │          │
-│   │   (D-FIN)         │◀───▶│    (D-EJEC)       │◀───▶│   (D-COORD)       │          │
-│   │   IPR, Presupuesto│     │   Convenios, Obras│     │   Actores, Mesas  │          │
-│   └─────────┬─────────┘     └─────────┬─────────┘     └─────────┬─────────┘          │
-│             │                         │                         │                    │
-│   ══════════╪═════════════════════════╪═════════════════════════╪══════════════════  │
+│   ┌───────────────────┐     ┌───────────────────┐                                    │
+│   │   2. FINANCIAR    │     │    3. EJECUTAR    │                                    │
+│   │   (D-FIN)         │◀───▶│    (D-EJEC)       │                                    │
+│   │   IPR, Presupuesto│     │   Convenios, Obras│                                    │
+│   └─────────┬─────────┘     └─────────┬─────────┘                                    │
+│             │                         │                                              │
+│   ══════════╪═════════════════════════╪══════════════════════════════════════════════│
 │             ▼                         ▼                         ▼                    │
 │   DIMENSIÓN HABILITANTE (El Soporte Operativo)                                       │
 │   ┌───────────────────────────────────────────────────────────────────────────────┐  │
@@ -147,10 +147,10 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                  │
 │  NÚCLEOS TÁCTICOS (Motor de Desarrollo)                                          │
-│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐          │
-│  │ FINANCIAR     │ │ EJECUTAR      │ │ COORDINAR     │ │ PROTEGER      │          │
-│  │ (D-FIN)       │ │ (D-EJEC)      │ │ (D-COORD)     │ │ (D-SEG)       │          │
-│  └───────────────┘ └───────────────┘ └───────────────┘ └───────────────┘          │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐                             │
+│  │ FINANCIAR     │ │ EJECUTAR      │ │ PROTEGER      │                             │
+│  │ (D-FIN)       │ │ (D-EJEC)      │ │ (D-SEG)       │                             │
+│  └───────────────┘ └───────────────┘ └───────────────┘                             │
 │                                                                                  │
 ├───────────────────────────────────────────────────────────────────────────────┤
 │                                                                                  │
@@ -170,22 +170,20 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 
 ### 6. Mapa de Dominios (Blueprint v5.0)
 
-| #   | Dominio                    | Código    | Capa        | Función     | BPMN   | US      | Estado       |
-| --- | -------------------------- | --------- | ----------- | ----------- | ------ | ------- | ------------ |
-| 1   | Gestión Financiera         | D-FIN     | Núcleo      | FINANCIAR   | 18     | 181     | ✅ 100%       |
-| 2   | Gestión Normativa          | D-NORM    | Habilitante | NORMAR      | 4      | 52      | ✅ 100%       |
-| 3   | Gestión Administrativa     | D-BACK    | Habilitante | ADMINISTRAR | 14     | 52      | ✅ 100%       |
-| 4   | Planificación Estratégica  | D-PLAN    | Habilitante | PLANIFICAR  | 6      | 27      | ✅ 100%       |
-| 5   | Ejecución y Seguimiento    | D-EJEC    | Núcleo      | EJECUTAR    | 4      | 43      | ✅ 100%       |
-| 6   | Coordinación y OIRS        | D-COORD   | Núcleo      | COORDINAR   | 4      | 14      | ✅ 100%       |
-| 7   | Seguridad Pública Regional | D-SEG     | Núcleo      | PROTEGER    | 4      | 24      | ✅ 100%       |
-| 8   | Inteligencia Territorial   | D-TERR    | Habilitante | -           | 4      | 24      | ✅ 100%       |
-| 9   | Gobernanza Digital         | D-TDE     | Habilitante | -           | 5      | 56      | ✅ 100%       |
-| 10  | Gobernanza Regional        | D-GOB     | Estratégica | GOBERNAR    | 4      | 49      | ✅ 100%       |
-| 11  | Gestión Institucional      | D-GESTION | Transversal | GESTIONAR   | 3      | 20      | ✅ 100%       |
-| 12  | Evolución e Inteligencia   | D-EVOL    | Estratégica | EVOLUCIONAR | 4      | 32      | ✅ 100%       |
-| 13  | Sistema FÉNIX              | FENIX     | Transversal | INTERVENIR  | 2      | 12      | ✅ 100%       |
-| -   | **TOTAL BLUEPRINT INT.**   | -         | -           | -           | **76** | **586** | **COMPLETO** |
+| #   | Dominio                    | Código    | Capa        | Función     | Estado |
+| --- | -------------------------- | --------- | ----------- | ----------- | ------ |
+| 1   | Gestión Financiera         | D-FIN     | Núcleo      | FINANCIAR   | ✅ 100% |
+| 2   | Gestión Jurídico-Adm.      | D-NORM    | Habilitante | NORMAR      | ✅ 100% |
+| 3   | Gestión de Recursos Inst.  | D-BACK    | Habilitante | ADMINISTRAR | ✅ 100% |
+| 4   | Planificación Estratégica  | D-PLAN    | Habilitante | PLANIFICAR  | ✅ 100% |
+| 5   | Ejecución y Seguimiento    | D-EJEC    | Núcleo      | EJECUTAR    | ✅ 100% |
+| 6   | Seguridad Pública Regional | D-SEG     | Núcleo      | PROTEGER    | ✅ 100% |
+| 7   | Inteligencia Territorial   | D-TERR    | Habilitante | -           | ✅ 100% |
+| 8   | Gobernanza Digital         | D-TDE     | Habilitante | -           | ✅ 100% |
+| 9   | Gobernanza Regional        | D-GOB     | Estratégica | GOBERNAR    | ✅ 100% |
+| 10  | Gestión Institucional      | D-GESTION | Operativa   | GESTIONAR   | ✅ 100% |
+| 11  | Evolución e Inteligencia   | D-EVOL    | Estratégica | EVOLUCIONAR | ✅ 100% |
+| 12  | Sistema FÉNIX              | FENIX     | Transversal | INTERVENIR  | ✅ 100% |
 
 ### 7. Resumen de Módulos por Dominio
 
@@ -194,9 +192,9 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 | **D-PLAN**         | ERD Digital, PROT Digital, ARI/PROPIR Digital, Inteligencia Territorial                                                                                                       |
 | **D-FIN**          | Captación Oportunidades, Capital Base, Portafolio IPR, Selector Mecanismos, Presupuesto, Rendiciones, Gestión Ejecutores, Evaluación Continua, IPR Problemáticas, Retorno IDR |
 | **D-EJEC**         | Convenios, PMO Regional                                                                                                                                                       |
-| **D-COORD**        | Directorio Actores, Ejecutores (ref), Proveedores, Participación Ciudadana, Gabinete Regional                                                                                 |
+| **D-GOB**          | Gobernanza Política, Gabinete, Descentralización, **Gestión Relacional (Actores)**, Participación Ciudadana                                                                   |
 | **D-NORM**         | Actos Administrativos, Procedimientos, Expediente Electrónico, Cumplimiento/Control, Convenios (SSOT), Reglamentos, Biblioteca Normativa                                      |
-| **D-BACK**         | Gestión Financiera/Tesorería, RRHH, Abastecimiento/Patrimonio, Inventarios, Activo Fijo, Flota                                                                                |
+| **D-BACK**         | RRHH/Personas, Abastecimiento, Inventarios, Activo Fijo, Flota, Bienestar, Tesorería                                                                                          |
 | **D-TDE**          | CPAT Institucional, Interoperabilidad, Ciberseguridad, Gobernanza Regional TDE                                                                                                |
 | **D-TERR**         | IDE Regional, Observatorio Regional, Visor Geoespacial                                                                                                                        |
 | **D-GESTION**      | OKRs Institucionales, H_gore, Playbooks Operativos, Mejora Continua                                                                                                           |
@@ -269,12 +267,12 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 │  D-FIN ◀──────────────────────────────────────────────────────────────────────▶ │
 │    │  IPR, Presupuesto, Rendiciones, Rating Ejecutores                          │
 │    │  ◀───── D-EJEC (Convenios operativos)                                      │
-│    │  ◀───── D-COORD (Actor como ejecutor)                                      │
+│    │  ◀───── D-GOB (Actor como ejecutor)                                        │
 │    │  ◀───── D-SEG (Proyectos Seguridad heredan IPR con reglas especiales)      │
 │    ▼                                                                             │
 │  D-SEG ◀─────────────────────────────────────────────────────────────────────▶  │
 │    │  Seguridad Pública Regional (División Prevención del Delito + CIES)        │
-│    │  ───▶ D-COORD (Consejo Regional Seguridad, Municipios)                     │
+│    │  ───▶ D-GOB (Consejo Regional Seguridad, Municipios)                       │
 │    │  ───▶ D-NORM (Convenios Seguridad, Cadena Custodia → Expediente)           │
 │    │  ───▶ D-TDE (Infraestructura CIES, Ciberseguridad, Interop. SITIA)         │
 │    │  ───▶ D-TERR (Georreferenciación incidentes, Mapas calor delictual)        │
@@ -286,7 +284,7 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 │    ▼                                                                             │
 │  D-BACK ─────────────────────────────────────────────────────────────────────▶  │
 │    │  Recursos institucionales (personas, finanzas, bienes)                     │
-│    │  ◀───── D-COORD (Proveedor)                                                │
+│    │  ◀───── D-GOB (Proveedor)                                                  │
 │    │  ◀───── D-SEG (Personal CIES, Equipamiento, Mantenimiento)                 │
 │    ▼                                                                             │
 │  D-TERR ─────────────────────────────────────────────────────────────────────▶  │
@@ -328,9 +326,7 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 
 ---
 
-## Anexo: Estructura de Archivos
-
-```
+```text
 docs/01_domain/
 ├── vision_general.md          ← Este documento (principal)
 ├── vision_general_legacy.md   ← Versión anterior completa (backup)
@@ -338,7 +334,6 @@ docs/01_domain/
     ├── domain_d-plan.md       ← D-PLAN detallado
     ├── domain_d-fin.md        ← D-FIN detallado
     ├── domain_d-ejec.md       ← D-EJEC detallado
-    ├── domain_d-coord.md      ← D-COORD detallado
     ├── domain_d-norm.md       ← D-NORM detallado
     ├── domain_d-back.md       ← D-BACK detallado
     ├── domain_d-tde.md        ← D-TDE detallado

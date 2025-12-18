@@ -1,26 +1,25 @@
 # D-SEG: Dominio de Seguridad Pública Regional
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Núcleo (Dimensión Táctica)  
-> **Función GORE:** COORDINAR  
-> **Procesos BPMN:** 4 | **Subprocesos:** ~12 | **User Stories:** 24
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Núcleo (Dimensión Táctica)  
+> Función GORE: COORDINAR  
 
 ---
 
 ## Glosario D-SEG
 
-| Término   | Definición                                                                                        |
-| :-------- | :------------------------------------------------------------------------------------------------ |
-| **CIES**  | Centro Integrado de Emergencias y Seguridad. Hub regional de monitoreo y coordinación 24/7.       |
-| **SITIA** | Sistema Integrado de Televigilancia con Inteligencia Artificial. Plataforma tecnológica nacional. |
-| **SPD**   | Subsecretaría de Prevención del Delito. Ente rector técnico y financiero.                         |
-| **PTZ**   | Pan-Tilt-Zoom. Cámaras robóticas controlables remotamente.                                        |
-| **LPR**   | License Plate Recognition. Lectura automática de patentes vehiculares.                            |
-| **VMS**   | Video Management System. Software de gestión de video (HikCentral).                               |
-| **IPR**   | Inversión Pública Regional. Cartera de proyectos de inversión.                                    |
-| **COSOC** | Consejo de la Sociedad Civil. Instancia de participación ciudadana.                               |
-| **STOP**  | Sistema Táctico de Operación Policial. Fuente de datos de delitos.                                |
-| **ENUSC** | Encuesta Nacional Urbana de Seguridad Ciudadana. Fuente de percepción.                            |
+| Término | Definición                                                                                        |
+| :------ | :------------------------------------------------------------------------------------------------ |
+| CIES    | Centro Integrado de Emergencias y Seguridad. Hub regional de monitoreo y coordinación 24/7.       |
+| SITIA   | Sistema Integrado de Televigilancia con Inteligencia Artificial. Plataforma tecnológica nacional. |
+| SPD     | Subsecretaría de Prevención del Delito. Ente rector técnico y financiero.                         |
+| PTZ     | Pan-Tilt-Zoom. Cámaras robóticas controlables remotamente.                                        |
+| LPR     | License Plate Recognition. Lectura automática de patentes vehiculares.                            |
+| VMS     | Video Management System. Software de gestión de video (HikCentral).                               |
+| IPR     | Inversión Pública Regional. Cartera de proyectos de inversión.                                    |
+| COSOC   | Consejo de la Sociedad Civil. Instancia de participación ciudadana.                               |
+| STOP    | Sistema Táctico de Operación Policial. Fuente de datos de delitos.                                |
+| ENUSC   | Encuesta Nacional Urbana de Seguridad Ciudadana. Fuente de percepción.                            |
 
 ---
 
@@ -28,17 +27,17 @@
 
 Gestionar las capacidades regionales de seguridad pública, integrando el Centro Integrado de Emergencias y Seguridad (CIES) con la inteligencia delictual, la prevención del delito y la coordinación interinstitucional.
 
-> **Visión:** La región cuenta con un ecosistema de seguridad pública integrado que combina monitoreo tecnológico, coordinación multi-agencia y prevención basada en datos para reducir la victimización y aumentar la percepción de seguridad.
+> Visión: La región cuenta con un ecosistema de seguridad pública integrado que combina monitoreo tecnológico, coordinación multi-agencia y prevención basada en datos para reducir la victimización y aumentar la percepción de seguridad.
 
 ---
 
 ## Tres Pilares del Dominio
 
-| Pilar          | Componentes                                            |
-| -------------- | ------------------------------------------------------ |
-| **Prevención** | Proyectos de iluminación, cámaras, intervención social |
-| **Monitoreo**  | CIES, videovigilancia, SITIA                           |
-| **Respuesta**  | Coordinación multi-agencia, evidencias                 |
+| Pilar      | Componentes                                            |
+| ---------- | ------------------------------------------------------ |
+| Prevención | Proyectos de iluminación, cámaras, intervención social |
+| Monitoreo  | CIES, videovigilancia, SITIA                           |
+| Respuesta  | Coordinación multi-agencia, evidencias                 |
 
 ---
 
@@ -46,7 +45,7 @@ Gestionar las capacidades regionales de seguridad pública, integrando el Centro
 
 ### 1. CIES Ñuble
 
-**Contexto Operativo:**
+Contexto Operativo:
 
 | Aspecto      | Detalle                                 |
 | ------------ | --------------------------------------- |
@@ -57,16 +56,18 @@ Gestionar las capacidades regionales de seguridad pública, integrando el Centro
 
 ### 2. Prevención y Apoyo a Víctimas
 
-**Funciones División Prevención del Delito:**
-- **Diseño de Políticas:** Planes regionales de seguridad basados en evidencia (STOP/ENUSC).
-- **Asesoría Municipal:** Asistencia técnica para planes comunales de seguridad.
-- **Apoyo a Víctimas:** Gestión de programas de asistencia y reparación.
-- **Inversión Preventiva:** Iluminación, televigilancia, recuperación de espacios.
+Funciones División Prevención del Delito:
+- Diseño de Políticas: Planes regionales de seguridad basados en evidencia (STOP/ENUSC).
 
+- Asesoría Municipal: Asistencia técnica para planes comunales de seguridad.
+
+- Apoyo a Víctimas: Gestión de programas de asistencia y reparación.
+
+- Inversión Preventiva: Iluminación, televigilancia, recuperación de espacios.
 
 ### 3. Evidencias Digitales
 
-**Cadena de Custodia:**
+Cadena de Custodia:
 
 | Elemento        | Verificación      |
 | --------------- | ----------------- |
@@ -77,7 +78,7 @@ Gestionar las capacidades regionales de seguridad pública, integrando el Centro
 
 ### 4. Gobernanza y Transparencia
 
-**Alcance:**
+Alcance:
 - Coordinación del Consejo Regional de Seguridad Pública.
 - Transparencia activa de inversiones a la ciudadanía (COSOC).
 - Relacionamiento institucional con SPD y Ministerio del Interior.
@@ -88,12 +89,11 @@ Gestionar las capacidades regionales de seguridad pública, integrando el Centro
 
 ### Mapa General (D09 CIES/SITIA)
 
-| Campo          | Valor                                  |
-| -------------- | -------------------------------------- |
-| **ID**         | `DOM-CIES`                             |
-| **Criticidad** | 🟠 Alta                                 |
-| **Dueño**      | Jefe Div. Prevención / Supervisor CIES |
-| **Procesos**   | 4                                      |
+| Campo      | Valor                                  |
+| ---------- | -------------------------------------- |
+| ID         | `DOM-CIES`                             |
+| Criticidad | 🟠 Alta                                 |
+| Dueño      | Jefe Div. Prevención / Supervisor CIES |
 
 ```mermaid
 flowchart LR
@@ -269,16 +269,6 @@ flowchart TD
 
 ## 📝 User Stories por Módulo
 
-### Resumen
-
-| Módulo     | US Críticas | US Altas | US Medias | Total  |
-| ---------- | ----------- | -------- | --------- | ------ |
-| Prevención | 4           | 4        | 1         | 9      |
-| CIES       | 5           | 4        | 0         | 9      |
-| Evidencia  | 3           | 0        | 0         | 3      |
-| Gobernanza | 0           | 1        | 2         | 3      |
-| **Total**  | **12**      | **9**    | **3**     | **24** |
-
 ### Catálogo por Proceso
 
 #### P1: Monitoreo
@@ -364,24 +354,24 @@ flowchart TD
 
 ## Normativa Aplicable
 
-| Norma            | Alcance                    |
-| ---------------- | -------------------------- |
-| **Ley 21.427**   | Sistema Nacional Seguridad |
-| **Ley 20.965**   | Cámaras vigilancia         |
-| **Ley 20.502**   | ONEMI/funcionamiento       |
-| **Ley 19.628**   | Protección vida privada    |
-| **Proyecto Ley** | Funciones Prevención GORE  |
+| Norma        | Alcance                    |
+| ------------ | -------------------------- |
+| Ley 21.427   | Sistema Nacional Seguridad |
+| Ley 20.965   | Cámaras vigilancia         |
+| Ley 20.502   | ONEMI/funcionamiento       |
+| Ley 19.628   | Protección vida privada    |
+| Proyecto Ley | Funciones Prevención GORE  |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio     | Relación                                      |
-| ----------- | --------------------------------------------- |
-| **D-FIN**   | Proyecto_Seguridad hereda de IPR              |
-| **D-NORM**  | Convenios con municipios, evidencias          |
-| **D-TERR**  | Georreferenciación cámaras e incidentes       |
-| **D-COORD** | Actores de respuesta (Carabineros, PDI, etc.) |
+| Dominio | Relación                                      |
+| ------- | --------------------------------------------- |
+| D-FIN   | Proyecto_Seguridad hereda de IPR              |
+| D-NORM  | Convenios con municipios, evidencias          |
+| D-TERR  | Georreferenciación cámaras e incidentes       |
+| D-COORD | Actores de respuesta (Carabineros, PDI, etc.) |
 
 ---
 

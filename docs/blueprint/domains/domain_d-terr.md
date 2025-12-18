@@ -1,9 +1,8 @@
 # D-TERR: Dominio de Inteligencia Territorial
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Núcleo (Dimensión Estratégica)  
-> **Función GORE:** PLANIFICAR  
-> **Procesos BPMN:** 4 | **Subprocesos:** ~12 | **User Stories:** 24
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Núcleo (Dimensión Estratégica)  
+> Función GORE: PLANIFICAR  
 
 ---
 
@@ -11,18 +10,18 @@
 
 Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inteligencia territorial para informar la planificación estratégica, la priorización de inversiones y el ordenamiento territorial de la región.
 
-> **Visión:** La toma de decisiones del GORE está informada por datos territoriales de alta calidad, georreferenciados e interoperables, que permiten visualizar brechas, monitorear avances y optimizar la asignación de recursos en el territorio.
+> Visión: La toma de decisiones del GORE está informada por datos territoriales de alta calidad, georreferenciados e interoperables, que permiten visualizar brechas, monitorear avances y optimizar la asignación de recursos en el territorio.
 
 ---
 
 ## Cuatro Pilares del Dominio
 
-| Pilar             | Componentes                                       |
-| ----------------- | ------------------------------------------------- |
-| **Planificación** | ERD, ARI/PROPIR, instrumentos regionales          |
-| **IDE**           | Geonodo, servicios OGC, metadatos                 |
-| **Analítica**     | Mapas temáticos, alertas duplicidad, benchmarking |
-| **Gestión**       | Catastro fiscal, calidad de datos, política geo   |
+| Pilar         | Componentes                                       |
+| ------------- | ------------------------------------------------- |
+| Planificación | ERD, ARI/PROPIR, instrumentos regionales          |
+| IDE           | Geonodo, servicios OGC, metadatos                 |
+| Analítica     | Mapas temáticos, alertas duplicidad, benchmarking |
+| Gestión       | Catastro fiscal, calidad de datos, política geo   |
 
 ---
 
@@ -30,7 +29,7 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 ### 1. Inteligencia Estratégica (Visualización)
 
-**Instrumentos:**
+Instrumentos:
 
 - ERD (Estrategia Regional de Desarrollo)
 - ARI (Anteproyecto Regional de Inversiones)
@@ -39,7 +38,7 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 ### 2. IDE Regional
 
-**Servicios OGC:**
+Servicios OGC:
 
 | Servicio | Función                |
 | -------- | ---------------------- |
@@ -50,7 +49,7 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 ### 3. Analítica Territorial
 
-**Capacidades:**
+Capacidades:
 
 - Mapas de calor de inversión
 - Brechas territoriales
@@ -59,7 +58,7 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 ### 4. Gestión y Gobernanza Territorial
 
-**Estándares:**
+Estándares:
 
 | Norma       | Aplicación          |
 | ----------- | ------------------- |
@@ -69,14 +68,16 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 ### 5. Asistencia Urbanística DOM
 
-| Atributo         | Descripción                                                         |
-| ---------------- | ------------------------------------------------------------------- |
-| **Propósito**    | Asesorar a los Municipios en la aplicación de normativa territorial |
-| **Beneficiario** | DOM y Asesores Urbanistas Municipales                               |
+| Atributo     | Descripción                                                         |
+| ------------ | ------------------------------------------------------------------- |
+| Propósito    | Asesorar a los Municipios en la aplicación de normativa territorial |
+| Beneficiario | DOM y Asesores Urbanistas Municipales                               |
 
-**Funcionalidades:**
+Funcionalidades:
 - Visor Unificado de Normativa (PRC Santiago + Intercomunal + PROT)
+
 - Asistente de Actualización de IPTs (Indicadores de vigencia)
+
 - Mesa de ayuda técnica para interpretación normativa
 
 ---
@@ -85,12 +86,11 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 ### Mapa General (D10 Geoespacial/IDE)
 
-| Campo          | Valor                    |
-| -------------- | ------------------------ |
-| **ID**         | `DOM-GEO`                |
-| **Criticidad** | 🟡 Media                  |
-| **Dueño**      | Coordinador Regional IDE |
-| **Procesos**   | 4                        |
+| Campo      | Valor                    |
+| ---------- | ------------------------ |
+| ID         | `DOM-GEO`                |
+| Criticidad | 🟡 Media                  |
+| Dueño      | Coordinador Regional IDE |
 
 ```mermaid
 flowchart LR
@@ -209,7 +209,7 @@ flowchart TD
 
 ### P4: Asistencia Técnica Territorial
 
-> **Propósito:** Formalizar el flujo de solicitud y entrega de asistencia técnica a las DOMs y SECPLAs para la actualización de instrumentos y validación normativa.
+> Propósito: Formalizar el flujo de solicitud y entrega de asistencia técnica a las DOMs y SECPLAs para la actualización de instrumentos y validación normativa.
 
 ```mermaid
 flowchart LR
@@ -232,25 +232,18 @@ flowchart LR
     D -->|"No"| H["Notificar<br/>Rechazo"]
 ```
 
+
 #### Tipos de Asistencia
-1. **Actualización IPT:** Diagnóstico de vigencia, apoyo metodológico.
-2. **Normativa:** Interpretación de zonas de riesgo (PROT), validación de afectaciones.
-3. **Catastro:** Apoyo en levantamiento de información territorial comunal.
+
+1. Actualización IPT: Diagnóstico de vigencia, apoyo metodológico.
+
+2. Normativa: Interpretación de zonas de riesgo (PROT), validación de afectaciones.
+
+3. Catastro: Apoyo en levantamiento de información territorial comunal.
 
 ---
 
 ## 📝 User Stories por Módulo
-
-### Resumen
-
-| Módulo         | US Críticas | US Altas | US Medias | Total  |
-| -------------- | ----------- | -------- | --------- | ------ |
-| Planificación  | 2           | 6        | 1         | 9      |
-| IDE            | 1           | 4        | 1         | 6      |
-| Analítica      | 0           | 3        | 2         | 5      |
-| Gestión        | 0           | 0        | 1         | 1      |
-| Asistencia DOM | 1           | 2        | 0         | 3      |
-| **Total**      | **4**       | **15**   | **5**     | **24** |
 
 ### Catálogo por Proceso
 
@@ -341,23 +334,23 @@ flowchart LR
 
 ## Normativa Aplicable
 
-| Norma                  | Alcance                    |
-| ---------------------- | -------------------------- |
-| **ISO 19115-1**        | Metadatos                  |
-| **ISO 19157**          | Calidad de datos           |
-| **ISO 19131**          | Especificaciones           |
-| **Política IDE Chile** | Interoperabilidad nacional |
+| Norma              | Alcance                    |
+| ------------------ | -------------------------- |
+| ISO 19115-1        | Metadatos                  |
+| ISO 19157          | Calidad de datos           |
+| ISO 19131          | Especificaciones           |
+| Política IDE Chile | Interoperabilidad nacional |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio    | Relación                           |
-| ---------- | ---------------------------------- |
-| **D-PLAN** | ERD, instrumentos de planificación |
-| **D-FIN**  | Georreferenciación de IPR          |
-| **D-SEG**  | Ubicación de cámaras e incidentes  |
-| **D-EJEC** | Supervisión georreferenciada       |
+| Dominio | Relación                           |
+| ------- | ---------------------------------- |
+| D-PLAN  | ERD, instrumentos de planificación |
+| D-FIN   | Georreferenciación de IPR          |
+| D-SEG   | Ubicación de cámaras e incidentes  |
+| D-EJEC  | Supervisión georreferenciada       |
 
 ---
 

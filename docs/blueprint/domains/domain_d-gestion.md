@@ -1,28 +1,49 @@
-# D-GESTION: Dominio de Gestión Institucional Transversal
+# D-GESTION: Dominio de Gestión Institucional
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Operativa  
-> **Función GORE:** GESTIONAR  
-> **Responsable:** Administrador Regional  
-> **Procesos BPMN:** 3 | **Subprocesos:** ~15 | **User Stories:** 20
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Operativa  
+> Función GORE: GESTIONAR  
+> Responsable: Administrador Regional  
+
 
 ---
 
 ## Glosario D-GESTION
 
-| Término                | Definición                                                                                   |
-| ---------------------- | -------------------------------------------------------------------------------------------- |
-| **H_gore**             | Health Score Institucional GORE. Índice operativo de salud diaria del GORE                   |
-| **SCG**                | Sistema de Control de Gestión. Conecta estrategia (ERD), presupuesto y resultados operativos |
-| **UCI**                | Unidad de Control Interno. Gestión de riesgos, controles y contraparte técnica CGR           |
-| **POA**                | Plan Operativo Anual. Desagregación de objetivos ERD en metas divisionales                   |
-| **PDCA**               | Plan-Do-Check-Act. Ciclo de mejora continua institucional                                    |
-| **Playbook Operativo** | Procedimiento estructurado para tareas recurrentes, crisis o onboarding                      |
-| **DPR**                | Delegado Presidencial Regional. Representante del gobierno central en la región              |
-| **COSOC**              | Consejo de la Sociedad Civil Regional. Órgano consultivo de participación                    |
-| **CCTID**              | Comité Regional de Ciencia, Tecnología e Innovación para el Desarrollo                       |
+| Término            | Definición                                                                                   |
+| ------------------ | -------------------------------------------------------------------------------------------- |
+| H_gore             | Health Score Institucional GORE. Índice operativo de salud diaria del GORE                   |
+| H_org              | Health Score Organizacional. Índice estratégico de madurez sistémica (ver D-EVOL)            |
+| SCG                | Sistema de Control de Gestión. Conecta estrategia (ERD), presupuesto y resultados operativos |
+| OKRs               | Objectives & Key Results. Metodología de gestión por objetivos implementada vía POA          |
+| UCI                | Unidad de Control Interno. Gestión de riesgos, controles y contraparte técnica CGR           |
+| POA                | Plan Operativo Anual. Desagregación de objetivos ERD en metas divisionales                   |
+| PDCA               | Plan-Do-Check-Act. Ciclo de mejora continua institucional                                    |
+| Playbook Operativo | Procedimiento estructurado para tareas recurrentes, crisis o onboarding                      |
+| DPR                | Delegado Presidencial Regional. Representante del gobierno central en la región              |
+| COSOC              | Consejo de la Sociedad Civil Regional. Órgano consultivo de participación                    |
+| CCTID              | Comité Regional de Ciencia, Tecnología e Innovación para el Desarrollo                       |
+| NPS                | Net Promoter Score. Indicador de satisfacción y lealtad de usuarios/funcionarios             |
+| RACI               | Responsible, Accountable, Consulted, Informed. Matriz de asignación de responsabilidades     |
+| SMART              | Specific, Measurable, Achievable, Relevant, Time-bound. Criterios para indicadores           |
+| IPR                | Inversión Pública Regional. Proyectos de inversión financiados por el GORE                   |
 
-> **Fuente canónica:** [gorenuble/knowledge/domains/gn/gestion](file:///Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion) para SCG, UCI, Administrador Regional
+> Fuente canónica: [kb_gn_035_estrategia_gestion_koda.yml](file:///Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_035_estrategia_gestion_koda.yml)
+
+---
+
+## Roles y Actores D-GESTION
+
+| Rol                       | Responsabilidad en D-GESTION                              | Módulos Principales            |
+| ------------------------- | --------------------------------------------------------- | ------------------------------ |
+| Administrador Regional    | Responsable del dominio, decisiones H_gore, lidera comité | SCG, H_gore, Playbooks, Coord. |
+| Jefe UCI                  | Gestión de riesgos y controles, reporte CGR               | UCI                            |
+| Jefe DAF                  | Indicadores de personas, recursos administrativos         | Personas                       |
+| Encargado Control Gestión | Operación SCG, ciclos PDCA, ejecución playbooks           | SCG, Mejora, Playbooks         |
+| Jefe de División          | Define POA divisional, monitorea indicadores propios      | SCG                            |
+| Encargado OIRS            | Atención ciudadana y seguimiento de plazos legales        | Procesos                       |
+| Encargado RRHH            | Gestión de inducción y clima organizacional               | Personas                       |
+| Funcionario GORE          | Registra mejoras, gestiona expedientes digitales          | Mejora, Procesos               |
 
 ---
 
@@ -30,7 +51,7 @@
 
 Gestionar el desempeño institucional diario, la operación transversal y la mejora continua del GORE, asegurando eficiencia operativa y coordinación interdivisional bajo el liderazgo del Administrador Regional.
 
-> **D-GESTION vs D-EVOL:** D-GESTION es la **gestión operativa diaria** (Administrador Regional), mientras D-EVOL es la **evolución estratégica** (Encargado TDE). H_gore mide salud operativa; H_org mide madurez sistémica.
+> D-GESTION vs D-EVOL: D-GESTION es la gestión operativa diaria (Administrador Regional), mientras D-EVOL es la evolución estratégica (Encargado TDE). H_gore mide salud operativa; H_org mide madurez sistémica.
 
 ---
 
@@ -38,9 +59,9 @@ Gestionar el desempeño institucional diario, la operación transversal y la mej
 
 ### 1. Sistema de Control de Gestión (SCG)
 
-> **Fuente:** kb_gn_035_estrategia_gestion_koda.yml → Sistemas_Control_Gestion_y_Desempeno
+> Fuente: kb_gn_035_estrategia_gestion_koda.yml → Sistemas_Control_Gestion_y_Desempeno
 
-**Vinculación Estrategia-Presupuesto:**
+Vinculación Estrategia-Presupuesto:
 
 ```mermaid
 flowchart LR
@@ -52,7 +73,7 @@ flowchart LR
     RET --> ERD
 ```
 
-**Indicadores de Desempeño (SMART):**
+Indicadores de Desempeño (SMART):
 
 | Tipo       | Descripción            | Ejemplo                     |
 | ---------- | ---------------------- | --------------------------- |
@@ -61,7 +82,7 @@ flowchart LR
 | Calidad    | Satisfacción y tiempos | NPS interno, días respuesta |
 | Impacto    | Outcomes regionales    | Brechas ERD cerradas        |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Definición de POA alineado a ERD
 - Dashboard de indicadores por división
@@ -70,9 +91,20 @@ flowchart LR
 
 ### 2. H_gore (Salud Institucional)
 
-> **Diferencia con H_org:** H_gore es operativo (diario/semanal); H_org es estratégico (madurez sistémica).
+> Diferencia con H_org: H_gore es operativo (diario/semanal); H_org es estratégico (madurez sistémica).
 
-**Dimensiones H_gore:**
+Tabla Comparativa H_gore vs H_org:
+
+| Aspecto     | H_gore                 | H_org                    |
+| ----------- | ---------------------- | ------------------------ |
+| Alcance     | Operativo diario       | Madurez sistémica        |
+| Frecuencia  | Diario/Semanal         | Trimestral               |
+| Dominio     | D-GESTION              | D-EVOL                   |
+| Responsable | Administrador Regional | Encargado TDE            |
+| Escala      | 0-100 (zona verde ≥80) | Niveles L0-L5            |
+| Trigger     | Degradación → FÉNIX    | Gaps → Pilotos evolución |
+
+Dimensiones H_gore:
 
 | Dimensión                | Indicadores                          | Peso |
 | ------------------------ | ------------------------------------ | ---- |
@@ -83,21 +115,21 @@ flowchart LR
 | Cumplimiento TDE         | % normas cumplidas, brechas          | 10%  |
 | Satisfacción             | NPS interno, tiempos respuesta       | 10%  |
 
-**Cálculo:**
+Cálculo:
 
 ```javascript
 H_gore = Σ (peso_i × indicador_normalizado_i)
 Escala: 0-100 | Meta: ≥80 (zona verde)
 ```
 
-**Umbrales de Escalamiento:**
+Umbrales de Escalamiento:
 
 | Umbral                  | Acción                                 |
 | ----------------------- | -------------------------------------- |
 | H_gore < 60 (2 semanas) | Notificación a Jefatura + Playbook P01 |
 | H_gore < 50             | Activación FÉNIX Nivel IV              |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Dashboard H_gore en tiempo real
 - Drill-down por dimensión
@@ -106,9 +138,9 @@ Escala: 0-100 | Meta: ≥80 (zona verde)
 
 ### 3. Playbooks Operativos
 
-> **Fuente:** orko/metodologia/kb_metodologia_002_playbooks_orko.yml
+> Fuente: [kb_metodologia_002_playbooks_orko.yml](file:///Users/felixsanhueza/Developer/orko/knowledge/domains/metodologia/kb_metodologia_002_playbooks_orko.yml)
 
-**Catálogo de Playbooks Operativos:**
+Catálogo de Playbooks Operativos:
 
 | ID  | Nombre                   | Trigger                                | Duración  |
 | --- | ------------------------ | -------------------------------------- | --------- |
@@ -120,7 +152,7 @@ Escala: 0-100 | Meta: ≥80 (zona verde)
 | P14 | Client Expectation Mgmt  | Insatisfacción stakeholders            | 3-7 días  |
 | P15 | Adaptive Cadence         | Shocks contextuales                    | Variable  |
 
-**Estructura de Playbook:**
+Estructura de Playbook:
 
 - Trigger conditions (métricas, umbrales)
 - Pasos de ejecución (checklist)
@@ -128,7 +160,7 @@ Escala: 0-100 | Meta: ≥80 (zona verde)
 - Criterios de éxito
 - Outputs y artefactos
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Catálogo de playbooks por categoría
 - Ejecución guiada paso a paso
@@ -137,9 +169,9 @@ Escala: 0-100 | Meta: ≥80 (zona verde)
 
 ### 4. Unidad de Control Interno (UCI)
 
-> **Fuente:** kb_gn_035_estrategia_gestion_koda.yml → Gestion_Riesgos_en_GORE
+> Fuente: kb_gn_035_estrategia_gestion_koda.yml → Gestion_Riesgos_en_GORE
 
-**Matriz de Riesgos:**
+Matriz de Riesgos:
 
 | Categoría    | Ejemplos                         | Tratamiento               |
 | ------------ | -------------------------------- | ------------------------- |
@@ -149,7 +181,7 @@ Escala: 0-100 | Meta: ≥80 (zona verde)
 | Probidad     | Conflictos interés, fraude       | Prevención, auditoría     |
 | Reputacional | Crisis mediáticas                | Protocolo comunicación    |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Mapa de riesgos institucional
 - Controles asociados por riesgo
@@ -158,7 +190,7 @@ Escala: 0-100 | Meta: ≥80 (zona verde)
 
 ### 5. Mejora Continua (PDCA)
 
-**Ciclo PDCA Institucional:**
+Ciclo PDCA Institucional:
 
 ```mermaid
 flowchart LR
@@ -168,7 +200,7 @@ flowchart LR
     A --> P
 ```
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Registro de oportunidades de mejora
 - Priorización por impacto/esfuerzo
@@ -177,9 +209,21 @@ flowchart LR
 
 ### 6. Gestión de Personas (DAF/RRHH)
 
-> **Ref cruzada:** D-BACK para procesos detallados de RRHH
+> Ref cruzada: D-BACK para procesos detallados de RRHH
 
-**Indicadores Clave:**
+Matriz de Responsabilidad D-BACK vs D-GESTION:
+
+| Función                   | D-BACK | D-GESTION |
+| ------------------------- | ------ | --------- |
+| CRUD Funcionarios         | ✅      | -         |
+| Nómina y remuneraciones   | ✅      | -         |
+| Dotación y planta         | ✅      | -         |
+| Dashboard ausentismo      | -      | ✅         |
+| Clima organizacional      | -      | ✅         |
+| Onboarding (proceso)      | ✅      | -         |
+| Onboarding (checklist AR) | -      | ✅         |
+
+Indicadores Clave:
 
 | Indicador    | Fórmula                      | Meta         |
 | ------------ | ---------------------------- | ------------ |
@@ -188,7 +232,7 @@ flowchart LR
 | Clima        | Score encuesta clima         | ≥ 75         |
 | Capacitación | Horas/funcionario            | ≥ 40 anuales |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Dashboard de ausentismo por tipo/unidad
 - Gestión de inducción (checklist, mentor)
@@ -197,7 +241,7 @@ flowchart LR
 
 ### 7. Procesos Operativos Críticos
 
-**Procesos Gestionados:**
+Procesos Gestionados:
 
 | Proceso                      | Responsable            | Sistema              |
 | ---------------------------- | ---------------------- | -------------------- |
@@ -206,7 +250,7 @@ flowchart LR
 | Coordinación interdivisional | Administrador Regional | Interno              |
 | Transparencia activa         | UCI                    | Portal Transparencia |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Expediente 100% digital (Ley 21.180)
 - Seguimiento de plazos legales
@@ -214,7 +258,7 @@ flowchart LR
 
 ### 8. Coordinación Institucional
 
-**Niveles de Coordinación:**
+Niveles de Coordinación:
 
 | Nivel             | Actores         | Mecanismo                |
 | ----------------- | --------------- | ------------------------ |
@@ -223,7 +267,7 @@ flowchart LR
 | Territorial       | Municipios      | Mesas de trabajo         |
 | Auxiliar          | COSOC, CCTID    | Sesiones formales        |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Gestión de comité directivo (agenda, acuerdos, seguimiento)
 - Coordinación con DPR
@@ -316,22 +360,6 @@ flowchart TD
 
 ## 📝 User Stories por Módulo
 
-### Resumen
-
-| Módulo       | US Críticas | US Altas | Total  |
-| ------------ | ----------- | -------- | ------ |
-| SCG          | 2           | 1        | 3      |
-| H_gore       | 1           | 2        | 3      |
-| Playbooks    | 1           | 2        | 3      |
-| UCI          | 1           | 1        | 2      |
-| Mejora       | 0           | 2        | 2      |
-| Personas     | 0           | 2        | 2      |
-| Procesos     | 1           | 1        | 2      |
-| Coordinación | 1           | 2        | 3      |
-| **Total**    | **7**       | **13**   | **20** |
-
-> **Fuente:** [kb_goreos_us_d-gestion.yml](../user-stories/kb_goreos_us_d-gestion.yml)
-
 ### Catálogo por Módulo
 
 #### Sistema de Control de Gestión (SCG)
@@ -398,7 +426,7 @@ flowchart TD
 
 ## Entidades de Datos
 
-### Control de Gestión
+### E: Control de Gestión
 
 | Entidad          | Atributos Clave                                              | Relaciones        |
 | ---------------- | ------------------------------------------------------------ | ----------------- |
@@ -406,28 +434,28 @@ flowchart TD
 | `IndicadorPOA`   | id, poa_id, nombre, meta, valor_actual, tendencia            | → POA, Medicion[] |
 | `ReporteGestion` | id, periodo, tipo (mensual/trimestral), contenido, aprobador | → POA[]           |
 
-### Salud Institucional
+### E: Salud Institucional
 
 | Entidad           | Atributos Clave                                             | Relaciones |
 | ----------------- | ----------------------------------------------------------- | ---------- |
 | `H_gore`          | id, fecha, valor_compuesto, dimension_scores (JSON), estado | → Alerta[] |
 | `DimensionH_gore` | id, nombre, peso, indicadores[], umbral_alerta              | → H_gore   |
 
-### Playbooks
+### E: Playbooks
 
 | Entidad             | Atributos Clave                                             | Relaciones                     |
 | ------------------- | ----------------------------------------------------------- | ------------------------------ |
 | `Playbook`          | id, codigo, nombre, categoria, trigger_condition, pasos[]   | → EjecucionPlaybook[]          |
 | `EjecucionPlaybook` | id, playbook_id, fecha_inicio, fecha_fin, estado, resultado | → Playbook, LeccionAprendida[] |
 
-### Control Interno
+### E: Control Interno
 
 | Entidad   | Atributos Clave                                                       | Relaciones  |
 | --------- | --------------------------------------------------------------------- | ----------- |
 | `Riesgo`  | id, categoria, descripcion, probabilidad, impacto, nivel, responsable | → Control[] |
 | `Control` | id, riesgo_id, descripcion, efectividad, evidencia                    | → Riesgo    |
 
-### Mejora Continua
+### E: Mejora Continua
 
 | Entidad             | Atributos Clave                                            | Relaciones          |
 | ------------------- | ---------------------------------------------------------- | ------------------- |
@@ -450,28 +478,63 @@ flowchart TD
 
 ## Normativa Aplicable
 
-| Norma                      | Alcance                                    |
-| -------------------------- | ------------------------------------------ |
-| **Ley 19.175** Art. 24 bis | Rol Administrador Regional                 |
-| **Ley 21.180**             | Transformación Digital del Estado          |
-| **Ley 20.285**             | Transparencia activa y pasiva              |
-| **Ley 20.880**             | Probidad, declaración intereses/patrimonio |
-| **Res. 30/2015 CGR**       | Control interno y auditoría                |
+| Norma                  | Alcance                                    |
+| ---------------------- | ------------------------------------------ |
+| Ley 19.175 Art. 24 bis | Rol Administrador Regional                 |
+| Ley 21.180             | Transformación Digital del Estado          |
+| Ley 20.285             | Transparencia activa y pasiva              |
+| Ley 20.880             | Probidad, declaración intereses/patrimonio |
+| Res. 30/2015 CGR       | Control interno y auditoría                |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio     | Relación                                           | Entidades Compartidas   |
-| ----------- | -------------------------------------------------- | ----------------------- |
-| **D-EVOL**  | Lecciones de mejora alimentan pilotos de evolución | IniciativaMejora        |
-| **D-FIN**   | Indicadores ejecución presupuestaria para H_gore   | Ejecucion, CDP          |
-| **D-EJEC**  | Estado convenios como dimensión H_gore             | Convenio                |
-| **D-BACK**  | Procesos RRHH detallados                           | Funcionario, Ausentismo |
-| **D-NORM**  | Expedientes digitales, OIRS                        | ActoAdministrativo      |
-| **D-TDE**   | Cumplimiento TDE como dimensión H_gore             | Indicador TDE           |
-| **D-COORD** | Relación con actores externos                      | Actor, Stakeholder      |
-| **FÉNIX**   | Escalamiento por H_gore crítico                    | AlertaFenix             |
+Diagrama de Integraciones D-GESTION:
+
+```mermaid
+flowchart LR
+    subgraph D-GESTION["D-GESTION"]
+        H_GORE["H_gore"]
+        SCG["SCG/POA"]
+        PLAY["Playbooks"]
+    end
+
+    D_EVOL[D-EVOL] --> |Lecciones| D-GESTION
+    D_FIN[D-FIN] --> |Ejecución %| H_GORE
+    D_EJEC[D-EJEC] --> |Estado Convenios| H_GORE
+    D_BACK[D-BACK] --> |RRHH indicadores| H_GORE
+    D_TDE[D-TDE] --> |Cumplimiento TDE %| H_GORE
+    D-GESTION --> |Escalamiento| FENIX[FÉNIX]
+    D-GESTION --> |Feedback| D_EVOL
+```
+
+Tabla de Referencias:
+
+| Dominio | Relación                                           | Entidades Compartidas   |
+| ------- | -------------------------------------------------- | ----------------------- |
+| D-EVOL  | Lecciones de mejora alimentan pilotos de evolución | IniciativaMejora        |
+| D-FIN   | Indicadores ejecución presupuestaria para H_gore   | Ejecucion, CDP          |
+| D-EJEC  | Estado convenios como dimensión H_gore             | Convenio                |
+| D-BACK  | Procesos RRHH detallados                           | Funcionario, Ausentismo |
+| D-NORM  | Expedientes digitales, OIRS                        | ActoAdministrativo      |
+| D-TDE   | Cumplimiento TDE como dimensión H_gore             | Indicador TDE           |
+| D-COORD | Relación con actores externos                      | Actor, Stakeholder      |
+| D-GOB   | Sesiones CORE, Acuerdos para POA, Informes Gob.    | Acuerdo, Sesion         |
+| FÉNIX   | Escalamiento por H_gore crítico                    | AlertaFenix             |
+
+---
+
+## Indicadores D-GESTION
+
+| KPI                       | Definición                                               | Meta     |
+| ------------------------- | -------------------------------------------------------- | -------- |
+| H_gore Score              | Valor compuesto de salud institucional                   | ≥ 80     |
+| % POA cumplido            | Metas divisionales alcanzadas / Total metas              | ≥ 90%    |
+| Días resolución playbook  | Promedio días desde trigger hasta cierre                 | ≤ 5 días |
+| % Controles UCI efectivos | Controles efectivos / Total controles evaluados          | ≥ 85%    |
+| NPS interno               | Net Promoter Score de satisfacción funcionarios          | ≥ 70     |
+| % Mejoras implementadas   | Iniciativas PDCA cerradas exitosamente / Total iniciadas | ≥ 80%    |
 
 ---
 

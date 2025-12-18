@@ -9,38 +9,11 @@ _manifest:
   status: Active
   created: "2025-12-16"
   audit_date: "2025-12-16"
-statistics:
-  total_stories: 466
-  total_domains: 11
-  total_modules: 64
-  dedup_count: 28
-  legacy_ids_captured: 469
-  legacy_ids_total_real: 487
-  coverage_percent: 96.3
-  excluded_external_actors: 16
-  priority_distribution:
-    critica: 220
-    alta: 190
-    media: 35
-  integrations_referenced:
-    - SIGFE
-    - SISREC
-    - BIP/Chileindica
-    - Mercado Público
-    - FirmaGob/DocDigital
-    - Plataforma Notificaciones (DS8)
-    - PISEE (DS12)
-    - ClaveÚnica (DS9)
-    - STOP/SPD
-    - SITIA/Genetec
-    - Previred
-    - IMED/Medipass
 domains:
   - id: D-FIN
     name: Financiamiento e Inversión Pública
     file: kb_goreos_us_d-fin.yml
     urn: "urn:goreos:specs:user-stories:d-fin:1.0.0"
-    stories_count: 78
     modules:
       - IPR
       - Presupuesto
@@ -59,7 +32,6 @@ domains:
     name: Gestión Jurídico-Administrativa
     file: kb_goreos_us_d-norm.yml
     urn: "urn:goreos:specs:user-stories:d-norm:1.0.0"
-    stories_count: 40
     modules:
       - Actos
       - Expediente
@@ -76,7 +48,6 @@ domains:
     name: Gestión de Recursos Institucionales
     file: kb_goreos_us_d-back.yml
     urn: "urn:goreos:specs:user-stories:d-back:1.0.0"
-    stories_count: 52
     modules:
       - Personas
       - Abastecimiento
@@ -92,7 +63,6 @@ domains:
     name: Gobernanza Digital y Transformación
     file: kb_goreos_us_d-tde.yml
     urn: "urn:goreos:specs:user-stories:d-tde:1.0.0"
-    stories_count: 42
     modules:
       - Infraestructura
       - Autenticacion
@@ -108,7 +78,6 @@ domains:
     name: Seguridad Pública Regional
     file: kb_goreos_us_d-seg.yml
     urn: "urn:goreos:specs:user-stories:d-seg:1.0.0"
-    stories_count: 24
     modules:
       - Prevencion
       - CIES
@@ -119,7 +88,6 @@ domains:
     name: Gobernanza Regional
     file: kb_goreos_us_d-gob.yml
     urn: "urn:goreos:specs:user-stories:d-gob:1.0.0"
-    stories_count: 26
     modules:
       - CORE
       - Gobernador
@@ -132,7 +100,6 @@ domains:
     name: Inteligencia Territorial
     file: kb_goreos_us_d-terr.yml
     urn: "urn:goreos:specs:user-stories:d-terr:1.0.0"
-    stories_count: 18
     modules:
       - Planificacion
       - IDE
@@ -141,7 +108,6 @@ domains:
     name: Ejecución y Seguimiento
     file: kb_goreos_us_d-ejec.yml
     urn: "urn:goreos:specs:user-stories:d-ejec:1.0.0"
-    stories_count: 26
     modules:
       - Supervision
       - AdministradorRegional
@@ -154,7 +120,6 @@ domains:
     name: Evolución e Inteligencia del Sistema
     file: kb_goreos_us_d-evol.yml
     urn: "urn:goreos:specs:user-stories:d-evol:1.0.0"
-    stories_count: 16
     modules:
       - HealthOrg
       - Trayectoria

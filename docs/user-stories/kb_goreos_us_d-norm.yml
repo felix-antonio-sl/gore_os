@@ -7,11 +7,12 @@ _manifest:
     - M11
     - M28
     - M32
-  total_stories: 52
+  total_stories: 31
   priority_distribution:
-    critica: 28
-    alta: 18
-    media: 6
+    critica: 15
+    alta: 13
+    media: 3
+  migration_note: "8 US Admin migradas a D-TDE (2025-12-16)"
 stories:
   - id: US-NORM-ACTO-001
     legacy_ids:
@@ -462,120 +463,8 @@ stories:
       - Notificación formal
       - Plazo de respuesta
     source_ref: "user_stories_legacy.md:L866"
-  - id: US-NORM-ADMIN-001
-    legacy_ids:
-      - AS-001
-    title: Crear/editar divisiones
-    as_a:
-      - Administrador Sistema
-    i_want: Crear/editar divisiones con jefe asignado
-    so_that: Configuro estructura organizacional
-    priority: Alta
-    module: Admin
-    acceptance_criteria:
-      - CRUD de divisiones
-      - Asignación de jefatura
-    source_ref: "user_stories_legacy.md:L568"
-  - id: US-NORM-ADMIN-002
-    legacy_ids:
-      - AS-002
-    title: Crear usuarios
-    as_a:
-      - Administrador Sistema
-    i_want: "Crear usuarios (email, división, rol)"
-    so_that: Habilito acceso al sistema
-    priority: Crítica
-    module: Admin
-    acceptance_criteria:
-      - Datos mínimos requeridos
-      - Asignación de rol
-    source_ref: "user_stories_legacy.md:L569"
-  - id: US-NORM-ADMIN-003
-    legacy_ids:
-      - AS-003
-    title: Cambiar rol/división usuario
-    as_a:
-      - Administrador Sistema
-    i_want: Cambiar rol/división actualizando permisos
-    so_that: Gestiono movilidad de usuarios
-    priority: Alta
-    module: Admin
-    acceptance_criteria:
-      - Actualización de permisos
-      - Historial de cambios
-    source_ref: "user_stories_legacy.md:L570"
-  - id: US-NORM-ADMIN-004
-    legacy_ids:
-      - AS-004
-    title: Desactivar usuarios
-    as_a:
-      - Administrador Sistema
-    i_want: Desactivar usuarios manteniendo historial
-    so_that: Gestiono bajas sin perder trazabilidad
-    priority: Alta
-    module: Admin
-    acceptance_criteria:
-      - "Usuario inactivo, no eliminado"
-      - Historial preservado
-    source_ref: "user_stories_legacy.md:L571"
-  - id: US-NORM-ADMIN-005
-    legacy_ids:
-      - AS-005
-    title: Importar IPR desde Excel
-    as_a:
-      - Administrador Sistema
-    i_want: Importar IPR desde Excel validando errores
-    so_that: Migro datos históricos
-    priority: Alta
-    module: Admin
-    acceptance_criteria:
-      - Validación de formato
-      - Reporte de errores
-    source_ref: "user_stories_legacy.md:L572"
-  - id: US-NORM-ADMIN-006
-    legacy_ids:
-      - AS-006
-    title: Configurar reglas de alerta
-    as_a:
-      - Administrador Sistema
-    i_want: Configurar reglas de alerta (disparo automático)
-    so_that: Personalizo notificaciones
-    priority: Alta
-    module: Admin
-    acceptance_criteria:
-      - Condiciones configurables
-      - Destinatarios por regla
-    source_ref: "user_stories_legacy.md:L573"
-  - id: US-NORM-ADMIN-007
-    legacy_ids:
-      - AS-007
-    title: Ver logs de actividad
-    as_a:
-      - Administrador Sistema
-    i_want: Ver logs de actividad (filtro usuario/acción)
-    so_that: Audito uso del sistema
-    priority: Alta
-    module: Admin
-    acceptance_criteria:
-      - Filtros avanzados
-      - Exportación de logs
-    source_ref: "user_stories_legacy.md:L574"
-  - id: US-NORM-ADMIN-008
-    legacy_ids:
-      - AS-008
-    title: Estado backups
-    as_a:
-      - Administrador Sistema
-    i_want: Ver estado de backups con ejecución manual
-    so_that: Aseguro recuperabilidad
-    priority: Alta
-    module: Admin
-    acceptance_criteria:
-      - Historial de backups
-      - Ejecución manual disponible
-    source_ref: "user_stories_legacy.md:L575"
 _summary:
-  total_stories: 40
+  total_stories: 31
   modules_covered:
     - Actos
     - Expediente
@@ -585,7 +474,6 @@ _summary:
     - Control
     - CGR
     - CPLT
-    - Admin
   deduplications:
     - JUR-003 + AD-CONV-001 → US-NORM-ACTO-003
     - TRANSP-02 + TRANS-002 → US-NORM-TRANS-002
@@ -594,4 +482,5 @@ _summary:
   external_actors:
     - CGR
     - CPLT
+  migration_note: "8 US Admin migradas a D-TDE (2025-12-16)"
   next_file: kb_goreos_us_d-back.yml

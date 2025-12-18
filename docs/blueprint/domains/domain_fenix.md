@@ -1,9 +1,8 @@
 # Departamento de Gestión Institucional (FÉNIX)
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Transversal (Metasistema)  
-> **Función GORE:** INTERVENIR  
-> **Procesos BPMN:** 2 | **User Stories:** 12  
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Transversal (Metasistema)  
+> Función GORE: INTERVENIR  
 
 ---
 
@@ -17,14 +16,14 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ## Principios Rectores
 
-| Principio                    | Descripción                                                             |
-| ---------------------------- | ----------------------------------------------------------------------- |
-| **Orientación a Resultados** | Objetivos específicos, medibles y con plazos definidos                  |
-| **Multidisciplinariedad**    | Integración de especialistas de múltiples áreas según requerimiento     |
-| **Facultades Delegadas**     | Autoridad para tomar decisiones operativas sin escalamiento innecesario |
-| **Agilidad Operativa**       | Ciclos de gestión abreviados respecto a procesos regulares              |
-| **Responsabilidad Directa**  | Rendición de cuentas sobre los resultados de cada intervención          |
-| **Transferencia Ordenada**   | Traspaso documentado a operación regular post-intervención              |
+| Principio                | Descripción                                                             |
+| ------------------------ | ----------------------------------------------------------------------- |
+| Orientación a Resultados | Objetivos específicos, medibles y con plazos definidos                  |
+| Multidisciplinariedad    | Integración de especialistas de múltiples áreas según requerimiento     |
+| Facultades Delegadas     | Autoridad para tomar decisiones operativas sin escalamiento innecesario |
+| Agilidad Operativa       | Ciclos de gestión abreviados respecto a procesos regulares              |
+| Responsabilidad Directa  | Rendición de cuentas sobre los resultados de cada intervención          |
+| Transferencia Ordenada   | Traspaso documentado a operación regular post-intervención              |
 
 ---
 
@@ -32,12 +31,12 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ### Equipo Base (3-4 funcionarios)
 
-| Rol                          | Responsabilidades                                                     |
-| ---------------------------- | --------------------------------------------------------------------- |
-| **Jefe de Intervención**     | Coordinación general y toma de decisiones operativas                  |
-| **Analista de Gestión**      | Diagnóstico situacional, análisis de datos e identificación de causas |
-| **Asesor Jurídico**          | Evaluación de viabilidad legal y alternativas normativas              |
-| **Especialista en Procesos** | Diseño e implementación de soluciones operativas                      |
+| Rol                      | Responsabilidades                                                     |
+| ------------------------ | --------------------------------------------------------------------- |
+| Jefe de Intervención     | Coordinación general y toma de decisiones operativas                  |
+| Analista de Gestión      | Diagnóstico situacional, análisis de datos e identificación de causas |
+| Asesor Jurídico          | Evaluación de viabilidad legal y alternativas normativas              |
+| Especialista en Procesos | Diseño e implementación de soluciones operativas                      |
 
 ### Especialistas de Apoyo (según intervención)
 
@@ -63,7 +62,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 - Crisis de seguridad regional (coordinación con FFOO, Fiscalía, Municipios)
 - Falla crítica del CIES (caída >4 horas o pérdida de evidencia)
 
-**Activación:** Inmediata | **Duración estimada:** 1-4 semanas
+Activación: Inmediata | Duración estimada: 1-4 semanas
 
 ### Nivel II: Gestión de Procesos Estancados
 
@@ -72,7 +71,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 - Procesos administrativos detenidos
 - Convenios en riesgo de caducidad (incluye convenios de seguridad municipal)
 
-**Activación:** Programada | **Duración estimada:** 2-6 semanas
+Activación: Programada | Duración estimada: 2-6 semanas
 
 ### Nivel III: Aceleración de Iniciativas
 
@@ -81,7 +80,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 - Implementación de nueva normativa
 - Gestión de cierre de año presupuestario
 
-**Activación:** Por requerimiento | **Duración estimada:** 2-8 semanas
+Activación: Por requerimiento | Duración estimada: 2-8 semanas
 
 ### Nivel IV: Mejora Institucional
 
@@ -90,11 +89,7 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 - Mejoramiento de áreas con bajo desempeño
 - Preparación para auditorías externas
 
-**Activación:** Por diagnóstico | **Duración estimada:** 4-12 semanas
-
----
-
----
+Activación: Por diagnóstico | Duración estimada: 4-12 semanas
 
 ## 📋 Procesos BPMN
 
@@ -181,8 +176,6 @@ flowchart LR
 
 ---
 
----
-
 ## Condiciones de Activación Automática
 
 | Condición                                           | Nivel    | Acción                                  |
@@ -204,18 +197,6 @@ flowchart LR
 ## 📝 User Stories
 
 > Ver catálogo completo en: [kb_goreos_us_fenix.yml](../user-stories/kb_goreos_us_fenix.yml)
-
-| Módulo          | US Críticas | US Altas | Total  |
-| --------------- | ----------- | -------- | ------ |
-| **Activación**  | 1           | 1        | 2      |
-| **Gestión**     | 2           | 1        | 3      |
-| **Operación**   | 1           | 0        | 1      |
-| **Cierre**      | 0           | 2        | 2      |
-| **Analítica**   | 0           | 0        | 2      |
-| **Integración** | 0           | 2        | 2      |
-| **Total**       | **4**       | **6**    | **12** |
-
----
 
 ## Entidades de Datos
 
@@ -269,11 +250,10 @@ flowchart LR
 
 ## Diagrama de Integración
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────────────────┐
 │                    DEPARTAMENTO DE GESTIÓN INSTITUCIONAL EN GORE_OS                  │
 ├─────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                      │
 │   OPERACIÓN REGULAR                                                                  │
 │   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
 │   D-PLAN → D-FIN → D-EJEC → D-COORD (flujo continuo)                                │
@@ -302,6 +282,7 @@ flowchart LR
 │   │  │          │             │  INSTIT.   │                               │   │   │
 │   │  │          │   OKRs      │ (capacidad │  Automatizaciones             │   │   │
 │   │  │  Madurez │   H_gore ───┼──especial) │                               │   │   │
+│   │  │          │             │            │                               │   │   │
 │   │  └──────────────────────────────┼──────────────────────────────────────┘   │   │
 │   └─────────────────────────────────┼───────────────────────────────────────────┘   │
 │                                     │ Interviene en                                  │
@@ -314,24 +295,22 @@ flowchart LR
 └─────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
----
-
 ## Referencias Cruzadas
 
-| Dominio       | Tipo de Integración                                                                    |
-| ------------- | -------------------------------------------------------------------------------------- |
-| **D-PLAN**    | Objetivos ERD sin avance >180 días activan intervención Nivel III                      |
-| **D-FIN**     | IPR Problemáticas activan intervención Nivel I-III                                     |
-| **D-EJEC**    | Convenios en riesgo de incumplimiento activan intervención Nivel I-II                  |
-| **D-COORD**   | Conflictos críticos con actores/ejecutores activan intervención Nivel I-II             |
-| **D-NORM**    | Actos administrativos vencidos o con observaciones CGR activan intervención Nivel I-II |
-| **D-BACK**    | Incumplimientos críticos de proveedores activan intervención Nivel II                  |
-| **D-TDE**     | Fallas críticas de infraestructura TDE activan intervención Nivel I-II                 |
-| **D-TERR**    | Anomalías territoriales críticas activan intervención Nivel III                        |
-| **D-GESTION** | H_gore como indicador de activación; Aprendizajes institucionales                      |
-| **D-EVOL**    | Detección automatizada de condiciones de activación                                    |
-| **D-SEG**     | Crisis de seguridad pública activan intervención Nivel I                               |
-| **Todos**     | Capacidad de intervención transversal según requerimiento                              |
+| Dominio   | Tipo de Integración                                                                    |
+| --------- | -------------------------------------------------------------------------------------- |
+| D-PLAN    | Objetivos ERD sin avance >180 días activan intervención Nivel III                      |
+| D-FIN     | IPR Problemáticas activan intervención Nivel I-III                                     |
+| D-EJEC    | Convenios en riesgo de incumplimiento activan intervención Nivel I-II                  |
+| D-COORD   | Conflictos críticos con actores/ejecutores activan intervención Nivel I-II             |
+| D-NORM    | Actos administrativos vencidos o con observaciones CGR activan intervención Nivel I-II |
+| D-BACK    | Incumplimientos críticos de proveedores activan intervención Nivel II                  |
+| D-TDE     | Fallas críticas de infraestructura TDE activan intervención Nivel I-II                 |
+| D-TERR    | Anomalías territoriales críticas activan intervención Nivel III                        |
+| D-GESTION | H_gore como indicador de activación; Aprendizajes institucionales                      |
+| D-EVOL    | Detección automatizada de condiciones de activación                                    |
+| D-SEG     | Crisis de seguridad pública activan intervención Nivel I                               |
+| Todos     | Capacidad de intervención transversal según requerimiento                              |
 
 ---
 

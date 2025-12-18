@@ -1,35 +1,35 @@
 # D-EVOL: Dominio de Evolución e Inteligencia
 
-> **Parte de:** [GORE_OS Vision General](../vision_general.md)  
-> **Capa:** Estratégica  
-> **Función GORE:** EVOLUCIONAR  
-> **Procesos BPMN:** 4 | **Subprocesos:** ~40 | **User Stories:** 32
+> Parte de: [GORE_OS Vision General](../vision_general.md)  
+> Capa: Estratégica  
+> Función GORE: EVOLUCIONAR  
+
 
 ---
 
 ## Glosario D-EVOL
 
-| Término             | Definición                                                                                                           |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **H_org**           | Health Score Organizacional. Índice compuesto que mide salud del sistema. Fórmula: A×0.25 + D×0.25 + O×0.30 + P×0.20 |
-| **HAIC**            | Human-AI Collaboration. Framework de colaboración humano-IA con niveles M1-M6. Invariante I5 de orko                 |
-| **SDA**             | Sense-Decide-Act. Ciclo operacional de percepción, análisis y ejecución                                              |
-| **P1-P5**           | Primitivos fundamentales: Capacidad, Flujo, Información, Límite, Propósito                                           |
-| **M1-M6**           | Modos de delegación IA: Monitorear, Asistir, Habilitar, Controlar, Supervisar, Ejecutar                              |
-| **L0-L5**           | Niveles de madurez: Inicial, Digitalizado, Integrado, Automatizado, Inteligente, Autónomo                            |
-| **Trajectory Log**  | Registro histórico de desempeño de capacidades IA para progresión de autonomía                                       |
-| **Drift Detection** | Detección de degradación de modelos ML mediante comparación con baseline                                             |
-| **Feature Flag**    | Mecanismo de habilitación gradual de funcionalidades                                                                 |
-| **RICE**            | Reach, Impact, Confidence, Effort. Framework de priorización                                                         |
-| **Data Steward**    | Responsable de calidad y gobernanza de un dataset                                                                    |
-| **Playbook**        | Procedimiento estructurado de respuesta a situaciones conocidas                                                      |
-| **URN**             | Uniform Resource Name. Identificador único de artefacto de conocimiento                                              |
-| **Catálogo**        | Inventario maestro de artefactos de conocimiento con metadatos                                                       |
-| **Linaje**          | Trazabilidad de origen y transformaciones de un artefacto                                                            |
-| **Agente IA**       | Capacidad declarativa con comportamiento determinista gobernada por HAIC                                             |
-| **Orquestador**     | Agente que coordina flota de sub-agentes para tareas complejas                                                       |
+| Término         | Definición                                                                                                           |
+| --------------- | -------------------------------------------------------------------------------------------------------------------- |
+| H_org           | Health Score Organizacional. Índice compuesto que mide salud del sistema. Fórmula: A×0.25 + D×0.25 + O×0.30 + P×0.20 |
+| HAIC            | Human-AI Collaboration. Framework de colaboración humano-IA con niveles M1-M6. Invariante I5 de orko                 |
+| SDA             | Sense-Decide-Act. Ciclo operacional de percepción, análisis y ejecución                                              |
+| P1-P5           | Primitivos fundamentales: Capacidad, Flujo, Información, Límite, Propósito                                           |
+| M1-M6           | Modos de delegación IA: Monitorear, Asistir, Habilitar, Controlar, Supervisar, Ejecutar                              |
+| L0-L5           | Niveles de madurez: Inicial, Digitalizado, Integrado, Automatizado, Inteligente, Autónomo                            |
+| Trajectory Log  | Registro histórico de desempeño de capacidades IA para progresión de autonomía                                       |
+| Drift Detection | Detección de degradación de modelos ML mediante comparación con baseline                                             |
+| Feature Flag    | Mecanismo de habilitación gradual de funcionalidades                                                                 |
+| RICE            | Reach, Impact, Confidence, Effort. Framework de priorización                                                         |
+| Data Steward    | Responsable de calidad y gobernanza de un dataset                                                                    |
+| Playbook        | Procedimiento estructurado de respuesta a situaciones conocidas                                                      |
+| URN             | Uniform Resource Name. Identificador único de artefacto de conocimiento                                              |
+| Catálogo        | Inventario maestro de artefactos de conocimiento con metadatos                                                       |
+| Linaje          | Trazabilidad de origen y transformaciones de un artefacto                                                            |
+| Agente IA       | Capacidad declarativa con comportamiento determinista gobernada por HAIC                                             |
+| Orquestador     | Agente que coordina flota de sub-agentes para tareas complejas                                                       |
 
-> **Fuente canónica:** [orko/knowledge/core](file:///Users/felixsanhueza/Developer/orko/knowledge/core) para HAIC, H_org, P1-P5
+> Fuente canónica: [orko/knowledge/core](file:///Users/felixsanhueza/Developer/orko/knowledge/core) para HAIC, H_org, P1-P5
 
 ---
 
@@ -37,7 +37,7 @@
 
 Gestionar la evolución nativa del sistema operativo regional hacia niveles superiores de madurez organizacional, basándose en un framework formal de transformación que va más allá del cumplimiento normativo.
 
-> **Evolución Nativa vs. Cumplimiento:** Mientras D-TDE asegura el piso normativo (Ley 21.180), D-EVOL representa el **techo de capacidades**. La TDE es obligatoria; la evolución nativa es estratégica.
+> Evolución Nativa vs. Cumplimiento: Mientras D-TDE asegura el piso normativo (Ley 21.180), D-EVOL representa el techo de capacidades. La TDE es obligatoria; la evolución nativa es estratégica.
 
 ---
 
@@ -45,15 +45,15 @@ Gestionar la evolución nativa del sistema operativo regional hacia niveles supe
 
 ### 1. Salud Organizacional (H_org)
 
-> **Fuente:** orko/knowledge/core/guide_core_004_toolkit_orko.yml
+> Fuente: orko/knowledge/core/guide_core_004_toolkit_orko.yml
 
-**Fórmula H_org:**
+Fórmula H_org:
 
 ```javascript
 H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 ```
 
-**Umbrales de Estado:**
+Umbrales de Estado:
 
 | Estado      | Rango H_org | Kit Aplicable | Acción                     |
 | ----------- | ----------- | ------------- | -------------------------- |
@@ -61,14 +61,14 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 | 🟡 Estable   | 0.50-0.70   | Kit Minimal   | Cimientos 6-12 semanas     |
 | 🟢 Saludable | > 0.70      | Kit Avanzado  | Transformación 3-6 meses   |
 
-**Gates de Transición:**
+Gates de Transición:
 
 - G1: H_org < 70 → Activar P01_Low_H_org_Recovery
 - GATE transformación estructural: H_org ≥ 70
 
 ### 2. Trayectoria del Sistema
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Configuración de Feature Flags (rollout gradual)
 - Ajuste de umbrales de riesgo
@@ -77,7 +77,7 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 
 ### 3. Pilotos de Autonomía
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Activación de pilotos M6 (autonomía máxima)
 - Escalamiento de configuración a nuevas divisiones
@@ -86,7 +86,7 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 
 ### 4. Playbooks de Remediación
 
-**Catálogo:**
+Catálogo:
 
 | Playbook          | Trigger                 | Objetivo                          |
 | ----------------- | ----------------------- | --------------------------------- |
@@ -94,7 +94,7 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 | P02_High_Handoffs | Handoffs > umbral       | Reducir fricciones operativas     |
 | P03_Drift_Alert   | Drift Score > threshold | Recalibrar modelo ML              |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Ejecución guiada de playbooks
 - Monitor de progreso por paso
@@ -102,7 +102,7 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 
 ### 5. Gobierno de Evolución
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Aprobación de cambios críticos
 - Arbitraje de prioridades (RICE)
@@ -110,7 +110,7 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 
 ### 6. Deuda Técnica
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Inventario de deuda técnica
 - Plan de pago de deuda
@@ -119,18 +119,18 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 
 ### 7. Base de Conocimiento Institucional
 
-> **Principio:** El conocimiento institucional es un activo estratégico que requiere gobernanza, curación y acceso estructurado.
+> Principio: El conocimiento institucional es un activo estratégico que requiere gobernanza, curación y acceso estructurado.
 
-**Componentes:**
+Componentes:
 
-| Componente     | Descripción                                      | Función                          |
-| -------------- | ------------------------------------------------ | -------------------------------- |
-| **Catálogo**   | Inventario maestro de artefactos de conocimiento | Fuente de verdad para resolución |
-| **Artefactos** | Documentos estructurados con semántica explícita | Conocimiento formalizado         |
-| **URN**        | Identificador único de artefacto                 | Resolución determinística        |
-| **Linaje**     | Trazabilidad de origen y transformaciones        | Auditoría y confianza            |
+| Componente | Descripción                                      | Función                          |
+| ---------- | ------------------------------------------------ | -------------------------------- |
+| Catálogo   | Inventario maestro de artefactos de conocimiento | Fuente de verdad para resolución |
+| Artefactos | Documentos estructurados con semántica explícita | Conocimiento formalizado         |
+| URN        | Identificador único de artefacto                 | Resolución determinística        |
+| Linaje     | Trazabilidad de origen y transformaciones        | Auditoría y confianza            |
 
-**Tipos de Artefacto:**
+Tipos de Artefacto:
 
 | Tipo      | Descripción                   | Ejemplo            |
 | --------- | ----------------------------- | ------------------ |
@@ -139,7 +139,7 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 | Técnico   | Especificaciones sistema      | ERD, API specs     |
 | Operativo | Procedimientos internos       | Protocolos GORE    |
 
-**Políticas de Uso:**
+Políticas de Uso:
 
 | Política      | Descripción                        | Caso de Uso           |
 | ------------- | ---------------------------------- | --------------------- |
@@ -147,7 +147,7 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 | HÍBRIDO       | KB + conocimiento general LLM      | Consultas abiertas    |
 | TIEMPO_REAL   | KB + búsqueda web                  | Datos actuales        |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Catálogo de artefactos con metadatos
 - Resolución de URN a contenido
@@ -157,9 +157,9 @@ H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15
 
 ### 8. Agentes IA Especializados
 
-> **Principio:** Los agentes IA son capacidades declarativas con comportamiento determinístico, gobernados por HAIC.
+> Principio: Los agentes IA son capacidades declarativas con comportamiento determinístico, gobernados por HAIC.
 
-**Arquitectura de Agente:**
+Arquitectura de Agente:
 
 ```mermaid
 IDENTIDAD → CONOCIMIENTO → COMPORTAMIENTO → SEGURIDAD → EVALUACIÓN
@@ -168,7 +168,7 @@ IDENTIDAD → CONOCIMIENTO → COMPORTAMIENTO → SEGURIDAD → EVALUACIÓN
   Rol+Obj    KB Sources     States+WF      Guardrails   Checklist
 ```
 
-**Tipos de Agente:**
+Tipos de Agente:
 
 | Tipo        | Descripción                 | Modo HAIC | Ejemplo                |
 | ----------- | --------------------------- | --------- | ---------------------- |
@@ -177,13 +177,13 @@ IDENTIDAD → CONOCIMIENTO → COMPORTAMIENTO → SEGURIDAD → EVALUACIÓN
 | Orquestador | Coordina otros agentes      | M4        | Gestor de casos        |
 | Monitor     | Observa y alerta            | M1-M2     | Vigilante de mora      |
 
-**Ciclo de Vida del Agente:**
+Ciclo de Vida del Agente:
 
 ```mermaid
 DISEÑO → VALIDACIÓN → DESPLIEGUE → MONITOREO → PROMOCIÓN/DEGRADACIÓN
 ```
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Definición declarativa de agentes
 - Gobernanza HAIC por agente
@@ -193,9 +193,9 @@ DISEÑO → VALIDACIÓN → DESPLIEGUE → MONITOREO → PROMOCIÓN/DEGRADACIÓN
 
 ### 9. Orquestación de Agentes
 
-> **Principio:** Agentes complejos coordinan flotas de sub-agentes para tareas multi-paso.
+> Principio: Agentes complejos coordinan flotas de sub-agentes para tareas multi-paso.
 
-**Patrones de Orquestación:**
+Patrones de Orquestación:
 
 | Patrón      | Descripción                       | Caso de Uso                  |
 | ----------- | --------------------------------- | ---------------------------- |
@@ -204,7 +204,7 @@ DISEÑO → VALIDACIÓN → DESPLIEGUE → MONITOREO → PROMOCIÓN/DEGRADACIÓN
 | CONDICIONAL | Seleccionar agente según contexto | Routing especializado        |
 | ITERATIVO   | Repetir hasta condición           | Ciclos de refinamiento       |
 
-**Funcionalidades:**
+Funcionalidades:
 
 - Definición de flotas de agentes
 - Contexto compartido entre agentes
@@ -217,13 +217,13 @@ DISEÑO → VALIDACIÓN → DESPLIEGUE → MONITOREO → PROMOCIÓN/DEGRADACIÓN
 
 ### Primitivos Fundamentales (P1-P5)
 
-| Primitivo           | Pregunta             | Descripción              |
-| ------------------- | -------------------- | ------------------------ |
-| **P1: CAPACIDAD**   | ¿Quién ejecuta?      | Humano/IA/Mixto          |
-| **P2: FLUJO**       | ¿Cómo se transforma? | Procesos y pasos         |
-| **P3: INFORMACIÓN** | ¿Qué se transforma?  | Entrada/salida           |
-| **P4: LÍMITE**      | ¿Qué restringe?      | Normas, recursos, plazos |
-| **P5: PROPÓSITO**   | ¿Para qué?           | OKRs, outcomes           |
+| Primitivo       | Pregunta             | Descripción              |
+| --------------- | -------------------- | ------------------------ |
+| P1: CAPACIDAD   | ¿Quién ejecuta?      | Humano/IA/Mixto          |
+| P2: FLUJO       | ¿Cómo se transforma? | Procesos y pasos         |
+| P3: INFORMACIÓN | ¿Qué se transforma?  | Entrada/salida           |
+| P4: LÍMITE      | ¿Qué restringe?      | Normas, recursos, plazos |
+| P5: PROPÓSITO   | ¿Para qué?           | OKRs, outcomes           |
 
 ### Ciclo Operacional: SDA
 
@@ -237,22 +237,22 @@ datos      priorizar  transformación
 
 ## Modelo HAIC: Colaboración Humano-IA
 
-> **Fuente:** orko/knowledge/core/guide_core_000_fundamentos_orko.yml → I5_HAIC
+> Fuente: orko/knowledge/core/guide_core_000_fundamentos_orko.yml → I5_HAIC
 
 ### Niveles de Delegación (M1-M6)
 
-| Nivel  | Nombre     | Descripción                             |
-| ------ | ---------- | --------------------------------------- |
-| **M1** | MONITOREAR | Humano ejecuta, IA observa y aprende    |
-| **M2** | ASISTIR    | Humano ejecuta, IA sugiere opciones     |
-| **M3** | HABILITAR  | IA prepara, humano decide y ejecuta     |
-| **M4** | CONTROLAR  | IA ejecuta, humano aprueba cada acción  |
-| **M5** | SUPERVISAR | IA ejecuta, humano audita por excepción |
-| **M6** | EJECUTAR   | IA autónoma, humano override disponible |
+| Nivel | Nombre     | Descripción                             |
+| ----- | ---------- | --------------------------------------- |
+| M1    | MONITOREAR | Humano ejecuta, IA observa y aprende    |
+| M2    | ASISTIR    | Humano ejecuta, IA sugiere opciones     |
+| M3    | HABILITAR  | IA prepara, humano decide y ejecuta     |
+| M4    | CONTROLAR  | IA ejecuta, humano aprueba cada acción  |
+| M5    | SUPERVISAR | IA ejecuta, humano audita por excepción |
+| M6    | EJECUTAR   | IA autónoma, humano override disponible |
 
 ### Invariantes HAIC
 
-- **∀ Capacidad IA (nivel ≥ M2): ∃ Humano accountable**
+- ∀ Capacidad IA (nivel ≥ M2): ∃ Humano accountable
 - Progresión M1→M6 solo con trajectory log y evidencia de desempeño
 - Explainability requerida para niveles M3+
 
@@ -260,14 +260,14 @@ datos      priorizar  transformación
 
 ## Niveles de Madurez
 
-| Nivel  | Nombre       | Características                                      |
-| ------ | ------------ | ---------------------------------------------------- |
-| **L0** | INICIAL      | Procesos ad-hoc, sin estandarización                 |
-| **L1** | DIGITALIZADO | Captura digital, repositorio único, trazabilidad     |
-| **L2** | INTEGRADO    | Datos unificados, dashboards tiempo real             |
-| **L3** | AUTOMATIZADO | Alertas, validaciones, flujos automáticos            |
-| **L4** | INTELIGENTE  | Decisiones asistidas por IA (M2-M4)                  |
-| **L5** | AUTÓNOMO     | Agentes IA operativos (M5-M6), optimización continua |
+| Nivel | Nombre       | Características                                      |
+| ----- | ------------ | ---------------------------------------------------- |
+| L0    | INICIAL      | Procesos ad-hoc, sin estandarización                 |
+| L1    | DIGITALIZADO | Captura digital, repositorio único, trazabilidad     |
+| L2    | INTEGRADO    | Datos unificados, dashboards tiempo real             |
+| L3    | AUTOMATIZADO | Alertas, validaciones, flujos automáticos            |
+| L4    | INTELIGENTE  | Decisiones asistidas por IA (M2-M4)                  |
+| L5    | AUTÓNOMO     | Agentes IA operativos (M5-M6), optimización continua |
 
 ---
 
@@ -386,22 +386,7 @@ flowchart TD
 
 ## 📝 User Stories por Módulo
 
-### Resumen
-
-| Módulo           | US Críticas | US Altas | Total  |
-| ---------------- | ----------- | -------- | ------ |
-| HealthOrg        | 2           | 1        | 3      |
-| Trayectoria      | 0           | 3        | 3      |
-| Pilotos          | 0           | 3        | 3      |
-| Playbooks        | 0           | 2        | 2      |
-| Gobierno         | 1           | 1        | 2      |
-| DeudaTecnica     | 1           | 2        | 3      |
-| BaseConocimiento | 2           | 4        | 6      |
-| AgentesIA        | 2           | 4        | 6      |
-| Orquestacion     | 1           | 3        | 4      |
-| **Total**        | **9**       | **23**   | **32** |
-
-> **Fuente:** [kb_goreos_us_d-evol.yml](../user-stories/kb_goreos_us_d-evol.yml)
+> Fuente: [kb_goreos_us_d-evol.yml](../user-stories/kb_goreos_us_d-evol.yml)
 
 ### Catálogo por Módulo
 
@@ -548,30 +533,30 @@ flowchart TD
 
 ## Normativa Aplicable
 
-| Norma          | Alcance                                   |
-| -------------- | ----------------------------------------- |
-| **Ley 21.719** | Protección de datos personales (datasets) |
-| **Ley 21.180** | TDE - piso normativo digitalización       |
-| **ISO 27001**  | Seguridad de información                  |
-| **ISO 38500**  | Gobierno de TI                            |
+| Norma      | Alcance                                   |
+| ---------- | ----------------------------------------- |
+| Ley 21.719 | Protección de datos personales (datasets) |
+| Ley 21.180 | TDE - piso normativo digitalización       |
+| ISO 27001  | Seguridad de información                  |
+| ISO 38500  | Gobierno de TI                            |
 
 ---
 
 ## Referencias Cruzadas
 
-| Dominio     | Relación                                             | Entidades Compartidas  |
-| ----------- | ---------------------------------------------------- | ---------------------- |
-| **D-PLAN**  | Proyección de cumplimiento ERD                       | OKR, Indicador         |
-| **D-FIN**   | Analytics predictivo para IPR                        | IPR, Proyeccion        |
-| **D-EJEC**  | Automatización de alertas de convenios               | Alerta, Convenio       |
-| **D-COORD** | Scoring predictivo de actores                        | Actor, Rating          |
-| **D-NORM**  | Automatización de expedientes                        | ActoAdministrativo     |
-| **D-BACK**  | Predicción de necesidades de recursos                | Inventario             |
-| **D-TDE**   | D-TDE es piso normativo, D-EVOL es techo estratégico | Capacidad              |
-| **D-TERR**  | Analytics geoespacial avanzado                       | CapaGeoespacial        |
-| **D-SEG**   | Analytics predictivo de incidentes                   | Incidente              |
-| **FÉNIX**   | Detección automatizada de condiciones de activación  | AlertaFenix, CasoFenix |
-| **Todos**   | Agentes IA operan sobre todos los dominios           | Agente, Capacidad      |
+| Dominio | Relación                                             | Entidades Compartidas  |
+| ------- | ---------------------------------------------------- | ---------------------- |
+| D-PLAN  | Proyección de cumplimiento ERD                       | OKR, Indicador         |
+| D-FIN   | Analytics predictivo para IPR                        | IPR, Proyeccion        |
+| D-EJEC  | Automatización de alertas de convenios               | Alerta, Convenio       |
+| D-COORD | Scoring predictivo de actores                        | Actor, Rating          |
+| D-NORM  | Automatización de expedientes                        | ActoAdministrativo     |
+| D-BACK  | Predicción de necesidades de recursos                | Inventario             |
+| D-TDE   | D-TDE es piso normativo, D-EVOL es techo estratégico | Capacidad              |
+| D-TERR  | Analytics geoespacial avanzado                       | CapaGeoespacial        |
+| D-SEG   | Analytics predictivo de incidentes                   | Incidente              |
+| FÉNIX   | Detección automatizada de condiciones de activación  | AlertaFenix, CasoFenix |
+| Todos   | Agentes IA operan sobre todos los dominios           | Agente, Capacidad      |
 
 ---
 
