@@ -67,7 +67,7 @@ El diagnóstico institucional (corte Junio 2025) identifica brechas críticas qu
 | **Autenticación**     | Bajo porcentaje de trámites integrados con ClaveÚnica.             | 8%      | 100% (M2)           |
 | **Calidad Web**       | Deficiencias en arquitectura de información y atención ciudadana.  | Parcial | 100% (M1)           |
 
-> **Nota de Absorción**: Las iniciativas del "Plan de Transformación Digital 2026-2029" (Res. Ex. 02034) han sido reformuladas e integradas como User Stories en este dominio para asegurar una ejecución coherente y acelerada, descartando sus cronogramas originales por ser incompatibles con la urgencia del GORE_OS.
+> **Nota de Absorción**: Las iniciativas del "Plan de Transformación Digital 2026-2029" (Res. Ex. 02034) han sido reformuladas e integradas como Historias de Usuario en este dominio para asegurar una ejecución coherente y acelerada, descartando sus cronogramas originales por ser incompatibles con la urgencia del GORE_OS.
 
 ### Matriz de Absorción PTD → D-TDE (15/15 Iniciativas)
 
@@ -173,7 +173,7 @@ Funcionalidades:
 
 - Gestión del Catálogo de Procedimientos (CPAT) nivel 0-5
 - Programa de Gestión del Cambio y Alfabetización Digital Funcionaria
-- Dashboard de cumplimiento decretos DS 7-12
+- Panel de cumplimiento decretos DS 7-12
 - Gate de evaluación de proyectos TIC (EvalTIC)
 
 ### M2: Servicios Digitales Habilitantes
@@ -311,7 +311,7 @@ flowchart TB
 
     P1_1 -.- N1["Inventario trámites<br/>Nivel digitalización"]
     P1_2 -.- N2["Gate EvalTIC<br/>Presupuesto"]
-    P1_3 -.- N3["Dashboard DS 7-12<br/>Semaforización"]
+    P1_3 -.- N3["Panel DS 7-12<br/>Semaforización"]
     P1_4 -.- N4["Reporte anual SGD<br/>Compromisos"]
 ```
 
@@ -444,14 +444,14 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 
 ---
 
-## Catálogo de User Stories
+## Catálogo de Historias de Usuario
 
 ### US Cumplimiento TDE (P1)
 
 | ID                 | Título                           | Prioridad |
 | ------------------ | -------------------------------- | --------- |
 | US-TDE-CALIDAD-001 | Mantener Catálogo de Plataformas | Alta      |
-| US-TDE-AVANCE-001  | Dashboard avance TDE             | Alta      |
+| US-TDE-AVANCE-001  | Panel de avance TDE              | Alta      |
 | US-TDE-CPAT-001    | Actualizar niveles CPAT          | Crítica   |
 | US-TDE-CPAT-002    | Priorizar trámites a digitalizar | Alta      |
 
@@ -532,57 +532,57 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 
 ## Entidades de Datos
 
-### Governance & Data Quality (New)
+### Gobernanza y Calidad de Datos
 
-| Entity       | Key Attributes                            | Relationships |
-| ------------ | ----------------------------------------- | ------------- |
-| `DataPolicy` | id, version, approval_date, principles[]  | → DataAsset   |
-| `DataAsset`  | id, name, source, owner_id, quality_score | → DataPolicy  |
-| `DataTerm`   | id, term, definition, data_type, format   | → DataAsset   |
+| Entidad         | Atributos Clave                                     | Relaciones      |
+| --------------- | --------------------------------------------------- | --------------- |
+| `PoliticaDatos` | id, version, fecha_aprobacion, principios[]         | → ActivoDatos   |
+| `ActivoDatos`   | id, nombre, fuente, id_propietario, puntaje_calidad | → PoliticaDatos |
+| `TerminoDatos`  | id, termino, definicion, tipo_dato, formato         | → ActivoDatos   |
 
-### Regulatory Compliance
+### Cumplimiento Normativo
 
-| Entity          | Key Attributes                        | Relationships      |
-| --------------- | ------------------------------------- | ------------------ |
-| `TDERegulation` | id, code, name, valid_from            | → ComplianceItem[] |
-| `Procedure`     | id, name, digital_level, cpat_id      | → DigitalPlan      |
-| `Platform`      | id, name, baseline, it_responsible_id | → ITAsset          |
+| Entidad         | Atributos Clave                           | Relaciones           |
+| --------------- | ----------------------------------------- | -------------------- |
+| `RegulacionTDE` | id, codigo, nombre, vigente_desde         | → ItemCumplimiento[] |
+| `Procedimiento` | id, nombre, nivel_digital, cpat_id        | → PlanDigital        |
+| `Plataforma`    | id, nombre, linea_base, id_responsable_ti | → ActivoTI           |
 
-### Governance & Security
+### Gobernanza y Seguridad
 
-| Entity        | Key Attributes                            | Relationships        |
-| ------------- | ----------------------------------------- | -------------------- |
-| `ITAsset`     | id, name, cia_classification, owner_id    | → Risk[], Incident[] |
-| `Incident`    | id, date, type, severity, anci_status     | → ITAsset[]          |
-| `Risk`        | id, asset_id, threat, probability, impact | → SecurityControl    |
-| `ARCORequest` | id, holder, right_type, date, status      | → DataProcessing     |
+| Entidad         | Atributos Clave                               | Relaciones              |
+| --------------- | --------------------------------------------- | ----------------------- |
+| `ActivoTI`      | id, nombre, clasificacion_cia, id_propietario | → Riesgo[], Incidente[] |
+| `Incidente`     | id, fecha, tipo, severidad, estado_anci       | → ActivoTI[]            |
+| `Riesgo`        | id, id_activo, amenaza, probabilidad, impacto | → ControlSeguridad      |
+| `SolicitudARCO` | id, titular, tipo_derecho, fecha, estado      | → TratamientoDatos      |
 
-### Electronic File
+### Expediente Electrónico
 
-| Entity           | Key Attributes                                               | Relationships     |
-| ---------------- | ------------------------------------------------------------ | ----------------- |
-| `ElectronicFile` | id, iuie, creation_date, status, procedure_type, folio_count | → ElectronicDoc[] |
-| `ElectronicDoc`  | id, file_id, folio, hash, timestamp, doc_type                | → ElectronicFile  |
-| `FileAction`     | id, file_id, action, official_id, timestamp                  | → ElectronicFile  |
+| Entidad                 | Atributos Clave                                                    | Relaciones               |
+| ----------------------- | ------------------------------------------------------------------ | ------------------------ |
+| `ExpedienteElectronico` | id, iuie, fecha_creacion, estado, tipo_procedimiento, total_folios | → DocumentoElectronico[] |
+| `DocumentoElectronico`  | id, id_expediente, folio, hash, timestamp, tipo_doc                | → ExpedienteElectronico  |
+| `AccionExpediente`      | id, id_expediente, accion, id_funcionario, timestamp               | → ExpedienteElectronico  |
 
-### Interoperability & Regional
+### Interoperabilidad y Regional
 
-| Entity                  | Key Attributes                                         | Relationships           |
-| ----------------------- | ------------------------------------------------------ | ----------------------- |
-| `PISEEService`          | id, name, provider, endpoint, wsdl_swagger             | → DataExchangeAgreement |
-| `DataExchangeAgreement` | id, service_id, source_institution, target_institution | → PISEETransaction[]    |
-| `RegionalEntity`        | id, name, type (Muni/Service), tde_maturity_level      | → TDETaskForce          |
-| `MuniDiagnosis`         | id, entity_id, date, dimension_scores, gaps[]          | → RegionalEntity        |
-| `TrainingPlan`          | id, entity_id, objectives, schedule, status            | → RegionalEntity        |
-| `TDEMaturityIndex`      | id, period, entity_id, global_score, dimensions[]      | → RegionalEntity        |
+| Entidad                   | Atributos Clave                                          | Relaciones                |
+| ------------------------- | -------------------------------------------------------- | ------------------------- |
+| `ServicioPISEE`           | id, nombre, proveedor, endpoint, wsdl_swagger            | → AcuerdoIntercambioDatos |
+| `AcuerdoIntercambioDatos` | id, id_servicio, institucion_origen, institucion_destino | → TransaccionPISEE[]      |
+| `EntidadRegional`         | id, nombre, tipo (Muni/Servicio), nivel_madurez_tde      | → FuerzaTareaTDE          |
+| `DiagnosticoMuni`         | id, id_entidad, fecha, puntajes_dimension, brechas[]     | → EntidadRegional         |
+| `PlanCapacitacion`        | id, id_entidad, objetivos, cronograma, estado            | → EntidadRegional         |
+| `IndiceMadurezTDE`        | id, periodo, id_entidad, puntaje_global, dimensiones[]   | → EntidadRegional         |
 
-### Change Management
+### Gestión del Cambio
 
-| Entity            | Key Attributes                                       | Relationships       |
-| ----------------- | ---------------------------------------------------- | ------------------- |
-| `ChangePlan`      | id, year, objectives, schedule, status               | → TrainingSession[] |
-| `TrainingSession` | id, plan_id, topic, date, attendee_count, evaluation | → ChangePlan        |
-| `AdoptionEval`    | id, official_id, pre_score, post_score, date         | → TrainingSession   |
+| Entidad              | Atributos Clave                                        | Relaciones             |
+| -------------------- | ------------------------------------------------------ | ---------------------- |
+| `PlanCambio`         | id, año, objetivos, cronograma, estado                 | → SesionCapacitacion[] |
+| `SesionCapacitacion` | id, id_plan, tema, fecha, total_asistentes, evaluacion | → PlanCambio           |
+| `EvaluacionAdopcion` | id, id_funcionario, puntaje_pre, puntaje_post, fecha   | → SesionCapacitacion   |
 
 ---
 

@@ -8,28 +8,28 @@
 
 ## Glosario D-EVOL
 
-| Término        | Definición                                                                                                                          |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| H_org          | Health Score Organizacional. Strategic metric for systemic maturity and health. Formula: A×0.30 + F×0.30 + C×0.20 + I×0.10 + G×0.10 |
-| H_gore         | Health Score Institucional GORE. Tactical metric for daily/weekly GORE operational performance (see D-GESTION).                     |
-| HAIC           | Human-AI Collaboration. Framework for human-AI interaction (M1-M6). ORKO Invariant I5.                                              |
-| SDA            | Sense-Decide-Act. Operational cycle of perception, analysis, and execution.                                                         |
-| P1-P5          | Fundamental Primitives: Capacity, Flow, Information, Limit, Purpose.                                                                |
-| M1-M6          | AI Delegation Modes: Monitor, Assist, Enable, Control, Supervise, Execute.                                                          |
-| L0-L5          | Maturity Levels: Initial, Digitalized, Integrated, Automated, Intelligent, Autonomous.                                              |
-| TrajectoryLog  | Historical performance log of AI capabilities for autonomy progression.                                                             |
-| DriftDetection | Detection of ML model degradation against a baseline.                                                                               |
-| FeatureFlag    | Mechanism for gradual feature enablement.                                                                                           |
-| RICE           | Reach, Impact, Confidence, Effort. Prioritization framework.                                                                        |
-| DataSteward    | Role responsible for the quality and governance of a dataset.                                                                       |
-| Playbook       | Structured procedure for responding to known situations.                                                                            |
-| URN            | Uniform Resource Name. Unique identifier for knowledge artifacts.                                                                   |
-| Catalog        | Master inventory of knowledge artifacts with metadata.                                                                              |
-| Lineage        | Traceability of origin and transformations of an artifact.                                                                          |
-| AI Agent       | Declarative capability with deterministic behavior governed by HAIC.                                                                |
-| Orchestrator   | Agent that coordinates a fleet of sub-agents for complex tasks.                                                                     |
-| ANCI           | Agencia Nacional de Ciberseguridad. Security regulator for critical AI systems (Law 21.663).                                        |
-| Bias           | Unfair distortion in AI results favoring or disadvantaging specific groups/territories.                                             |
+| Término           | Definición                                                                                                                                            |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| H_org             | Puntaje de Salud Organizacional (Health Score). Métrica estratégica de madurez y salud sistémica. Fórmula: A×0.30 + F×0.30 + C×0.20 + I×0.10 + G×0.10 |
+| H_gore            | Puntaje de Salud Institucional GORE. Métrica táctica de desempeño operativo diario/semanal (ver D-GESTION).                                           |
+| HAIC              | Colaboración Humano-IA (Human-AI Collaboration). Framework de interacción humano-IA (M1-M6). Invariante ORKO I5.                                      |
+| SDA               | Percibir-Decidir-Actuar (Sense-Decide-Act). Ciclo operacional de percepción, análisis y ejecución.                                                    |
+| P1-P5             | Primitivos Fundamentales: Capacidad, Flujo, Información, Límite, Propósito.                                                                           |
+| M1-M6             | Modos de Delegación IA: Monitorear, Asistir, Habilitar, Controlar, Supervisar, Ejecutar.                                                              |
+| L0-L5             | Niveles de Madurez: Inicial, Digitalizado, Integrado, Automatizado, Inteligente, Autónomo.                                                            |
+| RegistroDesempeño | Log histórico de desempeño de capacidades IA para progresión de autonomía (TrajectoryLog).                                                            |
+| DeteccionDeriva   | Detección de degradación del modelo de IA respecto a una línea base (DriftDetection).                                                                 |
+| BanderaFuncion    | Mecanismo de despliegue gradual de funcionalidades (FeatureFlag).                                                                                     |
+| RICE              | Priorización por Alcance, Impacto, Confianza y Esfuerzo (Reach, Impact, Confidence, Effort).                                                          |
+| CustodioDatos     | Rol responsable de la calidad y gobernanza de un conjunto de datos (DataSteward).                                                                     |
+| Playbook          | Procedimiento estructurado para responder a situaciones conocidas.                                                                                    |
+| URN               | Nombre de Recurso Uniforme. Identificador único para artefactos de conocimiento.                                                                      |
+| Catálogo          | Inventario maestro de artefactos de conocimiento con metadatos.                                                                                       |
+| Linaje            | Trazabilidad de origen y transformaciones de un artefacto.                                                                                            |
+| Agente IA         | Capacidad declarativa con comportamiento determinístico gobernada por HAIC.                                                                           |
+| Orquestador       | Agente que coordina una flota de sub-agentes para tareas complejas.                                                                                   |
+| ANCI              | Agencia Nacional de Ciberseguridad. Regulador de seguridad para sistemas de IA críticos (Ley 21.663).                                                 |
+| Sesgo             | Distorsión injusta en los resultados de IA que favorece o perjudica a grupos/territorios específicos (Bias).                                          |
 
 > Fuente canónica: [orko/knowledge/core](file:///Users/felixsanhueza/Developer/orko/knowledge/core) para HAIC, H_org, P1-P5
 
@@ -52,8 +52,8 @@ Gestionar la evolución nativa del sistema operativo regional hacia niveles supe
 Fórmula H_org (Celeridad y Madurez):
 
 ```javascript
-H_org = Purpose(P5)×0.30 + Flow(P2)×0.30 + Capacity(P1)×0.20 + Information(P3)×0.10 + Governance(P4)×0.10
-// Governance(P4) explicitly includes TDEScore (Compliance Floor)
+H_org = Propósito(P5)×0.30 + Flujo(P2)×0.30 + Capacidad(P1)×0.20 + Información(P3)×0.10 + Gobernanza(P4)×0.10
+// Gobernanza(P4) incluye explícitamente el Puntaje TDE (Piso Normativo)
 ```
 
 Umbrales de Estado:
@@ -109,7 +109,7 @@ Funcionalidades:
 
 - Aprobación de cambios críticos
 - Auditoría de Sesgo y Ética Algorítmica: Revisión de justicia territorial y social.
-- Arbitraje de prioridades (RICE)
+- Arbitraje de prioridades (Priorización RICE)
 - Comité de Gobierno para decisiones mayores
 
 ### 6. Deuda Técnica
@@ -260,7 +260,7 @@ Funcionalidades:
 | **Radar de Madurez**       | Niveles L0-L5 por dominio/sistema.                    | Prioridad de inversión.  |
 | **Heatmap de Integración** | Densidad de conexión entre sistemas.                  | Identificación de silos. |
 | **Timeline de Evolución**  | Hoja de ruta con hitos y fechas.                      | Planificación TI.        |
-| **Dashboard de Salud TI**  | KPIs técnicos consolidados.                           | Monitoreo operativo.     |
+| **Panel de Salud TI**      | KPIs técnicos consolidados.                           | Monitoreo operativo.     |
 
 **Análisis y Gobernanza:**
 
@@ -269,7 +269,7 @@ Funcionalidades:
 3. Análisis de Impacto: Simulación de cambios antes de la implementación.
 4. Identificación de Redundancias: Sistemas duplicados, datos inconsistentes.
 5. Hoja de Ruta Tecnológica: Planificación de la evolución de sistemas L0→L5.
-6. Deuda Técnica Priorizada: Backlog de modernización con scoring RICE.
+6. Deuda Técnica Priorizada: Lista de Pendientes (Backlog) de modernización con calificación (scoring) RICE.
 7. Gobernanza de Datos: Custodios, calidad, políticas de acceso.
 
 ### 11. Puente TDE-ORKO (Estrategia Regional)
@@ -379,7 +379,7 @@ datos      priorizar  transformación
 | ----- | ------------ | ---------------------------------------------------- |
 | L0    | INICIAL      | Procesos ad-hoc, sin estandarización                 |
 | L1    | DIGITALIZADO | Captura digital, repositorio único, trazabilidad     |
-| L2    | INTEGRADO    | Datos unificados, dashboards tiempo real             |
+| L2    | INTEGRADO    | Datos unificados, paneles tiempo real                |
 | L3    | AUTOMATIZADO | Alertas, validaciones, flujos automáticos            |
 | L4    | INTELIGENTE  | Decisiones asistidas por IA (M2-M4)                  |
 | L5    | AUTÓNOMO     | Agentes IA operativos (M5-M6), optimización continua |
@@ -499,7 +499,7 @@ flowchart TD
 
 ---
 
-## 📝 User Stories por Módulo
+## 📝 Historias de Usuario por Módulo
 
 > Fuente: [kb_goreos_us_d-evol.yml](../user-stories/kb_goreos_us_d-evol.yml)
 
@@ -588,16 +588,16 @@ flowchart TD
 | -------------- | ----------------------------------------------------- | --------- |
 | US-EVOL-AO-001 | Registrar sistema en catálogo de aplicaciones         | Crítica   |
 | US-EVOL-AO-002 | Registrar base de datos/datalake en catálogo de datos | Crítica   |
-| US-EVOL-AO-003 | Registrar artefacto KB en catálogo de conocimiento    | Alta      |
+| US-EVOL-AO-003 | Registrar artefacto de conocimiento en catálogo       | Alta      |
 | US-EVOL-AO-004 | Mapear dependencias sistema-proceso                   | Alta      |
-| US-EVOL-AO-005 | Consultar linaje de dato institucional end-to-end     | Alta      |
+| US-EVOL-AO-005 | Consultar linaje de dato institucional fin-a-fin      | Alta      |
 | US-EVOL-AO-006 | Visualizar mapa de recursos por categoría             | Alta      |
 | US-EVOL-AO-007 | Visualizar grafo de dependencias sistema-proceso-dato | Alta      |
 | US-EVOL-AO-008 | Visualizar radar de madurez L0-L5 por dominio         | Alta      |
 | US-EVOL-AO-009 | Visualizar mapa de calor de integraciones             | Alta      |
 | US-EVOL-AO-010 | Publicar hoja de ruta tecnológica por dominio         | Alta      |
 | US-EVOL-AO-011 | Gestionar portafolio de integraciones PISEE           | Crítica   |
-| US-EVOL-AO-012 | Tablero de salud de arquitectura (H_arq)              | Alta      |
+| US-EVOL-AO-012 | Panel de salud de arquitectura (H_arq)                | Alta      |
 | US-EVOL-AO-013 | Mapear obligación TDE a primitivo ORKO                | Alta      |
 | US-EVOL-AO-014 | Integrar puntaje TDE en cálculo H_org                 | Alta      |
 | US-EVOL-AO-015 | Coordinar cumplimiento TDE de servicios dependientes  | Crítica   |
@@ -608,83 +608,83 @@ flowchart TD
 
 ## Entidades de Datos
 
-### Evolution Framework
+### Framework de Evolución
 
-| Entity          | Key Attributes                                                                                    | Relationships             |
-| --------------- | ------------------------------------------------------------------------------------------------- | ------------------------- |
-| `Capability`    | id, name, substrate (human/algorithmic/mixto), cognitive_level, haic_mode (M1-M6), accountable_id | → Flow[], TrajectoryLog[] |
-| `MaturityLevel` | id, process_id, current_level (L0-L5), target_level, evaluation_date, gaps[]                      | → EvolutionPlan           |
+| Entidad        | Atributos Clave                                                                                     | Relaciones                     |
+| -------------- | --------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `Capacidad`    | id, nombre, sustrato (humano/algorítmico/mixto), nivel_cognitivo, modo_haic (M1-M6), id_responsable | → Flujo[], RegistroDesempeño[] |
+| `NivelMadurez` | id, id_proceso, nivel_actual (L0-L5), nivel_objetivo, fecha_evaluacion, brechas[]                   | → PlanEvolucion                |
 
-### Organizational Health
+### Salud Organizacional
 
-| Entity              | Key Attributes                                                    | Relationships         |
-| ------------------- | ----------------------------------------------------------------- | --------------------- |
-| `HealthScore`       | id, date, h_org_value, a_score, d_score, o_score, p_score, status | → Alert[]             |
-| `Playbook`          | id, name, trigger_condition, steps[], owner_id, expected_result   | → PlaybookExecution[] |
-| `PlaybookExecution` | id, playbook_id, start_date, end_date, status, actual_result      | → Playbook            |
+| Entidad             | Atributos Clave                                                            | Relaciones            |
+| ------------------- | -------------------------------------------------------------------------- | --------------------- |
+| `PuntajeSalud`      | id, fecha, valor_h_org, puntaje_a, puntaje_d, puntaje_o, puntaje_p, estado | → Alerta[]            |
+| `Playbook`          | id, nombre, condicion_disparo, pasos[], id_propietario, resultado_esperado | → EjecucionPlaybook[] |
+| `EjecucionPlaybook` | id, id_playbook, fecha_inicio, fecha_fin, estado, resultado_real           | → Playbook            |
 
-### Human-AI Collaboration
+### Colaboración Humano-IA
 
-| Entity          | Key Attributes                                                                   | Relationships          |
-| --------------- | -------------------------------------------------------------------------------- | ---------------------- |
-| `Delegation`    | id, ai_capability_id, human_accountable_id, mode (M1-M6), start_date, evidence   | → Capability, Official |
-| `TrajectoryLog` | id, capability_id, timestamp, input, output, success, latency                    | → Capability           |
-| `DriftAlert`    | id, capability_id, date, affected_metric, expected_value, actual_value, severity | → Capability           |
+| Entidad             | Atributos Clave                                                                   | Relaciones               |
+| ------------------- | --------------------------------------------------------------------------------- | ------------------------ |
+| `Delegacion`        | id, id_capacidad_ia, id_responsable_humano, modo (M1-M6), fecha_inicio, evidencia | → Capacidad, Funcionario |
+| `RegistroDesempeño` | id, id_capacidad, timestamp, entrada, salida, exito, latencia                     | → Capacidad              |
+| `AlertaDeriva`      | id, id_capacidad, fecha, metrica_afectada, valor_esperado, valor_real, severidad  | → Capacidad              |
 
-### Governance
+### Gobernanza
 
-| Entity              | Key Attributes                                                          | Relationships        |
-| ------------------- | ----------------------------------------------------------------------- | -------------------- |
-| `TechnicalDebt`     | id, description, source, impact, estimated_effort, payment_plan, status | → Sprint[]           |
-| `ApprovedChange`    | id, description, type, risk, approver_id, date, evidence                | → Official           |
-| `EthicalEvaluation` | id, agent_spec_id, justice_crit, transparency_crit, result, v_id        | → AgentSpec, Auditor |
+| Entidad           | Atributos Clave                                                           | Relaciones             |
+| ----------------- | ------------------------------------------------------------------------- | ---------------------- |
+| `DeudaTecnica`    | id, descripcion, fuente, impacto, esfuerzo_estimado, plan_pago, estado    | → Sprint[]             |
+| `CambioAprobado`  | id, descripcion, tipo, riesgo, id_aprobador, fecha, evidencia             | → Funcionario          |
+| `EvaluacionEtica` | id, id_espec_agente, crit_justicia, crit_transparencia, resultado, id_val | → EspecAgente, Auditor |
 
-### Institutional Knowledge Base
+### Base de Conocimiento Institucional
 
-| Entity     | Key Attributes                                                    | Relationships           |
-| ---------- | ----------------------------------------------------------------- | ----------------------- |
-| `Artifact` | id, urn, type, version, status (Draft/Published), content, hash   | → Metadata[], Lineage[] |
-| `Catalog`  | id, namespace, registered_artifacts[], resolution_policy          | → Artifact[]            |
-| `Lineage`  | id, artifact_id, source_origin, transformation, date, responsible | → Artifact              |
+| Entidad     | Atributos Clave                                                      | Relaciones              |
+| ----------- | -------------------------------------------------------------------- | ----------------------- |
+| `Artefacto` | id, urn, tipo, version, estado (Borrador/Publicado), contenido, hash | → Metadatos[], Linaje[] |
+| `Catálogo`  | id, namespace, artefactos_registrados[], politica_resolucion         | → Artefacto[]           |
+| `Linaje`    | id, id_artefacto, origen_fuente, transformacion, fecha, responsable  | → Artefacto             |
 
-### Agents & Orchestration
+### Agentes y Orquestación
 
-| Entity                 | Key Attributes                                                  | Relationships     |
-| ---------------------- | --------------------------------------------------------------- | ----------------- |
-| `AgentSpec`            | id, name, role, goal, cognitive_model, guardrails, kb_policy    | → AgentExecution  |
-| `AgentExecution`       | id, spec_id, current_haic_mode, operational_status, drift_score | → TrajectoryLog[] |
-| `Fleet`                | id, name, member_agents[], coordination_strategy                | → AgentSpec[]     |
-| `OrchestrationSession` | id, fleet_id, user_input, steps[], status, result               | → Fleet           |
+| Entidad              | Atributos Clave                                                      | Relaciones            |
+| -------------------- | -------------------------------------------------------------------- | --------------------- |
+| `EspecAgente`        | id, nombre, rol, objetivo, modelo_cognitivo, guardrails, politica_kb | → EjecucionAgente     |
+| `EjecucionAgente`    | id, id_espec, modo_haic_actual, estado_operativo, puntaje_deriva     | → RegistroDesempeño[] |
+| `Flota`              | id, nombre, agentes_miembros[], estrategia_coordinacion              | → EspecAgente[]       |
+| `SesionOrquestacion` | id, id_flota, entrada_usuario, pasos[], estado, resultado            | → Flota               |
 
-### Organizational Architecture (M10-M11)
+### Arquitectura Organizacional (M10-M11)
 
-**Information Assets:**
+**Activos de Información:**
 
-| Entity          | Key Attributes                                                                               | Relationships           |
-| --------------- | -------------------------------------------------------------------------------------------- | ----------------------- |
-| `Database`      | id, name, type (OLTP/OLAP/NoSQL), engine, schema, owner_id, criticality_level, quality_score | → System, DataLineage[] |
-| `DataLake`      | id, name, zone (raw/curated/trusted), format, volume_tb, ingesta_freq, owner_id              | → DataLineage[]         |
-| `DataWarehouse` | id, name, model (star/snowflake), cubes[], owner_id, bi_connectors[]                         | → Database, Dashboard[] |
-| `ITResource`    | id, name, category (server/network/cloud/storage), location, status, monthly_cost, owner_id  | → System[]              |
+| Entidad         | Atributos Clave                                                                                            | Relaciones               |
+| --------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `BaseDatos`     | id, nombre, tipo (OLTP/OLAP/NoSQL), motor, esquema, id_propietario, nivel_criticidad, puntaje_calidad      | → Sistema, LinajeDatos[] |
+| `DataLake`      | id, nombre, zona (raw/curated/trusted), formato, volumen_tb, frec_ingesta, id_propietario                  | → LinajeDatos[]          |
+| `DataWarehouse` | id, nombre, modelo (estrella/copo_nieve), cubos[], id_propietario, conectores_bi[]                         | → BaseDatos, Panel[]     |
+| `RecursoTI`     | id, nombre, categoria (servidor/red/nube/almacenamiento), ubicacion, estado, costo_mensual, id_propietario | → Sistema[]              |
 
-**Systems & Integrations:**
+**Sistemas e Integraciones:**
 
-| Entity             | Key Attributes                                                                              | Relationships           |
-| ------------------ | ------------------------------------------------------------------------------------------- | ----------------------- |
-| `System`           | id, name, type (core/support/external), lifecycle (L0-L5), owner_id, domain_id, criticality | → Flow[], Integration[] |
-| `Integration`      | id, source_system_id, target_system_id, type (sync/async), protocol (PISEE/direct), status  | → System[]              |
-| `SystemDependency` | id, system_id, flow_id, type (critical/operational/optional), failure_impact                | → System, Flow          |
+| Entidad              | Atributos Clave                                                                                     | Relaciones               |
+| -------------------- | --------------------------------------------------------------------------------------------------- | ------------------------ |
+| `Sistema`            | id, nombre, tipo (core/soporte/externo), ciclo_vida (L0-L5), id_propietario, id_dominio, criticidad | → Flujo[], Integracion[] |
+| `Integracion`        | id, id_sistema_origen, id_sistema_destino, tipo (sinc/asinc), protocolo (PISEE/direct), estado      | → Sistema[]              |
+| `DependenciaSistema` | id, id_sistema, id_flujo, tipo (critico/operativo/opcional), impacto_falla                          | → Sistema, Flujo         |
 
-**Evolution & Governance:**
+**Evolución y Gobernanza:**
 
-| Entity           | Key Attributes                                                                                          | Relationships                |
-| ---------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `RoadmapItem`    | id, system_id, current_level (L0-L5), target_level, deadline, owner_id, status                          | → System, Milestone[]        |
-| `DataLineage`    | id, data_id, source_system_id, target_system_id, transformation, frequency, quality_score               | → System[], Artifact         |
-| `TDEMapping`     | id, tde_obligation, orko_primitive (P1-P5), compliance_status, h_org_contribution                       | → TDEObligation, Primitive   |
-| `TDEScore`       | id, date, docdigital_score, cybersec_score, tramites_score, total_score, integrated_in_h_org            | → Indicator[]                |
-| `ImpactAnalysis` | id, proposed_change, affected_systems[], affected_data[], estimated_risk, mitigations[]                 | → System[], Database[]       |
-| `PortfolioView`  | id, name, type (ResourceMap/DependencyGraph/MaturityRadar), filters, configuration_json, last_generated | → Database, System, DataLake |
+| Entidad           | Atributos Clave                                                                                                | Relaciones                     |
+| ----------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `ItemHojaRuta`    | id, id_sistema, nivel_actual (L0-L5), nivel_objetivo, plazo, id_propietario, estado                            | → Sistema, Hito[]              |
+| `LinajeDatos`     | id, id_dato, id_sistema_origen, id_sistema_destino, transformacion, frecuencia, puntaje_calidad                | → Sistema[], Artefacto         |
+| `MapeoTDE`        | id, obligacion_tde, primitivo_orko (P1-P5), estado_cumplimiento, contribucion_h_org                            | → ObligacionTDE, Primitivo     |
+| `PuntajeTDE`      | id, fecha, puntaje_docdigital, puntaje_ciberseg, puntaje_tramites, puntaje_total, integrado_en_h_org           | → Indicador[]                  |
+| `AnálisisImpacto` | id, cambio_propuesto, sistemas_afectados[], datos_afectados[], riesgo_estimado, mitigaciones[]                 | → Sistema[], BaseDatos[]       |
+| `VistaPortafolio` | id, nombre, tipo (MapaRecursos/GrafoDependencias/RadarMadurez), filtros, json_configuracion, ultima_generacion | → BaseDatos, Sistema, DataLake |
 
 ---
 

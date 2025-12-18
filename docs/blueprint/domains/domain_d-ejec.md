@@ -8,22 +8,22 @@
 
 ## Glosario D-EJEC
 
-| Término  | Definición                                                                                     |
-| -------- | ---------------------------------------------------------------------------------------------- |
-| Convenio | Acto administrativo formal que establece obligaciones entre GORE y un ejecutor. SSOT en D-NORM |
-| Ejecutor | Actor habilitado para materializar proyectos. Ver D-GOB.Actor                                  |
-| PMO      | Project Management Office. Torre de control de proyectos regional                              |
-| EP       | Estado de Pago. Documento que autoriza transferencia parcial o final                           |
-| UT       | Unidad Técnica. Equipo ejecutor responsable de la obra                                         |
-| UJ       | Unidad Jurídica. Área encargada de visación de actos administrativos                           |
-| DIPIR    | División de Presupuesto e Inversión Regional                                                   |
-| ARI      | Anteproyecto Regional de Inversión. Priorización anual de IPR                                  |
-| IPR      | Iniciativa/Proyecto Regional. Ver D-FIN                                                        |
-| H_org    | Dashboard de Salud Organizacional. Ver D-EVOL                                                  |
-| FÉNIX    | Sistema de intervención para proyectos críticos. Ver fenix.md                                  |
-| SISREC   | Sistema de Rendición de Cuentas SUBDERE                                                        |
-| FRIL     | Fondo Regional de Iniciativa Local                                                             |
-| DAF      | División de Administración y Finanzas                                                          |
+| Término  | Definición                                                                                                              |
+| -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Convenio | Acto administrativo formal que establece obligaciones entre GORE y un ejecutor. SADV (Fuente Única de Verdad) en D-NORM |
+| Ejecutor | Actor habilitado para materializar proyectos. Ver D-GOB.Actor                                                           |
+| PMO      | Oficina de Gestión de Proyectos (Project Management Office). Torre de control de proyectos regional                     |
+| EP       | Estado de Pago. Documento que autoriza transferencia parcial o final                                                    |
+| UT       | Unidad Técnica. Equipo ejecutor responsable de la obra                                                                  |
+| UJ       | Unidad Jurídica. Área encargada de visación de actos administrativos                                                    |
+| DIPIR    | División de Presupuesto e Inversión Regional                                                                            |
+| ARI      | Anteproyecto Regional de Inversión. Priorización anual de IPR                                                           |
+| IPR      | Iniciativa/Proyecto Regional. Ver D-FIN                                                                                 |
+| H_org    | Panel de Salud Organizacional. Ver D-EVOL                                                                               |
+| FÉNIX    | Sistema de intervención para proyectos críticos. Ver fenix.md                                                           |
+| SISREC   | Sistema de Rendición de Cuentas SUBDERE                                                                                 |
+| FRIL     | Fondo Regional de Iniciativa Local                                                                                      |
+| DAF      | División de Administración y Finanzas                                                                                   |
 
 ---
 
@@ -31,7 +31,7 @@
 
 Gestionar la materialización de las iniciativas de inversión a través de convenios, supervisión de obras y seguimiento de compromisos, asegurando el cumplimiento de plazos, costos y alcance.
 
-> Principio Core: D-EJEC es el dominio de *ejecución operativa*. Consume definiciones formales de D-NORM (Convenio) y D-FIN (IPR), y produce información de avance para H_org (D-EVOL).
+> Principio Núcleo: D-EJEC es el dominio de *ejecución operativa*. Consume definiciones formales de D-NORM (Convenio) y D-FIN (IPR), y produce información de avance para el Panel de Salud Organizacional (H_org) en D-EVOL.
 
 ---
 
@@ -56,7 +56,7 @@ Funcionalidades:
 
 ### 2. Gestión de Convenios
 
-> Nota de Diseño: La entidad `Convenio` (SSOT) se define en D-NORM. D-EJEC gestiona la *ejecución operativa* (hitos, pagos, riesgos).
+> Nota de Diseño: La entidad `Convenio` (SADV) se define en D-NORM. D-EJEC gestiona la *ejecución operativa* (hitos, pagos, riesgos).
 
 Tipos de Convenio: (→ Ver D-NORM para definición formal)
 
@@ -111,7 +111,7 @@ Actores:
 
 Funcionalidades:
 
-- Dashboard ejecutivo con alertas
+- Panel ejecutivo con alertas
 - Creación y asignación de compromisos
 - Seguimiento con semáforo de vencimiento
 - **Validación de Percepción Ciudadana**: Registro de feedback social durante la obra.
@@ -122,7 +122,7 @@ Funcionalidades:
 Funcionalidades:
 
 - Guías por mecanismo de financiamiento
-- Wizard de vía de financiamiento
+- Asistente (Wizard) de vía de financiamiento
 - Verificación de elegibilidad FRIL
 - Reuniones de inicio con supervisor
 - Reportes de avance periódicos
@@ -133,7 +133,7 @@ Funcionalidades:
 Funcionalidades:
 
 - Gestión de convenios marco sectoriales
-- Dashboard de relaciones sectoriales
+- Panel de relaciones sectoriales
 - Coordinación con ministerios
 
 ---
@@ -252,7 +252,7 @@ flowchart TD
 > - Adjudicación sobre monto recomendado: hasta 10%, tope 7.000 UTM
 > - Si excede estos límites: requiere reevaluación MDSyF y nuevo acuerdo CORE obligatorio.
 
-## 📝 User Stories por Módulo
+## 📝 Historias de Usuario por Módulo
 
 ### Catálogo por Módulo
 
@@ -271,7 +271,7 @@ flowchart TD
 
 | ID             | Título                            | Prioridad |
 | -------------- | --------------------------------- | --------- |
-| US-EJEC-AR-001 | Dashboard ejecutivo AR            | Crítica   |
+| US-EJEC-AR-001 | Panel ejecutivo AR                | Crítica   |
 | US-EJEC-AR-002 | Monitor proyectos alerta crítica  | Crítica   |
 | US-EJEC-AR-003 | Compromisos vencidos por división | Crítica   |
 | US-EJEC-AR-004 | Crear compromiso en reunión       | Crítica   |
@@ -318,12 +318,12 @@ flowchart TD
 
 #### Sectorial y Comunicaciones
 
-| ID              | Título                           | Prioridad |
-| --------------- | -------------------------------- | --------- |
-| US-EJEC-SEC-001 | Gestionar convenios sectoriales  | Alta      |
-| US-EJEC-SEC-002 | Dashboard relaciones sectoriales | Alta      |
-| US-EJEC-PER-001 | Cubrir hito comunicacional obra  | Alta      |
-| US-EJEC-PER-002 | Entrevistar beneficiarios        | Media     |
+| ID              | Título                          | Prioridad |
+| --------------- | ------------------------------- | --------- |
+| US-EJEC-SEC-001 | Gestionar convenios sectoriales | Alta      |
+| US-EJEC-SEC-002 | Panel de relaciones sectoriales | Alta      |
+| US-EJEC-PER-001 | Cubrir hito comunicacional obra | Alta      |
+| US-EJEC-PER-002 | Entrevistar beneficiarios       | Media     |
 
 #### Ejecución (Ejecutor/Rendición)
 
@@ -367,7 +367,7 @@ flowchart TD
 | ------------ | ---------------------------- | ----------------------- |
 | `SYS-SISREC` | Rendición de cuentas SUBDERE | Rendiciones municipales |
 | `SYS-SIGFE`  | Contabilización pagos        | Estados de pago         |
-| `INT-PMO`    | Torre de control             | Dashboard regional      |
+| `INT-PMO`    | Torre de control             | Panel regional          |
 | `SYS-GPS`    | Geolocalización visitas      | Fotos geolocalizadas    |
 
 ---
@@ -388,7 +388,7 @@ flowchart TD
 | Dominio | Relación                                         | Entidades Compartidas        |
 | ------- | ------------------------------------------------ | ---------------------------- |
 | D-PLAN  | IPR priorizadas en ARI se ejecutan vía convenios | IPR, ObjetivoERD             |
-| D-NORM  | Convenio (SSOT del acto administrativo)          | Convenio, ActoAdministrativo |
+| D-NORM  | Convenio (SADV del acto administrativo)          | Convenio, ActoAdministrativo |
 | D-FIN   | IPR, Transferencias, Calificación Ejecutores     | IPR, CDP, Transferencia      |
 | D-BACK  | EP aprobado → Devengo → Pago (cadena contable)   | EstadoPago, Devengo, Pago    |
 | D-GOB   | Actor (entidad base del ejecutor)                | Actor.tipo=EJECUTOR          |

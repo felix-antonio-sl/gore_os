@@ -16,12 +16,12 @@ Gestionar la infraestructura de datos espaciales (IDE) y las capacidades de inte
 
 ## Cuatro Pilares del Dominio
 
-| Pilar         | Componentes                                       |
-| ------------- | ------------------------------------------------- |
-| Planificación | ERD, ARI/PROPIR, instrumentos regionales          |
-| IDE           | Geonodo, servicios OGC, metadatos                 |
-| Analítica     | Mapas temáticos, alertas duplicidad, benchmarking |
-| Gestión       | Catastro fiscal, calidad de datos, política geo   |
+| Pilar         | Componentes                                                 |
+| ------------- | ----------------------------------------------------------- |
+| Planificación | ERD, ARI/PROPIR, instrumentos regionales                    |
+| IDE           | Geonodo, servicios OGC, metadatos                           |
+| Analítica     | Mapas temáticos, alertas duplicidad, evaluación comparativa |
+| Gestión       | Catastro fiscal, calidad de datos, política geo             |
 
 ---
 
@@ -55,7 +55,7 @@ Capacidades:
 - Mapas de calor de inversión
 - Brechas territoriales
 - Alertas de duplicidad
-- Benchmarking de proyectos
+- Evaluación comparativa (Benchmarking) de proyectos
 
 ### 4. Gestión y Gobernanza Territorial
 
@@ -172,12 +172,12 @@ flowchart LR
 
 #### API Institucional
 
-| Endpoint             | Función           |
-| -------------------- | ----------------- |
-| `/datasets`          | Listar conjuntos  |
-| `/datasets/{id}`     | Detalle conjunto  |
-| `/tiles/{z}/{x}/{y}` | Teselas           |
-| `/search`            | Búsqueda avanzada |
+| Endpoint                | Función           |
+| ----------------------- | ----------------- |
+| `/conjuntos-datos`      | Listar conjuntos  |
+| `/conjuntos-datos/{id}` | Detalle conjunto  |
+| `/teselas/{z}/{x}/{y}`  | Teselas (Tiles)   |
+| `/busqueda`             | Búsqueda avanzada |
 
 ---
 
@@ -244,24 +244,20 @@ flowchart LR
 
 ---
 
-## 📝 User Stories por Módulo
+## 📝 Historias de Usuario por Módulo
 
 ### Catálogo por Proceso
 
 #### P1: Ciclo de Vida
 
-| ID              | Título                  | Prioridad | Actor         |
-| --------------- | ----------------------- | --------- | ------------- |
-| US-TERR-IDE-003 | Modelar datos ISO 19110 | Alta      | Admin Geonodo |
-| US-TERR-IDE-004 | Metadatos ISO 19115     | Alta      | Admin Geonodo |
-| US-TERR-IDE-005 | Publicar WMS/WFS/WCS    | Crítica   | Admin Geonodo |
+| US-TERR-IDE-003 | Modelar datos ISO 19110 | Alta      | Administrador Geonodo |
+| US-TERR-IDE-004 | Metadatos ISO 19115     | Alta      | Administrador Geonodo |
+| US-TERR-IDE-005 | Publicar WMS/WFS/WCS    | Crítica   | Administrador Geonodo |
 
 #### P2: Interoperabilidad
 
-| ID              | Título                       | Prioridad | Actor      |
-| --------------- | ---------------------------- | --------- | ---------- |
-| US-TERR-IDE-001 | Definir política geoespacial | Alta      | Coord. IDE |
-| US-TERR-IDE-002 | Federar catálogos IDE Chile  | Alta      | Coord. IDE |
+| US-TERR-IDE-001 | Definir política geoespacial | Alta      | Coord. Regional IDE |
+| US-TERR-IDE-002 | Federar catálogos IDE Chile  | Alta      | Coord. Regional IDE |
 
 #### P3: Gobernanza
 
@@ -290,9 +286,9 @@ flowchart LR
 
 ---
 
-## 🔗 Matriz de Trazabilidad
+## 🔗 Matriz de Trazabilidad (Historias de Usuario)
 
-| Proceso BPMN    | Subproceso  | User Stories               |
+| Proceso BPMN    | Subproceso  | Historias de Usuario       |
 | --------------- | ----------- | -------------------------- |
 | P1: Ciclo Datos | Planificar  | US-TERR-IDE-001            |
 | P1: Ciclo Datos | Calidad     | US-TERR-IDE-003            |

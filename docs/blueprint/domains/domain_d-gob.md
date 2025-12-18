@@ -9,23 +9,23 @@
 
 ## Glosario D-GOB
 
-| Término                   | Sigla | Definición                                                                                    |
-| ------------------------- | ----- | --------------------------------------------------------------------------------------------- |
-| Consejo Regional          | CORE  | Órgano colegiado normativo, resolutivo y fiscalizador del Gobierno Regional.                  |
-| Gobernador Regional       | GR    | Órgano ejecutivo del Gobierno Regional, electo por votación popular.                          |
-| Gabinete Regional         | GAB   | Equipo asesor directo del Gobernador para coordinación política y comunicacional.             |
-| Comité de Coordinación    | CIG   | Instancia de coordinación entre servicios públicos regionales (ex Gabinete Regional).         |
-| Transferencia Competencia | TC    | Proceso administrativo de traspaso de facultades desde nivel central a regional (Ley 19.175). |
-| Glosa 02/16               | -     | Disposiciones de Ley de Presupuestos sobre transparencia y gastos de funcionamiento CORE.     |
-| Circunscripción           | -     | División electoral territorial de la región (Diguillín, Punilla, Itata).                      |
-| Tabla de Sesión           | -     | Agenda oficial de temas a tratar en una sesión del CORE.                                      |
-| Voto Dirimente            | -     | Facultad del Gobernador para resolver empates en votaciones del CORE.                         |
-| Comité GRD                | GRD   | Comité Regional para la Gestión del Riesgo de Desastres (SENAPRED).                           |
-| Actor                     | -     | Entidad externa o interna (Municipio, Servicio, ONG, Persona) que interactúa con el GORE.     |
-| SSOT de Actores           | -     | Single Source of Truth. Directorio maestro de todos los actores del ecosistema regional.      |
-| COSOC                     | -     | Consejo de Organizaciones de la Sociedad Civil.                                               |
-| CTCI                      | -     | Comité Regional de Ciencia, Tecnología, Conocimiento e Innovación.                            |
-| AM                        | -     | Área Metropolitana. Conurbación con gobernanza coordinada (Art. 104 bis LOC).                 |
+| Término                   | Sigla | Definición                                                                                      |
+| ------------------------- | ----- | ----------------------------------------------------------------------------------------------- |
+| Consejo Regional          | CORE  | Órgano colegiado normativo, resolutivo y fiscalizador del Gobierno Regional.                    |
+| Gobernador Regional       | GR    | Órgano ejecutivo del Gobierno Regional, electo por votación popular.                            |
+| Gabinete Regional         | GAB   | Equipo asesor directo del Gobernador para coordinación política y comunicacional.               |
+| Comité de Coordinación    | CIG   | Instancia de coordinación entre servicios públicos regionales (ex Gabinete Regional).           |
+| Transferencia Competencia | TC    | Proceso administrativo de traspaso de facultades desde nivel central a regional (Ley 19.175).   |
+| Glosa 02/16               | -     | Disposiciones de Ley de Presupuestos sobre transparencia y gastos de funcionamiento CORE.       |
+| Circunscripción           | -     | División electoral territorial de la región (Diguillín, Punilla, Itata).                        |
+| Tabla de Sesión           | -     | Agenda oficial de temas a tratar en una sesión del CORE.                                        |
+| Voto Dirimente            | -     | Facultad del Gobernador para resolver empates en votaciones del CORE.                           |
+| Comité GRD                | GRD   | Comité Regional para la Gestión del Riesgo de Desastres (SENAPRED).                             |
+| Actor                     | -     | Entidad externa o interna (Municipio, Servicio, ONG, Persona) que interactúa con el GORE.       |
+| SADV de Actores           | -     | Fuente Única de Verdad (SSOT). Directorio maestro de todos los actores del ecosistema regional. |
+| COSOC                     | -     | Consejo de Organizaciones de la Sociedad Civil.                                                 |
+| CTCI                      | -     | Comité Regional de Ciencia, Tecnología, Conocimiento e Innovación.                              |
+| AM                        | -     | Área Metropolitana. Conurbación con gobernanza coordinada (Art. 104 bis LOC).                   |
 
 ---
 
@@ -100,7 +100,7 @@ Funcionalidades:
 
 Funcionalidades:
 
-- Dashboard ejecutivo integrado (KPIs regionales)
+- Panel ejecutivo integrado (KPIs regionales)
 - Gestión de compromisos de autoridad (Semáforo de cumplimiento)
 - Firma electrónica avanzada de actos
 - Coordinación de relaciones internacionales (URAI)
@@ -132,18 +132,18 @@ Funcionalidades:
 - Coordinación con Delegación Presidencial
 - Gestión de crisis comunicacionales
 
-### M5: Gestión Relacional (CRM) *(Integrado desde D-COORD)*
+### M5: Gestión Relacional (Gestor de Relaciones - CRM) *(Integrado desde D-COORD)*
 
-| Atributo    | Descripción                                                         |
-| ----------- | ------------------------------------------------------------------- |
-| Propósito   | Directorio maestro de actores territoriales (SSOT)                  |
-| Componentes | Registro de Actores, Roles (Ejecutor/Proveedor), Historial, Scoring |
+| Atributo    | Descripción                                                                        |
+| ----------- | ---------------------------------------------------------------------------------- |
+| Propósito   | Directorio maestro de actores territoriales (SADV)                                 |
+| Componentes | Registro de Actores, Roles (Ejecutor/Proveedor), Historial, Calificación (Scoring) |
 
 Funcionalidades:
 
-- Registro Único de Actores: SSOT para D-FIN (Ejecutores), D-BACK (Proveedores).
+- Registro Único de Actores: SADV para D-FIN (Ejecutores), D-BACK (Proveedores).
 - Historial de Interacciones: Trazabilidad de reuniones, convenios y conflictos.
-- Scoring Relacional: Nivel de vinculación y cumplimiento.
+- Calificación (Scoring) Relacional: Nivel de vinculación y cumplimiento.
 - **Mesa CTCI**: Articulación con universidades y centros de investigación para la estrategia regional.
 
 ### M6: Participación Ciudadana *(Integrado desde D-COORD)*
@@ -324,16 +324,16 @@ Frecuencia: A demanda
 
 ### Selección de US Clave
 
-| ID              | Título                        | Proceso | Prioridad |
-| --------------- | ----------------------------- | ------- | --------- |
-| US-GOB-CORE-001 | Carpeta digital sesión CORE   | P1      | Crítica   |
-| US-GOB-CORE-007 | Cumplimiento acuerdos CORE    | P1      | Crítica   |
-| US-GOB-DESC-002 | Negociar transferencia        | P2      | Crítica   |
-| US-GOB-GRD-001  | Aprobar Plan RRD              | P3      | Alta      |
-| US-GOB-GR-006   | Dashboard ejecutivo integrado | P4      | Crítica   |
-| US-GOB-GAB-002  | Seguimiento compromisos GR    | P4      | Crítica   |
-| US-GOB-ACT-001  | Registrar nuevo actor         | P5      | Alta      |
-| US-GOB-ACT-003  | Habilitar rol ejecutor        | P5      | Crítica   |
+| ID              | Título                      | Proceso | Prioridad |
+| --------------- | --------------------------- | ------- | --------- |
+| US-GOB-CORE-001 | Carpeta digital sesión CORE | P1      | Crítica   |
+| US-GOB-CORE-007 | Cumplimiento acuerdos CORE  | P1      | Crítica   |
+| US-GOB-DESC-002 | Negociar transferencia      | P2      | Crítica   |
+| US-GOB-GRD-001  | Aprobar Plan RRD            | P3      | Alta      |
+| US-GOB-GR-006   | Panel ejecutivo integrado   | P4      | Crítica   |
+| US-GOB-GAB-002  | Seguimiento compromisos GR  | P4      | Crítica   |
+| US-GOB-ACT-001  | Registrar nuevo actor       | P5      | Alta      |
+| US-GOB-ACT-003  | Habilitar rol ejecutor      | P5      | Crítica   |
 
 > *Para el detalle completo de las 57 historias, ver catálogo YAML adjunto.*
 
@@ -358,16 +358,16 @@ Frecuencia: A demanda
 | `Competencia`  | id, nombre, ministerio_origen, estado_TC, fecha_traspaso                | → IndicadorDesempeño[] |
 | `Emergencia`   | id, tipo, zona_afectada, nivel_alerta, fecha_inicio                     | → AccionRespuesta[]    |
 
-### Relacionamiento (CRM)
+### Relacionamiento (Gestor de Relaciones - CRM)
 
-| Entidad             | Atributos Clave                                                                                         | Relaciones                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `Actor`             | id, rut, razon_social, tipo, contacto_principal, email, telefono, comuna_id, estado, scoring_relacional | → HistorialActor[], ActorIPR[] (D-FIN), ConvenioMandato[] |
-| `HistorialActor`    | id, actor_id, evento_tipo, descripcion, fecha, funcionario_id                                           | → Actor                                                   |
-| `InteraccionActor`  | id, actor_id, tipo (reunion/llamada/email/convenio), fecha, resumen                                     | → Actor                                                   |
-| `RolActor`          | id, actor_id, rol (EJECUTOR/PROVEEDOR/MANDANTE/SOCIO), estado, fecha_habilitacion                       | → Actor                                                   |
-| `ConvenioMandato`   | id, mandante_id, mandatario_id, hito_inicio, presupuesto, estado                                        | → Actor (Mandante)                                        |
-| `AreaMetropolitana` | id, nombre, comunas_constituyentes[], director_am_id, estado                                            | → Comuna[]                                                |
+| Entidad             | Atributos Clave                                                                                               | Relaciones                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `Actor`             | id, rut, razon_social, tipo, contacto_principal, correo, telefono, id_comuna, estado, calificación_relacional | → HistorialActor[], ActorIPR[] (D-FIN), ConvenioMandato[] |
+| `HistorialActor`    | id, id_actor, tipo_evento, descripcion, fecha, id_funcionario                                                 | → Actor                                                   |
+| `InteraccionActor`  | id, id_actor, tipo (reunion/llamada/correo/convenio), fecha, resumen                                          | → Actor                                                   |
+| `RolActor`          | id, id_actor, rol (EJECUTOR/PROVEEDOR/MANDANTE/SOCIO), estado, fecha_habilitacion                             | → Actor                                                   |
+| `ConvenioMandato`   | id, id_mandante, id_mandatario, hito_inicio, presupuesto, estado                                              | → Actor (Mandante)                                        |
+| `AreaMetropolitana` | id, id_nombre, comunas_constituyentes[], id_director_am, estado                                               | → Comuna[]                                                |
 
 ### Participación Ciudadana
 
@@ -389,7 +389,7 @@ Frecuencia: A demanda
 | SENAPRED             | Plataforma de gestión de emergencias | Externo   |
 | ORG-CHILEPROVEEDORES | Registro de proveedores              | Externo   |
 | SYS-SII              | Validación RUT empresas/personas     | Externo   |
-| INT-GOREOS           | Directorio centralizado de actores   | SSOT      |
+| INT-GOREOS           | Directorio centralizado de actores   | SADV      |
 
 ---
 

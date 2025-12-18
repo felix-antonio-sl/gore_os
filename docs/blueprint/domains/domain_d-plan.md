@@ -59,7 +59,7 @@ flowchart TB
 
     subgraph OBSERVATORIO["📈 Observatorio"]
         IND["Indicadores<br/>Territoriales"]
-        DASH["Dashboards<br/>Avance"]
+        DASH["Paneles de<br/>Avance"]
     end
 
     ERD --> PROT
@@ -88,7 +88,7 @@ Funcionalidades:
 - Editor colaborativo de ERD (Objetivos, Lineamientos, Indicadores)
 - Vinculación con ODS y Programas de Gobierno
 - Repositorio documental de versiones (productos de seguridad)
-- Dashboard de avance por eje estratégico con semáforos
+- Panel de avance por eje estratégico con semáforos
 - Alertas de objetivos sin iniciativas vinculadas (>180 días)
 
 - Reportes de coherencia ERD ↔ Presupuesto ejecutado
@@ -121,7 +121,7 @@ Funcionalidades:
 
 - Formulario digital de solicitud de iniciativas (divisiones)
 
-- Scoring multicriterio de priorización (alineamiento ERD, impacto, factibilidad)
+- Calificación (Scoring) multicriterio de priorización (alineamiento ERD, impacto, factibilidad)
 
 - Consolidación automática por fuente/fondo (FNDR, FRPD, ISAR - Inversión Sectorial)
 
@@ -372,7 +372,7 @@ flowchart TB
 
     P5_1 -.- N1["Fuentes: INE, CASEN<br/>BCN, servicios"]
     P5_2 -.- N2["Comparación con<br/>metas ERD"]
-    P5_3 -.- N3["Dashboard público<br/>Observatorio Regional"]
+    P5_3 -.- N3["Panel público<br/>Observatorio Regional"]
 ```
 
 Actores: Observatorio DIPLADE, Áreas técnicas  
@@ -434,11 +434,11 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ### US Módulo ERD Digital
 
-| ID              | User Story                                                                                                   | Prioridad |
+| ID              | Historia de Usuario                                                                                          | Prioridad |
 | --------------- | ------------------------------------------------------------------------------------------------------------ | --------- |
 | US-PLAN-ERD-001 | Como Analista DIPLADE quiero navegar el árbol ERD con filtros para ubicar rápidamente objetivos estratégicos | Alta      |
 | US-PLAN-ERD-002 | Como Analista DIPIR quiero vincular una IPR a un objetivo ERD para garantizar alineamiento estratégico       | Alta      |
-| US-PLAN-ERD-003 | Como Jefe DIPLADE quiero visualizar un dashboard de avance por eje para monitorear cumplimiento              | Alta      |
+| US-PLAN-ERD-003 | Como Jefe DIPLADE quiero visualizar un panel de avance por eje para monitorear cumplimiento                  | Alta      |
 | US-PLAN-ERD-004 | Como Sistema quiero alertar objetivos sin iniciativas >180 días para activar intervención FÉNIX              | Media     |
 | US-PLAN-ERD-005 | Como Jefe DIPLADE quiero generar reportes coherencia ERD-Presupuesto para evaluar ejecución                  | Media     |
 | US-PLAN-ERD-006 | Como DIPLADE quiero gestionar proceso de actualización ERD para cumplir ciclo decenal                        | Alta      |
@@ -447,7 +447,7 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ### US Módulo PROT Digital
 
-| ID               | User Story                                                                                             | Prioridad |
+| ID               | Historia de Usuario                                                                                    | Prioridad |
 | ---------------- | ------------------------------------------------------------------------------------------------------ | --------- |
 | US-PLAN-PROT-001 | Como Analista DIPLADE quiero visualizar zonificación PROT en visor geoespacial para evaluar territorio | Alta      |
 | US-PLAN-PROT-002 | Como Analista DIPLADE quiero validar compatibilidad IPR↔Zona para prevenir conflictos territoriales    | Alta      |
@@ -458,7 +458,7 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ### US Módulo ARI/PROPIR
 
-| ID              | User Story                                                                                              | Prioridad |
+| ID              | Historia de Usuario                                                                                     | Prioridad |
 | --------------- | ------------------------------------------------------------------------------------------------------- | --------- |
 | US-PLAN-ARI-001 | Como Jefe de División quiero solicitar iniciativa para ARI vía formulario digital para agilizar proceso | Alta      |
 | US-PLAN-ARI-002 | Como DIPLADE quiero priorizar iniciativas con scoring multicriterio para transparentar decisiones       | Alta      |
@@ -470,7 +470,7 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ### US Módulo Observatorio
 
-| ID              | User Story                                                                                    | Prioridad |
+| ID              | Historia de Usuario                                                                           | Prioridad |
 | --------------- | --------------------------------------------------------------------------------------------- | --------- |
 | US-PLAN-OBS-001 | Como Analista quiero consultar indicadores territoriales por comuna para diagnóstico local    | Alta      |
 | US-PLAN-OBS-002 | Como DIPLADE quiero vincular indicadores a objetivos ERD para medir avance estratégico        | Alta      |
@@ -482,7 +482,7 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ### US Módulo Participación
 
-| ID               | User Story                                                                                              | Prioridad |
+| ID               | Historia de Usuario                                                                                     | Prioridad |
 | ---------------- | ------------------------------------------------------------------------------------------------------- | --------- |
 | US-PLAN-PART-001 | Como DIPLADE quiero registrar cabildo territorial con asistencia y propuestas para documentar proceso   | Alta      |
 | US-PLAN-PART-002 | Como Sistema quiero sintetizar aportes ciudadanos con IA para facilitar análisis                        | Media     |
@@ -493,7 +493,7 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ### US Módulo Apoyo Comunal
 
-| ID              | User Story                                                                                   | Prioridad |
+| ID              | Historia de Usuario                                                                          | Prioridad |
 | --------------- | -------------------------------------------------------------------------------------------- | --------- |
 | US-PLAN-MUN-001 | Como SECPLA quiero solicitar asistencia técnica para formulación de proyectos RS             | Alta      |
 | US-PLAN-MUN-002 | Como Analista DIPLADE quiero acceder a repositorio de PLADECOs para verificar coherencia ERD | Alta      |
@@ -503,19 +503,19 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ### US Módulo CDP (Convenios de Programación)
 
-| ID              | User Story                                                                                                  | Prioridad |
-| --------------- | ----------------------------------------------------------------------------------------------------------- | --------- |
-| US-PLAN-CDP-001 | Como Analista DIPLADE quiero registrar nuevo convenio con ministerio para iniciar seguimiento formal        | Alta      |
-| US-PLAN-CDP-002 | Como Jefe DIPLADE quiero visualizar dashboard de convenios activos y sus hitos para monitorear cumplimiento | Alta      |
-| US-PLAN-CDP-003 | Como Sistema quiero alertar convenios a 90 días de vencimiento sin renovación para activar gestión          | Alta      |
-| US-PLAN-CDP-004 | Como DIPIR quiero vincular IPR a convenio de programación para trazabilidad financiera                      | Alta      |
-| US-PLAN-CDP-005 | Como Jefe DIPLADE quiero generar informe de ejecución CDP para reunión con ministerio sectorial             | Media     |
+| ID              | Historia de Usuario                                                                                     | Prioridad |
+| --------------- | ------------------------------------------------------------------------------------------------------- | --------- |
+| US-PLAN-CDP-001 | Como Analista DIPLADE quiero registrar nuevo convenio con ministerio para iniciar seguimiento formal    | Alta      |
+| US-PLAN-CDP-002 | Como Jefe DIPLADE quiero visualizar panel de convenios activos y sus hitos para monitorear cumplimiento | Alta      |
+| US-PLAN-CDP-003 | Como Sistema quiero alertar convenios a 90 días de vencimiento sin renovación para activar gestión      | Alta      |
+| US-PLAN-CDP-004 | Como DIPIR quiero vincular IPR a convenio de programación para trazabilidad financiera                  | Alta      |
+| US-PLAN-CDP-005 | Como Jefe DIPLADE quiero generar informe de ejecución CDP para reunión con ministerio sectorial         | Media     |
 
 ---
 
 ## Matriz de Trazabilidad
 
-| Proceso                    | User Stories                | Entidades                                             |
+| Proceso                    | Historias de Usuario        | Entidades                                             |
 | -------------------------- | --------------------------- | ----------------------------------------------------- |
 | P1: Actualización ERD      | US-PLAN-ERD-001 a 006       | ERD, EjeEstrategico, Lineamiento, ObjetivoEstrategico |
 | P2: Ciclo ARI/PROPIR       | US-PLAN-ARI-001 a 005       | ARI, LineaARI, IPR                                    |

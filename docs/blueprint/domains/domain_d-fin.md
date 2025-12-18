@@ -235,12 +235,12 @@ flowchart TD
     classDef mecanismo fill:#2ecc71,stroke:#27ae60,color:#fff
     classDef inadmisible fill:#e74c3c,stroke:#c0392b,color:#fff
     classDef alerta fill:#f39c12,stroke:#d68910,color:#fff
-    classDef decision fill:#3498db,stroke:#2980b9,color:#fff
+    classDef decisión fill:#3498db,stroke:#2980b9,color:#fff
     
     class FRIL,SNI_MUNI,SNI_EST,SNI_OBRA,C33_CONS,C33_ANF,C33_EST,FRPD_IDI,FRPD_PRIV,FRPD_PPR,G06,TRANSF,S8,ISAR mecanismo
     class INADM1,INADM2 inadmisible
     class MML_REQ alerta
-    class Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10 decision
+    class Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10 decisión
 ```
 
 ### 5. Presupuesto Regional (Dimensión Estratégica)
@@ -323,7 +323,7 @@ Funcionalidades:
 
 - **Panel de Portafolio**: Visión consolidada IPR por eje ERD, riesgo y retorno esperado
 - **Teoría de Cambio**: Registro de hipótesis causal y supuestos clave por IPR estratégica
-- **PuntajeImpacto**: Puntuación ponderada de retorno territorial (Social 30% + Económico 30% + Ambiental 25% + Institucional 15%)
+- **Puntaje de Impacto (PuntajeImpacto)**: Puntuación ponderada de retorno territorial (Social 30% + Económico 30% + Ambiental 25% + Institucional 15%)
 - **Análisis de Diversificación**: Alertas de concentración por eje, territorio o ejecutor
 - **Proyectos Emblemáticos**: Seguimiento priorizado para iniciativas Ñuble 250
 - **Simulador de Escenarios**: Proyección de impacto ante reasignación de recursos
@@ -846,7 +846,7 @@ flowchart LR
 
 ---
 
-## 📝 User Stories por Módulo
+## 📝 Historias de Usuario por Módulo
 
 ### Catálogo por Proceso
 
@@ -916,7 +916,7 @@ flowchart LR
 
 ## 🔗 Matriz de Trazabilidad
 
-| Proceso BPMN       | Subproceso                 | User Stories Relacionadas                                         |
+| Proceso BPMN       | Subproceso                 | Historias de Usuario Relacionadas                                 |
 | ------------------ | -------------------------- | ----------------------------------------------------------------- |
 | P0: Selector Vías  | Decisión estratégica       | US-FIN-IPR-001, US-FIN-IPR-002                                    |
 | P1: Ingreso        | Recepción                  | US-FIN-IPR-004, US-FIN-GOB-004                                    |
@@ -948,7 +948,7 @@ flowchart LR
 
 ## 📊 Matriz de Concordancia (Módulo ↔ Proceso ↔ US ↔ Entidades)
 
-| Módulo                         | Proceso BPMN                | User Stories                             | Entidades de Datos                          |
+| Módulo                         | Proceso BPMN                | Historias de Usuario                     | Entidades de Datos                          |
 | ------------------------------ | --------------------------- | ---------------------------------------- | ------------------------------------------- |
 | **M1: Captación**              | P0: Selector de Vías        | US-FIN-IPR-001, 002, US-FIN-360-001, 002 | `Oportunidad`, `FaseEmbudo`, `Mecanismo`    |
 | **M2: Capital Base**           | PP1: Formulación (D02)      | US-FIN-FORM-001 a 005                    | `AsignacionPresupuestaria`                  |
@@ -967,7 +967,7 @@ flowchart LR
 | ---------- | ----- | ----------- | ------ | ----------- |
 | Módulos    | 10    | 10 ✓        | 10 ✓   | 10 ✓        |
 
-> **Resultado**: Concordancia completa. Todo módulo tiene proceso, user stories y entidades asociadas.
+> **Resultado**: Concordancia completa. Todo módulo tiene proceso, historias de usuario y entidades asociadas.
 
 ### US Módulo Gestión de Ejecutores (M7)
 

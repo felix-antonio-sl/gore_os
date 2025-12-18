@@ -21,7 +21,7 @@ Establecer las reglas de coexistencia entre el **Plan de Transformación Digital
 
 ### 2.1 Dimensión Soporte Electrónico (D1)
 
-| PTD ID | Iniciativa PTD              | Dominio GORE_OS    | Módulo | User Stories               |
+| PTD ID | Iniciativa PTD              | Dominio GORE_OS    | Módulo | Historias de Usuario       |
 | ------ | --------------------------- | ------------------ | ------ | -------------------------- |
 | D1-01  | Autenticación ClaveÚnica    | **D-TDE**          | M2     | US-TDE-AUTH-001            |
 | D1-02  | Interoperabilidad PISEE     | **D-TDE**          | M3     | US-TDE-INTEROP-001/002/003 |
@@ -32,22 +32,22 @@ Establecer las reglas de coexistencia entre el **Plan de Transformación Digital
 
 ### 2.2 Dimensión Calidad Web (D2)
 
-| PTD ID    | Iniciativa PTD             | Dominio GORE_OS       | Módulo | User Stories    |
-| --------- | -------------------------- | --------------------- | ------ | --------------- |
-| D2.1-AI4  | Arq. Información Web       | **D-TDE**             | M1     | US-TDE-WEB-001  |
-| D2.1-TE9  | Tecnología Web             | **D-TDE**             | M1     | US-TDE-WEB-002  |
-| D2.1-AC10 | Atención Ciudadana Web     | **D-TDE** + D-GESTION | M1     | US-TDE-WEB-003  |
-| D2.2-CL5  | Lenguaje Claro Servicio    | **D-TDE**             | M1     | US-TDE-SERV-001 |
-| D2.2-AI10 | Arq. Info Servicio Digital | **D-TDE**             | M1     | US-TDE-SERV-002 |
-| D2.2-EG17 | Enfoque de Género          | **D-TDE** + D-GESTION | M1     | US-TDE-SERV-001 |
+| PTD ID    | Iniciativa PTD             | Dominio GORE_OS       | Módulo | Historias de Usuario |
+| --------- | -------------------------- | --------------------- | ------ | -------------------- |
+| D2.1-AI4  | Arq. Información Web       | **D-TDE**             | M1     | US-TDE-WEB-001       |
+| D2.1-TE9  | Tecnología Web             | **D-TDE**             | M1     | US-TDE-WEB-002       |
+| D2.1-AC10 | Atención Ciudadana Web     | **D-TDE** + D-GESTION | M1     | US-TDE-WEB-003       |
+| D2.2-CL5  | Lenguaje Claro Servicio    | **D-TDE**             | M1     | US-TDE-SERV-001      |
+| D2.2-AI10 | Arq. Info Servicio Digital | **D-TDE**             | M1     | US-TDE-SERV-002      |
+| D2.2-EG17 | Enfoque de Género          | **D-TDE** + D-GESTION | M1     | US-TDE-SERV-001      |
 
 ### 2.3 Dimensión Gestión de Datos (D3)
 
-| PTD ID   | Iniciativa PTD           | Dominio GORE_OS    | Módulo | User Stories        |
-| -------- | ------------------------ | ------------------ | ------ | ------------------- |
-| D3-VE-01 | Visión Estratégica Datos | **D-TDE** + D-EVOL | M1     | US-TDE-DATA-001     |
-| D3-GO-01 | Gobernanza Datos         | **D-TDE**          | M1     | US-TDE-DATA-001/002 |
-| D3-AD-01 | Arquitectura/Doc Datos   | **D-TDE** + D-EVOL | M1     | US-TDE-DATA-002/003 |
+| PTD ID   | Iniciativa PTD           | Dominio GORE_OS    | Módulo | Historias de Usuario |
+| -------- | ------------------------ | ------------------ | ------ | -------------------- |
+| D3-VE-01 | Visión Estratégica Datos | **D-TDE** + D-EVOL | M1     | US-TDE-DATA-001      |
+| D3-GO-01 | Gobernanza Datos         | **D-TDE**          | M1     | US-TDE-DATA-001/002  |
+| D3-AD-01 | Arquitectura/Doc Datos   | **D-TDE** + D-EVOL | M1     | US-TDE-DATA-002/003  |
 
 ---
 
@@ -78,14 +78,14 @@ Establecer las reglas de coexistencia entre el **Plan de Transformación Digital
 ### 4.2 Funciones del Comité
 
 1. **Aprobar** toda iniciativa de desarrollo TI >100 UTM
-2. **Priorizar** backlog de User Stories cada trimestre
+2. **Priorizar** lista de pendientes (Backlog) de Historias de Usuario cada trimestre
 3. **Resolver** conflictos entre dominios GORE_OS
 4. **Reportar** avance PMG a la Red de Gobierno Digital
 5. **Vetar** desarrollos que violen la arquitectura GORE_OS
 
 ### 4.3 Sesiones
 
-| Tipo           | Frecuencia             | Quorum | Convocatoria                  |
+| Ordinaria      | Mensual (primer lunes) | Quórum | Convocatoria                  |
 | -------------- | ---------------------- | ------ | ----------------------------- |
 | Ordinaria      | Mensual (primer lunes) | 50%+1  | CTD con 5 días hábiles        |
 | Extraordinaria | A solicitud            | 50%+1  | Presidente con 2 días hábiles |
@@ -99,7 +99,7 @@ Establecer las reglas de coexistencia entre el **Plan de Transformación Digital
 > [!CAUTION]
 > **Queda expresamente prohibido** iniciar cualquier proyecto de desarrollo, adquisición o contratación de software que:
 > 1. No esté mapeado a un Dominio del Blueprint GORE_OS
-> 2. No tenga User Stories aprobadas en el backlog D-TDE
+> 2. No tenga Historias de Usuario aprobadas en la lista de pendientes (Backlog) D-TDE
 > 3. No haya sido evaluado por el Comité TDE
 > 4. No cumpla los estándares de interoperabilidad (PISEE/API)
 
@@ -108,7 +108,7 @@ Establecer las reglas de coexistencia entre el **Plan de Transformación Digital
 ```mermaid
 flowchart TD
     A[Necesidad TI Identificada] --> B{¿Existe US en GORE_OS?}
-    B -->|Sí| C[Priorizar en Backlog]
+    B -->|Sí| C[Priorizar en Lista de Pendientes]
     B -->|No| D[Crear US en Dominio]
     D --> E[Revisar Comité TDE]
     E -->|Aprobado| C
@@ -134,14 +134,14 @@ flowchart TD
 
 ### 6.1 Mapeo de Hitos PMG ↔ GORE_OS
 
-El avance del PTD (PMG-MEI) se reportará automáticamente desde el progreso de User Stories en GORE_OS:
+El avance del PTD (PMG-MEI) se reportará automáticamente desde el progreso de Historias de Usuario en GORE_OS:
 
-| Hito PMG               | Evidencia GORE_OS                          |
-| ---------------------- | ------------------------------------------ |
-| Hito cumplido          | US en estado "Done" + evidencia en sistema |
-| Actividad ejecutada    | US en estado "In Progress"                 |
-| Indicador de proceso   | % US completadas / US planificadas         |
-| Indicador de resultado | KPI del módulo D-TDE correspondiente       |
+| Hito PMG               | Evidencia GORE_OS                            |
+| ---------------------- | -------------------------------------------- |
+| Hito cumplido          | US en estado "Completada" (Finalizada) + evidencia |
+| Actividad ejecutada    | US en estado "En Progreso" (En Progreso)     |
+| Indicador de proceso   | % Historias de Usuario completadas           |
+| Indicador de resultado | KPI del módulo D-TDE correspondiente         |
 
 ### 6.2 Responsabilidad de Reporte
 
@@ -166,7 +166,7 @@ El avance del PTD (PMG-MEI) se reportará automáticamente desde el progreso de 
 
 > Yo, en mi calidad de [CARGO], me comprometo a:
 > 1. No promover desarrollos TI fuera del marco GORE_OS
-> 2. Priorizar las User Stories del dominio bajo mi responsabilidad
+> 2. Priorizar las Historias de Usuario del dominio bajo mi responsabilidad
 > 3. Reportar oportunamente los avances al Comité TDE
 > 4. Rechazar proveedores que no cumplan los estándares técnicos
 

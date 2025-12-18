@@ -10,24 +10,24 @@
 
 ## Glosario D-GESTION
 
-| Término            | Definición                                                                                   |
-| ------------------ | -------------------------------------------------------------------------------------------- |
-| H_gore             | Tactical Health Score. Daily/weekly operational health of the GORE.                          |
-| H_org              | Organizational Health Score. Strategic systemic maturity index (see D-EVOL).                 |
-| SCG                | Sistema de Control de Gestión. Conecta estrategia (ERD), presupuesto y resultados operativos |
-| OKRs               | Objectives & Key Results. Metodología de gestión por objetivos implementada vía POA          |
-| UCI                | Unidad de Control Interno. Gestión de riesgos, controles y contraparte técnica CGR           |
-| POA                | Plan Operativo Anual. Desagregación de objetivos ERD en metas divisionales                   |
-| PDCA               | Plan-Do-Check-Act. Ciclo de mejora continua institucional                                    |
-| Playbook Operativo | Procedimiento estructurado para tareas recurrentes, crisis o onboarding                      |
-| DPR                | Delegado Presidencial Regional. Representante del gobierno central en la región              |
-| COSOC              | Consejo de la Sociedad Civil Regional. Órgano consultivo de participación                    |
-| CTCI               | Comité Regional de Ciencia, Tecnología, Conocimiento e Innovación para el Desarrollo         |
-| LDP                | Ley de Protección de Datos Personales (Ley 21.719)                                           |
-| NPS                | Net Promoter Score. Indicador de satisfacción y lealtad de usuarios/funcionarios             |
-| RACI               | Responsible, Accountable, Consulted, Informed. Matriz de asignación de responsabilidades     |
-| SMART              | Specific, Measurable, Achievable, Relevant, Time-bound. Criterios para indicadores           |
-| IPR                | Inversión Pública Regional. Proyectos de inversión financiados por el GORE                   |
+| Término            | Definición                                                                                                           |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| H_gore             | Puntaje de Salud Táctico (Tactical Health Score). Salud operativa diaria/semanal del GORE.                           |
+| H_org              | Puntaje de Salud Organizacional (Organizational Health Score). Índice de madurez sistémica estratégica (ver D-EVOL). |
+| SCG                | Sistema de Control de Gestión. Conecta estrategia (ERD), presupuesto y resultados operativos                         |
+| OKRs               | Objectives & Key Results. Metodología de gestión por objetivos implementada vía POA                                  |
+| UCI                | Unidad de Control Interno. Gestión de riesgos, controles y contraparte técnica CGR                                   |
+| POA                | Plan Operativo Anual. Desagregación de objetivos ERD en metas divisionales                                           |
+| PDCA               | Plan-Do-Check-Act. Ciclo de mejora continua institucional                                                            |
+| Playbook Operativo | Procedimiento estructurado para tareas recurrentes, crisis o onboarding                                              |
+| DPR                | Delegado Presidencial Regional. Representante del gobierno central en la región                                      |
+| COSOC              | Consejo de la Sociedad Civil Regional. Órgano consultivo de participación                                            |
+| CTCI               | Comité Regional de Ciencia, Tecnología, Conocimiento e Innovación para el Desarrollo                                 |
+| LDP                | Ley de Protección de Datos Personales (Ley 21.719)                                                                   |
+| NPS                | Net Promoter Score. Indicador de satisfacción y lealtad de usuarios/funcionarios                                     |
+| RACI               | Responsible, Accountable, Consulted, Informed. Matriz de asignación de responsabilidades                             |
+| SMART              | Specific, Measurable, Achievable, Relevant, Time-bound. Criterios para indicadores                                   |
+| IPR                | Inversión Pública Regional. Proyectos de inversión financiados por el GORE                                           |
 
 > Fuente canónica: [kb_gn_035_estrategia_gestion_koda.yml](file:///Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_035_estrategia_gestion_koda.yml)
 
@@ -86,7 +86,7 @@ Indicadores de Desempeño (SMART):
 Funcionalidades:
 
 - Definición de POA alineado a ERD
-- Dashboard de indicadores por división
+- Panel de indicadores por división
 - Reportes mensuales automatizados
 - Convenios de desempeño divisionales
 
@@ -107,15 +107,15 @@ Tabla Comparativa H_gore vs H_org:
 
 Dimensiones H_gore:
 
-| Dimension             | Indicators                        | Weight |
-| --------------------- | --------------------------------- | ------ |
-| Budget Execution      | % execution, deviation vs plan    | 20%    |
-| IPR Portfolio         | % progress, projects at risk      | 20%    |
-| Accountabilities      | % mora, avg review days           | 20%    |
-| Regulatory Compliance | UCI/CGR findings, timely sumaries | 15%    |
-| Agreements            | % active OK, near expirations     | 10%    |
-| TDE Compliance        | % norms met (Basal Floor)         | 10%    |
-| Satisfaction          | Internal NPS, response times      | 5%     |
+| Dimensión                | Indicadores                          | Peso |
+| ------------------------ | ------------------------------------ | ---- |
+| Ejecución Presupuestaria | % ejecución, desviación vs plan      | 20%  |
+| Cartera de IPR           | % avance, proyectos en riesgo        | 20%  |
+| Responsabilidades        | % mora, días promedio de revisión    | 20%  |
+| Cumplimiento Normativo   | Hallazgos UCI/CGR, sumarios en plazo | 15%  |
+| Convenios                | % convenios vigentes, vencimientos   | 10%  |
+| Cumplimiento TDE         | % normas cumplidas (Piso Basal)      | 10%  |
+| Satisfacción             | NPS Interno, tiempos de respuesta    | 5%   |
 
 > **Nota:** El cumplimiento TDE indica higiene normativa. Un bajo puntaje aquí no invalida el alto desempeño en dimensiones operativas (Presupuesto/IPR), reflejando el principio de "Evolución Paralela".
 
@@ -128,15 +128,15 @@ Scale: 0-100 | Target: ≥80 (green zone)
 
 Escalation Thresholds:
 
-| Threshold             | Action                                 |
-| --------------------- | -------------------------------------- |
-| H_gore < 60 (2 weeks) | Management Notification + Playbook P01 |
-| H_gore < 50           | FÉNIX Level IV Activation              |
+| Umbral               | Acción                                  |
+| -------------------- | --------------------------------------- |
+| H_gore < 60 (2 sem.) | Notificación a Dirección + Playbook P01 |
+| H_gore < 50          | Activación FÉNIX Nivel IV               |
 
 Funcionalidades:
 
-- Dashboard H_gore en tiempo real
-- Drill-down por dimensión
+- Panel H_gore en tiempo real
+- Análisis detallado (Drill-down) por dimensión
 - Tendencia histórica (7-30-90 días)
 - Alertas configurables con escalamiento
 
@@ -146,23 +146,23 @@ Funcionalidades:
 
 Catálogo de Playbooks Operativos:
 
-| ID  | Nombre                   | Trigger                                | Duración  |
-| --- | ------------------------ | -------------------------------------- | --------- |
-| P01 | Low H_gore Recovery      | H_gore < 60                            | 1 día     |
-| P02 | Handoff Reduction        | Handoffs excesivos                     | 2 días    |
-| P09 | Drift Detection Response | Degradación sostenida del cumplimiento | 3 días    |
-| P12 | Data Quality Recovery    | Problemas calidad datos                | 2 semanas |
-| P13 | Political Alignment      | Conflictos stakeholders                | 2 semanas |
-| P14 | Client Expectation Mgmt  | Insatisfacción stakeholders            | 3-7 días  |
-| P15 | Adaptive Cadence         | Shocks contextuales                    | Variable  |
+| ID  | Nombre                     | Trigger                                | Duración  |
+| --- | -------------------------- | -------------------------------------- | --------- |
+| P01 | Recuperación H_gore Bajo   | H_gore < 60                            | 1 día     |
+| P02 | Reducción de Traspasos     | Traspasos (Handoffs) excesivos         | 2 días    |
+| P09 | Respuesta Detección Deriva | Degradación sostenida del cumplimiento | 3 días    |
+| P12 | Recuperación Calidad Datos | Problemas calidad datos                | 2 semanas |
+| P13 | Alineamiento Político      | Conflictos partes interesadas          | 2 semanas |
+| P14 | Gestión de Expectativas    | Insatisfacción partes interesadas      | 3-7 días  |
+| P15 | Cadencia Adaptativa        | Shocks contextuales                    | Variable  |
 
 Estructura de Playbook:
 
-- Trigger conditions (métricas, umbrales)
+- Condiciones de disparo (Disparadores/Triggers)
 - Pasos de ejecución (checklist)
-- RACI (Responsible, Accountable, Consulted, Informed)
+- RACI (Responsable, Encargado, Consultado, Informado)
 - Criterios de éxito
-- Outputs y artefactos
+- Salidas (Outputs) y artefactos
 
 Funcionalidades:
 
@@ -222,7 +222,7 @@ Matriz de Responsabilidad D-BACK vs D-GESTION:
 | CRUD Funcionarios         | ✅      | -         |
 | Nómina y remuneraciones   | ✅      | -         |
 | Dotación y planta         | ✅      | -         |
-| Dashboard ausentismo      | -      | ✅         |
+| Panel de ausentismo       | -      | ✅         |
 | Clima organizacional      | -      | ✅         |
 | Onboarding (proceso)      | ✅      | -         |
 | Onboarding (checklist AR) | -      | ✅         |
@@ -238,7 +238,7 @@ Indicadores Clave:
 
 Funcionalidades:
 
-- Dashboard de ausentismo por tipo/unidad
+- Panel de ausentismo por tipo/unidad
 - Gestión de inducción (checklist, mentor)
 - Clima organizacional
 - Plan de capacitación
@@ -362,7 +362,7 @@ flowchart TD
 
 ---
 
-## 📝 User Stories por Módulo
+## 📝 Historias de Usuario por Módulo
 
 ### Catálogo por Módulo
 
@@ -376,11 +376,11 @@ flowchart TD
 
 #### H_gore (Salud Institucional)
 
-| ID             | Título                        | Prioridad |
-| -------------- | ----------------------------- | --------- |
-| US-GEST-HG-001 | Dashboard H_gore tiempo real  | Crítica   |
-| US-GEST-HG-002 | Configurar umbrales de alerta | Alta      |
-| US-GEST-HG-003 | Drill-down por dimensión      | Alta      |
+| ID             | Título                                        | Prioridad |
+| -------------- | --------------------------------------------- | --------- |
+| US-GEST-HG-001 | Panel H_gore tiempo real                      | Crítica   |
+| US-GEST-HG-002 | Configurar umbrales de alerta                 | Alta      |
+| US-GEST-HG-003 | Análisis detallado (Drill-down) por dimensión | Alta      |
 
 #### Playbooks Operativos
 
@@ -408,7 +408,7 @@ flowchart TD
 
 | ID              | Título                           | Prioridad |
 | --------------- | -------------------------------- | --------- |
-| US-GEST-PER-001 | Dashboard ausentismo             | Alta      |
+| US-GEST-PER-001 | Panel de ausentismo              | Alta      |
 | US-GEST-PER-002 | Gestionar inducción funcionarios | Alta      |
 
 #### Procesos Operativos
@@ -438,45 +438,45 @@ flowchart TD
 | `IndicadorPOA`   | id, poa_id, nombre, meta, valor_actual, tendencia            | → POA, Medicion[] |
 | `ReporteGestion` | id, periodo, tipo (mensual/trimestral), contenido, aprobador | → POA[]           |
 
-### Entities: Tactical Health (H_gore)
+### Entidades: Salud Táctica (H_gore)
 
-| Entity            | Key Attributes                                             | Relationships |
-| ----------------- | ---------------------------------------------------------- | ------------- |
-| `HScoreGore`      | id, date, composite_value, dimension_scores (JSON), status | → Alert[]     |
-| `HScoreDimension` | id, name, weight, indicators[], alert_threshold            | → HScoreGore  |
+| Entidad            | Atributos Clave                                               | Relaciones         |
+| ------------------ | ------------------------------------------------------------- | ------------------ |
+| `PuntajeSaludGore` | id, fecha, valor_compuesto, puntajes_dimension (JSON), estado | → Alerta[]         |
+| `DimensionSalud`   | id, nombre, peso, indicadores[], umbral_alerta                | → PuntajeSaludGore |
 
 ### E: Playbooks
 
-| Entity              | Attributes                                                | Relationships               |
-| ------------------- | --------------------------------------------------------- | --------------------------- |
-| `Playbook`          | id, codigo, nombre, categoria, trigger_condition, pasos[] | → PlaybookExecution[]       |
-| `PlaybookExecution` | id, playbook_id, start_date, end_date, status, outcome    | → Playbook, LessonLearned[] |
+| Entidad             | Atributos                                                   | Relaciones                     |
+| ------------------- | ----------------------------------------------------------- | ------------------------------ |
+| `Playbook`          | id, codigo, nombre, categoria, condicion_disparo, pasos[]   | → EjecucionPlaybook[]          |
+| `EjecucionPlaybook` | id, id_playbook, fecha_inicio, fecha_fin, estado, resultado | → Playbook, LeccionAprendida[] |
 
 ### E: Control Interno
 
-| Entity    | Key Attributes                                                        | Relationships |
-| --------- | --------------------------------------------------------------------- | ------------- |
-| `Risk`    | id, category, description, probability, impact, level, accountable_id | → Control[]   |
-| `Control` | id, risk_id, description, effectiveness, evidence                     | → Risk        |
+| Entidad   | Atributos Clave                                                          | Relaciones  |
+| --------- | ------------------------------------------------------------------------ | ----------- |
+| `Riesgo`  | id, categoria, descripcion, probabilidad, impacto, nivel, id_responsable | → Control[] |
+| `Control` | id, id_riesgo, descripcion, efectividad, evidencia                       | → Riesgo    |
 
 ### E: Mejora Continua
 
-| Entity               | Key Attributes                                         | Relationships        |
-| -------------------- | ------------------------------------------------------ | -------------------- |
-| `ImprovementOpp`     | id, description, source, area, status, accountable_id  | → ImprovementProject |
-| `ImprovementProject` | id, opportunity_id, pdca_plan, impact_metrics, outcome | → ImprovementOpp     |
+| Entidad             | Atributos Clave                                            | Relaciones          |
+| ------------------- | ---------------------------------------------------------- | ------------------- |
+| `OportunidadMejora` | id, descripcion, fuente, area, estado, id_responsable      | → ProyectoMejora    |
+| `ProyectoMejora`    | id, id_oportunidad, plan_pdca, metricas_impacto, resultado | → OportunidadMejora |
 
 ---
 
 ## Sistemas Involucrados
 
-| Sistema      | Función                       | Integración         |
-| ------------ | ----------------------------- | ------------------- |
-| `SYS-SCG`    | Control de gestión y POA      | Dashboards internos |
-| `SYS-RRHH`   | Gestión de personas           | SIAPER              |
-| `SYS-GESDOC` | Gestión documental            | Expediente digital  |
-| `SYS-OIRS`   | Atención ciudadana            | Portal regional     |
-| `INT-H_GORE` | Dashboard salud institucional | Cálculo diario      |
+| Sistema      | Función                      | Integración        |
+| ------------ | ---------------------------- | ------------------ |
+| `SYS-SCG`    | Control de gestión y POA     | Paneles internos   |
+| `SYS-RRHH`   | Gestión de personas          | SIAPER             |
+| `SYS-GESDOC` | Gestión documental           | Expediente digital |
+| `SYS-OIRS`   | Atención ciudadana           | Portal regional    |
+| `INT-H_GORE` | Panel de salud institucional | Cálculo diario     |
 
 ---
 

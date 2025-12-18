@@ -32,14 +32,13 @@ El Departamento opera como capacidad transversal, activándose ante contingencia
 
 ### Equipo Base (3-4 funcionarios)
 
-| Rol                      | Responsabilidades                                                              |
-| ------------------------ | ------------------------------------------------------------------------------ |
-| Jefe de Intervención     | Coordinación general y toma de decisiones operativas                           |
-| Analista de Gestión      | Diagnóstico situacional, análisis de datos e identificación de causas          |
-| Asesor Jurídico          | Evaluación de viabilidad legal y alternativas normativas                       |
-| **Base ORKO**            | Contratos C1-C5, Inventario Maestro (Toolkit 1.1), E6_Estado_Arquitectónico.   |
-| **Diferencia TDE**       | D-TDE es el piso normativo; D-EVOL M10 es capacidad estratégica **ilimitada**. |
-| Especialista en Procesos | Diseño e implementación de soluciones operativas                               |
+| Rol                      | Responsabilidades                                                     |
+| ------------------------ | --------------------------------------------------------------------- |
+| Jefe de Intervención     | Coordinación general y toma de decisiones operativas                  |
+| Analista de Gestión      | Diagnóstico situacional, análisis de datos e identificación de causas |
+| Asesor Jurídico          | Evaluación de viabilidad legal y alternativas normativas              |
+| Especialista en Procesos | Diseño e implementación de soluciones operativas                      |
+| Referente Técnico        | Contraparte de la división intervenida (Enlace)                       |
 
 ### Especialistas de Apoyo (según intervención)
 
@@ -125,17 +124,17 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph TRIGGER["Trigger"]
-        A{"Origin?"}
-        A -->|"Automatic"| B["H_gore Alert<br/>(D-GESTION)"]
-        A -->|"Manual"| C["Management Request"]
+    subgraph TRIGGER["Disparador (Trigger)"]
+        A{"¿Origen?"}
+        A -->|"Automático"| B["Alerta H_gore<br/>(D-GESTION)"]
+        A -->|"Manual"| C["Solicitud de Jefatura"]
     end
 
     subgraph FENIX_UNIT["🔥 Unidad FÉNIX"]
         D["Evaluar Criticidad"]
         E{"¿Amerita<br/>Intervención?"}
-        F["Conformar Equipo<br/>(Task Force)"]
-        G["Definir Plan<br/>Acción"]
+        F["Conformar Equipo<br/>(Fuerza de Tarea)"]
+        G["Definir Plan de<br/>Acción"]
         H["Rechazar/Derivar"]
     end
 
@@ -158,7 +157,7 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph PRE["Preparación"]
-        A["Asignar Permisos<br/>(Superuser)"]
+        A["Asignar Permisos<br/>(Superusuario)"]
         B["Congelar Estado<br/>(Si aplica)"]
     end
 
@@ -183,23 +182,23 @@ flowchart LR
 
 ## Condiciones de Activación Automática
 
-| Condition                                         | Level    | Action                            |
-| ------------------------------------------------- | -------- | --------------------------------- |
-| H_gore Score < 60 sustained for 2 weeks           | IV       | Automatic Management Notification |
-| H_gore Score < 50                                 | IV       | Mandatory FÉNIX Activation        |
-| ERD Objectives without progress >180 days         | III      | Intervention Candidate            |
-| IPR in STAGNANT status >90 days                   | II       | Intervention Candidate            |
-| Accountabilities in mora >180 days                | II       | Escalation for evaluation         |
-| Agreement at <30 days from expiration w/o closure | I        | Priority Alert                    |
-| System-detected anomaly                           | Variable | Evaluation Recommendation         |
-| Regional Security crisis (D-SEG)                  | I        | Urgent Coordination with FFOO, DA |
-| CIES Critical failure >4 hours (D-SEG)            | II       | Operational Recovery              |
-| Stagnant Security Project >90 days (D-SEG)        | III      | Project Unblocking                |
-| Municipal Security agreement breach (D-SEG)       | III      | Institutional Mediation           |
+| Condición                                        | Nivel    | Acción                             |
+| ------------------------------------------------ | -------- | ---------------------------------- |
+| Puntaje H_gore < 60 sostenido por 2 semanas      | IV       | Notificación Automática a Jefatura |
+| Puntaje H_gore < 50                              | IV       | Activación Obligatoria FÉNIX       |
+| Objetivos ERD sin avance >180 días               | III      | Candidato a Intervención           |
+| IPR en estado ESTANCADO >90 días                 | II       | Candidato a Intervención           |
+| Responsabilidades en mora >180 días              | II       | Escalamiento para evaluación       |
+| Convenio a <30 días de vencer sin cierre         | I        | Alerta de Prioridad                |
+| Anomalía detectada por el sistema                | Variable | Recomendación de Evaluación        |
+| Crisis de Seguridad Regional (D-SEG)             | I        | Coordinación Urgente con FFOO, DA  |
+| Falla Crítica CIES >4 horas (D-SEG)              | II       | Recuperación Operativa             |
+| Proyecto de Seguridad Estancado >90 días (D-SEG) | III      | Desbloqueo de Proyecto             |
+| Incumplimiento Convenio Seguridad Mun. (D-SEG)   | III      | Mediación Institucional            |
 
 ---
 
-## 📝 User Stories
+## 📝 Historias de Usuario
 
 > Ver catálogo completo en: [kb_goreos_us_fenix.yml](../user-stories/kb_goreos_us_fenix.yml)
 
@@ -207,19 +206,14 @@ flowchart LR
 
 ### Intervención
 
-| Atributo       | Tipo                          | Descripción                                                              |
-| -------------- | ----------------------------- | ------------------------------------------------------------------------ |
-| id             | uuid                          | Identificador único                                                      |
-| codigo         | string                        | Código de intervención (ej: "INT-2024-001")                              |
-| nivel          | enum                          | I, II, III, IV                                                           |
-| estado         | enum                          | DETECTADA, EN_DIAGNOSTICO, PLANIFICADA, EN_EJECUCION, EN_CIERRE, CERRADA |
-| criticidad     | int                           | Escala 1-5                                                               |
-| Agreements     | % active OK, near expirations | 10%                                                                      |
-| TDE Compliance | % norms met (Basal Floor)     | 10%                                                                      |
-| Satisfaction   | Internal NPS, response times  | 5%                                                                       |
-
-> **Nota:** El cumplimiento TDE indica higiene normativa. Un bajo puntaje aquí no invalida el alto desempeño en dimensiones operativas (Presupuesto/IPR), reflejando el principio de "Evolución Paralela".
-| objetivo              | text   | Objetivo específico y medible                                            |
+| Atributo              | Tipo   | Descripción                                                              |
+| --------------------- | ------ | ------------------------------------------------------------------------ |
+| id                    | uuid   | Identificador único                                                      |
+| codigo                | string | Código de intervención (ej: "INT-2024-001")                              |
+| nivel                 | enum   | I, II, III, IV                                                           |
+| estado                | enum   | DETECTADA, EN_DIAGNOSTICO, PLANIFICADA, EN_EJECUCION, EN_CIERRE, CERRADA |
+| criticidad            | int    | Escala 1-5                                                               |
+| objetivo              | texto  | Objetivo específico y medible                                            |
 | fecha_inicio          | date   | Fecha de activación                                                      |
 | autoriza_id           | FK     | Directivo que autoriza la intervención                                   |
 | responsable_id        | FK     | Jefe de intervención asignado                                            |

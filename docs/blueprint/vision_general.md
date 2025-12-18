@@ -186,17 +186,17 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 | Dominio       | Módulos Principales                                                                                                                                        |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **D-PLAN**    | ERD Digital, PROT Digital, ARI/PROPIR Digital, CDP, Inteligencia Territorial, Planificación Participativa, Asistencia Técnica Municipal                    |
-| **D-FIN**     | Captación Oportunidades, Capital Base, Portafolio IPR, Selector Mecanismos (FNDR/FRPD/C33/FRIL), Presupuesto, Rendiciones, Gestión Ejecutores              |
+| **D-FIN**     | Captación de Oportunidades, Capital Base, Portafolio IPR, Selector de Mecanismos (FNDR/FRPD/C33/FRIL), Presupuesto, Rendiciones, Gestión de Ejecutores     |
 | **D-EJEC**    | Supervisión de Obras, Gestión de Convenios, PMO Regional (Torre de Control), Gestión de Compromisos, Coordinación Municipal, Relaciones Sectoriales        |
 | **D-GOB**     | Consejo Regional (CORE), Despacho Gobernador, Descentralización, Coordinación/Emergencias (GRD), Gestión Relacional (CRM/Actores), Participación Ciudadana |
-| **D-NORM**    | Actos Administrativos, Procedimientos (Ley 19.880), Expediente Electrónico, Cumplimiento/Control, Convenios (SSOT), Reglamentos, Biblioteca Normativa      |
+| **D-NORM**    | Actos Administrativos, Procedimientos (Ley 19.880), Expediente Electrónico, Cumplimiento/Control, Convenios (SADV), Reglamentos, Biblioteca Normativa      |
 | **D-BACK**    | RRHH/Personas, Abastecimiento/Compras, Inventarios, Activo Fijo, Flota Vehicular, Bienestar Funcionario, Contabilidad Operativa                            |
 | **D-TDE**     | Cumplimiento TDE (CPAT), Servicios Digitales (ClaveÚnica/FirmaGob), Interoperabilidad (PISEE), Ciberseguridad/Datos, Liderazgo Digital Regional            |
 | **D-TERR**    | Inteligencia Estratégica, IDE Regional (Servicios OGC), Analítica Territorial, Gobernanza de Datos Geo, Asistencia Urbanística DOM                         |
 | **D-SEG**     | CIES Ñuble (Monitoreo 24/7), Prevención del Delito, Evidencias Digitales (SITIA), Gobernanza de Seguridad, Coordinación Multi-agencia                      |
-| **D-GESTION** | System Management Control (SCG), H_gore Dashboard, Operational Playbooks, Internal Control (UCI), Continuous Improvement, Institutional Coordination       |
-| **D-EVOL**    | Organizational Health (H_org), System Trajectory, Knowledge Base (KB), AI Agents (HAIC), Maturity Levels L0-L5, Technical Debt                             |
-| **FÉNIX**     | Interventions Levels I-IV, Diagnosis & Activation, Contingency Management, Task Force, Initiative Acceleration, Institutional Learning                     |
+| **D-GESTION** | Control de Gestión del Sistema (SCG), Panel H_gore, Playbooks Operativos, Control Interno (UCI), Mejora Continua, Coordinación Institucional               |
+| **D-EVOL**    | Salud Organizacional (H_org), Trayectoria del Sistema, Base de Conocimiento (KB), Agentes de IA (HAIC), Niveles de Madurez L0-L5, Deuda Técnica            |
+| **FÉNIX**     | Niveles de Intervención I-IV, Diagnóstico y Activación, Gestión de Contingencias, Equipo de Tarea, Aceleración de Iniciativas, Aprendizaje Institucional   |
 
 ---
 
@@ -228,16 +228,16 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 
 ### 9. Catálogo de Agentes Especializados
 
-| Agente                          | Dominio        | Función Principal                                                                   | Interacción                    |
-| ------------------------------- | -------------- | ----------------------------------------------------------------------------------- | ------------------------------ |
-| **Analista de Ejecución**       | D-FIN          | Monitorea ejecución presupuestaria, proyecta cierre, identifica riesgos             | Alertas proactivas, dashboards |
-| **Monitor de Inversiones**      | D-FIN + D-EJEC | Seguimiento de cartera IPR, alertas de estancamiento                                | Notificaciones, reportes       |
-| **Verificador de Cumplimiento** | D-NORM         | Valida cumplimiento normativo en actos, procedimientos y documentos                 | Checklist automático           |
-| **Asesor de Mecanismos**        | D-FIN          | Recomienda mecanismo de financiamiento apropiado según características del proyecto | Chat interactivo               |
-| **Generador de Reportes**       | Transversal    | Produce informes para CORE, CGR, DIPRES en formatos requeridos                      | Generación automática          |
-| **Asistente Documental**        | D-NORM         | Ayuda en redacción de actos administrativos, resoluciones, convenios                | Plantillas SFD/STS             |
-| **Monitor H_gore**              | D-GESTION      | Alerta sobre desviaciones en salud operativa diaria                                 | Dashboard, escalamiento        |
-| **Coordinador CIES**            | D-SEG          | Gestiona incidentes y coordinación multi-agencia                                    | Alertas tiempo real            |
+| Agente                          | Dominio        | Función Principal                                                                   | Interacción                      |
+| ------------------------------- | -------------- | ----------------------------------------------------------------------------------- | -------------------------------- |
+| **Analista de Ejecución**       | D-FIN          | Monitorea ejecución presupuestaria, proyecta cierre, identifica riesgos             | Alertas proactivas, paneles      |
+| **Monitor de Inversiones**      | D-FIN + D-EJEC | Seguimiento de cartera IPR, alertas de estancamiento                                | Notificaciones, reportes         |
+| **Verificador de Cumplimiento** | D-NORM         | Valida cumplimiento normativo en actos, procedimientos y documentos                 | Lista de verificación automática |
+| **Asesor de Mecanismos**        | D-FIN          | Recomienda mecanismo de financiamiento apropiado según características del proyecto | Chat interactivo                 |
+| **Generador de Reportes**       | Transversal    | Produce informes para CORE, CGR, DIPRES en formatos requeridos                      | Generación automática            |
+| **Asistente Documental**        | D-NORM         | Ayuda en redacción de actos administrativos, resoluciones, convenios                | Plantillas SFD/STS               |
+| **Monitor H_gore**              | D-GESTION      | Alerta sobre desviaciones en salud operativa diaria                                 | Panel de control, escalamiento   |
+| **Coordinador CIES**            | D-SEG          | Gestiona incidentes y coordinación multi-agencia                                    | Alertas tiempo real              |
 
 **Gobernanza HAIC (Human-AI Collaboration):**
 
@@ -254,27 +254,27 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 
 ### 10. Indicadores de Salud del Sistema
 
-**H_gore (D-GESTION) - Tactical Health Score:**
+**H_gore (D-GESTION) - Puntaje de Salud Táctica:**
 
-| Dimension             | Weight | Components                        |
-| --------------------- | ------ | --------------------------------- |
-| Budget Execution      | 20%    | % execution, deviation vs plan    |
-| IPR Portfolio         | 20%    | % progress, projects at risk      |
-| Accountabilities      | 20%    | % mora, avg review days           |
-| Regulatory Compliance | 15%    | UCI/CGR findings, timely sumaries |
-| Agreements            | 10%    | % active OK, near expirations     |
-| TDE Compliance        | 10%    | % norms met, gaps                 |
-| Satisfaction          | 5%     | Internal NPS, response times      |
+| Dimensión            | Peso | Componentes                          |
+| -------------------- | ---- | ------------------------------------ |
+| Ejecución Presup.    | 20%  | % ejecución, desviación vs plan      |
+| Portafolio IPR       | 20%  | % avance, proyectos en riesgo        |
+| Rendiciones          | 20%  | % mora, días promedio de revisión    |
+| Cumplimiento Normat. | 15%  | Hallazgos UCI/CGR, sumarios a tiempo |
+| Convenios            | 10%  | % activos OK, vencimientos próximos  |
+| Cumplimiento TDE     | 10%  | % normas cumplidas, brechas          |
+| Satisfacción         | 5%   | NPS interno, tiempos de respuesta    |
 
-**H_org (D-EVOL) - Strategic Maturity Score:**
+**H_org (D-EVOL) - Puntaje de Madurez Estratégica:**
 
-> Formula: Purpose(P5)×0.30 + Flow(P2)×0.30 + Capacity(P1)×0.20 + Information(P3)×0.10 + Governance(P4)×0.10
+> Fórmula: Propósito(P5)×0.30 + Flujo(P2)×0.30 + Capacidad(P1)×0.20 + Información(P3)×0.10 + Gobernanza(P4)×0.10
 
-| Status     | H_org Range | Recommended Action                       |
-| ---------- | ----------- | ---------------------------------------- |
-| 🔴 Critical | < 0.50      | Survival Kit (Immediate stabilization)   |
-| 🟡 Stable   | 0.50-0.70   | Minimal Kit (Consolidation 6-12 weeks)   |
-| 🟢 Healthy  | > 0.70      | Advanced Kit (Transformation 3-6 months) |
+| Estado      | Rango H_org | Acción Recomendada                      |
+| ----------- | ----------- | --------------------------------------- |
+| 🔴 Crítico   | < 0.50      | Kit de Supervivencia (Plano inmediato)  |
+| 🟡 Estable   | 0.50-0.70   | Kit Mínimo (Consolidación 6-12 semanas) |
+| 🟢 Saludable | > 0.70      | Kit Avanzado (Transformación 3-6 meses) |
 
 ---
 

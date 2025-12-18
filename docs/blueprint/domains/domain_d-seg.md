@@ -8,21 +8,21 @@
 
 ## Glosario D-SEG
 
-| Término | Definición                                                                                        |
-| :------ | :------------------------------------------------------------------------------------------------ |
-| CIES    | Centro Integrado de Emergencias y Seguridad. Hub regional de monitoreo y coordinación 24/7.       |
-| SITIA   | Sistema Integrado de Televigilancia con Inteligencia Artificial. Plataforma tecnológica nacional. |
-| SPD     | Subsecretaría de Prevención del Delito. Ente rector técnico y financiero.                         |
-| PTZ     | Pan-Tilt-Zoom. Cámaras robóticas controlables remotamente.                                        |
-| LPR     | License Plate Recognition. Lectura automática de patentes vehiculares.                            |
-| VMS     | Video Management System. Software de gestión de video (HikCentral).                               |
-| IPR     | Inversión Pública Regional. Cartera de proyectos de inversión.                                    |
-| COSOC   | Consejo de la Sociedad Civil. Instancia de participación ciudadana.                               |
-| STOP    | Sistema Táctico de Operación Policial. Fuente de datos de delitos.                                |
-| ENUSC   | Encuesta Nacional Urbana de Seguridad Ciudadana. Fuente de percepción.                            |
-| ANCI    | Agencia Nacional de Ciberseguridad (Ley 21.663).                                                  |
-| COGRID  | Comité para Gestión del Riesgo de Desastres (ex-COE).                                             |
-| L21730  | Ley 21.730 de Atribuciones en Seguridad para Gobiernos Regionales (2024).                         |
+| Término | Definición                                                                                         |
+| :------ | :------------------------------------------------------------------------------------------------- |
+| CIES    | Centro Integrado de Emergencias y Seguridad. Nodo (Hub) regional de monitoreo y coordinación 24/7. |
+| SITIA   | Sistema Integrado de Televigilancia con Inteligencia Artificial. Plataforma tecnológica nacional.  |
+| SPD     | Subsecretaría de Prevención del Delito. Ente rector técnico y financiero.                          |
+| PTZ     | Pan-Tilt-Zoom. Cámaras robóticas controlables remotamente.                                         |
+| LPR     | License Plate Recognition. Lectura automática de patentes vehiculares.                             |
+| VMS     | Sistema de Gestión de Video (Video Management System). Software de gestión de video (HikCentral).  |
+| IPR     | Inversión Pública Regional. Cartera de proyectos de inversión.                                     |
+| COSOC   | Consejo de la Sociedad Civil. Instancia de participación ciudadana.                                |
+| STOP    | Sistema Táctico de Operación Policial. Fuente de datos de delitos.                                 |
+| ENUSC   | Encuesta Nacional Urbana de Seguridad Ciudadana. Fuente de percepción.                             |
+| ANCI    | Agencia Nacional de Ciberseguridad (Ley 21.663).                                                   |
+| COGRID  | Comité para Gestión del Riesgo de Desastres (ex-COE).                                              |
+| L21730  | Ley 21.730 de Atribuciones en Seguridad para Gobiernos Regionales (2024).                          |
 
 ---
 
@@ -271,7 +271,7 @@ flowchart TD
 
 ---
 
-## 📝 User Stories por Módulo
+## 📝 Historias de Usuario por Módulo
 
 ### Catálogo por Proceso
 
@@ -294,11 +294,11 @@ flowchart TD
 
 #### P3: Evidencias
 
-| ID              | Título                     | Prioridad | Actor              |
-| --------------- | -------------------------- | --------- | ------------------ |
-| US-SEG-EVID-001 | Extracción segura de video | Crítica   | Custodio Evidencia |
-| US-SEG-EVID-002 | Compartir con Fiscalía     | Crítica   | Custodio Evidencia |
-| US-SEG-EVID-003 | Cadena de custodia         | Crítica   | Custodio Evidencia |
+| ID              | Título                     | Prioridad | Actor                 |
+| --------------- | -------------------------- | --------- | --------------------- |
+| US-SEG-EVID-001 | Extracción segura de video | Crítica   | Custodio de Evidencia |
+| US-SEG-EVID-002 | Compartir con Fiscalía     | Crítica   | Custodio de Evidencia |
+| US-SEG-EVID-003 | Cadena de custodia         | Crítica   | Custodio de Evidencia |
 
 #### Prevención
 
@@ -312,9 +312,9 @@ flowchart TD
 
 ---
 
-## 🔗 Matriz de Trazabilidad
+## 🔗 Matriz de Trazabilidad (Historias de Usuario)
 
-| Proceso BPMN     | Subproceso      | User Stories              |
+| Proceso BPMN     | Subproceso      | Historias de Usuario      |
 | ---------------- | --------------- | ------------------------- |
 | P1: Monitoreo    | Detección       | US-SEG-CIES-001           |
 | P1: Monitoreo    | Control cámaras | US-SEG-CIES-003           |
@@ -335,12 +335,12 @@ flowchart TD
 
 ## Entidades de Datos
 
-| Entidad             | Atributos Clave                                        | Relaciones                       |
-| ------------------- | ------------------------------------------------------ | -------------------------------- |
-| `Incidente`         | id, tipo, prioridad, ubicacion_geo, estado, fecha_hora | → AccionRespuesta[], Evidencia[] |
-| `AccionRespuesta`   | id, incidente_id, tipo, agencia, tiempo_respuesta      | → Incidente                      |
-| `Evidencia`         | id, incidente_id, tipo, hash, cadena_custodia          | → Incidente                      |
-| `ProyectoSeguridad` | hereda IPR + tipo_prevencion, validacion_spd           | → IPR, ConvenioMunicipal         |
+| Entidad             | Atributos Clave                                           | Relaciones                       |
+| ------------------- | --------------------------------------------------------- | -------------------------------- |
+| `Incidente`         | id, tipo, prioridad, id_ubicacion_geo, estado, fecha_hora | → AccionRespuesta[], Evidencia[] |
+| `AccionRespuesta`   | id, id_incidente, tipo, agencia, tiempo_respuesta         | → Incidente                      |
+| `Evidencia`         | id, id_incidente, tipo, hash, cadena_custodia             | → Incidente                      |
+| `ProyectoSeguridad` | hereda IPR + tipo_prevencion, validacion_spd              | → IPR, ConvenioMunicipal         |
 
 ---
 

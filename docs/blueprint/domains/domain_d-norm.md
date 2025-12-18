@@ -13,7 +13,7 @@
 | LBPA    | Ley de Bases de Procedimientos Administrativos (19.880). Marco de actuación formal del Estado |
 | TDE     | Transformación Digital del Estado (Ley 21.180). Protocolo digital obligatorio                 |
 | FEA     | Firma Electrónica Avanzada. Equivalente legal a firma óloga                                   |
-| SSOT    | Single Source of Truth. Fuente única de verdad (Convenios viven en D-NORM)                    |
+| SSOT    | Fuente Única de Verdad (Single Source of Truth). Los convenios viven en D-NORM                |
 | DIP     | Declaración de Intereses y Patrimonio. Obligación anual de probidad                           |
 | SAI     | Solicitud de Acceso a Información (Ley 20.285)                                                |
 | SGD     | Sistema de Gestión Documental. Plataforma de trámites electrónicos                            |
@@ -210,10 +210,10 @@ flowchart TB
 
 ### P1: Flujo de Resoluciones Exentas
 
-| Campo | Valor                          |
-| ----- | ------------------------------ |
-| ID    | `BPMN-GN-RES-EXENTAS-FLUJO-01` |
-| SLA   | 15 días hábiles                |
+| Campo | Valor                                          |
+| ----- | ---------------------------------------------- |
+| ID    | `BPMN-GN-RES-EXENTAS-FLUJO-01`                 |
+| ANS   | 15 días hábiles (Acuerdo de Nivel de Servicio) |
 
 ```mermaid
 flowchart TD
@@ -281,10 +281,10 @@ flowchart TD
 
 ### P2: Aprobación de Transferencias y Convenios
 
-| Campo | Valor                                     |
-| ----- | ----------------------------------------- |
-| ID    | `PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01` |
-| SLA   | 30 días hábiles                           |
+| Campo | Valor                                          |
+| ----- | ---------------------------------------------- |
+| ID    | `PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01`      |
+| ANS   | 30 días hábiles (Acuerdo de Nivel de Servicio) |
 
 ```mermaid
 flowchart TD
@@ -354,10 +354,10 @@ flowchart TD
 
 ### P3: Procedimientos Administrativos (Ley 19.880)
 
-| Campo | Valor                   |
-| ----- | ----------------------- |
-| ID    | `BPMN-GN-PROC-ADMIN-01` |
-| SLA   | 6 meses (máximo)        |
+| Campo | Valor                                         |
+| ----- | --------------------------------------------- |
+| ID    | `BPMN-GN-PROC-ADMIN-01`                       |
+| ANS   | 6 meses máximo (Acuerdo de Nivel de Servicio) |
 
 ```mermaid
 flowchart TD
@@ -414,7 +414,7 @@ flowchart TD
 | ----- | ----------------------- |
 | ID    | `BPMN-GN-AUDITORIAS-01` |
 | Fases | 5                       |
-| SLA   | Variable según alcance  |
+| ANS   | Variable según alcance  |
 
 ```mermaid
 flowchart TD
@@ -470,7 +470,7 @@ flowchart TD
 
 ---
 
-## 📝 User Stories por Módulo
+## 📝 Historias de Usuario por Módulo
 
 ### Catálogo por Proceso
 
@@ -547,9 +547,9 @@ flowchart TD
 
 ---
 
-## 🔗 Matriz de Trazabilidad
+## 🔗 Matriz de Trazabilidad (Historias de Usuario)
 
-| Proceso BPMN       | Fase                     | User Stories Relacionadas                               |
+| Proceso BPMN       | Fase                     | Historias de Usuario Relacionadas                       |
 | ------------------ | ------------------------ | ------------------------------------------------------- |
 | P1: Resoluciones   | Fase 1 Iniciación        | US-NORM-ACTO-001                                        |
 | P1: Resoluciones   | Fase 2 Revisión Jurídica | US-NORM-ACTO-007, US-NORM-ACTO-008                      |
@@ -676,7 +676,7 @@ flowchart TD
 
 | KPI                         | Definición                                     | Meta   |
 | --------------------------- | ---------------------------------------------- | ------ |
-| % Actos tramitados en plazo | Actos firmados ≤ SLA / Total actos             | ≥ 95%  |
+| % Actos tramitados en plazo | Actos firmados ≤ ANS / Total actos             | ≥ 95%  |
 | Tasa de representación CGR  | Actos representados / Total enviados a TDR     | ≤ 5%   |
 | Tiempo promedio TDR         | Días desde envío hasta pronunciamiento CGR     | ≤ 25 d |
 | % SAI respondidas en plazo  | SAI respondidas ≤ 20 días / Total SAI          | 100%   |

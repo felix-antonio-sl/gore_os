@@ -684,7 +684,7 @@ flowchart LR
 
 ---
 
-### Catálogo por Proceso
+### Catálogo por Proceso (Historias de Usuario)
 
 #### D04: Compras
 
@@ -757,9 +757,9 @@ flowchart LR
 
 ---
 
-## 🔗 Matriz de Trazabilidad
+## 🔗 Matriz de Trazabilidad (Historias de Usuario)
 
-| Proceso BPMN            | Subproceso    | User Stories           |
+| Proceso BPMN            | Subproceso    | Historias de Usuario   |
 | ----------------------- | ------------- | ---------------------- |
 | D04 P1: PAC             | Consolidación | US-BACK-ABS-001        |
 | D04 P2: Licitación      | Publicación   | US-BACK-ABS-003        |
@@ -939,20 +939,20 @@ Flujos Principales:
 
 ## Indicadores de Gestión (KPIs)
 
-| KPI                        | Meta      | Fórmula                                            | Módulo            |
-| -------------------------- | --------- | -------------------------------------------------- | ----------------- |
-| % Conciliaciones al día    | 100%      | (Conciliaciones completadas / Total cuentas) × 100 | Contab. Operativa |
-| Mora pago proveedores      | < 30 días | Promedio días desde factura hasta pago             | Contab. Operativa |
-| Cobertura PAC              | > 90%     | (Compras ejecutadas / PAC planificado) × 100       | Abastecimiento    |
-| Rotación inventario        | > 4x/año  | (Salidas anuales / Stock promedio)                 | Inventarios       |
-| % Activos inventariados    | 100%      | (AF verificados / Total AF registrados) × 100      | Activo Fijo       |
-| Disponibilidad flota       | > 85%     | (Vehículos operativos / Total flota) × 100         | Flota             |
-| Mora rendiciones bienestar | < 15 días | Promedio días hasta reembolso                      | Bienestar         |
-| Dotación efectiva          | 95-100%   | (Dotación actual / Dotación autorizada) × 100      | Personas          |
+| KPI                        | Meta      | Fórmula                                            | Módulo              |
+| -------------------------- | --------- | -------------------------------------------------- | ------------------- |
+| % Conciliaciones al día    | 100%      | (Conciliaciones completadas / Total cuentas) × 100 | Contabilidad Op.    |
+| Mora pago proveedores      | < 30 días | Promedio días desde factura hasta pago             | Contabilidad Op.    |
+| Cobertura PAC              | > 90%     | (Compras ejecutadas / PAC planificado) × 100       | Abastecimiento      |
+| Rotación inventario        | > 4x/año  | (Salidas anuales / Stock promedio)                 | Inventarios         |
+| % Activos inventariados    | 100%      | (AF verificados / Total AF registrados) × 100      | Activo Fijo         |
+| Disponibilidad flota       | > 85%     | (Vehículos operativos / Total flota) × 100         | Flota               |
+| Mora rendiciones bienestar | < 15 días | Promedio días hasta reembolso                      | Bienestar           |
+| Dotación efectiva          | 95-100%   | (Dotación actual / Dotación autorizada) × 100      | Gestión de Personas |
 
 ---
 
-## Changelog
+## Registro de Cambios (Changelog)
 
 | Versión | Fecha      | Cambios                                                                             |
 | ------- | ---------- | ----------------------------------------------------------------------------------- |
