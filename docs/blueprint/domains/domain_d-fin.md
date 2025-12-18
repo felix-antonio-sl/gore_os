@@ -955,19 +955,14 @@ flowchart LR
 | **M3: Portafolio IPR**         | P1: Ingreso, P2: Evaluación | US-FIN-IPR-003 a 025, US-FIN-GOB-001     | `IPR`, `EvaluacionIPR`, `ActorIPR`          |
 | **M4: Selector Mecanismos**    | P0: Selector de Vías        | US-FIN-IPR-001, 002                      | `Mecanismo`                                 |
 | **M5: Presupuesto**            | PP1-PP5 (D02), P3           | US-FIN-PPTO-001 a 019                    | `CDP`, `Compromiso`, `Devengo`              |
-| **M6: Rendiciones**            | REND-P1, P2, P3 (D08)       | US-FIN-REND-001 a 008                    | `Transferencia`, `Rendicion`, `Observacion` |
+| **M6: Rendiciones**            | REND-P1, P2, P3 (D08)       | US-FIN-REND-001 a 012, US-FIN-SIGFE-001  | `Transferencia`, `Rendicion`, `Observacion` |
 | **M7: Gestión Ejecutores**     | P4-bis: Inducción           | US-FIN-EJEC-001 a 004                    | `CalificacionEjecutor`, `RelacionEjecutor`  |
 | **M8: Mesa Ayuda**             | P8: Asistencia Financiera   | US-FIN-ASIST-001 a 004                   | `InteraccionEjecutor`                       |
 | **M9: Portafolio Estratégico** | (Transversal)               | US-FIN-PORT-001 a 006, EXPOST-001 a 003  | `TeoriaCambio`, `PuntajeImpacto`            |
 | **M10: Alertas 360°**          | P1-P7 (Alertas)             | US-FIN-360-003 a 009                     | `SaludIPR`, `AlertaCiclo`                   |
+| **M11: Iniciativas DIFOI**     | P1: Ingreso (Track C)       | US-FIN-DIFOI-001 a 003                   | `IniciativaDIFOI`                           |
+| **M12: Subvención 8%**         | P1: Ingreso (Track C)       | US-FIN-S8-001 a 003                      | `IPR` (mecanismo S8%)                       |
 
-### ✅ Verificación de Cobertura
-
-| Componente | Total | Con Proceso | Con US | Con Entidad |
-| ---------- | ----- | ----------- | ------ | ----------- |
-| Módulos    | 10    | 10 ✓        | 10 ✓   | 10 ✓        |
-
-> **Resultado**: Concordancia completa. Todo módulo tiene proceso, historias de usuario y entidades asociadas.
 
 ### US Módulo Gestión de Ejecutores (M7)
 
@@ -1014,6 +1009,45 @@ flowchart LR
 | US-FIN-360-007 | Como Jefe DIPIR quiero ver el estado de la relación con cada ejecutor activo                 | Alta      | Jefe DIPIR     |
 | US-FIN-360-008 | Como Sistema quiero emitir alertas diferenciadas según la fase del ciclo de la IPR           | Crítica   | Sistema        |
 | US-FIN-360-009 | Como Analista quiero ver los próximos pasos sugeridos para cada IPR según su fase            | Alta      | Analista DIPIR |
+
+### US Iniciativas DIFOI (Absorción Gesdoc)
+
+> **Origen:** Informe Avance Gesdoc Oct-2025. Formulario web específico para División de Fomento e Industria.
+
+| ID               | Título                                       | Prioridad | Actor              |
+| ---------------- | -------------------------------------------- | --------- | ------------------ |
+| US-FIN-DIFOI-001 | Postular Iniciativa DIFOI vía Formulario Web | Alta      | Formulador Externo |
+| US-FIN-DIFOI-002 | Evaluar Admisibilidad DIFOI                  | Crítica   | Analista DIPIR     |
+| US-FIN-DIFOI-003 | Aprobar/Rechazar Iniciativa DIFOI en Comité  | Crítica   | Comité DIFOI       |
+
+### US Proyectos Subvención 8% (Absorción Gesdoc)
+
+> **Origen:** Informe Avance Gesdoc Oct-2025. Flujo específico para Glosa 07 (ONG/OSC).
+
+| ID            | Título                           | Prioridad | Actor                   |
+| ------------- | -------------------------------- | --------- | ----------------------- |
+| US-FIN-S8-001 | Postular Proyecto Subvención 8%  | Alta      | Formulador ONG/OSC      |
+| US-FIN-S8-002 | Evaluar Elegibilidad 8%          | Crítica   | Analista DIPIR          |
+| US-FIN-S8-003 | Gestionar Convenio Subvención 8% | Crítica   | Analista Transferencias |
+
+### US Trazabilidad Física Rendiciones (Absorción Gesdoc)
+
+> **Origen:** Informe Avance Gesdoc Oct-2025. Próximos pasos: QR y ubicación física.
+
+| ID              | Título                                  | Prioridad | Actor                 |
+| --------------- | --------------------------------------- | --------- | --------------------- |
+| US-FIN-REND-010 | Generar QR de Rastreo para Rendición    | Media     | Encargado Rendiciones |
+| US-FIN-REND-011 | Consultar Ubicación Física de Rendición | Media     | Analista UCR          |
+| US-FIN-REND-012 | Actualizar Ubicación vía Escaneo QR     | Media     | Funcionario Archivo   |
+
+### US Integración SIGFE (Absorción Gesdoc)
+
+> **Origen:** Informe Avance Gesdoc Oct-2025. Control SIGFE en rendiciones.
+
+| ID               | Título                                | Prioridad | Actor        |
+| ---------------- | ------------------------------------- | --------- | ------------ |
+| US-FIN-SIGFE-001 | Verificar Coherencia Rendición-SIGFE  | Crítica   | Analista DAF |
+| US-FIN-SIGFE-002 | Alertar Discrepancias SISREC vs SIGFE | Alta      | Sistema      |
 
 ---
 
@@ -1062,12 +1096,26 @@ flowchart LR
 
 ### Rendiciones
 
-| Entidad            | Atributos Clave                                                 | Relaciones              |
-| ------------------ | --------------------------------------------------------------- | ----------------------- |
-| `Transferencia`    | id, convenio_id, monto, fecha_giro, estado                      | → Convenio, Rendicion[] |
-| `Rendicion`        | id, transferencia_id, estado, monto_rendido, fecha_presentacion | → Transferencia         |
-| `InformeRendicion` | id, rendicion_id, tipo, estado_sisrec, firma_fea                | → Rendicion             |
-| `Observacion`      | id, rendicion_id, descripcion, estado, fecha_respuesta          | → Rendicion             |
+| Entidad            | Atributos Clave                                                                                                            | Relaciones              |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `Transferencia`    | id, convenio_id, monto, fecha_giro, estado                                                                                 | → Convenio, Rendicion[] |
+| `Rendicion`        | id, transferencia_id, estado, monto_rendido, fecha_presentacion, **ubicacion_fisica**, **codigo_qr**, **coherencia_sigfe** | → Transferencia         |
+| `InformeRendicion` | id, rendicion_id, tipo, estado_sisrec, firma_fea                                                                           | → Rendicion             |
+| `Observacion`      | id, rendicion_id, descripcion, estado, fecha_respuesta                                                                     | → Rendicion             |
+
+> **Atributos Absorción Gesdoc (Rendicion):**
+> - `ubicacion_fisica`: enum [DIGITAL, ARCHIVO_CENTRAL, BODEGA, EN_TRANSITO, DESTRUIDO]
+> - `codigo_qr`: string (hash único para QR de rastreo)
+> - `coherencia_sigfe`: decimal (% coherencia con devengado SIGFE)
+
+### Iniciativas DIFOI (Absorción Gesdoc)
+
+| Entidad           | Atributos Clave                                                                                          | Relaciones |
+| ----------------- | -------------------------------------------------------------------------------------------------------- | ---------- |
+| `IniciativaDIFOI` | hereda IPR + sector_economico, impacto_empleo_estimado, alineamiento_erd_eje, estado_difoi, fecha_comite | → IPR      |
+
+> **Nota:** `sector_economico` es enum [AGRICULTURA, TURISMO, INDUSTRIA, SERVICIOS, OTRO].
+> `estado_difoi` es enum [BORRADOR, POSTULADA, EN_EVALUACION, APROBADA, RECHAZADA].
 
 ---
 

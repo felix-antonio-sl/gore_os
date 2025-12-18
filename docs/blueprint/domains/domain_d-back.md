@@ -489,6 +489,110 @@ flowchart TD
     C & D & E & F --> G["Cierre:<br/>• Entrega cargo<br/>• Devolución equipos<br/>• Baja sistemas"]
 ```
 
+#### P5: Control de Asistencia (Absorción SIGPER)
+
+> **Origen:** Módulo Control Asistencia SIGPER. Permite integración con reloj biométrico y gestión de teletrabajo.
+
+```mermaid
+flowchart TD
+    subgraph MARCACION["⏱️ Captura Marcaciones"]
+        M1["Reloj biométrico<br/>(ZK/Anviz/HikVision)"]
+        M2["Marcación web<br/>Teletrabajo"]
+        M3["App móvil<br/>GPS opcional"]
+    end
+    
+    subgraph PROCESO["⚙️ Procesamiento"]
+        P1["Consolidar<br/>marcaciones diarias"]
+        P2["Calcular horas<br/>trabajadas"]
+        P3["Identificar<br/>novedades"]
+        P4["Generar tiempo<br/>excedente/faltante"]
+    end
+    
+    subgraph RESULTADO["📊 Resultado"]
+        R1["Libro asistencia<br/>mensual"]
+        R2["Horas extras<br/>25%/50%"]
+        R3["Atrasos/<br/>salidas anticipadas"]
+        R4["Justificaciones<br/>pendientes"]
+    end
+    
+    M1 & M2 & M3 --> P1
+    P1 --> P2 --> P3 --> P4
+    P4 --> R1 & R2 & R3 & R4
+```
+
+#### P6: Viáticos Nacionales y Extranjeros (Absorción SIGPER)
+
+> **Origen:** Módulo Viáticos SIGPER. Cumple DFL 262 para viáticos nacionales.
+
+```mermaid
+flowchart LR
+    subgraph SOLICITUD["📝 Solicitud"]
+        S1["Funcionario<br/>ingresa cometido"]
+        S2["Define destino<br/>y fechas"]
+        S3["Sistema calcula<br/>monto por grado"]
+    end
+    
+    subgraph AUTORIZACION["✅ Autorización"]
+        A1["Jefatura directa<br/>autoriza"]
+        A2["DAF valida<br/>disponibilidad"]
+        A3["Asignar código<br/>SIGFE"]
+    end
+    
+    subgraph PAGO["💳 Pago y Cierre"]
+        P1["Tramitar<br/>resolución"]
+        P2["Girar viático"]
+        P3["Rendición<br/>post-comisión"]
+        P4["Centralización<br/>contable"]
+    end
+    
+    S1 --> S2 --> S3
+    S3 --> A1 --> A2 --> A3
+    A3 --> P1 --> P2 --> P3 --> P4
+```
+
+#### Distribución de Viáticos (DFL 262)
+
+| Porcentaje | Condición                                                |
+| ---------- | -------------------------------------------------------- |
+| 100%       | Pernoctar fuera + alimentación propia                    |
+| 60%        | Sin pernoctar, pero jornada completa fuera               |
+| 50%        | Conglomerado urbano (mismo día, sin pernocte)            |
+| 40%        | Pernoctar en alojamiento institucional                   |
+| 20%        | Viaje mismo día, media jornada                           |
+| 10%        | Viaje breve sin necesidad de alimentación extraordinaria |
+
+#### P7: Desarrollo Organizacional (Absorción SIGPER)
+
+> **Origen:** Módulo Desarrollo Organizacional SIGPER. Gestión de competencias y evaluación 360°.
+
+```mermaid
+flowchart TD
+    subgraph COMPETENCIAS["🎯 Gestión de Competencias"]
+        C1["Definir modelo<br/>de competencias"]
+        C2["Asociar competencias<br/>a cargos"]
+        C3["Evaluar nivel<br/>funcionario"]
+        C4["Calcular brecha<br/>competencial"]
+    end
+    
+    subgraph DESARROLLO["📈 Plan de Desarrollo"]
+        D1["Priorizar brechas<br/>críticas"]
+        D2["Vincular a<br/>PAC-Capacitación"]
+        D3["Ejecutar<br/>intervenciones"]
+        D4["Medir avance<br/>competencial"]
+    end
+    
+    subgraph EVALUACION["📊 Evaluación 360°"]
+        E1["Autoevaluación"]
+        E2["Evaluación jefatura"]
+        E3["Evaluación pares"]
+        E4["Consolidar<br/>resultado"]
+    end
+    
+    C1 --> C2 --> C3 --> C4
+    C4 --> D1 --> D2 --> D3 --> D4
+    C3 --> E1 & E2 & E3 --> E4
+```
+
 ---
 
 ### D07.B: Bienestar Funcionario
@@ -730,6 +834,41 @@ flowchart LR
 | US-BACK-PER-016 | Registrar precalificación    | Crítica   | Junta Calificadora |
 | US-BACK-PER-017 | Consolidar calificaciones    | Crítica   | Junta Calificadora |
 
+#### D07: Absorción SIGPER (Gestión de Personas Extendida)
+
+> **Origen:** Análisis Gap Analysis SIGPER vs GORE_OS (Dic 2025). Funcionalidades necesarias para evitar adquisición de solución comercial Browse.
+
+| ID              | Título                                 | Prioridad | Actor           | Módulo SIGPER Equivalente |
+| --------------- | -------------------------------------- | --------- | --------------- | ------------------------- |
+| US-BACK-PER-020 | Integrar reloj biométrico              | Alta      | Admin GDP       | Control Asistencia        |
+| US-BACK-PER-021 | Gestionar competencias funcionarias    | Alta      | Gestor Personas | Desarrollo Organizacional |
+| US-BACK-PER-022 | Administrar planta y dotación          | Crítica   | Gestor Personas | Planta                    |
+| US-BACK-PER-023 | Gestionar grupo familiar               | Alta      | Funcionario     | Personal                  |
+| US-BACK-PER-024 | Tramitar nombramiento/contrato         | Crítica   | Gestor Personas | Adm. Documentos           |
+| US-BACK-PER-025 | Registrar haberes y descuentos esp.    | Crítica   | Gestor Personas | Haberes y Descuentos      |
+| US-BACK-PER-026 | Calcular subsidio incapacidad laboral  | Alta      | Gestor Personas | Licencias Médicas         |
+| US-BACK-PER-027 | Registrar accidente del trabajo (DIAT) | Crítica   | Prof. Bienestar | Accidentes del Trabajo    |
+| US-BACK-PER-028 | Gestionar cuenta corriente permisos    | Crítica   | Gestor Personas | Feriados y Permisos       |
+| US-BACK-PER-029 | Administrar PAC-Capacitación           | Alta      | Enc. Capacit.   | Capacitación              |
+| US-BACK-PER-030 | Tramitar viáticos nacionales/extranj.  | Crítica   | Gestor Personas | Viáticos                  |
+| US-BACK-PER-031 | Calcular retroactivos de remuneración  | Alta      | Gestor Personas | Remuneraciones            |
+| US-BACK-PER-032 | Registrar retención judicial           | Alta      | Gestor Personas | Retenciones Judiciales    |
+| US-BACK-PER-033 | Procesar marcaciones teletrabajo       | Alta      | Funcionario     | Control Asistencia        |
+| US-BACK-PER-034 | Generar centralización contable RRHH   | Crítica   | Contador        | Centralización Contable   |
+| US-BACK-PER-035 | Emitir libro de remuneraciones         | Alta      | Gestor Personas | Reporte Remuneraciones    |
+| US-BACK-PER-036 | Procesar operación renta anual         | Crítica   | Gestor Personas | Operación Renta           |
+| US-BACK-PER-037 | Calcular finiquito e indemnizaciones   | Crítica   | Gestor Personas | Finiquito                 |
+| US-BACK-PER-038 | Portal autoservicio funcionario        | Crítica   | Funcionario     | Persomático               |
+| US-BACK-PER-039 | Generar carga Transparencia Activa     | Crítica   | Gestor Personas | Transparencia             |
+| US-BACK-PER-040 | Gestionar asignación carga familiar    | Alta      | Gestor Personas | Asig. Carga Familiar      |
+| US-BACK-PER-041 | Procesar pago cotizaciones Previred    | Crítica   | Tesorero        | Pago Cotizaciones         |
+| US-BACK-PER-042 | Administrar dependencia funcional      | Alta      | Gestor Personas | Dependencia Funcional     |
+| US-BACK-PER-043 | Gestionar plantillas documentos RRHH   | Media     | Gestor Personas | Plantillas                |
+| US-BACK-PER-044 | Poblar datos masivos funcionarios      | Media     | Admin GDP       | Poblamiento               |
+| US-BACK-PER-045 | Integrar SIAPER vía API                | Crítica   | Sistema         | Servicios Integración     |
+| US-BACK-PER-046 | Consultar auditoría transacciones RRHH | Alta      | Auditor         | Auditoría                 |
+| US-BACK-PER-047 | Configurar seguridad jurisdiccional    | Crítica   | Admin GDP       | Seguridad                 |
+
 #### Bienestar (D07)
 
 | ID               | Título                        | Prioridad | Actor           |
@@ -737,6 +876,15 @@ flowchart LR
 | US-BACK-BIEN-008 | Coordinar con Mutual          | Crítica   | Prof. Bienestar |
 | US-BACK-BIEN-003 | Gestionar bonificación médica | Alta      | Prof. Bienestar |
 | US-BACK-BIEN-005 | Evaluar préstamos             | Alta      | Prof. Bienestar |
+
+#### Bienestar: Absorción SIGPER
+
+| ID               | Título                              | Prioridad | Actor           | Módulo SIGPER Equivalente |
+| ---------------- | ----------------------------------- | --------- | --------------- | ------------------------- |
+| US-BACK-BIEN-013 | Afiliar socio y grupo familiar      | Crítica   | Prof. Bienestar | Bienestar                 |
+| US-BACK-BIEN-014 | Administrar topes bonificación      | Alta      | Prof. Bienestar | Bienestar                 |
+| US-BACK-BIEN-015 | Gestionar convenios institucionales | Alta      | Prof. Bienestar | Bienestar                 |
+| US-BACK-BIEN-016 | Registrar sala cuna/jardín infantil | Alta      | Prof. Bienestar | Personal (Sala Cuna)      |
 
 #### Contabilidad Operativa (D08)
 
@@ -895,16 +1043,66 @@ Flujos Principales:
 | `DeudaFlotante`        | id, ejercicio, acreedor, monto, subtitulo, fecha_devengo | → Compromiso (D-FIN)         |
 | `CierreContable`       | id, ejercicio, tipo, fecha_corte, sic_calculado, estado  | → DeudaFlotante[]            |
 
+### Control de Asistencia (Absorción SIGPER)
+
+| Entidad             | Atributos Clave                                                                              | Relaciones      |
+| ------------------- | -------------------------------------------------------------------------------------------- | --------------- |
+| `Marcacion`         | id, funcionario_id, fecha, hora, tipo (ENTRADA/SALIDA), fuente (RELOJ/WEB/MOVIL), valida     | → Funcionario   |
+| `CodigoHorario`     | id, nombre, hora_entrada, hora_salida, tolerancia_min, dias_semana[], incluye_teletrabajo    | → Funcionario[] |
+| `ProcesoAsistencia` | id, periodo, fecha_proceso, total_funcionarios, con_novedades, estado                        | → Marcacion[]   |
+| `NovedadAsistencia` | id, funcionario_id, fecha, tipo (ATRASO/SALIDA_ANT/FALTA/EXTRA), minutos, justificada        | → Funcionario   |
+| `LibroAsistencia`   | id, periodo, funcionario_id, dias_trabajados, horas_normales, horas_extra_25, horas_extra_50 | → Funcionario   |
+
+### Viáticos (Absorción SIGPER)
+
+| Entidad               | Atributos Clave                                                                          | Relaciones    |
+| --------------------- | ---------------------------------------------------------------------------------------- | ------------- |
+| `Viatico`             | id, funcionario_id, tipo (NACIONAL/EXTRANJERO), fecha_inicio, fecha_fin, destino, estado | → Funcionario |
+| `DetalleViatico`      | id, viatico_id, fecha, porcentaje (100/60/50/40/20/10), monto_calculado                  | → Viatico     |
+| `ConglomeradoViatico` | id, region_id, nombre, localidades[], aplica_100                                         | -             |
+| `FactorPais`          | id, pais, costo_vida, vigencia_desde                                                     | -             |
+| `TablaGradoViatico`   | id, grado_eus, monto_diario_nacional, monto_diario_extranjero_base                       | -             |
+
+### Desarrollo Organizacional (Absorción SIGPER)
+
+| Entidad                 | Atributos Clave                                                             | Relaciones                 |
+| ----------------------- | --------------------------------------------------------------------------- | -------------------------- |
+| `Competencia`           | id, codigo, nombre, tipo (TECNICA/TRANSVERSAL), descripcion, niveles[]      | → CompetenciaCargo[]       |
+| `CompetenciaCargo`      | id, cargo_id, competencia_id, nivel_esperado                                | → Cargo, Competencia       |
+| `EvaluacionCompetencia` | id, funcionario_id, competencia_id, evaluador_id, nivel_observado, fecha    | → Funcionario, Competencia |
+| `BrechaCompetencial`    | id, funcionario_id, competencia_id, nivel_esperado, nivel_actual, prioridad | → Funcionario, Competencia |
+| `PlanDesarrollo`        | id, funcionario_id, periodo, brechas[], acciones_formativas[], estado       | → Funcionario, PAC         |
+
+### Grupo Familiar y Cargas (Absorción SIGPER)
+
+| Entidad             | Atributos Clave                                                                           | Relaciones      |
+| ------------------- | ----------------------------------------------------------------------------------------- | --------------- |
+| `GrupoFamiliar`     | id, funcionario_id, parentesco, nombre, rut, fecha_nacimiento, es_carga, estado           | → Funcionario   |
+| `AsignacionCarga`   | id, funcionario_id, tramo, monto, vigencia_desde, vigencia_hasta                          | → Funcionario   |
+| `RetencionJudicial` | id, funcionario_id, beneficiario_id, monto_fijo, porcentaje, tipo_reajuste, banco, cuenta | → GrupoFamiliar |
+
+### Haberes y Descuentos Especiales (Absorción SIGPER)
+
+| Entidad               | Atributos Clave                                                                 | Relaciones    |
+| --------------------- | ------------------------------------------------------------------------------- | ------------- |
+| `HaberDescuentoEsp`   | id, codigo, nombre, tipo (HABER/DESCUENTO), formula_id, imponible, tributable   | -             |
+| `AsignacionHaberDesc` | id, funcionario_id, haber_descuento_id, fecha_inicio, fecha_termino, monto_fijo | → Funcionario |
+| `Bienio`              | id, funcionario_id, fecha_reconocimiento, cantidad, monto                       | → Funcionario |
+
 ---
 
 ## Sistemas Involucrados
 
-| Sistema           | Función                           |
-| ----------------- | --------------------------------- |
-| `SYS-SIAPER`      | Control personal Estado           |
-| `SYS-PREVIRED`    | Cotizaciones previsionales        |
-| `ORG-CHILECOMPRA` | Mercado Público, licitaciones, OC |
-| `SYS-SIGFE`       | Contabilización                   |
+| Sistema           | Función                           | Módulo SIGPER Equivalente |
+| ----------------- | --------------------------------- | ------------------------- |
+| `SYS-SIAPER`      | Control personal Estado           | Servicios Integración     |
+| `SYS-PREVIRED`    | Cotizaciones previsionales        | Pago Cotizaciones         |
+| `ORG-CHILECOMPRA` | Mercado Público, licitaciones, OC | -                         |
+| `SYS-SIGFE`       | Contabilización                   | Centralización Contable   |
+| `SYS-IMED`        | Licencias médicas electrónicas    | Licencias Médicas         |
+| `SYS-SUSESO`      | Accidentes trabajo / DIAT         | Accidentes del Trabajo    |
+| `SYS-SII`         | Operación renta, F1887/F1879      | Operación Renta           |
+| `HW-BIOMETRICO`   | Relojes ZK/Anviz/HikVision        | Control Asistencia        |
 
 ---
 
@@ -925,45 +1123,54 @@ Flujos Principales:
 
 ## Referencias Cruzadas
 
-| Dominio | Relación                                       | Entidades Compartidas      |
-| ------- | ---------------------------------------------- | -------------------------- |
-| D-FIN   | % Ejecución como KPI, distribución estratégica | CDP, AsignacionPpto        |
-| D-EJEC  | EP validado → Devengo → Pago                   | EstadoPago, Hito           |
-| D-NORM  | Resoluciones de adjudicación, contratos        | ActoAdministrativo         |
-| D-TDE   | Interoperabilidad SIGFE, Mercado Público       | IntegracionPISEE           |
-| D-GOB   | Proveedores como actores                       | Actor                      |
-| D-SEG   | Equipamiento CIES, vehículos seguridad         | Vehiculo, ActivoFijo       |
-| D-TERR  | Geolocalización bienes fiscales, flota         | Ubicacion, CapaGeoespacial |
+| Dominio   | Relación                                       | Entidades Compartidas      |
+| --------- | ---------------------------------------------- | -------------------------- |
+| D-FIN     | % Ejecución como KPI, distribución estratégica | CDP, AsignacionPpto        |
+| D-EJEC    | EP validado → Devengo → Pago                   | EstadoPago, Hito           |
+| D-NORM    | Resoluciones de adjudicación, contratos        | ActoAdministrativo         |
+| D-TDE     | Interoperabilidad SIGFE, Mercado Público       | IntegracionPISEE           |
+| D-GOB     | Proveedores como actores                       | Actor                      |
+| D-SEG     | Equipamiento CIES, vehículos seguridad         | Vehiculo, ActivoFijo       |
+| D-TERR    | Geolocalización bienes fiscales, flota         | Ubicacion, CapaGeoespacial |
+| D-EVOL    | Orquestación de capacidades IA sobre recursos  | Inventory                  |
+| D-GESTION | Métricas back-office para scoring H_gore       | MetricaGestion             |
+| FÉNIX     | Protocolo de intervención por criticidad       | Intervencion               |
+| D-PLAN    | Alineación de compras con Plan Operativo       | PlanOperativo              |
+
 
 ---
 
 ## Indicadores de Gestión (KPIs)
 
-| KPI                        | Meta      | Fórmula                                            | Módulo              |
-| -------------------------- | --------- | -------------------------------------------------- | ------------------- |
-| % Conciliaciones al día    | 100%      | (Conciliaciones completadas / Total cuentas) × 100 | Contabilidad Op.    |
-| Mora pago proveedores      | < 30 días | Promedio días desde factura hasta pago             | Contabilidad Op.    |
-| Cobertura PAC              | > 90%     | (Compras ejecutadas / PAC planificado) × 100       | Abastecimiento      |
-| Rotación inventario        | > 4x/año  | (Salidas anuales / Stock promedio)                 | Inventarios         |
-| % Activos inventariados    | 100%      | (AF verificados / Total AF registrados) × 100      | Activo Fijo         |
-| Disponibilidad flota       | > 85%     | (Vehículos operativos / Total flota) × 100         | Flota               |
-| Mora rendiciones bienestar | < 15 días | Promedio días hasta reembolso                      | Bienestar           |
-| Dotación efectiva          | 95-100%   | (Dotación actual / Dotación autorizada) × 100      | Gestión de Personas |
+| KPI                          | Meta      | Fórmula                                            | Módulo              |
+| ---------------------------- | --------- | -------------------------------------------------- | ------------------- |
+| % Conciliaciones al día      | 100%      | (Conciliaciones completadas / Total cuentas) × 100 | Contabilidad Op.    |
+| Mora pago proveedores        | < 30 días | Promedio días desde factura hasta pago             | Contabilidad Op.    |
+| Cobertura PAC                | > 90%     | (Compras ejecutadas / PAC planificado) × 100       | Abastecimiento      |
+| Rotación inventario          | > 4x/año  | (Salidas anuales / Stock promedio)                 | Inventarios         |
+| % Activos inventariados      | 100%      | (AF verificados / Total AF registrados) × 100      | Activo Fijo         |
+| Disponibilidad flota         | > 85%     | (Vehículos operativos / Total flota) × 100         | Flota               |
+| Mora rendiciones bienestar   | < 15 días | Promedio días hasta reembolso                      | Bienestar           |
+| Dotación efectiva            | 95-100%   | (Dotación actual / Dotación autorizada) × 100      | Gestión de Personas |
+| % Marcaciones válidas        | > 98%     | (Marcaciones OK / Total marcaciones) × 100         | Control Asistencia  |
+| Brecha competencial media    | < 1 nivel | Promedio (nivel_esperado - nivel_actual)           | Desarrollo Org.     |
+| Viáticos tramitados a tiempo | > 95%     | (Viáticos pagados en plazo / Total viáticos) × 100 | Viáticos            |
 
 ---
 
 ## Registro de Cambios (Changelog)
 
-| Versión | Fecha      | Cambios                                                                             |
-| ------- | ---------- | ----------------------------------------------------------------------------------- |
-| 5.2     | 2025-12-16 | Añadido D07.B Bienestar (+3 procesos BPMN). Tabla índice BPMN. US completas D05/D06 |
-| 5.1     | 2025-12-16 | Renombre módulo Tesorería → Contabilidad Operativa. +6 términos glosario            |
-| 5.1     | 2025-12-16 | +5 entidades datos Contab. Operativa. +8 KPIs. +13 roles documentados               |
-| 5.1     | 2025-12-16 | Diagrama integración D-BACK ↔ D-FIN. Normativa ampliada (D.L. 1.263)                |
-| 5.0     | 2025-12-15 | Añadido módulo Tesorería (21 US nuevas). Migración US-BACK-CONT a Tesorería         |
-| 4.0     | 2025-12-10 | Versión inicial consolidada. 7 módulos, 49 US                                       |
+| Versión | Fecha      | Cambios                                                                                                                               |
+| ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 6.0     | 2025-12-18 | **Absorción SIGPER.** +28 US (PER-020 a 047, BIEN-013 a 016). +3 procesos BPMN (P5-P7). +18 entidades. Cobertura 100% módulos SIGPER. |
+| 5.2     | 2025-12-16 | Añadido D07.B Bienestar (+3 procesos BPMN). Tabla índice BPMN. US completas D05/D06                                                   |
+| 5.1     | 2025-12-16 | Renombre módulo Tesorería → Contabilidad Operativa. +6 términos glosario                                                              |
+| 5.1     | 2025-12-16 | +5 entidades datos Contab. Operativa. +8 KPIs. +13 roles documentados                                                                 |
+| 5.1     | 2025-12-16 | Diagrama integración D-BACK ↔ D-FIN. Normativa ampliada (D.L. 1.263)                                                                  |
+| 5.0     | 2025-12-15 | Añadido módulo Tesorería (21 US nuevas). Migración US-BACK-CONT a Tesorería                                                           |
+| 4.0     | 2025-12-10 | Versión inicial consolidada. 7 módulos, 49 US                                                                                         |
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.3*  
+*Documento parte de GORE_OS Blueprint Integral v5.4*  
 *Última actualización: 2025-12-18*

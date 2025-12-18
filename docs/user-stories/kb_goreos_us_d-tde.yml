@@ -4,7 +4,7 @@ _manifest:
   domain_name: Gobernanza Digital y Transformación
   legacy_modules:
     - M10
-  total_stories: 54
+  total_stories: 76
   priority_distribution:
     critica: 22
     alta: 24
@@ -934,8 +934,73 @@ stories:
       - Conector WMS/WFS
       - Visualización integrada
     source_ref: "user_stories_legacy.md:L645"
+  - id: US-TDE-REG-001
+    legacy_ids: []
+    title: Convocar Mesa Regional TDE
+    as_a:
+      - CTD
+    i_want: Convocar y liderar la Mesa Regional de Transformación Digital
+    so_that: Articulo el cumplimiento normativo en todo el territorio
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Acta de constitución
+      - Plan de trabajo regional
+    source_ref: "docs/blueprint/domains/domain_d-tde.md"
+  - id: US-TDE-REG-007
+    legacy_ids: []
+    title: Federar Firma Municipal
+    as_a:
+      - CTD
+    i_want: habilitar un servicio de firma electrónica federada para municipios
+    so_that: los municipios sin capacidad de firma propia puedan firmar convenios a través del GORE
+    priority: Crítica
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Convenio Marco firmado
+      - Proxy de firma operativo
+    source_ref: "artefacto:inteligencia-operativa:CAP-01"
+  - id: US-TDE-DOCDIG-002
+    legacy_ids: []
+    title: Generar Resolución con Link CeroPapel
+    as_a:
+      - Abogado Jurídica
+    i_want: incluir un link de verificación en lugar del texto íntegro del convenio en las resoluciones
+    so_that: las resoluciones sean cortas y verificables digitalmente
+    priority: Alta
+    module: Notificaciones
+    acceptance_criteria:
+      - URL de convenio generada
+      - Código QR opcional
+    source_ref: "artefacto:inteligencia-operativa:CAP-02"
+  - id: US-TDE-SEG-012
+    legacy_ids: []
+    title: Generar Resolución Encargado Ciberseguridad
+    as_a:
+      - CTD
+    i_want: Generar el acto administrativo de designación de encargado de ciberseguridad
+    so_that: Cumplo con los requisitos de la ANCI
+    priority: Alta
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Resolución firmada
+      - Notificación a ANCI
+    source_ref: "artefacto:inteligencia-operativa:CAP-03"
+  - id: US-TDE-FIRMA-002
+    legacy_ids: []
+    title: Conmutar Firma (FirmaGob ↔ Contingencia)
+    as_a:
+      - Administrador Sistema
+    i_want: Activar mecanismo de firma de contingencia ante caídas de FirmaGob
+    so_that: Aseguro la continuidad operativa del GORE
+    priority: Alta
+    module: Autenticacion
+    acceptance_criteria:
+      - Switch de contingencia operativo
+      - Firma simple/avanzada local alternativa
+    source_ref: "artefacto:inteligencia-operativa:CAP-05"
 _summary:
-  total_stories: 67
+  total_stories: 76
   modules_covered:
     - Infraestructura
     - Autenticacion

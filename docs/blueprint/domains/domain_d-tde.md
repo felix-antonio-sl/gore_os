@@ -444,6 +444,30 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 
 ---
 
+### P7: Federación de Firma Municipal
+
+```mermaid
+flowchart TD
+    A["Municipio solicita\nfirma federada"] --> B["GORE verifica\nconvenio vigente"]
+    B --> C{"¿Convenio OK?"}
+    C -->|"No"| D["Iniciar proceso\nde convenio"]
+    D --> B
+    C -->|"Sí"| E["Municipio sube\ndocumento a firmar"]
+    E --> F["GORE valida\ndocumento"]
+    F --> G{"¿Válido?"}
+    G -->|"No"| H["Devolver con\nobservaciones"]
+    H --> E
+    G -->|"Sí"| I["GORE firma con\nFirmaGob"]
+    I --> J["Documento firmado\ndisponible"]
+    J --> K["Log en registro\nfederación"]
+```
+
+Actores: GORE (CTD/Jurídica), Municipios (Contraparte)  
+Frecuencia: Bajo demanda  
+Módulo: M5 (Liderazgo Digital Regional)
+
+---
+
 ## Catálogo de Historias de Usuario
 
 ### US Cumplimiento TDE (P1)
@@ -457,25 +481,37 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 
 ### US Servicios Digitales (P2)
 
-| ID                 | Título                                | Prioridad |
-| ------------------ | ------------------------------------- | --------- |
-| US-TDE-AUTH-001    | Integrar ClaveÚnica OIDC              | Crítica   |
-| US-TDE-NOTIF-001   | Integrar Plataforma Notificaciones    | Crítica   |
-| US-TDE-SIMPLE-001  | Publicar trámite en SIMPLE            | Alta      |
-| US-TDE-FIRMA-001   | Habilitar firma electrónica           | Crítica   |
-| US-TDE-DOCDIG-001  | Integrar DocDigital (Comms Oficiales) | Crítica   |
-| US-TDE-DIGITAL-001 | Digitalizar Ingreso Solicitudes       | Alta      |
+| ID                 | Título                                   | Prioridad |
+| ------------------ | ---------------------------------------- | --------- |
+| US-TDE-AUTH-001    | Integrar ClaveÚnica OIDC                 | Crítica   |
+| US-TDE-NOTIF-001   | Integrar Plataforma Notificaciones       | Crítica   |
+| US-TDE-SIMPLE-001  | Publicar trámite en SIMPLE               | Alta      |
+| US-TDE-FIRMA-001   | Habilitar firma electrónica              | Crítica   |
+| US-TDE-FIRMA-002   | Conmutar Firma (FirmaGob ↔ Contingencia) | Alta      |
+| US-TDE-DOCDIG-001  | Integrar DocDigital (Comms Oficiales)    | Crítica   |
+| US-TDE-DOCDIG-002  | Generar Resolución con Link CeroPapel    | Alta      |
+| US-TDE-DOCDIG-003  | Tramitar Convenios por DocDigital        | Alta      |
+| US-TDE-DIGITAL-001 | Digitalizar Ingreso Solicitudes          | Alta      |
 
 ### US Ciberseguridad (P3)
 
-| ID             | Título                        | Prioridad |
-| -------------- | ----------------------------- | --------- |
-| US-TDE-SEG-001 | Inventariar activos TI        | Crítica   |
-| US-TDE-SEG-002 | Evaluar riesgos DS 7          | Crítica   |
-| US-TDE-SEG-003 | Implementar controles         | Alta      |
-| US-TDE-SEG-004 | Reportar incidentes a ANCI    | Crítica   |
-| US-TDE-DPO-001 | Gestionar Solicitudes ARCO    | Crítica   |
-| US-TDE-DPO-002 | Mantener registro tratamiento | Alta      |
+| ID             | Título                             | Prioridad |
+| -------------- | ---------------------------------- | --------- |
+| US-TDE-SEG-001 | Inventariar activos TI             | Crítica   |
+| US-TDE-SEG-002 | Evaluar riesgos DS 7               | Crítica   |
+| US-TDE-SEG-003 | Implementar controles              | Alta      |
+| US-TDE-SEG-004 | Reportar incidentes a ANCI         | Crítica   |
+| US-TDE-SEG-005 | Asegurar cifrado TLS y en reposo   | Alta      |
+| US-TDE-SEG-006 | Gestionar incidentes (CSIRT)       | Crítica   |
+| US-TDE-SEG-007 | Configurar políticas IAM           | Crítica   |
+| US-TDE-SEG-008 | Auditar logs acceso sensibles      | Alta      |
+| US-TDE-SEG-009 | Simulaciones Phishing              | Alta      |
+| US-TDE-SEG-010 | Auditar trazabilidad DS9           | Alta      |
+| US-TDE-SEG-011 | Privacidad por diseño              | Alta      |
+| US-TDE-SEG-012 | Generar Resolución Encargado Ciber | Alta      |
+| US-TDE-SEG-013 | Inscribir GORE en Plataforma ANCI  | Crítica   |
+| US-TDE-DPO-001 | Gestionar Solicitudes ARCO         | Crítica   |
+| US-TDE-DPO-002 | Mantener registro tratamiento      | Alta      |
 
 ### US Gobernanza Datos & Calidad (Absorción PMG)
 
@@ -508,6 +544,9 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 | US-TDE-REG-004  | Capacitar equipos municipales       | Alta      |
 | US-TDE-REG-005  | Monitorear Índice TDE Regional      | Alta      |
 | US-TDE-REG-006  | Coordinar respuesta ciberincidentes | Crítica   |
+| US-TDE-REG-007  | Federar Firma Municipal             | Crítica   |
+| US-TDE-REG-009  | Instancia SIMPLE Regional           | Crítica   |
+| US-TDE-REG-010  | Habilitar ClaveÚnica Macro          | Crítica   |
 | US-TDE-VINC-001 | Gestionar Firmas Municipales        | Alta      |
 | US-TDE-VINC-002 | Habilitar API Gateway Municipal     | Alta      |
 
@@ -563,7 +602,7 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 | ----------------------- | ------------------------------------------------------------------ | ------------------------ |
 | `ExpedienteElectronico` | id, iuie, fecha_creacion, estado, tipo_procedimiento, total_folios | → DocumentoElectronico[] |
 | `DocumentoElectronico`  | id, id_expediente, folio, hash, timestamp, tipo_doc                | → ExpedienteElectronico  |
-| `AccionExpediente`      | id, id_expediente, accion, id_funcionario, timestamp               | → ExpedienteElectronico  |
+| `AccionExpediente`      | id, id_expediente, accion, funcionario_id, timestamp               | → ExpedienteElectronico  |
 
 ### Interoperabilidad y Regional
 
@@ -582,7 +621,7 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 | -------------------- | ------------------------------------------------------ | ---------------------- |
 | `PlanCambio`         | id, año, objetivos, cronograma, estado                 | → SesionCapacitacion[] |
 | `SesionCapacitacion` | id, id_plan, tema, fecha, total_asistentes, evaluacion | → PlanCambio           |
-| `EvaluacionAdopcion` | id, id_funcionario, puntaje_pre, puntaje_post, fecha   | → SesionCapacitacion   |
+| `EvaluacionAdopcion` | id, funcionario_id, puntaje_pre, puntaje_post, fecha   | → SesionCapacitacion   |
 
 ---
 
@@ -634,19 +673,18 @@ Frecuencia: Anual (Plan) / Continua (Ejecución)
 
 ## Referencias Cruzadas
 
-| Dominio   | Relación                                                                                 | Entidades Compartidas |
-| --------- | ---------------------------------------------------------------------------------------- | --------------------- |
-| D-NORM    | Expediente electrónico debe cumplir DS 10 del TDE                                        | ElectronicFile        |
-| FÉNIX     | Fallas críticas de ciberseguridad activan intervención                                   | Incident              |
-| D-BACK    | Integración de sistemas administrativos con ClaveÚnica                                   | ITAsset               |
-| D-SEG     | Infraestructura de red CIES gestionada bajo normas TDE                                   | ITAsset               |
-| D-GOB     | Liderazgo político del Gobernador en Mesa Regional TDE                                   | RegionalEntity        |
-| D-PLAN    | Liderazgo TDE regional alineado con ERD (Eje Modernización)                              | TDEMaturityIndex      |
-| D-GESTION | Indicadores TDE como dimensión del H_gore                                                | Indicator             |
-| D-EVOL    | Agentes IA deben cumplir estándares de seguridad TDE. TDE habilita L2/L3 en escala ORKO. | Capability, H_org     |
+| Dominio   | Relación                                                                                                                                                                                                      | Entidades Compartidas                         |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| D-NORM    | Expediente electrónico debe cumplir DS 10 del TDE                                                                                                                                                             | ElectronicFile                                |
+| FÉNIX     | Fallas críticas de ciberseguridad activan intervención                                                                                                                                                        | Incident                                      |
+| D-BACK    | Integración de sistemas administrativos con ClaveÚnica                                                                                                                                                        | ITAsset                                       |
+| D-SEG     | Infraestructura de red CIES gestionada bajo normas TDE                                                                                                                                                        | ITAsset                                       |
+| D-GOB     | Liderazgo político del Gobernador en Mesa Regional TDE                                                                                                                                                        | RegionalEntity                                |
+| D-PLAN    | Liderazgo TDE regional alineado con ERD (Eje Modernización)                                                                                                                                                   | TDEMaturityIndex                              |
+| D-GESTION | Indicadores TDE como dimensión del H_gore                                                                                                                                                                     | Indicator                                     |
+| D-EVOL    | **Piso vs Techo**: D-TDE provee piso normativo (L2), D-EVOL construye techo estratégico (L3-L5). `TDEScore` es input duro de `H_org.Gobernanza(P4)`. M5/M6 alimentan el Repositorio Arquitectónico de D-EVOL. | Capability, H_org, TDEScore, IndiceMadurezTDE | \n | D-TERR | Capas geoespaciales deben cumplir metadatos TDE (DS 9/10). | ElectronicDocument |
 
 ---
 
 *Documento parte de GORE_OS Blueprint v5.2*  
 *Última actualización: 2025-12-18*
-```

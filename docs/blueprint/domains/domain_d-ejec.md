@@ -180,7 +180,7 @@ flowchart TD
     H --> I["Firma Gobernador"]
     I --> J["Firma Ejecutor"]
     J --> K["Convenio VIGENTE"]
-    K --> L["Notificar a<br/>D-FIN para CDP"]
+    K --> L["Notificar a<br/>D-FIN para Compromiso"]
 ```
 
 ---

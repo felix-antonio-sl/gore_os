@@ -240,6 +240,7 @@ Funcionalidades:
 | **Restricciones**             | C4_Límite      | Normativa CGR, TDE, Ciberseguridad ANCI           |
 | **Propósitos/OKRs**           | C5_Propósito   | Ejes ERD, OKRs Divisionales, Indicadores H_gore   |
 | **Agentes IA**                | AgentSpec      | Digitrans (TDE), Asesor IPR, Mora Watcher         |
+| **Ecosistema Municipal**      | C1+C2+C4       | Stack TI Municipal, Convenios Firma, APIs Munis   |
 
 #### Funcionalidades del Repositorio Arquitectónico
 
@@ -270,7 +271,8 @@ Funcionalidades:
 4. Identificación de Redundancias: Sistemas duplicados, datos inconsistentes.
 5. Hoja de Ruta Tecnológica: Planificación de la evolución de sistemas L0→L5.
 6. Deuda Técnica Priorizada: Lista de Pendientes (Backlog) de modernización con calificación (scoring) RICE.
-7. Gobernanza de Datos: Custodios, calidad, políticas de acceso.
+7. **Deuda Técnica Municipal:** Inventario de brechas tecnológicas y sistemas legados en las 21 comunas (consumido desde D-TDE M5/M6).
+8. Gobernanza de Datos: Custodios, calidad, políticas de acceso.
 
 ### 11. Puente TDE-ORKO (Estrategia Regional)
 
@@ -299,16 +301,23 @@ Las actividades de cumplimiento en D-TDE habilitan automáticamente primitivos O
 3. Liderazgo TDE Regional: Coordinar el cumplimiento de los servicios dependientes.
 4. Propagación Metodológica: Extender las prácticas de ORKO al ecosistema regional.
 
-| Módulo TDE                    | Habilita Primitivo ORKO | Lógica                                                                          |
-| :---------------------------- | :---------------------- | :------------------------------------------------------------------------------ |
-| **M2 Servicio Digital**       | **P1: Capacidad**       | Un servicio digitalizado aumenta la capacidad del GORE para entregar valor.     |
-| **M3 Interoperabilidad**      | **P2: Flujo**           | La integración PISEE reduce la fricción y acelera el flujo de datos.            |
-| **M7 Expediente Electrónico** | **P3: Información**     | Los archivos digitales estructurados crean activos de información consultables. |
-| **M1/M4 Gob y Seguridad**     | **P4: Límite**          | La seguridad y gobernanza definen fronteras operativas válidas.                 |
+| Módulo TDE                     | Habilita Primitivo ORKO | Lógica                                                                          |
+| :----------------------------- | :---------------------- | :------------------------------------------------------------------------------ |
+| **M2 Servicio Digital**        | **P1: Capacidad**       | Un servicio digitalizado aumenta la capacidad del GORE para entregar valor.     |
+| **M3 Interoperabilidad**       | **P2: Flujo**           | La integración PISEE reduce la fricción y acelera el flujo de datos.            |
+| **M7 Expediente Electrónico**  | **P3: Información**     | Los archivos digitales estructurados crean activos de información consultables. |
+| **M1/M4 Gob y Seguridad**      | **P4: Límite**          | La seguridad y gobernanza definen fronteras operativas válidas.                 |
+| **M5 Liderazgo Regional**      | **P1+P2 Distribuido**   | Extiende capacidades y flujos del GORE hacia el ecosistema municipal.           |
+| **M6 Vinculación Territorial** | **P1+P4 Federado**      | Provee capacidades compartidas (firma, gateway) bajo restricciones de convenio. |
 
 #### Integración de H_org
 El `TDEScore` es consumido explícitamente por el componente de Gobernanza/Límite del Health Score:
 
+```javascript
+// Componente Gobernanza(P4) del H_org
+Gobernanza_P4 = 0.60 * CumplimientoNormativo + 0.30 * TDEScore + 0.10 * AuditoriaInterna
+// TDEScore es HARD DEPENDENCY: si TDEScore < 0.50, Gobernanza_P4 se penaliza con factor 0.7
+```
 
 #### Autonomía de Evolución Nativa (Desarrollo Sin Límites)
 
@@ -499,6 +508,27 @@ flowchart TD
 
 ---
 
+### P5: Clonación de Proceso Municipal Exitoso
+
+```mermaid
+flowchart TD
+    A["Identificar municipio<br/>líder (ej: Ninhue)"] --> B["Entrevistar a<br/>encargado municipal"]
+    B --> C["Documentar stack<br/>y flujos"]
+    C --> D["Crear artefacto<br/>KB con URN"]
+    D --> E["Validar con<br/>CTD GORE"]
+    E --> F{"¿Replicable?"}
+    F -->|"No"| G["Marcar como<br/>'caso único'"]
+    F -->|"Sí"| H["Generar Playbook<br/>de replicación"]
+    H --> I["Desplegar en<br/>municipio objetivo"]
+    I --> J["Medir resultados<br/>post-despliegue"]
+```
+
+Actores: GORE (Agente KODA, CTD), Municipio (Líder/Objetivo)  
+Frecuencia: Por proyecto de expansión regional  
+Módulo: M7 (Base de Conocimiento Institucional)
+
+---
+
 ## 📝 Historias de Usuario por Módulo
 
 > Fuente: [kb_goreos_us_d-evol.yml](../user-stories/kb_goreos_us_d-evol.yml)
@@ -561,6 +591,9 @@ flowchart TD
 | US-EVOL-KB-004 | Clasificar artefacto (Público/Interno/Confidencial) | Alta      |
 | US-EVOL-KB-005 | Gestionar ciclo de vida (Draft/Review/Published)    | Alta      |
 | US-EVOL-KB-006 | Consultar linaje de artefacto                       | Alta      |
+| US-EVOL-KB-007 | Catalogar Plantillas Administrativas Nacionales     | Alta      |
+| US-EVOL-KB-008 | Registrar Patrón "Link CeroPapel"                   | Media     |
+| US-EVOL-KB-009 | Documentar Modelo Ninhue (Municipio Digital)        | Alta      |
 
 #### Agentes IA
 
@@ -603,6 +636,10 @@ flowchart TD
 | US-EVOL-AO-015 | Coordinar cumplimiento TDE de servicios dependientes  | Crítica   |
 | US-EVOL-AO-016 | Ejecutar análisis de impacto ante cambio planificado  | Alta      |
 | US-EVOL-AO-017 | Identificar redundancias y brechas en portafolio      | Alta      |
+| US-EVOL-AO-018 | Inventariar Stack Tecnológico de Municipios           | Alta      |
+| US-EVOL-AO-019 | Mapear Deuda Técnica Sistemas Legados                 | Media     |
+| US-EVOL-AO-020 | Calcular GAP Ñuble vs Antofagasta (Benchmark)         | Alta      |
+| US-EVOL-AO-021 | Generar Trayectoria de Evolución Selectiva            | Alta      |
 
 ---
 
@@ -625,11 +662,11 @@ flowchart TD
 
 ### Colaboración Humano-IA
 
-| Entidad             | Atributos Clave                                                                   | Relaciones               |
-| ------------------- | --------------------------------------------------------------------------------- | ------------------------ |
-| `Delegacion`        | id, id_capacidad_ia, id_responsable_humano, modo (M1-M6), fecha_inicio, evidencia | → Capacidad, Funcionario |
-| `RegistroDesempeño` | id, id_capacidad, timestamp, entrada, salida, exito, latencia                     | → Capacidad              |
-| `AlertaDeriva`      | id, id_capacidad, fecha, metrica_afectada, valor_esperado, valor_real, severidad  | → Capacidad              |
+| Entidad             | Atributos Clave                                                                  | Relaciones               |
+| ------------------- | -------------------------------------------------------------------------------- | ------------------------ |
+| `Delegacion`        | id, id_capacidad_ia, funcionario_id, modo (M1-M6), fecha_inicio, evidencia       | → Capacidad, Funcionario |
+| `RegistroDesempeño` | id, id_capacidad, timestamp, entrada, salida, exito, latencia                    | → Capacidad              |
+| `AlertaDeriva`      | id, id_capacidad, fecha, metrica_afectada, valor_esperado, valor_real, severidad | → Capacidad              |
 
 ### Gobernanza
 
@@ -712,19 +749,18 @@ flowchart TD
 
 ## Referencias Cruzadas
 
-| Dominio | Relación                                             | Entidades Compartidas |
-| ------- | ---------------------------------------------------- | --------------------- |
-| D-PLAN  | Proyección de cumplimiento ERD                       | OKR, Indicator        |
-| D-FIN   | Analytics predictivo para IPR                        | IPR, Projection       |
-| D-EJEC  | Automatización de alertas de convenios               | Alert, Agreement      |
-| D-GOB   | Scoring predictivo de actores                        | Actor, Rating         |
-| D-NORM  | Automatización de expedientes                        | AdministrativeAct     |
-| D-BACK  | Predicción de necesidades de recursos                | Inventory             |
-| D-TDE   | D-TDE es piso normativo, D-EVOL es techo estratégico | Capability            |
-| D-TERR  | Analytics geoespacial avanzado                       | GeospatialLayer       |
-| D-SEG   | Analytics predictivo de incidentes                   | Incident              |
-| FÉNIX   | Detección automatizada de condiciones de activación  | FenixAlert, FenixCase |
-| Todos   | Agentes IA operan sobre todos los dominios           | AI_Agent, Capability  |
+| Dominio | Relación                                                                                                                                                                    | Entidades Compartidas                  |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| D-PLAN  | Proyección de cumplimiento ERD                                                                                                                                              | OKR, Indicator                         |
+| D-FIN   | Analytics predictivo para IPR                                                                                                                                               | IPR, Projection                        |
+| D-EJEC  | Automatización de alertas de convenios                                                                                                                                      | Alert, Agreement                       |
+| D-GOB   | Scoring predictivo de actores                                                                                                                                               | Actor, Rating                          |
+| D-NORM  | Automatización de expedientes                                                                                                                                               | AdministrativeAct                      |
+| D-BACK  | Predicción de necesidades de recursos                                                                                                                                       | Inventory                              |
+| D-TDE   | **Piso vs Techo**: D-TDE (L2 Integrado) es piso legal; D-EVOL construye techo (L3-L5). `TDEScore` → `H_org.Gobernanza(P4)`. M5/M6 → Ecosistema Municipal en Repositorio AO. | Capability, TDEScore, IndiceMadurezTDE | \n | D-TERR | Analytics geoespacial avanzado (P6) alimenta métricas de salud | GeospatialLayer, H_org |
+| D-SEG   | Analytics predictivo de incidentes                                                                                                                                          | Incident                               |
+| FÉNIX   | Detección automatizada de condiciones de activación                                                                                                                         | FenixAlert, FenixCase                  |
+| Todos   | Agentes IA operan sobre todos los dominios                                                                                                                                  | AI_Agent, Capability                   |
 
 ---
 

@@ -4,7 +4,7 @@ _manifest:
   domain_name: Evolución e Inteligencia del Sistema
   legacy_modules:
     - M19
-  total_stories: 16
+  total_stories: 24
   priority_distribution:
     critica: 4
     alta: 12
@@ -234,8 +234,57 @@ stories:
       - KPIs técnicos
       - Alertas de degradación
     source_ref: "user_stories_legacy.md:L1032"
+  - id: US-EVOL-KB-007
+    legacy_ids: []
+    title: Catalogar Plantillas Administrativas Nacionales
+    as_a:
+      - Agente KODA
+    i_want: tener acceso a plantillas normativas validadas por otros GOREs
+    so_that: asisto en la generación rápida de documentos de cumplimiento
+    priority: Alta
+    module: BaseConocimiento
+    acceptance_criteria:
+      - Plantillas registradas en KB
+      - URN asignado
+    source_ref: "artefacto:inteligencia-operativa:CAP-04"
+  - id: US-EVOL-KB-008
+    legacy_ids: []
+    title: Registrar Patrón "Link CeroPapel"
+    as_a:
+      - Desarrollador Sistema
+    i_want: Registrar el patrón técnico y administrativo de links de verificación
+    so_that: Estandarizo la reducción de papel en resoluciones
+    priority: Media
+    module: BaseConocimiento
+    acceptance_criteria:
+      - Patrón documentado en KB
+    source_ref: "artefacto:inteligencia-operativa:CAP-02"
+  - id: US-EVOL-AO-018
+    legacy_ids: []
+    title: Inventariar Stack Tecnológico de Municipios
+    as_a:
+      - CTD GORE
+    i_want: Inventariar los sistemas y tecnologías usados por municipios
+    so_that: Identifico compatibilidades para la federación
+    priority: Alta
+    module: ArquitecturaOrganizacional
+    acceptance_criteria:
+      - Inventario municipal completo
+    source_ref: "artefacto:inteligencia-operativa:CAP-05"
+  - id: US-EVOL-PUENTE-001
+    legacy_ids: []
+    title: Calcular TDEScore para H_org
+    as_a:
+      - Monitor de Sistema
+    i_want: Integrar el cumplimiento TDE como una variable del Health Score
+    so_that: La salud organizacional refleja el cumplimiento legal
+    priority: Crítica
+    module: PuenteTDE-ORKO
+    acceptance_criteria:
+      - Algoritmo de H_org actualizado
+    source_ref: "artefacto:estrategia-techo-piso:CAP-06"
 _summary:
-  total_stories: 16
+  total_stories: 24
   modules_covered:
     - HealthOrg
     - Trayectoria
@@ -243,3 +292,6 @@ _summary:
     - Playbooks
     - Gobierno
     - DeudaTecnica
+    - BaseConocimiento
+    - ArquitecturaOrganizacional
+    - PuenteTDE-ORKO

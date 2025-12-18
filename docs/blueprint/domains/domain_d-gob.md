@@ -363,7 +363,7 @@ Frecuencia: A demanda
 | Entidad             | Atributos Clave                                                                                               | Relaciones                                                |
 | ------------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | `Actor`             | id, rut, razon_social, tipo, contacto_principal, correo, telefono, id_comuna, estado, calificación_relacional | → HistorialActor[], ActorIPR[] (D-FIN), ConvenioMandato[] |
-| `HistorialActor`    | id, id_actor, tipo_evento, descripcion, fecha, id_funcionario                                                 | → Actor                                                   |
+| `HistorialActor`    | id, id_actor, tipo_evento, descripcion, fecha, funcionario_id                                                 | → Actor                                                   |
 | `InteraccionActor`  | id, id_actor, tipo (reunion/llamada/correo/convenio), fecha, resumen                                          | → Actor                                                   |
 | `RolActor`          | id, id_actor, rol (EJECUTOR/PROVEEDOR/MANDANTE/SOCIO), estado, fecha_habilitacion                             | → Actor                                                   |
 | `ConvenioMandato`   | id, id_mandante, id_mandatario, hito_inicio, presupuesto, estado                                              | → Actor (Mandante)                                        |

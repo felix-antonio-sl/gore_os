@@ -15,7 +15,7 @@
 | Plan Regional de Ordenamiento Territorial | PROT    | Instrumento vinculante que orienta el uso del territorio regional mediante macrozonificación y condicionantes. Art. 17 LOC GORE                      |
 | Anteproyecto Regional de Inversiones      | ARI     | Planificación presupuestaria anual que consolida iniciativas para presentación CORE (ciclo mayo-agosto)                                              |
 | Programa Regional de Inversiones          | PROPIR  | Consolidación de ARI aprobada por CORE, base para ejecución presupuestaria del año siguiente                                                         |
-| Convenio de Programación                  | CDP     | Acuerdo plurianual entre GORE y ministerios sectoriales para financiamiento conjunto de inversiones                                                  |
+| Convenio de Programación                  | CP      | Acuerdo plurianual entre GORE y ministerios sectoriales para financiamiento conjunto de inversiones                                                  |
 | Eje Estratégico                           | EE      | Gran área de desarrollo regional definida en ERD (4-6 por estrategia)                                                                                |
 | Lineamiento                               | LIN     | Orientación programática dentro de un eje estratégico (2-4 por eje)                                                                                  |
 | Objetivo Estratégico                      | OE      | Meta medible vinculada a lineamiento con indicadores y metas anuales                                                                                 |
@@ -54,7 +54,7 @@ flowchart TB
     subgraph INVERSION["💰 Inversión Regional"]
         ARI["ARI<br/>Anual"]
         PROPIR["PROPIR<br/>Aprobado CORE"]
-        CDP["Convenios<br/>Programación"]
+        CP["Convenios<br/>Programación"]
     end
 
     subgraph OBSERVATORIO["📈 Observatorio"]
@@ -67,7 +67,7 @@ flowchart TB
     N250 --> ARI
     PROT --> PRC
     ARI --> PROPIR
-    PROPIR --> CDP
+    PROPIR --> CP
     IND --> DASH
     DASH --> ERD
 ```
@@ -151,17 +151,21 @@ Funcionalidades:
 | Atributo  | Descripción                                                             |
 | --------- | ----------------------------------------------------------------------- |
 | Propósito | Proveer inteligencia territorial para planificación basada en evidencia |
-| Fuentes   | BCN Indicadores Ñuble (800+), Ñuble250 Observatorio, CASEN, INE         |
+| Fuentes   | **D-TERR P6: Observatorio Regional** (motor de datos)                   |
+| Relación  | D-PLAN **consume** datos; D-TERR **produce** y publica capas temáticas  |
+
+> [!IMPORTANT]
+> Este módulo **no produce datos propios**. Consume los servicios WMS/WFS y API REST publicados por D-TERR (P6: Observatorio Regional).
 
 Funcionalidades:
 
-- Visualizador de capas territoriales (PROT, ZOIT, Pladecos)
+- Visualizador de capas territoriales (PROT, ZOIT, Pladecos) consumidas de D-TERR
 
-- Análisis de solapamiento de inversiones
+- Análisis de solapamiento de inversiones (cruce con D-FIN)
 
 - Generación de reportes territoriales y proyecciones
 
-- Vinculación indicadores ↔ objetivos ERD
+- Vinculación indicadores ↔ objetivos ERD (datos desde D-TERR: `IndicadorTerritorial`, `BrechaERD`)
 
 - Alertas de brechas por eje estratégico
 
@@ -225,7 +229,7 @@ flowchart LR
         P1["P1: Actualización ERD<br/>5 fases"]
         P2["P2: Ciclo ARI/PROPIR<br/>4 fases"]
         P3["P3: Validación PROT<br/>3 fases"]
-        P4["P4: Gestión CDP<br/>5 fases"]
+        P4["P4: Gestión CP<br/>5 fases"]
         P5["P5: Evaluación Indicadores<br/>3 fases"]
     end
 
@@ -332,7 +336,7 @@ flowchart TB
 
 ---
 
-### P4: Gestión CDP
+### P4: Gestión CP
 
 ```mermaid
 flowchart TB
@@ -501,15 +505,15 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ---
 
-### US Módulo CDP (Convenios de Programación)
+### US Módulo CP (Convenios de Programación)
 
-| ID              | Historia de Usuario                                                                                     | Prioridad |
-| --------------- | ------------------------------------------------------------------------------------------------------- | --------- |
-| US-PLAN-CDP-001 | Como Analista DIPLADE quiero registrar nuevo convenio con ministerio para iniciar seguimiento formal    | Alta      |
-| US-PLAN-CDP-002 | Como Jefe DIPLADE quiero visualizar panel de convenios activos y sus hitos para monitorear cumplimiento | Alta      |
-| US-PLAN-CDP-003 | Como Sistema quiero alertar convenios a 90 días de vencimiento sin renovación para activar gestión      | Alta      |
-| US-PLAN-CDP-004 | Como DIPIR quiero vincular IPR a convenio de programación para trazabilidad financiera                  | Alta      |
-| US-PLAN-CDP-005 | Como Jefe DIPLADE quiero generar informe de ejecución CDP para reunión con ministerio sectorial         | Media     |
+| ID             | Historia de Usuario                                                                                     | Prioridad |
+| -------------- | ------------------------------------------------------------------------------------------------------- | --------- |
+| US-PLAN-CP-001 | Como Analista DIPLADE quiero registrar nuevo convenio con ministerio para iniciar seguimiento formal    | Alta      |
+| US-PLAN-CP-002 | Como Jefe DIPLADE quiero visualizar panel de convenios activos y sus hitos para monitorear cumplimiento | Alta      |
+| US-PLAN-CP-003 | Como Sistema quiero alertar convenios a 90 días de vencimiento sin renovación para activar gestión      | Alta      |
+| US-PLAN-CP-004 | Como DIPIR quiero vincular IPR a convenio de programación para trazabilidad financiera                  | Alta      |
+| US-PLAN-CP-005 | Como Jefe DIPLADE quiero generar informe de ejecución CP para reunión con ministerio sectorial          | Media     |
 
 ---
 
@@ -520,7 +524,7 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 | P1: Actualización ERD      | US-PLAN-ERD-001 a 006       | ERD, EjeEstrategico, Lineamiento, ObjetivoEstrategico |
 | P2: Ciclo ARI/PROPIR       | US-PLAN-ARI-001 a 005       | ARI, LineaARI, IPR                                    |
 | P3: Validación PROT        | US-PLAN-PROT-001 a 004      | ZonaPROT, IPR                                         |
-| P4: Gestión CDP            | (4 US implícitas en D-EJEC) | ConvenioProgramacion, HitoCDP                         |
+| P4: Gestión CP             | (4 US implícitas en D-EJEC) | ConvenioProgramacion, HitoCP                          |
 | P5: Evaluación Indicadores | US-PLAN-OBS-001 a 005       | IndicadorERD, MedicionIndicador                       |
 | P6: Asistencia Municipal   | US-PLAN-MUN-001 a 003       | SolicitudAsistencia, PLADECO                          |
 
@@ -540,8 +544,8 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 | `ZonaPROT`             | id, macrozona, tipo_uso, condiciones_vinculantes, geometria               | → Territorio                    |
 | `ARI`                  | id, año, estado, fecha_presentacion, monto_total                          | → LineaARI[]                    |
 | `LineaARI`             | id, ari_id, ipr_id, prioridad, monto_solicitado, monto_asignado           | → IPR                           |
-| `ConvenioProgramacion` | id, ministerio, monto_total, vigencia_inicio, vigencia_fin, estado        | → HitoCDP[]                     |
-| `HitoCDP`              | id, convenio_id, descripcion, fecha_comprometida, monto, estado           |                                 |
+| `ConvenioProgramacion` | id, ministerio, monto_total, vigencia_inicio, vigencia_fin, estado        | → HitoCP[]                      |
+| `HitoCP`               | id, convenio_id, descripcion, fecha_comprometida, monto, estado           |                                 |
 | `CabildoTerritorial`   | id, fecha, comuna, participantes, propuestas_count                        | → PropuestaCiudadana[]          |
 | `ZUBC`                 | id, sector_costero, uso_preferente, condiciones, geometria                | Zonificación Borde Costero      |
 | `ConsultaPublica`      | id, instrumento_id, tipo, fecha_inicio, fecha_fin, observaciones          | Registro Art. 17 bis LOC        |
@@ -574,18 +578,20 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ## Referencias Cruzadas
 
-| Dominio   | Relación                                                           |
-| --------- | ------------------------------------------------------------------ |
-| D-TERR    | ZonaPROT definida en IDE; visor geoespacial compartido             |
-| D-FIN     | IPR vinculadas a objetivos ERD; rendiciones de convenios           |
-| D-EJEC    | Iniciativas priorizadas en ARI se ejecutan vía convenios           |
-| D-GOB     | Compromisos Gobernador vinculados a objetivos ERD                  |
-| D-GESTION | OKRs institucionales alineados con ejes ERD                        |
-| D-EVOL    | Proyección de cumplimiento ERD; alimenta KB regional               |
-| D-SEG     | Política Regional Seguridad → Eje Seguridad en ERD                 |
-| FÉNIX     | Objetivos ERD sin avance >180 días activan intervención Nivel III  |
-| D-NORM    | Toma de Razón de PROT y CDP; resoluciones aprobatorias ERD         |
-| D-TDE     | Sistemas digitales para ERD, PROT Digital; cumplimiento Ley 21.180 |
+| Dominio   | Relación                                                                         |
+| --------- | -------------------------------------------------------------------------------- |
+| D-TERR    | ZonaPROT definida en IDE; visor geoespacial compartido; **P6 provee datos a M5** |
+| D-FIN     | IPR vinculadas a objetivos ERD; rendiciones de convenios                         |
+| D-EJEC    | Iniciativas priorizadas en ARI se ejecutan vía convenios                         |
+| D-GOB     | Compromisos Gobernador vinculados a objetivos ERD                                |
+| D-GESTION | OKRs institucionales alineados con ejes ERD                                      |
+| D-EVOL    | Proyección de cumplimiento ERD; alimenta KB regional                             |
+| D-SEG     | Política Regional Seguridad → Eje Seguridad en ERD                               |
+| FÉNIX     | Objetivos ERD sin avance >180 días activan intervención Nivel III                |
+| D-NORM    | Toma de Razón de PROT y CP; resoluciones aprobatorias ERD                        |
+| D-TDE     | Sistemas digitales para ERD, PROT Digital; cumplimiento Ley 21.180               |
+
+> **Nota Técnica:** D-PLAN consume la entidad `BrechaERD` generada por D-TERR (P6) para alertar desviaciones estratégicas.
 
 ---
 
@@ -596,10 +602,11 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 | % Objetivos ERD con Iniciativa Vinculada | Proporción de OE del ERD que tienen al menos una IPR asociada | ≥ 90%       |
 | % Ejecución PROPIR                       | Grado de ejecución del presupuesto aprobado en PROPIR         | ≥ 85% anual |
 | Tiempo Promedio Validación PROT          | Días hábiles desde solicitud hasta dictamen de compatibilidad | ≤ 10 días   |
-| % Convenios con Hitos al Día             | Proporción de CDP activos sin hitos atrasados                 | ≥ 80%       |
+| % Convenios con Hitos al Día             | Proporción de CP activos sin hitos atrasados                  | ≥ 80%       |
 | Participantes en Cabildos por Año        | Número acumulado de ciudadanos en instancias participativas   | ≥ 3.000     |
 | % Propuestas Ciudadanas Trazadas         | Proporción de propuestas con iniciativa vinculada registrada  | ≥ 50%       |
 
 ---
 
-*Documento parte de GORE_OS Blueprint v5.2*
+*Documento parte de GORE_OS Blueprint v5.2*  
+*Última actualización: 2025-12-18*

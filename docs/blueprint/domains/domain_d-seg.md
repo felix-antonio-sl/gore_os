@@ -335,12 +335,12 @@ flowchart TD
 
 ## Entidades de Datos
 
-| Entidad             | Atributos Clave                                           | Relaciones                       |
-| ------------------- | --------------------------------------------------------- | -------------------------------- |
-| `Incidente`         | id, tipo, prioridad, id_ubicacion_geo, estado, fecha_hora | → AccionRespuesta[], Evidencia[] |
-| `AccionRespuesta`   | id, id_incidente, tipo, agencia, tiempo_respuesta         | → Incidente                      |
-| `Evidencia`         | id, id_incidente, tipo, hash, cadena_custodia             | → Incidente                      |
-| `ProyectoSeguridad` | hereda IPR + tipo_prevencion, validacion_spd              | → IPR, ConvenioMunicipal         |
+| Entidad              | Atributos Clave                                           | Relaciones                       |
+| -------------------- | --------------------------------------------------------- | -------------------------------- |
+| `Incidente`          | id, tipo, prioridad, id_ubicacion_geo, estado, fecha_hora | → AccionRespuesta[], Evidencia[] |
+| `AccionRespuesta`    | id, id_incidente, tipo, agencia, tiempo_respuesta         | → Incidente                      |
+| `Evidencia`          | id, id_incidente, tipo, hash, cadena_custodia             | → Incidente                      |
+| `Proyecto_Seguridad` | hereda IPR + tipo_prevencion, validacion_spd              | → IPR, ConvenioMunicipal         |
 
 ---
 
@@ -371,12 +371,14 @@ flowchart TD
 
 ## Referencias Cruzadas
 
-| Dominio | Relación                                      |
-| ------- | --------------------------------------------- |
-| D-FIN   | Proyecto_Seguridad hereda de IPR              |
-| D-NORM  | Convenios con municipios, evidencias          |
-| D-TERR  | Georreferenciación cámaras e incidentes       |
-| D-GOB   | Actores de respuesta (Carabineros, PDI, etc.) |
+| Dominio | Relación                                         |
+| ------- | ------------------------------------------------ |
+| D-FIN   | Proyecto_Seguridad hereda de IPR                 |
+| D-NORM  | Convenios con municipios, evidencias             |
+| D-TERR  | Georreferenciación cámaras e incidentes          |
+| D-GOB   | Actores de respuesta (Carabineros, PDI, etc.)    |
+| D-BACK  | Gestión financiera del equipamiento CIES y flota |
+
 
 ---
 

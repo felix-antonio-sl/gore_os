@@ -587,7 +587,7 @@ flowchart TD
 
 | Entidad                 | Atributos Clave                                                           | Relaciones                                    |
 | ----------------------- | ------------------------------------------------------------------------- | --------------------------------------------- |
-| `ExpedienteElectronico` | id, codigo, materia, fecha_inicio, estado, folio_actual                   | → DocumentoExpediente[], ActoAdministrativo[] |
+| `ExpedienteElectronico` | id, iuie, codigo, materia, fecha_inicio, estado, folio_actual             | → DocumentoExpediente[], ActoAdministrativo[] |
 | `DocumentoExpediente`   | id, expediente_id, folio, tipo, fecha_ingreso, origen                     | → ExpedienteElectronico                       |
 | `ProcedimientoAdmin`    | id, tipo, iniciador, fecha_inicio, plazo_legal, fecha_vencimiento, estado | → ExpedienteElectronico, ActoAdministrativo   |
 | `RecursoAdmin`          | id, procedimiento_id, tipo, fecha_interposicion, plazo_respuesta, estado  | → ProcedimientoAdmin                          |
