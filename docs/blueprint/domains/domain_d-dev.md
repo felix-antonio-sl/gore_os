@@ -1,191 +1,131 @@
-# D-DEV: Dominio de Desarrollo del Sistema
-
-> Parte de: [GORE_OS Vision General](../vision_general.md)  
-> Capa: Habilitante (Infraestructura Técnica)  
-> Función GORE: CONSTRUIR  
-> Responsable: Líder Técnico / DevOps Lead  
-> Ciclo ORKO: W2-W3 (Development + Implementation)
-
+---
+domain_id: D-DEV
+domain_name: "Dominio de Desarrollo del Sistema"
+blueprint_release: "5.5"
+domain_version: "5.5.0"
+status: "consolidated"
+last_update: "2025-12-18"
+owners:
+  - role: "Owner funcional"
+    org_unit: "Jefe de Producto (Product Owner)"
+  - role: "Owner técnico"
+    org_unit: "Líder Técnico / Arquitecto"
 ---
 
-## Glosario D-DEV
+# D-DEV — Dominio de Desarrollo del Sistema
 
-| Término          | Definición                                                                            |
-| ---------------- | ------------------------------------------------------------------------------------- |
-| CI/CD            | Continuous Integration / Continuous Deployment. Automatización de build y despliegue. |
-| Sprint           | Iteración de desarrollo con duración fija (típicamente 2 semanas).                    |
-| Release          | Versión del sistema desplegada en producción.                                         |
-| Backlog          | Lista priorizada de trabajo pendiente (features, bugs, mejoras).                      |
-| ADR              | Architecture Decision Record. Documento de decisión arquitectónica.                   |
-| DORA             | DevOps Research and Assessment. Métricas de rendimiento DevOps.                       |
-| Lead Time        | Tiempo desde commit hasta producción.                                                 |
-| Deploy Frequency | Frecuencia de despliegues a producción.                                               |
-| CFR              | Change Failure Rate. Tasa de cambios que causan fallos.                               |
-| Pipeline         | Secuencia automatizada de pasos de CI/CD.                                             |
-| Code Review      | Revisión de código por pares antes de merge.                                          |
-| Feature Flag     | Toggle para activar/desactivar funcionalidades sin despliegue.                        |
-| Rollback         | Reversión a versión anterior ante fallo de despliegue.                                |
-| SemVer           | Semantic Versioning. Esquema de versionado (MAJOR.MINOR.PATCH).                       |
+## 🧭 1. Resumen Ejecutivo
+- **Propósito**: Orquestar el ciclo de vida completo de construcción de software, asegurando que el código sea un reflejo fiel del diseño y seguro para operar.
+- **Resultado principal**: Releases confiables, iterativos y trazables (DORA metrics bajo control).
+- **Usuarios/beneficiarios**: Equipo de Desarrollo, QA, Producto, Operaciones.
+- **Interfaces críticas**:
+  - `D-OPS` (Entrega artefactos desplegables).
+  - `D-TDE` (Asegura que el código cumpla estándares de seguridad).
 
----
+## 🎯 2. Alcance
+### 2.1 Qué cubre
+- **Incluye**: Gestión de Backlog, Arquitectura, Testing, CI/CD, Releases y Mantenimiento de Código (Refactor).
+### 2.2 Qué NO cubre
+- **Excluye**: Operación en ambiente productivo (→ `D-OPS`), Definición de estrategia organizacional (→ `D-EVOL`).
 
-## Propósito
+## 🧠 3. Modelo Conceptual (Ontología)
+> Definición abstracta de los conceptos y relaciones (Genoma Humano).
 
-Gestionar el ciclo de vida de desarrollo del sistema GORE_OS: desde la planificación de features hasta el despliegue en producción, asegurando calidad, velocidad y trazabilidad.
+### 3.1 Diccionario de Conceptos
+- **Release**: Conjunto inmutable de artefactos de software versionados semánticamente y listos para despliegue.
+- **Backlog Item**: Unidad de trabajo (Historia, Bug, Tarea) que aporta valor o resuelve deuda.
+- **Pipeline**: Secuencia determinística de transformaciones (Build -> Test -> Deploy) aplicada al código.
+- **Invariante de Calidad**: Regla que impide que código defectuoso avance en el pipeline (Gatekeeper).
 
-> **D-DEV vs D-OPS**: D-DEV construye el sistema (W2-W3 ORKO). D-OPS opera el sistema en producción (W4 ORKO).
-
-> **D-DEV vs D-EVOL**: D-DEV es desarrollo técnico del software. D-EVOL es evolución estratégica de la organización.
-
----
-
-## Módulos
-
-### M1: Gestión de Producto (Product Management)
-
-| Atributo       | Descripción                                      |
-| -------------- | ------------------------------------------------ |
-| Propósito      | Planificar y priorizar el desarrollo del sistema |
-| Primitivo ORKO | C5 (Propósito)                                   |
-
-Funcionalidades:
-- Gestión del backlog de producto
-- Roadmap técnico por dominio
-- Priorización con RICE (Reach, Impact, Confidence, Effort)
-- Definición de épicas y features
-- Gestión de releases y milestones
-- Versionamiento semántico (SemVer)
-- Changelogs automáticos
-
-### M2: Desarrollo de Software
-
-| Atributo       | Descripción                           |
-| -------------- | ------------------------------------- |
-| Propósito      | Escribir y mantener código de calidad |
-| Primitivo ORKO | C2 (Flujo)                            |
-
-Funcionalidades:
-- Estándares de código (Effect-TS, Zod, tRPC)
-- Branching strategy (GitFlow o Trunk-based)
-- Code review y merge policies
-- Pair programming y mob programming
-- Refactoring y mejora continua
-- Gestión de dependencias
-- Documentación de código (TSDoc)
-
-### M3: Arquitectura Técnica
-
-| Atributo       | Descripción                                      |
-| -------------- | ------------------------------------------------ |
-| Propósito      | Diseñar y documentar la arquitectura del sistema |
-| Primitivo ORKO | D1 (Arquitectura)                                |
-
-Funcionalidades:
-- Diagramas C4 (Context, Container, Component, Code)
-- Architecture Decision Records (ADRs)
-- Diseño de APIs (contratos tRPC, schemas Zod)
-- Modelado de datos (Drizzle schemas)
-- Diseño de FSM (XState)
-- Patrones y anti-patrones
-- Documentación técnica (Wiki)
-
-### M4: Integración y Entrega Continua (CI/CD)
-
-| Atributo       | Descripción                          |
-| -------------- | ------------------------------------ |
-| Propósito      | Automatizar build, test y despliegue |
-| Primitivo ORKO | C2 (Flujo)                           |
-
-Funcionalidades:
-- Pipelines de integración continua
-- Build automatizado (Bun)
-- Análisis estático (ESLint, TypeScript strict)
-- Despliegue automatizado a ambientes
-- Gestión de ambientes (dev, staging, prod)
-- Rollback automático ante fallos
-- Feature flags para despliegue gradual
-- Notificaciones de estado de pipeline
-
-### M5: Testing y QA
-
-| Atributo       | Descripción                   |
-| -------------- | ----------------------------- |
-| Propósito      | Asegurar calidad del software |
-| Primitivo ORKO | C4 (Límite)                   |
-
-Funcionalidades:
-- Tests unitarios (Vitest)
-- Tests de integración
-- Tests end-to-end (Playwright)
-- Property-based testing
-- Cobertura de código
-- Pruebas de regresión
-- Pruebas de rendimiento
-- Acceptance criteria validation
-
-### M6: Gestión de Releases
-
-| Atributo       | Descripción                        |
-| -------------- | ---------------------------------- |
-| Propósito      | Planificar y ejecutar lanzamientos |
-| Primitivo ORKO | C2 (Flujo)                         |
-
-Funcionalidades:
-- Planificación de releases
-- Versionado semántico
-- Generación de changelogs
-- Comunicación de releases
-- Documentación de release notes
-- Coordinación con D-OPS para despliegue
-- Post-release monitoring
-
----
-
-## Procesos BPMN
-
-### Mapa General D-DEV
-
+### 3.2 Diagrama Conceptual
 ```mermaid
-flowchart TB
-    subgraph PLAN["📋 Planificación"]
-        P1["P1: Gestión del\nBacklog"]
-    end
-
-    subgraph BUILD["🔨 Construcción"]
-        B1["P2: Desarrollo\nde Feature"]
-    end
-
-    subgraph QUALITY["✅ Calidad"]
-        Q1["P3: Code Review\ny Testing"]
-    end
-
-    subgraph RELEASE["🚀 Release"]
-        R1["P4: Despliegue\na Producción"]
-    end
-
-    P1 --> B1 --> Q1 --> R1
-    R1 -.-> P1
+classDiagram
+    direction LR
+    class CodeBase {
+        +Commit head
+    }
+    class Release {
+        +SemVer version
+        +Artifact binary
+    }
+    class Pipeline {
+        +Status result
+    }
+    CodeBase "1" -- "*" Release : produces
+    Pipeline "1" -- "*" Release : validates
+    Release "1" -- "1" Environment : deploys_to
 ```
 
----
+## 🧬 4. Genotipo Categorial (Modelo de Datos Formal)
+> Especificación Matemática para el Desarrollo (Genoma Técnico). **Source of Truth**.
 
-### P1: Gestión del Backlog
+### 4.1 Objetos (Entidades) $A \in Ob(C_{dev})$
+
+| Objeto (Entity) | Definición Formal (Tipo)                                     | Invariante (Regla)                            | Source |
+| --------------- | ------------------------------------------------------------ | --------------------------------------------- | ------ |
+| `BacklogItem`   | `struct { id: UUID, type: ItemType, state: ItemState }`      | `INV_01: priority must be set`                | D-DEV  |
+| `PullRequest`   | `struct { id: UUID, branch: String, reviews: List[Review] }` | `INV_02: PR cannot merge to main w/o review`  | D-DEV  |
+| `Release`       | `struct { id: UUID, version: SemVer, sha: CommitHash }`      | `INV_03: version must be strictly increasing` | D-DEV  |
+| `ADR`           | `struct { id: UUID, decision: Status, context: Text }`       | `INV_04: immutable once approved`             | D-DEV  |
+| `TestResult`    | `struct { id: UUID, coverage: Percentage, passed: Bool }`    | `INV_05: coverage >= 80%`                     | D-DEV  |
+
+### 4.2 Morfismos (Relaciones/Procesos) $f: A \to B$
+
+| Morfismo (Func)    | Dominio $\to$ Codominio                | Tipo           | Implementación             |
+| ------------------ | -------------------------------------- | -------------- | -------------------------- |
+| `merge_pr`         | `PullRequest` $\to$ `Commit`           | Transformation | `git merge` / `github.api` |
+| `run_pipeline`     | `Commit` $\to$ `TestResult`            | Compute        | `github.actions`           |
+| `promover_release` | `Release` $\times$ `EnvA` $\to$ `EnvB` | Effect         | `deploy.script`            |
+| `priorizar_item`   | `BacklogItem` $\to$ `BacklogItem`      | Update         | `trpc.mutation`            |
+| `check_coverage`   | `TestResult` $\to$ `Bool`              | Predicate      | `vitest.coverage`          |
+
+### 4.3 Ecuaciones y Restricciones (Paths)
+- **EQ1 (Safe Deploy):** `run_pipeline(commit) == passed => deploy_allowed(commit)`.
+- **EQ2 (Traceability):** `release.features = map(pr => pr.linked_items, release.commits)`.
+- **INV_MAIN:** La rama `main` siempre debe ser desplegable (Green Build).
+
+## 🗺️ 5. Mapa del Dominio
 
 ```mermaid
-flowchart TD
-    A["Identificar\nnecesidad"] --> B["Crear item\nen backlog"]
-    B --> C["Clasificar\n(Feature/Bug/Tech)"]
-    C --> D["Estimar\nesfuerzo"]
-    D --> E["Priorizar\nRICE"]
-    E --> F{"¿Para\nsprint?"}
-    F -->|"Sí"| G["Asignar a\nsprint"]
-    F -->|"No"| H["Mantener en\nbacklog"]
-    G --> I["Iniciar\ndesarrollo"]
+flowchart LR
+    %% Contexto
+    D-EVOL -->|Estrategia| D-DEV
+    D-DEV -->|Binarios| D-OPS
+    D-TDE -->|Security Policies| D-DEV
+
+    subgraph D-DEV [Dominio Desarrollo]
+        PLAN[M1: Planning]
+        BUILD[M2: Code]
+        ARCH[M3: Arch]
+        QA[M4: QA/CI]
+        REL[M6: Release]
+        
+        PLAN --> BUILD
+        ARCH -.-> BUILD
+        BUILD --> QA
+        QA --> REL
+    end
 ```
 
----
+## 🧩 6. Módulos / Capacidades
 
-### P2: Desarrollo de Feature
+| Código | Módulo           | Objetivo                   | Entradas               | Salidas                 | Owner       |
+| ------ | ---------------- | -------------------------- | ---------------------- | ----------------------- | ----------- |
+| M1     | Gestión Producto | Definir roadmap y backlog  | Necesidades Negocio    | Backlog Priorizado      | PM          |
+| M2     | Desarrollo       | Construcción de código     | Backlog Item           | Pull Request            | Lead Dev    |
+| M3     | Arquitectura     | Diseño técnico y contratos | Requerimientos No-Func | ADRs / Schemas          | Arq         |
+| M4     | CI/CD & QA       | Validación automática      | PR / Commit            | Build Artifact / Report | DevOps      |
+| M5     | Releases         | Empaquetado y versión      | Build Validado         | Release Note / Tag      | Release Mgr |
+
+## 🔄 7. Procesos (Índice BPMN)
+
+| ID Proceso | Nombre           | Trigger       | Output          | BPMN/Link                                      |
+| ---------- | ---------------- | ------------- | --------------- | ---------------------------------------------- |
+| P1         | Ciclo de Feature | Item en ToDo  | Feature en Prod | [Ver Diagrama](#71-p1-desarrollo-de-feature)   |
+| P2         | Code Review Gate | PR Abierto    | Merge o Rechazo | [Ver Diagrama](#72-p2-code-review-y-testing)   |
+| P3         | Release Train    | Fin de Sprint | Versión Tagged  | [Ver Diagrama](#73-p3-despliegue-a-producción) |
+
+### 7.1 P1: Desarrollo de Feature
 
 ```mermaid
 flowchart TD
@@ -199,9 +139,7 @@ flowchart TD
     G --> H["Solicitar\nreview"]
 ```
 
----
-
-### P3: Code Review y Testing
+### 7.2 P2: Code Review y Testing
 
 ```mermaid
 flowchart TD
@@ -217,9 +155,7 @@ flowchart TD
     H --> I["Trigger\ndeploy staging"]
 ```
 
----
-
-### P4: Despliegue a Producción
+### 7.3 P3: Despliegue a Producción
 
 ```mermaid
 flowchart TD
@@ -238,180 +174,64 @@ flowchart TD
     L --> M["Notificar\na D-OPS"]
 ```
 
----
+## 👥 8. Roles y Actores
 
-## Historias de Usuario
+| Rol            | Responsabilidad            | Decisiones                         | US relacionadas |
+| -------------- | -------------------------- | ---------------------------------- | --------------- |
+| `ProductOwner` | Priorizar backlog          | Qué se hace y qué no               | `US-DEV-PROD-*` |
+| `Developer`    | Implementar código y tests | Cómo se implementa (dentro de arq) | `US-DEV-CODE-*` |
+| `TechLead`     | Guardián de calidad y arq  | Aprobar PRs complejos, Definir ADR | `US-DEV-ARCH-*` |
+| `DevOps`       | Mantener pipeline CI/CD    | Estrategia de branching y deploy   | `US-DEV-CICD-*` |
 
-### M1: Gestión de Producto
+## 🔌 9. Sistemas e Integraciones
 
-| ID              | Título                         | Prioridad |
-| --------------- | ------------------------------ | --------- |
-| US-DEV-PROD-001 | Gestionar backlog de producto  | Crítica   |
-| US-DEV-PROD-002 | Priorizar items con RICE       | Alta      |
-| US-DEV-PROD-003 | Planificar sprint              | Crítica   |
-| US-DEV-PROD-004 | Visualizar roadmap por dominio | Alta      |
-| US-DEV-PROD-005 | Generar changelog automático   | Alta      |
+| Código   | Sistema      | Tipo (Interno/Externo) | Rol                      | Dominio |
+| -------- | ------------ | ---------------------- | ------------------------ | ------- |
+| `SYS-04` | GitHub       | Externo (SaaS)         | SCM, CI/CD, Project Mgmt | D-DEV   |
+| `SYS-05` | Bun/Vitest   | Interno (Toolchain)    | Build & Test Runner      | D-DEV   |
+| `SYS-06` | Sonar/ESLint | Interno (Toolchain)    | Calidad de Código        | D-DEV   |
 
-### M2: Desarrollo
+## ⚖️ 10. Normativa Aplicable
 
-| ID              | Título                         | Prioridad |
-| --------------- | ------------------------------ | --------- |
-| US-DEV-CODE-001 | Aplicar estándares de código   | Crítica   |
-| US-DEV-CODE-002 | Crear branch de feature        | Alta      |
-| US-DEV-CODE-003 | Ejecutar code review           | Crítica   |
-| US-DEV-CODE-004 | Merge con protección de branch | Alta      |
+| Norma      | Artículos | Obligación           | Impacto en el dominio                   |
+| ---------- | --------- | -------------------- | --------------------------------------- |
+| Ley 21.180 | Art 2     | Seguridad por Diseño | Testing de seguridad en pipeline (SAST) |
+| ISO 25010  | Calidad   | Mantenibilidad       | Estándares de código y ADRs             |
 
-### M3: Arquitectura
+## 🧪 11. Historias de Usuario (Resumen)
 
-| ID              | Título                     | Prioridad |
-| --------------- | -------------------------- | --------- |
-| US-DEV-ARCH-001 | Documentar decisión en ADR | Alta      |
-| US-DEV-ARCH-002 | Generar diagrama C4        | Alta      |
-| US-DEV-ARCH-003 | Definir contrato de API    | Crítica   |
-| US-DEV-ARCH-004 | Diseñar schema de datos    | Crítica   |
+| ID               | Título               | Prioridad | Actor       |
+| ---------------- | -------------------- | --------- | ----------- |
+| `US-DEV-CODE-01` | Crear PR con Tests   | Crítica   | Developer   |
+| `US-DEV-CICD-01` | Pipeline Automático  | Crítica   | DevOps      |
+| `US-DEV-REL-01`  | Generar Release Note | Alta      | Release Mgr |
 
-### M4: CI/CD
+## 🔗 12. Matriz de Trazabilidad
 
-| ID              | Título                       | Prioridad |
-| --------------- | ---------------------------- | --------- |
-| US-DEV-CICD-001 | Ejecutar pipeline automático | Crítica   |
-| US-DEV-CICD-002 | Desplegar a staging          | Crítica   |
-| US-DEV-CICD-003 | Desplegar a producción       | Crítica   |
-| US-DEV-CICD-004 | Rollback automático          | Crítica   |
-| US-DEV-CICD-005 | Configurar feature flag      | Alta      |
+| Proceso      | Fase   | US               | Entidades                    |
+| ------------ | ------ | ---------------- | ---------------------------- |
+| P1 (Feature) | Coding | `US-DEV-CODE-01` | `BacklogItem`, `PullRequest` |
+| P3 (Release) | Deploy | `US-DEV-REL-01`  | `Release`, `Pipeline`        |
 
-### M5: Testing
+## 📈 13. Indicadores (KPIs - DORA)
 
-| ID              | Título                        | Prioridad |
-| --------------- | ----------------------------- | --------- |
-| US-DEV-TEST-001 | Ejecutar tests unitarios      | Crítica   |
-| US-DEV-TEST-002 | Ejecutar tests de integración | Alta      |
-| US-DEV-TEST-003 | Verificar cobertura mínima    | Alta      |
-| US-DEV-TEST-004 | Ejecutar tests E2E            | Alta      |
+| KPI              | Definición               | Fórmula                        | Meta    | Fuente |
+| ---------------- | ------------------------ | ------------------------------ | ------- | ------ |
+| Deploy Frequency | Frecuencia despliegues   | `Count(Deploys) / Week`        | > 1/sem | CI/CD  |
+| Lead Time        | Tiempo commit $\to$ prod | `Avg(DeployTime - CommitTime)` | < 24h   | GitHub |
+| CFR              | Change Failure Rate      | `FailedDeploys / TotalDeploys` | < 5%    | D-OPS  |
 
-### M6: Releases
+## 🤝 14. Referencias Cruzadas
 
-| ID             | Título                           | Prioridad |
-| -------------- | -------------------------------- | --------- |
-| US-DEV-REL-001 | Crear release con SemVer         | Alta      |
-| US-DEV-REL-002 | Publicar release notes           | Alta      |
-| US-DEV-REL-003 | Notificar release a stakeholders | Alta      |
+| Dominio  | Relación                   | Entidades compartidas (canónicas) |
+| -------- | -------------------------- | --------------------------------- |
+| `D-OPS`  | Operación de lo construido | `Artifact` (Docker Image)         |
+| `D-EVOL` | Alineación estratégica     | `Roadmap`                         |
 
----
+## 📝 15. Changelog
 
-## Entidades de Datos
-
-### Gestión de Producto
-
-| Entidad       | Atributos Clave                                                                                 | Relaciones      |
-| ------------- | ----------------------------------------------------------------------------------------------- | --------------- |
-| `BacklogItem` | id, titulo, tipo (Feature/Bug/Tech), descripcion, estado, prioridad_rice, estimacion, sprint_id | → Sprint, Epic  |
-| `Epic`        | id, titulo, descripcion, dominio, estado                                                        | → BacklogItem[] |
-| `Sprint`      | id, nombre, fecha_inicio, fecha_fin, objetivo, estado                                           | → BacklogItem[] |
-| `Roadmap`     | id, periodo, dominio, milestones[]                                                              | → Epic[]        |
-
-### Desarrollo
-
-| Entidad       | Atributos Clave                                           | Relaciones                  |
-| ------------- | --------------------------------------------------------- | --------------------------- |
-| `PullRequest` | id, titulo, branch, estado, autor, reviewers[], ci_status | → BacklogItem, CodeReview[] |
-| `CodeReview`  | id, pr_id, reviewer, decision, comentarios[], timestamp   | → PullRequest               |
-| `Branch`      | id, nombre, tipo, base, estado                            | → PullRequest               |
-
-### Arquitectura
-
-| Entidad       | Atributos Clave                                              | Relaciones |
-| ------------- | ------------------------------------------------------------ | ---------- |
-| `ADR`         | id, titulo, contexto, decision, consecuencias, estado, fecha | → Dominio  |
-| `DiagramaC4`  | id, tipo, nombre, contenido_mermaid, version                 | → Dominio  |
-| `ContratoAPI` | id, endpoint, metodo, input_schema, output_schema, version   | → Dominio  |
-
-### CI/CD
-
-| Entidad       | Atributos Clave                                     | Relaciones             |
-| ------------- | --------------------------------------------------- | ---------------------- |
-| `Pipeline`    | id, tipo, trigger, estado, duracion, logs           | → PullRequest, Release |
-| `Ambiente`    | id, nombre, url, version_actual, estado             | → Release[]            |
-| `FeatureFlag` | id, nombre, estado, porcentaje_rollout, condiciones |                        |
-
-### Releases
-
-| Entidad       | Atributos Clave                                         | Relaciones                |
-| ------------- | ------------------------------------------------------- | ------------------------- |
-| `Release`     | id, version, fecha, changelog, estado, ambiente_destino | → BacklogItem[], Pipeline |
-| `ReleaseNote` | id, release_id, contenido_md, fecha_publicacion         | → Release                 |
+- **2025-12-18**: Refactorización completa a v5.5 (Genotipo Categorial). Integración con modelo formal de desarrollo.
 
 ---
-
-## Indicadores D-DEV (DORA Metrics)
-
-| KPI                   | Definición                              | Meta       |
-| --------------------- | --------------------------------------- | ---------- |
-| Deploy Frequency      | Frecuencia de despliegues a producción  | ≥ 1/semana |
-| Lead Time for Changes | Tiempo desde commit hasta producción    | ≤ 1 día    |
-| Change Failure Rate   | % de despliegues que causan fallos      | ≤ 5%       |
-| MTTR                  | Tiempo medio de recuperación tras fallo | ≤ 1 hora   |
-| Test Coverage         | Cobertura de código por tests           | ≥ 80%      |
-| PR Review Time        | Tiempo promedio de review de PRs        | ≤ 4 horas  |
-| Sprint Velocity       | Story points completados por sprint     | Tracking   |
-| Backlog Groomed       | % de backlog priorizado y estimado      | ≥ 90%      |
-
----
-
-## Sistemas Involucrados
-
-| Sistema    | Función                           | Integración  |
-| ---------- | --------------------------------- | ------------ |
-| GitHub     | Repositorio de código, PRs, CI/CD | Git, Actions |
-| Bun        | Runtime y build                   | CLI          |
-| Vitest     | Testing                           | CLI          |
-| PostgreSQL | Base de datos                     | Drizzle      |
-| fxeon      | Infraestructura de despliegue     | SSH, Docker  |
-
----
-
-## Referencias Cruzadas
-
-| Dominio | Relación                                     | Entidades Compartidas   |
-| ------- | -------------------------------------------- | ----------------------- |
-| D-OPS   | Coordina despliegues, recibe tickets de bugs | Release, Ticket         |
-| D-EVOL  | Deuda técnica estratégica, KB técnica        | DeudaTecnica, Artefacto |
-| D-TDE   | Cumplimiento de seguridad en código          | Audit, FeatureFlag      |
-| Todos   | Backlog incluye items de todos los dominios  | BacklogItem, Epic       |
-
----
-
-## Stack Tecnológico
-
-```mermaid
-flowchart LR
-    subgraph FRONTEND["Frontend"]
-        REACT[React]
-        TANSTACK[TanStack Query]
-    end
-
-    subgraph API["API Layer"]
-        TRPC[tRPC v11]
-        ZOD[Zod Schemas]
-    end
-
-    subgraph BACKEND["Backend"]
-        BUN[Bun Runtime]
-        HONO[Hono Server]
-        EFFECT[Effect-TS]
-        XSTATE[XState v5]
-    end
-
-    subgraph DATA["Data Layer"]
-        DRIZZLE[Drizzle ORM]
-        POSTGRES[(PostgreSQL)]
-        POSTGIS[(PostGIS)]
-    end
-
-    FRONTEND --> API --> BACKEND --> DATA
-```
-
----
-
-*Documento parte de GORE_OS Blueprint Integral v5.5*  
+*Documento parte de GORE_OS Blueprint Release v5.5 (Categorical Genotype)*
 *Última actualización: 2025-12-18*

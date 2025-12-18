@@ -1140,3 +1140,51 @@ stories_migrated:
       - Historial de backups
       - Ejecución manual disponible
     source_ref: "user_stories_legacy.md:L575"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M10: RESILIENCIA DIGITAL Y CONTINUIDAD (RAINY DAY)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-TDE-CRIS-001
+    title: Activar Contingencia Interoperabilidad
+    as_a:
+      - Operador PISEE
+    i_want: Activar protocolo de ingreso manual ante caída de Nodo PISEE
+    so_that: Mantengo la operación crítica del servicio
+    priority: Crítica
+    module: Interoperabilidad
+    acceptance_criteria:
+      - Switch a modo manual habilitado en UI
+      - Bitácora de operaciones manuales para conciliación posterior
+      - Notificación a contraparte
+    source_ref: "SBG:Context:RainyDay"
+
+  - id: US-TDE-SEC-001
+    title: Simulacro de Breach de Datos
+    as_a:
+      - CISO
+    i_want: Ejecutar un simulacro de exfiltración de datos personales
+    so_that: Mido el tiempo de detección y respuesta del equipo
+    priority: Alta
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Escenario de ataque controlado
+      - Medición de MTTR (Mean Time to Respond)
+      - Reporte de lecciones aprendidas
+    source_ref: "SBG:Context:Crisis"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M11: ARQUEOLOGÍA DIGITAL (POST-FACTO)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-TDE-ARCH-001
+    title: Rescate de Formatos Obsoletos
+    as_a:
+      - Archivero Digital
+    i_want: Convertir automáticamente documentos antiguos de formatos deprecados a PDF/A
+    so_that: Garantizo la accesibilidad a largo plazo (DS10)
+    priority: Media
+    module: Expediente
+    acceptance_criteria:
+      - Detección de formato obsoleto
+      - Conversión automática a PDF/A-3
+      - Hash de integridad original vs copia
+    source_ref: "SBG:Time:PostFacto"

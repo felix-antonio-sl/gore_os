@@ -128,6 +128,40 @@ domains:
       - Gobierno
       - DeudaTecnica
     description: "Gestión de salud organizacional, feature flags, playbooks y deuda técnica"
+  - id: D-PLAN
+    name: Planificación Estratégica
+    file: kb_goreos_us_d-plan.yml
+    urn: "urn:goreos:specs:user-stories:d-plan:1.0.0"
+    modules:
+      - Lineamientos
+      - ARI_PROPIR
+      - Seguimiento
+    description: "Planificación regional, alineamiento estratégico y seguimiento de metas"
+  - id: D-GESTION
+    name: Gestión Institucional
+    file: kb_goreos_us_d-gestion.yml
+    urn: "urn:goreos:specs:user-stories:d-gestion.yml:1.0.0"
+    description: "Gestión interna y operativa del Gobierno Regional"
+  - id: FENIX
+    name: Unidad de Intervención Institucional
+    file: kb_goreos_us_fenix.yml
+    urn: "urn:goreos:specs:user-stories:fenix:1.0.0"
+    description: "Capacidad transversal para la resolución de nudos críticos y transformación de procesos"
+  - id: D-OPS
+    name: Operaciones del Sistema
+    file: kb_goreos_us_d-ops.yml
+    urn: "urn:goreos:specs:user-stories:d-ops:1.0.0"
+    description: "Operación, monitoreo, observabilidad y continuidad del sistema"
+  - id: D-DEV
+    name: Desarrollo del Sistema
+    file: kb_goreos_us_d-dev.yml
+    urn: "urn:goreos:specs:user-stories:d-dev:1.0.0"
+    description: "Desarrollo, transformación KODA, gestión de pilotos y ciclo de vida (WSLC)"
+  - id: D-COM
+    name: Comunicación Institucional
+    file: kb_goreos_us_d-com.yml
+    urn: "urn:goreos:specs:user-stories:d-com:1.0.0"
+    description: "Gestión de la estrategia de comunicación, prensa y redes sociales"
 deduplications:
   - legacy_ids:
       - JUR-003

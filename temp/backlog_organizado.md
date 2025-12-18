@@ -10,6 +10,8 @@ Tareas relacionadas con la definición y corrección de dominios.
 - [ ] plantilla debe albeergar tambien el dominio conceptual y el modelo de datos categorial
 - [ ] identificar todos los usuarios del sistema, todos los roles de la organización y los actores externos.
 - [ ] historias de uso de cada usuario, roles y actores que usen el sistema
+- [ ] solucionar las historias de usario de rrd
+- [ ] 
 
 ## 2. 🧠 KODA: Inteligencia y Ontología
 

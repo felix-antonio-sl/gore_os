@@ -987,3 +987,78 @@ stories:
       - Priorización por criticidad
       - Seguimiento de pagos
     source_ref: nuevo_modulo_tesoreria
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M8: CRISIS Y CONTINUIDAD (RAINY DAY)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-BACK-CRIS-001
+    title: Activar Protocolo Paro Nacional
+    as_a:
+      - Gestor de Personas
+    i_want: Registrar adhesión diaria a paro nacional por funcionario
+    so_that: Calculo descuentos legales y mantengo servicios mínimos
+    priority: Crítica
+    module: Personas
+    acceptance_criteria:
+      - Interfaz de registro masivo de adhesión
+      - Cálculo automático de horas no trabajadas
+      - Reporte de turnos éticos
+    source_ref: "SBG:Context:Crisis"
+
+  - id: US-BACK-CRIS-002
+    title: Ejecutar Recorte Presupuestario Masivo
+    as_a:
+      - Directora DAF
+    i_want: Simular y aplicar recortes lineales o focalizados al presupuesto vigente
+    so_that: Ajusto la operación a la instrucción de DIPRES/Hacienda
+    priority: Crítica
+    module: Presupuesto
+    acceptance_criteria:
+      - Selección de cuentas a afectar
+      - Simulación de impacto en compromisos
+      - Rebaja automática de saldos disponibles
+    source_ref: "SBG:Context:Crisis"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M9: AUTOMATIZACIÓN Y ROBOTS (SYSTEM)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-BACK-AUTO-001
+    title: Calculadora de Finiquito Automática
+    as_a:
+      - Sistema (Robot)
+    i_want: Calcular propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
+    so_that: Reduzco errores y tiempos de término
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Validación de causales
+      - Cálculo de feriado proporcional
+      - Emisión de borrador de finiquito
+    source_ref: "SBG:Role:AI"
+
+  - id: US-BACK-AUTO-002
+    title: Detección de Asistencia Anómala
+    as_a:
+      - Sistema (Robot)
+    i_want: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
+    so_that: Detecto posibles fraudes o errores de reloj
+    priority: Media
+    module: Personas
+    acceptance_criteria:
+      - Algoritmo de detección de patrones
+      - Alerta a auditoría interna
+    source_ref: "SBG:Role:AI"
+
+  - id: US-BACK-TES-022
+    title: Gestión de Rechazo Masivo TEF
+    as_a:
+      - Tesorero
+    i_want: Reprocesar nómina de pagos rechazada por el banco (cuenta cerrada/errónea)
+    so_that: Regularizo pagos fallidos rápidamente
+    priority: Crítica
+    module: ContabilidadOperativa
+    acceptance_criteria:
+      - Importación cartola de rechazos
+      - Reversión automática de egreso
+      - Generación nueva nómina corregida
+    source_ref: "SBG:Context:RainyDay"

@@ -1,0 +1,74 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:master:1.0.0"
+  status: Active
+  last_updated: "2025-12-18"
+  total_domains: 15
+  total_stories: 850 # Approximate sum
+
+domains:
+  - id: D-FIN
+    urn: "urn:goreos:specs:user-stories:d-fin:1.0.0"
+    file: kb_goreos_us_d-fin.yml
+    status: verified
+  - id: D-EJEC
+    urn: "urn:goreos:specs:user-stories:d-ejec:1.0.0"
+    file: kb_goreos_us_d-ejec.yml
+    status: draft
+  - id: D-SEG
+    urn: "urn:goreos:specs:user-stories:d-seg:1.0.0"
+    file: kb_goreos_us_d-seg.yml
+    status: draft
+  - id: D-PLAN
+    urn: "urn:goreos:specs:user-stories:d-plan:1.0.0"
+    file: kb_goreos_us_d-plan.yml
+    status: draft
+  - id: D-NORM
+    urn: "urn:goreos:specs:user-stories:d-norm:1.0.0"
+    file: kb_goreos_us_d-norm.yml
+    status: draft
+  - id: D-BACK
+    urn: "urn:goreos:specs:user-stories:d-back:1.0.0"
+    file: kb_goreos_us_d-back.yml
+    status: draft
+  - id: D-TDE
+    urn: "urn:goreos:specs:user-stories:d-tde:1.0.0"
+    file: kb_goreos_us_d-tde.yml
+    status: draft
+  - id: D-TERR
+    urn: "urn:goreos:specs:user-stories:d-terr:1.0.0"
+    file: kb_goreos_us_d-terr.yml
+    status: draft
+  - id: D-GOB
+    urn: "urn:goreos:specs:user-stories:d-gob:1.0.0"
+    file: kb_goreos_us_d-gob.yml
+    status: draft
+  - id: D-GESTION
+    urn: "urn:goreos:specs:user-stories:d-gestion:1.0.0"
+    file: kb_goreos_us_d-gestion.yml
+    status: draft
+  - id: D-EVOL
+    urn: "urn:goreos:specs:user-stories:d-evol:1.0.0"
+    file: kb_goreos_us_d-evol.yml
+    status: draft
+  - id: D-OPS
+    urn: "urn:goreos:specs:user-stories:d-ops:1.0.0"
+    file: kb_goreos_us_d-ops.yml
+    status: new
+  - id: D-DEV
+    urn: "urn:goreos:specs:user-stories:d-dev:1.0.0"
+    file: kb_goreos_us_d-dev.yml
+    status: new
+  - id: FENIX
+    urn: "urn:goreos:specs:user-stories:fenix:1.0.0"
+    file: kb_goreos_us_fenix.yml
+    status: draft
+  - id: D-COM
+    urn: "urn:goreos:specs:user-stories:d-com:1.0.0"
+    file: kb_goreos_us_d-com.yml
+    status: candidate
+
+statistics:
+  priority_distribution:
+    critica: 350
+    alta: 420
+    media: 80

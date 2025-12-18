@@ -1,17 +1,16 @@
 _manifest:
-  urn: "urn:goreos:specs:user-stories:d-seg:1.0.0"
+  urn: "urn:goreos:specs:user-stories:d-seg:1.1.0"
   domain: D-SEG
   domain_name: Seguridad Pública Regional
-  legacy_modules:
-    - M8
-    - M20
-    - M30
-  total_stories: 24
+  total_stories: 40
   priority_distribution:
-    critica: 12
-    alta: 9
-    media: 3
+    critica: 18
+    alta: 15
+    media: 7
 stories:
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M1: PREVENCIÓN DEL DELITO
+  # ═══════════════════════════════════════════════════════════════
   - id: US-SEG-PREV-001
     legacy_ids:
       - EPD-01
@@ -140,6 +139,22 @@ stories:
       - Registro de reuniones/acuerdos
       - Transferencia de directrices técnicas
     source_ref: "Ley Prevención Delito Art 1e"
+  - id: US-SEG-PREV-010
+    title: Modelo Predictivo de Delitos (Preventivo)
+    as_a:
+      - Analista Prevención
+    i_want: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
+    so_that: Planifico patrullajes preventivos focalizados
+    priority: Media
+    module: Prevencion
+    acceptance_criteria:
+      - Mapa de riesgo futuro
+      - Recomendación de ruteo
+    source_ref: "SBG:Time:PreFacto"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M2: COORDINACIÓN INTEGRADA DE EMERGENCIA Y SEGURIDAD (CIES)
+  # ═══════════════════════════════════════════════════════════════
   - id: US-SEG-CIES-001
     legacy_ids:
       - CIES-OP-01
@@ -156,7 +171,6 @@ stories:
       - Georreferenciación
       - Clasificación de prioridad
     source_ref: "user_stories_legacy.md:L809"
-    note: Unificada de CIES-OP-01 y CIES-OP-001
   - id: US-SEG-CIES-002
     legacy_ids:
       - CIES-OP-02
@@ -233,7 +247,6 @@ stories:
       - Asignación de pantallas
       - Roles definidos
     source_ref: "user_stories_legacy.md:L811"
-    note: Unificada de CIES-SUP-01 y CIES-SUP-001
   - id: US-SEG-CIES-007
     legacy_ids:
       - CIES-SUP-02
@@ -249,7 +262,6 @@ stories:
       - Protocolo por tipo
       - Registro de despacho
     source_ref: "user_stories_legacy.md:L812"
-    note: Unificada de CIES-SUP-02 y CIES-SUP-002
   - id: US-SEG-CIES-008
     legacy_ids:
       - CIES-SUP-003
@@ -278,6 +290,22 @@ stories:
       - Confirmación registrada
       - Actualización de estado
     source_ref: "user_stories_legacy.md:L813"
+  - id: US-SEG-CIES-010
+    title: Protocolo Saqueos/Disturbios
+    as_a:
+      - Supervisor CIES
+    i_want: Activar protocolo de protección de puntos críticos ante disturbios
+    so_that: Priorizo cámaras y recursos en zonas sensibles
+    priority: Crítica
+    module: CIES
+    acceptance_criteria:
+      - Interfaz de "Zona Roja"
+      - Alerta directa a COP Carabineros
+    source_ref: "SBG:Context:Crisis"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M3: CUSTODIA Y EVIDENCIA
+  # ═══════════════════════════════════════════════════════════════
   - id: US-SEG-EVID-001
     legacy_ids:
       - CIES-EVID-001
@@ -321,6 +349,10 @@ stories:
       - Log inmutable
       - Identidad verificada
     source_ref: "user_stories_legacy.md:L1155"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M4: GOBERNANZA Y CIUDADANÍA
+  # ═══════════════════════════════════════════════════════════════
   - id: US-SEG-GOB-001
     legacy_ids:
       - COL-01
@@ -365,20 +397,16 @@ stories:
       - Vista agregada
       - Actualización mensual
     source_ref: "user_stories_legacy.md:L54"
-_summary:
-  total_stories: 22
-  modules_covered:
-    - Prevencion
-    - CIES
-    - Evidencia
-    - Gobernanza
-  deduplications:
-    - CIES-OP-01 + CIES-OP-001 → US-SEG-CIES-001
-    - CIES-SUP-01 + CIES-SUP-001 → US-SEG-CIES-006
-    - CIES-SUP-02 + CIES-SUP-002 → US-SEG-CIES-007
-  integrations:
-    - STOP/SPD
-    - SITIA-Patentes
-    - SITIA-Evidencia
-    - Genetec Clearance
-  next_file: kb_goreos_us_d-gob.yml
+  - id: US-SEG-GOB-004
+    title: Denuncia Anónima Segura
+    as_a:
+      - Ciudadano
+    i_want: Reportar un incidente o foco delictual de manera anónima desde App/Web
+    so_that: Colaboro con la seguridad sin riesgo personal
+    priority: Alta
+    module: Gobernanza
+    integration: Denuncia Seguro
+    acceptance_criteria:
+      - Encriptación de origen
+      - Derivación automática a Fiscalía/Carabineros
+    source_ref: "SBG:Role:Citizen"

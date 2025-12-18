@@ -1,17 +1,16 @@
 _manifest:
-  urn: "urn:goreos:specs:user-stories:d-terr:1.0.0"
+  urn: "urn:goreos:specs:user-stories:d-terr:1.1.0"
   domain: D-TERR
   domain_name: Inteligencia Territorial
-  legacy_modules:
-    - M7
-    - M9
-    - M31
-  total_stories: 24
+  total_stories: 35
   priority_distribution:
-    critica: 4
-    alta: 15
-    media: 5
+    critica: 8
+    alta: 20
+    media: 7
 stories:
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M1: PLANIFICACIÓN Y ORDENAMIENTO (PLAN)
+  # ═══════════════════════════════════════════════════════════════
   - id: US-TERR-PLAN-001
     legacy_ids:
       - DIPL-001
@@ -83,47 +82,21 @@ stories:
       - Publicación oficial
     source_ref: "user_stories_legacy.md:L790"
   - id: US-TERR-PLAN-006
-    legacy_ids:
-      - GORE-AUTO-02
-    title: Instrumentos planificación
+    title: Simulación Cambio Uso de Suelo
     as_a:
-      - GORE
-    i_want: Gestionar instrumentos de planificación (seguimiento metas)
-    so_that: Monitoreo cumplimiento de instrumentos
-    priority: Alta
-    module: Planificacion
-    acceptance_criteria:
-      - Estado por instrumento
-      - Metas de seguimiento
-    source_ref: "user_stories_legacy.md:L791"
-  - id: US-TERR-PLAN-007
-    legacy_ids:
-      - PRG-01
-    title: Mapear programas públicos
-    as_a:
-      - Gestor Programas Públicos
-    i_want: Mapear programas públicos vigentes por beneficiario/objetivo
-    so_that: Visualizo oferta programática
-    priority: Alta
-    module: Planificacion
-    acceptance_criteria:
-      - Catálogo de programas
-      - Cobertura por territorio
-    source_ref: "user_stories_legacy.md:L799"
-  - id: US-TERR-PLAN-008
-    legacy_ids:
-      - PRG-03
-    title: Alertar ventanas postulación
-    as_a:
-      - Planificador
-    i_want: Alertar sobre ventanas de postulación a programas con plazos
-    so_that: Gestiono postulaciones a tiempo
+      - Planificador Urbano
+    i_want: Simular el impacto urbano de un cambio en el plan regulador (PRC/PROT)
+    so_that: Anticipo densificación y demanda de servicios
     priority: Media
     module: Planificacion
     acceptance_criteria:
-      - Alerta automática
-      - Calendario de plazos
-    source_ref: "user_stories_legacy.md:L1012"
+      - Modelo de densidad
+      - Proyección de población
+    source_ref: "SBG:Time:PreFacto"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M2: INFRAESTRUCTURA DE DATOS ESPACIALES (IDE)
+  # ═══════════════════════════════════════════════════════════════
   - id: US-TERR-IDE-001
     legacy_ids:
       - IDE-01
@@ -191,25 +164,26 @@ stories:
     so_that: Comparto datos espaciales
     priority: Crítica
     module: IDE
-    note: Unificada de UGIT-03 y IDE-ADM-001
     acceptance_criteria:
       - Servicio OGC operativo
       - URL pública
     source_ref: "user_stories_legacy.md:L825"
   - id: US-TERR-IDE-006
-    legacy_ids:
-      - UGIT-05
-    title: Gestionar catastro bienes fiscales
+    title: Mapeo Participativo (Crowdsourcing)
     as_a:
-      - Analista Territorial
-    i_want: Gestionar capas de catastro de propiedad fiscal y bienes nacionales
-    so_that: Apoyo ordenamiento territorial
-    priority: Media
-    module: GestionTerritorial
+      - Ciudadano
+    i_want: Reportar georreferencias de interés (microbasurales, puntos turísticos)
+    so_that: Enriquezco el mapa regional con datos comunitarios
+    priority: Alta
+    module: IDE
     acceptance_criteria:
-      - Capa actualizada
-      - Cruce con proyectos
-    source_ref: "user_stories_legacy.md:L500"
+      - Formulario móvil simple
+      - Validación por moderador antes de publicar
+    source_ref: "SBG:Role:Citizen"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M3: ANALÍTICA TERRITORIAL (ANL)
+  # ═══════════════════════════════════════════════════════════════
   - id: US-TERR-ANL-001
     legacy_ids:
       - IDI-01
@@ -267,54 +241,22 @@ stories:
       - Reporte de coincidencia
     source_ref: "user_stories_legacy.md:L1003"
   - id: US-TERR-ANL-005
-    legacy_ids:
-      - IDI-05
-    title: Clasificar tipología BIP
+    title: Detección de Polígonos Huérfanos
     as_a:
-      - Analista Planificación
-    i_want: Clasificar automáticamente tipología BIP usando NLP del nombre
-    so_that: Normalizo la cartera
+      - Analista Territorial
+    i_want: Identificar automáticamente terrenos fiscales sin uso asignado
+    so_that: Propongo proyectos de banco de suelos
     priority: Media
     module: Analitica
     acceptance_criteria:
-      - Clasificador IA
-      - Sugerencia de etiqueta
-    source_ref: "user_stories_legacy.md:L1004"
-  - id: US-TERR-PLAN-006
-    legacy_ids:
-      - PRG-01
-    title: Mapear programas públicos
-    as_a:
-      - Planificador
-    i_want: Mapear programas públicos vigentes por beneficiario y objetivo
-    so_that: Diseño oferta integrada
-    priority: Alta
-    module: Planificacion
-    acceptance_criteria:
-      - Mapa de oferta pública
-      - Ficha de programa
-    source_ref: "user_stories_legacy.md:L1010"
-  - id: US-TERR-PLAN-007
-    legacy_ids:
-      - PRG-02
-    title: Complementariedad programas
-    as_a:
-      - Planificador
-    i_want: Identificar complementariedad entre programas y proyectos IDI
-    so_that: Maximizo impacto
-    priority: Media
-    module: Planificacion
-    acceptance_criteria:
-      - Matriz de sinergias
-      - Recomendación de cruce
-    source_ref: "user_stories_legacy.md:L1011"
+      - Algoritmo de cruce Catastro vs Proyectos
+      - Reporte de oportunidades
+    source_ref: "SBG:Role:AI"
 
   # ═══════════════════════════════════════════════════════════════
-  # MÓDULO M5: ASISTENCIA URBANÍSTICA DOM
+  # MÓDULO M4: ASISTENCIA A MUNICIPIOS (DOM)
   # ═══════════════════════════════════════════════════════════════
-
   - id: US-TERR-DOM-001
-    legacy_ids: []
     title: Consultar norma urbanística unificada
     as_a:
       - DOM
@@ -328,9 +270,7 @@ stories:
       - Click para ver normas aplicables
       - Descarga de reporte consolidado
     source_ref: "new:standardization-municipal"
-
   - id: US-TERR-DOM-002
-    legacy_ids: []
     title: Solicitar asistencia técnica actualización PRC
     as_a:
       - Alcalde
@@ -344,9 +284,7 @@ stories:
       - Flujo de solicitud formal
       - Asignación de contraparte GORE
     source_ref: "new:standardization-municipal"
-
   - id: US-TERR-DOM-003
-    legacy_ids: []
     title: Validar zona de riesgo PROT
     as_a:
       - DOM
@@ -359,13 +297,47 @@ stories:
       - Capa de riesgos oficiales (Sernageomin, ONEMI)
       - Certificado de riesgo
     source_ref: "new:standardization-municipal"
+  - id: US-TERR-DOM-004
+    title: Fiscalización Obras Paralizadas
+    as_a:
+      - Inspector de Obras
+    i_want: Registrar visitas de fiscalización a obras reportadas como detenidas
+    so_that: Decido sobre la liquidación del contrato
+    priority: Crítica
+    module: Asistencia DOM
+    acceptance_criteria:
+      - App móvil con georreferencia obligatoria
+      - Subida de fotos de evidencia
+    source_ref: "SBG:Context:Compliance"
 
-_summary:
-  total_stories: 24
-  modules_covered:
-    - Planificacion
-    - IDE
-    - Analitica
-    - GestionTerritorial
-    - Asistencia DOM
-  added_in_audit_3: 14
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M5: GESTIÓN DE PROGRAMAS (PRG)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-TERR-PRG-001
+    legacy_ids:
+      - PRG-03
+    title: Alertar ventanas postulación
+    as_a:
+      - Planificador
+    i_want: Alertar sobre ventanas de postulación a programas con plazos
+    so_that: Gestiono postulaciones a tiempo
+    priority: Media
+    module: Programas
+    acceptance_criteria:
+      - Alerta automática
+      - Calendario de plazos
+    source_ref: "user_stories_legacy.md:L1012"
+  - id: US-TERR-PRG-002
+    legacy_ids:
+      - PRG-02
+    title: Complementariedad programas
+    as_a:
+      - Planificador
+    i_want: Identificar complementariedad entre programas y proyectos IDI
+    so_that: Maximizo impacto
+    priority: Media
+    module: Programas
+    acceptance_criteria:
+      - Matriz de sinergias
+      - Recomendación de cruce
+    source_ref: "user_stories_legacy.md:L1011"

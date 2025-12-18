@@ -1,17 +1,16 @@
 _manifest:
-  urn: "urn:goreos:specs:user-stories:d-gob:1.0.0"
+  urn: "urn:goreos:specs:user-stories:d-gob:1.1.0"
   domain: D-GOB
   domain_name: Gobernanza Regional
-  legacy_modules:
-    - M5
-    - M21
-    - M27
-  total_stories: 38
+  total_stories: 60
   priority_distribution:
-    critica: 20
-    alta: 14
-    media: 4
+    critica: 25
+    alta: 25
+    media: 10
 stories:
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M1: CONSEJO REGIONAL (CORE)
+  # ═══════════════════════════════════════════════════════════════
   - id: US-GOB-CORE-001
     legacy_ids:
       - CR-001
@@ -125,6 +124,50 @@ stories:
       - Publicación mensual
       - Formato normado
     source_ref: "user_stories_legacy.md:L518"
+  - id: US-GOB-CORE-009
+    legacy_ids:
+      - CR-008
+    title: Solicitar antecedentes adicionales
+    as_a:
+      - Consejero Regional
+    i_want: Solicitar antecedentes adicionales sobre proyectos en tabla
+    so_that: Tomo decisiones informadas
+    priority: Alta
+    module: CORE
+    acceptance_criteria:
+      - Solicitud formal
+      - Respuesta en plazo
+    source_ref: "user_stories_legacy.md:L517"
+  - id: US-GOB-CORE-010
+    legacy_ids:
+      - CR-010
+    title: Acceder actas sesiones anteriores
+    as_a:
+      - Consejero Regional
+    i_want: Acceder a actas de sesiones anteriores
+    so_that: Consulto decisiones previas
+    priority: Alta
+    module: CORE
+    acceptance_criteria:
+      - Repositorio de actas
+      - Búsqueda por fecha/tema
+    source_ref: "user_stories_legacy.md:L519"
+  - id: US-GOB-CORE-011
+    title: Simular Votación en Línea
+    as_a:
+      - Secretario Ejecutivo CORE
+    i_want: Habilitar simulación de quórum antes de la votación real
+    so_that: Verifico si tengo los votos necesarios para aprobar (Sunny/Rainy Day)
+    priority: Media
+    module: CORE
+    acceptance_criteria:
+      - Tablero de simulación de asistencia
+      - Cálculo automático de quórums (Simple/Calificado)
+    source_ref: "SBG:Context:Politics"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M2: GOBERNADOR REGIONAL
+  # ═══════════════════════════════════════════════════════════════
   - id: US-GOB-GR-001
     legacy_ids:
       - GR-EST-01
@@ -223,188 +266,6 @@ stories:
       - Firma FEA
       - Registro en expediente
     source_ref: "user_stories_legacy.md:L544"
-  - id: US-GOB-GAB-001
-    legacy_ids:
-      - GAB-001
-    title: Gestionar agenda Gobernador
-    as_a:
-      - Gabinete
-    i_want: "Gestionar agenda GR (reuniones, giras, audiencias)"
-    so_that: Organizo el tiempo de la autoridad
-    priority: Alta
-    module: Gabinete
-    acceptance_criteria:
-      - Calendario integrado
-      - Gestión de solicitudes
-    source_ref: "user_stories_legacy.md:L553"
-  - id: US-GOB-GAB-002
-    legacy_ids:
-      - GAB-004
-    title: Seguimiento compromisos GR
-    as_a:
-      - Gabinete
-    i_want: Dar seguimiento a compromisos del GR (alertas vencimiento)
-    so_that: Aseguro cumplimiento
-    priority: Crítica
-    module: Gabinete
-    acceptance_criteria:
-      - Lista de compromisos
-      - Alertas de vencimiento
-    source_ref: "user_stories_legacy.md:L556"
-  - id: US-GOB-GAB-003
-    legacy_ids:
-      - GAB-005
-    title: Gestión de crisis
-    as_a:
-      - Gabinete
-    i_want: Gestionar crisis comunicacionales y políticas
-    so_that: Respondo a contingencias
-    priority: Crítica
-    module: Gabinete
-    acceptance_criteria:
-      - Protocolo de crisis
-      - Comunicación coordinada
-    source_ref: "user_stories_legacy.md:L557"
-  - id: US-GOB-DESC-001
-    legacy_ids:
-      - TC-001
-    title: Solicitar transferencia de competencia
-    as_a:
-      - Gobernador Regional
-    i_want: Presentar expediente fundado al CORE para aprobación de transferencia
-    so_that: Inicio proceso de descentralización
-    priority: Alta
-    module: Descentralizacion
-    acceptance_criteria:
-      - Expediente completo
-      - Aprobación CORE
-    source_ref: "user_stories_legacy.md:L1060"
-  - id: US-GOB-DESC-002
-    legacy_ids:
-      - TC-002
-    title: Negociar transferencia
-    as_a:
-      - Gobernador Regional
-    i_want: Representar a la región ante Comité Interministerial
-    so_that: Obtengo competencias
-    priority: Crítica
-    module: Descentralizacion
-    acceptance_criteria:
-      - Participación documentada
-      - Negociación de condiciones
-    source_ref: "user_stories_legacy.md:L1061"
-  - id: US-GOB-DESC-003
-    legacy_ids:
-      - TC-004
-    title: Evaluar competencia transferida
-    as_a:
-      - Gobernador Regional
-    i_want: Monitorear indicadores de desempeño de servicios traspasados
-    so_that: Valido la transferencia
-    priority: Alta
-    module: Descentralizacion
-    acceptance_criteria:
-      - Indicadores de gestión
-      - Comparativo pre/post
-    source_ref: "user_stories_legacy.md:L1062"
-  - id: US-GOB-DESC-004
-    legacy_ids:
-      - L4-COMP-01
-    title: Monitorear estado transferencia
-    as_a:
-      - Encargado Competencias
-    i_want: Monitorear estado transferencia sectorial (SUBDERE)
-    so_that: Hago seguimiento del proceso
-    priority: Alta
-    module: Descentralizacion
-    acceptance_criteria:
-      - Estado por competencia
-      - Plazos
-    source_ref: "user_stories_legacy.md:L1006"
-  - id: US-GOB-DEL-001
-    legacy_ids:
-      - DEL-001
-    title: Coordinar Gabinete Regional
-    as_a:
-      - Delegado Presidencial Regional
-    i_want: Convocar a SEREMIS para alineamiento de políticas
-    so_that: Coordino gobierno interior
-    priority: Alta
-    module: Delegados
-    acceptance_criteria:
-      - Convocatoria
-      - Acuerdos documentados
-    source_ref: "user_stories_legacy.md:L1046"
-  - id: US-GOB-DEL-002
-    legacy_ids:
-      - DEL-004
-    title: Articular demanda regional
-    as_a:
-      - Delegado Presidencial Regional
-    i_want: Definir prioridades de inversión sectorial con Gobernador
-    so_that: Alineo inversión nacional/regional
-    priority: Alta
-    module: Delegados
-    acceptance_criteria:
-      - Prioridades acordadas
-      - Documento conjunto
-    source_ref: "user_stories_legacy.md:L1048"
-  - id: US-GOB-GRD-001
-    legacy_ids:
-      - GRD-001
-    title: Aprobar Plan RRD
-    as_a:
-      - Comité Regional GRD
-    i_want: Sancionar el Plan Regional de Reducción del Riesgo
-    so_that: Formalizo la estrategia de GRD
-    priority: Alta
-    module: GRD
-    acceptance_criteria:
-      - Plan aprobado
-      - Acta de sesión
-    source_ref: "user_stories_legacy.md:L1109"
-  - id: US-GOB-GRD-002
-    legacy_ids:
-      - GRD-003
-    title: Vincular GRD-PROT
-    as_a:
-      - Comité Regional GRD
-    i_want: Asegurar coherencia entre mapas de riesgo y ordenamiento territorial
-    so_that: Planifico con enfoque de riesgo
-    priority: Crítica
-    module: GRD
-    acceptance_criteria:
-      - Mapas de riesgo integrados
-      - PROT actualizado
-    source_ref: "user_stories_legacy.md:L1110"
-  - id: US-GOB-CORE-009
-    legacy_ids:
-      - CR-008
-    title: Solicitar antecedentes adicionales
-    as_a:
-      - Consejero Regional
-    i_want: Solicitar antecedentes adicionales sobre proyectos en tabla
-    so_that: Tomo decisiones informadas
-    priority: Alta
-    module: CORE
-    acceptance_criteria:
-      - Solicitud formal
-      - Respuesta en plazo
-    source_ref: "user_stories_legacy.md:L517"
-  - id: US-GOB-CORE-010
-    legacy_ids:
-      - CR-010
-    title: Acceder actas sesiones anteriores
-    as_a:
-      - Consejero Regional
-    i_want: Acceder a actas de sesiones anteriores
-    so_that: Consulto decisiones previas
-    priority: Alta
-    module: CORE
-    acceptance_criteria:
-      - Repositorio de actas
-      - Búsqueda por fecha/tema
-    source_ref: "user_stories_legacy.md:L519"
   - id: US-GOB-GR-008
     legacy_ids:
       - GR-EST-04
@@ -475,6 +336,92 @@ stories:
       - Monitoreo de cumplimiento
       - Acciones correctivas
     source_ref: "user_stories_legacy.md:L545"
+  - id: US-GOB-GR-013
+    legacy_ids:
+      - GR-EST-05
+    title: Presidir Comité Infraestructura
+    as_a:
+      - Gobernador Regional
+    i_want: Presidir Comité Regional de Infraestructura y Ordenamiento
+    so_that: Coordino grandes obras
+    priority: Alta
+    module: Gobernador
+    acceptance_criteria:
+      - Actas de sesión
+      - Cartera priorizada
+    source_ref: "user_stories_legacy.md:L536"
+  - id: US-GOB-GR-014
+    legacy_ids:
+      - GR-EST-06
+    title: Impulsar convenios programación
+    as_a:
+      - Gobernador Regional
+    i_want: Impulsar convenios de programación con ministerios
+    so_that: Apalanco recursos sectoriales
+    priority: Crítica
+    module: Gobernador
+    acceptance_criteria:
+      - Convenio firmado
+      - Montos comprometidos
+    source_ref: "user_stories_legacy.md:L537"
+  - id: US-GOB-GR-015
+    title: Monitorear Promesas de Campaña
+    as_a:
+      - Gobernador Regional
+    i_want: Vincular cartera de proyectos con ejes programáticos de campaña
+    so_that: Visualizo el porcentaje de cumplimiento de mis compromisos electorales
+    priority: Alta
+    module: Gobernador
+    acceptance_criteria:
+      - Tagging de proyectos con eje programático
+      - Dashboard de avance "Promesas"
+    source_ref: "SBG:Context:Politics"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M3: GABINETE Y DIPLOMACIA
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-GOB-GAB-001
+    legacy_ids:
+      - GAB-001
+    title: Gestionar agenda Gobernador
+    as_a:
+      - Gabinete
+    i_want: "Gestionar agenda GR (reuniones, giras, audiencias)"
+    so_that: Organizo el tiempo de la autoridad
+    priority: Alta
+    module: Gabinete
+    acceptance_criteria:
+      - Calendario integrado
+      - Gestión de solicitudes
+    source_ref: "user_stories_legacy.md:L553"
+  - id: US-GOB-GAB-002
+    legacy_ids:
+      - GAB-004
+    title: Seguimiento compromisos GR
+    as_a:
+      - Gabinete
+    i_want: Dar seguimiento a compromisos del GR (alertas vencimiento)
+    so_that: Aseguro cumplimiento
+    priority: Crítica
+    module: Gabinete
+    acceptance_criteria:
+      - Lista de compromisos
+      - Alertas de vencimiento
+    source_ref: "user_stories_legacy.md:L556"
+  - id: US-GOB-GAB-003
+    legacy_ids:
+      - GAB-005
+    title: Gestión de crisis
+    as_a:
+      - Gabinete
+    i_want: Gestionar crisis comunicacionales y políticas
+    so_that: Respondo a contingencias
+    priority: Crítica
+    module: Gabinete
+    acceptance_criteria:
+      - Protocolo de crisis
+      - Comunicación coordinada
+    source_ref: "user_stories_legacy.md:L557"
   - id: US-GOB-GAB-004
     legacy_ids:
       - GAB-002
@@ -517,118 +464,136 @@ stories:
       - Sesiones programadas
       - Sistematización de aportes
     source_ref: "user_stories_legacy.md:L558"
-  - id: US-GOB-DEL-003
+  - id: US-GOB-SEC-001
     legacy_ids:
-      - DEL-002
-    title: Resolver recursos jerárquicos
+      - S-GOB-001
+    title: Coordinar gabinete sectorial
     as_a:
-      - Delegado Presidencial Regional
-    i_want: Resolver recursos jerárquicos administrativos
-    so_that: Ejerzo tutela administrativa
+      - Gabinete
+    i_want: Coordinar agenda con gabinetes sectoriales (Seremías)
+    so_that: Alineo agenda política
     priority: Alta
-    module: Delegados
+    module: Gabinete
     acceptance_criteria:
-      - Tramitación formal
-      - Resolución fundada
-    source_ref: "user_stories_legacy.md:L1047"
-  - id: US-GOB-DEL-004
-    legacy_ids:
-      - DEL-003
-    title: Gestión orden público
+      - Agenda coordinada
+      - Minutas conjuntas
+    source_ref: "user_stories_legacy.md:L1200"
+  - id: US-GOB-GAB-007
+    title: Gestionar Paradiplomacia
     as_a:
-      - Delegado Presidencial Regional
-    i_want: Coordinar gestión del orden público regional
-    so_that: Mantengo seguridad institucional
-    priority: Crítica
-    module: Delegados
-    acceptance_criteria:
-      - Coordinación con fuerzas de orden
-      - Protocolos de contingencia
-    source_ref: "user_stories_legacy.md:L1048"
-  - id: US-GOB-GRD-003
-    legacy_ids:
-      - GRD-002
-    title: Elaborar Plan Emergencia
-    as_a:
-      - Comité Regional GRD
-    i_want: Elaborar Plan Regional de Emergencia
-    so_that: Preparo respuesta a desastres
-    priority: Crítica
-    module: GRD
-    acceptance_criteria:
-      - Plan documentado
-      - Recursos asignados
-    source_ref: "user_stories_legacy.md:L1110"
-  - id: US-GOB-GRD-004
-    legacy_ids:
-      - GRD-004
-    title: Presidir Comité Mitigación
-    as_a:
-      - Comité Regional GRD
-    i_want: Presidir sesiones del Comité de Mitigación
-    so_that: Coordino acciones preventivas
+      - Encargado Relaciones Internacionales
+    i_want: Gestionar acuerdos y misiones con regiones extranjeras
+    so_that: Fomento la cooperación internacional descentralizada
     priority: Alta
-    module: GRD
+    module: Gabinete
     acceptance_criteria:
-      - Sesiones programadas
-      - Acuerdos documentados
-    source_ref: "user_stories_legacy.md:L1111"
-  - id: US-GOB-OP-001
-    legacy_ids:
-      - OP-01
-    title: Recepcionar Oficio Ingreso IPR
+      - Registro de acuerdos (MOU)
+      - Seguimiento de iniciativas conjuntas
+    source_ref: "SBG:Context:Strategy"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M4: TRANSPARENCIA Y LOBBY (COMPLIANCE)
+  # ═══════════════════════════════════════════════════════════════
+
+  - id: US-GOB-LOB-001
+    title: Registro Integrado de Lobby
     as_a:
-      - Oficina de Partes
-    i_want: Recepcionar Oficio de Ingreso de IPR (timbre digital/físico)
-    so_that: Inicio el expediente administrativo
+      - Sujeto Pasivo (Autoridad)
+    i_want: Registrar audiencias y viajes integrados con Infolobby
+    so_that: Cumplo con la Ley 20.730automáticamente
     priority: Crítica
-    module: OficinaPartes
+    module: Transparencia
+    integration: Infolobby
     acceptance_criteria:
-      - Timbre y fecha
-      - Ingreso al sistema
-    source_ref: "user_stories_legacy.md:L89"
-  - id: US-GOB-OP-002
-    legacy_ids:
-      - OP-02
-    title: Derivar antecedentes a DIPIR
+      - Sincronización automática
+      - Alerta de audiencia no registrada
+    source_ref: "SBG:Context:Compliance"
+
+  - id: US-GOB-LOB-002
+    title: Declaración de Intereses y Patrimonio
     as_a:
-      - Oficina de Partes
-    i_want: Derivar antecedentes a DIPIR mediante ruta automática
-    so_that: Distribuyo la carga de trabajo
-    priority: Alta
-    module: OficinaPartes
+      - Funcionario
+    i_want: Recibir alertas para actualizar mi Declaración de Intereses y Patrimonio
+    so_that: Evito sanciones por incumplimiento de plazos (Ley 20.880)
+    priority: Crítica
+    module: Transparencia
     acceptance_criteria:
-      - Ruta automática
-      - Notificación a destino
-    source_ref: "user_stories_legacy.md:L90"
-  - id: US-GOB-GR-013
+      - Notificación anticipada (30 días)
+      - Enlace directo a Contraloría
+    source_ref: "SBG:Context:Compliance"
+
+  - id: US-GOB-PART-001
+    title: Consulta Ciudadana Digital
+    as_a:
+      - Encargado Participación
+    i_want: Lanzar consultas ciudadanas digitales vinculadas a proyectos de inversión
+    so_that: Recojo la opinión validada de la ciudadanía (ClaveÚnica)
+    priority: Alta
+    module: Transparencia
+    acceptance_criteria:
+      - Autenticación ClaveÚnica
+      - Resultados en tiempo real
+    source_ref: "SBG:Role:External"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M5: DESCENTRALIZACIÓN Y DELEGADOS
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-GOB-DESC-001
     legacy_ids:
-      - GR-EST-05
-    title: Presidir Comité Infraestructura
+      - TC-001
+    title: Solicitar transferencia de competencia
     as_a:
       - Gobernador Regional
-    i_want: Presidir Comité Regional de Infraestructura y Ordenamiento
-    so_that: Coordino grandes obras
+    i_want: Presentar expediente fundado al CORE para aprobación de transferencia
+    so_that: Inicio proceso de descentralización
     priority: Alta
-    module: Gobernador
+    module: Descentralizacion
     acceptance_criteria:
-      - Actas de sesión
-      - Cartera priorizada
-    source_ref: "user_stories_legacy.md:L536"
-  - id: US-GOB-GR-014
+      - Expediente completo
+      - Aprobación CORE
+    source_ref: "user_stories_legacy.md:L1060"
+  - id: US-GOB-DESC-002
     legacy_ids:
-      - GR-EST-06
-    title: Impulsar convenios programación
+      - TC-002
+    title: Negociar transferencia
     as_a:
       - Gobernador Regional
-    i_want: Impulsar convenios de programación con ministerios
-    so_that: Apalanco recursos sectoriales
+    i_want: Representar a la región ante Comité Interministerial
+    so_that: Obtengo competencias
     priority: Crítica
-    module: Gobernador
+    module: Descentralizacion
     acceptance_criteria:
-      - Convenio firmado
-      - Montos comprometidos
-    source_ref: "user_stories_legacy.md:L537"
+      - Participación documentada
+      - Negociación de condiciones
+    source_ref: "user_stories_legacy.md:L1061"
+  - id: US-GOB-DESC-003
+    legacy_ids:
+      - TC-004
+    title: Evaluar competencia transferida
+    as_a:
+      - Gobernador Regional
+    i_want: Monitorear indicadores de desempeño de servicios traspasados
+    so_that: Valido la transferencia
+    priority: Alta
+    module: Descentralizacion
+    acceptance_criteria:
+      - Indicadores de gestión
+      - Comparativo pre/post
+    source_ref: "user_stories_legacy.md:L1062"
+  - id: US-GOB-DESC-004
+    legacy_ids:
+      - L4-COMP-01
+    title: Monitorear estado transferencia
+    as_a:
+      - Encargado Competencias
+    i_want: Monitorear estado transferencia sectorial (SUBDERE)
+    so_that: Hago seguimiento del proceso
+    priority: Alta
+    module: Descentralizacion
+    acceptance_criteria:
+      - Estado por competencia
+      - Plazos
+    source_ref: "user_stories_legacy.md:L1006"
   - id: US-GOB-DESC-005
     legacy_ids:
       - L4-COMP-02
@@ -671,22 +636,207 @@ stories:
       - Análisis de costos
       - Comparativo vs Transferencia
     source_ref: "user_stories_legacy.md:L1009"
-  - id: US-GOB-SEC-001
+  - id: US-GOB-DEL-001
     legacy_ids:
-      - S-GOB-001
-    title: Coordinar gabinete sectorial
+      - DEL-001
+    title: Coordinar Gabinete Regional
     as_a:
-      - Gabinete
-    i_want: Coordinar agenda con gabinetes sectoriales (Seremías)
-    so_that: Alineo agenda política
+      - Delegado Presidencial Regional
+    i_want: Convocar a SEREMIS para alineamiento de políticas
+    so_that: Coordino gobierno interior
     priority: Alta
-    module: Gabinete
+    module: Delegados
     acceptance_criteria:
-      - Agenda coordinada
-      - Minutas conjuntas
-    source_ref: "user_stories_legacy.md:L1200"
+      - Convocatoria
+      - Acuerdos documentados
+    source_ref: "user_stories_legacy.md:L1046"
+  - id: US-GOB-DEL-002
+    legacy_ids:
+      - DEL-004
+    title: Articular demanda regional
+    as_a:
+      - Delegado Presidencial Regional
+    i_want: Definir prioridades de inversión sectorial con Gobernador
+    so_that: Alineo inversión nacional/regional
+    priority: Alta
+    module: Delegados
+    acceptance_criteria:
+      - Prioridades acordadas
+      - Documento conjunto
+    source_ref: "user_stories_legacy.md:L1048"
+  - id: US-GOB-DEL-003
+    legacy_ids:
+      - DEL-002
+    title: Resolver recursos jerárquicos
+    as_a:
+      - Delegado Presidencial Regional
+    i_want: Resolver recursos jerárquicos administrativos
+    so_that: Ejerzo tutela administrativa
+    priority: Alta
+    module: Delegados
+    acceptance_criteria:
+      - Tramitación formal
+      - Resolución fundada
+    source_ref: "user_stories_legacy.md:L1047"
+  - id: US-GOB-DEL-004
+    legacy_ids:
+      - DEL-003
+    title: Gestión orden público
+    as_a:
+      - Delegado Presidencial Regional
+    i_want: Coordinar gestión del orden público regional
+    so_that: Mantengo seguridad institucional
+    priority: Crítica
+    module: Delegados
+    acceptance_criteria:
+      - Coordinación con fuerzas de orden
+      - Protocolos de contingencia
+    source_ref: "user_stories_legacy.md:L1048"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M6: GESTIÓN DE RIESGO DE DESASTRES (GRD)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-GOB-GRD-001
+    legacy_ids:
+      - GRD-001
+    title: Aprobar Plan RRD
+    as_a:
+      - Comité Regional GRD
+    i_want: Sancionar el Plan Regional de Reducción del Riesgo
+    so_that: Formalizo la estrategia de GRD
+    priority: Alta
+    module: GRD
+    acceptance_criteria:
+      - Plan aprobado
+      - Acta de sesión
+    source_ref: "user_stories_legacy.md:L1109"
+  - id: US-GOB-GRD-002
+    legacy_ids:
+      - GRD-003
+    title: Vincular GRD-PROT
+    as_a:
+      - Comité Regional GRD
+    i_want: Asegurar coherencia entre mapas de riesgo y ordenamiento territorial
+    so_that: Planifico con enfoque de riesgo
+    priority: Crítica
+    module: GRD
+    acceptance_criteria:
+      - Mapas de riesgo integrados
+      - PROT actualizado
+    source_ref: "user_stories_legacy.md:L1110"
+  - id: US-GOB-GRD-003
+    legacy_ids:
+      - GRD-002
+    title: Elaborar Plan Emergencia
+    as_a:
+      - Comité Regional GRD
+    i_want: Elaborar Plan Regional de Emergencia
+    so_that: Preparo respuesta a desastres
+    priority: Crítica
+    module: GRD
+    acceptance_criteria:
+      - Plan documentado
+      - Recursos asignados
+    source_ref: "user_stories_legacy.md:L1110"
+  - id: US-GOB-GRD-004
+    legacy_ids:
+      - GRD-004
+    title: Presidir Comité Mitigación
+    as_a:
+      - Comité Regional GRD
+    i_want: Presidir sesiones del Comité de Mitigación
+    so_that: Coordino acciones preventivas
+    priority: Alta
+    module: GRD
+    acceptance_criteria:
+      - Sesiones programadas
+      - Acuerdos documentados
+    source_ref: "user_stories_legacy.md:L1111"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M7: OFICINA DE PARTES (ADMINISTRACIÓN)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-GOB-OP-001
+    legacy_ids:
+      - OP-01
+    title: Recepcionar Oficio Ingreso IPR
+    as_a:
+      - Oficina de Partes
+    i_want: Recepcionar Oficio de Ingreso de IPR (timbre digital/físico)
+    so_that: Inicio el expediente administrativo
+    priority: Crítica
+    module: OficinaPartes
+    acceptance_criteria:
+      - Timbre y fecha
+      - Ingreso al sistema
+    source_ref: "user_stories_legacy.md:L89"
+  - id: US-GOB-OP-002
+    legacy_ids:
+      - OP-02
+    title: Derivar antecedentes a DIPIR
+    as_a:
+      - Oficina de Partes
+    i_want: Derivar antecedentes a DIPIR mediante ruta automática
+    so_that: Distribuyo la carga de trabajo
+    priority: Alta
+    module: OficinaPartes
+    acceptance_criteria:
+      - Ruta automática
+      - Notificación a destino
+    source_ref: "user_stories_legacy.md:L90"
+  - id: US-GOB-OP-003
+    title: Digitalizar y Repositorio Ad-hoc
+    as_a:
+      - Encargado Oficina Partes
+    i_want: Digitalizar documentos físicos y guardarlos en un repositorio estructurado ad-hoc
+    so_that: Elimino el papel y centralizo la documentación
+    priority: Crítica
+    module: OficinaPartes
+    acceptance_criteria:
+      - Escaneo de alta calidad
+      - Indexación automática por metadatos
+      - Almacenamiento seguro por tipo de documento
+    source_ref: "user_request:digitization"
+  - id: US-GOB-OP-004
+    title: Procesamiento OCR Automático
+    as_a:
+      - Sistema
+    i_want: Aplicar OCR automáticamente a todo documento digitalizado
+    so_that: Hago el contenido buscable y procesable por agentes
+    priority: Alta
+    module: OficinaPartes
+    acceptance_criteria:
+      - OCR en background
+      - Capa de texto indexable
+    source_ref: "user_request:ocr"
+  - id: US-GOB-OP-005
+    title: Revisión Inteligente por Agente
+    as_a:
+      - Agente Clasificador
+    i_want: Procesar la versión OCR para extraer entidades clave y pre-clasificar
+    so_that: Facilito la revisión humana
+    priority: Alta
+    module: OficinaPartes
+    acceptance_criteria:
+      - Extracción de Fecha, Remitente, Materia
+      - Sugerencia de clasificación
+      - Cola de revisión humana
+    source_ref: "user_request:agent_review"
+  - id: US-GOB-OP-006
+    title: Activación Dinámica de Pipes
+    as_a:
+      - Sistema
+    i_want: Activar pipes de gestión específicos según la caracterización del documento
+    so_that: Automatizo el flujo de ingreso (IPR, Factura, Oficio)
+    priority: Crítica
+    module: OficinaPartes
+    acceptance_criteria:
+      - Reglas de ruteo basadas en metadatos/tags
+      - Disparo de evento de inicio de proceso BPMN
+    source_ref: "user_request:dynamic_pipes"
+
 _summary:
-  total_stories: 49
+  total_stories: 64
   modules_covered:
     - CORE
     - Gobernador
@@ -695,5 +845,4 @@ _summary:
     - Delegados
     - GRD
     - OficinaPartes
-  added_in_audit_1: 15
-  added_in_audit_2: 8
+    - Transparencia

@@ -463,6 +463,56 @@ stories:
       - Notificación formal
       - Plazo de respuesta
     source_ref: "user_stories_legacy.md:L866"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M9: SIMULACIÓN Y PREVENCIÓN (PRE-FACTO)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-NORM-SIM-001
+    title: Simulador de Legalidad del Gasto
+    as_a:
+      - Abogado Revisor
+    i_want: Simular si una imputación presupuestaria cumple con las reglas de la Glosa vigente
+    so_that: Detecto rechazos probables antes de enviar a firma
+    priority: Alta
+    module: Control
+    acceptance_criteria:
+      - Carga de reglas de negocio (Glosa N)
+      - Validación automática de objeto del gasto
+    source_ref: "SBG:Time:PreFacto"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M10: CONTINGENCIA JURÍDICA (RAINY DAY)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-NORM-CRIS-001
+    title: Gestión de Fiscalización Masiva
+    as_a:
+      - Encargado Transparencia
+    i_want: Gestionar un pico de solicitudes de información (>50 simultáneas) coordinado
+    so_that: Evito caer en silencio administrativo masivo
+    priority: Crítica
+    module: Transparencia
+    acceptance_criteria:
+      - Agrupación de solicitudes por materia
+      - Respuesta tipo masiva
+      - Solicitud de prórroga automática
+    source_ref: "SBG:Context:Compliance"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M11: ASISTENCIA JURÍDICA AUTOMATIZADA (SYSTEM)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-NORM-AI-001
+    title: Redacción Automática de Resoluciones
+    as_a:
+      - Asistente Jurídico (Robot)
+    i_want: Generar borrador de resolución estándar (ej. cometido, feriado) basado en plantilla
+    so_that: Reduzco carga operativa de abogados
+    priority: Media
+    module: Actos
+    acceptance_criteria:
+      - Selección de plantilla
+      - Inyección de datos variables
+      - Marca de "Borrador Automático"
+    source_ref: "SBG:Role:AI"
 _summary:
   total_stories: 31
   modules_covered:

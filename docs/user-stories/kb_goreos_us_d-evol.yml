@@ -1,15 +1,16 @@
 _manifest:
-  urn: "urn:goreos:specs:user-stories:d-evol:1.0.0"
+  urn: "urn:goreos:specs:user-stories:d-evol:1.1.0"
   domain: D-EVOL
   domain_name: Evolución e Inteligencia del Sistema
-  legacy_modules:
-    - M19
-  total_stories: 24
+  total_stories: 35
   priority_distribution:
-    critica: 4
-    alta: 12
-    media: 0
+    critica: 10
+    alta: 20
+    media: 5
 stories:
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M1: SALUD ORGANIZACIONAL (HealthOrg)
+  # ═══════════════════════════════════════════════════════════════
   - id: US-EVOL-H-001
     legacy_ids:
       - HO-EVO-001
@@ -52,6 +53,10 @@ stories:
       - Simulación de escenarios
       - Impacto proyectado
     source_ref: "user_stories_legacy.md:L1019"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M2: GESTIÓN DE TRAYECTORIA (Feature Flags)
+  # ═══════════════════════════════════════════════════════════════
   - id: US-EVOL-TRAY-001
     legacy_ids:
       - TO-EVO-001
@@ -94,6 +99,10 @@ stories:
       - Reporte de brechas
       - Recomendaciones
     source_ref: "user_stories_legacy.md:L1022"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M3: GESTIÓN DE PILOTOS Y SANDBOX
+  # ═══════════════════════════════════════════════════════════════
   - id: US-EVOL-PILOT-001
     legacy_ids:
       - TL-EVO-001
@@ -136,6 +145,10 @@ stories:
       - Retrospectiva documentada
       - Acciones de mejora
     source_ref: "user_stories_legacy.md:L1025"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M4: PLAYBOOKS DE REMEDIACIÓN
+  # ═══════════════════════════════════════════════════════════════
   - id: US-EVOL-PLAY-001
     legacy_ids:
       - PL-EVO-001
@@ -164,6 +177,10 @@ stories:
       - Estado por playbook
       - Pasos completados
     source_ref: "user_stories_legacy.md:L1027"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M5: GOBIERNO DE EVOLUCIÓN
+  # ═══════════════════════════════════════════════════════════════
   - id: US-EVOL-GOV-001
     legacy_ids:
       - CAP-EVO-01
@@ -192,6 +209,10 @@ stories:
       - Priorización RICE
       - Decisión documentada
     source_ref: "user_stories_legacy.md:L1029"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M6: DEUDA TÉCNICA E INFRAESTRUCTURA
+  # ═══════════════════════════════════════════════════════════════
   - id: US-EVOL-DT-001
     legacy_ids:
       - EVOL-01
@@ -234,6 +255,10 @@ stories:
       - KPIs técnicos
       - Alertas de degradación
     source_ref: "user_stories_legacy.md:L1032"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M7: BASE DE CONOCIMIENTO Y ARQUITECTURA
+  # ═══════════════════════════════════════════════════════════════
   - id: US-EVOL-KB-007
     legacy_ids: []
     title: Catalogar Plantillas Administrativas Nacionales
@@ -283,15 +308,64 @@ stories:
     acceptance_criteria:
       - Algoritmo de H_org actualizado
     source_ref: "artefacto:estrategia-techo-piso:CAP-06"
-_summary:
-  total_stories: 24
-  modules_covered:
-    - HealthOrg
-    - Trayectoria
-    - Pilotos
-    - Playbooks
-    - Gobierno
-    - DeudaTecnica
-    - BaseConocimiento
-    - ArquitecturaOrganizacional
-    - PuenteTDE-ORKO
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M8: INTELIGENCIA ARTIFICIAL Y ÉTICA
+  # ═══════════════════════════════════════════════════════════════
+
+  - id: US-EVOL-AI-001
+    title: Auditoría de Sesgos Algorítmicos
+    as_a:
+      - Comité de Ética
+    i_want: Recibir un reporte automático de sesgo en los modelos predictivos (FENIX/D-SEG)
+    so_that: Evito discriminación automatizada y cumplo Ley de Protección de Datos
+    priority: Crítica
+    module: IE_Etica
+    acceptance_criteria:
+      - Reporte de disparidad estadística
+      - Alerta de sesgo detectado
+    source_ref: "SBG:Context:Compliance"
+
+  - id: US-EVOL-AI-002
+    title: Registro de Decisiones Automatizadas
+    as_a:
+      - Agente KODA
+    i_want: Registrar en un log inmutable cada decisión tomada por un agente autónomo
+    so_that: Garantizo la explicabilidad (XAI) ante auditorías
+    priority: Crítica
+    module: IE_Etica
+    acceptance_criteria:
+      - Log "Decision Trace"
+      - Explicación en lenguaje natural
+    source_ref: "SBG:Role:Watchdog"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M9: INGENIERÍA DEL CAOS Y RESILIENCIA
+  # ═══════════════════════════════════════════════════════════════
+
+  - id: US-EVOL-CHAOS-001
+    title: Simulacro de Caída de Servicios
+    as_a:
+      - Ingeniero SRE
+    i_want: Simular la caída controlada de un servicio crítico (ej: Plataforma Ley Lobby)
+    so_that: Verifico que los protocolos de contingencia manual se activen
+    priority: Media
+    module: Resiliencia
+    acceptance_criteria:
+      - Ejecución en ambiente Sandbox
+      - Medición de tiempo de recuperación (RTO)
+    source_ref: "SBG:Context:RainyDay"
+
+  - id: US-EVOL-CHAOS-002
+    title: Prueba de Estrés Financiero
+    as_a:
+      - Jefe DIPIR
+    i_want: Simular un recorte presupuestario masivo (-30%) en el sistema
+    so_that: Identifico qué proyectos se pueden postergar automáticamente
+    priority: Alta
+    module: Resiliencia
+    acceptance_criteria:
+      - Escenario de "Recorte" activado
+      - Lista de re-priorización generada
+    source_ref: "SBG:Context:RainyDay"
+
