@@ -1,8 +1,8 @@
 # GORE_OS: Visión General
 
-> **Versión:** 5.2 (Deep Audit Complete)  
+> **Versión:** 5.5 (Unified Audit & Refactoring)  
 > **Fecha:** 18 Diciembre 2025  
-> **Estructura:** Blueprint Integral Unificado (12 dominios)
+> **Estructura:** Blueprint Integral Unificado (13 dominios + Capacidad FÉNIX)
 
 ---
 
@@ -18,7 +18,7 @@ El GORE de Ñuble opera hoy como un **sistema fragmentado**:
 ├─────────────────────────────────────────────────────────────────────────────────────┤
 │   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐          │
 │   │   SIGFE     │    │   BIP/SNI   │    │   SISREC    │    │  DocDigital │          │
-│   │ (Finanzas)  │    │ (Proyectos) │    │(Rendiciones)│    │(Expedientes)│          │
+│   │ (Finanzas)  │    │ (Proyectos) │    │ (CGR)       │    │(Expedientes)│          │
 │   └──────┬──────┘    └──────┬──────┘    └──────┬──────┘    └──────┬──────┘          │
 │          │                  │                  │                  │                 │
 │          ▼                  ▼                  ▼                  ▼                 │
@@ -124,19 +124,15 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                         ARQUITECTURA GORE_OS v5.1                                │
+│                         ARQUITECTURA GORE_OS v5.5                                │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                  │
 │  CAPA DE EVOLUCIÓN                                                               │
 │  └── D-EVOL: Framework ORKO, HAIC, Madurez L0-L5, Agentes IA, H_org              │
 │                                                                                  │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                  │
 │  CAPA TRANSVERSAL                                                                │
 │  ├── D-GESTION: OKRs, H_gore, Playbooks, UCI, Mejora Continua                    │
-│  └── FÉNIX: Departamento de Gestión Institucional (Intervenciones Nivel I-IV)   │
-│                                                                                  │
-├─────────────────────────────────────────────────────────────────────────────────┤
+│  └── FÉNIX: Unidad de Intervención Institucional (Niveles I-IV)                  │
 │                                                                                  │
 │  NÚCLEOS TÁCTICOS (Motor de Desarrollo)                                          │
 │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐                           │
@@ -145,15 +141,15 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 │  │ IPR, Rend.    │ │ Convenios,PMO │ │ CIES, SITIA   │                           │
 │  └───────────────┘ └───────────────┘ └───────────────┘                           │
 │                                                                                  │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                  │
 │  CAPAS HABILITANTES (Soporte Operativo)                                          │
 │  ├── D-PLAN: Planificación estratégica (ERD, PROT, ARI, CDP)                     │
 │  ├── D-GOB: Gobernanza y Relacionamiento Regional (CORE, Actores, CRM)           │
 │  ├── D-NORM: Gestión Jurídico-Administrativa y Cumplimiento                      │
 │  ├── D-BACK: Gestión de Recursos Institucionales (RRHH, Compras, Flota)          │
 │  ├── D-TDE: Gobernanza Digital y Ciberseguridad (Ley 21.180)                     │
-│  └── D-TERR: Inteligencia Territorial y GIS (IDE Regional)                       │
+│  ├── D-TERR: Inteligencia Territorial y GIS (IDE Regional)                       │
+│  ├── D-OPS: Operaciones de Sistemas (ITSM, IAM, Monitoreo)                       │
+│  └── D-DEV: Desarrollo y Construcción (DevOps, CI/CD, QA)                        │
 │                                                                                  │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -162,7 +158,7 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 
 ## C. DOMINIOS GORE_OS
 
-### 6. Mapa de Dominios (Blueprint v5.1)
+### 6. Mapa de Dominios (Blueprint v5.5)
 
 | #   | Dominio                                | Código    | Capa        | Función     | Doc. Detalle                                       |
 | --- | -------------------------------------- | --------- | ----------- | ----------- | -------------------------------------------------- |
@@ -177,7 +173,9 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 | 9   | Gobernanza y Relacionamiento Regional  | D-GOB     | Estratégica | GOBERNAR    | [domain_d-gob.md](domains/domain_d-gob.md)         |
 | 10  | Gestión Institucional                  | D-GESTION | Operativa   | GESTIONAR   | [domain_d-gestion.md](domains/domain_d-gestion.md) |
 | 11  | Evolución e Inteligencia               | D-EVOL    | Estratégica | EVOLUCIONAR | [domain_d-evol.md](domains/domain_d-evol.md)       |
-| 12  | Departamento Gestión Institucional     | FÉNIX     | Transversal | INTERVENIR  | [domain_fenix.md](domains/domain_fenix.md)         |
+| 12  | Operaciones del Sistema                | D-OPS     | Habilitante | OPERAR      | [domain_d-ops.md](domains/domain_d-ops.md)         |
+| 13  | Desarrollo del Sistema                 | D-DEV     | Habilitante | CONSTRUIR   | [domain_d-dev.md](domains/domain_d-dev.md)         |
+| --  | Unidad de Intervención Institucional   | FÉNIX     | Capacidad   | INTERVENIR  | [domain_fenix.md](domains/domain_fenix.md)         |
 
 ---
 
@@ -196,6 +194,8 @@ El GORE opera mediante un ciclo integrado de funciones organizadas en tres dimen
 | **D-SEG**     | CIES Ñuble (Monitoreo 24/7), Prevención del Delito, Evidencias Digitales (SITIA), Gobernanza de Seguridad, Coordinación Multi-agencia                      |
 | **D-GESTION** | Control de Gestión del Sistema (SCG), Panel H_gore, Playbooks Operativos, Control Interno (UCI), Mejora Continua, Coordinación Institucional               |
 | **D-EVOL**    | Salud Organizacional (H_org), Trayectoria del Sistema, Base de Conocimiento (KB), Agentes de IA (HAIC), Niveles de Madurez L0-L5, Deuda Técnica            |
+| **D-OPS**     | Gestión de Usuarios (IAM), Cargas Masivas y Migraciones, Monitoreo y Observabilidad, Gestión de Incidentes, Backup y Continuidad, Configuración            |
+| **D-DEV**     | Gestión de Producto (Backlog/Roadmap), Desarrollo de Software, Arquitectura Técnica, CI/CD, Testing y QA, Gestión de Releases                              |
 | **FÉNIX**     | Niveles de Intervención I-IV, Diagnóstico y Activación, Gestión de Contingencias, Equipo de Tarea, Aceleración de Iniciativas, Aprendizaje Institucional   |
 
 ---
@@ -286,7 +286,7 @@ GORE_OS incorpora una **base de conocimiento estructurada** que permite a los ag
 | --------------- | --------------------------------------------- | --------- | ----------------- |
 | SIGFE           | Contabilidad gubernamental, devengado, pagado | P0        | D-FIN, D-BACK     |
 | BIP/SNI         | Banco Integrado de Proyectos, RS, estados     | P0        | D-FIN             |
-| SISREC          | Rendiciones de cuentas a CGR                  | P0        | D-FIN, D-EJEC     |
+| SISREC          | Rendiciones de cuentas a **CGR**              | P0        | D-FIN, D-EJEC     |
 | Mercado Público | Órdenes de compra, contratos, proveedores     | P0        | D-BACK            |
 | DocDigital      | Gestión documental, expediente electrónico    | P1        | D-NORM            |
 | ClaveÚnica      | Autenticación ciudadana (OIDC)                | P1        | D-TDE             |
@@ -431,11 +431,13 @@ docs/blueprint/
     ├── domain_d-seg.md        ← D-SEG: Seguridad Pública Regional
     ├── domain_d-gestion.md    ← D-GESTION: Gestión Institucional
     ├── domain_d-evol.md       ← D-EVOL: Evolución e Inteligencia
-    └── domain_fenix.md        ← FÉNIX: Departamento Gestión Institucional
+    ├── domain_d-ops.md        ← D-OPS: Operaciones del Sistema
+    ├── domain_d-dev.md        ← D-DEV: Desarrollo del Sistema
+    └── domain_fenix.md        ← FÉNIX: Unidad de Intervención Institucional
 ```
 
 ---
 
 *Documento generado como parte del proceso de diseño de GORE_OS.*  
-*Versión: 5.2 (Consolidada y Sincronizada) | Fecha: 18 Diciembre 2025*  
+*Versión: 5.5 (Consolidada y Sincronizada) | Fecha: 18 Diciembre 2025*  
 *Última sincronización con dominios: 2025-12-18*

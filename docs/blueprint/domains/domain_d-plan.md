@@ -115,7 +115,7 @@ Funcionalidades:
 | Atributo  | Descripción                                                               |
 | --------- | ------------------------------------------------------------------------- |
 | Propósito | Gestionar el ciclo anual de inversión regional                            |
-| Ciclo     | Mayo-Agosto: solicitud → priorización → consolidación → presentación CORE |
+| Ciclo     | Abril-Junio: solicitud → priorización → consolidación → presentación CORE |
 
 Funcionalidades:
 
@@ -608,5 +608,5 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ---
 
-*Documento parte de GORE_OS Blueprint v5.2*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Última actualización: 2025-12-18*

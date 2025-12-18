@@ -1,7 +1,7 @@
-# Departamento de Gestión Institucional (FÉNIX)
+# Unidad de Intervención Institucional (FÉNIX)
 
 > Parte de: [GORE_OS Vision General](../vision_general.md)  
-> Capa: Transversal (Metasistema)  
+> Capa: Transversal (Capacidad de Intervención)  
 > Función GORE: INTERVENIR  
 
 ---
@@ -10,7 +10,7 @@
 
 Unidad especializada del GORE de Ñuble responsable de diagnosticar, intervenir y resolver situaciones críticas institucionales, gestionar procesos estancados y acelerar iniciativas estratégicas cuando las circunstancias lo requieren.
 
-El Departamento opera como capacidad transversal, activándose ante contingencias que exceden la capacidad de respuesta de los flujos operativos normales.
+La Unidad opera como capacidad transversal, activándose ante contingencias que exceden la capacidad de respuesta de los flujos operativos normales.
 
 ---
 
@@ -318,5 +318,5 @@ flowchart LR
 
 ---
 
-*Documento parte de GORE_OS Blueprint v5.0*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Departamento de Gestión Institucional - GORE Ñuble*

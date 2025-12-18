@@ -755,7 +755,7 @@ Módulo: M7 (Base de Conocimiento Institucional)
 | D-FIN   | Analytics predictivo para IPR                                                                                                                                               | IPR, Projection                        |
 | D-EJEC  | Automatización de alertas de convenios                                                                                                                                      | Alert, Agreement                       |
 | D-GOB   | Scoring predictivo de actores                                                                                                                                               | Actor, Rating                          |
-| D-NORM  | Automatización de expedientes                                                                                                                                               | AdministrativeAct                      |
+| D-NORM  | Automatización de expedientes                                                                                                                                               | ActoAdministrativo                      |
 | D-BACK  | Predicción de necesidades de recursos                                                                                                                                       | Inventory                              |
 | D-TDE   | **Piso vs Techo**: D-TDE (L2 Integrado) es piso legal; D-EVOL construye techo (L3-L5). `TDEScore` → `H_org.Gobernanza(P4)`. M5/M6 → Ecosistema Municipal en Repositorio AO. | Capability, TDEScore, IndiceMadurezTDE | \n | D-TERR | Analytics geoespacial avanzado (P6) alimenta métricas de salud | GeospatialLayer, H_org |
 | D-SEG   | Analytics predictivo de incidentes                                                                                                                                          | Incident                               |
@@ -764,5 +764,5 @@ Módulo: M7 (Base de Conocimiento Institucional)
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.2*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Última actualización: 2025-12-18*

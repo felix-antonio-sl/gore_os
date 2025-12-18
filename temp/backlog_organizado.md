@@ -6,13 +6,10 @@
 Tareas relacionadas con la definición y corrección de dominios.
 
 - [ ] **Auditoría Integral ("Goreólogo")**: "Goreologo, tde y orko auditoría todo dominio algo falta" (Conecta con las auditorías 12x12 recientes). historias de usuario y procesos
-- [ ] **Modelo de Datos Goreos**: modelo de datos de los dominios Goreos.
-- [ ] **Usuarios del sistem**: "todos los casos de uso y journeys de cada usuario del gore".
-- [ ] refactorizar fin para capturar todos los submecanismos ?
 - [ ] Circular 01/2025
-- [ ] historias de usuario propias
-- [ ] dominio de administracion y instalacion de construcción
-- [ ] 
+- [ ] plantilla debe albeergar tambien el dominio conceptual y el modelo de datos categorial
+- [ ] identificar todos los usuarios del sistema, todos los roles de la organización y los actores externos.
+- [ ] historias de uso de cada usuario, roles y actores que usen el sistema
 
 ## 2. 🧠 KODA: Inteligencia y Ontología
 

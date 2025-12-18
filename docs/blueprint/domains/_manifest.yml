@@ -3,11 +3,11 @@
 # Sincronizado con vision_general.md
 
 _manifest:
-  urn: "urn:goreos:blueprint:manifest:5.2.0"
+  urn: "urn:goreos:blueprint:manifest:5.3.0"
   created_at: "2025-12-16"
   last_sync: "2025-12-18"
   status: "Consolidated"
-  total_domains: 12
+  total_domains: 14
 
 domains:
   # === NÚCLEOS TÁCTICOS (Motor de Desarrollo) ===
@@ -16,6 +16,14 @@ domains:
     file: domain_d-fin.md
     layer: Núcleo (Transaccional)
     function: FINANCIAR
+    subdomains:
+      - d-fin/sub_dfin_ipr_core.md
+      - d-fin/sub_dfin_mecanismos.md
+      - d-fin/sub_dfin_presupuesto.md
+      - d-fin/sub_dfin_rendiciones.md
+      - d-fin/sub_dfin_portafolio.md
+      - d-fin/sub_dfin_ejecutores.md
+      - d-fin/sub_dfin_user_stories.md
 
   - id: D-EJEC
     name: Ejecución y Seguimiento
@@ -79,6 +87,21 @@ domains:
     layer: Estratégica (Evolutiva)
     function: EVOLUCIONAR
 
+  # === CAPA HABILITANTE (Infraestructura Técnica del Sistema) ===
+  - id: D-OPS
+    name: Operaciones del Sistema
+    file: domain_d-ops.md
+    layer: Habilitante (Infraestructura Técnica)
+    function: OPERAR
+    orko_cycle: W4 (Operation)
+
+  - id: D-DEV
+    name: Desarrollo del Sistema
+    file: domain_d-dev.md
+    layer: Habilitante (Infraestructura Técnica)
+    function: CONSTRUIR
+    orko_cycle: W2-W3 (Development + Implementation)
+
   # === CAPA TRANSVERSAL ===
   - id: FENIX
     name: Departamento de Gestión Institucional
@@ -88,10 +111,10 @@ domains:
     type: Subsystem
 
 statistics:
-  total_domains: 12
+  total_domains: 14
   nucleo_tactico: 3
-  habilitante: 5
+  habilitante: 7
   estrategica: 3
   transversal: 1
   last_updated: "2025-12-18"
-  notes: "Synchronized with vision_general.md v5.2. Deep audit of all domains complete. Integrated Ley 21.730, ANCI (L21.663), ISAR redefinition, and SIGPER removal."
+  notes: "v5.3 - Added D-OPS (System Operations) and D-DEV (System Development) domains based on ORKO WSLC framework."

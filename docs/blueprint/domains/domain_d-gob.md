@@ -93,10 +93,10 @@ Funcionalidades:
 
 ### M2: Despacho Gobernador y Gabinete
 
-| Atributo    | Descripción                                                      |
-| ----------- | ---------------------------------------------------------------- |
-| Propósito   | Apoyar la labor ejecutiva y estratégica de la autoridad regional |
-| Componentes | Agenda, Gabinete, Comunicaciones, Protocolo, Compromisos         |
+| Atributo    | Descripción                                                           |
+| ----------- | --------------------------------------------------------------------- |
+| Propósito   | Apoyar la labor ejecutiva y estratégica de la autoridad regional      |
+| Componentes | Agenda, Gabinete, Comunicaciones, Protocolo, Compromisos de Autoridad |
 
 Funcionalidades:
 
@@ -420,5 +420,5 @@ Frecuencia: A demanda
 
 ---
 
-*Documento parte de GORE_OS Blueprint v5.0 (Consolidado)*  
-*Última actualización: 2025-12-17*
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
+*Última actualización: 2025-12-18*

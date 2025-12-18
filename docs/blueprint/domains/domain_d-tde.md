@@ -675,16 +675,17 @@ Módulo: M5 (Liderazgo Digital Regional)
 
 | Dominio   | Relación                                                                                                                                                                                                      | Entidades Compartidas                         |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| D-NORM    | Expediente electrónico debe cumplir DS 10 del TDE                                                                                                                                                             | ElectronicFile                                |
+| D-NORM    | Expediente electrónico debe cumplir DS 10 del TDE                                                                                                                                                             | ExpedienteElectronico                                |
 | FÉNIX     | Fallas críticas de ciberseguridad activan intervención                                                                                                                                                        | Incident                                      |
-| D-BACK    | Integración de sistemas administrativos con ClaveÚnica                                                                                                                                                        | ITAsset                                       |
-| D-SEG     | Infraestructura de red CIES gestionada bajo normas TDE                                                                                                                                                        | ITAsset                                       |
-| D-GOB     | Liderazgo político del Gobernador en Mesa Regional TDE                                                                                                                                                        | RegionalEntity                                |
+| D-BACK    | Integración de sistemas administrativos con ClaveÚnica                                                                                                                                                        | ActivoTI                                       |
+| D-SEG     | Infraestructura de red CIES gestionada bajo normas TDE                                                                                                                                                        | ActivoTI                                       |
+| D-GOB     | Liderazgo político del Gobernador en Mesa Regional TDE                                                                                                                                                        | EntidadRegional                                |
 | D-PLAN    | Liderazgo TDE regional alineado con ERD (Eje Modernización)                                                                                                                                                   | TDEMaturityIndex                              |
 | D-GESTION | Indicadores TDE como dimensión del H_gore                                                                                                                                                                     | Indicator                                     |
-| D-EVOL    | **Piso vs Techo**: D-TDE provee piso normativo (L2), D-EVOL construye techo estratégico (L3-L5). `TDEScore` es input duro de `H_org.Gobernanza(P4)`. M5/M6 alimentan el Repositorio Arquitectónico de D-EVOL. | Capability, H_org, TDEScore, IndiceMadurezTDE | \n | D-TERR | Capas geoespaciales deben cumplir metadatos TDE (DS 9/10). | ElectronicDocument |
+| D-EVOL    | **Piso vs Techo**: D-TDE provee piso normativo (L2), D-EVOL construye techo estratégico (L3-L5). `TDEScore` es input duro de `H_org.Gobernanza(P4)`. M5/M6 alimentan el Repositorio Arquitectónico de D-EVOL. | Capability, H_org, TDEScore, IndiceMadurezTDE |
+| D-TERR    | Capas geoespaciales deben cumplir metadatos TDE (DS 9/10).                                                                                                                                                    | DocumentoElectronico                          |
 
 ---
 
-*Documento parte de GORE_OS Blueprint v5.2*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Última actualización: 2025-12-18*

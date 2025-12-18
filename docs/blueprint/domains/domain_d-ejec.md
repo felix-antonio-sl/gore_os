@@ -21,7 +21,7 @@
 | IPR      | Iniciativa/Proyecto Regional. Ver D-FIN                                                                                 |
 | H_org    | Panel de Salud Organizacional. Ver D-EVOL                                                                               |
 | FÉNIX    | Sistema de intervención para proyectos críticos. Ver fenix.md                                                           |
-| SISREC   | Sistema de Rendición de Cuentas SUBDERE                                                                                 |
+| SISREC   | Sistema de Rendición de Cuentas **CGR** (Contraloría General de la República)                                           |
 | FRIL     | Fondo Regional de Iniciativa Local                                                                                      |
 | DAF      | División de Administración y Finanzas                                                                                   |
 
@@ -399,5 +399,5 @@ flowchart TD
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.3*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Última actualización: 2025-12-18*

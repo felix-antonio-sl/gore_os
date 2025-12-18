@@ -86,7 +86,7 @@ Cadena de Adquisición:
 PAC-Compras → REQUERIMIENTO → CDP → LICITACIÓN/CM → OC → RECEPCIÓN → PAGO
 ```
 
-> Nota: CDP (Certificado de Disponibilidad Presupuestaria) se gestiona en [D-FIN](domain_d-fin.md#cadena-presupuestaria).
+> Nota: CDP (Certificado de Disponibilidad Presupuestaria) se gestiona en [D-FIN Presupuesto](d-fin/sub_dfin_presupuesto.md#cadena-presupuestaria).
 
 Mecanismos:
 
@@ -1172,5 +1172,5 @@ Flujos Principales:
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.4*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Última actualización: 2025-12-18*

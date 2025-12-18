@@ -491,5 +491,5 @@ flowchart LR
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.2*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Última actualización: 2025-12-18*

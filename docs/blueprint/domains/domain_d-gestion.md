@@ -1,4 +1,4 @@
-# D-GESTION: Dominio de Gestión Institucional
+# D-GESTION: Dominio de Control de Gestión y Operación
 
 > Parte de: [GORE_OS Vision General](../vision_general.md)  
 > Capa: Operativa  
@@ -521,7 +521,7 @@ Tabla de Referencias:
 | D-FIN   | Indicadores ejecución presupuestaria para H_gore   | Execution, CDP        |
 | D-EJEC  | Estado convenios como dimensión H_gore             | Agreement             |
 | D-BACK  | Procesos RRHH detallados                           | Official, Absence     |
-| D-NORM  | Expedientes digitales, OIRS                        | AdministrativeAct     |
+| D-NORM  | Expedientes digitales, OIRS                        | ActoAdministrativo    |
 | D-TDE   | Cumplimiento TDE como dimensión H_gore             | TDEIndicator          |
 | D-GOB   | Relación con actores externos                      | Actor, Stakeholder    |
 | D-GOB   | Sesiones CORE, Acuerdos para POA, Informes Gob.    | Agreement, Session    |
@@ -542,5 +542,5 @@ Tabla de Referencias:
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.2*  
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
 *Última actualización: 2025-12-18*

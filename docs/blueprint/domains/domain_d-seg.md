@@ -382,5 +382,5 @@ flowchart TD
 
 ---
 
-*Documento parte de GORE_OS Blueprint Integral v5.0*  
-*Última actualización: 2025-12-16*
+*Documento parte de GORE_OS Blueprint Integral v5.5*  
+*Última actualización: 2025-12-18*
