@@ -1,0 +1,208 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENT-FIN-CERTIFICADO_ACUERDO_CORE | Certificado de Acuerdo del Consejo Regional
+# Dominio: D-FIN
+# Subdomain: presupuesto
+# Fuente: kb_gn_019_gestion_ipr_koda.yml, kb_gn_018_gestion_prpto_koda.yml
+# ═══════════════════════════════════════════════════════════════════════════════
+version: "1.0.0"
+
+metadata:
+  entity_id: ENT-FIN-CERTIFICADO_ACUERDO_CORE
+  name: CertificadoAcuerdoCORE
+  domain: D-FIN
+  subdomain: presupuesto
+  description: |
+    Documento formal emitido por el Secretario Ejecutivo del CORE que
+    acredita la votación del Consejo Regional sobre aprobación de
+    financiamiento, modificaciones presupuestarias u otras materias.
+    Es requerido por DIPRES para tramitar actos presupuestarios.
+  legal_basis:
+    - LOC GORE Art. 36, 78
+    - Glosa 01 Partida 31 Ley 21.796
+    - Glosa 16 (publicación en 5 días)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ATRIBUTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+attributes:
+  - name: id_certificado
+    type: String
+    key: true
+
+  - name: numero_certificado
+    type: String
+    nullable: false
+    description: Número secuencial del certificado
+
+  - name: ejercicio
+    type: Integer
+    nullable: false
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Sesión CORE
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: fecha_sesion
+    type: Date
+    nullable: false
+
+  - name: numero_sesion
+    type: Integer
+    nullable: false
+
+  - name: tipo_sesion
+    type: Enum[Ordinaria, Extraordinaria]
+    default: Ordinaria
+
+  - name: quorum_presente
+    type: Integer
+    nullable: true
+    description: Número de consejeros presentes
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Votación
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: votacion_favor
+    type: Integer
+    nullable: false
+
+  - name: votacion_contra
+    type: Integer
+    nullable: false
+
+  - name: abstenciones
+    type: Integer
+    default: 0
+
+  - name: resultado
+    type: Enum[Aprobado, Rechazado, Diferido]
+    nullable: false
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Tipo de Acuerdo
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: tipo_acuerdo
+    type: Enum[AprobacionFinanciamientoIPR, ModificacionPresupuestaria, AdjudicacionConcurso, AsignacionDirecta, AprobacionConvenio, Otro]
+    nullable: false
+
+  - name: materia_acuerdo
+    type: Text
+    nullable: false
+    description: Descripción de la materia votada
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # IPRs Vinculadas
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: ipr_ids
+    type: Array[String]
+    nullable: true
+    description: IDs de las IPR aprobadas en este acuerdo
+
+  - name: monto_total_aprobado
+    type: Decimal
+    nullable: true
+
+  - name: numero_iprs
+    type: Integer
+    computed: true
+    formula: LENGTH(ipr_ids)
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Emisión y Publicación
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: emitido_por_id
+    type: String
+    fk: ROL-SECRETARIO-EJECUTIVO-CORE
+    nullable: false
+    description: Secretario Ejecutivo que certifica
+
+  - name: fecha_emision
+    type: Date
+    nullable: false
+
+  - name: formato_dipres
+    type: Boolean
+    default: true
+    description: Si usa formato estandarizado DIPRES
+
+  - name: fecha_publicacion_web
+    type: Date
+    nullable: true
+    description: Fecha de publicación en sitio web GORE
+
+  - name: publicado_en_plazo
+    type: Boolean
+    computed: true
+    formula: fecha_publicacion_web <= fecha_sesion + 5 días hábiles
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Tramitación
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: fecha_envio_dipres
+    type: Date
+    nullable: true
+
+  - name: numero_oficio_envio
+    type: String
+    nullable: true
+
+  - name: estado
+    type: Enum[Emitido, Publicado, EnviadoDIPRES, Utilizado]
+    default: Emitido
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INVARIANTES
+# ═══════════════════════════════════════════════════════════════════════════════
+invariants:
+  - id: INV-CERTCORE-001
+    name: publicacion_5dias
+    rule: |
+      fecha_publicacion_web <= fecha_sesion + 5 días hábiles
+    description: Acuerdos deben publicarse en máximo 5 días hábiles
+    source: Glosa 16
+
+  - id: INV-CERTCORE-002
+    name: votacion_coherente
+    rule: |
+      (resultado = Aprobado) → votacion_favor > votacion_contra
+    description: Aprobación requiere mayoría
+
+  - id: INV-CERTCORE-003
+    name: quorum_valido
+    rule: |
+      quorum_presente >= quorum_minimo_locgore
+    description: Sesión requiere quórum legal
+
+  - id: INV-CERTCORE-004
+    name: formato_dipres_obligatorio
+    rule: |
+      (tipo_acuerdo IN [AprobacionFinanciamientoIPR, ModificacionPresupuestaria]) →
+      formato_dipres = true
+    description: Acuerdos presupuestarios usan formato DIPRES
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MORFISMOS
+# ═══════════════════════════════════════════════════════════════════════════════
+morphisms:
+  - source: ENT-FIN-CERTIFICADO_ACUERDO_CORE
+    target: ENT-FIN-IPR
+    type: 1:N
+    name: iprs_aprobadas
+    description: IPRs aprobadas por este acuerdo
+
+  - source: ENT-FIN-CERTIFICADO_ACUERDO_CORE
+    target: ENT-FIN-MODIFICACION_PRESUPUESTARIA
+    type: 1:N
+    name: modificaciones_habilitadas
+    description: Modificaciones presupuestarias habilitadas
+
+  - source: ENT-FIN-CERTIFICADO_ACUERDO_CORE
+    target: ENT-FIN-CDP
+    type: 1:N
+    name: cdps_habilitados
+    description: CDPs que pueden emitirse tras este acuerdo
+
+  - source: ENT-FIN-CERTIFICADO_ACUERDO_CORE
+    target: ENT-FIN-CONCURSO
+    type: 1:N
+    name: concursos_adjudicados
+    description: Concursos adjudicados por este acuerdo

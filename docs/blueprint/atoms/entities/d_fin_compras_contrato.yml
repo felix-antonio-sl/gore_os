@@ -33,6 +33,13 @@ attributes:
   - name: resolucion_aprobacion
     type: String
     nullable: false
+    description: Número de resolución (Legacy). Preferir resolucion_aprobatoria_id.
+
+  - name: resolucion_aprobatoria_id
+    type: String
+    fk: ENT-FIN-ACTO_ADMINISTRATIVO
+    nullable: true
+    description: Link al acto administrativo formal (Phase 20.2 EACS Enrichment)
 
   - name: fecha_resolucion
     type: Date
@@ -166,8 +173,9 @@ attributes:
 
   # Estado
   - name: estado
-    type: Enum[Borrador, EnFirma, Vigente, EnModificacion, EnRecepcion, Terminado, Resciliado, Caducado]
+    type: Enum[Borrador, EnFirma, EnTomaRazon, Vigente, EnModificacion, EnRecepcion, Terminado, Resciliado, Caducado]
     default: Borrador
+    description: Incluye EnTomaRazon para contratos afectos (Phase 20.2 EACS)
 
   - name: fecha_firma
     type: Date

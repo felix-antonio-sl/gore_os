@@ -1,0 +1,156 @@
+# Entidad: SumarioAdministrativo
+# Domain: D-BACK
+# Subdomain: personas
+# Generated: 2025-12-21 (Phase 20.2 - EACS Deep Enrichment)
+
+id: ENT-BACK-SUMARIO_ADMINISTRATIVO
+urn: "urn:goreos:entity:d-back:sumario-administrativo:1.0.0"
+name: Sumario Administrativo
+domain: D-BACK
+subdomain: personas
+category: Transactional
+canonical_source:
+  - "agent_eacs.yaml"
+  - "Ley 18.834 (Estatuto Administrativo) Art. 119-145"
+  - "Dictámenes CGR"
+
+description: |
+  Procedimiento disciplinario formal para investigar faltas graves de funcionarios.
+  Fases: Ordenación → Investigación → Cargos → Descargos → Vista Fiscal → Resolución.
+  Plazo máximo legal: 5 meses. Puede derivar en absolución, multa, suspensión o destitución.
+
+attributes:
+  - name: id_sumario
+    type: String
+    key: true
+
+  - name: numero_sumario
+    type: String
+    nullable: true
+
+  # Partes
+  - name: funcionario_investigado_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: fiscal_sumariante_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: actuario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+
+  # Origen
+  - name: resolucion_ordenadora
+    type: String
+    nullable: false
+    description: Número de resolución que ordena el sumario
+
+  - name: fecha_resolucion_ordenadora
+    type: Date
+    nullable: false
+
+  - name: tipo_falta
+    type: Enum[FaltaProbidad, IncumplimientoDeberes, InasistenciaInjustificada, MaltratoLaboral, AcosoSexual, Otro]
+    nullable: false
+
+  - name: descripcion_hechos
+    type: Text
+    nullable: false
+
+  # Plazos
+  - name: fecha_inicio_investigacion
+    type: Date
+    nullable: true
+
+  - name: plazo_legal_dias
+    type: Integer
+    default: 20
+    description: 20 días hábiles prorrogables
+
+  - name: fecha_prorroga
+    type: Date
+    nullable: true
+
+  - name: dias_prorroga
+    type: Integer
+    nullable: true
+
+  - name: fecha_limite_resolucion
+    type: Date
+    computed: true
+    description: 5 meses desde inicio (invariante CGR)
+
+  # Etapas
+  - name: fecha_formulacion_cargos
+    type: Date
+    nullable: true
+
+  - name: fecha_descargos
+    type: Date
+    nullable: true
+
+  - name: fecha_vista_fiscal
+    type: Date
+    nullable: true
+
+  - name: fecha_resolucion_final
+    type: Date
+    nullable: true
+
+  # Sanción
+  - name: sancion_propuesta
+    type: Enum[Absolucion, Anotacion, Multa, Suspension, Destitucion]
+    nullable: true
+
+  - name: sancion_aplicada
+    type: Enum[Absolucion, Anotacion, Multa, Suspension, Destitucion]
+    nullable: true
+
+  - name: monto_multa_pct
+    type: Decimal
+    nullable: true
+    description: Porcentaje de remuneración (5% a 20%)
+
+  - name: dias_suspension
+    type: Integer
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Ordenado, EnInvestigacion, ConCargos, EnDescargos, VistaFiscal, ParaResolucion, Resuelto, Apelado, Prescrito]
+    default: Ordenado
+
+  # Apelación
+  - name: recurso_presentado
+    type: Boolean
+    default: false
+
+  - name: resolucion_apelacion_id
+    type: String
+    nullable: true
+
+  # Documentos
+  - name: expediente_url
+    type: String
+    nullable: true
+
+invariants:
+  - name: plazo_5_meses
+    rule: "fecha_resolucion_final <= fecha_inicio_investigacion + 5 meses"
+    source: "Dictámenes CGR"
+
+  - name: fiscal_no_es_investigado
+    rule: "fiscal_sumariante_id != funcionario_investigado_id"
+
+  - name: sancion_requiere_cargos
+    rule: "IF sancion_aplicada NOT NULL THEN fecha_formulacion_cargos NOT NULL"
+
+morphisms:
+  investiga: [ENT-BACK-FUNCIONARIO]
+  ordenado_por: [ENT-FIN-ACTO_ADMINISTRATIVO]
+  genera: [ENT-FIN-ACTO_ADMINISTRATIVO]

@@ -1,0 +1,303 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENT-BACK-COMETIDO | Cometido Funcionario
+# Dominio: D-BACK (Gestión de Personas)
+# Fuente: Manual General GDP GORE Ñuble, RES EXTA 01076/2025
+# ═══════════════════════════════════════════════════════════════════════════════
+version: "1.0.0"
+
+metadata:
+  entity_id: ENT-BACK-COMETIDO
+  name: CometidoFuncionario
+  domain: D-BACK
+  subdomain: Gestión de Personas
+  description: |
+    Representa un cometido funcionario o comisión de servicio autorizada
+    para un funcionario del GORE. Incluye cometidos nacionales e internacionales,
+    con o sin derecho a viático, regulados por el Estatuto Administrativo
+    (Ley 18.834) y el DFL 262/1977 sobre viáticos.
+  legal_basis:
+    - Ley 18.834 - Estatuto Administrativo (arts. 75-78, 98 letra e)
+    - DFL 262/1977 - Reglamento de Viáticos
+    - Decreto 90/2018 - Localidades para pago de viáticos
+    - Decreto 705/2016 - Viáticos internacionales en dólares
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ATRIBUTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+attributes:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Identificación
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: id_cometido
+    type: String
+    key: true
+    description: Identificador único del cometido
+
+  - name: funcionario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario que realiza el cometido
+
+  - name: numero_resolucion
+    type: String
+    nullable: true
+    description: Número de resolución exenta que autoriza el cometido
+
+  - name: resolucion_siaper
+    type: String
+    nullable: true
+    description: Número de resolución registrada en SIAPER de CGR
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Clasificación del Cometido
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: tipo_cometido
+    type: Enum[CometidoFuncionario, ComisionServicio, ComisionExtranjero]
+    nullable: false
+    description: |
+      CometidoFuncionario: labores propias del cargo fuera del lugar habitual
+      ComisionServicio: labores ajenas al cargo en mismo u otro servicio
+      ComisionExtranjero: comisión de servicio en territorio extranjero
+
+  - name: ambito
+    type: Enum[Nacional, Internacional]
+    nullable: false
+    default: Nacional
+
+  - name: con_derecho_viatico
+    type: Boolean
+    default: false
+    description: Indica si genera derecho a viático
+
+  - name: con_derecho_reembolso
+    type: Boolean
+    default: false
+    description: Indica si genera derecho a reembolso de gastos
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Temporalidad
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: fecha_inicio
+    type: DateTime
+    nullable: false
+    description: Fecha y hora de inicio del cometido
+
+  - name: fecha_termino
+    type: DateTime
+    nullable: false
+    description: Fecha y hora de término del cometido
+
+  - name: requiere_pernoctar
+    type: Boolean
+    default: false
+    description: Si debe pernoctar fuera del lugar habitual
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Destino y Motivo
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: localidad_destino
+    type: String
+    nullable: false
+    description: Localidad o ciudad de destino
+
+  - name: pais_destino
+    type: String
+    nullable: true
+    description: País de destino (para cometidos internacionales)
+
+  - name: institucion_destino
+    type: String
+    nullable: true
+    description: Institución, municipio u organización de destino
+
+  - name: motivo
+    type: Text
+    nullable: false
+    description: Descripción del motivo y objetivos del cometido
+
+  - name: programa_actividades
+    type: Text
+    nullable: true
+    description: Programa detallado de actividades a realizar
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Viáticos y Gastos
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: tipo_viatico
+    type: Enum[Completo100, ParcialAlojamiento60, ParcialAlimentacion40, SinViatico]
+    nullable: true
+    description: |
+      Completo100: pernocta + alimentación
+      ParcialAlojamiento60: solo alojamiento (alimentación cubierta)
+      ParcialAlimentacion40: solo alimentación (alojamiento cubierto)
+      SinViatico: gastos cubiertos por organizador
+
+  - name: monto_viatico
+    type: Decimal
+    nullable: true
+    description: Monto total de viático calculado según grado y días
+
+  - name: monto_viatico_usd
+    type: Decimal
+    nullable: true
+    description: Monto en dólares (para viáticos internacionales)
+
+  - name: tipo_cambio_aplicado
+    type: Decimal
+    nullable: true
+    description: Tipo de cambio USD aplicado para cometidos internacionales
+
+  - name: gastos_pasajes
+    type: Decimal
+    nullable: true
+    default: 0
+
+  - name: gastos_peajes
+    type: Decimal
+    nullable: true
+    default: 0
+
+  - name: gastos_combustible
+    type: Decimal
+    nullable: true
+    default: 0
+
+  - name: gastos_seguro_viaje
+    type: Decimal
+    nullable: true
+    default: 0
+    description: Seguro de viaje (requerido para viajes internacionales)
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Autorizaciones
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: jefatura_autorizadora_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Jefatura que autoriza el cometido
+
+  - name: autorizado_dipres
+    type: Boolean
+    nullable: true
+    description: Requiere autorización DIPRES (más de 2 personas al extranjero)
+
+  - name: autorizado_rree
+    type: Boolean
+    nullable: true
+    description: Requiere autorización Ministerio RREE
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Estado y Tramitación
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: estado
+    type: Enum[Solicitado, VBJefatura, Aprobado, Subsanar, Rechazado, EnCurso, Ejecutado, Pagado, Rendido]
+    default: Solicitado
+
+  - name: fecha_solicitud
+    type: Date
+    nullable: false
+
+  - name: fecha_aprobacion
+    type: Date
+    nullable: true
+
+  - name: fecha_pago_viatico
+    type: Date
+    nullable: true
+
+  - name: anticipo_viatico
+    type: Boolean
+    default: false
+    description: Si se otorgó anticipo de viático
+
+  - name: monto_anticipo
+    type: Decimal
+    nullable: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INVARIANTES
+# ═══════════════════════════════════════════════════════════════════════════════
+invariants:
+  - id: INV-COMETIDO-001
+    name: fecha_termino_posterior
+    rule: fecha_termino >= fecha_inicio
+    description: Fecha de término debe ser igual o posterior a inicio
+
+  - id: INV-COMETIDO-002
+    name: viatico_solo_si_derecho
+    rule: (monto_viatico > 0) → con_derecho_viatico = true
+    description: Solo se calcula viático si tiene derecho
+
+  - id: INV-COMETIDO-003
+    name: internacional_requiere_pais
+    rule: (ambito = Internacional) → pais_destino IS NOT NULL
+    description: Cometidos internacionales deben indicar país de destino
+
+  - id: INV-COMETIDO-004
+    name: internacional_requiere_seguro
+    rule: (ambito = Internacional) → gastos_seguro_viaje > 0
+    description: Viajes internacionales requieren seguro de viaje
+
+  - id: INV-COMETIDO-005
+    name: viatico_completo_requiere_pernoctar
+    rule: (tipo_viatico = Completo100) → requiere_pernoctar = true
+    description: Viático completo solo si pernocta fuera
+
+  - id: INV-COMETIDO-006
+    name: solicitud_anticipada_internacional
+    rule: |
+      (ambito = Internacional) → 
+      (fecha_solicitud <= fecha_inicio - 15 días hábiles)
+    description: Cometidos internacionales requieren 15 días de anticipación
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MORFISMOS
+# ═══════════════════════════════════════════════════════════════════════════════
+morphisms:
+  - source: ENT-BACK-COMETIDO
+    target: ENT-BACK-FUNCIONARIO
+    type: N:1
+    name: funcionario_cometido
+    description: Funcionario que realiza el cometido
+
+  - source: ENT-BACK-COMETIDO
+    target: ENT-BACK-FUNCIONARIO
+    type: N:1
+    name: autorizador_cometido
+    description: Jefatura que autoriza el cometido
+
+  - source: ENT-BACK-COMETIDO
+    target: ENT-FIN-ACTO_ADMINISTRATIVO
+    type: N:1
+    name: resolucion_aprobatoria
+    description: Resolución exenta que aprueba el cometido
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# OPERACIONES
+# ═══════════════════════════════════════════════════════════════════════════════
+operations:
+  - name: calcular_viatico
+    description: |
+      Calcula el monto de viático según grado del funcionario,
+      días de duración y tipo de viático (completo/parcial).
+      Para internacionales, aplica tabla de costos por país.
+    input:
+      - grado_funcionario: Integer
+      - dias_duracion: Integer
+      - tipo_viatico: Enum
+      - pais_destino: String (opcional)
+    output: monto_calculado
+
+  - name: registrar_en_siaper
+    description: Registra el cometido en el sistema SIAPER de la CGR
+    input:
+      - datos_cometido: CometidoFuncionario
+    output: numero_resolucion_siaper
+
+  - name: solicitar_autorizacion_dipres
+    description: |
+      Genera oficio a DIPRES cuando más de 2 personas
+      deben viajar al extranjero en la misma comisión
+    precondition: ambito = Internacional AND count(funcionarios) > 2

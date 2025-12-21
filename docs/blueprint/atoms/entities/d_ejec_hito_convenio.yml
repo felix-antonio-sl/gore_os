@@ -1,0 +1,110 @@
+# Entidad: HitoConvenio
+# Domain: D-EJEC
+# Generated: 2025-12-21 (Phase 20.2)
+
+id: ENT-EJEC-HITO_CONVENIO
+urn: "urn:goreos:entity:d-ejec:hito-convenio:1.0.0"
+name: Hito de Convenio
+domain: D-EJEC
+category: Transactional
+canonical_source:
+  - "domain_d-ejec.md#ejecución-de-convenios"
+  - "D.S. 148 - Reglamento convenios GORE"
+
+description: |
+  Punto de control crítico en la ejecución de un convenio.
+  Marca eventos contractuales que gatillan acciones (pagos, informes, visitas).
+  Alimenta el semáforo de proyecto en PMO Regional.
+
+attributes:
+  - name: id_hito
+    type: String
+    key: true
+
+  - name: convenio_id
+    type: String
+    fk: ENT-FIN-CONVENIO
+    nullable: false
+
+  - name: numero_hito
+    type: Integer
+    nullable: false
+
+  - name: nombre
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+    nullable: true
+
+  # Tipo de hito
+  - name: tipo_hito
+    type: Enum[EntregaProducto, InicioObra, TerminoEtapa, RecepcionParcial, RecepcionFinal, InformeAvance, PagoAsociado, OtroHito]
+    nullable: false
+
+  # Fechas
+  - name: fecha_planificada
+    type: Date
+    nullable: false
+
+  - name: fecha_real
+    type: Date
+    nullable: true
+
+  - name: desviacion_dias
+    type: Integer
+    computed: true
+    formula: DATEDIFF(fecha_real, fecha_planificada)
+
+  # Estado
+  - name: estado
+    type: Enum[Pendiente, EnProgreso, Cumplido, Atrasado, Cancelado]
+    default: Pendiente
+
+  # Ponderación PMO
+  - name: ponderacion_pct
+    type: Decimal
+    nullable: true
+    description: Peso del hito en el avance total (suma = 100%)
+
+  # Vinculación a pago
+  - name: libera_pago
+    type: Boolean
+    default: false
+
+  - name: estado_pago_id
+    type: String
+    fk: ENT-FIN-ESTADO_PAGO
+    nullable: true
+
+  # Entregables
+  - name: entregables_esperados
+    type: List[String]
+    nullable: true
+
+  - name: entregables_recibidos_url
+    type: List[String]
+    nullable: true
+
+  # Responsables
+  - name: responsable_ejecutor
+    type: String
+    nullable: true
+
+  - name: supervisor_gore_id
+    type: String
+    fk: ROL-SUPERVISOR
+
+invariants:
+  - name: ponderacion_suma_100
+    rule: "SUM(ponderacion_pct WHERE convenio_id = this.convenio_id) = 100"
+
+  - name: fecha_real_posterior
+    rule: "IF fecha_real NOT NULL THEN fecha_real >= fecha_planificada - 30"
+
+morphisms:
+  parte_de: [ENT-FIN-CONVENIO]
+  gatilla: [ENT-FIN-ESTADO_PAGO]
+  monitoreado_por: [PMO_Regional]
+  alimenta: [ENT-EJEC-SEMAFORO_PROYECTO]

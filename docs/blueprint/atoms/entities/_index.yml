@@ -2,7 +2,7 @@ _meta:
   urn: urn:goreos:index:entities:1.0.0
   type: EntitiesIndex
   generated_at: "2025-12-21"
-total: 136
+total: 166
 items:
   - id: ENT-BACK-PAC_COMPRAS
     urn: urn:goreos:atom:entity:d_back_pac_compras:1.0.0
@@ -559,3 +559,122 @@ items:
     urn: urn:goreos:atom:entity:d_back_tesoreria_nomina_pago:1.0.0
     name: NominaPago
     domain: D-BACK
+  # === PHASE 20.2 D-EJEC ENTITIES (2025-12-21) ===
+  - id: ENT-EJEC-HITO_CONVENIO
+    urn: urn:goreos:atom:entity:d_ejec_hito_convenio:1.0.0
+    name: HitoConvenio
+    domain: D-EJEC
+  - id: ENT-EJEC-VISITA_TERRENO
+    urn: urn:goreos:atom:entity:d_ejec_visita_terreno:1.0.0
+    name: VisitaTerreno
+    domain: D-EJEC
+  - id: ENT-EJEC-BITACORA_OBRA
+    urn: urn:goreos:atom:entity:d_ejec_bitacora_obra:1.0.0
+    name: BitacoraObra
+    domain: D-EJEC
+  - id: ENT-EJEC-ACTA_RECEPCION
+    urn: urn:goreos:atom:entity:d_ejec_acta_recepcion:1.0.0
+    name: ActaRecepcion
+    domain: D-EJEC
+  - id: ENT-EJEC-INFORME_AVANCE
+    urn: urn:goreos:atom:entity:d_ejec_informe_avance:1.0.0
+    name: InformeAvance
+    domain: D-EJEC
+  - id: ENT-EJEC-PROBLEMA_IPR
+    urn: urn:goreos:atom:entity:d_ejec_problema_ipr:1.0.0
+    name: ProblemaIPR
+    domain: D-EJEC
+  - id: ENT-EJEC-RIESGO_CONVENIO
+    urn: urn:goreos:atom:entity:d_ejec_riesgo_convenio:1.0.0
+    name: RiesgoConvenio
+    domain: D-EJEC
+  - id: ENT-EJEC-MODIFICACION_CONVENIO
+    urn: urn:goreos:atom:entity:d_ejec_modificacion_convenio:1.0.0
+  - id: ENT-EJEC-EVENTO_MULTA
+    urn: urn:goreos:atom:entity:d_ejec_evento_multa:1.0.0
+    name: EventoMulta
+    domain: D-EJEC
+  - id: ENT-FIN-MARCO_LOGICO_PPR
+    urn: urn:goreos:atom:entity:d_fin_ipr_core_marco_logico_ppr:1.0.0
+    name: MarcoLogicoPPR
+    domain: D-FIN-IPR_CORE
+  - id: ENT-FIN-SEGUIMIENTO_IPR
+    urn: urn:goreos:atom:entity:d_fin_ipr_core_seguimiento_ipr:1.0.0
+    name: SeguimientoIPR
+    domain: D-FIN-IPR_CORE
+  - id: ENT-FIN-MODIF_PRESUPUESTARIA
+    urn: urn:goreos:atom:entity:d_fin_modif_presupuestaria:1.0.0
+    name: ModificacionPresupuestaria
+    domain: D-FIN
+  - id: ENT-FIN-ACTO_ADMINISTRATIVO
+    urn: urn:goreos:atom:entity:d_fin_acto_administrativo:1.0.0
+    name: ActoAdministrativo
+    domain: D-FIN
+  - id: ENT-FIN-DEVENGO
+    urn: urn:goreos:atom:entity:d_fin_devengo:1.0.0
+    name: Devengo
+    domain: D-FIN
+  - id: ENT-BACK-FUNCIONARIO
+    urn: urn:goreos:atom:entity:d_back_funcionario:1.0.0
+    name: Funcionario
+    domain: D-BACK
+  - id: ENT-BACK-ARTICULO_INVENTARIO
+    urn: urn:goreos:atom:entity:d_back_articulo_inventario:1.0.0
+    name: ArticuloInventario
+    domain: D-BACK
+  - id: ENT-BACK-SOLICITUD_VEHICULO
+    urn: urn:goreos:atom:entity:d_back_solicitud_vehiculo:1.0.0
+    name: SolicitudVehiculo
+    domain: D-BACK
+  - id: ENT-BACK-OT_VEHICULAR
+    urn: urn:goreos:atom:entity:d_back_ot_vehicular:1.0.0
+    name: OrdenTrabajoVehicular
+    domain: D-BACK
+  - id: ENT-BACK-SUMARIO_ADMINISTRATIVO
+    urn: urn:goreos:atom:entity:d_back_sumario:1.0.0
+    name: SumarioAdministrativo
+    domain: D-BACK
+  - id: ENT-BACK-DECLARACION_JURADA
+    urn: urn:goreos:atom:entity:d_back_declaracion_jurada:1.0.0
+    name: DeclaracionJurada
+    domain: D-BACK
+  - id: ENT-BACK-RECURSO_ADMINISTRATIVO
+    urn: urn:goreos:atom:entity:d_back_recurso:1.0.0
+    name: RecursoAdministrativo
+    domain: D-BACK
+  - id: ENT-BACK-COMETIDO
+    urn: urn:goreos:atom:entity:d_back_cometido:1.0.0
+    name: CometidoFuncionario
+    domain: D-BACK
+  - id: ENT-BACK-REMUNERACION
+    urn: urn:goreos:atom:entity:d_back_remuneracion:1.0.0
+    name: LiquidacionRemuneracion
+    domain: D-BACK
+  - id: ENT-BACK-HORA-EXTRA
+    urn: urn:goreos:atom:entity:d_back_hora_extra:1.0.0
+    name: HoraExtraordinaria
+    domain: D-BACK
+  - id: ENT-BACK-PERMISO
+    urn: urn:goreos:atom:entity:d_back_permiso:1.0.0
+    name: PermisoAdministrativo
+    domain: D-BACK
+  - id: ENT-BACK-ASISTENCIA
+    urn: urn:goreos:atom:entity:d_back_asistencia:1.0.0
+    name: RegistroAsistencia
+    domain: D-BACK
+  - id: ENT-FIN-RATE
+    urn: urn:goreos:atom:entity:d_fin_rate:1.0.0
+    name: ResultadoAnalisisTecnicoEconomico
+    domain: D-FIN
+  - id: ENT-FIN-FONDO
+    urn: urn:goreos:atom:entity:d_fin_fondo:1.0.0
+    name: FondoFinanciamientoRegional
+    domain: D-FIN
+  - id: ENT-FIN-CONCURSO
+    urn: urn:goreos:atom:entity:d_fin_concurso:1.0.0
+    name: ConcursoFinanciamiento
+    domain: D-FIN
+  - id: ENT-FIN-CERTIFICADO_ACUERDO_CORE
+    urn: urn:goreos:atom:entity:d_fin_certificado_core:1.0.0
+    name: CertificadoAcuerdoCORE
+    domain: D-FIN

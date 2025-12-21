@@ -1,0 +1,114 @@
+# Entidad: BitacoraObra
+# Domain: D-EJEC
+# Generated: 2025-12-21 (Phase 20.2)
+
+id: ENT-EJEC-BITACORA_OBRA
+urn: "urn:goreos:entity:d-ejec:bitacora-obra:1.0.0"
+name: Bitácora de Obra
+domain: D-EJEC
+category: Operational
+canonical_source:
+  - "domain_d-ejec.md#ejecución-de-convenios"
+  - "Ley 19.886"
+
+description: |
+  Registro cronológico de eventos relevantes durante la ejecución de una obra.
+  Funciona como libro de obra digital. Cada entrada es inmutable.
+
+attributes:
+  - name: id_entrada
+    type: String
+    key: true
+
+  - name: convenio_id
+    type: String
+    fk: ENT-FIN-CONVENIO
+    nullable: false
+
+  - name: numero_entrada
+    type: Integer
+    nullable: false
+
+  - name: fecha_hora
+    type: DateTime
+    nullable: false
+
+  # Tipo de libro (Enrichment Phase 20.2)
+  - name: tipo_libro
+    type: Enum[LibroObras, LibroComunicaciones, LibroPrevencion, BitacoraDigital]
+    default: LibroObras
+    description: Distinción legal del cuaderno utilizado
+
+  - name: folio_correlativo
+    type: Integer
+    nullable: false
+    description: Numeración única e inmutable dentro del libro específico
+
+  # Tipo de evento
+  - name: tipo_evento
+    type: Enum[InicioObra, SuspensionObra, ReanudacionObra, Incidente, CambioAlcance, EntregaMaterial, VisitaInspeccion, HitoAlcanzado, ProblemaDetectado, SolucionImplementada, ClimaAdverso, TerminoObra, Otro]
+    nullable: false
+
+  # Contenido
+  - name: descripcion
+    type: Text
+    nullable: false
+
+  - name: detalle_tecnico
+    type: Text
+    nullable: true
+
+  # Autor
+  - name: autor_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: false
+
+  - name: autor_nombre
+    type: String
+    nullable: false
+
+  - name: rol_autor
+    type: Enum[SupervisorGORE, RepresentanteEjecutor, ITO, Contratista, Otro]
+
+  # Adjuntos
+  - name: adjuntos
+    type: List[String]
+    nullable: true
+
+  - name: fotografias
+    type: List[String]
+    nullable: true
+
+  # Vinculación
+  - name: visita_id
+    type: String
+    fk: ENT-EJEC-VISITA_TERRENO
+    nullable: true
+
+  - name: hito_id
+    type: String
+    fk: ENT-EJEC-HITO_CONVENIO
+    nullable: true
+
+  # Inmutabilidad
+  - name: hash_integridad
+    type: String
+    nullable: true
+    description: Hash SHA-256 para garantizar inmutabilidad
+
+  - name: firmado_electronicamente
+    type: Boolean
+    default: false
+
+invariants:
+  - name: entrada_inmutable
+    rule: "Una vez creada, la entrada no puede ser modificada (append-only)"
+
+  - name: cronologia_estricta
+    rule: "fecha_hora > MAX(fecha_hora WHERE convenio_id = this.convenio_id)"
+
+morphisms:
+  documenta: [ENT-FIN-CONVENIO]
+  creado_por: [ROL-FUNCIONARIO]
+  vinculado_a: [ENT-EJEC-VISITA_TERRENO, ENT-EJEC-HITO_CONVENIO]

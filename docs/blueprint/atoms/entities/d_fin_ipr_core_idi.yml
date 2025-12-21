@@ -25,10 +25,21 @@ inherits_from: ENT-FIN-IPR
 attributes:
   # Hereda todos los atributos de IPR más:
 
-  - name: tipologia_bip
+  - name: codigo_bip
     type: String
-    nullable: false
-    description: Tipología según catálogo BIP (ej. Edificación Pública)
+    nullable: true
+    description: Código BIP identificador
+
+  # Carpeta Digital BIP (Phase 20.2 CRM-IPR Enrichment)
+  - name: url_carpeta_bip
+    type: String
+    nullable: true
+    description: URL a la carpeta digital en Banco Integrado de Proyectos
+
+  - name: estado_carpeta
+    type: Enum[Incompleta, Completa, Validada, Observada]
+    default: Incompleta
+    description: Estado de la documentación en carpeta BIP
 
   - name: etapa_bip
     type: Enum[Prefactibilidad, Factibilidad, Diseño, Ejecucion]
@@ -81,6 +92,22 @@ attributes:
   - name: beneficiarios_directos
     type: Integer
     nullable: true
+
+  # Indicadores adicionales (Phase 20.2 Enrichment)
+  - name: cae
+    type: Decimal
+    nullable: true
+    description: Costo Anual Equivalente - para proyectos de conservación y comparación alternativas
+
+  - name: indicador_costo_eficiencia
+    type: Decimal
+    nullable: true
+    description: Costo por beneficiario ($/beneficiario)
+
+  - name: poblacion_objetivo
+    type: Integer
+    nullable: true
+    description: Población total afectada (distinta de beneficiarios directos)
 
   # Ejecución física
   - name: avance_fisico_pct

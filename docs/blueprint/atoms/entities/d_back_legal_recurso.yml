@@ -1,0 +1,135 @@
+# Entidad: RecursoAdministrativo
+# Domain: D-BACK
+# Subdomain: legal
+# Generated: 2025-12-21 (Phase 20.2 - EACS Deep Enrichment)
+
+id: ENT-BACK-RECURSO_ADMINISTRATIVO
+urn: "urn:goreos:entity:d-back:recurso-administrativo:1.0.0"
+name: Recurso Administrativo
+domain: D-BACK
+subdomain: legal
+category: Transactional
+canonical_source:
+  - "agent_eacs.yaml"
+  - "kb_gn_100_modelos_actos_juridicos_koda.yml#FORM-ESCRITO-REPO-01"
+  - "Ley 19.880 Art. 59"
+
+description: |
+  Impugnación formal de un acto administrativo por un interesado.
+  Tipos: Reposición (5 días ante misma autoridad), Jerárquico (subsidiario ante superior),
+  Revisión (por hechos nuevos). La Administración debe resolver en 30 días.
+
+attributes:
+  - name: id_recurso
+    type: String
+    key: true
+
+  - name: numero_ingreso
+    type: String
+    nullable: true
+    description: Número de Oficina de Partes
+
+  # Recurrente
+  - name: recurrente_nombre
+    type: String
+    nullable: false
+
+  - name: recurrente_rut
+    type: String
+    nullable: false
+
+  - name: recurrente_email
+    type: String
+    nullable: true
+
+  - name: recurrente_direccion
+    type: String
+    nullable: true
+
+  # Representante (opcional)
+  - name: representante_nombre
+    type: String
+    nullable: true
+
+  - name: representante_rut
+    type: String
+    nullable: true
+
+  # Acto Impugnado
+  - name: acto_impugnado_id
+    type: String
+    fk: ENT-FIN-ACTO_ADMINISTRATIVO
+    nullable: false
+
+  - name: fecha_notificacion_acto
+    type: Date
+    nullable: false
+    description: Fecha en que el recurrente fue notificado del acto
+
+  # Tipo de Recurso
+  - name: tipo_recurso
+    type: Enum[Reposicion, Jerarquico, Revision, ReposicionSubsidiarioJerarquico]
+    nullable: false
+
+  # Fechas
+  - name: fecha_interposicion
+    type: Date
+    nullable: false
+
+  - name: plazo_legal_dias
+    type: Integer
+    computed: true
+    description: 5 días para Reposición/Jerárquico, 1 año para Revisión
+
+  - name: fecha_limite_resolucion
+    type: Date
+    computed: true
+    description: 30 días desde interposición
+
+  # Contenido
+  - name: fundamentos
+    type: Text
+    nullable: false
+    description: Vicios de ilegalidad alegados
+
+  - name: peticion
+    type: Text
+    nullable: false
+    description: Lo que se solicita (dejar sin efecto, modificar, etc.)
+
+  # Resolución
+  - name: fecha_resolucion
+    type: Date
+    nullable: true
+
+  - name: resultado
+    type: Enum[Acogido, AcogidoParcialmente, Rechazado, Desistido, Prescrito, Inadmisible]
+    nullable: true
+
+  - name: resolucion_respuesta_id
+    type: String
+    fk: ENT-FIN-ACTO_ADMINISTRATIVO
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Interpuesto, EnAnalisis, ParaResolucion, Resuelto, Archivado]
+    default: Interpuesto
+
+  # Documentos
+  - name: escrito_url
+    type: String
+    nullable: true
+
+invariants:
+  - name: plazo_reposicion_5_dias
+    rule: "IF tipo_recurso = Reposicion THEN fecha_interposicion <= fecha_notificacion_acto + 5 días hábiles"
+    source: "Ley 19.880 Art. 59"
+
+  - name: resolucion_30_dias
+    rule: "IF estado = Resuelto THEN fecha_resolucion <= fecha_interposicion + 30 días"
+
+morphisms:
+  impugna: [ENT-FIN-ACTO_ADMINISTRATIVO]
+  genera: [ENT-FIN-ACTO_ADMINISTRATIVO]
+  presentado_por: [Ciudadano]

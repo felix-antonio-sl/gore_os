@@ -1,0 +1,135 @@
+# Entidad: SolicitudVehiculo
+# Domain: D-BACK
+# Subdomain: flotas
+# Generated: 2025-12-21 (Phase 20.2 - ERP-GORE Deep Enrichment)
+
+id: ENT-BACK-SOLICITUD_VEHICULO
+urn: "urn:goreos:entity:d-back:solicitud-vehiculo:1.0.0"
+name: Solicitud de Vehículo
+domain: D-BACK
+subdomain: flotas
+category: Transactional
+canonical_source:
+  - "agent_erp_gore.yaml"
+  - "manual_2_4_servicios_flotas_koda.yml#GN-MANUAL-SERV-FLOTAS-SEC-III-SOL-ASIG-01"
+  - "DL 799 (Uso vehículos fiscales)"
+
+description: |
+  Reserva formal de vehículo institucional para comisiones de servicio.
+  Flujo: Solicitud → Aprobación Jefatura → Asignación Encargado Flota → Ejecución.
+  Restricción DL 799: No circulación fines de semana sin autorización especial.
+
+attributes:
+  - name: id_solicitud
+    type: String
+    key: true
+
+  - name: numero_solicitud
+    type: String
+    nullable: true
+
+  # Solicitante
+  - name: solicitante_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: division_solicitante
+    type: String
+    nullable: true
+
+  - name: jefatura_aprobador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+
+  # Fechas y Horarios
+  - name: fecha_hora_salida
+    type: DateTime
+    nullable: false
+
+  - name: fecha_hora_retorno_estimada
+    type: DateTime
+    nullable: false
+
+  - name: fecha_hora_retorno_real
+    type: DateTime
+    nullable: true
+
+  # Destino
+  - name: destino
+    type: String
+    nullable: false
+
+  - name: proposito
+    type: Text
+    nullable: false
+
+  - name: numero_pasajeros
+    type: Integer
+    default: 1
+
+  # Asignación
+  - name: vehiculo_asignado_id
+    type: String
+    fk: ENT-BACK-VEHICULO
+    nullable: true
+
+  - name: conductor_asignado_id
+    type: String
+    fk: ENT-BACK-CONDUCTOR
+    nullable: true
+
+  - name: encargado_flota_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Borrador, Solicitada, AprobadaJefatura, Rechazada, Asignada, EnCurso, Completada, Cancelada, SinVehiculo]
+    default: Borrador
+
+  - name: fecha_aprobacion
+    type: DateTime
+    nullable: true
+
+  - name: motivo_rechazo
+    type: Text
+    nullable: true
+
+  # Fin de Semana (DL 799)
+  - name: requiere_autorizacion_fds
+    type: Boolean
+    computed: true
+    description: True si fecha_hora_salida cae en sábado, domingo o festivo
+
+  - name: autorizacion_fds_aprobada
+    type: Boolean
+    default: false
+
+  - name: justificacion_fds
+    type: Text
+    nullable: true
+
+  # Vinculación con Bitácora
+  - name: bitacora_viaje_id
+    type: String
+    fk: ENT-BACK-BITACORA_VIAJE
+    nullable: true
+
+invariants:
+  - name: aprobacion_antes_asignacion
+    rule: "IF estado = Asignada THEN jefatura_aprobador_id NOT NULL"
+
+  - name: fds_requiere_justificacion
+    rule: "IF requiere_autorizacion_fds AND autorizacion_fds_aprobada THEN justificacion_fds NOT NULL"
+
+  - name: vehiculo_con_conductor
+    rule: "IF vehiculo_asignado_id NOT NULL THEN conductor_asignado_id NOT NULL"
+
+morphisms:
+  solicitada_por: [ENT-BACK-FUNCIONARIO]
+  aprobada_por: [ENT-BACK-FUNCIONARIO]
+  asigna: [ENT-BACK-VEHICULO, ENT-BACK-CONDUCTOR]
+  genera: [ENT-BACK-BITACORA_VIAJE]

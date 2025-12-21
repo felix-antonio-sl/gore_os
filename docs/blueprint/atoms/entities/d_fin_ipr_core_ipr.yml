@@ -65,11 +65,13 @@ attributes:
 
   # Ciclo de vida
   - name: fase_actual
-    type: Enum[Ingreso, Evaluacion, Financiamiento, Formalizacion, Ejecucion, Modificacion, Cierre]
-    default: Ingreso
+    type: Enum[Oportunidad, Formulacion, Ingreso, Evaluacion, Financiamiento, Formalizacion, Ejecucion, Modificacion, Cierre, Rendicion]
+    default: Oportunidad
+    description: Fases enriquecidas desde CRM-IPR (Phase 20.2)
 
   - name: estado
-    type: Enum[EnTramite, Admisible, Inadmisible, RS, OT, FI, Aprobado, EnEjecucion, Suspendida, Cancelada, Cerrada]
+    type: Enum[EnTramite, PreAdmisibleCDR, NoPreAdmisibleCDR, ParaRevisionTecnica, EnCarteraPreAdmisible, Admisible, AdmisibleConObservaciones, Inadmisible, EnviadoMDSF, RS, AD, RF, OT, FI, ITF, AprobadoTecnicamente, EnCarteraCORE, CertificadoCORE, EnEjecucion, Suspendida, Cancelada, Cerrada]
+    description: Estados enriquecidos desde kb_gn_019 (Phase 20.2)
 
   # Datos del formulador
   - name: entidad_formuladora_id

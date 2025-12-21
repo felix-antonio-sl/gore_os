@@ -1,0 +1,137 @@
+# Entidad: ProblemaIPR
+# Domain: D-EJEC
+# Generated: 2025-12-21 (Phase 20.2)
+
+id: ENT-EJEC-PROBLEMA_IPR
+urn: "urn:goreos:entity:d-ejec:problema-ipr:1.0.0"
+name: Problema de IPR
+domain: D-EJEC
+category: Operational
+canonical_source:
+  - "domain_d-ejec.md#gestión-de-compromisos"
+  - "fenix.md"
+
+description: |
+  Registro de problemas detectados durante la ejecución de una IPR.
+  Alimenta el sistema de gestión de compromisos y puede escalar a FÉNIX.
+  Tracking desde detección hasta resolución.
+
+attributes:
+  - name: id_problema
+    type: String
+    key: true
+
+  - name: ipr_id
+    type: String
+    fk: ENT-FIN-IPR
+    nullable: false
+
+  - name: convenio_id
+    type: String
+    fk: ENT-FIN-CONVENIO
+    nullable: true
+
+  # Clasificación
+  - name: tipo_problema
+    type: Enum[Tecnico, Financiero, Legal, Administrativo, Ambiental, Social, Plazo, Calidad, Alcance, Otro]
+    nullable: false
+
+  - name: categoria
+    type: Enum[Menor, Moderado, Mayor, Critico]
+    nullable: false
+
+  # Descripción
+  - name: titulo
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+    nullable: false
+
+  - name: causa_raiz
+    type: Text
+    nullable: true
+
+  - name: impacto
+    type: Text
+    nullable: true
+
+  # Fechas
+  - name: fecha_deteccion
+    type: Date
+    nullable: false
+
+  - name: fecha_limite_resolucion
+    type: Date
+    nullable: true
+
+  - name: fecha_resolucion
+    type: Date
+    nullable: true
+
+  # Responsables
+  - name: reportado_por_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: false
+
+  - name: asignado_a_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: true
+
+  - name: division_responsable
+    type: String
+    nullable: true
+
+  # Solución
+  - name: solucion_propuesta
+    type: Text
+    nullable: true
+
+  - name: solucion_implementada
+    type: Text
+    nullable: true
+
+  - name: lecciones_aprendidas
+    type: Text
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Detectado, EnAnalisis, AsignadoPropuesto, EnResolucion, Resuelto, Escalado, Cerrado]
+    default: Detectado
+
+  # Escalamiento
+  - name: escalado
+    type: Boolean
+    default: false
+
+  - name: nivel_escalamiento
+    type: Enum[JefeDivision, AdministradorRegional, Gobernador, FENIX]
+    nullable: true
+
+  - name: fenix_nivel
+    type: Enum[Nivel_I, Nivel_II, Nivel_III]
+    nullable: true
+
+  # Vinculación
+  - name: compromiso_generado_id
+    type: String
+    nullable: true
+    description: Compromiso de gestión derivado del problema
+
+invariants:
+  - name: critico_escala
+    rule: "IF categoria = Critico AND dias_sin_resolver > 7 THEN escalado = true"
+
+  - name: resolucion_documentada
+    rule: "IF estado = Resuelto THEN solucion_implementada NOT NULL"
+
+morphisms:
+  afecta: [ENT-FIN-IPR, ENT-FIN-CONVENIO]
+  reportado_por: [ROL-FUNCIONARIO]
+  genera: [Compromiso]
+  puede_activar: [FENIX]
+  alimenta: [ENT-FIN-SALUD_IPR]

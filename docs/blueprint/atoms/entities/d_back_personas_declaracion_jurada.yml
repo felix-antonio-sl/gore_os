@@ -1,0 +1,98 @@
+# Entidad: DeclaracionJurada
+# Domain: D-BACK
+# Subdomain: personas
+# Generated: 2025-12-21 (Phase 20.2 - EACS Deep Enrichment)
+
+id: ENT-BACK-DECLARACION_JURADA
+urn: "urn:goreos:entity:d-back:declaracion-jurada:1.0.0"
+name: Declaración Jurada de Probidad
+domain: D-BACK
+subdomain: personas
+category: Transactional
+canonical_source:
+  - "agent_eacs.yaml"
+  - "Ley 19.653 (Probidad Administrativa) Art. 57-65"
+  - "Plataforma InfoProbidad CGR"
+
+description: |
+  Registro de declaraciones juradas de patrimonio, intereses e inhabilidades
+  que deben presentar funcionarios públicos. Obligatorias para cargos directivos
+  y de confianza. Plazo: 60 días desde asunción y actualización anual.
+
+attributes:
+  - name: id_declaracion
+    type: String
+    key: true
+
+  - name: funcionario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  # Tipo
+  - name: tipo_declaracion
+    type: Enum[Patrimonio, Intereses, Inhabilidades]
+    nullable: false
+
+  # Fechas
+  - name: fecha_obligacion
+    type: Date
+    nullable: false
+    description: Fecha a partir de la cual nace la obligación
+
+  - name: fecha_vencimiento
+    type: Date
+    nullable: false
+    description: 60 días desde asunción o 31/marzo para actualización
+
+  - name: fecha_presentacion
+    type: Date
+    nullable: true
+
+  - name: fecha_ultima_actualizacion
+    type: Date
+    nullable: true
+
+  # Plataforma
+  - name: plataforma
+    type: Enum[InfoProbidadCGR, SistemaInterno, Papel]
+    default: InfoProbidadCGR
+
+  - name: numero_folio
+    type: String
+    nullable: true
+    description: Folio en plataforma InfoProbidad
+
+  # Estado
+  - name: estado
+    type: Enum[Pendiente, Presentada, Vencida, Actualizada, Exceptuada]
+    default: Pendiente
+
+  # Motivo Excepción
+  - name: motivo_excepcion
+    type: Text
+    nullable: true
+    description: Si está exceptuado de declarar
+
+  # Vigencia
+  - name: vigente
+    type: Boolean
+    computed: true
+    formula: estado IN (Presentada, Actualizada) AND fecha_vencimiento >= TODAY()
+
+  # Documento
+  - name: documento_url
+    type: String
+    nullable: true
+
+invariants:
+  - name: plazo_60_dias
+    rule: "IF estado = Pendiente AND TODAY() > fecha_vencimiento THEN estado = Vencida"
+
+  - name: presentacion_antes_vencimiento
+    rule: "IF estado = Presentada THEN fecha_presentacion <= fecha_vencimiento"
+
+morphisms:
+  declara: [ENT-BACK-FUNCIONARIO]
+  registrada_en: [InfoProbidadCGR]
+  fiscaliza: [CGR]

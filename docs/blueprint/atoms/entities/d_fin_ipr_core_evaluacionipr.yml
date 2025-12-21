@@ -1,14 +1,134 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_fin_ipr_core_evaluacionipr:1.0.0
-  type: Entity
-  source: domains/d-fin-ipr_core/entity_data
-id: ENT-FIN-IPR_CORE-EVALUACIONIPR
-name: EvaluacionIPR
-entity_key: evaluacionipr
-domain: D-FIN-IPR_CORE
-category: Reference
-description: id, ipr_id, tipo, resultado, observaciones
+# Entidad: EvaluacionIPR (RATE - Resultado Análisis Técnico-Económico)
+# Domain: D-FIN
+# Subdomain: ipr_core
+# Rewritten: 2025-12-21 (Phase 20.2 - Deep Enrichment)
+
+id: ENT-FIN-EVALUACION_IPR
+urn: "urn:goreos:entity:d-fin:evaluacion-ipr:1.0.0"
+name: Evaluación de IPR (RATE)
+domain: D-FIN
+subdomain: ipr_core
+category: Transactional
+canonical_source:
+  - "kb_gn_019_gestion_ipr_koda.yml#GN-IPR-FASE2-EVAL"
+  - "kb_gn_011_selector_ipr_koda.yml#RATE-RS"
+  - "DL 1263/1975 Art. 19bis"
+
+description: |
+  Registro del Resultado del Análisis Técnico-Económico (RATE) de una IPR.
+  Tipos: RS (Rec. Satisfactoria), AD (Admisible), RF (Rec. Favorable), ITF (Informe Técnico Favorable),
+  FI (Falta Información), OT (Objetado Técnicamente).
+  Evento crítico que habilita paso a etapa de Financiamiento.
+
+attributes:
+  - name: id_evaluacion
+    type: String
+    key: true
+
+  - name: ipr_id
+    type: String
+    fk: ENT-FIN-IPR
+    nullable: false
+
+  # Tipo de evaluación
+  - name: tipo_rate
+    type: Enum[RS, AD, RF, ITF, FI, OT, ExentoRS]
+    nullable: false
+    description: Resultado del Análisis Técnico-Económico
+
+  # Track evaluativo
+  - name: track_evaluacion
+    type: Enum[TrackA_SNI, TrackB_Glosa06, TrackC_Simplificado, TrackD_ITF]
+    nullable: false
+    description: Vía de evaluación según kb_gn_019
+
+  # Evaluador
+  - name: evaluador
+    type: Enum[MDSF_SNI, DIPRES, SES, GORE, MDSyF_Conservacion]
+    nullable: false
+
+  - name: nombre_evaluador
+    type: String
+    nullable: true
+
+  # Documento
+  - name: numero_oficio
+    type: String
+    nullable: true
+    description: Número del oficio o resolución que formaliza el RATE
+
+  - name: fecha_emision
+    type: Date
+    nullable: false
+
+  - name: codigo_bip
+    type: String
+    nullable: true
+    description: Código en Banco Integrado de Proyectos (si aplica)
+
+  # Contenido
+  - name: observaciones
+    type: Text
+    nullable: true
+
+  - name: tiene_observaciones_subsanables
+    type: Boolean
+    default: false
+
+  - name: fecha_limite_subsanacion
+    type: Date
+    nullable: true
+    description: Plazo máximo para subsanar observaciones (FI)
+
+  - name: dias_plazo_subsanacion
+    type: Integer
+    default: 60
+    description: 60 días hábiles según kb_gn_019
+
+  # Indicadores (para RS)
+  - name: van_evaluado
+    type: Decimal
+    nullable: true
+
+  - name: tir_evaluado
+    type: Decimal
+    nullable: true
+
+  - name: costo_evaluado
+    type: Decimal
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Vigente, Subsanado, Vencido, Revocado]
+    default: Vigente
+
+  - name: fecha_subsanacion
+    type: Date
+    nullable: true
+
+  - name: nueva_evaluacion_id
+    type: String
+    nullable: true
+    description: FK a evaluación posterior si hubo repostulación
+
+  # Documento adjunto
+  - name: documento_url
+    type: String
+    nullable: true
+
+invariants:
+  - name: fi_requiere_plazo
+    rule: "IF tipo_rate = FI THEN fecha_limite_subsanacion NOT NULL"
+
+  - name: rs_habilita_financiamiento
+    rule: "IF tipo_rate IN (RS, AD, RF, ITF, ExentoRS) THEN puede_financiar = true"
+
+  - name: ot_bloquea
+    rule: "IF tipo_rate = OT THEN ipr.estado NOT IN (EnEjecucion, Cerrada)"
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  evalua: [ENT-FIN-IPR, ENT-FIN-IDI, ENT-FIN-PPR]
+  emitido_por: [MDSF, DIPRES, SES, GORE]
+  habilita: [ENT-FIN-CDP, ENT-FIN-CONVENIO]
+  registrado_en: [BIP]

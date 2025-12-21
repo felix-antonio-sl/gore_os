@@ -1,0 +1,97 @@
+# Entidad: ActoAdministrativo
+# Domain: D-FIN
+# Subdomain: legal (cross-cutting)
+# Generated: 2025-12-21 (Phase 20.2 - EACS Deep Enrichment)
+
+id: ENT-FIN-ACTO_ADMINISTRATIVO
+urn: "urn:goreos:entity:d-fin:acto-administrativo:1.0.0"
+name: Acto Administrativo
+domain: D-FIN
+subdomain: presupuesto
+category: Reference
+canonical_source:
+  - "agent_eacs.yaml"
+  - "Ley 19.880"
+  - "LOC 19.175"
+
+description: |
+  Documento formal que expresa la voluntad de la administración (Resolución, Decreto).
+  Soporte legal para modificaciones presupuestarias, convenios, contratos y nombramientos.
+
+attributes:
+  - name: id_acto
+    type: String
+    key: true
+
+  - name: tipo_acto
+    type: Enum[Resolucion, Decreto, OrdenServicio, Oficio, AcuerdoCORE]
+    nullable: false
+
+  - name: tipo_control
+    type: Enum[Exento, Afecto]
+    nullable: false
+    description: Si está sujeto a Toma de Razón de Contraloría
+
+  - name: numero_acto
+    type: String
+    nullable: true
+
+  - name: fecha_emision
+    type: Date
+    nullable: false
+
+  - name: anio
+    type: Integer
+    nullable: false
+
+  # Contenido
+  - name: materia
+    type: String
+    nullable: false
+
+  - name: vistos
+    type: Text
+    nullable: true
+
+  - name: considerando
+    type: Text
+    nullable: true
+
+  - name: resuelve
+    type: Text
+    nullable: false
+
+  # Firmantes
+  - name: autoridad_firmante
+    type: Enum[Gobernador, AdministradorRegional, JefeDivision, JefeDAF, Delegado]
+    nullable: false
+
+  # Tramitación CGR
+  - name: estado_tramitacion
+    type: Enum[Borrador, EnVisacion, Firmado, EnTomaRazon, TomadoRazon, Representado, Publicado]
+    default: Borrador
+
+  - name: fecha_toma_razon
+    type: Date
+    nullable: true
+
+  - name: codigo_cgr
+    type: String
+    nullable: true
+
+  # Archivo
+  - name: url_digital
+    type: String
+    nullable: true
+
+  - name: url_diario_oficial
+    type: String
+    nullable: true
+
+invariants:
+  - name: afecto_requiere_toma_razon
+    rule: "IF tipo_control = Afecto AND estado_tramitacion = Publicado THEN fecha_toma_razon NOT NULL"
+
+morphisms:
+  formaliza: [ENT-FIN-MODIF_PRESUPUESTARIA, ENT-FIN-CONVENIO, ENT-FIN-CONTRATO]
+  controlado_por: [CGR]

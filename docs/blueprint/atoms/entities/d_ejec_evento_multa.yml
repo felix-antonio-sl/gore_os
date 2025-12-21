@@ -1,0 +1,106 @@
+# Entidad: EventoMulta
+# Domain: D-EJEC
+# Generated: 2025-12-21 (Phase 20.2 - Deep Enrichment)
+
+id: ENT-EJEC-EVENTO_MULTA
+urn: "urn:goreos:entity:d-ejec:evento-multa:1.0.0"
+name: Evento de Multa
+domain: D-EJEC
+category: Transactional
+canonical_source:
+  - "domain_d-ejec.md#supervisión-de-obras"
+  - "D.S. 75 MOP - Reglamento de Contratos de Obra Publica"
+
+description: |
+  Registro de una sanción administrativa aplicada al ejecutor por incumplimiento de contrato.
+  Nace como un evento operativo en D-EJEC y se materializa como descuento financiero en D-FIN
+  cuando queda firme (ejecutoriada).
+
+attributes:
+  - name: id_multa
+    type: String
+    key: true
+
+  - name: convenio_id
+    type: String
+    fk: ENT-FIN-CONVENIO
+    nullable: false
+
+  - name: numero_resolucion
+    type: String
+    nullable: true
+    description: Número de acto administrativo que aplica la multa (si aplica)
+
+  # Origen
+  - name: origen
+    type: Enum[AtrasoHito, IncumplimientoInstruccion, AusenciaProfesional, SeguridadLaboral, CalidadDeficiente, Otro]
+    nullable: false
+
+  - name: descripcion_incumplimiento
+    type: Text
+    nullable: false
+
+  - name: bitacora_entrada_id
+    type: String
+    fk: ENT-EJEC-BITACORA_OBRA
+    nullable: true
+    description: Referencia a la anotación en el Libro de Obras/Comunicaciones donde se constató la falta
+
+  # Cálculo
+  - name: base_calculo
+    type: Enum[MontoTotalContractual, ValorEstadoPago, UTM, UF, MontoFijo]
+    nullable: false
+
+  - name: factor_multa
+    type: Decimal
+    nullable: false
+    description: Valor numérico (porcentaje o cantidad)
+
+  - name: monto_estimado
+    type: Decimal
+    nullable: false
+
+  # Proceso Administrativo
+  - name: fecha_notificacion
+    type: Date
+    nullable: false
+
+  - name: tiene_descargos
+    type: Boolean
+    default: false
+
+  - name: fecha_descargos
+    type: Date
+    nullable: true
+
+  - name: resultado_descargos
+    type: Enum[Rechazados, AcogidosParcialmente, AcogidosTotalmente]
+    nullable: true
+
+  - name: monto_final
+    type: Decimal
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Notificada, EnDescargo, ResueltaAplica, ResueltaAbsuelta, Ejecutoriada, Descontada, Anulada]
+    default: Notificada
+
+  # Vinculación Financiera
+  - name: estado_pago_descuento_id
+    type: String
+    fk: ENT-FIN-ESTADO_PAGO
+    nullable: true
+    description: EP donde se materializó el descuento
+
+invariants:
+  - name: monto_final_requerido
+    rule: "IF estado = Ejecutoriada THEN monto_final NOT NULL"
+
+  - name: descuento_vinculado
+    rule: "IF estado = Descontada THEN estado_pago_descuento_id NOT NULL"
+
+morphisms:
+  sanciona: [ENT-FIN-CONVENIO]
+  documentada_en: [ENT-EJEC-BITACORA_OBRA]
+  genera_descuento: [ENT-FIN-ESTADO_PAGO]

@@ -1,0 +1,226 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENT-BACK-PERMISO | Permiso Administrativo / Feriado Legal
+# Dominio: D-BACK (Gestión de Personas)
+# Fuente: Manual General GDP GORE Ñuble - Gestión de Feriado y Permisos
+# ═══════════════════════════════════════════════════════════════════════════════
+version: "1.0.0"
+
+metadata:
+  entity_id: ENT-BACK-PERMISO
+  name: PermisoAdministrativo
+  domain: D-BACK
+  subdomain: Gestión de Personas - Ausentismo
+  description: |
+    Representa solicitudes de feriado legal, permisos administrativos
+    con o sin goce de remuneraciones, y otros tipos de ausencias
+    autorizadas según el Estatuto Administrativo.
+  legal_basis:
+    - Ley 18.834 - Estatuto Administrativo (arts. 97-114)
+    - Normativa interna GORE Ñuble
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ATRIBUTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+attributes:
+  - name: id_permiso
+    type: String
+    key: true
+
+  - name: funcionario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: tipo_permiso
+    type: Enum[FeriadoLegal, Feriados, PermisoConGoce, PermisoSinGoce, DiaAdministrativo, LicenciaMedica, PermisoPaternal, PermisoMaternal, PermisoNacimientoHijo, PermisoFallecimientoFamiliar, PermisoMatrimonio, PermisoCapacitacion, PermisoGremial]
+    nullable: false
+    description: |
+      FeriadoLegal: Vacaciones anuales según antigüedad
+      Feriados: Días de descanso legal del estatuto
+      PermisoConGoce: Hasta 6 días al año con goce de remuneraciones
+      PermisoSinGoce: Sin goce de remuneraciones
+      DiaAdministrativo: Días administrativos acumulados
+      LicenciaMedica: Reposo por enfermedad
+      PermisoPaternal: 5 días por nacimiento de hijo
+      PermisoNacimientoHijo: Permiso especial por nacimiento
+      PermisoFallecimientoFamiliar: 3-7 días según parentesco
+      PermisoMatrimonio: Días por matrimonio
+      PermisoCapacitacion: Para actividades de capacitación
+      PermisoGremial: Para actividades de asociación de funcionarios
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Temporalidad
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+
+  - name: fecha_termino
+    type: Date
+    nullable: false
+
+  - name: dias_habiles
+    type: Integer
+    computed: true
+    description: Cantidad de días hábiles del permiso
+
+  - name: dias_corridos
+    type: Integer
+    computed: true
+    description: Cantidad de días corridos
+
+  - name: hora_inicio
+    type: Time
+    nullable: true
+    description: Para permisos por horas
+
+  - name: hora_termino
+    type: Time
+    nullable: true
+
+  - name: es_permiso_fraccionado
+    type: Boolean
+    default: false
+    description: Si el permiso es por horas y no días completos
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Justificación
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: motivo
+    type: Text
+    nullable: true
+    description: Motivo o justificación del permiso
+
+  - name: tiene_documento_respaldo
+    type: Boolean
+    default: false
+    description: Si adjunta licencia médica, certificado, etc.
+
+  - name: documento_respaldo_ref
+    type: String
+    nullable: true
+    description: Referencia al documento de respaldo
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Autorización
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: jefatura_autorizadora_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: fecha_solicitud
+    type: Date
+    nullable: false
+
+  - name: fecha_autorizacion
+    type: Date
+    nullable: true
+
+  - name: numero_resolucion
+    type: String
+    nullable: true
+    description: Resolución para permisos que la requieren
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Impacto en Remuneraciones
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: con_goce_remuneraciones
+    type: Boolean
+    default: true
+
+  - name: genera_descuento
+    type: Boolean
+    default: false
+
+  - name: monto_descuento
+    type: Decimal
+    nullable: true
+    description: Monto a descontar si es sin goce
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Control de Saldos (para feriado legal)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: dias_feriado_disponibles_antes
+    type: Integer
+    nullable: true
+    description: Días de feriado disponibles antes de usar
+
+  - name: dias_feriado_disponibles_despues
+    type: Integer
+    nullable: true
+    description: Días de feriado restantes
+
+  - name: anio_feriado
+    type: Integer
+    nullable: true
+    description: Año al que corresponde el feriado
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Estado
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: estado
+    type: Enum[Solicitado, Autorizado, Rechazado, EnCurso, Completado, Cancelado]
+    default: Solicitado
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INVARIANTES
+# ═══════════════════════════════════════════════════════════════════════════════
+invariants:
+  - id: INV-PERM-001
+    name: fecha_termino_posterior
+    rule: fecha_termino >= fecha_inicio
+
+  - id: INV-PERM-002
+    name: feriado_legal_minimo
+    rule: |
+      (tipo_permiso = FeriadoLegal) →
+      dias_habiles >= 10
+    description: Feriado legal mínimo 10 días hábiles
+
+  - id: INV-PERM-003
+    name: permiso_con_goce_limite_anual
+    rule: |
+      (tipo_permiso = PermisoConGoce) →
+      SUM(dias_habiles WHERE funcionario_id AND anio) <= 6
+    description: Máximo 6 días de permiso con goce al año
+
+  - id: INV-PERM-004
+    name: permiso_fallecimiento_limite
+    rule: |
+      (tipo_permiso = PermisoFallecimientoFamiliar) →
+      dias_habiles IN [3, 7]
+    description: 3 días familiar ascendiente/descendiente, 7 días cónyuge/hijo
+
+  - id: INV-PERM-005
+    name: permiso_paternal_nacimiento
+    rule: |
+      (tipo_permiso = PermisoPaternal) →
+      dias_habiles = 5
+    description: Permiso paternal es de 5 días
+
+  - id: INV-PERM-006
+    name: solicitud_anticipada
+    rule: fecha_solicitud <= fecha_inicio
+    description: La solicitud debe ser previa al permiso
+    exception: Licencias médicas pueden ser posteriores
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MORFISMOS
+# ═══════════════════════════════════════════════════════════════════════════════
+morphisms:
+  - source: ENT-BACK-PERMISO
+    target: ENT-BACK-FUNCIONARIO
+    type: N:1
+    name: funcionario_permiso
+
+  - source: ENT-BACK-PERMISO
+    target: ENT-BACK-FUNCIONARIO
+    type: N:1
+    name: autorizador_permiso
+
+  - source: ENT-BACK-PERMISO
+    target: ENT-BACK-REMUNERACION
+    type: N:1
+    name: liquidacion_descuento
+    description: Liquidación donde se aplica el descuento (si aplica)

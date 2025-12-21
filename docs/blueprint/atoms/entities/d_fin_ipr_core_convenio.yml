@@ -38,8 +38,9 @@ attributes:
     nullable: false
 
   - name: tipo_convenio
-    type: Enum[Transferencia, Mandato, Colaboracion, Comodato, Marco]
+    type: Enum[Transferencia, Mandato, MandatoMOP, Colaboracion, Comodato, Marco, EjecucionDirecta]
     nullable: false
+    description: Incluye MandatoMOP para convenios con MOP (Phase 20.2 CRM-IPR)
 
   # Partes
   - name: otorgante
@@ -153,6 +154,20 @@ attributes:
   - name: porcentaje_rendido
     type: Decimal
     default: 0
+
+  # Alertas CRM (Phase 20.2 CRM-IPR Enrichment)
+  - name: alerta_vencimiento_enviada
+    type: Boolean
+    default: false
+
+  - name: fecha_ultima_alerta
+    type: Date
+    nullable: true
+
+  - name: dias_para_vencimiento
+    type: Integer
+    computed: true
+    description: Calculado desde fecha_termino - hoy
 
 invariants:
   - name: plazo_rendicion_legal

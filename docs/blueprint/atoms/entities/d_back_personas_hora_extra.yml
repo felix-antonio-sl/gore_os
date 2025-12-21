@@ -1,0 +1,175 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENT-BACK-HORA-EXTRA | Hora Extraordinaria
+# Dominio: D-BACK (Gestión de Personas)
+# Fuente: Manual General GDP GORE Ñuble - Procedimiento Horas Extra
+# ═══════════════════════════════════════════════════════════════════════════════
+version: "1.0.0"
+
+metadata:
+  entity_id: ENT-BACK-HORA-EXTRA
+  name: HoraExtraordinaria
+  domain: D-BACK
+  subdomain: Gestión de Personas - Control de Asistencia
+  description: |
+    Representa el registro de horas extraordinarias trabajadas por un funcionario.
+    Las horas extra pueden ser compensadas con descanso compensatorio o pago,
+    sujetas a autorización previa y límites legales según Estatuto Administrativo.
+  legal_basis:
+    - Ley 18.834 - Estatuto Administrativo (arts. relacionados a jornada)
+    - Normativa interna GORE Ñuble sobre trabajo extraordinario
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ATRIBUTOS
+# ═══════════════════════════════════════════════════════════════════════════════
+attributes:
+  - name: id_hora_extra
+    type: String
+    key: true
+
+  - name: funcionario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: fecha
+    type: Date
+    nullable: false
+    description: Fecha en que se realizó el trabajo extraordinario
+
+  - name: tipo_hora
+    type: Enum[Diurna, Nocturna, Festiva]
+    nullable: false
+    description: |
+      Diurna: entre 08:00 y 20:00 días hábiles
+      Nocturna: entre 20:00 y 08:00
+      Festiva: domingos y festivos
+
+  - name: hora_inicio
+    type: Time
+    nullable: false
+
+  - name: hora_termino
+    type: Time
+    nullable: false
+
+  - name: cantidad_horas
+    type: Decimal
+    computed: true
+    description: Horas calculadas entre inicio y término
+
+  - name: motivo
+    type: Text
+    nullable: false
+    description: Justificación del trabajo extraordinario
+
+  - name: tarea_realizada
+    type: Text
+    nullable: true
+    description: Descripción de las labores ejecutadas
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Autorización
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: autorizado_por_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Jefatura que autoriza las horas extra
+
+  - name: fecha_autorizacion
+    type: Date
+    nullable: true
+
+  - name: numero_resolucion
+    type: String
+    nullable: true
+    description: Resolución que autoriza el trabajo extraordinario
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Compensación
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: tipo_compensacion
+    type: Enum[DescansoCompensatorio, Pago, Mixto]
+    nullable: false
+    description: Forma en que se compensan las horas extra
+
+  - name: factor_recargo
+    type: Decimal
+    computed: true
+    description: |
+      Diurna: 1.25 (25% recargo)
+      Nocturna: 1.50 (50% recargo)
+      Festiva: 1.50 (50% recargo)
+
+  - name: monto_pago
+    type: Decimal
+    nullable: true
+    description: Monto a pagar si tipo_compensacion incluye pago
+
+  - name: horas_descanso_otorgadas
+    type: Decimal
+    nullable: true
+    description: Horas de descanso compensatorio otorgadas
+
+  - name: fecha_descanso_compensatorio
+    type: Date
+    nullable: true
+    description: Fecha en que se tomará el descanso
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Estado
+  # ─────────────────────────────────────────────────────────────────────────────
+  - name: estado
+    type: Enum[Solicitada, Autorizada, Rechazada, Ejecutada, Compensada, Pagada]
+    default: Solicitada
+
+  - name: periodo_pago
+    type: String
+    nullable: true
+    description: Período de remuneraciones donde se pagará (YYYY-MM)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INVARIANTES
+# ═══════════════════════════════════════════════════════════════════════════════
+invariants:
+  - id: INV-HE-001
+    name: hora_termino_posterior
+    rule: hora_termino > hora_inicio
+    description: Hora de término debe ser posterior al inicio
+
+  - id: INV-HE-002
+    name: autorizacion_previa
+    rule: fecha_autorizacion <= fecha
+    description: La autorización debe ser previa o el mismo día
+
+  - id: INV-HE-003
+    name: limite_mensual
+    rule: SUM(cantidad_horas WHERE funcionario_id AND mes) <= limite_legal
+    description: No exceder límite legal de horas extra mensuales
+
+  - id: INV-HE-004
+    name: descanso_dentro_plazo
+    rule: |
+      (tipo_compensacion = DescansoCompensatorio) → 
+      fecha_descanso_compensatorio <= (fecha + 30 días)
+    description: El descanso compensatorio debe tomarse dentro de 30 días
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MORFISMOS
+# ═══════════════════════════════════════════════════════════════════════════════
+morphisms:
+  - source: ENT-BACK-HORA-EXTRA
+    target: ENT-BACK-FUNCIONARIO
+    type: N:1
+    name: funcionario_hora_extra
+
+  - source: ENT-BACK-HORA-EXTRA
+    target: ENT-BACK-FUNCIONARIO
+    type: N:1
+    name: autorizador_hora_extra
+
+  - source: ENT-BACK-HORA-EXTRA
+    target: ENT-BACK-REMUNERACION
+    type: N:1
+    name: liquidacion_pago
+    description: Liquidación donde se paga la hora extra

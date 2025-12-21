@@ -41,8 +41,14 @@ attributes:
 
   # Motivo
   - name: motivo
-    type: Enum[ExcedenteNoUtilizado, RechazoRendicion, InteresesBancarios, RescisionConvenio, CaducidadPlazo]
+    type: Enum[ExcedenteNoUtilizado, RechazoRendicion, InteresesBancarios, RescisionConvenio, CaducidadPlazo, Multa]
     nullable: false
+
+  # Origen Analítico (Phase 20.2 ERP Enrichment)
+  - name: tipo_origen
+    type: Enum[Administrativo, Financiero, Legal]
+    nullable: true
+    description: Clasificación analítica para contabilidad
 
   - name: descripcion_motivo
     type: Text
@@ -76,14 +82,29 @@ attributes:
     type: String
     nullable: true
 
+  - name: boleta_deposito_url
+    type: String
+    nullable: true
+    description: Escaneo del comprobante de depósito
+
+  - name: rut_pagador
+    type: String
+    nullable: true
+    description: RUT de quien realizó la transferencia (puede diferir del ejecutor)
+
   - name: fecha_reintegro
     type: Date
     nullable: true
 
   # Estado
   - name: estado
-    type: Enum[Solicitado, EnTramite, Recibido, Contabilizado, Fallido]
+    type: Enum[Solicitado, EnTramite, DepositoRealizado, Conciliado, Contabilizado, Rechazado]
     default: Solicitado
+
+  - name: estado_conciliacion
+    type: Enum[Pendiente, Conciliado, Diferencia]
+    default: Pendiente
+    description: Estado de la conciliación bancaria en ERP
 
   # Contabilización
   - name: cuenta_ingreso
