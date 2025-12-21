@@ -23,7 +23,6 @@ domains:
       - d-fin/sub_dfin_rendiciones.md
       - d-fin/sub_dfin_portafolio.md
       - d-fin/sub_dfin_ejecutores.md
-      - d-fin/sub_dfin_user_stories.md
 
   - id: D-EJEC
     name: Ejecución y Seguimiento

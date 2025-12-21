@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_tde_esquema_nac_seguridad_inf:1.0.0
+  type: Entity
+  source: domains/d-tde/glossary
+id: ENT-TDE-ESQUEMA_NAC_SEGURIDA
+name: Esquema Nac. Seguridad Inf.
+entity_key: esquema_nac_seguridad_inf
+domain: D-TDE
+category: Reference
+description: ENSI
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

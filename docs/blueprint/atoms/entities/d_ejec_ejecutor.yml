@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_ejec_ejecutor:1.0.0
+  type: Entity
+  source: domains/d-ejec/glossary
+id: ENT-EJEC-EJECUTOR
+name: Ejecutor
+entity_key: ejecutor
+domain: D-EJEC
+category: Reference
+description: Actor habilitado para materializar proyectos. Ver D-GOB.Actor
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

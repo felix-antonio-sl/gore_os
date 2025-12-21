@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_fin_portafolio_saludipr:1.0.0
+  type: Entity
+  source: domains/d-fin-portafolio/entity_data
+id: ENT-FIN-PORTAFOLIO-SALUDIPR
+name: SaludIPR
+entity_key: saludipr
+domain: D-FIN-PORTAFOLIO
+category: Reference
+description: id, ipr_id, puntaje_avance, puntaje_rendicion, puntaje_riesgo, salud_total
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_plan_regional_de_ordenamiento_territorial:1.0.0
+  type: Entity
+  source: domains/d-plan/glossary
+id: ENT-PLAN-PLAN_REGIONAL_DE_ORD
+name: Plan Regional de Ordenamiento Territorial
+entity_key: plan_regional_de_ordenamiento_territorial
+domain: D-PLAN
+category: Reference
+description: PROT
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

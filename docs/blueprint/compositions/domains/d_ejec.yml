@@ -1,0 +1,31 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_ejec:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-EJEC
+name: Dominio D-EJEC
+aggregation:
+  modules:
+  - urn:goreos:atom:module:d_ejec_coordinaci_n_municipal:1.0.0
+  - urn:goreos:atom:module:d_ejec_gesti_n_de_compromisos:1.0.0
+  - urn:goreos:atom:module:d_ejec_gesti_n_de_convenios:1.0.0
+  - urn:goreos:atom:module:d_ejec_pmo_regional_torre_de_control:1.0.0
+  - urn:goreos:atom:module:d_ejec_relaciones_sectoriales:1.0.0
+  - urn:goreos:atom:module:d_ejec_supervisi_n_de_obras:1.0.0
+  processes:
+  - urn:goreos:atom:process:d_ejec_p1:1.0.0
+  - urn:goreos:atom:process:d_ejec_p2:1.0.0
+  - urn:goreos:atom:process:d_ejec_p3:1.0.0
+  - urn:goreos:atom:process:d_ejec_p4:1.0.0
+  entities:
+  - urn:goreos:atom:entity:d_ejec_convenio:1.0.0
+  - urn:goreos:atom:entity:d_ejec_ejecutor:1.0.0
+  - urn:goreos:atom:entity:d_ejec_h_org:1.0.0
+  capabilities:
+  - urn:goreos:atom:capability:cap_ejec_portal_001:1.0.0
+  - urn:goreos:atom:capability:cap_ejec_seg_001:1.0.0
+stats:
+  modules_count: 6
+  processes_count: 4
+  entities_count: 3
+  capabilities_count: 2

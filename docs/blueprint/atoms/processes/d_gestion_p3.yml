@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_gestion_p3:1.0.0
+  type: Process
+  source: domains/d-gestion
+id: PROC-GESTION-P3
+code: P3
+name: Ejecución de Playbooks Operativos
+domain: D-GESTION
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

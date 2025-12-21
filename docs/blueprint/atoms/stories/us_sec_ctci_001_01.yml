@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_sec_ctci_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEC-CTCI-001-01
+story_key: us_sec_ctci_001_01
+role_id: USR-CTCI-SEC
+as_a: null
+i_want: un módulo de gestión de sesiones del CTCI
+so_that: pueda registrar acuerdos y hacer seguimiento
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-CTCI-SEC
+  contribuye_a: CAP-PLAN-001

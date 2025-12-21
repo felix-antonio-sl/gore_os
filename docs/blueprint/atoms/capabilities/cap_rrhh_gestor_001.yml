@@ -1,0 +1,41 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_rrhh_gestor_001:1.0.0
+  type: Capability
+id: CAP-RRHH-GESTOR-001
+name: Gestión de Personas
+domain: D-BACK
+type: DOMAIN_SPECIFIC
+description: 'Gestión administrativa de personas: dotación, contratos, calificaciones,
+  licencias.'
+value_proposition: Centraliza la gestión del ciclo de vida del funcionario, asegurando
+  cumplimiento legal.
+orko_mapping:
+  p1_capacity: Gestor de Personas DAF
+  p2_flow: P-BACK-RRHH (Ciclo de Vida Funcionario)
+  p4_limit: Estatuto Administrativo, Reglamento Calificaciones
+  p5_purpose: Dotación óptima, clima laboral positivo
+stories:
+- urn:goreos:atom:story:us_acv_001_01
+- urn:goreos:atom:story:us_aprev_001_01
+- urn:goreos:atom:story:us_asis_001_01
+- urn:goreos:atom:story:us_back_bien_001
+- urn:goreos:atom:story:us_back_bien_002
+- urn:goreos:atom:story:us_back_bien_003
+- urn:goreos:atom:story:us_back_bien_004
+- urn:goreos:atom:story:us_back_bien_006
+- urn:goreos:atom:story:us_back_bien_007
+- urn:goreos:atom:story:us_back_bien_008
+- urn:goreos:atom:story:us_back_bien_009
+- urn:goreos:atom:story:us_back_bien_010
+- urn:goreos:atom:story:us_back_bien_011
+- urn:goreos:atom:story:us_back_bien_012
+- urn:goreos:atom:story:us_back_comp_002
+- urn:goreos:atom:story:us_back_comp_003
+- urn:goreos:atom:story:us_bien_001_01
+- urn:goreos:atom:story:us_bien_002_01
+- urn:goreos:atom:story:us_cap_001_01
+- urn:goreos:atom:story:us_hon_001_01
+- urn:goreos:atom:story:us_hon_002_01
+- urn:goreos:atom:story:us_jefe_rrhh_001_01
+- urn:goreos:atom:story:us_socio_001_01
+ofrecida_por: null

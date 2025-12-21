@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_terr_brechaerd:1.0.0
+  type: Entity
+  source: domains/d-terr/entity_data
+id: ENT-TERR-BRECHAERD
+name: BrechaERD
+entity_key: brechaerd
+domain: D-TERR
+category: Reference
+description: id, objetivo_erd_id, meta, avance, gap
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

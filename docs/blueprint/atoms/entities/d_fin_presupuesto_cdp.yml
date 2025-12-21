@@ -1,0 +1,161 @@
+# Entidad: CDP (Certificado de Disponibilidad Presupuestaria)
+# Domain: D-FIN
+# Subdomain: presupuesto
+# Generated: 2025-12-21 (Phase 20.1a Core IPR)
+
+id: ENT-FIN-CDP
+urn: "urn:goreos:entity:d-fin:cdp:1.0.0"
+name: Certificado de Disponibilidad Presupuestaria
+domain: D-FIN
+subdomain: presupuesto
+category: Control
+canonical_source:
+  - "sub_dfin_presupuesto.md#cadena-presupuestaria"
+  - "manual_2_1_compras_koda.yml#MANUAL-COMPRAS-SEC-II-RESERVA-01"
+  - "DL 1263/1975"
+
+description: |
+  Primera etapa de la cadena presupuestaria.
+  Certifica que existen recursos disponibles para una obligación futura.
+  La pre-afectación bloquea los recursos hasta adjudicación o desistimiento.
+
+attributes:
+  - name: id_cdp
+    type: String
+    key: true
+
+  - name: numero_cdp
+    type: String
+    nullable: false
+    description: Número secuencial por ejercicio
+
+  - name: ejercicio
+    type: Integer
+    nullable: false
+
+  - name: fecha_emision
+    type: Date
+    nullable: false
+
+  - name: fecha_vencimiento
+    type: Date
+    nullable: true
+    description: Fecha límite de uso del CDP
+
+  # Solicitante
+  - name: unidad_solicitante
+    type: String
+    nullable: false
+
+  - name: solicitante_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: true
+
+  # Objeto
+  - name: descripcion
+    type: Text
+    nullable: false
+
+  - name: tipo_gasto
+    type: Enum[Inversion, Operacion, Personal, Bienes, Servicios, Transferencia]
+    nullable: false
+
+  # Imputación presupuestaria
+  - name: subtitulo
+    type: String
+    nullable: false
+
+  - name: item
+    type: String
+    nullable: false
+
+  - name: asignacion
+    type: String
+    nullable: true
+
+  - name: programa
+    type: String
+    nullable: true
+
+  # Monto
+  - name: monto_solicitado
+    type: Decimal
+    nullable: false
+
+  - name: monto_aprobado
+    type: Decimal
+    nullable: true
+
+  - name: moneda
+    type: Enum[CLP, UF, UTM]
+    default: CLP
+
+  # Vinculación
+  - name: ipr_id
+    type: String
+    fk: ENT-FIN-IPR
+    nullable: true
+
+  - name: licitacion_id
+    type: String
+    fk: ENT-FIN-LICITACION
+    nullable: true
+
+  - name: orden_compra_id
+    type: String
+    fk: ENT-FIN-ORDEN_COMPRA
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Solicitado, Emitido, Utilizado, Liberado, Vencido, Anulado]
+    default: Solicitado
+
+  - name: fecha_utilizacion
+    type: Date
+    nullable: true
+
+  - name: compromiso_id
+    type: String
+    fk: ENT-FIN-COMPROMISO
+    nullable: true
+    description: Compromiso que consume este CDP
+
+  # Aprobación
+  - name: aprobado_por_id
+    type: String
+    fk: ROL-JEFE-PRESUPUESTO
+    nullable: true
+
+  - name: fecha_aprobacion
+    type: DateTime
+    nullable: true
+
+  # Saldo
+  - name: saldo_disponible
+    type: Decimal
+    computed: true
+    formula: monto_aprobado - monto_comprometido
+
+invariants:
+  - name: cdp_previo_obligatorio
+    rule: "Ningún proceso de compra inicia sin CDP vigente"
+    source: "MANUAL-COMPRAS-SEC-II-RESERVA-01"
+
+  - name: saldo_no_negativo
+    rule: "saldo_disponible >= 0"
+
+  - name: vencimiento_anual
+    rule: "fecha_vencimiento <= 31-12-{ejercicio} OR estado IN (Liberado, Anulado)"
+
+morphisms:
+  emitido_por: [ROL-JEFE-PRESUPUESTO, DAF]
+  respalda: [ENT-FIN-LICITACION, ENT-FIN-ORDEN_COMPRA, ENT-FIN-IPR]
+  consume: [ENT-FIN-ASIGNACION_PRESUPUESTARIA]
+  genera: [ENT-FIN-COMPROMISO]
+  registrado_en: [SIGFE]
+
+related_processes:
+  - "P3-Obtencion-Financiamiento"
+  - "P.FIN.EMISION.CDP"

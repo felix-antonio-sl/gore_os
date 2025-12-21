@@ -1,0 +1,912 @@
+atomic_stories:
+  - id: US-TDE-TIC-001
+    as_a: Administrador TI
+    i_want: Asignar equipamiento tecnológico con acta digital
+    so_that: Documento la entrega de equipos
+    acceptance_criteria:
+      - "Acta digital con firma"
+      - "Vinculación con Activo Fijo"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-TIC-002
+    as_a: Administrador TI
+    i_want: Gestionar identidad digital (ClaveÚnica/SSO)
+    so_that: Centralizo autenticación
+    acceptance_criteria:
+      - "Integración SSO"
+      - "Sincronización de usuarios"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-TIC-003
+    as_a: Administrador TI
+    i_want: Integrar DocDigital/FirmaGob
+    so_that: Habilito firma electrónica
+    acceptance_criteria:
+      - "APIs conectadas"
+      - "Flujos de firma funcionando"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-TIC-004
+    as_a: Administrador TI
+    i_want: Recibir alertas de ciberseguridad (CSIRT, Incidentes)
+    so_that: Respondo a amenazas
+    acceptance_criteria:
+      - "Integración CSIRT"
+      - "Alertas en tiempo real"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-TIC-005
+    as_a: Administrador TI
+    i_want: Ver dashboard de cumplimiento DS N°7-12
+    so_that: Monitoreo compliance TDE
+    acceptance_criteria:
+      - "Estado por decreto"
+      - "Brechas identificadas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-AUTH-001
+    as_a: Desarrollador TI
+    i_want: >-
+    so_that: Cumplo con DS9
+    acceptance_criteria:
+      - "Flujo OIDC implementado"
+      - "Token validado en backend"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: desarrollador_ti
+    origin: legacy
+  - id: US-TDE-AUTH-002
+    as_a: Administrador TI
+    i_want: Gestionar credenciales ClaveÚnica por ambiente (sandbox/QA/producción)
+    so_that: Separo ambientes correctamente
+    acceptance_criteria:
+      - "Credenciales por ambiente"
+      - "Custodia segura"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-AUTH-003
+    as_a: Desarrollador TI
+    i_want: Implementar cierre de sesión ClaveÚnica con URIs registradas
+    so_that: Gestiono sesiones correctamente
+    acceptance_criteria:
+      - "Logout funcional"
+      - "URIs registradas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: desarrollador_ti
+    origin: legacy
+  - id: US-TDE-AUTH-004
+    as_a: Administrador TI
+    i_want: >-
+    so_that: Mantengo auditoría de accesos
+    acceptance_criteria:
+      - "Log de accesos"
+      - "Timestamp hora oficial"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-AUTH-005
+    as_a: Administrador TI
+    i_want: >-
+    so_that: Atiendo a empresas
+    acceptance_criteria:
+      - "Clave Tributaria o representante"
+      - "Verificación de poderes"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_ti
+    origin: legacy
+  - id: US-TDE-AUTH-006
+    as_a: Coordinador Transformación Digital
+    i_want: Prohibir mecanismos propios de autenticación para ciudadanía
+    so_that: Cumplo con DS9
+    acceptance_criteria:
+      - "Sin contraseñas locales para ciudadanos"
+      - "Solo ClaveÚnica"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-NOTIF-001
+    as_a: Desarrollador TI
+    i_want: Integrar Plataforma de Notificaciones del Estado (DS8)
+    so_that: Notifico electrónicamente
+    acceptance_criteria:
+      - "API integrada"
+      - "Canal web y email"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: desarrollador_ti
+    origin: legacy
+  - id: US-TDE-NOTIF-002
+    as_a: Sistema
+    i_want: Resolver DDU del destinatario y aplicar canal correcto (DS8)
+    so_that: Notifico por el canal registrado
+    acceptance_criteria:
+      - "Consulta DDU"
+      - "Selección de canal"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: sistema
+    origin: legacy
+  - id: US-TDE-NOTIF-003
+    as_a: Sistema
+    i_want: Enviar notificaciones vía API /notificador/sendMessage vía Nodo PISEE
+    so_that: Uso infraestructura estatal
+    acceptance_criteria:
+      - "Mensaje enviado"
+      - "Respuesta registrada"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: sistema
+    origin: legacy
+  - id: US-TDE-NOTIF-004
+    as_a: Sistema
+    i_want: Consultar estado de notificación vía API o webhook
+    so_that: Verifico entrega
+    acceptance_criteria:
+      - "Estado actualizado"
+      - "Webhook configurado"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: sistema
+    origin: legacy
+  - id: US-TDE-NOTIF-005
+    as_a: Sistema
+    i_want: Persistir constancia de notificación (codigo_tx, fechas) y asociar a IUIe
+    so_that: Mantengo trazabilidad
+    acceptance_criteria:
+      - "Constancia almacenada"
+      - "Vinculación a expediente"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: sistema
+    origin: legacy
+  - id: US-TDE-NOTIF-006
+    as_a: Sistema
+    i_want: Aplicar regla notificación practicada (3 días hábiles o lectura)
+    so_that: Calculo plazos correctamente
+    acceptance_criteria:
+      - "Cálculo automático"
+      - "3 días hábiles o lectura"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: sistema
+    origin: legacy
+  - id: US-TDE-INTEROP-001
+    as_a: Coordinador Transformación Digital
+    i_want: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
+    so_that: Conecto con servicios estatales
+    acceptance_criteria:
+      - "Nodo habilitado"
+      - "Roles asignados"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-INTEROP-002
+    as_a: Coordinador Transformación Digital
+    i_want: Registrar/administrar servicios en Catálogo de Servicios
+    so_that: Publico mis servicios
+    acceptance_criteria:
+      - "Servicio registrado"
+      - "Metadata completa"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-INTEROP-003
+    as_a: Coordinador Transformación Digital
+    i_want: Registrar trazabilidad central de transacciones interoperables
+    so_that: Audito intercambios
+    acceptance_criteria:
+      - "Log centralizado"
+      - "Campos mínimos DS12"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-INTEROP-004
+    as_a: Coordinador Transformación Digital
+    i_want: Gestionar acuerdos previos antes de consumir servicios
+    so_that: Formalizo intercambios
+    acceptance_criteria:
+      - "Acuerdo registrado"
+      - "Partes identificadas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-INTEROP-005
+    as_a: Coordinador Transformación Digital
+    i_want: Gestionar consentimiento para datos sensibles (Gestor Autorizaciones)
+    so_that: Respeto privacidad
+    acceptance_criteria:
+      - "Consentimiento registrado"
+      - "Revocación posible"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-SEG-001
+    as_a: CISO
+    i_want: Mantener Política de Seguridad de la Información (DS7) aprobada
+    so_that: Cumplo con marco normativo
+    acceptance_criteria:
+      - "Política aprobada por acto"
+      - "Actualizada anualmente"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-002
+    as_a: Autoridad
+    i_want: Designar y mantener Responsable de Seguridad (CISO)
+    so_that: Tengo accountability
+    acceptance_criteria:
+      - "CISO designado formalmente"
+      - "Funciones publicadas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: autoridad
+    origin: legacy
+  - id: US-TDE-SEG-003
+    as_a: CISO
+    i_want: Clasificar activos de información según CIA
+    so_that: Priorizo protección
+    acceptance_criteria:
+      - "Inventario de activos"
+      - "Clasificación C/I/D"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-004
+    as_a: CISO
+    i_want: Reportar incidentes de seguridad a CSIRT MININT y ANCI
+    so_that: Notifico al Estado
+    acceptance_criteria:
+      - "Reporte en plazo"
+      - "Formulario correcto"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-005
+    as_a: CISO
+    i_want: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
+    so_that: Protejo información
+    acceptance_criteria:
+      - "TLS 1.2+ verificado"
+      - "Cifrado en reposo activo"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-006
+    as_a: CISO
+    i_want: Gestionar incidentes de seguridad (CSIRT)
+    so_that: Respondo a amenazas
+    acceptance_criteria:
+      - "Proceso de respuesta"
+      - "Escalamiento definido"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-007
+    as_a: CISO
+    i_want: Configurar políticas de acceso y roles (IAM)
+    so_that: Controlo accesos
+    acceptance_criteria:
+      - "RBAC implementado"
+      - "Principio menor privilegio"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-008
+    as_a: CISO
+    i_want: Auditar logs de acceso a datos sensibles
+    so_that: Detecto anomalías
+    acceptance_criteria:
+      - "Logs centralizados"
+      - "Alertas de anomalías"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-CALIDAD-001
+    as_a: Coordinador Transformación Digital
+    i_want: Mantener Catálogo de Plataformas con línea base
+    so_that: Documento sistemas
+    acceptance_criteria:
+      - "Inventario de plataformas"
+      - "Línea base por sistema"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-CALIDAD-002
+    as_a: Coordinador Transformación Digital
+    i_want: Elaborar Plan de Mejora Continua anual (DS11)
+    so_that: Planifico evolución
+    acceptance_criteria:
+      - "Diagnóstico incluido"
+      - "Iniciativas priorizadas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-CALIDAD-003
+    as_a: Coordinador Transformación Digital
+    i_want: >-
+    so_that: Mejoro continuamente
+    acceptance_criteria:
+      - "Ciclo documentado"
+      - "Métricas de avance"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-CALIDAD-004
+    as_a: Coordinador Transformación Digital
+    i_want: Someter proyectos TIC con presupuesto a EvalTIC (gate)
+    so_that: Valido inversiones TIC
+    acceptance_criteria:
+      - "Evaluación previa"
+      - "Aprobación documentada"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-DPO-001
+    as_a: DPO
+    i_want: Gestionar Solicitudes ARCO (Acceso, Rectificación, Cancelación, Oposición)
+    so_that: Cumplo con derechos ciudadanos
+    acceptance_criteria:
+      - "Flujo de solicitud"
+      - "Plazo de respuesta"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-DPO-002
+    as_a: DPO
+    i_want: Mantener Inventario de Actividades de Tratamiento (IAT)
+    so_that: Documento tratamientos
+    acceptance_criteria:
+      - "IAT completo"
+      - "Actualización periódica"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-DPO-003
+    as_a: DPO
+    i_want: Notificar brechas de datos a la Agencia
+    so_that: Cumplo con notificación obligatoria
+    acceptance_criteria:
+      - "Notificación en plazo"
+      - "Medidas correctivas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-DPO-004
+    as_a: DPO
+    i_want: Evaluar Impacto en Protección de Datos (EIPD) de nuevos proyectos
+    so_that: Prevengo riesgos
+    acceptance_criteria:
+      - "EIPD documentado"
+      - "Riesgos mitigados"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-DPO-005
+    as_a: DPO
+    i_want: >-
+    so_that: Demuestro accountability ante la Agencia
+    acceptance_criteria:
+      - ""Campos: Responsable, Finalidad, Categorías Interesados/Datos""
+      - ""Campos: Destinatarios, Transferencias Int., Plazos, Seguridad""
+      - "Validación de integridad de registro"
+      - "Exportable JSON/XML"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-DPO-006
+    as_a: DPO
+    i_want: >-
+    so_that: Garantizo eliminación oportuna y trazo transferencias
+    acceptance_criteria:
+      - ""Registro: fuenteDatos, destinatarios[], plazosConservacion""
+      - "Alerta 30 días antes de vencimiento"
+      - "Log de transferencias a terceros"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-DPO-007
+    as_a: DPO
+    i_want: >-
+    so_that: Protejo identidad de titulares (minimización)
+    acceptance_criteria:
+      - ""Soporte: Seudonimización (tokens reversibles)""
+      - ""Soporte: Anonimización (K-anonymity, supresión)""
+      - "Log de técnica aplicada"
+      - "Bloqueo de datos sensibles sin anonimizar"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-SEG-009
+    as_a: CISO
+    i_want: Ejecutar simulaciones de phishing para concientización
+    so_that: Educo a funcionarios
+    acceptance_criteria:
+      - "Campaña programada"
+      - "Métricas de resultados"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-010
+    as_a: CISO
+    i_want: Auditar trazabilidad de accesos DS9
+    so_that: Verifico cumplimiento de autenticación
+    acceptance_criteria:
+      - "Auditoría periódica"
+      - "Reporte de hallazgos"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-SEG-011
+    as_a: CISO
+    i_want: Aplicar privacidad por diseño en nuevos sistemas
+    so_that: Prevengo brechas desde origen
+    acceptance_criteria:
+      - "Checklist PbD"
+      - "Validación en desarrollo"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-DPO-008
+    as_a: DPO
+    i_want: Registrar versión del RAT con control de cambios
+    so_that: Mantengo historial
+    acceptance_criteria:
+      - "Versionamiento"
+      - "Log de cambios"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: dpo
+    origin: legacy
+  - id: US-TDE-TIC-006
+    as_a: Coordinador Transformación Digital
+    i_want: Mantener inventario de proyectos TIC activos
+    so_that: Gestiono cartera tecnológica
+    acceptance_criteria:
+      - "Lista de proyectos"
+      - "Estado y responsable"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-AVANCE-001
+    as_a: Coordinador Transformación Digital
+    i_want: Ver dashboard de avance en cumplimiento TDE
+    so_that: Monitoreo progreso institucional
+    acceptance_criteria:
+      - ""% por decreto""
+      - "Brechas identificadas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-AVANCE-002
+    as_a: Coordinador Transformación Digital
+    i_want: Monitorear meta de interoperabilidad DS12
+    so_that: Cumplo con plazos
+    acceptance_criteria:
+      - "Meta vs avance"
+      - "Plan de cierre"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-AVANCE-003
+    as_a: Coordinador Transformación Digital
+    i_want: Monitorear meta de expediente electrónico DS10
+    so_that: Cumplo con digitalización
+    acceptance_criteria:
+      - ""% trámites digitalizados""
+      - "Roadmap de cierre"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-MUNI-001
+    as_a: Coordinador Transformación Digital
+    i_want: Conectar sistemas DIDECO municipales vía interoperabilidad
+    so_that: Integro datos municipales
+    acceptance_criteria:
+      - "API disponible"
+      - "Acuerdo formalizado"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P2
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-VINC-001
+    as_a: Coordinador Transformación Digital
+    i_want: Gestionar enrolamiento y soporte de Firmas Electrónicas Avanzadas para funcionarios municipales (vía convenio GORE)
+    so_that: Habilito la transformación digital en comunas
+    acceptance_criteria:
+      - "Enrolamiento centralizado"
+      - "Soporte de primer nivel GORE"
+      - "Reporte de uso"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-VINC-002
+    as_a: Desarrollador Municipal
+    i_want: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE) y del GORE
+    so_that: Integro mis sistemas locales (DOM, Tránsito) sin gestionar convenios individuales
+    acceptance_criteria:
+      - "Credenciales developer"
+      - "Documentación API"
+      - "Logs de consumo"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: desarrollador_municipal
+    origin: legacy
+  - id: US-TDE-VINC-003
+    as_a: Encargado Informática Municipal
+    i_want: Solicitar soporte técnico o evaluación de proyectos de infraestructura crítica (enlaces, servidores)
+    so_that: Mejoro la conectividad en zonas rezagadas
+    acceptance_criteria:
+      - "Ticket de requerimiento"
+      - "Evaluación técnica GORE"
+      - "Recomendación de inversión"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: encargado_informática_municipal
+    origin: legacy
+  - id: US-TDE-MUNI-002
+    as_a: Coordinador Transformación Digital
+    i_want: Habilitar Trámite Express para municipios
+    so_that: Simplifico interacción
+    acceptance_criteria:
+      - "Flujo simplificado"
+      - "Piloto implementado"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P2
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-TIC-007
+    as_a: Mesa de Ayuda
+    i_want: Gestionar tickets de soporte técnico de usuarios
+    so_that: Mantengo continuidad operativa
+    acceptance_criteria:
+      - "Gestión de tickets"
+      - "SLA definido"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: mesa_de_ayuda
+    origin: legacy
+  - id: US-TDE-MUNI-003
+    as_a: Encargado Digital Muni
+    i_want: Digitalizar proceso de permisos municipales (DOM)
+    so_that: Agilizo trámites locales
+    acceptance_criteria:
+      - "Integración DOM Digital"
+      - "Pago en línea"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: encargado_digital_muni
+    origin: legacy
+  - id: US-TDE-MUNI-004
+    as_a: Encargado Digital Muni
+    i_want: Habilitar ventanilla única municipal integrada a GORE
+    so_that: Centralizo atención
+    acceptance_criteria:
+      - "Portal único"
+      - "SSO Ciudadano"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: encargado_digital_muni
+    origin: legacy
+  - id: US-TDE-INTEROP-006
+    as_a: Coordinador Transformación Digital
+    i_want: Publicar datasets en portal de Datos Abiertos
+    so_that: Fomento transparencia y reutilización
+    acceptance_criteria:
+      - "Datasets normalizados"
+      - "API CKAN"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P2
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-INTEROP-007
+    as_a: Coordinador Transformación Digital
+    i_want: Consumir capas de datos territoriales de IDE
+    so_that: Enriquezco sistemas de gestión
+    acceptance_criteria:
+      - "Conector WMS/WFS"
+      - "Visualización integrada"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-REG-001
+    as_a: Coordinador Transformación Digital
+    i_want: Convocar y liderar la Mesa Regional de Transformación Digital
+    so_that: Articulo el cumplimiento normativo en todo el territorio
+    acceptance_criteria:
+      - "Acta de constitución"
+      - "Plan de trabajo regional"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-REG-007
+    as_a: Coordinador Transformación Digital
+    i_want: habilitar un servicio de firma electrónica federada para municipios
+    so_that: los municipios sin capacidad de firma propia puedan firmar convenios a través del GORE
+    acceptance_criteria:
+      - "Convenio Marco firmado"
+      - "Proxy de firma operativo"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-DOCDIG-002
+    as_a: Abogado Jurídica
+    i_want: incluir un link de verificación en lugar del texto íntegro del convenio en las resoluciones
+    so_that: las resoluciones sean cortas y verificables digitalmente
+    acceptance_criteria:
+      - "URL de convenio generada"
+      - "Código QR opcional"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: abogado_jurídica
+    origin: legacy
+  - id: US-TDE-SEG-012
+    as_a: Coordinador Transformación Digital
+    i_want: Generar el acto administrativo de designación de encargado de ciberseguridad
+    so_that: Cumplo con los requisitos de la ANCI
+    acceptance_criteria:
+      - "Resolución firmada"
+      - "Notificación a ANCI"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: coordinador_transformación_digital
+    origin: legacy
+  - id: US-TDE-FIRMA-002
+    as_a: Administrador Sistema
+    i_want: Activar mecanismo de firma de contingencia ante caídas de FirmaGob
+    so_that: Aseguro la continuidad operativa del GORE
+    acceptance_criteria:
+      - "Switch de contingencia operativo"
+      - "Firma simple/avanzada local alternativa"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-001
+    as_a: Administrador Sistema
+    i_want: Crear/editar divisiones con jefe asignado
+    so_that: Configuro estructura organizacional
+    acceptance_criteria:
+      - "CRUD de divisiones"
+      - "Asignación de jefatura"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-002
+    as_a: Administrador Sistema
+    i_want: Crear usuarios (email, división, rol)
+    so_that: Habilito acceso al sistema
+    acceptance_criteria:
+      - "Datos mínimos requeridos"
+      - "Asignación de rol"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-003
+    as_a: Administrador Sistema
+    i_want: Cambiar rol/división actualizando permisos
+    so_that: Gestiono movilidad de usuarios
+    acceptance_criteria:
+      - "Actualización de permisos"
+      - "Historial de cambios"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-004
+    as_a: Administrador Sistema
+    i_want: Desactivar usuarios manteniendo historial
+    so_that: Gestiono bajas sin perder trazabilidad
+    acceptance_criteria:
+      - ""Usuario inactivo, no eliminado""
+      - "Historial preservado"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-005
+    as_a: Administrador Sistema
+    i_want: Importar IPR desde Excel validando errores
+    so_that: Migro datos históricos
+    acceptance_criteria:
+      - "Validación de formato"
+      - "Reporte de errores"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-006
+    as_a: Administrador Sistema
+    i_want: Configurar reglas de alerta (disparo automático)
+    so_that: Personalizo notificaciones
+    acceptance_criteria:
+      - "Condiciones configurables"
+      - "Destinatarios por regla"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-007
+    as_a: Administrador Sistema
+    i_want: Ver logs de actividad (filtro usuario/acción)
+    so_that: Audito uso del sistema
+    acceptance_criteria:
+      - "Filtros avanzados"
+      - "Exportación de logs"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-ADMIN-008
+    as_a: Administrador Sistema
+    i_want: Ver estado de backups con ejecución manual
+    so_that: Aseguro recuperabilidad
+    acceptance_criteria:
+      - "Historial de backups"
+      - "Ejecución manual disponible"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-TDE-CRIS-001
+    as_a: Operador PISEE
+    i_want: Activar protocolo de ingreso manual ante caída de Nodo PISEE
+    so_that: Mantengo la operación crítica del servicio
+    acceptance_criteria:
+      - "Switch a modo manual habilitado en UI"
+      - "Bitácora de operaciones manuales para conciliación posterior"
+      - "Notificación a contraparte"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: operador_pisee
+    origin: legacy
+  - id: US-TDE-SEC-001
+    as_a: CISO
+    i_want: Ejecutar un simulacro de exfiltración de datos personales
+    so_that: Mido el tiempo de detección y respuesta del equipo
+    acceptance_criteria:
+      - "Escenario de ataque controlado"
+      - "Medición de MTTR (Mean Time to Respond)"
+      - "Reporte de lecciones aprendidas"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: ciso
+    origin: legacy
+  - id: US-TDE-ARCH-001
+    as_a: Archivero Digital
+    i_want: Convertir automáticamente documentos antiguos de formatos deprecados a PDF/A
+    so_that: Garantizo la accesibilidad a largo plazo (DS10)
+    acceptance_criteria:
+      - "Detección de formato obsoleto"
+      - "Conversión automática a PDF/A-3"
+      - "Hash de integridad original vs copia"
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P2
+    role_key: archivero_digital
+    origin: legacy

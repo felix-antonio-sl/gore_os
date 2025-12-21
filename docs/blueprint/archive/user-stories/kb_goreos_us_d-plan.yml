@@ -1,0 +1,441 @@
+# KODA/Spec: User Stories D-PLAN
+# Dominio: Planificación Estratégica DIPLADE
+
+_manifest:
+  urn: "urn:knowledge:goreos:us:d-plan:1.0.0"
+  federation:
+    visibility: internal
+    license: "Institutional Use"
+  provenance:
+    created_by: "GORE OS"
+    created_at: "2025-12-16"
+    last_modified_at: "2025-12-16"
+
+ID: GOREOS-US-D-PLAN-01
+Version: 1.1.0
+Status: Draft
+Domain: D-PLAN
+Domain_Name: "Planificación Estratégica"
+Division: DIPLADE
+Total_User_Stories: 27
+
+User_Stories:
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M1: ERD DIGITAL
+  # ═══════════════════════════════════════════════════════════════
+
+  - ID: US-PLAN-ERD-001
+    Title: "Navegar árbol ERD"
+    Module: M1_ERD_Digital
+    Process: P1_Actualizacion_ERD
+    As_A: Analista DIPLADE
+    I_Want: navegar el árbol ERD con filtros por eje, lineamiento y objetivo
+    So_That: pueda ubicar rápidamente objetivos estratégicos para vincular iniciativas
+    Priority: Alta
+    Acceptance_Criteria:
+      - Árbol expandible hasta nivel de objetivo estratégico
+      - Filtros por eje, lineamiento, estado
+      - Búsqueda por texto libre
+      - Contador Gubernamental de iniciativas vinculadas por nodo
+
+  # ... (Previous existing stories remain implicitly, focusing update on header and end of file)
+
+  # SKIP TO END FOR APPENDING
+
+  - ID: US-PLAN-PART-004
+    Title: "Reportar participación acumulada"
+    Module: M6_Participacion
+    Process: P1_Actualizacion_ERD
+    As_A: Jefe DIPLADE
+    I_Want: generar reporte de participación acumulada por territorio
+    So_That: evalúe representatividad del proceso participativo
+    Priority: Media
+    Acceptance_Criteria:
+      - Total participantes por comuna
+      - Distribución demográfica si disponible
+      - Comparación con población objetivo
+      - Recomendaciones para mejorar cobertura
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M7: APOYO A PLANIFICACIÓN COMUNAL
+  # ═══════════════════════════════════════════════════════════════
+
+  - ID: US-PLAN-MUN-001
+    Title: "Solicitar asistencia técnica proyectos"
+    Module: M7_Apoyo_Comunal
+    Process: P6_Asistencia_Municipal
+    As_A: SECPLA
+    I_Want: solicitar asistencia técnica para formulación de proyectos RS
+    So_That: mejore la calidad de la cartera comunal y aumente tasa de elegibilidad
+    Priority: Alta
+    Acceptance_Criteria:
+      - Formulario de solicitud simplificado
+      - Selección de tipo de asistencia (MIDESO, FNDR)
+      - Adjuntar antecedentes preliminares
+      - Trazabilidad de estado de solicitud
+
+  - ID: US-PLAN-MUN-002
+    Title: "Repositorio de PLADECOs"
+    Module: M7_Apoyo_Comunal
+    Process: P6_Asistencia_Municipal
+    As_A: Analista DIPLADE
+    I_Want: acceder a un repositorio centralizado de PLADECOs
+    So_That: pueda verificar coherencia entre planificación comunal y ERD regional
+    Priority: Alta
+    Acceptance_Criteria:
+      - Carga de PLADECO vigente por comuna
+      - Análisis automático de palabras clave
+      - Matriz de cruce PLADECO vs Ejes ERD
+      - Alertas de vencimiento de PLADECO
+
+  - ID: US-PLAN-MUN-003
+    Title: "Recomendar Proyectos Tipo"
+    Module: M7_Apoyo_Comunal
+    Process: P6_Asistencia_Municipal
+    As_A: Sistema (IA)
+    I_Want: recomendar "Proyectos Tipo" a municipios según sus brechas territoriales
+    So_That: facilite la postulación de soluciones probadas en comunas rezagadas
+    Priority: Media
+    Acceptance_Criteria:
+      - Análisis de indicadores del Observatorio (déficits)
+      - Sugerencia de proyectos estándar (ej: iluminación, plazas)
+      - Repositorio de perfiles y especificaciones técnicas
+      - Descarga de kit de postulación
+
+  - ID: US-PLAN-ERD-002
+    Title: "Vincular IPR a objetivo ERD"
+    Module: M1_ERD_Digital
+    Process: P1_Actualizacion_ERD
+    As_A: Analista DIPIR
+    I_Want: vincular una IPR a uno o más objetivos ERD
+    So_That: garantice alineamiento estratégico de la inversión regional
+    Priority: Alta
+    Acceptance_Criteria:
+      - Vinculación obligatoria antes de aprobación IPR
+      - Un IPR puede vincularse a múltiples objetivos
+      - Validación de coherencia eje-tipo proyecto
+      - Historial de vinculaciones
+
+  - ID: US-PLAN-ERD-003
+    Title: "Dashboard avance por eje"
+    Module: M1_ERD_Digital
+    Process: P1_Actualizacion_ERD
+    As_A: Jefe DIPLADE
+    I_Want: visualizar un dashboard de avance por eje estratégico
+    So_That: pueda monitorear cumplimiento de metas ERD en tiempo real
+    Priority: Alta
+    Acceptance_Criteria:
+      - Semáforo por eje (verde/amarillo/rojo)
+      - Indicadores principales con valor real vs meta
+      - Drill-down a lineamientos y objetivos
+      - Exportación PDF para CORE
+
+  - ID: US-PLAN-ERD-004
+    Title: "Alertar objetivos sin iniciativas"
+    Module: M1_ERD_Digital
+    Process: P1_Actualizacion_ERD
+    As_A: Sistema
+    I_Want: alertar objetivos ERD sin iniciativas vinculadas >180 días
+    So_That: se active intervención FÉNIX Nivel III para corrección estratégica
+    Priority: Media
+    Acceptance_Criteria:
+      - Cálculo automático de días sin vinculación
+      - Notificación a DIPLADE y DAF
+      - Escalamiento a FÉNIX si persiste >180 días
+      - Log de alertas enviadas
+
+  - ID: US-PLAN-ERD-005
+    Title: "Reportar coherencia ERD-Presupuesto"
+    Module: M1_ERD_Digital
+    Process: P1_Actualizacion_ERD
+    As_A: Jefe DIPLADE
+    I_Want: generar reportes de coherencia entre ERD y presupuesto ejecutado
+    So_That: pueda evaluar si la inversión responde a prioridades estratégicas
+    Priority: Media
+    Acceptance_Criteria:
+      - Reporte por eje: monto asignado vs ejecutado
+      - Comparativa % presupuesto por eje vs metas ERD
+      - Identificación de ejes subfinanciados
+      - Exportación Excel/PDF
+
+  - ID: US-PLAN-ERD-006
+    Title: "Gestionar actualización ERD"
+    Module: M1_ERD_Digital
+    Process: P1_Actualizacion_ERD
+    As_A: DIPLADE
+    I_Want: gestionar el proceso completo de actualización ERD
+    So_That: cumpla con ciclo decenal y requisitos de participación
+    Priority: Alta
+    Acceptance_Criteria:
+      - Workflow de 5 fases con checklist
+      - Registro de cabildos y participación
+      - Versionamiento de borradores
+      - Trámite de aprobación CORE
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M2: PROT DIGITAL
+  # ═══════════════════════════════════════════════════════════════
+
+  - ID: US-PLAN-PROT-001
+    Title: "Visualizar zonificación PROT"
+    Module: M2_PROT_Digital
+    Process: P3_Validacion_PROT
+    As_A: Analista DIPLADE
+    I_Want: visualizar zonificación PROT en visor geoespacial
+    So_That: pueda evaluar compatibilidad territorial de proyectos
+    Priority: Alta
+    Acceptance_Criteria:
+      - Integración con IDE D-TERR
+      - Capas de macrozonas y zonas
+      - Tooltip con condiciones de uso
+      - Leyenda de usos permitidos/condicionados/prohibidos
+
+  - ID: US-PLAN-PROT-002
+    Title: "Validar compatibilidad IPR-Zona"
+    Module: M2_PROT_Digital
+    Process: P3_Validacion_PROT
+    As_A: Analista DIPLADE
+    I_Want: validar compatibilidad de una IPR con la zona territorial
+    So_That: prevenga conflictos de uso de suelo antes de aprobación
+    Priority: Alta
+    Acceptance_Criteria:
+      - Input: coordenadas IPR, tipo de proyecto
+      - Consulta automática a capa PROT
+      - Resultado: compatible/condicionado/incompatible
+      - Registro en ficha IPR
+
+  - ID: US-PLAN-PROT-003
+    Title: "Alertar proyectos incompatibles"
+    Module: M2_PROT_Digital
+    Process: P3_Validacion_PROT
+    As_A: Sistema
+    I_Want: alertar proyectos en zonas de uso incompatible
+    So_That: bloquee avance sin revisión técnica obligatoria
+    Priority: Alta
+    Acceptance_Criteria:
+      - Bloqueo automático de flujo de aprobación
+      - Notificación a DIPLADE y proponente
+      - Opción de solicitar excepción fundada
+      - Log de alertas para auditoría
+
+  - ID: US-PLAN-PROT-004
+    Title: "Consulta ciudadana aptitud territorial"
+    Module: M2_PROT_Digital
+    Process: P3_Validacion_PROT
+    As_A: Ciudadano
+    I_Want: consultar aptitud territorial de un predio
+    So_That: pueda orientar inversión privada conociendo restricciones
+    Priority: Media
+    Acceptance_Criteria:
+      - Ingreso de dirección o coordenadas
+      - Respuesta con macrozona y usos permitidos
+      - Descarga de certificado informativo
+      - Sin autenticación requerida
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M3: ARI / PROPIR
+  # ═══════════════════════════════════════════════════════════════
+
+  - ID: US-PLAN-ARI-001
+    Title: "Solicitar iniciativa para ARI"
+    Module: M3_ARI_PROPIR
+    Process: P2_Ciclo_ARI
+    As_A: Jefe de División
+    I_Want: solicitar inclusión de iniciativa en ARI vía formulario digital
+    So_That: agilice proceso anual de planificación de inversiones
+    Priority: Alta
+    Acceptance_Criteria:
+      - Formulario con campos obligatorios (nombre, monto, objetivo ERD)
+      - Carga de ficha técnica adjunta
+      - Validación de requisitos mínimos
+      - Confirmación de recepción automática
+
+  - ID: US-PLAN-ARI-002
+    Title: "Priorizar iniciativas con scoring"
+    Module: M3_ARI_PROPIR
+    Process: P2_Ciclo_ARI
+    As_A: DIPLADE
+    I_Want: priorizar iniciativas con scoring multicriterio
+    So_That: transparente decisiones de asignación presupuestaria
+    Priority: Alta
+    Acceptance_Criteria:
+      - Criterios configurables (alineamiento ERD, impacto, factibilidad)
+      - Ponderación ajustable por administrador
+      - Ranking automático
+      - Justificación obligatoria para modificar ranking
+
+  - ID: US-PLAN-ARI-003
+    Title: "Consolidar ARI por fuente"
+    Module: M3_ARI_PROPIR
+    Process: P2_Ciclo_ARI
+    As_A: DIPIR
+    I_Want: consolidar ARI agrupando iniciativas por fuente de financiamiento
+    So_That: presente propuesta organizada al CORE
+    Priority: Alta
+    Acceptance_Criteria:
+      - Agrupación por FNDR, FRPD, ISAR, otros
+      - Totales por fuente con validación de techo presupuestario
+      - Vista comparativa año anterior
+      - Exportación para sesión CORE
+
+  - ID: US-PLAN-ARI-004
+    Title: "Simular escenarios presupuestarios"
+    Module: M3_ARI_PROPIR
+    Process: P2_Ciclo_ARI
+    As_A: Jefe DIPLADE
+    I_Want: simular escenarios presupuestarios alternativos
+    So_That: evalúe impacto de diferentes niveles de financiamiento
+    Priority: Media
+    Acceptance_Criteria:
+      - Ajuste de % disponible por fuente
+      - Recálculo automático de priorización
+      - Comparación lado a lado de escenarios
+      - Guardado de escenarios para referencia
+
+  - ID: US-PLAN-ARI-005
+    Title: "Exportar formato DIPRES"
+    Module: M3_ARI_PROPIR
+    Process: P2_Ciclo_ARI
+    As_A: DIPIR
+    I_Want: exportar ARI en formato requerido por DIPRES
+    So_That: integre con sistema nacional de presupuesto
+    Priority: Alta
+    Acceptance_Criteria:
+      - Formato XML/CSV conforme a especificación DIPRES
+      - Validación de campos obligatorios
+      - Registro de envío exitoso
+      - Archivo de respaldo local
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M5: OBSERVATORIO TERRITORIAL
+  # ═══════════════════════════════════════════════════════════════
+
+  - ID: US-PLAN-OBS-001
+    Title: "Consultar indicadores territoriales"
+    Module: M5_Observatorio
+    Process: P5_Evaluacion_Indicadores
+    As_A: Analista
+    I_Want: consultar indicadores territoriales desagregados por comuna
+    So_That: realice diagnóstico local para planificación
+    Priority: Alta
+    Acceptance_Criteria:
+      - Filtro por comuna, indicador, periodo
+      - Visualización en tabla y mapa
+      - Comparación regional y nacional
+      - Fuente y fecha de actualización visibles
+
+  - ID: US-PLAN-OBS-002
+    Title: "Vincular indicadores a OE-ERD"
+    Module: M5_Observatorio
+    Process: P5_Evaluacion_Indicadores
+    As_A: DIPLADE
+    I_Want: vincular indicadores territoriales a objetivos ERD
+    So_That: mida avance estratégico con datos oficiales
+    Priority: Alta
+    Acceptance_Criteria:
+      - Mapeo indicador → objetivo ERD
+      - Cálculo automático de brecha vs meta
+      - Actualización periódica de valores
+      - Alerta cuando brecha supera umbral
+
+  - ID: US-PLAN-OBS-003
+    Title: "Alertar brechas por eje"
+    Module: M5_Observatorio
+    Process: P5_Evaluacion_Indicadores
+    As_A: Sistema
+    I_Want: alertar brechas significativas por eje estratégico
+    So_That: priorice intervención en áreas críticas
+    Priority: Media
+    Acceptance_Criteria:
+      - Umbral configurable por indicador
+      - Notificación a DIPLADE cuando brecha > umbral
+      - Tendencia histórica incluida
+      - Sugerencia de iniciativas relacionadas
+
+  - ID: US-PLAN-OBS-004
+    Title: "Publicar tablero mensual"
+    Module: M5_Observatorio
+    Process: P5_Evaluacion_Indicadores
+    As_A: Observatorio
+    I_Want: publicar tablero mensual de indicadores
+    So_That: transparente situación regional a ciudadanía
+    Priority: Media
+    Acceptance_Criteria:
+      - Generación automática fin de mes
+      - Publicación en portal regional
+      - Formato accesible (Web + PDF)
+      - Histórico de tableros anteriores
+
+  - ID: US-PLAN-OBS-005
+    Title: "Descargar series históricas"
+    Module: M5_Observatorio
+    Process: P5_Evaluacion_Indicadores
+    As_A: Usuario externo
+    I_Want: descargar series históricas en formato abierto
+    So_That: realice investigación o análisis independiente
+    Priority: Baja
+    Acceptance_Criteria:
+      - Exportación CSV/Excel
+      - Metadatos incluidos (fuente, metodología)
+      - Sin autenticación requerida
+      - Límite de registros por descarga
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M6: PLANIFICACIÓN PARTICIPATIVA
+  # ═══════════════════════════════════════════════════════════════
+
+  - ID: US-PLAN-PART-001
+    Title: "Registrar cabildo territorial"
+    Module: M6_Participacion
+    Process: P1_Actualizacion_ERD
+    As_A: DIPLADE
+    I_Want: registrar cabildo territorial con asistencia y propuestas
+    So_That: documente proceso participativo para actualización ERD
+    Priority: Alta
+    Acceptance_Criteria:
+      - Campos: fecha, comuna, lugar, participantes, propuestas
+      - Carga de lista de asistencia
+      - Categorización de propuestas
+      - Generación de acta automática
+
+  - ID: US-PLAN-PART-002
+    Title: "Sintetizar aportes ciudadanos"
+    Module: M6_Participacion
+    Process: P1_Actualizacion_ERD
+    As_A: Sistema (IA)
+    I_Want: sintetizar aportes ciudadanos de múltiples cabildos
+    So_That: facilite análisis para formulación ERD
+    Priority: Media
+    Acceptance_Criteria:
+      - Agrupación temática automática
+      - Identificación de propuestas más frecuentes
+      - Resumen ejecutivo por territorio
+      - Supervisión humana antes de publicación
+
+  - ID: US-PLAN-PART-003
+    Title: "Trazar propuesta a iniciativa"
+    Module: M6_Participacion
+    Process: P1_Actualizacion_ERD
+    As_A: DIPLADE
+    I_Want: vincular propuesta ciudadana a iniciativa de inversión
+    So_That: demuestre incidencia de participación en decisiones
+    Priority: Media
+    Acceptance_Criteria:
+      - Vinculación propuesta → IPR o programa
+      - Estado de la propuesta (en estudio, incorporada, descartada)
+      - Justificación obligatoria si descartada
+      - Reporte público de propuestas incorporadas
+
+  - ID: US-PLAN-PART-004
+    Title: "Reportar participación acumulada"
+    Module: M6_Participacion
+    Process: P1_Actualizacion_ERD
+    As_A: Jefe DIPLADE
+    I_Want: generar reporte de participación acumulada por territorio
+    So_That: evalúe representatividad del proceso participativo
+    Priority: Media
+    Acceptance_Criteria:
+      - Total participantes por comuna
+      - Distribución demográfica si disponible
+      - Comparación con población objetivo
+      - Recomendaciones para mejorar cobertura

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_gestion_p2:1.0.0
+  type: Process
+  source: domains/d-gestion
+id: PROC-GESTION-P2
+code: P2
+name: Gestión de Riesgos UCI
+domain: D-GESTION
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

@@ -1,0 +1,20 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_fin_presupuesto:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-FIN-PRESUPUESTO
+name: Dominio D-FIN-PRESUPUESTO
+aggregation:
+  modules: []
+  processes: []
+  entities:
+  - urn:goreos:atom:entity:d_fin_presupuesto_asignacionpresupuestaria:1.0.0
+  - urn:goreos:atom:entity:d_fin_presupuesto_compromiso:1.0.0
+  - urn:goreos:atom:entity:d_fin_presupuesto_devengo:1.0.0
+  - urn:goreos:atom:entity:d_fin_presupuesto_modificacionpresupuestaria:1.0.0
+  capabilities: []
+stats:
+  modules_count: 0
+  processes_count: 0
+  entities_count: 4
+  capabilities_count: 0

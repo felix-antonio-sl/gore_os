@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_norm_cumplimiento_y_control_interno:1.0.0
+  type: Module
+  source: domains/d-norm
+id: MOD-NORM-CUMPLIMIENTO_Y_CONTR
+name: Cumplimiento y Control Interno
+domain: D-NORM
+number: 4
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

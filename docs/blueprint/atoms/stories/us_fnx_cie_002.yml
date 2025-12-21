@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fnx_cie_002:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FNX-CIE-002
+story_key: us_fnx_cie_002
+role_id: USR-AUD-PROF
+as_a: null
+i_want: Registrar hallazgos y recomendaciones estructuradas (People, Process, Tech)
+so_that: Alimento la base de conocimiento institucional (D-GESTION)
+domain: D-FENIX
+priority: P1
+capability_bundle_id: CAP-FENIX-001
+morphisms:
+  protagonizado_por: USR-AUD-PROF
+  contribuye_a: CAP-FENIX-001

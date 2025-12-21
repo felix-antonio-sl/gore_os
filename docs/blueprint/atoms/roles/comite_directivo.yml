@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:role:comite_directivo:1.0.0
+  type: Role
+  source: organization
+id: USR-DIPL-CDR
+role_key: comite_directivo
+title: Comité Directivo Regional (CDR)
+description: Instancia colegiada de priorización estratégica y decisiones de inversión.
+type: Human
+unit: DIPLADE
+unit_type: Ejecutivo & Operaciones
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []

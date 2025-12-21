@@ -1,0 +1,132 @@
+# Entidad: PlanCompras (Plan Anual de Compras - PAC)
+# Domain: D-FIN
+# Subdomain: compras
+# Generated: 2025-12-21 (Phase 20.1 Deep Modeling)
+
+id: ENT-FIN-PLAN_COMPRAS
+urn: "urn:goreos:entity:d-fin:plan-compras:1.0.0"
+name: Plan Anual de Compras
+domain: D-FIN
+subdomain: compras
+category: Master
+canonical_source:
+  - "urn:knowledge:gorenuble:gn:manual-compras-contrataciones:1.0.0#MANUAL-COMPRAS-SEC-II-PAC-01"
+
+description: |
+  Instrumento de planificación que articula necesidades institucionales
+  con presupuesto disponible. Publicado en Mercado Público.
+
+attributes:
+  - name: id_pac
+    type: String
+    key: true
+
+  - name: anio_fiscal
+    type: Integer
+    nullable: false
+
+  - name: version
+    type: Integer
+    default: 1
+
+  - name: fecha_aprobacion
+    type: Date
+    nullable: true
+
+  - name: resolucion_aprobacion
+    type: String
+    nullable: true
+
+  - name: fecha_publicacion
+    type: Date
+    nullable: true
+    description: Dentro de primeros 30 días del año
+
+  - name: estado
+    type: Enum[Borrador, Consolidado, Aprobado, Publicado, Modificado]
+    default: Borrador
+
+  - name: monto_total_estimado
+    type: Decimal
+    nullable: true
+
+  - name: cantidad_lineas
+    type: Integer
+    computed: true
+
+morphisms:
+  aprobado_por: [ROL-ADM-REGIONAL]
+  publicado_en: [MercadoPublico]
+  genera: [ENT-FIN-LINEA_PAC]
+  ejecutado_mediante: [ENT-FIN-ORDEN_COMPRA, ENT-FIN-LICITACION]
+
+---
+# Entidad: LineaPAC (Línea del Plan de Compras)
+
+id: ENT-FIN-LINEA_PAC
+urn: "urn:goreos:entity:d-fin:linea-pac:1.0.0"
+name: Línea de Plan de Compras
+domain: D-FIN
+subdomain: compras
+category: Detail
+
+attributes:
+  - name: id_linea
+    type: String
+    key: true
+
+  - name: pac_id
+    type: String
+    fk: ENT-FIN-PLAN_COMPRAS
+
+  - name: division_solicitante
+    type: String
+    nullable: false
+
+  - name: descripcion_bien_servicio
+    type: String
+    nullable: false
+
+  - name: codigo_onu
+    type: String
+    nullable: true
+    description: Código clasificador ONU de productos
+
+  - name: cantidad_estimada
+    type: Integer
+    nullable: false
+
+  - name: unidad_medida
+    type: String
+    nullable: false
+
+  - name: monto_estimado
+    type: Decimal
+    nullable: false
+
+  - name: mes_estimado_compra
+    type: Integer
+    description: 1-12
+
+  - name: modalidad_probable
+    type: Enum[ConvenioMarco, LicitacionPublica, TratoDirecto, CompraAgil]
+
+  - name: prioridad
+    type: Enum[Alta, Media, Baja]
+
+  - name: tipo_requerimiento
+    type: Enum[Planificado, Extraordinario, Urgente]
+    default: Planificado
+
+  - name: estado_ejecucion
+    type: Enum[Pendiente, EnProceso, Ejecutado, Cancelado]
+    default: Pendiente
+
+  - name: orden_compra_id
+    type: String
+    fk: ENT-FIN-ORDEN_COMPRA
+    nullable: true
+
+morphisms:
+  parte_de: [ENT-FIN-PLAN_COMPRAS]
+  ejecutado_por: [ENT-FIN-ORDEN_COMPRA]

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_isan_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ISAN-001-01
+story_key: us_isan_001_01
+role_id: USR-DIT-SANE-ING
+as_a: null
+i_want: acceso a factibilidades técnicas de servicios sanitarios
+so_that: pueda aprobar soluciones de APR
+domain: D-TERR
+priority: P0
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-DIT-SANE-ING
+  contribuye_a: CAP-TERR-MAP-001

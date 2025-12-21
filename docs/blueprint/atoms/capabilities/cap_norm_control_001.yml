@@ -1,0 +1,29 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_norm_control_001:1.0.0
+  type: Capability
+id: CAP-NORM-CONTROL-001
+name: Control de Legalidad
+domain: D-NORM
+type: DOMAIN_SPECIFIC
+description: 'Control de legalidad previo a la firma: checklist normativo, visación
+  jurídica, trazabilidad.'
+value_proposition: Previene observaciones CGR y asegura que los actos cumplan con
+  la normativa vigente.
+orko_mapping:
+  p1_capacity: Jefe Unidad Jurídica
+  p2_flow: P1-Resoluciones Fase 2 (D-NORM)
+  p4_limit: Ley 19.880, LOC GORE
+  p5_purpose: Tasa representación CGR ≤5%
+stories:
+- urn:goreos:atom:story:us_abog_001_02
+- urn:goreos:atom:story:us_ap_core_001_01
+- urn:goreos:atom:story:us_arqp_001_01
+- urn:goreos:atom:story:us_aud_ctrl_001_01
+- urn:goreos:atom:story:us_aud_ext_001_01
+- urn:goreos:atom:story:us_corte_001_01
+- urn:goreos:atom:story:us_juez_001_01
+- urn:goreos:atom:story:us_norm_acto_003
+- urn:goreos:atom:story:us_norm_acto_005
+- urn:goreos:atom:story:us_norm_acto_008
+- urn:goreos:atom:story:us_seccom_001_01
+ofrecida_por: null

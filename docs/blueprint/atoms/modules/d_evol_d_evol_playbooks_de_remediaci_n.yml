@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_evol_playbooks_de_remediaci_n:1.0.0
+  type: Module
+  source: domains/d-evol
+id: MOD-EVOL-PLAYBOOKS_DE_REMEDIA
+name: Playbooks de Remediación
+domain: D-EVOL
+number: 4
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

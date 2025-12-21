@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:role:analista_8_tecnico:1.0.0
+  type: Role
+  source: organization
+id: USR-DIDES-ANAL8
+role_key: analista_8_tecnico
+title: Analista 8% (Técnico)
+description: ''
+type: Human
+unit: DIDESOH
+unit_type: Ejecutivo & Operaciones
+archetype: analista_base
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_gestion_p1:1.0.0
+  type: Process
+  source: domains/d-gestion
+id: PROC-GESTION-P1
+code: P1
+name: Ciclo de Control de Gestión
+domain: D-GESTION
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

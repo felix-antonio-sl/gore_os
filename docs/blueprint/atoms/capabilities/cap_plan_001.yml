@@ -1,0 +1,41 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_plan_001:1.0.0
+  type: Capability
+id: CAP-PLAN-001
+name: Planificación Estratégica Regional
+domain: D-PLAN
+type: DOMAIN_SPECIFIC
+description: Gestión de ERD, PROT, ARI, programación plurianual y alineamiento estratégico.
+value_proposition: Orienta la inversión regional hacia los objetivos de desarrollo
+  definidos.
+orko_mapping:
+  p1_capacity: Jefe DIPLADE, Analista Planificación
+  p2_flow: P-PLAN (Ciclo ARI)
+  p3_information: ERD, brechas, indicadores
+  p5_purpose: 100% inversión alineada con ERD
+stories:
+- urn:goreos:atom:story:us_anal_ppr_001_01
+- urn:goreos:atom:story:us_anid_001_01
+- urn:goreos:atom:story:us_ases_001_01
+- urn:goreos:atom:story:us_corfo_001_01
+- urn:goreos:atom:story:us_desc_001_02
+- urn:goreos:atom:story:us_diplade_001_01
+- urn:goreos:atom:story:us_diplade_001_02
+- urn:goreos:atom:story:us_dpr_002_01
+- urn:goreos:atom:story:us_dseg_001_02
+- urn:goreos:atom:story:us_gen_001_01
+- urn:goreos:atom:story:us_gob_002_01
+- urn:goreos:atom:story:us_gobprov_001_01
+- urn:goreos:atom:story:us_inv_dep_001_01
+- urn:goreos:atom:story:us_jprog_001_01
+- urn:goreos:atom:story:us_pmg_001_01
+- urn:goreos:atom:story:us_po_001_01
+- urn:goreos:atom:story:us_ppert_001_01
+- urn:goreos:atom:story:us_prof_n250_001_01
+- urn:goreos:atom:story:us_rpmg_001_01
+- urn:goreos:atom:story:us_sec_ctci_001_01
+- urn:goreos:atom:story:us_ser_agr_001_01
+- urn:goreos:atom:story:us_spert_001_01
+- urn:goreos:atom:story:us_ucr_001_01
+- urn:goreos:atom:story:us_uf_001_01
+ofrecida_por: null

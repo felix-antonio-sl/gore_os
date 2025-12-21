@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_seg_gobernanza_y_transparencia:1.0.0
+  type: Module
+  source: domains/d-seg
+id: MOD-SEG-GOBERNANZA_Y_TRANSPA
+name: Gobernanza y Transparencia
+domain: D-SEG
+number: 4
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_ciclo_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DEV-CICLO-001
+story_key: us_dev_ciclo_001
+role_id: USR-DEV-LEAD
+as_a: null
+i_want: Gestionar las fases de desarrollo e implementación (W2-W3)
+so_that: Aseguro una evolución controlada del Blueprint al Código
+domain: D-DEV
+priority: P0
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-DEV-LEAD
+  contribuye_a: CAP-DEV-001

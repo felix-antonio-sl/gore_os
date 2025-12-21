@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_evol_p1:1.0.0
+  type: Process
+  source: domains/d-evol
+id: PROC-EVOL-P1
+code: P1
+name: Evaluación y Monitoreo H_org
+domain: D-EVOL
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

@@ -1,0 +1,315 @@
+# Entidad: MecanismoFinanciamiento (Catálogo de Mecanismos)
+# Domain: D-FIN
+# Subdomain: mecanismos
+# Generated: 2025-12-21 (Phase 20.1 - Catálogo)
+
+id: ENT-FIN-MECANISMO_FINANCIAMIENTO
+urn: "urn:goreos:entity:d-fin:mecanismo-financiamiento:1.0.0"
+name: Mecanismo de Financiamiento
+domain: D-FIN
+subdomain: mecanismos
+category: Catalog
+canonical_source:
+  - "sub_dfin_mecanismos.md"
+  - "Circular 11 DIPRES (Glosas Presupuestarias)"
+  - "Ley FNDR, DFL 1-19.175"
+
+description: |
+  Catálogo de vías de financiamiento para Intervenciones Públicas Regionales.
+  Centraliza reglas de elegibilidad, evaluadores, topes y convocatorias.
+  Single Source of Truth para configuración de mecanismos.
+
+# ============================================================
+# INSTANCIAS DEL CATÁLOGO
+# ============================================================
+
+instances:
+  - id: MEC-SNI
+    codigo: SNI
+    nombre: "IDI General - Sistema Nacional de Inversiones"
+    descripcion: "Inversión tradicional evaluada por MDSF"
+    naturaleza: IDI
+    subtitulo_presupuestario: "31"
+    evaluador: MDSF
+    rate_tipo: [RS, AD, FI, OT]
+    tope_utm: null # Sin tope
+    ejecutor_elegible: [Municipio, Servicio, GORE, Universidad]
+    privados_elegibles: false
+    convocatoria: Ventanilla
+    periodo_concurso: null
+    registro_bip_obligatorio: true
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-idi-sni-sts:1.0.0"
+    glosa_asociada: "10"
+    restricciones: []
+
+  - id: MEC-FRIL
+    codigo: FRIL
+    nombre: "Fondo Regional de Iniciativa Local"
+    descripcion: "Infraestructura municipal menor, sin evaluación SNI"
+    naturaleza: IDI
+    subtitulo_presupuestario: "31"
+    evaluador: GORE
+    rate_tipo: [APROBADO, OT]
+    tope_utm: 5000
+    ejecutor_elegible: [Municipio]
+    privados_elegibles: false
+    convocatoria: Concurso
+    periodo_concurso: "febrero-marzo"
+    registro_bip_obligatorio: false
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-fril-2025-sts:1.0.0"
+    glosa_asociada: "12"
+    restricciones:
+      - "Solo municipios de la región"
+      - "No requiere evaluación MDSF"
+
+  - id: MEC-FRPD
+    codigo: FRPD
+    nombre: "Fondo Regional de Productividad y Desarrollo"
+    descripcion: "I+D+i y productividad regional (Royalty)"
+    naturaleza: Mixto # Puede ser IDI o PPR
+    subtitulo_presupuestario: "31,24" # Variable según tipología
+    evaluador: Variable # SNI o GORE según umbral/tipo
+    rate_tipo: [RS, RF, ITF, OT]
+    tope_utm: null # Variable por línea
+    ejecutor_elegible:
+      [Municipio, Servicio, GORE, Universidad, FundacionCTI, EmpresaHabilitada]
+    privados_elegibles: true # Privados habilitados en líneas específicas
+    convocatoria: Mixto # Concurso + Ventanilla
+    periodo_concurso: "variable por línea"
+    registro_bip_obligatorio: true # Para líneas IDI
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-frpd-nuble:1.0.0"
+    glosa_asociada: "13"
+    restricciones:
+      - "Foco obligatorio en I+D+i o productividad"
+      - "Bifurcación de evaluador según tipo/umbral"
+    sublineas:
+      - nombre: "FRPD-IDI"
+        naturaleza: IDI
+        evaluador: MDSF
+      - nombre: "FRPD-PPR"
+        naturaleza: PPR
+        evaluador: GORE
+
+  - id: MEC-C33-CONSERVACION
+    codigo: C33_CONS
+    nombre: "Circular 33 - Conservación"
+    descripcion: "Conservación de activos existentes sin nueva construcción"
+    naturaleza: IDI
+    subtitulo_presupuestario: "31"
+    evaluador: GORE
+    rate_tipo: [APROBADO, OT]
+    tope_utm: null # Sin tope monetario
+    tope_porcentaje: 30 # ≤30% del costo de reposición
+    ejecutor_elegible: [Servicio, GORE]
+    privados_elegibles: false
+    convocatoria: Ventanilla
+    periodo_concurso: null
+    registro_bip_obligatorio: false
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-circular-33-sts:1.0.0"
+    glosa_asociada: null
+    restricciones:
+      - "Solo conservación de activos existentes"
+      - "Máximo 30% del costo de reposición"
+      - "No incluye obra nueva"
+
+  - id: MEC-C33-ANF
+    codigo: C33_ANF
+    nombre: "Circular 33 - Activos No Financieros"
+    descripcion: "Adquisición de activos sin componente de obra"
+    naturaleza: IDI
+    subtitulo_presupuestario: "29"
+    evaluador: GORE
+    rate_tipo: [APROBADO, OT]
+    tope_utm: null
+    ejecutor_elegible: [Servicio, GORE]
+    privados_elegibles: false
+    convocatoria: Ventanilla
+    periodo_concurso: null
+    registro_bip_obligatorio: false
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-circular-33-sts:1.0.0"
+    glosa_asociada: "09"
+    restricciones:
+      - "Solo adquisición de activos (vehículos, equipamiento)"
+      - "Transferir en máximo 90 días"
+
+  - id: MEC-C33-ESTUDIO
+    codigo: C33_EST
+    nombre: "Circular 33 - Estudios"
+    descripcion: "Estudios y diseños menores"
+    naturaleza: IDI
+    subtitulo_presupuestario: "31"
+    evaluador: GORE
+    rate_tipo: [APROBADO, OT]
+    tope_utm: null
+    tope_porcentaje: 3 # ≤3% del costo de inversión
+    ejecutor_elegible: [Servicio, GORE]
+    privados_elegibles: false
+    convocatoria: Ventanilla
+    periodo_concurso: null
+    registro_bip_obligatorio: false
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-circular-33-sts:1.0.0"
+    glosa_asociada: null
+    restricciones:
+      - "Máximo 3% del costo de inversión del proyecto"
+      - "Para estudios mayores usar SNI"
+
+  - id: MEC-G06
+    codigo: G06
+    nombre: "Glosa 06 - Programas de Ejecución Directa GORE"
+    descripcion: "PPR ejecutados directamente por el GORE"
+    naturaleza: PPR
+    subtitulo_presupuestario: "24"
+    evaluador: DIPRES_SES
+    rate_tipo: [RF, FI, OT]
+    tope_utm: null
+    ejecutor_elegible: [GORE]
+    privados_elegibles: false
+    convocatoria: ProgramacionAnual
+    periodo_concurso: null
+    registro_bip_obligatorio: false
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-programas-directos-gore:1.0.0"
+    glosa_asociada: "06"
+    restricciones:
+      - "Requiere Marco Metodológico Lógico (MML) aprobado"
+      - "Gastos administrativos máximo 5%"
+      - "No requiere rendición SISREC (ejecución directa)"
+    requisitos_obligatorios:
+      - mml_aprobado: true
+
+  - id: MEC-TRANSF
+    codigo: TRANSF
+    nombre: "Transferencia a Entidad Pública"
+    descripcion: "PPR transferido a municipios o servicios públicos"
+    naturaleza: PPR
+    subtitulo_presupuestario: "24"
+    evaluador: GORE
+    rate_tipo: [ITF]
+    tope_utm: null
+    ejecutor_elegible: [Municipio, Servicio]
+    privados_elegibles: false
+    convocatoria: Ventanilla
+    periodo_concurso: null
+    registro_bip_obligatorio: false
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:guia-transferencia-ppr:1.0.0"
+    glosa_asociada: "06"
+    restricciones:
+      - "Solo entidades públicas"
+      - "Rendición SISREC obligatoria"
+      - "Plazo rendición: 60 días desde última cuota"
+
+  - id: MEC-S8
+    codigo: S8
+    nombre: "Subvención 8% FNDR"
+    descripcion: "Apoyo a organizaciones sin fines de lucro"
+    naturaleza: PPR
+    subtitulo_presupuestario: "24"
+    evaluador: GORE
+    rate_tipo: [APROBADO, OT]
+    tope_utm: null
+    tope_porcentaje_fndr: 8 # 8% del FNDR
+    ejecutor_elegible: [ONG, OSC, Fundacion, Municipio]
+    privados_elegibles: true # Solo sin fines de lucro
+    convocatoria: Concurso
+    periodo_concurso: "marzo-abril"
+    registro_bip_obligatorio: false
+    guia_koda_ref: "urn:knowledge:gorenuble:gn:instructivo-subvencion-8:1.0.0"
+    glosa_asociada: "07"
+    restricciones:
+      - "Solo organizaciones sin fines de lucro"
+      - "10% puede ser asignación directa"
+      - "Rendición SISREC obligatoria"
+
+# ============================================================
+# ATRIBUTOS DE LA ENTIDAD CATÁLOGO
+# ============================================================
+
+attributes:
+  - name: id
+    type: String
+    key: true
+    description: ID único del mecanismo (MEC-XXX)
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: Código corto (SNI, FRIL, G06, etc.)
+
+  - name: nombre
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+
+  - name: naturaleza
+    type: Enum[IDI, PPR, Mixto]
+    nullable: false
+
+  - name: subtitulo_presupuestario
+    type: String
+    description: "21, 24, 29, 31, 33"
+
+  - name: evaluador
+    type: Enum[MDSF, GORE, DIPRES_SES, Variable]
+
+  - name: rate_tipo
+    type: List[Enum[RS, AD, RF, ITF, FI, OT, APROBADO]]
+
+  - name: tope_utm
+    type: Integer
+    nullable: true
+
+  - name: tope_porcentaje
+    type: Decimal
+    nullable: true
+
+  - name: ejecutor_elegible
+    type: List[TipoEjecutor]
+
+  - name: privados_elegibles
+    type: Boolean
+    default: false
+
+  - name: convocatoria
+    type: Enum[Ventanilla, Concurso, Mixto, ProgramacionAnual]
+
+  - name: periodo_concurso
+    type: String
+    nullable: true
+
+  - name: registro_bip_obligatorio
+    type: Boolean
+    default: true
+
+  - name: guia_koda_ref
+    type: URN
+    nullable: true
+
+  - name: glosa_asociada
+    type: String
+    nullable: true
+
+  - name: restricciones
+    type: List[String]
+
+  - name: activo
+    type: Boolean
+    default: true
+
+morphisms:
+  aplica_a: [ENT-FIN-IPR, ENT-FIN-IDI, ENT-FIN-PPR]
+  evaluado_por: [MDSF, GORE, DIPRES]
+  normado_por: [Circular11_DIPRES, LeyFNDR]
+
+queries:
+  mecanismos_por_naturaleza: |
+    SELECT * FROM MecanismoFinanciamiento WHERE naturaleza = :tipo
+
+  mecanismos_privados_elegibles: |
+    SELECT * FROM MecanismoFinanciamiento WHERE privados_elegibles = true
+
+  mecanismos_con_concurso: |
+    SELECT * FROM MecanismoFinanciamiento WHERE convocatoria IN ('Concurso', 'Mixto')
+
+  mecanismos_por_subtitulo: |
+    SELECT * FROM MecanismoFinanciamiento WHERE subtitulo_presupuestario LIKE :st

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_ejec_supervisi_n_de_obras:1.0.0
+  type: Module
+  source: domains/d-ejec
+id: MOD-EJEC-SUPERVISI_N_DE_OBRAS
+name: Supervisión de Obras
+domain: D-EJEC
+number: 1
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_gestion_sistema_de_control_de_gesti_n_scg:1.0.0
+  type: Module
+  source: domains/d-gestion
+id: MOD-GESTION-SISTEMA_DE_CONTROL_D
+name: Sistema de Control de Gestión (SCG)
+domain: D-GESTION
+number: 1
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

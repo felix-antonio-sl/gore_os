@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_tes_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TES-001-01
+story_key: us_tes_001_01
+role_id: USR-DAF-FIN-TES
+as_a: null
+i_want: un módulo de programación de pagos con priorización
+so_that: pueda asegurar la liquidez y cumplir compromisos
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-FIN-TES
+  contribuye_a: CAP-FIN-DASH-001

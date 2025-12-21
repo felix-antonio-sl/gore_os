@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DEV-DX-002
+story_key: us_dev_dx_002
+role_id: USR-DEV-BACK
+as_a: null
+i_want: Consultar la documentación técnica generada directamente desde el código
+so_that: Evito consultar wikis desactualizadas
+domain: D-DEV
+priority: P2
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-DEV-BACK
+  contribuye_a: CAP-DEV-001

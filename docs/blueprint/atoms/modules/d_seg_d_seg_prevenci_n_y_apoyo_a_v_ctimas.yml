@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_seg_prevenci_n_y_apoyo_a_v_ctimas:1.0.0
+  type: Module
+  source: domains/d-seg
+id: MOD-SEG-PREVENCI_N_Y_APOYO_A
+name: Prevención y Apoyo a Víctimas
+domain: D-SEG
+number: 2
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

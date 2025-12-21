@@ -1,0 +1,38 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_ops_001:1.0.0
+  type: Capability
+id: CAP-OPS-001
+name: Operaciones e Infraestructura TI
+domain: D-OPS
+type: DOMAIN_SPECIFIC
+description: Gestión de infraestructura, monitoreo, incidentes, backup y continuidad
+  operacional.
+value_proposition: Asegura la disponibilidad y rendimiento de los sistemas institucionales.
+orko_mapping:
+  p1_capacity: Admin Plataforma, SRE, NOC
+  p2_flow: P-OPS (Gestión de Incidentes)
+  p4_limit: SLAs definidos, BCP
+  p5_purpose: Disponibilidad ≥99.5%
+stories:
+- urn:goreos:atom:story:us_adm_plat_001_01
+- urn:goreos:atom:story:us_dev_001_01
+- urn:goreos:atom:story:us_devops_001_01
+- urn:goreos:atom:story:us_finops_001_01
+- urn:goreos:atom:story:us_iplat_001_01
+- urn:goreos:atom:story:us_iseg_001_01
+- urn:goreos:atom:story:us_jti_001_01
+- urn:goreos:atom:story:us_mesa_001_01
+- urn:goreos:atom:story:us_mon_001_01
+- urn:goreos:atom:story:us_noc_001_01
+- urn:goreos:atom:story:us_ope_001_01
+- urn:goreos:atom:story:us_ops_back_001
+- urn:goreos:atom:story:us_ops_fin_001
+- urn:goreos:atom:story:us_ops_iac_001
+- urn:goreos:atom:story:us_ops_inc_001
+- urn:goreos:atom:story:us_ops_perf_001
+- urn:goreos:atom:story:us_ops_sec_001
+- urn:goreos:atom:story:us_ops_sre_001
+- urn:goreos:atom:story:us_qa_001_01
+- urn:goreos:atom:story:us_sop_001_01
+- urn:goreos:atom:story:us_sre_001_01
+ofrecida_por: null

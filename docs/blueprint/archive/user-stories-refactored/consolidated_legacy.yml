@@ -1,0 +1,3721 @@
+_manifest:
+  title: Legacy Stories - Consolidated
+  original_count: 581
+  bundle_count: 9
+  atomic_count: 453
+  total_consolidated: 462
+  reduction_pct: 20.5
+  rules_applied:
+    - D-01
+    - D-02
+    - D-03
+    - D-04
+capability_bundles:
+  - id: CAP-BACK-PERS-001
+    capability: Gestión de Personas
+    domain: D-BACK
+    beneficiaries: ['funcionario']
+    original_count: 3
+    deduplicated_count: 3
+    representative_stories: [{'id': 'US-BACK-PER-001', 'i_want': 'Visualizar mi ficha de funcionario (hoja de vida)', 'priority': 'P0'}, {'id': 'US-BACK-PER-004', 'i_want': 'Declarar licencia médica (IMED/Medipass)', 'priority': 'P0'}, {'id': 'US-BACK-PER-006', 'i_want': 'Visualizar mi liquidación de sueldo (PDF)', 'priority': 'P0'}]
+  - id: CAP-TDE-FIRMA-001
+    capability: Bandeja de Firma Electrónica
+    domain: D-TDE
+    beneficiaries: ['contador', 'coordinador_transformación_digital', 'enlace_cies', 'formulador_externo', 'funcionario', 'gobernador_regional', 'jefe_daf', 'operador_de_sistema', 'product_owner']
+    original_count: 9
+    deduplicated_count: 9
+    representative_stories: [{'id': 'US-BACK-PER-007', 'i_want': 'Solicitar certificado de antigüedad/renta (FEA)', 'priority': 'P1'}, {'id': 'US-BACK-TES-019', 'i_want': 'Emitir certificado oficial de deuda flotante con FEA', 'priority': 'P0'}, {'id': 'US-DEV-FEAT-001', 'i_want': 'Habilitar funcionalidades específicas para grupos de prueba (Pilotos)', 'priority': 'P1'}, {'id': 'US-EVOL-TRAY-001', 'i_want': 'Configurar trayectoria del sistema (Feature Flags)', 'priority': 'P1'}, {'id': 'US-FIN-IPR-010', 'i_want': 'Descargar convenio de transferencia para firma FEA', 'priority': 'P1'}]
+  - id: CAP-FIN-DASH-001
+    capability: Dashboard de Ejecución Presupuestaria
+    domain: D-FIN
+    beneficiaries: ['administrador_regional', 'administrador_ti', 'analista_gestión_dipir', 'consejero_regional', 'coordinador_sectorial', 'coordinador_transformación_digital', 'cosoc_/_comités', 'gestor_de_personas', 'gobernador', 'gobernador_regional', 'jefe_daf', 'jefe_dipir', 'líder_técnico', 'operador_de_sistema', 'profesional_daf', 'unidad_contabilidad_rendiciones']
+    original_count: 20
+    deduplicated_count: 19
+    representative_stories: [{'id': 'US-BACK-PER-008', 'i_want': 'Ver dashboard de ausentismo por tipo y unidad', 'priority': 'P1'}, {'id': 'US-EJEC-AR-001', 'i_want': 'Ver dashboard ejecutivo (alertas, compromisos)', 'priority': 'P0'}, {'id': 'US-EJEC-SEC-002', 'i_want': 'Ver dashboard de relaciones sectoriales (mapa)', 'priority': 'P1'}, {'id': 'US-EVOL-H-001', 'i_want': 'Ver dashboard de salud del sistema (H_org)', 'priority': 'P0'}, {'id': 'US-EVOL-DT-003', 'i_want': 'Monitorear KPIs del sistema (técnicos)', 'priority': 'P0'}]
+  - id: CAP-BACK-COMP-001
+    capability: Compras y Abastecimiento
+    domain: D-BACK
+    beneficiaries: ['analista_gestión_dipir', 'coordinador_ide', 'dpo', 'encargado_abastecimiento', 'encargado_bodega', 'encargado_capacitación', 'encargado_prevención', 'entidad_ejecutora', 'gobernador_regional', 'jefe_fenix', 'jefe_unidad_de_control', 'operador_cies', 'operador_de_sistema', 'planificador_urbano_urbano', 'profesional_bienestar', 'supervisor_cies']
+    original_count: 19
+    deduplicated_count: 19
+    representative_stories: [{'id': 'US-BACK-ABS-001', 'i_want': 'Gestionar Plan Anual de Compras (PAC) consolidado', 'priority': 'P1'}, {'id': 'US-BACK-ABS-005', 'i_want': 'Emitir OC (compromiso de gasto)', 'priority': 'P0'}, {'id': 'US-BACK-BOD-002', 'i_want': 'Despachar solicitudes (disminuye stock, FEA)', 'priority': 'P0'}, {'id': 'US-BACK-BIEN-005', 'i_want': 'Evaluar préstamos (capacidad endeudamiento)', 'priority': 'P1'}, {'id': 'US-BACK-COMP-001', 'i_want': 'Gestionar Plan Anual de Capacitación (PAC)', 'priority': 'P1'}]
+  - id: CAP-BACK-INV-001
+    capability: Inventarios y Activo Fijo
+    domain: D-BACK
+    beneficiaries: ['coordinador_transformación_digital', 'dpo', 'encargado_activo_fijo', 'encargado_bodega', 'jefe_división_daf', 'líder_técnico']
+    original_count: 9
+    deduplicated_count: 9
+    representative_stories: [{'id': 'US-BACK-BOD-001', 'i_want': 'Registrar ingresos (aumenta stock)', 'priority': 'P0'}, {'id': 'US-BACK-BOD-003', 'i_want': 'Realizar inventario físico (ajustes diferencia)', 'priority': 'P1'}, {'id': 'US-BACK-AF-001', 'i_want': 'Registrar alta de activo fijo (código, depreciación)', 'priority': 'P0'}, {'id': 'US-BACK-AF-003', 'i_want': 'Registrar baja de bienes (resolución, causal)', 'priority': 'P1'}, {'id': 'US-BACK-AF-004', 'i_want': 'Realizar inventario anual de activo fijo', 'priority': 'P1'}]
+  - id: CAP-BACK-BIEN-001
+    capability: Bienestar Funcionario
+    domain: D-BACK
+    beneficiaries: ['profesional_bienestar', 'socio_bienestar']
+    original_count: 6
+    deduplicated_count: 6
+    representative_stories: [{'id': 'US-BACK-BIEN-001', 'i_want': 'Registrar afiliaciones (socio con descuento)', 'priority': 'P1'}, {'id': 'US-BACK-BIEN-003', 'i_want': 'Gestionar bonificación médica (tope anual, SIGBIE)', 'priority': 'P1'}, {'id': 'US-BACK-BIEN-006', 'i_want': 'Aplicar descuento de cuotas (automático planilla)', 'priority': 'P1'}, {'id': 'US-BACK-BIEN-010', 'i_want': 'Solicitar bonificación (adjuntar boletas)', 'priority': 'P1'}, {'id': 'US-BACK-BIEN-011', 'i_want': 'Solicitar préstamo (ver condiciones)', 'priority': 'P1'}]
+  - id: CAP-BACK-TES-001
+    capability: Tesorería y Contabilidad
+    domain: D-BACK
+    beneficiaries: ['analista_gestión_dipir', 'contador', 'jefe_daf', 'jefe_unidad_de_control', 'profesional_daf', 'supervisor', 'tesorero']
+    original_count: 16
+    deduplicated_count: 16
+    representative_stories: [{'id': 'US-BACK-TES-002', 'i_want': 'Programar la ejecución de pagos del día validando disponibilidad de fondos', 'priority': 'P0'}, {'id': 'US-BACK-TES-007', 'i_want': 'Conciliar automáticamente movimientos SIGFE con cartola bancaria', 'priority': 'P0'}, {'id': 'US-BACK-TES-008', 'i_want': 'Documentar y clasificar partidas pendientes de conciliación', 'priority': 'P1'}, {'id': 'US-BACK-TES-009', 'i_want': 'Emitir informe de conciliación bancaria mensual firmado', 'priority': 'P1'}, {'id': 'US-BACK-TES-021', 'i_want': 'Priorizar el pago de deuda flotante en enero-febrero', 'priority': 'P2'}]
+  - id: CAP-FIN-REND-001
+    capability: Módulo de Rendiciones
+    domain: D-FIN
+    beneficiaries: ['analista_ejecutor', 'cgr_(externo)', 'contador', 'ejecutor', 'encargado_ejecutor', 'encargado_rendiciones', 'entidad_ejecutora', 'jefe_daf', 'jefe_unidad_de_control', 'municipio', 'organización_beneficiaria', 'unidad_contabilidad_rendiciones', 'unidad_técnica_municipal']
+    original_count: 24
+    deduplicated_count: 24
+    representative_stories: [{'id': 'US-BACK-TES-012', 'i_want': '>-\n      Contabilizar el devengado de rendiciones aprobadas en SISREC\n      automáticamente en SIGFE', 'priority': 'P1'}, {'id': 'US-EJEC-EJEC-003', 'i_want': 'Devolver rendición con correcciones a analista', 'priority': 'P1'}, {'id': 'US-EJEC-MUNI-006', 'i_want': 'Subir rendición final en SISREC', 'priority': 'P0'}, {'id': 'US-FIN-IPR-012', 'i_want': 'Ingresar rendición vía SISREC (integración o carga manual)', 'priority': 'P0'}, {'id': 'US-FIN-IPR-013', 'i_want': 'Responder observaciones a rendiciones rechazadas', 'priority': 'P0'}]
+  - id: CAP-EJEC-SEG-001
+    capability: Seguimiento de Proyectos
+    domain: D-EJEC
+    beneficiaries: ['administrador_regional', 'analista_gestión_dipir', 'analista_planificación', 'analista_preinversión_dipir', 'comité_directivo_regional', 'encargado_comunicaciones', 'encargado_oirs', 'encargado_operativo', 'encargado_prevención', 'entidad_ejecutora', 'gabinete', 'gobernador_regional', 'profesional_daf', 'supervisor', 'unidad_técnica_municipal']
+    original_count: 21
+    deduplicated_count: 21
+    representative_stories: [{'id': 'US-COM-ESTR-005', 'i_want': 'Difundir estado de avance de proyectos emblemáticos', 'priority': 'P1'}, {'id': 'US-EJEC-SUP-001', 'i_want': 'Crear carpeta de seguimiento (visitas, informes)', 'priority': 'P0'}, {'id': 'US-EJEC-EO-001', 'i_want': 'Ver lista de compromisos (semáforo días restantes)', 'priority': 'P0'}, {'id': 'US-EJEC-EO-002', 'i_want': "Marcar compromiso 'En progreso' (avance parcial)", 'priority': 'P0'}, {'id': 'US-EJEC-MUNI-004', 'i_want': 'Reportar avance periódico (validación supervisor)', 'priority': 'P0'}]
+atomic_stories:
+  - id: US-BACK-PER-002
+    as_a: Funcionario
+    i_want: Completar proceso de inducción digital (checklist)
+    so_that: Me integro correctamente a la institución
+    priority: P1
+    role_key: funcionario
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-003
+    as_a: Funcionario
+    i_want: Solicitar feriado/permiso validando saldo
+    so_that: Gestiono mi tiempo libre
+    priority: P0
+    role_key: funcionario
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-005
+    as_a: Funcionario
+    i_want: Solicitar permiso administrativo (máx 6 días/año)
+    so_that: Uso mis días administrativos
+    priority: P1
+    role_key: funcionario
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-009
+    as_a: Gestor de Personas
+    i_want: Procesar licencias médicas (COMPIN/ISAPRE)
+    so_that: Gestiono el flujo de licencias
+    priority: P0
+    role_key: gestor_de_personas
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-010
+    as_a: Gestor de Personas
+    i_want: Calcular liquidaciones mensuales (EUS)
+    so_that: Proceso remuneraciones
+    priority: P0
+    role_key: gestor_de_personas
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-011
+    as_a: Gestor de Personas
+    i_want: Generar planilla Previred
+    so_that: Cumplo con obligaciones previsionales
+    priority: P0
+    role_key: gestor_de_personas
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-012
+    as_a: Gestor de Personas
+    i_want: Gestionar horas extraordinarias (F2)
+    so_that: Controlo sobretiempo
+    priority: P1
+    role_key: gestor_de_personas
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-PER-013
+    as_a: Gestor de Personas
+    i_want: Gestionar cometidos funcionarios (viático)
+    so_that: Proceso comisiones de servicio
+    priority: P1
+    role_key: gestor_de_personas
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-014
+    as_a: Gestor de Personas
+    i_want: Registrar accidente de trabajo (DIAT)
+    so_that: Cumplo con normativa de seguridad
+    priority: P0
+    role_key: gestor_de_personas
+    nfr_refs: ['NFR-GIS', 'NFR-ALERT']
+    origin: legacy
+  - id: US-BACK-PER-015
+    as_a: Gestor de Personas
+    i_want: Gestionar concursos públicos
+    so_that: Recluto personal
+    priority: P1
+    role_key: gestor_de_personas
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-016
+    as_a: Junta Calificadora
+    i_want: Registrar precalificación (factores/sub)
+    so_that: Inicio proceso de calificación
+    priority: P0
+    role_key: junta_calificadora
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-PER-017
+    as_a: Junta Calificadora
+    i_want: Consolidar calificaciones (junta anual)
+    so_that: Cierro proceso de calificación
+    priority: P0
+    role_key: junta_calificadora
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-PER-018
+    as_a: Junta Calificadora
+    i_want: Notificar resultado de calificación
+    so_that: Informo a funcionarios
+    priority: P1
+    role_key: junta_calificadora
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-BACK-ABS-002
+    as_a: Encargado Abastecimiento
+    i_want: Tramitar solicitudes verificando CDP
+    so_that: Proceso requerimientos
+    priority: P1
+    role_key: encargado_abastecimiento
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-ABS-003
+    as_a: Encargado Abastecimiento
+    i_want: Publicar licitaciones en Mercado Público
+    so_that: Cumplo con Ley 19.886
+    priority: P0
+    role_key: encargado_abastecimiento
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-ABS-004
+    as_a: Encargado Abastecimiento
+    i_want: Evaluar ofertas (criterios técnico-económicos)
+    so_that: Selecciono mejor propuesta
+    priority: P0
+    role_key: encargado_abastecimiento
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-ABS-006
+    as_a: Encargado Abastecimiento
+    i_want: Gestionar contratos (hitos, garantías)
+    so_that: Administro ejecución contractual
+    priority: P1
+    role_key: encargado_abastecimiento
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-AF-002
+    as_a: Encargado Activo Fijo
+    i_want: Registrar traslado de bienes (cambio ubicación)
+    so_that: Actualizo ubicación de activos
+    priority: P1
+    role_key: encargado_activo_fijo
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-FLO-001
+    as_a: Encargado Servicios Generales
+    i_want: Gestionar órdenes de trabajo de mantención (asignar técnico)
+    so_that: Mantengo infraestructura
+    priority: P1
+    role_key: encargado_servicios_generales
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-FLO-002
+    as_a: Encargado Flota
+    i_want: Gestionar solicitudes de vehículos (asignar conductor)
+    so_that: Administro uso de flota
+    priority: P1
+    role_key: encargado_flota
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-FLO-003
+    as_a: Encargado Flota
+    i_want: Controlar km/combustible (bitácora)
+    so_that: Monitoreo uso de vehículos
+    priority: P1
+    role_key: encargado_flota
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-BIEN-002
+    as_a: Profesional Bienestar
+    i_want: Gestionar grupo familiar (cargas)
+    so_that: Registro beneficiarios
+    priority: P1
+    role_key: profesional_bienestar
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-BIEN-004
+    as_a: Profesional Bienestar
+    i_want: Otorgar subsidios por eventos (natalidad/pérdida)
+    so_that: Apoyo en momentos especiales
+    priority: P2
+    role_key: profesional_bienestar
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-BIEN-007
+    as_a: Profesional Bienestar
+    i_want: Gestionar convenios con terceros (farmacias, etc)
+    so_that: Amplío beneficios
+    priority: P2
+    role_key: profesional_bienestar
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-BIEN-008
+    as_a: Profesional Bienestar
+    i_want: Coordinar con Mutual (accidente laboral)
+    so_that: Gestiono atención de accidentados
+    priority: P0
+    role_key: profesional_bienestar
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-BIEN-009
+    as_a: Profesional Bienestar
+    i_want: Apoyar CPHS (investigación accidentes)
+    so_that: Prevengo futuros accidentes
+    priority: P1
+    role_key: profesional_bienestar
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-COMP-002
+    as_a: Encargado Capacitación
+    i_want: Gestionar proceso de calificaciones Junta
+    so_that: Cumplo con ciclo de evaluación
+    priority: P0
+    role_key: encargado_capacitación
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-COMP-003
+    as_a: Encargado Capacitación
+    i_want: Gestionar metas de desempeño (CDC/PMG)
+    so_that: Cumplo con compromisos institucionales
+    priority: P1
+    role_key: encargado_capacitación
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-001
+    as_a: Tesorero
+    i_want: Consultar saldos bancarios institucionales del GORE en tiempo real
+    so_that: Tomo decisiones de pago informadas
+    priority: P0
+    role_key: tesorero
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-003
+    as_a: Tesorero
+    i_want: Ejecutar transferencias electrónicas de fondos (TEF) masivas
+    so_that: Pago a proveedores y funcionarios eficientemente
+    priority: P1
+    role_key: tesorero
+    nfr_refs: ['NFR-SIGFE', 'NFR-GIS']
+    origin: legacy
+  - id: US-BACK-TES-004
+    as_a: Tesorero
+    i_want: Mantener el libro de caja institucional actualizado
+    so_that: Tengo control cronológico de movimientos de efectivo
+    priority: P1
+    role_key: tesorero
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-TES-005
+    as_a: Tesorero
+    i_want: Gestionar el fondo fijo de caja chica (arqueos y reposición)
+    so_that: Atiendo gastos menores con control adecuado
+    priority: P2
+    role_key: tesorero
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-006
+    as_a: Contador
+    i_want: Importar cartolas bancarias de múltiples bancos en formato electrónico
+    so_that: Automatizo el proceso de conciliación
+    priority: P0
+    role_key: contador
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-010
+    as_a: Contador
+    i_want: Registrar ingresos propios del GORE según clasificador DIPRES
+    so_that: Mantengo contabilidad actualizada
+    priority: P0
+    role_key: contador
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-TES-011
+    as_a: Contador
+    i_want: Contabilizar gastos operativos del GORE (Subt. 21, 22)
+    so_that: Registro correctamente el devengo en SIGFE
+    priority: P0
+    role_key: contador
+    nfr_refs: ['NFR-SIGFE']
+    origin: legacy
+  - id: US-BACK-TES-013
+    as_a: Contador
+    i_want: Generar reportes contables mensuales (balance, comparativo)
+    so_that: Tengo visibilidad de situación financiera
+    priority: P1
+    role_key: contador
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-014
+    as_a: Jefe DAF
+    i_want: Ejecutar corte de compromisos de fin de año con notificación a unidades
+    so_that: Cierro ordenadamente el ejercicio
+    priority: P0
+    role_key: jefe_daf
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-BACK-TES-015
+    as_a: Contador
+    i_want: Calcular devengos pendientes por subtítulo al cierre del ejercicio
+    so_that: Identifico obligaciones para deuda flotante
+    priority: P0
+    role_key: contador
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-016
+    as_a: Contador
+    i_want: Generar estados financieros anuales del GORE
+    so_that: Cumplo con normativa y remito a CGR
+    priority: P1
+    role_key: contador
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-017
+    as_a: Contador
+    i_want: Calcular el Saldo Inicial de Caja para el presupuesto del año siguiente
+    so_that: Incorporo recursos de arrastre correctamente
+    priority: P1
+    role_key: contador
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-018
+    as_a: Contador
+    i_want: Identificar todos los componentes de la deuda flotante al cierre
+    so_that: Documento compromisos pendientes de pago
+    priority: P0
+    role_key: contador
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-TES-020
+    as_a: Profesional DAF
+    i_want: Tramitar la incorporación de deuda flotante en presupuesto (Ítem 34.07)
+    so_that: Habilito el pago de obligaciones del año anterior
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-CRIS-001
+    as_a: Gestor de Personas
+    i_want: Registrar adhesión diaria a paro nacional por funcionario
+    so_that: Calculo descuentos legales y mantengo servicios mínimos
+    priority: P0
+    role_key: gestor_de_personas
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-BACK-CRIS-002
+    as_a: Directora DAF
+    i_want: Simular y aplicar recortes lineales o focalizados al presupuesto vigente
+    so_that: Ajusto la operación a la instrucción de DIPRES/Hacienda
+    priority: P0
+    role_key: directora_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-AUTO-001
+    as_a: Sistema (Robot)
+    i_want: Calcular propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
+    so_that: Reduzco errores y tiempos de término
+    priority: P1
+    role_key: sistema_(robot)
+    nfr_refs: []
+    origin: legacy
+  - id: US-BACK-AUTO-002
+    as_a: Sistema (Robot)
+    i_want: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
+    so_that: Detecto posibles fraudes o errores de reloj
+    priority: P2
+    role_key: sistema_(robot)
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-COM-ESTR-001
+    as_a: Encargado Comunicaciones
+    i_want: Gestionar estrategia comunicacional (web, RRSS)
+    so_that: Posiciono al GORE en medios
+    priority: P1
+    role_key: encargado_comunicaciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-COM-ESTR-002
+    as_a: Encargado Comunicaciones
+    i_want: Publicar noticias oficiales en portal y RRSS
+    so_that: Informo a la ciudadanía
+    priority: P1
+    role_key: encargado_comunicaciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-COM-ESTR-003
+    as_a: Encargado Comunicaciones
+    i_want: Gestionar repositorio de material audiovisual
+    so_that: Centralizo recursos de comunicación
+    priority: P1
+    role_key: encargado_comunicaciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-COM-ESTR-004
+    as_a: Encargado Comunicaciones
+    i_want: Monitorear menciones en medios y gestionar crisis
+    so_that: Respondo a contingencias comunicacionales
+    priority: P1
+    role_key: encargado_comunicaciones
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-COM-ESTR-006
+    as_a: Encargado Comunicaciones
+    i_want: Gestionar comunicación interna institucional
+    so_that: Mantengo informados a funcionarios
+    priority: P1
+    role_key: encargado_comunicaciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-COM-SEC-001
+    as_a: Encargado Comunicaciones
+    i_want: Coordinar difusión conjunta con municipios
+    so_that: Potencio alcance local
+    priority: P1
+    role_key: encargado_comunicaciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-COM-SEC-002
+    as_a: Encargado Comunicaciones
+    i_want: Gestionar uso correcto de marca regional en terceros
+    so_that: Cuido imagen institucional
+    priority: P1
+    role_key: encargado_comunicaciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-DEV-CICLO-001
+    as_a: Líder Técnico
+    i_want: Gestionar las fases de desarrollo e implementación (W2-W3)
+    so_that: Aseguro una evolución controlada del Blueprint al Código
+    priority: P0
+    role_key: líder_técnico
+    nfr_refs: []
+    origin: legacy
+  - id: US-DEV-KODA-001
+    as_a: Ingeniero de Conocimiento
+    i_want: Transformar documentos legacy a formato KODA compatible
+    so_that: Integro el conocimiento institucional en la base de razonamiento de los agentes
+    priority: P0
+    role_key: ingeniero_de_conocimiento
+    nfr_refs: []
+    origin: legacy
+  - id: US-DEV-DOC-001
+    as_a: Arquitecto de Sistemas
+    i_want: Asegurar que el Blueprint refleje el estado actual del código
+    so_that: Mantengo la integridad arquitectónica (SDA de Segundo Orden)
+    priority: P1
+    role_key: arquitecto_de_sistemas
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-DEV-KODA-002
+    as_a: Arquitecto Categórico
+    i_want: Validar que las entidades y relaciones respeten las primitivas ORKO
+    so_that: Evito la degradación semántica del sistema (H_org)
+    priority: P1
+    role_key: arquitecto_categórico
+    nfr_refs: []
+    origin: legacy
+  - id: US-DEV-QA-001
+    as_a: Desarrollador DevOps
+    i_want: Disponer de un pipeline de CI/CD que ejecute tests unitarios y linter en cada commit
+    so_that: Detecto regresiones inmediatamente (Shift-Left Testing)
+    priority: P0
+    role_key: desarrollador_devops
+    nfr_refs: []
+    origin: legacy
+  - id: US-DEV-SEC-001
+    as_a: Ingeniero de Seguridad
+    i_want: Ejecutar escaneos automáticos de seguridad (SAST) en el código fuente
+    so_that: Identifico vulnerabilidades comunes (OWASP Top 10) antes de desplegar
+    priority: P0
+    role_key: ingeniero_de_seguridad
+    nfr_refs: []
+    origin: legacy
+  - id: US-DEV-DX-001
+    as_a: Nuevo Desarrollador
+    i_want: Iniciar el entorno de desarrollo con un solo comando (DevContainer)
+    so_that: Soy productivo desde el día 1 sin "configuración del infierno
+    priority: P1
+    role_key: nuevo_desarrollador
+    nfr_refs: []
+    origin: legacy
+  - id: US-DEV-DX-002
+    as_a: Desarrollador Backend
+    i_want: Consultar la documentación técnica generada directamente desde el código
+    so_that: Evito consultar wikis desactualizadas
+    priority: P2
+    role_key: desarrollador_backend
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-SUP-002
+    as_a: Supervisor
+    i_want: Registrar visitas a terreno (fotos, notas, GPS)
+    so_that: Documento avance físico
+    priority: P0
+    role_key: supervisor
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EJEC-SUP-003
+    as_a: Supervisor
+    i_want: Revisar informes UT (aprobar/observar)
+    so_that: Valido reportes de ejecutor
+    priority: P0
+    role_key: supervisor
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-EJEC-SUP-005
+    as_a: Supervisor
+    i_want: Alertar desviaciones >10% (recomendación)
+    so_that: Activo gestión de modificaciones
+    priority: P1
+    role_key: supervisor
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-EJEC-AR-002
+    as_a: Administrador Regional
+    i_want: Ver monitor de proyectos en alerta crítica (problema/resp)
+    so_that: Focalizo gestión
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-EJEC-AR-003
+    as_a: Administrador Regional
+    i_want: Ver compromisos vencidos por división (ranking)
+    so_that: Exijo rendición de cuentas
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-AR-004
+    as_a: Administrador Regional
+    i_want: Crear compromiso en reunión (vincula IPR)
+    so_that: Registro acuerdos
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EJEC-AR-005
+    as_a: Administrador Regional
+    i_want: Verificar compromisos completados (cierra/dev)
+    so_that: Valido cumplimiento
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-AR-006
+    as_a: Administrador Regional
+    i_want: Generar resumen semanal para Gobernador (PDF tendencias)
+    so_that: Informo a la autoridad
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-JD-001
+    as_a: Jefe de División
+    i_want: Ver métricas de división (IPR, problemas, compromisos)
+    so_that: Gestiono mi área
+    priority: P0
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-JD-002
+    as_a: Jefe de División
+    i_want: Crear compromiso y asignar (persona, plazo)
+    so_that: Delego tareas
+    priority: P0
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-JD-003
+    as_a: Jefe de División
+    i_want: Registrar problema IPR (tipo, solución)
+    so_that: Documento obstáculos
+    priority: P0
+    role_key: jefe_de_división
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EJEC-JD-004
+    as_a: Jefe de División
+    i_want: Cerrar problema resuelto (lección aprendida)
+    so_that: Documento soluciones
+    priority: P1
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-EO-003
+    as_a: Encargado Operativo
+    i_want: Marcar compromiso 'Completado' (pasa a verificación)
+    so_that: Solicito validación
+    priority: P0
+    role_key: encargado_operativo
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-EJEC-EO-004
+    as_a: Encargado Operativo
+    i_want: Registrar problema detectado (vincula IPR)
+    so_that: Escalo obstáculos
+    priority: P1
+    role_key: encargado_operativo
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EJEC-MUNI-001
+    as_a: Unidad Formuladora Municipal
+    i_want: Consultar guías por mecanismo
+    so_that: Preparo correctamente postulaciones
+    priority: P1
+    role_key: unidad_formuladora_municipal
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-MUNI-002
+    as_a: Unidad Formuladora Municipal
+    i_want: Usar wizard de vía de financiamiento (recomendación fundamentada)
+    so_that: Elijo mecanismo correcto
+    priority: P0
+    role_key: unidad_formuladora_municipal
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-MUNI-003
+    as_a: Unidad Técnica Municipal
+    i_want: Coordinar reunión de inicio con supervisor
+    so_that: Alineo expectativas
+    priority: P1
+    role_key: unidad_técnica_municipal
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-SEC-001
+    as_a: Coordinador Sectorial
+    i_want: Gestionar convenios sectoriales (marco)
+    so_that: Formalizo relación con ministerios
+    priority: P1
+    role_key: coordinador_sectorial
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-AR-007
+    as_a: Administrador Regional
+    i_want: Reasignar compromisos a otro responsable
+    so_that: Gestiono cambios de personal
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-EJEC-AR-008
+    as_a: Administrador Regional
+    i_want: Reabrir compromiso devuelto por completado incorrecto
+    so_that: Corrijo estado
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EJEC-AR-009
+    as_a: Administrador Regional
+    i_want: Ver monitor de problemas escalados
+    so_that: Gestiono obstáculos críticos
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-JD-005
+    as_a: Jefe de División
+    i_want: Filtrar compromisos por estado y vencimiento
+    so_that: Focalizo gestión
+    priority: P1
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-JD-006
+    as_a: Jefe de División
+    i_want: Validar compromisos marcados como completados
+    so_that: Certifico cumplimiento
+    priority: P0
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-JD-007
+    as_a: Jefe de División
+    i_want: Generar reportes divisionales periódicos
+    so_that: Documento gestión
+    priority: P1
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-EO-005
+    as_a: Encargado Operativo
+    i_want: Solicitar extensión de plazo con justificación
+    so_that: Gestiono imprevistos
+    priority: P1
+    role_key: encargado_operativo
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-EO-006
+    as_a: Encargado Operativo
+    i_want: Ver historial de cambios del compromiso
+    so_that: Consulto trazabilidad
+    priority: P2
+    role_key: encargado_operativo
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-EO-007
+    as_a: Encargado Operativo
+    i_want: Recibir notificaciones de próximo vencimiento
+    so_that: Actúo a tiempo
+    priority: P1
+    role_key: encargado_operativo
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-EJEC-EJEC-001
+    as_a: Ejecutor
+    i_want: Ingresar transacciones de gasto
+    so_that: Documento ejecución
+    priority: P1
+    role_key: ejecutor
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-EJEC-002
+    as_a: Ministro de Fe
+    i_want: Certificar autenticidad de documentos
+    so_that: Formalizo rendición
+    priority: P0
+    role_key: ministro_de_fe
+    nfr_refs: ['NFR-FEA', 'NFR-GIS']
+    origin: legacy
+  - id: US-EJEC-EJEC-004
+    as_a: Ejecutor
+    i_want: Crear informe de regularización de mora
+    so_that: Documento recuperación
+    priority: P1
+    role_key: ejecutor
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-MUNI-005
+    as_a: Unidad Formuladora Municipal
+    i_want: Verificar elegibilidad comunal para FRIL
+    so_that: Confirmo criterio
+    priority: P1
+    role_key: unidad_formuladora_municipal
+    nfr_refs: []
+    origin: legacy
+  - id: US-EJEC-PER-001
+    as_a: Periodista
+    i_want: Cubrir hito comunicacional de inicio/entrega de obra
+    so_that: Difundo logros
+    priority: P1
+    role_key: periodista
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EJEC-PER-002
+    as_a: Periodista
+    i_want: Entrevistar beneficiarios de proyectos ejecutados
+    so_that: Genero testimonios de impacto
+    priority: P2
+    role_key: periodista
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EVOL-H-002
+    as_a: Operador de Sistema
+    i_want: Declarar cambio de Estado de Salud (Gate)
+    so_that: Formalizo transiciones
+    priority: P0
+    role_key: operador_de_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-TRAY-002
+    as_a: Operador de Sistema
+    i_want: Ajustar umbrales de riesgo
+    so_that: Calibro sensibilidad de alertas
+    priority: P1
+    role_key: operador_de_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-PILOT-001
+    as_a: Líder Técnico
+    i_want: Activar pilotos de autonomía (M6)
+    so_that: Pruebo nuevas capacidades
+    priority: P1
+    role_key: líder_técnico
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-PILOT-002
+    as_a: Líder Técnico
+    i_want: Escalar configuración a nueva división
+    so_that: Expando funcionalidades
+    priority: P1
+    role_key: líder_técnico
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-PILOT-003
+    as_a: Líder Técnico
+    i_want: Crear retrospectiva de sistema
+    so_that: Documento aprendizajes
+    priority: P1
+    role_key: líder_técnico
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-PLAY-001
+    as_a: Operador de Sistema
+    i_want: Ejecutar playbook de remediación
+    so_that: Respondo a problemas conocidos
+    priority: P1
+    role_key: operador_de_sistema
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EVOL-PLAY-002
+    as_a: Operador de Sistema
+    i_want: Ver monitor de progreso de playbooks
+    so_that: Sigo ejecución de remediaciones
+    priority: P1
+    role_key: operador_de_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-GOV-001
+    as_a: Comité de Gobierno
+    i_want: Aprobar cambios críticos (Gobierno)
+    so_that: Controlo cambios mayores
+    priority: P0
+    role_key: comité_de_gobierno
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-GOV-002
+    as_a: Comité de Gobierno
+    i_want: Realizar arbitraje de prioridades (RICE)
+    so_that: Optimizo recursos
+    priority: P1
+    role_key: comité_de_gobierno
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-DT-002
+    as_a: Líder Técnico
+    i_want: Planificar evolución de schema (migraciones)
+    so_that: Evoluciono el modelo de datos
+    priority: P1
+    role_key: líder_técnico
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-KB-007
+    as_a: Agente KODA
+    i_want: tener acceso a plantillas normativas validadas por otros GOREs
+    so_that: asisto en la generación rápida de documentos de cumplimiento
+    priority: P1
+    role_key: agente_koda
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EVOL-KB-008
+    as_a: Desarrollador Sistema
+    i_want: Registrar el patrón técnico y administrativo de links de verificación
+    so_that: Estandarizo la reducción de papel en resoluciones
+    priority: P2
+    role_key: desarrollador_sistema
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EVOL-AO-018
+    as_a: Coordinador Transformación Digital GORE
+    i_want: Inventariar los sistemas y tecnologías usados por municipios
+    so_that: Identifico compatibilidades para la federación
+    priority: P1
+    role_key: coordinador_transformación_digital_gore
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-PUENTE-001
+    as_a: Monitor de Sistema
+    i_want: Integrar el cumplimiento TDE como una variable del Health Score
+    so_that: La salud organizacional refleja el cumplimiento legal
+    priority: P0
+    role_key: monitor_de_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-AI-001
+    as_a: Comité de Ética
+    i_want: Recibir un reporte automático de sesgo en los modelos predictivos (FENIX/D-SEG)
+    so_that: Evito discriminación automatizada y cumplo Ley de Protección de Datos
+    priority: P0
+    role_key: comité_de_ética
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-EVOL-AI-002
+    as_a: Agente KODA
+    i_want: Registrar en un log inmutable cada decisión tomada por un agente autónomo
+    so_that: Garantizo la explicabilidad (XAI) ante auditorías
+    priority: P0
+    role_key: agente_koda
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-EVOL-CHAOS-001
+    as_a: Ingeniero SRE
+    i_want: Simular la caída controlada de un servicio crítico (ej: Plataforma Ley Lobby)
+    so_that: Verifico que los protocolos de contingencia manual se activen
+    priority: P2
+    role_key: ingeniero_sre
+    nfr_refs: []
+    origin: legacy
+  - id: US-EVOL-CHAOS-002
+    as_a: Jefe DIPIR
+    i_want: Simular un recorte presupuestario masivo (-30%) en el sistema
+    so_that: Identifico qué proyectos se pueden postergar automáticamente
+    priority: P1
+    role_key: jefe_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-001
+    as_a: Formulador Externo
+    i_want: Ver convocatorias abiertas (FRPD, 8%, FRIL) vs Ventanilla Abierta (SNI)
+    so_that: Identifico el mecanismo apropiado para mi proyecto
+    priority: P0
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-002
+    as_a: Formulador Externo
+    i_want: Navegar árbol de decisión (SNI/FRIL/FRPD/8%/Glosa06)
+    so_that: Selecciono el mecanismo correcto según características del proyecto
+    priority: P0
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-003
+    as_a: Formulador Externo
+    i_want: Ver lista de documentos obligatorios según mecanismo seleccionado
+    so_that: Preparo correctamente la postulación
+    priority: P0
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-004
+    as_a: Formulador Externo
+    i_want: Cargar postulación IPR con antecedentes digitalizados
+    so_that: Ingreso formalmente mi proyecto al sistema
+    priority: P0
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-005
+    as_a: Formulador Externo
+    i_want: Recibir notificación de observaciones de admisibilidad (plazo 60d)
+    so_that: Puedo subsanar a tiempo
+    priority: P0
+    role_key: formulador_externo
+    nfr_refs: ['NFR-GIS', 'NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-IPR-006
+    as_a: Formulador Externo
+    i_want: Subsanar observaciones sin trámite presencial
+    so_that: Agilizo el proceso de admisibilidad
+    priority: P1
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-007
+    as_a: Formulador Externo
+    i_want: Consultar estado de mi postulación en tiempo real (timeline visual)
+    so_that: Tengo visibilidad del avance del trámite
+    priority: P0
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-008
+    as_a: Formulador Externo
+    i_want: Ver historial de postulaciones con tasa de éxito
+    so_that: Mejoro mis futuras postulaciones
+    priority: P2
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-009
+    as_a: Formulador Externo
+    i_want: Verificar elegibilidad municipal FRIL (<5000 UTM)
+    so_that: Confirmo que mi proyecto califica
+    priority: P0
+    role_key: formulador_externo
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-014
+    as_a: Entidad Ejecutora
+    i_want: Solicitar modificación (Plazo, Monto, Reitemización)
+    so_that: Ajusto el proyecto según necesidades
+    priority: P1
+    role_key: entidad_ejecutora
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-015
+    as_a: Entidad Ejecutora
+    i_want: Reintegrar saldos no ejecutados
+    so_that: Cumplo con devolución de recursos
+    priority: P0
+    role_key: entidad_ejecutora
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-IPR-017
+    as_a: Entidad Ejecutora
+    i_want: Subir Acta Entrega Terreno / Inicio Obras
+    so_that: Registro el hito de inicio formal
+    priority: P0
+    role_key: entidad_ejecutora
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-IPR-018
+    as_a: Entidad Ejecutora
+    i_want: Solicitar Recepción Provisoria/Definitiva de Obras
+    so_that: Cierro formalmente la ejecución
+    priority: P0
+    role_key: entidad_ejecutora
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-019
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar admisibilidad formal con checklist documental
+    so_that: Verifico completitud de la postulación
+    priority: P0
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-020
+    as_a: Analista Preinversión DIPIR
+    i_want: Revisar Perfil/Prefactibilidad según metodología MDSF
+    so_that: Preparo el proyecto para evaluación externa
+    priority: P0
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-021
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar Perfil de programa (Pertinencia DIPRES)
+    so_that: Verifico viabilidad programática
+    priority: P0
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-022
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar Diseño con Marco Lógico detallado
+    so_that: Verifico calidad del diseño programático
+    priority: P0
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-023
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar proyectos <5000 UTM o Conservación (simplificado)
+    so_that: Proceso rápido para proyectos menores
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-024
+    as_a: Analista Preinversión DIPIR
+    i_want: Preparar Oficio Solicitud Evaluación (MDSF/DIPRES)
+    so_that: Envío formal a evaluador externo
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-025
+    as_a: Analista Preinversión DIPIR
+    i_want: Registrar resultado evaluación externa (RS/RF/AD/OT)
+    so_that: Actualizo el estado del proyecto
+    priority: P0
+    role_key: analista_preinversión_dipir
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-PPTO-001
+    as_a: Analista Presupuesto DAF
+    i_want: Emitir CDP (Certificado Disponibilidad Presupuestaria)
+    so_that: Reservo fondos para el compromiso
+    priority: P0
+    role_key: analista_presupuesto_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-002
+    as_a: Analista Presupuesto DAF
+    i_want: Tramitar Resolución/Decreto Identificatorio (DIPRES/CGR)
+    so_that: Formalizo la asignación presupuestaria
+    priority: P0
+    role_key: analista_presupuesto_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-003
+    as_a: Analista Presupuesto DAF
+    i_want: Elaborar Convenio de Transferencia (Borrador)
+    so_that: Preparo el instrumento de transferencia
+    priority: P1
+    role_key: analista_presupuesto_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-004
+    as_a: Analista Presupuesto DAF
+    i_want: Gestionar firmas Convenio (Gore - Ejecutor)
+    so_that: Obtengo firmas de ambas partes
+    priority: P1
+    role_key: analista_presupuesto_daf
+    nfr_refs: ['NFR-FEA']
+    origin: legacy
+  - id: US-FIN-PPTO-005
+    as_a: Analista Presupuesto DAF
+    i_want: Devengar obligación (Hito exigible / Tramitación completa)
+    so_that: Habilito el pago al ejecutor
+    priority: P0
+    role_key: analista_presupuesto_daf
+    nfr_refs: ['NFR-SIGFE']
+    origin: legacy
+  - id: US-FIN-PPTO-006
+    as_a: Profesional DAF
+    i_want: Emitir CDP validando saldo en asignación
+    so_that: Evito compromisos sin respaldo
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-007
+    as_a: Profesional DAF
+    i_want: Consultar estado afectación por IPR
+    so_that: Verifico compromisos por proyecto
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-009
+    as_a: Profesional DAF
+    i_want: Recibir alertas de glosas infringidas (03/04/06)
+    so_that: Evito incumplimientos normativos
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-PPTO-010
+    as_a: Profesional DAF
+    i_want: Usar asistente para modificaciones presupuestarias
+    so_that: Gestiono cambios correctamente
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-011
+    as_a: Profesional DAF
+    i_want: Ver proyección vs programa caja con alertas >5%
+    so_that: Anticipo desfases de caja
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-PPTO-012
+    as_a: Profesional DAF
+    i_want: Gestionar cierre deuda flotante por programa/subtítulo
+    so_that: Cierro correctamente el ejercicio
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-CONV-001
+    as_a: Profesional DAF
+    i_want: Generar convenios desde plantillas por tipo ejecutor
+    so_that: Estandarizo documentos
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-CONV-002
+    as_a: Profesional DAF
+    i_want: Ver lista convenios por estado con filtros
+    so_that: Gestiono cartera de convenios
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-CONV-003
+    as_a: Profesional DAF
+    i_want: Recibir alertas de convenios por vencer (prórroga/cierre)
+    so_that: Actúo antes del vencimiento
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-CONV-004
+    as_a: Profesional DAF
+    i_want: Registrar cuotas de transferencia (calendario)
+    so_that: Controlo desembolsos
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-CONV-005
+    as_a: Profesional DAF
+    i_want: Controlar garantías con alertas de vencimiento
+    so_that: Evito pérdida de garantías
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: ['NFR-GIS', 'NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-REND-003
+    as_a: Encargado Rendiciones
+    i_want: Generar informe aprobación para Jefe DAF
+    so_that: Documento la revisión
+    priority: P0
+    role_key: encargado_rendiciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-REND-005
+    as_a: Analista Operativo Transferencias
+    i_want: Verificar elegibilidad ejecutor (bloqueo Art.18)
+    so_that: Evito transferencias a ejecutores inhabilitados
+    priority: P0
+    role_key: analista_operativo_transferencias
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-REND-008
+    as_a: Unidad Contabilidad Rendiciones
+    i_want: Recibir alertas automáticas de bloqueo Art.18
+    so_that: Evito transferencias a morosos
+    priority: P0
+    role_key: unidad_contabilidad_rendiciones
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-GEST-002
+    as_a: Analista Gestión DIPIR
+    i_want: Evaluar Solicitud de Modificación (Informe Técnico)
+    so_that: Fundamento la decisión
+    priority: P1
+    role_key: analista_gestión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-GEST-003
+    as_a: Analista Gestión DIPIR
+    i_want: Gestionar Reevaluación (si supera 10% / cambio sustancial)
+    so_that: Cumplo con normativa de modificaciones
+    priority: P0
+    role_key: analista_gestión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-GEST-005
+    as_a: Analista Gestión DIPIR
+    i_want: Visar Cierre Técnico (Checklist recepción obras/programas)
+    so_that: Certifico culminación técnica
+    priority: P0
+    role_key: analista_gestión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-GEST-006
+    as_a: Analista Gestión DIPIR
+    i_want: Recibir alertas de IPR >30 días sin movimiento
+    so_that: Gestiono proyectos estancados
+    priority: P1
+    role_key: analista_gestión_dipir
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-SUP-001
+    as_a: Municipio
+    i_want: Agendar una hora de soporte con un analista contable (virtual/presencial)
+    so_that: Aclare dudas complejas sobre rendiciones y evite rechazos
+    priority: P1
+    role_key: municipio
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-JEF-002
+    as_a: Jefe DIPIR
+    i_want: Ver distribución de carga por analista con métricas de tiempos
+    so_that: Balanceo trabajo del equipo
+    priority: P1
+    role_key: jefe_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-JEF-003
+    as_a: Jefe DIPIR
+    i_want: Ver problemas críticos escalados en lista priorizada
+    so_that: Gestiono lo urgente primero
+    priority: P0
+    role_key: jefe_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-JEF-004
+    as_a: Jefe DIPIR
+    i_want: Ver propuesta de priorización (ranking ERD/urgencia/monto)
+    so_that: Optimizo uso de recursos
+    priority: P0
+    role_key: jefe_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRIL-001
+    as_a: Analista FRIL DIPIR
+    i_want: Configurar Marcos Presupuestarios (Cuota por Comuna)
+    so_that: Controlo asignación comunal
+    priority: P0
+    role_key: analista_fril_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRIL-002
+    as_a: Analista FRIL DIPIR
+    i_want: Validar proyecto contra saldo de marco comunal (bloqueo automático)
+    so_that: Evito excesos de cuota
+    priority: P0
+    role_key: analista_fril_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRIL-003
+    as_a: Analista FRIL DIPIR
+    i_want: Emitir RATE FRIL (RS, FI, OT, NV)
+    so_that: Documento resultado de evaluación
+    priority: P0
+    role_key: analista_fril_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRPD-001
+    as_a: Comité FRPD
+    i_want: Validar alineación con Ejes (Sustentabilidad, Innovación)
+    so_that: Aseguro pertinencia estratégica
+    priority: P0
+    role_key: comité_frpd
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRPD-002
+    as_a: Analista Fomento
+    i_want: Evaluar admisibilidad de beneficiario (Empresa/Gremio)
+    so_that: Verifico elegibilidad
+    priority: P0
+    role_key: analista_fomento
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-SUB-001
+    as_a: Analista 8%
+    i_want: >-
+      Ejecutar check automático de inhabilidades (Cruce RUT Directiva vs
+      Funcionarios)
+    so_that: Evito conflictos de interés
+    priority: P0
+    role_key: analista_8%
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-SUB-002
+    as_a: Analista 8%
+    i_want: Evaluar Admisibilidad Estricta (Vigencia PJ, Directorio)
+    so_that: Verifico requisitos formales
+    priority: P0
+    role_key: analista_8%
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-SUB-003
+    as_a: Analista 8%
+    i_want: Aplicar pauta de evaluación ciega (doble ciego opcional)
+    so_that: Aseguro objetividad
+    priority: P1
+    role_key: analista_8%
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-SUB-004
+    as_a: Analista 8%
+    i_want: Generar nómina de adjudicación para CORE
+    so_that: Preparo aprobación colegiada
+    priority: P0
+    role_key: analista_8%
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-C33-001
+    as_a: Analista Operaciones C33
+    i_want: Ejecutar Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
+    so_that: Respondo a urgencias
+    priority: P0
+    role_key: analista_operaciones_c33
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-C33-002
+    as_a: Analista Operaciones C33
+    i_want: Validar tipología Activo (Vehículo, Maquinaria, Equipo)
+    so_that: Clasifico correctamente
+    priority: P1
+    role_key: analista_operaciones_c33
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FORM-001
+    as_a: DIPIR
+    i_want: Elaborar proyecto presupuesto inversiones alineado con ERD
+    so_that: Preparo propuesta anual
+    priority: P0
+    role_key: dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FORM-002
+    as_a: DIPIR
+    i_want: Coordinar ARI con servicios vía Chileindica (plazo primeros 4 meses)
+    so_that: Consolido inversión regional
+    priority: P0
+    role_key: dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-APR-001
+    as_a: Gobernador
+    i_want: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
+    so_that: Cumplo con obligación legal
+    priority: P0
+    role_key: gobernador
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPR-001
+    as_a: Analista DAE PPR
+    i_want: Evaluar Track A (Transferencia) y emitir ITF
+    so_that: Habilito transferencia a ejecutor
+    priority: P0
+    role_key: analista_dae_ppr
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPR-002
+    as_a: Analista DAE PPR
+    i_want: Evaluar Track B (Ejecución Directa) con Matriz Marco Lógico rigurosa
+    so_that: Aseguro calidad programática
+    priority: P0
+    role_key: analista_dae_ppr
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-GOB-001
+    as_a: Comité Directivo Regional
+    i_want: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
+    so_that: Filtro estratégico antes de evaluación técnica
+    priority: P0
+    role_key: comité_directivo_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-GOB-004
+    as_a: Oficial de Partes
+    i_want: Recepcionar Oficio Ingreso IPR (Timbre digital/físico)
+    so_that: Inicio trazabilidad documental
+    priority: P0
+    role_key: oficial_de_partes
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-CTRL-001
+    as_a: Profesional DAF
+    i_want: Generar reportes estandarizados para DIPRES
+    so_that: Cumplo con obligaciones de reporte
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FORM-003
+    as_a: Profesional DAF
+    i_want: Proyectar gastos de funcionamiento (Subtítulo 21-22)
+    so_that: Planifico el presupuesto operacional
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FORM-004
+    as_a: Profesional DAF
+    i_want: Verificar clasificador presupuestario vigente
+    so_that: Uso códigos correctos
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FORM-005
+    as_a: Profesional DAF
+    i_want: Crear provisiones presupuestarias para FRIL/FRPD
+    so_that: Reservo fondos por concurso
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-MOD-002
+    as_a: Profesional DAF
+    i_want: Validar modificaciones que no requieren CORE
+    so_that: Agilizo trámites menores
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-017
+    as_a: Profesional DAF
+    i_want: Gestionar presupuesto de cometidos y viáticos
+    so_that: Controlo gastos de personal
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-019
+    as_a: Jefe DAF
+    i_want: Proyectar deuda flotante a fin de año
+    so_that: Planifico cierre de ejercicio
+    priority: P1
+    role_key: jefe_daf
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-PPTO-020
+    as_a: Jefe DAF
+    i_want: Visar resoluciones de cometidos funcionarios
+    so_that: Autorizo viáticos
+    priority: P1
+    role_key: jefe_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-026
+    as_a: Analista Gestión DIPIR
+    i_want: Gestionar devolución de garantías a ejecutores
+    so_that: Libero garantías correctamente
+    priority: P1
+    role_key: analista_gestión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-027
+    as_a: Analista Preinversión DIPIR
+    i_want: Ver bandeja de postulaciones ordenada FIFO
+    so_that: Proceso en orden de llegada
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-029
+    as_a: Analista Preinversión DIPIR
+    i_want: Registrar observaciones técnicas (FI/OT)
+    so_that: Documento condiciones de aprobación
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-IPR-031
+    as_a: Analista Preinversión DIPIR
+    i_want: Generar carpeta digital para sesión CORE
+    so_that: Distribuyo antecedentes
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-032
+    as_a: Analista Gestión DIPIR
+    i_want: Exportar reportes para CGR/DIPRES
+    so_that: Cumplo con obligaciones de reporte
+    priority: P0
+    role_key: analista_gestión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-033
+    as_a: Analista Gestión DIPIR
+    i_want: Gestionar vigencia de iniciativas en BIP
+    so_that: Mantengo cartera actualizada
+    priority: P1
+    role_key: analista_gestión_dipir
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-IPR-034
+    as_a: Jefe DIPIR
+    i_want: Ver tiempos promedio por fase del ciclo
+    so_that: Identifico cuellos de botella
+    priority: P1
+    role_key: jefe_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-035
+    as_a: Jefe DIPIR
+    i_want: Generar informes de gestión divisional
+    so_that: Reporto a autoridades
+    priority: P1
+    role_key: jefe_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-036
+    as_a: Jefe DIPIR
+    i_want: Preparar información para CDR alineada con ERD
+    so_that: Apoyo decisiones estratégicas
+    priority: P1
+    role_key: jefe_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-037
+    as_a: Jefe DIPIR
+    i_want: Coordinar con MDSF/DIPRES casos complejos
+    so_that: Resuelvo obstáculos de evaluación
+    priority: P1
+    role_key: jefe_dipir
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-IPR-038
+    as_a: Jefe DIPIR
+    i_want: Configurar alertas y reglas del sistema
+    so_that: Personalizo monitoreo
+    priority: P2
+    role_key: jefe_dipir
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-REND-009
+    as_a: Encargado Rendiciones
+    i_want: Registrar envío de transferencia a ejecutor
+    so_that: Documento el desembolso
+    priority: P1
+    role_key: encargado_rendiciones
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-REND-014
+    as_a: Encargado Rendiciones
+    i_want: Verificar cumplimiento de hitos I+D+i (FRPD)
+    so_that: Valido productos de innovación
+    priority: P1
+    role_key: encargado_rendiciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-REND-015
+    as_a: Encargado Rendiciones
+    i_want: Verificar medios de verificación de Subvención 8%
+    so_that: Valido cumplimiento de objetivos
+    priority: P1
+    role_key: encargado_rendiciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-REND-016
+    as_a: Encargado Rendiciones
+    i_want: Controlar tope 5% de gastos administrativos
+    so_that: Verifico cumplimiento de límite
+    priority: P1
+    role_key: encargado_rendiciones
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-REND-018
+    as_a: Encargado Rendiciones
+    i_want: Gestionar proceso de reintegro de fondos
+    so_that: Recupero saldos no ejecutados
+    priority: P0
+    role_key: encargado_rendiciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-REND-019
+    as_a: Encargado Rendiciones
+    i_want: Preparar antecedentes para Juicio de Cuentas CGR
+    so_that: Documento casos de incumplimiento
+    priority: P0
+    role_key: encargado_rendiciones
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRIL-004
+    as_a: Analista FRIL DIPIR
+    i_want: Controlar tope de 2000 UTM por proyecto
+    so_that: Verifico límite normativo
+    priority: P0
+    role_key: analista_fril_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRPD-003
+    as_a: Analista Fomento
+    i_want: Validar porcentaje de co-financiamiento
+    so_that: Verifico aporte del beneficiario
+    priority: P1
+    role_key: analista_fomento
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-FRPD-004
+    as_a: Comité FRPD
+    i_want: Generar ranking de competitividad de proyectos
+    so_that: Priorizo adjudicación
+    priority: P0
+    role_key: comité_frpd
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPR-003
+    as_a: Analista DAE PPR
+    i_want: Verificar que no existe fraccionamiento de programas
+    so_that: Evito sobrepaso de topes
+    priority: P0
+    role_key: analista_dae_ppr
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FIN-PPR-004
+    as_a: Analista DAE PPR
+    i_want: Presentar programas al Comité de Pertinencia
+    so_that: Obtengo validación colegiada
+    priority: P1
+    role_key: analista_dae_ppr
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPR-005
+    as_a: Ejecutor PPR
+    i_want: Presentar Declaración Jurada Art.18
+    so_that: Habilito transferencia
+    priority: P0
+    role_key: ejecutor_ppr
+    nfr_refs: ['NFR-FEA']
+    origin: legacy
+  - id: US-FIN-PPR-006
+    as_a: Ejecutor PPR
+    i_want: Visualizar estado de mi programa en el ciclo
+    so_that: Tengo visibilidad del avance
+    priority: P1
+    role_key: ejecutor_ppr
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-SUB-005
+    as_a: Organización Postulante
+    i_want: Postular a Subvención 8% en línea
+    so_that: Accedo a fondos concursables
+    priority: P1
+    role_key: organización_postulante
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-039
+    as_a: Analista Preinversión DIPIR
+    i_want: Verificar cumplimiento de Requisitos de Información (ARI)
+    so_that: Valido admisibilidad
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-040
+    as_a: Analista Preinversión DIPIR
+    i_want: Solicitar antecedentes adicionales al formulador
+    so_that: Completo la evaluación
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-041
+    as_a: Analista Preinversión DIPIR
+    i_want: Generar ficha IDI (Iniciativa de Inversión) para Mideso
+    so_that: Postulo al banco de proyectos
+    priority: P0
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-SEC-001
+    as_a: Analista Sectorial
+    i_want: Evaluar pertinencia técnica de proyectos sectoriales
+    so_that: Valido alineamiento
+    priority: P0
+    role_key: analista_sectorial
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-SEC-002
+    as_a: Analista Sectorial
+    i_want: Participar en mesas técnicas con servicios públicos
+    so_that: Coordino inversión
+    priority: P1
+    role_key: analista_sectorial
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-PPTO-023
+    as_a: Profesional DAF
+    i_want: Cargar decreto de presupuesto inicial en sistema
+    so_that: Habilito la ejecución
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-024
+    as_a: Profesional DAF
+    i_want: Generar certificados de disponibilidad presupuestaria
+    so_that: Respaldo gastos
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: ['NFR-FEA']
+    origin: legacy
+  - id: US-FIN-PPTO-026
+    as_a: Profesional DAF
+    i_want: Devengar gastos asociados a facturas recibidas
+    so_that: Registro la obligación
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-C33-005
+    as_a: Encargado Circular 33
+    i_want: Gestionar adquisición de activos vía Circular 33
+    so_that: Ejecuto presupuesto C33
+    priority: P1
+    role_key: encargado_circular_33
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-PPTO-028
+    as_a: Profesional DAF
+    i_want: Aplicar reglas de devengo diferenciado según tipo de transferencia
+    so_that: Cumplo instrucciones CGR
+    priority: P0
+    role_key: profesional_daf
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FIN-PPTO-029
+    as_a: Profesional DAF
+    i_want: Clasificar modificación por tipo y determinar acto administrativo (Res/DS)
+    so_that: Gestiono el trámite correcto
+    priority: P1
+    role_key: profesional_daf
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-042
+    as_a: Analista Preinversión DIPIR
+    i_want: Tramitar modificaciones de proyecto (evaluar si requiere RS/CORE)
+    so_that: Gestiono cambios de alcance
+    priority: P1
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-FIN-IPR-043
+    as_a: Analista Preinversión DIPIR
+    i_want: Validar cierre técnico del proyecto (acta recepción, saldos)
+    so_that: Cierro iniciativa BIP
+    priority: P0
+    role_key: analista_preinversión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-SCG-001
+    as_a: Jefe de División
+    i_want: Definir Plan Operativo Anual (POA) divisional alineado con objetivos ERD
+    so_that: Aseguro coherencia entre planificación estratégica y operativa
+    priority: P0
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-SCG-002
+    as_a: Administrador Regional
+    i_want: Monitorear indicadores de desempeño de todas las divisiones
+    so_that: Identifico desviaciones y tomo acciones correctivas oportunas
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-SCG-003
+    as_a: Administrador Regional
+    i_want: Generar reporte mensual de gestión institucional
+    so_that: Informo al Gobernador y CORE sobre el estado de la gestión
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-GEST-HG-002
+    as_a: Administrador Regional
+    i_want: Configurar umbrales de alerta para dimensiones de H_gore
+    so_that: Recibo notificaciones automáticas ante degradación
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-GEST-HG-003
+    as_a: Jefe de División
+    i_want: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
+    so_that: Identifico causas raíz de degradación en mi área
+    priority: P1
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-PB-001
+    as_a: Administrador Regional
+    i_want: Ejecutar playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
+    so_that: Recupero la salud institucional en 7-14 días
+    priority: P0
+    role_key: administrador_regional
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GEST-PB-002
+    as_a: Administrador Regional
+    i_want: Ejecutar playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
+    so_that: Gestiono brechas de expectativas antes de que escalen
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-PB-003
+    as_a: Encargado de Control de Gestión
+    i_want: Registrar resultados de ejecución de playbooks
+    so_that: Genero base de conocimiento para mejora continua
+    priority: P1
+    role_key: encargado_de_control_de_gestión
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GEST-UCI-002
+    as_a: Jefe Unidad de Control
+    i_want: Monitorear efectividad de controles internos
+    so_that: Aseguro que los controles mitigan los riesgos identificados
+    priority: P1
+    role_key: jefe_unidad_de_control
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-GEST-MC-001
+    as_a: Funcionario GORE
+    i_want: Registrar una oportunidad de mejora en procesos o servicios
+    so_that: Contribuyo a la mejora continua institucional
+    priority: P1
+    role_key: funcionario_gore
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GEST-MC-002
+    as_a: Encargado de Control de Gestión
+    i_want: Ejecutar ciclo PDCA para iniciativas de mejora priorizadas
+    so_that: Implemento mejoras de manera sistemática y medible
+    priority: P1
+    role_key: encargado_de_control_de_gestión
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-PER-002
+    as_a: Encargado RRHH
+    i_want: Gestionar proceso de inducción de nuevos funcionarios
+    so_that: Aseguro integración efectiva y productiva
+    priority: P1
+    role_key: encargado_rrhh
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-PROC-001
+    as_a: Funcionario GORE
+    i_want: Gestionar expedientes digitales con trazabilidad completa
+    so_that: Cumplo con Ley 21.180 de Transformación Digital
+    priority: P0
+    role_key: funcionario_gore
+    nfr_refs: ['NFR-FEA']
+    origin: legacy
+  - id: US-GEST-COORD-002
+    as_a: Administrador Regional
+    i_want: Coordinar acciones con Delegado Presidencial Regional
+    so_that: Alineo gestión GORE con gobierno interior
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GEST-COORD-003
+    as_a: Administrador Regional
+    i_want: Gestionar relación institucional con municipios de la región
+    so_that: Facilito colaboración y ejecución de proyectos conjuntos
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-CORE-001
+    as_a: Consejero Regional
+    i_want: Recibir carpeta digital de sesión (notificación + docs)
+    so_that: Preparo mi participación
+    priority: P0
+    role_key: consejero_regional
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-GOB-CORE-002
+    as_a: Consejero Regional
+    i_want: Ver fichas resumen ejecutivo (1 página por IPR)
+    so_that: Evalúo rápidamente los proyectos
+    priority: P1
+    role_key: consejero_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-CORE-003
+    as_a: Consejero Regional
+    i_want: Ver proyectos de mi circunscripción (mapa territorial)
+    so_that: Focalizo en mi representación
+    priority: P1
+    role_key: consejero_regional
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GOB-CORE-004
+    as_a: Consejero Regional
+    i_want: Ver mapa de inversiones (geolocalización + filtros)
+    so_that: Visualizo distribución territorial
+    priority: P0
+    role_key: consejero_regional
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GOB-CORE-006
+    as_a: Consejero Regional
+    i_want: Ver historial de votaciones (resultado y acuerdo)
+    so_that: Consulto decisiones pasadas
+    priority: P1
+    role_key: consejero_regional
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GOB-CORE-007
+    as_a: Consejero Regional
+    i_want: Ver cumplimiento de acuerdos (estado/evidencia)
+    so_that: Fiscalizo ejecución del ejecutivo
+    priority: P0
+    role_key: consejero_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-CORE-008
+    as_a: Consejero Regional
+    i_want: Acceder a portal de transparencia Glosa 16
+    so_that: Cumplo con obligación de publicidad
+    priority: P0
+    role_key: consejero_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-CORE-009
+    as_a: Consejero Regional
+    i_want: Solicitar antecedentes adicionales sobre proyectos en tabla
+    so_that: Tomo decisiones informadas
+    priority: P1
+    role_key: consejero_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-CORE-010
+    as_a: Consejero Regional
+    i_want: Acceder a actas de sesiones anteriores
+    so_that: Consulto decisiones previas
+    priority: P1
+    role_key: consejero_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-CORE-011
+    as_a: Secretario Ejecutivo CORE
+    i_want: Habilitar simulación de quórum antes de la votación real
+    so_that: Verifico si tengo los votos necesarios para aprobar (Sunny/Rainy Day)
+    priority: P2
+    role_key: secretario_ejecutivo_core
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-001
+    as_a: Gobernador Regional
+    i_want: Formular políticas de desarrollo regional (ERD/PROT/ZUBC)
+    so_that: Defino rumbo estratégico
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-002
+    as_a: Gobernador Regional
+    i_want: Proponer distribución FNDR/ISAR (presupuesto al CORE)
+    so_that: Priorizo inversión regional
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-004
+    as_a: Gobernador Regional
+    i_want: Presidir sesiones CORE (voto dirimente, tabla)
+    so_that: Dirijo el órgano colegiado
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-005
+    as_a: Gobernador Regional
+    i_want: Coordinar respuesta a emergencias (Comité Gestión Riesgos)
+    so_that: Lidero la respuesta regional
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-008
+    as_a: Gobernador Regional
+    i_want: Proponer declaración de zonas rezagadas
+    so_that: Focalizo inversión en áreas prioritarias
+    priority: P1
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-009
+    as_a: Gobernador Regional
+    i_want: Gestionar nombramiento y remoción de directivos regionales
+    so_that: Ejerzo atribuciones de autoridad
+    priority: P1
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-010
+    as_a: Gobernador Regional
+    i_want: Representar al GORE ante autoridades nacionales e internacionales
+    so_that: Gestiono relaciones institucionales
+    priority: P1
+    role_key: gobernador_regional
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GOB-GR-012
+    as_a: Gobernador Regional
+    i_want: Velar por probidad y transparencia institucional
+    so_that: Cumplo con obligaciones éticas
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-013
+    as_a: Gobernador Regional
+    i_want: Presidir Comité Regional de Infraestructura y Ordenamiento
+    so_that: Coordino grandes obras
+    priority: P1
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GR-014
+    as_a: Gobernador Regional
+    i_want: Impulsar convenios de programación con ministerios
+    so_that: Apalanco recursos sectoriales
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GAB-001
+    as_a: Gabinete
+    i_want: Gestionar agenda GR (reuniones, giras, audiencias)
+    so_that: Organizo el tiempo de la autoridad
+    priority: P1
+    role_key: gabinete
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GAB-003
+    as_a: Gabinete
+    i_want: Gestionar crisis comunicacionales y políticas
+    so_that: Respondo a contingencias
+    priority: P0
+    role_key: gabinete
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GAB-004
+    as_a: Gabinete
+    i_want: Coordinar articulación política con actores regionales
+    so_that: Gestiono relaciones estratégicas
+    priority: P1
+    role_key: gabinete
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GOB-GAB-005
+    as_a: Gabinete
+    i_want: Preparar minutas y briefs para autoridad
+    so_that: Apoyo la toma de decisiones
+    priority: P1
+    role_key: gabinete
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GAB-006
+    as_a: Gabinete
+    i_want: Coordinar relación con COSOC y sociedad civil
+    so_that: Fomento participación ciudadana
+    priority: P1
+    role_key: gabinete
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-SEC-001
+    as_a: Gabinete
+    i_want: Coordinar agenda con gabinetes sectoriales (Seremías)
+    so_that: Alineo agenda política
+    priority: P1
+    role_key: gabinete
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GAB-007
+    as_a: Encargado Relaciones Internacionales
+    i_want: Gestionar acuerdos y misiones con regiones extranjeras
+    so_that: Fomento la cooperación internacional descentralizada
+    priority: P1
+    role_key: encargado_relaciones_internacionales
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GOB-LOB-001
+    as_a: Sujeto Pasivo (Autoridad)
+    i_want: Registrar audiencias y viajes integrados con Infolobby
+    so_that: Cumplo con la Ley 20.730automáticamente
+    priority: P0
+    role_key: sujeto_pasivo_(autoridad)
+    nfr_refs: ['NFR-GIS', 'NFR-ALERT']
+    origin: legacy
+  - id: US-GOB-LOB-002
+    as_a: Funcionario
+    i_want: Recibir alertas para actualizar mi Declaración de Intereses y Patrimonio
+    so_that: Evito sanciones por incumplimiento de plazos (Ley 20.880)
+    priority: P0
+    role_key: funcionario
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-GOB-PART-001
+    as_a: Encargado Participación
+    i_want: Lanzar consultas ciudadanas digitales vinculadas a proyectos de inversión
+    so_that: Recojo la opinión validada de la ciudadanía (ClaveÚnica)
+    priority: P1
+    role_key: encargado_participación
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DESC-001
+    as_a: Gobernador Regional
+    i_want: Presentar expediente fundado al CORE para aprobación de transferencia
+    so_that: Inicio proceso de descentralización
+    priority: P1
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DESC-002
+    as_a: Gobernador Regional
+    i_want: Representar a la región ante Comité Interministerial
+    so_that: Obtengo competencias
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DESC-003
+    as_a: Gobernador Regional
+    i_want: Monitorear indicadores de desempeño de servicios traspasados
+    so_that: Valido la transferencia
+    priority: P1
+    role_key: gobernador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DESC-004
+    as_a: Encargado Competencias
+    i_want: Monitorear estado transferencia sectorial (SUBDERE)
+    so_that: Hago seguimiento del proceso
+    priority: P1
+    role_key: encargado_competencias
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DESC-005
+    as_a: Encargado Competencias
+    i_want: Elaborar plan de instalación de competencia transferida
+    so_that: Aseguro operatividad
+    priority: P1
+    role_key: encargado_competencias
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DESC-006
+    as_a: Encargado Competencias
+    i_want: Emitir informe final de proceso de instalación
+    so_that: Cierro el traspaso
+    priority: P1
+    role_key: encargado_competencias
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DESC-007
+    as_a: Encargado Competencias
+    i_want: Evaluar suficiencia de recursos financieros traspasados
+    so_that: Reclamo brechas financieras
+    priority: P0
+    role_key: encargado_competencias
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DEL-001
+    as_a: Delegado Presidencial Regional
+    i_want: Convocar a SEREMIS para alineamiento de políticas
+    so_that: Coordino gobierno interior
+    priority: P1
+    role_key: delegado_presidencial_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DEL-002
+    as_a: Delegado Presidencial Regional
+    i_want: Definir prioridades de inversión sectorial con Gobernador
+    so_that: Alineo inversión nacional/regional
+    priority: P1
+    role_key: delegado_presidencial_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DEL-003
+    as_a: Delegado Presidencial Regional
+    i_want: Resolver recursos jerárquicos administrativos
+    so_that: Ejerzo tutela administrativa
+    priority: P1
+    role_key: delegado_presidencial_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-DEL-004
+    as_a: Delegado Presidencial Regional
+    i_want: Coordinar gestión del orden público regional
+    so_that: Mantengo seguridad institucional
+    priority: P0
+    role_key: delegado_presidencial_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GRD-001
+    as_a: Comité Regional GRD
+    i_want: Sancionar el Plan Regional de Reducción del Riesgo
+    so_that: Formalizo la estrategia de GRD
+    priority: P1
+    role_key: comité_regional_grd
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GRD-002
+    as_a: Comité Regional GRD
+    i_want: Asegurar coherencia entre mapas de riesgo y ordenamiento territorial
+    so_that: Planifico con enfoque de riesgo
+    priority: P0
+    role_key: comité_regional_grd
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-GOB-GRD-003
+    as_a: Comité Regional GRD
+    i_want: Elaborar Plan Regional de Emergencia
+    so_that: Preparo respuesta a desastres
+    priority: P0
+    role_key: comité_regional_grd
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-GRD-004
+    as_a: Comité Regional GRD
+    i_want: Presidir sesiones del Comité de Mitigación
+    so_that: Coordino acciones preventivas
+    priority: P1
+    role_key: comité_regional_grd
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-OP-002
+    as_a: Oficial de Partes
+    i_want: Derivar antecedentes a DIPIR mediante ruta automática
+    so_that: Distribuyo la carga de trabajo
+    priority: P1
+    role_key: oficial_de_partes
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-GOB-OP-003
+    as_a: Encargado Oficina Partes
+    i_want: Digitalizar documentos físicos y guardarlos en un repositorio estructurado ad-hoc
+    so_that: Elimino el papel y centralizo la documentación
+    priority: P0
+    role_key: encargado_oficina_partes
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-OP-004
+    as_a: Sistema
+    i_want: Aplicar OCR automáticamente a todo documento digitalizado
+    so_that: Hago el contenido buscable y procesable por agentes
+    priority: P1
+    role_key: sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-OP-005
+    as_a: Agente Clasificador
+    i_want: Procesar la versión OCR para extraer entidades clave y pre-clasificar
+    so_that: Facilito la revisión humana
+    priority: P1
+    role_key: agente_clasificador
+    nfr_refs: []
+    origin: legacy
+  - id: US-GOB-OP-006
+    as_a: Sistema
+    i_want: Activar pipes de gestión específicos según la caracterización del documento
+    so_that: Automatizo el flujo de ingreso (IPR, Factura, Oficio)
+    priority: P0
+    role_key: sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-ACTO-001
+    as_a: Abogado Unidad Jurídica
+    i_want: Gestionar actos administrativos (decretos/resoluciones)
+    so_that: Aseguro validez jurídica de los actos
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-ACTO-002
+    as_a: Abogado Unidad Jurídica
+    i_want: Asesorar legalmente y revisar bases/convenios
+    so_that: Prevengo riesgos legales
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-ACTO-003
+    as_a: Abogado Unidad Jurídica
+    i_want: Tramitar actos ante CGR (toma de razón)
+    so_that: Cumplo con control preventivo
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-NORM-ACTO-004
+    as_a: Abogado Unidad Jurídica
+    i_want: Gestionar litigios y defensa judicial regional
+    so_that: Defiendo intereses del GORE
+    priority: P1
+    role_key: abogado_unidad_jurídica
+    nfr_refs: ['NFR-GIS', 'NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-ACTO-005
+    as_a: Abogado Unidad Jurídica
+    i_want: Supervisar cumplimiento normativo (sumarios)
+    so_that: Mantengo disciplina administrativa
+    priority: P1
+    role_key: abogado_unidad_jurídica
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-ACTO-006
+    as_a: Analista Gestión DIPIR
+    i_want: Clasificar convenio AFECTA/EXENTA según normativa CGR
+    so_that: Determino flujo de aprobación correcto
+    priority: P1
+    role_key: analista_gestión_dipir
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-ACTO-007
+    as_a: Abogado Unidad Jurídica
+    i_want: Visar borrador de acto administrativo (check atribuciones y presupuesto)
+    so_that: Valido antes de firma
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-ACTO-008
+    as_a: Abogado Unidad Jurídica
+    i_want: Devolver trámite con observaciones jurídicas para corrección
+    so_that: Corrijo antes de firma
+    priority: P1
+    role_key: abogado_unidad_jurídica
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-ACTO-009
+    as_a: Oficial de Partes / Oficial de Partes
+    i_want: Asignar folio único a Resolución/Decreto tras total tramitación
+    so_that: Formalizo el acto
+    priority: P0
+    role_key: oficial_de_partes_/_oficial_de_partes
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-ACTO-010
+    as_a: Oficial de Partes / Oficial de Partes
+    i_want: Notificar digitalmente a interesados y publicar en Transparencia
+    so_that: Cumplo con notificación y publicidad
+    priority: P1
+    role_key: oficial_de_partes_/_oficial_de_partes
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-ACTO-011
+    as_a: Oficial de Partes / Oficial de Partes
+    i_want: Recibir alerta de actos pendientes de firma >5 días
+    so_that: Gestiono demoras
+    priority: P2
+    role_key: oficial_de_partes_/_oficial_de_partes
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-ACTO-012
+    as_a: Ministro de Fe
+    i_want: Generar copia auténtica digital de actos originales
+    so_that: Proveo copias oficiales
+    priority: P1
+    role_key: ministro_de_fe
+    nfr_refs: ['NFR-FEA']
+    origin: legacy
+  - id: US-NORM-EXP-001
+    as_a: Administrador Sistema
+    i_want: Gestionar Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
+    so_that: Cumplo con Ley TDE
+    priority: P0
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-EXP-002
+    as_a: Administrador Sistema
+    i_want: Mantener índice electrónico del expediente (DS10)
+    so_that: Documento todas las actuaciones
+    priority: P0
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-EXP-003
+    as_a: Administrador Sistema
+    i_want: Registrar trazabilidad de acciones sobre expediente (DS10)
+    so_that: Garantizo auditoría
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-NORM-EXP-004
+    as_a: Administrador Sistema
+    i_want: Registrar eventos documentales (CERT_CORE, CREA_ASIG, APRUEBA_CONV, etc.)
+    so_that: Documento hitos del expediente
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-NORM-TRANS-001
+    as_a: Encargado Transparencia
+    i_want: Verificar transparencia activa mensual
+    so_that: Cumplo con Ley 20.285
+    priority: P1
+    role_key: encargado_transparencia
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-TRANS-002
+    as_a: Encargado Transparencia
+    i_want: Gestionar solicitudes OIRS/SAI integradas (respuesta 20 días hábiles)
+    so_that: Respondo en plazo legal
+    priority: P0
+    role_key: encargado_transparencia
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-TRANS-003
+    as_a: Encargado Transparencia
+    i_want: Gestionar amparos ante CPLT (preparar descargos)
+    so_that: Defiendo decisiones de denegación
+    priority: P1
+    role_key: encargado_transparencia
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-NORM-LOBBY-001
+    as_a: Encargado Transparencia
+    i_want: Verificar registros de audiencias y donativos
+    so_that: Cumplo con Ley de Lobby
+    priority: P0
+    role_key: encargado_transparencia
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-NORM-LOBBY-002
+    as_a: Encargado Transparencia
+    i_want: Coordinar nómina de sujetos pasivos
+    so_that: Identifico obligados a registrar
+    priority: P1
+    role_key: encargado_transparencia
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-DIP-001
+    as_a: Encargado Transparencia
+    i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
+    so_that: Aseguro cumplimiento de funcionarios
+    priority: P0
+    role_key: encargado_transparencia
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-CTRL-001
+    as_a: Jefe Unidad de Control
+    i_want: Recibir notificaciones de cruces entre evaluadores y postulantes
+    so_that: Prevengo conflictos de interés
+    priority: P0
+    role_key: jefe_unidad_de_control
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-CTRL-004
+    as_a: Jefe Unidad de Control
+    i_want: Informar hallazgos y recomendaciones al Gobernador y CORE
+    so_that: Escalo temas relevantes
+    priority: P1
+    role_key: jefe_unidad_de_control
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-CTRL-005
+    as_a: Fiscal Sumariante
+    i_want: Gestionar expediente disciplinario con reserva y plazos
+    so_that: Investigo faltas administrativas
+    priority: P2
+    role_key: fiscal_sumariante
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-CGR-001
+    as_a: CGR (Externo)
+    i_want: Recibir actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
+    so_that: Ejerzo control preventivo
+    priority: P0
+    role_key: cgr_(externo)
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-CGR-003
+    as_a: CGR (Externo)
+    i_want: Fiscalizar DIP detectando incumplimientos
+    so_that: Aseguro probidad
+    priority: P1
+    role_key: cgr_(externo)
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-CPLT-001
+    as_a: CPLT (Externo)
+    i_want: Requerir información en amparo (plazo legal)
+    so_that: Ejerzo tutela de acceso a información
+    priority: P1
+    role_key: cplt_(externo)
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-NORM-SIM-001
+    as_a: Abogado Revisor
+    i_want: Simular si una imputación presupuestaria cumple con las reglas de la Glosa vigente
+    so_that: Detecto rechazos probables antes de enviar a firma
+    priority: P1
+    role_key: abogado_revisor
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-CRIS-001
+    as_a: Encargado Transparencia
+    i_want: Gestionar un pico de solicitudes de información (>50 simultáneas) coordinado
+    so_that: Evito caer en silencio administrativo masivo
+    priority: P0
+    role_key: encargado_transparencia
+    nfr_refs: []
+    origin: legacy
+  - id: US-NORM-AI-001
+    as_a: Asistente Jurídico (Robot)
+    i_want: Generar borrador de resolución estándar (ej. cometido, feriado) basado en plantilla
+    so_that: Reduzco carga operativa de abogados
+    priority: P2
+    role_key: asistente_jurídico_(robot)
+    nfr_refs: []
+    origin: legacy
+  - id: US-OPS-MON-001
+    as_a: Administrador de Plataforma
+    i_want: Ver el panel de observabilidad con los 16 indicadores ORKO
+    so_that: Detecto proactivamente fallos o degradación del servicio
+    priority: P0
+    role_key: administrador_de_plataforma
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-OPS-INC-001
+    as_a: Soporte Técnico
+    i_want: Registrar y resolver incidentes siguiendo el ciclo SDA
+    so_that: Mantengo la continuidad operacional
+    priority: P0
+    role_key: soporte_técnico
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-OPS-SEC-001
+    as_a: Oficial de Seguridad (CISO)
+    i_want: Revisar logs de acceso y acciones críticas
+    so_that: Garantizo el cumplimiento de la Ley 21.663 (Ciberseguridad)
+    priority: P0
+    role_key: oficial_de_seguridad_(ciso)
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-OPS-PERF-001
+    as_a: Administrador Regional
+    i_want: Ver el O_Score de los procesos críticos
+    so_that: Identifico cuellos de botella y optimizo la eficiencia
+    priority: P1
+    role_key: administrador_regional
+    nfr_refs: []
+    origin: legacy
+  - id: US-OPS-BACK-001
+    as_a: Administrador de Plataforma
+    i_want: Asegurar políticas de backup y restauración
+    so_that: Protejo la integridad de los datos institucionales
+    priority: P1
+    role_key: administrador_de_plataforma
+    nfr_refs: []
+    origin: legacy
+  - id: US-OPS-IAC-001
+    as_a: Ingeniero de Plataforma
+    i_want: Provisionar y gestionar toda la infraestructura mediante código (Terraform)
+    so_that: Evito configuration drift y permito recuperación ante desastres
+    priority: P0
+    role_key: ingeniero_de_plataforma
+    nfr_refs: []
+    origin: legacy
+  - id: US-OPS-SRE-001
+    as_a: Sistema (Orquestador)
+    i_want: Escalar horizontalmente los pods según consumo de CPU/Memoria
+    so_that: Mantengo el rendimiento ante picos de demanda
+    priority: P1
+    role_key: sistema_(orquestador)
+    nfr_refs: []
+    origin: legacy
+  - id: US-OPS-FIN-001
+    as_a: FinOps Manager
+    i_want: Recibir alertas cuando el consumo proyectado exceda el presupuesto mensual
+    so_that: Evito sorpresas en la facturación de servicios en la nube
+    priority: P1
+    role_key: finops_manager
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-OPS-SRE-002
+    as_a: Robot Cert-Manager
+    i_want: Renovar automáticamente los certificados SSL/TLS antes de su expiración
+    so_that: Garantizo la continuidad del cifrado sin intervención humana
+    priority: P0
+    role_key: robot_cert-manager
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-PREV-001
+    as_a: Encargado Prevención
+    i_want: Visualizar mapa de calor delictual (integración STOP/SPD + Indicadores KB)
+    so_that: Focalizo intervenciones
+    priority: P0
+    role_key: encargado_prevención
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-SEG-PREV-003
+    as_a: Encargado Prevención
+    i_want: Coordinar sesiones del Consejo Regional de Seguridad Pública
+    so_that: Articulo gobernanza de seguridad
+    priority: P1
+    role_key: encargado_prevención
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-PREV-005
+    as_a: Analista Proyectos Seguridad
+    i_want: Evaluar admisibilidad técnica de proyectos de seguridad
+    so_that: Verifico requisitos técnicos
+    priority: P1
+    role_key: analista_proyectos_seguridad
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-PREV-006
+    as_a: Analista Proyectos Seguridad
+    i_want: Monitorear ejecución financiera de convenios con municipios
+    so_that: Controlo uso de recursos
+    priority: P1
+    role_key: analista_proyectos_seguridad
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-SEG-PREV-007
+    as_a: Analista Proyectos Seguridad
+    i_want: Gestionar programa de asistencia a víctimas (División Prevención)
+    so_that: Apoyo a afectados por delitos con recursos legales/psicosociales
+    priority: P0
+    role_key: analista_proyectos_seguridad
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-SEG-PREV-008
+    as_a: Asesor Técnico
+    i_want: Asesorar a municipios en la formulación de sus planes comunales de seguridad
+    so_that: Cumplo mandato legal de apoyo técnico
+    priority: P0
+    role_key: asesor_técnico
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-SEG-PREV-009
+    as_a: Jefe División Prevención
+    i_want: Mantener coordinación permanente con la Subsecretaría de Prevención del Delito
+    so_that: Aseguro coherencia con política nacional
+    priority: P1
+    role_key: jefe_división_prevención
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-SEG-PREV-010
+    as_a: Analista Prevención
+    i_want: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
+    so_that: Planifico patrullajes preventivos focalizados
+    priority: P2
+    role_key: analista_prevención
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-SEG-CIES-001
+    as_a: Operador CIES
+    i_want: Registrar alertas de cámaras, sensores o llamados (tipo, georreferencia)
+    so_that: Inicio respuesta coordinada
+    priority: P0
+    role_key: operador_cies
+    nfr_refs: ['NFR-GIS', 'NFR-ALERT']
+    origin: legacy
+  - id: US-SEG-CIES-003
+    as_a: Operador CIES
+    i_want: Tomar control manual de cámara PTZ ante incidente flagrante
+    so_that: Enfoco el evento
+    priority: P0
+    role_key: operador_cies
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-CIES-004
+    as_a: Operador CIES
+    i_want: >-
+      Recibir notificación automática de pórticos (patente robada) o
+      reconocimiento
+    so_that: Activo protocolo de búsqueda
+    priority: P0
+    role_key: operador_cies
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-SEG-CIES-006
+    as_a: Supervisor CIES
+    i_want: Asignar roles y escenarios en Videowall durante emergencia mayor
+    so_that: Coordino respuesta masiva
+    priority: P0
+    role_key: supervisor_cies
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-CIES-008
+    as_a: Supervisor CIES
+    i_want: Generar estadística de incidentes/horarios/zonas calientes
+    so_that: Analizo patrones
+    priority: P1
+    role_key: supervisor_cies
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-CIES-010
+    as_a: Supervisor CIES
+    i_want: Activar protocolo de protección de puntos críticos ante disturbios
+    so_that: Priorizo cámaras y recursos en zonas sensibles
+    priority: P0
+    role_key: supervisor_cies
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-SEG-EVID-001
+    as_a: Custodio Evidencia
+    i_want: Generar clip de video con marca de agua y hash de integridad
+    so_that: Preservo evidencia
+    priority: P0
+    role_key: custodio_evidencia
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-EVID-002
+    as_a: Custodio Evidencia
+    i_want: Habilitar link seguro (Genetec Clearance) por oficio judicial
+    so_that: Entrego evidencia formalmente
+    priority: P0
+    role_key: custodio_evidencia
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-SEG-EVID-003
+    as_a: Custodio Evidencia
+    i_want: Trazar quién accedió, visualizó o descargó evidencia (Logs inalterables)
+    so_that: Mantengo cadena de custodia
+    priority: P0
+    role_key: custodio_evidencia
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-GOB-002
+    as_a: COSOC / Comités
+    i_want: >-
+      Recibir y responder consultas sobre instrumentos de planificación (ERD,
+      PROT)
+    so_that: Participo en planificación regional
+    priority: P2
+    role_key: cosoc_/_comités
+    nfr_refs: []
+    origin: legacy
+  - id: US-SEG-GOB-004
+    as_a: Ciudadano
+    i_want: Reportar un incidente o foco delictual de manera anónima desde App/Web
+    so_that: Colaboro con la seguridad sin riesgo personal
+    priority: P1
+    role_key: ciudadano
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-TIC-001
+    as_a: Administrador TI
+    i_want: Asignar equipamiento tecnológico con acta digital
+    so_that: Documento la entrega de equipos
+    priority: P1
+    role_key: administrador_ti
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-TIC-002
+    as_a: Administrador TI
+    i_want: Gestionar identidad digital (ClaveÚnica/SSO)
+    so_that: Centralizo autenticación
+    priority: P0
+    role_key: administrador_ti
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-TIC-003
+    as_a: Administrador TI
+    i_want: Integrar DocDigital/FirmaGob
+    so_that: Habilito firma electrónica
+    priority: P0
+    role_key: administrador_ti
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-TIC-004
+    as_a: Administrador TI
+    i_want: Recibir alertas de ciberseguridad (CSIRT, Incidentes)
+    so_that: Respondo a amenazas
+    priority: P0
+    role_key: administrador_ti
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-AUTH-001
+    as_a: Desarrollador TI
+    i_want: >-
+      Integrar ClaveÚnica (OIDC Authorization Code Flow) con state, token desde
+      backend
+    so_that: Cumplo con DS9
+    priority: P0
+    role_key: desarrollador_ti
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-AUTH-002
+    as_a: Administrador TI
+    i_want: Gestionar credenciales ClaveÚnica por ambiente (sandbox/QA/producción)
+    so_that: Separo ambientes correctamente
+    priority: P1
+    role_key: administrador_ti
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-AUTH-003
+    as_a: Desarrollador TI
+    i_want: Implementar cierre de sesión ClaveÚnica con URIs registradas
+    so_that: Gestiono sesiones correctamente
+    priority: P1
+    role_key: desarrollador_ti
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-AUTH-004
+    as_a: Administrador TI
+    i_want: >-
+      Registrar trazabilidad de accesos autenticados (DS9) con timestamp
+      sincronizado
+    so_that: Mantengo auditoría de accesos
+    priority: P1
+    role_key: administrador_ti
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-AUTH-005
+    as_a: Administrador TI
+    i_want: >-
+      Habilitar autenticación de personas jurídicas (Clave Tributaria o
+      representante)
+    so_that: Atiendo a empresas
+    priority: P1
+    role_key: administrador_ti
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-AUTH-006
+    as_a: Coordinador Transformación Digital
+    i_want: Prohibir mecanismos propios de autenticación para ciudadanía
+    so_that: Cumplo con DS9
+    priority: P0
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-NOTIF-001
+    as_a: Desarrollador TI
+    i_want: Integrar Plataforma de Notificaciones del Estado (DS8)
+    so_that: Notifico electrónicamente
+    priority: P0
+    role_key: desarrollador_ti
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-NOTIF-002
+    as_a: Sistema
+    i_want: Resolver DDU del destinatario y aplicar canal correcto (DS8)
+    so_that: Notifico por el canal registrado
+    priority: P0
+    role_key: sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-NOTIF-003
+    as_a: Sistema
+    i_want: Enviar notificaciones vía API /notificador/sendMessage vía Nodo PISEE
+    so_that: Uso infraestructura estatal
+    priority: P1
+    role_key: sistema
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-NOTIF-004
+    as_a: Sistema
+    i_want: Consultar estado de notificación vía API o webhook
+    so_that: Verifico entrega
+    priority: P1
+    role_key: sistema
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-NOTIF-005
+    as_a: Sistema
+    i_want: Persistir constancia de notificación (codigo_tx, fechas) y asociar a IUIe
+    so_that: Mantengo trazabilidad
+    priority: P0
+    role_key: sistema
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-NOTIF-006
+    as_a: Sistema
+    i_want: Aplicar regla notificación practicada (3 días hábiles o lectura)
+    so_that: Calculo plazos correctamente
+    priority: P1
+    role_key: sistema
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-INTEROP-001
+    as_a: Coordinador Transformación Digital
+    i_want: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
+    so_that: Conecto con servicios estatales
+    priority: P0
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-INTEROP-002
+    as_a: Coordinador Transformación Digital
+    i_want: Registrar/administrar servicios en Catálogo de Servicios
+    so_that: Publico mis servicios
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-INTEROP-003
+    as_a: Coordinador Transformación Digital
+    i_want: Registrar trazabilidad central de transacciones interoperables
+    so_that: Audito intercambios
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-INTEROP-004
+    as_a: Coordinador Transformación Digital
+    i_want: Gestionar acuerdos previos antes de consumir servicios
+    so_that: Formalizo intercambios
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-INTEROP-005
+    as_a: Coordinador Transformación Digital
+    i_want: Gestionar consentimiento para datos sensibles (Gestor Autorizaciones)
+    so_that: Respeto privacidad
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-SEG-001
+    as_a: CISO
+    i_want: Mantener Política de Seguridad de la Información (DS7) aprobada
+    so_that: Cumplo con marco normativo
+    priority: P0
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-002
+    as_a: Autoridad
+    i_want: Designar y mantener Responsable de Seguridad (CISO)
+    so_that: Tengo accountability
+    priority: P0
+    role_key: autoridad
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-003
+    as_a: CISO
+    i_want: Clasificar activos de información según CIA
+    so_that: Priorizo protección
+    priority: P1
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-004
+    as_a: CISO
+    i_want: Reportar incidentes de seguridad a CSIRT MININT y ANCI
+    so_that: Notifico al Estado
+    priority: P0
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-005
+    as_a: CISO
+    i_want: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
+    so_that: Protejo información
+    priority: P1
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-006
+    as_a: CISO
+    i_want: Gestionar incidentes de seguridad (CSIRT)
+    so_that: Respondo a amenazas
+    priority: P0
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-007
+    as_a: CISO
+    i_want: Configurar políticas de acceso y roles (IAM)
+    so_that: Controlo accesos
+    priority: P0
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-008
+    as_a: CISO
+    i_want: Auditar logs de acceso a datos sensibles
+    so_that: Detecto anomalías
+    priority: P1
+    role_key: ciso
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-CALIDAD-001
+    as_a: Coordinador Transformación Digital
+    i_want: Mantener Catálogo de Plataformas con línea base
+    so_that: Documento sistemas
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-CALIDAD-002
+    as_a: Coordinador Transformación Digital
+    i_want: Elaborar Plan de Mejora Continua anual (DS11)
+    so_that: Planifico evolución
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-CALIDAD-003
+    as_a: Coordinador Transformación Digital
+    i_want: >-
+      Ejecutar Ciclo de Gestión de Calidad
+      (Elaboración/Formulación/Implementación/Evaluación)
+    so_that: Mejoro continuamente
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-CALIDAD-004
+    as_a: Coordinador Transformación Digital
+    i_want: Someter proyectos TIC con presupuesto a EvalTIC (gate)
+    so_that: Valido inversiones TIC
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-DPO-001
+    as_a: DPO
+    i_want: Gestionar Solicitudes ARCO (Acceso, Rectificación, Cancelación, Oposición)
+    so_that: Cumplo con derechos ciudadanos
+    priority: P0
+    role_key: dpo
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-DPO-003
+    as_a: DPO
+    i_want: Notificar brechas de datos a la Agencia
+    so_that: Cumplo con notificación obligatoria
+    priority: P1
+    role_key: dpo
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-DPO-005
+    as_a: DPO
+    i_want: >-
+      Mantener Registro de Actividades de Tratamiento (RAT) con campos mínimos
+      SGD
+    so_that: Demuestro accountability ante la Agencia
+    priority: P0
+    role_key: dpo
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-DPO-006
+    as_a: DPO
+    i_want: >-
+      Controlar ciclo de vida de datos personales: fuente, destinatarios,
+      conservación
+    so_that: Garantizo eliminación oportuna y trazo transferencias
+    priority: P1
+    role_key: dpo
+    nfr_refs: ['NFR-GIS', 'NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-DPO-007
+    as_a: DPO
+    i_want: >-
+      Definir y aplicar técnicas de anonimización o seudonimización para
+      analítica
+    so_that: Protejo identidad de titulares (minimización)
+    priority: P1
+    role_key: dpo
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-009
+    as_a: CISO
+    i_want: Ejecutar simulaciones de phishing para concientización
+    so_that: Educo a funcionarios
+    priority: P1
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-010
+    as_a: CISO
+    i_want: Auditar trazabilidad de accesos DS9
+    so_that: Verifico cumplimiento de autenticación
+    priority: P1
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-011
+    as_a: CISO
+    i_want: Aplicar privacidad por diseño en nuevos sistemas
+    so_that: Prevengo brechas desde origen
+    priority: P1
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-DPO-008
+    as_a: DPO
+    i_want: Registrar versión del RAT con control de cambios
+    so_that: Mantengo historial
+    priority: P1
+    role_key: dpo
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TDE-AVANCE-002
+    as_a: Coordinador Transformación Digital
+    i_want: Monitorear meta de interoperabilidad DS12
+    so_that: Cumplo con plazos
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-AVANCE-003
+    as_a: Coordinador Transformación Digital
+    i_want: Monitorear meta de expediente electrónico DS10
+    so_that: Cumplo con digitalización
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-MUNI-001
+    as_a: Coordinador Transformación Digital
+    i_want: Conectar sistemas DIDECO municipales vía interoperabilidad
+    so_that: Integro datos municipales
+    priority: P2
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-VINC-001
+    as_a: Coordinador Transformación Digital
+    i_want: Gestionar enrolamiento y soporte de Firmas Electrónicas Avanzadas para funcionarios municipales (vía convenio GORE)
+    so_that: Habilito la transformación digital en comunas
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-VINC-002
+    as_a: Desarrollador Municipal
+    i_want: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE) y del GORE
+    so_that: Integro mis sistemas locales (DOM, Tránsito) sin gestionar convenios individuales
+    priority: P1
+    role_key: desarrollador_municipal
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-VINC-003
+    as_a: Encargado Informática Municipal
+    i_want: Solicitar soporte técnico o evaluación de proyectos de infraestructura crítica (enlaces, servidores)
+    so_that: Mejoro la conectividad en zonas rezagadas
+    priority: P1
+    role_key: encargado_informática_municipal
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-MUNI-002
+    as_a: Coordinador Transformación Digital
+    i_want: Habilitar Trámite Express para municipios
+    so_that: Simplifico interacción
+    priority: P2
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-TIC-007
+    as_a: Mesa de Ayuda
+    i_want: Gestionar tickets de soporte técnico de usuarios
+    so_that: Mantengo continuidad operativa
+    priority: P1
+    role_key: mesa_de_ayuda
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-MUNI-003
+    as_a: Encargado Digital Muni
+    i_want: Digitalizar proceso de permisos municipales (DOM)
+    so_that: Agilizo trámites locales
+    priority: P1
+    role_key: encargado_digital_muni
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-MUNI-004
+    as_a: Encargado Digital Muni
+    i_want: Habilitar ventanilla única municipal integrada a GORE
+    so_that: Centralizo atención
+    priority: P1
+    role_key: encargado_digital_muni
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-INTEROP-006
+    as_a: Coordinador Transformación Digital
+    i_want: Publicar datasets en portal de Datos Abiertos
+    so_that: Fomento transparencia y reutilización
+    priority: P2
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-INTEROP-007
+    as_a: Coordinador Transformación Digital
+    i_want: Consumir capas de datos territoriales de IDE
+    so_that: Enriquezco sistemas de gestión
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-REG-001
+    as_a: Coordinador Transformación Digital
+    i_want: Convocar y liderar la Mesa Regional de Transformación Digital
+    so_that: Articulo el cumplimiento normativo en todo el territorio
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-DOCDIG-002
+    as_a: Abogado Jurídica
+    i_want: incluir un link de verificación en lugar del texto íntegro del convenio en las resoluciones
+    so_that: las resoluciones sean cortas y verificables digitalmente
+    priority: P1
+    role_key: abogado_jurídica
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-SEG-012
+    as_a: Coordinador Transformación Digital
+    i_want: Generar el acto administrativo de designación de encargado de ciberseguridad
+    so_that: Cumplo con los requisitos de la ANCI
+    priority: P1
+    role_key: coordinador_transformación_digital
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-FIRMA-002
+    as_a: Administrador Sistema
+    i_want: Activar mecanismo de firma de contingencia ante caídas de FirmaGob
+    so_that: Aseguro la continuidad operativa del GORE
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ADMIN-001
+    as_a: Administrador Sistema
+    i_want: Crear/editar divisiones con jefe asignado
+    so_that: Configuro estructura organizacional
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ADMIN-002
+    as_a: Administrador Sistema
+    i_want: Crear usuarios (email, división, rol)
+    so_that: Habilito acceso al sistema
+    priority: P0
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ADMIN-003
+    as_a: Administrador Sistema
+    i_want: Cambiar rol/división actualizando permisos
+    so_that: Gestiono movilidad de usuarios
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ADMIN-004
+    as_a: Administrador Sistema
+    i_want: Desactivar usuarios manteniendo historial
+    so_that: Gestiono bajas sin perder trazabilidad
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ADMIN-005
+    as_a: Administrador Sistema
+    i_want: Importar IPR desde Excel validando errores
+    so_that: Migro datos históricos
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ADMIN-006
+    as_a: Administrador Sistema
+    i_want: Configurar reglas de alerta (disparo automático)
+    so_that: Personalizo notificaciones
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-ADMIN-007
+    as_a: Administrador Sistema
+    i_want: Ver logs de actividad (filtro usuario/acción)
+    so_that: Audito uso del sistema
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ADMIN-008
+    as_a: Administrador Sistema
+    i_want: Ver estado de backups con ejecución manual
+    so_that: Aseguro recuperabilidad
+    priority: P1
+    role_key: administrador_sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-CRIS-001
+    as_a: Operador PISEE
+    i_want: Activar protocolo de ingreso manual ante caída de Nodo PISEE
+    so_that: Mantengo la operación crítica del servicio
+    priority: P0
+    role_key: operador_pisee
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TDE-SEC-001
+    as_a: CISO
+    i_want: Ejecutar un simulacro de exfiltración de datos personales
+    so_that: Mido el tiempo de detección y respuesta del equipo
+    priority: P1
+    role_key: ciso
+    nfr_refs: []
+    origin: legacy
+  - id: US-TDE-ARCH-001
+    as_a: Archivero Digital
+    i_want: Convertir automáticamente documentos antiguos de formatos deprecados a PDF/A
+    so_that: Garantizo la accesibilidad a largo plazo (DS10)
+    priority: P2
+    role_key: archivero_digital
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-PLAN-001
+    as_a: Analista Planificación
+    i_want: Visualizar brechas territoriales (brecha vs meta con mapa)
+    so_that: Identifico necesidades territoriales
+    priority: P0
+    role_key: analista_planificación
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TERR-PLAN-002
+    as_a: Analista Planificación
+    i_want: Ver alineamiento de IPR a ERD (score)
+    so_that: Verifico coherencia estratégica
+    priority: P0
+    role_key: analista_planificación
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-PLAN-004
+    as_a: Analista Planificación
+    i_want: Gestionar proceso ARI/PROPIR (convocar, revisar, aprobar)
+    so_that: Consolido inversión regional
+    priority: P1
+    role_key: analista_planificación
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-PLAN-005
+    as_a: GORE
+    i_want: Gestionar Política Regional propia (instrumento normativo)
+    so_that: Defino políticas sectoriales
+    priority: P1
+    role_key: gore
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-IDE-002
+    as_a: Coordinador IDE
+    i_want: Federar catálogos IDE Chile (CSW)
+    so_that: Integro datos nacionales
+    priority: P1
+    role_key: coordinador_ide
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-IDE-003
+    as_a: Administrador Geonodo
+    i_want: Modelar datos ISO 19110 (catálogo objetos)
+    so_that: Estandarizo estructura de datos
+    priority: P1
+    role_key: administrador_geonodo
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-IDE-004
+    as_a: Administrador Geonodo
+    i_want: Gestionar metadatos ISO 19115-1 (Perfil Chileno)
+    so_that: Documento los datos
+    priority: P1
+    role_key: administrador_geonodo
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-IDE-005
+    as_a: Administrador Geonodo
+    i_want: Publicar servicios WMS/WFS/WCS en Geonodo
+    so_that: Comparto datos espaciales
+    priority: P0
+    role_key: administrador_geonodo
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-IDE-006
+    as_a: Ciudadano
+    i_want: Reportar georreferencias de interés (microbasurales, puntos turísticos)
+    so_that: Enriquezco el mapa regional con datos comunitarios
+    priority: P1
+    role_key: ciudadano
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TERR-ANL-001
+    as_a: Analista Planificación
+    i_want: Consultar histórico de inversiones por tipología, comuna y año
+    so_that: Analizo tendencias
+    priority: P1
+    role_key: analista_planificación
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-ANL-002
+    as_a: Analista Planificación
+    i_want: Visualizar mapa de calor de inversión (FNDR/BIP) en el territorio
+    so_that: Identifico zonas rezagadas
+    priority: P1
+    role_key: analista_planificación
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TERR-ANL-003
+    as_a: Analista Planificación
+    i_want: Comparar proyectos similares por código BIP o nombre
+    so_that: Realizo benchmarking de costos
+    priority: P2
+    role_key: analista_planificación
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-ANL-004
+    as_a: Analista Planificación
+    i_want: Recibir alertas de posibles duplicidades de inversión en misma ubicación
+    so_that: Evito doble financiamiento
+    priority: P1
+    role_key: analista_planificación
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TERR-ANL-005
+    as_a: Analista Territorial
+    i_want: Identificar automáticamente terrenos fiscales sin uso asignado
+    so_that: Propongo proyectos de banco de suelos
+    priority: P2
+    role_key: analista_territorial
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-DOM-001
+    as_a: DOM
+    i_want: Consultar norma urbanística unificada (PRC + Intercomunal + PROT) en un visor
+    so_that: Emito certificados de informaciones previas con certeza jurídica
+    priority: P1
+    role_key: dom
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-DOM-002
+    as_a: Alcalde
+    i_want: Solicitar asistencia técnica al GORE para actualizar el PRC
+    so_that: Mantengo el instrumento vigente según dinámica territorial
+    priority: P1
+    role_key: alcalde
+    nfr_refs: []
+    origin: legacy
+  - id: US-TERR-DOM-003
+    as_a: DOM
+    i_want: Validar si un predio se intersecta con zonas de riesgo definidas en el PROT
+    so_that: Prevengo edificaciones en zonas peligrosas
+    priority: P0
+    role_key: dom
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TERR-DOM-004
+    as_a: Inspector de Obras
+    i_want: Registrar visitas de fiscalización a obras reportadas como detenidas
+    so_that: Decido sobre la liquidación del contrato
+    priority: P0
+    role_key: inspector_de_obras
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-TERR-PRG-001
+    as_a: Planificador
+    i_want: Alertar sobre ventanas de postulación a programas con plazos
+    so_that: Gestiono postulaciones a tiempo
+    priority: P2
+    role_key: planificador
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-TERR-PRG-002
+    as_a: Planificador
+    i_want: Identificar complementariedad entre programas y proyectos IDI
+    so_that: Maximizo impacto
+    priority: P2
+    role_key: planificador
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-ACT-001
+    as_a: Jefe FENIX
+    i_want: Recibir alertas automáticas cuando el índice H_gore baje de 60
+    so_that: Puedo iniciar la evaluación de intervención proactiva
+    priority: P0
+    role_key: jefe_fenix
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FNX-ACT-002
+    as_a: Jefe de División
+    i_want: Solicitar formalmente una intervención FENIX para un proceso crítico estancado
+    so_that: Desbloqueo situaciones que exceden mi capacidad operativa
+    priority: P1
+    role_key: jefe_de_división
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-ACT-003
+    as_a: Gobernador Regional
+    i_want: Declarar estado de "Emergencia Administrativa" en el sistema
+    so_that: Activo reglas de excepción para agilizar procesos críticos
+    priority: P0
+    role_key: gobernador_regional
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FNX-GES-001
+    as_a: Jefe FENIX
+    i_want: Crear un expediente digital de intervención (ID, Objetivo, Equipo)
+    so_that: Centralizo la gestión y documentación del caso
+    priority: P0
+    role_key: jefe_fenix
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-GES-002
+    as_a: Interventor
+    i_want: Registrar hitos, decisiones y acciones en una bitácora inmutable
+    so_that: Mantengo la trazabilidad y rendición de cuentas
+    priority: P0
+    role_key: interventor
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FNX-GES-004
+    as_a: Jefe FENIX
+    i_want: Designar funcionarios de distintas divisiones a una Fuerza de Tarea temporal
+    so_that: Concentro capacidades multidisciplinarias para resolver el nudo
+    priority: P0
+    role_key: jefe_fenix
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FNX-OPE-001
+    as_a: Interventor
+    i_want: Recibir permisos temporales sobre los objetos intervenidos (IPR, Convenios)
+    so_that: Puedo ejecutar acciones correctivas directamente en el sistema
+    priority: P0
+    role_key: interventor
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-OPE-002
+    as_a: Interventor Fiscal
+    i_want: Ejecutar un "Bypass Administrativo" en un flujo BPMN detenido
+    so_that: Fuerzo el avance de una etapa trabada por ausencia o error
+    priority: P0
+    role_key: interventor_fiscal
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FNX-OPE-003
+    as_a: Interventor Financiero
+    i_want: Habilitar línea de ejecución directa para corrección de errores
+    so_that: Soluciono problemas de imputación masiva
+    priority: P1
+    role_key: interventor_financiero
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-CIE-001
+    as_a: Jefe FENIX
+    i_want: Generar automáticamente un informe de cierre con bitácora y resultados
+    so_that: Formalizo el fin de la intervención y documento aprendizajes
+    priority: P1
+    role_key: jefe_fenix
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-CIE-002
+    as_a: Interventor
+    i_want: Registrar hallazgos y recomendaciones estructuradas (People, Process, Tech)
+    so_that: Alimento la base de conocimiento institucional (D-GESTION)
+    priority: P1
+    role_key: interventor
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FNX-CIE-003
+    as_a: Jefe FENIX
+    i_want: Evaluar el desempeño de los miembros de la Fuerza de Tarea
+    so_that: Reconozco el mérito y mejoro futuras asignaciones
+    priority: P2
+    role_key: jefe_fenix
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FNX-ANA-001
+    as_a: Analista D-GESTION
+    i_want: Analizar patrones de intervenciones pasadas
+    so_that: Identifico debilidades estructurales sistémicas
+    priority: P2
+    role_key: analista_d-gestion
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-ANA-003
+    as_a: Auditor Interno
+    i_want: Visualizar zonas de la organización con mayor propensión a fallos (basado en historial FENIX)
+    so_that: Focalizo el plan de auditoría anual
+    priority: P1
+    role_key: auditor_interno
+    nfr_refs: ['NFR-GIS']
+    origin: legacy
+  - id: US-FNX-INT-001
+    as_a: Sistema
+    i_want: Consumir métricas de D-EVOL en tiempo real
+    so_that: Detecto condiciones de activación
+    priority: P1
+    role_key: sistema
+    nfr_refs: []
+    origin: legacy
+  - id: US-FNX-INT-002
+    as_a: Sistema
+    i_want: Recibir alertas críticas de seguridad pública (D-SEG)
+    so_that: Activo protocolos de crisis nivel I
+    priority: P1
+    role_key: sistema
+    nfr_refs: ['NFR-ALERT']
+    origin: legacy
+  - id: US-FNX-INT-003
+    as_a: Sistema
+    i_want: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
+    so_that: Evito que el problema crezca mientras se interviene
+    priority: P0
+    role_key: sistema
+    nfr_refs: []
+    origin: legacy

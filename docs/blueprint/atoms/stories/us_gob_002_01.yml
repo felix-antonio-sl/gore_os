@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-002-01
+story_key: us_gob_002_01
+role_id: USR-GOB-JEFE
+as_a: null
+i_want: un registro centralizado de convenios vigentes con cada SEREMI y ministerio
+so_that: pueda hacer seguimiento de compromisos y vencimientos
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-GOB-JEFE
+  contribuye_a: CAP-PLAN-001

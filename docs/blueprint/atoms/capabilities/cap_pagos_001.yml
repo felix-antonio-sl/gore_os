@@ -1,0 +1,40 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_pagos_001:1.0.0
+  type: Capability
+id: CAP-PAGOS-001
+name: Pagos y Tesorería
+domain: D-BACK
+type: DOMAIN_SPECIFIC
+description: Gestión de pagos a proveedores, ejecutores y contratistas, incluyendo
+  estados de pago y TEF.
+value_proposition: Garantiza la ejecución presupuestaria correcta y oportuna, evitando
+  mora y descuadres.
+orko_mapping:
+  p1_capacity: Tesorería Regional
+  p2_flow: P-BACK-PAGOS (Ciclo de Pago)
+  p3_information: SIGFE, Cartolas Bancarias
+  p4_limit: Ley de Presupuestos, Normativa CGR
+  p5_purpose: Ejecución presupuestaria ≥90%
+stories:
+- urn:goreos:atom:story:us_back_cris_001
+- urn:goreos:atom:story:us_back_per_010
+- urn:goreos:atom:story:us_back_per_011
+- urn:goreos:atom:story:us_back_per_012
+- urn:goreos:atom:story:us_back_per_013
+- urn:goreos:atom:story:us_back_per_014
+- urn:goreos:atom:story:us_back_per_015
+- urn:goreos:atom:story:us_back_tes_004
+- urn:goreos:atom:story:us_back_tes_005
+- urn:goreos:atom:story:us_back_tes_006
+- urn:goreos:atom:story:us_back_tes_007
+- urn:goreos:atom:story:us_back_tes_008
+- urn:goreos:atom:story:us_back_tes_009
+- urn:goreos:atom:story:us_back_tes_011
+- urn:goreos:atom:story:us_back_tes_013
+- urn:goreos:atom:story:us_back_tes_014
+- urn:goreos:atom:story:us_back_tes_015
+- urn:goreos:atom:story:us_back_tes_016
+- urn:goreos:atom:story:us_back_tes_017
+- urn:goreos:atom:story:us_jcal_001_01
+- urn:goreos:atom:story:us_tcorp_001_01
+ofrecida_por: null

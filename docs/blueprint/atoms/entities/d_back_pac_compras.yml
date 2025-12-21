@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_back_pac_compras:1.0.0
+  type: Entity
+  source: domains/d-back/glossary
+id: ENT-BACK-PAC_COMPRAS
+name: PAC-Compras
+entity_key: pac_compras
+domain: D-BACK
+category: Reference
+description: Plan Anual de Compras. Programación de adquisiciones en Mercado Público
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

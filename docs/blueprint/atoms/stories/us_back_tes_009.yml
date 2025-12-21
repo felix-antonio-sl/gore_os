@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_back_tes_009:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BACK-TES-009
+story_key: us_back_tes_009
+role_id: USR-DAF-FIN-CONT
+as_a: null
+i_want: Emitir informe de conciliación bancaria mensual firmado
+so_that: Cumplo con control interno y normativa
+domain: D-BACK
+priority: P1
+capability_bundle_id: CAP-PAGOS-001
+morphisms:
+  protagonizado_por: USR-DAF-FIN-CONT
+  contribuye_a: CAP-PAGOS-001

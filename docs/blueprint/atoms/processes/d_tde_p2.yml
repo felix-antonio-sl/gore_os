@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_tde_p2:1.0.0
+  type: Process
+  source: domains/d-tde
+id: PROC-TDE-P2
+code: P2
+name: Habilitación Servicios Digitales
+domain: D-TDE
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

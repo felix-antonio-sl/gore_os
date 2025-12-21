@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_ejec_p4:1.0.0
+  type: Process
+  source: domains/d-ejec
+id: PROC-EJEC-P4
+code: P4
+name: Cierre y Liquidación de Convenio
+domain: D-EJEC
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

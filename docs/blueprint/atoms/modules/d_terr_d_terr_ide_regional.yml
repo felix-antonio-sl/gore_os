@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_terr_ide_regional:1.0.0
+  type: Module
+  source: domains/d-terr
+id: MOD-TERR-IDE_REGIONAL
+name: IDE Regional
+domain: D-TERR
+number: 2
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

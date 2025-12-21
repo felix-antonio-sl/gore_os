@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_terr_ide_002:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TERR-IDE-002
+story_key: us_terr_ide_002
+role_id: USR-TERR-IDE
+as_a: null
+i_want: Federar catálogos IDE Chile (CSW)
+so_that: Integro datos nacionales
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-TERR-IDE
+  contribuye_a: CAP-TERR-MAP-001

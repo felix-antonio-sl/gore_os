@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_gest_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-GEST-003
+story_key: us_fin_gest_003
+role_id: USR-CAL-ANAL
+as_a: null
+i_want: Gestionar Reevaluación (si supera 10% / cambio sustancial)
+so_that: Cumplo con normativa de modificaciones
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-CAL-ANAL
+  contribuye_a: CAP-FIN-DASH-001

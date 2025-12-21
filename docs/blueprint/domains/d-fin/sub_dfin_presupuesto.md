@@ -158,13 +158,18 @@ flowchart TD
 
 ## Entidades de Datos
 
-| Entidad                      | Atributos Clave                                               | Relaciones                 |
-| ---------------------------- | ------------------------------------------------------------- | -------------------------- |
-| `AsignacionPresupuestaria`   | id, subtitulo, item, asignacion, monto_inicial, monto_vigente | → Programa                 |
-| `CDP`                        | id, asignacion_id, monto, fecha, estado                       | → AsignacionPresupuestaria |
-| `Compromiso`                 | id, cdp_id, acto_id, monto, fecha                             | → CDP, ActoAdministrativo  |
-| `Devengo`                    | id, compromiso_id, monto, fecha                               | → Compromiso               |
-| `ModificacionPresupuestaria` | id, tipo, nivel, monto, justificacion, acuerdo_core           | → AsignacionPresupuestaria |
+## Entidades de Datos
+
+| Entidad                      | Atributos Clave                                             | Relaciones        |
+| :--------------------------- | :---------------------------------------------------------- | :---------------- |
+| **`CDP`**                    | `numero`, `monto_solicitado`, `estado`, `fecha_vencimiento` | → IPR, Asignacion |
+| `AsignacionPresupuestaria`   | `subtitulo`, `item`, `asignacion`, `saldo_vigente`          | → CDP             |
+| `Compromiso`                 | `acto_administrativo`, `monto_comprometido`, `proveedor`    | → CDP             |
+| `Devengo`                    | `obligacion_exigible`, `fecha_devengo`, `factura_ref`       | → Compromiso      |
+| `ModificacionPresupuestaria` | `tipo` (M1/M2/M3), `monto`, `decreto_dipres`                | → Asignacion      |
+
+> [!TIP]
+> **Cadena:** CDP → Compromiso → Devengo → Pago (D-BACK)
 
 ---
 
@@ -183,6 +188,45 @@ flowchart TD
 - **Ley de Presupuestos:** [kb_gn_210_ley_presupuestos_2026_partida_31_koda.yml](file:///Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/kb_gn_210_ley_presupuestos_2026_partida_31_koda.yml)
 - **Integración D-BACK:** [domain_d-back.md#contabilidad-operativa](../domain_d-back.md#contabilidad-operativa)
 - **Gestión Presupuesto:** [kb_gn_009_gestion_presupuesto_koda.yml](file:///Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/kb_gn_009_gestion_presupuesto_koda.yml)
+
+---
+
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key                | Título                  | Responsabilidad Principal              |
+| ----------------------- | ----------------------- | -------------------------------------- |
+| jefe_dipir              | Jefe DIPIR              | Aprobación final de CDPs y estructura  |
+| jefe_presupuesto        | Jefe Depto. Presupuesto | Gestión operativa del ciclo anual      |
+| analista_presupuestario | Analista Presupuestario | Emisión de certificados y ajustes      |
+| analista_seguimiento    | Analista Seguimiento    | Monitoreo de ejecución vs programación |
+
+---
+
+## Capability Bundles (SSOT: historias_usuarios_v2.yml)
+
+### CAP-FIN-DASH-001: Dashboard de Ejecución Presupuestaria
+
+| Atributo          | Valor                                                          |
+| ----------------- | -------------------------------------------------------------- |
+| **Prioridad**     | P0                                                             |
+| **Beneficiarios** | 42 roles (gobernador, jefe_daf, jefe_dipir, etc.)              |
+| **Criterios**     | % ejecución por división, gráfico tendencia, alertas mora >30d |
+
+> **Como** Gobernador Regional  
+> **Quiero** un dashboard ejecutivo con KPIs de ejecución FNDR, convenios y programas  
+> **Para** evaluar el avance de la gestión en reuniones de gabinete
+
+---
+
+## Historias de Usuario (SSOT: historias_usuarios_v2.yml)
+
+### Historias Atómicas (M5: Presupuesto Regional)
+
+| ID                 | Role Key                | Quiero                                                       | Prioridad |
+| ------------------ | ----------------------- | ------------------------------------------------------------ | --------- |
+| US-DIPIR-001-02    | jefe_dipir              | aprobar CDPs digitalmente con validación automática de saldo | P0        |
+| US-ANALPRES-001-01 | analista_presupuestario | registro de modificaciones presupuestarias                   | P0        |
+| US-ANALPRES-001-02 | analista_presupuestario | alertas de desviaciones presupuestarias                      | P1        |
 
 ---
 

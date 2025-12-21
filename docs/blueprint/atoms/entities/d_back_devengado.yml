@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_back_devengado:1.0.0
+  type: Entity
+  source: domains/d-back/glossary
+id: ENT-BACK-DEVENGADO
+name: Devengado
+entity_key: devengado
+domain: D-BACK
+category: Reference
+description: Obligación contable exigible. Momento en que se reconoce el gasto
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

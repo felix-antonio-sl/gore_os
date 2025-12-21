@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_back_p1:1.0.0
+  type: Process
+  source: domains/d-back
+id: PROC-BACK-P1
+code: P1
+name: Plan Anual de Compras (PAC)
+domain: D-BACK
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

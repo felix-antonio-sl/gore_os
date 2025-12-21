@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_fin_ejecutores_p4_bis:1.0.0
+  type: Process
+  source: domains/d-fin-ejecutores
+id: PROC-FIN-EJECUTORES-P4-bis
+code: P4-bis
+name: Inducción de Ejecutor
+domain: D-FIN-EJECUTORES
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

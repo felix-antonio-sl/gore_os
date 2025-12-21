@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_tde_interop_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TDE-INTEROP-001
+story_key: us_tde_interop_001
+role_id: USR-DAF-TIC-CTD
+as_a: null
+i_want: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
+so_that: Conecto con servicios estatales
+domain: D-TDE
+priority: P0
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-CTD
+  contribuye_a: CAP-FIRMA-001

@@ -247,13 +247,17 @@ flowchart TD
 
 ## Entidades de Datos
 
-| Entidad              | Atributos Clave                                          | Relaciones                           |
-| -------------------- | -------------------------------------------------------- | ------------------------------------ |
-| `IPR`                | id, codigo_bip, nombre, naturaleza, mecanismo_id, estado | → Oportunidad, Mecanismo, Convenio[] |
-| `Proyecto_Seguridad` | hereda IPR + tipo_prevencion, validacion_spd             | → IPR                                |
-| `ActorIPR`           | id, ipr_id, actor_id, rol, fase, activo                  | → IPR, Actor                         |
-| `EvaluacionIPR`      | id, ipr_id, tipo, resultado, observaciones               | → IPR                                |
+| Entidad                 | Atributos Clave                                                                           | Relaciones              |
+| :---------------------- | :---------------------------------------------------------------------------------------- | :---------------------- |
+| **`IPR`** (Abstract)    | `id`, `codigo_bip`, `mecanismo_id`, `fase_actual`, `estado`, `costo_total`, `aporte_gore` | → ActorIPR, → Mecanismo |
+| **`IDI`** (Extends IPR) | `tipologia_bip`, `etapa_bip`, `van`, `tir`, `avance_fisico`                               | → EstadoPago            |
+| **`PPR`** (Extends IPR) | `modalidad`, `objetivo_general`, `beneficiarios_meta`, `es_glosa_06`                      | → Rendicion             |
+| **`Convenio`**          | `numero_resolucion`, `monto_total`, `plazo_meses`, `garantia_id`                          | → IPR, → ActorIPR       |
+| **`ActorIPR`**          | `rut`, `razon_social`, `tipo`, `banco_datos`                                              | → IPR                   |
+| **`EvaluacionIPR`**     | `resultado` (RS/rate), `fecha_evaluacion`, `analista_id`                                  | → IPR                   |
 
+> [!TIP]
+> **Modelo de Datos Completo:** Ver átomos YAML en `docs/blueprint/atoms/entities/d_fin_ipr_core_*.yml`
 ---
 
 ## Referencias
@@ -264,4 +268,18 @@ flowchart TD
 
 ---
 
-*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key             | Título               | Proceso    |
+| -------------------- | -------------------- | ---------- |
+| jefe_dipir           | Jefe DIPIR           | P1-P7      |
+| analista_inversion   | Analista Inversión   | P1, P2     |
+| analista_seguimiento | Analista Seguimiento | P5, P6     |
+| inspector_fiscal     | Inspector Fiscal     | P5, P7     |
+| unidad_tecnica       | Unidad Técnica       | P5, P6     |
+| entidad_ejecutora    | Entidad Ejecutora    | P4, P5, P7 |
+
+---
+
+*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*  
+*SSOT: inventario_roles_v8.yml*

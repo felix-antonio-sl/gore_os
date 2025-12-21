@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_uf_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-UF-001-01
+story_key: us_uf_001_01
+role_id: USR-MUNI-FORM
+as_a: null
+i_want: obtener el código BIP de mis iniciativas
+so_that: pueda solicitar financiamiento FNDR
+domain: D-PLAN
+priority: P0
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-MUNI-FORM
+  contribuye_a: CAP-PLAN-001

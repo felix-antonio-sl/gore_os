@@ -35,6 +35,19 @@
 | Compra Ágil       | Modalidad de compra competitiva para montos menores o iguales a 100 UTM      |
 | Fondos Globales   | Fondos en efectivo o cta. corriente para gastos menores (caja chica) ≤3 UTM  |
 
+## Entidades de Datos
+
+| Entidad             | Atributos Clave                                                   | Relaciones         |
+| :------------------ | :---------------------------------------------------------------- | :----------------- |
+| **`ActivoFijo`**    | `codigo`, `clase_activo`, `vida_util`, `valor_libro`, `ubicacion` | → MovimientoActivo |
+| `MovimientoActivo`  | `tipo` (Alta/Baja/Traslado), `origen`, `destino`, `acta_url`      | → ActivoFijo       |
+| `Vehiculo`          | `patente`, `marca`, `modelo`, `kilometraje`, `estado`             | → ActivoFijo       |
+| `ContratoHonorario` | `rut_prestador`, `monto_bruto`, `fecha_inicio`, `fecha_termino`   | → InformeHonorario |
+| `Pago`              | `id_pago`, `beneficiario`, `monto_liquido`, `medio_pago`          | → Devengo          |
+| `Devengo`           | `id_devengo`, `compromiso_ref`, `obligacion_exigible`             | → Compromiso       |
+
+> [!TIP]
+> **Integración:** D-BACK recibe `OrdenesCompra` y `EstadosPago` de D-FIN para procesar `Compromisos` y `Devengos`.
 
 ---
 
@@ -1158,10 +1171,54 @@ Flujos Principales:
 
 ---
 
+## Capability Bundles (SSOT: historias_usuarios_v2.yml)
+
+### CAP-BACK-TICKETS-001: Sistema de Tickets de Soporte (P0)
+
+> **Como** Jefe TIC  
+> **Quiero** un sistema de tickets de soporte con SLAs  
+> **Para** medir y mejorar los tiempos de respuesta
+
+| Atributo       | Valor                                                              |
+| -------------- | ------------------------------------------------------------------ |
+| Beneficiarios  | 6 roles (jefe_tic, encargado_soporte_ti, analista_funcional, etc.) |
+| Criterios      | Registro por usuario, Asignación a técnicos, Métricas resolución   |
+| Atomic Stories | 52 historias D-BACK vinculadas                                     |
+
+---
+
+### Historias Atómicas D-BACK
+
+#### Gestión Financiera y Tesorería
+| ID            | Role Key          | Quiero                                           | Prioridad |
+| ------------- | ----------------- | ------------------------------------------------ | --------- |
+| US-TES-001-01 | tesorero_regional | módulo de programación de pagos con priorización | P0        |
+| US-FIN-001-01 | jefe_finanzas     | panel de cuadratura contable diaria              | P0        |
+| US-TES-002-01 | tesorero_regional | conciliación automática con bancos               | P1        |
+| US-DAF-001-01 | jefe_daf          | checklist digital de cierre contable mensual     | P0        |
+
+#### Abastecimiento y Compras
+| ID              | Role Key                 | Quiero                                                    | Prioridad |
+| --------------- | ------------------------ | --------------------------------------------------------- | --------- |
+| US-ABAST-001-01 | encargado_abastecimiento | gestión del Plan de Compras integrado con Mercado Público | P0        |
+| US-ABAST-001-02 | encargado_abastecimiento | alertas de contratos por vencer                           | P1        |
+| US-COMP-001-01  | comprador_publico        | panel de licitaciones activas                             | P0        |
+
+---
+
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+Los roles D-BACK incluyen: `jefe_daf`, `jefe_rrhh`, `jefe_finanzas`, `tesorero_regional`, `encargado_abastecimiento`, `comprador_publico`, `jefe_tic`, `soporte_tecnico`, `admin_ti`, `encargado_capacitacion`, `funcionario`, `gestor_personas`.
+
+Ver inventario completo: [inventario_roles_v8.yml](../inventario_roles_v8.yml)
+
+---
+
 ## Registro de Cambios (Changelog)
 
 | Versión | Fecha      | Cambios                                                                                                                               |
 | ------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 6.1     | 2025-12-19 | **Inyección SSOT.** Vinculación con CAP-BACK-TICKETS-001 e inventario_roles_v8.yml                                                    |
 | 6.0     | 2025-12-18 | **Absorción SIGPER.** +28 US (PER-020 a 047, BIEN-013 a 016). +3 procesos BPMN (P5-P7). +18 entidades. Cobertura 100% módulos SIGPER. |
 | 5.2     | 2025-12-16 | Añadido D07.B Bienestar (+3 procesos BPMN). Tabla índice BPMN. US completas D05/D06                                                   |
 | 5.1     | 2025-12-16 | Renombre módulo Tesorería → Contabilidad Operativa. +6 términos glosario                                                              |
@@ -1172,5 +1229,76 @@ Flujos Principales:
 
 ---
 
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-BACK`  
+> Total: 59 historias
+
+| ID                   | Role                 | Descripción                                           | P   |
+| -------------------- | -------------------- | ----------------------------------------------------- | --- |
+| CAP-BACK-TICKETS-001 | Jefe TIC             | un sistema de tickets de soporte con SLAs...          | P0  |
+| US-ABAST-001-01      | encargado_abastecimi | un módulo de gestión del Plan de Compras integrado... | P0  |
+| US-ABAST-001-02      | encargado_abastecimi | generación automática de bases de licitación tipo...  | P1  |
+| US-ACV-001-01        | analista_ciclo_vida  | un workflow de onboarding con checklist de documen... | P0  |
+| US-APREV-001-01      | analista_prevencion  | formulario móvil de inspección de extintores y vía... | P2  |
+| US-AR-001-02         | administrador_region | programar reuniones de coordinación con jefes de d... | P2  |
+| US-AR-002-01         | administrador_region | visualizar métricas de ausentismo, rotación y capa... | P1  |
+| US-AR-003-01         | administrador_region | un módulo de gestión de subrogancias con fechas y ... | P1  |
+| US-ARCH-001-01       | archivero_digital    | definir tablas de retención documental en el siste... | P2  |
+| US-ASERV-001-01      | analista_servicios_g | un módulo de solicitudes de mantención y reserva d... | P2  |
+| US-ASIS-001-01       | analista_control_asi | integración con sistema biométrico y reportes auto... | P0  |
+| US-AUX-001-01        | auxiliar             | recibir solicitudes de apoyo logístico...             | P3  |
+| US-BIEN-001-01       | analista_bienestar   | un módulo de beneficios y programas de bienestar...   | P2  |
+| US-BIEN-001-01       | profesional_bienesta | registro de cargas familiares y seguros complement... | P1  |
+| US-BOD-001-01        | bodeguero            | ingreso y salida de insumos mediante código de bar... | P2  |
+| US-CAP-001-01        | analista_capacitacio | un módulo de gestión de capacitación con inscripci... | P1  |
+| US-CGPE-001-01       | encargado_control_ge | alertas automáticas de licencias médicas prolongad... | P1  |
+| US-COM-001-01        | encargado_comunicaci | un calendario de contenidos con programación de pu... | P0  |
+| US-COM-001-02        | encargado_comunicaci | un repositorio de material multimedia instituciona... | P1  |
+| US-COM-002-01        | encargado_comunicaci | reportes de menciones en medios y redes sociales...   | P2  |
+| US-COMP-001-01       | comprador_publico    | un buscador de productos en Convenio Marco integra... | P0  |
+| US-COMP-001-01       | encargado_competenci | formularios digitales de evaluación 360...            | P2  |
+| US-COMP-001-02       | comprador_publico    | un workflow de solicitud de compra desde las unida... | P0  |
+| US-COND-001-01       | conductor            | un módulo de reserva de vehículos y registro de bi... | P2  |
+| US-CP-001-01         | encargado_comite_par | un módulo de registro de incidentes laborales...      | P2  |
+| US-CSEU-001-01       | encargado_cseu       | un módulo de registro de incidentes de atención...    | P2  |
+| US-CSEU-001-01       | miembro_cseu         | matriz de evaluación curricular digital...            | P1  |
+| US-DAF-001-01        | jefe_daf             | un checklist digital de cierre contable mensual co... | P0  |
+| US-EOPE-001-01       | encargado_operativo  | gestión de reserva de salas y vehículos...            | P2  |
+| US-EVERDE-001-01     | miembro_estado_verde | registro de consumos de papel y energía...            | P3  |
+| US-FIN-001-01        | jefe_finanzas        | un panel de cuadratura contable diaria con validac... | P0  |
+| US-FLOTA-001-01      | encargado_flota      | control de bitácoras y mantenciones de vehículos...   | P2  |
+| US-FOTO-001-01       | fotografo            | un repositorio de fotos con metadatos de evento...    | P2  |
+| US-FUNC-001-01       | funcionario          | solicitar permisos administrativos y feriados en l... | P0  |
+| US-FUNC-001-02       | funcionario          | consultar mis liquidaciones de sueldo y certificad... | P0  |
+| US-GAB-001-01        | jefe_gabinete        | un sistema de gestión de agenda integrado con comp... | P0  |
+| US-GAB-002-01        | jefe_gabinete        | un protocolo de comunicación de crisis digitalizad... | P1  |
+| US-HON-001-01        | analista_honorarios  | un módulo de gestión de honorarios con informes de... | P0  |
+| US-HON-001-01        | prestador_honorarios | subir mi informe de actividades y boleta digitalme... | P0  |
+| US-JCAL-001-01       | junta_calificadora   | acceso a las hojas de vida y precalificaciones...     | P0  |
+| US-JEFE-RRHH-001-01  | encargado_rrhh       | un expediente digital único por funcionario...        | P0  |
+| US-OIRS-001-02       | encargado_oirs       | generar reportes de satisfacción ciudadana...         | P1  |
+| US-OP-001-01         | oficial_partes       | un sistema de carátulas con código de barras y rut... | P0  |
+| US-PCSEU-001-01      | presidente_cseu      | actas de selección automáticas con puntajes consol... | P1  |
+| US-PER-001-01        | periodista           | plantillas de notas de prensa y comunicados...        | P1  |
+| US-PREV-001-01       | prevencionista_riesg | un módulo de evaluación de riesgos laborales...       | P1  |
+| US-PREV-001-01       | encargado_prevencion | registro de entrega de EPP (Equipos Protección Per... | P1  |
+| US-REM-001-01        | analista_remuneracio | un módulo de cálculo de remuneraciones con validac... | P0  |
+| US-REM-001-01        | encargado_remuneraci | cálculo automático de bonificaciones y descuentos ... | P0  |
+| US-RPSICO-001-01     | referente_riesgos_ps | encuestas de clima laboral anónimas y digitales...    | P1  |
+| US-RRHH-001-01       | jefe_rrhh            | un workflow digital de ingreso de funcionarios con... | P0  |
+| US-RRHH-001-02       | jefe_rrhh            | alertas de términos de contrata próximos a vencer...  | P0  |
+| US-RRHH-002-01       | jefe_rrhh            | un módulo de gestión del PAC con inscripciones y e... | P1  |
+| US-SECDIV-001-01     | secretaria_division  | un módulo de gestión de correspondencia entrante y... | P1  |
+| US-SERV-001-01       | encargado_servicios  | gestión de contratos de aseo y vigilancia...          | P1  |
+| US-SOCIO-001-01      | socio_bienestar      | consultar mis saldos de ayudas económicas...          | P2  |
+| US-TCORP-001-01      | trabajador_corporaci | permiso de acceso limitado a la intranet...           | P2  |
+| US-TES-001-01        | tesorero_regional    | un módulo de programación de pagos con priorizació... | P0  |
+| US-TIC-001-02        | jefe_tic             | un inventario de activos TI con ciclo de vida...      | P1  |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+

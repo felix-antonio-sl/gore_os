@@ -1,0 +1,28 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_fin:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-FIN
+name: Dominio D-FIN
+aggregation:
+  modules:
+  - urn:goreos:atom:module:d_fin_alertas_360:1.0.0
+  - urn:goreos:atom:module:d_fin_capital_base:1.0.0
+  - urn:goreos:atom:module:d_fin_captaci_n_de_oportunidades:1.0.0
+  - urn:goreos:atom:module:d_fin_gesti_n_de_ejecutores:1.0.0
+  - urn:goreos:atom:module:d_fin_mesa_de_ayuda:1.0.0
+  - urn:goreos:atom:module:d_fin_portafolio_estrat_gico:1.0.0
+  - urn:goreos:atom:module:d_fin_portafolio_ipr:1.0.0
+  - urn:goreos:atom:module:d_fin_presupuesto_regional:1.0.0
+  - urn:goreos:atom:module:d_fin_rendiciones:1.0.0
+  - urn:goreos:atom:module:d_fin_selector_de_mecanismos:1.0.0
+  processes: []
+  entities: []
+  capabilities:
+  - urn:goreos:atom:capability:cap_fin_dash_001:1.0.0
+  - urn:goreos:atom:capability:cap_fin_rend_001:1.0.0
+stats:
+  modules_count: 10
+  processes_count: 0
+  entities_count: 0
+  capabilities_count: 2

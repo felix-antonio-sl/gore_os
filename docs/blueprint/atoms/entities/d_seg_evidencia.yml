@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_seg_evidencia:1.0.0
+  type: Entity
+  source: domains/d-seg/entity_data
+id: ENT-SEG-EVIDENCIA
+name: Evidencia
+entity_key: evidencia
+domain: D-SEG
+category: Reference
+description: id, id_incidente, tipo, hash, cadena_custodia
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

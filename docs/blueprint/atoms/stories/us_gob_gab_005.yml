@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_gab_005:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-GAB-005
+story_key: us_gob_gab_005
+role_id: USR-GAB-JEFE
+as_a: null
+i_want: Preparar minutas y briefs para autoridad
+so_that: Apoyo la toma de decisiones
+domain: D-GOB
+priority: P1
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-GAB-JEFE
+  contribuye_a: CAP-GOB-001

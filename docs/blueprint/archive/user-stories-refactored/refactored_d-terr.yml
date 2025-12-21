@@ -1,0 +1,280 @@
+atomic_stories:
+  - id: US-TERR-PLAN-001
+    as_a: Analista Planificación
+    i_want: Visualizar brechas territoriales (brecha vs meta con mapa)
+    so_that: Identifico necesidades territoriales
+    acceptance_criteria:
+      - "Mapa de brechas"
+      - "Indicadores por comuna"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-PLAN-002
+    as_a: Analista Planificación
+    i_want: Ver alineamiento de IPR a ERD (score)
+    so_that: Verifico coherencia estratégica
+    acceptance_criteria:
+      - "Score de alineamiento"
+      - "Vinculación a objetivos ERD"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-PLAN-003
+    as_a: Analista Planificación
+    i_want: Ver avance de metas ERD (tendencia, proyección)
+    so_that: Monitoreo cumplimiento estratégico
+    acceptance_criteria:
+      - "Progreso por meta"
+      - "Proyección temporal"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-PLAN-004
+    as_a: Analista Planificación
+    i_want: Gestionar proceso ARI/PROPIR (convocar, revisar, aprobar)
+    so_that: Consolido inversión regional
+    acceptance_criteria:
+      - "Flujo de convocatoria"
+      - "Consolidación de propuestas"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-PLAN-005
+    as_a: GORE
+    i_want: Gestionar Política Regional propia (instrumento normativo)
+    so_that: Defino políticas sectoriales
+    acceptance_criteria:
+      - "Instrumento aprobado"
+      - "Publicación oficial"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: gore
+    origin: legacy
+  - id: US-TERR-PLAN-006
+    as_a: Planificador Urbano Urbano
+    i_want: Simular el impacto urbano de un cambio en el plan regulador (PRC/PROT)
+    so_that: Anticipo densificación y demanda de servicios
+    acceptance_criteria:
+      - "Modelo de densidad"
+      - "Proyección de población"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    role_key: planificador_urbano_urbano
+    origin: legacy
+  - id: US-TERR-IDE-001
+    as_a: Coordinador IDE
+    i_want: Definir política geoespacial (documentada)
+    so_that: Gobierno los datos espaciales
+    acceptance_criteria:
+      - "Política aprobada"
+      - "Roles definidos"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: coordinador_ide
+    origin: legacy
+  - id: US-TERR-IDE-002
+    as_a: Coordinador IDE
+    i_want: Federar catálogos IDE Chile (CSW)
+    so_that: Integro datos nacionales
+    acceptance_criteria:
+      - "Cosecha CSW activa"
+      - "Catálogo federado"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: coordinador_ide
+    origin: legacy
+  - id: US-TERR-IDE-003
+    as_a: Administrador Geonodo
+    i_want: Modelar datos ISO 19110 (catálogo objetos)
+    so_that: Estandarizo estructura de datos
+    acceptance_criteria:
+      - "Catálogo de objetos"
+      - "Atributos definidos"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: administrador_geonodo
+    origin: legacy
+  - id: US-TERR-IDE-004
+    as_a: Administrador Geonodo
+    i_want: Gestionar metadatos ISO 19115-1 (Perfil Chileno)
+    so_that: Documento los datos
+    acceptance_criteria:
+      - "Ficha de metadatos"
+      - "Campos obligatorios"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: administrador_geonodo
+    origin: legacy
+  - id: US-TERR-IDE-005
+    as_a: Administrador Geonodo
+    i_want: Publicar servicios WMS/WFS/WCS en Geonodo
+    so_that: Comparto datos espaciales
+    acceptance_criteria:
+      - "Servicio OGC operativo"
+      - "URL pública"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: administrador_geonodo
+    origin: legacy
+  - id: US-TERR-IDE-006
+    as_a: Ciudadano
+    i_want: Reportar georreferencias de interés (microbasurales, puntos turísticos)
+    so_that: Enriquezco el mapa regional con datos comunitarios
+    acceptance_criteria:
+      - "Formulario móvil simple"
+      - "Validación por moderador antes de publicar"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: ciudadano
+    origin: legacy
+  - id: US-TERR-ANL-001
+    as_a: Analista Planificación
+    i_want: Consultar histórico de inversiones por tipología, comuna y año
+    so_that: Analizo tendencias
+    acceptance_criteria:
+      - "Filtros multidimensionales"
+      - "Gráficos evolución"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-ANL-002
+    as_a: Analista Planificación
+    i_want: Visualizar mapa de calor de inversión (FNDR/BIP) en el territorio
+    so_that: Identifico zonas rezagadas
+    acceptance_criteria:
+      - "Mapa coroplético"
+      - "Drill-down comunal"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-ANL-003
+    as_a: Analista Planificación
+    i_want: Comparar proyectos similares por código BIP o nombre
+    so_that: Realizo benchmarking de costos
+    acceptance_criteria:
+      - "Búsqueda por similitud"
+      - "Comparativo de montos"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-ANL-004
+    as_a: Analista Planificación
+    i_want: Recibir alertas de posibles duplicidades de inversión en misma ubicación
+    so_that: Evito doble financiamiento
+    acceptance_criteria:
+      - "Alerta geoespacial"
+      - "Reporte de coincidencia"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_planificación
+    origin: legacy
+  - id: US-TERR-ANL-005
+    as_a: Analista Territorial
+    i_want: Identificar automáticamente terrenos fiscales sin uso asignado
+    so_that: Propongo proyectos de banco de suelos
+    acceptance_criteria:
+      - "Algoritmo de cruce Catastro vs Proyectos"
+      - "Reporte de oportunidades"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    role_key: analista_territorial
+    origin: legacy
+  - id: US-TERR-DOM-001
+    as_a: DOM
+    i_want: Consultar norma urbanística unificada (PRC + Intercomunal + PROT) en un visor
+    so_that: Emito certificados de informaciones previas con certeza jurídica
+    acceptance_criteria:
+      - "Visor con capas superpuestas"
+      - "Click para ver normas aplicables"
+      - "Descarga de reporte consolidado"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: dom
+    origin: legacy
+  - id: US-TERR-DOM-002
+    as_a: Alcalde
+    i_want: Solicitar asistencia técnica al GORE para actualizar el PRC
+    so_that: Mantengo el instrumento vigente según dinámica territorial
+    acceptance_criteria:
+      - "Diagnóstico de vigencia automático"
+      - "Flujo de solicitud formal"
+      - "Asignación de contraparte GORE"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: alcalde
+    origin: legacy
+  - id: US-TERR-DOM-003
+    as_a: DOM
+    i_want: Validar si un predio se intersecta con zonas de riesgo definidas en el PROT
+    so_that: Prevengo edificaciones en zonas peligrosas
+    acceptance_criteria:
+      - "Alerta roja si hay intersección con riesgo no mitigable"
+      - "Capa de riesgos oficiales (Sernageomin, ONEMI)"
+      - "Certificado de riesgo"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: dom
+    origin: legacy
+  - id: US-TERR-DOM-004
+    as_a: Inspector de Obras
+    i_want: Registrar visitas de fiscalización a obras reportadas como detenidas
+    so_that: Decido sobre la liquidación del contrato
+    acceptance_criteria:
+      - "App móvil con georreferencia obligatoria"
+      - "Subida de fotos de evidencia"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: inspector_de_obras
+    origin: legacy
+  - id: US-TERR-PRG-001
+    as_a: Planificador
+    i_want: Alertar sobre ventanas de postulación a programas con plazos
+    so_that: Gestiono postulaciones a tiempo
+    acceptance_criteria:
+      - "Alerta automática"
+      - "Calendario de plazos"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    role_key: planificador
+    origin: legacy
+  - id: US-TERR-PRG-002
+    as_a: Planificador
+    i_want: Identificar complementariedad entre programas y proyectos IDI
+    so_that: Maximizo impacto
+    acceptance_criteria:
+      - "Matriz de sinergias"
+      - "Recomendación de cruce"
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    role_key: planificador
+    origin: legacy

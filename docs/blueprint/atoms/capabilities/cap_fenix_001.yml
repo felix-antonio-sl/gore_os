@@ -1,0 +1,29 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_fenix_001:1.0.0
+  type: Capability
+id: CAP-FENIX-001
+name: Sistema de Intervención FÉNIX
+domain: D-FENIX
+type: DOMAIN_SPECIFIC
+description: Gestión de intervenciones de contingencia Nivel I-IV para procesos problemáticos.
+value_proposition: Recupera procesos críticos y previene pérdida de recursos o incumplimientos
+  graves.
+orko_mapping:
+  p1_capacity: Jefe FÉNIX, Interventor
+  p2_flow: P1-Activación, P2-Ejecución (FÉNIX)
+  p4_limit: Protocolos de intervención
+  p5_purpose: Resolución de crisis en plazo definido
+stories:
+- urn:goreos:atom:story:us_fnx_act_001
+- urn:goreos:atom:story:us_fnx_act_003
+- urn:goreos:atom:story:us_fnx_ana_001
+- urn:goreos:atom:story:us_fnx_ana_003
+- urn:goreos:atom:story:us_fnx_cie_002
+- urn:goreos:atom:story:us_fnx_cie_003
+- urn:goreos:atom:story:us_fnx_ges_001
+- urn:goreos:atom:story:us_fnx_int_001
+- urn:goreos:atom:story:us_fnx_int_002
+- urn:goreos:atom:story:us_fnx_int_003
+- urn:goreos:atom:story:us_fnx_ope_002
+- urn:goreos:atom:story:us_fnx_ope_003
+ofrecida_por: null

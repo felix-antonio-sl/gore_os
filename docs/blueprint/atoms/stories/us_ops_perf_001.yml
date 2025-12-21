@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_perf_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OPS-PERF-001
+story_key: us_ops_perf_001
+role_id: USR-ADM-JEFE
+as_a: null
+i_want: Ver el O_Score de los procesos críticos
+so_that: Identifico cuellos de botella y optimizo la eficiencia
+domain: D-OPS
+priority: P1
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: USR-ADM-JEFE
+  contribuye_a: CAP-OPS-001

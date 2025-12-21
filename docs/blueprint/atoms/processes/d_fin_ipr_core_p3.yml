@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p3:1.0.0
+  type: Process
+  source: domains/d-fin-ipr_core
+id: PROC-FIN-IPR_CORE-P3
+code: P3
+name: Obtención de Financiamiento
+domain: D-FIN-IPR_CORE
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

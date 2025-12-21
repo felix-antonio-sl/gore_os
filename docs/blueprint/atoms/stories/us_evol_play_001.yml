@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_evol_play_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EVOL-PLAY-001
+story_key: us_evol_play_001
+role_id: USR-EVOL-OP
+as_a: null
+i_want: Ejecutar playbook de remediación
+so_that: Respondo a problemas conocidos
+domain: D-EVOL
+priority: P1
+capability_bundle_id: CAP-EVOL-001
+morphisms:
+  protagonizado_por: USR-EVOL-OP
+  contribuye_a: CAP-EVOL-001

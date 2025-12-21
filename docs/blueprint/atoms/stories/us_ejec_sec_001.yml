@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ejec_sec_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EJEC-SEC-001
+story_key: us_ejec_sec_001
+role_id: USR-DIT-COOR
+as_a: null
+i_want: Gestionar convenios sectoriales (marco)
+so_that: Formalizo relación con ministerios
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIT-COOR
+  contribuye_a: CAP-EJEC-PORTAL-001

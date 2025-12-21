@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_medicionindicador:1.0.0
+  type: Entity
+  source: domains/d-plan/entity_data
+id: ENT-PLAN-MEDICIONINDICADOR
+name: MedicionIndicador
+entity_key: medicionindicador
+domain: D-PLAN
+category: Reference
+description: id, indicador_id, periodo, valor_real, fuente
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

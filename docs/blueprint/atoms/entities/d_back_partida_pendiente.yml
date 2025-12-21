@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_back_partida_pendiente:1.0.0
+  type: Entity
+  source: domains/d-back/glossary
+id: ENT-BACK-PARTIDA_PENDIENTE
+name: Partida Pendiente
+entity_key: partida_pendiente
+domain: D-BACK
+category: Reference
+description: Diferencia temporal entre registro SIGFE y movimiento bancario
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

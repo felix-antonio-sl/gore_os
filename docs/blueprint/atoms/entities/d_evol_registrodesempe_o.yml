@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_evol_registrodesempe_o:1.0.0
+  type: Entity
+  source: domains/d-evol/glossary
+id: ENT-EVOL-REGISTRODESEMPE_O
+name: RegistroDesempeño
+entity_key: registrodesempe_o
+domain: D-EVOL
+category: Reference
+description: Log histórico de desempeño de capacidades IA para progresión de autonomía
+  (TrajectoryLog).
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

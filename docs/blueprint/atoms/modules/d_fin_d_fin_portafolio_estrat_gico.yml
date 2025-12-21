@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:module:d_fin_portafolio_estrat_gico:1.0.0
+  type: Module
+  source: domains/d-fin/table
+id: MOD-FIN-PORTAFOLIO_ESTRAT_GI
+name: Portafolio Estratégico
+domain: D-FIN
+number: 9
+type: DOMAIN_SPECIFIC
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

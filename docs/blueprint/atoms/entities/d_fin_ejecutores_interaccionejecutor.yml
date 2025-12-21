@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_fin_ejecutores_interaccionejecutor:1.0.0
+  type: Entity
+  source: domains/d-fin-ejecutores/entity_data
+id: ENT-FIN-EJECUTORES-INTERACCIONEJECUTOR
+name: InteraccionEjecutor
+entity_key: interaccionejecutor
+domain: D-FIN-EJECUTORES
+category: Reference
+description: id, relacion_id, tipo (CONSULTA/CAPACITACION/ALERTA), fecha, canal, resumen
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

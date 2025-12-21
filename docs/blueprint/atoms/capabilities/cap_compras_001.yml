@@ -1,0 +1,22 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_compras_001:1.0.0
+  type: Capability
+id: CAP-COMPRAS-001
+name: Compras y Licitaciones
+domain: D-BACK
+type: DOMAIN_SPECIFIC
+description: 'Gestión integral del ciclo de compras públicas: PAC, licitaciones, adjudicaciones
+  y contratos.'
+value_proposition: Asegura el cumplimiento de la Ley 19.886 de Compras Públicas, optimizando
+  procesos y transparencia.
+orko_mapping:
+  p1_capacity: Unidad de Abastecimiento
+  p2_flow: P-BACK-COMPRAS (Ciclo de Adquisiciones)
+  p4_limit: Ley 19.886, Reglamento ChileCompra
+  p5_purpose: Aprovisionamiento oportuno y eficiente
+stories:
+- urn:goreos:atom:story:us_back_abs_002
+- urn:goreos:atom:story:us_back_abs_004
+- urn:goreos:atom:story:us_back_abs_005
+- urn:goreos:atom:story:us_comp_001_02
+ofrecida_por: null

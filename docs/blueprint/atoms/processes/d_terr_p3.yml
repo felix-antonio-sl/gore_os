@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_terr_p3:1.0.0
+  type: Process
+  source: domains/d-terr
+id: PROC-TERR-P3
+code: P3
+name: Gobernanza de Datos Geoespaciales
+domain: D-TERR
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

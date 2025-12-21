@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_rpmg_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-RPMG-001-01
+story_key: us_rpmg_001_01
+role_id: USR-CAL-PMG-REF
+as_a: null
+i_want: cargar medios de verificación validados
+so_that: se apruebe el cumplimiento de la etapa
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-CAL-PMG-REF
+  contribuye_a: CAP-PLAN-001

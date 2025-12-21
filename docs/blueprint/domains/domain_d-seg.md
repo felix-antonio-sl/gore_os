@@ -382,5 +382,19 @@ flowchart TD
 
 ---
 
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-SEG`  
+> Total: 3 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| US-FISC-001-01 | ministerio_publico | acceso total y reservado a servidores y correos ba... | P0 |
+| US-GLOSA7-001-01 | formulador_glosa7 | formatos estandarizados para proyectos de cámaras ... | P1 |
+| US-GRD-001-01 | comite_grd | protocolos de respuesta digitales activables con u... | P0 |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_rrhh_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-RRHH-002-01
+story_key: us_rrhh_002_01
+role_id: USR-DAF-RH-JEFE
+as_a: null
+i_want: un módulo de gestión del PAC con inscripciones y evaluaciones
+so_that: pueda reportar el cumplimiento del plan
+domain: D-BACK
+priority: P1
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-DAF-RH-JEFE
+  contribuye_a: CAP-BACK-TICKETS-001

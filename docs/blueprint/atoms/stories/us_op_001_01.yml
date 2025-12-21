@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_op_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OP-001-01
+story_key: us_op_001_01
+role_id: USR-OP-OF
+as_a: null
+i_want: un sistema de carátulas con código de barras y ruta digital
+so_that: se asegure la trazabilidad de cada ingreso
+domain: D-BACK
+priority: P0
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-OP-OF
+  contribuye_a: CAP-BACK-TICKETS-001

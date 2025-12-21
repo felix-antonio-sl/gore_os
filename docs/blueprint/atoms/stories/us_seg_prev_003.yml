@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_seg_prev_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEG-PREV-003
+story_key: us_seg_prev_003
+role_id: USR-SEG-PREV
+as_a: null
+i_want: Coordinar sesiones del Consejo Regional de Seguridad Pública
+so_that: Articulo gobernanza de seguridad
+domain: D-SEG
+priority: P1
+capability_bundle_id: CAP-SEG-001
+morphisms:
+  protagonizado_por: USR-SEG-PREV
+  contribuye_a: CAP-SEG-001

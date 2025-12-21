@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ppto_021:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-PPTO-021
+story_key: us_fin_ppto_021
+role_id: USR-DAF-JEFE
+as_a: null
+i_want: Reconciliar ejecución con SIGFE
+so_that: Valido consistencia
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-JEFE
+  contribuye_a: CAP-FIN-DASH-001

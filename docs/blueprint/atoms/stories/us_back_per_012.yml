@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_back_per_012:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BACK-PER-012
+story_key: us_back_per_012
+role_id: USR-DAF-PER-GEST
+as_a: null
+i_want: Gestionar horas extraordinarias (F2)
+so_that: Controlo sobretiempo
+domain: D-BACK
+priority: P1
+capability_bundle_id: CAP-PAGOS-001
+morphisms:
+  protagonizado_por: USR-DAF-PER-GEST
+  contribuye_a: CAP-PAGOS-001

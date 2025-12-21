@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_cabildoterritorial:1.0.0
+  type: Entity
+  source: domains/d-plan/entity_data
+id: ENT-PLAN-CABILDOTERRITORIAL
+name: CabildoTerritorial
+entity_key: cabildoterritorial
+domain: D-PLAN
+category: Reference
+description: id, fecha, comuna, participantes, propuestas_count
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

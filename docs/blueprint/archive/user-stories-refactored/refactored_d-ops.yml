@@ -1,0 +1,111 @@
+atomic_stories:
+  - id: US-OPS-MON-001
+    as_a: Administrador de Plataforma
+    i_want: Ver el panel de observabilidad con los 16 indicadores ORKO
+    so_that: Detecto proactivamente fallos o degradación del servicio
+    acceptance_criteria:
+      - "Dashboard con 8 observables externos (EX1-8)"
+      - "Dashboard con 8 observables internos (IN1-8)"
+      - "Alertas automáticas ante desviaciones de umbrales"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: administrador_de_plataforma
+    origin: legacy
+  - id: US-OPS-INC-001
+    as_a: Soporte Técnico
+    i_want: Registrar y resolver incidentes siguiendo el ciclo SDA
+    so_that: Mantengo la continuidad operacional
+    acceptance_criteria:
+      - "Registro de Sense (Captura), Decide (Diagnóstico), Act (Resolución)"
+      - "Trazabilidad del owner del incidente (Humano Accountable)"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: soporte_técnico
+    origin: legacy
+  - id: US-OPS-SEC-001
+    as_a: Oficial de Seguridad (CISO)
+    i_want: Revisar logs de acceso y acciones críticas
+    so_that: Garantizo el cumplimiento de la Ley 21.663 (Ciberseguridad)
+    acceptance_criteria:
+      - "Reporte consolidado de accesos por URN"
+      - "Integración con el sistema de alertas de ciberseguridad"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: oficial_de_seguridad_(ciso)
+    origin: legacy
+  - id: US-OPS-PERF-001
+    as_a: Administrador Regional
+    i_want: Ver el O_Score de los procesos críticos
+    so_that: Identifico cuellos de botella y optimizo la eficiencia
+    acceptance_criteria:
+      - "Cálculo de O_Score (Efficiency, Reliability)"
+      - "Sugerencias automáticas de optimización basadas en historial"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-OPS-BACK-001
+    as_a: Administrador de Plataforma
+    i_want: Asegurar políticas de backup y restauración
+    so_that: Protejo la integridad de los datos institucionales
+    acceptance_criteria:
+      - "Plan de backup automatizado"
+      - "Pruebas de restauración exitosas periódicas"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: administrador_de_plataforma
+    origin: legacy
+  - id: US-OPS-IAC-001
+    as_a: Ingeniero de Plataforma
+    i_want: Provisionar y gestionar toda la infraestructura mediante código (Terraform)
+    so_that: Evito configuration drift y permito recuperación ante desastres
+    acceptance_criteria:
+      - "Estado remoto gestionado"
+      - "Plan de ejecución verificable"
+      - "Idempotencia en despliegues"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: ingeniero_de_plataforma
+    origin: legacy
+  - id: US-OPS-SRE-001
+    as_a: Sistema (Orquestador)
+    i_want: Escalar horizontalmente los pods según consumo de CPU/Memoria
+    so_that: Mantengo el rendimiento ante picos de demanda
+    acceptance_criteria:
+      - "Definición de métricas de escalado"
+      - "Límites máximos de recursos (Quotas)"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: sistema_(orquestador)
+    origin: legacy
+  - id: US-OPS-FIN-001
+    as_a: FinOps Manager
+    i_want: Recibir alertas cuando el consumo proyectado exceda el presupuesto mensual
+    so_that: Evito sorpresas en la facturación de servicios en la nube
+    acceptance_criteria:
+      - "Alertas al 50%, 80% y 100% del presupuesto"
+      - "Desglose por centro de costos"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: finops_manager
+    origin: legacy
+  - id: US-OPS-SRE-002
+    as_a: Robot Cert-Manager
+    i_want: Renovar automáticamente los certificados SSL/TLS antes de su expiración
+    so_that: Garantizo la continuidad del cifrado sin intervención humana
+    acceptance_criteria:
+      - "Renovación 30 días antes de expirar"
+      - "Verificación de desafío ACME"
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: robot_cert-manager
+    origin: legacy

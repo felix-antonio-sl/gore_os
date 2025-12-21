@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ciu_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-CIU-002-01
+story_key: us_ciu_002_01
+role_id: USR-CIU-GEN
+as_a: null
+i_want: acceder a plataformas de consulta ciudadana del GORE
+so_that: pueda expresar mi opinión sobre prioridades de inversión
+domain: D-TERR
+priority: P2
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-CIU-GEN
+  contribuye_a: CAP-TERR-MAP-001

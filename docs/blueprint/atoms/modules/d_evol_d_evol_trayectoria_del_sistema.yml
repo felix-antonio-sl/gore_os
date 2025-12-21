@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_evol_trayectoria_del_sistema:1.0.0
+  type: Module
+  source: domains/d-evol
+id: MOD-EVOL-TRAYECTORIA_DEL_SIST
+name: Trayectoria del Sistema
+domain: D-EVOL
+number: 2
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

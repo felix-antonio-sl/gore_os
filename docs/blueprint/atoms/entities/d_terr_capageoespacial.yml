@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_terr_capageoespacial:1.0.0
+  type: Entity
+  source: domains/d-terr/entity_data
+id: ENT-TERR-CAPAGEOESPACIAL
+name: CapaGeoespacial
+entity_key: capageoespacial
+domain: D-TERR
+category: Reference
+description: id, nombre, geometria, fecha_publicacion, licencia
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

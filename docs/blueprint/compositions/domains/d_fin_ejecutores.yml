@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_fin_ejecutores:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-FIN-EJECUTORES
+name: Dominio D-FIN-EJECUTORES
+aggregation:
+  modules: []
+  processes:
+  - urn:goreos:atom:process:d_fin_ejecutores_p4_bis:1.0.0
+  - urn:goreos:atom:process:d_fin_ejecutores_p8:1.0.0
+  entities:
+  - urn:goreos:atom:entity:d_fin_ejecutores_calificacionejecutor:1.0.0
+  - urn:goreos:atom:entity:d_fin_ejecutores_interaccionejecutor:1.0.0
+  - urn:goreos:atom:entity:d_fin_ejecutores_relacionejecutor:1.0.0
+  capabilities: []
+stats:
+  modules_count: 0
+  processes_count: 2
+  entities_count: 3
+  capabilities_count: 0

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_norm_p4:1.0.0
+  type: Process
+  source: domains/d-norm
+id: PROC-NORM-P4
+code: P4
+name: Auditorías CGR
+domain: D-NORM
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

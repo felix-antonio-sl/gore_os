@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_back_conciliaci_n:1.0.0
+  type: Entity
+  source: domains/d-back/glossary
+id: ENT-BACK-CONCILIACI_N
+name: Conciliación
+entity_key: conciliaci_n
+domain: D-BACK
+category: Reference
+description: Proceso de cuadrar movimientos bancarios (cartola) con registros SIGFE
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

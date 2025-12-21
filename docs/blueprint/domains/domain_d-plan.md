@@ -608,5 +608,68 @@ Frecuencia: Anual (muestreo de proyectos finalizados año anterior)
 
 ---
 
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key               | Título                 | Responsabilidades                |
+| ---------------------- | ---------------------- | -------------------------------- |
+| jefe_diplade           | Jefe DIPLADE           | Dirección planificación regional |
+| analista_planificacion | Analista Planificación | Elaboración y monitoreo ERD/PROT |
+| coordinador_propir     | Coordinador PROPIR     | Gestión ciclo ARI/PROPIR         |
+| analista_geoespacial   | Analista Geoespacial   | Análisis territorial             |
+
+Ver inventario completo: [inventario_roles_v8.yml](../inventario_roles_v8.yml)
+
+---
+
+## Historias de Usuario (SSOT: historias_usuarios_v2.yml)
+
+D-PLAN tiene **24 historias atómicas** que abarcan:
+- ERD Digital (US-PLAN-ERD-*)
+- PROT Digital (US-PLAN-PROT-*)
+- ARI/PROPIR (US-PLAN-ARI-*)
+- Observatorio (US-PLAN-OBS-*)
+
+Ver [historias_usuarios_v2.yml](../historias_usuarios_v2.yml) para catálogo completo.
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-PLAN`  
+> Total: 26 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| US-ANAL-PPR-001-01 | analista_ppr | un módulo de diseño de programas con marco lógico... | P1 |
+| US-ANID-001-01 | representante_anid | acceso a indicadores de capital humano avanzado... | P2 |
+| US-ASES-001-01 | asesor_gabinete | acceder a información consolidada de los temas que... | P2 |
+| US-CORFO-001-01 | Director CORFO | información de proyectos productivos GORE... | P1 |
+| US-DESC-001-02 | encargado_descentral | documentar las capacidades requeridas para cada co... | P1 |
+| US-DIPLADE-001-01 | jefe_diplade | un módulo de gestión de la Estrategia Regional de ... | P0 |
+| US-DIPLADE-001-02 | jefe_diplade | generar el Anteproyecto Regional de Inversiones (A... | P0 |
+| US-DPR-002-01 | delegado_presidencia | reportes de inversión en seguridad pública financi... | P1 |
+| US-DSEG-001-02 | jefe_seg | un registro de programas de prevención financiados... | P1 |
+| US-GEN-001-01 | referente_genero | indicadores desagregados por sexo en todos los rep... | P2 |
+| US-GOB-002-01 | gobernador | un registro centralizado de convenios vigentes con... | P1 |
+| US-GOBPROV-001-01 | gobernacion_provinci | reportes de inversión GORE en la provincia... | P1 |
+| US-INV-DEP-001-01 | jefe_inversion | priorizar proyectos en el anteproyecto regional de... | P0 |
+| US-JD-PLAN-001-01 | jefe_depto_planif | un repositorio documental de estudios regionales... | P1 |
+| US-JPROG-001-01 | jefe_programacion | un módulo de programación plurianual de inversione... | P0 |
+| US-PMG-001-01 | coordinador_pmg | un sistema de carga de evidencias PMG descentraliz... | P1 |
+| US-PO-001-01 | product_owner | herramientas para gestionar user stories y criteri... | P0 |
+| US-PPERT-001-01 | presidente_comite_pe | visar el acta de pertinencia con firma digital... | P0 |
+| US-PROF-N250-001-01 | profesional_nuble_25 | acceder al detalle de compromisos de mi área... | P0 |
+| US-RPMG-001-01 | referente_tecnico_pm | cargar medios de verificación validados... | P1 |
+| US-RRII-001-01 | encargado_rrii | un registro de convenios internacionales y proyect... | P2 |
+| US-SEC-CTCI-001-01 | secretario_ctci | un módulo de gestión de sesiones del CTCI... | P1 |
+| US-SER-AGR-001-01 | SEREMI Agricultura | reportes de inversión GORE en sector agrícola... | P1 |
+| US-SPERT-001-01 | secretario_comite_pe | generar actas automáticas a partir de la tabla de ... | P1 |
+| US-UCR-001-01 | unidad_coordinacion_ | reportes de gestión del GORE... | P1 |
+| US-UF-001-01 | unidad_formuladora | obtener el código BIP de mis iniciativas... | P0 |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+

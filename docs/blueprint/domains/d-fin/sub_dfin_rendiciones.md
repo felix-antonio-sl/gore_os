@@ -104,12 +104,20 @@ flowchart TD
 
 ## Entidades de Datos
 
-| Entidad            | Atributos Clave                                                                            | Relaciones              |
-| ------------------ | ------------------------------------------------------------------------------------------ | ----------------------- |
-| `Transferencia`    | id, convenio_id, monto, fecha_giro, estado                                                 | → Convenio, Rendicion[] |
-| `Rendicion`        | id, transferencia_id, estado, monto_rendido, ubicacion_fisica, codigo_qr, coherencia_sigfe | → Transferencia         |
-| `InformeRendicion` | id, rendicion_id, tipo, estado_sisrec, firma_fea                                           | → Rendicion             |
-| `Observacion`      | id, rendicion_id, descripcion, estado, fecha_respuesta                                     | → Rendicion             |
+| Entidad | Atributos Clave | Relaciones |
+| ------- | --------------- | ---------- |
+## Entidades de Datos
+
+| Entidad            | Atributos Clave                                               | Relaciones            |
+| :----------------- | :------------------------------------------------------------ | :-------------------- |
+| **`EstadoPago`**   | `numero_ep`, `avance_fisico`, `monto_liquido`, `ito_visacion` | → Contrato, → Devengo |
+| `Transferencia`    | `monto_girado`, `fecha_abono`, `comprobante_bancario`         | → Convenio            |
+| `Rendicion`        | `monto_rendido`, `saldo_disponible`, `estado_sisrec`          | → Transferencia       |
+| `InformeRendicion` | `periodo`, `gastos_detalle`, `firma_electronica`              | → Rendicion           |
+| `Observacion`      | `tipo_hallazgo`, `monto_observado`, `plazo_subsanacion`       | → Rendicion           |
+
+> [!NOTE]
+> `EstadoPago` aplica para obras (D-FIN Patrón A). `Rendicion` aplica para transferencias (D-FIN Patrón B).
 
 ---
 
@@ -123,11 +131,37 @@ flowchart TD
 
 ---
 
-## Referencias
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
 
-- **Guía Rendiciones:** [kb_gn_020_gestion_rendiciones_koda.yml](file:///Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/kb_gn_020_gestion_rendiciones_koda.yml)
-- **Integración D-BACK:** [domain_d-back.md](../domain_d-back.md) (Contabilización)
+| Role Key              | Título                | Responsabilidades              |
+| --------------------- | --------------------- | ------------------------------ |
+| encargado_rendiciones | Encargado Rendiciones | Revisión exhaustiva de cuentas |
+| coordinador_ucr       | Coordinador UCR       | Jefatura operativa de UCR      |
+| profesional_ucr       | Profesional UCR       | Gestión operativa rendiciones  |
+| analista_rendiciones  | Analista Rendiciones  | Revisión técnica-financiera    |
+| jefe_daf              | Jefe DAF              | Autorización bloqueos Art.18   |
 
 ---
 
-*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*
+## Historias de Usuario (SSOT: historias_usuarios_v2.yml)
+
+### CAP-FIN-REND-001: Módulo de Rendiciones (P0)
+
+> **Como** Encargado de Rendiciones  
+> **Quiero** alertas automáticas de rendiciones pendientes por vencer  
+> **Para** gestionar proactivamente con los ejecutores
+
+**Beneficiarios:** encargado_rendiciones, ejecutor_ppr, unidad_tecnica, coordinador_ucr
+
+### Historias Atómicas
+
+| ID             | Role Key              | Quiero                           | Prioridad |
+| -------------- | --------------------- | -------------------------------- | --------- |
+| US-REND-002-01 | encargado_rendiciones | workflow de revisión con estados | P0        |
+| US-UCR-001-01  | coordinador_ucr       | panel de mora por ejecutor       | P0        |
+
+---
+
+*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*  
+*Actualizado: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+

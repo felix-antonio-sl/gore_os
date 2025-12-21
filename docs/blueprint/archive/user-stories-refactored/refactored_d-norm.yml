@@ -1,0 +1,412 @@
+atomic_stories:
+  - id: US-NORM-ACTO-001
+    as_a: Abogado Unidad Jurídica
+    i_want: Gestionar actos administrativos (decretos/resoluciones)
+    so_that: Aseguro validez jurídica de los actos
+    acceptance_criteria:
+      - ""Tipos: Decreto, Resolución Exenta, Resolución Afecta""
+      - "Flujo de visación y firma"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    origin: legacy
+  - id: US-NORM-ACTO-002
+    as_a: Abogado Unidad Jurídica
+    i_want: Asesorar legalmente y revisar bases/convenios
+    so_that: Prevengo riesgos legales
+    acceptance_criteria:
+      - "Checklist de revisión legal"
+      - "Observaciones estructuradas"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    origin: legacy
+  - id: US-NORM-ACTO-003
+    as_a: Abogado Unidad Jurídica
+    i_want: Tramitar actos ante CGR (toma de razón)
+    so_that: Cumplo con control preventivo
+    acceptance_criteria:
+      - "Envío electrónico a CGR"
+      - "Seguimiento de estado"
+      - "Registro de representaciones/observaciones"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    origin: legacy
+  - id: US-NORM-ACTO-004
+    as_a: Abogado Unidad Jurídica
+    i_want: Gestionar litigios y defensa judicial regional
+    so_that: Defiendo intereses del GORE
+    acceptance_criteria:
+      - "Registro de causas activas"
+      - "Plazos judiciales con alertas"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_unidad_jurídica
+    origin: legacy
+  - id: US-NORM-ACTO-005
+    as_a: Abogado Unidad Jurídica
+    i_want: Supervisar cumplimiento normativo (sumarios)
+    so_that: Mantengo disciplina administrativa
+    acceptance_criteria:
+      - "Inventario de sumarios"
+      - "Estados y plazos"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_unidad_jurídica
+    origin: legacy
+  - id: US-NORM-ACTO-006
+    as_a: Analista Gestión DIPIR
+    i_want: Clasificar convenio AFECTA/EXENTA según normativa CGR
+    so_that: Determino flujo de aprobación correcto
+    acceptance_criteria:
+      - "Criterios de clasificación"
+      - "Fundamentación automática"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-NORM-ACTO-007
+    as_a: Abogado Unidad Jurídica
+    i_want: Visar borrador de acto administrativo (check atribuciones y presupuesto)
+    so_that: Valido antes de firma
+    acceptance_criteria:
+      - "Checklist de visación"
+      - "Atribuciones verificadas"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_unidad_jurídica
+    origin: legacy
+  - id: US-NORM-ACTO-008
+    as_a: Abogado Unidad Jurídica
+    i_want: Devolver trámite con observaciones jurídicas para corrección
+    so_that: Corrijo antes de firma
+    acceptance_criteria:
+      - "Observaciones estructuradas"
+      - "Notificación al área"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_unidad_jurídica
+    origin: legacy
+  - id: US-NORM-ACTO-009
+    as_a: Oficial de Partes / Oficial de Partes
+    i_want: Asignar folio único a Resolución/Decreto tras total tramitación
+    so_that: Formalizo el acto
+    acceptance_criteria:
+      - "Folio correlativo por tipo"
+      - "Fecha de emisión"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: oficial_de_partes_/_oficial_de_partes
+    origin: legacy
+  - id: US-NORM-ACTO-010
+    as_a: Oficial de Partes / Oficial de Partes
+    i_want: Notificar digitalmente a interesados y publicar en Transparencia
+    so_that: Cumplo con notificación y publicidad
+    acceptance_criteria:
+      - "Notificación electrónica"
+      - "Publicación automática"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: oficial_de_partes_/_oficial_de_partes
+    origin: legacy
+  - id: US-NORM-ACTO-011
+    as_a: Oficial de Partes / Oficial de Partes
+    i_want: Recibir alerta de actos pendientes de firma >5 días
+    so_that: Gestiono demoras
+    acceptance_criteria:
+      - "Alerta automática"
+      - "Dashboard de pendientes"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: oficial_de_partes_/_oficial_de_partes
+    origin: legacy
+  - id: US-NORM-ACTO-012
+    as_a: Ministro de Fe
+    i_want: Generar copia auténtica digital de actos originales
+    so_that: Proveo copias oficiales
+    acceptance_criteria:
+      - "Firma FEA del Ministro de Fe"
+      - "Marca de autenticidad"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: ministro_de_fe
+    origin: legacy
+  - id: US-NORM-EXP-001
+    as_a: Administrador Sistema
+    i_want: Gestionar Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
+    so_that: Cumplo con Ley TDE
+    acceptance_criteria:
+      - "IUIe único por expediente"
+      - "Índice electrónico automático"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-NORM-EXP-002
+    as_a: Administrador Sistema
+    i_want: Mantener índice electrónico del expediente (DS10)
+    so_that: Documento todas las actuaciones
+    acceptance_criteria:
+      - "Foliación automática"
+      - "Metadatos por documento"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-NORM-EXP-003
+    as_a: Administrador Sistema
+    i_want: Registrar trazabilidad de acciones sobre expediente (DS10)
+    so_that: Garantizo auditoría
+    acceptance_criteria:
+      - "Log de todas las acciones"
+      - ""Usuario, fecha, acción""
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-NORM-EXP-004
+    as_a: Administrador Sistema
+    i_want: Registrar eventos documentales (CERT_CORE, CREA_ASIG, APRUEBA_CONV, etc.)
+    so_that: Documento hitos del expediente
+    acceptance_criteria:
+      - "Tipología de eventos"
+      - "Vinculación a documentos"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: administrador_sistema
+    origin: legacy
+  - id: US-NORM-TRANS-001
+    as_a: Encargado Transparencia
+    i_want: Verificar transparencia activa mensual
+    so_that: Cumplo con Ley 20.285
+    acceptance_criteria:
+      - "Checklist de ítems obligatorios"
+      - "Estado de actualización"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: encargado_transparencia
+    origin: legacy
+  - id: US-NORM-TRANS-002
+    as_a: Encargado Transparencia
+    i_want: Gestionar solicitudes OIRS/SAI integradas (respuesta 20 días hábiles)
+    so_that: Respondo en plazo legal
+    acceptance_criteria:
+      - "Portal unificado"
+      - "Control de plazos"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: encargado_transparencia
+    origin: legacy
+  - id: US-NORM-TRANS-003
+    as_a: Encargado Transparencia
+    i_want: Gestionar amparos ante CPLT (preparar descargos)
+    so_that: Defiendo decisiones de denegación
+    acceptance_criteria:
+      - "Registro de amparos"
+      - "Plazos de respuesta"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: encargado_transparencia
+    origin: legacy
+  - id: US-NORM-LOBBY-001
+    as_a: Encargado Transparencia
+    i_want: Verificar registros de audiencias y donativos
+    so_that: Cumplo con Ley de Lobby
+    acceptance_criteria:
+      - "Registro de audiencias"
+      - "Registro de donativos"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: encargado_transparencia
+    origin: legacy
+  - id: US-NORM-LOBBY-002
+    as_a: Encargado Transparencia
+    i_want: Coordinar nómina de sujetos pasivos
+    so_that: Identifico obligados a registrar
+    acceptance_criteria:
+      - "Lista actualizada"
+      - "Notificación de obligaciones"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: encargado_transparencia
+    origin: legacy
+  - id: US-NORM-DIP-001
+    as_a: Encargado Transparencia
+    i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
+    so_that: Aseguro cumplimiento de funcionarios
+    acceptance_criteria:
+      - "Alerta automática"
+      - "Lista de pendientes"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: encargado_transparencia
+    origin: legacy
+  - id: US-NORM-CTRL-001
+    as_a: Jefe Unidad de Control
+    i_want: Recibir notificaciones de cruces entre evaluadores y postulantes
+    so_that: Prevengo conflictos de interés
+    acceptance_criteria:
+      - "Cruce automático RUT"
+      - "Alerta inmediata"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: jefe_unidad_de_control
+    origin: legacy
+  - id: US-NORM-CTRL-002
+    as_a: Jefe Unidad de Control
+    i_want: Revisar muestreo de adjudicaciones y pagos
+    so_that: Detecto irregularidades
+    acceptance_criteria:
+      - "Muestreo aleatorio"
+      - "Registro de revisiones"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: jefe_unidad_de_control
+    origin: legacy
+  - id: US-NORM-CTRL-003
+    as_a: Jefe Unidad de Control
+    i_want: Auditar selectivamente procesos de transferencia y rendición
+    so_that: Verifico cumplimiento de procedimientos
+    acceptance_criteria:
+      - "Plan de auditoría"
+      - "Hallazgos documentados"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: jefe_unidad_de_control
+    origin: legacy
+  - id: US-NORM-CTRL-004
+    as_a: Jefe Unidad de Control
+    i_want: Informar hallazgos y recomendaciones al Gobernador y CORE
+    so_that: Escalo temas relevantes
+    acceptance_criteria:
+      - "Informe estructurado"
+      - "Clasificación de hallazgos"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: jefe_unidad_de_control
+    origin: legacy
+  - id: US-NORM-CTRL-005
+    as_a: Fiscal Sumariante
+    i_want: Gestionar expediente disciplinario con reserva y plazos
+    so_that: Investigo faltas administrativas
+    acceptance_criteria:
+      - "Expediente reservado"
+      - "Control de plazos legales"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: fiscal_sumariante
+    origin: legacy
+  - id: US-NORM-CGR-001
+    as_a: CGR (Externo)
+    i_want: Recibir actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
+    so_that: Ejerzo control preventivo
+    acceptance_criteria:
+      - "Recepción electrónica"
+      - "Pronunciamiento en plazo"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: cgr_(externo)
+    origin: legacy
+  - id: US-NORM-CGR-002
+    as_a: CGR (Externo)
+    i_want: Verificar rendiciones SISREC fiscalizando fondos
+    so_that: Controlo uso de recursos públicos
+    acceptance_criteria:
+      - "Acceso a rendiciones"
+      - "Registro de observaciones"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: cgr_(externo)
+    origin: legacy
+  - id: US-NORM-CGR-003
+    as_a: CGR (Externo)
+    i_want: Fiscalizar DIP detectando incumplimientos
+    so_that: Aseguro probidad
+    acceptance_criteria:
+      - "Cruce de declaraciones"
+      - "Detección de inconsistencias"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: cgr_(externo)
+    origin: legacy
+  - id: US-NORM-CPLT-001
+    as_a: CPLT (Externo)
+    i_want: Requerir información en amparo (plazo legal)
+    so_that: Ejerzo tutela de acceso a información
+    acceptance_criteria:
+      - "Notificación formal"
+      - "Plazo de respuesta"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: cplt_(externo)
+    origin: legacy
+  - id: US-NORM-SIM-001
+    as_a: Abogado Revisor
+    i_want: Simular si una imputación presupuestaria cumple con las reglas de la Glosa vigente
+    so_that: Detecto rechazos probables antes de enviar a firma
+    acceptance_criteria:
+      - "Carga de reglas de negocio (Glosa N)"
+      - "Validación automática de objeto del gasto"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_revisor
+    origin: legacy
+  - id: US-NORM-CRIS-001
+    as_a: Encargado Transparencia
+    i_want: Gestionar un pico de solicitudes de información (>50 simultáneas) coordinado
+    so_that: Evito caer en silencio administrativo masivo
+    acceptance_criteria:
+      - "Agrupación de solicitudes por materia"
+      - "Respuesta tipo masiva"
+      - "Solicitud de prórroga automática"
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: encargado_transparencia
+    origin: legacy
+  - id: US-NORM-AI-001
+    as_a: Asistente Jurídico (Robot)
+    i_want: Generar borrador de resolución estándar (ej. cometido, feriado) basado en plantilla
+    so_that: Reduzco carga operativa de abogados
+    acceptance_criteria:
+      - "Selección de plantilla"
+      - "Inyección de datos variables"
+      - "Marca de "Borrador Automático""
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: asistente_jurídico_(robot)
+    origin: legacy

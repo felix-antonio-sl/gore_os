@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_rtd_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-RTD-001-01
+story_key: us_rtd_001_01
+role_id: USR-DAF-TIC-CTD
+as_a: null
+i_want: reportar el porcentaje de trámites digitalizados
+so_that: el servicio cumpla la ley de transformación digital
+domain: D-DEV
+priority: P1
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-CTD
+  contribuye_a: CAP-DEV-001

@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_evol_h_gore:1.0.0
+  type: Entity
+  source: domains/d-evol/glossary
+id: ENT-EVOL-H_GORE
+name: H_gore
+entity_key: h_gore
+domain: D-EVOL
+category: Reference
+description: Puntaje de Salud Institucional GORE. Métrica táctica de desempeño operativo
+  diario/semanal (ver D-GESTION).
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

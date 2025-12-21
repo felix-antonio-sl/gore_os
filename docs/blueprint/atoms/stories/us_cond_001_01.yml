@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_cond_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-COND-001-01
+story_key: us_cond_001_01
+role_id: USR-NEW-CONDUCTOR
+as_a: null
+i_want: un módulo de reserva de vehículos y registro de bitácora
+so_that: pueda documentar los traslados
+domain: D-BACK
+priority: P2
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-NEW-CONDUCTOR
+  contribuye_a: CAP-BACK-TICKETS-001

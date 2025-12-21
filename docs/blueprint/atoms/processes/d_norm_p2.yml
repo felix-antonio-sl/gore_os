@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_norm_p2:1.0.0
+  type: Process
+  source: domains/d-norm
+id: PROC-NORM-P2
+code: P2
+name: Aprobación de Transferencias y Convenios
+domain: D-NORM
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

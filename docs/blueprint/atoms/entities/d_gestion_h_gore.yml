@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_gestion_h_gore:1.0.0
+  type: Entity
+  source: domains/d-gestion/glossary
+id: ENT-GESTION-H_GORE
+name: H_gore
+entity_key: h_gore
+domain: D-GESTION
+category: Reference
+description: Puntaje de Salud Táctico (Tactical Health Score). Salud operativa diaria/semanal
+  del GORE.
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

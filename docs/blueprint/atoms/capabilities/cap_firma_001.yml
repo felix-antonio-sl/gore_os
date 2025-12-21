@@ -1,0 +1,95 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_firma_001:1.0.0
+  type: Capability
+id: CAP-FIRMA-001
+name: Bandeja de Firma Electrónica
+domain: D-TDE
+type: DOMAIN_SPECIFIC
+description: Bandeja de firma electrónica avanzada con priorización, flujo de aprobaciones
+  y contingencia.
+value_proposition: Acelera el despacho de actos administrativos cumpliendo con estándares
+  FEA.
+orko_mapping:
+  p1_capacity: Gobernador, Jefes de División
+  p2_flow: P1-Resoluciones Fase 6 (D-NORM)
+  p4_limit: Ley 21.180, Ley 19.799 (FEA)
+  p5_purpose: Tiempo firma ≤24h para prioridad P0
+stories:
+- urn:goreos:atom:story:us_acc_001_01
+- urn:goreos:atom:story:us_admin_001_01
+- urn:goreos:atom:story:us_arch_001_01
+- urn:goreos:atom:story:us_arq_dat_001_01
+- urn:goreos:atom:story:us_bcp_001_01
+- urn:goreos:atom:story:us_bi_001_01
+- urn:goreos:atom:story:us_capdig_001_01
+- urn:goreos:atom:story:us_cgr_001_01
+- urn:goreos:atom:story:us_ctd_001_02
+- urn:goreos:atom:story:us_cust_001_01
+- urn:goreos:atom:story:us_cust_dat_001_01
+- urn:goreos:atom:story:us_dba_001_01
+- urn:goreos:atom:story:us_dueno_001_01
+- urn:goreos:atom:story:us_inter_001_01
+- urn:goreos:atom:story:us_mctd_001_01
+- urn:goreos:atom:story:us_msia_001_01
+- urn:goreos:atom:story:us_oirs_001_01
+- urn:goreos:atom:story:us_op_001_02
+- urn:goreos:atom:story:us_op_002_01
+- urn:goreos:atom:story:us_sec_ctd_001_01
+- urn:goreos:atom:story:us_tde_admin_001
+- urn:goreos:atom:story:us_tde_admin_002
+- urn:goreos:atom:story:us_tde_admin_004
+- urn:goreos:atom:story:us_tde_admin_006
+- urn:goreos:atom:story:us_tde_admin_007
+- urn:goreos:atom:story:us_tde_admin_008
+- urn:goreos:atom:story:us_tde_auth_001
+- urn:goreos:atom:story:us_tde_auth_002
+- urn:goreos:atom:story:us_tde_auth_003
+- urn:goreos:atom:story:us_tde_auth_004
+- urn:goreos:atom:story:us_tde_auth_005
+- urn:goreos:atom:story:us_tde_auth_006
+- urn:goreos:atom:story:us_tde_avance_002
+- urn:goreos:atom:story:us_tde_avance_003
+- urn:goreos:atom:story:us_tde_calidad_002
+- urn:goreos:atom:story:us_tde_calidad_003
+- urn:goreos:atom:story:us_tde_cris_001
+- urn:goreos:atom:story:us_tde_dev_001
+- urn:goreos:atom:story:us_tde_docdig_002
+- urn:goreos:atom:story:us_tde_dpo_001
+- urn:goreos:atom:story:us_tde_dpo_003
+- urn:goreos:atom:story:us_tde_dpo_005
+- urn:goreos:atom:story:us_tde_dpo_007
+- urn:goreos:atom:story:us_tde_dpo_008
+- urn:goreos:atom:story:us_tde_firma_002
+- urn:goreos:atom:story:us_tde_interop_001
+- urn:goreos:atom:story:us_tde_interop_002
+- urn:goreos:atom:story:us_tde_interop_003
+- urn:goreos:atom:story:us_tde_interop_004
+- urn:goreos:atom:story:us_tde_interop_005
+- urn:goreos:atom:story:us_tde_interop_007
+- urn:goreos:atom:story:us_tde_muni_001
+- urn:goreos:atom:story:us_tde_muni_002
+- urn:goreos:atom:story:us_tde_muni_004
+- urn:goreos:atom:story:us_tde_notif_001
+- urn:goreos:atom:story:us_tde_notif_002
+- urn:goreos:atom:story:us_tde_notif_003
+- urn:goreos:atom:story:us_tde_notif_004
+- urn:goreos:atom:story:us_tde_notif_005
+- urn:goreos:atom:story:us_tde_notif_006
+- urn:goreos:atom:story:us_tde_qa_001
+- urn:goreos:atom:story:us_tde_reg_001
+- urn:goreos:atom:story:us_tde_sec_001
+- urn:goreos:atom:story:us_tde_seg_001
+- urn:goreos:atom:story:us_tde_seg_002
+- urn:goreos:atom:story:us_tde_seg_003
+- urn:goreos:atom:story:us_tde_seg_004
+- urn:goreos:atom:story:us_tde_seg_005
+- urn:goreos:atom:story:us_tde_seg_006
+- urn:goreos:atom:story:us_tde_seg_007
+- urn:goreos:atom:story:us_tde_seg_008
+- urn:goreos:atom:story:us_tde_seg_009
+- urn:goreos:atom:story:us_tde_seg_010
+- urn:goreos:atom:story:us_tde_seg_011
+- urn:goreos:atom:story:us_tde_tic_002
+- urn:goreos:atom:story:us_tde_tic_004
+- urn:goreos:atom:story:us_tde_vinc_002
+ofrecida_por: null

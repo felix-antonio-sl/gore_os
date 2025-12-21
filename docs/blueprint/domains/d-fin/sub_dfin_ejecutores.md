@@ -97,10 +97,35 @@ flowchart LR
 
 ---
 
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key           | Título                    | Responsabilidades          |
+| ------------------ | ------------------------- | -------------------------- |
+| entidad_ejecutora  | Entidad Ejecutora         | Recibe y ejecuta fondos    |
+| ejecutor_ppr       | Ejecutor PPR              | Ejecuta programas propios  |
+| org_beneficiaria   | Organización Beneficiaria | Adjudicataria de fondos    |
+| contratista        | Contratista / Proveedor   | Provee bienes/servicios    |
+| formulador_externo | Formulador Externo        | Diseña y postula proyectos |
+
+---
+
+## Historias de Usuario (SSOT: historias_usuarios_v2.yml)
+
+### Historias Atómicas (M7: Gestión Ejecutores)
+
+| ID                 | Role Key          | Quiero                          | Prioridad |
+| ------------------ | ----------------- | ------------------------------- | --------- |
+| US-EJEC-001-01     | entidad_ejecutora | acceso a sistema de rendiciones | P0        |
+| US-EJEC-PPR-001-01 | ejecutor_ppr      | portal de postulación           | P1        |
+
+---
+
 ## Referencias
 
 - **Integración D-GOB:** [domain_d-gob.md](../domain_d-gob.md) (Registro de Actores)
 
 ---
 
-*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*
+*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*  
+*Actualizado: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+

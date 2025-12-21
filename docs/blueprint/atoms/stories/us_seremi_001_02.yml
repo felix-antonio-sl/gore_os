@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:story:us_seremi_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEREMI-001-02
+story_key: us_seremi_001_02
+role_id: USR-EXT-SEREMI
+as_a: null
+i_want: recibir notificaciones de sesiones del CORE donde se traten materias de mi
+  sector
+so_that: pueda asistir o enviar información técnica
+domain: D-NORM
+priority: P2
+capability_bundle_id: CAP-DOCUMENTOS-001
+morphisms:
+  protagonizado_por: USR-EXT-SEREMI
+  contribuye_a: CAP-DOCUMENTOS-001

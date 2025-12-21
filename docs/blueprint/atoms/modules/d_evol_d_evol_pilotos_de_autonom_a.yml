@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_evol_pilotos_de_autonom_a:1.0.0
+  type: Module
+  source: domains/d-evol
+id: MOD-EVOL-PILOTOS_DE_AUTONOM_A
+name: Pilotos de Autonomía
+domain: D-EVOL
+number: 3
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

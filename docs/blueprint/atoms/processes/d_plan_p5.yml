@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_plan_p5:1.0.0
+  type: Process
+  source: domains/d-plan
+id: PROC-PLAN-P5
+code: P5
+name: Evaluación Indicadores
+domain: D-PLAN
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

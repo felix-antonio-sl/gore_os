@@ -764,5 +764,17 @@ Módulo: M7 (Base de Conocimiento Institucional)
 
 ---
 
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-EVOL`  
+> Total: 1 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| US-GOB-001-02 | gobernador | recibir alertas automáticas de desviaciones crític... | P1 |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*

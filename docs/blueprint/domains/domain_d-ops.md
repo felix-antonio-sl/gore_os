@@ -15,6 +15,7 @@ owners:
 # D-OPS — Dominio de Operaciones del Sistema
 
 ## 🧭 1. Resumen Ejecutivo
+
 - **Propósito**: Garantizar la continuidad operativa, seguridad y soporte del ecosistema GORE_OS en producción.
 - **Resultado principal**: Sistema disponible (99.5%), seguro y con usuarios atendidos eficientemente.
 - **Usuarios/beneficiarios**: Todos los funcionarios (Usuarios finales), Equipo TI (Administradores).
@@ -24,21 +25,28 @@ owners:
   - `FÉNIX` (Reporta incidentes críticos).
 
 ## 🎯 2. Alcance
+
 ### 2.1 Qué cubre
+
 - **Incluye**: Gestión de Identidades (IAM), Monitoreo (Observabilidad), Incidentes (Help Desk), Cargas Masivas, Backup/Recovery y Configuración de Entorno.
+
 ### 2.2 Qué NO cubre
+
 - **Excluye**: Desarrollo de nuevas funcionalidades (→ `D-DEV`), Definición de normativas legales (→ `D-NORM`).
 
 ## 🧠 3. Modelo Conceptual (Ontología)
+>
 > Definición abstracta de los conceptos y relaciones (Genoma Humano).
 
 ### 3.1 Diccionario de Conceptos
+
 - **Operación**: Acto de mantener un sistema en funcionamiento productivo.
 - **Incidente**: Interrupción no planificada o reducción en la calidad del servicio.
 - **Identidad Digital**: Representación única de un agente (humano o máquina) en el sistema.
 - **Observabilidad**: Capacidad de entender el estado interno del sistema basándose en sus outputs (logs, métricas).
 
 ### 3.2 Diagrama Conceptual
+
 ```mermaid
 classDiagram
     direction LR
@@ -59,6 +67,7 @@ classDiagram
 ```
 
 ## 🧬 4. Genotipo Categorial (Modelo de Datos Formal)
+>
 > Especificación Matemática para el Desarrollo (Genoma Técnico). **Source of Truth**.
 
 ### 4.1 Objetos (Entidades) $A \in Ob(C_{ops})$
@@ -82,6 +91,7 @@ classDiagram
 | `emitir_alerta`   | `Metric` $\to$ `Alerta`                                | Trigger                   | `effect.fiber`                |
 
 ### 4.3 Ecuaciones y Restricciones (Paths)
+
 - **EQ1 (Audit):** `asignar_rol ; log_audit = identity` (Toda asignación debe generar log).
 - **EQ2 (Resolution):** `reportar ; resolver ; cerrar = ciclo_completo`.
 - **INV_IAM:** Todo usuario activo DEBE tener al menos un Rol asignado o un perfil 'Guest' por defecto.
@@ -233,4 +243,29 @@ flowchart TD
 
 ---
 *Documento parte de GORE_OS Blueprint Release v5.5 (Categorical Genotype)*
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-OPS`  
+> Total: 14 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| US-ADM-PLAT-001-01 | admin_plataforma | gestión centralizada de permisos y roles... | P0 |
+| US-DEV-001-01 | desarrollador_sistem | acceso a logs centralizados de errores... | P1 |
+| US-DEVOPS-001-01 | desarrollador_devops | monitorización de infraestructura como código (IaC... | P0 |
+| US-FINOPS-001-01 | finops_manager | reportes de consumo de créditos cloud por proyecto... | P2 |
+| US-IPLAT-001-01 | ingeniero_plataforma | catálogo de servicios autogestionado (Base de dato... | P1 |
+| US-ISEG-001-01 | ingeniero_seguridad | escaneo automático de vulnerabilidades en el códig... | P0 |
+| US-JTI-001-01 | admin_ti | un inventario automatizado de activos TI... | P1 |
+| US-MESA-001-01 | mesa_ayuda | una base de conocimientos con soluciones frecuente... | P1 |
+| US-MON-001-01 | monitor_sistema | un wallboard con semáforos de estado de servicios... | P1 |
+| US-NOC-001-01 | noc_soc | correlación de eventos de seguridad (SIEM)... | P0 |
+| US-OPE-001-01 | operador_sistema | planificador de tareas con reporte de éxito/fallo... | P2 |
+| US-QA-001-01 | qa_engineer | un entorno de staging idéntico a producción... | P1 |
+| US-SOP-001-01 | soporte_tecnico | historial de mantenimiento por número de serie de ... | P1 |
+| US-SRE-001-01 | ingeniero_sre | definir y monitorear SLIs y SLOs... | P1 |
+

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:process:d_back_d04:1.0.0
+  type: Process
+  source: domains/d-back
+id: PROC-BACK-D04
+code: D04
+name: Compras Públicas y Contrataciones
+domain: D-BACK
+subdomain: Compras
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

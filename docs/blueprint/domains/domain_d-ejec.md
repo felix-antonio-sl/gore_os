@@ -395,9 +395,126 @@ flowchart TD
 | D-TERR  | Geolocalización de obras en ejecución            | CapaGeoespacial, Ubicacion   |
 | D-EVOL  | Indicadores de ejecución para H_org              | Metrica, Alerta              |
 | D-SEG   | PMO para proyectos de seguridad                  | Proyecto_Seguridad           |
-| FÉNIX   | Convenios en riesgo activan intervención         | AlertaFenix, CasoFenix       |
+---
+
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key               | Título             | Unidad     |
+| ---------------------- | ------------------ | ---------- |
+| jefe_dipir             | Jefe DIPIR         | DIPIR      |
+| jefe_dit               | Jefe DIT           | DIT        |
+| analista_inversion     | Analista Inversión | DIPIR      |
+| inspector_fiscal       | Inspector Fiscal   | DIPIR      |
+| inspector_tecnico_obra | ITO                | DIT        |
+| ito_campo              | ITO Campo          | DIT        |
+| supervisor_obras       | Supervisor Obras   | DIT        |
+| unidad_tecnica         | Unidad Técnica     | Municipios |
+| alcalde                | Alcalde            | Municipios |
+| secpla                 | SECPLA             | Municipios |
+| entidad_ejecutora      | Entidad Ejecutora  | Externos   |
+
+---
+
+## Capability Bundles (SSOT: historias_usuarios_v2.yml)
+
+### CAP-EJEC-SEG-001: Seguimiento de Proyectos (P0)
+
+> **Como** Jefe DIPIR  
+> **Quiero** un semáforo de estado de la cartera de inversión con filtros por tipo  
+> **Para** priorizar la gestión de proyectos críticos
+
+| Atributo      | Valor                                                          |
+| ------------- | -------------------------------------------------------------- |
+| Beneficiarios | 30 roles                                                       |
+| Criterios     | Estado (Formulación/Ejecución/Terminado), Semáforo, Drill-down |
+
+### CAP-EJEC-PORTAL-001: Portal de Postulación FNDR (P1)
+
+> **Como** Consejero Regional  
+> **Quiero** un portal con historial de mis votaciones y asistencias  
+> **Para** rendir cuenta a mis representados
+
+| Atributo      | Valor                                                   |
+| ------------- | ------------------------------------------------------- |
+| Beneficiarios | 24 roles                                                |
+| Criterios     | Historial votaciones, Registro asistencia, Certificados |
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-EJEC`  
+> Total: 63 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| CAP-EJEC-PORTAL-001 | Consejero Regional | un portal de consejeros con historial de mis votac... | P1 |
+| CAP-EJEC-SEG-001 | Jefe DIPIR | un semáforo de estado de la cartera de inversión c... | P0 |
+| US-ACONV-001-01 | analista_convenios | un workflow de convenios con checklist de requisit... | P0 |
+| US-AEVAL-001-01 | analista_evaluacion | una ficha de evaluación con criterios estándar... | P0 |
+| US-ALC-001-02 | alcalde | consultar el calendario de llamados y fondos dispo... | P0 |
+| US-ALC-CHI-001-01 | Alcalde de Chillán | ver el estado de todos los proyectos de mi comuna... | P0 |
+| US-ALC-CHV-001-01 | Alcalde de Chillán V | ver el estado de todos los proyectos de mi comuna... | P0 |
+| US-ALC-SC-001-01 | Alcalde de San Carlo | ver el estado de todos los proyectos de mi comuna... | P0 |
+| US-AMOD-001-01 | analista_modificacio | un módulo de gestión de modificaciones con histori... | P0 |
+| US-ANAL-INV-001-01 | analista_inversion | un formulario digital de evaluación técnica con ca... | P0 |
+| US-ANAL-INV-001-02 | analista_inversion | consultar el historial de proyectos similares eval... | P2 |
+| US-ANAL-SEG-001-02 | analista_seguimiento | recibir alertas automáticas de proyectos con desvi... | P0 |
+| US-ARQ-001-01 | arquitecto_revisor | visualizador de planos en formato BIM/CAD... | P1 |
+| US-AS-001-01 | asistente_social | un módulo de fichas sociales con criterios de eval... | P0 |
+| US-C33-001-01 | analista_c33 | un catálogo de precios referenciales de vehículos ... | P1 |
+| US-CC-001-01 | camara_comercio | información de programas de apoyo empresarial del ... | P2 |
+| US-COM-REC-001-01 | miembro_comision_rec | un acta de recepción electrónica con checklist de ... | P0 |
+| US-COM-SECT-001-01 | comunicaciones_dipir | información actualizada de proyectos para comunica... | P2 |
+| US-COMPERT-001-01 | miembro_comite_perti | acceder a la documentación de iniciativas antes de... | P0 |
+| US-COMPERT-001-02 | miembro_comite_perti | votar electrónicamente durante las sesiones... | P0 |
+| US-COORD-DIT-001-01 | coordinador_sectoria | una vista consolidada de proyectos por sector (via... | P1 |
+| US-CORE-002-01 | consejero_regional | consultar el estado de ejecución de proyectos que ... | P1 |
+| US-DIFOI-001-02 | jefe_difoi | integración con SERCOTEC, CORFO e INDAP para datos... | P1 |
+| US-DIFOI-002-01 | jefe_difoi | un catálogo de proyectos FIC-R y de innovación reg... | P1 |
+| US-DIPLADE-002-01 | jefe_diplade | un workflow digital para el Comité de Pertinencia ... | P1 |
+| US-DIR-SOC-001-01 | dirigente_social | información de fondos concursables y consultas... | P1 |
+| US-DIT-002-01 | jefe_dit | un módulo de gestión de contratos con plazos, gara... | P1 |
+| US-EDU-001-01 | analista_educacion | un módulo de gestión de becas regionales... | P0 |
+| US-EMP-001-01 | empresa_gremio | un calendario único de postulaciones a fondos... | P1 |
+| US-EPP-001-01 | encargado_proy_prog | alertas de desviación de cronograma (Gantt)... | P1 |
+| US-EVAL-001-01 | evaluador_social | un formulario de evaluación con criterios ponderad... | P0 |
+| US-EVAL-001-02 | evaluador_social | consultar el historial de la organización postulan... | P1 |
+| US-F8-001-01 | encargado_fondos_8 | un módulo de gestión de concursos con etapas confi... | P0 |
+| US-F8-001-02 | encargado_fondos_8 | generar reportes de cobertura territorial y temáti... | P1 |
+| US-FNDR8-001-01 | analista_8_tecnico | un checklist automático de admisibilidad... | P0 |
+| US-FRPD-001-01 | comite_frpd | acceso a expedientes técnicos de proyectos FRPD... | P2 |
+| US-GFOM-001-01 | gestor_fomento | estadísticas de formalización de empresas por comu... | P1 |
+| US-IF-001-02 | inspector_fiscal | generar informes de fiscalización con plantillas e... | P1 |
+| US-INDAP-001-01 | Director INDAP | información de proyectos agrícolas GORE... | P1 |
+| US-INV-001-01 | investigador_univers | postular proyectos FIC totalmente en línea... | P1 |
+| US-ITO-001-01 | inspector_tecnico_ob | una app móvil offline para el libro de obras digit... | P0 |
+| US-ITO-001-02 | ito_obra | un checklist digital de verificación de hitos cont... | P0 |
+| US-ITO-002-01 | ito_obra | un workflow de aprobación de EP con validación de ... | P0 |
+| US-ITOM-001-01 | ITO Municipal | acceso restringido al sistema de inversión regiona... | P1 |
+| US-ITP-001-01 | itp_programa | un módulo de inspección con checklist por programa... | P0 |
+| US-MDS-001-01 | analista_inversiones | acceso al banco de proyectos BIP integrado... | P0 |
+| US-ONG-001-01 | ong_regional | información de fondos concursables y consultas ciu... | P2 |
+| US-ONG-001-01 | ong_fundacion | postular en línea a subvenciones del 8%... | P0 |
+| US-PAT-DID-001-01 | analista_patrocinant | un módulo de patrocinio con checklist de requisito... | P0 |
+| US-PAT-DIF-001-01 | analista_patrocinant | un módulo de patrocinio integrado con BIP... | P0 |
+| US-PAT-DIT-001-01 | analista_patrocinant | validación técnica automática de proyectos de infr... | P0 |
+| US-PES-001-01 | analista_pesca | un registro de caletas y organizaciones pesqueras ... | P1 |
+| US-PPR-001-01 | analista_ppr_tecnico | un módulo de evaluación técnica específico para PP... | P1 |
+| US-PREINV-001-01 | analista_preinversio | un módulo de evaluación de admisibilidad con check... | P0 |
+| US-PROF-REZ-001-01 | profesional_zona_rez | acceso a expedientes de proyectos rezagados... | P0 |
+| US-RTEC-001-01 | referente_tecnico | aprobar hitos técnicos en sistema... | P1 |
+| US-SAG-001-01 | Director SAG | información de proyectos agrícolas financiados por... | P2 |
+| US-SECPLA-001-01 | secpla | un asistente de formulación de proyectos que valid... | P1 |
+| US-SECPLA-001-02 | secpla | consultar proyectos similares ejecutados en otras ... | P2 |
+| US-SER-MOP-001-01 | SEREMI MOP | ver el estado de convenios de mandato MOP-GORE... | P0 |
+| US-SERC-001-01 | Director SERCOTEC | información de beneficiarios GORE para evitar dupl... | P1 |
+| US-SERVIU-001-01 | Director SERVIU | ver proyectos de vivienda con cofinanciamiento GOR... | P1 |
+| US-SOC-001-01 | analista_social | un registro de organizaciones y beneficiarios soci... | P0 |
+
 
 ---
 
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+

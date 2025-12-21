@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_evol_arquitectura_organizacional_ao:1.0.0
+  type: Module
+  source: domains/d-evol
+id: MOD-EVOL-ARQUITECTURA_ORGANIZ
+name: Arquitectura Organizacional (AO)
+domain: D-EVOL
+number: 10
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

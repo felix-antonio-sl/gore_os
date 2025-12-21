@@ -1,0 +1,20 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_transparencia_001:1.0.0
+  type: Capability
+id: CAP-TRANSPARENCIA-001
+name: Transparencia y Acceso Info
+domain: D-TDE
+type: DOMAIN_SPECIFIC
+description: Módulo de transparencia con publicación automática y gestión de solicitudes
+  de información.
+value_proposition: Simplifica el cumplimiento de obligaciones de transparencia y acceso
+  a información.
+orko_mapping:
+  p1_capacity: Encargado Transparencia, OIRS
+  p2_flow: P-NORM-TRANS (D-NORM)
+  p4_limit: Ley 20.285
+  p5_purpose: 100% publicaciones en plazo
+stories:
+- urn:goreos:atom:story:us_dpo_001_01
+- urn:goreos:atom:story:us_transp_002_01
+ofrecida_por: null

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_transp_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TRANSP-002-01
+story_key: us_transp_002_01
+role_id: USR-NORM-TRANSP
+as_a: null
+i_want: un módulo de gestión de solicitudes SAI con control de plazos
+so_that: pueda responder dentro de los 20 días hábiles legales
+domain: D-TDE
+priority: P0
+capability_bundle_id: CAP-TRANSPARENCIA-001
+morphisms:
+  protagonizado_por: USR-NORM-TRANSP
+  contribuye_a: CAP-TRANSPARENCIA-001

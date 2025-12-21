@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_lineaari:1.0.0
+  type: Entity
+  source: domains/d-plan/entity_data
+id: ENT-PLAN-LINEAARI
+name: LineaARI
+entity_key: lineaari
+domain: D-PLAN
+category: Reference
+description: id, ari_id, ipr_id, prioridad, monto_solicitado, monto_asignado
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

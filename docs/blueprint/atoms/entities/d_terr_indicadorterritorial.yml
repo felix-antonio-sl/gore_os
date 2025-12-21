@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_terr_indicadorterritorial:1.0.0
+  type: Entity
+  source: domains/d-terr/entity_data
+id: ENT-TERR-INDICADORTERRITORIAL
+name: IndicadorTerritorial
+entity_key: indicadorterritorial
+domain: D-TERR
+category: Reference
+description: id, nombre, valor, comuna_id, fecha
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

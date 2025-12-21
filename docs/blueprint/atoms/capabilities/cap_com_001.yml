@@ -1,0 +1,23 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_com_001:1.0.0
+  type: Capability
+id: CAP-COM-001
+name: Gestión de Comunicaciones Institucionales
+domain: D-COM
+type: DOMAIN_SPECIFIC
+description: 'Planificación y ejecución de la estrategia comunicacional del GORE:
+  web, RRSS, prensa.'
+value_proposition: Posiciona al GORE en medios y mantiene informada a la ciudadanía.
+orko_mapping:
+  p1_capacity: Encargado de Comunicaciones
+  p2_flow: P-COM (Ciclo de Contenidos)
+  p5_purpose: Visibilidad institucional positiva
+stories:
+- urn:goreos:atom:story:us_com_estr_001
+- urn:goreos:atom:story:us_com_estr_002
+- urn:goreos:atom:story:us_com_estr_003
+- urn:goreos:atom:story:us_com_estr_004
+- urn:goreos:atom:story:us_com_estr_006
+- urn:goreos:atom:story:us_com_sec_001
+- urn:goreos:atom:story:us_com_sec_002
+ofrecida_por: null

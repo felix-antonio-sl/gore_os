@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_ops:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-OPS
+name: Dominio D-OPS
+aggregation:
+  modules: []
+  processes: []
+  entities: []
+  capabilities:
+  - urn:goreos:atom:capability:cap_ops_001:1.0.0
+stats:
+  modules_count: 0
+  processes_count: 0
+  entities_count: 0
+  capabilities_count: 1

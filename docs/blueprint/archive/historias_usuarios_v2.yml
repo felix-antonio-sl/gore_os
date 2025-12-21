@@ -1,0 +1,3509 @@
+_manifest:
+  urn: urn:goreos:specs:user-stories-consolidated:2.0.0
+  title: Catálogo Consolidado de Historias de Usuario
+  source: historias usuarios expandidas.yml v1.0
+  generated_at: "2025-12-19T13:32:09.793147"
+  deduplication_rules:
+    - D-01
+    - D-02
+    - D-03
+    - D-04
+  original_stories: 487
+  consolidated_stories: 317
+  reduction_percentage: 34.9
+  capability_bundles_count: 9
+  territorial_archetypes_count: 3
+  sectoral_archetypes_count: 3
+  atomic_stories_count: 293
+nfr_catalog:
+  - id: NFR-SIGFE-001
+    name: Integración con SIGFE
+    description: "Requisito no funcional transversal: Integración con SIGFE"
+  - id: NFR-FEA-001
+    name: Firma Electrónica Avanzada (Ley 21.180)
+    description: "Requisito no funcional transversal: Firma Electrónica Avanzada (Ley 21.180)"
+  - id: NFR-GIS-001
+    name: Georreferenciación GIS
+    description: "Requisito no funcional transversal: Georreferenciación GIS"
+  - id: NFR-ALERT-001
+    name: Sistema de Alertas y Notificaciones
+    description: "Requisito no funcional transversal: Sistema de Alertas y Notificaciones"
+  - id: NFR-CLAVEUN-001
+    name: Autenticación con Clave Única
+    description: "Requisito no funcional transversal: Autenticación con Clave Única"
+  - id: NFR-PDF-001
+    name: Exportación a PDF
+    description: "Requisito no funcional transversal: Exportación a PDF"
+  - id: NFR-AUDIT-001
+    name: Trazabilidad y Auditoría
+    description: "Requisito no funcional transversal: Trazabilidad y Auditoría"
+capability_bundles:
+  - id: CAP-FIN-DASH-001
+    as_a: Gobernador Regional
+    i_want: un dashboard ejecutivo con KPIs de ejecución FNDR, convenios y programas
+    so_that: pueda evaluar el avance de la gestión en reuniones de gabinete
+    acceptance_criteria:
+      - Muestra % de ejecución presupuestaria por división
+      - Incluye gráfico de tendencia mensual
+      - Alerta visual de proyectos en mora >30 días
+      - Comparativa interanual
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    capability: Dashboard de Ejecución Presupuestaria
+    beneficiaries:
+      - jefe_didesoh
+      - jefe_gabinete
+      - analista_seguimiento
+      - jefe_depto_personal
+      - encargado_cti
+      - jefe_ejecucion
+      - analista_gestion
+      - ctd_daf
+      - jefe_difoi
+      - jefe_depto_presupuesto
+      - presidente_ctd
+      - jefe_seguimiento_dipir
+      - gobernador
+      - banco_central
+      - analista_equidad
+      - presidente_subcomite_ia
+      - analista_erd
+      - jefe_seg
+      - jefe_juridica_general
+      - administrador_regional_generico
+      - auditor_interno
+      - analista_sectorial_dipres
+      - jefe_juridica
+      - analista_infraestructura
+      - analista_division_gobiernos
+      - encargado_fenix
+      - jefe_tic
+      - encargado_nuble_250
+      - comite_directivo
+      - jefe_dae
+      - jefe_dipir
+      - responsable_sistema_ia
+      - seremi_hacienda
+      - coord_transformacion
+      - analista_rezago
+      - administrador_regional
+      - jefe_daf
+      - coordinador_cies
+      - ciso
+      - delegado_presidencial
+      - jefe_depto_abastecimiento
+      - jefe_rendiciones
+    consolidated_from:
+      - US-GOB-001-01
+      - US-AR-001-01
+      - US-DIPIR-001-01
+      - US-DAF-002-01
+      - US-DIDESOH-001-01
+    consolidated_count: 42
+  - id: CAP-TERR-MAP-001
+    as_a: Gobernador Regional
+    i_want: visualizar el mapa de actores externos con los que interactúa el GORE
+    so_that: pueda identificar aliados estratégicos y brechas de coordinación
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    capability: Mapa de Proyectos Regionales
+    beneficiaries:
+      - coordinador_ecif
+      - coordinador_propir
+      - ciudadano
+      - analista_geoespacial
+      - analista_conectividad
+      - coordinador_mapa_propir
+      - gobernador
+      - interventor_fenix
+      - ito_campo
+      - analista_equidad_territorial
+      - subtel_mtt
+      - fosis
+    consolidated_from:
+      - US-GOB-002-02
+      - US-CIU-001-01
+      - US-GEO-001-02
+      - US-PROPIR-001-01
+      - US-MPROPIR-001-01
+    consolidated_count: 12
+  - id: CAP-TDE-FIRMA-001
+    as_a: Gobernador Regional
+    i_want: una bandeja de firma electrónica avanzada con priorización automática
+    so_that: pueda despachar resoluciones y decretos sin demoras
+    acceptance_criteria:
+      - Documentos ordenados por urgencia y tipo
+      - Firma con FEA (Ley 21.180)
+      - Trazabilidad de cada firma
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    capability: Bandeja de Firma Electrónica
+    beneficiaries:
+      - cogirador
+      - gobernador
+      - alcalde
+      - tesorero_regional
+      - ministro_fe
+    consolidated_from:
+      - US-GOB-003-01
+      - US-TES-001-02
+      - US-ALC-002-01
+      - US-COGIR-001-01
+      - US-MIN-FE-001-01
+    consolidated_count: 5
+  - id: CAP-EJEC-SEG-001
+    as_a: Jefe DIPIR
+    i_want: un semáforo de estado de la cartera de inversión con filtros por tipo de iniciativa
+    so_that: pueda priorizar la gestión de proyectos críticos
+    acceptance_criteria:
+      - "Estado: En formulación, En ejecución, Terminado"
+      - "Semáforo: Verde/Amarillo/Rojo según avance"
+      - Drill-down a detalle de proyecto
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    capability: Seguimiento de Proyectos
+    beneficiaries:
+      - analista_fomento
+      - utm_generica
+      - director_vialidad
+      - analista_deporte
+      - analista_medio_ambiente
+      - analista_vivienda
+      - analista_energia
+      - inspector_fiscal
+      - auditor_general_gobierno
+      - encargado_estado_verde
+      - analista_compras
+      - cpc_regional
+      - analista_cartera
+      - contraparte_interna
+      - analista_turismo
+      - encargado_descentralizacion
+      - analista_inversion
+      - jefe_dipir
+      - encargado_calidad
+      - encargado_capacitacion
+      - analista_salud
+      - analista_agua_potable
+      - encargado_muni_cons
+      - coordinador_programas
+      - jefe_dit
+      - ito_obra
+      - jefe_daf
+      - analista_planificacion
+      - unidad_tecnica
+    consolidated_from:
+      - US-DIPIR-002-01
+      - US-DAF-003-01
+      - US-ANAL-INV-002-01
+      - US-DIT-001-01
+      - US-DIT-001-02
+    consolidated_count: 30
+  - id: CAP-EJEC-PORTAL-001
+    as_a: Consejero Regional
+    i_want: un portal de consejeros con historial de mis votaciones y asistencias
+    so_that: pueda rendir cuenta a mis representados
+    acceptance_criteria:
+      - Historial de votaciones por sesión
+      - Registro de asistencia
+      - Descarga de certificados
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    capability: Portal de Postulación FNDR
+    beneficiaries:
+      - medio_comunicacion
+      - formulador_externo
+      - cplt
+      - secpla_chillan
+      - seremi
+      - encargado_rendiciones
+      - referente_transparencia
+      - contratista
+      - universidad_regional
+      - junta_vecinos
+      - consultor_externo
+      - secpla_san_carlos
+      - beneficiario_individual
+      - media_comunicacion
+      - ejecutor_ppr
+      - org_postulante
+      - gestor_personas
+      - analista_municipios
+      - alcalde
+      - consejero_regional
+      - analista_cultura
+      - funcionario
+      - prensa_regional
+    consolidated_from:
+      - US-CORE-001-02
+      - US-REND-001-01
+      - US-SEREMI-001-01
+      - US-ALC-001-01
+      - US-EJEC-PPR-001-01
+    consolidated_count: 24
+  - id: CAP-NORM-CONTROL-001
+    as_a: Jefe Unidad de Control
+    i_want: una bandeja de documentos pendientes de visación con checklist normativo
+    so_that: pueda verificar el cumplimiento de requisitos legales
+    acceptance_criteria:
+      - Lista de documentos por visar
+      - Checklist normativo por tipo de acto
+      - Registro de observaciones y devoluciones
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    capability: Control de Legalidad
+    beneficiaries:
+      - jefe_finanzas
+      - jefe_control
+    consolidated_from:
+      - US-UCI-001-01
+      - US-UCI-001-02
+      - US-UCI-002-01
+      - US-FIN-001-02
+    consolidated_count: 4
+  - id: CAP-TDE-TRANSP-001
+    as_a: Encargado de Transparencia
+    i_want: un workflow de actualización de transparencia activa con alertas de vencimiento
+    so_that: pueda cumplir con los plazos legales de publicación
+    acceptance_criteria:
+      - Checklist de los 16 ítems del Art. 7°
+      - Alerta 5 días antes del vencimiento mensual
+      - Registro de quién actualizó cada ítem
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    capability: Transparencia Activa/Pasiva
+    beneficiaries:
+      - encargado_transparencia
+    consolidated_from:
+      - US-TRANSP-001-01
+      - US-TRANSP-001-02
+    consolidated_count: 2
+  - id: CAP-FIN-REND-001
+    as_a: Encargado de Rendiciones
+    i_want: alertas automáticas de rendiciones pendientes por vencer
+    so_that: pueda gestionar proactivamente con los ejecutores
+    acceptance_criteria:
+      - Lista de rendiciones pendientes por convenio
+      - Días restantes para vencimiento
+      - Envío de recordatorio automático al ejecutor
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    capability: Módulo de Rendiciones
+    beneficiaries:
+      - jefe_didesoh
+      - encargado_rendiciones
+      - ejecutor_ppr
+      - corporacion_municipal
+      - analista_viaticos
+      - analista_rendiciones
+      - auditor_ministerial_interior
+      - entidad_ejecutora
+      - org_beneficiaria
+      - unidad_tecnica
+      - coordinador_ucr
+    consolidated_from:
+      - US-REND-001-02
+      - US-REND-002-02
+      - US-DIDESOH-001-02
+      - US-UT-001-02
+      - US-EJEC-PPR-001-02
+    consolidated_count: 13
+  - id: CAP-BACK-TICKETS-001
+    as_a: Jefe TIC
+    i_want: un sistema de tickets de soporte con SLAs
+    so_that: pueda medir y mejorar los tiempos de respuesta
+    acceptance_criteria:
+      - Registro de tickets por usuario
+      - Asignación a técnicos
+      - Métricas de resolución
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    capability: Sistema de Tickets de Soporte
+    beneficiaries:
+      - analista_funcional
+      - equipo_campeon
+      - jefe_tic
+      - encargado_soporte_ti
+      - abogado_dnorm
+      - encargado_mesa_ayuda
+    consolidated_from:
+      - US-TIC-002-01
+      - US-ABOG-002-01
+      - US-CAMP-001-01
+      - US-TI-001-01
+      - US-AF-001-01
+    consolidated_count: 6
+stakeholder_archetypes:
+  territorial:
+    - archetype_id: alcalde_municipal
+      title: Alcalde Municipal
+      parameter: comuna
+      instance_count: 21
+      stories:
+        - id: US-ALC-CHI-001-01
+          as_a: Alcalde de Chillán
+          i_want: ver el estado de todos los proyectos de mi comuna
+          so_that: pueda informar a la comunidad
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P0
+        - id: US-ALC-CHV-001-01
+          as_a: Alcalde de Chillán Viejo
+          i_want: ver el estado de todos los proyectos de mi comuna
+          so_that: pueda informar a la comunidad
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P0
+        - id: US-ALC-SC-001-01
+          as_a: Alcalde de San Carlos
+          i_want: ver el estado de todos los proyectos de mi comuna
+          so_that: pueda informar a la comunidad
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P0
+      consolidated_count: 21
+    - archetype_id: ito_municipal
+      title: ITO Municipal
+      parameter: comuna
+      instance_count: 1
+      stories:
+        - id: US-ITOM-001-01
+          as_a: ITO Municipal
+          i_want: acceso restringido al sistema de inversión regional
+          so_that: pueda subir estados de pago para visación
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P1
+      consolidated_count: 1
+    - archetype_id: informatico_municipal
+      title: Informático Municipal
+      parameter: comuna
+      instance_count: 2
+      stories:
+        - id: US-ITMUNI-001-01
+          as_a: Informático Municipal
+          i_want: credenciales de API seguras
+          so_that: pueda automatizar el envío de información
+          domain: D-DEV
+          target_domain: D-DEV
+          priority: P2
+        - id: US-DTMUNI-001-01
+          as_a: Encargado Digital Muni
+          i_want: reutilizar componentes de la plataforma GORE_OS
+          so_that: no tengamos que desarrollar software desde cero
+          domain: D-DEV
+          target_domain: D-DEV
+          priority: P2
+      consolidated_count: 2
+  sectoral:
+    - archetype_id: seremi_sectorial
+      title: SEREMI Sectorial
+      parameter: ministerio
+      instance_count: 16
+      stories:
+        - id: US-SER-GOB-001-01
+          as_a: SEREMI Gobierno
+          i_want: un canal de comunicación con el GORE para emergencias
+          so_that: pueda coordinar respuestas rápidamente
+          domain: D-TERR
+          target_domain: D-TERR
+          priority: P0
+        - id: US-SER-MOP-001-01
+          as_a: SEREMI MOP
+          i_want: ver el estado de convenios de mandato MOP-GORE
+          so_that: pueda hacer seguimiento de obras compartidas
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P0
+        - id: US-SER-AGR-001-01
+          as_a: SEREMI Agricultura
+          i_want: reportes de inversión GORE en sector agrícola
+          so_that: pueda complementar con programas sectoriales
+          domain: D-PLAN
+          target_domain: D-PLAN
+          priority: P1
+      consolidated_count: 16
+    - archetype_id: director_servicio_regional
+      title: Director Servicio Regional
+      parameter: servicio
+      instance_count: 13
+      stories:
+        - id: US-SERVIU-001-01
+          as_a: Director SERVIU
+          i_want: ver proyectos de vivienda con cofinanciamiento GORE
+          so_that: pueda articular recursos sectoriales
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P1
+        - id: US-CONAF-001-01
+          as_a: Director CONAF
+          i_want: integración con CIES para alertas de incendios forestales
+          so_that: la respuesta sea coordinada
+          domain: D-TERR
+          target_domain: D-TERR
+          priority: P0
+        - id: US-SAG-001-01
+          as_a: Director SAG
+          i_want: información de proyectos agrícolas financiados por GORE
+          so_that: pueda verificar cumplimiento fitosanitario
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P2
+      consolidated_count: 13
+    - archetype_id: ejecutor_sectorial
+      title: Ejecutor Sectorial
+      parameter: organismo
+      instance_count: 3
+      stories:
+        - id: US-SERC-001-01
+          as_a: Director SERCOTEC
+          i_want: información de beneficiarios GORE para evitar duplicidad
+          so_that: pueda focalizar instrumentos
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P1
+        - id: US-CORFO-001-01
+          as_a: Director CORFO
+          i_want: información de proyectos productivos GORE
+          so_that: pueda articular instrumentos CORFO
+          domain: D-PLAN
+          target_domain: D-PLAN
+          priority: P1
+        - id: US-INDAP-001-01
+          as_a: Director INDAP
+          i_want: información de proyectos agrícolas GORE
+          so_that: pueda complementar con programas INDAP
+          domain: D-EJEC
+          target_domain: D-EJEC
+          priority: P1
+      consolidated_count: 3
+atomic_stories:
+  - id: US-GOB-001-02
+    as_a: Gobernador Regional
+    i_want: recibir alertas automáticas de desviaciones críticas en proyectos estratégicos
+    so_that: pueda intervenir oportunamente antes de que escalen
+    acceptance_criteria:
+      - Notificación push/email cuando ejecución <70% al cierre de trimestre
+      - Detalle del proyecto y responsable
+    domain: D-EVOL
+    target_domain: D-EVOL
+    priority: P1
+    nfr_refs:
+      - NFR-ALERT-001
+    role_key: gobernador
+    unit: Gobernador Regional
+  - id: US-GOB-002-01
+    as_a: Gobernador Regional
+    i_want: un registro centralizado de convenios vigentes con cada SEREMI y ministerio
+    so_that: pueda hacer seguimiento de compromisos y vencimientos
+    acceptance_criteria:
+      - Lista de convenios activos con fecha de término
+      - Estado de cumplimiento de hitos
+      - Filtro por ministerio/SEREMI
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: gobernador
+    unit: Gobernador Regional
+  - id: US-AR-001-02
+    as_a: Administrador Regional
+    i_want: programar reuniones de coordinación con jefes de división desde el sistema
+    so_that: pueda mantener alineamiento estratégico
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: administrador_regional
+    unit: Administración Regional
+  - id: US-AR-002-01
+    as_a: Administrador Regional
+    i_want: visualizar métricas de ausentismo, rotación y capacitación del personal
+    so_that: pueda tomar decisiones de gestión de talento
+    acceptance_criteria:
+      - Tasa de ausentismo mensual
+      - Rotación por unidad
+      - Cumplimiento del PAC (Plan Anual de Capacitación)
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: administrador_regional
+    unit: Administración Regional
+  - id: US-AR-003-01
+    as_a: Administrador Regional
+    i_want: un módulo de gestión de subrogancias con fechas y resoluciones
+    so_that: la continuidad operativa esté siempre garantizada
+    acceptance_criteria:
+      - Registro de cadena de subrogancia por cargo
+      - Alertas de subrogancias próximas a vencer
+      - Generación automática de resolución de subrogancia
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    nfr_refs:
+      - NFR-GIS-001
+      - NFR-ALERT-001
+    role_key: administrador_regional
+    unit: Administración Regional
+  - id: US-DIPLADE-001-01
+    as_a: Jefe DIPLADE
+    i_want: un módulo de gestión de la Estrategia Regional de Desarrollo (ERD)
+    so_that: pueda hacer seguimiento de objetivos e indicadores estratégicos
+    acceptance_criteria:
+      - Árbol de objetivos ERD con indicadores
+      - Avance porcentual por eje estratégico
+      - Vinculación con proyectos FNDR
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: jefe_diplade
+    unit: DIPLADE
+  - id: US-DIPLADE-001-02
+    as_a: Jefe DIPLADE
+    i_want: generar el Anteproyecto Regional de Inversiones (ARI) de forma automatizada
+    so_that: pueda presentarlo oportunamente a DIPRES
+    acceptance_criteria:
+      - Consolidación de iniciativas priorizadas
+      - Validación de RS y CDP
+      - Exportación a formato DIPRES
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: jefe_diplade
+    unit: DIPLADE
+  - id: US-DIPLADE-002-01
+    as_a: Jefe DIPLADE
+    i_want: un workflow digital para el Comité de Pertinencia con trazabilidad de decisiones
+    so_that: el proceso de RS sea transparente y auditable
+    acceptance_criteria:
+      - Registro de cada sesión del Comité
+      - Votación digital de iniciativas
+      - Acta automática con firmas electrónicas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: jefe_diplade
+    unit: DIPLADE
+  - id: US-DIPIR-001-02
+    as_a: Jefe DIPIR
+    i_want: aprobar CDPs digitalmente con validación automática de saldo
+    so_that: no se comprometan recursos sin disponibilidad
+    acceptance_criteria:
+      - Validación en tiempo real contra SIGFE
+      - Firma electrónica del CDP
+      - Notificación al solicitante
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    nfr_refs:
+      - NFR-SIGFE-001
+      - NFR-FEA-001
+      - NFR-ALERT-001
+    role_key: jefe_dipir
+    unit: DIPIR
+  - id: US-DAF-001-01
+    as_a: Jefe DAF
+    i_want: un checklist digital de cierre contable mensual con validaciones automáticas
+    so_that: el cierre sea oportuno y sin errores
+    acceptance_criteria:
+      - Checklist de tareas de cierre
+      - Validación de cuadratura con SIGFE
+      - Generación de Balance parcial
+    domain: D-FIN
+    target_domain: D-BACK
+    priority: P0
+    nfr_refs:
+      - NFR-SIGFE-001
+    role_key: jefe_daf
+    unit: DAF
+  - id: US-CORE-001-01
+    as_a: Consejero Regional
+    i_want: recibir la tabla de sesión y documentos de respaldo con anticipación
+    so_that: pueda estudiar las materias antes de votar
+    acceptance_criteria:
+      - Notificación 5 días hábiles antes de la sesión
+      - Documentos descargables en PDF
+      - Resumen ejecutivo de cada materia
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    nfr_refs:
+      - NFR-ALERT-001
+      - NFR-PDF-001
+    role_key: consejero_regional
+    unit: Consejo Regional (CORE)
+  - id: US-CORE-002-01
+    as_a: Consejero Regional
+    i_want: consultar el estado de ejecución de proyectos que he votado favorablemente
+    so_that: pueda verificar que se están ejecutando correctamente
+    acceptance_criteria:
+      - Filtro por proyectos votados por mí
+      - Estado actual y % de avance
+      - Alertas de proyectos en mora
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    nfr_refs:
+      - NFR-ALERT-001
+    role_key: consejero_regional
+    unit: Consejo Regional (CORE)
+  - id: US-TRANSP-002-01
+    as_a: Encargado de Transparencia
+    i_want: un módulo de gestión de solicitudes SAI con control de plazos
+    so_that: pueda responder dentro de los 20 días hábiles legales
+    acceptance_criteria:
+      - Ingreso de solicitud desde OIRS
+      - Derivación a unidades responsables
+      - Semáforo de plazo restante
+      - Generación de respuesta formal
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: encargado_transparencia
+    unit: Cumplimiento Normativo (D-NORM)
+  - id: US-ANAL-INV-001-01
+    as_a: Analista de Inversión
+    i_want: un formulario digital de evaluación técnica con campos validados
+    so_that: pueda registrar mi análisis de forma estructurada
+    acceptance_criteria:
+      - Campos de evaluación técnica, económica y social
+      - Adjuntar documentos de respaldo
+      - Calcular indicadores VAN/TIR automáticamente
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_inversion
+    unit: DIPIR
+  - id: US-ANAL-INV-001-02
+    as_a: Analista de Inversión
+    i_want: consultar el historial de proyectos similares evaluados anteriormente
+    so_that: pueda mantener consistencia en mis criterios
+    acceptance_criteria:
+      - Buscador de proyectos por tipo y territorio
+      - Ver evaluaciones previas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: analista_inversion
+    unit: DIPIR
+  - id: US-REND-002-01
+    as_a: Encargado de Rendiciones
+    i_want: un workflow de revisión con estados (Recibida, En revisión, Aprobada, Observada, Rechazada)
+    so_that: el proceso sea trazable y estructurado
+    acceptance_criteria:
+      - Cambio de estado con registro de usuario y fecha
+      - Campo para observaciones
+      - Notificación al ejecutor de observaciones
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+      - NFR-ALERT-001
+    role_key: encargado_rendiciones
+    unit: DAF
+  - id: US-DIDESOH-002-01
+    as_a: Jefe DIDESOH
+    i_want: un registro de organizaciones de la sociedad civil activas en la región
+    so_that: pueda convocar a diálogos y consultas ciudadanas
+    acceptance_criteria:
+      - Base de datos de organizaciones con RUT
+      - Clasificación por tipo y comuna
+      - Historial de participación
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: jefe_didesoh
+    unit: DIDESOH
+  - id: US-DIFOI-001-02
+    as_a: Jefe DIFOI
+    i_want: integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
+    so_that: pueda evitar duplicidad de apoyo y focalizar mejor
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: jefe_difoi
+    unit: DIFOI
+  - id: US-DIFOI-002-01
+    as_a: Jefe DIFOI
+    i_want: un catálogo de proyectos FIC-R y de innovación regional
+    so_that: pueda hacer seguimiento de la ejecución y resultados
+    acceptance_criteria:
+      - Lista de proyectos FIC activos
+      - Estado de ejecución y hitos
+      - Vinculación con universidades y centros
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: jefe_difoi
+    unit: DIFOI
+  - id: US-DIT-002-01
+    as_a: Jefe DIT
+    i_want: un módulo de gestión de contratos con plazos, garantías y estados de pago
+    so_that: pueda asegurar el cumplimiento contractual
+    acceptance_criteria:
+      - Registro de contratos con fechas clave
+      - Alertas de vencimiento de garantías
+      - Historial de estados de pago aprobados
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    nfr_refs:
+      - NFR-GIS-001
+      - NFR-ALERT-001
+    role_key: jefe_dit
+    unit: DIT
+  - id: US-DSEG-001-02
+    as_a: Jefe D-SEG
+    i_want: un registro de programas de prevención financiados por el GORE
+    so_that: pueda evaluar cobertura e impacto
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: jefe_seg
+    unit: Seguridad Pública (D-SEG)
+  - id: US-FIN-001-01
+    as_a: Jefe Finanzas
+    i_want: un panel de cuadratura contable diaria con validaciones automáticas
+    so_that: pueda detectar descuadres antes del cierre mensual
+    acceptance_criteria:
+      - Comparación bancos vs SIGFE
+      - Alertas de diferencias >$100.000
+      - Drill-down a movimientos específicos
+    domain: D-FIN
+    target_domain: D-BACK
+    priority: P0
+    nfr_refs:
+      - NFR-SIGFE-001
+      - NFR-ALERT-001
+    role_key: jefe_finanzas
+    unit: DAF
+  - id: US-RRHH-001-01
+    as_a: Jefe Gestión Personas
+    i_want: un workflow digital de ingreso de funcionarios con checklist de documentos
+    so_that: el proceso de incorporación sea ágil y completo
+    acceptance_criteria:
+      - Checklist de documentos de ingreso
+      - Generación de resolución de nombramiento
+      - Alta automática en sistemas (remuneraciones, acceso)
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: jefe_rrhh
+    unit: DAF
+  - id: US-RRHH-001-02
+    as_a: Jefe Gestión Personas
+    i_want: alertas de términos de contrata próximos a vencer
+    so_that: pueda gestionar renovaciones oportunamente
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: jefe_rrhh
+    unit: DAF
+  - id: US-RRHH-002-01
+    as_a: Jefe Gestión Personas
+    i_want: un módulo de gestión del PAC con inscripciones y evaluaciones
+    so_that: pueda reportar el cumplimiento del plan
+    acceptance_criteria:
+      - Catálogo de cursos del PAC
+      - Inscripción de funcionarios
+      - Registro de asistencia y evaluación
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    nfr_refs:
+      - NFR-GIS-001
+      - NFR-AUDIT-001
+    role_key: jefe_rrhh
+    unit: DAF
+  - id: US-TES-001-01
+    as_a: Tesorero Regional
+    i_want: un módulo de programación de pagos con priorización
+    so_that: pueda asegurar la liquidez y cumplir compromisos
+    acceptance_criteria:
+      - Cola de pagos pendientes
+      - Saldo disponible por cuenta corriente
+      - Priorización por tipo (remuneraciones, proveedores, transferencias)
+    domain: D-FIN
+    target_domain: D-BACK
+    priority: P0
+    role_key: tesorero_regional
+    unit: DAF
+  - id: US-ABAST-001-01
+    as_a: Encargado de Abastecimiento
+    i_want: un módulo de gestión del Plan de Compras integrado con Mercado Público
+    so_that: pueda hacer seguimiento de las adquisiciones programadas
+    acceptance_criteria:
+      - Catálogo de compras planificadas
+      - Estado de cada proceso en MP
+      - Alertas de procesos atrasados
+    domain: D-FIN
+    target_domain: D-BACK
+    priority: P0
+    nfr_refs:
+      - NFR-ALERT-001
+      - NFR-AUDIT-001
+    role_key: encargado_abastecimiento
+    unit: DAF
+  - id: US-ABAST-001-02
+    as_a: Encargado de Abastecimiento
+    i_want: generación automática de bases de licitación tipo
+    so_that: pueda agilizar la preparación de procesos
+    acceptance_criteria:
+      - Plantillas por tipo de adquisición
+      - Campos pre-llenados
+      - Validación de normativa
+    domain: D-FIN
+    target_domain: D-BACK
+    priority: P1
+    role_key: encargado_abastecimiento
+    unit: DAF
+  - id: US-COMP-001-01
+    as_a: Comprador Público
+    i_want: un buscador de productos en Convenio Marco integrado al sistema
+    so_that: pueda encontrar rápidamente lo que necesitan las unidades
+    acceptance_criteria:
+      - Búsqueda por palabra clave
+      - Filtro por proveedor y precio
+      - Comparación de alternativas
+    domain: D-FIN
+    target_domain: D-BACK
+    priority: P0
+    role_key: comprador_publico
+    unit: DAF
+  - id: US-COMP-001-02
+    as_a: Comprador Público
+    i_want: un workflow de solicitud de compra desde las unidades
+    so_that: pueda recibir requerimientos formalizados
+    acceptance_criteria:
+      - Formulario de solicitud con especificaciones
+      - Aprobación de jefatura
+      - Derivación automática a Abastecimiento
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: comprador_publico
+    unit: DAF
+  - id: US-TIC-001-02
+    as_a: Jefe TIC
+    i_want: un inventario de activos TI con ciclo de vida
+    so_that: pueda planificar renovaciones y obsolescencia
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: jefe_tic
+    unit: DAF
+  - id: US-CTD-001-02
+    as_a: CTD
+    i_want: un catálogo de expedientes electrónicos con estado de digitalización
+    so_that: pueda identificar procesos pendientes de migrar
+    acceptance_criteria:
+      - Lista de procesos por unidad
+      - "Estado: Papel/Híbrido/Digital"
+      - Prioridad de migración
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: ctd_daf
+    unit: DAF
+  - id: US-ANALPRES-001-01
+    as_a: Analista Presupuestario
+    i_want: un módulo de emisión de CDP con validación automática de saldo
+    so_that: no pueda comprometer recursos sin disponibilidad
+    acceptance_criteria:
+      - Consulta de saldo por subtítulo/glosa
+      - Generación de CDP numerado
+      - Firma electrónica
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    nfr_refs:
+      - NFR-FEA-001
+    role_key: analista_presupuestario
+    unit: DIPIR
+  - id: US-ANALPRES-001-02
+    as_a: Analista Presupuestario
+    i_want: alertas de marcos presupuestarios próximos a agotarse
+    so_that: pueda informar oportunamente a la jefatura
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_presupuestario
+    unit: DIPIR
+  - id: US-SEREMI-001-02
+    as_a: SEREMI
+    i_want: recibir notificaciones de sesiones del CORE donde se traten materias de mi sector
+    so_that: pueda asistir o enviar información técnica
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: seremi
+    unit: Secretarías Regionales Ministeriales (SEREMI)
+  - id: US-DPR-002-01
+    as_a: Delegado Presidencial Regional
+    i_want: reportes de inversión en seguridad pública financiada por el GORE
+    so_that: pueda articular con Carabineros y PDI
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: delegado_presidencial
+    unit: Gobierno Interior
+  - id: US-ALC-001-02
+    as_a: Alcalde
+    i_want: consultar el calendario de llamados y fondos disponibles
+    so_that: pueda planificar las postulaciones de mi comuna
+    acceptance_criteria:
+      - Calendario de llamados por tipo de fondo
+      - Montos disponibles por línea
+      - Bases y requisitos descargables
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    nfr_refs:
+      - NFR-PDF-001
+    role_key: alcalde
+    unit: Municipios
+  - id: US-SECPLA-001-01
+    as_a: SECPLA
+    i_want: un asistente de formulación de proyectos que valide la coherencia con la ERD
+    so_that: mis proyectos tengan mayor probabilidad de RS
+    acceptance_criteria:
+      - Validación de alineamiento con ejes ERD
+      - Sugerencias de mejora
+      - Pre-evaluación automática
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: secpla
+    unit: Municipios
+  - id: US-SECPLA-001-02
+    as_a: SECPLA
+    i_want: consultar proyectos similares ejecutados en otras comunas
+    so_that: pueda aprender de buenas prácticas y costos referenciales
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: secpla
+    unit: Municipios
+  - id: US-CONT-001-02
+    as_a: Contratista
+    i_want: cargar documentación de estados de pago en línea
+    so_that: el proceso sea más ágil
+    acceptance_criteria:
+      - Formulario de solicitud de EP
+      - Carga de documentos (factura, informe, etc.)
+      - Notificación de aprobación
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    nfr_refs:
+      - NFR-ALERT-001
+    role_key: contratista
+    unit: Ejecutores y Beneficiarios
+  - id: US-CIU-001-02
+    as_a: Ciudadano
+    i_want: consultar en qué se gasta el presupuesto regional
+    so_that: pueda fiscalizar el uso de los recursos públicos
+    acceptance_criteria:
+      - Dashboard de ejecución presupuestaria
+      - Gráficos por área temática
+      - Descarga de datos abiertos
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    nfr_refs:
+      - NFR-PDF-001
+    role_key: ciudadano
+    unit: Ciudadanía
+  - id: US-CIU-002-01
+    as_a: Ciudadano
+    i_want: acceder a plataformas de consulta ciudadana del GORE
+    so_that: pueda expresar mi opinión sobre prioridades de inversión
+    acceptance_criteria:
+      - Consultas activas con plazo
+      - Formulario de participación
+      - Resultados publicados
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    role_key: ciudadano
+    unit: Ciudadanía
+  - id: US-CGR-001-01
+    as_a: Analista CGR
+    i_want: recibir expedientes electrónicos completos vía interoperabilidad
+    so_that: pueda revisar sin solicitar documentos adicionales
+    acceptance_criteria:
+      - Expediente electrónico completo
+      - Metadatos de trazabilidad
+      - Firma electrónica válida
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    nfr_refs:
+      - NFR-FEA-001
+      - NFR-AUDIT-001
+    role_key: analista_toma_razon
+    unit: Reguladores Nacionales
+  - id: US-ITO-001-02
+    as_a: ITO
+    i_want: un checklist digital de verificación de hitos contractuales
+    so_that: no omita ningún punto de control
+    acceptance_criteria:
+      - Checklist por tipo de obra
+      - Validación de hitos cumplidos
+      - Generación de acta de recepción parcial
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: ito_obra
+    unit: DIT
+  - id: US-ITO-002-01
+    as_a: ITO
+    i_want: un workflow de aprobación de EP con validación de cubicaciones
+    so_that: pueda certificar avances reales
+    acceptance_criteria:
+      - Comparación EP solicitado vs avance real
+      - Firma electrónica de VºBº técnico
+      - Derivación a Finanzas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    nfr_refs:
+      - NFR-FEA-001
+    role_key: ito_obra
+    unit: DIT
+  - id: US-IF-001-02
+    as_a: Inspector Fiscal
+    i_want: generar informes de fiscalización con plantillas estándar
+    so_that: la documentación sea consistente
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: inspector_fiscal
+    unit: DIPIR
+  - id: US-ANAL-SEG-001-02
+    as_a: Analista de Seguimiento
+    i_want: recibir alertas automáticas de proyectos con desviación >15%
+    so_that: pueda gestionar proactivamente
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_seguimiento
+    unit: DIPIR
+  - id: US-OP-001-01
+    as_a: Encargado de Oficina de Partes
+    i_want: un sistema de gestión documental con ingreso de correspondencia
+    so_that: pueda registrar y derivar documentos rápidamente
+    acceptance_criteria:
+      - Formulario de ingreso con metadatos
+      - Clasificación por tipo y urgencia
+      - Derivación a unidad responsable
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: encargado_partes
+    unit: Oficina de Partes (DAF)
+  - id: US-OP-001-02
+    as_a: Encargado de Oficina de Partes
+    i_want: generar número de ingreso correlativo automático
+    so_that: la trazabilidad esté garantizada
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: encargado_partes
+    unit: Oficina de Partes (DAF)
+  - id: US-OP-002-01
+    as_a: Encargado de Oficina de Partes
+    i_want: un módulo de despacho con registro de destinatario y medio de envío
+    so_that: pueda comprobar la recepción
+    acceptance_criteria:
+      - Registro de número de oficio saliente
+      - Tipo de envío (físico, electrónico)
+      - Acuse de recibo
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: encargado_partes
+    unit: Oficina de Partes (DAF)
+  - id: US-ABOG-001-01
+    as_a: Abogado D-NORM
+    i_want: plantillas de actos administrativos con campos pre-llenados
+    so_that: pueda agilizar la redacción y reducir errores
+    acceptance_criteria:
+      - Plantillas por tipo de acto
+      - Campos dinámicos
+      - Numeración automática
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_dnorm
+    unit: Cumplimiento Normativo (D-NORM)
+  - id: US-ABOG-001-02
+    as_a: Abogado D-NORM
+    i_want: consultar actos similares anteriores
+    so_that: pueda mantener consistencia jurídica
+    acceptance_criteria:
+      - Buscador de resoluciones históricas
+      - Filtro por materia
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_dnorm
+    unit: Cumplimiento Normativo (D-NORM)
+  - id: US-AUD-001-01
+    as_a: Auditor Interno
+    i_want: un módulo de planificación y ejecución de auditorías
+    so_that: pueda documentar hallazgos y recomendaciones
+    acceptance_criteria:
+      - Plan anual de auditoría con cronograma
+      - Registro de hallazgos por auditoría
+      - Clasificación por riesgo
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: auditor_interno
+    unit: Unidad de Auditoría
+  - id: US-AUD-001-02
+    as_a: Auditor Interno
+    i_want: generar informes de auditoría con plantilla estándar
+    so_that: los informes sean consistentes
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: auditor_interno
+    unit: Unidad de Auditoría
+  - id: US-OBS-001-01
+    as_a: Analista de Observatorio
+    i_want: un módulo de carga y procesamiento de series de datos
+    so_that: pueda mantener actualizados los indicadores regionales
+    acceptance_criteria:
+      - Carga de datos desde fuentes externas (INE, CASEN)
+      - Procesamiento y limpieza
+      - Publicación en portal de datos abiertos
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_observatorio
+    unit: Observatorio Regional
+  - id: US-OBS-001-02
+    as_a: Analista de Observatorio
+    i_want: generar reportes temáticos con visualizaciones
+    so_that: pueda comunicar hallazgos a tomadores de decisión
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_observatorio
+    unit: Observatorio Regional
+  - id: US-GEO-001-01
+    as_a: Analista Geoespacial
+    i_want: un administrador de capas GIS con metadatos y permisos
+    so_that: pueda mantener la IDE actualizada y organizada
+    acceptance_criteria:
+      - Carga de capas en formatos estándar
+      - Edición de metadatos
+      - Control de acceso por capa
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_geoespacial
+    unit: Inteligencia Territorial (D-TERR)
+  - id: US-OIRS-001-01
+    as_a: Encargado OIRS
+    i_want: un sistema de gestión de solicitudes con trazabilidad completa
+    so_that: pueda asegurar respuesta en plazo legal
+    acceptance_criteria:
+      - Ingreso de solicitud multicanal
+      - Derivación a unidad responsable
+      - Control de plazos (30 días hábiles)
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: encargado_oirs
+    unit: Gabinete
+  - id: US-OIRS-001-02
+    as_a: Encargado OIRS
+    i_want: generar reportes de satisfacción ciudadana
+    so_that: pueda mejorar el servicio
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: encargado_oirs
+    unit: Gabinete
+  - id: US-F8-001-01
+    as_a: Encargado Fondos 8%
+    i_want: un módulo de gestión de concursos con etapas configurables
+    so_that: pueda administrar el proceso completo
+    acceptance_criteria:
+      - Configuración de bases y plazos
+      - Recepción de postulaciones
+      - Evaluación y puntaje
+      - Publicación de resultados
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: encargado_fondos_8
+    unit: DIDESOH
+  - id: US-F8-001-02
+    as_a: Encargado Fondos 8%
+    i_want: generar reportes de cobertura territorial y temática
+    so_that: pueda evaluar equidad en la distribución
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: encargado_fondos_8
+    unit: DIDESOH
+  - id: US-EVAL-001-01
+    as_a: Evaluador Social
+    i_want: un formulario de evaluación con criterios ponderados
+    so_that: la evaluación sea objetiva y trazable
+    acceptance_criteria:
+      - Criterios de evaluación configurables
+      - Puntaje automático
+      - Registro de observaciones
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: evaluador_social
+    unit: DIDESOH
+  - id: US-EVAL-001-02
+    as_a: Evaluador Social
+    i_want: consultar el historial de la organización postulante
+    so_that: pueda evaluar su trayectoria
+    acceptance_criteria:
+      - Proyectos anteriores adjudicados
+      - Estado de rendiciones previas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: evaluador_social
+    unit: DIDESOH
+  - id: US-FUNC-001-01
+    as_a: Funcionario
+    i_want: solicitar permisos administrativos y feriados en línea
+    so_that: no tenga que hacer trámites en papel
+    acceptance_criteria:
+      - Formulario de solicitud de permiso
+      - Aprobación de jefatura
+      - Registro automático en sistema de asistencia
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: funcionario
+    unit: Todas las unidades
+  - id: US-FUNC-001-02
+    as_a: Funcionario
+    i_want: consultar mis liquidaciones de sueldo y certificados
+    so_that: pueda acceder a mi información laboral
+    acceptance_criteria:
+      - Historial de liquidaciones
+      - Descarga en PDF
+      - Certificados de antigüedad
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    nfr_refs:
+      - NFR-PDF-001
+    role_key: funcionario
+    unit: Todas las unidades
+  - id: US-GAB-001-01
+    as_a: Jefe de Gabinete
+    i_want: un sistema de gestión de agenda integrado con compromisos
+    so_that: pueda organizar las actividades del Gobernador y hacer seguimiento
+    acceptance_criteria:
+      - Calendario con citas y eventos
+      - Registro de compromisos adquiridos
+      - Alertas de vencimiento de compromisos
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+      - NFR-ALERT-001
+    role_key: jefe_gabinete
+    unit: Gabinete
+  - id: US-GAB-002-01
+    as_a: Jefe de Gabinete
+    i_want: un protocolo de comunicación de crisis digitalizado
+    so_that: la respuesta sea rápida y coordinada
+    acceptance_criteria:
+      - Flujo de escalamiento
+      - Plantillas de comunicados
+      - Lista de contactos de emergencia
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: jefe_gabinete
+    unit: Gabinete
+  - id: US-COM-001-01
+    as_a: Encargado de Comunicaciones
+    i_want: un calendario de contenidos con programación de publicaciones
+    so_that: pueda planificar la comunicación institucional
+    acceptance_criteria:
+      - Calendario de publicaciones
+      - Asignación a canales (RRSS, web, prensa)
+      - Flujo de aprobación
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: encargado_comunicaciones
+    unit: Comunicaciones
+  - id: US-COM-001-02
+    as_a: Encargado de Comunicaciones
+    i_want: un repositorio de material multimedia institucional
+    so_that: pueda acceder a fotos, videos y gráficas oficiales
+    acceptance_criteria:
+      - Biblioteca de medios con metadatos
+      - Búsqueda por evento y fecha
+      - Control de versiones
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: encargado_comunicaciones
+    unit: Comunicaciones
+  - id: US-COM-002-01
+    as_a: Encargado de Comunicaciones
+    i_want: reportes de menciones en medios y redes sociales
+    so_that: pueda evaluar el impacto comunicacional
+    acceptance_criteria:
+      - Conteo de menciones
+      - Análisis de sentimiento
+      - Alertas de menciones negativas
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    nfr_refs:
+      - NFR-ALERT-001
+    role_key: encargado_comunicaciones
+    unit: Comunicaciones
+  - id: US-PER-001-01
+    as_a: Periodista
+    i_want: plantillas de notas de prensa y comunicados
+    so_that: pueda producir contenidos consistentes rápidamente
+    acceptance_criteria:
+      - Plantillas por tipo de noticia
+      - Campos pre-llenados
+      - Historial de publicaciones
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: periodista
+    unit: Comunicaciones
+  - id: US-CIES-001-02
+    as_a: Coordinador CIES
+    i_want: registrar eventos de emergencia con timeline de acciones
+    so_that: pueda documentar la gestión para análisis posterior
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: coordinador_cies
+    unit: CIES (Centro Integral de Emergencia y Seguridad)
+  - id: US-DESC-001-02
+    as_a: Encargado de Descentralización
+    i_want: documentar las capacidades requeridas para cada competencia
+    so_that: pueda planificar el fortalecimiento institucional
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: encargado_descentralizacion
+    unit: Descentralización
+  - id: US-ANAL-PPR-001-01
+    as_a: Analista PPR Técnico
+    i_want: un módulo de diseño de programas con marco lógico
+    so_that: pueda estructurar objetivos, indicadores y metas
+    acceptance_criteria:
+      - Plantilla de marco lógico
+      - Definición de indicadores
+      - Presupuesto asociado
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: analista_ppr
+    unit: DIDESOH
+  - id: US-SECCORE-001-01
+    as_a: Secretario Ejecutivo CORE
+    i_want: un sistema de gestión de sesiones con tabla, votaciones y actas
+    so_that: las sesiones sean trazables y documentadas
+    acceptance_criteria:
+      - Configuración de tabla de sesión
+      - Registro de votaciones (nombre, voto)
+      - Generación automática de acta
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: secretario_ejecutivo_core
+    unit: Consejo Regional (CORE)
+  - id: US-SECCORE-001-02
+    as_a: Secretario Ejecutivo CORE
+    i_want: notificar a consejeros las materias a tratar con antelación
+    so_that: puedan prepararse para la sesión
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: secretario_ejecutivo_core
+    unit: Consejo Regional (CORE)
+  - id: US-COMPERT-001-01
+    as_a: Miembro Comité de Pertinencia
+    i_want: acceder a la documentación de iniciativas antes de la sesión
+    so_that: pueda evaluarlas con tiempo
+    acceptance_criteria:
+      - Carpeta digital por iniciativa
+      - Ficha resumen
+      - Antecedentes técnicos
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: miembro_comite_pertinencia
+    unit: Comité de Pertinencia Regional
+  - id: US-COMPERT-001-02
+    as_a: Miembro Comité de Pertinencia
+    i_want: votar electrónicamente durante las sesiones
+    so_that: el proceso sea ágil y trazable
+    acceptance_criteria:
+      - Sistema de votación en sesión
+      - Registro de voto por iniciativa
+      - Resultado automático
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: miembro_comite_pertinencia
+    unit: Comité de Pertinencia Regional
+  - id: US-CAL-001-02
+    as_a: Encargado de Calidad
+    i_want: generar reportes de cumplimiento para DIPRES
+    so_that: pueda reportar en formato oficial
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: encargado_calidad
+    unit: Unidad de Calidad y Gestión Institucional
+  - id: US-DPO-001-01
+    as_a: DPO
+    i_want: un registro de bases de datos personales del GORE
+    so_that: pueda cumplir con las obligaciones legales de transparencia
+    acceptance_criteria:
+      - Inventario de bases con datos personales
+      - Tipo de datos y finalidad
+      - Medidas de protección
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: dpo
+    unit: Gobernanza Digital (D-TDE)
+  - id: US-ARQ-DAT-001-01
+    as_a: Arquitecto de Datos
+    i_want: un catálogo de entidades y modelos de datos del GORE
+    so_that: pueda asegurar consistencia y reutilización
+    acceptance_criteria:
+      - Diccionario de datos
+      - Diagramas de modelos
+      - Linaje de datos
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: arquitecto_datos
+    unit: Gobernanza Digital (D-TDE)
+  - id: US-DUENO-001-01
+    as_a: Dueño de Datos
+    i_want: reportes de calidad de datos de mi área (completitud, exactitud)
+    so_that: pueda tomar acciones correctivas
+    acceptance_criteria:
+      - Métricas de calidad por dataset
+      - Tendencia histórica
+      - Alertas de degradación
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    nfr_refs:
+      - NFR-ALERT-001
+    role_key: dueno_datos
+    unit: Gobernanza Digital (D-TDE)
+  - id: US-ADMIN-001-01
+    as_a: Administrador de Sistemas
+    i_want: un panel de administración centralizado de usuarios y permisos
+    so_that: pueda gestionar el acceso a los sistemas
+    acceptance_criteria:
+      - Gestión de usuarios (alta, baja, modificación)
+      - Asignación de roles y permisos
+      - Log de auditoría de cambios
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    nfr_refs:
+      - NFR-AUDIT-001
+    role_key: admin_sistema
+    unit: Gobernanza Digital (D-TDE)
+  - id: US-ODIA-001-01
+    as_a: Jefe ODIA
+    i_want: un módulo de gestión de portafolio de proyectos digitales
+    so_that: pueda priorizar y hacer seguimiento
+    acceptance_criteria:
+      - Lista de proyectos con estado
+      - Recursos asignados
+      - Métricas de avance
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: jefe_odia
+    unit: Oficina Digital e IA (ODIA)
+  - id: US-JAUD-001-01
+    as_a: Jefe de Auditoría
+    i_want: un módulo de planificación de auditoría basado en riesgos
+    so_that: pueda focalizar recursos en áreas críticas
+    acceptance_criteria:
+      - Matriz de riesgos institucionales
+      - Plan anual de auditoría
+      - Asignación de auditores
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: jefe_auditoria
+    unit: Unidad de Auditoría
+  - id: US-LOBBY-001-01
+    as_a: Encargado Ley del Lobby
+    i_want: un módulo de registro de audiencias con publicación automática
+    so_that: pueda cumplir con los plazos legales
+    acceptance_criteria:
+      - Formulario de registro de audiencia
+      - Publicación en portal de transparencia
+      - Alertas de plazos
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+      - NFR-ALERT-001
+    role_key: encargado_lobby
+    unit: Cumplimiento Normativo (D-NORM)
+  - id: US-ARCH-001-01
+    as_a: Encargado de Archivo
+    i_want: un sistema de gestión de archivo con ubicación y digitalización
+    so_that: pueda localizar documentos históricos
+    acceptance_criteria:
+      - Inventario de cajas y carpetas
+      - Ubicación física
+      - Escaneo y OCR de documentos
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: encargado_archivo
+    unit: Cumplimiento Normativo (D-NORM)
+  - id: US-ASES-001-01
+    as_a: Asesor de Gabinete
+    i_want: acceder a información consolidada de los temas que asesoro
+    so_that: pueda preparar informes y recomendaciones
+    acceptance_criteria:
+      - Acceso a dashboards relevantes
+      - Historial de decisiones relacionadas
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P2
+    role_key: asesor_gabinete
+    unit: Gabinete
+  - id: US-RRII-001-01
+    as_a: Encargado RRII
+    i_want: un registro de convenios internacionales y proyectos de cooperación
+    so_that: pueda hacer seguimiento de las iniciativas
+    acceptance_criteria:
+      - Lista de convenios vigentes
+      - Proyectos en ejecución
+      - Contrapartes internacionales
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P2
+    role_key: encargado_rrii
+    unit: Gabinete
+  - id: US-PLAN-URB-001-01
+    as_a: Planificador Urbano
+    i_want: un visor de instrumentos de planificación territorial vigentes
+    so_that: pueda verificar coherencia de proyectos con PROT/PRC
+    acceptance_criteria:
+      - Capas GIS de zonificación
+      - Estado de tramitación de IPT
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: planificador_urbano
+    unit: DIPLADE
+  - id: US-PREINV-001-01
+    as_a: Analista de Preinversión
+    i_want: un módulo de evaluación de admisibilidad con checklist BIP
+    so_that: pueda verificar requisitos de ingreso a evaluación
+    acceptance_criteria:
+      - Checklist de admisibilidad
+      - Validación de código BIP
+      - Observaciones estructuradas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_preinversion
+    unit: DIPLADE
+  - id: US-ABOG-DAF-001-01
+    as_a: Abogado DAF
+    i_want: plantillas de bases y contratos con cláusulas actualizadas
+    so_that: pueda agilizar la revisión jurídica
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: abogado_daf
+    unit: DAF
+  - id: US-CONT-001-01
+    as_a: Analista Contable
+    i_want: un módulo de conciliación bancaria automatizada
+    so_that: pueda detectar diferencias rápidamente
+    acceptance_criteria:
+      - Carga de cartolas bancarias
+      - Matching automático
+      - Reporte de partidas pendientes
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_contable
+    unit: DAF
+  - id: US-REM-001-01
+    as_a: Analista de Remuneraciones
+    i_want: un módulo de cálculo de remuneraciones con validaciones
+    so_that: el pago sea correcto y oportuno
+    acceptance_criteria:
+      - Cálculo de haberes y descuentos
+      - Validación con SIGFE
+      - Generación de liquidaciones
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    nfr_refs:
+      - NFR-SIGFE-001
+    role_key: analista_remuneraciones
+    unit: DAF
+  - id: US-OP-CIES-001-01
+    as_a: Operador CIES
+    i_want: una consola de monitoreo con alertas priorizadas
+    so_that: pueda detectar incidentes rápidamente
+    acceptance_criteria:
+      - Vista de cámaras en grilla
+      - Alertas por tipo de evento
+      - Registro de incidentes
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+      - NFR-ALERT-001
+    role_key: operador_cies
+    unit: CIES
+  - id: US-FOTO-001-01
+    as_a: Fotógrafo
+    i_want: un repositorio de fotos con metadatos de evento
+    so_that: Comunicaciones pueda acceder al material
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: fotografo
+    unit: Comunicaciones
+  - id: US-PRES-CORE-001-01
+    as_a: Presidente del CORE
+    i_want: una herramienta de gestión de sesiones con votación electrónica
+    so_that: las sesiones sean ágiles y registradas
+    acceptance_criteria:
+      - Control de quórum
+      - Votación nominal
+      - Registro de acuerdos
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    nfr_refs:
+      - NFR-GIS-001
+    role_key: presidente_core
+    unit: Consejo Regional (CORE)
+  - id: US-AP-CORE-001-01
+    as_a: Profesional de Apoyo CORE
+    i_want: acceder a antecedentes de materias a tratar
+    so_that: pueda preparar minutas y resúmenes
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: profesional_apoyo_core
+    unit: Consejo Regional (CORE)
+  - id: US-G7-001-01
+    as_a: Revisor Glosa 7
+    i_want: un módulo de control de programación de caja con cuotas
+    so_that: pueda asegurar el cumplimiento del flujo de caja
+    acceptance_criteria:
+      - Cuotas mensuales por subtítulo
+      - Ejecución vs programación
+      - Alertas de desvío
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    nfr_refs:
+      - NFR-ALERT-001
+    role_key: revisor_glosa7
+    unit: DIPIR
+  - id: US-SOC-001-01
+    as_a: Analista Social
+    i_want: un registro de organizaciones y beneficiarios sociales
+    so_that: pueda focalizar intervenciones
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_social
+    unit: DIDESOH
+  - id: US-EDU-001-01
+    as_a: Analista de Educación
+    i_want: un módulo de gestión de becas regionales
+    so_that: pueda administrar postulaciones y pagos
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_educacion
+    unit: DIDESOH
+  - id: US-SUP-CIES-001-01
+    as_a: Supervisor CIES
+    i_want: reportes de eventos por turno y operador
+    so_that: pueda evaluar desempeño
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: supervisor_cies
+    unit: CIES
+  - id: US-ENL-CIES-001-01
+    as_a: Enlace CIES
+    i_want: un directorio de contactos de emergencia actualizado
+    so_that: pueda activar protocolos rápidamente
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: enlace_cies
+    unit: CIES
+  - id: US-CUST-001-01
+    as_a: Custodio de Evidencia
+    i_want: un sistema de almacenamiento seguro de grabaciones
+    so_that: la evidencia mantenga validez legal
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: custodio_evidencia
+    unit: CIES
+  - id: US-SEC-CTCI-001-01
+    as_a: Secretario CTCI
+    i_want: un módulo de gestión de sesiones del CTCI
+    so_that: pueda registrar acuerdos y hacer seguimiento
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: secretario_ctci
+    unit: Comité Ciencia (CTCI)
+  - id: US-MCTD-001-01
+    as_a: Miembro CTD
+    i_want: acceder a las minutas y acuerdos del CTD
+    so_that: pueda dar seguimiento en mi división
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: miembro_ctd
+    unit: Comité de Transformación Digital
+  - id: US-MSIA-001-01
+    as_a: Miembro Subcomité IA
+    i_want: acceder a evaluaciones de riesgo de proyectos IA
+    so_that: pueda votar informadamente
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: miembro_subcomite_ia
+    unit: Subcomité de IA
+  - id: US-AUD-CTRL-001-01
+    as_a: Auditor de Control
+    i_want: acceder a registros de transacciones y aprobaciones
+    so_that: pueda verificar trazabilidad
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: auditor_control
+    unit: Unidad de Control
+  - id: US-SUP-TRANS-001-01
+    as_a: Suplente Transparencia
+    i_want: acceso equivalente al Encargado en caso de ausencia
+    so_that: pueda mantener continuidad operativa
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: suplente_transparencia
+    unit: Cumplimiento Normativo
+  - id: US-CUST-DAT-001-01
+    as_a: Custodio de Datos
+    i_want: herramientas de monitoreo de calidad de datos
+    so_that: pueda detectar anomalías
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: custodio_datos
+    unit: Gobernanza Digital
+  - id: US-SEC-CTD-001-01
+    as_a: Secretario CTD
+    i_want: un módulo de gestión de sesiones del CTD
+    so_that: pueda generar actas y hacer seguimiento
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: secretario_ctd
+    unit: Comité de Transformación Digital
+  - id: US-PROF-N250-001-01
+    as_a: Profesional Ñuble 250
+    i_want: acceder al detalle de compromisos de mi área
+    so_that: pueda reportar avances
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: profesional_nuble_250
+    unit: Agenda Ñuble 250
+  - id: US-CC-001-01
+    as_a: Cámara de Comercio
+    i_want: información de programas de apoyo empresarial del GORE
+    so_that: pueda difundir a mis asociados
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: camara_comercio
+    unit: Gremios y Asociaciones
+  - id: US-AUD-EXT-001-01
+    as_a: Auditor Externo
+    i_want: acceso controlado a expedientes y registros financieros
+    so_that: pueda realizar mi trabajo de auditoría
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: auditor_externo
+    unit: Auditores Externos
+  - id: US-ONG-001-01
+    as_a: ONG Regional
+    i_want: información de fondos concursables y consultas ciudadanas
+    so_that: pueda participar activamente
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: ong_regional
+    unit: Sociedad Civil
+  - id: US-GOBPROV-001-01
+    as_a: Gobernación Provincial
+    i_want: reportes de inversión GORE en la provincia
+    so_that: pueda informar al territorio
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: gobernacion_provincial
+    unit: Gobierno Interior
+  - id: US-BOMB-001-01
+    as_a: Bomberos
+    i_want: integración con sistema de alertas del CIES
+    so_that: pueda recibir información en tiempo real
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: bomberos
+    unit: Instituciones de Emergencia
+  - id: US-CAR-001-01
+    as_a: Carabineros
+    i_want: acceso a cámaras del CIES en operativos coordinados
+    so_that: pueda mejorar la respuesta
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: carabineros
+    unit: Instituciones de Emergencia
+  - id: US-CGR-CONT-001-01
+    as_a: Contraparte Contable CGR
+    i_want: acceso a reportes contables en formato estándar
+    so_that: pueda realizar revisión remota
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: contraparte_contable_cgr
+    unit: Reguladores Nacionales
+  - id: US-AT-001-01
+    as_a: Analista Territorial
+    i_want: acceso a la IDE regional con capas actualizadas
+    so_that: pueda realizar análisis espaciales
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: analista_territorial
+    unit: DIPLADE
+  - id: US-PAT-DID-001-01
+    as_a: Analista Patrocinante DIDESOH
+    i_want: un módulo de patrocinio con checklist de requisitos
+    so_that: pueda verificar completitud antes de patrocinar
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_patrocinante_dides
+    unit: DIDESOH
+  - id: US-PAT-DIF-001-01
+    as_a: Analista Patrocinante DIFOI
+    i_want: un módulo de patrocinio integrado con BIP
+    so_that: pueda verificar alineamiento sectorial
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_patrocinante_difoi
+    unit: DIFOI
+  - id: US-PAT-DIT-001-01
+    as_a: Analista Patrocinante DIT
+    i_want: validación técnica automática de proyectos de infraestructura
+    so_that: pueda verificar coherencia con planes sectoriales
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_patrocinante_dit
+    unit: DIT
+  - id: US-ITP-001-01
+    as_a: ITP
+    i_want: un módulo de inspección con checklist por programa
+    so_that: pueda verificar cumplimiento de bases
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: itp_programa
+    unit: Divisiones (transversal)
+  - id: US-COM-EV-001-01
+    as_a: Comisión Evaluadora
+    i_want: acceso a ofertas y matriz de evaluación en plataforma segura
+    so_that: el proceso sea trazable y auditable
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: miembro_comision_evaluadora
+    unit: Comisiones (ad-hoc)
+  - id: US-COM-REC-001-01
+    as_a: Comisión de Recepción
+    i_want: un acta de recepción electrónica con checklist de verificación
+    so_that: el proceso sea documentado
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: miembro_comision_recepcion
+    unit: Comisiones (ad-hoc)
+  - id: US-SECCOM-001-01
+    as_a: Secretario CORE Comisionado
+    i_want: acceso a materias asignadas a cada comisión
+    so_that: pueda preparar documentación
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: secretario_core_comisionado
+    unit: Consejo Regional
+  - id: US-APT-001-01
+    as_a: Apoyo Técnico Transparencia
+    i_want: herramientas de validación de formatos de archivos
+    so_that: los documentos cumplan estándares
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: apoyo_tecnico_transparencia
+    unit: Cumplimiento Normativo
+  - id: US-SUJ-001-01
+    as_a: Sujeto Pasivo
+    i_want: un formulario de registro de audiencias simplificado
+    so_that: pueda cumplir con la Ley del Lobby
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: sujeto_pasivo
+    unit: Sujetos Regulados
+  - id: US-ECIF-001-01
+    as_a: ECIF
+    i_want: reportes de cumplimiento de controles financieros
+    so_that: pueda identificar debilidades
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: ecif
+    unit: DAF
+  - id: US-JCONT-001-01
+    as_a: Jefe Depto. Contabilidad
+    i_want: un checklist de cierre mensual automatizado
+    so_that: pueda verificar completitud del proceso
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_depto_contabilidad
+    unit: DAF
+  - id: US-JTES-001-01
+    as_a: Jefe Depto. Tesorería
+    i_want: un módulo de programación de pagos con proyección de caja
+    so_that: pueda asegurar liquidez
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_depto_tesoreria
+    unit: DAF
+  - id: US-ACV-001-01
+    as_a: Analista Ciclo de Vida
+    i_want: un workflow de onboarding con checklist de documentos
+    so_that: el ingreso de funcionarios sea completo
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: analista_ciclo_vida
+    unit: DAF
+  - id: US-CAP-001-01
+    as_a: Analista de Capacitación
+    i_want: un módulo de gestión de capacitación con inscripciones
+    so_that: pueda administrar el PAC
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: analista_capacitacion
+    unit: DAF
+  - id: US-BIEN-001-01
+    as_a: Analista de Bienestar
+    i_want: un módulo de beneficios y programas de bienestar
+    so_that: pueda administrar solicitudes
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: analista_bienestar
+    unit: DAF
+  - id: US-ASIS-001-01
+    as_a: Analista Control de Asistencia
+    i_want: integración con sistema biométrico y reportes automáticos
+    so_that: pueda detectar irregularidades
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: analista_control_asistencia
+    unit: DAF
+  - id: US-INV-001-01
+    as_a: Analista de Inventario
+    i_want: un módulo de control de activos con ubicación y responsable
+    so_that: pueda mantener el inventario actualizado
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_inventario
+    unit: DAF
+  - id: US-HON-001-01
+    as_a: Analista de Honorarios
+    i_want: un módulo de gestión de honorarios con informes de cumplimiento
+    so_that: pueda verificar antes del pago
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: analista_honorarios
+    unit: DAF
+  - id: US-JPROG-001-01
+    as_a: Jefe Programación
+    i_want: un módulo de programación plurianual de inversiones
+    so_that: pueda proyectar recursos
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: jefe_programacion
+    unit: DIPLADE
+  - id: US-JEST-001-01
+    as_a: Jefe Estudios Territoriales
+    i_want: un repositorio de estudios con buscador temático
+    so_that: pueda reutilizar conocimiento
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: jefe_estudios
+    unit: DIPLADE
+  - id: US-ACONV-001-01
+    as_a: Analista de Convenios
+    i_want: un workflow de convenios con checklist de requisitos
+    so_that: pueda verificar completitud
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_convenios
+    unit: DIPIR
+  - id: US-AMOD-001-01
+    as_a: Analista de Modificaciones
+    i_want: un módulo de gestión de modificaciones con historial
+    so_that: pueda trazabilizar cambios
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_modificaciones
+    unit: DIPIR
+  - id: US-AEVAL-001-01
+    as_a: Analista de Evaluación
+    i_want: una ficha de evaluación con criterios estándar
+    so_that: la evaluación sea consistente
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_evaluacion
+    unit: DIPLADE
+  - id: US-PES-001-01
+    as_a: Analista de Pesca
+    i_want: un registro de caletas y organizaciones pesqueras beneficiarias
+    so_that: pueda focalizar intervenciones
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: analista_pesca
+    unit: DIFOI
+  - id: US-ATES-001-01
+    as_a: Analista de Tesorería
+    i_want: un módulo de emisión de pagos con validación presupuestaria
+    so_that: los pagos sean correctos
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_tesoreria
+    unit: DAF
+  - id: US-APRES-001-01
+    as_a: Analista de Presupuesto
+    i_want: un módulo de modificaciones presupuestarias
+    so_that: pueda tramitar cambios
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_presupuesto
+    unit: DAF
+  - id: US-ASERV-001-01
+    as_a: Analista Servicios Generales
+    i_want: un módulo de solicitudes de mantención y reserva de salas
+    so_that: pueda coordinar servicios
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: analista_servicios_generales
+    unit: DAF
+  - id: US-SECDIV-001-01
+    as_a: Secretaria de División
+    i_want: un módulo de gestión de correspondencia entrante y saliente
+    so_that: pueda mantener trazabilidad
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: secretaria_division
+    unit: Divisiones (transversal)
+  - id: US-COND-001-01
+    as_a: Conductor
+    i_want: un módulo de reserva de vehículos y registro de bitácora
+    so_that: pueda documentar los traslados
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: conductor
+    unit: DAF - Servicios
+  - id: US-AUX-001-01
+    as_a: Auxiliar
+    i_want: recibir solicitudes de apoyo logístico
+    so_that: pueda organizar mi trabajo
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P3
+    role_key: auxiliar
+    unit: DAF - Servicios
+  - id: US-BOD-001-01
+    as_a: Encargado de Bodega
+    i_want: un módulo de control de stock con entradas y salidas
+    so_that: pueda mantener el inventario actualizado
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_bodega
+    unit: DAF
+  - id: US-DBA-001-01
+    as_a: DBA
+    i_want: un panel de monitoreo de bases de datos
+    so_that: pueda detectar problemas de rendimiento
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: dba
+    unit: TIC
+  - id: US-PDI-001-01
+    as_a: PDI
+    i_want: acceso a cámaras del CIES en investigaciones
+    so_that: pueda obtener evidencia
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: pdi
+    unit: Instituciones de Seguridad
+  - id: US-SENAPRED-001-01
+    as_a: SENAPRED
+    i_want: integración con CIES para alertas de emergencia
+    so_that: la respuesta sea coordinada
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: senapred
+    unit: Instituciones de Emergencia
+  - id: US-UCR-001-01
+    as_a: UCR SUBDERE
+    i_want: reportes de gestión del GORE
+    so_that: pueda informar a nivel central
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: unidad_coordinacion_regional
+    unit: Instituciones de Gobierno Central
+  - id: US-DIR-SOC-001-01
+    as_a: Dirigente Social
+    i_want: información de fondos concursables y consultas
+    so_that: pueda representar a mi comunidad
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: dirigente_social
+    unit: Sociedad Civil
+  - id: US-ABOG-001-01
+    as_a: Abogado
+    i_want: acceso a base de normativa y jurisprudencia
+    so_that: pueda fundamentar mis informes
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_general
+    unit: Unidad Jurídica
+  - id: US-PROF-REZ-001-01
+    as_a: Profesional Rezago
+    i_want: acceso a expedientes de proyectos rezagados
+    so_that: pueda diagnosticar problemas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: profesional_zona_rezago
+    unit: DIT
+  - id: US-COM-SECT-001-01
+    as_a: Comunicaciones Sectoriales
+    i_want: información actualizada de proyectos para comunicados
+    so_that: pueda difundir logros
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: comunicaciones_dipir
+    unit: DIPIR
+  - id: US-ABOG-LIC-001-01
+    as_a: Abogado Licitaciones
+    i_want: plantillas de bases con cláusulas actualizadas
+    so_that: pueda agilizar revisiones
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_licitaciones
+    unit: Unidad Jurídica
+  - id: US-ABOG-CONV-001-01
+    as_a: Abogado Convenios
+    i_want: plantillas de convenios con cláusulas estándar
+    so_that: pueda estandarizar revisiones
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_convenios
+    unit: Unidad Jurídica
+  - id: US-AS-001-01
+    as_a: Asistente Social
+    i_want: un módulo de fichas sociales con criterios de evaluación
+    so_that: la evaluación sea consistente
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: asistente_social
+    unit: DIDESOH
+  - id: US-QA-001-01
+    as_a: Analista QA
+    i_want: un módulo de gestión de pruebas con casos de test
+    so_that: pueda documentar la calidad
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: qa_analista
+    unit: TIC
+  - id: US-DEV-001-01
+    as_a: Desarrollador
+    i_want: acceso a documentación técnica y APIs
+    so_that: pueda integrar sistemas
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: desarrollador
+    unit: TIC
+  - id: US-UOCT-001-01
+    as_a: UOCT Ñuble
+    i_want: información de proyectos viales GORE
+    so_that: pueda articular con semáforos y señalética
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: uoct_nuble
+    unit: Instituciones de Gobierno Central
+  - id: US-BI-001-01
+    as_a: Especialista BI
+    i_want: acceso a datos consolidados para análisis
+    so_that: pueda crear visualizaciones para la gestión
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: especialista_bi
+    unit: Gobernanza Digital
+  - id: US-CP-001-01
+    as_a: Encargado Comité Paritario
+    i_want: un módulo de registro de incidentes laborales
+    so_that: pueda hacer seguimiento de seguridad
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: encargado_comite_paritario
+    unit: DAF
+  - id: US-PREV-001-01
+    as_a: Prevencionista de Riesgos
+    i_want: un módulo de evaluación de riesgos laborales
+    so_that: pueda cumplir con normativa
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: prevencionista_riesgos
+    unit: DAF
+  - id: US-CSEU-001-01
+    as_a: Encargado CSEU
+    i_want: un módulo de registro de incidentes de atención
+    so_that: pueda mejorar la calidad de servicio
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: encargado_cseu
+    unit: Calidad y Gestión Institucional
+  - id: US-ACC-001-01
+    as_a: Especialista Accesibilidad
+    i_want: herramientas de auditoría de accesibilidad
+    so_that: pueda verificar cumplimiento
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: especialista_accesibilidad
+    unit: Gobernanza Digital
+  - id: US-BCP-001-01
+    as_a: Encargado Continuidad
+    i_want: un módulo de gestión del BCP con pruebas
+    so_that: pueda asegurar resiliencia
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: encargado_continuidad
+    unit: Gobernanza Digital
+  - id: US-INTER-001-01
+    as_a: Encargado Interoperabilidad
+    i_want: un catálogo de APIs y servicios web disponibles
+    so_that: pueda facilitar integraciones
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P0
+    role_key: encargado_interoperabilidad
+    unit: Gobernanza Digital
+  - id: US-CAPDIG-001-01
+    as_a: Encargado Capacitación Digital
+    i_want: un LMS con cursos de herramientas del GORE
+    so_that: pueda formar a los funcionarios
+    domain: D-TDE
+    target_domain: D-TDE
+    priority: P1
+    role_key: encargado_capacitacion_digital
+    unit: Gobernanza Digital
+  - id: US-ABOG-DIV-001-01
+    as_a: Abogado Asesor de División
+    i_want: acceso a los expedientes técnicos de la división
+    so_that: pueda emitir informes jurídicos fundados
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_asesor_division
+    unit: Unidad Jurídica
+  - id: US-ABOG-DISC-001-01
+    as_a: Abogado Disciplinario
+    i_want: un módulo confidencial de gestión de sumarios
+    so_that: pueda tramitar procesos con reserva
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_disciplinarios
+    unit: Unidad Jurídica
+  - id: US-ABOG-INF-001-01
+    as_a: Abogado Informante
+    i_want: un repositorio de jurisprudencia administrativa regional
+    so_that: pueda mantener consistencia en los criterios
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: abogado_informante
+    unit: Unidad Jurídica
+  - id: US-ABOG-JUD-001-01
+    as_a: Abogado Judicial
+    i_want: un calendario procesal con alertas de plazos fatales
+    so_that: no se pierdan instancias judiciales
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_judiciales
+    unit: Unidad Jurídica
+  - id: US-ABOG-REV-001-01
+    as_a: Abogado Revisor
+    i_want: un workflow de revisión de resoluciones con control de versiones
+    so_that: pueda asegurar la integridad del acto administrativo
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P0
+    role_key: abogado_revisor
+    unit: Unidad Jurídica
+  - id: US-FISC-SUM-001-01
+    as_a: Fiscal Sumariante
+    i_want: herramientas para tomar declaraciones y registrar evidencia digital
+    so_that: el expediente del sumario esté digitalizado y seguro
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: fiscal_sumariante
+    unit: Comisiones Especiales
+  - id: US-JUEZ-001-01
+    as_a: Juez de Cuentas
+    i_want: la remisión de expedientes originales digitalizados y certificados
+    so_that: se pueda instruir el juicio de cuentas
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: juez_cuentas
+    unit: Organismos de Control
+  - id: US-CDE-001-01
+    as_a: Abogado CDE
+    i_want: antecedentes completos de litigios donde el GORE es parte
+    so_that: pueda asumir la defensa fiscal
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: cde
+    unit: Organismos de Defensa
+  - id: US-OP-001-01
+    as_a: Oficial de Partes
+    i_want: un sistema de carátulas con código de barras y ruta digital
+    so_that: se asegure la trazabilidad de cada ingreso
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: oficial_partes
+    unit: Administración
+  - id: US-NOT-001-01
+    as_a: Notario
+    i_want: verificar firmas electrónicas de documentos GORE
+    so_that: pueda protocolizar instrumentos públicos
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: notario
+    unit: Externo - Legal
+  - id: US-APT-001-01
+    as_a: Analista Planificación Territorial
+    i_want: acceso a capas GEO de planos reguladores comunales
+    so_that: pueda validar la compatibilidad de proyectos
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_planif_territorial
+    unit: DIPLADE
+  - id: US-ATRANS-001-01
+    as_a: Analista de Transferencias
+    i_want: un módulo de control de convenios de transferencia
+    so_that: pueda verificar ejecución financiera y técnica
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_transferencias
+    unit: DIDESOH / DIFOI
+  - id: US-ATRA-001-01
+    as_a: Analista de Transporte
+    i_want: acceso a datos de flujo vehicular y estado de rutas
+    so_that: pueda priorizar conservaciones viales
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_transporte
+    unit: DIT
+  - id: US-MDS-001-01
+    as_a: Analista MDSF
+    i_want: acceso al banco de proyectos BIP integrado
+    so_that: pueda otorgar el RS (Recomendación Satisfactoria)
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_inversiones_mds
+    unit: Ministerio Desarrollo Social
+  - id: US-FNDR8-001-01
+    as_a: Analista 8% Técnico
+    i_want: un checklist automático de admisibilidad
+    so_that: pueda filtrar postulaciones rápidamente
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: analista_8_tecnico
+    unit: DIDESOH
+  - id: US-PPR-001-01
+    as_a: Analista PPR
+    i_want: un módulo de evaluación técnica específico para PPR
+    so_that: pueda calificar iniciativas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: analista_ppr_tecnico
+    unit: DIDESOH
+  - id: US-SUBV-001-01
+    as_a: Analista Subvenciones
+    i_want: un registro de organizaciones receptoras con historial
+    so_that: pueda validar elegibilidad
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_subvenciones
+    unit: DIDESOH
+  - id: US-AMB-001-01
+    as_a: Analista Ambiental
+    i_want: integración con el SEIA (Servicio Evaluación Ambiental)
+    so_that: pueda verificar resoluciones ambientales (RCA)
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: analista_ambiental
+    unit: DIFOI
+  - id: US-IVIAL-001-01
+    as_a: Ingeniero de Vialidad
+    i_want: integración con normas de diseño vial MOP
+    so_that: los proyectos cumplan estándares sectoriales
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: ing_vialidad
+    unit: DIT
+  - id: US-ISAN-001-01
+    as_a: Ingeniero Sanitario
+    i_want: acceso a factibilidades técnicas de servicios sanitarios
+    so_that: pueda aprobar soluciones de APR
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P0
+    role_key: ingeniero_sanitario
+    unit: DIT
+  - id: US-ITO-001-01
+    as_a: ITO
+    i_want: una app móvil offline para el libro de obras digital
+    so_that: pueda registrar hitos sin conexión a internet
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: inspector_tecnico_obra
+    unit: DIT
+  - id: US-SUP-OBRA-001-01
+    as_a: Supervisor de Obras
+    i_want: alertas de vencimiento de boletas de garantía
+    so_that: pueda solicitar renovación a tiempo
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: supervisor_obras
+    unit: DIT
+  - id: US-COORD-DIT-001-01
+    as_a: Coordinador Sectorial DIT
+    i_want: una vista consolidada de proyectos por sector (vial, salud, educación)
+    so_that: pueda gestionar prioridades técnicas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: coordinador_sectorial_dit
+    unit: DIT
+  - id: US-IDE-001-01
+    as_a: Coordinador IDE
+    i_want: un catálogo de metadatos geográficos estandarizado
+    so_that: se facilite el intercambio de información territorial
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: coordinador_ide
+    unit: DIPLADE
+  - id: US-PMG-001-01
+    as_a: Coordinador PMG
+    i_want: un sistema de carga de evidencias PMG descentralizado
+    so_that: cada unidad suba sus medios de verificación
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: coordinador_pmg
+    unit: Administración
+  - id: US-C33-001-01
+    as_a: Analista C33
+    i_want: un catálogo de precios referenciales de vehículos y maquinaria
+    so_that: pueda evaluar la eficiencia del gasto
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: analista_c33
+    unit: DIFOI
+  - id: US-EC33-001-01
+    as_a: Encargado C33
+    i_want: reporte de vida útil y depreciación de activos financiados
+    so_that: pueda planificar reposiciones
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P2
+    role_key: encargado_c33
+    unit: DIFOI
+  - id: US-ARQ-001-01
+    as_a: Arquitecto Revisor
+    i_want: visualizador de planos en formato BIM/CAD
+    so_that: pueda validar detalles constructivos
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: arquitecto_revisor
+    unit: DIT
+  - id: US-ARQP-001-01
+    as_a: Arquitecto Revisor Proyectos
+    i_want: checklist de normativa OGUC integrado
+    so_that: asegure cumplimiento legal de la edificación
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: arquitecto_revisor_proy
+    unit: DIT
+  - id: US-COMP-001-01
+    as_a: Encargado Competencias
+    i_want: formularios digitales de evaluación 360
+    so_that: pueda identificar brechas de competencia
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: encargado_competencias
+    unit: Gestión de Personas
+  - id: US-CGPE-001-01
+    as_a: Encargado Control Gestión
+    i_want: alertas automáticas de licencias médicas prolongadas
+    so_that: pueda gestionar reemplazos a tiempo
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: encargado_control_gestion
+    unit: Gestión de Personas
+  - id: US-REM-001-01
+    as_a: Encargado de Remuneraciones
+    i_want: cálculo automático de bonificaciones y descuentos legales
+    so_that: se minimicen errores en la liquidación
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: encargado_remuneraciones
+    unit: Gestión de Personas
+  - id: US-JEFE-RRHH-001-01
+    as_a: Encargado RRHH
+    i_want: un expediente digital único por funcionario
+    so_that: tenga toda la historia laboral centralizada
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: encargado_rrhh
+    unit: Gestión de Personas
+  - id: US-BIEN-001-01
+    as_a: Profesional Bienestar
+    i_want: registro de cargas familiares y seguros complementarios
+    so_that: pueda gestionar reembolsos médicos
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: profesional_bienestar
+    unit: Servicio de Bienestar
+  - id: US-SOCIO-001-01
+    as_a: Socio Bienestar
+    i_want: consultar mis saldos de ayudas económicas
+    so_that: pueda planificar mis gastos
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: socio_bienestar
+    unit: Funcionarios
+  - id: US-RPSICO-001-01
+    as_a: Referente Riesgos Psicosociales
+    i_want: encuestas de clima laboral anónimas y digitales
+    so_that: se garantice la confidencialidad de los datos
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: referente_riesgos_psicosociales
+    unit: Prevención de Riesgos
+  - id: US-JCAL-001-01
+    as_a: Miembro Junta Calificadora
+    i_want: acceso a las hojas de vida y precalificaciones
+    so_that: pueda asignar puntajes objetivos
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: junta_calificadora
+    unit: Comisiones
+  - id: US-HON-001-01
+    as_a: Prestador Honorarios
+    i_want: subir mi informe de actividades y boleta digitalmente
+    so_that: se curse mi pago mensual
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P0
+    role_key: prestador_honorarios
+    unit: Transversal
+  - id: US-PREV-001-01
+    as_a: Prevencionista
+    i_want: registro de entrega de EPP (Equipos Protección Personal)
+    so_that: cumpla con la normativa legal
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: encargado_prevencion
+    unit: Prevención de Riesgos
+  - id: US-APREV-001-01
+    as_a: Analista Prevención
+    i_want: formulario móvil de inspección de extintores y vías de escape
+    so_that: pueda reportar anomalías inmediatamente
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: analista_prevencion
+    unit: Prevención de Riesgos
+  - id: US-GEN-001-01
+    as_a: Referente Género
+    i_want: indicadores desagregados por sexo en todos los reportes
+    so_that: visualice brechas de género
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P2
+    role_key: referente_genero
+    unit: Transversal
+  - id: US-RPMG-001-01
+    as_a: Referente Técnico PMG
+    i_want: cargar medios de verificación validados
+    so_that: se apruebe el cumplimiento de la etapa
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: referente_tecnico_pmg
+    unit: Unidades Técnicas
+  - id: US-ARQS-001-01
+    as_a: Arquitecto de Sistemas
+    i_want: un repositorio central de decisiones de arquitectura (ADR)
+    so_that: se mantenga la consistencia técnica del proyecto
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P0
+    role_key: arquitecto_sistemas
+    unit: Informática (TDE)
+  - id: US-ARQC-001-01
+    as_a: Arquitecto Categórico
+    i_want: herramientas de modelado semántico integradas
+    so_that: las definiciones de negocio sean coherentes en el código
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P0
+    role_key: arquitecto_categorico
+    unit: Informática (TDE)
+  - id: US-BACK-001-01
+    as_a: Backend Developer
+    i_want: pipelines de CI/CD automatizados
+    so_that: pueda desplegar nuevas features rápidamente sin romper nada
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P0
+    role_key: desarrollador_backend
+    unit: Informática (TDE)
+  - id: US-FRONT-001-01
+    as_a: Frontend Developer
+    i_want: una biblioteca de componentes de diseño (Design System)
+    so_that: la UI sea consistente en todos los módulos
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P1
+    role_key: desarrollador_frontend
+    unit: Informática (TDE)
+  - id: US-DEVOPS-001-01
+    as_a: DevOps
+    i_want: monitorización de infraestructura como código (IaC)
+    so_that: los entornos sean reproducibles y estables
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: desarrollador_devops
+    unit: Informática (TDE)
+  - id: US-DEV-001-01
+    as_a: Desarrollador
+    i_want: acceso a logs centralizados de errores
+    so_that: pueda diagnosticar bugs en producción
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: desarrollador_sistema
+    unit: Informática (TDE)
+  - id: US-NDEV-001-01
+    as_a: Nuevo Desarrollador
+    i_want: documentación técnica actualizada y guías de contribución
+    so_that: pueda ser productivo en mi primera semana
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P1
+    role_key: nuevo_desarrollador
+    unit: Informática (TDE)
+  - id: US-TLEAD-001-01
+    as_a: Tech Lead
+    i_want: métricas de velocidad y calidad del equipo (DORA metrics)
+    so_that: pueda optimizar el proceso de desarrollo
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P1
+    role_key: lider_tecnico
+    unit: Informática (TDE)
+  - id: US-PO-001-01
+    as_a: Product Owner
+    i_want: herramientas para gestionar user stories y criterios de aceptación
+    so_that: el equipo desarrolle lo que el negocio necesita
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: product_owner
+    unit: Negocio / Informática
+  - id: US-QA-001-01
+    as_a: QA Engineer
+    i_want: un entorno de staging idéntico a producción
+    so_that: las pruebas sean fiables
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: qa_engineer
+    unit: Informática (TDE)
+  - id: US-ICON-001-01
+    as_a: Ingeniero de Conocimiento
+    i_want: herramientas para curar y versionar prompts y contextos
+    so_that: los agentes respondan con precisión
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P1
+    role_key: ingeniero_conocimiento
+    unit: Informática (TDE)
+  - id: US-IPLAT-001-01
+    as_a: Ingeniero de Plataforma
+    i_want: catálogo de servicios autogestionado (Base de datos, Cache)
+    so_that: los desarrolladores no pierdan tiempo configurando infraestructura
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: ingeniero_plataforma
+    unit: Informática (TDE)
+  - id: US-ISEG-001-01
+    as_a: Ingeniero de Seguridad
+    i_want: escaneo automático de vulnerabilidades en el código
+    so_that: se detecten fallos de seguridad antes de desplegar
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: ingeniero_seguridad
+    unit: Informática (TDE)
+  - id: US-SRE-001-01
+    as_a: SRE
+    i_want: definir y monitorear SLIs y SLOs
+    so_that: se mantenga la calidad del servicio acordada
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: ingeniero_sre
+    unit: Informática (TDE)
+  - id: US-GEO-001-01
+    as_a: Admin Geonodo
+    i_want: herramientas para estandarizar formatos (Shapefile, GeoJSON)
+    so_that: las capas sean interoperables
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: admin_geonodo
+    unit: DIPLADE / TI
+  - id: US-ADM-PLAT-001-01
+    as_a: Admin Plataforma
+    i_want: gestión centralizada de permisos y roles
+    so_that: se cumpla el principio de menor privilegio
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: admin_plataforma
+    unit: Informática (TDE)
+  - id: US-JTI-001-01
+    as_a: Admin TI
+    i_want: un inventario automatizado de activos TI
+    so_that: pueda planificar renovaciones tecnológicas
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: admin_ti
+    unit: Informática (TDE)
+  - id: US-DATA-001-01
+    as_a: Agencia de Datos
+    i_want: herramientas de limpieza y deduplicación de registros
+    so_that: se mantenga una 'Golden Record' de ciudadanos y entidades
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P1
+    role_key: agencia_datos
+    unit: Informática (TDE)
+  - id: US-ARCH-001-01
+    as_a: Archivero Digital
+    i_want: definir tablas de retención documental en el sistema
+    so_that: se elimine lo obsoleto y preserve lo histórico
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: archivero_digital
+    unit: Gestión Documental
+  - id: US-MESA-001-01
+    as_a: Agente Mesa Ayuda
+    i_want: una base de conocimientos con soluciones frecuentes
+    so_that: pueda resolver tickets en la primera llamada
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: mesa_ayuda
+    unit: Informática (TDE)
+  - id: US-MON-001-01
+    as_a: Monitor Sistema
+    i_want: un wallboard con semáforos de estado de servicios
+    so_that: detecte caídas antes que los usuarios reporten
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: monitor_sistema
+    unit: Informática (TDE)
+  - id: US-NOC-001-01
+    as_a: Operador NOC/SOC
+    i_want: correlación de eventos de seguridad (SIEM)
+    so_that: pueda identificar ataques complejos
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P0
+    role_key: noc_soc
+    unit: Informática (TDE)
+  - id: US-OPE-001-01
+    as_a: Operador Sistema
+    i_want: planificador de tareas con reporte de éxito/fallo
+    so_that: pueda reintentar procesos fallidos
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P2
+    role_key: operador_sistema
+    unit: Informática (TDE)
+  - id: US-SOP-001-01
+    as_a: Técnico Soporte
+    i_want: historial de mantenimiento por número de serie de equipo
+    so_that: pueda detectar fallas recurrentes
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P1
+    role_key: soporte_tecnico
+    unit: Informática (TDE)
+  - id: US-DEVMUNI-001-01
+    as_a: Enlace Técnico Municipal
+    i_want: documentación clara de APIs de interoperabilidad
+    so_that: pueda conectar el ERP municipal
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P2
+    role_key: desarrollador_municipal
+    unit: Municipios / TDE
+  - id: US-SEN-001-01
+    as_a: Senador
+    i_want: información detallada sobre la ejecución de grandes proyectos
+    so_that: pueda ejercer mi rol fiscalizador en el congreso
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P1
+    role_key: senador_nuble
+    unit: Poder Legislativo
+  - id: US-DIP-001-01
+    as_a: Diputado
+    i_want: consultar el estado de proyectos comunales específicos
+    so_that: pueda responder a mis electores
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P1
+    role_key: diputado_nuble
+    unit: Poder Legislativo
+  - id: US-TC-001-01
+    as_a: Ministro TC
+    i_want: expedientes completos sobre controversias legales
+    so_that: pueda fallar conforma a derecho
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: tribunal_constitucional
+    unit: Organismo Autónomo
+  - id: US-CORTE-001-01
+    as_a: Juez Corte Apelaciones
+    i_want: la remisión inmediata de informes sobre actos impugnados
+    so_that: se administre justicia oportunamente
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: corte_apelaciones_nuble
+    unit: Poder Judicial
+  - id: US-FISC-001-01
+    as_a: Fiscal Ministerio Público
+    i_want: acceso total y reservado a servidores y correos bajo orden judicial
+    so_that: pueda recabar evidencia digital
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: ministerio_publico
+    unit: Organismo Autónomo
+  - id: US-AMUCH-001-01
+    as_a: Representante AMUCH
+    i_want: canales de comunicación directa con el Gobernador
+    so_that: se aborden problemáticas municipales transversales
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P2
+    role_key: amuch
+    unit: Gremio Municipal
+  - id: US-ANCI-001-01
+    as_a: Representante ANCORE
+    i_want: compartir buenas prácticas legislativas regionales
+    so_that: se mejore la gestión de los consejos
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P2
+    role_key: anci
+    unit: Gremio CORE
+  - id: US-FEDMUNI-001-01
+    as_a: Dirigente Municipal
+    i_want: denunciar sobrecargas laborales derivadas de convenios
+    so_that: se ajusten los recursos para la ejecución
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P2
+    role_key: federacion_municipios
+    unit: Gremio
+  - id: US-CUT-001-01
+    as_a: Dirigente CUT
+    i_want: acceso a actas del Consejo de la Sociedad Civil
+    so_that: pueda monitorear compromisos laborales
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P2
+    role_key: central_sindical
+    unit: Sociedad Civil
+  - id: US-EMP-001-01
+    as_a: Empresario Regional
+    i_want: un calendario único de postulaciones a fondos
+    so_that: no pierda oportunidades de co-financiamiento
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: empresa_gremio
+    unit: Sector Privado
+  - id: US-ONG-001-01
+    as_a: Director Fundación
+    i_want: postular en línea a subvenciones del 8%
+    so_that: pueda ejecutar mis programas sociales
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: ong_fundacion
+    unit: Sociedad Civil
+  - id: US-CORP-001-01
+    as_a: Director Corporación
+    i_want: transferencias corrientes para gastos operativos
+    so_that: la corporación funcione administrativamente
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P2
+    role_key: director_corporacion
+    unit: Corporación Desarrollo
+  - id: US-INV-001-01
+    as_a: Investigador
+    i_want: postular proyectos FIC totalmente en línea
+    so_that: pueda innovar en sectores productivos regionales
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: investigador_universidad
+    unit: Academia
+  - id: US-ANID-001-01
+    as_a: Representante ANID
+    i_want: acceso a indicadores de capital humano avanzado
+    so_that: se evite la fuga de cerebros
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P2
+    role_key: representante_anid
+    unit: Ciencia y Tecnología
+  - id: US-SOFO-001-01
+    as_a: Dirigente Agrícola
+    i_want: alertas tempranas de emergencias agrícolas (sequía, heladas)
+    so_that: se activen fondos de emergencia a tiempo
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: sna_sofo
+    unit: Gremio Agrícola
+  - id: US-COL-001-01
+    as_a: Presidente Colegio Profesionales
+    i_want: registro público de consultores sancionados
+    so_that: se resguarde la fe pública
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P2
+    role_key: colegio_profesional
+    unit: Sociedad Civil
+  - id: US-JER-001-01
+    as_a: Jefe Unidad
+    i_want: trazabilidad completa de las asignaciones de tareas
+    so_that: pueda ejercer el control jerárquico efectivo
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P1
+    role_key: jefe_control_jerarquico
+    unit: Administración
+  - id: US-JD-ANA-001-01
+    as_a: Jefe Depto Análisis
+    i_want: reportes de devengo vs. gasto efectivo en tiempo real
+    so_that: pueda proyectar el cierre presupuestario
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_depto_analisis
+    unit: DIPLADE
+  - id: US-JD-PLAN-001-01
+    as_a: Jefe Depto Planificación
+    i_want: un repositorio documental de estudios regionales
+    so_that: las decisiones estratégicas tengan base técnica
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: jefe_depto_planif
+    unit: DIPLADE
+  - id: US-FENIX-001-01
+    as_a: Jefe FÉNIX
+    i_want: acceso privilegiado temporal a sistemas de unidades intervenidas
+    so_that: pueda auditar y reorganizar procesos rápidamente
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P0
+    role_key: jefe_fenix
+    unit: Unidad Especial
+  - id: US-INV-DEP-001-01
+    as_a: Jefe Inversiones
+    i_want: priorizar proyectos en el anteproyecto regional de inversiones
+    so_that: se negocie el presupuesto anual con DIPRES
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: jefe_inversion
+    unit: DIPLADE
+  - id: US-JPRE-001-01
+    as_a: Jefe Presupuesto
+    i_want: bloquear imputaciones que excedan el saldo disponible
+    so_that: no se genere deuda flotante sin respaldo
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_presupuesto
+    unit: DAF
+  - id: US-JTERR-001-01
+    as_a: Jefe Territorio
+    i_want: vistas geográficas de la inversión per cápita por comuna
+    so_that: pueda corregir inequidades territoriales
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: jefe_terr
+    unit: DIPLADE
+  - id: US-FRPD-001-01
+    as_a: Miembro Comité FRPD
+    i_want: acceso a expedientes técnicos de proyectos FRPD
+    so_that: pueda calificar iniciativas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: comite_frpd
+    unit: Comités
+  - id: US-GRD-001-01
+    as_a: Miembro Comité GRD
+    i_want: protocolos de respuesta digitales activables con un clic
+    so_that: se movilicen recursos de emergencia rápidamente
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: comite_grd
+    unit: Emergencias
+  - id: US-CSEU-001-01
+    as_a: Evaluador CSEU
+    i_want: matriz de evaluación curricular digital
+    so_that: se estandarice el puntaje de los postulantes
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: miembro_cseu
+    unit: Gestión Personas
+  - id: US-MECIF-001-01
+    as_a: Miembro ECIF
+    i_want: acceso al registro de dirigentes sociales
+    so_that: se validen los interlocutores en el territorio
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P2
+    role_key: miembro_ecif
+    unit: Comités
+  - id: US-EVERDE-001-01
+    as_a: Miembro Estado Verde
+    i_want: registro de consumos de papel y energía
+    so_that: pueda reportar al ministerio de medio ambiente
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P3
+    role_key: miembro_estado_verde
+    unit: Gestión Ambiental
+  - id: US-PPERT-001-01
+    as_a: Pte. Comité Pertinencia
+    i_want: visar el acta de pertinencia con firma digital
+    so_that: los proyectos pasen a etapa de análisis técnico
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: presidente_comite_pertinencia
+    unit: DIPLADE
+  - id: US-SPERT-001-01
+    as_a: Secretario Comité
+    i_want: generar actas automáticas a partir de la tabla de proyectos
+    so_that: se agilice la comunicación de resueltos a las unidades
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P1
+    role_key: secretario_comite_pertinencia
+    unit: DIPLADE
+  - id: US-INTFIN-001-01
+    as_a: Interventor Financiero
+    i_want: acceso total de auditoría al ERP financiero
+    so_that: pueda identificar descuadres históricos
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: interventor_financiero
+    unit: DAF / FÉNIX
+  - id: US-INTFIS-001-01
+    as_a: Interventor Fiscal
+    i_want: expedientes de sumarios administrativos digitalizados
+    so_that: pueda formular cargos fundados
+    domain: D-NORM
+    target_domain: D-NORM
+    priority: P1
+    role_key: interventor_fiscal
+    unit: Jurídica / Fiscalización
+  - id: US-EOPE-001-01
+    as_a: Encargado Operativo
+    i_want: gestión de reserva de salas y vehículos
+    so_that: se optimice el uso de recursos físicos
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: encargado_operativo
+    unit: Administración
+  - id: US-PART-001-01
+    as_a: Encargado Participación
+    i_want: una plataforma de votación digital segura
+    so_that: la ciudadanía priorice iniciativas de inversión
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P1
+    role_key: encargado_participacion
+    unit: DIPLADE / Social
+  - id: US-EPP-001-01
+    as_a: Encargado Proyectos
+    i_want: alertas de desviación de cronograma (Gantt)
+    so_that: pueda gestionar medidas correctivas
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: encargado_proy_prog
+    unit: Divisiones Técnicas
+  - id: US-VINC-001-01
+    as_a: Encargado Vinculación
+    i_want: un CRM de stakeholders regionales
+    so_that: mantenga actualizada la agenda de contactos
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P2
+    role_key: encargado_vinculacion
+    unit: Comunicaciones
+  - id: US-REZ-001-01
+    as_a: Encargado Rezago
+    i_want: flexibilidad en los criterios de evaluación social (RS)
+    so_that: se aprueben proyectos en zonas aisladas
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: encargado_zonas_rezago
+    unit: DIPLADE
+  - id: US-GFOM-001-01
+    as_a: Gestor Fomento
+    i_want: estadísticas de formalización de empresas por comuna
+    so_that: pueda dirigir programas de apoyo
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: gestor_fomento
+    unit: DIFOI
+  - id: US-GPROV-001-01
+    as_a: Gestor Provincial
+    i_want: acceso remoto a todos los sistemas GORE
+    so_that: pueda atender consultas en delegaciones provinciales
+    domain: D-TERR
+    target_domain: D-TERR
+    priority: P1
+    role_key: gestor_provincial
+    unit: Territorio
+  - id: US-FLOTA-001-01
+    as_a: Encargado Flota
+    i_want: control de bitácoras y mantenciones de vehículos
+    so_that: la flota esté disponible y segura
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: encargado_flota
+    unit: Administración / Servicios
+  - id: US-SERV-001-01
+    as_a: Encargado Servicios
+    i_want: gestión de contratos de aseo y vigilancia
+    so_that: el edificio opere sin interrupciones
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: encargado_servicios
+    unit: Administración
+  - id: US-BOD-001-01
+    as_a: Bodeguero
+    i_want: ingreso y salida de insumos mediante código de barras
+    so_that: el stock físico cuadre con el sistema
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: bodeguero
+    unit: Administración
+  - id: US-FINOPS-001-01
+    as_a: FinOps Manager
+    i_want: reportes de consumo de créditos cloud por proyecto
+    so_that: pueda imputar costos a cada división
+    domain: D-OPS
+    target_domain: D-OPS
+    priority: P2
+    role_key: finops_manager
+    unit: Informática (TDE)
+  - id: US-GLOSA7-001-01
+    as_a: Formulador Glosa 7
+    i_want: formatos estandarizados para proyectos de cámaras y luminarias
+    so_that: se agilice la admisibilidad
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: formulador_glosa7
+    unit: Entidad Ejecutora
+  - id: US-USR-001-01
+    as_a: Ciudadano
+    i_want: ingresar con Clave Única
+    so_that: no tenga que recordar otra contraseña
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P0
+    role_key: usuario_externo
+    unit: Ciudadanía
+  - id: US-RGASTO-001-01
+    as_a: Referente Gasto
+    i_want: validación automática de clasificadores presupuestarios
+    so_that: no se imputen gastos a cuentas erróneas
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: referente_gasto
+    unit: Finanzas (DAF)
+  - id: US-RTEC-001-01
+    as_a: Referente Técnico
+    i_want: aprobar hitos técnicos en sistema
+    so_that: se autorice el pago administrativo
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: referente_tecnico
+    unit: Divisiones Técnicas
+  - id: US-RTD-001-01
+    as_a: Referente Digital
+    i_want: reportar el porcentaje de trámites digitalizados
+    so_that: el servicio cumpla la ley de transformación digital
+    domain: D-DEV
+    target_domain: D-DEV
+    priority: P1
+    role_key: referente_td_pmg
+    unit: Informática / Calidad
+  - id: US-TCORP-001-01
+    as_a: Trabajador Corporación
+    i_want: permiso de acceso limitado a la intranet
+    so_that: pueda coordinarme con las unidades del GORE
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P2
+    role_key: trabajador_corporacion
+    unit: Corporación Desarrollo
+  - id: US-AUCR-001-01
+    as_a: Analista UCR
+    i_want: visores de documentos digitalizados con OCR
+    so_that: pueda buscar montos y fechas rápidamente
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: unidad_control_rendiciones
+    unit: DAF
+  - id: US-UF-001-01
+    as_a: Unidad Formuladora
+    i_want: obtener el código BIP de mis iniciativas
+    so_that: pueda solicitar financiamiento FNDR
+    domain: D-PLAN
+    target_domain: D-PLAN
+    priority: P0
+    role_key: unidad_formuladora
+    unit: Municipios / Servicios
+  - id: US-PCSEU-001-01
+    as_a: Presidente CSEU
+    i_want: actas de selección automáticas con puntajes consolidados
+    so_that: se proponga la terna a la autoridad
+    domain: D-BACK
+    target_domain: D-BACK
+    priority: P1
+    role_key: presidente_cseu
+    unit: Gestión Personas
+  - id: US-PEVER-001-01
+    as_a: Presidente Estado Verde
+    i_want: certificar al GORE en niveles superiores de Estado Verde
+    so_that: se reconozca el compromiso ambiental institucional
+    domain: D-GOB
+    target_domain: D-GOB
+    priority: P2
+    role_key: presidente_estado_verde
+    unit: Administración

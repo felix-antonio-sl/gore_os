@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_everde_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EVERDE-001-01
+story_key: us_everde_001_01
+role_id: USR-CAL-VERDE-MEMB
+as_a: null
+i_want: registro de consumos de papel y energía
+so_that: pueda reportar al ministerio de medio ambiente
+domain: D-BACK
+priority: P3
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-CAL-VERDE-MEMB
+  contribuye_a: CAP-BACK-TICKETS-001

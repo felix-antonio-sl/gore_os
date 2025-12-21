@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_ejec_convenio:1.0.0
+  type: Entity
+  source: domains/d-ejec/glossary
+id: ENT-EJEC-CONVENIO
+name: Convenio
+entity_key: convenio
+domain: D-EJEC
+category: Reference
+description: Acto administrativo formal que establece obligaciones entre GORE y un
+  ejecutor. SADV (Fuente Única de Verdad) en D-NORM
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

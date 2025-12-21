@@ -1,0 +1,34 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_terr:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-TERR
+name: Dominio D-TERR
+aggregation:
+  modules:
+  - urn:goreos:atom:module:d_terr_anal_tica_territorial:1.0.0
+  - urn:goreos:atom:module:d_terr_asistencia_urban_stica_dom:1.0.0
+  - urn:goreos:atom:module:d_terr_gesti_n_y_gobernanza_territorial:1.0.0
+  - urn:goreos:atom:module:d_terr_ide_regional:1.0.0
+  - urn:goreos:atom:module:d_terr_inteligencia_estrat_gica_visualizaci_n:1.0.0
+  processes:
+  - urn:goreos:atom:process:d_terr_p1:1.0.0
+  - urn:goreos:atom:process:d_terr_p2:1.0.0
+  - urn:goreos:atom:process:d_terr_p3:1.0.0
+  - urn:goreos:atom:process:d_terr_p4:1.0.0
+  - urn:goreos:atom:process:d_terr_p5:1.0.0
+  - urn:goreos:atom:process:d_terr_p6:1.0.0
+  entities:
+  - urn:goreos:atom:entity:d_terr_brechaerd:1.0.0
+  - urn:goreos:atom:entity:d_terr_capageoespacial:1.0.0
+  - urn:goreos:atom:entity:d_terr_indicadorterritorial:1.0.0
+  - urn:goreos:atom:entity:d_terr_metadato:1.0.0
+  - urn:goreos:atom:entity:d_terr_vistaterritorialipr:1.0.0
+  - urn:goreos:atom:entity:d_terr_zonariesgo:1.0.0
+  capabilities:
+  - urn:goreos:atom:capability:cap_terr_map_001:1.0.0
+stats:
+  modules_count: 5
+  processes_count: 6
+  entities_count: 6
+  capabilities_count: 1

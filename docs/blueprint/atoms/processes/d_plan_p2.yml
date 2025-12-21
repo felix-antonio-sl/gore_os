@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_plan_p2:1.0.0
+  type: Process
+  source: domains/d-plan
+id: PROC-PLAN-P2
+code: P2
+name: Ciclo ARI/PROPIR
+domain: D-PLAN
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_evol_salud_organizacional_h_org:1.0.0
+  type: Module
+  source: domains/d-evol
+id: MOD-EVOL-SALUD_ORGANIZACIONAL
+name: Salud Organizacional (H_org)
+domain: D-EVOL
+number: 1
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

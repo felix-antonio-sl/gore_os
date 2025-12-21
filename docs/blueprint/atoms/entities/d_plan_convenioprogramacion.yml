@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_convenioprogramacion:1.0.0
+  type: Entity
+  source: domains/d-plan/entity_data
+id: ENT-PLAN-CONVENIOPROGRAMACION
+name: ConvenioProgramacion
+entity_key: convenioprogramacion
+domain: D-PLAN
+category: Reference
+description: id, ministerio, monto_total, vigencia_inicio, vigencia_fin, estado
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

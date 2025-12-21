@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEG-PREV-010
+story_key: us_seg_prev_010
+role_id: USR-SEG-PREV-ANAL
+as_a: null
+i_want: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
+so_that: Planifico patrullajes preventivos focalizados
+domain: D-SEG
+priority: P2
+capability_bundle_id: CAP-SEG-001
+morphisms:
+  protagonizado_por: USR-SEG-PREV-ANAL
+  contribuye_a: CAP-SEG-001

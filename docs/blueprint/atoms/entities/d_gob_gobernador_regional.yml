@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_gob_gobernador_regional:1.0.0
+  type: Entity
+  source: domains/d-gob/glossary
+id: ENT-GOB-GOBERNADOR_REGIONAL
+name: Gobernador Regional
+entity_key: gobernador_regional
+domain: D-GOB
+category: Reference
+description: GR
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

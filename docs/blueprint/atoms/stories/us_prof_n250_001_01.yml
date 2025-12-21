@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_prof_n250_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-PROF-N250-001-01
+story_key: us_prof_n250_001_01
+role_id: USR-GAB-250-PROF
+as_a: null
+i_want: acceder al detalle de compromisos de mi área
+so_that: pueda reportar avances
+domain: D-PLAN
+priority: P0
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-GAB-250-PROF
+  contribuye_a: CAP-PLAN-001

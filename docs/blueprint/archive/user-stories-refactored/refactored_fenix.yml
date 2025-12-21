@@ -1,0 +1,235 @@
+atomic_stories:
+  - id: US-FNX-ACT-001
+    as_a: Jefe FENIX
+    i_want: Recibir alertas automáticas cuando el índice H_gore baje de 60
+    so_that: Puedo iniciar la evaluación de intervención proactiva
+    acceptance_criteria:
+      - "Notificación push/email"
+      - "Detalle de métricas degradadas"
+      - "Enlace a dashboard de diagnóstico"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: jefe_fenix
+    origin: legacy
+  - id: US-FNX-ACT-002
+    as_a: Jefe de División
+    i_want: Solicitar formalmente una intervención FENIX para un proceso crítico estancado
+    so_that: Desbloqueo situaciones que exceden mi capacidad operativa
+    acceptance_criteria:
+      - "Formulario de solicitud (Causa, Impacto)"
+      - "Flujo de aprobación por Gobernador (si aplica)"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-FNX-ACT-003
+    as_a: Gobernador Regional
+    i_want: Declarar estado de "Emergencia Administrativa" en el sistema
+    so_that: Activo reglas de excepción para agilizar procesos críticos
+    acceptance_criteria:
+      - "Switch de estado "Rainy Day""
+      - "Bitácora de activación obligatoria"
+      - "Notificación a CGR/DIPRES automática"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: gobernador_regional
+    origin: legacy
+  - id: US-FNX-GES-001
+    as_a: Jefe FENIX
+    i_want: Crear un expediente digital de intervención (ID, Objetivo, Equipo)
+    so_that: Centralizo la gestión y documentación del caso
+    acceptance_criteria:
+      - "Asignación de código único"
+      - "Selección de dominios afectados"
+      - "Definición de equipo base"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: jefe_fenix
+    origin: legacy
+  - id: US-FNX-GES-002
+    as_a: Interventor
+    i_want: Registrar hitos, decisiones y acciones en una bitácora inmutable
+    so_that: Mantengo la trazabilidad y rendición de cuentas
+    acceptance_criteria:
+      - "Registro con timestamp"
+      - "Tipificación de entradas (Acción, Decisión, Bloqueo)"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: interventor
+    origin: legacy
+  - id: US-FNX-GES-003
+    as_a: Gobernador
+    i_want: Visualizar el estado de todas las intervenciones activas y su progreso
+    so_that: Monitoreo la salud institucional crítica
+    acceptance_criteria:
+      - "Vista kanban o lista"
+      - "Semáforos de avance"
+      - "Filtros por nivel de criticidad"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: gobernador
+    origin: legacy
+  - id: US-FNX-GES-004
+    as_a: Jefe FENIX
+    i_want: Designar funcionarios de distintas divisiones a una Fuerza de Tarea temporal
+    so_that: Concentro capacidades multidisciplinarias para resolver el nudo
+    acceptance_criteria:
+      - "Selección de usuarios (cross-division)"
+      - "Notificación de asignación"
+      - "Roles temporales FENIX asignados"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: jefe_fenix
+    origin: legacy
+  - id: US-FNX-OPE-001
+    as_a: Interventor
+    i_want: Recibir permisos temporales sobre los objetos intervenidos (IPR, Convenios)
+    so_that: Puedo ejecutar acciones correctivas directamente en el sistema
+    acceptance_criteria:
+      - "Delegación de roles auditada"
+      - "Expiración automática de permisos al cerrar caso"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: interventor
+    origin: legacy
+  - id: US-FNX-OPE-002
+    as_a: Interventor Fiscal
+    i_want: Ejecutar un "Bypass Administrativo" en un flujo BPMN detenido
+    so_that: Fuerzo el avance de una etapa trabada por ausencia o error
+    acceptance_criteria:
+      - "Acción de forzar avance"
+      - "Justificación obligatoria (Campo texto + Adjunto)"
+      - "Alerta inmediata a Auditoría Interna"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: interventor_fiscal
+    origin: legacy
+  - id: US-FNX-OPE-003
+    as_a: Interventor Financiero
+    i_want: Habilitar línea de ejecución directa para corrección de errores
+    so_that: Soluciono problemas de imputación masiva
+    acceptance_criteria:
+      - "Lote de corrección financiera"
+      - "Validación pre/post transacción"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: interventor_financiero
+    origin: legacy
+  - id: US-FNX-CIE-001
+    as_a: Jefe FENIX
+    i_want: Generar automáticamente un informe de cierre con bitácora y resultados
+    so_that: Formalizo el fin de la intervención y documento aprendizajes
+    acceptance_criteria:
+      - "Plantilla estándar"
+      - "Inclusión automática de métricas antes/después"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: jefe_fenix
+    origin: legacy
+  - id: US-FNX-CIE-002
+    as_a: Interventor
+    i_want: Registrar hallazgos y recomendaciones estructuradas (People, Process, Tech)
+    so_that: Alimento la base de conocimiento institucional (D-GESTION)
+    acceptance_criteria:
+      - "Categorización del hallazgo"
+      - "Vinculación a activos de conocimiento"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: interventor
+    origin: legacy
+  - id: US-FNX-CIE-003
+    as_a: Jefe FENIX
+    i_want: Evaluar el desempeño de los miembros de la Fuerza de Tarea
+    so_that: Reconozco el mérito y mejoro futuras asignaciones
+    acceptance_criteria:
+      - "Formulario de evaluación 360"
+      - "Registro en hoja de vida (integración D-BACK)"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P2
+    role_key: jefe_fenix
+    origin: legacy
+  - id: US-FNX-ANA-001
+    as_a: Analista D-GESTION
+    i_want: Analizar patrones de intervenciones pasadas
+    so_that: Identifico debilidades estructurales sistémicas
+    acceptance_criteria:
+      - "Reporte de frecuencia por dominio"
+      - "Análisis de causas raíz comunes"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P2
+    role_key: analista_d-gestion
+    origin: legacy
+  - id: US-FNX-ANA-002
+    as_a: Jefe FENIX
+    i_want: Simular el impacto proyectado de una intervención en el H_gore
+    so_that: Priorizo recursos donde más aportan
+    acceptance_criteria:
+      - "Modelo predictivo básico"
+      - "Escenarios what-if"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P2
+    role_key: jefe_fenix
+    origin: legacy
+  - id: US-FNX-ANA-003
+    as_a: Auditor Interno
+    i_want: Visualizar zonas de la organización con mayor propensión a fallos (basado en historial FENIX)
+    so_that: Focalizo el plan de auditoría anual
+    acceptance_criteria:
+      - "Mapa de calor por unidad/proceso"
+      - "Drill-down a incidentes históricos"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: auditor_interno
+    origin: legacy
+  - id: US-FNX-INT-001
+    as_a: Sistema
+    i_want: Consumir métricas de D-EVOL en tiempo real
+    so_that: Detecto condiciones de activación
+    acceptance_criteria:
+      - "API webhook"
+      - "Latencia baja"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: sistema
+    origin: legacy
+  - id: US-FNX-INT-002
+    as_a: Sistema
+    i_want: Recibir alertas críticas de seguridad pública (D-SEG)
+    so_that: Activo protocolos de crisis nivel I
+    acceptance_criteria:
+      - "Canal prioritario"
+      - "Notificación inmediata a Gobernador"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P1
+    role_key: sistema
+    origin: legacy
+  - id: US-FNX-INT-003
+    as_a: Sistema
+    i_want: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
+    so_that: Evito que el problema crezca mientras se interviene
+    acceptance_criteria:
+      - "Regla de "Circuit Breaker" activable"
+      - "Mensaje de error personalizado al usuario"
+    domain: FENIX
+    target_domain: FENIX
+    priority: P0
+    role_key: sistema
+    origin: legacy

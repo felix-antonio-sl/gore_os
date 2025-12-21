@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_hitocp:1.0.0
+  type: Entity
+  source: domains/d-plan/entity_data
+id: ENT-PLAN-HITOCP
+name: HitoCP
+entity_key: hitocp
+domain: D-PLAN
+category: Reference
+description: id, convenio_id, descripcion, fecha_comprometida, monto, estado
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_gob_p5:1.0.0
+  type: Process
+  source: domains/d-gob
+id: PROC-GOB-P5
+code: P5
+name: Registro y Vinculación de Actores *(Nuevo)*
+domain: D-GOB
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

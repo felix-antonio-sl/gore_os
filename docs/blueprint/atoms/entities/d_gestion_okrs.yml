@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_gestion_okrs:1.0.0
+  type: Entity
+  source: domains/d-gestion/glossary
+id: ENT-GESTION-OKRS
+name: OKRs
+entity_key: okrs
+domain: D-GESTION
+category: Reference
+description: Objectives & Key Results. Metodología de gestión por objetivos implementada
+  vía POA
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

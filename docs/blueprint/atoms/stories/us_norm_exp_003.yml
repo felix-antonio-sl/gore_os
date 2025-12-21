@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_norm_exp_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-NORM-EXP-003
+story_key: us_norm_exp_003
+role_id: USR-DAF-TIC-ADMIN
+as_a: null
+i_want: Registrar trazabilidad de acciones sobre expediente (DS10)
+so_that: Garantizo auditoría
+domain: D-NORM
+priority: P1
+capability_bundle_id: CAP-DOCUMENTOS-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-ADMIN
+  contribuye_a: CAP-DOCUMENTOS-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_tde_auth_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TDE-AUTH-003
+story_key: us_tde_auth_003
+role_id: USR-NEW-DESARROLLADO
+as_a: null
+i_want: Implementar cierre de sesión ClaveÚnica con URIs registradas
+so_that: Gestiono sesiones correctamente
+domain: D-TDE
+priority: P1
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-NEW-DESARROLLADO
+  contribuye_a: CAP-FIRMA-001

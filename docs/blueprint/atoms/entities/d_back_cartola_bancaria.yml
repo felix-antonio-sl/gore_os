@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_back_cartola_bancaria:1.0.0
+  type: Entity
+  source: domains/d-back/glossary
+id: ENT-BACK-CARTOLA_BANCARIA
+name: Cartola Bancaria
+entity_key: cartola_bancaria
+domain: D-BACK
+category: Reference
+description: Extracto de movimientos de cuenta corriente emitido por el banco
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

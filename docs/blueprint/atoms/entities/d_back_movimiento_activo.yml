@@ -1,0 +1,97 @@
+# Entidad: MovimientoActivo (Movimiento de Activo Fijo)
+# Domain: D-BACK
+# Subdomain: activo_fijo
+# Generated: 2025-12-21 (Phase 20.1 Deep Modeling)
+
+id: ENT-BACK-MOVIMIENTO_ACTIVO
+urn: "urn:goreos:entity:d-back:movimiento-activo:1.0.0"
+name: Movimiento de Activo
+domain: D-BACK
+subdomain: activo_fijo
+category: Transaction
+canonical_source:
+  - "urn:knowledge:gorenuble:gn:manual-activo-fijo:1.0.0#GN-MANUAL-ACTIVO-FIJO-S04"
+
+description: |
+  Registro de traslados, préstamos, comodatos y mantenciones mayores
+  que afectan la ubicación, custodia o valor de un activo fijo.
+
+attributes:
+  - name: id_movimiento
+    type: String
+    key: true
+
+  - name: activo_id
+    type: String
+    fk: ENT-BACK-ACTIVO_FIJO
+    nullable: false
+
+  - name: tipo_movimiento
+    type: Enum[Traslado, PrestamoInterno, ComodatoExterno, MantencionMayor, Descomponentizacion]
+    nullable: false
+
+  - name: fecha_movimiento
+    type: Date
+    nullable: false
+
+  # Traslado/Préstamo
+  - name: ubicacion_origen
+    type: String
+    nullable: true
+
+  - name: ubicacion_destino
+    type: String
+    nullable: true
+
+  - name: responsable_origen_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: true
+
+  - name: responsable_destino_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: true
+
+  # Comodato
+  - name: entidad_beneficiaria
+    type: String
+    nullable: true
+    description: Municipalidad, ONG, etc.
+
+  - name: resolucion_comodato
+    type: String
+    nullable: true
+
+  - name: fecha_devolucion_programada
+    type: Date
+    nullable: true
+
+  - name: fecha_devolucion_real
+    type: Date
+    nullable: true
+
+  # Mantención Mayor (capitalizable)
+  - name: monto_mantencion
+    type: Decimal
+    nullable: true
+
+  - name: es_capitalizable
+    type: Boolean
+    default: false
+    description: Si cumple criterios NICSP, se suma al valor del activo
+
+  # Documentación
+  - name: acta_entrega_recepcion
+    type: String
+    nullable: true
+    description: URL o ID del documento de acta
+
+  - name: observaciones
+    type: Text
+    nullable: true
+
+morphisms:
+  afecta: [ENT-BACK-ACTIVO_FIJO]
+  ejecutado_por: [ROL-ENC-ACTIVO-FIJO]
+  genera: [Asiento contable si capitalizable]

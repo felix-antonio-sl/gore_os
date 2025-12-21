@@ -1,0 +1,81 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_ejec_portal_001:1.0.0
+  type: Capability
+id: CAP-EJEC-PORTAL-001
+name: Portal de Postulación FNDR
+domain: D-EJEC
+type: DOMAIN_SPECIFIC
+description: Portal web para postulación en línea a fondos FNDR, FRIL, FRPD y otros
+  mecanismos regionales.
+value_proposition: Facilita el acceso de municipios y ejecutores a los fondos regionales,
+  digitalizando el ingreso.
+orko_mapping:
+  p1_capacity: Formulador Externo / Municipio
+  p2_flow: P1-Ingreso y Admisibilidad (D-FIN)
+  p3_information: Formularios según mecanismo, ARI
+  p4_limit: Bases de cada fondo, Ley 21.180
+  p5_purpose: Democratización del acceso a inversión regional
+stories:
+- urn:goreos:atom:story:us_aconv_001_01
+- urn:goreos:atom:story:us_aeval_001_01
+- urn:goreos:atom:story:us_alc_001_02
+- urn:goreos:atom:story:us_amod_001_01
+- urn:goreos:atom:story:us_anal_inv_001_01
+- urn:goreos:atom:story:us_anal_inv_001_02
+- urn:goreos:atom:story:us_arq_001_01
+- urn:goreos:atom:story:us_as_001_01
+- urn:goreos:atom:story:us_c33_001_01
+- urn:goreos:atom:story:us_cc_001_01
+- urn:goreos:atom:story:us_com_rec_001_01
+- urn:goreos:atom:story:us_com_sect_001_01
+- urn:goreos:atom:story:us_compert_001_01
+- urn:goreos:atom:story:us_compert_001_02
+- urn:goreos:atom:story:us_diplade_002_01
+- urn:goreos:atom:story:us_dir_soc_001_01
+- urn:goreos:atom:story:us_dit_002_01
+- urn:goreos:atom:story:us_edu_001_01
+- urn:goreos:atom:story:us_ejec_eo_002
+- urn:goreos:atom:story:us_ejec_eo_003
+- urn:goreos:atom:story:us_ejec_eo_005
+- urn:goreos:atom:story:us_ejec_eo_006
+- urn:goreos:atom:story:us_ejec_eo_007
+- urn:goreos:atom:story:us_ejec_jd_002
+- urn:goreos:atom:story:us_ejec_jd_005
+- urn:goreos:atom:story:us_ejec_jd_006
+- urn:goreos:atom:story:us_ejec_muni_001
+- urn:goreos:atom:story:us_ejec_muni_002
+- urn:goreos:atom:story:us_ejec_muni_003
+- urn:goreos:atom:story:us_ejec_muni_004
+- urn:goreos:atom:story:us_ejec_muni_005
+- urn:goreos:atom:story:us_ejec_per_001
+- urn:goreos:atom:story:us_ejec_sec_001
+- urn:goreos:atom:story:us_ejec_sup_003
+- urn:goreos:atom:story:us_ejec_sup_005
+- urn:goreos:atom:story:us_emp_001_01
+- urn:goreos:atom:story:us_epp_001_01
+- urn:goreos:atom:story:us_eval_001_01
+- urn:goreos:atom:story:us_eval_001_02
+- urn:goreos:atom:story:us_f8_001_01
+- urn:goreos:atom:story:us_f8_001_02
+- urn:goreos:atom:story:us_fndr8_001_01
+- urn:goreos:atom:story:us_frpd_001_01
+- urn:goreos:atom:story:us_gfom_001_01
+- urn:goreos:atom:story:us_if_001_02
+- urn:goreos:atom:story:us_ito_001_01
+- urn:goreos:atom:story:us_ito_001_02
+- urn:goreos:atom:story:us_ito_002_01
+- urn:goreos:atom:story:us_itom_001_01
+- urn:goreos:atom:story:us_itp_001_01
+- urn:goreos:atom:story:us_ong_001_01
+- urn:goreos:atom:story:us_ong_002_01
+- urn:goreos:atom:story:us_pat_did_001_01
+- urn:goreos:atom:story:us_pat_dif_001_01
+- urn:goreos:atom:story:us_pes_001_01
+- urn:goreos:atom:story:us_ppr_001_01
+- urn:goreos:atom:story:us_preinv_001_01
+- urn:goreos:atom:story:us_prof_rez_001_01
+- urn:goreos:atom:story:us_rtec_001_01
+- urn:goreos:atom:story:us_ser_mop_001_01
+- urn:goreos:atom:story:us_serc_001_01
+- urn:goreos:atom:story:us_soc_001_01
+ofrecida_por: null

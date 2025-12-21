@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ppto_012:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-PPTO-012
+story_key: us_fin_ppto_012
+role_id: USR-DAF-PROF
+as_a: null
+i_want: Gestionar cierre deuda flotante por programa/subtítulo
+so_that: Cierro correctamente el ejercicio
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-PROF
+  contribuye_a: CAP-FIN-DASH-001

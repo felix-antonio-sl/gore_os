@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_terr_gesti_n_y_gobernanza_territorial:1.0.0
+  type: Module
+  source: domains/d-terr
+id: MOD-TERR-GESTI_N_Y_GOBERNANZA
+name: Gestión y Gobernanza Territorial
+domain: D-TERR
+number: 4
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

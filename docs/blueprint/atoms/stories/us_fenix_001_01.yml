@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fenix_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FENIX-001-01
+story_key: us_fenix_001_01
+role_id: USR-CAL-FNX-J
+as_a: null
+i_want: acceso privilegiado temporal a sistemas de unidades intervenidas
+so_that: pueda auditar y reorganizar procesos rápidamente
+domain: D-GOB
+priority: P0
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-CAL-FNX-J
+  contribuye_a: CAP-GOB-001

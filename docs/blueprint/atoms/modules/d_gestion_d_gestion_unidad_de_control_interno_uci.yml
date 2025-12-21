@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_gestion_unidad_de_control_interno_uci:1.0.0
+  type: Module
+  source: domains/d-gestion
+id: MOD-GESTION-UNIDAD_DE_CONTROL_IN
+name: Unidad de Control Interno (UCI)
+domain: D-GESTION
+number: 4
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

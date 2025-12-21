@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_norm_expediente_electr_nico:1.0.0
+  type: Module
+  source: domains/d-norm
+id: MOD-NORM-EXPEDIENTE_ELECTR_NI
+name: Expediente Electrónico
+domain: D-NORM
+number: 3
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

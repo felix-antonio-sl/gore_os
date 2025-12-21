@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:role:encargado_cti:1.0.0
+  type: Role
+  source: organization
+id: USR-CTCI-ENC
+role_key: encargado_cti
+title: Encargado CTI
+description: Gestión operativa de proyectos de Ciencia, Tecnología e Innovación.
+type: Human
+unit: Comité Ciencia (CTCI)
+unit_type: Gobernanza Estratégica
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []

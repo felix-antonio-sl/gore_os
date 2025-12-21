@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_seg_cies_010:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEG-CIES-010
+story_key: us_seg_cies_010
+role_id: USR-CIES-SUP
+as_a: null
+i_want: Activar protocolo de protección de puntos críticos ante disturbios
+so_that: Priorizo cámaras y recursos en zonas sensibles
+domain: D-SEG
+priority: P0
+capability_bundle_id: CAP-SEG-001
+morphisms:
+  protagonizado_por: USR-CIES-SUP
+  contribuye_a: CAP-SEG-001

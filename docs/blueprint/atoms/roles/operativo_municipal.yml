@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:operativo_municipal:1.0.0
+  type: Role
+  source: archetypes.municipal
+id: ARCH-MUN-OPERATIVO_MUNICIPAL
+role_key: operativo_municipal
+title: Operativo Municipal
+description: Roles operativos municipales. Ejecutan y fiscalizan proyectos.
+type: External
+archetype: null
+member_roles:
+- unidad_tecnica
+- ito_municipal
+- encargado_digital_muni
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []

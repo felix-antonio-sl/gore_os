@@ -685,6 +685,77 @@ flowchart TD
 
 ---
 
+## Capability Bundles (SSOT: historias_usuarios_v2.yml)
+
+### CAP-NORM-CONTROL-001: Control de Legalidad (P0)
+
+> **Como** Jefe Unidad de Control  
+> **Quiero** una bandeja de documentos pendientes de visación con checklist normativo  
+> **Para** verificar el cumplimiento de requisitos legales
+
+| Atributo       | Valor                                                                   |
+| -------------- | ----------------------------------------------------------------------- |
+| Beneficiarios  | 2 roles (jefe_control, jefe_finanzas)                                   |
+| Criterios      | Lista documentos por visar, Checklist normativo, Registro observaciones |
+| Atomic Stories | 36 historias D-NORM vinculadas                                          |
+
+---
+
+## Roles Asociados
+
+Ver sección [Roles por Módulo](#roles-por-módulo) y [inventario_roles_v8.yml](../inventario_roles_v8.yml)
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-NORM`  
+> Total: 37 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| CAP-NORM-CONTROL-001 | Jefe Unidad de Contr | una bandeja de documentos pendientes de visación c... | P0 |
+| US-ABOG-001-01 | abogado_dnorm | plantillas de actos administrativos con campos pre... | P0 |
+| US-ABOG-001-01 | abogado_general | acceso a base de normativa y jurisprudencia... | P1 |
+| US-ABOG-001-02 | abogado_dnorm | consultar actos similares anteriores... | P1 |
+| US-ABOG-CONV-001-01 | abogado_convenios | plantillas de convenios con cláusulas estándar... | P1 |
+| US-ABOG-DISC-001-01 | abogado_disciplinari | un módulo confidencial de gestión de sumarios... | P0 |
+| US-ABOG-DIV-001-01 | abogado_asesor_divis | acceso a los expedientes técnicos de la división... | P1 |
+| US-ABOG-INF-001-01 | abogado_informante | un repositorio de jurisprudencia administrativa re... | P1 |
+| US-ABOG-JUD-001-01 | abogado_judiciales | un calendario procesal con alertas de plazos fatal... | P0 |
+| US-ABOG-LIC-001-01 | abogado_licitaciones | plantillas de bases con cláusulas actualizadas... | P1 |
+| US-ABOG-REV-001-01 | abogado_revisor | un workflow de revisión de resoluciones con contro... | P0 |
+| US-AP-CORE-001-01 | profesional_apoyo_co | acceder a antecedentes de materias a tratar... | P1 |
+| US-APT-001-01 | apoyo_tecnico_transp | herramientas de validación de formatos de archivos... | P1 |
+| US-ARQP-001-01 | arquitecto_revisor_p | checklist de normativa OGUC integrado... | P1 |
+| US-AUD-001-01 | auditor_interno | un módulo de planificación y ejecución de auditorí... | P0 |
+| US-AUD-001-02 | auditor_interno | generar informes de auditoría con plantilla estánd... | P0 |
+| US-AUD-CTRL-001-01 | auditor_control | acceder a registros de transacciones y aprobacione... | P0 |
+| US-AUD-EXT-001-01 | auditor_externo | acceso controlado a expedientes y registros financ... | P0 |
+| US-CAL-001-02 | encargado_calidad | generar reportes de cumplimiento para DIPRES... | P0 |
+| US-CDE-001-01 | cde | antecedentes completos de litigios donde el GORE e... | P1 |
+| US-COL-001-01 | colegio_profesional | registro público de consultores sancionados... | P2 |
+| US-CORE-001-01 | consejero_regional | recibir la tabla de sesión y documentos de respald... | P0 |
+| US-CORTE-001-01 | corte_apelaciones_nu | la remisión inmediata de informes sobre actos impu... | P1 |
+| US-FISC-SUM-001-01 | fiscal_sumariante | herramientas para tomar declaraciones y registrar ... | P1 |
+| US-INTFIS-001-01 | interventor_fiscal | expedientes de sumarios administrativos digitaliza... | P1 |
+| US-JAUD-001-01 | jefe_auditoria | un módulo de planificación de auditoría basado en ... | P0 |
+| US-JUEZ-001-01 | juez_cuentas | la remisión de expedientes originales digitalizado... | P2 |
+| US-LOBBY-001-01 | encargado_lobby | un módulo de registro de audiencias con publicació... | P0 |
+| US-NOT-001-01 | notario | verificar firmas electrónicas de documentos GORE... | P2 |
+| US-PRES-CORE-001-01 | presidente_core | una herramienta de gestión de sesiones con votació... | P0 |
+| US-SECCOM-001-01 | secretario_core_comi | acceso a materias asignadas a cada comisión... | P1 |
+| US-SECCORE-001-01 | secretario_ejecutivo | un sistema de gestión de sesiones con tabla, votac... | P0 |
+| US-SECCORE-001-02 | secretario_ejecutivo | notificar a consejeros las materias a tratar con a... | P0 |
+| US-SEREMI-001-02 | seremi | recibir notificaciones de sesiones del CORE donde ... | P2 |
+| US-SUJ-001-01 | sujeto_pasivo | un formulario de registro de audiencias simplifica... | P0 |
+| US-SUP-TRANS-001-01 | suplente_transparenc | acceso equivalente al Encargado en caso de ausenci... | P1 |
+| US-TC-001-01 | tribunal_constitucio | expedientes completos sobre controversias legales... | P2 |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*  
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*  
 *Auditoría aplicada: Fase 1-3 completadas (migración Admin, glosario, roles, indicadores)*
+

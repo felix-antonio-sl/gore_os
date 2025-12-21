@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-IPLAT-001-01
+story_key: us_iplat_001_01
+role_id: USR-OPS-ING
+as_a: null
+i_want: catálogo de servicios autogestionado (Base de datos, Cache)
+so_that: los desarrolladores no pierdan tiempo configurando infraestructura
+domain: D-OPS
+priority: P1
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: USR-OPS-ING
+  contribuye_a: CAP-OPS-001

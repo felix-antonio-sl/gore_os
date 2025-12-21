@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_back_p5:1.0.0
+  type: Process
+  source: domains/d-back
+id: PROC-BACK-P5
+code: P5
+name: Control de Asistencia (Absorción SIGPER)
+domain: D-BACK
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

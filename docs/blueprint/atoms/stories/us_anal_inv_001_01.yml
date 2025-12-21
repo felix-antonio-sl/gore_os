@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_anal_inv_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ANAL-INV-001-01
+story_key: us_anal_inv_001_01
+role_id: USR-DIPIR-ANAL-INV
+as_a: null
+i_want: un formulario digital de evaluación técnica con campos validados
+so_that: pueda registrar mi análisis de forma estructurada
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIPIR-ANAL-INV
+  contribuye_a: CAP-EJEC-PORTAL-001

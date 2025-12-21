@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_terr_p6:1.0.0
+  type: Process
+  source: domains/d-terr
+id: PROC-TERR-P6
+code: P6
+name: Observatorio Regional (Realidad Territorial)
+domain: D-TERR
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_back_compra_gil:1.0.0
+  type: Entity
+  source: domains/d-back/glossary
+id: ENT-BACK-COMPRA_GIL
+name: Compra Ágil
+entity_key: compra_gil
+domain: D-BACK
+category: Reference
+description: Modalidad de compra competitiva para montos menores o iguales a 100 UTM
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

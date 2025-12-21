@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_cgr_cont_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-CGR-CONT-001-01
+story_key: us_cgr_cont_001_01
+role_id: USR-EXT-CGR-CONT
+as_a: null
+i_want: acceso a reportes contables en formato estándar
+so_that: pueda realizar revisión remota
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-EXT-CGR-CONT
+  contribuye_a: CAP-FIN-DASH-001

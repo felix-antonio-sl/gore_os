@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_plan_p1:1.0.0
+  type: Process
+  source: domains/d-plan
+id: PROC-PLAN-P1
+code: P1
+name: Actualización ERD
+domain: D-PLAN
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

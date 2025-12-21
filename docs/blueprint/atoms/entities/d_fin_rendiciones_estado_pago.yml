@@ -1,0 +1,177 @@
+# Entidad: EstadoPago (Estado de Pago para Obras)
+# Domain: D-FIN
+# Subdomain: rendiciones
+# Generated: 2025-12-21 (Phase 20.1b P1)
+
+id: ENT-FIN-ESTADO_PAGO
+urn: "urn:goreos:entity:d-fin:estado-pago:1.0.0"
+name: Estado de Pago
+domain: D-FIN
+subdomain: rendiciones
+category: Transactional
+canonical_source:
+  - "sub_dfin_rendiciones.md"
+  - "sub_dfin_ipr_core.md#P5-Ejecucion"
+  - "Resolución 30/2015 CGR"
+
+description: |
+  Documento que certifica el avance de obra para liberar pagos parciales.
+  Funciona como rendición parcial para IDI (Patrón A).
+  Genera devengo presupuestario tras aprobación técnica.
+
+attributes:
+  - name: id_estado_pago
+    type: String
+    key: true
+
+  - name: numero_ep
+    type: Integer
+    nullable: false
+    description: Número secuencial del EP dentro del contrato
+
+  - name: ipr_id
+    type: String
+    fk: ENT-FIN-IPR
+
+  - name: contrato_id
+    type: String
+    fk: ENT-FIN-CONTRATO
+    nullable: true
+
+  - name: convenio_id
+    type: String
+    fk: ENT-FIN-CONVENIO
+    nullable: true
+
+  - name: fecha_presentacion
+    type: Date
+    nullable: false
+
+  - name: periodo_desde
+    type: Date
+    nullable: false
+
+  - name: periodo_hasta
+    type: Date
+    nullable: false
+
+  # Avance
+  - name: avance_fisico_periodo
+    type: Decimal
+    description: Porcentaje de avance en el período
+
+  - name: avance_fisico_acumulado
+    type: Decimal
+    description: Porcentaje acumulado total
+
+  - name: avance_financiero_periodo
+    type: Decimal
+
+  - name: avance_financiero_acumulado
+    type: Decimal
+
+  # Montos
+  - name: monto_contrato
+    type: Decimal
+    nullable: false
+
+  - name: monto_ep_bruto
+    type: Decimal
+    nullable: false
+
+  - name: reajustes
+    type: Decimal
+    default: 0
+
+  - name: deducciones
+    type: Decimal
+    default: 0
+    description: Multas, retenciones, garantías
+
+  - name: monto_ep_neto
+    type: Decimal
+    computed: true
+    formula: monto_ep_bruto + reajustes - deducciones
+
+  - name: monto_acumulado
+    type: Decimal
+
+  # Aprobaciones
+  - name: supervisor_tecnico_id
+    type: String
+    fk: ROL-SUPERVISOR-OBRA
+
+  - name: fecha_aprobacion_tecnica
+    type: Date
+    nullable: true
+
+  - name: ito_id
+    type: String
+    fk: ROL-ITO
+    nullable: true
+    description: Inspector Técnico de Obra
+
+  - name: fecha_certificacion_ito
+    type: Date
+    nullable: true
+
+  - name: administrador_contrato_id
+    type: String
+    fk: ROL-ADM-CONTRATO
+
+  - name: fecha_aprobacion_admin
+    type: Date
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Borrador, Presentado, EnRevisionTecnica, EnRevisionAdmin, Aprobado, Observado, Rechazado, Pagado]
+    default: Borrador
+
+  # Documentación
+  - name: libro_obra_referencia
+    type: String
+    nullable: true
+    description: Folio del Libro de Obra
+
+  - name: informe_avance_url
+    type: String
+    nullable: true
+
+  - name: fotografias_url
+    type: String
+    nullable: true
+
+  # Vinculación contable
+  - name: genera_devengado
+    type: Boolean
+    default: true
+
+  - name: devengado_id
+    type: String
+    fk: ENT-FIN-DEVENGO
+    nullable: true
+
+invariants:
+  - name: ep_secuencial
+    rule: "numero_ep = MAX(numero_ep WHERE contrato_id = this.contrato_id) + 1"
+
+  - name: avance_no_retrocede
+    rule: "avance_fisico_acumulado >= avance_anterior"
+
+  - name: triple_aprobacion
+    rule: |
+      IF estado = Aprobado THEN 
+        fecha_certificacion_ito NOT NULL AND
+        fecha_aprobacion_tecnica NOT NULL AND
+        fecha_aprobacion_admin NOT NULL
+
+morphisms:
+  parte_de: [ENT-FIN-CONTRATO, ENT-FIN-CONVENIO]
+  aprobado_por: [ROL-ITO, ROL-SUPERVISOR-OBRA, ROL-ADM-CONTRATO]
+  genera: [ENT-FIN-DEVENGO]
+  documenta: [ENT-FIN-IPR]
+
+related_processes:
+  - "P5-Ejecucion-IDI"
+  - "REND-P1-EP"

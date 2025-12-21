@@ -420,5 +420,28 @@ Frecuencia: A demanda
 
 ---
 
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-GOB`  
+> Total: 12 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| US-AMUCH-001-01 | amuch | canales de comunicación directa con el Gobernador... | P2 |
+| US-ANCI-001-01 | anci | compartir buenas prácticas legislativas regionales... | P2 |
+| US-CUT-001-01 | central_sindical | acceso a actas del Consejo de la Sociedad Civil... | P2 |
+| US-DIP-001-01 | diputado_nuble | consultar el estado de proyectos comunales específ... | P1 |
+| US-FEDMUNI-001-01 | federacion_municipio | denunciar sobrecargas laborales derivadas de conve... | P2 |
+| US-FENIX-001-01 | jefe_fenix | acceso privilegiado temporal a sistemas de unidade... | P0 |
+| US-JER-001-01 | jefe_control_jerarqu | trazabilidad completa de las asignaciones de tarea... | P1 |
+| US-PART-001-01 | encargado_participac | una plataforma de votación digital segura... | P1 |
+| US-PEVER-001-01 | presidente_estado_ve | certificar al GORE en niveles superiores de Estado... | P2 |
+| US-SEN-001-01 | senador_nuble | información detallada sobre la ejecución de grande... | P1 |
+| US-USR-001-01 | usuario_externo | ingresar con Clave Única... | P0 |
+| US-VINC-001-01 | encargado_vinculacio | un CRM de stakeholders regionales... | P2 |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*

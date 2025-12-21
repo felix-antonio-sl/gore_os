@@ -1,0 +1,386 @@
+mapped_roles:
+  fotógrafo:
+    target: fotografo
+    method: Fuzzy Match (Score > 0.85)
+  encargado_participación:
+    target: encargado_participacion
+    method: Fuzzy Match (Score > 0.85)
+  asesor_de_gabinete:
+    target: asesor_gabinete
+    method: Normalization Match
+  encargado_fondos_8%:
+    target: encargado_fondos_8
+    method: Fuzzy Match (Score > 0.85)
+  trabajador_corporación:
+    target: trabajador_corporacion
+    method: Fuzzy Match (Score > 0.85)
+  arquitecto_de_datos:
+    target: arquitecto_datos
+    method: Normalization Match
+  jefe_depto._tesorería:
+    target: jefe_depto_tesoreria
+    method: Fuzzy Match (Score > 0.85)
+  secretaria_de_división:
+    target: secretaria_division
+    method: Fuzzy Match (Score > 0.85)
+  gobernación_provincial:
+    target: gobernacion_provincial
+    method: Fuzzy Match (Score > 0.85)
+  encargado_vinculación:
+    target: encargado_vinculacion
+    method: Fuzzy Match (Score > 0.85)
+  jefe_depto_análisis:
+    target: jefe_depto_analisis
+    method: Fuzzy Match (Score > 0.85)
+  ingeniero_de_conocimiento:
+    target: ingeniero_conocimiento
+    method: Normalization Match
+  custodio_de_datos:
+    target: custodio_datos
+    method: Normalization Match
+  apoyo_técnico_transparencia:
+    target: apoyo_tecnico_transparencia
+    method: Fuzzy Match (Score > 0.85)
+  miembro_comité_de_pertinencia:
+    target: miembro_comite_pertinencia
+    method: Fuzzy Match (Score > 0.85)
+  gestor_de_personas:
+    target: gestor_personas
+    method: Normalization Match
+  arquitecto_revisor_proyectos:
+    target: arquitecto_revisor_proy
+    method: Fuzzy Match (Score > 0.85)
+  coordinador_sectorial:
+    target: coordinador_sectorial_dit
+    method: Fuzzy Match (Score > 0.85)
+  monitor_de_sistema:
+    target: monitor_sistema
+    method: Normalization Match
+  encargado_de_transparencia:
+    target: encargado_transparencia
+    method: Normalization Match
+  soporte_técnico:
+    target: soporte_tecnico
+    method: Fuzzy Match (Score > 0.85)
+  encargado_de_calidad:
+    target: encargado_calidad
+    method: Normalization Match
+  encargado_de_comunicaciones:
+    target: encargado_comunicaciones
+    method: Normalization Match
+  encargado_de_bodega:
+    target: encargado_bodega
+    method: Normalization Match
+  uoct_ñuble:
+    target: uoct_nuble
+    method: Fuzzy Match (Score > 0.85)
+  encargado_de_descentralización:
+    target: encargado_descentralizacion
+    method: Fuzzy Match (Score > 0.85)
+  referente_técnico_pmg:
+    target: referente_tecnico_pmg
+    method: Fuzzy Match (Score > 0.85)
+  referente_género:
+    target: referente_genero
+    method: Fuzzy Match (Score > 0.85)
+  desarrollador_ti:
+    target: desarrollador
+    method: Fuzzy Match (Score > 0.85)
+  ingeniero_de_seguridad:
+    target: ingeniero_seguridad
+    method: Normalization Match
+  jefe_de_gabinete:
+    target: jefe_gabinete
+    method: Normalization Match
+  oficial_de_partes:
+    target: oficial_partes
+    method: Normalization Match
+  presidente_del_core:
+    target: presidente_core
+    method: Normalization Match
+  jefe_fénix:
+    target: jefe_fenix
+    method: Fuzzy Match (Score > 0.85)
+  informático_municipal:
+    target: informatico_municipal
+    method: Fuzzy Match (Score > 0.85)
+  ministro_de_fe:
+    target: ministro_fe
+    method: Normalization Match
+  encargado_de_control_de_gestión:
+    target: encargado_control_gestion
+    method: Fuzzy Match (Score > 0.85)
+  abogado_disciplinario:
+    target: abogado_disciplinarios
+    method: Fuzzy Match (Score > 0.85)
+  encargado_de_rendiciones:
+    target: encargado_rendiciones
+    method: Normalization Match
+  director_corporación:
+    target: director_corporacion
+    method: Fuzzy Match (Score > 0.85)
+  arquitecto_categórico:
+    target: arquitecto_categorico
+    method: Fuzzy Match (Score > 0.85)
+  formulador_glosa_7:
+    target: formulador_glosa7
+    method: Normalization Match
+  abogado_judicial:
+    target: abogado_judiciales
+    method: Fuzzy Match (Score > 0.85)
+  prevencionista_de_riesgos:
+    target: prevencionista_riesgos
+    method: Normalization Match
+  mesa_de_ayuda:
+    target: mesa_ayuda
+    method: Normalization Match
+  referente_técnico:
+    target: referente_tecnico
+    method: Fuzzy Match (Score > 0.85)
+  custodio_de_evidencia:
+    target: custodio_evidencia
+    method: Normalization Match
+  revisor_glosa_7:
+    target: revisor_glosa7
+    method: Normalization Match
+  jefe_d-seg:
+    target: jefe_seg
+    method: Fuzzy Match (Score > 0.85)
+  ingeniero_de_plataforma:
+    target: ingeniero_plataforma
+    method: Normalization Match
+  encargado_de_remuneraciones:
+    target: encargado_remuneraciones
+    method: Normalization Match
+  jefe_inversiones:
+    target: jefe_inversion
+    method: Fuzzy Match (Score > 0.85)
+  juez_de_cuentas:
+    target: juez_cuentas
+    method: Normalization Match
+  encargado_comité_paritario:
+    target: encargado_comite_paritario
+    method: Fuzzy Match (Score > 0.85)
+  abogado_asesor_de_división:
+    target: abogado_asesor_division
+    method: Fuzzy Match (Score > 0.85)
+  jefe_depto._contabilidad:
+    target: jefe_depto_contabilidad
+    method: Fuzzy Match (Score > 0.85)
+  director_corfo:
+    target: director_conaf
+    method: Fuzzy Match (Score > 0.85)
+  jefe_programación:
+    target: jefe_programacion
+    method: Fuzzy Match (Score > 0.85)
+  encargado_prevención:
+    target: encargado_prevencion
+    method: Fuzzy Match (Score > 0.85)
+  encargado_capacitación_digital:
+    target: encargado_capacitacion_digital
+    method: Fuzzy Match (Score > 0.85)
+  miembro_subcomité_ia:
+    target: miembro_subcomite_ia
+    method: Fuzzy Match (Score > 0.85)
+  comprador_público:
+    target: comprador_publico
+    method: Fuzzy Match (Score > 0.85)
+  operador_de_sistema:
+    target: operador_sistema
+    method: Normalization Match
+  encargado_de_abastecimiento:
+    target: encargado_abastecimiento
+    method: Normalization Match
+  encargado_de_archivo:
+    target: encargado_archivo
+    method: Normalization Match
+  comité_frpd:
+    target: comite_frpd
+    method: Fuzzy Match (Score > 0.85)
+  supervisor_de_obras:
+    target: supervisor_obras
+    method: Normalization Match
+  director_indap:
+    target: director_ind
+    method: Fuzzy Match (Score > 0.85)
+  agencia_de_datos:
+    target: agencia_datos
+    method: Normalization Match
+  auditor_de_control:
+    target: auditor_control
+    method: Normalization Match
+  arquitecto_de_sistemas:
+    target: arquitecto_sistemas
+    method: Normalization Match
+  encargado_capacitación:
+    target: encargado_capacitacion
+    method: Fuzzy Match (Score > 0.85)
+unmapped_roles:
+- administrador_de_plataforma
+- encargado_rezago
+- encargado_ley_del_lobby
+- profesional_rezago
+- comisión_evaluadora
+- analista_presupuestario
+- cplt_(externo)
+- gabinete
+- secretario_comité
+- coordinador_transformación_digital
+- analista_prevención
+- representante_amuch
+- analista_c33
+- tech_lead
+- tesorero
+- analista_de_seguimiento
+- analista_ambiental
+- analista_patrocinante_didesoh
+- analista_ejecutor
+- analista_de_convenios
+- funcionario_gore
+- analista_ppr_técnico
+- jefe_gestión_personas
+- fiscal_ministerio_público
+- analista_de_educación
+- jefe_depto_planificación
+- delegado_presidencial_regional
+- encargado_circular_33
+- supervisor
+- operador_noc/soc
+- analista_preinversión_dipir
+- analista_operaciones_c33
+- comité_de_gobierno
+- presidente_colegio_profesionales
+- agente_mesa_ayuda
+- profesional_bienestar
+- analista_d-gestion
+- diputado
+- analista_planificación_territorial
+- analista_de_preinversión
+- cgr_(externo)
+- contador
+- jefe_división_prevención
+- miembro_comité_grd
+- organización_postulante
+- municipio
+- analista_de_tesorería
+- frontend_developer
+- sistema
+- director_obras_municipales
+- abogado_unidad_jurídica
+- analista_geoespacial
+- miembro_junta_calificadora
+- administrador_ti
+- jefe_estudios_territoriales
+- dirigente_cut
+- unidad_formuladora_municipal
+- oficial_de_partes_/_oficial_de_partes
+- ito
+- analista_ciclo_de_vida
+- alcalde_de_san_carlos
+- encargado_proyectos
+- profesional_daf
+- administrador_sistema
+- analista_de_transferencias
+- comisión_de_recepción
+- ctd
+- analista_de_inversión
+- analista_de_evaluación
+- alcalde_de_chillán_viejo
+- abogado_cde
+- juez_corte_apelaciones
+- analista_ppr
+- comunicaciones_sectoriales
+- comité_de_ética
+- interventor
+- analista_de_bienestar
+- analista_control_de_asistencia
+- director_sercotec
+- ucr_subdere
+- jefe_territorio
+- analista_qa
+- unidad_técnica_municipal
+- dirigente_municipal
+- jefe_unidad
+- enlace_técnico_municipal
+- jefe_de_auditoría
+- analista_de_transporte
+- analista_fril_dipir
+- sre
+- planificador
+- analista_patrocinante_difoi
+- encargado_relaciones_internacionales
+- evaluador_cseu
+- representante_ancore
+- ejecutor
+- analista_fomento
+- encargado_servicios_generales
+- gobernador_regional
+- analista_presupuesto_daf
+- analista_contable
+- alcalde_de_chillán
+- comité_directivo_regional
+- analista_social
+- técnico_soporte
+- dueño_de_datos
+- asesor_técnico
+- analista_subvenciones
+- analista_dae_ppr
+- sujeto_pasivo_(autoridad)
+- ingeniero_de_vialidad
+- investigador
+- prevencionista
+- analista_mdsf
+- jefe_unidad_de_control
+- dirigente_agrícola
+- ministro_tc
+- asistente_jurídico_(robot)
+- líder_técnico
+- jefe_división_daf
+- administrador_de_sistemas
+- analista_de_modificaciones
+- analista_de_pesca
+- analista_de_presupuesto
+- analista_proyectos_seguridad
+- abogado
+- analista_de_observatorio
+- cosoc_/_comités
+- itp
+- director_fundación
+- agente_clasificador
+- empresario_regional
+- referente_digital
+- backend_developer
+- analista_de_capacitación
+- analista_servicios_generales
+- analista_8%
+- profesional_de_apoyo_core
+- senador
+- cámara_de_comercio
+- analista_de_inventario
+- encargado_de_oficina_de_partes
+- analista_operativo_transferencias
+- profesional_ñuble_250
+- devops
+- analista_de_honorarios
+- analista_8%_técnico
+- autoridad
+- analista_gestión_dipir
+- analista_patrocinante_dit
+- analista_cgr
+- analista_planificación
+- dom
+- coordinador_transformación_digital_gore
+- comité_regional_grd
+- analista_de_remuneraciones
+- encargado_control_interno
+- analista_ucr
+- administrador_geonodo
+- analista_territorial
+- pte._comité_pertinencia
+- gore
+- jefe_de_división
+- oficial_de_seguridad_(ciso)
+stats:
+  total_phantoms: 236
+  auto_mapped: 72
+  needs_creation: 164

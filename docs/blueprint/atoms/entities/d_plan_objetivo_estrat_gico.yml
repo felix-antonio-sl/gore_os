@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_objetivo_estrat_gico:1.0.0
+  type: Entity
+  source: domains/d-plan/glossary
+id: ENT-PLAN-OBJETIVO_ESTRAT_GICO
+name: Objetivo Estratégico
+entity_key: objetivo_estrat_gico
+domain: D-PLAN
+category: Reference
+description: OE
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

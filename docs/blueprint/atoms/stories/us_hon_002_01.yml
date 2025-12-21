@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_hon_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-HON-002-01
+story_key: us_hon_002_01
+role_id: USR-DAF-HON-PRES
+as_a: null
+i_want: subir mi informe de actividades y boleta digitalmente
+so_that: se curse mi pago mensual
+domain: D-BACK
+priority: P0
+capability_bundle_id: CAP-RRHH-GESTOR-001
+morphisms:
+  protagonizado_por: USR-DAF-HON-PRES
+  contribuye_a: CAP-RRHH-GESTOR-001

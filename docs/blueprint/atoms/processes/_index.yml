@@ -1,0 +1,290 @@
+_meta:
+  urn: urn:goreos:index:processes:1.0.0
+  type: ProcessesIndex
+  generated_at: '2025-12-21'
+total: 71
+items:
+- id: PROC-BACK-D04
+  urn: urn:goreos:atom:process:d_back_d04:1.0.0
+  name: Compras Públicas y Contrataciones
+  domain: D-BACK
+- id: PROC-BACK-D05
+  urn: urn:goreos:atom:process:d_back_d05:1.0.0
+  name: Gestión de Inventarios y Activo Fijo
+  domain: D-BACK
+- id: PROC-BACK-D06
+  urn: urn:goreos:atom:process:d_back_d06:1.0.0
+  name: Gestión de Flota Vehicular
+  domain: D-BACK
+- id: PROC-BACK-D07
+  urn: urn:goreos:atom:process:d_back_d07:1.0.0
+  name: Gestión de Personas
+  domain: D-BACK
+- id: PROC-BACK-D07.B
+  urn: urn:goreos:atom:process:d_back_d07.b:1.0.0
+  name: Bienestar Funcionario
+  domain: D-BACK
+- id: PROC-BACK-D08
+  urn: urn:goreos:atom:process:d_back_d08:1.0.0
+  name: Contabilidad Operativa
+  domain: D-BACK
+- id: PROC-BACK-P1
+  urn: urn:goreos:atom:process:d_back_p1:1.0.0
+  name: Plan Anual de Compras (PAC)
+  domain: D-BACK
+- id: PROC-BACK-P2
+  urn: urn:goreos:atom:process:d_back_p2:1.0.0
+  name: Licitación Pública
+  domain: D-BACK
+- id: PROC-BACK-P3
+  urn: urn:goreos:atom:process:d_back_p3:1.0.0
+  name: Órdenes de Compra
+  domain: D-BACK
+- id: PROC-BACK-P4
+  urn: urn:goreos:atom:process:d_back_p4:1.0.0
+  name: Gestión de Contratos
+  domain: D-BACK
+- id: PROC-BACK-P5
+  urn: urn:goreos:atom:process:d_back_p5:1.0.0
+  name: Control de Asistencia (Absorción SIGPER)
+  domain: D-BACK
+- id: PROC-BACK-P6
+  urn: urn:goreos:atom:process:d_back_p6:1.0.0
+  name: Viáticos Nacionales y Extranjeros (Absorción SIGPER)
+  domain: D-BACK
+- id: PROC-BACK-P7
+  urn: urn:goreos:atom:process:d_back_p7:1.0.0
+  name: Desarrollo Organizacional (Absorción SIGPER)
+  domain: D-BACK
+- id: PROC-EJEC-P1
+  urn: urn:goreos:atom:process:d_ejec_p1:1.0.0
+  name: Elaboración y Firma de Convenio
+  domain: D-EJEC
+- id: PROC-EJEC-P2
+  urn: urn:goreos:atom:process:d_ejec_p2:1.0.0
+  name: Ejecución y Estados de Pago
+  domain: D-EJEC
+- id: PROC-EJEC-P3
+  urn: urn:goreos:atom:process:d_ejec_p3:1.0.0
+  name: Supervisión de Obra en Terreno
+  domain: D-EJEC
+- id: PROC-EJEC-P4
+  urn: urn:goreos:atom:process:d_ejec_p4:1.0.0
+  name: Cierre y Liquidación de Convenio
+  domain: D-EJEC
+- id: PROC-PLAN-P1
+  urn: urn:goreos:atom:process:d_plan_p1:1.0.0
+  name: Actualización ERD
+  domain: D-PLAN
+- id: PROC-PLAN-P2
+  urn: urn:goreos:atom:process:d_plan_p2:1.0.0
+  name: Ciclo ARI/PROPIR
+  domain: D-PLAN
+- id: PROC-PLAN-P3
+  urn: urn:goreos:atom:process:d_plan_p3:1.0.0
+  name: Validación PROT
+  domain: D-PLAN
+- id: PROC-PLAN-P3-bis
+  urn: urn:goreos:atom:process:d_plan_p3_bis:1.0.0
+  name: Elaboración y Aprobación PROT
+  domain: D-PLAN
+- id: PROC-PLAN-P4
+  urn: urn:goreos:atom:process:d_plan_p4:1.0.0
+  name: Gestión CP
+  domain: D-PLAN
+- id: PROC-PLAN-P5
+  urn: urn:goreos:atom:process:d_plan_p5:1.0.0
+  name: Evaluación Indicadores
+  domain: D-PLAN
+- id: PROC-PLAN-P6
+  urn: urn:goreos:atom:process:d_plan_p6:1.0.0
+  name: Asistencia Técnica Municipal
+  domain: D-PLAN
+- id: PROC-PLAN-P7
+  urn: urn:goreos:atom:process:d_plan_p7:1.0.0
+  name: Evaluación Ex-Post de Proyectos
+  domain: D-PLAN
+- id: PROC-NORM-P1
+  urn: urn:goreos:atom:process:d_norm_p1:1.0.0
+  name: Flujo de Resoluciones Exentas
+  domain: D-NORM
+- id: PROC-NORM-P2
+  urn: urn:goreos:atom:process:d_norm_p2:1.0.0
+  name: Aprobación de Transferencias y Convenios
+  domain: D-NORM
+- id: PROC-NORM-P3
+  urn: urn:goreos:atom:process:d_norm_p3:1.0.0
+  name: Procedimientos Administrativos (Ley 19.880)
+  domain: D-NORM
+- id: PROC-NORM-P4
+  urn: urn:goreos:atom:process:d_norm_p4:1.0.0
+  name: Auditorías CGR
+  domain: D-NORM
+- id: PROC-GOB-P1
+  urn: urn:goreos:atom:process:d_gob_p1:1.0.0
+  name: Sesión CORE
+  domain: D-GOB
+- id: PROC-GOB-P2
+  urn: urn:goreos:atom:process:d_gob_p2:1.0.0
+  name: Transferencia Competencias
+  domain: D-GOB
+- id: PROC-GOB-P3
+  urn: urn:goreos:atom:process:d_gob_p3:1.0.0
+  name: Gestión Crisis / GRD
+  domain: D-GOB
+- id: PROC-GOB-P4
+  urn: urn:goreos:atom:process:d_gob_p4:1.0.0
+  name: Gestión Agenda & Compromisos
+  domain: D-GOB
+- id: PROC-GOB-P5
+  urn: urn:goreos:atom:process:d_gob_p5:1.0.0
+  name: Registro y Vinculación de Actores *(Nuevo)*
+  domain: D-GOB
+- id: PROC-TDE-P1
+  urn: urn:goreos:atom:process:d_tde_p1:1.0.0
+  name: Gestión Cumplimiento TDE
+  domain: D-TDE
+- id: PROC-TDE-P2
+  urn: urn:goreos:atom:process:d_tde_p2:1.0.0
+  name: Habilitación Servicios Digitales
+  domain: D-TDE
+- id: PROC-TDE-P3
+  urn: urn:goreos:atom:process:d_tde_p3:1.0.0
+  name: Ciberseguridad & Protección Datos
+  domain: D-TDE
+- id: PROC-TDE-P4
+  urn: urn:goreos:atom:process:d_tde_p4:1.0.0
+  name: Gestión Interoperabilidad
+  domain: D-TDE
+- id: PROC-TDE-P5
+  urn: urn:goreos:atom:process:d_tde_p5:1.0.0
+  name: Articulación Ecosistema Regional
+  domain: D-TDE
+- id: PROC-TDE-P6
+  urn: urn:goreos:atom:process:d_tde_p6:1.0.0
+  name: Gestión del Cambio TDE
+  domain: D-TDE
+- id: PROC-TDE-P7
+  urn: urn:goreos:atom:process:d_tde_p7:1.0.0
+  name: Federación de Firma Municipal
+  domain: D-TDE
+- id: PROC-TERR-P1
+  urn: urn:goreos:atom:process:d_terr_p1:1.0.0
+  name: Ciclo de Vida de Datos Geoespaciales
+  domain: D-TERR
+- id: PROC-TERR-P2
+  urn: urn:goreos:atom:process:d_terr_p2:1.0.0
+  name: Publicación e Interoperabilidad
+  domain: D-TERR
+- id: PROC-TERR-P3
+  urn: urn:goreos:atom:process:d_terr_p3:1.0.0
+  name: Gobernanza de Datos Geoespaciales
+  domain: D-TERR
+- id: PROC-TERR-P4
+  urn: urn:goreos:atom:process:d_terr_p4:1.0.0
+  name: Asistencia Técnica Territorial
+  domain: D-TERR
+- id: PROC-TERR-P5
+  urn: urn:goreos:atom:process:d_terr_p5:1.0.0
+  name: Visualización y Análisis PROPIR
+  domain: D-TERR
+- id: PROC-TERR-P6
+  urn: urn:goreos:atom:process:d_terr_p6:1.0.0
+  name: Observatorio Regional (Realidad Territorial)
+  domain: D-TERR
+- id: PROC-SEG-P1
+  urn: urn:goreos:atom:process:d_seg_p1:1.0.0
+  name: Monitoreo, Detección y Escalamiento
+  domain: D-SEG
+- id: PROC-SEG-P2
+  urn: urn:goreos:atom:process:d_seg_p2:1.0.0
+  name: Coordinación Interinstitucional
+  domain: D-SEG
+- id: PROC-SEG-P3
+  urn: urn:goreos:atom:process:d_seg_p3:1.0.0
+  name: Gestión de Evidencias Digitales
+  domain: D-SEG
+- id: PROC-SEG-P4
+  urn: urn:goreos:atom:process:d_seg_p4:1.0.0
+  name: Asesoría y Coordinación Municipal
+  domain: D-SEG
+- id: PROC-GESTION-P1
+  urn: urn:goreos:atom:process:d_gestion_p1:1.0.0
+  name: Ciclo de Control de Gestión
+  domain: D-GESTION
+- id: PROC-GESTION-P2
+  urn: urn:goreos:atom:process:d_gestion_p2:1.0.0
+  name: Gestión de Riesgos UCI
+  domain: D-GESTION
+- id: PROC-GESTION-P3
+  urn: urn:goreos:atom:process:d_gestion_p3:1.0.0
+  name: Ejecución de Playbooks Operativos
+  domain: D-GESTION
+- id: PROC-EVOL-P1
+  urn: urn:goreos:atom:process:d_evol_p1:1.0.0
+  name: Evaluación y Monitoreo H_org
+  domain: D-EVOL
+- id: PROC-EVOL-P2
+  urn: urn:goreos:atom:process:d_evol_p2:1.0.0
+  name: Progresión de Modo HAIC (M1→M6)
+  domain: D-EVOL
+- id: PROC-EVOL-P3
+  urn: urn:goreos:atom:process:d_evol_p3:1.0.0
+  name: Gestión de Base de Conocimiento
+  domain: D-EVOL
+- id: PROC-EVOL-P4
+  urn: urn:goreos:atom:process:d_evol_p4:1.0.0
+  name: Ciclo de Vida de Agente IA
+  domain: D-EVOL
+- id: PROC-EVOL-P5
+  urn: urn:goreos:atom:process:d_evol_p5:1.0.0
+  name: Clonación de Proceso Municipal Exitoso
+  domain: D-EVOL
+- id: PROC-FENIX-P1
+  urn: urn:goreos:atom:process:fenix_p1:1.0.0
+  name: Activación y Diagnóstico
+  domain: FENIX
+- id: PROC-FENIX-P2
+  urn: urn:goreos:atom:process:fenix_p2:1.0.0
+  name: Ciclo de Ejecución
+  domain: FENIX
+- id: PROC-FIN-EJECUTORES-P4-bis
+  urn: urn:goreos:atom:process:d_fin_ejecutores_p4_bis:1.0.0
+  name: Inducción de Ejecutor
+  domain: D-FIN-EJECUTORES
+- id: PROC-FIN-EJECUTORES-P8
+  urn: urn:goreos:atom:process:d_fin_ejecutores_p8:1.0.0
+  name: Asistencia Financiera
+  domain: D-FIN-EJECUTORES
+- id: PROC-FIN-IPR_CORE-P1
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p1:1.0.0
+  name: Ingreso, Pertinencia y Admisibilidad
+  domain: D-FIN-IPR_CORE
+- id: PROC-FIN-IPR_CORE-P2
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p2:1.0.0
+  name: Evaluación Técnico-Económica
+  domain: D-FIN-IPR_CORE
+- id: PROC-FIN-IPR_CORE-P3
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p3:1.0.0
+  name: Obtención de Financiamiento
+  domain: D-FIN-IPR_CORE
+- id: PROC-FIN-IPR_CORE-P4
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p4:1.0.0
+  name: Formalización
+  domain: D-FIN-IPR_CORE
+- id: PROC-FIN-IPR_CORE-P4-bis
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p4_bis:1.0.0
+  name: Inducción de Ejecutor
+  domain: D-FIN-IPR_CORE
+- id: PROC-FIN-IPR_CORE-P5
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p5:1.0.0
+  name: Ejecución y Supervisión
+  domain: D-FIN-IPR_CORE
+- id: PROC-FIN-IPR_CORE-P6
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p6:1.0.0
+  name: Modificaciones en Ejecución
+  domain: D-FIN-IPR_CORE
+- id: PROC-FIN-IPR_CORE-P7
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p7:1.0.0
+  name: Cierre Técnico-Financiero
+  domain: D-FIN-IPR_CORE

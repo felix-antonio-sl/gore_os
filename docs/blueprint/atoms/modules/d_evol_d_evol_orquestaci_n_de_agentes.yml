@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_evol_orquestaci_n_de_agentes:1.0.0
+  type: Module
+  source: domains/d-evol
+id: MOD-EVOL-ORQUESTACI_N_DE_AGEN
+name: Orquestación de Agentes
+domain: D-EVOL
+number: 9
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_tde_p3:1.0.0
+  type: Process
+  source: domains/d-tde
+id: PROC-TDE-P3
+code: P3
+name: Ciberseguridad & Protección Datos
+domain: D-TDE
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

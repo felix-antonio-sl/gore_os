@@ -1,0 +1,1190 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-tde:1.0.0"
+  domain: D-TDE
+  domain_name: Gobernanza Digital y Transformación
+  legacy_modules:
+    - M10
+  total_stories: 76
+  priority_distribution:
+    critica: 22
+    alta: 24
+    media: 2
+  normativa:
+    - Ley 21.180 (TDE)
+    - DS N°7 (Seguridad)
+    - DS N°8 (Notificaciones)
+    - DS N°9 (Autenticación)
+    - DS N°10 (Expediente)
+    - DS N°11 (Calidad)
+    - DS N°12 (Interoperabilidad)
+stories:
+  - id: US-TDE-TIC-001
+    legacy_ids:
+      - tic-001
+    title: Asignar equipamiento tecnológico
+    as_a:
+      - Administrador TI
+    i_want: Asignar equipamiento tecnológico con acta digital
+    so_that: Documento la entrega de equipos
+    priority: Alta
+    module: Infraestructura
+    acceptance_criteria:
+      - Acta digital con firma
+      - Vinculación con Activo Fijo
+    source_ref: "user_stories_legacy.md:L606"
+  - id: US-TDE-TIC-002
+    legacy_ids:
+      - tic-002
+    title: Gestionar identidad digital
+    as_a:
+      - Administrador TI
+    i_want: Gestionar identidad digital (ClaveÚnica/SSO)
+    so_that: Centralizo autenticación
+    priority: Crítica
+    module: Autenticacion
+    acceptance_criteria:
+      - Integración SSO
+      - Sincronización de usuarios
+    source_ref: "user_stories_legacy.md:L607"
+  - id: US-TDE-TIC-003
+    legacy_ids:
+      - tic-003
+    title: Integrar DocDigital/FirmaGob
+    as_a:
+      - Administrador TI
+    i_want: Integrar DocDigital/FirmaGob
+    so_that: Habilito firma electrónica
+    priority: Crítica
+    module: Firma
+    integration: "DocDigital, FirmaGob"
+    acceptance_criteria:
+      - APIs conectadas
+      - Flujos de firma funcionando
+    source_ref: "user_stories_legacy.md:L626"
+  - id: US-TDE-TIC-004
+    legacy_ids:
+      - tic-004
+    title: Alertas de ciberseguridad
+    as_a:
+      - Administrador TI
+    i_want: "Recibir alertas de ciberseguridad (CSIRT, Incidentes)"
+    so_that: Respondo a amenazas
+    priority: Crítica
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Integración CSIRT
+      - Alertas en tiempo real
+    source_ref: "user_stories_legacy.md:L627"
+  - id: US-TDE-TIC-005
+    legacy_ids:
+      - tic-005
+    title: Dashboard cumplimiento DS N°7-12
+    as_a:
+      - Administrador TI
+    i_want: Ver dashboard de cumplimiento DS N°7-12
+    so_that: Monitoreo compliance TDE
+    priority: Alta
+    module: Cumplimiento
+    acceptance_criteria:
+      - Estado por decreto
+      - Brechas identificadas
+    source_ref: "user_stories_legacy.md:L637"
+  - id: US-TDE-AUTH-001
+    legacy_ids:
+      - tic-006
+    title: Integrar ClaveÚnica OIDC
+    as_a:
+      - Desarrollador TI
+    i_want: >-
+      Integrar ClaveÚnica (OIDC Authorization Code Flow) con state, token desde
+      backend
+    so_that: Cumplo con DS9
+    priority: Crítica
+    module: Autenticacion
+    normativa: DS9
+    acceptance_criteria:
+      - Flujo OIDC implementado
+      - Token validado en backend
+    source_ref: "user_stories_legacy.md:L608"
+  - id: US-TDE-AUTH-002
+    legacy_ids:
+      - tic-007
+    title: Gestionar credenciales ClaveÚnica por ambiente
+    as_a:
+      - Administrador TI
+    i_want: Gestionar credenciales ClaveÚnica por ambiente (sandbox/QA/producción)
+    so_that: Separo ambientes correctamente
+    priority: Alta
+    module: Autenticacion
+    acceptance_criteria:
+      - Credenciales por ambiente
+      - Custodia segura
+    source_ref: "user_stories_legacy.md:L609"
+  - id: US-TDE-AUTH-003
+    legacy_ids:
+      - tic-008
+    title: Implementar logout ClaveÚnica
+    as_a:
+      - Desarrollador TI
+    i_want: Implementar cierre de sesión ClaveÚnica con URIs registradas
+    so_that: Gestiono sesiones correctamente
+    priority: Alta
+    module: Autenticacion
+    acceptance_criteria:
+      - Logout funcional
+      - URIs registradas
+    source_ref: "user_stories_legacy.md:L610"
+  - id: US-TDE-AUTH-004
+    legacy_ids:
+      - tic-009
+    title: Registrar trazabilidad accesos
+    as_a:
+      - Administrador TI
+    i_want: >-
+      Registrar trazabilidad de accesos autenticados (DS9) con timestamp
+      sincronizado
+    so_that: Mantengo auditoría de accesos
+    priority: Alta
+    module: Autenticacion
+    normativa: DS9
+    acceptance_criteria:
+      - Log de accesos
+      - Timestamp hora oficial
+    source_ref: "user_stories_legacy.md:L611"
+  - id: US-TDE-AUTH-005
+    legacy_ids:
+      - tic-010
+    title: Autenticación personas jurídicas
+    as_a:
+      - Administrador TI
+    i_want: >-
+      Habilitar autenticación de personas jurídicas (Clave Tributaria o
+      representante)
+    so_that: Atiendo a empresas
+    priority: Alta
+    module: Autenticacion
+    acceptance_criteria:
+      - Clave Tributaria o representante
+      - Verificación de poderes
+    source_ref: "user_stories_legacy.md:L612"
+  - id: US-TDE-AUTH-006
+    legacy_ids:
+      - tic-011
+    title: Prohibir autenticación propia ciudadanía
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Prohibir mecanismos propios de autenticación para ciudadanía
+    so_that: Cumplo con DS9
+    priority: Crítica
+    module: Autenticacion
+    normativa: DS9
+    acceptance_criteria:
+      - Sin contraseñas locales para ciudadanos
+      - Solo ClaveÚnica
+    source_ref: "user_stories_legacy.md:L613"
+  - id: US-TDE-NOTIF-001
+    legacy_ids:
+      - tic-012
+    title: Integrar Plataforma Notificaciones
+    as_a:
+      - Desarrollador TI
+    i_want: Integrar Plataforma de Notificaciones del Estado (DS8)
+    so_that: Notifico electrónicamente
+    priority: Crítica
+    module: Notificaciones
+    normativa: DS8
+    integration: Plataforma Notificaciones
+    acceptance_criteria:
+      - API integrada
+      - Canal web y email
+    source_ref: "user_stories_legacy.md:L614"
+  - id: US-TDE-NOTIF-002
+    legacy_ids:
+      - tic-013
+    title: Resolver DDU destinatario
+    as_a:
+      - Sistema
+    i_want: Resolver DDU del destinatario y aplicar canal correcto (DS8)
+    so_that: Notifico por el canal registrado
+    priority: Crítica
+    module: Notificaciones
+    normativa: DS8
+    acceptance_criteria:
+      - Consulta DDU
+      - Selección de canal
+    source_ref: "user_stories_legacy.md:L615"
+  - id: US-TDE-NOTIF-003
+    legacy_ids:
+      - tic-014
+    title: Enviar notificaciones vía API PISEE
+    as_a:
+      - Sistema
+    i_want: Enviar notificaciones vía API /notificador/sendMessage vía Nodo PISEE
+    so_that: Uso infraestructura estatal
+    priority: Alta
+    module: Notificaciones
+    normativa: "DS8, DS12"
+    acceptance_criteria:
+      - Mensaje enviado
+      - Respuesta registrada
+    source_ref: "user_stories_legacy.md:L616"
+  - id: US-TDE-NOTIF-004
+    legacy_ids:
+      - tic-015
+    title: Consultar estado notificación
+    as_a:
+      - Sistema
+    i_want: Consultar estado de notificación vía API o webhook
+    so_that: Verifico entrega
+    priority: Alta
+    module: Notificaciones
+    normativa: DS8
+    acceptance_criteria:
+      - Estado actualizado
+      - Webhook configurado
+    source_ref: "user_stories_legacy.md:L617"
+  - id: US-TDE-NOTIF-005
+    legacy_ids:
+      - tic-016
+    title: Persistir constancia notificación
+    as_a:
+      - Sistema
+    i_want: "Persistir constancia de notificación (codigo_tx, fechas) y asociar a IUIe"
+    so_that: Mantengo trazabilidad
+    priority: Crítica
+    module: Notificaciones
+    normativa: "DS8, DS10"
+    acceptance_criteria:
+      - Constancia almacenada
+      - Vinculación a expediente
+    source_ref: "user_stories_legacy.md:L618"
+  - id: US-TDE-NOTIF-006
+    legacy_ids:
+      - tic-017
+    title: Aplicar regla notificación practicada
+    as_a:
+      - Sistema
+    i_want: Aplicar regla notificación practicada (3 días hábiles o lectura)
+    so_that: Calculo plazos correctamente
+    priority: Alta
+    module: Notificaciones
+    normativa: DS8
+    acceptance_criteria:
+      - Cálculo automático
+      - 3 días hábiles o lectura
+    source_ref: "user_stories_legacy.md:L619"
+  - id: US-TDE-INTEROP-001
+    legacy_ids:
+      - tic-019
+      - CTD-04
+    title: Habilitar Nodo PISEE
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
+    so_that: Conecto con servicios estatales
+    priority: Crítica
+    module: Interoperabilidad
+    normativa: DS12
+    acceptance_criteria:
+      - Nodo habilitado
+      - Roles asignados
+    source_ref: "user_stories_legacy.md:L621"
+    note: Unificada de tic-019 y CTD-04
+  - id: US-TDE-INTEROP-002
+    legacy_ids:
+      - tic-020
+      - CTD-05
+    title: Registrar servicios interoperables
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Registrar/administrar servicios en Catálogo de Servicios
+    so_that: Publico mis servicios
+    priority: Alta
+    module: Interoperabilidad
+    normativa: DS12
+    acceptance_criteria:
+      - Servicio registrado
+      - Metadata completa
+    source_ref: "user_stories_legacy.md:L622"
+    note: Unificada de tic-020 y CTD-05
+  - id: US-TDE-INTEROP-003
+    legacy_ids:
+      - tic-021
+      - CTD-06
+    title: Registrar trazabilidad transacciones
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Registrar trazabilidad central de transacciones interoperables
+    so_that: Audito intercambios
+    priority: Alta
+    module: Interoperabilidad
+    normativa: DS12
+    acceptance_criteria:
+      - Log centralizado
+      - Campos mínimos DS12
+    source_ref: "user_stories_legacy.md:L623"
+    note: Unificada de tic-021 y CTD-06
+  - id: US-TDE-INTEROP-004
+    legacy_ids:
+      - tic-022
+      - CTD-07
+    title: Gestionar acuerdos previos
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Gestionar acuerdos previos antes de consumir servicios
+    so_that: Formalizo intercambios
+    priority: Alta
+    module: Interoperabilidad
+    normativa: DS12
+    acceptance_criteria:
+      - Acuerdo registrado
+      - Partes identificadas
+    source_ref: "user_stories_legacy.md:L624"
+    note: Unificada de tic-022 y CTD-07
+  - id: US-TDE-INTEROP-005
+    legacy_ids:
+      - tic-023
+      - CTD-08
+    title: Gestionar consentimiento datos sensibles
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Gestionar consentimiento para datos sensibles (Gestor Autorizaciones)
+    so_that: Respeto privacidad
+    priority: Alta
+    module: Interoperabilidad
+    normativa: DS12
+    acceptance_criteria:
+      - Consentimiento registrado
+      - Revocación posible
+    source_ref: "user_stories_legacy.md:L625"
+    note: Unificada de tic-023 y CTD-08
+  - id: US-TDE-SEG-001
+    legacy_ids:
+      - tic-024
+      - CISO-06
+    title: Mantener Política de Seguridad
+    as_a:
+      - CISO
+    i_want: Mantener Política de Seguridad de la Información (DS7) aprobada
+    so_that: Cumplo con marco normativo
+    priority: Crítica
+    module: Ciberseguridad
+    normativa: DS7
+    acceptance_criteria:
+      - Política aprobada por acto
+      - Actualizada anualmente
+    source_ref: "user_stories_legacy.md:L628"
+    note: Unificada de tic-024 y CISO-06
+  - id: US-TDE-SEG-002
+    legacy_ids:
+      - tic-025
+    title: Designar Responsable Seguridad (CISO)
+    as_a:
+      - Autoridad
+    i_want: Designar y mantener Responsable de Seguridad (CISO)
+    so_that: Tengo accountability
+    priority: Crítica
+    module: Ciberseguridad
+    normativa: DS7
+    acceptance_criteria:
+      - CISO designado formalmente
+      - Funciones publicadas
+    source_ref: "user_stories_legacy.md:L629"
+  - id: US-TDE-SEG-003
+    legacy_ids:
+      - tic-026
+      - CISO-07
+    title: Clasificar activos CIA
+    as_a:
+      - CISO
+    i_want: Clasificar activos de información según CIA
+    so_that: Priorizo protección
+    priority: Alta
+    module: Ciberseguridad
+    normativa: DS7
+    acceptance_criteria:
+      - Inventario de activos
+      - Clasificación C/I/D
+    source_ref: "user_stories_legacy.md:L630"
+    note: Unificada de tic-026 y CISO-07
+  - id: US-TDE-SEG-004
+    legacy_ids:
+      - tic-027
+      - CISO-08
+    title: Reportar incidentes a CSIRT/ANCI
+    as_a:
+      - CISO
+    i_want: Reportar incidentes de seguridad a CSIRT MININT y ANCI
+    so_that: Notifico al Estado
+    priority: Crítica
+    module: Ciberseguridad
+    normativa: DS7
+    acceptance_criteria:
+      - Reporte en plazo
+      - Formulario correcto
+    source_ref: "user_stories_legacy.md:L631"
+    note: Unificada de tic-027 y CISO-08
+  - id: US-TDE-SEG-005
+    legacy_ids:
+      - tic-028
+      - CISO-09
+    title: Asegurar cifrado TLS y en reposo
+    as_a:
+      - CISO
+    i_want: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
+    so_that: Protejo información
+    priority: Alta
+    module: Ciberseguridad
+    normativa: DS7
+    acceptance_criteria:
+      - TLS 1.2+ verificado
+      - Cifrado en reposo activo
+    source_ref: "user_stories_legacy.md:L632"
+    note: Unificada de tic-028 y CISO-09
+  - id: US-TDE-SEG-006
+    legacy_ids:
+      - CISO-01
+    title: Gestionar incidentes de seguridad
+    as_a:
+      - CISO
+    i_want: Gestionar incidentes de seguridad (CSIRT)
+    so_that: Respondo a amenazas
+    priority: Crítica
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Proceso de respuesta
+      - Escalamiento definido
+    source_ref: "user_stories_legacy.md:L645"
+  - id: US-TDE-SEG-007
+    legacy_ids:
+      - CISO-02
+    title: Configurar políticas acceso (IAM)
+    as_a:
+      - CISO
+    i_want: Configurar políticas de acceso y roles (IAM)
+    so_that: Controlo accesos
+    priority: Crítica
+    module: Ciberseguridad
+    acceptance_criteria:
+      - RBAC implementado
+      - Principio menor privilegio
+    source_ref: "user_stories_legacy.md:L646"
+  - id: US-TDE-SEG-008
+    legacy_ids:
+      - CISO-03
+    title: Auditar logs acceso datos sensibles
+    as_a:
+      - CISO
+    i_want: Auditar logs de acceso a datos sensibles
+    so_that: Detecto anomalías
+    priority: Alta
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Logs centralizados
+      - Alertas de anomalías
+    source_ref: "user_stories_legacy.md:L647"
+  - id: US-TDE-CALIDAD-001
+    legacy_ids:
+      - tic-029
+      - CTD-09
+    title: Mantener Catálogo de Plataformas
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Mantener Catálogo de Plataformas con línea base
+    so_that: Documento sistemas
+    priority: Alta
+    module: Calidad
+    normativa: DS11
+    acceptance_criteria:
+      - Inventario de plataformas
+      - Línea base por sistema
+    source_ref: "user_stories_legacy.md:L633"
+    note: Unificada de tic-029 y CTD-09
+  - id: US-TDE-CALIDAD-002
+    legacy_ids:
+      - tic-030
+      - CTD-10
+    title: Plan de Mejora Continua anual
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Elaborar Plan de Mejora Continua anual (DS11)
+    so_that: Planifico evolución
+    priority: Alta
+    module: Calidad
+    normativa: DS11
+    acceptance_criteria:
+      - Diagnóstico incluido
+      - Iniciativas priorizadas
+    source_ref: "user_stories_legacy.md:L634"
+    note: Unificada de tic-030 y CTD-10
+  - id: US-TDE-CALIDAD-003
+    legacy_ids:
+      - tic-031
+      - CTD-11
+    title: Ciclo Gestión de Calidad
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: >-
+      Ejecutar Ciclo de Gestión de Calidad
+      (Elaboración/Formulación/Implementación/Evaluación)
+    so_that: Mejoro continuamente
+    priority: Alta
+    module: Calidad
+    normativa: DS11
+    acceptance_criteria:
+      - Ciclo documentado
+      - Métricas de avance
+    source_ref: "user_stories_legacy.md:L635"
+    note: Unificada de tic-031 y CTD-11
+  - id: US-TDE-CALIDAD-004
+    legacy_ids:
+      - tic-032
+      - CTD-12
+    title: Gate EvalTIC
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Someter proyectos TIC con presupuesto a EvalTIC (gate)
+    so_that: Valido inversiones TIC
+    priority: Alta
+    module: Calidad
+    normativa: DS11
+    acceptance_criteria:
+      - Evaluación previa
+      - Aprobación documentada
+    source_ref: "user_stories_legacy.md:L636"
+    note: Unificada de tic-032 y CTD-12
+  - id: US-TDE-DPO-001
+    legacy_ids:
+      - DPO-01
+    title: Gestionar Solicitudes ARCO
+    as_a:
+      - DPO
+    i_want: "Gestionar Solicitudes ARCO (Acceso, Rectificación, Cancelación, Oposición)"
+    so_that: Cumplo con derechos ciudadanos
+    priority: Crítica
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - Flujo de solicitud
+      - Plazo de respuesta
+    source_ref: "user_stories_legacy.md:L660"
+  - id: US-TDE-DPO-002
+    legacy_ids:
+      - DPO-02
+    title: Mantener Inventario Actividades Tratamiento
+    as_a:
+      - DPO
+    i_want: Mantener Inventario de Actividades de Tratamiento (IAT)
+    so_that: Documento tratamientos
+    priority: Crítica
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - IAT completo
+      - Actualización periódica
+    source_ref: "user_stories_legacy.md:L661"
+  - id: US-TDE-DPO-003
+    legacy_ids:
+      - DPO-03
+    title: Notificar brechas a Agencia
+    as_a:
+      - DPO
+    i_want: Notificar brechas de datos a la Agencia
+    so_that: Cumplo con notificación obligatoria
+    priority: Alta
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - Notificación en plazo
+      - Medidas correctivas
+    source_ref: "user_stories_legacy.md:L662"
+  - id: US-TDE-DPO-004
+    legacy_ids:
+      - DPO-04
+    title: Evaluar Impacto Protección Datos
+    as_a:
+      - DPO
+    i_want: Evaluar Impacto en Protección de Datos (EIPD) de nuevos proyectos
+    so_that: Prevengo riesgos
+    priority: Alta
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - EIPD documentado
+      - Riesgos mitigados
+    source_ref: "user_stories_legacy.md:L663"
+  - id: US-TDE-DPO-005
+    legacy_ids:
+      - DPO-05
+    title: Mantener RAT
+    as_a:
+      - DPO
+    i_want: >-
+      Mantener Registro de Actividades de Tratamiento (RAT) con campos mínimos
+      SGD
+    so_that: Demuestro accountability ante la Agencia
+    priority: Crítica
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - "Campos: Responsable, Finalidad, Categorías Interesados/Datos"
+      - "Campos: Destinatarios, Transferencias Int., Plazos, Seguridad"
+      - Validación de integridad de registro
+      - Exportable JSON/XML
+    source_ref: "user_stories_legacy.md:L664"
+  - id: US-TDE-DPO-006
+    legacy_ids:
+      - DPO-06
+    title: Controlar ciclo vida datos
+    as_a:
+      - DPO
+    i_want: >-
+      Controlar ciclo de vida de datos personales: fuente, destinatarios,
+      conservación
+    so_that: Garantizo eliminación oportuna y trazo transferencias
+    priority: Alta
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - "Registro: fuenteDatos, destinatarios[], plazosConservacion"
+      - Alerta 30 días antes de vencimiento
+      - Log de transferencias a terceros
+    source_ref: "user_stories_legacy.md:L665"
+  - id: US-TDE-DPO-007
+    legacy_ids:
+      - DPO-08
+    title: Aplicar anonimización/seudonimización
+    as_a:
+      - DPO
+    i_want: >-
+      Definir y aplicar técnicas de anonimización o seudonimización para
+      analítica
+    so_that: Protejo identidad de titulares (minimización)
+    priority: Alta
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - "Soporte: Seudonimización (tokens reversibles)"
+      - "Soporte: Anonimización (K-anonymity, supresión)"
+      - Log de técnica aplicada
+      - Bloqueo de datos sensibles sin anonimizar
+    source_ref: "user_stories_legacy.md:L667"
+  - id: US-TDE-SEG-009
+    legacy_ids:
+      - CISO-04
+    title: Simulaciones Phishing
+    as_a:
+      - CISO
+    i_want: Ejecutar simulaciones de phishing para concientización
+    so_that: Educo a funcionarios
+    priority: Alta
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Campaña programada
+      - Métricas de resultados
+    source_ref: "user_stories_legacy.md:L648"
+  - id: US-TDE-SEG-010
+    legacy_ids:
+      - CISO-05
+    title: Auditar trazabilidad DS9
+    as_a:
+      - CISO
+    i_want: Auditar trazabilidad de accesos DS9
+    so_that: Verifico cumplimiento de autenticación
+    priority: Alta
+    module: Ciberseguridad
+    normativa: DS9
+    acceptance_criteria:
+      - Auditoría periódica
+      - Reporte de hallazgos
+    source_ref: "user_stories_legacy.md:L649"
+  - id: US-TDE-SEG-011
+    legacy_ids:
+      - CISO-10
+    title: Privacidad por diseño
+    as_a:
+      - CISO
+    i_want: Aplicar privacidad por diseño en nuevos sistemas
+    so_that: Prevengo brechas desde origen
+    priority: Alta
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Checklist PbD
+      - Validación en desarrollo
+    source_ref: "user_stories_legacy.md:L654"
+  - id: US-TDE-DPO-008
+    legacy_ids:
+      - DPO-07
+    title: Registrar versión RAT
+    as_a:
+      - DPO
+    i_want: Registrar versión del RAT con control de cambios
+    so_that: Mantengo historial
+    priority: Alta
+    module: ProteccionDatos
+    normativa: Ley 21.719
+    acceptance_criteria:
+      - Versionamiento
+      - Log de cambios
+    source_ref: "user_stories_legacy.md:L666"
+  - id: US-TDE-TIC-006
+    legacy_ids:
+      - PMOTIC-01
+    title: Inventario proyectos TIC
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Mantener inventario de proyectos TIC activos
+    so_that: Gestiono cartera tecnológica
+    priority: Alta
+    module: Infraestructura
+    acceptance_criteria:
+      - Lista de proyectos
+      - Estado y responsable
+    source_ref: "user_stories_legacy.md:L638"
+  - id: US-TDE-AVANCE-001
+    legacy_ids:
+      - CTD-01
+    title: Dashboard avance TDE
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Ver dashboard de avance en cumplimiento TDE
+    so_that: Monitoreo progreso institucional
+    priority: Alta
+    module: Cumplimiento
+    acceptance_criteria:
+      - "% por decreto"
+      - Brechas identificadas
+    source_ref: "user_stories_legacy.md:L639"
+  - id: US-TDE-AVANCE-002
+    legacy_ids:
+      - CTD-02
+    title: Meta interoperabilidad
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Monitorear meta de interoperabilidad DS12
+    so_that: Cumplo con plazos
+    priority: Alta
+    module: Interoperabilidad
+    normativa: DS12
+    acceptance_criteria:
+      - Meta vs avance
+      - Plan de cierre
+    source_ref: "user_stories_legacy.md:L640"
+  - id: US-TDE-AVANCE-003
+    legacy_ids:
+      - CTD-03
+    title: Meta expediente DS10
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Monitorear meta de expediente electrónico DS10
+    so_that: Cumplo con digitalización
+    priority: Alta
+    module: Cumplimiento
+    normativa: DS10
+    acceptance_criteria:
+      - "% trámites digitalizados"
+      - Roadmap de cierre
+    source_ref: "user_stories_legacy.md:L641"
+  - id: US-TDE-MUNI-001
+    legacy_ids:
+      - S-CTD-MUNI-001
+    title: Conectar DIDECO municipal
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Conectar sistemas DIDECO municipales vía interoperabilidad
+    so_that: Integro datos municipales
+    priority: Media
+    module: Interoperabilidad
+    acceptance_criteria:
+      - API disponible
+      - Acuerdo formalizado
+    source_ref: "user_stories_legacy.md:L700"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M6: VINCULACIÓN TERRITORIAL DIGITAL
+  # ═══════════════════════════════════════════════════════════════
+
+  - id: US-TDE-VINC-001
+    legacy_ids: []
+    title: Gestionar firmas municipales
+    as_a:
+      - Coordinador Transformación Digital
+      - Alcalde
+    i_want: Gestionar enrolamiento y soporte de Firmas Electrónicas Avanzadas para funcionarios municipales (vía convenio GORE)
+    so_that: Habilito la transformación digital en comunas
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Enrolamiento centralizado
+      - Soporte de primer nivel GORE
+      - Reporte de uso
+    source_ref: "new:standardization-municipal"
+
+  - id: US-TDE-VINC-002
+    legacy_ids: []
+    title: Acceso a API Gateway Regional
+    as_a:
+      - Desarrollador Municipal
+    i_want: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE) y del GORE
+    so_that: Integro mis sistemas locales (DOM, Tránsito) sin gestionar convenios individuales
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Credenciales developer
+      - Documentación API
+      - Logs de consumo
+    source_ref: "new:standardization-municipal"
+
+  - id: US-TDE-VINC-003
+    legacy_ids: []
+    title: Solicitar soporte infraestructura crítica
+    as_a:
+      - Encargado Informática Municipal
+    i_want: Solicitar soporte técnico o evaluación de proyectos de infraestructura crítica (enlaces, servidores)
+    so_that: Mejoro la conectividad en zonas rezagadas
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Ticket de requerimiento
+      - Evaluación técnica GORE
+      - Recomendación de inversión
+    source_ref: "new:standardization-municipal"
+  - id: US-TDE-MUNI-002
+    legacy_ids:
+      - S-CTD-MUNI-002
+    title: Trámite Express municipal
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Habilitar Trámite Express para municipios
+    so_that: Simplifico interacción
+    priority: Media
+    module: Interoperabilidad
+    acceptance_criteria:
+      - Flujo simplificado
+      - Piloto implementado
+    source_ref: "user_stories_legacy.md:L643"
+  - id: US-TDE-TIC-007
+    legacy_ids:
+      - tic-018
+    title: Soporte técnico usuarios
+    as_a:
+      - Mesa de Ayuda
+    i_want: Gestionar tickets de soporte técnico de usuarios
+    so_that: Mantengo continuidad operativa
+    priority: Alta
+    module: Infraestructura
+    acceptance_criteria:
+      - Gestión de tickets
+      - SLA definido
+    source_ref: "user_stories_legacy.md:L620"
+  - id: US-TDE-MUNI-003
+    legacy_ids:
+      - MUNI-TD-01
+    title: Digitalizar permisos municipales
+    as_a:
+      - Encargado Digital Muni
+    i_want: Digitalizar proceso de permisos municipales (DOM)
+    so_that: Agilizo trámites locales
+    priority: Alta
+    module: Interoperabilidad
+    acceptance_criteria:
+      - Integración DOM Digital
+      - Pago en línea
+    source_ref: "user_stories_legacy.md:L890"
+  - id: US-TDE-MUNI-004
+    legacy_ids:
+      - MUNI-TD-02
+    title: Unificar ventanilla municipal
+    as_a:
+      - Encargado Digital Muni
+    i_want: Habilitar ventanilla única municipal integrada a GORE
+    so_that: Centralizo atención
+    priority: Alta
+    module: Interoperabilidad
+    acceptance_criteria:
+      - Portal único
+      - SSO Ciudadano
+    source_ref: "user_stories_legacy.md:L891"
+  - id: US-TDE-INTEROP-006
+    legacy_ids:
+      - S-CTD-GORE-001
+    title: Publicar datos abiertos GORE
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Publicar datasets en portal de Datos Abiertos
+    so_that: Fomento transparencia y reutilización
+    priority: Media
+    module: Interoperabilidad
+    normativa: DS11
+    acceptance_criteria:
+      - Datasets normalizados
+      - API CKAN
+    source_ref: "user_stories_legacy.md:L644"
+  - id: US-TDE-INTEROP-007
+    legacy_ids:
+      - S-CTD-GORE-002
+    title: Consumir datos territoriales
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Consumir capas de datos territoriales de IDE
+    so_that: Enriquezco sistemas de gestión
+    priority: Alta
+    module: Interoperabilidad
+    acceptance_criteria:
+      - Conector WMS/WFS
+      - Visualización integrada
+    source_ref: "user_stories_legacy.md:L645"
+  - id: US-TDE-REG-001
+    legacy_ids: []
+    title: Convocar Mesa Regional TDE
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Convocar y liderar la Mesa Regional de Transformación Digital
+    so_that: Articulo el cumplimiento normativo en todo el territorio
+    priority: Alta
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Acta de constitución
+      - Plan de trabajo regional
+    source_ref: "docs/blueprint/domains/domain_d-tde.md"
+  - id: US-TDE-REG-007
+    legacy_ids: []
+    title: Federar Firma Municipal
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: habilitar un servicio de firma electrónica federada para municipios
+    so_that: los municipios sin capacidad de firma propia puedan firmar convenios a través del GORE
+    priority: Crítica
+    module: VinculacionDigital
+    acceptance_criteria:
+      - Convenio Marco firmado
+      - Proxy de firma operativo
+    source_ref: "artefacto:inteligencia-operativa:CAP-01"
+  - id: US-TDE-DOCDIG-002
+    legacy_ids: []
+    title: Generar Resolución con Link CeroPapel
+    as_a:
+      - Abogado Jurídica
+    i_want: incluir un link de verificación en lugar del texto íntegro del convenio en las resoluciones
+    so_that: las resoluciones sean cortas y verificables digitalmente
+    priority: Alta
+    module: Notificaciones
+    acceptance_criteria:
+      - URL de convenio generada
+      - Código QR opcional
+    source_ref: "artefacto:inteligencia-operativa:CAP-02"
+  - id: US-TDE-SEG-012
+    legacy_ids: []
+    title: Generar Resolución Encargado Ciberseguridad
+    as_a:
+      - Coordinador Transformación Digital
+    i_want: Generar el acto administrativo de designación de encargado de ciberseguridad
+    so_that: Cumplo con los requisitos de la ANCI
+    priority: Alta
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Resolución firmada
+      - Notificación a ANCI
+    source_ref: "artefacto:inteligencia-operativa:CAP-03"
+  - id: US-TDE-FIRMA-002
+    legacy_ids: []
+    title: Conmutar Firma (FirmaGob ↔ Contingencia)
+    as_a:
+      - Administrador Sistema
+    i_want: Activar mecanismo de firma de contingencia ante caídas de FirmaGob
+    so_that: Aseguro la continuidad operativa del GORE
+    priority: Alta
+    module: Autenticacion
+    acceptance_criteria:
+      - Switch de contingencia operativo
+      - Firma simple/avanzada local alternativa
+    source_ref: "artefacto:inteligencia-operativa:CAP-05"
+_summary:
+  total_stories: 76
+  modules_covered:
+    - Infraestructura
+    - Autenticacion
+    - Notificaciones
+    - Interoperabilidad
+    - Ciberseguridad
+    - Calidad
+    - ProteccionDatos
+    - Cumplimiento
+    - VinculacionDigital
+    - AdminSistema
+  added_in_audit_1: 11
+  added_in_audit_2: 5
+  migrated_from_d_norm: 8
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO ADMIN SISTEMA (migrado desde D-NORM 2025-12-16)
+  # ═══════════════════════════════════════════════════════════════
+stories_migrated:
+  - id: US-TDE-ADMIN-001
+    legacy_ids:
+      - AS-001
+    title: Crear/editar divisiones
+    as_a:
+      - Administrador Sistema
+    i_want: Crear/editar divisiones con jefe asignado
+    so_that: Configuro estructura organizacional
+    priority: Alta
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-001
+    acceptance_criteria:
+      - CRUD de divisiones
+      - Asignación de jefatura
+    source_ref: "user_stories_legacy.md:L568"
+  - id: US-TDE-ADMIN-002
+    legacy_ids:
+      - AS-002
+    title: Crear usuarios
+    as_a:
+      - Administrador Sistema
+    i_want: "Crear usuarios (email, división, rol)"
+    so_that: Habilito acceso al sistema
+    priority: Crítica
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-002
+    acceptance_criteria:
+      - Datos mínimos requeridos
+      - Asignación de rol
+    source_ref: "user_stories_legacy.md:L569"
+  - id: US-TDE-ADMIN-003
+    legacy_ids:
+      - AS-003
+    title: Cambiar rol/división usuario
+    as_a:
+      - Administrador Sistema
+    i_want: Cambiar rol/división actualizando permisos
+    so_that: Gestiono movilidad de usuarios
+    priority: Alta
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-003
+    acceptance_criteria:
+      - Actualización de permisos
+      - Historial de cambios
+    source_ref: "user_stories_legacy.md:L570"
+  - id: US-TDE-ADMIN-004
+    legacy_ids:
+      - AS-004
+    title: Desactivar usuarios
+    as_a:
+      - Administrador Sistema
+    i_want: Desactivar usuarios manteniendo historial
+    so_that: Gestiono bajas sin perder trazabilidad
+    priority: Alta
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-004
+    acceptance_criteria:
+      - "Usuario inactivo, no eliminado"
+      - Historial preservado
+    source_ref: "user_stories_legacy.md:L571"
+  - id: US-TDE-ADMIN-005
+    legacy_ids:
+      - AS-005
+    title: Importar IPR desde Excel
+    as_a:
+      - Administrador Sistema
+    i_want: Importar IPR desde Excel validando errores
+    so_that: Migro datos históricos
+    priority: Alta
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-005
+    acceptance_criteria:
+      - Validación de formato
+      - Reporte de errores
+    source_ref: "user_stories_legacy.md:L572"
+  - id: US-TDE-ADMIN-006
+    legacy_ids:
+      - AS-006
+    title: Configurar reglas de alerta
+    as_a:
+      - Administrador Sistema
+    i_want: Configurar reglas de alerta (disparo automático)
+    so_that: Personalizo notificaciones
+    priority: Alta
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-006
+    acceptance_criteria:
+      - Condiciones configurables
+      - Destinatarios por regla
+    source_ref: "user_stories_legacy.md:L573"
+  - id: US-TDE-ADMIN-007
+    legacy_ids:
+      - AS-007
+    title: Ver logs de actividad
+    as_a:
+      - Administrador Sistema
+    i_want: Ver logs de actividad (filtro usuario/acción)
+    so_that: Audito uso del sistema
+    priority: Alta
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-007
+    acceptance_criteria:
+      - Filtros avanzados
+      - Exportación de logs
+    source_ref: "user_stories_legacy.md:L574"
+  - id: US-TDE-ADMIN-008
+    legacy_ids:
+      - AS-008
+    title: Estado backups
+    as_a:
+      - Administrador Sistema
+    i_want: Ver estado de backups con ejecución manual
+    so_that: Aseguro recuperabilidad
+    priority: Alta
+    module: AdminSistema
+    migrated_from: US-NORM-ADMIN-008
+    acceptance_criteria:
+      - Historial de backups
+      - Ejecución manual disponible
+    source_ref: "user_stories_legacy.md:L575"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M10: RESILIENCIA DIGITAL Y CONTINUIDAD (RAINY DAY)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-TDE-CRIS-001
+    title: Activar Contingencia Interoperabilidad
+    as_a:
+      - Operador PISEE
+    i_want: Activar protocolo de ingreso manual ante caída de Nodo PISEE
+    so_that: Mantengo la operación crítica del servicio
+    priority: Crítica
+    module: Interoperabilidad
+    acceptance_criteria:
+      - Switch a modo manual habilitado en UI
+      - Bitácora de operaciones manuales para conciliación posterior
+      - Notificación a contraparte
+    source_ref: "SBG:Context:RainyDay"
+
+  - id: US-TDE-SEC-001
+    title: Simulacro de Breach de Datos
+    as_a:
+      - CISO
+    i_want: Ejecutar un simulacro de exfiltración de datos personales
+    so_that: Mido el tiempo de detección y respuesta del equipo
+    priority: Alta
+    module: Ciberseguridad
+    acceptance_criteria:
+      - Escenario de ataque controlado
+      - Medición de MTTR (Mean Time to Respond)
+      - Reporte de lecciones aprendidas
+    source_ref: "SBG:Context:Crisis"
+
+  # ═══════════════════════════════════════════════════════════════
+  # MÓDULO M11: ARQUEOLOGÍA DIGITAL (POST-FACTO)
+  # ═══════════════════════════════════════════════════════════════
+  - id: US-TDE-ARCH-001
+    title: Rescate de Formatos Obsoletos
+    as_a:
+      - Archivero Digital
+    i_want: Convertir automáticamente documentos antiguos de formatos deprecados a PDF/A
+    so_that: Garantizo la accesibilidad a largo plazo (DS10)
+    priority: Media
+    module: Expediente
+    acceptance_criteria:
+      - Detección de formato obsoleto
+      - Conversión automática a PDF/A-3
+      - Hash de integridad original vs copia
+    source_ref: "SBG:Time:PostFacto"

@@ -1,0 +1,118 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_fin_dash_001:1.0.0
+  type: Capability
+id: CAP-FIN-DASH-001
+name: Dashboard de Ejecución Presupuestaria
+domain: D-FIN
+type: DOMAIN_SPECIFIC
+description: Dashboard de ejecución presupuestaria regional con indicadores, semáforos
+  y proyecciones.
+value_proposition: Provee visibilidad en tiempo real del estado financiero, habilitando
+  decisiones oportunas.
+orko_mapping:
+  p1_capacity: Jefe DAF, Profesional Presupuesto
+  p2_flow: Ciclo Presupuestario Mensual (D-FIN)
+  p3_information: SIGFE, marcos, compromisos, devengos
+  p4_limit: Ley de Presupuestos, Glosas
+  p5_purpose: Ejecución ≥90%, cero deuda flotante irregular
+stories:
+- urn:goreos:atom:story:us_abast_001_01
+- urn:goreos:atom:story:us_abast_001_02
+- urn:goreos:atom:story:us_abog_daf_001_01
+- urn:goreos:atom:story:us_analpres_001_01
+- urn:goreos:atom:story:us_analpres_001_02
+- urn:goreos:atom:story:us_apres_001_01
+- urn:goreos:atom:story:us_ates_001_01
+- urn:goreos:atom:story:us_atrans_001_01
+- urn:goreos:atom:story:us_aucr_001_01
+- urn:goreos:atom:story:us_bod_002_01
+- urn:goreos:atom:story:us_cgr_cont_001_01
+- urn:goreos:atom:story:us_ciu_001_02
+- urn:goreos:atom:story:us_com_ev_001_01
+- urn:goreos:atom:story:us_comp_001_01
+- urn:goreos:atom:story:us_cont_001_01
+- urn:goreos:atom:story:us_cont_001_02
+- urn:goreos:atom:story:us_corp_001_01
+- urn:goreos:atom:story:us_daf_001_01
+- urn:goreos:atom:story:us_dipir_001_02
+- urn:goreos:atom:story:us_ec33_001_01
+- urn:goreos:atom:story:us_ecif_001_01
+- urn:goreos:atom:story:us_fin_001_01
+- urn:goreos:atom:story:us_fin_apr_001
+- urn:goreos:atom:story:us_fin_c33_001
+- urn:goreos:atom:story:us_fin_c33_002
+- urn:goreos:atom:story:us_fin_c33_005
+- urn:goreos:atom:story:us_fin_conv_003
+- urn:goreos:atom:story:us_fin_conv_005
+- urn:goreos:atom:story:us_fin_form_003
+- urn:goreos:atom:story:us_fin_form_004
+- urn:goreos:atom:story:us_fin_form_005
+- urn:goreos:atom:story:us_fin_fril_001
+- urn:goreos:atom:story:us_fin_frpd_001
+- urn:goreos:atom:story:us_fin_frpd_002
+- urn:goreos:atom:story:us_fin_frpd_003
+- urn:goreos:atom:story:us_fin_gest_002
+- urn:goreos:atom:story:us_fin_gest_003
+- urn:goreos:atom:story:us_fin_gest_005
+- urn:goreos:atom:story:us_fin_gob_001
+- urn:goreos:atom:story:us_fin_ipr_005
+- urn:goreos:atom:story:us_fin_ipr_006
+- urn:goreos:atom:story:us_fin_ipr_007
+- urn:goreos:atom:story:us_fin_ipr_008
+- urn:goreos:atom:story:us_fin_ipr_011
+- urn:goreos:atom:story:us_fin_ipr_015
+- urn:goreos:atom:story:us_fin_ipr_017
+- urn:goreos:atom:story:us_fin_ipr_018
+- urn:goreos:atom:story:us_fin_ipr_022
+- urn:goreos:atom:story:us_fin_ipr_026
+- urn:goreos:atom:story:us_fin_ipr_027
+- urn:goreos:atom:story:us_fin_ipr_031
+- urn:goreos:atom:story:us_fin_ipr_034
+- urn:goreos:atom:story:us_fin_ipr_035
+- urn:goreos:atom:story:us_fin_ipr_036
+- urn:goreos:atom:story:us_fin_ipr_039
+- urn:goreos:atom:story:us_fin_ipr_040
+- urn:goreos:atom:story:us_fin_jef_002
+- urn:goreos:atom:story:us_fin_jef_003
+- urn:goreos:atom:story:us_fin_jef_004
+- urn:goreos:atom:story:us_fin_mod_002
+- urn:goreos:atom:story:us_fin_ppr_002
+- urn:goreos:atom:story:us_fin_ppr_003
+- urn:goreos:atom:story:us_fin_ppr_004
+- urn:goreos:atom:story:us_fin_ppr_006
+- urn:goreos:atom:story:us_fin_ppto_004
+- urn:goreos:atom:story:us_fin_ppto_006
+- urn:goreos:atom:story:us_fin_ppto_009
+- urn:goreos:atom:story:us_fin_ppto_010
+- urn:goreos:atom:story:us_fin_ppto_011
+- urn:goreos:atom:story:us_fin_ppto_012
+- urn:goreos:atom:story:us_fin_ppto_013
+- urn:goreos:atom:story:us_fin_ppto_017
+- urn:goreos:atom:story:us_fin_ppto_019
+- urn:goreos:atom:story:us_fin_ppto_020
+- urn:goreos:atom:story:us_fin_ppto_021
+- urn:goreos:atom:story:us_fin_ppto_022
+- urn:goreos:atom:story:us_fin_ppto_026
+- urn:goreos:atom:story:us_fin_ppto_027
+- urn:goreos:atom:story:us_fin_ppto_031
+- urn:goreos:atom:story:us_fin_rend_014
+- urn:goreos:atom:story:us_fin_rend_015
+- urn:goreos:atom:story:us_fin_rend_016
+- urn:goreos:atom:story:us_fin_rend_018
+- urn:goreos:atom:story:us_fin_sub_001
+- urn:goreos:atom:story:us_fin_sub_002
+- urn:goreos:atom:story:us_fin_sub_003
+- urn:goreos:atom:story:us_fin_sub_004
+- urn:goreos:atom:story:us_fin_sub_005
+- urn:goreos:atom:story:us_fin_sup_002
+- urn:goreos:atom:story:us_g7_001_01
+- urn:goreos:atom:story:us_intfin_001_01
+- urn:goreos:atom:story:us_inv_001_01
+- urn:goreos:atom:story:us_jcont_001_01
+- urn:goreos:atom:story:us_jd_ana_001_01
+- urn:goreos:atom:story:us_jpre_001_01
+- urn:goreos:atom:story:us_jtes_001_01
+- urn:goreos:atom:story:us_rend_002_01
+- urn:goreos:atom:story:us_subv_001_01
+- urn:goreos:atom:story:us_tes_001_01
+ofrecida_por: null

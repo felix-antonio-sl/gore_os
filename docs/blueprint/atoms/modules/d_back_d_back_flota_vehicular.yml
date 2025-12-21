@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_back_flota_vehicular:1.0.0
+  type: Module
+  source: domains/d-back
+id: MOD-BACK-FLOTA_VEHICULAR
+name: Flota Vehicular
+domain: D-BACK
+number: 5
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

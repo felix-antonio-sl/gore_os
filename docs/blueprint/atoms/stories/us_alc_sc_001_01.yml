@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_alc_sc_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ALC-SC-001-01
+story_key: us_alc_sc_001_01
+role_id: USR-MUNI-ALC
+as_a: null
+i_want: ver el estado de todos los proyectos de mi comuna
+so_that: pueda informar a la comunidad
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-SEG-001
+morphisms:
+  protagonizado_por: USR-MUNI-ALC
+  contribuye_a: CAP-EJEC-SEG-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_jef_004:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-JEF-004
+story_key: us_fin_jef_004
+role_id: USR-DIPIR-JEFE
+as_a: null
+i_want: Ver propuesta de priorización (ranking ERD/urgencia/monto)
+so_that: Optimizo uso de recursos
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DIPIR-JEFE
+  contribuye_a: CAP-FIN-DASH-001

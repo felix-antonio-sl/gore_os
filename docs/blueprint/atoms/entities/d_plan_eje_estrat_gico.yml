@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_eje_estrat_gico:1.0.0
+  type: Entity
+  source: domains/d-plan/glossary
+id: ENT-PLAN-EJE_ESTRAT_GICO
+name: Eje Estratégico
+entity_key: eje_estrat_gico
+domain: D-PLAN
+category: Reference
+description: EE
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

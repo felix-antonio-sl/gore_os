@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fnx_int_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FNX-INT-003
+story_key: us_fnx_int_003
+role_id: BOT-KODA
+as_a: null
+i_want: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
+so_that: Evito que el problema crezca mientras se interviene
+domain: D-FENIX
+priority: P0
+capability_bundle_id: CAP-FENIX-001
+morphisms:
+  protagonizado_por: BOT-KODA
+  contribuye_a: CAP-FENIX-001

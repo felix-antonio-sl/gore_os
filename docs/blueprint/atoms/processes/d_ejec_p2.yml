@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_ejec_p2:1.0.0
+  type: Process
+  source: domains/d-ejec
+id: PROC-EJEC-P2
+code: P2
+name: Ejecución y Estados de Pago
+domain: D-EJEC
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

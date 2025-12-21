@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_seg_p4:1.0.0
+  type: Process
+  source: domains/d-seg
+id: PROC-SEG-P4
+code: P4
+name: Asesoría y Coordinación Municipal
+domain: D-SEG
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

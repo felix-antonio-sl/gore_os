@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_evol_h_org:1.0.0
+  type: Entity
+  source: domains/d-evol/glossary
+id: ENT-EVOL-H_ORG
+name: H_org
+entity_key: h_org
+domain: D-EVOL
+category: Reference
+description: 'Puntaje de Salud Organizacional (Health Score). Métrica estratégica
+  de madurez y salud sistémica. Fórmula: A×0.30 + F×0.30 + C×0.20 + I×0.10 + G×0.10'
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

@@ -1,0 +1,45 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_evol:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-EVOL
+name: Dominio D-EVOL
+aggregation:
+  modules:
+  - urn:goreos:atom:module:d_evol_agentes_ia_especializados:1.0.0
+  - urn:goreos:atom:module:d_evol_arquitectura_organizacional_ao:1.0.0
+  - urn:goreos:atom:module:d_evol_base_de_conocimiento_institucional:1.0.0
+  - urn:goreos:atom:module:d_evol_deuda_t_cnica:1.0.0
+  - urn:goreos:atom:module:d_evol_gobierno_de_evoluci_n:1.0.0
+  - urn:goreos:atom:module:d_evol_orquestaci_n_de_agentes:1.0.0
+  - urn:goreos:atom:module:d_evol_pilotos_de_autonom_a:1.0.0
+  - urn:goreos:atom:module:d_evol_playbooks_de_remediaci_n:1.0.0
+  - urn:goreos:atom:module:d_evol_puente_tde_orko_estrategia_regional:1.0.0
+  - urn:goreos:atom:module:d_evol_salud_organizacional_h_org:1.0.0
+  - urn:goreos:atom:module:d_evol_trayectoria_del_sistema:1.0.0
+  processes:
+  - urn:goreos:atom:process:d_evol_p1:1.0.0
+  - urn:goreos:atom:process:d_evol_p2:1.0.0
+  - urn:goreos:atom:process:d_evol_p3:1.0.0
+  - urn:goreos:atom:process:d_evol_p4:1.0.0
+  - urn:goreos:atom:process:d_evol_p5:1.0.0
+  entities:
+  - urn:goreos:atom:entity:d_evol_agente_ia:1.0.0
+  - urn:goreos:atom:entity:d_evol_banderafuncion:1.0.0
+  - urn:goreos:atom:entity:d_evol_cat_logo:1.0.0
+  - urn:goreos:atom:entity:d_evol_custodiodatos:1.0.0
+  - urn:goreos:atom:entity:d_evol_deteccionderiva:1.0.0
+  - urn:goreos:atom:entity:d_evol_h_gore:1.0.0
+  - urn:goreos:atom:entity:d_evol_h_org:1.0.0
+  - urn:goreos:atom:entity:d_evol_linaje:1.0.0
+  - urn:goreos:atom:entity:d_evol_orquestador:1.0.0
+  - urn:goreos:atom:entity:d_evol_playbook:1.0.0
+  - urn:goreos:atom:entity:d_evol_registrodesempe_o:1.0.0
+  - urn:goreos:atom:entity:d_evol_sesgo:1.0.0
+  capabilities:
+  - urn:goreos:atom:capability:cap_evol_001:1.0.0
+stats:
+  modules_count: 11
+  processes_count: 5
+  entities_count: 12
+  capabilities_count: 1

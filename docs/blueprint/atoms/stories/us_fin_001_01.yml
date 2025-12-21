@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-001-01
+story_key: us_fin_001_01
+role_id: USR-DAF-FIN-JEFE
+as_a: null
+i_want: un panel de cuadratura contable diaria con validaciones automáticas
+so_that: pueda detectar descuadres antes del cierre mensual
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-FIN-JEFE
+  contribuye_a: CAP-FIN-DASH-001

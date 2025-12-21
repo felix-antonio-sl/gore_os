@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_tde_agencia_nac_ciberseguridad:1.0.0
+  type: Entity
+  source: domains/d-tde/glossary
+id: ENT-TDE-AGENCIA_NAC_CIBERSEG
+name: Agencia Nac. Ciberseguridad
+entity_key: agencia_nac_ciberseguridad
+domain: D-TDE
+category: Reference
+description: ANCI
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

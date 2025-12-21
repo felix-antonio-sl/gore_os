@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ar_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-AR-001-02
+story_key: us_ar_001_02
+role_id: USR-ADM-JEFE
+as_a: null
+i_want: programar reuniones de coordinación con jefes de división desde el sistema
+so_that: pueda mantener alineamiento estratégico
+domain: D-BACK
+priority: P2
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-ADM-JEFE
+  contribuye_a: CAP-BACK-TICKETS-001

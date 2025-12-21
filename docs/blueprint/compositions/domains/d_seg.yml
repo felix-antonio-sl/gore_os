@@ -1,0 +1,29 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_seg:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-SEG
+name: Dominio D-SEG
+aggregation:
+  modules:
+  - urn:goreos:atom:module:d_seg_cies_uble:1.0.0
+  - urn:goreos:atom:module:d_seg_evidencias_digitales:1.0.0
+  - urn:goreos:atom:module:d_seg_gobernanza_y_transparencia:1.0.0
+  - urn:goreos:atom:module:d_seg_prevenci_n_y_apoyo_a_v_ctimas:1.0.0
+  processes:
+  - urn:goreos:atom:process:d_seg_p1:1.0.0
+  - urn:goreos:atom:process:d_seg_p2:1.0.0
+  - urn:goreos:atom:process:d_seg_p3:1.0.0
+  - urn:goreos:atom:process:d_seg_p4:1.0.0
+  entities:
+  - urn:goreos:atom:entity:d_seg_accionrespuesta:1.0.0
+  - urn:goreos:atom:entity:d_seg_evidencia:1.0.0
+  - urn:goreos:atom:entity:d_seg_incidente:1.0.0
+  - urn:goreos:atom:entity:d_seg_proyecto_seguridad:1.0.0
+  capabilities:
+  - urn:goreos:atom:capability:cap_seg_001:1.0.0
+stats:
+  modules_count: 4
+  processes_count: 4
+  entities_count: 4
+  capabilities_count: 1

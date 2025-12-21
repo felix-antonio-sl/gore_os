@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_tde_expediente_electr_nico:1.0.0
+  type: Entity
+  source: domains/d-tde/glossary
+id: ENT-TDE-EXPEDIENTE_ELECTR_NI
+name: Expediente Electrónico
+entity_key: expediente_electr_nico
+domain: D-TDE
+category: Reference
+description: EE
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_seg_p3:1.0.0
+  type: Process
+  source: domains/d-seg
+id: PROC-SEG-P3
+code: P3
+name: Gestión de Evidencias Digitales
+domain: D-SEG
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

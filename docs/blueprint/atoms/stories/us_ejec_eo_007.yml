@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ejec_eo_007:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EJEC-EO-007
+story_key: us_ejec_eo_007
+role_id: USR-DIDES-TERR-OP
+as_a: null
+i_want: Recibir notificaciones de próximo vencimiento
+so_that: Actúo a tiempo
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIDES-TERR-OP
+  contribuye_a: CAP-EJEC-PORTAL-001

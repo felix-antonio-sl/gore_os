@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_sub_005:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-SUB-005
+story_key: us_fin_sub_005
+role_id: USR-NEW-EJECUTOR
+as_a: null
+i_want: Postular a Subvención 8% en línea
+so_that: Accedo a fondos concursables
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-NEW-EJECUTOR
+  contribuye_a: CAP-FIN-DASH-001

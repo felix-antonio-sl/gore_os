@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_back_af_004:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BACK-AF-004
+story_key: us_back_af_004
+role_id: USR-DAF-OPS-AF
+as_a: null
+i_want: Realizar inventario anual de activo fijo
+so_that: Cumplo con normativa contable
+domain: D-BACK
+priority: P1
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-DAF-OPS-AF
+  contribuye_a: CAP-BACK-TICKETS-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_atrans_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ATRANS-001-01
+story_key: us_atrans_001_01
+role_id: USR-FIN-TRANS
+as_a: null
+i_want: un módulo de control de convenios de transferencia
+so_that: pueda verificar ejecución financiera y técnica
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-FIN-TRANS
+  contribuye_a: CAP-FIN-DASH-001

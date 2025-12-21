@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_back_tem_34_07:1.0.0
+  type: Entity
+  source: domains/d-back/glossary
+id: ENT-BACK-TEM_34_07
+name: Ítem 34.07
+entity_key: tem_34_07
+domain: D-BACK
+category: Reference
+description: Asignación presupuestaria para pago de deuda flotante del ejercicio anterior
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_seg_p1:1.0.0
+  type: Process
+  source: domains/d-seg
+id: PROC-SEG-P1
+code: P1
+name: Monitoreo, Detección y Escalamiento
+domain: D-SEG
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

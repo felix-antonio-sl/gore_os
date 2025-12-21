@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_tde_cat_logo_procedimientos:1.0.0
+  type: Entity
+  source: domains/d-tde/glossary
+id: ENT-TDE-CAT_LOGO_PROCEDIMIEN
+name: Catálogo Procedimientos
+entity_key: cat_logo_procedimientos
+domain: D-TDE
+category: Reference
+description: CPAT
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

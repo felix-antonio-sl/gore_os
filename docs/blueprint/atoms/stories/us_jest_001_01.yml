@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_jest_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-JEST-001-01
+story_key: us_jest_001_01
+role_id: USR-DIPL-PLAN-ANAL
+as_a: null
+i_want: un repositorio de estudios con buscador temático
+so_that: pueda reutilizar conocimiento
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-DIPL-PLAN-ANAL
+  contribuye_a: CAP-TERR-MAP-001

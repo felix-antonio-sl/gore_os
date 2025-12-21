@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-IPR-027
+story_key: us_fin_ipr_027
+role_id: USR-DIPL-DAE-PRE
+as_a: null
+i_want: Ver bandeja de postulaciones ordenada FIFO
+so_that: Proceso en orden de llegada
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DIPL-DAE-PRE
+  contribuye_a: CAP-FIN-DASH-001

@@ -1,0 +1,657 @@
+to_review_and_integrate:
+- id: USR-NEW-ADMINISTRA
+  title: Administrador De Plataforma
+  role_key: administrador_de_plataforma
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado Rezago
+  role_key: encargado_rezago
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado Ley Del Lobby
+  role_key: encargado_ley_del_lobby
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PROFESIONA
+  title: Profesional Rezago
+  role_key: profesional_rezago
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COMISIÓN-E
+  title: Comisión Evaluadora
+  role_key: comisión_evaluadora
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Presupuestario
+  role_key: analista_presupuestario
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-CPLT-(EXTE
+  title: Cplt (Externo)
+  role_key: cplt_(externo)
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-GABINETE
+  title: Gabinete
+  role_key: gabinete
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-SECRETARIO
+  title: Secretario Comité
+  role_key: secretario_comité
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COORDINADO
+  title: Coordinador Transformación Digital
+  role_key: coordinador_transformación_digital
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Prevención
+  role_key: analista_prevención
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-REPRESENTA
+  title: Representante Amuch
+  role_key: representante_amuch
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-C
+  title: Analista C33
+  role_key: analista_c33
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-TECH-LEAD
+  title: Tech Lead
+  role_key: tech_lead
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-TESORERO
+  title: Tesorero
+  role_key: tesorero
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Seguimiento
+  role_key: analista_de_seguimiento
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-A
+  title: Analista Ambiental
+  role_key: analista_ambiental
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Patrocinante Didesoh
+  role_key: analista_patrocinante_didesoh
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-E
+  title: Analista Ejecutor
+  role_key: analista_ejecutor
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Convenios
+  role_key: analista_de_convenios
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-FUNCIONARI
+  title: Funcionario Gore
+  role_key: funcionario_gore
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Ppr Técnico
+  role_key: analista_ppr_técnico
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-GESTI
+  title: Jefe Gestión Personas
+  role_key: jefe_gestión_personas
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-FISCAL-MIN
+  title: Fiscal Ministerio Público
+  role_key: fiscal_ministerio_público
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Educación
+  role_key: analista_de_educación
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-DEPTO
+  title: Jefe Depto Planificación
+  role_key: jefe_depto_planificación
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DELEGADO-P
+  title: Delegado Presidencial Regional
+  role_key: delegado_presidencial_regional
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado Circular 33
+  role_key: encargado_circular_33
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-SUPERVISOR
+  title: Supervisor
+  role_key: supervisor
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-OPERADOR-N
+  title: Operador Noc/Soc
+  role_key: operador_noc/soc
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Preinversión Dipir
+  role_key: analista_preinversión_dipir
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-O
+  title: Analista Operaciones C33
+  role_key: analista_operaciones_c33
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COMITÉ-DE-
+  title: Comité De Gobierno
+  role_key: comité_de_gobierno
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PRESIDENTE
+  title: Presidente Colegio Profesionales
+  role_key: presidente_colegio_profesionales
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-AGENTE-MES
+  title: Agente Mesa Ayuda
+  role_key: agente_mesa_ayuda
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PROFESIONA
+  title: Profesional Bienestar
+  role_key: profesional_bienestar
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista D-Gestion
+  role_key: analista_d-gestion
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DIPUTADO
+  title: Diputado
+  role_key: diputado
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Planificación Territorial
+  role_key: analista_planificación_territorial
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Preinversión
+  role_key: analista_de_preinversión
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-CGR-(EXTER
+  title: Cgr (Externo)
+  role_key: cgr_(externo)
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-CONTADOR
+  title: Contador
+  role_key: contador
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-DIVIS
+  title: Jefe División Prevención
+  role_key: jefe_división_prevención
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-MIEMBRO-CO
+  title: Miembro Comité Grd
+  role_key: miembro_comité_grd
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ORGANIZACI
+  title: Organización Postulante
+  role_key: organización_postulante
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-MUNICIPIO
+  title: Municipio
+  role_key: municipio
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Tesorería
+  role_key: analista_de_tesorería
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-FRONTEND-D
+  title: Frontend Developer
+  role_key: frontend_developer
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-SISTEMA
+  title: Sistema
+  role_key: sistema
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DIRECTOR-O
+  title: Director Obras Municipales
+  role_key: director_obras_municipales
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ABOGADO-UN
+  title: Abogado Unidad Jurídica
+  role_key: abogado_unidad_jurídica
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-G
+  title: Analista Geoespacial
+  role_key: analista_geoespacial
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-MIEMBRO-JU
+  title: Miembro Junta Calificadora
+  role_key: miembro_junta_calificadora
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ADMINISTRA
+  title: Administrador Ti
+  role_key: administrador_ti
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-ESTUD
+  title: Jefe Estudios Territoriales
+  role_key: jefe_estudios_territoriales
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DIRIGENTE-
+  title: Dirigente Cut
+  role_key: dirigente_cut
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-UNIDAD-FOR
+  title: Unidad Formuladora Municipal
+  role_key: unidad_formuladora_municipal
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-OFICIAL-DE
+  title: Oficial De Partes / Oficial De Partes
+  role_key: oficial_de_partes_/_oficial_de_partes
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ITO
+  title: Ito
+  role_key: ito
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-C
+  title: Analista Ciclo De Vida
+  role_key: analista_ciclo_de_vida
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ALCALDE-DE
+  title: Alcalde De San Carlos
+  role_key: alcalde_de_san_carlos
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado Proyectos
+  role_key: encargado_proyectos
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PROFESIONA
+  title: Profesional Daf
+  role_key: profesional_daf
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ADMINISTRA
+  title: Administrador Sistema
+  role_key: administrador_sistema
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Transferencias
+  role_key: analista_de_transferencias
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COMISIÓN-D
+  title: Comisión De Recepción
+  role_key: comisión_de_recepción
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-CTD
+  title: Ctd
+  role_key: ctd
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Inversión
+  role_key: analista_de_inversión
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Evaluación
+  role_key: analista_de_evaluación
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ALCALDE-DE
+  title: Alcalde De Chillán Viejo
+  role_key: alcalde_de_chillán_viejo
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ABOGADO-CD
+  title: Abogado Cde
+  role_key: abogado_cde
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JUEZ-CORTE
+  title: Juez Corte Apelaciones
+  role_key: juez_corte_apelaciones
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Ppr
+  role_key: analista_ppr
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COMUNICACI
+  title: Comunicaciones Sectoriales
+  role_key: comunicaciones_sectoriales
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COMITÉ-DE-
+  title: Comité De Ética
+  role_key: comité_de_ética
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-INTERVENTO
+  title: Interventor
+  role_key: interventor
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Bienestar
+  role_key: analista_de_bienestar
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-C
+  title: Analista Control De Asistencia
+  role_key: analista_control_de_asistencia
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DIRECTOR-S
+  title: Director Sercotec
+  role_key: director_sercotec
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-UCR-SUBDER
+  title: Ucr Subdere
+  role_key: ucr_subdere
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-TERRI
+  title: Jefe Territorio
+  role_key: jefe_territorio
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-Q
+  title: Analista Qa
+  role_key: analista_qa
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-UNIDAD-TÉC
+  title: Unidad Técnica Municipal
+  role_key: unidad_técnica_municipal
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DIRIGENTE-
+  title: Dirigente Municipal
+  role_key: dirigente_municipal
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-UNIDA
+  title: Jefe Unidad
+  role_key: jefe_unidad
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENLACE-TÉC
+  title: Enlace Técnico Municipal
+  role_key: enlace_técnico_municipal
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-DE-AU
+  title: Jefe De Auditoría
+  role_key: jefe_de_auditoría
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Transporte
+  role_key: analista_de_transporte
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-F
+  title: Analista Fril Dipir
+  role_key: analista_fril_dipir
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-SRE
+  title: Sre
+  role_key: sre
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PLANIFICAD
+  title: Planificador
+  role_key: planificador
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Patrocinante Difoi
+  role_key: analista_patrocinante_difoi
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado Relaciones Internacionales
+  role_key: encargado_relaciones_internacionales
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-EVALUADOR-
+  title: Evaluador Cseu
+  role_key: evaluador_cseu
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-REPRESENTA
+  title: Representante Ancore
+  role_key: representante_ancore
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-EJECUTOR
+  title: Ejecutor
+  role_key: ejecutor
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-F
+  title: Analista Fomento
+  role_key: analista_fomento
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado Servicios Generales
+  role_key: encargado_servicios_generales
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-GOBERNADOR
+  title: Gobernador Regional
+  role_key: gobernador_regional
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Presupuesto Daf
+  role_key: analista_presupuesto_daf
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-C
+  title: Analista Contable
+  role_key: analista_contable
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ALCALDE-DE
+  title: Alcalde De Chillán
+  role_key: alcalde_de_chillán
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COMITÉ-DIR
+  title: Comité Directivo Regional
+  role_key: comité_directivo_regional
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-S
+  title: Analista Social
+  role_key: analista_social
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-TÉCNICO-SO
+  title: Técnico Soporte
+  role_key: técnico_soporte
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DUEÑO-DE-D
+  title: Dueño De Datos
+  role_key: dueño_de_datos
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ASESOR-TÉC
+  title: Asesor Técnico
+  role_key: asesor_técnico
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-S
+  title: Analista Subvenciones
+  role_key: analista_subvenciones
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista Dae Ppr
+  role_key: analista_dae_ppr
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-SUJETO-PAS
+  title: Sujeto Pasivo (Autoridad)
+  role_key: sujeto_pasivo_(autoridad)
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-INGENIERO-
+  title: Ingeniero De Vialidad
+  role_key: ingeniero_de_vialidad
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-INVESTIGAD
+  title: Investigador
+  role_key: investigador
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PREVENCION
+  title: Prevencionista
+  role_key: prevencionista
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-M
+  title: Analista Mdsf
+  role_key: analista_mdsf
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-UNIDA
+  title: Jefe Unidad De Control
+  role_key: jefe_unidad_de_control
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DIRIGENTE-
+  title: Dirigente Agrícola
+  role_key: dirigente_agrícola
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-MINISTRO-T
+  title: Ministro Tc
+  role_key: ministro_tc
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ASISTENTE-
+  title: Asistente Jurídico (Robot)
+  role_key: asistente_jurídico_(robot)
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-LÍDER-TÉCN
+  title: Líder Técnico
+  role_key: líder_técnico
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-DIVIS
+  title: Jefe División Daf
+  role_key: jefe_división_daf
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ADMINISTRA
+  title: Administrador De Sistemas
+  role_key: administrador_de_sistemas
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Modificaciones
+  role_key: analista_de_modificaciones
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Pesca
+  role_key: analista_de_pesca
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Presupuesto
+  role_key: analista_de_presupuesto
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Proyectos Seguridad
+  role_key: analista_proyectos_seguridad
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ABOGADO
+  title: Abogado
+  role_key: abogado
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Observatorio
+  role_key: analista_de_observatorio
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COSOC-/-CO
+  title: Cosoc / Comités
+  role_key: cosoc_/_comités
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ITP
+  title: Itp
+  role_key: itp
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DIRECTOR-F
+  title: Director Fundación
+  role_key: director_fundación
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-AGENTE-CLA
+  title: Agente Clasificador
+  role_key: agente_clasificador
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-EMPRESARIO
+  title: Empresario Regional
+  role_key: empresario_regional
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-REFERENTE-
+  title: Referente Digital
+  role_key: referente_digital
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-BACKEND-DE
+  title: Backend Developer
+  role_key: backend_developer
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Capacitación
+  role_key: analista_de_capacitación
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-S
+  title: Analista Servicios Generales
+  role_key: analista_servicios_generales
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-8
+  title: Analista 8%
+  role_key: analista_8%
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PROFESIONA
+  title: Profesional De Apoyo Core
+  role_key: profesional_de_apoyo_core
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-SENADOR
+  title: Senador
+  role_key: senador
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-CÁMARA-DE-
+  title: Cámara De Comercio
+  role_key: cámara_de_comercio
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Inventario
+  role_key: analista_de_inventario
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado De Oficina De Partes
+  role_key: encargado_de_oficina_de_partes
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-O
+  title: Analista Operativo Transferencias
+  role_key: analista_operativo_transferencias
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PROFESIONA
+  title: Profesional Ñuble 250
+  role_key: profesional_ñuble_250
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DEVOPS
+  title: Devops
+  role_key: devops
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Honorarios
+  role_key: analista_de_honorarios
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-8
+  title: Analista 8% Técnico
+  role_key: analista_8%_técnico
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-AUTORIDAD
+  title: Autoridad
+  role_key: autoridad
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-G
+  title: Analista Gestión Dipir
+  role_key: analista_gestión_dipir
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Patrocinante Dit
+  role_key: analista_patrocinante_dit
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-C
+  title: Analista Cgr
+  role_key: analista_cgr
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-P
+  title: Analista Planificación
+  role_key: analista_planificación
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-DOM
+  title: Dom
+  role_key: dom
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COORDINADO
+  title: Coordinador Transformación Digital Gore
+  role_key: coordinador_transformación_digital_gore
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-COMITÉ-REG
+  title: Comité Regional Grd
+  role_key: comité_regional_grd
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-D
+  title: Analista De Remuneraciones
+  role_key: analista_de_remuneraciones
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ENCARGADO-
+  title: Encargado Control Interno
+  role_key: encargado_control_interno
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-U
+  title: Analista Ucr
+  role_key: analista_ucr
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ADMINISTRA
+  title: Administrador Geonodo
+  role_key: administrador_geonodo
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-ANALISTA-T
+  title: Analista Territorial
+  role_key: analista_territorial
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-PTE.-COMIT
+  title: Pte. Comité Pertinencia
+  role_key: pte._comité_pertinencia
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-GORE
+  title: Gore
+  role_key: gore
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-JEFE-DE-DI
+  title: Jefe De División
+  role_key: jefe_de_división
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.
+- id: USR-NEW-OFICIAL-DE
+  title: Oficial De Seguridad (Ciso)
+  role_key: oficial_de_seguridad_(ciso)
+  description: Rol detectado via SSOT (Fisiología). Requiere definición anatómica.

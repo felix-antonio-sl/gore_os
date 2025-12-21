@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_plan_p6:1.0.0
+  type: Process
+  source: domains/d-plan
+id: PROC-PLAN-P6
+code: P6
+name: Asistencia Técnica Municipal
+domain: D-PLAN
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

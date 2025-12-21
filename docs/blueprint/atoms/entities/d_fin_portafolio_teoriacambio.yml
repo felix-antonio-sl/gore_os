@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_fin_portafolio_teoriacambio:1.0.0
+  type: Entity
+  source: domains/d-fin-portafolio/entity_data
+id: ENT-FIN-PORTAFOLIO-TEORIACAMBIO
+name: TeoriaCambio
+entity_key: teoriacambio
+domain: D-FIN-PORTAFOLIO
+category: Reference
+description: id, ipr_id, hipotesis, supuestos_clave[], riesgos_logicos[]
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

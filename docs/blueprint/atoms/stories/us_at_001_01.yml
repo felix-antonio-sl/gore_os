@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_at_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-AT-001-01
+story_key: us_at_001_01
+role_id: USR-NEW-ANALISTA-TER
+as_a: null
+i_want: acceso a la IDE regional con capas actualizadas
+so_that: pueda realizar análisis espaciales
+domain: D-TERR
+priority: P0
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-NEW-ANALISTA-TER
+  contribuye_a: CAP-TERR-MAP-001

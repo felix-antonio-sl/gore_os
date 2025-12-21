@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_norm_procedimientos_administrativos:1.0.0
+  type: Module
+  source: domains/d-norm
+id: MOD-NORM-PROCEDIMIENTOS_ADMIN
+name: Procedimientos Administrativos
+domain: D-NORM
+number: 2
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

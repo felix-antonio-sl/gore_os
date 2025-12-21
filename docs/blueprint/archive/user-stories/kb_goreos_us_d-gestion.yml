@@ -1,0 +1,299 @@
+_manifest:
+  urn: "urn:goreos:specs:user-stories:d-gestion:1.0.0"
+  domain: D-GESTION
+  domain_name: Gestión Institucional Transversal
+  responsible: Administrador Regional
+  total_stories: 20
+  priority_distribution:
+    critica: 7
+    alta: 13
+    media: 0
+
+stories:
+  # Módulo: Sistema de Control de Gestión (SCG)
+  - id: US-GEST-SCG-001
+    title: Definir POA alineado a ERD
+    as_a:
+      - Jefe de División
+    i_want: Definir Plan Operativo Anual (POA) divisional alineado con objetivos ERD
+    so_that: Aseguro coherencia entre planificación estratégica y operativa
+    priority: Crítica
+    module: SCG
+    acceptance_criteria:
+      - POA vinculado a objetivos ERD
+      - Indicadores SMART definidos
+      - Aprobación por Administrador Regional
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  - id: US-GEST-SCG-002
+    title: Monitorear indicadores divisionales
+    as_a:
+      - Administrador Regional
+    i_want: Monitorear indicadores de desempeño de todas las divisiones
+    so_that: Identifico desviaciones y tomo acciones correctivas oportunas
+    priority: Crítica
+    module: SCG
+    acceptance_criteria:
+      - Dashboard consolidado por división
+      - Semáforos de estado
+      - Drill-down a indicadores específicos
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  - id: US-GEST-SCG-003
+    title: Generar reporte mensual de gestión
+    as_a:
+      - Administrador Regional
+    i_want: Generar reporte mensual de gestión institucional
+    so_that: Informo al Gobernador y CORE sobre el estado de la gestión
+    priority: Alta
+    module: SCG
+    acceptance_criteria:
+      - Reporte automatizado
+      - Comparativo con período anterior
+      - Destacados y alertas
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  # Módulo: H_gore (Salud Institucional)
+  - id: US-GEST-HG-001
+    title: Dashboard H_gore tiempo real
+    as_a:
+      - Administrador Regional
+    i_want: Ver dashboard de salud institucional (H_gore) en tiempo real
+    so_that: Tengo visibilidad continua del estado operativo del GORE
+    priority: Crítica
+    module: H_gore
+    acceptance_criteria:
+      - Actualización automática
+      - Indicador compuesto visible
+      - Tendencia histórica (7-30-90 días)
+    source_ref: "domain_d-gestion.md"
+
+  - id: US-GEST-HG-002
+    title: Configurar umbrales de alerta H_gore
+    as_a:
+      - Administrador Regional
+    i_want: Configurar umbrales de alerta para dimensiones de H_gore
+    so_that: Recibo notificaciones automáticas ante degradación
+    priority: Alta
+    module: H_gore
+    acceptance_criteria:
+      - Umbrales configurables por dimensión
+      - Notificaciones multicanal (email, sistema)
+      - Escalamiento a FÉNIX si H_gore < 50
+    source_ref: "domain_d-gestion.md"
+
+  - id: US-GEST-HG-003
+    title: Drill-down por dimensión H_gore
+    as_a:
+      - Jefe de División
+    i_want: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
+    so_that: Identifico causas raíz de degradación en mi área
+    priority: Alta
+    module: H_gore
+    acceptance_criteria:
+      - Navegación jerárquica
+      - Indicadores detallados por dimensión
+      - Comparativo con benchmark
+    source_ref: "domain_d-gestion.md"
+
+  # Módulo: Playbooks Operativos
+  - id: US-GEST-PB-001
+    title: Ejecutar playbook P01 (Recovery)
+    as_a:
+      - Administrador Regional
+    i_want: Ejecutar playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
+    so_that: Recupero la salud institucional en 7-14 días
+    priority: Crítica
+    module: Playbooks
+    acceptance_criteria:
+      - Activación automática por trigger
+      - Pasos guiados con checklist
+      - Registro de resultados
+    source_ref: "kb_metodologia_002_playbooks_orko.yml"
+
+  - id: US-GEST-PB-002
+    title: Ejecutar playbook P14 (Expectativas)
+    as_a:
+      - Administrador Regional
+    i_want: Ejecutar playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
+    so_that: Gestiono brechas de expectativas antes de que escalen
+    priority: Alta
+    module: Playbooks
+    acceptance_criteria:
+      - Plan de comunicación generado
+      - Stakeholders identificados
+      - Acciones correctivas priorizadas
+    source_ref: "kb_metodologia_002_playbooks_orko.yml"
+
+  - id: US-GEST-PB-003
+    title: Registrar resultados de playbook
+    as_a:
+      - Encargado de Control de Gestión
+    i_want: Registrar resultados de ejecución de playbooks
+    so_that: Genero base de conocimiento para mejora continua
+    priority: Alta
+    module: Playbooks
+    acceptance_criteria:
+      - Log de ejecución completo
+      - Métricas pre/post playbook
+      - Lecciones aprendidas documentadas
+    source_ref: "kb_metodologia_002_playbooks_orko.yml"
+
+  # Módulo: Unidad de Control Interno (UCI)
+  - id: US-GEST-UCI-001
+    title: Actualizar matriz de riesgos institucional
+    as_a:
+      - Jefe Unidad de Control
+    i_want: Actualizar la matriz de riesgos institucional (probabilidad × impacto)
+    so_that: Mantengo actualizado el perfil de riesgo del GORE
+    priority: Crítica
+    module: UCI
+    acceptance_criteria:
+      - Riesgos categorizados (político, financiero, operacional, probidad)
+      - Controles asociados
+      - Responsables y plazos
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  - id: US-GEST-UCI-002
+    title: Monitorear controles internos
+    as_a:
+      - Jefe Unidad de Control
+    i_want: Monitorear efectividad de controles internos
+    so_that: Aseguro que los controles mitigan los riesgos identificados
+    priority: Alta
+    module: UCI
+    acceptance_criteria:
+      - Dashboard de controles
+      - Alertas de control ineficaz
+      - Reporte para CGR
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  # Módulo: Mejora Continua
+  - id: US-GEST-MC-001
+    title: Registrar oportunidad de mejora
+    as_a:
+      - Funcionario GORE
+    i_want: Registrar una oportunidad de mejora en procesos o servicios
+    so_that: Contribuyo a la mejora continua institucional
+    priority: Alta
+    module: Mejora
+    acceptance_criteria:
+      - Formulario simple de registro
+      - Clasificación por área/proceso
+      - Estado de seguimiento visible
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  - id: US-GEST-MC-002
+    title: Ejecutar ciclo PDCA
+    as_a:
+      - Encargado de Control de Gestión
+    i_want: Ejecutar ciclo PDCA para iniciativas de mejora priorizadas
+    so_that: Implemento mejoras de manera sistemática y medible
+    priority: Alta
+    module: Mejora
+    acceptance_criteria:
+      - Fases Plan-Do-Check-Act documentadas
+      - Métricas de impacto
+      - Cierre formal con lecciones aprendidas
+    source_ref: "domain_d-gestion.md"
+
+  # Módulo: Gestión de Personas (DAF/RRHH)
+  - id: US-GEST-PER-001
+    title: Dashboard de ausentismo
+    as_a:
+      - Jefe DAF
+    i_want: Ver dashboard de ausentismo por tipo y unidad
+    so_that: Identifico patrones y tomo acciones preventivas
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Ausentismo por tipo (licencia, permiso, feriado)
+      - Comparativo por división
+      - Tendencia histórica
+    source_ref: "kb_goreos_us_d-back.yml"
+
+  - id: US-GEST-PER-002
+    title: Gestionar inducción funcionarios
+    as_a:
+      - Encargado RRHH
+    i_want: Gestionar proceso de inducción de nuevos funcionarios
+    so_that: Aseguro integración efectiva y productiva
+    priority: Alta
+    module: Personas
+    acceptance_criteria:
+      - Checklist de inducción
+      - Asignación de mentor
+      - Evaluación a 30-60-90 días
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  # Módulo: Procesos Operativos Críticos
+  - id: US-GEST-PROC-001
+    title: Gestionar expediente digital
+    as_a:
+      - Funcionario GORE
+    i_want: Gestionar expedientes digitales con trazabilidad completa
+    so_that: Cumplo con Ley 21.180 de Transformación Digital
+    priority: Crítica
+    module: Procesos
+    acceptance_criteria:
+      - Expediente 100% digital
+      - Firma electrónica integrada
+      - Trazabilidad de acciones
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  - id: US-GEST-PROC-002
+    title: Atención ciudadana (OIRS)
+    as_a:
+      - Encargado OIRS
+    i_want: Gestionar solicitudes ciudadanas con seguimiento de plazos
+    so_that: Cumplo plazos legales y mejoro satisfacción ciudadana
+    priority: Alta
+    module: Procesos
+    acceptance_criteria:
+      - Registro centralizado
+      - Alertas de vencimiento
+      - Métricas de satisfacción
+    source_ref: "kb_goreos_us_d-norm.yml"
+
+  # Módulo: Coordinación Institucional
+  - id: US-GEST-COORD-001
+    title: Gestionar comité directivo
+    as_a:
+      - Administrador Regional
+    i_want: Gestionar reuniones de comité directivo (agenda, acuerdos, seguimiento)
+    so_that: Aseguro coordinación efectiva interdivisional
+    priority: Crítica
+    module: Coordinacion
+    acceptance_criteria:
+      - Agenda publicada con anticipación
+      - Acuerdos con responsables y plazos
+      - Tracking de cumplimiento
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  - id: US-GEST-COORD-002
+    title: Coordinación con DPR
+    as_a:
+      - Administrador Regional
+    i_want: Coordinar acciones con Delegado Presidencial Regional
+    so_that: Alineo gestión GORE con gobierno interior
+    priority: Alta
+    module: Coordinacion
+    acceptance_criteria:
+      - Agenda compartida
+      - Temas de coordinación documentados
+      - Acuerdos formalizados
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"
+
+  - id: US-GEST-COORD-003
+    title: Gestionar relación con municipios
+    as_a:
+      - Administrador Regional
+    i_want: Gestionar relación institucional con municipios de la región
+    so_that: Facilito colaboración y ejecución de proyectos conjuntos
+    priority: Alta
+    module: Coordinacion
+    acceptance_criteria:
+      - Directorio de contactos actualizado
+      - Historial de interacciones
+      - Convenios vigentes visibles
+    source_ref: "kb_gn_035_estrategia_gestion_koda.yml"

@@ -1,0 +1,63 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_back_tickets_001:1.0.0
+  type: Capability
+id: CAP-BACK-TICKETS-001
+name: Sistema de Tickets de Soporte
+domain: D-BACK
+type: DOMAIN_SPECIFIC
+description: Gestión de tickets de soporte técnico para requerimientos de TI y servicios
+  internos.
+value_proposition: Centraliza y rastrea las solicitudes de soporte, mejorando tiempos
+  de respuesta y satisfacción interna.
+orko_mapping:
+  p1_capacity: Mesa de Ayuda TI
+  p2_flow: P-BACK-SOPORTE (Atención de Tickets)
+  p5_purpose: Continuidad operativa de sistemas
+stories:
+- urn:goreos:atom:story:us_ar_001_02
+- urn:goreos:atom:story:us_ar_002_01
+- urn:goreos:atom:story:us_ar_003_01
+- urn:goreos:atom:story:us_aserv_001_01
+- urn:goreos:atom:story:us_aux_001_01
+- urn:goreos:atom:story:us_back_af_001
+- urn:goreos:atom:story:us_back_af_002
+- urn:goreos:atom:story:us_back_af_004
+- urn:goreos:atom:story:us_back_auto_001
+- urn:goreos:atom:story:us_back_auto_002
+- urn:goreos:atom:story:us_back_bod_001
+- urn:goreos:atom:story:us_back_bod_003
+- urn:goreos:atom:story:us_back_flo_001
+- urn:goreos:atom:story:us_back_flo_002
+- urn:goreos:atom:story:us_bod_001_01
+- urn:goreos:atom:story:us_cgpe_001_01
+- urn:goreos:atom:story:us_com_001_01
+- urn:goreos:atom:story:us_com_001_02
+- urn:goreos:atom:story:us_com_002_01
+- urn:goreos:atom:story:us_compt_001_01
+- urn:goreos:atom:story:us_cond_001_01
+- urn:goreos:atom:story:us_cp_001_01
+- urn:goreos:atom:story:us_cseu_001_01
+- urn:goreos:atom:story:us_cseu_002_01
+- urn:goreos:atom:story:us_eope_001_01
+- urn:goreos:atom:story:us_everde_001_01
+- urn:goreos:atom:story:us_flota_001_01
+- urn:goreos:atom:story:us_foto_001_01
+- urn:goreos:atom:story:us_gab_001_01
+- urn:goreos:atom:story:us_gab_002_01
+- urn:goreos:atom:story:us_mesa_002_01
+- urn:goreos:atom:story:us_oirs_001_02
+- urn:goreos:atom:story:us_op_001_01
+- urn:goreos:atom:story:us_pcseu_001_01
+- urn:goreos:atom:story:us_per_001_01
+- urn:goreos:atom:story:us_prev_001_01
+- urn:goreos:atom:story:us_prev_002_01
+- urn:goreos:atom:story:us_rem_001_01
+- urn:goreos:atom:story:us_rem_002_01
+- urn:goreos:atom:story:us_rpsico_001_01
+- urn:goreos:atom:story:us_rrhh_001_01
+- urn:goreos:atom:story:us_rrhh_001_02
+- urn:goreos:atom:story:us_rrhh_002_01
+- urn:goreos:atom:story:us_secdiv_001_01
+- urn:goreos:atom:story:us_serv_001_01
+- urn:goreos:atom:story:us_tic_001_02
+ofrecida_por: null

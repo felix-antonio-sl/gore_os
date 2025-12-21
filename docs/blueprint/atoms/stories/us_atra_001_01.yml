@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_atra_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ATRA-001-01
+story_key: us_atra_001_01
+role_id: USR-DIT-TRANS-ANAL
+as_a: null
+i_want: acceso a datos de flujo vehicular y estado de rutas
+so_that: pueda priorizar conservaciones viales
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-DIT-TRANS-ANAL
+  contribuye_a: CAP-TERR-MAP-001

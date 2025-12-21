@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_gestion_h_org:1.0.0
+  type: Entity
+  source: domains/d-gestion/glossary
+id: ENT-GESTION-H_ORG
+name: H_org
+entity_key: h_org
+domain: D-GESTION
+category: Reference
+description: Puntaje de Salud Organizacional (Organizational Health Score). Índice
+  de madurez sistémica estratégica (ver D-EVOL).
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

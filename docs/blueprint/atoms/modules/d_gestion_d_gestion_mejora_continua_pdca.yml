@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_gestion_mejora_continua_pdca:1.0.0
+  type: Module
+  source: domains/d-gestion
+id: MOD-GESTION-MEJORA_CONTINUA_PDCA
+name: Mejora Continua (PDCA)
+domain: D-GESTION
+number: 5
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

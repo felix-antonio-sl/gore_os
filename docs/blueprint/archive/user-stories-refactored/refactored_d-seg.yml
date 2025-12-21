@@ -1,0 +1,329 @@
+atomic_stories:
+  - id: US-SEG-PREV-001
+    as_a: Encargado Prevención
+    i_want: Visualizar mapa de calor delictual (integración STOP/SPD + Indicadores KB)
+    so_that: Focalizo intervenciones
+    acceptance_criteria:
+      - "Mapa con concentración de delitos"
+      - "Filtros por tipo y período"
+      - "Cruce con KB Indicadores (Abigeato, etc.)"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: encargado_prevención
+    origin: legacy
+  - id: US-SEG-PREV-002
+    as_a: Encargado Prevención
+    i_want: Gestionar cartera de proyectos preventivos (iluminación, cámaras, social)
+    so_that: Administro inversión en seguridad
+    acceptance_criteria:
+      - "Cartera por tipo"
+      - "Estado de ejecución"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: encargado_prevención
+    origin: legacy
+  - id: US-SEG-PREV-003
+    as_a: Encargado Prevención
+    i_want: Coordinar sesiones del Consejo Regional de Seguridad Pública
+    so_that: Articulo gobernanza de seguridad
+    acceptance_criteria:
+      - "Convocatoria y tabla"
+      - "Acta de sesión"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: encargado_prevención
+    origin: legacy
+  - id: US-SEG-PREV-004
+    as_a: Encargado Prevención
+    i_want: Emitir informes de impacto de inversiones en seguridad
+    so_that: Demuestro resultados
+    acceptance_criteria:
+      - "Indicadores de impacto"
+      - "Comparativo antes/después"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: encargado_prevención
+    origin: legacy
+  - id: US-SEG-PREV-005
+    as_a: Analista Proyectos Seguridad
+    i_want: Evaluar admisibilidad técnica de proyectos de seguridad
+    so_that: Verifico requisitos técnicos
+    acceptance_criteria:
+      - "Checklist técnico"
+      - "Validación SPD si >1000 UTM"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: analista_proyectos_seguridad
+    origin: legacy
+  - id: US-SEG-PREV-006
+    as_a: Analista Proyectos Seguridad
+    i_want: Monitorear ejecución financiera de convenios con municipios
+    so_that: Controlo uso de recursos
+    acceptance_criteria:
+      - "Avance financiero"
+      - "Alertas de desviación"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: analista_proyectos_seguridad
+    origin: legacy
+  - id: US-SEG-PREV-007
+    as_a: Analista Proyectos Seguridad
+    i_want: Gestionar programa de asistencia a víctimas (División Prevención)
+    so_that: Apoyo a afectados por delitos con recursos legales/psicosociales
+    acceptance_criteria:
+      - "Registro de atenciones"
+      - "Derivaciones red asistencia"
+      - "Seguimiento casos"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: analista_proyectos_seguridad
+    origin: legacy
+  - id: US-SEG-PREV-008
+    as_a: Asesor Técnico
+    i_want: Asesorar a municipios en la formulación de sus planes comunales de seguridad
+    so_that: Cumplo mandato legal de apoyo técnico
+    acceptance_criteria:
+      - "Registro de asesorías"
+      - "Validación de planes comunales"
+      - "Alineamiento con política nacional"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: asesor_técnico
+    origin: legacy
+  - id: US-SEG-PREV-009
+    as_a: Jefe División Prevención
+    i_want: Mantener coordinación permanente con la Subsecretaría de Prevención del Delito
+    so_that: Aseguro coherencia con política nacional
+    acceptance_criteria:
+      - "Registro de reuniones/acuerdos"
+      - "Transferencia de directrices técnicas"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: jefe_división_prevención
+    origin: legacy
+  - id: US-SEG-PREV-010
+    as_a: Analista Prevención
+    i_want: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
+    so_that: Planifico patrullajes preventivos focalizados
+    acceptance_criteria:
+      - "Mapa de riesgo futuro"
+      - "Recomendación de ruteo"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P2
+    role_key: analista_prevención
+    origin: legacy
+  - id: US-SEG-CIES-001
+    as_a: Operador CIES
+    i_want: Registrar alertas de cámaras, sensores o llamados (tipo, georreferencia)
+    so_that: Inicio respuesta coordinada
+    acceptance_criteria:
+      - "Registro de incidente"
+      - "Georreferenciación"
+      - "Clasificación de prioridad"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: operador_cies
+    origin: legacy
+  - id: US-SEG-CIES-002
+    as_a: Operador CIES
+    i_want: Seguir trayectorias geoespaciales en mapa
+    so_that: Monitoreo movimiento de sospechosos
+    acceptance_criteria:
+      - "Mapa en tiempo real"
+      - "Historial de trayectoria"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: operador_cies
+    origin: legacy
+  - id: US-SEG-CIES-003
+    as_a: Operador CIES
+    i_want: Tomar control manual de cámara PTZ ante incidente flagrante
+    so_that: Enfoco el evento
+    acceptance_criteria:
+      - "Control PTZ remoto"
+      - "Prioridad sobre automático"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: operador_cies
+    origin: legacy
+  - id: US-SEG-CIES-004
+    as_a: Operador CIES
+    i_want: >-
+    so_that: Activo protocolo de búsqueda
+    acceptance_criteria:
+      - "Alerta automática"
+      - "Datos del vehículo/persona"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: operador_cies
+    origin: legacy
+  - id: US-SEG-CIES-005
+    as_a: Operador CIES
+    i_want: >-
+    so_that: Documento la respuesta
+    acceptance_criteria:
+      - "Registro cronológico"
+      - "Asociado a incidente"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: operador_cies
+    origin: legacy
+  - id: US-SEG-CIES-006
+    as_a: Supervisor CIES
+    i_want: Asignar roles y escenarios en Videowall durante emergencia mayor
+    so_that: Coordino respuesta masiva
+    acceptance_criteria:
+      - "Asignación de pantallas"
+      - "Roles definidos"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: supervisor_cies
+    origin: legacy
+  - id: US-SEG-CIES-007
+    as_a: Supervisor CIES
+    i_want: Despachar incidente a Carabineros/Bomberos/SAMU según protocolo
+    so_that: Activo respuesta especializada
+    acceptance_criteria:
+      - "Protocolo por tipo"
+      - "Registro de despacho"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: supervisor_cies
+    origin: legacy
+  - id: US-SEG-CIES-008
+    as_a: Supervisor CIES
+    i_want: Generar estadística de incidentes/horarios/zonas calientes
+    so_that: Analizo patrones
+    acceptance_criteria:
+      - "Dashboard estadístico"
+      - "Exportable"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: supervisor_cies
+    origin: legacy
+  - id: US-SEG-CIES-009
+    as_a: Enlace CIES
+    i_want: Confirmar alertas en terreno
+    so_that: Valido información visual
+    acceptance_criteria:
+      - "Confirmación registrada"
+      - "Actualización de estado"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: enlace_cies
+    origin: legacy
+  - id: US-SEG-CIES-010
+    as_a: Supervisor CIES
+    i_want: Activar protocolo de protección de puntos críticos ante disturbios
+    so_that: Priorizo cámaras y recursos en zonas sensibles
+    acceptance_criteria:
+      - "Interfaz de "Zona Roja""
+      - "Alerta directa a COP Carabineros"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: supervisor_cies
+    origin: legacy
+  - id: US-SEG-EVID-001
+    as_a: Custodio Evidencia
+    i_want: Generar clip de video con marca de agua y hash de integridad
+    so_that: Preservo evidencia
+    acceptance_criteria:
+      - "Marca de agua GORE"
+      - "Hash SHA-256"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: custodio_evidencia
+    origin: legacy
+  - id: US-SEG-EVID-002
+    as_a: Custodio Evidencia
+    i_want: Habilitar link seguro (Genetec Clearance) por oficio judicial
+    so_that: Entrego evidencia formalmente
+    acceptance_criteria:
+      - "Link seguro generado"
+      - "Registro de entrega"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: custodio_evidencia
+    origin: legacy
+  - id: US-SEG-EVID-003
+    as_a: Custodio Evidencia
+    i_want: Trazar quién accedió, visualizó o descargó evidencia (Logs inalterables)
+    so_that: Mantengo cadena de custodia
+    acceptance_criteria:
+      - "Log inmutable"
+      - "Identidad verificada"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P0
+    role_key: custodio_evidencia
+    origin: legacy
+  - id: US-SEG-GOB-001
+    as_a: COSOC / Comités
+    i_want: Acceder a dashboard de transparencia activa del GORE
+    so_that: Ejerzo control ciudadano
+    acceptance_criteria:
+      - "Acceso público"
+      - "Información actualizada"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: cosoc_/_comités
+    origin: legacy
+  - id: US-SEG-GOB-002
+    as_a: COSOC / Comités
+    i_want: >-
+    so_that: Participo en planificación regional
+    acceptance_criteria:
+      - "Canal de consulta"
+      - "Respuestas documentadas"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P2
+    role_key: cosoc_/_comités
+    origin: legacy
+  - id: US-SEG-GOB-003
+    as_a: COSOC / Comités
+    i_want: Visualizar estado de ejecución presupuestaria agregada
+    so_that: Monitoreo uso de recursos
+    acceptance_criteria:
+      - "Vista agregada"
+      - "Actualización mensual"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P2
+    role_key: cosoc_/_comités
+    origin: legacy
+  - id: US-SEG-GOB-004
+    as_a: Ciudadano
+    i_want: Reportar un incidente o foco delictual de manera anónima desde App/Web
+    so_that: Colaboro con la seguridad sin riesgo personal
+    acceptance_criteria:
+      - "Encriptación de origen"
+      - "Derivación automática a Fiscalía/Carabineros"
+    domain: D-SEG
+    target_domain: D-SEG
+    priority: P1
+    role_key: ciudadano
+    origin: legacy

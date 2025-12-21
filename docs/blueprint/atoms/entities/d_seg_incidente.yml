@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_seg_incidente:1.0.0
+  type: Entity
+  source: domains/d-seg/entity_data
+id: ENT-SEG-INCIDENTE
+name: Incidente
+entity_key: incidente
+domain: D-SEG
+category: Reference
+description: id, tipo, prioridad, id_ubicacion_geo, estado, fecha_hora
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

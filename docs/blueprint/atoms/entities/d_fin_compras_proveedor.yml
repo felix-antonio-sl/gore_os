@@ -1,0 +1,115 @@
+# Entidad: Proveedor
+# Domain: D-FIN
+# Subdomain: compras
+# Generated: 2025-12-21 (Phase 20.1 Deep Modeling)
+
+id: ENT-FIN-PROVEEDOR
+urn: "urn:goreos:entity:d-fin:proveedor:1.0.0"
+name: Proveedor
+domain: D-FIN
+subdomain: compras
+category: Master
+canonical_source:
+  - "urn:knowledge:gorenuble:gn:manual-compras-contrataciones:1.0.0#MANUAL-COMPRAS-SEC-VI-EVAL-01"
+  - "Registro ChileProveedores"
+
+description: |
+  Persona natural o jurídica que provee bienes o servicios al GORE.
+  Incluye historial de evaluación y calificación.
+
+attributes:
+  - name: id_proveedor
+    type: String
+    key: true
+
+  - name: rut
+    type: String
+    nullable: false
+    unique: true
+
+  - name: razon_social
+    type: String
+    nullable: false
+
+  - name: nombre_fantasia
+    type: String
+    nullable: true
+
+  - name: tipo_persona
+    type: Enum[Natural, Juridica]
+    nullable: false
+
+  - name: giro
+    type: String
+    nullable: true
+
+  - name: direccion
+    type: String
+    nullable: true
+
+  - name: comuna
+    type: String
+    nullable: true
+
+  - name: region
+    type: String
+    nullable: true
+
+  - name: telefono
+    type: String
+    nullable: true
+
+  - name: email
+    type: String
+    nullable: true
+
+  - name: representante_legal
+    type: String
+    nullable: true
+
+  - name: rut_representante
+    type: String
+    nullable: true
+
+  # Registro ChileProveedores
+  - name: id_chile_proveedores
+    type: String
+    nullable: true
+    description: ID en www.chileproveedores.cl
+
+  - name: estado_registro
+    type: Enum[Habilitado, Inhabilitado, SinRegistro]
+    default: SinRegistro
+
+  - name: fecha_ultima_verificacion
+    type: Date
+    nullable: true
+
+  # Historial de evaluación
+  - name: cantidad_contratos
+    type: Integer
+    default: 0
+
+  - name: calificacion_promedio
+    type: Decimal
+    nullable: true
+    description: Promedio de evaluaciones (1-5)
+
+  - name: ultima_evaluacion
+    type: Date
+    nullable: true
+
+  - name: es_excluido
+    type: Boolean
+    default: false
+    description: Excluido de futuras licitaciones por mala evaluación
+
+  - name: motivo_exclusion
+    type: String
+    nullable: true
+
+morphisms:
+  registrado_en: [ChileProveedores, MercadoPublico]
+  recibe: [ENT-FIN-ORDEN_COMPRA]
+  evaluado_por: [ROL-ADM-CONTRATO]
+  entrega: [ENT-FIN-GARANTIA]

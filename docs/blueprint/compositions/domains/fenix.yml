@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:composition:domain:fenix:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: FENIX
+name: Dominio FENIX
+aggregation:
+  modules: []
+  processes:
+  - urn:goreos:atom:process:fenix_p1:1.0.0
+  - urn:goreos:atom:process:fenix_p2:1.0.0
+  entities: []
+  capabilities: []
+stats:
+  modules_count: 0
+  processes_count: 2
+  entities_count: 0
+  capabilities_count: 0

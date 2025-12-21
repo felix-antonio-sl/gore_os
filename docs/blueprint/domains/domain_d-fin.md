@@ -43,36 +43,31 @@ D-EJEC (Ejecución Física)  D-BACK (Ejecución Presupuestaria)
 
 ## Subdominios
 
-| Subdominio       | Contenido                                            | Enlace                                                     |
-| ---------------- | ---------------------------------------------------- | ---------------------------------------------------------- |
-| **Core IPR**     | Taxonomía, Ciclo de vida (Fases 1-7), Procesos P1-P7 | [sub_dfin_ipr_core.md](d-fin/sub_dfin_ipr_core.md)         |
-| **Mecanismos**   | Selector, Árbol de decisión, Guías KODA              | [sub_dfin_mecanismos.md](d-fin/sub_dfin_mecanismos.md)     |
-| **Presupuesto**  | Ciclo anual, Glosas, Cadena SIGFE                    | [sub_dfin_presupuesto.md](d-fin/sub_dfin_presupuesto.md)   |
-| **Rendiciones**  | SISREC, Mora, Res. 30 CGR                            | [sub_dfin_rendiciones.md](d-fin/sub_dfin_rendiciones.md)   |
-| **Portafolio**   | Banca Inversión, PuntajeImpacto, Alertas 360°        | [sub_dfin_portafolio.md](d-fin/sub_dfin_portafolio.md)     |
-| **Ejecutores**   | Calificación, Mesa de Ayuda, Inducción               | [sub_dfin_ejecutores.md](d-fin/sub_dfin_ejecutores.md)     |
-| **User Stories** | Catálogo consolidado por proceso/módulo              | [sub_dfin_user_stories.md](d-fin/sub_dfin_user_stories.md) |
+| Subdominio      | Contenido                                            | Enlace                                                   |
+| --------------- | ---------------------------------------------------- | -------------------------------------------------------- |
+| **Core IPR**    | Taxonomía, Ciclo de vida (Fases 1-7), Procesos P1-P7 | [sub_dfin_ipr_core.md](d-fin/sub_dfin_ipr_core.md)       |
+| **Mecanismos**  | Selector, Árbol de decisión, Guías KODA              | [sub_dfin_mecanismos.md](d-fin/sub_dfin_mecanismos.md)   |
+| **Presupuesto** | Ciclo anual, Glosas, Cadena SIGFE                    | [sub_dfin_presupuesto.md](d-fin/sub_dfin_presupuesto.md) |
+| **Rendiciones** | SISREC, Mora, Res. 30 CGR                            | [sub_dfin_rendiciones.md](d-fin/sub_dfin_rendiciones.md) |
+| **Portafolio**  | Banca Inversión, PuntajeImpacto, Alertas 360°        | [sub_dfin_portafolio.md](d-fin/sub_dfin_portafolio.md)   |
+| **Ejecutores**  | Calificación, Mesa de Ayuda, Inducción               | [sub_dfin_ejecutores.md](d-fin/sub_dfin_ejecutores.md)   |
+
 
 ---
 
-## Glosario D-FIN
+## Glosario y Entidades Core
 
-| Término | Definición                                                                          |
-| ------- | ----------------------------------------------------------------------------------- |
-| IPR     | Intervención Pública Regional. Paragua que agrupa IDI, PPR y tipologías específicas |
-| IDI     | Iniciativa de Inversión. Gasto de capital (S.31/S.33). Requiere RS/AD de MDSF       |
-| PPR     | Programa Público Regional. Gasto corriente/mixto (S.24)                             |
-| RS      | Recomendación Satisfactoria (MDSF/SNI)                                              |
-| RF      | Resultado Favorable (DIPRES/SES)                                                    |
-| ITF     | Informe Técnico Favorable. Evaluación interna GORE                                  |
-| CDP     | Certificado de Disponibilidad Presupuestaria                                        |
-| BIP     | Banco Integrado de Proyectos (SNI)                                                  |
-| SISREC  | Sistema de Rendición Electrónica de Cuentas (CGR)                                   |
-| FNDR    | Fondo Nacional de Desarrollo Regional                                               |
-| FRPD    | Fondo Regional de Productividad y Desarrollo                                        |
-| FRIL    | Fondo Regional de Iniciativa Local (≤5.000 UTM)                                     |
-| C33     | Circular 33. Estudios, ANF, conservación, emergencias                               |
-| S8%     | Subvención 8%. Financiamiento a ONG/OSC                                             |
+**(Ver detalle en subdominios)**
+
+| Entidad Core     | Descripción                                                            | Subdominio                                   |
+| :--------------- | :--------------------------------------------------------------------- | :------------------------------------------- |
+| **`IPR`**        | Intervención Pública Regional (Abstracta). Padre de IDI y PPR.         | [Core IPR](d-fin/sub_dfin_ipr_core.md)       |
+| **`IDI`**        | Iniciativa de Inversión (Gasto Capital). SNI, FRIL, C33.               | [Core IPR](d-fin/sub_dfin_ipr_core.md)       |
+| **`PPR`**        | Programa Público Regional (Gasto Corriente). Glosa 06, Transferencias. | [Core IPR](d-fin/sub_dfin_ipr_core.md)       |
+| **`Mecanismo`**  | Catálogo de financiamiento (SNI, FRIL, FRPD, etc.)                     | [Mecanismos](d-fin/sub_dfin_mecanismos.md)   |
+| **`CDP`**        | Certificado Disponibilidad Presupuestaria. Inicio cadena.              | [Presupuesto](d-fin/sub_dfin_presupuesto.md) |
+| **`EstadoPago`** | Rendición parcial de obras. Habilita devengo.                          | [Rendiciones](d-fin/sub_dfin_rendiciones.md) |
+| **`Convenio`**   | Formalización legal GORE-Ejecutor.                                     | [Core IPR](d-fin/sub_dfin_ipr_core.md)       |
 
 ---
 
@@ -161,5 +156,88 @@ D-EJEC (Ejecución Física)  D-BACK (Ejecución Presupuestaria)
 
 ---
 
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key                | Título                  | Unidad | Subdominio  |
+| ----------------------- | ----------------------- | ------ | ----------- |
+| jefe_dipir              | Jefe DIPIR              | DIPIR  | Core IPR    |
+| jefe_presupuesto        | Jefe Depto. Presupuesto | DIPIR  | Presupuesto |
+| jefe_inversion          | Jefe Depto. Inversión   | DIPIR  | Core IPR    |
+| analista_inversion      | Analista de Inversión   | DIPIR  | Core IPR    |
+| analista_presupuestario | Analista Presupuestario | DIPIR  | Presupuesto |
+| analista_seguimiento    | Analista Seguimiento    | DIPIR  | Portafolio  |
+| encargado_rendiciones   | Encargado Rendiciones   | DAF    | Rendiciones |
+| coordinador_ucr         | Coordinador UCR         | DAF    | Rendiciones |
+| entidad_ejecutora       | Entidad Ejecutora       | Ext.   | Ejecutores  |
+| ejecutor_ppr            | Ejecutor PPR            | Ext.   | Ejecutores  |
+
+> Ver inventario completo: [inventario_roles_v8.yml](inventario_roles_v8.yml)
+
+---
+
+## Historias de Usuario (SSOT: historias_usuarios_v2.yml)
+
+### Capability Bundles D-FIN
+
+| Bundle           | Descripción                           | Prioridad | Subdominio  |
+| ---------------- | ------------------------------------- | --------- | ----------- |
+| CAP-FIN-DASH-001 | Dashboard de Ejecución Presupuestaria | P0        | Presupuesto |
+| CAP-FIN-REND-001 | Módulo de Rendiciones                 | P0        | Rendiciones |
+
+### Distribución de Historias Atómicas
+
+| Subdominio  | Historias | Enlace                                                   |
+| ----------- | --------- | -------------------------------------------------------- |
+| Presupuesto | 3         | [sub_dfin_presupuesto.md](d-fin/sub_dfin_presupuesto.md) |
+| Rendiciones | 2         | [sub_dfin_rendiciones.md](d-fin/sub_dfin_rendiciones.md) |
+| Ejecutores  | 2         | [sub_dfin_ejecutores.md](d-fin/sub_dfin_ejecutores.md)   |
+
+> **Nota**: Las historias operativas (Tesorería, Compras) fueron reclasificadas a D-BACK según campo `target_domain` del SSOT.
+
+> Ver catálogo completo: [historias_usuarios_v2.yml](historias_usuarios_v2.yml)
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-FIN`  
+> Total: 30 historias
+
+| ID                 | Role                 | Descripción                                           | P   |
+| ------------------ | -------------------- | ----------------------------------------------------- | --- |
+| CAP-FIN-DASH-001   | Gobernador Regional  | un dashboard ejecutivo con KPIs de ejecución FNDR,... | P0  |
+| CAP-FIN-REND-001   | Encargado de Rendici | alertas automáticas de rendiciones pendientes por ... | P0  |
+| US-ABOG-DAF-001-01 | abogado_daf          | plantillas de bases y contratos con cláusulas actu... | P1  |
+| US-ANALPRES-001-01 | analista_presupuesta | un módulo de emisión de CDP con validación automát... | P0  |
+| US-ANALPRES-001-02 | analista_presupuesta | alertas de marcos presupuestarios próximos a agota... | P0  |
+| US-APRES-001-01    | analista_presupuesto | un módulo de modificaciones presupuestarias...        | P0  |
+| US-ATES-001-01     | analista_tesoreria   | un módulo de emisión de pagos con validación presu... | P0  |
+| US-ATRANS-001-01   | analista_transferenc | un módulo de control de convenios de transferencia... | P0  |
+| US-AUCR-001-01     | unidad_control_rendi | visores de documentos digitalizados con OCR...        | P0  |
+| US-BOD-001-01      | encargado_bodega     | un módulo de control de stock con entradas y salid... | P1  |
+| US-CGR-CONT-001-01 | contraparte_contable | acceso a reportes contables en formato estándar...    | P0  |
+| US-CIU-001-02      | ciudadano            | consultar en qué se gasta el presupuesto regional...  | P1  |
+| US-COM-EV-001-01   | miembro_comision_eva | acceso a ofertas y matriz de evaluación en platafo... | P0  |
+| US-CONT-001-01     | analista_contable    | un módulo de conciliación bancaria automatizada...    | P0  |
+| US-CONT-001-02     | contratista          | cargar documentación de estados de pago en línea...   | P1  |
+| US-CORP-001-01     | director_corporacion | transferencias corrientes para gastos operativos...   | P2  |
+| US-DIPIR-001-02    | jefe_dipir           | aprobar CDPs digitalmente con validación automátic... | P0  |
+| US-EC33-001-01     | encargado_c33        | reporte de vida útil y depreciación de activos fin... | P2  |
+| US-ECIF-001-01     | ecif                 | reportes de cumplimiento de controles financieros...  | P0  |
+| US-G7-001-01       | revisor_glosa7       | un módulo de control de programación de caja con c... | P0  |
+| US-INTFIN-001-01   | interventor_financie | acceso total de auditoría al ERP financiero...        | P0  |
+| US-INV-001-01      | analista_inventario  | un módulo de control de activos con ubicación y re... | P1  |
+| US-JCONT-001-01    | jefe_depto_contabili | un checklist de cierre mensual automatizado...        | P0  |
+| US-JD-ANA-001-01   | jefe_depto_analisis  | reportes de devengo vs. gasto efectivo en tiempo r... | P0  |
+| US-JPRE-001-01     | jefe_presupuesto     | bloquear imputaciones que excedan el saldo disponi... | P0  |
+| US-JTES-001-01     | jefe_depto_tesoreria | un módulo de programación de pagos con proyección ... | P0  |
+| US-REND-002-01     | encargado_rendicione | un workflow de revisión con estados (Recibida, En ... | P0  |
+| US-RGASTO-001-01   | referente_gasto      | validación automática de clasificadores presupuest... | P0  |
+| US-SUBV-001-01     | analista_subvencione | un registro de organizaciones receptoras con histo... | P1  |
+| US-SUP-OBRA-001-01 | supervisor_obras     | alertas de vencimiento de boletas de garantía...      | P0  |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-20 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*

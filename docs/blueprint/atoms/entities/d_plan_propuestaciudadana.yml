@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_propuestaciudadana:1.0.0
+  type: Entity
+  source: domains/d-plan/entity_data
+id: ENT-PLAN-PROPUESTACIUDADANA
+name: PropuestaCiudadana
+entity_key: propuestaciudadana
+domain: D-PLAN
+category: Reference
+description: id, cabildo_id, descripcion, estado_trazabilidad, iniciativa_vinculada_id
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

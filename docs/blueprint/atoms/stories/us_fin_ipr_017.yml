@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ipr_017:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-IPR-017
+story_key: us_fin_ipr_017
+role_id: USR-EXT-EJEC
+as_a: null
+i_want: Subir Acta Entrega Terreno / Inicio Obras
+so_that: Registro el hito de inicio formal
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-EXT-EJEC
+  contribuye_a: CAP-FIN-DASH-001

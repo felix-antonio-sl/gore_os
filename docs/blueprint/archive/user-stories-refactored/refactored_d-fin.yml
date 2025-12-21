@@ -1,0 +1,1889 @@
+atomic_stories:
+  - id: US-FIN-IPR-001
+    as_a: Formulador Externo
+    i_want: Ver convocatorias abiertas (FRPD, 8%, FRIL) vs Ventanilla Abierta (SNI)
+    so_that: Identifico el mecanismo apropiado para mi proyecto
+    acceptance_criteria:
+      - ""Lista filtrable por mecanismo, estado, plazo""
+      - "Indicador visual de días restantes"
+      - "Distingue concurso vs ventanilla abierta"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-002
+    as_a: Formulador Externo
+    i_want: Navegar árbol de decisión (SNI/FRIL/FRPD/8%/Glosa06)
+    so_that: Selecciono el mecanismo correcto según características del proyecto
+    acceptance_criteria:
+      - "Wizard interactivo con preguntas clave"
+      - "Resultado con justificación normativa"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-003
+    as_a: Formulador Externo
+    i_want: Ver lista de documentos obligatorios según mecanismo seleccionado
+    so_that: Preparo correctamente la postulación
+    acceptance_criteria:
+      - "Checklist dinámico por mecanismo"
+      - "Indicador de estado por documento"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-004
+    as_a: Formulador Externo
+    i_want: Cargar postulación IPR con antecedentes digitalizados
+    so_that: Ingreso formalmente mi proyecto al sistema
+    acceptance_criteria:
+      - "Validación de formato de archivos"
+      - "Confirmación de recepción con folio"
+      - "Integración con expediente electrónico"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-005
+    as_a: Formulador Externo
+    i_want: Recibir notificación de observaciones de admisibilidad (plazo 60d)
+    so_that: Puedo subsanar a tiempo
+    acceptance_criteria:
+      - "Notificación vía canal registrado"
+      - "Plazo visible en sistema"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-006
+    as_a: Formulador Externo
+    i_want: Subsanar observaciones sin trámite presencial
+    so_that: Agilizo el proceso de admisibilidad
+    acceptance_criteria:
+      - "Formulario de subsanación digital"
+      - "Adjuntos actualizados reemplazan versión anterior"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-007
+    as_a: Formulador Externo
+    i_want: Consultar estado de mi postulación en tiempo real (timeline visual)
+    so_that: Tengo visibilidad del avance del trámite
+    acceptance_criteria:
+      - "Timeline con estados y fechas"
+      - "Indicador de etapa actual"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-008
+    as_a: Formulador Externo
+    i_want: Ver historial de postulaciones con tasa de éxito
+    so_that: Mejoro mis futuras postulaciones
+    acceptance_criteria:
+      - "Lista histórica con resultado"
+      - "Estadísticas de éxito/rechazo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P2
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-009
+    as_a: Formulador Externo
+    i_want: Verificar elegibilidad municipal FRIL (<5000 UTM)
+    so_that: Confirmo que mi proyecto califica
+    acceptance_criteria:
+      - "Validación automática de monto"
+      - "Verificación de marco comunal disponible"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-010
+    as_a: Formulador Externo
+    i_want: Descargar convenio de transferencia para firma FEA
+    so_that: Formalizo la transferencia de recursos
+    acceptance_criteria:
+      - "PDF descargable con campos prellenados"
+      - "Integración con FirmaGob"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: formulador_externo
+    origin: legacy
+  - id: US-FIN-IPR-011
+    as_a: Entidad Ejecutora
+    i_want: Reportar avance mensual (% físico/financiero)
+    so_that: Cumplo con obligaciones de reporte
+    acceptance_criteria:
+      - "Formulario de avance estandarizado"
+      - "Comparativo plan vs real"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-012
+    as_a: Entidad Ejecutora
+    i_want: Ingresar rendición vía SISREC (integración o carga manual)
+    so_that: Cumplo con obligaciones de rendición
+    acceptance_criteria:
+      - "Integración API SISREC o carga manual"
+      - "Validación de documentos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-013
+    as_a: Entidad Ejecutora
+    i_want: Responder observaciones a rendiciones rechazadas
+    so_that: Regularizo mi situación de rendición
+    acceptance_criteria:
+      - "Formulario de respuesta estructurado"
+      - "Adjuntos complementarios"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-014
+    as_a: Entidad Ejecutora
+    i_want: Solicitar modificación (Plazo, Monto, Reitemización)
+    so_that: Ajusto el proyecto según necesidades
+    acceptance_criteria:
+      - "Formulario según tipo de modificación"
+      - "Justificación requerida"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-015
+    as_a: Entidad Ejecutora
+    i_want: Reintegrar saldos no ejecutados
+    so_that: Cumplo con devolución de recursos
+    acceptance_criteria:
+      - "Instrucción de pago generada"
+      - "Comprobante registrado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-016
+    as_a: Entidad Ejecutora
+    i_want: Registrar adjudicación de licitación y contrato
+    so_that: Documento el inicio de ejecución
+    acceptance_criteria:
+      - ""Campos de OC, monto, proveedor""
+      - "Vinculación con Mercado Público"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-017
+    as_a: Entidad Ejecutora
+    i_want: Subir Acta Entrega Terreno / Inicio Obras
+    so_that: Registro el hito de inicio formal
+    acceptance_criteria:
+      - "Documento firmado adjunto"
+      - "Fecha de inicio registrada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-018
+    as_a: Entidad Ejecutora
+    i_want: Solicitar Recepción Provisoria/Definitiva de Obras
+    so_that: Cierro formalmente la ejecución
+    acceptance_criteria:
+      - "Formulario de solicitud"
+      - "Documentos de respaldo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: entidad_ejecutora
+    origin: legacy
+  - id: US-FIN-IPR-019
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar admisibilidad formal con checklist documental
+    so_that: Verifico completitud de la postulación
+    acceptance_criteria:
+      - "Checklist dinámico por mecanismo"
+      - ""Resultado: Admisible/Inadmisible/Subsanable""
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-020
+    as_a: Analista Preinversión DIPIR
+    i_want: Revisar Perfil/Prefactibilidad según metodología MDSF
+    so_that: Preparo el proyecto para evaluación externa
+    acceptance_criteria:
+      - "Validación de campos SNI"
+      - "Generación de oficio a MDSF"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-021
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar Perfil de programa (Pertinencia DIPRES)
+    so_that: Verifico viabilidad programática
+    acceptance_criteria:
+      - "Revisión de pertinencia"
+      - "Checklist Glosa 06"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-022
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar Diseño con Marco Lógico detallado
+    so_that: Verifico calidad del diseño programático
+    acceptance_criteria:
+      - "Revisión de MML completo"
+      - "Coherencia interna verificada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-023
+    as_a: Analista Preinversión DIPIR
+    i_want: Evaluar proyectos <5000 UTM o Conservación (simplificado)
+    so_that: Proceso rápido para proyectos menores
+    acceptance_criteria:
+      - "Evaluación abreviada"
+      - "Sin envío a MDSF"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-024
+    as_a: Analista Preinversión DIPIR
+    i_want: Preparar Oficio Solicitud Evaluación (MDSF/DIPRES)
+    so_that: Envío formal a evaluador externo
+    acceptance_criteria:
+      - "Plantilla de oficio"
+      - "Antecedentes adjuntos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-025
+    as_a: Analista Preinversión DIPIR
+    i_want: Registrar resultado evaluación externa (RS/RF/AD/OT)
+    so_that: Actualizo el estado del proyecto
+    acceptance_criteria:
+      - ""Estados: RS/FI/OT/AD""
+      - "Fecha y número de dictamen"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-PPTO-001
+    as_a: Analista Presupuesto DAF
+    i_want: Emitir CDP (Certificado Disponibilidad Presupuestaria)
+    so_that: Reservo fondos para el compromiso
+    acceptance_criteria:
+      - "Validación automática de saldo"
+      - "CDP con folio único"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_presupuesto_daf
+    origin: legacy
+  - id: US-FIN-PPTO-002
+    as_a: Analista Presupuesto DAF
+    i_want: Tramitar Resolución/Decreto Identificatorio (DIPRES/CGR)
+    so_that: Formalizo la asignación presupuestaria
+    acceptance_criteria:
+      - "Generación de acto administrativo"
+      - "Envío a CGR si aplica"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_presupuesto_daf
+    origin: legacy
+  - id: US-FIN-PPTO-003
+    as_a: Analista Presupuesto DAF
+    i_want: Elaborar Convenio de Transferencia (Borrador)
+    so_that: Preparo el instrumento de transferencia
+    acceptance_criteria:
+      - "Plantilla por tipo de ejecutor"
+      - "Campos prellenados desde IPR"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_presupuesto_daf
+    origin: legacy
+  - id: US-FIN-PPTO-004
+    as_a: Analista Presupuesto DAF
+    i_want: Gestionar firmas Convenio (Gore - Ejecutor)
+    so_that: Obtengo firmas de ambas partes
+    acceptance_criteria:
+      - "Flujo de firmas FEA"
+      - "Notificaciones de estado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_presupuesto_daf
+    origin: legacy
+  - id: US-FIN-PPTO-005
+    as_a: Analista Presupuesto DAF
+    i_want: Devengar obligación (Hito exigible / Tramitación completa)
+    so_that: Habilito el pago al ejecutor
+    acceptance_criteria:
+      - "Validación de hitos cumplidos"
+      - "Generación de devengo en SIGFE"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_presupuesto_daf
+    origin: legacy
+  - id: US-FIN-PPTO-006
+    as_a: Profesional DAF
+    i_want: Emitir CDP validando saldo en asignación
+    so_that: Evito compromisos sin respaldo
+    acceptance_criteria:
+      - "Bloqueo automático si sin saldo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-007
+    as_a: Profesional DAF
+    i_want: Consultar estado afectación por IPR
+    so_that: Verifico compromisos por proyecto
+    acceptance_criteria:
+      - "Vista por IPR con montos afectados"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-008
+    as_a: Profesional DAF
+    i_want: Programar pagos con reglas devengo CGR
+    so_that: Cumplo normativa de pagos
+    acceptance_criteria:
+      - "Calendario de pagos"
+      - "Validación de reglas CGR"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-009
+    as_a: Profesional DAF
+    i_want: Recibir alertas de glosas infringidas (03/04/06)
+    so_that: Evito incumplimientos normativos
+    acceptance_criteria:
+      - "Alerta automática por glosa"
+      - "Detalle de infracción potencial"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-010
+    as_a: Profesional DAF
+    i_want: Usar asistente para modificaciones presupuestarias
+    so_that: Gestiono cambios correctamente
+    acceptance_criteria:
+      - "Wizard por tipo de modificación"
+      - "Determina actos requeridos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-011
+    as_a: Profesional DAF
+    i_want: Ver proyección vs programa caja con alertas >5%
+    so_that: Anticipo desfases de caja
+    acceptance_criteria:
+      - "Comparativo proyectado vs real"
+      - "Alerta de desviación >5%"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-012
+    as_a: Profesional DAF
+    i_want: Gestionar cierre deuda flotante por programa/subtítulo
+    so_that: Cierro correctamente el ejercicio
+    acceptance_criteria:
+      - "Listado de compromisos pendientes"
+      - "Procedimiento de arrastre"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-013
+    as_a: Profesional DAF
+    i_want: Sincronizar con SIGFE validando consistencia
+    so_that: Mantengo datos alineados
+    acceptance_criteria:
+      - "Reconciliación automática"
+      - "Alertas de inconsistencia"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-014
+    as_a: Jefe DAF
+    i_want: Ver dashboard ejecución mensual por subtítulo
+    so_that: Monitoreo ejecución global
+    acceptance_criteria:
+      - "Gráficos por subtítulo"
+      - "Comparativo año anterior"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_daf
+    origin: legacy
+  - id: US-FIN-PPTO-015
+    as_a: Jefe DAF
+    i_want: Ver monitor de rendiciones vencidas (días mora, Art.18)
+    so_that: Gestiono mora de ejecutores
+    acceptance_criteria:
+      - "Ranking por días de mora"
+      - "Alertas de bloqueo Art.18"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_daf
+    origin: legacy
+  - id: US-FIN-PPTO-016
+    as_a: Jefe DAF
+    i_want: Aprobar informes FEA habilitando contabilización
+    so_that: Autorizo registro contable
+    acceptance_criteria:
+      - "Firma electrónica avanzada"
+      - "Liberación de contabilización"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_daf
+    origin: legacy
+  - id: US-FIN-CONV-001
+    as_a: Profesional DAF
+    i_want: Generar convenios desde plantillas por tipo ejecutor
+    so_that: Estandarizo documentos
+    acceptance_criteria:
+      - "Plantillas por tipo"
+      - "Campos prellenados"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-CONV-002
+    as_a: Profesional DAF
+    i_want: Ver lista convenios por estado con filtros
+    so_that: Gestiono cartera de convenios
+    acceptance_criteria:
+      - ""Filtros por estado, ejecutor, fecha""
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-CONV-003
+    as_a: Profesional DAF
+    i_want: Recibir alertas de convenios por vencer (prórroga/cierre)
+    so_that: Actúo antes del vencimiento
+    acceptance_criteria:
+      - "Alerta 30/15/7 días antes"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-CONV-004
+    as_a: Profesional DAF
+    i_want: Registrar cuotas de transferencia (calendario)
+    so_that: Controlo desembolsos
+    acceptance_criteria:
+      - "Calendario de cuotas"
+      - "Estado por cuota"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-CONV-005
+    as_a: Profesional DAF
+    i_want: Controlar garantías con alertas de vencimiento
+    so_that: Evito pérdida de garantías
+    acceptance_criteria:
+      - "Registro de garantías"
+      - "Alertas de vencimiento"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-REND-001
+    as_a: Encargado Rendiciones
+    i_want: Crear proyectos SISREC habilitando rendiciones
+    so_that: Inicio el flujo de rendición
+    acceptance_criteria:
+      - "Proyecto creado en SISREC"
+      - "Vinculado a convenio"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-002
+    as_a: Encargado Rendiciones
+    i_want: Revisar rendiciones (aprobar/observar)
+    so_that: Valido la documentación de respaldo
+    acceptance_criteria:
+      - "Checklist de revisión"
+      - "Observaciones estructuradas"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-003
+    as_a: Encargado Rendiciones
+    i_want: Generar informe aprobación para Jefe DAF
+    so_that: Documento la revisión
+    acceptance_criteria:
+      - "Informe estructurado"
+      - "Firma requerida"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-004
+    as_a: Encargado Rendiciones
+    i_want: Coordinar regularización rendiciones (>15 días)
+    so_that: Gestiono mora temprana
+    acceptance_criteria:
+      - "Alertas de retraso"
+      - "Seguimiento documentado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-005
+    as_a: Analista Operativo Transferencias
+    i_want: Verificar elegibilidad ejecutor (bloqueo Art.18)
+    so_that: Evito transferencias a ejecutores inhabilitados
+    acceptance_criteria:
+      - "Consulta automática de inhabilitaciones"
+      - "Bloqueo preventivo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_operativo_transferencias
+    origin: legacy
+  - id: US-FIN-REND-006
+    as_a: Unidad Contabilidad Rendiciones
+    i_want: Contabilizar en SIGFE (requiere FEA)
+    so_that: Registro contable de la rendición
+    acceptance_criteria:
+      - "Asiento contable generado"
+      - "Firma FEA requerida"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: unidad_contabilidad_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-007
+    as_a: Unidad Contabilidad Rendiciones
+    i_want: Ver dashboard rendiciones pendientes (ranking mora)
+    so_that: Priorizo revisiones
+    acceptance_criteria:
+      - "Ranking por días de mora"
+      - "Filtros por ejecutor/programa"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: unidad_contabilidad_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-008
+    as_a: Unidad Contabilidad Rendiciones
+    i_want: Recibir alertas automáticas de bloqueo Art.18
+    so_that: Evito transferencias a morosos
+    acceptance_criteria:
+      - "Alerta automática"
+      - "Lista de ejecutores bloqueados"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: unidad_contabilidad_rendiciones
+    origin: legacy
+  - id: US-FIN-GEST-001
+    as_a: Analista Gestión DIPIR
+    i_want: Ver dashboard de cartera ejecución (físico vs financiero)
+    so_that: Monitoreo avance de proyectos
+    acceptance_criteria:
+      - "Gráfico físico vs financiero"
+      - "Semáforos por proyecto"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-GEST-002
+    as_a: Analista Gestión DIPIR
+    i_want: Evaluar Solicitud de Modificación (Informe Técnico)
+    so_that: Fundamento la decisión
+    acceptance_criteria:
+      - "Informe técnico estructurado"
+      - "Recomendación fundamentada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-GEST-003
+    as_a: Analista Gestión DIPIR
+    i_want: Gestionar Reevaluación (si supera 10% / cambio sustancial)
+    so_that: Cumplo con normativa de modificaciones
+    acceptance_criteria:
+      - "Validación de umbral 10%"
+      - "Flujo de reevaluación"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-GEST-004
+    as_a: Analista Gestión DIPIR
+    i_want: Validar estado de pago (avance físico coherente)
+    so_that: Autorizo pagos con respaldo
+    acceptance_criteria:
+      - "Comparativo físico vs pago solicitado"
+      - "Aprobación/rechazo documentado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-GEST-005
+    as_a: Analista Gestión DIPIR
+    i_want: Visar Cierre Técnico (Checklist recepción obras/programas)
+    so_that: Certifico culminación técnica
+    acceptance_criteria:
+      - "Checklist de cierre"
+      - "Documentos de respaldo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-GEST-006
+    as_a: Analista Gestión DIPIR
+    i_want: Recibir alertas de IPR >30 días sin movimiento
+    so_that: Gestiono proyectos estancados
+    acceptance_criteria:
+      - "Alerta automática configurable"
+      - "Sugerencia de acción"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-GEST-007
+    as_a: Analista Gestión DIPIR
+    i_want: Registrar problema/nudo (tipo, impacto, compromiso)
+    so_that: Documento obstáculos del proyecto
+    acceptance_criteria:
+      - "Tipología de problemas"
+      - "Compromiso de resolución"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-GEST-008
+    as_a: Analista Gestión DIPIR
+    i_want: Ver semáforos de ejecución (alerta temprana)
+    so_that: Identifico proyectos en riesgo
+    acceptance_criteria:
+      - "Indicadores de riesgo configurables"
+      - "Notificación automática"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-SUP-001
+    as_a: Municipio
+    i_want: Agendar una hora de soporte con un analista contable (virtual/presencial)
+    so_that: Aclare dudas complejas sobre rendiciones y evite rechazos
+    acceptance_criteria:
+      - "Calendario de disponibilidad integrado"
+      - "Selección de tema (SISREC, Glosa, etc.)"
+      - "Confirmación y link de videollamada"
+      - "Registro de acta de atención"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: municipio
+    origin: legacy
+  - id: US-FIN-SUP-002
+    as_a: Municipio
+    i_want: Consultar una base de conocimiento con errores frecuentes y soluciones
+    so_that: Resuelva dudas comunes sin contactar a soporte
+    acceptance_criteria:
+      - "Buscador semántico (IA)"
+      - "Ranking de preguntas más consultadas"
+      - "Ejemplos de documentos aceptados/rechazados"
+      - "Feedback de utilidad"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: municipio
+    origin: legacy
+  - id: US-FIN-SUP-003
+    as_a: Municipio
+    i_want: Simular una carga de rendición en un entorno de pruebas
+    so_that: Verifique si mis documentos cumplen validaciones antes del envío real
+    acceptance_criteria:
+      - "Entorno réplica de SISREC"
+      - "Validación automática de archivos"
+      - "Reporte de pre-validación con errores detectados"
+      - "Sin efectos legales ni contables"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: municipio
+    origin: legacy
+  - id: US-FIN-GEST-009
+    as_a: Analista Gestión DIPIR
+    i_want: Registrar código SIGFE (subt/item/asig) en ficha IPR
+    so_that: Vinculo proyecto con presupuesto
+    acceptance_criteria:
+      - "Campos SIGFE obligatorios"
+      - "Validación de formato"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-JEF-001
+    as_a: Jefe DIPIR
+    i_want: Ver dashboard ejecutivo: total IPR, monto, % ejecución, problemas
+    so_that: Tengo visión global de la división
+    acceptance_criteria:
+      - "KPIs principales"
+      - "Comparativo histórico"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-JEF-002
+    as_a: Jefe DIPIR
+    i_want: Ver distribución de carga por analista con métricas de tiempos
+    so_that: Balanceo trabajo del equipo
+    acceptance_criteria:
+      - "Carga por analista"
+      - "Tiempos promedio"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-JEF-003
+    as_a: Jefe DIPIR
+    i_want: Ver problemas críticos escalados en lista priorizada
+    so_that: Gestiono lo urgente primero
+    acceptance_criteria:
+      - "Lista priorizada"
+      - "Estado de escalamiento"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-JEF-004
+    as_a: Jefe DIPIR
+    i_want: Ver propuesta de priorización (ranking ERD/urgencia/monto)
+    so_that: Optimizo uso de recursos
+    acceptance_criteria:
+      - "Algoritmo de priorización"
+      - "Justificación por proyecto"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-FRIL-001
+    as_a: Analista FRIL DIPIR
+    i_want: Configurar Marcos Presupuestarios (Cuota por Comuna)
+    so_that: Controlo asignación comunal
+    acceptance_criteria:
+      - "Cuota por comuna"
+      - "Histórico de asignaciones"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_fril_dipir
+    origin: legacy
+  - id: US-FIN-FRIL-002
+    as_a: Analista FRIL DIPIR
+    i_want: Validar proyecto contra saldo de marco comunal (bloqueo automático)
+    so_that: Evito excesos de cuota
+    acceptance_criteria:
+      - "Validación automática"
+      - "Bloqueo si excede"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_fril_dipir
+    origin: legacy
+  - id: US-FIN-FRIL-003
+    as_a: Analista FRIL DIPIR
+    i_want: Emitir RATE FRIL (RS, FI, OT, NV)
+    so_that: Documento resultado de evaluación
+    acceptance_criteria:
+      - "Estados RS/FI/OT/NV"
+      - "Fundamentación"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_fril_dipir
+    origin: legacy
+  - id: US-FIN-FRPD-001
+    as_a: Comité FRPD
+    i_want: Validar alineación con Ejes (Sustentabilidad, Innovación)
+    so_that: Aseguro pertinencia estratégica
+    acceptance_criteria:
+      - "Checklist de ejes"
+      - "Puntaje de alineación"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: comité_frpd
+    origin: legacy
+  - id: US-FIN-FRPD-002
+    as_a: Analista Fomento
+    i_want: Evaluar admisibilidad de beneficiario (Empresa/Gremio)
+    so_that: Verifico elegibilidad
+    acceptance_criteria:
+      - "Validación de personalidad jurídica"
+      - "Verificación de actividad"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_fomento
+    origin: legacy
+  - id: US-FIN-SUB-001
+    as_a: Analista 8%
+    i_want: >-
+    so_that: Evito conflictos de interés
+    acceptance_criteria:
+      - "Cruce automático RUT"
+      - "Alerta de inhabilidad"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_8%
+    origin: legacy
+  - id: US-FIN-SUB-002
+    as_a: Analista 8%
+    i_want: Evaluar Admisibilidad Estricta (Vigencia PJ, Directorio)
+    so_that: Verifico requisitos formales
+    acceptance_criteria:
+      - "Checklist de requisitos"
+      - ""Estado: Admisible/Inadmisible""
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_8%
+    origin: legacy
+  - id: US-FIN-SUB-003
+    as_a: Analista 8%
+    i_want: Aplicar pauta de evaluación ciega (doble ciego opcional)
+    so_that: Aseguro objetividad
+    acceptance_criteria:
+      - "Anonimización de postulantes"
+      - "Pauta estructurada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_8%
+    origin: legacy
+  - id: US-FIN-SUB-004
+    as_a: Analista 8%
+    i_want: Generar nómina de adjudicación para CORE
+    so_that: Preparo aprobación colegiada
+    acceptance_criteria:
+      - "Lista ordenada por puntaje"
+      - "Monto total vs disponible"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_8%
+    origin: legacy
+  - id: US-FIN-C33-001
+    as_a: Analista Operaciones C33
+    i_want: Ejecutar Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
+    so_that: Respondo a urgencias
+    acceptance_criteria:
+      - "Flujo abreviado"
+      - "Justificación de emergencia"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_operaciones_c33
+    origin: legacy
+  - id: US-FIN-C33-002
+    as_a: Analista Operaciones C33
+    i_want: Validar tipología Activo (Vehículo, Maquinaria, Equipo)
+    so_that: Clasifico correctamente
+    acceptance_criteria:
+      - "Categorías de activos"
+      - "Requisitos por categoría"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_operaciones_c33
+    origin: legacy
+  - id: US-FIN-FORM-001
+    as_a: DIPIR
+    i_want: Elaborar proyecto presupuesto inversiones alineado con ERD
+    so_that: Preparo propuesta anual
+    acceptance_criteria:
+      - "Alineación con objetivos ERD"
+      - "Montos por eje estratégico"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: dipir
+    origin: legacy
+  - id: US-FIN-FORM-002
+    as_a: DIPIR
+    i_want: Coordinar ARI con servicios vía Chileindica (plazo primeros 4 meses)
+    so_that: Consolido inversión regional
+    acceptance_criteria:
+      - "Integración Chileindica"
+      - "Plazo verificado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: dipir
+    origin: legacy
+  - id: US-FIN-APR-001
+    as_a: Gobernador
+    i_want: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
+    so_that: Cumplo con obligación legal
+    acceptance_criteria:
+      - "Documento de distribución"
+      - "Verificación de plazo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: gobernador
+    origin: legacy
+  - id: US-FIN-PPR-001
+    as_a: Analista DAE PPR
+    i_want: Evaluar Track A (Transferencia) y emitir ITF
+    so_that: Habilito transferencia a ejecutor
+    acceptance_criteria:
+      - "Informe Técnico Favorable"
+      - "Checklist Glosa 06"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_dae_ppr
+    origin: legacy
+  - id: US-FIN-PPR-002
+    as_a: Analista DAE PPR
+    i_want: Evaluar Track B (Ejecución Directa) con Matriz Marco Lógico rigurosa
+    so_that: Aseguro calidad programática
+    acceptance_criteria:
+      - "MML completo validado"
+      - "Indicadores definidos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_dae_ppr
+    origin: legacy
+  - id: US-FIN-GOB-001
+    as_a: Comité Directivo Regional
+    i_want: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
+    so_that: Filtro estratégico antes de evaluación técnica
+    acceptance_criteria:
+      - "Acta de sesión"
+      - ""Resultado: Pertinente/No Pertinente""
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: comité_directivo_regional
+    origin: legacy
+  - id: US-FIN-GOB-002
+    as_a: Comité Directivo Regional
+    i_want: Realizar Priorización Estratégica (Ranking de cartera para evaluación)
+    so_that: Ordeno la cola de evaluación
+    acceptance_criteria:
+      - "Ranking con criterios"
+      - "Acuerdo documentado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: comité_directivo_regional
+    origin: legacy
+  - id: US-FIN-GOB-003
+    as_a: Comité Directivo Regional
+    i_want: Visualizar cartera georreferenciada por provincia (equidad territorial)
+    so_that: Evalúo distribución territorial
+    acceptance_criteria:
+      - "Mapa con proyectos"
+      - "Filtros por provincia"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: comité_directivo_regional
+    origin: legacy
+  - id: US-FIN-GOB-004
+    as_a: Oficial de Partes
+    i_want: Recepcionar Oficio Ingreso IPR (Timbre digital/físico)
+    so_that: Inicio trazabilidad documental
+    acceptance_criteria:
+      - "Folio de ingreso"
+      - "Timbre digital"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: oficial_de_partes
+    origin: legacy
+  - id: US-FIN-SISREC-001
+    as_a: Analista Ejecutor
+    i_want: Aceptar transferencia del GORE en SISREC para iniciar flujo de rendición
+    so_that: Inicio formalmente la ejecución
+    acceptance_criteria:
+      - "Aceptación registrada"
+      - "Flujo de rendición habilitado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_ejecutor
+    origin: legacy
+  - id: US-FIN-SISREC-002
+    as_a: Analista Ejecutor
+    i_want: >-
+    so_that: Cumplo con obligación de reporte
+    acceptance_criteria:
+      - "Tipos de informe"
+      - "Validación de plazo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_ejecutor
+    origin: legacy
+  - id: US-FIN-SISREC-003
+    as_a: Encargado Ejecutor
+    i_want: Firmar Informe de Rendición con FEA y enviar al GORE
+    so_that: Formalizo la rendición
+    acceptance_criteria:
+      - "Firma FEA válida"
+      - "Envío automatizado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: encargado_ejecutor
+    origin: legacy
+  - id: US-FIN-CTRL-001
+    as_a: Profesional DAF
+    i_want: Generar reportes estandarizados para DIPRES
+    so_that: Cumplo con obligaciones de reporte
+    acceptance_criteria:
+      - "Formato DIPRES"
+      - "Automatización mensual"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-CTRL-002
+    as_a: Profesional DAF
+    i_want: Publicar cartera FNDR en portal de transparencia
+    so_that: Cumplo con Glosa 16
+    acceptance_criteria:
+      - "Publicación mensual"
+      - "Formato Glosa 16"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-CTRL-003
+    as_a: Profesional DAF
+    i_want: Monitorear indicadores de la Ley de Presupuestos
+    so_that: Verifico cumplimiento de metas
+    acceptance_criteria:
+      - "Dashboard de KPIs"
+      - "Alertas de desviación"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-FORM-003
+    as_a: Profesional DAF
+    i_want: Proyectar gastos de funcionamiento (Subtítulo 21-22)
+    so_that: Planifico el presupuesto operacional
+    acceptance_criteria:
+      - "Proyección por ítem"
+      - "Comparativo histórico"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-FORM-004
+    as_a: Profesional DAF
+    i_want: Verificar clasificador presupuestario vigente
+    so_that: Uso códigos correctos
+    acceptance_criteria:
+      - "Clasificador actualizado"
+      - "Validación automática"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-FORM-005
+    as_a: Profesional DAF
+    i_want: Crear provisiones presupuestarias para FRIL/FRPD
+    so_that: Reservo fondos por concurso
+    acceptance_criteria:
+      - "Provisión por mecanismo"
+      - "Liberación al adjudicar"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-MOD-002
+    as_a: Profesional DAF
+    i_want: Validar modificaciones que no requieren CORE
+    so_that: Agilizo trámites menores
+    acceptance_criteria:
+      - "Reglas de excepción"
+      - "Autorización delegada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-017
+    as_a: Profesional DAF
+    i_want: Gestionar presupuesto de cometidos y viáticos
+    so_that: Controlo gastos de personal
+    acceptance_criteria:
+      - "Cuota por unidad"
+      - "Control de ejecución"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-018
+    as_a: Profesional DAF
+    i_want: Realizar conciliación bancaria mensual
+    so_that: Verifico consistencia de cuentas
+    acceptance_criteria:
+      - "Conciliación automática"
+      - "Identificación de diferencias"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-019
+    as_a: Jefe DAF
+    i_want: Proyectar deuda flotante a fin de año
+    so_that: Planifico cierre de ejercicio
+    acceptance_criteria:
+      - "Proyección mensual"
+      - "Alertas de riesgo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_daf
+    origin: legacy
+  - id: US-FIN-PPTO-020
+    as_a: Jefe DAF
+    i_want: Visar resoluciones de cometidos funcionarios
+    so_that: Autorizo viáticos
+    acceptance_criteria:
+      - "Visación electrónica"
+      - "Control de presupuesto"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_daf
+    origin: legacy
+  - id: US-FIN-PPTO-021
+    as_a: Jefe DAF
+    i_want: Reconciliar ejecución con SIGFE
+    so_that: Valido consistencia
+    acceptance_criteria:
+      - "Reconciliación automática"
+      - "Reporte de diferencias"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_daf
+    origin: legacy
+  - id: US-FIN-PPTO-022
+    as_a: Jefe DAF
+    i_want: Recibir alertas de gaps en reconciliación
+    so_that: Corrijo inconsistencias
+    acceptance_criteria:
+      - "Alerta automática"
+      - "Detalle de diferencia"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_daf
+    origin: legacy
+  - id: US-FIN-IPR-026
+    as_a: Analista Gestión DIPIR
+    i_want: Gestionar devolución de garantías a ejecutores
+    so_that: Libero garantías correctamente
+    acceptance_criteria:
+      - "Verificación de cierre"
+      - "Liberación documentada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-027
+    as_a: Analista Preinversión DIPIR
+    i_want: Ver bandeja de postulaciones ordenada FIFO
+    so_that: Proceso en orden de llegada
+    acceptance_criteria:
+      - "Orden cronológico"
+      - "Indicador de antigüedad"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-028
+    as_a: Analista Preinversión DIPIR
+    i_want: Monitorear estado RATE con semáforo
+    so_that: Visualizo avance de evaluación
+    acceptance_criteria:
+      - "Semáforo por proyecto"
+      - "Días en estado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-029
+    as_a: Analista Preinversión DIPIR
+    i_want: Registrar observaciones técnicas (FI/OT)
+    so_that: Documento condiciones de aprobación
+    acceptance_criteria:
+      - "Observaciones estructuradas"
+      - "Vinculadas a RATE"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-030
+    as_a: Analista Preinversión DIPIR
+    i_want: Generar cartera de proyectos RS para sesión CORE
+    so_that: Preparo tabla de asignación
+    acceptance_criteria:
+      - "Lista ordenada por prioridad"
+      - "Monto total vs disponible"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-031
+    as_a: Analista Preinversión DIPIR
+    i_want: Generar carpeta digital para sesión CORE
+    so_that: Distribuyo antecedentes
+    acceptance_criteria:
+      - "PDF consolidado"
+      - "Fichas resumen"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-032
+    as_a: Analista Gestión DIPIR
+    i_want: Exportar reportes para CGR/DIPRES
+    so_that: Cumplo con obligaciones de reporte
+    acceptance_criteria:
+      - "Formato estándar"
+      - "Periodicidad configurada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-033
+    as_a: Analista Gestión DIPIR
+    i_want: Gestionar vigencia de iniciativas en BIP
+    so_that: Mantengo cartera actualizada
+    acceptance_criteria:
+      - "Alertas de vencimiento"
+      - "Renovación documentada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_gestión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-034
+    as_a: Jefe DIPIR
+    i_want: Ver tiempos promedio por fase del ciclo
+    so_that: Identifico cuellos de botella
+    acceptance_criteria:
+      - "Métricas por fase"
+      - "Comparativo histórico"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-IPR-035
+    as_a: Jefe DIPIR
+    i_want: Generar informes de gestión divisional
+    so_that: Reporto a autoridades
+    acceptance_criteria:
+      - "Informe estructurado"
+      - "KPIs principales"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-IPR-036
+    as_a: Jefe DIPIR
+    i_want: Preparar información para CDR alineada con ERD
+    so_that: Apoyo decisiones estratégicas
+    acceptance_criteria:
+      - "Vinculación a objetivos ERD"
+      - "Presentación ejecutiva"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-IPR-037
+    as_a: Jefe DIPIR
+    i_want: Coordinar con MDSF/DIPRES casos complejos
+    so_that: Resuelvo obstáculos de evaluación
+    acceptance_criteria:
+      - "Registro de comunicaciones"
+      - "Seguimiento de compromisos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-IPR-038
+    as_a: Jefe DIPIR
+    i_want: Configurar alertas y reglas del sistema
+    so_that: Personalizo monitoreo
+    acceptance_criteria:
+      - "Reglas configurables"
+      - "Destinatarios por alerta"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P2
+    role_key: jefe_dipir
+    origin: legacy
+  - id: US-FIN-REND-009
+    as_a: Encargado Rendiciones
+    i_want: Registrar envío de transferencia a ejecutor
+    so_that: Documento el desembolso
+    acceptance_criteria:
+      - "Comprobante de transferencia"
+      - "Fecha de pago"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-010
+    as_a: Encargado Rendiciones
+    i_want: Descargar Informe de Aprobación de rendición
+    so_that: Documento el cierre
+    acceptance_criteria:
+      - "PDF con firma"
+      - "Resumen de rendición"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-011
+    as_a: Unidad Contabilidad Rendiciones
+    i_want: Archivar expediente digital de rendición
+    so_that: Cierro el ciclo documental
+    acceptance_criteria:
+      - "Expediente completo"
+      - "IUIe asignado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: unidad_contabilidad_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-012
+    as_a: Unidad Contabilidad Rendiciones
+    i_want: Supervisar tiempos de revisión de rendiciones
+    so_that: Identifico demoras
+    acceptance_criteria:
+      - "Métricas por analista"
+      - "Alertas de demora"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: unidad_contabilidad_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-013
+    as_a: Encargado Rendiciones
+    i_want: Validar rendición aplicando reglas FRIL
+    so_that: Verifico cumplimiento específico
+    acceptance_criteria:
+      - "Checklist FRIL"
+      - "Validación de tope"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-014
+    as_a: Encargado Rendiciones
+    i_want: Verificar cumplimiento de hitos I+D+i (FRPD)
+    so_that: Valido productos de innovación
+    acceptance_criteria:
+      - "Hitos verificados"
+      - "Productos documentados"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-015
+    as_a: Encargado Rendiciones
+    i_want: Verificar medios de verificación de Subvención 8%
+    so_that: Valido cumplimiento de objetivos
+    acceptance_criteria:
+      - "Medios de verificación"
+      - "Coherencia con proyecto"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-016
+    as_a: Encargado Rendiciones
+    i_want: Controlar tope 5% de gastos administrativos
+    so_that: Verifico cumplimiento de límite
+    acceptance_criteria:
+      - "Cálculo automático"
+      - "Alerta de exceso"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-017
+    as_a: Encargado Rendiciones
+    i_want: Gestionar rendición de gastos internos S31
+    so_that: Controlo ejecución directa
+    acceptance_criteria:
+      - "Flujo interno"
+      - "Documentación de respaldo"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-018
+    as_a: Encargado Rendiciones
+    i_want: Gestionar proceso de reintegro de fondos
+    so_that: Recupero saldos no ejecutados
+    acceptance_criteria:
+      - "Cálculo de reintegro"
+      - "Seguimiento de pago"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-019
+    as_a: Encargado Rendiciones
+    i_want: Preparar antecedentes para Juicio de Cuentas CGR
+    so_that: Documento casos de incumplimiento
+    acceptance_criteria:
+      - "Expediente completo"
+      - "Fundamentación jurídica"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-REND-020
+    as_a: Encargado Rendiciones
+    i_want: Publicar rendiciones en portal de Transparencia
+    so_that: Cumplo con publicidad
+    acceptance_criteria:
+      - "Publicación periódica"
+      - "Formato estandarizado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_rendiciones
+    origin: legacy
+  - id: US-FIN-FRIL-004
+    as_a: Analista FRIL DIPIR
+    i_want: Controlar tope de 2000 UTM por proyecto
+    so_that: Verifico límite normativo
+    acceptance_criteria:
+      - "Validación automática"
+      - "Bloqueo si excede"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_fril_dipir
+    origin: legacy
+  - id: US-FIN-FRPD-003
+    as_a: Analista Fomento
+    i_want: Validar porcentaje de co-financiamiento
+    so_that: Verifico aporte del beneficiario
+    acceptance_criteria:
+      - "Porcentaje mínimo"
+      - "Documentación de aporte"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_fomento
+    origin: legacy
+  - id: US-FIN-FRPD-004
+    as_a: Comité FRPD
+    i_want: Generar ranking de competitividad de proyectos
+    so_that: Priorizo adjudicación
+    acceptance_criteria:
+      - "Puntaje por criterio"
+      - "Ranking final"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: comité_frpd
+    origin: legacy
+  - id: US-FIN-PPR-003
+    as_a: Analista DAE PPR
+    i_want: Verificar que no existe fraccionamiento de programas
+    so_that: Evito sobrepaso de topes
+    acceptance_criteria:
+      - "Cruce con proyectos similares"
+      - "Alerta de potencial fraccionamiento"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_dae_ppr
+    origin: legacy
+  - id: US-FIN-PPR-004
+    as_a: Analista DAE PPR
+    i_want: Presentar programas al Comité de Pertinencia
+    so_that: Obtengo validación colegiada
+    acceptance_criteria:
+      - "Presentación estructurada"
+      - "Acta de decisión"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_dae_ppr
+    origin: legacy
+  - id: US-FIN-PPR-005
+    as_a: Ejecutor PPR
+    i_want: Presentar Declaración Jurada Art.18
+    so_that: Habilito transferencia
+    acceptance_criteria:
+      - "DJ con firma FEA"
+      - "Validación automática"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: ejecutor_ppr
+    origin: legacy
+  - id: US-FIN-PPR-006
+    as_a: Ejecutor PPR
+    i_want: Visualizar estado de mi programa en el ciclo
+    so_that: Tengo visibilidad del avance
+    acceptance_criteria:
+      - "Timeline con estados"
+      - "Próximos pasos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: ejecutor_ppr
+    origin: legacy
+  - id: US-FIN-SUB-005
+    as_a: Organización Postulante
+    i_want: Postular a Subvención 8% en línea
+    so_that: Accedo a fondos concursables
+    acceptance_criteria:
+      - "Formulario digital"
+      - "Carga de antecedentes"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: organización_postulante
+    origin: legacy
+  - id: US-FIN-SUB-006
+    as_a: Organización Beneficiaria
+    i_want: Subir rendición simplificada de Subvención 8%
+    so_that: Cumplo con obligación de reporte
+    acceptance_criteria:
+      - "Formulario simplificado"
+      - "Medios de verificación"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: organización_beneficiaria
+    origin: legacy
+  - id: US-FIN-IPR-039
+    as_a: Analista Preinversión DIPIR
+    i_want: Verificar cumplimiento de Requisitos de Información (ARI)
+    so_that: Valido admisibilidad
+    acceptance_criteria:
+      - "Checklist ARI"
+      - "Validación documental"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-040
+    as_a: Analista Preinversión DIPIR
+    i_want: Solicitar antecedentes adicionales al formulador
+    so_that: Completo la evaluación
+    acceptance_criteria:
+      - "Solicitud formal"
+      - "Plazo de respuesta"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-041
+    as_a: Analista Preinversión DIPIR
+    i_want: Generar ficha IDI (Iniciativa de Inversión) para Mideso
+    so_that: Postulo al banco de proyectos
+    acceptance_criteria:
+      - "Ficha con formato estándar"
+      - "Integración BIP"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-SEC-001
+    as_a: Analista Sectorial
+    i_want: Evaluar pertinencia técnica de proyectos sectoriales
+    so_that: Valido alineamiento
+    acceptance_criteria:
+      - "Informe técnico"
+      - "Recomendación"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_sectorial
+    origin: legacy
+  - id: US-FIN-SEC-002
+    as_a: Analista Sectorial
+    i_want: Participar en mesas técnicas con servicios públicos
+    so_that: Coordino inversión
+    acceptance_criteria:
+      - "Actas de mesa"
+      - "Acuerdos registrados"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_sectorial
+    origin: legacy
+  - id: US-FIN-PPTO-023
+    as_a: Profesional DAF
+    i_want: Cargar decreto de presupuesto inicial en sistema
+    so_that: Habilito la ejecución
+    acceptance_criteria:
+      - "Decreto cargado"
+      - "Montos cuadrados"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-024
+    as_a: Profesional DAF
+    i_want: Generar certificados de disponibilidad presupuestaria
+    so_that: Respaldo gastos
+    acceptance_criteria:
+      - "Certificado con folio"
+      - "Firma FEA"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-025
+    as_a: Profesional DAF
+    i_want: Controlar ejecución presupuestaria per cápita comunal
+    so_that: Verifico equidad territorial
+    acceptance_criteria:
+      - "Reporte por comuna"
+      - "Comparativo vs población"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-026
+    as_a: Profesional DAF
+    i_want: Devengar gastos asociados a facturas recibidas
+    so_that: Registro la obligación
+    acceptance_criteria:
+      - "Devengo contable"
+      - "Vinculación con factura"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-C33-005
+    as_a: Encargado Circular 33
+    i_want: Gestionar adquisición de activos vía Circular 33
+    so_that: Ejecuto presupuesto C33
+    acceptance_criteria:
+      - "Proceso de compra"
+      - "Inventario de activos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: encargado_circular_33
+    origin: legacy
+  - id: US-FIN-PPTO-027
+    as_a: Profesional DAF
+    i_want: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
+    so_that: Habilito ejecución financiera nacional
+    acceptance_criteria:
+      - "Carga exitosa"
+      - "Cuadratura montos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-028
+    as_a: Profesional DAF
+    i_want: Aplicar reglas de devengo diferenciado según tipo de transferencia
+    so_that: Cumplo instrucciones CGR
+    acceptance_criteria:
+      - "Regla aplicada"
+      - "Devengo registrado"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-029
+    as_a: Profesional DAF
+    i_want: Clasificar modificación por tipo y determinar acto administrativo (Res/DS)
+    so_that: Gestiono el trámite correcto
+    acceptance_criteria:
+      - "Tipo determinado"
+      - "Acto sugerido"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-030
+    as_a: Profesional DAF
+    i_want: Tramitar visación DIPRES y seguimiento Toma de Razón
+    so_that: Legalizo la modificación
+    acceptance_criteria:
+      - "Envío a DIPRES"
+      - "Toma de Razón registrada"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: profesional_daf
+    origin: legacy
+  - id: US-FIN-PPTO-031
+    as_a: Jefe División DAF
+    i_want: Gestionar modificaciones presupuestarias (Rebajas/Suplementos)
+    so_that: Autorizo ajustes
+    acceptance_criteria:
+      - "Aprobación jefatura"
+      - "Registro de ajuste"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: jefe_división_daf
+    origin: legacy
+  - id: US-FIN-IPR-042
+    as_a: Analista Preinversión DIPIR
+    i_want: Tramitar modificaciones de proyecto (evaluar si requiere RS/CORE)
+    so_that: Gestiono cambios de alcance
+    acceptance_criteria:
+      - "Evaluación impacto"
+      - "Derivación Mideso/CORE"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P1
+    role_key: analista_preinversión_dipir
+    origin: legacy
+  - id: US-FIN-IPR-043
+    as_a: Analista Preinversión DIPIR
+    i_want: Validar cierre técnico del proyecto (acta recepción, saldos)
+    so_that: Cierro iniciativa BIP
+    acceptance_criteria:
+      - "Acta recepción conforme"
+      - "Certificado saldos"
+    domain: D-FIN
+    target_domain: D-FIN
+    priority: P0
+    role_key: analista_preinversión_dipir
+    origin: legacy

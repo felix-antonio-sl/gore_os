@@ -1,0 +1,517 @@
+atomic_stories:
+  - id: US-EJEC-SUP-001
+    as_a: Supervisor
+    i_want: Crear carpeta de seguimiento (visitas, informes)
+    so_that: Documento la supervisión
+    acceptance_criteria:
+      - "Carpeta por IPR"
+      - "Historial de documentos"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: supervisor
+    origin: legacy
+  - id: US-EJEC-SUP-002
+    as_a: Supervisor
+    i_want: Registrar visitas a terreno (fotos, notas, GPS)
+    so_that: Documento avance físico
+    acceptance_criteria:
+      - "Fotos geolocalizadas"
+      - "Notas de inspección"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: supervisor
+    origin: legacy
+  - id: US-EJEC-SUP-003
+    as_a: Supervisor
+    i_want: Revisar informes UT (aprobar/observar)
+    so_that: Valido reportes de ejecutor
+    acceptance_criteria:
+      - "Aprobación/observación"
+      - "Notificación a UT"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: supervisor
+    origin: legacy
+  - id: US-EJEC-SUP-004
+    as_a: Supervisor
+    i_want: Gestionar estados de pago (valida físico)
+    so_that: Autorizo pagos con respaldo
+    acceptance_criteria:
+      - "Validación de avance"
+      - "Liberación de pago"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: supervisor
+    origin: legacy
+  - id: US-EJEC-SUP-005
+    as_a: Supervisor
+    i_want: Alertar desviaciones >10% (recomendación)
+    so_that: Activo gestión de modificaciones
+    acceptance_criteria:
+      - "Detección automática"
+      - "Recomendación de acción"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: supervisor
+    origin: legacy
+  - id: US-EJEC-SUP-006
+    as_a: Supervisor
+    i_want: Validar actas de recepción (autoriza último pago)
+    so_that: Cierro la ejecución
+    acceptance_criteria:
+      - "Acta validada"
+      - "Liberación de pago final"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: supervisor
+    origin: legacy
+  - id: US-EJEC-AR-001
+    as_a: Administrador Regional
+    i_want: Ver dashboard ejecutivo (alertas, compromisos)
+    so_that: Tengo visión de la gestión
+    acceptance_criteria:
+      - "Alertas priorizadas"
+      - "Compromisos pendientes"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-AR-002
+    as_a: Administrador Regional
+    i_want: Ver monitor de proyectos en alerta crítica (problema/resp)
+    so_that: Focalizo gestión
+    acceptance_criteria:
+      - "Lista priorizada"
+      - "Responsable asignado"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-AR-003
+    as_a: Administrador Regional
+    i_want: Ver compromisos vencidos por división (ranking)
+    so_that: Exijo rendición de cuentas
+    acceptance_criteria:
+      - "Ranking por división"
+      - "Días de mora"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-AR-004
+    as_a: Administrador Regional
+    i_want: Crear compromiso en reunión (vincula IPR)
+    so_that: Registro acuerdos
+    acceptance_criteria:
+      - "Compromiso registrado"
+      - "Vinculación a IPR"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-AR-005
+    as_a: Administrador Regional
+    i_want: Verificar compromisos completados (cierra/dev)
+    so_that: Valido cumplimiento
+    acceptance_criteria:
+      - "Cierre documentado"
+      - "Evidencia de cumplimiento"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-AR-006
+    as_a: Administrador Regional
+    i_want: Generar resumen semanal para Gobernador (PDF tendencias)
+    so_that: Informo a la autoridad
+    acceptance_criteria:
+      - "PDF automatizado"
+      - "Tendencias visuales"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-JD-001
+    as_a: Jefe de División
+    i_want: Ver métricas de división (IPR, problemas, compromisos)
+    so_that: Gestiono mi área
+    acceptance_criteria:
+      - "Dashboard divisional"
+      - "KPIs por área"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-EJEC-JD-002
+    as_a: Jefe de División
+    i_want: Crear compromiso y asignar (persona, plazo)
+    so_that: Delego tareas
+    acceptance_criteria:
+      - "Asignación a persona"
+      - "Plazo definido"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-EJEC-JD-003
+    as_a: Jefe de División
+    i_want: Registrar problema IPR (tipo, solución)
+    so_that: Documento obstáculos
+    acceptance_criteria:
+      - "Tipología de problema"
+      - "Propuesta de solución"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-EJEC-JD-004
+    as_a: Jefe de División
+    i_want: Cerrar problema resuelto (lección aprendida)
+    so_that: Documento soluciones
+    acceptance_criteria:
+      - "Resolución documentada"
+      - "Lección aprendida"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-EJEC-EO-001
+    as_a: Encargado Operativo
+    i_want: Ver lista de compromisos (semáforo días restantes)
+    so_that: Priorizo mi trabajo
+    acceptance_criteria:
+      - "Lista personal"
+      - "Semáforo de urgencia"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: encargado_operativo
+    origin: legacy
+  - id: US-EJEC-EO-002
+    as_a: Encargado Operativo
+    i_want: Marcar compromiso 'En progreso' (avance parcial)
+    so_that: Reporto avance
+    acceptance_criteria:
+      - "Estado actualizado"
+      - ""% de avance""
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: encargado_operativo
+    origin: legacy
+  - id: US-EJEC-EO-003
+    as_a: Encargado Operativo
+    i_want: Marcar compromiso 'Completado' (pasa a verificación)
+    so_that: Solicito validación
+    acceptance_criteria:
+      - "Envío a verificación"
+      - "Notificación a jefatura"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: encargado_operativo
+    origin: legacy
+  - id: US-EJEC-EO-004
+    as_a: Encargado Operativo
+    i_want: Registrar problema detectado (vincula IPR)
+    so_that: Escalo obstáculos
+    acceptance_criteria:
+      - "Problema registrado"
+      - "Vinculación a IPR"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: encargado_operativo
+    origin: legacy
+  - id: US-EJEC-MUNI-001
+    as_a: Unidad Formuladora Municipal
+    i_want: Consultar guías por mecanismo
+    so_that: Preparo correctamente postulaciones
+    acceptance_criteria:
+      - "Guía por mecanismo"
+      - "Requisitos listados"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: unidad_formuladora_municipal
+    origin: legacy
+  - id: US-EJEC-MUNI-002
+    as_a: Unidad Formuladora Municipal
+    i_want: Usar wizard de vía de financiamiento (recomendación fundamentada)
+    so_that: Elijo mecanismo correcto
+    acceptance_criteria:
+      - "Wizard interactivo"
+      - "Recomendación con justificación"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: unidad_formuladora_municipal
+    origin: legacy
+  - id: US-EJEC-MUNI-003
+    as_a: Unidad Técnica Municipal
+    i_want: Coordinar reunión de inicio con supervisor
+    so_that: Alineo expectativas
+    acceptance_criteria:
+      - "Reunión agendada"
+      - "Acta de inicio"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: unidad_técnica_municipal
+    origin: legacy
+  - id: US-EJEC-MUNI-004
+    as_a: Unidad Técnica Municipal
+    i_want: Reportar avance periódico (validación supervisor)
+    so_that: Cumplo con reporte
+    acceptance_criteria:
+      - "Reporte estructurado"
+      - "Validación GORE"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: unidad_técnica_municipal
+    origin: legacy
+  - id: US-EJEC-SEC-001
+    as_a: Coordinador Sectorial
+    i_want: Gestionar convenios sectoriales (marco)
+    so_that: Formalizo relación con ministerios
+    acceptance_criteria:
+      - "Convenio marco"
+      - "Seguimiento de compromisos"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: coordinador_sectorial
+    origin: legacy
+  - id: US-EJEC-SEC-002
+    as_a: Coordinador Sectorial
+    i_want: Ver dashboard de relaciones sectoriales (mapa)
+    so_that: Visualizo articulación
+    acceptance_criteria:
+      - "Mapa de relaciones"
+      - "Estado de convenios"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: coordinador_sectorial
+    origin: legacy
+  - id: US-EJEC-AR-007
+    as_a: Administrador Regional
+    i_want: Reasignar compromisos a otro responsable
+    so_that: Gestiono cambios de personal
+    acceptance_criteria:
+      - "Reasignación documentada"
+      - "Notificación al nuevo responsable"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-AR-008
+    as_a: Administrador Regional
+    i_want: Reabrir compromiso devuelto por completado incorrecto
+    so_that: Corrijo estado
+    acceptance_criteria:
+      - "Reapertura documentada"
+      - "Observación registrada"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-AR-009
+    as_a: Administrador Regional
+    i_want: Ver monitor de problemas escalados
+    so_that: Gestiono obstáculos críticos
+    acceptance_criteria:
+      - "Lista priorizada"
+      - "Tiempo en estado"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: administrador_regional
+    origin: legacy
+  - id: US-EJEC-JD-005
+    as_a: Jefe de División
+    i_want: Filtrar compromisos por estado y vencimiento
+    so_that: Focalizo gestión
+    acceptance_criteria:
+      - "Filtros múltiples"
+      - "Vista ordenable"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-EJEC-JD-006
+    as_a: Jefe de División
+    i_want: Validar compromisos marcados como completados
+    so_that: Certifico cumplimiento
+    acceptance_criteria:
+      - "Revisión de evidencia"
+      - "Aprobación/rechazo"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-EJEC-JD-007
+    as_a: Jefe de División
+    i_want: Generar reportes divisionales periódicos
+    so_that: Documento gestión
+    acceptance_criteria:
+      - "Reporte automatizado"
+      - "KPIs por período"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: jefe_de_división
+    origin: legacy
+  - id: US-EJEC-EO-005
+    as_a: Encargado Operativo
+    i_want: Solicitar extensión de plazo con justificación
+    so_that: Gestiono imprevistos
+    acceptance_criteria:
+      - "Solicitud formal"
+      - "Justificación requerida"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: encargado_operativo
+    origin: legacy
+  - id: US-EJEC-EO-006
+    as_a: Encargado Operativo
+    i_want: Ver historial de cambios del compromiso
+    so_that: Consulto trazabilidad
+    acceptance_criteria:
+      - "Log de cambios"
+      - "Fechas y responsables"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: encargado_operativo
+    origin: legacy
+  - id: US-EJEC-EO-007
+    as_a: Encargado Operativo
+    i_want: Recibir notificaciones de próximo vencimiento
+    so_that: Actúo a tiempo
+    acceptance_criteria:
+      - "Alerta previa"
+      - "Canal configurado"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: encargado_operativo
+    origin: legacy
+  - id: US-EJEC-EJEC-001
+    as_a: Ejecutor
+    i_want: Ingresar transacciones de gasto
+    so_that: Documento ejecución
+    acceptance_criteria:
+      - "Formulario de ingreso"
+      - "Documentos de respaldo"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: ejecutor
+    origin: legacy
+  - id: US-EJEC-EJEC-002
+    as_a: Ministro de Fe
+    i_want: Certificar autenticidad de documentos
+    so_that: Formalizo rendición
+    acceptance_criteria:
+      - "Certificación FEA"
+      - "Registro en expediente"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: ministro_de_fe
+    origin: legacy
+  - id: US-EJEC-EJEC-003
+    as_a: Ejecutor
+    i_want: Devolver rendición con correcciones a analista
+    so_that: Respondo observaciones
+    acceptance_criteria:
+      - "Correcciones documentadas"
+      - "Reenvío formal"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: ejecutor
+    origin: legacy
+  - id: US-EJEC-EJEC-004
+    as_a: Ejecutor
+    i_want: Crear informe de regularización de mora
+    so_that: Documento recuperación
+    acceptance_criteria:
+      - "Informe estructurado"
+      - "Plan de acción"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: ejecutor
+    origin: legacy
+  - id: US-EJEC-MUNI-005
+    as_a: Unidad Formuladora Municipal
+    i_want: Verificar elegibilidad comunal para FRIL
+    so_that: Confirmo criterio
+    acceptance_criteria:
+      - "Validación automática"
+      - "Criterios aplicados"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: unidad_formuladora_municipal
+    origin: legacy
+  - id: US-EJEC-MUNI-006
+    as_a: Unidad Técnica Municipal
+    i_want: Subir rendición final en SISREC
+    so_that: Cierro el proyecto
+    acceptance_criteria:
+      - "Rendición completa"
+      - "Validación GORE"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P0
+    role_key: unidad_técnica_municipal
+    origin: legacy
+  - id: US-EJEC-PER-001
+    as_a: Periodista
+    i_want: Cubrir hito comunicacional de inicio/entrega de obra
+    so_that: Difundo logros
+    acceptance_criteria:
+      - "Nota de prensa"
+      - "Registro audiovisual"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P1
+    role_key: periodista
+    origin: legacy
+  - id: US-EJEC-PER-002
+    as_a: Periodista
+    i_want: Entrevistar beneficiarios de proyectos ejecutados
+    so_that: Genero testimonios de impacto
+    acceptance_criteria:
+      - "Entrevista registrada"
+      - "Testimonio publicado"
+    domain: D-EJEC
+    target_domain: D-EJEC
+    priority: P2
+    role_key: periodista
+    origin: legacy

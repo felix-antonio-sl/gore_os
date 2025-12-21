@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:module:d_fin_capital_base:1.0.0
+  type: Module
+  source: domains/d-fin/table
+id: MOD-FIN-CAPITAL_BASE
+name: Capital Base
+domain: D-FIN
+number: 2
+type: DOMAIN_SPECIFIC
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_diplade_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DIPLADE-001-02
+story_key: us_diplade_001_02
+role_id: USR-DIPL-JEFE
+as_a: null
+i_want: generar el Anteproyecto Regional de Inversiones (ARI) de forma automatizada
+so_that: pueda presentarlo oportunamente a DIPRES
+domain: D-PLAN
+priority: P0
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-DIPL-JEFE
+  contribuye_a: CAP-PLAN-001

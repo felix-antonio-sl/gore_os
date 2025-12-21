@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_ejec_pmo_regional_torre_de_control:1.0.0
+  type: Module
+  source: domains/d-ejec
+id: MOD-EJEC-PMO_REGIONAL_TORRE_D
+name: PMO Regional (Torre de Control)
+domain: D-EJEC
+number: 3
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

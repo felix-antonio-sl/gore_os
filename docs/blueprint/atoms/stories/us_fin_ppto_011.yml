@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ppto_011:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-PPTO-011
+story_key: us_fin_ppto_011
+role_id: USR-DAF-PROF
+as_a: null
+i_want: Ver proyección vs programa caja con alertas >5%
+so_that: Anticipo desfases de caja
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-PROF
+  contribuye_a: CAP-FIN-DASH-001

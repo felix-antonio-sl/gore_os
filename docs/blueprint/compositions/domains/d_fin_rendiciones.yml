@@ -1,0 +1,20 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_fin_rendiciones:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-FIN-RENDICIONES
+name: Dominio D-FIN-RENDICIONES
+aggregation:
+  modules: []
+  processes: []
+  entities:
+  - urn:goreos:atom:entity:d_fin_rendiciones_informerendicion:1.0.0
+  - urn:goreos:atom:entity:d_fin_rendiciones_observacion:1.0.0
+  - urn:goreos:atom:entity:d_fin_rendiciones_rendicion:1.0.0
+  - urn:goreos:atom:entity:d_fin_rendiciones_transferencia:1.0.0
+  capabilities: []
+stats:
+  modules_count: 0
+  processes_count: 0
+  entities_count: 4
+  capabilities_count: 0

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_evol_linaje:1.0.0
+  type: Entity
+  source: domains/d-evol/glossary
+id: ENT-EVOL-LINAJE
+name: Linaje
+entity_key: linaje
+domain: D-EVOL
+category: Reference
+description: Trazabilidad de origen y transformaciones de un artefacto.
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

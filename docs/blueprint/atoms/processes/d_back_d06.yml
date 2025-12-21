@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:process:d_back_d06:1.0.0
+  type: Process
+  source: domains/d-back
+id: PROC-BACK-D06
+code: D06
+name: Gestión de Flota Vehicular
+domain: D-BACK
+subdomain: Flota
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

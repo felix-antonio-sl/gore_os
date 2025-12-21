@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gest_pb_002:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GEST-PB-002
+story_key: us_gest_pb_002
+role_id: USR-ADM-JEFE
+as_a: null
+i_want: Ejecutar playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
+so_that: Gestiono brechas de expectativas antes de que escalen
+domain: D-GESTION
+priority: P1
+capability_bundle_id: CAP-GESTION-001
+morphisms:
+  protagonizado_por: USR-ADM-JEFE
+  contribuye_a: CAP-GESTION-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:role:ito_campo:1.0.0
+  type: Role
+  source: organization
+id: USR-DIT-ITO
+role_key: ito_campo
+title: Inspector Técnico de Obras (Campo)
+description: Fiscalización física directa de avances y calidad de obra.
+type: Human
+unit: DIT
+unit_type: Ejecutivo & Operaciones
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []

@@ -1,0 +1,22 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_rrhh_func_001:1.0.0
+  type: Capability
+id: CAP-RRHH-FUNC-001
+name: Autoservicio Funcionario
+domain: D-BACK
+type: DOMAIN_SPECIFIC
+description: 'Autoservicio para funcionarios: consulta de liquidaciones, solicitud
+  de permisos, certificados.'
+value_proposition: Empodera al funcionario con acceso digital a su información laboral,
+  reduciendo carga administrativa.
+orko_mapping:
+  p1_capacity: Funcionario GORE
+  p2_flow: P-BACK-RRHH-AUTOSERV (Autogestión)
+  p4_limit: Estatuto Administrativo, Ley 18.834
+  p5_purpose: Satisfacción funcionaria, cero papel RRHH
+stories:
+- urn:goreos:atom:story:us_back_per_001
+- urn:goreos:atom:story:us_back_per_002
+- urn:goreos:atom:story:us_func_001_01
+- urn:goreos:atom:story:us_func_001_02
+ofrecida_por: null

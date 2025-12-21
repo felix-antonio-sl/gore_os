@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_fin_ipr_core_p2:1.0.0
+  type: Process
+  source: domains/d-fin-ipr_core
+id: PROC-FIN-IPR_CORE-P2
+code: P2
+name: Evaluación Técnico-Económica
+domain: D-FIN-IPR_CORE
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

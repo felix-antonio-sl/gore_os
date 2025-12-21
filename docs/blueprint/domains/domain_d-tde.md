@@ -675,17 +675,82 @@ Módulo: M5 (Liderazgo Digital Regional)
 
 | Dominio   | Relación                                                                                                                                                                                                      | Entidades Compartidas                         |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| D-NORM    | Expediente electrónico debe cumplir DS 10 del TDE                                                                                                                                                             | ExpedienteElectronico                                |
+| D-NORM    | Expediente electrónico debe cumplir DS 10 del TDE                                                                                                                                                             | ExpedienteElectronico                         |
 | FÉNIX     | Fallas críticas de ciberseguridad activan intervención                                                                                                                                                        | Incident                                      |
-| D-BACK    | Integración de sistemas administrativos con ClaveÚnica                                                                                                                                                        | ActivoTI                                       |
-| D-SEG     | Infraestructura de red CIES gestionada bajo normas TDE                                                                                                                                                        | ActivoTI                                       |
-| D-GOB     | Liderazgo político del Gobernador en Mesa Regional TDE                                                                                                                                                        | EntidadRegional                                |
+| D-BACK    | Integración de sistemas administrativos con ClaveÚnica                                                                                                                                                        | ActivoTI                                      |
+| D-SEG     | Infraestructura de red CIES gestionada bajo normas TDE                                                                                                                                                        | ActivoTI                                      |
+| D-GOB     | Liderazgo político del Gobernador en Mesa Regional TDE                                                                                                                                                        | EntidadRegional                               |
 | D-PLAN    | Liderazgo TDE regional alineado con ERD (Eje Modernización)                                                                                                                                                   | TDEMaturityIndex                              |
 | D-GESTION | Indicadores TDE como dimensión del H_gore                                                                                                                                                                     | Indicator                                     |
 | D-EVOL    | **Piso vs Techo**: D-TDE provee piso normativo (L2), D-EVOL construye techo estratégico (L3-L5). `TDEScore` es input duro de `H_org.Gobernanza(P4)`. M5/M6 alimentan el Repositorio Arquitectónico de D-EVOL. | Capability, H_org, TDEScore, IndiceMadurezTDE |
 | D-TERR    | Capas geoespaciales deben cumplir metadatos TDE (DS 9/10).                                                                                                                                                    | DocumentoElectronico                          |
+---
+
+## Capability Bundles (SSOT: historias_usuarios_v2.yml)
+
+### CAP-TDE-FIRMA-001: Bandeja de Firma Electrónica (P0)
+
+> **Como** Gobernador Regional  
+> **Quiero** una bandeja de firma electrónica avanzada con priorización automática  
+> **Para** despachar resoluciones y decretos sin demoras
+
+| Atributo      | Valor                                                             |
+| ------------- | ----------------------------------------------------------------- |
+| Beneficiarios | gobernador, tesorero_regional, cogirador, alcalde, ministro_fe    |
+| Criterios     | Documentos ordenados por urgencia, FEA (Ley 21.180), Trazabilidad |
+
+### CAP-TDE-TRANSP-001: Transparencia Activa/Pasiva (P0)
+
+> **Como** Encargado de Transparencia  
+> **Quiero** workflow de actualización con alertas de vencimiento  
+> **Para** cumplir plazos legales de publicación
+
+| Atributo       | Valor                         |
+| -------------- | ----------------------------- |
+| Beneficiarios  | encargado_transparencia       |
+| Atomic Stories | 26 historias D-TDE vinculadas |
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-TDE`  
+> Total: 28 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| CAP-TDE-FIRMA-001 | Gobernador Regional | una bandeja de firma electrónica avanzada con prio... | P0 |
+| CAP-TDE-TRANSP-001 | Encargado de Transpa | un workflow de actualización de transparencia acti... | P0 |
+| US-ACC-001-01 | especialista_accesib | herramientas de auditoría de accesibilidad... | P1 |
+| US-ADMIN-001-01 | admin_sistema | un panel de administración centralizado de usuario... | P0 |
+| US-ARCH-001-01 | encargado_archivo | un sistema de gestión de archivo con ubicación y d... | P1 |
+| US-ARQ-DAT-001-01 | arquitecto_datos | un catálogo de entidades y modelos de datos del GO... | P1 |
+| US-BCP-001-01 | encargado_continuida | un módulo de gestión del BCP con pruebas... | P0 |
+| US-BI-001-01 | especialista_bi | acceso a datos consolidados para análisis... | P0 |
+| US-CAPDIG-001-01 | encargado_capacitaci | un LMS con cursos de herramientas del GORE... | P1 |
+| US-CGR-001-01 | analista_toma_razon | recibir expedientes electrónicos completos vía int... | P0 |
+| US-CTD-001-02 | ctd_daf | un catálogo de expedientes electrónicos con estado... | P0 |
+| US-CUST-001-01 | custodio_evidencia | un sistema de almacenamiento seguro de grabaciones... | P0 |
+| US-CUST-DAT-001-01 | custodio_datos | herramientas de monitoreo de calidad de datos... | P1 |
+| US-DBA-001-01 | dba | un panel de monitoreo de bases de datos... | P0 |
+| US-DEV-001-01 | desarrollador | acceso a documentación técnica y APIs... | P0 |
+| US-DPO-001-01 | dpo | un registro de bases de datos personales del GORE... | P0 |
+| US-DUENO-001-01 | dueno_datos | reportes de calidad de datos de mi área (completit... | P1 |
+| US-INTER-001-01 | encargado_interopera | un catálogo de APIs y servicios web disponibles... | P0 |
+| US-MCTD-001-01 | miembro_ctd | acceder a las minutas y acuerdos del CTD... | P1 |
+| US-MSIA-001-01 | miembro_subcomite_ia | acceder a evaluaciones de riesgo de proyectos IA... | P1 |
+| US-ODIA-001-01 | jefe_odia | un módulo de gestión de portafolio de proyectos di... | P0 |
+| US-OIRS-001-01 | encargado_oirs | un sistema de gestión de solicitudes con trazabili... | P0 |
+| US-OP-001-01 | encargado_partes | un sistema de gestión documental con ingreso de co... | P0 |
+| US-OP-001-02 | encargado_partes | generar número de ingreso correlativo automático... | P0 |
+| US-OP-002-01 | encargado_partes | un módulo de despacho con registro de destinatario... | P1 |
+| US-QA-001-01 | qa_analista | un módulo de gestión de pruebas con casos de test... | P1 |
+| US-SEC-CTD-001-01 | secretario_ctd | un módulo de gestión de sesiones del CTD... | P0 |
+| US-TRANSP-002-01 | encargado_transparen | un módulo de gestión de solicitudes SAI con contro... | P0 |
+
 
 ---
 
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+

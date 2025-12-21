@@ -491,5 +491,70 @@ flowchart LR
 
 ---
 
+## Capability Bundles (SSOT: historias_usuarios_v2.yml)
+
+### CAP-TERR-MAP-001: Mapa de Proyectos Regionales (P2)
+
+> **Como** Gobernador Regional  
+> **Quiero** visualizar el mapa de actores externos con los que interactúa el GORE  
+> **Para** identificar aliados estratégicos y brechas de coordinación
+
+| Atributo       | Valor                                                                 |
+| -------------- | --------------------------------------------------------------------- |
+| Beneficiarios  | 12 roles (gobernador, coordinador_propir, analista_geoespacial, etc.) |
+| Atomic Stories | 29 historias D-TERR vinculadas                                        |
+
+---
+
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+Ver inventario completo: [inventario_roles_v8.yml](../inventario_roles_v8.yml)
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-TERR`  
+> Total: 32 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| CAP-TERR-MAP-001 | Gobernador Regional | visualizar el mapa de actores externos con los que... | P2 |
+| US-AMB-001-01 | analista_ambiental | integración con el SEIA (Servicio Evaluación Ambie... | P1 |
+| US-APT-001-01 | analista_planif_terr | acceso a capas GEO de planos reguladores comunales... | P1 |
+| US-AT-001-01 | analista_territorial | acceso a la IDE regional con capas actualizadas... | P0 |
+| US-ATRA-001-01 | analista_transporte | acceso a datos de flujo vehicular y estado de ruta... | P1 |
+| US-BOMB-001-01 | bomberos | integración con sistema de alertas del CIES... | P0 |
+| US-CAR-001-01 | carabineros | acceso a cámaras del CIES en operativos coordinado... | P0 |
+| US-CIES-001-02 | coordinador_cies | registrar eventos de emergencia con timeline de ac... | P0 |
+| US-CIU-002-01 | ciudadano | acceder a plataformas de consulta ciudadana del GO... | P2 |
+| US-CONAF-001-01 | Director CONAF | integración con CIES para alertas de incendios for... | P0 |
+| US-DIDESOH-002-01 | jefe_didesoh | un registro de organizaciones de la sociedad civil... | P1 |
+| US-ENL-CIES-001-01 | enlace_cies | un directorio de contactos de emergencia actualiza... | P0 |
+| US-GEO-001-01 | analista_geoespacial | un administrador de capas GIS con metadatos y perm... | P1 |
+| US-GEO-001-01 | admin_geonodo | herramientas para estandarizar formatos (Shapefile... | P1 |
+| US-GPROV-001-01 | gestor_provincial | acceso remoto a todos los sistemas GORE... | P1 |
+| US-IDE-001-01 | coordinador_ide | un catálogo de metadatos geográficos estandarizado... | P1 |
+| US-ISAN-001-01 | ingeniero_sanitario | acceso a factibilidades técnicas de servicios sani... | P0 |
+| US-IVIAL-001-01 | ing_vialidad | integración con normas de diseño vial MOP... | P1 |
+| US-JEST-001-01 | jefe_estudios | un repositorio de estudios con buscador temático... | P1 |
+| US-JTERR-001-01 | jefe_terr | vistas geográficas de la inversión per cápita por ... | P1 |
+| US-MECIF-001-01 | miembro_ecif | acceso al registro de dirigentes sociales... | P2 |
+| US-OBS-001-01 | analista_observatori | un módulo de carga y procesamiento de series de da... | P1 |
+| US-OBS-001-02 | analista_observatori | generar reportes temáticos con visualizaciones... | P1 |
+| US-OP-CIES-001-01 | operador_cies | una consola de monitoreo con alertas priorizadas... | P0 |
+| US-PDI-001-01 | pdi | acceso a cámaras del CIES en investigaciones... | P0 |
+| US-PLAN-URB-001-01 | planificador_urbano | un visor de instrumentos de planificación territor... | P1 |
+| US-REZ-001-01 | encargado_zonas_reza | flexibilidad en los criterios de evaluación social... | P1 |
+| US-SENAPRED-001-01 | senapred | integración con CIES para alertas de emergencia... | P0 |
+| US-SER-GOB-001-01 | SEREMI Gobierno | un canal de comunicación con el GORE para emergenc... | P0 |
+| US-SOFO-001-01 | sna_sofo | alertas tempranas de emergencias agrícolas (sequía... | P1 |
+| US-SUP-CIES-001-01 | supervisor_cies | reportes de eventos por turno y operador... | P1 |
+| US-UOCT-001-01 | uoct_nuble | información de proyectos viales GORE... | P1 |
+
+
+---
+
 *Documento parte de GORE_OS Blueprint Integral v5.5*  
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_sen_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEN-001-01
+story_key: us_sen_001_01
+role_id: USR-CORE-CONS
+as_a: null
+i_want: información detallada sobre la ejecución de grandes proyectos
+so_that: pueda ejercer mi rol fiscalizador en el congreso
+domain: D-GOB
+priority: P1
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-CORE-CONS
+  contribuye_a: CAP-GOB-001

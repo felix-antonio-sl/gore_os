@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_tde_derechos_arco:1.0.0
+  type: Entity
+  source: domains/d-tde/glossary
+id: ENT-TDE-DERECHOS_ARCO
+name: Derechos ARCO
+entity_key: derechos_arco
+domain: D-TDE
+category: Reference
+description: ARCO
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

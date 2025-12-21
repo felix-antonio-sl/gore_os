@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fnx_ana_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FNX-ANA-001
+story_key: us_fnx_ana_001
+role_id: USR-CAL-ANAL
+as_a: null
+i_want: Analizar patrones de intervenciones pasadas
+so_that: Identifico debilidades estructurales sistémicas
+domain: D-FENIX
+priority: P2
+capability_bundle_id: CAP-FENIX-001
+morphisms:
+  protagonizado_por: USR-CAL-ANAL
+  contribuye_a: CAP-FENIX-001

@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:role:abogado_disciplinarios:1.0.0
+  type: Role
+  source: organization
+id: USR-JUR-DISC
+role_key: abogado_disciplinarios
+title: Abogado Procesos Disciplinarios
+description: Asesoría, planilla y custodia de sumarios e investigaciones sumarias
+  (Res. 681).
+type: Human
+unit: Unidad Jurídica
+unit_type: Gobernanza Estratégica
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []

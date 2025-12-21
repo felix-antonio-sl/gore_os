@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_sofo_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SOFO-001-01
+story_key: us_sofo_001_01
+role_id: USR-NEW-DIRIGENTE-SO
+as_a: null
+i_want: alertas tempranas de emergencias agrícolas (sequía, heladas)
+so_that: se activen fondos de emergencia a tiempo
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-NEW-DIRIGENTE-SO
+  contribuye_a: CAP-TERR-MAP-001

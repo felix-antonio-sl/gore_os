@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_tde_delegado_protecci_n_datos:1.0.0
+  type: Entity
+  source: domains/d-tde/glossary
+id: ENT-TDE-DELEGADO_PROTECCI_N_
+name: Delegado Protección Datos
+entity_key: delegado_protecci_n_datos
+domain: D-TDE
+category: Reference
+description: DPO
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_difoi_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DIFOI-001-02
+story_key: us_difoi_001_02
+role_id: USR-DIFOI-JEFE
+as_a: null
+i_want: integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
+so_that: pueda evitar duplicidad de apoyo y focalizar mejor
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-SEG-001
+morphisms:
+  protagonizado_por: USR-DIFOI-JEFE
+  contribuye_a: CAP-EJEC-SEG-001

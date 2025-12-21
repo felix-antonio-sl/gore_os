@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_seg_evid_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEG-EVID-003
+story_key: us_seg_evid_003
+role_id: USR-CIES-EVID
+as_a: null
+i_want: Trazar quién accedió, visualizó o descargó evidencia (Logs inalterables)
+so_that: Mantengo cadena de custodia
+domain: D-SEG
+priority: P0
+capability_bundle_id: CAP-SEG-001
+morphisms:
+  protagonizado_por: USR-CIES-EVID
+  contribuye_a: CAP-SEG-001

@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_tde_p7:1.0.0
+  type: Process
+  source: domains/d-tde
+id: PROC-TDE-P7
+code: P7
+name: Federación de Firma Municipal
+domain: D-TDE
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []

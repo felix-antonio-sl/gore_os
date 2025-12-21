@@ -105,4 +105,16 @@ Indicador 0-100 que consolida:
 
 ---
 
-*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key             | Título               | Responsabilidad                |
+| -------------------- | -------------------- | ------------------------------ |
+| jefe_dipir           | Jefe DIPIR           | Gestión estratégica portafolio |
+| analista_seguimiento | Analista Seguimiento | Monitoreo SaludIPR y alertas   |
+| analista_erd         | Analista ERD         | Vinculación con brechas ERD    |
+| encargado_nuble_250  | Encargado Ñuble 250  | Proyectos emblemáticos         |
+
+---
+
+*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*  
+*SSOT: inventario_roles_v8.yml*

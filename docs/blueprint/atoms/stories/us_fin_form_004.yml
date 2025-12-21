@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_form_004:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-FORM-004
+story_key: us_fin_form_004
+role_id: USR-DAF-PROF
+as_a: null
+i_want: Verificar clasificador presupuestario vigente
+so_that: Uso códigos correctos
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-PROF
+  contribuye_a: CAP-FIN-DASH-001

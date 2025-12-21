@@ -1,0 +1,31 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_gestion_001:1.0.0
+  type: Capability
+id: CAP-GESTION-001
+name: Sistema de Control de Gestión
+domain: D-GESTION
+type: DOMAIN_SPECIFIC
+description: Gestión del H_gore, OKRs institucionales, playbooks de remediación y
+  mejora continua.
+value_proposition: Mantiene la salud operativa institucional y habilita intervenciones
+  oportunas.
+orko_mapping:
+  p1_capacity: Administrador Regional, Jefes División
+  p2_flow: P-GESTION (Ciclo POA)
+  p3_information: H_gore, indicadores, alertas
+  p5_purpose: H_gore ≥ 70 sostenido
+stories:
+- urn:goreos:atom:story:us_gest_coord_002
+- urn:goreos:atom:story:us_gest_hg_002
+- urn:goreos:atom:story:us_gest_hg_003
+- urn:goreos:atom:story:us_gest_mc_001
+- urn:goreos:atom:story:us_gest_mc_002
+- urn:goreos:atom:story:us_gest_pb_001
+- urn:goreos:atom:story:us_gest_pb_002
+- urn:goreos:atom:story:us_gest_pb_003
+- urn:goreos:atom:story:us_gest_per_002
+- urn:goreos:atom:story:us_gest_proc_001
+- urn:goreos:atom:story:us_gest_scg_001
+- urn:goreos:atom:story:us_gest_scg_003
+- urn:goreos:atom:story:us_gest_uci_002
+ofrecida_por: null

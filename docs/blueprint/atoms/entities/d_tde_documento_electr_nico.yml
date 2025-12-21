@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_tde_documento_electr_nico:1.0.0
+  type: Entity
+  source: domains/d-tde/glossary
+id: ENT-TDE-DOCUMENTO_ELECTR_NIC
+name: Documento Electrónico
+entity_key: documento_electr_nico
+domain: D-TDE
+category: Reference
+description: DE
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

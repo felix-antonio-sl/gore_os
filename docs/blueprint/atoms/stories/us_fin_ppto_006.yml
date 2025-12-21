@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ppto_006:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-PPTO-006
+story_key: us_fin_ppto_006
+role_id: USR-DAF-PROF
+as_a: null
+i_want: Emitir CDP validando saldo en asignación
+so_that: Evito compromisos sin respaldo
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-PROF
+  contribuye_a: CAP-FIN-DASH-001

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_terr_asistencia_urban_stica_dom:1.0.0
+  type: Module
+  source: domains/d-terr
+id: MOD-TERR-ASISTENCIA_URBAN_STI
+name: Asistencia Urbanística DOM
+domain: D-TERR
+number: 5
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gest_pb_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GEST-PB-001
+story_key: us_gest_pb_001
+role_id: USR-ADM-JEFE
+as_a: null
+i_want: Ejecutar playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
+so_that: Recupero la salud institucional en 7-14 días
+domain: D-GESTION
+priority: P0
+capability_bundle_id: CAP-GESTION-001
+morphisms:
+  protagonizado_por: USR-ADM-JEFE
+  contribuye_a: CAP-GESTION-001

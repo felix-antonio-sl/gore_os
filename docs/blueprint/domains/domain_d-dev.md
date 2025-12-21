@@ -234,4 +234,27 @@ flowchart TD
 
 ---
 *Documento parte de GORE_OS Blueprint Release v5.5 (Categorical Genotype)*
-*Última actualización: 2025-12-18*
+*Última actualización: 2025-12-19 | SSOT: inventario_roles_v8.yml, historias_usuarios_v2.yml*
+
+---
+
+## Catálogo Completo de Historias (SSOT)
+
+> Fuente: `historias_usuarios_v2.yml` | Filtro: `target_domain: D-DEV`  
+> Total: 12 historias
+
+| ID | Role | Descripción | P |
+|-----|------|-------------|---|
+| US-ARQC-001-01 | arquitecto_categoric | herramientas de modelado semántico integradas... | P0 |
+| US-ARQS-001-01 | arquitecto_sistemas | un repositorio central de decisiones de arquitectu... | P0 |
+| US-BACK-001-01 | desarrollador_backen | pipelines de CI/CD automatizados... | P0 |
+| US-DATA-001-01 | agencia_datos | herramientas de limpieza y deduplicación de regist... | P1 |
+| US-DEVMUNI-001-01 | desarrollador_munici | documentación clara de APIs de interoperabilidad... | P2 |
+| US-DTMUNI-001-01 | Encargado Digital Mu | reutilizar componentes de la plataforma GORE_OS... | P2 |
+| US-FRONT-001-01 | desarrollador_fronte | una biblioteca de componentes de diseño (Design Sy... | P1 |
+| US-ICON-001-01 | ingeniero_conocimien | herramientas para curar y versionar prompts y cont... | P1 |
+| US-ITMUNI-001-01 | Informático Municipa | credenciales de API seguras... | P2 |
+| US-NDEV-001-01 | nuevo_desarrollador | documentación técnica actualizada y guías de contr... | P1 |
+| US-RTD-001-01 | referente_td_pmg | reportar el porcentaje de trámites digitalizados... | P1 |
+| US-TLEAD-001-01 | lider_tecnico | métricas de velocidad y calidad del equipo (DORA m... | P1 |
+

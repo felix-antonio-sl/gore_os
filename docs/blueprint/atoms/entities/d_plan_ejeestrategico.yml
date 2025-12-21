@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_ejeestrategico:1.0.0
+  type: Entity
+  source: domains/d-plan/entity_data
+id: ENT-PLAN-EJEESTRATEGICO
+name: EjeEstrategico
+entity_key: ejeestrategico
+domain: D-PLAN
+category: Reference
+description: id, erd_id, codigo, nombre, descripcion
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

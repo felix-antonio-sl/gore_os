@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_com_estr_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-COM-ESTR-003
+story_key: us_com_estr_003
+role_id: USR-COM-ENC
+as_a: null
+i_want: Gestionar repositorio de material audiovisual
+so_that: Centralizo recursos de comunicación
+domain: D-COM
+priority: P1
+capability_bundle_id: CAP-COM-001
+morphisms:
+  protagonizado_por: USR-COM-ENC
+  contribuye_a: CAP-COM-001

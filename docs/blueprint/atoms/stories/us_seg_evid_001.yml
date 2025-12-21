@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_seg_evid_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEG-EVID-001
+story_key: us_seg_evid_001
+role_id: USR-CIES-EVID
+as_a: null
+i_want: Generar clip de video con marca de agua y hash de integridad
+so_that: Preservo evidencia
+domain: D-SEG
+priority: P0
+capability_bundle_id: CAP-SEG-001
+morphisms:
+  protagonizado_por: USR-CIES-EVID
+  contribuye_a: CAP-SEG-001

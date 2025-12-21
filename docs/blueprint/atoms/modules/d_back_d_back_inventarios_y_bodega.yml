@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:module:d_back_inventarios_y_bodega:1.0.0
+  type: Module
+  source: domains/d-back
+id: MOD-BACK-INVENTARIOS_Y_BODEGA
+name: Inventarios y Bodega
+domain: D-BACK
+number: 3
+type: DOMAIN_SPECIFIC
+subsystems: null
+morphisms:
+  capabilities: []
+  implementado_por: []
+  depends_on: []

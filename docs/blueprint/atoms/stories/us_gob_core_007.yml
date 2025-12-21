@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-CORE-007
+story_key: us_gob_core_007
+role_id: USR-CORE-CONS
+as_a: null
+i_want: Ver cumplimiento de acuerdos (estado/evidencia)
+so_that: Fiscalizo ejecución del ejecutivo
+domain: D-GOB
+priority: P0
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-CORE-CONS
+  contribuye_a: CAP-GOB-001

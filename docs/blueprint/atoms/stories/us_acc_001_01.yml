@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_acc_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ACC-001-01
+story_key: us_acc_001_01
+role_id: USR-NEW-ESPECIALISTA
+as_a: null
+i_want: herramientas de auditoría de accesibilidad
+so_that: pueda verificar cumplimiento
+domain: D-TDE
+priority: P1
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-NEW-ESPECIALISTA
+  contribuye_a: CAP-FIRMA-001

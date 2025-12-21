@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_plan_divisi_n_de_planificaci_n_y_desarrollo:1.0.0
+  type: Entity
+  source: domains/d-plan/glossary
+id: ENT-PLAN-DIVISI_N_DE_PLANIFIC
+name: División de Planificación y Desarrollo
+entity_key: divisi_n_de_planificaci_n_y_desarrollo
+domain: D-PLAN
+category: Reference
+description: DIPLADE
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

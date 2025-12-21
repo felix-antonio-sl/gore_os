@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_norm_acto_004:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-NORM-ACTO-004
+story_key: us_norm_acto_004
+role_id: USR-JUR-ABOG
+as_a: null
+i_want: Gestionar litigios y defensa judicial regional
+so_that: Defiendo intereses del GORE
+domain: D-NORM
+priority: P1
+capability_bundle_id: CAP-DOCUMENTOS-001
+morphisms:
+  protagonizado_por: USR-JUR-ABOG
+  contribuye_a: CAP-DOCUMENTOS-001

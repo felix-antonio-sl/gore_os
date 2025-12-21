@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_sup_obra_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SUP-OBRA-001-01
+story_key: us_sup_obra_001_01
+role_id: USR-DIT-SUP
+as_a: null
+i_want: alertas de vencimiento de boletas de garantía
+so_that: pueda solicitar renovación a tiempo
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-REND-001
+morphisms:
+  protagonizado_por: USR-DIT-SUP
+  contribuye_a: CAP-FIN-REND-001

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:entity:d_terr_metadato:1.0.0
+  type: Entity
+  source: domains/d-terr/entity_data
+id: ENT-TERR-METADATO
+name: Metadato
+entity_key: metadato
+domain: D-TERR
+category: Reference
+description: id, capa_id, titulo, resumen, palabras_clave, fecha
+morphisms:
+  manipulado_por: []
+  mencionado_en: []
+  relacionado_con: []

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ANALPRES-001-01
+story_key: us_analpres_001_01
+role_id: USR-DIPIR-PRES-ANAL
+as_a: null
+i_want: un módulo de emisión de CDP con validación automática de saldo
+so_that: no pueda comprometer recursos sin disponibilidad
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DIPIR-PRES-ANAL
+  contribuye_a: CAP-FIN-DASH-001

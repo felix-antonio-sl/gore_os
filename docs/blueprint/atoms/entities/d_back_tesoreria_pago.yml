@@ -1,0 +1,146 @@
+# Entidad: Pago (Pago de Obligaciones)
+# Domain: D-BACK
+# Subdomain: tesoreria
+# Generated: 2025-12-21 (Phase 20.1b P1)
+
+id: ENT-BACK-PAGO
+urn: "urn:goreos:entity:d-back:pago:1.0.0"
+name: Pago
+domain: D-BACK
+subdomain: tesoreria
+category: Financial
+canonical_source:
+  - "sub_dfin_presupuesto.md#cadena-presupuestaria"
+  - "manual_2_1_compras_koda.yml#MANUAL-COMPRAS-SEC-IV-PAGO-ELECTRONICO-01"
+
+description: |
+  Cuarta y última etapa de la cadena presupuestaria.
+  Extingue la obligación mediante transferencia electrónica.
+  Pago en efectivo/cheque prohibido salvo excepciones legales.
+
+attributes:
+  - name: id_pago
+    type: String
+    key: true
+
+  - name: numero_pago
+    type: String
+    nullable: false
+
+  - name: devengado_id
+    type: String
+    fk: ENT-BACK-DEVENGADO
+    nullable: false
+
+  - name: fecha_pago
+    type: Date
+    nullable: false
+
+  - name: fecha_valor
+    type: Date
+    nullable: true
+    description: Fecha efectiva en cuenta bancaria
+
+  # Beneficiario
+  - name: beneficiario_rut
+    type: String
+    nullable: false
+
+  - name: beneficiario_nombre
+    type: String
+    nullable: false
+
+  - name: beneficiario_tipo
+    type: Enum[Proveedor, Ejecutor, Funcionario, PersonaNatural, Institucion]
+
+  # Monto
+  - name: monto_bruto
+    type: Decimal
+    nullable: false
+
+  - name: retenciones
+    type: Decimal
+    default: 0
+    description: Retenciones legales (boletas honorarios, etc.)
+
+  - name: monto_liquido
+    type: Decimal
+    computed: true
+    formula: monto_bruto - retenciones
+
+  # Medio de pago
+  - name: medio_pago
+    type: Enum[TransferenciaElectronica, Cheque, ValorVista, Efectivo]
+    default: TransferenciaElectronica
+
+  - name: cuenta_origen
+    type: String
+    nullable: false
+    description: Cuenta corriente GORE
+
+  - name: banco_destino
+    type: String
+    nullable: true
+
+  - name: cuenta_destino
+    type: String
+    nullable: true
+
+  - name: numero_operacion
+    type: String
+    nullable: true
+    description: Comprobante bancario
+
+  # Estado
+  - name: estado
+    type: Enum[Programado, EnProceso, Ejecutado, Rechazado, Anulado]
+    default: Programado
+
+  - name: fecha_rechazo
+    type: Date
+    nullable: true
+
+  - name: motivo_rechazo
+    type: String
+    nullable: true
+
+  # Autorización
+  - name: autorizado_por_id
+    type: String
+    fk: ROL-TESORERO
+
+  - name: fecha_autorizacion
+    type: DateTime
+    nullable: true
+
+  # Documentos
+  - name: factura_id
+    type: String
+    nullable: true
+
+  - name: boleta_id
+    type: String
+    nullable: true
+
+  - name: comprobante_url
+    type: String
+    nullable: true
+
+invariants:
+  - name: pago_electronico_obligatorio
+    rule: "medio_pago = TransferenciaElectronica OR excepcion_autorizada"
+    source: "Art. 8 Ley de Presupuestos"
+
+  - name: pago_posterior_devengo
+    rule: "fecha_pago >= fecha_devengado"
+
+morphisms:
+  extingue: [ENT-BACK-DEVENGADO]
+  autorizado_por: [ROL-TESORERO]
+  beneficia_a: [ENT-FIN-PROVEEDOR, ENT-FIN-ACTOR_IPR]
+  registrado_en: [SIGFE, Banco]
+  conciliado_en: [ENT-BACK-CONCILIACION]
+
+related_processes:
+  - "P.BACK.PAGO.PROVEEDOR"
+  - "P.BACK.CIERRE.MES"

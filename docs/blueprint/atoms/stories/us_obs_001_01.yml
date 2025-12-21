@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_obs_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OBS-001-01
+story_key: us_obs_001_01
+role_id: USR-PLAN-OBS
+as_a: null
+i_want: un módulo de carga y procesamiento de series de datos
+so_that: pueda mantener actualizados los indicadores regionales
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-PLAN-OBS
+  contribuye_a: CAP-TERR-MAP-001

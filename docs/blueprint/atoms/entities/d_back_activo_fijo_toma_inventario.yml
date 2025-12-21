@@ -1,0 +1,164 @@
+# Entidad: TomaInventario
+# Domain: D-BACK
+# Subdomain: activo_fijo
+# Generated: 2025-12-21 (Phase 20.1b - Gaps)
+
+id: ENT-BACK-TOMA_INVENTARIO
+urn: "urn:goreos:entity:d-back:toma-inventario:1.0.0"
+name: Toma de Inventario
+domain: D-BACK
+subdomain: activo_fijo
+category: Control
+canonical_source:
+  - "manual_2_3_activo_fijo.yml#MANUAL-FIJO-SEC-VII-CONTROL-01"
+  - "Resolución 30/2015 CGR"
+  - "NICSP-17"
+
+description: |
+  Proceso periódico de verificación física del inventario de activos.
+  Obligatorio anualmente según normativa CGR.
+  Identifica faltantes, sobrantes y diferencias de ubicación.
+
+attributes:
+  - name: id_toma
+    type: String
+    key: true
+
+  - name: numero_toma
+    type: String
+    nullable: false
+
+  - name: ejercicio
+    type: Integer
+    nullable: false
+
+  - name: tipo_toma
+    type: Enum[Anual, Selectiva, Extraordinaria, Transferencia]
+    nullable: false
+
+  # Alcance
+  - name: alcance
+    type: Enum[Total, PorUbicacion, PorClase, PorResponsable]
+    nullable: false
+
+  - name: ubicacion_id
+    type: String
+    nullable: true
+    description: Si alcance = PorUbicacion
+
+  - name: clase_activo
+    type: String
+    nullable: true
+    description: Si alcance = PorClase
+
+  - name: responsable_custodia_id
+    type: String
+    nullable: true
+    description: Si alcance = PorResponsable
+
+  # Fechas
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+
+  - name: fecha_corte
+    type: Date
+    nullable: false
+    description: Fecha de corte contable
+
+  - name: fecha_termino
+    type: Date
+    nullable: true
+
+  # Equipo
+  - name: jefe_comision_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: false
+
+  - name: miembros_comision
+    type: List[String]
+    nullable: false
+
+  - name: resolucion_designacion
+    type: String
+    nullable: true
+
+  # Resultados
+  - name: total_activos_sistema
+    type: Integer
+    nullable: true
+
+  - name: total_activos_contados
+    type: Integer
+    nullable: true
+
+  - name: sobrantes
+    type: Integer
+    default: 0
+
+  - name: faltantes
+    type: Integer
+    default: 0
+
+  - name: diferencias_ubicacion
+    type: Integer
+    default: 0
+
+  - name: diferencias_estado
+    type: Integer
+    default: 0
+
+  # Montos
+  - name: valor_faltantes
+    type: Decimal
+    default: 0
+
+  - name: valor_sobrantes
+    type: Decimal
+    default: 0
+
+  # Estado
+  - name: estado
+    type: Enum[Planificada, EnEjecucion, Concluida, EnAjuste, Cerrada]
+    default: Planificada
+
+  # Documentos
+  - name: acta_inicio_url
+    type: String
+    nullable: true
+
+  - name: acta_cierre_url
+    type: String
+    nullable: true
+
+  - name: informe_final_url
+    type: String
+    nullable: true
+
+  # Ajustes
+  - name: ajustes_realizados
+    type: Boolean
+    default: false
+
+  - name: resolucion_ajuste
+    type: String
+    nullable: true
+
+invariants:
+  - name: toma_anual_obligatoria
+    rule: "EXISTS TomaInventario WHERE tipo_toma = Anual AND ejercicio = CURRENT_YEAR"
+    source: "CGR Res. 30/2015"
+
+  - name: comision_minima
+    rule: "LENGTH(miembros_comision) >= 2"
+
+  - name: faltante_genera_investigacion
+    rule: "IF faltantes > 0 THEN estado IN (EnAjuste, Cerrada)"
+
+morphisms:
+  verifica: [ENT-BACK-ACTIVO_FIJO]
+  ejecutado_por: [ComisionInventario]
+  genera: [ENT-BACK-MOVIMIENTO_ACTIVO]
+  aprobado_por: [ROL-JEFE-DAF]
+  notificado_a: [CGR]

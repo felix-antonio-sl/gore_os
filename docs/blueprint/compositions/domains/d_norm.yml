@@ -1,0 +1,28 @@
+_meta:
+  urn: urn:goreos:composition:domain:d_norm:1.0.0
+  type: DomainComposition
+  generated_at: '2025-12-21'
+id: D-NORM
+name: Dominio D-NORM
+aggregation:
+  modules:
+  - urn:goreos:atom:module:d_norm_actos_administrativos:1.0.0
+  - urn:goreos:atom:module:d_norm_control_externo:1.0.0
+  - urn:goreos:atom:module:d_norm_convenios_institucionales_ssot:1.0.0
+  - urn:goreos:atom:module:d_norm_cumplimiento_y_control_interno:1.0.0
+  - urn:goreos:atom:module:d_norm_expediente_electr_nico:1.0.0
+  - urn:goreos:atom:module:d_norm_procedimientos_administrativos:1.0.0
+  processes:
+  - urn:goreos:atom:process:d_norm_p1:1.0.0
+  - urn:goreos:atom:process:d_norm_p2:1.0.0
+  - urn:goreos:atom:process:d_norm_p3:1.0.0
+  - urn:goreos:atom:process:d_norm_p4:1.0.0
+  entities: []
+  capabilities:
+  - urn:goreos:atom:capability:cap_documentos_001:1.0.0
+  - urn:goreos:atom:capability:cap_norm_control_001:1.0.0
+stats:
+  modules_count: 6
+  processes_count: 4
+  entities_count: 0
+  capabilities_count: 2

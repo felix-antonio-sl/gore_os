@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dueno_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DUENO-001-01
+story_key: us_dueno_001_01
+role_id: USR-TDE-DUENO-DATOS
+as_a: null
+i_want: reportes de calidad de datos de mi área (completitud, exactitud)
+so_that: pueda tomar acciones correctivas
+domain: D-TDE
+priority: P1
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-TDE-DUENO-DATOS
+  contribuye_a: CAP-FIRMA-001

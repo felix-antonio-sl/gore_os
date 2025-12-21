@@ -160,7 +160,24 @@ flowchart TD
 
 ---
 
-## Entidad de Datos
+## Entidades de Datos
+
+### Catálogo Maestro
+**`MecanismoFinanciamiento`** (`d_fin_mecanismos_catalogo.yml`)
+Catálogo centralizado (SSOT) que define reglas, umbrales y evaluadores.
+
+| Código     | Naturaleza | Tope UTM | Evaluador |
+| :--------- | :--------- | :------- | :-------- |
+| **SNI**    | IDI        | ∞        | MDSF      |
+| **FRIL**   | IDI        | 5.000    | GORE      |
+| **FRPD**   | Mixto      | Variable | Variable  |
+| **C33**    | IDI        | Variable | GORE      |
+| **G06**    | PPR        | ∞        | DIPRES    |
+| **TRANSF** | PPR        | ∞        | GORE      |
+| **S8%**    | PPR        | 8% FNDR  | GORE      |
+
+> [!NOTE]
+> Las entidades operativas (`IPR`, `IDI`, `PPR`) referencian a este catálogo mediante `mecanismo_id`.
 
 | Entidad     | Atributos Clave                                                                          |
 | ----------- | ---------------------------------------------------------------------------------------- |
@@ -168,4 +185,16 @@ flowchart TD
 
 ---
 
-*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*
+## Roles Asociados (SSOT: inventario_roles_v8.yml)
+
+| Role Key           | Título             | Función                    |
+| ------------------ | ------------------ | -------------------------- |
+| jefe_dipir         | Jefe DIPIR         | Aprobación de vía          |
+| analista_inversion | Analista Inversión | Evaluación de mecanismo    |
+| analista_fril      | Analista FRIL      | Vía simplificada municipal |
+| formulador_externo | Formulador Externo | Consultor postulante       |
+
+---
+
+*Subdominio parte de D-FIN | GORE_OS Blueprint Integral v5.5*  
+*SSOT: inventario_roles_v8.yml*

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_g7_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-G7-001-01
+story_key: us_g7_001_01
+role_id: USR-DIPIR-G7-REV
+as_a: null
+i_want: un módulo de control de programación de caja con cuotas
+so_that: pueda asegurar el cumplimiento del flujo de caja
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DIPIR-G7-REV
+  contribuye_a: CAP-FIN-DASH-001

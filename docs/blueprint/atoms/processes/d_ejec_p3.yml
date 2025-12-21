@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_ejec_p3:1.0.0
+  type: Process
+  source: domains/d-ejec
+id: PROC-EJEC-P3
+code: P3
+name: Supervisión de Obra en Terreno
+domain: D-EJEC
+type: BPMN
+morphisms:
+  roles_ejecutores: []
+  manipula: []
+  triggers: []
