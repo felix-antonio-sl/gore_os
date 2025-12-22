@@ -218,17 +218,33 @@ def hydrate_processes(
     """Ejecuta la hidratación de procesos."""
     report = HydrationReport()
 
-    # Parse all markdown files
+    # Parse all markdown files - key by document prefix (D01, D02, etc.)
     all_specs = {}
+    doc_specs = {}  # Document-level specs keyed by D-number
+
     for md_file in docs_path.glob("*.md"):
         if md_file.name.startswith("_"):
             continue
         try:
             file_specs = parse_markdown_file(md_file)
+
+            # Extract document number (D01, D02, etc.) from filename
+            doc_match = re.search(r"D(\d+)", md_file.name)
+            doc_num = doc_match.group(1) if doc_match else None
+
             # Key by filename + process key
             for key, spec in file_specs.items():
                 full_key = f"{md_file.stem}:{key}"
                 all_specs[full_key] = spec
+
+                # Also store by document number for D-code matching
+                if doc_num:
+                    doc_key = f"D{doc_num}:{key}"
+                    doc_specs[doc_key] = spec
+                    # Store first process of each doc as default for that D-number
+                    if f"D{doc_num}:default" not in doc_specs:
+                        doc_specs[f"D{doc_num}:default"] = spec
+
         except Exception as e:
             report.errors.append(f"Parse {md_file.name}: {str(e)}")
 
@@ -249,17 +265,28 @@ def hydrate_processes(
                 report.skipped += 1
                 continue
 
-            # Try to match spec
+            # Try to match spec using multiple strategies
             matched_spec = None
             atom_code = atom.get("code", "")
+            atom_filename = atom_file.stem  # e.g., "d_back_d07"
 
-            for key, spec in all_specs.items():
-                # Match by process number in code
-                if atom_code:
-                    proc_match = re.search(r"[PD](\d+)", atom_code, re.IGNORECASE)
-                    if proc_match:
-                        proc_num = proc_match.group(1)
-                        if f":P{proc_num}" in key:
+            # Strategy 1: Match by D-number in atom filename (d_back_d07 -> D07)
+            d_match = re.search(r"d(\d+)", atom_filename, re.IGNORECASE)
+            if d_match:
+                d_num = d_match.group(1)
+                # Look for D07:P1, D07:P2, etc. or D07:default
+                for key, spec in doc_specs.items():
+                    if key.startswith(f"D{d_num}:"):
+                        matched_spec = spec
+                        break
+
+            # Strategy 2: Match by P-number in code (P1, P2, etc.)
+            if not matched_spec and atom_code:
+                p_match = re.search(r"P(\d+)", atom_code, re.IGNORECASE)
+                if p_match:
+                    p_num = p_match.group(1)
+                    for key, spec in all_specs.items():
+                        if f":P{p_num}" in key:
                             matched_spec = spec
                             break
 

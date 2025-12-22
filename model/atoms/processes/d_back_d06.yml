@@ -9,3 +9,17 @@ domain: D-BACK
 code: D06
 subdomain: Flota
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
+  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
+  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
+    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
+    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
+    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
+    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
+    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
+    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
+    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
+    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
+    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
+    \ I fill:#4CAF50,color:#fff"

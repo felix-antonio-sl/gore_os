@@ -9,3 +9,14 @@ domain: D-BACK
 code: D04
 subdomain: Compras
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-COMPRAS-PAC-01`'
+  mermaid_ref: D04_compras_contrataciones.md#p1-plan-anual-de-compras-pac
+  period: Anual (Diciembre-Enero)
+  mermaid: "flowchart TD\n    A[\"Divisiones identifican<br/>necesidades\"] --> B[\"\
+    Unidades envían<br/>requerimientos\"]\n    B --> C[\"Abastecimiento consolida\"\
+    ]\n    C --> D[\"Clasificar por:<br/>• Convenio Marco<br/>• Licitación<br/>• Compra\
+    \ Directa\"]\n    D --> E[\"Validación<br/>presupuestaria (DAF)\"]\n    E -->\
+    \ F[\"Aprobación<br/>Gobernador/a\"]\n    F --> G[\"Publicar PAC en<br/>Mercado\
+    \ Público\"]\n    G --> H[\"Monitoreo y<br/>ajustes trimestrales\"]\n\n    style\
+    \ G fill:#4CAF50,color:#fff"

@@ -9,3 +9,18 @@ domain: D-BACK
 code: D08
 subdomain: Contabilidad
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-RENDICIONES-TRADICIONAL-01`'
+  mermaid_ref: D08_rendiciones.md#p1-rendicin-tradicional-sin-sisrec
+  sla: 18 días hábiles GORE + 15 días EE
+  mermaid: "flowchart TD\n    subgraph EE[\"\U0001F3E2 Entidad Ejecutora\"]\n    \
+    \    A[\"Preparar rendición<br/>en papel/digital\"]\n    end\n\n    subgraph GORE[\"\
+    \U0001F3DB️ GORE Ñuble\"]\n        B[\"\U0001F4EC OP: Recepcionar<br/>(2 días)\"\
+    ]\n        C[\"\U0001F4CA UCR: Registrar y<br/>asignar (2 días)\"]\n        D[\"\
+    \U0001F50D RTF: Revisión<br/>técnico-financiera<br/>(7 días)\"]\n        E{\"\
+    ¿OK?\"}\n        F[\"✅ Certificado<br/>aprobación\"]\n        G[\"❌ Observar\"\
+    ]\n        H[\"\U0001F4CA UCR: Control<br/>final (4 días)\"]\n        I[\"\U0001F4B0\
+    \ Contabilizar<br/>SIGFE (2 días)\"]\n        J[\"\U0001F4C1 Archivar<br/>(1 día)\"\
+    ]\n    end\n\n    A -->|\"15 días<br/>del mes sig.\"| B --> C --> D --> E\n  \
+    \  E -->|\"OK\"| F --> H --> I --> J\n    E -->|\"Observa\"| G --> A\n\n    style\
+    \ J fill:#4CAF50,color:#fff"

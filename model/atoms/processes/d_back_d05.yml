@@ -9,3 +9,13 @@ domain: D-BACK
 code: D05
 subdomain: Inventarios
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-INVENTARIOS-BODEGAS-01`'
+  mermaid_ref: D05_inventarios_activo_fijo.md#p1-gestin-de-inventarios-y-bodegas
+  systems:
+  - SIGAS
+  mermaid: "flowchart TD\n    A[\"Identificar necesidad<br/>de nuevo ítem\"] --> B[\"\
+    Verificar si<br/>existe código\"]\n    B --> C{\"¿Existe?\"}\n    C -->|\"Sí\"\
+    | D[\"Usar código<br/>existente\"]\n    C -->|\"No\"| E[\"Crear nuevo<br/>código\
+    \ en SIGAS\"]\n    E --> F[\"Asignar:<br/>• Nombre<br/>• Unidad medida<br/>• Categoría<br/>•\
+    \ Valorización\"]\n\n    style F fill:#2196F3,color:#fff"

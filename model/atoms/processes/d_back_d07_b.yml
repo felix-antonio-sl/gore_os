@@ -9,3 +9,21 @@ domain: D-BACK
 code: D07.B
 subdomain: Bienestar
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-RRHH-INGRESO-01`'
+  mermaid_ref: D07_rrhh.md#p1-ingreso-y-contratacin
+  systems:
+  - SIGPER
+  - SIAPER
+  mermaid: "flowchart TD\n    subgraph RECLUTAMIENTO[\"\U0001F4CB Reclutamiento\"\
+    ]\n        A[\"Identificar vacante\"]\n        B[\"Elaborar perfil<br/>de cargo\"\
+    ]\n        C[\"Publicar llamado:<br/>• Empleo Público<br/>• GORE web\"]\n    \
+    \    D[\"Recepción de<br/>postulaciones\"]\n    end\n\n    subgraph SELECCION[\"\
+    \U0001F50D Selección\"]\n        E[\"Filtro curricular\"]\n        F[\"Evaluación\
+    \ técnica/<br/>psicológica\"]\n        G[\"Entrevista Comisión\"]\n        H[\"\
+    Propuesta de<br/>terna\"]\n        I[\"Gobernador/a<br/>decide\"]\n    end\n\n\
+    \    subgraph CONTRATACION[\"✍️ Contratación\"]\n        J[\"Oferta formal\"]\n\
+    \        K[\"Aceptación candidato\"]\n        L[\"Resolución de<br/>nombramiento\"\
+    ]\n        M[\"Alta en SIGPER<br/>y SIAPER\"]\n        N[\"Firma contrato/<br/>decreto\"\
+    ]\n    end\n\n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J -->\
+    \ K --> L --> M --> N\n\n    style N fill:#4CAF50,color:#fff"
