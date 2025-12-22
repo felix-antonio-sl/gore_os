@@ -11,6 +11,9 @@ description: Organismo público o privado que recibe y ejecuta fondos públicos.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

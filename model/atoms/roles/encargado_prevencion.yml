@@ -11,6 +11,9 @@ description: Diseño y coordinación de planes de prevención del delito.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

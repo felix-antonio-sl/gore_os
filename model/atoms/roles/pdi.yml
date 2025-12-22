@@ -11,6 +11,9 @@ description: Policía civil, investigación de delitos y cadena de custodia.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

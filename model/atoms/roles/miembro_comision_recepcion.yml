@@ -11,6 +11,9 @@ description: Funcionario responsable de la recepción física provisional o defi
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

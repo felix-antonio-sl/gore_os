@@ -11,6 +11,9 @@ description: Centro de Operaciones de Red / Centro de Operaciones de Seguridad.
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Diseño y ejecución de pruebas de calidad (unitarias, integración
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

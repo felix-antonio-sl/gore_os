@@ -1,0 +1,939 @@
+_meta:
+  urn: "urn:goreos:profunctor:assumes:1.0.0"
+  type: Profunctor
+  ontology_version: "3.0.0"
+
+signature:
+  source_type: Role
+  target_type: Role
+  semantics: "L1 (Structural) → L2 (Competencial)"
+
+relations:
+  - source: "urn:goreos:atom:role:miembro_comision_evaluadora:2.0.0"
+    target: "urn:goreos:atom:role:miembro_comision_recepcion:2.0.0"
+    metadata:
+      reason: "Domain match + keywords: comisión, miembro"
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:role:analista_equidad_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:role:analista_planif_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:role:analista_planificacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:role:analista_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:presidente_comite_pertinencia:2.0.0"
+    target: "urn:goreos:atom:role:miembro_comite_pertinencia:2.0.0"
+    metadata:
+      reason: "Domain match + keywords: pertinencia, comité"
+  - source: "urn:goreos:atom:role:presidente_estado_verde:2.0.0"
+    target: "urn:goreos:atom:role:encargado_estado_verde:2.0.0"
+    metadata:
+      reason: "Domain match + keywords: estado, verde"
+  - source: "urn:goreos:atom:role:presidente_estado_verde:2.0.0"
+    target: "urn:goreos:atom:role:miembro_estado_verde:2.0.0"
+    metadata:
+      reason: "Domain match + keywords: estado, verde, comité"
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:role:analista_equidad_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:role:analista_planif_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:role:analista_planificacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:role:analista_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:role:analista_equidad_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:role:analista_planif_territorial:2.0.0"
+    metadata:
+      reason: "Domain match + keywords: planificación, territorial"
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:role:analista_planificacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:role:analista_territorial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_observatorio:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_remuneraciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_subvenciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_agua_potable:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dides:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversiones_mds:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_vivienda:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_diplade:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_control_asistencia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_turismo:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_toma_razon:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_convenios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_medio_ambiente:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_bienestar:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_geoespacial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_conectividad:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_social:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_pesca:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_cartera:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_sectorial_dipres:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_energia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_capacitacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_modificaciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_viaticos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_evaluacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_ciclo_vida:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_transporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_deporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_municipios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_servicios_generales:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_ambiental:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_salud:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_gdp_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_difoi:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_division_gobiernos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_educacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_presupuestario:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_cultura:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_fomento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_funcional:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_prevencion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:role:analista_seguimiento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:role:analista_compras:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:role:analista_presupuesto:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:role:analista_contable:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:role:analista_tesoreria:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_observatorio:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_remuneraciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_subvenciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_agua_potable:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dides:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversiones_mds:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_vivienda:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_diplade:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_control_asistencia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_turismo:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_toma_razon:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_convenios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_medio_ambiente:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_bienestar:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_geoespacial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_conectividad:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_social:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_pesca:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_cartera:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_sectorial_dipres:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_energia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_capacitacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_modificaciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_viaticos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_evaluacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_ciclo_vida:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_transporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_deporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_municipios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_servicios_generales:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_ambiental:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_salud:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_gdp_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_difoi:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_division_gobiernos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_educacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_presupuestario:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_cultura:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_fomento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_funcional:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_prevencion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:role:analista_seguimiento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:role:analista_compras:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:role:analista_presupuesto:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:role:analista_contable:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:role:analista_tesoreria:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_observatorio:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_remuneraciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_subvenciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_agua_potable:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dides:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversiones_mds:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_vivienda:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_diplade:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_control_asistencia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_turismo:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_toma_razon:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_convenios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_medio_ambiente:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_bienestar:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_geoespacial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_conectividad:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_social:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_pesca:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_cartera:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_sectorial_dipres:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_energia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_capacitacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_modificaciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_viaticos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_evaluacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_ciclo_vida:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_transporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_deporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_municipios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_servicios_generales:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_ambiental:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_salud:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_gdp_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_difoi:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_division_gobiernos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_educacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_presupuestario:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_cultura:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_fomento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_funcional:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_prevencion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:role:analista_seguimiento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:role:analista_compras:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:role:analista_presupuesto:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:role:analista_contable:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:role:analista_tesoreria:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_observatorio:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_remuneraciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_subvenciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_agua_potable:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dides:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversiones_mds:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_vivienda:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_diplade:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_control_asistencia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_turismo:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_toma_razon:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_convenios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_medio_ambiente:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_bienestar:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_geoespacial:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_conectividad:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_social:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_pesca:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_cartera:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_sectorial_dipres:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_energia:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_capacitacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_modificaciones:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_viaticos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_evaluacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_ciclo_vida:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_transporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_deporte:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_municipios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_servicios_generales:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_dit:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_ambiental:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr_tecnico:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_salud:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_gdp_honorarios:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_patrocinante_difoi:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_division_gobiernos:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_educacion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_presupuestario:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_cultura:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_fomento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_funcional:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_prevencion:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:role:analista_seguimiento:2.0.0"
+    metadata:
+      reason: "Hierarchical: Jefe → Analista"

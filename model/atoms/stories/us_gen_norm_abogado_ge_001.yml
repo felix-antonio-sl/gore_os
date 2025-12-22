@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_norm_abogado_ge_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Abogado General
+id: US-GEN-NORM_ABOGADO_GE-001
+urn: urn:goreos:atom:story:us_gen_norm_abogado_ge_001:1.0.0
+role_id: ROL-NORM-ABOGADO-GENE
+as_a: Abogado General
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

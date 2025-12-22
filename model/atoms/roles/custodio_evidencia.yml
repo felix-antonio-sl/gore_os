@@ -11,6 +11,9 @@ description: Resguardo de grabaciones y gestión de la cadena de custodia digita
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -3099,3 +3099,2204 @@ relations:
     target: "urn:goreos:atom:story:us_gest_coord_002:1.0.0"
   - source: "urn:goreos:atom:role:administrador_regional:2.0.0"
     target: "urn:goreos:atom:story:us_gest_coord_002:1.0.0"
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_006:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:anci:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_mds_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:uoct_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_intfis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:autoridad_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_hon_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:desarrollador_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_039:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_006:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_intfis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_seg:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:presidente_comite_pertinencia:2.0.0"
+    target: "urn:goreos:atom:story:us_compert_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_cap_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_seg:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:miembro_subcomite_ia:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:fiscal_sumariante:2.0.0"
+    target: "urn:goreos:atom:story:us_intfis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_atra_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_geo_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fndr8_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_aeval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:uoct_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_bien_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_seg_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_plan_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_aserv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_cgr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fndr8_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:tecnico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:informatico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:dirigente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_did_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:fiscal_sumariante:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_did_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_preinv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:coordinador_programas:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_fril_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:analista_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_aconv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ana_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_anl_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_subv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:supervisor_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_aprev_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_006:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_027:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_rem_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_plan_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_027:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_rem_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_edu_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_039:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:supervisor_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_010:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_edu_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_040:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_seg:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_amb_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_terr:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_010:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_terr:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:encargado_digital_muni:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_qa_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_epp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_intfin_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_did_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:fiscal_sumariante:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:corporacion_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:seremi_mop:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_cont_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_aconv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_005:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dit_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:operativo_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_031:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_005:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dit_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:analista_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:seremi_mdsf:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_ates_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:story:us_aconv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:story:us_at_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_seg_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_027:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_rem_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_031:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:asistente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_seg_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_edu_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_aeval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_bien_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_amod_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_aserv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:role_migrador:2.0.0"
+    target: "urn:goreos:atom:story:us_intfis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:story:us_apt_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_010:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_asis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_preinv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_040:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:informatico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_022:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:encargado_digital_muni:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ana_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_anl_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:abogado_dnorm:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_acv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:abogado_dnorm:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:formulador_glosa7:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_aprev_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:story:us_apt_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:operativo_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_fril_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_soc_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_terr:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:role_migrador:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:informatico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_aprev_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:seremi_mop:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:corporacion_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:abogado_revisor:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_soc_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:operativo_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_006:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_cont_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_005:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dit_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:operativo_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_031:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_apres_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:informatico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_amb_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:story:us_cont_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_ates_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_atra_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_seg_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:autoridad_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:desarrollador_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:responsable_sistema_ia:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_anl_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:seremi_mdsf:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fndr8_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:miembro_comision_evaluadora:2.0.0"
+    target: "urn:goreos:atom:story:us_com_rec_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:presidente_comite_pertinencia:2.0.0"
+    target: "urn:goreos:atom:story:us_compert_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:asistente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_preinv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dif_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ana_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_did_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dif_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_040:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_aprev_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_026:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:encargado_proy_prog:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:tecnico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_at_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_pes_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_soc_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_mds_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:corporacion_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_hon_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_026:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:abogado_dnorm:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_mds_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:arquitecto_revisor_proy:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_cap_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_hon_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:desarrollador_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:uoct_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_intfin_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_rem_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_amod_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_apt_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:uoct_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_cap_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_intfin_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_039:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_apres_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_geo_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_022:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_amod_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_amb_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_edu_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:autoridad_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:desarrollador_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_geo_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_acv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_022:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_cgr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_010:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:desarrollador_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_intfis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_cgr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:encargado_digital_muni:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:story:us_at_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:tecnico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:responsable_sistema_ia:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:supervisor_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:story:us_jest_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dif_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_preinv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:tecnico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_subv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:seremi_mop:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_026:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:encargado_digital_muni:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ana_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_atra_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:presidente_estado_verde:2.0.0"
+    target: "urn:goreos:atom:story:us_everde_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:story:us_jest_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:tecnico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_mds_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_005:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_subv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dit_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_hon_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_intfin_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_031:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_cap_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:seremi_mop:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_amod_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:encargado_digital_muni:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_asis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_geo_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_022:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_prg_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:supervisor_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_acv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_cgr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:seremi_mop:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_amb_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_qa_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_epp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_pes_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:operativo_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:story:us_ates_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:senador_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:supervisor_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_plan_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_intfis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_qa_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_epp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_pes_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_soc_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:corporacion_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:miembro_subcomite_ia:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_subv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_prg_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_039:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_atra_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_planif:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_prg_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:corporacion_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fndr8_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:dirigente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_aeval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:autoridad_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_bien_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_027:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_aserv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_jest_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_asis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_aeval_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_bien_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_004:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_aserv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:diputado_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:informatico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_asis_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:role_migrador:2.0.0"
+    target: "urn:goreos:atom:story:us_intfin_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:role_migrador:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_003:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:autoridad_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dif_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_qa_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_epp_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_pes_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:story:us_apres_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_040:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_fril_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_acv_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_002:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_personal:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_02:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_fril_001:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_ppr_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:arquitecto_revisor:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_depto_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_026:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:anci:2.0.0"
+    target: "urn:goreos:atom:story:us_intfin_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:jefe_dae:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_01:1.0.0"
+    metadata:
+      derived: true  # Transitive via fibration
+  - source: "urn:goreos:atom:role:ito_campo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ejec_ito_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:junta_vecinos:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_jjvv_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_sii:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_sii_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:sercotec:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_serco_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:seremi_hacienda:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_seremi__001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:especialista_accesibilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_especia_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_agua_potable:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_analist_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_servicio_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_directo_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_compras:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_fin_analista_co_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_cnr:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cnr_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:comite_grd:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_grd_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:profesional_cti:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cti_pro_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_sernameg:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_sernam_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:encargado_nuble_250:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_250_enc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:coordinador_ecif:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_coor_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:universidad_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_univers_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:empresa_gremio:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_emp_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:sociologo_territorial:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_terr_terr_soc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:comunicaciones_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_com_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:formuevaluador:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_ipr_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:goreologo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_goreolo_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:encargado_partes:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_enc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:colegio_profesional:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_ccasoc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_diplade:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_gen_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:ministerio_publico:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_norm_mp_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:subtel_mtt:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_subtel_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:cplt:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cplt_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:central_sindical:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_sindic_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:auditor_ministerial_interior:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_aud_min_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:jano:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_jano_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:abogado_general:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_norm_abogado_ge_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:encargado_continuidad:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ops_encargado_c_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_sence:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_sence_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:jefe_control_jerarquico:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_dev_hon_jefe_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_dit:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_anal_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:equipo_campeon:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_camp_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:miembro_cseu:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cseu_me_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_sectorial_dipres:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_dipres_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:encargado_zonas_rezago:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_rez_enc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:org_beneficiaria:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_org_ben_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:corfo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_corfo_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:corte_apelaciones_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_corte_n_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:referente_td_pmg:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_pmg_td_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:federacion_municipios:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_femp_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:encargado_estado_verde:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_encarga_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:cosoc:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cosoc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:contraparte_interna:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_contrap_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_equidad_territorial:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_terr_terr_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:delegado_provincial:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_dpp_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:inspector_tecnico_obra:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ejec_infra_ito_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:jefe_odia:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_jefe_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:asesor_tde:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_digitra_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:ejecutivo_urai:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ejec_urai_ejec_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:consultor_externo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_consult_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_ejecutor:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ejec_anal_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_junji:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_junji_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:comunicon:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_comunic_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:interventor_fenix:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_fnx_op_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:medio_comunicacion:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_medio_c_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:org_postulante:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_org_pos_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:centro_investigacion:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cenic_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:archivero_digital:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_arch_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_doh:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_doh_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:investigador_universidad:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_univ_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_gdp_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_hon_ana_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:coordinador_propir:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_propir_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:tribunal_constitucional:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_tc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:analista_division_gobiernos:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_subdere_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:desarrollador_frontend:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_front_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:coord_transformacion:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_ctd_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:encargado_muni_cons:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_muni_en_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:indap:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_indap_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:itp_programa:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ejec_itp_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:utm_generica:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_utm_gen_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_servicio_salud:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_salud_s_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:encargado_rrii:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_int_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:secretario_comite_pertinencia:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ejec_cper_sec_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:juzgado_letras:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_juzg_le_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:prensa_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_prensa__001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:secpla_san_carlos:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_secpla__001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:cpc_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cpc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:cde:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cde_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:beneficiario_individual:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_benefic_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:referente_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_transp__001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:jefe_estudios:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_jefe_es_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:ong_fundacion:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_ong_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:cogirador_autorizado:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_fin_cog_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:ing_vialidad:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_con_ing_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:auditor_general_gobierno:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_caigg_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:qa_analista:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_dev_qa_analista_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:abogado_asesor_division:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_jur_ases_div_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:director_dga:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_dga_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:unidad_coordinacion_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_unidad__001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:coordinador_ucr:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_ucr_coo_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:notario:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_notario_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:asesor_seguridad:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_seg_ases_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:comite_directivo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cdr_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:banco_central:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_bc_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:presidente_subcomite_ia:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_pres_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:monitor_plazos:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_mora_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:media_comunicacion:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_media_c_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:sna_sofo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_sna_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:fosis:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_fosis_001:1.0.0"
+    metadata:
+      generated: true
+
+  - source: "urn:goreos:atom:role:seremi_minvu:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_seremi__002:1.0.0"
+  - source: "urn:goreos:atom:role:analista_vivienda:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_analist_002:1.0.0"
+  - source: "urn:goreos:atom:role:auditor_bot:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_norm_audit_002:1.0.0"
+  - source: "urn:goreos:atom:role:profesional_base:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_profesi_002:1.0.0"
+  - source: "urn:goreos:atom:role:admin_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_ops_admin_sys_002:1.0.0"
+  - source: "urn:goreos:atom:role:clasificador:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_clasif_002:1.0.0"
+  - source: "urn:goreos:atom:role:usuario_externo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_ext_002:1.0.0"
+  - source: "urn:goreos:atom:role:cert_manager:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_cert_002:1.0.0"
+  - source: "urn:goreos:atom:role:analista_base:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_generic_analist_002:1.0.0"
+  - source: "urn:goreos:atom:role:secpla_chillan:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_gestion_secpla__002:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_educacion:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_001:1.0.0"
+  - source: "urn:goreos:atom:role:analista_turismo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_002:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_mujer:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_003:1.0.0"
+  - source: "urn:goreos:atom:role:analista_convenios:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_004:1.0.0"
+  - source: "urn:goreos:atom:role:analista_medio_ambiente:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_005:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_economia:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_006:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_sectorial:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_007:1.0.0"
+  - source: "urn:goreos:atom:role:analista_conectividad:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_008:1.0.0"
+  - source: "urn:goreos:atom:role:analista_cartera:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_009:1.0.0"
+  - source: "urn:goreos:atom:role:analista_energia:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_010:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_trabajo:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_011:1.0.0"
+  - source: "urn:goreos:atom:role:analista_viaticos:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_012:1.0.0"
+  - source: "urn:goreos:atom:role:analista_deporte:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_013:1.0.0"
+  - source: "urn:goreos:atom:role:analista_municipios:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_014:1.0.0"
+  - source: "urn:goreos:atom:role:analista_salud:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_015:1.0.0"
+  - source: "urn:goreos:atom:role:analista_cultura:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_016:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_salud:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_017:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_medioambiente:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_018:1.0.0"
+  - source: "urn:goreos:atom:role:seremi_culturas:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_final_019:1.0.0"

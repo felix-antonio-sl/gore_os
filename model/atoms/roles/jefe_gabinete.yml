@@ -11,6 +11,9 @@ description: Coordinación de agenda política, asesores directos y comités.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

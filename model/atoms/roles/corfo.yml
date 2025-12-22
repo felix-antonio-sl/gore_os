@@ -11,6 +11,9 @@ description: Corporación de Fomento de la Producción, innovación y desarrollo
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

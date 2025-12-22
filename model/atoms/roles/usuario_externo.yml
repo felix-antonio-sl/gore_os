@@ -1,6 +1,7 @@
 _meta:
   urn: "urn:goreos:atom:role:usuario_externo:2.0.0"
   type: Role
+abstract: true  # No requiere stories (arquetipo/sistema)
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
@@ -9,7 +10,11 @@ role_key: usuario_externo
 title: Usuario Externo (Genérico)
 description: Cualquier persona natural o jurídica externa que interactúa con el GORE.
 type: INTERNAL
+abstract: true  # No requiere stories (arquetipo/sistema)
 logic_scope: OPERATIONAL
+
+categorical:
+  level: L2
 
 morphisms:
   actor_of: []
@@ -17,6 +22,8 @@ morphisms:
 
 unit: Ciudadanía
 unit_type: Ecosistema Externo
+abstract: true  # No requiere stories (arquetipo/sistema)
 domain: D-GESTION
 archetype: null
+abstract: true  # No requiere stories (arquetipo/sistema)
 extends: null

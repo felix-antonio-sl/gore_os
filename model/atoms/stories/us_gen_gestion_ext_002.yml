@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_ext_002:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Usuario Externo (Genérico)
+id: US-GEN-GESTION_EXT-002
+urn: urn:goreos:atom:story:us_gen_gestion_ext_002:1.0.0
+role_id: ROL-GESTION-EXT
+as_a: Usuario Externo (Genérico)
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

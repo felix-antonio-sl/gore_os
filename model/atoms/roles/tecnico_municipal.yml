@@ -11,6 +11,9 @@ description: Roles técnicos municipales. Formulan y diseñan proyectos.
 type: External
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

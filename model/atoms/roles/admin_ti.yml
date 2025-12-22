@@ -11,6 +11,9 @@ description: Gestión avanzada de usuarios, accesos (IAM) y directorio activo.
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

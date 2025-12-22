@@ -1,6 +1,7 @@
 _meta:
   urn: "urn:goreos:atom:role:auditor_bot:2.0.0"
   type: Role
+abstract: true  # No requiere stories (arquetipo/sistema)
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
@@ -9,7 +10,11 @@ role_key: auditor_bot
 title: Fiscalizador Bot
 description: Agente de auditoría contínua y detección de anomalías (Madurez 5).
 type: Bot
+abstract: true  # No requiere stories (arquetipo/sistema)
 logic_scope: TACTICAL
+
+categorical:
+  level: L3
 
 morphisms:
   actor_of: []
@@ -17,6 +22,8 @@ morphisms:
 
 unit: GORE_OS AI
 unit_type: Fuerza de Trabajo Digital
+abstract: true  # No requiere stories (arquetipo/sistema)
 domain: D-NORM
 archetype: null
+abstract: true  # No requiere stories (arquetipo/sistema)
 extends: null

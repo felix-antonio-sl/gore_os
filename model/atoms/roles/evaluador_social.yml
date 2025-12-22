@@ -11,6 +11,9 @@ description: Revisión de admisibilidad y evaluación social de postulaciones.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

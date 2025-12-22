@@ -11,6 +11,9 @@ description: Funcionario designado para generar información de ítems 1-16 del 
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

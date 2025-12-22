@@ -11,6 +11,9 @@ description: Certificación de la autenticidad de actuaciones y documentos ofici
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

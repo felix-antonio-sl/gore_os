@@ -11,6 +11,9 @@ description: Agencia Nacional de Investigación y Desarrollo. Fondos FIC, CTI re
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

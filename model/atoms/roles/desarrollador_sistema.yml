@@ -11,6 +11,9 @@ description: Rol genérico de desarrollo full-stack o de sistemas.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

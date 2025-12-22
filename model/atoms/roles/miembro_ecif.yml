@@ -11,6 +11,9 @@ description: Funcionario asignado a la fase de respuesta ante desastres (articul
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

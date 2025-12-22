@@ -11,6 +11,9 @@ description: Administración técnica de la plataforma GeoNodo.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

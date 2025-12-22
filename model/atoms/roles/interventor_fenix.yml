@@ -11,6 +11,9 @@ description: Ejecución de planes de estabilización en unidades críticas.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

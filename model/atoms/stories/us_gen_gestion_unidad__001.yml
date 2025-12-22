@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_unidad__001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Unidad Coordinación Regional
+id: US-GEN-GESTION_UNIDAD_-001
+urn: urn:goreos:atom:story:us_gen_gestion_unidad__001:1.0.0
+role_id: ROL-GESTION-UNIDAD-COORD
+as_a: Unidad Coordinación Regional
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

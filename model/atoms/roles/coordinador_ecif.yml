@@ -11,6 +11,9 @@ description: Lidera el Equipo de Coordinación Específico para Incendios Forest
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

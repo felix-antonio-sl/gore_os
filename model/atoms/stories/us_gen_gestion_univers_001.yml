@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_univers_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Universidad Regional
+id: US-GEN-GESTION_UNIVERS-001
+urn: urn:goreos:atom:story:us_gen_gestion_univers_001:1.0.0
+role_id: ROL-GESTION-UNIVERSIDAD-
+as_a: Universidad Regional
+i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
+so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

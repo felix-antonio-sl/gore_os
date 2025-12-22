@@ -11,6 +11,9 @@ description: Inspector Técnico de Obras municipal para proyectos financiados po
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

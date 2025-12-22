@@ -11,6 +11,9 @@ description: Rol legal para Ley de Lobby; encargado de recibir y registrar audie
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Ingreso, distribución, numeración y despacho de documentos.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

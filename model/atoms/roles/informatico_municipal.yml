@@ -11,6 +11,9 @@ description: Contraparte técnica TIC del municipio para interoperabilidad.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

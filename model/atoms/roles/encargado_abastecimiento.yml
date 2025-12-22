@@ -11,6 +11,9 @@ description: Gestión del Plan Anual de Compras y licitaciones.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

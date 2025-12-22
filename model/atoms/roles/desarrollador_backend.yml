@@ -11,6 +11,9 @@ description: Implementación de la lógica de negocio, bases de datos y APIs.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Orquestador general del sistema GORE_OS, interfaz principal de IA.
 type: Bot
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

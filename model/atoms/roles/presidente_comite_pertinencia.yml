@@ -11,6 +11,9 @@ description: Lidera la evaluación de admisibilidad y pertinencia técnica (Pres
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Gestión de atracción de inversiones y comercio exterior (URAI).
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

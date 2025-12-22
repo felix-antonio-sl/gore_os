@@ -11,6 +11,9 @@ description: Sociedad Nacional de Agricultura / Sociedad de Fomento Agrícola Ñ
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

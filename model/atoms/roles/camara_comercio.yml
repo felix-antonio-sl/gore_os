@@ -11,6 +11,9 @@ description: Gremio empresarial local. Fomento productivo y comercio regional.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

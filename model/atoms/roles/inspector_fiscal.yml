@@ -11,6 +11,9 @@ description: Resguardar el cumplimiento de contratos mandatados según Art. 16 L
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

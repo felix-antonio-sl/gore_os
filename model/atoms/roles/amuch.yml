@@ -11,6 +11,9 @@ description: Asociación de Municipalidades de Chile. Representación nacional d
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

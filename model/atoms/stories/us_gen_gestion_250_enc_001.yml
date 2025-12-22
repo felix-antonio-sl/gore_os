@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_250_enc_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Encargado Agenda Ñuble 250
+id: US-GEN-GESTION_250_ENC-001
+urn: urn:goreos:atom:story:us_gen_gestion_250_enc_001:1.0.0
+role_id: ROL-GESTION-250-ENC
+as_a: Encargado Agenda Ñuble 250
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

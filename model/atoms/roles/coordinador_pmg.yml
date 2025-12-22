@@ -11,6 +11,9 @@ description: Líder del programa. Encargado de Gestión Institucional. Monitoreo
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

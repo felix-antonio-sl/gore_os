@@ -11,6 +11,9 @@ description: Preside las sesiones del Consejo y firma acuerdos.
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

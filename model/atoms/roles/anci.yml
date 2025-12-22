@@ -11,6 +11,9 @@ description: Agencia coordinadora de ciberseguridad nacional.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

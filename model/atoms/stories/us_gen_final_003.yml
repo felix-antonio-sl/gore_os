@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_final_003:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia para SEREMI Mujer y EG
+id: US-GEN-FINAL-003
+urn: urn:goreos:atom:story:us_gen_final_003:1.0.0
+role_id: ROL-GESTION-SEREMI-MUJER
+as_a: SEREMI Mujer y EG
+i_want: participar activamente en los procesos del GORE según mi rol institucional
+so_that: pueda contribuir al desarrollo regional de Ñuble
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

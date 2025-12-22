@@ -11,6 +11,9 @@ description: Responsable de la definición de arquitectura de componentes y soft
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

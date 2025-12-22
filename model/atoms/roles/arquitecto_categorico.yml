@@ -11,6 +11,9 @@ description: Rol técnico superior encargado de mantener la integridad ontológi
 type: TECHNICAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

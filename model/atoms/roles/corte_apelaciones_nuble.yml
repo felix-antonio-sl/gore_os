@@ -11,6 +11,9 @@ description: Tribunal de alzada regional. Recursos de protección, apelaciones.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

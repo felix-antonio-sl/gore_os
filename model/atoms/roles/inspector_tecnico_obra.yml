@@ -11,6 +11,9 @@ description: Supervisión técnica y administrativa de obras en ejecución.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

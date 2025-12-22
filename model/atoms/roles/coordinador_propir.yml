@@ -11,6 +11,9 @@ description: Responsable de la difusión y actualización del Mapa de Georrefere
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Control de inventario de activos fijos, altas, bajas y depreciació
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

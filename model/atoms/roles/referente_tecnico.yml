@@ -11,6 +11,9 @@ description: Profesional asignado para el acompañamiento y validación técnica
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

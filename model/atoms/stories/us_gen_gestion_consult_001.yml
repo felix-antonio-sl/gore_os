@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_consult_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Consultor Externo
+id: US-GEN-GESTION_CONSULT-001
+urn: urn:goreos:atom:story:us_gen_gestion_consult_001:1.0.0
+role_id: ROL-GESTION-CONSULTOR-EX
+as_a: Consultor Externo
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

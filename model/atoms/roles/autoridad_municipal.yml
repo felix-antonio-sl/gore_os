@@ -11,6 +11,9 @@ description: Autoridad máxima del municipio. Firma convenios y representa legal
 type: External
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

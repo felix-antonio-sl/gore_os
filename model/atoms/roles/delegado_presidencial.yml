@@ -11,6 +11,9 @@ description: Representante del Presidente en la región, coordinación de seguri
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Desarrollador de software al servicio del municipio.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

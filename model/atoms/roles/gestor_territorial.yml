@@ -11,6 +11,9 @@ description: Profesional encargado de la articulación y gestión en territorios
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

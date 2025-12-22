@@ -11,6 +11,9 @@ description: Liderazgo estratégico del ciclo de vida funcionario.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

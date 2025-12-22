@@ -11,6 +11,9 @@ description: Agente IA para análisis preliminar y formulación de iniciativas d
 type: Bot
 logic_scope: TACTICAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

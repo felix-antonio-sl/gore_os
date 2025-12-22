@@ -11,6 +11,9 @@ description: Profesional que diseña y formula iniciativas elegibles para financ
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

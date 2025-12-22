@@ -11,6 +11,9 @@ description: Representante ministerial en la región. Coordina políticas sector
 type: External
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

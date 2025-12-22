@@ -1,6 +1,7 @@
 _meta:
   urn: "urn:goreos:atom:role:cert_manager:2.0.0"
   type: Role
+abstract: true  # No requiere stories (arquetipo/sistema)
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
@@ -9,7 +10,11 @@ role_key: cert_manager
 title: Robot Cert-Manager
 description: Bot encargado de la gestión y renovación automática de certificados digitales.
 type: Bot
+abstract: true  # No requiere stories (arquetipo/sistema)
 logic_scope: TACTICAL
+
+categorical:
+  level: L2
 
 morphisms:
   actor_of: []
@@ -17,6 +22,8 @@ morphisms:
 
 unit: GORE_OS AI
 unit_type: Fuerza de Trabajo Digital
+abstract: true  # No requiere stories (arquetipo/sistema)
 domain: D-GESTION
 archetype: null
+abstract: true  # No requiere stories (arquetipo/sistema)
 extends: null

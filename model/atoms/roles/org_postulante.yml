@@ -11,6 +11,9 @@ description: Junta de vecinos, club deportivo u ONG que postula a fondos.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

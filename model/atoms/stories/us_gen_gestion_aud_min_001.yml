@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_aud_min_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Auditor Ministerial
+id: US-GEN-GESTION_AUD_MIN-001
+urn: urn:goreos:atom:story:us_gen_gestion_aud_min_001:1.0.0
+role_id: ROL-GESTION-AUD-MIN
+as_a: Auditor Ministerial
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

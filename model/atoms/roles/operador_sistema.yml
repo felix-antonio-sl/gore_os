@@ -11,6 +11,9 @@ description: Usuario especializado encargado de ejecutar procesos batch o manual
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Abogado UJ suplente en ausencia del titular de Transparencia.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

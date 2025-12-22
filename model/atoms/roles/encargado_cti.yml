@@ -11,6 +11,9 @@ description: Gestión operativa de proyectos de Ciencia, Tecnología e Innovaci�
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

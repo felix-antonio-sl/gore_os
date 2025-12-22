@@ -11,6 +11,9 @@ description: Funcionario designado para implementar el Plan de Gestión Ambienta
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

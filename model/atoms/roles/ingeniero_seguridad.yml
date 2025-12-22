@@ -11,6 +11,9 @@ description: Implementación de controles de seguridad en aplicaciones (AppSec).
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

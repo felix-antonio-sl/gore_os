@@ -11,6 +11,9 @@ description: Gestión técnica y asistencia a municipios para proyectos (Bajo DA
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

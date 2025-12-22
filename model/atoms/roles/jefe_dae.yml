@@ -11,6 +11,9 @@ description: Evaluación técnica de proyectos y programas (Movido a DIPLADE en 
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

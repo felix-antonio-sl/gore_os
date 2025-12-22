@@ -11,6 +11,9 @@ description: Supervisión del flujo documental y gestión de archivos. Dependenc
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

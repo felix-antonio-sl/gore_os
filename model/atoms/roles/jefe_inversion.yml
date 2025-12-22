@@ -11,6 +11,9 @@ description: Seguimiento financiero global de la cartera FNDR.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

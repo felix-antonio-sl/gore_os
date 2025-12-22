@@ -11,6 +11,9 @@ description: Registro visual y audiovisual de actividades y agenda del Gobernado
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Mantenimiento de servidores, virtualización y servicios cloud.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

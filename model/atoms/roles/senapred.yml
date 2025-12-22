@@ -11,6 +11,9 @@ description: Servicio Nacional de Prevención y Respuesta ante Desastres.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

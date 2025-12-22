@@ -11,6 +11,9 @@ description: Instrucción de sumarios administrativos e investigaciones sumarias
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

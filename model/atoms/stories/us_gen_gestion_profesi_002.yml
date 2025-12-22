@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_profesi_002:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Profesional {area}
+id: US-GEN-GESTION_PROFESI-002
+urn: urn:goreos:atom:story:us_gen_gestion_profesi_002:1.0.0
+role_id: ROL-GESTION-PROFESIONAL_BASE
+as_a: Profesional {area}
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

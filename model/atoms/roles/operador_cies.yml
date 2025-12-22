@@ -11,6 +11,9 @@ description: Monitoreo de cámaras, televigilancia y enlace SINAPRED.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

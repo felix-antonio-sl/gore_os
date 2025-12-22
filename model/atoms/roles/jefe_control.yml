@@ -11,6 +11,9 @@ description: Liderazgo de la fiscalización operativa y reporte a CGR.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

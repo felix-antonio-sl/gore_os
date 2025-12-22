@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_seg_ases_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Asesor Técnico Seguridad
+id: US-GEN-SEG_ASES-001
+urn: urn:goreos:atom:story:us_gen_seg_ases_001:1.0.0
+role_id: ROL-SEG-ASES
+as_a: Asesor Técnico Seguridad
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

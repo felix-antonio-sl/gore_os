@@ -11,6 +11,9 @@ description: Órgano garante del acceso a la información y fiscalización de tr
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

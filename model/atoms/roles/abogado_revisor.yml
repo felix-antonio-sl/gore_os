@@ -11,6 +11,9 @@ description: Control de legalidad de actos administrativos de menor complejidad.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

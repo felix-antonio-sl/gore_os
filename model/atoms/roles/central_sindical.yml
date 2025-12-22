@@ -11,6 +11,9 @@ description: CUT u otra central de trabajadores. Interlocución laboral.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

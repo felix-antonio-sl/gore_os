@@ -11,6 +11,9 @@ description: Manejo de flujo de caja, cuentas corrientes y pagos (TEF).
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

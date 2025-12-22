@@ -11,6 +11,9 @@ description: Jefatura operativa de la unidad de rendiciones.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

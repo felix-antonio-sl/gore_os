@@ -11,6 +11,9 @@ description: Usuario base de la administración pública (planta, contrata, hono
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

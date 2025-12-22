@@ -11,6 +11,9 @@ description: Jefe de División o encargado con voz y voto en decisiones de inver
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Lidera la unidad permanente de transformación digital e IA (Hito M
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

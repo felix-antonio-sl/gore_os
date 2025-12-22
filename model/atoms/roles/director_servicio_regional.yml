@@ -11,6 +11,9 @@ description: Director de servicio público regional. Ejecuta programas con cofin
 type: External
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

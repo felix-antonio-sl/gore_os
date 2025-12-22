@@ -11,6 +11,9 @@ description: Funcionario designado para evaluar ofertas técnicas y económicas 
 type: INTERNAL
 logic_scope: STRATEGIC
 
+categorical:
+  level: L1
+
 morphisms:
   actor_of: []
   governed_by: []

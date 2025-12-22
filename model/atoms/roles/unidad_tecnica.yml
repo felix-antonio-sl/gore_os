@@ -11,6 +11,9 @@ description: Equipo responsable de la ejecución técnica de convenios.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

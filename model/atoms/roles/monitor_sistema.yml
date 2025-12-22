@@ -11,6 +11,9 @@ description: Usuario que vigila dashboards de salud, rendimiento y disponibilida
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Equipo municipal encargado del diseño y postulación de iniciativa
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

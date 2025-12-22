@@ -11,6 +11,9 @@ description: Revisión exhaustiva de cuentas de transferencias corrientes y de c
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

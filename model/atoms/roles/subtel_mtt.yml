@@ -11,6 +11,9 @@ description: Subsecretaría de Telecomunicaciones y Ministerio de Transportes, c
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

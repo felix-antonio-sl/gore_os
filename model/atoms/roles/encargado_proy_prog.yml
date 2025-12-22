@@ -11,6 +11,9 @@ description: Evaluación técnica de proyectos y programas regionales (Bajo DAE/
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

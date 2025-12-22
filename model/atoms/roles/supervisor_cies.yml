@@ -11,6 +11,9 @@ description: Supervisi√≥n de turnos, protocolos y escalamiento de incidentes cr√
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

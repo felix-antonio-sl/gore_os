@@ -11,6 +11,9 @@ description: Líder de la implementación de Ley de Transformación Digital (Res
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

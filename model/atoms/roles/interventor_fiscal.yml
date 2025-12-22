@@ -11,6 +11,9 @@ description: Auditoría forense y regularización de procesos financieros.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

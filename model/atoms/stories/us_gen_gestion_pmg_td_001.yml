@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_pmg_td_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Referente Transformación Digital PMG
+id: US-GEN-GESTION_PMG_TD-001
+urn: urn:goreos:atom:story:us_gen_gestion_pmg_td_001:1.0.0
+role_id: ROL-GESTION-PMG-TD
+as_a: Referente Transformación Digital PMG
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_caigg_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Auditor General de Gobierno
+id: US-GEN-GESTION_CAIGG-001
+urn: urn:goreos:atom:story:us_gen_gestion_caigg_001:1.0.0
+role_id: ROL-GESTION-CAIGG
+as_a: Auditor General de Gobierno
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

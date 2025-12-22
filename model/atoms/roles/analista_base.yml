@@ -1,6 +1,7 @@
 _meta:
   urn: "urn:goreos:atom:role:analista_base:2.0.0"
   type: Role
+abstract: true  # No requiere stories (arquetipo/sistema)
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
@@ -9,7 +10,11 @@ role_key: analista_base
 title: Analista Base (Arquetipo)
 description: Arquetipo fundacional para roles operativos enfocados en análisis, procesamiento de información y ejecución de procesos técnicos administrativos.
 type: INTERNAL
+abstract: true  # No requiere stories (arquetipo/sistema)
 logic_scope: OPERATIONAL
+
+categorical:
+  level: L2
 
 morphisms:
   actor_of: []
@@ -17,6 +22,8 @@ morphisms:
 
 unit: GENERIC
 unit_type: Operativo
+abstract: true  # No requiere stories (arquetipo/sistema)
 domain: D-GENERIC
 archetype: BASE
+abstract: true  # No requiere stories (arquetipo/sistema)
 extends: null

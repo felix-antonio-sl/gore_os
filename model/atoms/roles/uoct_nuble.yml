@@ -11,6 +11,9 @@ description: Unidad Operativa de Control de Tránsito en proceso de traspaso des
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

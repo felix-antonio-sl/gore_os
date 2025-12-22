@@ -11,6 +11,9 @@ description: Registro en contabilidad SIGFE y elaboración de Balances.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

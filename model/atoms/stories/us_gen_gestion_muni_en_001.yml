@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_muni_en_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Encargado Unidad de Municipalidades y Conservaciones
+id: US-GEN-GESTION_MUNI_EN-001
+urn: urn:goreos:atom:story:us_gen_gestion_muni_en_001:1.0.0
+role_id: ROL-GESTION-MUNI-ENC
+as_a: Encargado Unidad de Municipalidades y Conservaciones
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

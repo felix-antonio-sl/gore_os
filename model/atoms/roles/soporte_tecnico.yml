@@ -11,6 +11,9 @@ description: Atención de Mesa de Ayuda y soporte a usuarios Nivel 1.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

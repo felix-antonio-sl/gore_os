@@ -1,6 +1,7 @@
 _meta:
   urn: "urn:goreos:atom:role:admin_sistema:2.0.0"
   type: Role
+abstract: true  # No requiere stories (arquetipo/sistema)
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
@@ -9,7 +10,11 @@ role_key: admin_sistema
 title: Administrador de Sistema
 description: Administración funcional de aplicaciones y configuración de parámetros.
 type: INTERNAL
+abstract: true  # No requiere stories (arquetipo/sistema)
 logic_scope: OPERATIONAL
+
+categorical:
+  level: L1
 
 morphisms:
   actor_of: []
@@ -17,6 +22,8 @@ morphisms:
 
 unit: D-TDE
 unit_type: Capacidades Transversales
+abstract: true  # No requiere stories (arquetipo/sistema)
 domain: D-OPS
 archetype: null
+abstract: true  # No requiere stories (arquetipo/sistema)
 extends: null

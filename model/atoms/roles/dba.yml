@@ -11,6 +11,9 @@ description: Administración de bases de datos, respaldos, performance y migraci
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

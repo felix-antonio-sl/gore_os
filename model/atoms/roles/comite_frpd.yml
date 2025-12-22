@@ -11,6 +11,9 @@ description: Gestión del Fondo Regional de Producción y Desarrollo.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

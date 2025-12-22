@@ -11,6 +11,9 @@ description: Liderazgo de la unidad de intervención y estabilización organizac
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

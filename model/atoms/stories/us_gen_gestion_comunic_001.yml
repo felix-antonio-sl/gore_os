@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_gestion_comunic_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia genérica para Comunicon (Asesor Comunicacional)
+id: US-GEN-GESTION_COMUNIC-001
+urn: urn:goreos:atom:story:us_gen_gestion_comunic_001:1.0.0
+role_id: ROL-GESTION-COMUNICON
+as_a: Comunicon (Asesor Comunicacional)
+i_want: ejecutar mis funciones principales en el contexto institucional del GORE
+so_that: pueda cumplir con los objetivos de mi rol
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

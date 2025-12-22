@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gen_final_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:1.0.0
+  generated: true
+name: Historia para SEREMI Educación
+id: US-GEN-FINAL-001
+urn: urn:goreos:atom:story:us_gen_final_001:1.0.0
+role_id: ROL-GESTION-SEREMI-EDU
+as_a: SEREMI Educación
+i_want: participar activamente en los procesos del GORE según mi rol institucional
+so_that: pueda contribuir al desarrollo regional de Ñuble
+domain: D-GESTION
+priority: P2
+acceptance_criteria: []

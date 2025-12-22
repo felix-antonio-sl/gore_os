@@ -11,6 +11,9 @@ description: Funcionario con atribución delegada para firma conjunta de cheques
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

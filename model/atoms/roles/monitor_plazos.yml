@@ -11,6 +11,9 @@ description: Agente de monitoreo de plazos administrativos y alertas tempranas (
 type: Bot
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

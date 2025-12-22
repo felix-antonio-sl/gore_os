@@ -11,6 +11,9 @@ description: Referente técnico de las Medidas de Equidad de Género PMG.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

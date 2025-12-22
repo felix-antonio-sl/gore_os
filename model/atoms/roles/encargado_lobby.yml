@@ -11,6 +11,9 @@ description: Registro y publicación de audiencias según Ley 20.730.
 type: INTERNAL
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

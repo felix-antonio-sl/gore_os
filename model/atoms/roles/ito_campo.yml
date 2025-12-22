@@ -11,6 +11,9 @@ description: Fiscalización física directa de avances y calidad de obra.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L3
+
 morphisms:
   actor_of: []
   governed_by: []

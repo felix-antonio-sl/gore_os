@@ -11,6 +11,9 @@ description: Secretario Regional Ministerial, representante de un ministerio en 
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

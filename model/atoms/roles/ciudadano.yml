@@ -11,6 +11,9 @@ description: Habitante de la región, usuario final de servicios y obras.
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

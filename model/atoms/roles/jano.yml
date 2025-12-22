@@ -11,6 +11,9 @@ description: IA de apoyo para redacción, revisión legal y verificación de con
 type: Bot
 logic_scope: TACTICAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

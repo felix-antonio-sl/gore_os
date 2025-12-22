@@ -11,6 +11,9 @@ description: Persona natural o jurídica que provee bienes o servicios al GORE v
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []

@@ -11,6 +11,9 @@ description: Profesional con conocimiento en ética, datos o IA que participa en
 type: INTERNAL
 logic_scope: OPERATIONAL
 
+categorical:
+  level: L2
+
 morphisms:
   actor_of: []
   governed_by: []
