@@ -1,0 +1,118 @@
+# ==============================================================================
+# GORE_OS Entity Atom: IniciativaEstrategica (Iniciativa Estratégica TDE)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M9 Gobernanza Estratégica
+# Source: Estrategia Gobierno Digital 2030
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: gobernanza_estrategica
+  kb_source:
+    - "Estrategia Gobierno Digital 2030"
+    - "KB TDE Estrategias 003"
+
+entity:
+  id: ENT-TDE-INICIATIVA-ESTRATEGICA
+  name: IniciativaEstrategica
+  name_es: Iniciativa Estratégica TDE
+  description: |
+    Proyecto, programa o línea de acción que implementa
+    directamente uno de los ejes de la Estrategia de
+    Gobierno Digital 2030.
+
+    Ejemplos:
+    - Digitalización 100% Trámites
+    - Implementación Cero Papel
+    - Adopción Identidad Digital
+    - Apertura Datos GORE
+
+  purpose: |
+    Trazar ejecución estratégica para:
+    - Monitorear avance metas 2030
+    - Alinear presupuesto (D-FIN) con estrategia TDE
+    - Reportar a Consejo de Modernización
+    - Priorizar cartera de proyectos
+
+  categorical_type: Object
+  is_abstract: false
+  category: Strategy
+
+attributes:
+  - name: id_iniciativa
+    type: String
+    key: true
+
+  - name: nombre
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+    nullable: true
+
+  # Alineamiento
+  - name: eje_estrategico
+    type: Enum[ServiciosPersonas, SectorPublicoEficiente, GestionDatos, Gobernanza, TalentoDigital, IdentidadInfraestructura]
+    nullable: false
+    description: Eje de la Estrategia GD 2030
+
+  - name: objetivo_vinculado
+    type: String
+    nullable: true
+    description: ID del objetivo estratégico GD 2030
+
+  # Ejecución
+  - name: responsable_id
+    type: String
+    fk: ENT-BACK-DIVISION
+    nullable: false
+    description: Unidad líder
+
+  - name: presupuesto_asignado
+    type: Decimal
+    nullable: true
+    description: Monto asignado (vínculo con D-FIN opcional)
+
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+
+  - name: fecha_termino_estimada
+    type: Date
+    nullable: true
+
+  # Avance
+  - name: porcentaje_avance
+    type: Decimal
+    default: 0.0
+
+  - name: estado
+    type: Enum[Idea, EnDiseno, EnEjecucion, Completada, Cancelada, Pausada]
+    default: Idea
+
+  - name: kpi_impacto
+    type: String
+    nullable: true
+    description: Métrica principal de éxito
+
+invariants:
+  - id: INV-EST-001
+    name: avance_rango_valido
+    rule: porcentaje_avance BETWEEN 0 AND 100
+    description: Avance debe ser porcentaje 0-100
+
+morphisms:
+  implementa: [EstrategiaGobiernoDigital]
+  financiada_por: [ENT-FIN-PRESUPUESTO]
+
+audit:
+  fields_tracked:
+    - estado
+    - porcentaje_avance
+  retention_years: 10

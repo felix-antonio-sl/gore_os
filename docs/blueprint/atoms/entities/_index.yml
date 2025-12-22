@@ -1,9 +1,112 @@
 _meta:
   urn: urn:goreos:index:entities:1.0.0
   type: EntitiesIndex
-  generated_at: "2025-12-21"
-total: 184
+  generated_at: "2025-12-22"
+total: 220
 items:
+  # === P8 ENTITIES D-GESTION (2025-12-22) - Multi-Agent Dialogue ===
+  - id: ENT-GESTION-POA
+    urn: urn:goreos:atom:entity:d_gestion_poa:1.0.0
+    name: POA
+    domain: D-GESTION
+  - id: ENT-GESTION-INDICADOR-POA
+    urn: urn:goreos:atom:entity:d_gestion_indicadorpoa:1.0.0
+    name: IndicadorPOA
+    domain: D-GESTION
+  - id: ENT-GESTION-DIMENSION-SALUD
+    urn: urn:goreos:atom:entity:d_gestion_dimensionsalud:1.0.0
+    name: DimensionSalud
+    domain: D-GESTION
+  - id: ENT-GESTION-PUNTAJE-HGORE
+    urn: urn:goreos:atom:entity:d_gestion_puntajesaludgore:1.0.0
+    name: PuntajeSaludGore
+    domain: D-GESTION
+  - id: ENT-GESTION-RIESGO
+    urn: urn:goreos:atom:entity:d_gestion_riesgo:1.0.0
+    name: Riesgo
+    domain: D-GESTION
+  - id: ENT-GESTION-CONTROL
+    urn: urn:goreos:atom:entity:d_gestion_control:1.0.0
+    name: Control
+    domain: D-GESTION
+  - id: ENT-GESTION-PLAYBOOK
+    urn: urn:goreos:atom:entity:d_gestion_playbook:1.0.0
+    name: Playbook
+    domain: D-GESTION
+  - id: ENT-GESTION-EJECUCION-PLAYBOOK
+    urn: urn:goreos:atom:entity:d_gestion_ejecucionplaybook:1.0.0
+    name: EjecucionPlaybook
+    domain: D-GESTION
+  - id: ENT-GESTION-OPORTUNIDAD-MEJORA
+    urn: urn:goreos:atom:entity:d_gestion_oportunidadmejora:1.0.0
+    name: OportunidadMejora
+    domain: D-GESTION
+  - id: ENT-GESTION-PROYECTO-MEJORA
+    urn: urn:goreos:atom:entity:d_gestion_proyectomejora:1.0.0
+    name: ProyectoMejora
+    domain: D-GESTION
+  - id: ENT-GESTION-REPORTE
+    urn: urn:goreos:atom:entity:d_gestion_reportegestion:1.0.0
+    name: ReporteGestion
+    domain: D-GESTION
+  - id: ENT-GESTION-INSTANCIA
+    urn: urn:goreos:atom:entity:d_gestion_instanciagestion:1.0.0
+    name: InstanciaGestion
+    domain: D-GESTION
+  - id: ENT-GESTION-COMPROMISO
+    urn: urn:goreos:atom:entity:d_gestion_compromisogestion:1.0.0
+    name: CompromisoGestion
+    domain: D-GESTION
+  - id: ENT-GESTION-CDC
+    urn: urn:goreos:atom:entity:d_gestion_conveniocdc:1.0.0
+    name: ConvenioDesempenoColectivo
+    domain: D-GESTION
+  - id: ENT-GESTION-CUENTA-PUBLICA
+    urn: urn:goreos:atom:entity:d_gestion_cuentapublica:1.0.0
+    name: CuentaPublica
+    domain: D-GESTION
+  # === P9 ENTITIES FENIX (2025-12-22) - Multi-Agent Dialogue ===
+  - id: ENT-FENIX-INTERVENCION
+    urn: urn:goreos:atom:entity:fenix_intervencion:1.0.0
+    name: Intervencion
+    domain: FENIX
+  - id: ENT-FENIX-EQUIPO
+    urn: urn:goreos:atom:entity:fenix_equipointervencion:1.0.0
+    name: EquipoIntervencion
+    domain: FENIX
+  - id: ENT-FENIX-BITACORA
+    urn: urn:goreos:atom:entity:fenix_bitacoraintervencion:1.0.0
+    name: BitacoraIntervencion
+    domain: FENIX
+  - id: ENT-FENIX-APRENDIZAJE
+    urn: urn:goreos:atom:entity:fenix_aprendizajeinstitucional:1.0.0
+    name: AprendizajeInstitucional
+    domain: FENIX
+  - id: ENT-FENIX-PLAN-ACCION
+    urn: urn:goreos:atom:entity:fenix_planaccion:1.0.0
+    name: PlanAccion
+    domain: FENIX
+  - id: ENT-FENIX-RECURSO
+    urn: urn:goreos:atom:entity:fenix_recursointervencion:1.0.0
+    name: RecursoIntervencion
+    domain: FENIX
+  - id: ENT-FENIX-ALERTA
+    urn: urn:goreos:atom:entity:fenix_alertafenix:1.0.0
+    name: AlertaFenix
+    domain: FENIX
+  # === P7 ENTITIES D-PLAN/D-TERR Remediation (2025-12-22) ===
+  - id: ENT-TERR-PROT
+    urn: urn:goreos:atom:entity:d_terr_prot:1.0.0
+    name: PROT
+    domain: D-TERR
+  - id: ENT-TERR-VISTA-IPR
+    urn: urn:goreos:atom:entity:d_terr_vistaterritorialipr:1.0.0
+    name: Vista Territorial IPR
+    domain: D-TERR
+  - id: ENT-PLAN-ZUBC
+    urn: urn:goreos:atom:entity:d_plan_zubc:1.0.0
+    name: ZUBC
+    domain: D-PLAN
   # === P6 ENTITIES D-NORM (2025-12-22) - Multi-Agent Dialogue ===
   - id: ENT-NORM-ACTO
     urn: urn:goreos:atom:entity:d_norm_actoadministrativo:1.0.0

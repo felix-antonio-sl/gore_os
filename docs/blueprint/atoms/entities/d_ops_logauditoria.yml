@@ -1,0 +1,101 @@
+# ==============================================================================
+# GORE_OS Entity Atom: LogAuditoria
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Auditoría
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: auditoria
+
+entity:
+  id: ENT-OPS-LOG-AUDITORIA
+  name: LogAuditoria
+  name_es: Registro de Auditoría
+  description: |
+    Registro inmutable de acciones realizadas en el sistema.
+    Base para compliance y forensics.
+
+  purpose: |
+    Modelar logs de auditoría para:
+    - Compliance normativo
+    - Investigación de incidentes
+    - Trazabilidad de acciones
+
+  categorical_type: Event
+  is_abstract: false
+  category: Compliance
+
+attributes:
+  - name: id_log
+    type: String
+    key: true
+
+  - name: timestamp
+    type: DateTime
+    nullable: false
+
+  - name: usuario_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: true
+    description: "NULL si es acción de sistema"
+
+  - name: accion
+    type: String
+    nullable: false
+    description: "Tipo de acción (CREATE, UPDATE, DELETE, LOGIN, etc.)"
+
+  - name: recurso_tipo
+    type: String
+    nullable: false
+    description: "Tipo de entidad afectada"
+
+  - name: recurso_id
+    type: String
+    nullable: true
+    description: "ID de la entidad afectada"
+
+  - name: cambios
+    type: Json
+    nullable: true
+    description: "Detalle de cambios (before/after)"
+
+  - name: ip_origen
+    type: String
+    nullable: true
+
+  - name: user_agent
+    type: String
+    nullable: true
+
+  - name: resultado
+    type: Enum[Exito, Fallido, Denegado]
+    default: Exito
+
+  - name: motivo_fallo
+    type: String
+    nullable: true
+
+invariants:
+  - id: INV-LOG-001
+    name: fallido_tiene_motivo
+    rule: resultado IN ('Fallido', 'Denegado') → motivo_fallo IS NOT NULL
+    description: "Acción fallida debe tener motivo"
+
+  - id: INV-LOG-002
+    name: inmutable
+    rule: IMMUTABLE after INSERT
+    description: "Logs de auditoría son inmutables"
+
+morphisms:
+  usuario: [ENT-OPS-USUARIO-SISTEMA]
+
+audit:
+  fields_tracked: []
+  retention_years: 10

@@ -1,0 +1,170 @@
+# ==============================================================================
+# GORE_OS Entity Atom: ZUBC (Zona Urbana de Borde Costero)
+# ==============================================================================
+# Domain: D-PLAN (Strategic Planning)
+# Subdomain: Ordenamiento Territorial
+# Source: domain_d-plan.md, Política Nacional de Uso del Borde Costero
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + Goreólogo"
+  domain: D-PLAN
+  subdomain: ordenamiento_territorial
+  kb_source:
+    - "domain_d-plan.md"
+    - "DS 475/1994 MINDEF: Política Nacional de Uso del Borde Costero"
+    - "LOC GORE Art. 17"
+
+entity:
+  id: ENT-PLAN-ZUBC
+  name: ZUBC
+  name_es: Zona Urbana de Borde Costero
+  description: |
+    Zonificación específica del borde costero regional definida
+    según la Política Nacional de Uso del Borde Costero (DS 475/1994).
+
+    En la Región de Ñuble aplica principalmente a la zona costera
+    de la Provincia de Itata (Cobquecura, Trehuaco, Coelemu).
+
+    La ZUBC define usos preferentes que deben ser respetados
+    por los IPTs comunales y los proyectos de inversión.
+
+  purpose: |
+    Modelar las ZUBC para:
+    - Validar proyectos costeros contra zonificación
+    - Coordinar con DIRECTEMAR y SEREMI Bienes Nacionales
+    - Aplicar restricciones de uso en proyectos de inversión
+    - Integrar con sistema IDE regional
+
+  categorical_type: Object
+  is_abstract: false
+  category: Reference
+
+attributes:
+  - name: id_zubc
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre de la zona
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: "Código según zonificación (ej: ZUBC-IT-01)"
+
+  # Territorio
+  - name: comuna_id
+    type: String
+    fk: ENT-TERR-COMUNA
+    nullable: false
+    description: Comuna costera
+
+  - name: provincia
+    type: String
+    default: "Itata"
+    description: Provincia costera
+
+  # Uso preferente
+  - name: uso_preferente
+    type: Enum[PortuarioAcuicola, Industrial, PescaArtesanal, Turismo, Conservacion, UsoPublico, Mixto]
+    nullable: false
+    description: Uso preferente según PNUBC
+
+  - name: usos_compatibles
+    type: Array[String]
+    nullable: true
+    description: Usos compatibles con el preferente
+
+  - name: usos_incompatibles
+    type: Array[String]
+    nullable: true
+    description: Usos prohibidos en la zona
+
+  # Geometría
+  - name: geometria
+    type: Geometry
+    geometry_type: Polygon
+    nullable: false
+    description: Polígono de la zona
+
+  - name: extension_km
+    type: Decimal
+    nullable: true
+    description: Extensión del tramo costero en km
+
+  - name: superficie_ha
+    type: Decimal
+    nullable: true
+    description: Superficie en hectáreas
+
+  # Normativa
+  - name: decreto_aprobatorio
+    type: String
+    nullable: true
+    description: "Decreto que aprueba la zonificación (DS 475/1994)"
+
+  - name: fecha_aprobacion
+    type: Date
+    nullable: true
+    description: Fecha de aprobación
+
+  # Relación con otros instrumentos
+  - name: prot_zona_id
+    type: String
+    fk: ENT-PLAN-ZONA-PROT
+    nullable: true
+    description: Zona PROT correspondiente
+
+  - name: prc_zonificacion
+    type: String
+    nullable: true
+    description: Zonificación en PRC comunal si existe
+
+  # Estado
+  - name: estado
+    type: Enum[Vigente, EnRevision, Propuesta, Historica]
+    default: Vigente
+    description: Estado de la zonificación
+
+  # Concesiones
+  - name: tiene_concesiones_maritimas
+    type: Boolean
+    default: false
+    description: ¿Existen concesiones marítimas vigentes?
+
+  - name: numero_concesiones
+    type: Integer
+    default: 0
+    description: Cantidad de concesiones en la zona
+
+invariants:
+  - id: INV-ZUBC-001
+    name: geometria_valida
+    rule: ST_IsValid(geometria) = true
+    description: La geometría debe ser válida
+    severity: error
+
+  - id: INV-ZUBC-002
+    name: codigo_unico
+    rule: UNIQUE(codigo)
+    description: Código único por zona
+    severity: error
+
+morphisms:
+  contenida_en: [ENT-TERR-COMUNA]
+  regulada_por: [ENT-PLAN-ZONA-PROT]
+  restringe: [ENT-FIN-IPR]
+  publicada_en: [ENT-TERR-CAPA]
+
+audit:
+  fields_tracked:
+    - estado
+    - uso_preferente
+  retention_years: 20

@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_cicd_003:1.0.0
+  type: Story
+  source: plan_especificacion_ddev_dops.md
+id: US-DEV-CICD-003
+story_key: us_dev_cicd_003
+role_id: ROLE-QA
+as_a: QA
+i_want: visualizar reportes de cobertura de tests detallados por Pull Request
+so_that: se asegure que el nuevo código cumple con los umbrales de calidad definidos
+domain: D-DEV
+priority: P1
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: ROLE-QA
+  contribuye_a: CAP-DEV-001
+  lee: ENT-DEV-TEST-SUITE

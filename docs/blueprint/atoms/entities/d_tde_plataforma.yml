@@ -1,0 +1,162 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Plataforma (Plataforma TDE)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M2 Servicios Digitales
+# Source: dialogo_riguroso_d_tde.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: servicios_digitales
+  kb_source:
+    - "dialogo_riguroso_d_tde.md"
+    - "Ley 21.180: Plataformas habilitantes"
+
+entity:
+  id: ENT-TDE-PLATAFORMA
+  name: Plataforma
+  name_es: Plataforma TDE
+  description: |
+    Plataforma de transformación digital del Estado que el GORE
+    consume o integra para cumplir Ley 21.180.
+
+    Plataformas principales:
+    - ClaveÚnica: Autenticación SSO
+    - FirmaGob: Firma electrónica
+    - DocDigital: Gestión documental
+    - SIMPLE: Trámites digitales
+    - PISEE: Interoperabilidad
+    - Notificaciones: Avisos legales
+
+  purpose: |
+    Catalogar plataformas para:
+    - Registrar estado de integración
+    - Monitorear disponibilidad
+    - Gestionar credenciales
+    - Trazar dependencias
+
+  categorical_type: Object
+  is_abstract: false
+  category: Reference
+
+attributes:
+  - name: id_plataforma
+    type: String
+    key: true
+
+  - name: codigo
+    type: String
+    nullable: true
+    description: "Código corto (ej: CU, FG, DD)"
+
+  - name: nombre
+    type: String
+    nullable: false
+
+  - name: proveedor
+    type: String
+    nullable: true
+    description: Institución proveedora (SEGEGOB, MinSEGPRES, etc.)
+
+  # Tipo
+  - name: tipo
+    type: Enum[Autenticacion, FirmaElectronica, GestionDocumental, Tramites, Interoperabilidad, Notificaciones, DatosAbiertos, Otro]
+    nullable: false
+
+  - name: categoria
+    type: Enum[Obligatoria, Opcional, Recomendada]
+    default: Obligatoria
+
+  # Identidad y Confianza
+  - name: rol_identidad
+    type: Enum[ProveedorIdentidad, Broker, Consumidor, N/A]
+    default: Consumidor
+    description: Rol en el ecosistema de Identidad Digital
+
+  - name: nivel_confianza_ofrecido
+    type: Enum[Bajo, Medio, Alto, MuyAlto, N/A]
+    default: N/A
+    description: LoA ofrecido si es proveedor de identidad
+
+  - name: integracion_broker_identidad
+    type: Boolean
+    default: false
+    description: ¿Integrado al Broker de Identidad del Estado?
+
+  # Integración
+  - name: estado_integracion
+    type: Enum[NoIniciada, EnProceso, Certificada, Produccion, Suspendida]
+    default: NoIniciada
+
+  - name: fecha_integracion
+    type: Date
+    nullable: true
+
+  - name: responsable_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+
+  # Técnico
+  - name: url_produccion
+    type: String
+    nullable: true
+
+  - name: url_sandbox
+    type: String
+    nullable: true
+
+  - name: tipo_autenticacion
+    type: Enum[OIDC, OAuth2, SAML, APIKey, Certificado]
+    nullable: true
+
+  - name: credencial_id
+    type: String
+    nullable: true
+    description: ID de credencial en vault
+
+  # Normativa
+  - name: norma_tecnica
+    type: String
+    nullable: true
+    description: "DS asociado (ej: DS 12/2020)"
+
+  - name: obligatoria_ley
+    type: Boolean
+    default: true
+
+  # Disponibilidad
+  - name: sla_disponibilidad
+    type: Decimal
+    nullable: true
+    description: "SLA esperado (ej: 99.5)"
+
+  - name: contacto_soporte
+    type: String
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Activa, Inactiva, Deprecada]
+    default: Activa
+
+invariants:
+  - id: INV-PLAT-001
+    name: produccion_requiere_url
+    rule: estado_integracion = 'Produccion' → url_produccion IS NOT NULL
+    description: Plataforma en producción debe tener URL
+
+morphisms:
+  integrada_en: [D-TDE]
+  regulada_por: [RegulacionTDE]
+
+audit:
+  fields_tracked:
+    - estado_integracion
+    - estado
+  retention_years: 5

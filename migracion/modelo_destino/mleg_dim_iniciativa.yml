@@ -1,0 +1,39 @@
+_meta:
+  urn: urn:goreos:atom:entity:dim_iniciativa:1.0.0
+  type: Entity
+id: ENT-MLEG-DIM-INICIATIVA
+name: Dim_Iniciativa
+name_singular: Iniciativa
+domain: D-OPS
+module: M10-LEGACY
+source: IDIS
+description: Dimensión de iniciativas de inversión pública extraída desde IDIS ANALISIS. Foreign key principal del modelo de cartera.
+approximate_rows: 2800
+attributes:
+  - name: cod_unico
+    type: string
+    required: true
+    description: Código único de la iniciativa (COD.ÚNICO normalizado)
+    constraints:
+      - no_placeholders
+  - name: nombre_iniciativa
+    type: string
+    required: true
+    description: Nombre descriptivo de la iniciativa
+  - name: etapa
+    type: enum
+    values: [PREFACTIBILIDAD, FACTIBILIDAD, DISEÑO, EJECUCION, TERMINADO]
+    description: Etapa actual del ciclo de vida
+  - name: fecha_creacion
+    type: date
+    format: ISO
+    description: Fecha de creación en el sistema origen
+  - name: estado_activo
+    type: boolean
+    default: true
+    description: Indica si la iniciativa está activa
+morphisms:
+  relacionado_con:
+    - Fact_LineaPresupuestaria (1:N)
+    - Fact_EjecucionMensual (1:N)
+    - fin_iniciativa (1:1)

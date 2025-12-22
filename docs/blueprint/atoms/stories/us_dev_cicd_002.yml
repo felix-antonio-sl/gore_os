@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_cicd_002:1.0.0
+  type: Story
+  source: plan_especificacion_ddev_dops.md
+id: US-DEV-CICD-002
+story_key: us_dev_cicd_002
+role_id: ROLE-DEVOPS
+as_a: DevOps
+i_want: generar artefactos de build versionados e inmutables automáticamente
+so_that: los despliegues sean siempre reproducibles y trazables
+domain: D-DEV
+priority: P0
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: ROLE-DEVOPS
+  contribuye_a: CAP-DEV-001
+  produce: ENT-DEV-ARTEFACTO-BUILD

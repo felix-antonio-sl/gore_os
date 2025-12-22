@@ -1,0 +1,190 @@
+# ==============================================================================
+# GORE_OS Entity Atom: PlanAccion (Plan de Acción de Intervención)
+# ==============================================================================
+# Domain: FENIX (Unidad de Intervención Institucional)
+# Subdomain: Estrategia
+# Source: dialogo_riguroso_fenix_orko.md (AC + AO)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + Arquitecto ORKO"
+  domain: FENIX
+  subdomain: estrategia
+  kb_source:
+    - "dialogo_riguroso_fenix_orko.md"
+    - "ORKO Layer 3: Metodología"
+
+entity:
+  id: ENT-FENIX-PLAN-ACCION
+  name: PlanAccion
+  name_es: Plan de Acción
+  description: |
+    Estrategia específica para una fase de la intervención.
+
+    Separado de `Intervencion` para permitir pivotes estratégicos
+    sin cerrar el registro administrativo de la crisis.
+
+    Una Intervención puede tener múltiples Planes de Acción
+    secuenciales (v1, v2, v3...) conforme evoluciona la situación.
+
+  purpose: |
+    Modelar planes de acción para:
+    - Definir estrategia y tácticas por fase
+    - Permitir iteración sin perder trazabilidad
+    - Establecer KPIs específicos del plan
+    - Documentar pivotes estratégicos
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_plan
+    type: String
+    key: true
+    description: "Identificador único (ej: PA-INT2025001-V1)"
+
+  - name: intervencion_id
+    type: String
+    fk: ENT-FENIX-INTERVENCION
+    nullable: false
+    description: Intervención a la que pertenece
+
+  - name: version
+    type: Integer
+    default: 1
+    description: Versión del plan (1, 2, 3...)
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre descriptivo del plan
+
+  # Estrategia
+  - name: estrategia
+    type: Text
+    nullable: false
+    description: Descripción de la estrategia general
+
+  - name: enfoque
+    type: Enum[Correctivo, Preventivo, Aceleracion, Estabilizacion, Contencion]
+    nullable: false
+    description: Tipo de enfoque estratégico
+
+  - name: hipotesis
+    type: Text
+    nullable: true
+    description: Hipótesis de trabajo del plan
+
+  # Hitos
+  - name: hitos_clave
+    type: JSON
+    nullable: false
+    description: |
+      Hitos del plan:
+      [{
+        "orden": 1,
+        "descripcion": "...",
+        "fecha_objetivo": "...",
+        "responsable_id": "...",
+        "completado": false
+      }]
+
+  - name: hitos_completados
+    type: Integer
+    default: 0
+
+  - name: hitos_totales
+    type: Integer
+    default: 0
+
+  # KPIs
+  - name: kpis_especificos
+    type: JSON
+    nullable: true
+    description: |
+      KPIs del plan:
+      [{
+        "indicador": "...",
+        "meta": 0,
+        "actual": 0,
+        "peso": 0.25
+      }]
+
+  # Temporalidad
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+
+  - name: fecha_fin_planificada
+    type: Date
+    nullable: false
+
+  - name: fecha_revision
+    type: Date
+    nullable: true
+    description: Próxima fecha de revisión del plan
+
+  - name: fecha_cierre
+    type: Date
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[Borrador, Activo, EnRevision, Superado, Exitoso, Fallido]
+    default: Borrador
+    description: Estado del plan
+
+  - name: es_plan_vigente
+    type: Boolean
+    default: true
+    description: ¿Es el plan actualmente vigente?
+
+  # Aprobación
+  - name: aprobador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+
+  - name: fecha_aprobacion
+    type: Date
+    nullable: true
+
+  # Razón de superación
+  - name: motivo_superacion
+    type: Text
+    nullable: true
+    description: Por qué se pasó a un nuevo plan
+
+  # Observaciones
+  - name: observaciones
+    type: Text
+    nullable: true
+
+invariants:
+  - id: INV-PA-001
+    name: un_plan_vigente_por_intervencion
+    rule: |
+      COUNT(WHERE intervencion_id = X AND es_plan_vigente = TRUE) <= 1
+    description: Solo un plan vigente por intervención
+    severity: error
+
+  - id: INV-PA-002
+    name: activo_requiere_aprobacion
+    rule: estado = 'Activo' → fecha_aprobacion IS NOT NULL
+    description: Plan activo debe estar aprobado
+
+morphisms:
+  pertenece_a: [ENT-FENIX-INTERVENCION]
+  aprobado_por: [ENT-BACK-FUNCIONARIO]
+  ejecutado_por: [ENT-FENIX-EQUIPO]
+
+audit:
+  fields_tracked:
+    - estado
+    - es_plan_vigente
+    - hitos_completados
+  retention_years: 10

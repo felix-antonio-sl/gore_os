@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_dev_p5:1.0.0
+  type: Process
+  source: plan_especificacion_ddev_dops.md
+id: PROC-DEV-P5
+code: P5
+name: Aprobación de ADR
+domain: D-DEV
+type: BPMN
+morphisms:
+  roles_ejecutores: [ROLE-TECH-LEAD, ROLE-ARCHITECT]
+  manipula: [ENT-DEV-ADR]
+  triggers: [New ADR Proposed]

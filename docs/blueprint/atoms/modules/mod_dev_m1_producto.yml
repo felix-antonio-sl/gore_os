@@ -1,0 +1,26 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_dev_m1:1.0.0
+  type: Module
+id: MOD-DEV-M1
+name: Gestión de Producto
+code: M1
+domain: D-DEV
+description: Epics, backlog, priorización, roadmap y gestión de stakeholders.
+priority: P0
+stories:
+  - US-DEV-PROD-001
+  - US-DEV-PROD-002
+  - US-DEV-PROD-003
+  - US-DEV-PROD-004
+  - US-DEV-PROD-005
+  - US-DEV-PROD-006
+  - US-DEV-PROD-007
+  - US-DEV-PROD-008
+entities:
+  - Epic
+  - Story
+stats:
+  p0_stories: 3
+  p1_stories: 3
+  p2_stories: 2
+  total: 8

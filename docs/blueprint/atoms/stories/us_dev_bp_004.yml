@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_004:1.0.0
+  type: Story
+  source: catalogo_exhaustivo_ddev_dops.md
+id: US-DEV-BP-004
+story_key: us_dev_bp_004
+role_id: ROLE-ARQUITECTO
+as_a: Arquitecto
+i_want: generar composición de dominio (d_*.yml) desde atoms
+so_that: se tenga Aggregation actualizada automáticamente
+domain: D-DEV
+module: M0-BLUEPRINT
+priority: P1
+acceptance_criteria:
+  - d_*.yml generado en compositions/domains
+  - Aggregation con modules, processes, entities
+  - stats.* calculados automáticamente
+capability_bundle_id: CAP-DEV-BLUEPRINT
+morphisms:
+  protagonizado_por: ROLE-ARQUITECTO
+  contribuye_a: CAP-DEV-BLUEPRINT

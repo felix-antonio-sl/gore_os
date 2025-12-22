@@ -1,0 +1,29 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_ops_m2:1.0.0
+  type: Module
+id: MOD-OPS-M2
+name: Cargas Masivas de Datos
+code: M2
+domain: D-OPS
+description: Importación masiva de datos CSV/Excel con validación de esquema, procesamiento asíncrono y reportes de errores.
+priority: P0
+stories:
+  - US-OPS-DAT-001
+  - US-OPS-DAT-002
+  - US-OPS-DAT-003
+  - US-OPS-DAT-004
+  - US-OPS-DAT-005
+  - US-OPS-DAT-006
+  - US-OPS-DAT-007
+  - US-OPS-DAT-008
+  - US-OPS-DAT-009
+  - US-OPS-DAT-010
+  - US-OPS-DAT-011
+  - US-OPS-DAT-012
+entities:
+  - CargaMasiva
+stats:
+  p0_stories: 3
+  p1_stories: 6
+  p2_stories: 3
+  total: 12

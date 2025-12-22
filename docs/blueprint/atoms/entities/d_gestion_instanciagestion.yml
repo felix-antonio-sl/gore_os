@@ -1,0 +1,263 @@
+# ==============================================================================
+# GORE_OS Entity Atom: InstanciaGestion (Reunión/Comité de Gestión)
+# ==============================================================================
+# Domain: D-GESTION (Control de Gestión y Operación)
+# Subdomain: Gobernanza Operativa
+# Source: Gap analysis dialogo_riguroso_d_gestion.md
+# ==============================================================================
+
+_metadata:
+  version: "2.0.0"
+  status: active
+  created_at: "2025-12-22"
+  updated_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + AR Virtual + Arquitecto ORKO"
+  domain: D-GESTION
+  subdomain: gobernanza_operativa
+  kb_source:
+    - "kb_gn_035 → GORE-ARQUITECTURA-COORDINACION-01"
+    - "dialogo_orquestado_dgestion_fenix.md (P2 refinement)"
+
+entity:
+  id: ENT-GESTION-INSTANCIA
+  name: InstanciaGestion
+  name_es: Instancia de Gestión
+  description: |
+    Representa una reunión o sesión formal donde se revisa el estado
+    de la gestión institucional y se toman decisiones.
+
+    Tipos de instancias:
+    - Comité de Riesgos (trimestral, liderado por UC)
+    - Revisión POA Divisional (mensual)
+    - Directorio de Gestión (semanal, GR + AR + Jefes División)
+    - Comité de Crisis (ad-hoc, FÉNIX)
+    - Sesión CORE (cuando aplica a gestión interna)
+
+    Cada instancia genera compromisos y se alimenta de reportes.
+
+  purpose: |
+    Modelar instancias de gestión para:
+    - Registrar reuniones formales del ciclo de gestión
+    - Vincular reportes revisados con decisiones tomadas
+    - Generar compromisos con responsables y plazos
+    - Trazar la gobernanza operativa
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_instancia
+    type: String
+    key: true
+    description: "Identificador único (ej: IG-2025-001)"
+
+  - name: codigo
+    type: String
+    nullable: true
+    description: "Código corto (ej: CDR-T1, RPO-DAF-03)"
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre de la instancia
+
+  # Clasificación
+  - name: tipo
+    type: Enum[ComiteRiesgos, RevisionPOA, DirectorioGestion, ComiteCrisis, SesionCORE, ComiteDirectivo, Otro]
+    nullable: false
+    description: Tipo de instancia
+
+  - name: nivel
+    type: Enum[Estrategico, Tactico, Operativo]
+    default: Tactico
+    description: Nivel de la instancia
+
+  - name: periodicidad
+    type: Enum[Semanal, Quincenal, Mensual, Trimestral, Semestral, Anual, AdHoc]
+    nullable: false
+    description: Frecuencia programada
+
+  # Temporalidad
+  - name: fecha
+    type: Date
+    nullable: false
+    description: Fecha de la reunión
+
+  - name: hora_inicio
+    type: Time
+    nullable: true
+    description: Hora de inicio
+
+  - name: hora_fin
+    type: Time
+    nullable: true
+    description: Hora de término
+
+  - name: duracion_minutos
+    type: Integer
+    computed: true
+    description: Duración en minutos
+
+  # Convocatoria
+  - name: convocante_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Quién convoca (AR, Jefe UC, GR)
+
+  - name: asistentes
+    type: Array[String]
+    nullable: true
+    description: IDs de funcionarios asistentes
+
+  - name: asistentes_externos
+    type: Array[String]
+    nullable: true
+    description: Nombres de externos si aplica
+
+  - name: quorum_alcanzado
+    type: Boolean
+    default: true
+    description: ¿Se alcanzó quórum?
+
+  # Contenido
+  - name: tabla
+    type: JSON
+    nullable: true
+    description: |
+      Tabla de la reunión:
+      [{
+        "punto": 1,
+        "descripcion": "...",
+        "tiempo_asignado": 15,
+        "responsable_presentar": "..."
+      }]
+
+  - name: reportes_revisados
+    type: Array[String]
+    nullable: true
+    description: IDs de ReporteGestion revisados
+
+  - name: riesgos_tratados
+    type: Array[String]
+    nullable: true
+    description: IDs de Riesgos discutidos
+
+  - name: poas_evaluados
+    type: Array[String]
+    nullable: true
+    description: IDs de POAs evaluados
+
+  - name: hgore_presentado_id
+    type: String
+    fk: ENT-GESTION-PUNTAJE-HGORE
+    nullable: true
+    description: Puntaje H_gore presentado
+
+  # Acta
+  - name: acta_resumen
+    type: Text
+    nullable: true
+    description: Resumen ejecutivo del acta
+
+  - name: decisiones_clave
+    type: Array[String]
+    nullable: true
+    description: Decisiones principales tomadas
+
+  - name: url_acta_completa
+    type: String
+    nullable: true
+    description: URL al documento de acta completa
+
+  # Estado
+  - name: estado
+    type: Enum[Programada, EnCurso, Completada, Cancelada, Pospuesta]
+    default: Programada
+    description: Estado de la instancia
+
+  - name: compromisos_generados
+    type: Integer
+    default: 0
+    description: Número de compromisos creados
+
+  # Seguimiento
+  - name: proxima_instancia_fecha
+    type: Date
+    nullable: true
+    description: Fecha próxima reunión si es recurrente
+
+  # ===== ATRIBUTOS ESPECÍFICOS SESIÓN CORE (P2) =====
+  - name: es_sesion_core
+    type: Boolean
+    default: false
+    description: "True si tipo = SesionCORE"
+
+  - name: sesion_core_ordinaria
+    type: Boolean
+    nullable: true
+    description: "True = Ordinaria, False = Extraordinaria"
+
+  - name: consejeros_presentes
+    type: Integer
+    nullable: true
+    description: Cantidad de consejeros regionales presentes
+
+  - name: quorum_core
+    type: Boolean
+    nullable: true
+    description: "¿Se alcanzó quórum del CORE (mayoría absoluta)?"
+
+  - name: acuerdo_core_id
+    type: String
+    nullable: true
+    description: ID del acuerdo CORE si se generó
+
+  - name: cuenta_publica_id
+    type: String
+    fk: ENT-GESTION-CUENTA-PUBLICA
+    nullable: true
+    description: Cuenta pública presentada (si aplica)
+
+  - name: seguimiento_proyecto_mejora_id
+    type: String
+    fk: ENT-GESTION-PROYECTO-MEJORA
+    nullable: true
+    description: "Seguimiento PDCA Check (vínculo D-GESTION)"
+
+invariants:
+  - id: INV-IG-001
+    name: completada_requiere_acta
+    rule: estado = 'Completada' → acta_resumen IS NOT NULL
+    description: Instancia completada debe tener acta
+    severity: warning
+
+  - id: INV-IG-002
+    name: crisis_requiere_hgore
+    rule: tipo = 'ComiteCrisis' → hgore_presentado_id IS NOT NULL
+    description: Comité de crisis debe revisar H_gore
+
+  - id: INV-IG-003
+    name: core_requiere_quorum
+    rule: tipo = 'SesionCORE' AND estado = 'Completada' → quorum_core IS NOT NULL
+    description: Sesión CORE completada debe registrar quórum
+    severity: warning
+
+morphisms:
+  revisa:
+    [
+      ENT-GESTION-REPORTE,
+      ENT-GESTION-PUNTAJE-HGORE,
+      ENT-GESTION-POA,
+      ENT-GESTION-RIESGO,
+    ]
+  genera: [ENT-GESTION-COMPROMISO]
+  convocada_por: [ENT-BACK-FUNCIONARIO]
+  escalada_por: [FENIX]
+
+audit:
+  fields_tracked:
+    - estado
+    - compromisos_generados
+  retention_years: 5

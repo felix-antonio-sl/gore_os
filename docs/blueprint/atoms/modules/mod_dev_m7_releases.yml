@@ -1,0 +1,24 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_dev_m7:1.0.0
+  type: Module
+id: MOD-DEV-M7
+name: Releases
+code: M7
+domain: D-DEV
+description: Versionado semántico, changelog, notas de release, rollback y hotfixes.
+priority: P0
+stories:
+  - US-DEV-REL-001
+  - US-DEV-REL-002
+  - US-DEV-REL-003
+  - US-DEV-REL-004
+  - US-DEV-REL-005
+  - US-DEV-REL-006
+  - US-DEV-REL-007
+entities:
+  - Release
+stats:
+  p0_stories: 3
+  p1_stories: 2
+  p2_stories: 2
+  total: 7

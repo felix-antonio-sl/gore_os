@@ -1,0 +1,159 @@
+# ==============================================================================
+# GORE_OS Entity Atom: AccionExpediente (Acción sobre Expediente)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M7 Expediente Electrónico
+# Source: dialogo_riguroso_d_tde.md, DS 10/2020
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: expediente_electronico
+  kb_source:
+    - "DS 10/2020: Trazabilidad obligatoria"
+    - "dialogo_riguroso_d_tde.md"
+
+entity:
+  id: ENT-TDE-ACCION-EXPEDIENTE
+  name: AccionExpediente
+  name_es: Acción sobre Expediente
+  description: |
+    Registro de trazabilidad de todas las acciones realizadas
+    sobre un expediente electrónico, conforme a DS 10/2020.
+
+    Tipos de acción:
+    - CREAR: Inicio del expediente
+    - AGREGAR_DOCUMENTO: Foliado de documento
+    - DERIVAR: Cambio de custodia
+    - FIRMAR: Firma de documento
+    - SUSPENDER/REANUDAR: Cambios de estado
+    - CERRAR/ARCHIVAR: Finalización
+    - CONSULTAR: Acceso de lectura
+
+  purpose: |
+    Registrar acciones para:
+    - Cumplir trazabilidad DS 10/2020
+    - Auditar accesos y modificaciones
+    - Reconstruir historial del expediente
+    - Detectar accesos indebidos
+
+  categorical_type: Object
+  is_abstract: false
+  category: Event
+
+attributes:
+  - name: id_accion
+    type: String
+    key: true
+    description: "Identificador único"
+
+  - name: expediente_id
+    type: String
+    fk: ENT-TDE-EXPEDIENTE
+    nullable: false
+    description: Expediente afectado
+
+  # Acción
+  - name: tipo_accion
+    type: Enum[Crear, AgregarDocumento, Derivar, Firmar, Suspender, Reanudar, Cerrar, Archivar, Consultar, Modificar, Anular]
+    nullable: false
+    description: Tipo de acción realizada
+
+  - name: descripcion
+    type: Text
+    nullable: true
+    description: Descripción de la acción
+
+  # Temporalidad
+  - name: timestamp
+    type: DateTime
+    nullable: false
+    description: Fecha y hora exacta de la acción
+
+  # Actor
+  - name: funcionario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario que ejecutó la acción
+
+  - name: rol_funcionario
+    type: String
+    nullable: true
+    description: Rol del funcionario al momento
+
+  - name: ip_origen
+    type: String
+    nullable: true
+    description: IP desde donde se ejecutó
+
+  - name: user_agent
+    type: String
+    nullable: true
+    description: Navegador/aplicación utilizada
+
+  # Contexto
+  - name: documento_id
+    type: String
+    fk: ENT-TDE-DOCUMENTO
+    nullable: true
+    description: Documento afectado (si aplica)
+
+  - name: custodia_anterior_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Custodio anterior (para derivación)
+
+  - name: custodia_nueva_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Nuevo custodio (para derivación)
+
+  - name: estado_anterior
+    type: String
+    nullable: true
+    description: Estado antes de la acción
+
+  - name: estado_nuevo
+    type: String
+    nullable: true
+    description: Estado después de la acción
+
+  # Resultado
+  - name: exitosa
+    type: Boolean
+    default: true
+    description: ¿La acción fue exitosa?
+
+  - name: error_mensaje
+    type: String
+    nullable: true
+    description: Mensaje de error si falló
+
+invariants:
+  - id: INV-ACC-001
+    name: timestamp_obligatorio
+    rule: timestamp IS NOT NULL
+    description: Toda acción debe tener timestamp
+    severity: error
+
+  - id: INV-ACC-002
+    name: derivar_requiere_custodias
+    rule: tipo_accion = 'Derivar' → custodia_anterior_id IS NOT NULL AND custodia_nueva_id IS NOT NULL
+    description: Derivación debe registrar custodias
+
+morphisms:
+  sobre: [ENT-TDE-EXPEDIENTE]
+  ejecutada_por: [ENT-BACK-FUNCIONARIO]
+  afecta: [ENT-TDE-DOCUMENTO]
+
+audit:
+  fields_tracked: []
+  retention_years: 20
+  immutable: true

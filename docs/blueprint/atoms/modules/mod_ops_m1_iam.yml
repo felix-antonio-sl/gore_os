@@ -1,0 +1,47 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_ops_m1:1.0.0
+  type: Module
+id: MOD-OPS-M1
+name: Gestión de Identidad y Acceso (IAM)
+code: M1
+domain: D-OPS
+description: Gestión del ciclo de vida de usuarios, autenticación (ClaveÚnica, MFA), y autorización basada en roles (RBAC).
+priority: P0
+stories:
+  - US-OPS-IAM-001
+  - US-OPS-IAM-002
+  - US-OPS-IAM-003
+  - US-OPS-IAM-004
+  - US-OPS-IAM-005
+  - US-OPS-IAM-006
+  - US-OPS-IAM-007
+  - US-OPS-AUTH-001
+  - US-OPS-AUTH-002
+  - US-OPS-AUTH-003
+  - US-OPS-AUTH-004
+  - US-OPS-AUTH-005
+  - US-OPS-AUTH-006
+  - US-OPS-AUTH-007
+  - US-OPS-AUTH-008
+  - US-OPS-AUTH-009
+  - US-OPS-AUTH-010
+  - US-OPS-RBAC-001
+  - US-OPS-RBAC-002
+  - US-OPS-RBAC-003
+  - US-OPS-RBAC-004
+  - US-OPS-RBAC-005
+  - US-OPS-RBAC-006
+  - US-OPS-RBAC-007
+  - US-OPS-RBAC-008
+  - US-OPS-RBAC-009
+  - US-OPS-RBAC-010
+entities:
+  - UsuarioSistema
+  - Rol
+  - Permiso
+  - AsignacionRol
+stats:
+  p0_stories: 10
+  p1_stories: 12
+  p2_stories: 8
+  total: 30

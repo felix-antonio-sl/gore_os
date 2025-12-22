@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_008:1.0.0
+  type: Story
+  source: catalogo_exhaustivo_ddev_dops.md
+id: US-DEV-BP-008
+story_key: us_dev_bp_008
+role_id: ROLE-PO
+as_a: Product Owner
+i_want: sincronizar capability_bundle con roles de inventario
+so_that: se asegure Beneficiaries ⊆ Role Set
+domain: D-DEV
+module: M0-BLUEPRINT
+priority: P2
+acceptance_criteria:
+  - Cada beneficiary existe en inventario roles
+  - Alertas para roles huérfanos
+  - Sincronización bidireccional
+capability_bundle_id: CAP-DEV-BLUEPRINT
+morphisms:
+  protagonizado_por: ROLE-PO
+  contribuye_a: CAP-DEV-BLUEPRINT

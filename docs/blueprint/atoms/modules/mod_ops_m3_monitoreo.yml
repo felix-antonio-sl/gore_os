@@ -1,0 +1,45 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_ops_m3:1.0.0
+  type: Module
+id: MOD-OPS-M3
+name: Monitoreo y Observabilidad
+code: M3
+domain: D-OPS
+description: Métricas, alertas, dashboards, logs, trazas y correlación para SRE y NOC.
+priority: P0
+stories:
+  - US-OPS-MON-001
+  - US-OPS-MON-002
+  - US-OPS-MON-003
+  - US-OPS-MON-004
+  - US-OPS-MON-005
+  - US-OPS-MON-006
+  - US-OPS-MON-007
+  - US-OPS-MON-008
+  - US-OPS-MON-009
+  - US-OPS-MON-010
+  - US-OPS-MON-011
+  - US-OPS-MON-012
+  - US-OPS-MON-013
+  - US-OPS-MON-014
+  - US-OPS-MON-015
+  - US-OPS-MON-016
+  - US-OPS-MON-017
+  - US-OPS-MON-018
+  - US-OPS-MON-019
+  - US-OPS-MON-020
+  - US-OPS-MON-021
+  - US-OPS-MON-022
+  - US-OPS-MON-023
+  - US-OPS-MON-024
+  - US-OPS-MON-025
+  - US-OPS-MON-026
+entities:
+  - Metrica
+  - Alerta
+  - Dashboard
+stats:
+  p0_stories: 8
+  p1_stories: 9
+  p2_stories: 9
+  total: 26

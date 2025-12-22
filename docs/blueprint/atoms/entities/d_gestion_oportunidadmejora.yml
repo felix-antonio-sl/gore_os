@@ -1,0 +1,186 @@
+# ==============================================================================
+# GORE_OS Entity Atom: OportunidadMejora (Oportunidad de Mejora PDCA)
+# ==============================================================================
+# Domain: D-GESTION (Control de Gestión y Operación)
+# Subdomain: Mejora Continua (PDCA)
+# Source: domain_d-gestion.md M5, kb_gn_035_estrategia_gestion_koda.yml
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + AR Virtual"
+  domain: D-GESTION
+  subdomain: pdca
+  kb_source:
+    - "domain_d-gestion.md M5: Mejora Continua (PDCA)"
+    - "kb_gn_035 → GORE-PROCESOS-MEJORA-CONTINUA-01"
+    - "dialogo_riguroso_d_gestion.md"
+
+entity:
+  id: ENT-GESTION-OPORTUNIDAD-MEJORA
+  name: OportunidadMejora
+  name_es: Oportunidad de Mejora
+  description: |
+    Registro de una oportunidad de mejora identificada en la operación
+    del GORE. Puede originarse de múltiples fuentes:
+    - Unidad de Control (UC)
+    - Auditoría CGR
+    - Encuestas (clima, satisfacción)
+    - Ejecución de Playbooks
+    - Incidentes FÉNIX
+    - Funcionarios (buzón de sugerencias)
+    - OIRS (retroalimentación ciudadana)
+
+    Las oportunidades se priorizan por impacto/esfuerzo y derivan
+    en ProyectoMejora cuando son aprobadas.
+
+  purpose: |
+    Registrar oportunidades de mejora para:
+    - Centralizar detección de problemas
+    - Priorizar por impacto/esfuerzo
+    - Trazar origen de la mejora
+    - Alimentar ciclo PDCA
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_oportunidad
+    type: String
+    key: true
+    description: "Identificador único (ej: OP-2025-001)"
+
+  - name: titulo
+    type: String
+    nullable: false
+    description: Título descriptivo
+
+  - name: descripcion
+    type: Text
+    nullable: false
+    description: Descripción detallada del problema/oportunidad
+
+  # Origen
+  - name: fuente
+    type: Enum[UC, CGR, Encuesta, Playbook, FENIX, Funcionario, OIRS, ProcesoInterno]
+    nullable: false
+    description: Origen de la oportunidad
+
+  - name: fuente_id
+    type: String
+    nullable: true
+    description: ID del elemento origen (riesgo, playbook, etc.)
+
+  - name: area
+    type: String
+    nullable: false
+    description: Área o proceso afectado
+
+  - name: division_id
+    type: String
+    fk: ENT-BACK-DIVISION
+    nullable: true
+    description: División relacionada
+
+  # Priorización
+  - name: impacto_estimado
+    type: Enum[Bajo, Medio, Alto, MuyAlto]
+    nullable: false
+    description: Impacto potencial de la mejora
+
+  - name: esfuerzo_estimado
+    type: Enum[Bajo, Medio, Alto, MuyAlto]
+    nullable: false
+    description: Esfuerzo/recursos necesarios
+
+  - name: prioridad
+    type: Enum[Urgente, Alta, Media, Baja]
+    computed: true
+    formula: |
+      CASE 
+        WHEN impacto_estimado = 'MuyAlto' AND esfuerzo_estimado IN ('Bajo', 'Medio') THEN 'Urgente'
+        WHEN impacto_estimado = 'Alto' THEN 'Alta'
+        WHEN impacto_estimado = 'Medio' THEN 'Media'
+        ELSE 'Baja'
+      END
+    description: Prioridad calculada
+
+  - name: quick_win
+    type: Boolean
+    computed: true
+    formula: impacto_estimado IN ('Alto', 'MuyAlto') AND esfuerzo_estimado = 'Bajo'
+    description: ¿Es un quick win?
+
+  # Responsabilidad
+  - name: identificador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Quien identificó la oportunidad
+
+  - name: responsable_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Responsable asignado
+
+  # Estado
+  - name: estado
+    type: Enum[Pendiente, EnEvaluacion, Aprobada, EnImplementacion, Cerrada, Descartada]
+    default: Pendiente
+    description: Estado actual
+
+  - name: motivo_descarte
+    type: Text
+    nullable: true
+    description: Razón si fue descartada
+
+  # Fechas
+  - name: fecha_registro
+    type: Date
+    nullable: false
+    description: Fecha de registro
+
+  - name: fecha_evaluacion
+    type: Date
+    nullable: true
+    description: Fecha de evaluación
+
+  - name: fecha_cierre
+    type: Date
+    nullable: true
+    description: Fecha de cierre
+
+  # Vinculación
+  - name: proyecto_mejora_id
+    type: String
+    fk: ENT-GESTION-PROYECTO-MEJORA
+    nullable: true
+    description: Proyecto generado si fue aprobada
+
+invariants:
+  - id: INV-OP-001
+    name: aprobada_requiere_responsable
+    rule: estado = 'Aprobada' → responsable_id IS NOT NULL
+    description: Oportunidad aprobada debe tener responsable
+    severity: error
+
+  - id: INV-OP-002
+    name: descartada_requiere_motivo
+    rule: estado = 'Descartada' → motivo_descarte IS NOT NULL
+    description: Descarte debe justificarse
+    severity: warning
+
+morphisms:
+  originada_en: [ENT-GESTION-RIESGO, ENT-GESTION-EJECUCION-PLAYBOOK, FENIX, CGR]
+  genera: [ENT-GESTION-PROYECTO-MEJORA]
+  asignada_a: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - responsable_id
+  retention_years: 5

@@ -13,20 +13,31 @@ Tareas relacionadas con la definición y corrección de dominios.
 - [ ] solucionar las historias de usario de rrd
 - [ ] cuando llegue el momento, debo acceder al contenido de la resoluciones y revisar los archivos linkeados por resolucion.
 - [ ] revisar 1 x 1 manualmente
-- [ ] **Recursos Institucionales**: "Cargar Bbdd gabinete" y "Cargar Bbdd Gore personas".
+- [ ] capacidad ocr de documentos
 - [ ] **Usuarios/IAM**: "Dominio admin interno ocr, gestión usuarios, roles y permisos".
 - [ ] mínimo para titi
 - [ ] **Agente Mantención**: "agente de mantención de fxeon".
 - [ ] **Hetzner**: "quedarme con un solo servidor en hetzner".
 - [ ] **GOREOS WS**: Web Services y Namespace ("Goreos ws", "Goreos name espace").
 - [ ] **Admin Sistema**: "Dominio admin del sistema" (Panel de control técnico).
+- [ ] no es necesario en d-terr una entidad región?
+- [ ] meter gestion oranizacional en bruto?
+- [ ] meter intentos de frameworks previos a orko?
+- [ ] historia de usuario de ver inventario de sistemas
+- [ ] historia de usuario de ver todos los funcionarios
+- [ ] 
 
 ## 5. [ ] migración
 
+- [ ] **Recursos Institucionales**: "Cargar Bbdd gabinete" y "Cargar Bbdd Gore personas".
 ### 5.1. preparación migración
 
 - [ ] descargar documentación tipo.
-  - [ ] muestras de - 
+  - [ ] muestras de - resoluciones, 
+- [ ] preparar los csv con gpt 5.2 pro
+
+
+
 ## 6. 📂 Proyectos Específicos / Externalidades
 
 - [ ] **Plataforma SENAPRED**: "plataforma senapred, modulo, migrar".

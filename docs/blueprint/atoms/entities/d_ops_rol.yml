@@ -1,0 +1,97 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Rol
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Gestión IAM (M1)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: gestion_iam
+
+entity:
+  id: ENT-OPS-ROL
+  name: Rol
+  name_es: Rol de Usuario
+  description: |
+    Conjunto de permisos agrupados que define las capacidades
+    de un usuario en el sistema. Implementa RBAC.
+
+  purpose: |
+    Modelar roles para:
+    - Agrupación lógica de permisos
+    - Asignación simplificada
+    - Governance de accesos
+
+  categorical_type: Object
+  is_abstract: false
+  category: Authorization
+
+attributes:
+  - name: id_rol
+    type: String
+    key: true
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: "Código único ej: ADMIN, ANALISTA_FIN, OPERADOR"
+
+  - name: nombre
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+    nullable: true
+
+  - name: tipo
+    type: Enum[Sistema, Dominio, Custom]
+    nullable: false
+    description: "Sistema=builtin, Dominio=por área, Custom=adhoc"
+
+  - name: nivel
+    type: Enum[SuperAdmin, Admin, Manager, Operator, Viewer, Guest]
+    nullable: false
+
+  - name: dominio
+    type: String
+    nullable: true
+    description: "Dominio GORE_OS al que aplica (D-FIN, D-PLAN, etc.)"
+
+  - name: estado
+    type: Enum[Activo, Inactivo]
+    default: Activo
+
+  - name: fecha_creacion
+    type: Date
+    nullable: false
+
+invariants:
+  - id: INV-ROL-001
+    name: codigo_unico
+    rule: UNIQUE(codigo)
+    description: "Código de rol debe ser único"
+
+  - id: INV-ROL-002
+    name: sistema_inmutable
+    rule: tipo = 'Sistema' → IMMUTABLE
+    description: "Roles de sistema no pueden modificarse"
+
+  - id: INV-ROL-003
+    name: tiene_permisos
+    rule: permisos.count > 0
+    description: "Todo rol debe tener al menos un permiso"
+
+morphisms:
+  tiene_permisos: [ENT-OPS-PERMISO]
+  asignado_a: [ENT-OPS-ASIGNACION-ROL]
+
+audit:
+  fields_tracked:
+    - estado
+  retention_years: 10

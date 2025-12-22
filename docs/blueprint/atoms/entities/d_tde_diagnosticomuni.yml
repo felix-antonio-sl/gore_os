@@ -1,0 +1,155 @@
+# ==============================================================================
+# GORE_OS Entity Atom: DiagnosticoMuni (Diagnóstico Municipal TDE)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M5 Liderazgo Digital Regional
+# Source: dialogo_riguroso_d_tde.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: liderazgo_regional
+  kb_source:
+    - "dialogo_riguroso_d_tde.md"
+    - "CPAT dimensiones de madurez"
+
+entity:
+  id: ENT-TDE-DIAGNOSTICO-MUNI
+  name: DiagnosticoMuni
+  name_es: Diagnóstico Municipal TDE
+  description: |
+    Evaluación de madurez digital de un municipio o servicio
+    regional, identificando brechas y priorizando acciones.
+
+    Dimensiones evaluadas (alineadas con CPAT):
+    - Gobierno Digital: Liderazgo, estrategia
+    - Servicios Digitales: Trámites, ClaveÚnica
+    - Interoperabilidad: PISEE, datos abiertos
+    - Ciberseguridad: DS 7, incidentes
+    - Capacidades: Personal, infraestructura
+
+  purpose: |
+    Registrar diagnósticos para:
+    - Medir brechas TDE por comuna
+    - Priorizar transferencia de capacidades
+    - Alimentar Índice Regional TDE
+    - Seguimiento de mejoras
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_diagnostico
+    type: String
+    key: true
+
+  - name: entidad_id
+    type: String
+    fk: ENT-TDE-ENTIDAD-REGIONAL
+    nullable: false
+    description: Entidad diagnosticada
+
+  - name: fecha
+    type: Date
+    nullable: false
+    description: Fecha del diagnóstico
+
+  - name: periodo
+    type: String
+    nullable: true
+    description: "Período (ej: 2025-S1)"
+
+  # Evaluador
+  - name: evaluador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Funcionario GORE que evaluó
+
+  - name: metodologia
+    type: Enum[CPAT, Autodiagnostico, VisitaTerreno, Mixto]
+    default: CPAT
+
+  # Puntajes por dimensión (1-5)
+  - name: puntaje_gobierno_digital
+    type: Decimal
+    nullable: false
+
+  - name: puntaje_servicios_digitales
+    type: Decimal
+    nullable: false
+
+  - name: puntaje_interoperabilidad
+    type: Decimal
+    nullable: false
+
+  - name: puntaje_ciberseguridad
+    type: Decimal
+    nullable: false
+
+  - name: puntaje_capacidades
+    type: Decimal
+    nullable: false
+
+  - name: puntaje_global
+    type: Decimal
+    computed: true
+    formula: (puntaje_gobierno_digital + puntaje_servicios_digitales + puntaje_interoperabilidad + puntaje_ciberseguridad + puntaje_capacidades) / 5
+
+  # Brechas identificadas
+  - name: brechas
+    type: JSON
+    nullable: true
+    description: |
+      Lista de brechas:
+      [{
+        "dimension": "...",
+        "brecha": "...",
+        "prioridad": "Alta|Media|Baja",
+        "accion_sugerida": "..."
+      }]
+
+  - name: fortalezas
+    type: Array[String]
+    nullable: true
+
+  # Plan de acción
+  - name: plan_accion_id
+    type: String
+    nullable: true
+    description: ID del plan de mejora generado
+
+  - name: fecha_proximo_diagnostico
+    type: Date
+    nullable: true
+
+  # Estado
+  - name: estado
+    type: Enum[EnCurso, Completado, Pendiente]
+    default: EnCurso
+
+invariants:
+  - id: INV-DIAG-001
+    name: puntajes_rango_valido
+    rule: |
+      puntaje_gobierno_digital BETWEEN 1 AND 5 AND
+      puntaje_servicios_digitales BETWEEN 1 AND 5 AND
+      puntaje_interoperabilidad BETWEEN 1 AND 5 AND
+      puntaje_ciberseguridad BETWEEN 1 AND 5 AND
+      puntaje_capacidades BETWEEN 1 AND 5
+    description: Puntajes deben estar en rango 1-5
+
+morphisms:
+  evalua: [ENT-TDE-ENTIDAD-REGIONAL]
+  genera: [ENT-TDE-INDICE-MADUREZ]
+
+audit:
+  fields_tracked:
+    - puntaje_global
+    - estado
+  retention_years: 5

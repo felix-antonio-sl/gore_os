@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:process:d_ops_p5:1.0.0
+  type: Process
+  source: plan_especificacion_ddev_dops.md
+id: PROC-OPS-P5
+code: P5
+name: Ejecución de Migración Segura
+domain: D-OPS
+type: BPMN
+morphisms:
+  roles_ejecutores: [ROLE-DEVOPS, ROLE-DBA]
+  manipula: [ENT-OPS-MIGRACION]
+  triggers: [Continuous Deployment]

@@ -1,0 +1,182 @@
+# ==============================================================================
+# GORE_OS Entity Atom: EntidadRegional (Municipio/Servicio Regional)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M5 Liderazgo Digital Regional
+# Source: dialogo_riguroso_d_tde.md, Art. 16 LOC 19.175
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: liderazgo_regional
+  kb_source:
+    - "Art. 16 LOC 19.175: Coordinación regional"
+    - "dialogo_riguroso_d_tde.md"
+
+entity:
+  id: ENT-TDE-ENTIDAD-REGIONAL
+  name: EntidadRegional
+  name_es: Entidad Regional (Municipio/Servicio)
+  description: |
+    Representa un municipio o servicio público regional bajo
+    el liderazgo de transformación digital del GORE.
+
+    El GORE coordina la Mesa Regional TDE y provee:
+    - Kit Digital Municipal
+    - Capacitación técnica
+    - Firmas federadas
+    - API Gateway Regional
+
+  purpose: |
+    Modelar entidades regionales para:
+    - Diagnosticar madurez TDE territorial
+    - Coordinar Mesa Regional
+    - Transferir capacidades digitales
+    - Medir índice TDE por comuna
+
+  categorical_type: Object
+  is_abstract: false
+  category: Reference
+
+attributes:
+  - name: id_entidad
+    type: String
+    key: true
+    description: "Identificador único"
+
+  - name: codigo
+    type: String
+    nullable: true
+    description: "Código oficial (ej: MUN-16101)"
+
+  # Identificación
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre de la entidad
+
+  - name: tipo
+    type: Enum[Municipalidad, ServicioPublico, CorporacionMunicipal, Otro]
+    nullable: false
+
+  - name: comuna_id
+    type: String
+    fk: ENT-TERR-COMUNA
+    nullable: true
+    description: Comuna si es municipio
+
+  - name: rut
+    type: String
+    nullable: true
+    description: RUT de la entidad
+
+  # Contacto TDE
+  - name: encargado_tde_nombre
+    type: String
+    nullable: true
+    description: Nombre del encargado TDE
+
+  - name: encargado_tde_email
+    type: String
+    nullable: true
+
+  - name: encargado_tde_telefono
+    type: String
+    nullable: true
+
+  # Estado TDE
+  - name: nivel_madurez_tde
+    type: Integer
+    nullable: true
+    description: "Nivel de madurez TDE agregado (1-5)"
+
+  - name: fecha_ultimo_diagnostico
+    type: Date
+    nullable: true
+
+  - name: participante_mesa_tde
+    type: Boolean
+    default: false
+    description: ¿Participa en Mesa Regional TDE?
+
+  - name: fecha_incorporacion_mesa
+    type: Date
+    nullable: true
+
+  # Gobernanza Estratégica (Roles)
+  - name: encargado_datos_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Encargado de Datos (Estrategia Datos)
+
+  - name: encargado_ciberseguridad_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Encargado Ciberseguridad/CSIRT
+
+  - name: encargado_transformacion_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Coordinador Transformación Digital (Ley 21.180)
+
+  # Convenios
+  - name: convenio_firma_federada
+    type: Boolean
+    default: false
+    description: ¿Tiene convenio de firma federada?
+
+  - name: convenio_claveunica
+    type: Boolean
+    default: false
+
+  - name: convenio_simple
+    type: Boolean
+    default: false
+
+  # Kit Digital
+  - name: kit_digital_implementado
+    type: Boolean
+    default: false
+
+  - name: fecha_kit_digital
+    type: Date
+    nullable: true
+
+  - name: modulos_kit
+    type: Array[String]
+    nullable: true
+    description: Módulos del kit implementados
+
+  # Zona rezagada
+  - name: zona_rezagada
+    type: Boolean
+    default: false
+    description: ¿Es zona rezagada (prioridad)?
+
+  # Estado
+  - name: estado
+    type: Enum[Activo, Inactivo, EnDiagnostico]
+    default: Activo
+
+invariants:
+  - id: INV-ENT-001
+    name: municipio_requiere_comuna
+    rule: tipo = 'Municipalidad' → comuna_id IS NOT NULL
+    description: Municipio debe tener comuna asociada
+
+morphisms:
+  ubicada_en: [ENT-TERR-COMUNA]
+  diagnosticada_en: [ENT-TDE-DIAGNOSTICO-MUNI]
+
+audit:
+  fields_tracked:
+    - nivel_madurez_tde
+    - kit_digital_implementado
+  retention_years: 5

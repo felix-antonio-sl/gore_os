@@ -1,0 +1,42 @@
+_meta:
+  urn: urn:goreos:atom:entity:fin_rendicion:1.0.0
+  type: Entity
+id: ENT-MLEG-FIN-RENDICION
+name: fin_rendicion
+name_singular: Rendición
+domain: D-OPS
+module: M10-LEGACY
+source: Partes
+description: Rendiciones financieras de transferencias a instituciones.
+approximate_rows: 2300
+attributes:
+  - name: numero_rendicion
+    type: string
+    required: true
+    description: Número o correlativo de la rendición
+  - name: institucion_rut
+    type: string
+    required: true
+    description: FK a fin_institucion (RUT)
+  - name: iniciativa_codigo
+    type: string
+    description: FK a fin_iniciativa (código de proyecto)
+  - name: monto_rendido
+    type: decimal
+    required: true
+    description: Monto total rendido
+  - name: fecha_rendicion
+    type: date
+    format: ISO
+    description: Fecha de presentación de la rendición
+  - name: estado
+    type: enum
+    values: [PENDIENTE, EN_REVISION, APROBADA, OBSERVADA, RECHAZADA]
+    description: Estado de la rendición
+  - name: observaciones
+    type: string
+    description: Observaciones del revisor
+morphisms:
+  relacionado_con:
+    - fin_institucion (N:1)
+    - fin_iniciativa (N:1)

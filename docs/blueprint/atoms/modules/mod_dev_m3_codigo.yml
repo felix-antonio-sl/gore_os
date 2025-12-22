@@ -1,0 +1,25 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_dev_m3:1.0.0
+  type: Module
+id: MOD-DEV-M3
+name: Código y Versionamiento
+code: M3
+domain: D-DEV
+description: Repositorios, branches, commits, políticas de merge y convenciones.
+priority: P0
+stories:
+  - US-DEV-COD-001
+  - US-DEV-COD-002
+  - US-DEV-COD-003
+  - US-DEV-COD-004
+  - US-DEV-COD-005
+  - US-DEV-COD-006
+entities:
+  - Repositorio
+  - Branch
+  - Commit
+stats:
+  p0_stories: 2
+  p1_stories: 2
+  p2_stories: 2
+  total: 6

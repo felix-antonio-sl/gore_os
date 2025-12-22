@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_prod_003:1.0.0
+  type: Story
+  source: plan_especificacion_ddev_dops.md
+id: US-DEV-PROD-003
+story_key: us_dev_prod_003
+role_id: ROLE-TECH-LEAD
+as_a: Tech Lead
+i_want: registrar ADRs y vincularlas a stories
+so_that: se mantenga la trazabilidad de las decisiones arquitectónicas
+domain: D-DEV
+priority: P1
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: ROLE-TECH-LEAD
+  contribuye_a: CAP-DEV-001

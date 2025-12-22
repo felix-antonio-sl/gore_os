@@ -1,0 +1,200 @@
+# ==============================================================================
+# GORE_OS Entity Atom: CuentaPublica (Cuenta Pública Anual)
+# ==============================================================================
+# Domain: D-GESTION (Control de Gestión y Operación)
+# Subdomain: Sistema de Control de Gestión (SCG)
+# Source: dialogo_orquestado_dgestion_fenix.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "AR Virtual + Arquitecto ORKO"
+  domain: D-GESTION
+  subdomain: scg
+  kb_source:
+    - "LOC 19.175 Art. 36 (Cuenta Pública)"
+    - "kb_gn_cuentas_publicas_2021_2024_koda.yml"
+    - "dialogo_orquestado_dgestion_fenix.md"
+
+entity:
+  id: ENT-GESTION-CUENTA-PUBLICA
+  name: CuentaPublica
+  name_es: Cuenta Pública Anual
+  description: |
+    Documento oficial que el Gobernador Regional presenta anualmente
+    al CORE dando cuenta de la gestión del período.
+
+    Según LOC 19.175 Art. 36, el GR debe rendir cuenta pública
+    y participativa de su gestión ante el CORE y la ciudadanía.
+
+    Contenido típico:
+    - Ejecución presupuestaria
+    - Avance ERD y POA
+    - Cartera de inversiones (IPR)
+    - Convenios ejecutados
+    - Logros y desafíos
+
+  purpose: |
+    Modelar Cuenta Pública para:
+    - Consolidar gestión anual
+    - Documentar presentación al CORE
+    - Registrar compromisos asumidos
+    - Trazar cumplimiento año siguiente
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_cuenta
+    type: String
+    key: true
+    description: "Identificador único (ej: CP-2024)"
+
+  - name: año_gestion
+    type: Integer
+    nullable: false
+    description: Año de gestión reportado
+
+  - name: titulo
+    type: String
+    nullable: false
+    description: "Título (ej: Cuenta Pública Gestión 2024)"
+
+  # Métricas consolidadas
+  - name: resumen_ejecutivo
+    type: Text
+    nullable: true
+    description: Síntesis para presentación
+
+  - name: ejecucion_presupuestaria_pct
+    type: Decimal
+    nullable: true
+    description: "Porcentaje ejecución presupuesto"
+
+  - name: avance_erd_pct
+    type: Decimal
+    nullable: true
+    description: "Porcentaje avance ERD"
+
+  - name: hgore_promedio
+    type: Decimal
+    nullable: true
+    description: H_gore promedio del año
+
+  - name: total_inversion_ejecutada
+    type: Decimal
+    nullable: true
+    description: Inversión ejecutada en M$
+
+  - name: convenios_ejecutados
+    type: Integer
+    nullable: true
+
+  - name: proyectos_finalizados
+    type: Integer
+    nullable: true
+
+  # Contenido
+  - name: contenido_completo
+    type: JSON
+    nullable: true
+    description: |
+      Contenido estructurado:
+      {
+        "ejecucion_presupuestaria": {...},
+        "avance_erd": {...},
+        "cartera_ipr": {...},
+        "convenios": {...},
+        "logros_destacados": [...],
+        "desafios": [...],
+        "compromisos_nuevos": [...]
+      }
+
+  - name: url_documento
+    type: String
+    nullable: true
+    description: URL documento oficial (PDF)
+
+  - name: url_video
+    type: String
+    nullable: true
+    description: URL grabación presentación
+
+  # Presentación
+  - name: fecha_presentacion
+    type: Date
+    nullable: true
+    description: Fecha presentación al CORE
+
+  - name: sesion_core_id
+    type: String
+    nullable: true
+    description: ID sesión CORE donde se presentó
+
+  - name: asistentes_core
+    type: Integer
+    nullable: true
+    description: Cantidad consejeros presentes
+
+  # Participación ciudadana
+  - name: cuenta_participativa
+    type: Boolean
+    default: false
+    description: ¿Se realizó cuenta participativa?
+
+  - name: fecha_cuenta_participativa
+    type: Date
+    nullable: true
+
+  - name: asistentes_ciudadanos
+    type: Integer
+    nullable: true
+
+  # Responsabilidad
+  - name: gobernador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Gobernador que presenta
+
+  # Estado
+  - name: estado
+    type: Enum[EnPreparacion, Aprobada, Presentada, Publicada]
+    default: EnPreparacion
+
+  # Compromisos
+  - name: compromisos_cuenta
+    type: JSON
+    nullable: true
+    description: |
+      Compromisos asumidos públicamente:
+      [{
+        "compromiso": "...",
+        "plazo": "...",
+        "responsable": "..."
+      }]
+
+invariants:
+  - id: INV-CP-001
+    name: presentada_requiere_fecha
+    rule: estado = 'Presentada' → fecha_presentacion IS NOT NULL
+    description: Cuenta presentada debe tener fecha
+
+  - id: INV-CP-002
+    name: publicada_requiere_url
+    rule: estado = 'Publicada' → url_documento IS NOT NULL
+    description: Cuenta publicada debe tener documento
+
+morphisms:
+  consolida: [ENT-GESTION-REPORTE, ENT-GESTION-POA, ENT-GESTION-PUNTAJE-HGORE]
+  presentada_en: [SesionCORE]
+  presentada_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - fecha_presentacion
+  retention_years: 20

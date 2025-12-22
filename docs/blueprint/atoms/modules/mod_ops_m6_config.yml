@@ -1,0 +1,33 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_ops_m6:1.0.0
+  type: Module
+id: MOD-OPS-M6
+name: Configuración y Feature Flags
+code: M6
+domain: D-OPS
+description: Configuración por ambiente, feature flags, rollout gradual y secrets.
+priority: P0
+stories:
+  - US-OPS-CFG-001
+  - US-OPS-CFG-002
+  - US-OPS-CFG-003
+  - US-OPS-CFG-004
+  - US-OPS-CFG-005
+  - US-OPS-CFG-006
+  - US-OPS-CFG-007
+  - US-OPS-CFG-008
+  - US-OPS-CFG-009
+  - US-OPS-CFG-010
+  - US-OPS-CFG-011
+  - US-OPS-CFG-012
+  - US-OPS-CFG-013
+  - US-OPS-CFG-014
+  - US-OPS-CFG-015
+entities:
+  - Configuracion
+  - FeatureFlag
+stats:
+  p0_stories: 5
+  p1_stories: 5
+  p2_stories: 5
+  total: 15

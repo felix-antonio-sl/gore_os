@@ -1,0 +1,179 @@
+# ==============================================================================
+# GORE_OS Entity Atom: PROT (Plan Regional de Ordenamiento Territorial)
+# ==============================================================================
+# Domain: D-TERR (Inteligencia Territorial)
+# Subdomain: Ordenamiento Territorial
+# Source: LOC GORE Art. 17, LGUC DFL 458, dialogo_cobertura_rigurosa
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + Goreólogo"
+  domain: D-TERR
+  subdomain: ordenamiento_territorial
+  kb_source:
+    - "LOC GORE Art. 17: PROT vinculante"
+    - "LGUC DFL 458: Título II"
+    - "dialogo_cobertura_rigurosa_dplan_dterr.md"
+
+entity:
+  id: ENT-TERR-PROT
+  name: PROT
+  name_es: Plan Regional de Ordenamiento Territorial
+  description: |
+    Instrumento de planificación territorial de escala regional que
+    orienta el desarrollo del territorio de manera vinculante.
+
+    Según Art. 17 LOC GORE, el PROT es el único instrumento regional
+    vinculante que puede establecer condiciones para IPTs comunales
+    (PRC, PRI, Límites Urbanos).
+
+    Componentes principales:
+    - Memoria Explicativa
+    - Lineamientos y objetivos
+    - Macrozonificación
+    - Normativa
+
+  purpose: |
+    Modelar el PROT para:
+    - Registrar el instrumento regional vinculante
+    - Validar compatibilidad de IPRs con zonificación
+    - Relacionar con ZonaPROT (las zonas que lo componen)
+    - Controlar vigencia y proceso de actualización
+
+  categorical_type: Object
+  is_abstract: false
+  category: Master
+
+attributes:
+  - name: id_prot
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: region
+    type: String
+    default: "Ñuble"
+    description: Región a la que aplica
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Nombre formal (ej: PROT Región de Ñuble)"
+
+  # Vigencia
+  - name: estado
+    type: Enum[EnElaboracion, ConsultaCiudadana, EnAprobacion, Vigente, EnActualizacion]
+    default: EnElaboracion
+    description: Estado del instrumento
+
+  - name: fecha_publicacion_do
+    type: Date
+    nullable: true
+    description: Fecha de publicación en Diario Oficial
+
+  - name: decreto_aprobatorio
+    type: String
+    nullable: true
+    description: "Decreto GORE aprobatorio"
+
+  - name: resolucion_cgr
+    type: String
+    nullable: true
+    description: Número de Toma de Razón CGR
+
+  - name: fecha_vigencia_inicio
+    type: Date
+    nullable: true
+    description: Inicio de vigencia
+
+  - name: fecha_ultima_modificacion
+    type: Date
+    nullable: true
+    description: Última modificación
+
+  # Documentos
+  - name: memoria_explicativa_url
+    type: String
+    nullable: true
+    description: URL de la memoria explicativa
+
+  - name: normativa_url
+    type: String
+    nullable: true
+    description: URL de la normativa
+
+  - name: planos_url
+    type: String
+    nullable: true
+    description: URL de planos de zonificación
+
+  # Contenido
+  - name: cantidad_macrozonas
+    type: Integer
+    default: 0
+    description: Número de macrozonas definidas
+
+  - name: cantidad_zonas
+    type: Integer
+    default: 0
+    description: Total de ZonaPROT definidas
+
+  # Participación
+  - name: proceso_participativo
+    type: Boolean
+    default: false
+    description: ¿Incluye consulta ciudadana?
+
+  - name: observaciones_ciudadanas
+    type: Integer
+    default: 0
+    description: Número de observaciones recibidas
+
+  # ERD
+  - name: erd_vinculada_id
+    type: String
+    fk: ENT-PLAN-ERD
+    nullable: true
+    description: ERD vigente al momento de elaboración
+
+invariants:
+  - id: INV-PROT-001
+    name: vigente_requiere_publicacion
+    rule: |
+      (estado = 'Vigente') → (fecha_publicacion_do IS NOT NULL)
+    description: PROT vigente requiere publicación DO
+    severity: error
+
+  - id: INV-PROT-002
+    name: vigente_requiere_tdr
+    rule: |
+      (estado = 'Vigente') → (resolucion_cgr IS NOT NULL)
+    description: PROT vigente requiere Toma de Razón CGR
+    severity: error
+
+lifecycle:
+  states:
+    - name: EnElaboracion
+      description: Equipo técnico elaborando
+    - name: ConsultaCiudadana
+      description: Proceso participativo
+    - name: EnAprobacion
+      description: En trámite GR/CORE/CGR
+    - name: Vigente
+      description: Publicado y aplicable
+    - name: EnActualizacion
+      description: Proceso de modificación
+
+morphisms:
+  compuesto_por: [ENT-PLAN-ZONA-PROT]
+  vinculado_a: [ENT-PLAN-ERD]
+  superior_a: [ENT-TERR-IPT]
+
+audit:
+  fields_tracked:
+    - estado
+    - fecha_publicacion_do
+  retention_years: 50

@@ -1,0 +1,96 @@
+# ==============================================================================
+# GORE_OS Entity Atom: MapeoTDE
+# ==============================================================================
+# Domain: D-EVOL (Evolución e Inteligencia)
+# Subdomain: Puente TDE-ORKO (M11)
+# Source: Framework ORKO P4 → P1-P5
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + Arquitecto ORKO"
+  domain: D-EVOL
+  subdomain: puente_tde_orko
+  kb_source:
+    - "urn:knowledge:orko:core:fundamentos:1.0.0"
+    - "dialogo_triagente_d_evol.md"
+
+entity:
+  id: ENT-EVOL-MAPEO-TDE
+  name: MapeoTDE
+  name_es: Mapeo TDE a Primitivo ORKO
+  description: |
+    Mapping de una obligación/módulo TDE a un primitivo ORKO (P1-P5).
+    Permite integrar el cumplimiento TDE (piso normativo) en el cálculo
+    de H_org (techo estratégico).
+
+    Ej: TDE M2 (Servicios) → ORKO P1 (Capacidad)
+        TDE M3 (Interop) → ORKO P2 (Flujo)
+        TDE M7 (Expediente) → ORKO P3 (Información)
+
+  purpose: |
+    Modelar mapeo TDE-ORKO para:
+    - Ingesta automática de métricas TDE a H_org
+    - Trazabilidad de contribución TDE a salud organizacional
+    - Estrategia "Caballo de Troya" (TDE habilita ORKO)
+
+  categorical_type: Configuration
+  is_abstract: false
+  category: Governance
+
+attributes:
+  # Identificación
+  - name: id_mapeo
+    type: String
+    key: true
+
+  # Obligación TDE
+  - name: obligacion_tde_codigo
+    type: String
+    nullable: false
+    description: "M1, M2, M3, M4, M5, M6, M7, etc."
+
+  - name: obligacion_tde_nombre
+    type: String
+    nullable: false
+    description: "Gobernanza, Servicios, Interoperabilidad, etc."
+
+  # Primitivo ORKO
+  - name: primitivo_orko
+    type: Enum[P1_Capacidad, P2_Flujo, P3_Informacion, P4_Limite, P5_Proposito]
+    nullable: false
+
+  # Estado Cumplimiento
+  - name: estado_cumplimiento
+    type: Enum[NoCumple, EnProgreso, CumpleParcial, Cumple]
+    default: NoCumple
+
+  # Contribución a H_org
+  - name: contribucion_h_org
+    type: Decimal
+    nullable: true
+    description: "Factor de contribución a H_org (0..1)"
+
+  - name: peso_en_componente
+    type: Decimal
+    nullable: true
+    description: "Peso dentro del componente P4.Gobernanza"
+
+  # Fuente de Datos
+  - name: fuente_metrica
+    type: String
+    nullable: true
+    description: "Sistema/API que provee la métrica de cumplimiento"
+
+morphisms:
+  alimenta: [ENT-EVOL-H_ORG]
+  origen_de: [ENT-EVOL-PUNTAJE-TDE]
+
+audit:
+  fields_tracked:
+    - estado_cumplimiento
+    - contribucion_h_org
+  retention_years: 5
+  legal_basis: "Ley 21.180, Framework ORKO"

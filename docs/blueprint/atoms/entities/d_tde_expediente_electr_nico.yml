@@ -1,14 +1,236 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_tde_expediente_electr_nico:1.0.0
-  type: Entity
-  source: domains/d-tde/glossary
-id: ENT-TDE-EXPEDIENTE_ELECTR_NI
-name: Expediente Electrónico
-entity_key: expediente_electr_nico
-domain: D-TDE
-category: Reference
-description: EE
+# ==============================================================================
+# GORE_OS Entity Atom: ExpedienteElectronico (Expediente Electrónico)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M7 Expediente Electrónico
+# Source: dialogo_riguroso_d_tde.md, DS 10/2020
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: expediente_electronico
+  kb_source:
+    - "DS 10/2020: Norma Técnica Expediente Electrónico"
+    - "Ley 21.180 Art. 7-12"
+    - "dialogo_riguroso_d_tde.md"
+
+entity:
+  id: ENT-TDE-EXPEDIENTE
+  name: ExpedienteElectronico
+  name_es: Expediente Electrónico
+  description: |
+    Conjunto ordenado de documentos electrónicos que conforman
+    una actuación administrativa, con Identidad Única del Estado (IUIe)
+    y foliado secuencial conforme a DS 10/2020.
+
+    Características legales:
+    - IUIe: Identificador único nacional (formato estandarizado)
+    - Foliado automático y secuencial
+    - Trazabilidad completa de acciones
+    - Custodia con responsable identificado
+    - Archivo digital con retención normativa
+
+  purpose: |
+    Modelar expedientes electrónicos para:
+    - Cumplir DS 10/2020 (Ley 21.180)
+    - Garantizar trazabilidad administrativa
+    - Vincular documentos con foliado
+    - Habilitar consulta ciudadana de estado
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_expediente
+    type: String
+    key: true
+    description: "Identificador interno GORE_OS"
+
+  - name: iuie
+    type: String
+    nullable: false
+    unique: true
+    description: |
+      Identidad Única del Estado (IUIe).
+      Formato: [COD_INST]-[AÑO]-[TIPO]-[CORRELATIVO]
+      Ejemplo: GORENUBLE-2025-RES-00001
+
+  - name: codigo_corto
+    type: String
+    nullable: true
+    description: Código interno corto
+
+  # Clasificación
+  - name: tipo_procedimiento_id
+    type: String
+    fk: ENT-TDE-PROCEDIMIENTO
+    nullable: false
+    description: Procedimiento administrativo (CPAT)
+
+  - name: materia
+    type: String
+    nullable: true
+    description: Materia o asunto del expediente
+
+  - name: clasificacion
+    type: Enum[Publico, Reservado, Secreto]
+    default: Publico
+    description: Clasificación de acceso
+
+  # Estado
+  - name: estado
+    type: Enum[Iniciado, EnTramite, Suspendido, Cerrado, Archivado, Anulado]
+    default: Iniciado
+    description: Estado del expediente
+
+  - name: subestado
+    type: String
+    nullable: true
+    description: Subestado específico del procedimiento
+
+  # Foliado
+  - name: total_folios
+    type: Integer
+    default: 0
+    description: Total de folios (documentos) en el expediente
+
+  - name: ultimo_folio
+    type: Integer
+    default: 0
+    description: Número del último folio agregado
+
+  # Integridad
+  - name: hash_integridad
+    type: String
+    nullable: true
+    description: "Hash SHA-256 de todos los documentos"
+
+  - name: fecha_ultimo_hash
+    type: DateTime
+    nullable: true
+    description: Fecha del último cálculo de hash
+
+  # Temporalidad
+  - name: fecha_creacion
+    type: DateTime
+    nullable: false
+    description: Fecha de inicio del expediente
+
+  - name: fecha_cierre
+    type: DateTime
+    nullable: true
+    description: Fecha de cierre del expediente
+
+  - name: fecha_archivado
+    type: DateTime
+    nullable: true
+    description: Fecha de paso a archivo
+
+  - name: plazo_legal_dias
+    type: Integer
+    nullable: true
+    description: Plazo legal para resolver (si aplica)
+
+  - name: dias_transcurridos
+    type: Integer
+    computed: true
+    formula: DATEDIFF(NOW(), fecha_creacion)
+
+  - name: en_plazo
+    type: Boolean
+    computed: true
+    formula: dias_transcurridos <= plazo_legal_dias
+
+  # Custodia
+  - name: custodia_actual_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario responsable actual
+
+  - name: unidad_tramitadora_id
+    type: String
+    fk: ENT-BACK-DIVISION
+    nullable: false
+    description: División que tramita
+
+  # Interesado/Solicitante
+  - name: rut_interesado
+    type: String
+    nullable: true
+    description: RUT del ciudadano o entidad interesada
+
+  - name: nombre_interesado
+    type: String
+    nullable: true
+
+  - name: email_interesado
+    type: String
+    nullable: true
+    description: Para notificaciones electrónicas
+
+  # Vinculación
+  - name: expediente_padre_id
+    type: String
+    fk: ENT-TDE-EXPEDIENTE
+    nullable: true
+    description: Expediente padre si es subexpediente
+
+  - name: acto_administrativo_id
+    type: String
+    fk: ENT-NORM-ACTO
+    nullable: true
+    description: Acto administrativo resultante
+
+  # Archivo
+  - name: tipo_archivo
+    type: Enum[Central, Historico, Intermedio]
+    nullable: true
+    description: Tipo de archivo donde se conserva
+
+  - name: retencion_años
+    type: Integer
+    default: 5
+    description: Años de retención según tabla
+
+invariants:
+  - id: INV-EXP-001
+    name: iuie_unico
+    rule: UNIQUE(iuie)
+    description: IUIe debe ser único en todo el Estado
+    severity: error
+
+  - id: INV-EXP-002
+    name: cerrado_requiere_cierre
+    rule: estado = 'Cerrado' → fecha_cierre IS NOT NULL
+    description: Expediente cerrado debe tener fecha de cierre
+
+  - id: INV-EXP-003
+    name: archivado_requiere_fecha
+    rule: estado = 'Archivado' → fecha_archivado IS NOT NULL
+    description: Expediente archivado debe tener fecha
+
+  - id: INV-EXP-004
+    name: foliado_consistente
+    rule: total_folios = COUNT(DocumentoElectronico WHERE expediente_id = this.id)
+    description: Total folios debe coincidir con documentos
+    severity: warning
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  contiene: [ENT-TDE-DOCUMENTO]
+  trazado_en: [ENT-TDE-ACCION-EXPEDIENTE]
+  vinculado_a: [ENT-TDE-PROCEDIMIENTO]
+  genera: [ENT-NORM-ACTO]
+  custodiado_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - custodia_actual_id
+    - total_folios
+  retention_years: 20

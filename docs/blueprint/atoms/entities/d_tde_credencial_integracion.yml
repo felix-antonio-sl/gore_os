@@ -1,0 +1,160 @@
+# ==============================================================================
+# GORE_OS Entity Atom: CredencialIntegracion
+# ==============================================================================
+# Domain: D-TDE (Transformación Digital del Estado)
+# Subdomain: Plataformas Compartidas - Autenticación
+# Source: KB-015/036 ClaveÚnica Integración y TyC
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: plataformas_autenticacion
+  kb_source:
+    - "urn:knowledge:tde:lineamientos:plataforma_claveunica_integracion:1.0.0"
+    - "urn:knowledge:tde:lineamientos:terminos_condiciones_claveunica:1.0.0"
+    - "dialogo_plataformas_d_tde.md"
+
+entity:
+  id: ENT-TDE-CREDENCIAL-INTEGRACION
+  name: CredencialIntegracion
+  name_es: Credencial de Integración OAuth2/OIDC
+  description: |
+    Credenciales (client_id, client_secret) emitidas por la SGD para integrar
+    una aplicación institucional con plataformas TDE (ClaveÚnica, PISEE,
+    Notificaciones).
+
+    Gestionadas según Manual de Integración ClaveÚnica y TyC.
+
+  purpose: |
+    Modelar credenciales de integración para:
+    - Gestión segura de secrets
+    - Trazabilidad de habilitaciones
+    - Control de ambientes (Sandbox/QA/Prod)
+    - Auditoría de certificaciones
+
+  categorical_type: Configuration
+  is_abstract: false
+  category: Security
+
+attributes:
+  # Identificación
+  - name: id_credencial
+    type: String
+    key: true
+
+  # Plataforma
+  - name: plataforma_id
+    type: String
+    fk: ENT-TDE-PLATAFORMA
+    nullable: false
+    description: "ClaveÚnica, PISEE, Notificaciones, etc."
+
+  - name: entidad_usuaria_id
+    type: String
+    fk: ENT-TDE-ENTIDAD-REGIONAL
+    nullable: false
+
+  # Ambiente
+  - name: ambiente
+    type: Enum[Sandbox, QA, Produccion]
+    nullable: false
+
+  # Credenciales OAuth2
+  - name: client_id
+    type: String
+    nullable: false
+    description: "Identificador único de la integración"
+
+  - name: client_secret_hash
+    type: String
+    nullable: false
+    description: "Hash del secret (NUNCA almacenar en plano)"
+
+  # URIs
+  - name: redirect_uris
+    type: Array[String]
+    nullable: false
+    description: "Endpoints de callback autorizados"
+
+  - name: logout_uris
+    type: Array[String]
+    nullable: true
+    description: "URIs de cierre de sesión registradas"
+
+  # Aplicación
+  - name: nombre_aplicacion
+    type: String
+    nullable: false
+    description: "Texto mostrado en formulario de login"
+
+  - name: descripcion_aplicacion
+    type: Text
+    nullable: true
+
+  - name: url_aplicacion
+    type: String
+    nullable: true
+    description: "URL pública del sitio (dominio .gob.cl en prod)"
+
+  - name: tipo_publico
+    type: Enum[Publico, Interno]
+    default: Publico
+    description: "Ciudadanía vs. funcionarios"
+
+  # Contactos
+  - name: contacto_admin_email
+    type: String
+    nullable: false
+    description: "Email institucional nominativo"
+
+  - name: contacto_tecnico_email
+    type: String
+    nullable: false
+
+  # Fechas
+  - name: fecha_emision
+    type: Date
+    nullable: false
+
+  - name: fecha_certificacion
+    type: Date
+    nullable: true
+    description: "Fecha de certificación para producción"
+
+  # Estado
+  - name: estado
+    type: Enum[Activa, Revocada, Suspendida, Pendiente_Certificacion]
+    default: Pendiente_Certificacion
+
+invariants:
+  - id: INV-CRED-001
+    name: produccion_requiere_certificacion
+    rule: ambiente = 'Produccion' AND estado = 'Activa' → fecha_certificacion IS NOT NULL
+    description: "Credenciales productivas requieren certificación"
+
+  - id: INV-CRED-002
+    name: email_institucional
+    rule: contacto_admin_email CONTAINS '.gob.cl' OR contacto_admin_email CONTAINS '.gov.cl'
+    description: "Contacto admin debe ser institucional"
+
+  - id: INV-CRED-003
+    name: redirect_uri_no_localhost_prod
+    rule: ambiente = 'Produccion' → NOT ANY(uri IN redirect_uris WHERE uri CONTAINS 'localhost')
+    description: "No se permite localhost en producción"
+
+morphisms:
+  pertenece_a: [ENT-TDE-ENTIDAD-REGIONAL]
+  habilita_acceso_a: [ENT-TDE-PLATAFORMA]
+  gestionada_por: [ENT-TDE-SGD]
+
+audit:
+  fields_tracked:
+    - estado
+    - fecha_certificacion
+    - redirect_uris
+  retention_years: 10
+  legal_basis: "Ley 21.658, TyC ClaveÚnica"

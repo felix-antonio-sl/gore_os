@@ -1,0 +1,104 @@
+# ==============================================================================
+# GORE_OS Entity Atom: FeatureFlag
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Configuración (M6)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: configuracion
+
+entity:
+  id: ENT-OPS-FEATURE-FLAG
+  name: FeatureFlag
+  name_es: Bandera de Funcionalidad
+  description: |
+    Mecanismo de despliegue gradual de funcionalidades.
+    Permite activar/desactivar features sin deploy.
+
+  purpose: |
+    Modelar feature flags para:
+    - Rollout gradual de funcionalidades
+    - A/B testing
+    - Kill switches de emergencia
+
+  categorical_type: Configuration
+  is_abstract: false
+  category: ConfigManagement
+
+attributes:
+  - name: id_flag
+    type: String
+    key: true
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Nombre único del flag"
+
+  - name: descripcion
+    type: String
+    nullable: true
+
+  - name: estado
+    type: Enum[Activo, Inactivo, Rollout]
+    default: Inactivo
+
+  - name: porcentaje_rollout
+    type: Integer
+    default: 0
+    description: "Porcentaje de usuarios que ven la feature (0-100)"
+
+  - name: ambiente
+    type: Enum[Development, Staging, Production, All]
+    nullable: false
+
+  - name: segmentacion
+    type: Json
+    nullable: true
+    description: "Reglas de segmentación (roles, usuarios, etc.)"
+
+  - name: fecha_activacion
+    type: DateTime
+    nullable: true
+
+  - name: fecha_desactivacion
+    type: DateTime
+    nullable: true
+
+  - name: propietario_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: true
+
+  - name: story_id
+    type: String
+    fk: ENT-DEV-STORY
+    nullable: true
+    description: "Story que implementa la feature"
+
+invariants:
+  - id: INV-FF-001
+    name: rollout_tiene_porcentaje
+    rule: estado = 'Rollout' → porcentaje_rollout > 0 AND porcentaje_rollout < 100
+    description: "Rollout debe tener porcentaje parcial"
+
+  - id: INV-FF-002
+    name: activo_es_100
+    rule: estado = 'Activo' → porcentaje_rollout = 100
+    description: "Activo significa 100% rollout"
+
+morphisms:
+  propietario: [ENT-OPS-USUARIO-SISTEMA]
+  implementa_story: [ENT-DEV-STORY]
+
+audit:
+  fields_tracked:
+    - estado
+    - porcentaje_rollout
+  retention_years: 2

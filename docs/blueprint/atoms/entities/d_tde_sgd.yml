@@ -1,0 +1,116 @@
+# ==============================================================================
+# GORE_OS Entity Atom: SecretariaGobiernoDigital (SGD)
+# ==============================================================================
+# Domain: D-TDE (Transformación Digital del Estado)
+# Subdomain: Gobernanza TDE
+# Source: Ley 21.658, Art. 1
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: gobernanza
+  kb_source:
+    - "urn:knowledge:tde:leyes:ley_21658_segdig:1.0.0"
+    - "dialogo_legislativo_d_tde.md"
+
+entity:
+  id: ENT-TDE-SGD
+  name: SecretariaGobiernoDigital
+  name_es: Secretaría de Gobierno Digital
+  description: |
+    Órgano rector de gobierno digital, creado por Ley 21.658 en la
+    Subsecretaría de Hacienda, como continuador legal de la División
+    de Gobierno Digital de SEGPRES.
+
+    Responsable de proponer la Estrategia de Gobierno Digital y
+    coordinar su implementación intersectorial.
+
+  purpose: |
+    Modelar la entidad institucional rectora para:
+    - Proponer y coordinar Estrategia GD 2030
+    - Operar plataformas compartidas (PISEE, ClaveÚnica)
+    - Dictar normas técnicas
+    - Coordinar con OAEs en materia de gobierno digital
+
+  categorical_type: Organization
+  is_abstract: false
+  category: Institutional
+  singleton: true
+
+attributes:
+  # Identificación
+  - name: id_sgd
+    type: String
+    key: true
+    default: "SGD-001"
+
+  - name: nombre_oficial
+    type: String
+    default: "Secretaría de Gobierno Digital"
+
+  # Ubicación Institucional
+  - name: ministerio
+    type: String
+    default: "Ministerio de Hacienda"
+
+  - name: subsecretaria
+    type: String
+    default: "Subsecretaría de Hacienda"
+
+  # Gobernanza
+  - name: director_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: "Jefe/a de División - Grado 3 EUS"
+
+  - name: fecha_creacion
+    type: Date
+    default: "2024-03-01"
+
+  # Funciones (Art. 1 Ley 21.658)
+  - name: funciones
+    type: Array[String]
+    default:
+      - "Proponer Estrategia de Gobierno Digital"
+      - "Coordinar implementación intersectorial de tecnologías digitales"
+      - "Desarrollar y operar plataformas compartidas"
+      - "Asesorar OAEs en uso estratégico de datos e información"
+
+  # Plataformas Operadas
+  - name: plataformas_operadas
+    type: Array[String]
+    default:
+      - "ClaveÚnica"
+      - "PISEE"
+      - "DocDigital"
+      - "Notificaciones"
+      - "Datos.gob"
+
+  # Estado
+  - name: estado
+    type: Enum[Activo, Inactivo]
+    default: Activo
+
+invariants:
+  - id: INV-SGD-001
+    name: singleton
+    rule: COUNT(id_sgd) = 1
+    description: "Solo puede existir una instancia de SGD"
+
+morphisms:
+  propone: [ENT-TDE-ESTRATEGIA-GOBIERNO-DIGITAL]
+  opera: [ENT-TDE-PLATAFORMA]
+  coordina: [ENT-TDE-ENTIDAD-REGIONAL]
+  sucesora_de: [] # División GD SEGPRES (eliminada)
+
+audit:
+  fields_tracked:
+    - director_id
+    - estado
+  retention_years: 10
+  legal_basis: "Ley 21.658, Art. 1"

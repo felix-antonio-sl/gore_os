@@ -1,0 +1,129 @@
+# ==============================================================================
+# GORE_OS Entity Atom: ActivoDatos (Activo de Datos)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M6 Gestión de Datos
+# Source: Estrategia de Datos de la Administración del Estado
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: gestion_datos
+  kb_source:
+    - "Estrategia de Datos de la Administración del Estado"
+    - "KB TDE Estrategias 001"
+
+entity:
+  id: ENT-TDE-ACTIVO-DATOS
+  name: ActivoDatos
+  name_es: Activo de Datos
+  description: |
+    Conjunto de datos (Dataset), base de datos o registro maestro
+    que posee valor para la institución y debe ser gobernado como
+    un activo estratégico.
+
+    Tipos:
+    - Dato Maestro: Identificadores únicos (RUT, Rol Predial).
+    - Dato Referencia: Tablas de códigos (Comunas, Países).
+    - Dato Transaccional: Registros de operaciones.
+    - Dato Abierto: Publicable para la ciudadanía.
+
+  purpose: |
+    Gobernar los datos para:
+    - Mantener inventario de datos institucional
+    - Clasificar sensibilidad y propiedad
+    - Habilitar interoperabilidad semántica
+    - Alimentar portal de Datos Abiertos
+
+  categorical_type: Object
+  is_abstract: false
+  category: Reference
+
+attributes:
+  - name: id_activo
+    type: String
+    key: true
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Nombre del activo (ej: Base de Proveedores)"
+
+  - name: descripcion
+    type: Text
+    nullable: true
+
+  # Clasificación
+  - name: tipo
+    type: Enum[Maestro, Referencia, Transaccional, Analitico, NoEstructurado]
+    nullable: false
+
+  - name: clasificacion_seguridad
+    type: Enum[Publico, Interno, Confidencial, Secreto]
+    default: Interno
+    description: Nivel de sensibilidad del dato
+
+  - name: es_dato_abierto
+    type: Boolean
+    default: false
+    description: ¿Disponible en portal de datos abiertos?
+
+  - name: formato_distribucion
+    type: Array[String]
+    nullable: true
+    description: "Formatos disponibles (CSV, JSON, XML)"
+
+  # Gobernanza
+  - name: custodio_id
+    type: String
+    fk: ENT-BACK-DIVISION
+    nullable: false
+    description: Unidad responsable (Data Steward)
+
+  - name: propietario_tecnico_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Responsable técnico
+
+  - name: fuente_autoritativa
+    type: Boolean
+    default: false
+    description: ¿Es la fuente oficial de verdad para este dato?
+
+  # Calidad
+  - name: calidad_dato_score
+    type: Decimal
+    nullable: true
+    description: Puntaje de calidad (0-100)
+
+  - name: frecuencia_actualizacion
+    type: Enum[RealTime, Diaria, Mensual, Anual, Estatica]
+    default: Mensual
+
+  # Relaciones
+  - name: plataforma_origen_id
+    type: String
+    fk: ENT-TDE-PLATAFORMA
+    nullable: true
+    description: Sistema donde reside el dato
+
+invariants:
+  - id: INV-DAT-001
+    name: publico_requiere_formato
+    rule: es_dato_abierto = TRUE → formato_distribucion IS NOT NULL
+    description: Dato abierto debe especificar formato de distribución
+
+morphisms:
+  custodiado_por: [ENT-BACK-DIVISION]
+  reside_en: [ENT-TDE-PLATAFORMA]
+
+audit:
+  fields_tracked:
+    - clasificacion_seguridad
+    - es_dato_abierto
+  retention_years: 10

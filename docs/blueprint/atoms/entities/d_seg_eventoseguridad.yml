@@ -1,0 +1,121 @@
+# ==============================================================================
+# GORE_OS Entity Atom: EventoSeguridad (Log / Alerta SIEM)
+# ==============================================================================
+# Domain: D-SEG (Ciberseguridad)
+# Subdomain: M3 Operaciones y Respuesta
+# Source: dialogo_riguroso_d_seg.md, NIST SP 800-92
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + CISO Virtual"
+  domain: D-SEG
+  subdomain: operaciones_monitoreo
+  kb_source:
+    - "NIST SP 800-92: Guide to Computer Security Log Management"
+    - "MITRE ATT&CK (Data Sources)"
+
+entity:
+  id: ENT-SEG-EVENTO
+  name: EventoSeguridad
+  name_es: Evento de Seguridad (Log/Alerta)
+  description: |
+    Ocurrencia observable en un sistema o red que puede ser relevante
+    para la seguridad de la información. No necesariamente es un incidente,
+    pero puede ser precursor de uno.
+    Generalmente ingestados por un SIEM.
+
+    Ejemplos:
+    - Log de fallo de autenticación repetido.
+    - Detección de malware por antivirus.
+    - Cambio de configuración en firewall.
+    - Acceso fuera de horario laboral.
+
+  purpose: |
+    Monitorear seguridad para:
+    - Detectar incidentes tempranamente
+    - Generar alertas automáticas (Reglas de Correlación)
+    - Proveer trazabilidad (Audit Trail)
+    - Cumplir norma de retención de logs (DS 83)
+
+  categorical_type: Transaction
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_evento
+    type: String
+    key: true
+    description: "UUID del evento o log ID"
+
+  - name: timestamp
+    type: Timestamp
+    nullable: false
+    description: "Fecha/Hora exacta del evento (UTC)"
+
+  - name: fuente
+    type: String
+    nullable: false
+    description: "Sistema origen (Firewall, AD, App, Antivirus)"
+
+  - name: tipo_evento
+    type: Enum[Autenticacion, AccesoRecurso, ModificacionConfiguracion, TraficoRed, Malware, ErrorSistema, Otro]
+    nullable: false
+
+  - name: severidad
+    type: Enum[Info, Low, Medium, High, Critical]
+    default: Info
+
+  - name: mensaje
+    type: Text
+    nullable: false
+    description: "Contenido raw o parseado del log"
+
+  # Contexto
+  - name: activo_relacionado_id
+    type: String
+    fk: ENT-SEG-ACTIVO-INFORMACION
+    nullable: true
+
+  - name: usuario_involucrado_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: "Si el evento tiene identidad asociada"
+
+  - name: ip_origen
+    type: String
+    nullable: true
+
+  - name: ip_destino
+    type: String
+    nullable: true
+
+  # Gestión
+  - name: es_incidente
+    type: Boolean
+    default: false
+    description: "¿Escaló a incidente?"
+
+  - name: incidente_id
+    type: String
+    fk: ENT-SEG-INCIDENTE
+    nullable: true
+    description: "Link al incidente generado"
+
+invariants:
+  - id: INV-EVT-001
+    name: incidente_link
+    rule: es_incidente = TRUE → incidente_id IS NOT NULL
+    description: Si es marcado como incidente, debe enlazar al ID
+
+morphisms:
+  generado_en: [ENT-SEG-ACTIVO-INFORMACION, ENT-TDE-PLATAFORMA]
+  analizado_en: [SIEM] # (Sistema externo o módulo)
+
+audit:
+  fields_tracked:
+    - es_incidente
+  retention_years: 1

@@ -1,0 +1,47 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_dev_blueprint:1.0.0
+  type: Capability
+id: CAP-DEV-BLUEPRINT
+name: Blueprint Categórico y Gobernanza KODA
+domain: D-DEV
+type: ENABLER
+description: Capacidad para sincronizar, validar y gobernar el Blueprint Categórico de GORE_OS mediante la metodología KODA y multi-agentes.
+value_proposition: Asegura integridad ontológica, trazabilidad URN y compliance con invariantes KODA en todo el modelo.
+orko_mapping:
+  p1_capacity: Arquitecto, Equipo KODA
+  p2_flow: P-BP (Gestión de Blueprint)
+  p3_trace: Morfismos categóricos, URN trazable
+  p4_limit: Invariantes I1-I14, JSON Schema
+  p5_purpose: 0 violaciones de ontología, 100% trazabilidad
+koda_elements:
+  atoms: [Entity, Story, Role, Process, Module, Capability]
+  compositions: [Domain, Aggregation]
+  invariants: [I1, I2, I3, I4, I5, I6, I7, I8, I9, I10, I11, I12, I13, I14]
+orko_primitives:
+  - P1 (Capacity)
+  - P2 (Flow)
+  - P3 (Trace)
+  - P4 (Limit)
+  - P5 (Purpose)
+  - TF (Transition Function)
+scripts:
+  - verify_ontology.py
+  - validate_koda.py
+  - sync_blueprint.py
+stories:
+  - urn:goreos:atom:story:us_dev_bp_001:1.0.0
+  - urn:goreos:atom:story:us_dev_bp_002:1.0.0
+  - urn:goreos:atom:story:us_dev_bp_003:1.0.0
+  - urn:goreos:atom:story:us_dev_bp_004:1.0.0
+  - urn:goreos:atom:story:us_dev_bp_005:1.0.0
+  - urn:goreos:atom:story:us_dev_bp_006:1.0.0
+  - urn:goreos:atom:story:us_dev_bp_007:1.0.0
+  - urn:goreos:atom:story:us_dev_bp_008:1.0.0
+  - urn:goreos:atom:story:us_dev_koda_001:1.0.0
+  - urn:goreos:atom:story:us_dev_koda_002:1.0.0
+  - urn:goreos:atom:story:us_dev_koda_003:1.0.0
+  - urn:goreos:atom:story:us_dev_koda_004:1.0.0
+beneficiaries:
+  - ROLE-ARQUITECTO
+  - ROLE-PO
+  - ROLE-DEV

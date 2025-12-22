@@ -1,0 +1,28 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_dev_m5:1.0.0
+  type: Module
+id: MOD-DEV-M5
+name: CI/CD
+code: M5
+domain: D-DEV
+description: Pipelines, builds, despliegues, gates y automatización de releases.
+priority: P0
+stories:
+  - US-DEV-CI-001
+  - US-DEV-CI-002
+  - US-DEV-CI-003
+  - US-DEV-CI-004
+  - US-DEV-CI-005
+  - US-DEV-CI-006
+  - US-DEV-CI-007
+  - US-DEV-CI-008
+  - US-DEV-CI-009
+entities:
+  - Pipeline
+  - PasoPipeline
+  - ArtefactoBuild
+stats:
+  p0_stories: 3
+  p1_stories: 4
+  p2_stories: 2
+  total: 9

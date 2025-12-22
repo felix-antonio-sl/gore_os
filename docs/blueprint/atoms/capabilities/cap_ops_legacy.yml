@@ -1,0 +1,68 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_ops_legacy:1.0.0
+  type: Capability
+id: CAP-OPS-LEGACY
+name: Migración de Data Legacy
+domain: D-OPS
+type: ENABLER
+description: Capacidad para migrar, transformar y validar datos desde fuentes legacy institucionales hacia el modelo GORE_OS.
+value_proposition: Permite inyectar datos históricos normalizados para arranque de operación sin pérdida de información.
+orko_mapping:
+  p1_capacity: Migrador de Datos, ETL Engineer
+  p2_flow: P-MIG (Migración de Datos Legacy)
+  p3_trace: Trazabilidad fuente → destino con logs
+  p4_limit: Integridad referencial, validación de esquema
+  p5_purpose: 100% de datos críticos migrados sin pérdida
+legacy_sources:
+  - IDIS
+  - Convenios
+  - Partes
+  - Modificaciones
+  - FRIL
+  - Progs
+target_entities:
+  - Dim_Iniciativa
+  - Fact_LineaPresupuestaria
+  - Fact_EjecucionMensual
+  - Convenio
+  - ModificacionConvenio
+  - HitoConvenio
+  - doc_documento
+  - doc_tipo_documento
+  - doc_canal
+  - doc_derivacion
+  - fin_rendicion
+  - line
+  - sheet
+  - IniciativaFRIL
+  - ProgramaRegional
+stories:
+  - urn:goreos:atom:story:us_ops_leg_001:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_002:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_003:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_004:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_005:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_006:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_010:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_011:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_012:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_013:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_014:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_020:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_021:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_022:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_023:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_024:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_025:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_026:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_030:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_031:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_032:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_033:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_040:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_041:1.0.0
+  - urn:goreos:atom:story:us_ops_leg_042:1.0.0
+beneficiaries:
+  - ROLE-MIGRADOR
+  - ROLE-QA
+  - ROLE-ADMIN-TI

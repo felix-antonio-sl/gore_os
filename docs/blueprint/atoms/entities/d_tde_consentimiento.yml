@@ -1,0 +1,129 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Consentimiento (Data Protection)
+# ==============================================================================
+# Domain: D-TDE (Transformación Digital del Estado)
+# Subdomain: Protección de Datos Personales
+# Source: Ley 21.719, Art. 12
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: proteccion_datos
+  kb_source:
+    - "urn:knowledge:tde:leyes:ley_21719_datos_personales:1.0.0"
+    - "dialogo_legislativo_d_tde.md"
+
+entity:
+  id: ENT-TDE-CONSENTIMIENTO
+  name: Consentimiento
+  name_es: Consentimiento para Tratamiento de Datos
+  description: |
+    Manifestación de voluntad libre, específica, inequívoca e informada,
+    otorgada por el titular de datos personales (o su representante),
+    que autoriza el tratamiento de sus datos para finalidades determinadas.
+
+    Base de licitud principal según Ley 21.719.
+
+  purpose: |
+    Registrar y gestionar el ciclo de vida del consentimiento para:
+    - Acreditar licitud del tratamiento (Art. 12)
+    - Permitir revocación sin efectos retroactivos
+    - Trazabilidad ante fiscalización APDP
+
+  categorical_type: Transaction
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  # Identificación
+  - name: id_consentimiento
+    type: String
+    key: true
+    description: "UUID único"
+
+  # Partes
+  - name: titular_rut
+    type: String
+    nullable: false
+    description: "RUT del titular de los datos"
+
+  - name: responsable_id
+    type: String
+    fk: ENT-TDE-RESPONSABLE-TRATAMIENTO
+    nullable: false
+    description: "Responsable que recibe el consentimiento"
+
+  # Otorgamiento
+  - name: fecha_otorgamiento
+    type: Timestamp
+    nullable: false
+
+  - name: medio_otorgamiento
+    type: Enum[Escrito, Verbal, Electronico, AccionAfirmativa]
+    nullable: false
+    description: "Forma en que se manifestó la voluntad"
+
+  - name: finalidades
+    type: Array[String]
+    nullable: false
+    description: "Fines específicos autorizados"
+
+  - name: datos_autorizados
+    type: Array[String]
+    nullable: true
+    description: "Categorías de datos autorizados (si se especifican)"
+
+  # Revocación
+  - name: fecha_revocacion
+    type: Timestamp
+    nullable: true
+
+  - name: medio_revocacion
+    type: Enum[Escrito, Verbal, Electronico]
+    nullable: true
+
+  - name: motivo_revocacion
+    type: String
+    nullable: true
+    description: "Sin obligación de expresar causa (Art. 12)"
+
+  # Estado
+  - name: vigente
+    type: Boolean
+    computed: true
+    formula: fecha_revocacion IS NULL
+    description: "Calculado: True si no ha sido revocado"
+
+  # Evidencia
+  - name: evidencia_url
+    type: String
+    nullable: true
+    description: "Link a documento/registro que respalda el consentimiento"
+
+invariants:
+  - id: INV-CONSENT-001
+    name: revocacion_no_retroactiva
+    rule: fecha_revocacion IS NULL OR fecha_revocacion >= fecha_otorgamiento
+    description: "La revocación no puede ser anterior al otorgamiento"
+
+  - id: INV-CONSENT-002
+    name: finalidad_especifica
+    rule: LENGTH(finalidades) > 0
+    description: "Debe existir al menos una finalidad específica"
+
+morphisms:
+  autoriza_tratamiento_de: [ENT-TDE-ACTIVO-DATOS]
+  otorgado_a: [ENT-TDE-RESPONSABLE-TRATAMIENTO]
+  revocado_ante: [ENT-TDE-AGENCIA-PROTECCION-DATOS]
+
+audit:
+  fields_tracked:
+    - fecha_otorgamiento
+    - fecha_revocacion
+    - vigente
+  retention_years: 10
+  legal_basis: "Ley 21.719, Art. 12 - Acreditar licitud del tratamiento"

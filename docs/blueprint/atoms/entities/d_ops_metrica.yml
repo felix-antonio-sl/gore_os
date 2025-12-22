@@ -1,0 +1,91 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Metrica
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Monitoreo (M3)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: monitoreo
+
+entity:
+  id: ENT-OPS-METRICA
+  name: Metrica
+  name_es: Métrica de Sistema
+  description: |
+    Definición de una métrica observable del sistema.
+    Recolectada periódicamente para dashboards y alertas.
+
+  purpose: |
+    Modelar métricas para:
+    - Observabilidad del sistema
+    - Base para alertas
+    - Análisis de tendencias
+
+  categorical_type: Object
+  is_abstract: false
+  category: Observability
+
+attributes:
+  - name: id_metrica
+    type: String
+    key: true
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Ej: cpu_usage, memory_percent, request_latency_p99"
+
+  - name: tipo
+    type: Enum[Counter, Gauge, Histogram, Summary]
+    nullable: false
+
+  - name: unidad
+    type: String
+    nullable: true
+    description: "%, ms, bytes, count"
+
+  - name: descripcion
+    type: String
+    nullable: true
+
+  - name: origen
+    type: String
+    nullable: false
+    description: "Sistema/servicio que genera la métrica"
+
+  - name: etiquetas
+    type: Json
+    nullable: true
+    description: "Labels para filtrado (env, service, host)"
+
+  - name: valor_actual
+    type: Decimal
+    nullable: true
+
+  - name: ultima_actualizacion
+    type: DateTime
+    nullable: true
+
+  - name: retencion_dias
+    type: Integer
+    default: 30
+
+invariants:
+  - id: INV-MET-001
+    name: nombre_unico_origen
+    rule: UNIQUE(nombre, origen)
+    description: "Nombre de métrica único por origen"
+
+morphisms:
+  dispara_alertas: [ENT-OPS-ALERTA]
+  visualizado_en: [ENT-OPS-DASHBOARD]
+
+audit:
+  fields_tracked: []
+  retention_years: 1

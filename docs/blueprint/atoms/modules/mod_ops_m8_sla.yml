@@ -1,0 +1,23 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_ops_m8:1.0.0
+  type: Module
+id: MOD-OPS-M8
+name: SLA y Métricas de Servicio
+code: M8
+domain: D-OPS
+description: Definición y monitoreo de SLAs, SLIs, SLOs y error budgets.
+priority: P1
+stories:
+  - US-OPS-SLA-001
+  - US-OPS-SLA-002
+  - US-OPS-SLA-003
+  - US-OPS-SLA-004
+  - US-OPS-SLA-005
+  - US-OPS-SLA-006
+entities:
+  - SLA
+stats:
+  p0_stories: 0
+  p1_stories: 3
+  p2_stories: 3
+  total: 6

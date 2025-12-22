@@ -1,0 +1,117 @@
+# ==============================================================================
+# GORE_OS Entity Atom: VulnerabilidadTecnica (Vulnerabilidad Técnica CVE)
+# ==============================================================================
+# Domain: D-SEG (Ciberseguridad)
+# Subdomain: M3 Operaciones y Respuesta
+# Source: dialogo_riguroso_d_seg.md, NIST NVD
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + CISO Virtual"
+  domain: D-SEG
+  subdomain: operaciones_vulnerabilidades
+  kb_source:
+    - "NIST National Vulnerability Database (NVD)"
+    - "CVSS: Common Vulnerability Scoring System"
+    - "dialogo_riguroso_d_seg.md"
+
+entity:
+  id: ENT-SEG-VULNERABILIDAD
+  name: VulnerabilidadTecnica
+  name_es: Vulnerabilidad Técnica (CVE)
+  description: |
+    Debilidad técnica identificada en un activo (software, hardware)
+    que puede ser explotada por una amenaza.
+    Generalmente asociada a un CVE (Common Vulnerabilities and Exposures).
+
+  purpose: |
+    Gestionar vulnerabilidades para:
+    - Priorizar parches de seguridad (Patch Management)
+    - Calcular riesgo técnico
+    - Prevenir explotación (Zero-days, Known vulnerabilities)
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_vulnerabilidad
+    type: String
+    key: true
+    description: "ID interno o scanner ID"
+
+  - name: cve_id
+    type: String
+    nullable: true
+    description: "Identificador CVE (ej: CVE-2024-1234)"
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Nombre descriptivo (ej: SQL Injection en Login)"
+
+  # Puntuación CVSS
+  - name: cvss_score
+    type: Decimal
+    nullable: false
+    description: "Puntaje Base (0.0 - 10.0)"
+
+  - name: cvss_vector
+    type: String
+    nullable: true
+    description: "Vector string (ej: CVSS:3.1/AV:N/AC:L...)"
+
+  - name: severidad
+    type: Enum[Baja, Media, Alta, Critica]
+    computed: true
+    formula: |
+      CASE 
+        WHEN cvss_score >= 9.0 THEN 'Critica'
+        WHEN cvss_score >= 7.0 THEN 'Alta'
+        WHEN cvss_score >= 4.0 THEN 'Media'
+        ELSE 'Baja'
+      END
+
+  # Activo afectado
+  - name: activo_afectado_id
+    type: String
+    fk: ENT-SEG-ACTIVO-INFORMACION
+    nullable: false
+
+  # Estado Gestión
+  - name: estado
+    type: Enum[Nueva, EnAnalisis, ParcheProgramado, Mitigada, FalsoPositivo, Aceptada]
+    default: Nueva
+
+  - name: fecha_deteccion
+    type: Date
+    nullable: false
+
+  - name: fecha_resolucion
+    type: Date
+    nullable: true
+
+  - name: parche_aplicado
+    type: String
+    nullable: true
+    description: "Versión de software/firmware que corrige"
+
+invariants:
+  - id: INV-VULN-001
+    name: resuelta_requiere_fecha
+    rule: estado = 'Mitigada' → fecha_resolucion IS NOT NULL
+    description: Vulnerabilidad mitigada debe tener fecha
+
+morphisms:
+  presente_en: [ENT-SEG-ACTIVO-INFORMACION]
+  explotada_por: [ENT-SEG-AMENAZA]
+
+audit:
+  fields_tracked:
+    - estado
+    - cvss_score
+    - fecha_resolucion
+  retention_years: 2

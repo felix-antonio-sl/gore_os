@@ -1,16 +1,21 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  source: catalogo_exhaustivo_ddev_dops.md
 id: US-DEV-KODA-002
 story_key: us_dev_koda_002
-role_id: USR-DEV-ARQCAT
-as_a: null
-i_want: Validar que las entidades y relaciones respeten las primitivas ORKO
-so_that: Evito la degradación semántica del sistema (H_org)
+role_id: ROLE-DEV
+as_a: Desarrollador
+i_want: consultar agente Goreólogo para validación de dominio
+so_that: se obtenga respuesta contextualizada del dominio institucional
 domain: D-DEV
+module: M0-BLUEPRINT
 priority: P1
-capability_bundle_id: CAP-DEV-001
+acceptance_criteria:
+  - Consulta procesada correctamente
+  - Respuesta incluye contexto GORE Ñuble
+  - Referencias a KB citadas
+capability_bundle_id: CAP-DEV-BLUEPRINT
 morphisms:
-  protagonizado_por: USR-DEV-ARQCAT
-  contribuye_a: CAP-DEV-001
+  protagonizado_por: ROLE-DEV
+  contribuye_a: CAP-DEV-BLUEPRINT

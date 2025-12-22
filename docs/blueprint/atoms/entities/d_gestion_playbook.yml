@@ -1,0 +1,207 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Playbook (Playbook Operativo)
+# ==============================================================================
+# Domain: D-GESTION (Control de Gestión y Operación)
+# Subdomain: Playbooks Operativos
+# Source: domain_d-gestion.md M3, kb_metodologia_002_playbooks_orko.yml
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + AR Virtual"
+  domain: D-GESTION
+  subdomain: playbooks
+  kb_source:
+    - "domain_d-gestion.md M3: Playbooks Operativos"
+    - "kb_metodologia_002_playbooks_orko.yml"
+    - "dialogo_riguroso_d_gestion.md"
+
+entity:
+  id: ENT-GESTION-PLAYBOOK
+  name: Playbook
+  name_es: Playbook Operativo
+  description: |
+    Procedimiento estructurado para responder a situaciones recurrentes,
+    crisis o tareas operativas críticas.
+
+    Catálogo de Playbooks según domain_d-gestion.md:
+    - P01: Recuperación H_gore Bajo (1 día)
+    - P02: Reducción de Traspasos (2 días)
+    - P09: Respuesta Detección Deriva (3 días)
+    - P12: Recuperación Calidad Datos (2 semanas)
+    - P13: Alineamiento Político (2 semanas)
+    - P14: Gestión de Expectativas (3-7 días)
+    - P15: Cadencia Adaptativa (Variable)
+
+  purpose: |
+    Modelar playbooks para:
+    - Estandarizar respuesta a triggers
+    - Definir pasos y RACI
+    - Establecer criterios de éxito
+    - Capturar lecciones aprendidas
+
+  categorical_type: Object
+  is_abstract: false
+  category: Reference
+
+attributes:
+  - name: id_playbook
+    type: String
+    key: true
+    description: "Identificador único (ej: PB-P01)"
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: "Código estándar (P01, P02, etc.)"
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre del playbook
+
+  - name: descripcion
+    type: Text
+    nullable: true
+    description: Descripción del propósito
+
+  # Clasificación
+  - name: categoria
+    type: Enum[Recuperacion, Calidad, Alineamiento, Respuesta, Cadencia, Crisis, Onboarding]
+    nullable: false
+    description: Categoría del playbook
+
+  - name: nivel_criticidad
+    type: Enum[Bajo, Medio, Alto, Critico]
+    default: Medio
+    description: Nivel de criticidad
+
+  # Trigger
+  - name: condicion_disparo
+    type: Text
+    nullable: false
+    description: Condiciones que activan el playbook
+
+  - name: trigger_automatico
+    type: Boolean
+    default: false
+    description: ¿Se activa automáticamente?
+
+  - name: fuente_trigger
+    type: Enum[H_gore, UC, Manual, Sistema, FENIX, CGR]
+    nullable: true
+    description: Origen del trigger
+
+  # Duración
+  - name: duracion_estimada
+    type: String
+    nullable: false
+    description: "Duración esperada (ej: 1 día, 2 semanas)"
+
+  - name: duracion_horas
+    type: Integer
+    nullable: true
+    description: Duración en horas (para SLA)
+
+  # Pasos
+  - name: pasos
+    type: JSON
+    nullable: false
+    description: |
+      Array de pasos:
+      [{
+        "orden": 1,
+        "descripcion": "...",
+        "responsable_rol": "Jefe UC",
+        "checklist": ["item1", "item2"],
+        "duracion_estimada": "2h"
+      }]
+
+  - name: cantidad_pasos
+    type: Integer
+    computed: true
+    description: Número total de pasos
+
+  # RACI
+  - name: raci
+    type: JSON
+    nullable: false
+    description: |
+      Matriz RACI:
+      {
+        "responsible": ["rol1"],
+        "accountable": "Administrador Regional",
+        "consulted": ["rol2", "rol3"],
+        "informed": ["división"]
+      }
+
+  # Criterios de éxito
+  - name: criterios_exito
+    type: Text
+    nullable: false
+    description: Condiciones para considerar exitoso
+
+  - name: metricas_exito
+    type: Array[String]
+    nullable: true
+    description: Indicadores a medir
+
+  # Outputs
+  - name: outputs
+    type: Array[String]
+    nullable: true
+    description: Entregables del playbook
+
+  - name: artefactos_requeridos
+    type: Array[String]
+    nullable: true
+    description: Documentos necesarios
+
+  # Versionamiento
+  - name: version
+    type: String
+    default: "1.0"
+    description: Versión del playbook
+
+  - name: fecha_ultima_actualizacion
+    type: Date
+    nullable: true
+    description: Última revisión
+
+  - name: autor_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Autor o responsable
+
+  # Estado
+  - name: estado
+    type: Enum[Borrador, Activo, EnRevision, Deprecado]
+    default: Activo
+    description: Estado del playbook
+
+invariants:
+  - id: INV-PB-001
+    name: pasos_no_vacios
+    rule: JSON_LENGTH(pasos) > 0
+    description: Playbook debe tener al menos un paso
+    severity: error
+
+  - id: INV-PB-002
+    name: raci_accountable
+    rule: raci.accountable IS NOT NULL
+    description: Debe haber un accountable definido
+    severity: error
+
+morphisms:
+  instanciado_por: [ENT-GESTION-EJECUCION-PLAYBOOK]
+  activado_por: [ENT-GESTION-PUNTAJE-HGORE, FENIX]
+  genera: [ENT-GESTION-OPORTUNIDAD-MEJORA]
+
+audit:
+  fields_tracked:
+    - version
+    - estado
+  retention_years: 10

@@ -1,0 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:entity:doc_canal:1.0.0
+  type: Entity
+id: ENT-MLEG-DOC-CANAL
+name: doc_canal
+name_singular: Canal de Recepción
+domain: D-OPS
+module: M10-LEGACY
+source: Partes
+description: Catálogo normalizado de canales de recepción de documentos.
+attributes:
+  - name: codigo
+    type: string
+    required: true
+    description: Código canónico del canal
+  - name: nombre
+    type: string
+    required: true
+    description: Nombre descriptivo del canal
+  - name: alias
+    type: array
+    items: string
+    description: Variantes encontradas en fuentes legacy (EMAIL, E-MAIL, etc.)
+  - name: es_digital
+    type: boolean
+    default: false
+    description: Indica si es un canal digital
+catalog_values:
+  - EMAIL
+  - DOCDIGITAL
+  - CORREOS_CHILE
+  - PRESENCIAL
+  - FAX
+  - OTRO
+normalization_rules:
+  - source: E-MAIL
+    target: EMAIL
+  - source: DOC DIGITAL
+    target: DOCDIGITAL
+  - source: DOCDIGITAL
+    target: DOCDIGITAL
+morphisms:
+  relacionado_con:
+    - doc_documento (1:N)

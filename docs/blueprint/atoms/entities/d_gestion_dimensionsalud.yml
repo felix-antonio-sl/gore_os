@@ -1,0 +1,147 @@
+# ==============================================================================
+# GORE_OS Entity Atom: DimensionSalud (Dimensión de Salud Institucional)
+# ==============================================================================
+# Domain: D-GESTION (Control de Gestión y Operación)
+# Subdomain: H_gore (Salud Institucional)
+# Source: domain_d-gestion.md M2, kb_gn_035_estrategia_gestion_koda.yml
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + AR Virtual"
+  domain: D-GESTION
+  subdomain: hgore
+  kb_source:
+    - "domain_d-gestion.md M2: H_gore"
+    - "kb_gn_035 → Gestion_Riesgos_en_GORE"
+    - "dialogo_riguroso_d_gestion.md"
+
+entity:
+  id: ENT-GESTION-DIMENSION-SALUD
+  name: DimensionSalud
+  name_es: Dimensión de Salud Institucional
+  description: |
+    Define una de las 7 dimensiones que componen el puntaje H_gore.
+
+    Dimensiones según domain_d-gestion.md:
+    1. Ejecución Presupuestaria (20%)
+    2. Cartera de IPR (20%)
+    3. Responsabilidades/Mora (20%)
+    4. Cumplimiento Normativo (15%)
+    5. Convenios (10%)
+    6. Cumplimiento TDE (10%)
+    7. Satisfacción (5%)
+
+    Cada dimensión tiene indicadores y pesos configurables.
+
+  purpose: |
+    Modelar dimensiones H_gore para:
+    - Configurar pesos y umbrales
+    - Definir indicadores por dimensión
+    - Establecer fuentes de datos
+    - Calcular puntajes normalizados
+
+  categorical_type: Object
+  is_abstract: false
+  category: Reference
+
+attributes:
+  - name: id_dimension
+    type: String
+    key: true
+    description: "Identificador único (ej: DIM-HGORE-EJEC)"
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: "Código corto (ej: EJEC, IPR, MORA)"
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre de la dimensión
+
+  - name: descripcion
+    type: Text
+    nullable: true
+    description: Descripción detallada
+
+  # Ponderación
+  - name: peso_porcentual
+    type: Decimal
+    nullable: false
+    description: Peso en el cálculo H_gore (suma = 100%)
+
+  # Umbrales
+  - name: umbral_verde
+    type: Decimal
+    default: 80
+    description: Puntaje mínimo para estado verde
+
+  - name: umbral_amarillo
+    type: Decimal
+    default: 60
+    description: Puntaje mínimo para estado amarillo
+
+  - name: umbral_critico
+    type: Decimal
+    default: 50
+    description: Umbral para alerta FÉNIX
+
+  # Fuente de datos
+  - name: fuente_datos
+    type: Enum[D-FIN, D-EJEC, D-BACK, D-NORM, D-TDE, Encuesta, Calculado]
+    nullable: false
+    description: Dominio o fuente de los indicadores
+
+  - name: indicadores
+    type: Array[String]
+    nullable: true
+    description: IDs de indicadores que componen la dimensión
+
+  - name: formula_calculo
+    type: Text
+    nullable: true
+    description: Fórmula para calcular puntaje normalizado (0-100)
+
+  # Frecuencia
+  - name: frecuencia_actualizacion
+    type: Enum[Diaria, Semanal, Mensual]
+    default: Semanal
+    description: Frecuencia de recálculo
+
+  # Estado
+  - name: activa
+    type: Boolean
+    default: true
+    description: ¿Dimensión activa en cálculo?
+
+  - name: orden_visualizacion
+    type: Integer
+    nullable: true
+    description: Orden en dashboard
+
+invariants:
+  - id: INV-DIM-001
+    name: peso_valido
+    rule: peso_porcentual > 0 AND peso_porcentual <= 100
+    description: Peso debe estar entre 0 y 100
+    severity: error
+
+  - id: INV-DIM-002
+    name: umbrales_ordenados
+    rule: umbral_critico < umbral_amarillo AND umbral_amarillo < umbral_verde
+    description: Los umbrales deben estar ordenados
+    severity: error
+
+morphisms:
+  compone: [ENT-GESTION-PUNTAJE-HGORE]
+  alimentada_por: [ENT-FIN, ENT-EJEC, ENT-BACK, ENT-NORM, ENT-TDE]
+
+audit:
+  fields_tracked:
+    - peso_porcentual
+    - activa
+  retention_years: 5

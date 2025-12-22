@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_rel_001:1.0.0
+  type: Story
+  source: plan_especificacion_ddev_dops.md
+id: US-DEV-REL-001
+story_key: us_dev_rel_001
+role_id: ROLE-RELEASE-MANAGER
+as_a: Release Manager
+i_want: generar release notes automáticamente desde PRs
+so_that: se documenten los cambios de forma eficiente y consistente
+domain: D-DEV
+priority: P1
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: ROLE-RELEASE-MANAGER
+  contribuye_a: CAP-DEV-001

@@ -1,0 +1,178 @@
+# ==============================================================================
+# GORE_OS Entity Atom: RecursoIntervencion (Recurso Extraordinario)
+# ==============================================================================
+# Domain: FENIX (Unidad de Intervención Institucional)
+# Subdomain: Recursos
+# Source: dialogo_riguroso_fenix_orko.md (AC + AO)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + Arquitecto ORKO"
+  domain: FENIX
+  subdomain: recursos
+  kb_source:
+    - "dialogo_riguroso_fenix_orko.md"
+    - "ORKO Layer 2: Tejidos"
+
+entity:
+  id: ENT-FENIX-RECURSO
+  name: RecursoIntervencion
+  name_es: Recurso de Intervención
+  description: |
+    Recursos extraordinarios movilizados para una intervención.
+
+    Tipos de recursos:
+    - Financiero: Presupuesto de emergencia, fondos reasignados
+    - Humano: Contrataciones honorarios, horas extra
+    - Material: Vehículos, equipos, insumos
+    - Tecnológico: Licencias, servidores, accesos TDE
+
+    Vincula FENIX con D-FIN, D-BACK, D-TDE para trazabilidad.
+
+  purpose: |
+    Modelar recursos extraordinarios para:
+    - Trazar movilización de recursos en crisis
+    - Vincular con ítems presupuestarios (D-FIN)
+    - Gestionar activos asignados (D-BACK)
+    - Documentar costo real de intervenciones
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_recurso
+    type: String
+    key: true
+    description: "Identificador único"
+
+  - name: intervencion_id
+    type: String
+    fk: ENT-FENIX-INTERVENCION
+    nullable: false
+    description: Intervención que requiere el recurso
+
+  # Clasificación
+  - name: tipo_recurso
+    type: Enum[Financiero, Humano, Material, Tecnologico, Servicios, Otro]
+    nullable: false
+    description: Tipo de recurso
+
+  - name: descripcion
+    type: Text
+    nullable: false
+    description: Descripción del recurso requerido
+
+  - name: cantidad
+    type: Decimal
+    nullable: true
+    description: Cantidad (unidades, horas, etc.)
+
+  - name: unidad
+    type: String
+    nullable: true
+    description: "Unidad de medida (horas, unidades, $)"
+
+  # Costos
+  - name: costo_estimado
+    type: Decimal
+    nullable: true
+    description: Costo estimado en CLP
+
+  - name: costo_real
+    type: Decimal
+    nullable: true
+    description: Costo real incurrido
+
+  # Origen del recurso
+  - name: origen_recurso
+    type: Enum[PresupuestoRegular, Reasignacion, FondoEmergencia, Donacion, Prestamo, Otro]
+    nullable: false
+
+  - name: item_presupuestario_id
+    type: String
+    fk: ENT-FIN-ITEM-PRESUPUESTARIO
+    nullable: true
+    description: Ítem presupuestario origen (D-FIN)
+
+  - name: activo_id
+    type: String
+    nullable: true
+    description: ID de activo si es material (D-BACK)
+
+  - name: dominio_proveedor
+    type: Enum[D-FIN, D-BACK, D-TDE, D-EJEC, Externo]
+    nullable: true
+    description: Dominio que provee el recurso
+
+  # Estado
+  - name: estado_solicitud
+    type: Enum[Solicitado, Aprobado, Rechazado, EnProvision, Provisto, Liberado]
+    default: Solicitado
+    description: Estado de la solicitud
+
+  - name: fecha_solicitud
+    type: Date
+    nullable: false
+
+  - name: fecha_provision
+    type: Date
+    nullable: true
+    description: Fecha de entrega/provisión
+
+  - name: fecha_liberacion
+    type: Date
+    nullable: true
+    description: Fecha de devolución si aplica
+
+  # Responsabilidad
+  - name: solicitante_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: aprobador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+
+  # Urgencia
+  - name: urgencia
+    type: Enum[Inmediata, Alta, Media, Baja]
+    default: Alta
+
+  - name: critico_para_intervencion
+    type: Boolean
+    default: false
+    description: ¿La intervención depende de este recurso?
+
+  # Observaciones
+  - name: observaciones
+    type: Text
+    nullable: true
+
+invariants:
+  - id: INV-REC-001
+    name: provisto_requiere_aprobacion
+    rule: estado_solicitud = 'Provisto' → aprobador_id IS NOT NULL
+    description: Provisión requiere aprobación previa
+
+  - id: INV-REC-002
+    name: financiero_requiere_item
+    rule: tipo_recurso = 'Financiero' → item_presupuestario_id IS NOT NULL
+    description: Recurso financiero debe tener ítem presupuestario
+    severity: warning
+
+morphisms:
+  pertenece_a: [ENT-FENIX-INTERVENCION]
+  proviene_de: [ENT-FIN-ITEM-PRESUPUESTARIO, ENT-BACK-ACTIVO, D-TDE]
+  solicitado_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado_solicitud
+    - costo_real
+  retention_years: 10

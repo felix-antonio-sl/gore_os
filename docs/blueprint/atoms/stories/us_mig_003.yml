@@ -1,0 +1,25 @@
+_meta:
+  urn: urn:goreos:atom:story:us_mig_003:1.0.0
+  type: Story
+  source: catalogo_exhaustivo_ddev_dops.md
+id: US-MIG-003
+story_key: us_mig_003
+role_id: ROLE-QA
+as_a: QA
+i_want: validar la integridad de los datos migrados
+so_that: se garantice que los datos legacy estén completos y correctos antes de producción
+domain: D-OPS
+module: M10-LEGACY
+priority: P0
+description: |
+  Suite de validación post-migración que verifica integridad referencial,
+  detecta huérfanos, valida cruces entre fuentes y genera reporte de calidad.
+acceptance_criteria:
+  - Suite de tests ejecutable
+  - Reporte de calidad generado
+  - 0 errores críticos para aprobación
+  - Issues documentados para corrección
+capability_bundle_id: CAP-OPS-LEGACY
+morphisms:
+  protagonizado_por: ROLE-QA
+  contribuye_a: CAP-OPS-LEGACY

@@ -1,0 +1,221 @@
+# ==============================================================================
+# GORE_OS Entity Atom: SolicitudARCO (Solicitud Derechos ARCO)
+# ==============================================================================
+# Domain: D-TDE (Gobernanza Digital)
+# Subdomain: M4 Protección de Datos
+# Source: dialogo_riguroso_d_tde.md, Ley 21.719
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: proteccion_datos
+  kb_source:
+    - "Ley 21.719: Protección de Datos Personales"
+    - "dialogo_riguroso_d_tde.md"
+
+entity:
+  id: ENT-TDE-SOLICITUD-ARCO
+  name: SolicitudARCO
+  name_es: Solicitud de Derechos ARCO
+  description: |
+    Solicitud ciudadana para ejercer derechos sobre sus datos personales
+    conforme a Ley 21.719.
+
+    Derechos ARCO:
+    - Acceso: Conocer qué datos se tienen
+    - Rectificación: Corregir datos inexactos
+    - Cancelación: Eliminar datos (supresión)
+    - Oposición: Oponerse al tratamiento
+
+    Plazo legal: 30 días corridos para responder (ampliable por 30 días más).
+    Permite bloqueo temporal mientras se resuelve (Art. 8 ter).
+
+  purpose: |
+    Modelar solicitudes ARCO para:
+    - Cumplir Ley 21.719
+    - Gestionar plazos legales
+    - Trazar resoluciones
+    - Reportar a Agencia Protección Datos
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_solicitud
+    type: String
+    key: true
+    description: "Identificador único"
+
+  - name: codigo
+    type: String
+    nullable: true
+    description: "Código interno (ej: ARCO-2025-001)"
+
+  # Titular
+  - name: rut_titular
+    type: String
+    nullable: false
+    description: RUT del titular de los datos
+
+  - name: nombre_titular
+    type: String
+    nullable: false
+    description: Nombre completo del titular
+
+  - name: email_titular
+    type: String
+    nullable: false
+    description: Email para notificaciones
+
+  - name: telefono_titular
+    type: String
+    nullable: true
+
+  # Representante
+  - name: es_representante
+    type: Boolean
+    default: false
+    description: ¿Solicitud por representante?
+
+  - name: nombre_representante
+    type: String
+    nullable: true
+
+  - name: rut_representante
+    type: String
+    nullable: true
+
+  # Derecho solicitado
+  - name: tipo_derecho
+    type: Enum[Acceso, Rectificacion, Cancelacion, Oposicion]
+    nullable: false
+    description: Derecho ARCO solicitado
+
+  - name: descripcion
+    type: Text
+    nullable: false
+    description: Descripción de la solicitud
+
+  - name: datos_afectados
+    type: Array[String]
+    nullable: true
+    description: Datos específicos involucrados
+
+  - name: fundamento
+    type: Text
+    nullable: true
+    description: Fundamento legal o motivo
+
+  # Estado
+  - name: estado
+    type: Enum[Recibida, EnEvaluacion, Aceptada, RechazadaParcial, Rechazada, Ejecutada, Cerrada]
+    default: Recibida
+    description: Estado de la solicitud
+
+  - name: motivo_rechazo
+    type: Text
+    nullable: true
+    description: Motivo si fue rechazada
+
+  # Temporalidad
+  - name: fecha_ingreso
+    type: Date
+    nullable: false
+    description: Fecha de ingreso
+
+  - name: fecha_limite
+    type: Date
+    computed: true
+    formula: fecha_ingreso + 15 DIAS_HABILES
+    description: Fecha límite de respuesta (15 días hábiles)
+
+  - name: fecha_respuesta
+    type: Date
+    nullable: true
+    description: Fecha de respuesta efectiva
+
+  - name: dias_transcurridos
+    type: Integer
+    computed: true
+
+  - name: dentro_plazo
+    type: Boolean
+    computed: true
+    formula: fecha_respuesta <= fecha_limite OR fecha_respuesta IS NULL
+
+  - name: prorroga_solicitada
+    type: Boolean
+    default: false
+    description: ¿Se solicitó prórroga?
+
+  - name: fecha_limite_prorrogada
+    type: Date
+    nullable: true
+
+  # Bloqueo Temporal (Art. 8 ter Ley 21.719)
+  - name: bloqueo_temporal_solicitado
+    type: Boolean
+    default: false
+    description: "¿Titular solicitó bloqueo temporal mientras se resuelve?"
+
+  - name: bloqueo_temporal_vigente
+    type: Boolean
+    default: false
+    description: "¿Bloqueo temporal activo? Responsable tiene 2 días para responder"
+
+  # Responsabilidad
+  - name: dpo_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: DPO responsable
+
+  - name: unidad_tratamiento_id
+    type: String
+    fk: ENT-BACK-DIVISION
+    nullable: true
+    description: Unidad que tiene los datos
+
+  # Resolución
+  - name: resolucion
+    type: Text
+    nullable: true
+    description: Resolución de la solicitud
+
+  - name: acto_administrativo_id
+    type: String
+    fk: ENT-NORM-ACTO
+    nullable: true
+    description: Acto administrativo de respuesta
+
+  # Reportes
+  - name: reportado_apd
+    type: Boolean
+    default: false
+    description: ¿Reportado a Agencia Protección Datos?
+
+invariants:
+  - id: INV-ARCO-001
+    name: respuesta_en_plazo
+    rule: estado NOT IN ('Recibida', 'EnEvaluacion') → fecha_respuesta IS NOT NULL
+    description: Solicitud resuelta debe tener fecha respuesta
+
+  - id: INV-ARCO-002
+    name: rechazo_requiere_motivo
+    rule: estado IN ('Rechazada', 'RechazadaParcial') → motivo_rechazo IS NOT NULL
+    description: Rechazo debe tener motivo
+
+morphisms:
+  gestionada_por: [ENT-BACK-FUNCIONARIO]
+  genera: [ENT-NORM-ACTO]
+
+audit:
+  fields_tracked:
+    - estado
+    - fecha_respuesta
+  retention_years: 5

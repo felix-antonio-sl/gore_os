@@ -1,0 +1,296 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Intervencion (Intervención Institucional)
+# ==============================================================================
+# Domain: FENIX (Unidad de Intervención Institucional)
+# Subdomain: Core
+# Source: domain_fenix.md, dialogo_riguroso_fenix.md
+# ==============================================================================
+
+_metadata:
+  version: "2.0.0"
+  status: active
+  created_at: "2025-12-22"
+  updated_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + AR Virtual + Arquitecto ORKO"
+  domain: FENIX
+  subdomain: core
+  kb_source:
+    - "domain_fenix.md"
+    - "dialogo_orquestado_dgestion_fenix.md (P2 refinement)"
+
+entity:
+  id: ENT-FENIX-INTERVENCION
+  name: Intervencion
+  name_es: Intervención Institucional
+  description: |
+    Representa una intervención institucional activada por FENIX.
+
+    Niveles de intervención:
+    - Nivel I: Contingencia Crítica (1-4 semanas)
+    - Nivel II: Procesos Estancados (2-6 semanas)
+    - Nivel III: Aceleración de Iniciativas (2-8 semanas)
+    - Nivel IV: Mejora Institucional (4-12 semanas)
+
+    El ciclo de vida es:
+    DETECTADA → EN_DIAGNOSTICO → PLANIFICADA → EN_EJECUCION → EN_CIERRE → CERRADA
+
+  purpose: |
+    Modelar intervenciones para:
+    - Registrar crisis y respuestas institucionales
+    - Coordinar equipos de intervención
+    - Medir efectividad de acciones
+    - Generar aprendizajes institucionales
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_intervencion
+    type: String
+    key: true
+    description: "Identificador único (ej: INT-2025-001)"
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: "Código de intervención"
+
+  # Clasificación
+  - name: nivel
+    type: Enum[I, II, III, IV]
+    nullable: false
+    description: Nivel de intervención
+
+  - name: categoria
+    type: Enum[ContingenciaCritica, ProcesoEstancado, AceleracionIniciativa, MejoraInstitucional]
+    nullable: false
+    description: Categoría según domain_fenix.md
+
+  - name: criticidad
+    type: Integer
+    nullable: false
+    description: "Escala 1-5 (5 = máxima criticidad)"
+
+  # Estado
+  - name: estado
+    type: Enum[Detectada, EnDiagnostico, Planificada, EnEjecucion, EnCierre, Cerrada, Cancelada]
+    default: Detectada
+    description: Estado del ciclo de vida
+
+  # Objetivo
+  - name: objetivo
+    type: Text
+    nullable: false
+    description: Objetivo específico y medible
+
+  - name: descripcion_situacion
+    type: Text
+    nullable: true
+    description: Descripción de la situación a intervenir
+
+  # Origen
+  - name: dominio_origen
+    type: Enum[D-FIN, D-EJEC, D-GOB, D-NORM, D-BACK, D-TDE, D-TERR, D-GESTION, D-SEG, D-PLAN, Transversal]
+    nullable: false
+    description: Dominio donde se detectó la necesidad
+
+  - name: dominios_involucrados
+    type: Array[String]
+    nullable: true
+    description: Dominios afectados por la intervención
+
+  # Trigger
+  - name: trigger_tipo
+    type: Enum[Automatico, Manual]
+    nullable: false
+    description: Tipo de activación
+
+  - name: trigger_origen_id
+    type: String
+    nullable: true
+    description: "ID del trigger (H_gore, IPR, Convenio, etc.)"
+
+  - name: trigger_descripcion
+    type: Text
+    nullable: true
+    description: Descripción del evento disparador
+
+  # Autorización
+  - name: autoriza_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: "GR para Nivel I-II, AR para III-IV"
+
+  - name: autoriza_rol
+    type: Enum[Gobernador, AdministradorRegional]
+    nullable: false
+
+  - name: fecha_autorizacion
+    type: Date
+    nullable: true
+
+  # Responsabilidad
+  - name: jefe_intervencion_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Jefe de la fuerza de tarea
+
+  # Temporalidad
+  - name: fecha_deteccion
+    type: Date
+    nullable: false
+    description: Fecha de detección
+
+  - name: fecha_inicio
+    type: Date
+    nullable: true
+    description: Inicio de ejecución
+
+  - name: fecha_fin_planificada
+    type: Date
+    nullable: true
+    description: Fecha objetivo de cierre
+
+  - name: fecha_cierre
+    type: Date
+    nullable: true
+    description: Fecha real de cierre
+
+  - name: duracion_dias
+    type: Integer
+    computed: true
+    formula: DATEDIFF(fecha_cierre, fecha_inicio)
+    description: Duración real en días
+
+  - name: dentro_plazo
+    type: Boolean
+    computed: true
+    formula: fecha_cierre <= fecha_fin_planificada
+
+  # Métricas
+  - name: indicadores_exito
+    type: JSON
+    nullable: true
+    description: |
+      Métricas definidas:
+      [{
+        "indicador": "...",
+        "meta": 0,
+        "peso": 0.2
+      }]
+
+  - name: metricas_pre
+    type: JSON
+    nullable: true
+    description: Situación antes de intervenir
+
+  - name: metricas_post
+    type: JSON
+    nullable: true
+    description: Situación después de intervenir
+
+  - name: resultado
+    type: Enum[Exitosa, Parcial, Fallida, Escalada]
+    nullable: true
+    description: Resultado final
+
+  - name: puntaje_exito
+    type: Decimal
+    nullable: true
+    description: "Puntaje calculado (0-100)"
+
+  # Notificaciones
+  - name: notificado_core
+    type: Boolean
+    default: false
+    description: "Notificar Comisión de Control CORE para Nivel I-II"
+
+  - name: fecha_notificacion_core
+    type: Date
+    nullable: true
+
+  # Cierre
+  - name: informe_cierre_url
+    type: String
+    nullable: true
+    description: URL del informe final
+
+  - name: observaciones_cierre
+    type: Text
+    nullable: true
+
+  # ===== ATRIBUTOS P2 (dialogo_orquestado) =====
+  - name: decreto_aprobacion_id
+    type: String
+    nullable: true
+    description: "ID decreto GR para Nivel I (obligatorio según LOC 19.175)"
+
+  - name: costo_total_estimado
+    type: Decimal
+    computed: true
+    formula: SUM(RecursoIntervencion.costo_estimado)
+    description: "Costo total estimado (suma de RecursoIntervencion)"
+
+  - name: costo_total_real
+    type: Decimal
+    computed: true
+    formula: SUM(RecursoIntervencion.costo_real)
+    description: "Costo total real incurrido"
+
+invariants:
+  - id: INV-INT-001
+    name: nivel_12_requiere_gr
+    rule: nivel IN ('I', 'II') → autoriza_rol = 'Gobernador'
+    description: Niveles I y II requieren autorización del Gobernador
+    severity: error
+
+  - id: INV-INT-002
+    name: cerrada_requiere_resultado
+    rule: estado = 'Cerrada' → resultado IS NOT NULL
+    description: Intervención cerrada debe tener resultado
+    severity: error
+
+  - id: INV-INT-003
+    name: core_notificado_nivel_12
+    rule: nivel IN ('I', 'II') AND estado = 'EnEjecucion' → notificado_core = TRUE
+    description: Nivel I-II requiere notificación a CORE
+    severity: warning
+
+  - id: INV-INT-004
+    name: ejecucion_requiere_autorizacion
+    rule: estado = 'EnEjecucion' → fecha_autorizacion IS NOT NULL
+    description: Ejecución requiere autorización previa
+
+lifecycle:
+  states:
+    - name: Detectada
+      description: Situación identificada
+    - name: EnDiagnostico
+      description: Equipo evaluando
+    - name: Planificada
+      description: Plan de acción definido
+    - name: EnEjecucion
+      description: Intervención activa
+    - name: EnCierre
+      description: Normalizando flujos
+    - name: Cerrada
+      description: Intervención finalizada
+    - name: Cancelada
+      description: Intervención abortada
+
+morphisms:
+  activada_por: [ENT-GESTION-PUNTAJE-HGORE, ENT-FIN-IPR, ENT-EJEC-CONVENIO]
+  compuesta_por: [ENT-FENIX-EQUIPO]
+  registrada_en: [ENT-FENIX-BITACORA]
+  genera: [ENT-FENIX-APRENDIZAJE]
+  autorizada_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - resultado
+    - criticidad
+  retention_years: 10

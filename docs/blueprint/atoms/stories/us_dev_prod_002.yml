@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_prod_002:1.0.0
+  type: Story
+  source: plan_especificacion_ddev_dops.md
+id: US-DEV-PROD-002
+story_key: us_dev_prod_002
+role_id: ROLE-PO
+as_a: Product Owner
+i_want: visualizar el roadmap de releases
+so_that: pueda comunicar las expectativas a los stakeholders
+domain: D-DEV
+priority: P1
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: ROLE-PO
+  contribuye_a: CAP-DEV-001

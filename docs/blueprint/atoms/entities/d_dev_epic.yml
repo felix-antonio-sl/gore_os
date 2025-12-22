@@ -1,0 +1,94 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Epic
+# ==============================================================================
+# Domain: D-DEV (Desarrollo del Sistema)
+# Subdomain: Gestión de Producto (M1)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-DEV
+  subdomain: gestion_producto
+
+entity:
+  id: ENT-DEV-EPIC
+  name: Epic
+  name_es: Épica
+  description: |
+    Iniciativa de alto nivel que agrupa múltiples historias de usuario
+    relacionadas. Representa una capacidad grande que aporta valor de negocio
+    y requiere múltiples sprints para completarse.
+
+  purpose: |
+    Modelar épicas para:
+    - Organización jerárquica del backlog
+    - Trazabilidad de features a nivel estratégico
+    - Planificación de roadmap de producto
+
+  categorical_type: Object
+  is_abstract: false
+  category: Product
+
+attributes:
+  - name: id_epic
+    type: String
+    key: true
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: "Código único ej: EPIC-001"
+
+  - name: titulo
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+    nullable: true
+
+  - name: estado
+    type: Enum[Backlog, InProgress, Done, Cancelled]
+    default: Backlog
+
+  - name: prioridad
+    type: Enum[P0_Critica, P1_Alta, P2_Media, P3_Baja]
+    default: P2_Media
+
+  - name: propietario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: "Product Owner responsable"
+
+  - name: fecha_creacion
+    type: Date
+    nullable: false
+
+  - name: fecha_objetivo
+    type: Date
+    nullable: true
+
+  - name: porcentaje_completado
+    type: Decimal
+    computed: true
+    formula: stories_done / stories_total * 100
+
+invariants:
+  - id: INV-EPIC-001
+    name: epic_tiene_stories
+    rule: estado = 'Done' → stories.count > 0
+    description: "Una épica completada debe tener al menos una story"
+
+morphisms:
+  tiene_stories: [ENT-DEV-STORY]
+  asignada_a: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - prioridad
+  retention_years: 5

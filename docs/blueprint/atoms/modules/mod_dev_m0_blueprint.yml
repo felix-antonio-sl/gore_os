@@ -1,0 +1,33 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_dev_m0:1.0.0
+  type: Module
+id: MOD-DEV-M0
+name: Blueprint Categórico y KODA Sync
+code: M0
+domain: D-DEV
+description: Sincronización de Blueprint Categórico, validación KODA, gobernanza multi-agente y verificación de ontología.
+priority: P0
+orko_integration:
+  primitives: [P1, P2, P3, P4, P5, TF]
+  categorical_elements: [URN, Morphism, Composition, Aggregation]
+stories:
+  - US-DEV-BP-001
+  - US-DEV-BP-002
+  - US-DEV-BP-003
+  - US-DEV-BP-004
+  - US-DEV-BP-005
+  - US-DEV-BP-006
+  - US-DEV-BP-007
+  - US-DEV-BP-008
+  - US-DEV-KODA-001
+  - US-DEV-KODA-002
+  - US-DEV-KODA-003
+  - US-DEV-KODA-004
+scripts:
+  - verify_ontology.py
+  - validate_koda.py
+stats:
+  p0_stories: 3
+  p1_stories: 5
+  p2_stories: 4
+  total: 12

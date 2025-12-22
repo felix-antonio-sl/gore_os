@@ -1,0 +1,176 @@
+# ==============================================================================
+# GORE_OS Entity Atom: PuntajeSaludGore (Registro H_gore)
+# ==============================================================================
+# Domain: D-GESTION (Control de Gestión y Operación)
+# Subdomain: H_gore (Salud Institucional)
+# Source: domain_d-gestion.md M2, dialogo_riguroso_d_gestion.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + AR Virtual"
+  domain: D-GESTION
+  subdomain: hgore
+  kb_source:
+    - "domain_d-gestion.md M2: H_gore"
+    - "dialogo_riguroso_d_gestion.md"
+
+entity:
+  id: ENT-GESTION-PUNTAJE-HGORE
+  name: PuntajeSaludGore
+  name_es: Puntaje de Salud Institucional
+  description: |
+    Registro temporal del puntaje H_gore calculado.
+
+    Fórmula: H_gore = Σ (peso_i × puntaje_normalizado_i)
+    Escala: 0-100 | Objetivo: ≥80 (zona verde)
+
+    Umbrales de escalamiento:
+    - H_gore < 60 (2 semanas) → Notificación + Playbook P01
+    - H_gore < 50 → Activación FÉNIX Nivel IV
+
+  purpose: |
+    Registrar snapshots de H_gore para:
+    - Series temporales de salud institucional
+    - Drill-down por dimensión
+    - Tendencia histórica (7-30-90 días)
+    - Detección de degradación sostenida
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_puntaje
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: fecha
+    type: Date
+    nullable: false
+    description: Fecha del cálculo
+
+  - name: hora_calculo
+    type: Time
+    nullable: true
+    description: Hora del cálculo
+
+  # Valor compuesto
+  - name: valor_compuesto
+    type: Decimal
+    nullable: false
+    description: H_gore calculado (0-100)
+
+  - name: valor_anterior
+    type: Decimal
+    nullable: true
+    description: H_gore del período anterior
+
+  - name: variacion
+    type: Decimal
+    computed: true
+    formula: valor_compuesto - valor_anterior
+    description: Cambio respecto a período anterior
+
+  # Puntajes por dimensión (JSON)
+  - name: puntajes_dimension
+    type: JSON
+    nullable: false
+    description: "Map {dimension_id: puntaje}"
+
+  - name: dimensiones_criticas
+    type: Array[String]
+    computed: true
+    description: IDs de dimensiones bajo umbral
+
+  # Semáforo
+  - name: estado_semaforo
+    type: Enum[Verde, Amarillo, Rojo]
+    computed: true
+    formula: |
+      CASE 
+        WHEN valor_compuesto >= 80 THEN 'Verde'
+        WHEN valor_compuesto >= 60 THEN 'Amarillo'
+        ELSE 'Rojo'
+      END
+    description: Estado visual
+
+  - name: tendencia
+    type: Enum[Mejorando, Estable, Degradando]
+    nullable: true
+    description: Tendencia últimos 7 días
+
+  # Alertas
+  - name: alerta_generada
+    type: Boolean
+    default: false
+    description: ¿Se generó alerta?
+
+  - name: tipo_alerta
+    type: Enum[Ninguna, NotificacionDireccion, ActivacionFENIX]
+    default: Ninguna
+    description: Tipo de alerta si aplica
+
+  - name: playbook_activado_id
+    type: String
+    fk: ENT-GESTION-EJECUCION-PLAYBOOK
+    nullable: true
+    description: Playbook activado por esta alerta
+
+  # Contexto
+  - name: observaciones
+    type: Text
+    nullable: true
+    description: Notas sobre el período
+
+  - name: eventos_relevantes
+    type: Array[String]
+    nullable: true
+    description: Eventos que afectaron el puntaje
+
+invariants:
+  - id: INV-HGORE-001
+    name: rango_valido
+    rule: valor_compuesto >= 0 AND valor_compuesto <= 100
+    description: Puntaje debe estar entre 0 y 100
+    severity: error
+
+  - id: INV-HGORE-002
+    name: alerta_rojo_sostenido
+    rule: |
+      (SELECT COUNT(*) FROM PuntajeSaludGore p2 
+       WHERE p2.fecha >= CURRENT_DATE - 14 
+       AND p2.estado_semaforo = 'Rojo') >= 2*7
+      → alerta_generada = TRUE AND tipo_alerta IN ('NotificacionDireccion', 'ActivacionFENIX')
+    description: 2 semanas en rojo activa alerta
+    severity: error
+
+  - id: INV-HGORE-003
+    name: critico_activa_fenix
+    rule: valor_compuesto < 50 → tipo_alerta = 'ActivacionFENIX'
+    description: Puntaje crítico activa FÉNIX
+
+lifecycle:
+  events:
+    - name: CalculoCompletado
+      description: H_gore calculado exitosamente
+    - name: AlertaGenerada
+      description: Se detectó degradación
+    - name: FENIXActivado
+      description: Se activó protocolo de crisis
+
+morphisms:
+  compuesto_por: [ENT-GESTION-DIMENSION-SALUD]
+  alimentado_por: [ENT-GESTION-POA, ENT-FIN, ENT-EJEC, ENT-NORM]
+  activa: [ENT-GESTION-EJECUCION-PLAYBOOK]
+  escala_a: [FENIX]
+
+audit:
+  fields_tracked:
+    - valor_compuesto
+    - estado_semaforo
+    - alerta_generada
+  retention_years: 5

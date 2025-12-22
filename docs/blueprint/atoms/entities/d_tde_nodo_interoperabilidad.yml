@@ -1,0 +1,137 @@
+# ==============================================================================
+# GORE_OS Entity Atom: NodoInteroperabilidad
+# ==============================================================================
+# Domain: D-TDE (Transformación Digital del Estado)
+# Subdomain: Plataformas Compartidas - PISEE
+# Source: KB-027 Red de Interoperabilidad PISEE
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + DigiTrans"
+  domain: D-TDE
+  subdomain: plataformas_interoperabilidad
+  kb_source:
+    - "urn:knowledge:tde:lineamientos:plataforma_pisee_interoperabilidad:1.0.0"
+    - "dialogo_plataformas_d_tde.md"
+
+entity:
+  id: ENT-TDE-NODO-INTEROPERABILIDAD
+  name: NodoInteroperabilidad
+  name_es: Nodo de Interoperabilidad PISEE
+  description: |
+    Componente de software alojado en la infraestructura del OAE que le permite
+    conectarse a la red de interoperabilidad PISEE, consumir y proveer servicios
+    de interoperabilidad cumpliendo estándares técnicos (Decreto 12).
+
+    Cada institución puede tener nodos de Desarrollo y Producción.
+
+  purpose: |
+    Modelar nodos PISEE para:
+    - Inventario CMDB de infraestructura TDE
+    - Trazabilidad de habilitaciones
+    - Catálogo de servicios publicados/consumidos
+    - Gobernanza de interoperabilidad
+
+  categorical_type: Object
+  is_abstract: false
+  category: Infrastructure
+
+attributes:
+  # Identificación
+  - name: id_nodo
+    type: String
+    key: true
+
+  # Institución
+  - name: entidad_id
+    type: String
+    fk: ENT-TDE-ENTIDAD-REGIONAL
+    nullable: false
+
+  # Tipo
+  - name: tipo
+    type: Enum[Desarrollo, Produccion]
+    nullable: false
+
+  # Estado
+  - name: estado
+    type: Enum[Solicitado, Habilitado, Activo, Suspendido, Inactivo]
+    default: Solicitado
+
+  # Fechas
+  - name: fecha_solicitud
+    type: Date
+    nullable: false
+
+  - name: fecha_habilitacion
+    type: Date
+    nullable: true
+
+  # Configuración Técnica
+  - name: endpoint_base
+    type: String
+    nullable: true
+    description: "URL base del nodo"
+
+  - name: version_nodo
+    type: String
+    nullable: true
+    description: "Versión del software del nodo"
+
+  # Métricas
+  - name: servicios_publicados_count
+    type: Integer
+    default: 0
+    description: "Número de servicios que provee"
+
+  - name: servicios_consumidos_count
+    type: Integer
+    default: 0
+    description: "Número de servicios que consume"
+
+  - name: transacciones_ultimo_mes
+    type: Integer
+    default: 0
+    description: "Transacciones procesadas en últimos 30 días"
+
+  # Contactos
+  - name: admin_tecnico_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: "Funcionario técnico responsable del nodo"
+
+  - name: admin_negocio_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: "Funcionario de negocio responsable"
+
+invariants:
+  - id: INV-NODO-001
+    name: produccion_requiere_habilitacion
+    rule: tipo = 'Produccion' AND estado = 'Activo' → fecha_habilitacion IS NOT NULL
+    description: "Nodos de producción activos requieren fecha de habilitación"
+
+  - id: INV-NODO-002
+    name: endpoint_requerido_si_activo
+    rule: estado = 'Activo' → endpoint_base IS NOT NULL
+    description: "Nodos activos requieren endpoint configurado"
+
+morphisms:
+  pertenece_a: [ENT-TDE-ENTIDAD-REGIONAL]
+  provee: [ENT-TDE-SERVICIO-INTEROPERABILIDAD]
+  consume: [ENT-TDE-SERVICIO-INTEROPERABILIDAD]
+  gestionado_por: [ENT-TDE-SGD]
+  ejecuta: [ENT-TDE-TRANSACCION-PISEE]
+
+audit:
+  fields_tracked:
+    - estado
+    - servicios_publicados_count
+    - servicios_consumidos_count
+  retention_years: 10
+  legal_basis: "Decreto 12, Norma Técnica de Interoperabilidad"

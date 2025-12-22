@@ -1,0 +1,108 @@
+# ==============================================================================
+# GORE_OS Entity Atom: ArtefactoBuild
+# ==============================================================================
+# Domain: D-DEV (Desarrollo del Sistema)
+# Subdomain: CI/CD & QA (M4)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-DEV
+  subdomain: cicd_qa
+
+entity:
+  id: ENT-DEV-ARTEFACTO-BUILD
+  name: ArtefactoBuild
+  name_es: Artefacto de Build
+  description: |
+    Resultado inmutable de un pipeline de build exitoso.
+    Puede ser imagen Docker, bundle JS, binario, etc.
+
+  purpose: |
+    Modelar artefactos para:
+    - Despliegue reproducible
+    - Versionamiento de binarios
+    - Trazabilidad código → artefacto
+
+  categorical_type: Object
+  is_abstract: false
+  category: Artifact
+
+attributes:
+  - name: id_artefacto
+    type: String
+    key: true
+
+  - name: tipo
+    type: Enum[DockerImage, NpmPackage, Binary, Bundle, Archive]
+    nullable: false
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Ej: goreos-api, goreos-webapp"
+
+  - name: version
+    type: String
+    nullable: false
+    description: "SemVer o hash de commit"
+
+  - name: tag
+    type: String
+    nullable: true
+    description: "Tag de imagen/paquete"
+
+  - name: pipeline_id
+    type: String
+    fk: ENT-DEV-PIPELINE
+    nullable: false
+
+  - name: commit_sha
+    type: String
+    nullable: false
+
+  - name: checksum
+    type: String
+    nullable: false
+    description: "SHA256 para verificar integridad"
+
+  - name: tamaño_bytes
+    type: BigInteger
+    nullable: true
+
+  - name: ubicacion
+    type: String
+    nullable: false
+    description: "URL o path del artefacto"
+
+  - name: fecha_creacion
+    type: DateTime
+    nullable: false
+
+  - name: expiracion
+    type: DateTime
+    nullable: true
+    description: "Para artefactos temporales"
+
+invariants:
+  - id: INV-ARTE-001
+    name: checksum_presente
+    rule: checksum IS NOT NULL
+    description: "Todo artefacto debe tener checksum"
+
+  - id: INV-ARTE-002
+    name: version_formato
+    rule: version MATCHES '^[0-9]+\\.[0-9]+\\.[0-9]+' OR version MATCHES '^[a-f0-9]{7,40}$'
+    description: "Version debe ser SemVer o commit hash"
+
+morphisms:
+  generado_por: [ENT-DEV-PIPELINE]
+  incluido_en: [ENT-DEV-RELEASE]
+  desplegado_en: [ENT-OPS-DESPLIEGUE]
+
+audit:
+  fields_tracked: []
+  retention_years: 5

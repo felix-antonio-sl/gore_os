@@ -1,0 +1,91 @@
+# ==============================================================================
+# GORE_OS Entity Atom: TestCase
+# ==============================================================================
+# Domain: D-DEV (Desarrollo del Sistema)
+# Subdomain: CI/CD & QA (M4)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-DEV
+  subdomain: cicd_qa
+
+entity:
+  id: ENT-DEV-TEST-CASE
+  name: TestCase
+  name_es: Caso de Test
+  description: |
+    Unidad atómica de verificación. Prueba una propiedad específica
+    del código o sistema.
+
+  purpose: |
+    Modelar casos de test para:
+    - Trazabilidad AC → test
+    - Debug de fallos específicos
+    - Historial de ejecuciones
+
+  categorical_type: Object
+  is_abstract: false
+  category: Quality
+
+attributes:
+  - name: id_test
+    type: String
+    key: true
+
+  - name: suite_id
+    type: String
+    fk: ENT-DEV-TEST-SUITE
+    nullable: false
+
+  - name: nombre
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: String
+    nullable: true
+
+  - name: estado
+    type: Enum[Passed, Failed, Skipped, Error]
+    nullable: false
+
+  - name: duracion_ms
+    type: Integer
+    nullable: true
+
+  - name: error_mensaje
+    type: Text
+    nullable: true
+    description: "Mensaje de error si falló"
+
+  - name: stack_trace
+    type: Text
+    nullable: true
+
+  - name: story_id
+    type: String
+    fk: ENT-DEV-STORY
+    nullable: true
+    description: "Story que este test verifica"
+
+  - name: fecha_ejecucion
+    type: DateTime
+    nullable: false
+
+invariants:
+  - id: INV-TC-001
+    name: failed_has_error
+    rule: estado = 'Failed' → error_mensaje IS NOT NULL
+    description: "Test fallido debe tener mensaje de error"
+
+morphisms:
+  pertenece_a: [ENT-DEV-TEST-SUITE]
+  verifica: [ENT-DEV-STORY]
+
+audit:
+  fields_tracked: []
+  retention_years: 1

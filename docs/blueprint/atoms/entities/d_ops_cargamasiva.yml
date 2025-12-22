@@ -1,0 +1,115 @@
+# ==============================================================================
+# GORE_OS Entity Atom: CargaMasiva
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Cargas Masivas (M2)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: cargas_masivas
+
+entity:
+  id: ENT-OPS-CARGA-MASIVA
+  name: CargaMasiva
+  name_es: Carga Masiva de Datos
+  description: |
+    Proceso de ingesta de datos en bulk desde archivos CSV/Excel.
+    Incluye validación, staging y promoción a producción.
+
+  purpose: |
+    Modelar cargas masivas para:
+    - Trazabilidad de ingestas
+    - Validación de calidad de datos
+    - Rollback en caso de error
+
+  categorical_type: Transaction
+  is_abstract: false
+  category: DataOps
+
+attributes:
+  - name: id_carga
+    type: String
+    key: true
+
+  - name: tipo
+    type: String
+    nullable: false
+    description: "Tipo de carga (IPR, Proyectos, Usuarios, etc.)"
+
+  - name: archivo_nombre
+    type: String
+    nullable: false
+
+  - name: archivo_ubicacion
+    type: String
+    nullable: true
+
+  - name: checksum
+    type: String
+    nullable: false
+    description: "Hash del archivo para integridad"
+
+  - name: total_filas
+    type: Integer
+    nullable: false
+
+  - name: filas_exitosas
+    type: Integer
+    default: 0
+
+  - name: filas_fallidas
+    type: Integer
+    default: 0
+
+  - name: estado
+    type: Enum[Subido, Validando, ValidacionFallida, EnStaging, Promovido, Rollback]
+    default: Subido
+
+  - name: errores
+    type: Json
+    nullable: true
+    description: "Detalle de errores por fila"
+
+  - name: subido_por_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: false
+
+  - name: fecha_subida
+    type: DateTime
+    nullable: false
+
+  - name: fecha_validacion
+    type: DateTime
+    nullable: true
+
+  - name: fecha_promocion
+    type: DateTime
+    nullable: true
+
+invariants:
+  - id: INV-CARGA-001
+    name: totales_consistentes
+    rule: total_filas = filas_exitosas + filas_fallidas + filas_pendientes
+    description: "Los totales deben cuadrar"
+
+  - id: INV-CARGA-002
+    name: promovido_sin_errores
+    rule: estado = 'Promovido' → filas_fallidas = 0
+    description: "Solo se promociona si no hay errores"
+
+morphisms:
+  subido_por: [ENT-OPS-USUARIO-SISTEMA]
+  genera_log: [ENT-OPS-LOG-AUDITORIA]
+
+audit:
+  fields_tracked:
+    - estado
+    - filas_exitosas
+    - filas_fallidas
+  retention_years: 5

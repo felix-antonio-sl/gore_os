@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_koda_004:1.0.0
+  type: Story
+  source: catalogo_exhaustivo_ddev_dops.md
+id: US-DEV-KODA-004
+story_key: us_dev_koda_004
+role_id: ROLE-ARQUITECTO
+as_a: Arquitecto
+i_want: auditar atom con koda-tester
+so_that: se tenga score de compliance ≥ 80%
+domain: D-DEV
+module: M0-BLUEPRINT
+priority: P2
+acceptance_criteria:
+  - koda-tester ejecutado
+  - Score de compliance calculado
+  - Score ≥ 80% para aprobación
+capability_bundle_id: CAP-DEV-BLUEPRINT
+morphisms:
+  protagonizado_por: ROLE-ARQUITECTO
+  contribuye_a: CAP-DEV-BLUEPRINT

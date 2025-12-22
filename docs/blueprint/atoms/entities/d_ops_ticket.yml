@@ -1,0 +1,132 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Ticket
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Soporte (M4)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: soporte
+
+entity:
+  id: ENT-OPS-TICKET
+  name: Ticket
+  name_es: Ticket de Soporte
+  description: |
+    Solicitud de soporte o reporte de incidente por parte de un usuario.
+    Sigue un ciclo de vida desde creación hasta resolución.
+
+  purpose: |
+    Modelar tickets para:
+    - Gestión de incidentes
+    - Métricas de soporte (MTTR, SLA)
+    - Base de conocimiento
+
+  categorical_type: Object
+  is_abstract: false
+  category: Support
+
+attributes:
+  - name: id_ticket
+    type: String
+    key: true
+
+  - name: numero
+    type: String
+    nullable: false
+    description: "Número legible ej: TKT-2025-0001"
+
+  - name: tipo
+    type: Enum[Incidente, Solicitud, Consulta, Problema]
+    nullable: false
+
+  - name: categoria
+    type: String
+    nullable: false
+    description: "Categoría del problema"
+
+  - name: titulo
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+    nullable: false
+
+  - name: severidad
+    type: Enum[Critico, Alto, Medio, Bajo]
+    default: Medio
+
+  - name: estado
+    type: Enum[Nuevo, Asignado, EnProgreso, Pendiente, Resuelto, Cerrado]
+    default: Nuevo
+
+  - name: reportado_por_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: false
+
+  - name: asignado_a_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: true
+
+  - name: fecha_creacion
+    type: DateTime
+    nullable: false
+
+  - name: fecha_primera_respuesta
+    type: DateTime
+    nullable: true
+
+  - name: fecha_resolucion
+    type: DateTime
+    nullable: true
+
+  - name: fecha_cierre
+    type: DateTime
+    nullable: true
+
+  - name: sla_respuesta_horas
+    type: Integer
+    nullable: true
+
+  - name: sla_resolucion_horas
+    type: Integer
+    nullable: true
+
+  - name: sla_cumplido
+    type: Boolean
+    computed: true
+
+  - name: resolucion
+    type: Text
+    nullable: true
+
+invariants:
+  - id: INV-TKT-001
+    name: resuelto_tiene_resolucion
+    rule: estado IN ('Resuelto', 'Cerrado') → resolucion IS NOT NULL
+    description: "Ticket resuelto debe tener descripción de resolución"
+
+  - id: INV-TKT-002
+    name: critico_tiene_asignado
+    rule: severidad = 'Critico' AND estado ≠ 'Nuevo' → asignado_a_id IS NOT NULL
+    description: "Ticket crítico debe tener asignado"
+
+morphisms:
+  reportado_por: [ENT-OPS-USUARIO-SISTEMA]
+  asignado_a: [ENT-OPS-USUARIO-SISTEMA]
+  generado_por_alerta: [ENT-OPS-ALERTA]
+
+audit:
+  fields_tracked:
+    - estado
+    - asignado_a_id
+    - severidad
+  retention_years: 5

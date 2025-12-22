@@ -1,0 +1,100 @@
+# ==============================================================================
+# GORE_OS Entity Atom: AsignacionRol
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Gestión IAM (M1)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: gestion_iam
+
+entity:
+  id: ENT-OPS-ASIGNACION-ROL
+  name: AsignacionRol
+  name_es: Asignación de Rol
+  description: |
+    Relación temporal entre un usuario y un rol.
+    Permite asignaciones con fecha de inicio/fin para permisos temporales.
+
+  purpose: |
+    Modelar asignaciones para:
+    - Auditoría de cambios de permisos
+    - Permisos temporales con expiración
+    - Historial de accesos
+
+  categorical_type: Transaction
+  is_abstract: false
+  category: Authorization
+
+attributes:
+  - name: id_asignacion
+    type: String
+    key: true
+
+  - name: usuario_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: false
+
+  - name: rol_id
+    type: String
+    fk: ENT-OPS-ROL
+    nullable: false
+
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+
+  - name: fecha_fin
+    type: Date
+    nullable: true
+    description: "NULL = asignación permanente"
+
+  - name: motivo
+    type: String
+    nullable: true
+    description: "Justificación de la asignación"
+
+  - name: asignado_por_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: false
+
+  - name: estado
+    type: Enum[Activa, Expirada, Revocada]
+    default: Activa
+
+  - name: revocado_por_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: true
+
+  - name: fecha_revocacion
+    type: DateTime
+    nullable: true
+
+invariants:
+  - id: INV-ASIG-001
+    name: fechas_validas
+    rule: fecha_fin IS NULL OR fecha_fin > fecha_inicio
+    description: "Fecha fin debe ser posterior a inicio"
+
+  - id: INV-ASIG-002
+    name: revocada_tiene_datos
+    rule: estado = 'Revocada' → revocado_por_id IS NOT NULL AND fecha_revocacion IS NOT NULL
+    description: "Asignación revocada debe tener auditoría"
+
+morphisms:
+  usuario: [ENT-OPS-USUARIO-SISTEMA]
+  rol: [ENT-OPS-ROL]
+  asignador: [ENT-OPS-USUARIO-SISTEMA]
+
+audit:
+  fields_tracked:
+    - estado
+  retention_years: 10

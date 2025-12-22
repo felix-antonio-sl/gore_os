@@ -1,0 +1,43 @@
+_meta:
+  urn: urn:goreos:atom:entity:programa_regional:1.0.0
+  type: Entity
+id: ENT-MLEG-PROGRAMA-REGIONAL
+name: ProgramaRegional
+name_singular: Programa Regional
+domain: D-OPS
+module: M10-LEGACY
+source: Progs
+description: Programas regionales de inversión extraídos de fuente legacy Progs.
+approximate_rows: 800
+attributes:
+  - name: codigo_programa
+    type: string
+    required: true
+    description: Código único del programa regional
+  - name: nombre_programa
+    type: string
+    required: true
+    description: Nombre del programa
+  - name: eje_estrategico
+    type: string
+    description: Eje estratégico del ERD al que tributa
+  - name: sector
+    type: string
+    description: Sector de inversión
+  - name: presupuesto_total
+    type: decimal
+    description: Presupuesto total del programa
+  - name: anio_inicio
+    type: integer
+    description: Año de inicio del programa
+  - name: anio_termino
+    type: integer
+    description: Año de término estimado
+  - name: estado
+    type: enum
+    values: [PLANIFICACION, EJECUCION, TERMINADO, CANCELADO]
+    description: Estado del programa
+morphisms:
+  relacionado_con:
+    - fin_eje_erd (N:1)
+    - fin_iniciativa (1:N)

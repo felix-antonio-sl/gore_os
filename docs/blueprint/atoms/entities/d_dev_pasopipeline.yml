@@ -1,0 +1,94 @@
+# ==============================================================================
+# GORE_OS Entity Atom: PasoPipeline
+# ==============================================================================
+# Domain: D-DEV (Desarrollo del Sistema)
+# Subdomain: CI/CD & QA (M4)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-DEV
+  subdomain: cicd_qa
+
+entity:
+  id: ENT-DEV-PASO-PIPELINE
+  name: PasoPipeline
+  name_es: Paso de Pipeline
+  description: |
+    Unidad atómica de ejecución dentro de un pipeline.
+    Ej: checkout, install, lint, test, build, deploy.
+
+  purpose: |
+    Modelar pasos para:
+    - Visibilidad granular de ejecución
+    - Identificación de cuellos de botella
+    - Debug de fallos
+
+  categorical_type: Object
+  is_abstract: false
+  category: Automation
+
+attributes:
+  - name: id_paso
+    type: String
+    key: true
+
+  - name: pipeline_id
+    type: String
+    fk: ENT-DEV-PIPELINE
+    nullable: false
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Ej: checkout, install, lint, test, build"
+
+  - name: orden
+    type: Integer
+    nullable: false
+
+  - name: estado
+    type: Enum[Pending, Running, Success, Failed, Skipped]
+    default: Pending
+
+  - name: fecha_inicio
+    type: DateTime
+    nullable: true
+
+  - name: fecha_fin
+    type: DateTime
+    nullable: true
+
+  - name: duracion_ms
+    type: Integer
+    computed: true
+
+  - name: logs_url
+    type: String
+    nullable: true
+
+  - name: exit_code
+    type: Integer
+    nullable: true
+
+invariants:
+  - id: INV-PASO-001
+    name: orden_positivo
+    rule: orden > 0
+    description: "El orden debe ser positivo"
+
+  - id: INV-PASO-002
+    name: failed_has_logs
+    rule: estado = 'Failed' → logs_url IS NOT NULL
+    description: "Paso fallido debe tener logs"
+
+morphisms:
+  pertenece_a: [ENT-DEV-PIPELINE]
+
+audit:
+  fields_tracked:
+    - estado
+  retention_years: 1

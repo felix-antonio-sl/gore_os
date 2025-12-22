@@ -1,0 +1,125 @@
+# ==============================================================================
+# GORE_OS Entity Atom: PullRequest (Solicitud de Cambio)
+# ==============================================================================
+# Domain: D-DEV (Desarrollo de Software)
+# Subdomain: M2 Calidad y Colaboración
+# Source: dialogo_profundo_dev_ops.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + Ingeniero GORE_OS"
+  domain: D-DEV
+  subdomain: code_review
+  kb_source:
+    - "GitHub Flow"
+    - "dialogo_profundo_dev_ops.md"
+
+entity:
+  id: ENT-DEV-PULLREQUEST
+  name: PullRequest
+  name_es: Solicitud de Cambio (PR/MR)
+  description: |
+    Petición formal para fusionar cambios de una rama de trabajo
+    a la rama principal o de release. Mecanismo central de
+    Code Review y Auditoría de Cambios.
+
+  purpose: |
+    Gestionar cambios para:
+    - Revisar calidad de código (Peer Review)
+    - Ejecutar pruebas automáticas (CI)
+    - Vincular código con requerimientos (Historias)
+    - Aprobar despliegues
+
+  categorical_type: Transaction
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_pr
+    type: String
+    key: true
+    description: "ID global o compuesto (REPO-NUM)"
+
+  - name: numero
+    type: Integer
+    nullable: false
+    description: "Número correlativo en el repo"
+
+  - name: titulo
+    type: String
+    nullable: false
+
+  - name: descripcion
+    type: Text
+    nullable: true
+
+  # Contexto Git
+  - name: repositorio_id
+    type: String
+    fk: ENT-DEV-REPOSITORIO
+    nullable: false
+
+  - name: rama_origen
+    type: String
+    nullable: false
+
+  - name: rama_destino
+    type: String
+    nullable: false
+
+  # Auditoría y Personas
+  - name: autor_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+
+  - name: revisores_ids
+    type: Array[String]
+    # fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+
+  # Vinculación Funcional
+  - name: historias_vinculadas
+    type: Array[String]
+    # fk: ENT-DE-HISTORIA-USUARIO (Link lógico a atom story ID)
+    nullable: true
+    description: "IDs de historias que resuelve este PR"
+
+  # Estado CI/CD
+  - name: estado_ci
+    type: Enum[Pendiente, Exitoso, Fallido, Saltado]
+    default: Pendiente
+
+  # Estado PR
+  - name: estado
+    type: Enum[Abierto, Merged, Cerrado, Draft]
+    default: Abierto
+
+  - name: fecha_creacion
+    type: Timestamp
+    nullable: false
+
+  - name: fecha_cierre
+    type: Timestamp
+    nullable: true
+
+invariants:
+  - id: INV-PR-001
+    name: merge_requiere_ci_exitoso
+    rule: estado = 'Merged' → estado_ci = 'Exitoso'
+    description: No mercar si CI falló (soft rule para hotfix)
+    severity: warning
+
+morphisms:
+  implementa: [HistoriaUsuario]
+  contenido_en: [ENT-DEV-RELEASE]
+
+audit:
+  fields_tracked:
+    - estado
+    - estado_ci
+    - revisores_ids
+  retention_years: 5

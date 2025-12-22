@@ -1,0 +1,105 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Migracion
+# ==============================================================================
+# Domain: D-OPS (Operaciones del Sistema)
+# Subdomain: Migraciones (M7)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Ingeniero Software Composicional"
+  domain: D-OPS
+  subdomain: migraciones
+
+entity:
+  id: ENT-OPS-MIGRACION
+  name: Migracion
+  name_es: Migración de Base de Datos
+  description: |
+    Cambio estructural versionado en la base de datos.
+    Incluye script de migración y rollback.
+
+  purpose: |
+    Modelar migraciones para:
+    - Evolución controlada del schema
+    - Trazabilidad de cambios de BD
+    - Rollback seguro
+
+  categorical_type: Transaction
+  is_abstract: false
+  category: DataOps
+
+attributes:
+  - name: id_migracion
+    type: String
+    key: true
+
+  - name: version
+    type: String
+    nullable: false
+    description: "Versión semántica o timestamp"
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: "Nombre descriptivo de la migración"
+
+  - name: descripcion
+    type: Text
+    nullable: true
+
+  - name: script_up
+    type: Text
+    nullable: false
+    description: "Script de migración"
+
+  - name: script_down
+    type: Text
+    nullable: true
+    description: "Script de rollback"
+
+  - name: estado
+    type: Enum[Pendiente, Aplicada, Fallida, Revertida]
+    default: Pendiente
+
+  - name: ambiente
+    type: Enum[Development, Staging, Production]
+    nullable: false
+
+  - name: fecha_aplicacion
+    type: DateTime
+    nullable: true
+
+  - name: duracion_ms
+    type: Integer
+    nullable: true
+
+  - name: ejecutado_por_id
+    type: String
+    fk: ENT-OPS-USUARIO-SISTEMA
+    nullable: true
+
+  - name: error_mensaje
+    type: Text
+    nullable: true
+
+invariants:
+  - id: INV-MIG-001
+    name: fallida_tiene_error
+    rule: estado = 'Fallida' → error_mensaje IS NOT NULL
+    description: "Migración fallida debe tener mensaje de error"
+
+  - id: INV-MIG-002
+    name: aplicada_tiene_fecha
+    rule: estado = 'Aplicada' → fecha_aplicacion IS NOT NULL
+    description: "Migración aplicada debe tener fecha"
+
+morphisms:
+  ejecutado_por: [ENT-OPS-USUARIO-SISTEMA]
+
+audit:
+  fields_tracked:
+    - estado
+  retention_years: 10

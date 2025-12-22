@@ -1,0 +1,193 @@
+# ==============================================================================
+# GORE_OS Entity Atom: AlertaFenix (Alerta Temprana FENIX)
+# ==============================================================================
+# Domain: FENIX (Unidad de Intervención Institucional)
+# Subdomain: Detección
+# Source: dialogo_riguroso_fenix_orko.md (AC + AO)
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-22"
+  created_by: "Arquitecto Categórico + Arquitecto ORKO"
+  domain: FENIX
+  subdomain: deteccion
+  kb_source:
+    - "dialogo_riguroso_fenix_orko.md"
+    - "domain_fenix.md: Condiciones de Activación Automática"
+
+entity:
+  id: ENT-FENIX-ALERTA
+  name: AlertaFenix
+  name_es: Alerta Temprana FENIX
+  description: |
+    Buffer de entrada para señales que potencialmente ameritan
+    una intervención FENIX.
+
+    Funciona como filtro de triaje:
+    - Recibe triggers automáticos (H_gore < 50, IPR estancada)
+    - Recibe solicitudes manuales de jefaturas
+    - Se evalúa y decide: Descartar, Monitorear, Intervenir
+
+    Evita "ruido" en la entidad principal `Intervencion`.
+
+  purpose: |
+    Modelar alertas para:
+    - Centralizar señales de alerta temprana
+    - Evaluar criticidad antes de crear intervención
+    - Filtrar falsos positivos
+    - Trazar origen de cada intervención
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_alerta
+    type: String
+    key: true
+    description: "Identificador único (ej: ALT-2025-001)"
+
+  - name: codigo
+    type: String
+    nullable: true
+    description: Código corto de alerta
+
+  # Origen
+  - name: fuente
+    type: Enum[Automatica, Manual]
+    nullable: false
+    description: Tipo de activación
+
+  - name: trigger_tipo
+    type: Enum[HGore, IPREstancada, ConvenioVencer, CrisisSeguridad, CGRObservacion, SolicitudJefatura, Otro]
+    nullable: false
+    description: Tipo de disparador
+
+  - name: trigger_origen_id
+    type: String
+    nullable: true
+    description: "ID del objeto origen (PuntajeSaludGore, IPR, etc.)"
+
+  - name: dominio_origen
+    type: Enum[D-GESTION, D-FIN, D-EJEC, D-SEG, D-NORM, D-GOB, D-TDE, Otro]
+    nullable: false
+    description: Dominio donde se originó la alerta
+
+  # Métricas
+  - name: metricas_reportadas
+    type: JSON
+    nullable: true
+    description: |
+      Métricas que dispararon la alerta:
+      {
+        "h_gore": 48,
+        "dias_estancamiento": 95,
+        "monto_en_riesgo": 500000000
+      }
+
+  - name: umbral_violado
+    type: String
+    nullable: true
+    description: "Regla violada (ej: H_gore < 50)"
+
+  # Descripción
+  - name: descripcion
+    type: Text
+    nullable: false
+    description: Descripción de la situación
+
+  - name: impacto_potencial
+    type: Enum[Critico, Alto, Medio, Bajo]
+    nullable: false
+    description: Impacto potencial evaluado
+
+  - name: nivel_sugerido
+    type: Enum[I, II, III, IV]
+    nullable: true
+    description: Nivel de intervención sugerido
+
+  # Evaluación
+  - name: evaluador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Quien evalúa la alerta
+
+  - name: fecha_evaluacion
+    type: Date
+    nullable: true
+
+  - name: evaluacion_preliminar
+    type: Text
+    nullable: true
+    description: Análisis preliminar de la situación
+
+  # Decisión
+  - name: decision
+    type: Enum[Pendiente, Descartar, Monitorear, Intervenir]
+    default: Pendiente
+    description: Decisión tomada
+
+  - name: motivo_decision
+    type: Text
+    nullable: true
+    description: Justificación de la decisión
+
+  # Vinculación
+  - name: intervencion_generada_id
+    type: String
+    fk: ENT-FENIX-INTERVENCION
+    nullable: true
+    description: ID de intervención si se creó
+
+  # Estado
+  - name: estado
+    type: Enum[Nueva, EnEvaluacion, Resuelta, Escalada]
+    default: Nueva
+
+  # Temporalidad
+  - name: fecha_alerta
+    type: DateTime
+    nullable: false
+    description: Fecha/hora de la alerta
+
+  - name: fecha_resolucion
+    type: DateTime
+    nullable: true
+
+  - name: tiempo_respuesta_horas
+    type: Decimal
+    computed: true
+    description: Horas entre alerta y resolución
+
+invariants:
+  - id: INV-ALT-001
+    name: intervenir_genera_intervencion
+    rule: decision = 'Intervenir' → intervencion_generada_id IS NOT NULL
+    description: Decisión de intervenir debe generar intervención
+    severity: error
+
+  - id: INV-ALT-002
+    name: descartar_requiere_motivo
+    rule: decision = 'Descartar' → motivo_decision IS NOT NULL
+    description: Descarte debe justificarse
+    severity: warning
+
+  - id: INV-ALT-003
+    name: critico_requiere_evaluacion_rapida
+    rule: impacto_potencial = 'Critico' AND estado = 'Nueva' → tiempo_respuesta_horas <= 4
+    description: Alertas críticas deben evaluarse en 4 horas
+    severity: warning
+
+morphisms:
+  originada_en: [ENT-GESTION-PUNTAJE-HGORE, ENT-FIN-IPR, ENT-EJEC-CONVENIO]
+  genera: [ENT-FENIX-INTERVENCION]
+  evaluada_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - decision
+    - estado
+  retention_years: 5

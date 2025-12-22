@@ -1,0 +1,25 @@
+_meta:
+  urn: urn:goreos:atom:module:mod_dev_m4:1.0.0
+  type: Module
+id: MOD-DEV-M4
+name: Code Review
+code: M4
+domain: D-DEV
+description: Pull requests, revisiones, aprobaciones, comentarios y métricas de calidad.
+priority: P0
+stories:
+  - US-DEV-REV-001
+  - US-DEV-REV-002
+  - US-DEV-REV-003
+  - US-DEV-REV-004
+  - US-DEV-REV-005
+  - US-DEV-REV-006
+  - US-DEV-REV-007
+entities:
+  - PullRequest
+  - ReviewComment
+stats:
+  p0_stories: 4
+  p1_stories: 2
+  p2_stories: 1
+  total: 7
