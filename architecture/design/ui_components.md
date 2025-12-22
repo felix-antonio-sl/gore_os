@@ -78,20 +78,20 @@ Para garantizar la máxima compatibilidad con el stack GORE_OS (Bun + Hono + Rea
 
 **Componentes GIS Específicos:**
 
-| Componente      | Props                         | Uso                                                                      |
-| :-------------- | :---------------------------- | :----------------------------------------------------------------------- |
-| `LayerSwitcher` | `layers`, `activeLayer`       | Control flotante para alternar entre capas (ej. Inversión vs Normativa). |
-| `GeoFilter`     | `region`, `commune`, `bounds` | Filtros espaciales que actualizan el viewport y los datos cargados.      |
-| `FeaturePopup`  | `feature`, `position`         | Tooltip rico con metadatos del objeto seleccionado en el mapa.           |
+| Componente      | Props / States                                                               | Uso / Accesibilidad                                                                   |
+| :-------------- | :--------------------------------------------------------------------------- | :------------------------------------------------------------------------------------ |
+| `LayerSwitcher` | `layers: Layer[]`, `activeLayerId: string`, `onToggle: (id: string) => void` | Control flotante. **A11y:** Usar `role="menu"` y atajos numéricos para capas rápidas. |
+| `GeoFilter`     | `extent: Bounds`, `filters: FilterState`, `onFilterChange`                   | Filtros espaciales. **A11y:** Anunciar cambios de resultados vía `aria-live`.         |
+| `FeaturePopup`  | `data: FeatureProperties`, `onAction: (a: Action) => void`                   | Tooltip rico. **A11y:** `focus-trap` si contiene botones de acción.                   |
 
 ### Timelines & Procesos
 
 Soporte para visualización temporal (`US-FIN-IPR-007`).
 
-| Componente      | Variantes                | Uso                                                                                                                                          |
-| :-------------- | :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
-| `StatusTracker` | `vertical`, `horizontal` | Muestra el estado actual en una secuencia lineal (ej. Pasos de Postulación). Diferencia visual clara entre `completed`, `current`, `future`. |
-| `AuditTimeline` | `dense`                  | Lista vertical compacta de eventos históricos con timestamp y autor (Logs de auditoría).                                                     |
+| Componente      | Props / States                                                  | Uso / Accesibilidad                                                                               |
+| :-------------- | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| `StatusTracker` | `steps: Step[]`, `currentId: string`, `orientation: 'v' \| 'h'` | Refleja flujo IFML. **A11y:** `aria-current="step"`. Indicadores visuales + textuales de estado.  |
+| `AuditTimeline` | `events: Event[]`, `onExpand: (id: string) => void`             | Logs de auditoría. **A11y:** Navegación por teclado entre eventos; `aria-expanded` para detalles. |
 
 ---
 
@@ -106,4 +106,26 @@ Componentes específicos para interactuar con agentes (D-EVOL).
 
 ---
 
-*GORE_OS UI Components v2.0.0*
+## 6. Mapeo de Interacción y Datos (IFML)
+
+Para formalizar el comportamiento de los componentes en flujos complejos, se definen sus roles según el estándar IFML.
+
+### Tipos de Componentes
+
+| Componente GORE_OS | Estereotipo IFML | Eventos Principales        | Data Binding (In/Out)          |
+| :----------------- | :--------------- | :------------------------- | :----------------------------- |
+| **TanStack Table** | `List`           | `SelectEvent` (onRowClick) | **Out:** `selectedRow: Object` |
+| **Form (+Inputs)** | `Form`           | `SubmitEvent` (onSubmit)   | **Out:** `payload: ZodSchema`  |
+| **MetricCard**     | `Details`        | `N/A`                      | **In:** `metricData: JSON`     |
+| **StatusTracker**  | `ViewComponent`  | `StepSelectEvent`          | **In:** `currentStep: Number`  |
+| **MapLibre**       | `ViewComponent`  | `SelectEvent` (onFeature)  | **Out:** `feature: GeoJSON`    |
+
+### Parámetros y Flujos (Data Binding)
+
+1.  **Navigation Flow:** Al dispararse un `Event` (ej. click en fila de tabla), los parámetros de salida (`Out`) se inyectan en el componente/contenedor destino.
+2.  **Explicit Binding:** Usamos **tRPC** y **TanStack Query** para el binding de datos dinámicos, asegurando que el estado de la UI (`ViewComponent`) sea un reflejo reactivo del `DataBinding` (Base de datos).
+3.  **ContextVariables:** Información persistente (ej. `userID`, `activeCommune`) se maneja vía React Context, mapeando directamente a `DataContextVariable` de IFML.
+
+---
+
+*GORE_OS UI Components v2.1.0 (IFML Compliant)*

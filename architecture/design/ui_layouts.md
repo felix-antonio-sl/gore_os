@@ -7,6 +7,7 @@
 ---
 
 ## 1. App Shell (Layout Principal)
+
 El contenedor base para el 90% de las aplicaciones administrativas de GORE_OS.
 
 ```text
@@ -184,4 +185,24 @@ Diseño específico PWA para inspectores en terreno (`US-ITO-001-01`).
 
 ---
 
-*GORE_OS UI Layouts v2.0.0*
+## 8. Mapeo Arquitectónico (IFML)
+
+Para asegurar la coherencia con el modelo agéntico y la trazabilidad de la navegación, cada layout se mapea a conceptos de la **Interaction Flow Modeling Language (IFML)**.
+
+| Layout GORE_OS     | Concepto IFML               | Lógica de Anidamiento | Propiedades Especiales                    |
+| :----------------- | :-------------------------- | :-------------------- | :---------------------------------------- |
+| **App Shell**      | `ViewContainer` (Top-level) | **AND (Conjunctive)** | Contiene navegación global.               |
+| **Dashboard**      | `ViewContainer`             | **AND (Conjunctive)** | `[D]` (Default) al entrar a la App Shell. |
+| **Split Layout**   | `ViewContainer`             | **AND (Conjunctive)** | Master-Detail simultáneo.                 |
+| **Focused Layout** | `Window`                    | **N/A**               | Puede ser `Modal` o `Modeless`.           |
+| **Public Portal**  | `ViewContainer`             | **XOR (Disjunctive)** | `[L]` (Landmark) para acceso ciudadano.   |
+| **Mobile Field**   | `ViewContainer`             | **XOR (Disjunctive)** | Optimizado para `Device: Mobile`.         |
+
+### Lógica de Visibilidad
+- **XOR (Mutual Exclusion):** Utilizado en pestañas (Tabs) o navegación lateral de módulos, donde solo un contenedor es visible a la vez.
+- **AND (Simultaneous):** Utilizado en Dashboards y Split Layouts, donde múltiples bloques de contenido/funcionalidad coexisten en el visor.
+- **Landmarks [L]:** El Dashboard Principal y el Portal Público actúan como hitos alcanzables desde cualquier estado del sistema.
+
+---
+
+*GORE_OS UI Layouts v2.1.0 (IFML Compliant)*

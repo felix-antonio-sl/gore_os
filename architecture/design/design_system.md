@@ -36,6 +36,7 @@ Funciona en el escritorio del analista, la tablet del supervisor en terreno y el
 ### 🎨 Paleta de Colores
 
 #### Institucional (Brand)
+
 Colores primarios del Gobierno Regional, ajustados para accesibilidad digital.
 
 | Token       | Valor Hex | Uso Principal                  | Texto sobre color |
@@ -101,9 +102,11 @@ Animaciones discretas para mejorar la percepción de velocidad ("Perceived Perfo
 ### 📏 Espaciado y Breakpoints
 
 #### Espaciado (Base 4px)
+
 `space-1` (4px), `space-2` (8px), `space-4` (16px, estándar), `space-6` (24px), `space-8` (32px).
 
 #### Breakpoints
+
 Puntos de quiebre para diseño responsivo (Mobile-First).
 
 | Token | Min-Width | Dispositivo Típico                 |
@@ -117,6 +120,7 @@ Puntos de quiebre para diseño responsivo (Mobile-First).
 ---
 
 ### 🧩 Iconografía
+
 **Standard:** [Lucide Icons](https://lucide.dev/).
 *Estilo:* Lineal, bordes redondeados.
 *Tamaños:* 16px (sm), 20px (base), 24px (lg).
