@@ -1,123 +1,84 @@
 # GORE_OS UI Interaction Patterns
 
-> **Versión 1.0.0** | Parte del Design System
+> **Versión 2.0.0** | Parte del Design System
 >
-> Patrones de interacción estándar para resolver problemas comunes de UI/UX, inspirados en IFML y adaptados a las necesidades de GORE_OS.
+> Patrones de interacción estándar para resolver problemas comunes de UI/UX.
 
 ---
 
-## 1. Patrones Estructurales (Layout Patterns)
+## 1. Patrones Estructurales
 
 ### 📄 Master-Detail (Maestro-Detalle)
-**Uso:** Gestión de registros (CRUD), listados de entidades.
-**Dominios:** D-BACK, D-NORM, M7-Ejecutores.
+**Uso:** Gestión de registros (CRUD).
+- **Master:** Tabla filtrable (`TanStack Table`).
+- **Detail:** Sheet lateral (`shadcn/sheet`) para no perder contexto.
+- **Deep Linking:** La URL cambia `/items?id=123`.
 
-- **Vista Master:** Tabla o Lista con filtros y búsqueda. Muestra resumen de registros.
-- **Vista Detail:** Panel lateral (Sheet) o página dedicada con la información completa del registro seleccionado.
-- **Comportamiento:**
-  - Al hacer click en fila → Abre detalle.
-  - La URL debe cambiar (`/recursos/123`) para permitir compartir enlaces (Deep Linking).
-
-### 📊 Dashboard (Cuandro de Mando)
-**Uso:** Monitoreo, KPIs, Alertas.
-**Dominios:** D-GESTION, D-SEG, D-OPS.
-
-- **Grid Layout:** Tarjetas organizadas en grilla responsive.
-- **Jerarquía:**
-  1. **Top:** KPIs críticos (MetricCards) y Alertas activas.
-  2. **Middle:** Gráficos de tendencia y desgloses.
-  3. **Bottom:** Listados recientes o detallados.
-- **Interactividad:** Drill-down (click en gráfico filtra los datos).
-
-### 🧙‍♂️ Wizard (Asistente Paso a Paso)
-**Uso:** Procesos secuenciales complejos, formularios largos.
-**Dominios:** D-FIN (Postulaciones), D-NORM (Actos), Rendiciones.
-
-- **Stepper:** Barra de progreso superior indicando pasos (Pasado/Presente/Futuro).
-- **Validación:** No permite avanzar si el paso actual es inválido.
-- **Guardado:** Auto-guardado de "Borrador" en cada cambio de paso.
-- **Navegación:** Botones "Atrás" y "Siguiente" claros. "Finalizar" en el último.
+### 📊 Dashboard
+**Uso:** Monitoreo (D-GESTION).
+- **Layout:** Grid responsive (1 col mobile -> 4 cols desktop).
+- **Skeletons:** Carga progresiva de widgets individuales.
 
 ---
 
-## 2. Patrones de Navegación y Búsqueda
+## 2. Error Handling & Feedback
 
-### 🔍 Search & Filter (Búsqueda Facetada)
-**Uso:** Encontrar IPRs, Documentos, Normativas.
+### Estados de Error
+El sistema debe comunicar fallos sin culpar al usuario.
 
-- **Barra Simple:** Input de texto para búsqueda difusa (Fuzzy).
-- **Filtros Avanzados:** Panel colapsable con Selects múltiples y Rangos de fecha.
-- **Chips de Filtro:** Los filtros activos se muestran como chips removibles bajo la barra.
-- **Resultados:** Instantáneos (debounce) o tras "Buscar". Empty States amigables.
+1.  **Error de Campo (Formulario):**
+    - Mensaje rojo debajo del input (`text-error-600`).
+    - Borde rojo en input.
+    - `aria-invalid="true"`.
 
-### 🌳 Hierarchical Browse (Navegación en Árbol)
-**Uso:** Expedientes, ERD, Carpetas.
+2.  **Error de Operación (Toast):**
+    - Para fallos transitorios (ej. "No se pudo guardar").
+    - Transitorio (5s) o Persistente (si requiere acción).
+    - Componente: `shadcn/toast` variant `destructive`.
 
-- **Tree View:** Estructura colapsable con indentación.
-- **Breadcrumbs:** Muestra la ruta actual (`Home > D-FIN > IPR > 2024`).
-- **Preview:** Al seleccionar un nodo hoja, se muestra su contenido (FileViewer).
+3.  **Error de Sistema (Page):**
+    - Pantalla completa (500/404).
+    - Botón de "Regresar" o "Reintentar".
+    - Ilustración amigable no técnica.
 
----
-
-## 3. Patrones de Acción y Estado
-
-### 🚦 FSM Transition (Flujo de Estados)
-**Uso:** Ciclo de vida IPR, Actos Administrativos.
-
-- **Visualización:** `FSMStatusFlow` mostrando el estado actual y los posibles siguientes.
-- **Acciones Transicionales:** Los botones de acción son las transiciones válidas (ej. "Aprobar", "Observar").
-- **Bloqueo:** Acciones inválidas para el rol o estado actual están deshabilitadas o ocultas.
-
-### 📝 Inline Editing (Edición en Línea)
-**Uso:** Correcciones rápidas, datagrids editables.
-
-- **Modo Lectura:** Texto plano.
-- **Modo Edición:** Al hacer click/hover, se convierte en Input.
-- **Guardado:** Check/Enter para guardar, Esc para cancelar. Optimista (feedback inmediato).
+4.  **Error de Red (Offline):**
+    - Banner superior "Sin conexión - Trabajando offline".
+    - Deshabilitar acciones que requieren confirmación inmediata de servidor.
 
 ---
 
-## 4. Patrones de Agentes IA (Agentic Patterns)
+## 3. Theming & Dark Mode
 
-### 🤖 Contextual Assistance (Asistencia Contextual)
-**Uso:** Ayuda en formularios complejos, dudas normativas.
+### Toggle de Tema
+- **Ubicación:** Header o Menú de Usuario.
+- **Opciones:** Light / Dark / System.
+- **Persistencia:** `localStorage` o cookie para evitar FOUC (Flash of Unstyled Content).
 
-- **Trigger:** Botón `ChatWidget` o icono de ayuda en campo específico.
-- **Contexto:** El agente recibe el JSON de la entidad/formulario actual en el prompt oculto.
-- **Respuesta:**
-  - Explicación textual.
-  - Citas a normativa (KB).
-  - Sugerencia de valor (Actionable).
+### Consideraciones de Diseño
+- **Elevación en Dark Mode:** No usar sombras negras (invisibles); usar superficies más claras (`surface-100` sobre `surface-50`).
+- **Texto:** Evitar blanco puro (`#FFFFFF`) en fondos negros puros (`#000000`). Usar `slate-50` sobre `slate-900` para reducir fatiga visual.
 
-### 🔔 Proactive Alerting (Alertas Proactivas)
-**Uso:** Detección de mora, errores, oportunidades.
-
-- **Toast/Banner:** Aparición no intrusiva pero visible.
-- **Accionable:** La alerta incluye botón "Ver Problema" o "Corregir".
-- **Agrupación:** Si hay muchas alertas del mismo tipo, se agrupan ("5 IPRs en mora").
-
-### ✨ AI Autocomplete (Generación de Contenido)
-**Uso:** Redacción de resúmenes, oficios, observaciones.
-
-- **Magic Input:** Campo de texto con botón "✨ Mejorar" o "✨ Generar".
-- **Prompt:** Usuario escribe idea base ("rechazar por falta de firma").
-- **Generación:** IA expande a texto formal ("Se rechaza la presente rendición debido a...").
-- **Revisión:** Usuario debe aceptar o editar antes de guardar.
+### ✍️ Request Flow (Solicitudes)
+**Uso:** Solicitudes de asistencia (D-TERR) o creación de tickets.
+- **Combinación:** Wizard corto + Chat Contextual.
+- **Contexto:** Al iniciar, el usuario describe el problema (texto libre o voz).
+- **IA:** El agente clasifica la solicitud y pre-llena el formulario estructurado.
+- **Confirmación:** Usuario revisa y envía.
 
 ---
 
-## 5. Patrones de Feedback
+## 5. Patrones de Agentes IA
 
-### 💾 Optimistic UI (Feedback Optimista)
-**Uso:** Likes, cambios de estado simples.
-- La UI se actualiza inmediatamente asumiendo éxito.
-- Si falla la API, se revierte y muestra error (Toast).
+### 🤖 Asistencia Contextual
+- **Trigger:** Botón flotante o atajo `Cmd+K`.
+- **Streaming UI:** Mostrar respuesta token por token para reducir latencia percibida.
+- **Actionables:** La IA no solo responde texto; devuelve "Botones de Acción" (ej. "Aplicar Filtro", "Generar Borrador").
 
-### ⏳ Skeleton Loading (Carga Esqueleto)
-**Uso:** Carga inicial de datos.
-- Muestra la estructura de la página en gris pulsante.
-- Reduce la percepción de tiempo de espera y evita saltos de layout (CLS).
+### ✨ Optimistic AI
+Para generaciones rápidas (autocompletar):
+- Mostrar el texto sugerido en gris (placeholder) o "fantasma".
+- `Tab` para aceptar.
 
 ---
 
-*GORE_OS UI Patterns v1.0.0*
+*GORE_OS UI Patterns v2.0.0*

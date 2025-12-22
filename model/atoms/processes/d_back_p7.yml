@@ -8,3 +8,23 @@ name: Desarrollo Organizacional (Absorción SIGPER)
 domain: D-BACK
 code: P7
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-RRHH-EGRESO-01`'
+  mermaid_ref: D07_rrhh.md#p7-egreso-y-desvinculacin
+  phases:
+  - id: F1
+    name: Egreso de - funcionario
+  - id: F2
+    name: Renuncia - voluntaria
+  - id: F3
+    name: Retiro por - pensión
+  - id: F4
+    name: No renovación - 31/12
+  - id: F5
+    name: Eliminación - por nota
+  - id: F6
+    name: Destitución
+  - id: F7
+    name: Incompatibilidad - de salud
+  - id: F8
+    name: Procedimiento - de cierre

@@ -1,127 +1,109 @@
 # GORE_OS UI Components Catalog
 
-> **Versión 1.0.0** | Parte del Design System
+> **Versión 2.0.0** | Parte del Design System
 >
-> Catálogo de componentes visuales reutilizables, mapeados a conceptos IFML (ViewComponents) y organizados por complejidad (Atomic Design).
+> Catálogo de componentes visuales reutilizables, organizados por complejidad (Atomic Design).
+> **Tech Stack Compatibility:** React 18+, TailwindCSS v3.4+, Shadcn UI.
 
 ---
 
-## 1. Átomos (Atomic Components)
-Bloques fundamentales e indivisibles de la interfaz.
+## 1. Stack Técnico Recomendado (Oficial)
+
+Para garantizar la máxima compatibilidad con el stack GORE_OS (Bun + Hono + React + tRPC), se definen las siguientes librerías estándar.
+
+| Categoría            | Librería Recomendada                | Justificación / Nota de Compatibilidad                                                                                   |
+| :------------------- | :---------------------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| **Componentes Base** | **Shadcn UI**                       | Arquitectura "Copy-paste" ideal para personalización total. Basado en Radix UI (Accesible) y Tailwind.                   |
+| **Iconos**           | **Lucide React**                    | Estándar de facto en el ecosistema Shadcn/Next.js modern. Ligero y treeshakable.                                         |
+| **Gráficos**         | **Recharts**                        | La opción más madura para React. **Nota:** Requiere implementación cuidadosa de ARIA labels para accesibilidad completa. |
+| **Mapas (GIS)**      | **MapLibre GL JS** (`react-map-gl`) | Rendimiento superior (WebGL) para "Gemelo Digital". Soporta Vector Tiles eficientemente.                                 |
+| **Tablas**           | **TanStack Table v8**               | Headless, type-safe y altamente performante para grandes volúmenes de datos (D-FIN).                                     |
+| **Formularios**      | **React Hook Form** + **Zod**       | Integración nativa con las validaciones del Backend (tRPC comparte esquemas Zod).                                        |
+
+---
+
+## 2. Átomos (Atomic Components)
 
 ### Inputs & Controles
-| Componente     | IFML Mapping     | Descripción                                 | Variantes              |
-| -------------- | ---------------- | ------------------------------------------- | ---------------------- |
-| `TextInput`    | `Field`          | Campo de texto básico con label y ayuda     | Text, Email, Password  |
-| `NumberInput`  | `Field`          | Input numérico con controles +/- opcionales | Currency, Percentage   |
-| `Select`       | `SelectionField` | Dropdown nativo o custom                    | Single, Multiple       |
-| `Checkbox`     | `SelectionField` | Selección binaria                           | Default, Indeterminate |
-| `ToggleSwitch` | `SelectionField` | Interruptor binario inmediato               | ON/OFF                 |
-| `DatePicker`   | `Field`          | Selector de fecha/rango                     | Single, Range          |
+
+| Componente   | Props Clave                     | Accesibilidad (A11y)                                           | Notas Stack                                       |
+| :----------- | :------------------------------ | :------------------------------------------------------------- | :------------------------------------------------ |
+| `TextInput`  | `label`, `error`, `placeholder` | `aria-invalid` automático si hay error. Label asociado por ID. | Wrapper sobre `shadcn/input`.                     |
+| `Select`     | `options`, `value`, `onChange`  | Soporte teclado completo (Arrows, Enter, Esc).                 | Wrapper sobre `shadcn/select` (Radix).            |
+| `DatePicker` | `mode` (single/range), `locale` | Navegación por teclado en calendario.                          | `shadcn/calendar` (basado en `react-day-picker`). |
+| `Switch`     | `checked`, `onCheckedChange`    | Role `switch`, label clickeable.                               | `shadcn/switch`.                                  |
 
 ### Acciones & Navegación
-| Componente   | IFML Mapping     | Descripción                                | Variantes                         |
-| ------------ | ---------------- | ------------------------------------------ | --------------------------------- |
-| `Button`     | `Event`          | Disparador de eventos principal            | Primary, Secondary, Ghost, Danger |
-| `IconButton` | `Event`          | Botón solo icono para acciones secundarias | Default, Tooltip                  |
-| `Link`       | `NavigationFlow` | Enlace de navegación texto                 | Inline, Standalone                |
-| `TabItem`    | `NavigationFlow` | Pestaña individual de navegación           | Active, Inactive                  |
 
-### Feedback & Status
-| Componente | IFML Mapping | Descripción                           | Variantes                      |
-| ---------- | ------------ | ------------------------------------- | ------------------------------ |
-| `Badge`    | N/A          | Etiqueta pequeña de estado o contador | Success, Warning, Error, Agent |
-| `Spinner`  | N/A          | Indicador de carga circular           | Sm, Md, Lg                     |
-| `Avatar`   | N/A          | Representación de usuario o entidad   | Image, Initials                |
-| `Icon`     | N/A          | Representación gráfica vectorial      | 16/20/24/32px                  |
+| Componente | Props Clave                                              | Accesibilidad (A11y)                      | Notas Stack      |
+| :--------- | :------------------------------------------------------- | :---------------------------------------- | :--------------- |
+| `Button`   | `variant` (default, destructive, outline, ghost), `size` | Focus visible ring.                       | `shadcn/button`. |
+| `Tabs`     | `defaultValue`, `orientation`                            | Role `tablist`, `tab`. Arrows move focus. | `shadcn/tabs`.   |
 
 ---
 
-## 2. Moléculas (Molecules)
-Agrupaciones funcionales de átomos.
+## 3. Moléculas (Molecules)
 
 ### Cards & Contenedores
-| Componente   | Propósito                         | Composición típica                                   |
-| ------------ | --------------------------------- | ---------------------------------------------------- |
-| `SimpleCard` | Contenedor básico de información  | Title + Body + Footer                                |
-| `MetricCard` | KPI individual (Dashboard)        | Icono + Valor + Tendencia + MiniChart                |
-| `ActionCard` | Acceso directo a una acción       | Icono + Título + Descripción + Flecha                |
-| `FileCard`   | Representación de archivo adjunto | Icono Tipo + Nombre + Tamaño + Acciones (Ver/Borrar) |
 
-### Listas & Tablas Simples
-| Componente        | Propósito                   | Composición típica                  |
-| ----------------- | --------------------------- | ----------------------------------- |
-| `ListItem`        | Elemento de lista estándar  | Avatar + Texto Princ/Sec + Acciones |
-| `DescriptionList` | Pares clave-valor (Detalle) | Label (gris) + Value (negro)        |
-| `TimelineItem`    | Evento en línea de tiempo   | Punto/Icono + Fecha + Contenido     |
+| Componente   | Composición                                                                | Uso                                  |
+| :----------- | :------------------------------------------------------------------------- | :----------------------------------- |
+| `MetricCard` | `CardHeader` > `CardTitle` + `Icon` <br> `CardContent` > `Value` + `Trend` | Dashboard KPIs.                      |
+| `Alert`      | `AlertTitle`, `AlertDescription`, `Icon`                                   | Feedback de usuario (Success/Error). |
 
-### Formularios & Búsqueda
-| Componente    | Propósito                      | Composición típica                           |
-| ------------- | ------------------------------ | -------------------------------------------- |
-| `SearchBar`   | Barra de búsqueda global/local | Input + SearchIcon + ClearButton + (Filters) |
-| `FilterGroup` | Conjunto de filtros            | Label + Select/Checkbox Group                |
-| `FormGroup`   | Bloque lógico de formulario    | Título Sección + Inputs Relacionados         |
+### Formularios Avanzados
 
-### Alertas Específicas
-| Componente      | Propósito                      | Composición típica                           |
-| --------------- | ------------------------------ | -------------------------------------------- |
-| `ToastAlert`    | Notificación temporal flotante | Icono Estado + Mensaje + Cerrar              |
-| `InlineAlert`   | Alerta contextual en contenido | Icono + Título + Cuerpo + (Acción)           |
-| `SemaphoreCard` | Alerta de mora/estado crítico  | Barra color (Semáforo) + Días Mora + Mensaje |
+- **`Form` (Component):** Utiliza el contexto de `react-hook-form`. Gestiona automáticamente `aria-describedby` para mensajes de error.
+- **Pattern:** Usar `zodResolver` para conectar con esquemas compartidos en `packages/core/src/schema`.
 
 ---
 
-## 3. Organismos (Organisms)
-Componentes complejos que forman secciones completas de la UI.
+## 4. Organismos (Organisms)
 
-### Gestión de Datos
-| Componente    | IFML   | Descripción                                                                                                |
-| ------------- | ------ | ---------------------------------------------------------------------------------------------------------- |
-| `DataTable`   | `List` | Tabla avanzada con ordenamiento, filtrado, paginación y acciones por fila/lote. **Crítico D-FIN, D-BACK**. |
-| `KanbanBoard` | `List` | Tablero de columnas por estado (Drag & Drop opcional). **Crítico D-EJEC, FÉNIX**.                          |
-| `TreeViewer`  | `List` | Visualizador jerárquico de carpetas o estructuras. **Crítico D-NORM, D-PLAN**.                             |
+### Visualización de Datos (Recharts)
 
-### Visualización Avanzada
-| Componente      | IFML      | Descripción                                                                      |
-| --------------- | --------- | -------------------------------------------------------------------------------- |
-| `FSMStatusFlow` | `Details` | Barra de progreso de estados (Pasado / Presente / Futuro). **Crítico IPR Core**. |
-| `MapViewer`     | `List`    | Visor GIS con control de capas, popups y leyenda. **Crítico D-TERR**.            |
-| `GanttCalendar` | `List`    | Calendario / Cronograma interactivo de proyectos. **Crítico D-EJEC, D-FIN**.     |
-| `RadarScore`    | `Details` | Gráfico de radar para evaluaciones multidimensionales. **Crítico Ejecutores**.   |
+> **Advertencia A11y:** Los gráficos SVG no son accesibles por defecto.
+> **Regla:** Todo gráfico debe ir acompañado de una **tabla de datos accesible** (visualmente oculta o en una pestaña "Ver Datos") o descripciones detalladas con `aria-label`.
 
-### Navegación Estructurada
-| Componente      | IFML             | Descripción                                                          |
-| --------------- | ---------------- | -------------------------------------------------------------------- |
-| `WizardStepper` | `ViewContainer`  | Navegación paso a paso para formularios largos. Validación por paso. |
-| `SideNav`       | `ViewContainer`  | Menú lateral principal de la aplicación.                             |
-| `Breadcrumbs`   | `NavigationFlow` | Ruta de navegación jerárquica actual.                                |
+| Componente        | Implementación         | Uso                                   |
+| :---------------- | :--------------------- | :------------------------------------ |
+| `TrendChart`      | `LineChart` (Recharts) | Evolución presupuestaria.             |
+| `DistributionPie` | `PieChart` (Recharts)  | Distribución de inversión por comuna. |
 
----
+### Mapas Interactivos (MapLibre)
 
-## 4. Componentes de Agentes IA (Agentic UI)
-Componentes específicos para la interacción con LLMs y automatizaciones.
+- **Performance:** Usar Vector Tiles (.pbf) servidos por el backend.
+- **Interacción:** `Hover` para tooltips rápidos, `Click` para detalles en panel lateral.
+- **A11y:** Proveer controles de zoom por teclado y alternativas textuales para la información geoespacial crítica.
 
-| Componente          | Uso Principal          | Descripción Visual                                                                            |
-| ------------------- | ---------------------- | --------------------------------------------------------------------------------------------- |
-| `ChatWidget`        | Asistencia Contextual  | Botón flotante o panel lateral derecho. Historial de chat tipo mensajería.                    |
-| `SuggestionPopover` | Proactividad           | Tooltip enriquecido que aparece sobre elementos (ej. Inputs) con sugerencias ("Considera X"). |
-| `AgentResponseCard` | Respuesta Estructurada | Tarjeta dentro del chat o contenido mostrando respuesta del agente con citas y acciones.      |
-| `NotificationBadge` | Alertas Background     | Badge en header que agrupa notificaciones de agentes (p.ej. "Vigilante completó análisis").   |
-| `MagicInput`        | Autocompletar IA       | Input de texto con icono de "estrellas" que permite generar/refinar texto con IA.             |
+**Componentes GIS Específicos:**
+
+| Componente      | Props                         | Uso                                                                      |
+| :-------------- | :---------------------------- | :----------------------------------------------------------------------- |
+| `LayerSwitcher` | `layers`, `activeLayer`       | Control flotante para alternar entre capas (ej. Inversión vs Normativa). |
+| `GeoFilter`     | `region`, `commune`, `bounds` | Filtros espaciales que actualizan el viewport y los datos cargados.      |
+| `FeaturePopup`  | `feature`, `position`         | Tooltip rico con metadatos del objeto seleccionado en el mapa.           |
+
+### Timelines & Procesos
+
+Soporte para visualización temporal (`US-FIN-IPR-007`).
+
+| Componente      | Variantes                | Uso                                                                                                                                          |
+| :-------------- | :----------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| `StatusTracker` | `vertical`, `horizontal` | Muestra el estado actual en una secuencia lineal (ej. Pasos de Postulación). Diferencia visual clara entre `completed`, `current`, `future`. |
+| `AuditTimeline` | `dense`                  | Lista vertical compacta de eventos históricos con timestamp y autor (Logs de auditoría).                                                     |
 
 ---
 
-## 5. Mapeo a Librerías Técnicas
+## 5. Componentes AI (Agentic UI)
 
-Para la implementación (React), se recomienda:
+Componentes específicos para interactuar con agentes (D-EVOL).
 
-- **Base UI:** [Shadcn UI](https://ui.shadcn.com/) (Radix Primitives)
-- **Iconos:** [Lucide React](https://lucide.dev/guide/packages/lucide-react)
-- **Gráficos:** [Recharts](https://recharts.org/) (DataViz estándar)
-- **Mapas:** `react-leaflet` o `maplibre-gl-js`
-- **Tablas:** `@tanstack/react-table`
-- **Drag & Drop:** `@hello-pangea/dnd` (Kanban)
+| Componente       | Props                  | Comportamiento                                                                      |
+| :--------------- | :--------------------- | :---------------------------------------------------------------------------------- |
+| `MagicInput`     | `onGenerate` (Promise) | Input con botón de "estrellas". Al clickear, estado `loading` y reemplazo de texto. |
+| `CopilotSidebar` | `context` (JSON)       | Panel lateral persistente que mantiene el contexto de la página actual.             |
 
 ---
 
-*GORE_OS UI Components v1.0.0*
+*GORE_OS UI Components v2.0.0*

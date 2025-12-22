@@ -8,3 +8,27 @@ name: Viáticos Nacionales y Extranjeros (Absorción SIGPER)
 domain: D-BACK
 code: P6
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-RRHH-BIENESTAR-01`'
+  mermaid_ref: D07_rrhh.md#p6-bienestar-y-calidad-de-vida
+  phases:
+  - id: F1
+    name: 📋 Afiliación
+  - id: F2
+    name: Funcionario ingresa
+  - id: F3
+    name: Invitar a - Servicio de Bienestar
+  - id: F4
+    name: Aceptar y afiliar
+  - id: F5
+    name: Descuento mensual - por planilla
+  - id: F6
+    name: 🎁 Prestaciones
+  - id: F7
+    name: 'Solicitar beneficio: - • Médico - • Económico - • Préstamo - • Convenio'
+  - id: F8
+    name: Unidad Bienestar - evalúa
+  - id: F9
+    name: Consejo Administrativo - aprueba si requiere
+  - id: F10
+    name: Otorgar beneficio

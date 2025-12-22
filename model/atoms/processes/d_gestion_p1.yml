@@ -8,3 +8,27 @@ name: Ciclo de Control de Gestión
 domain: D-GESTION
 code: P1
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
+  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
+  phases:
+  - id: F1
+    name: 🚗 Registro de Vehículos
+  - id: F2
+    name: Adquisición de - vehículo
+  - id: F3
+    name: Registrar en - sistema interno
+  - id: F4
+    name: 'Datos: - • Patente - • Modelo - • Año - • Tipo combustible'
+  - id: F5
+    name: Asignar a - división/área
+  - id: F6
+    name: Inscribir en - Registro Automotor
+  - id: F7
+    name: 👤 Registro de Conductores
+  - id: F8
+    name: Funcionario solicita - autorización
+  - id: F9
+    name: 'Verificar: - • Licencia vigente - • Clase apropiada - • Hoja de vida'
+  - id: F10
+    name: Autorización de - Jefe Servicios

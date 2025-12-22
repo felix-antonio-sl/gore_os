@@ -8,3 +8,27 @@ name: Gestión de Contratos
 domain: D-BACK
 code: P4
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-RRHH-TIEMPO-AUSENTISMO-01`'
+  mermaid_ref: D07_rrhh.md#p4-tiempo-asistencia-y-ausentismo
+  phases:
+  - id: F1
+    name: 📋 Registro
+  - id: F2
+    name: Funcionario marca - entrada/salida
+  - id: F3
+    name: Sistema registra - en reloj control
+  - id: F4
+    name: Generar reporte - diario
+  - id: F5
+    name: 📝 Permisos
+  - id: F6
+    name: 'Solicitar permiso: - • Administrativo - • Particular'
+  - id: F7
+    name: Jefatura aprueba/ - rechaza
+  - id: F8
+    name: Registrar en - sistema
+  - id: F9
+    name: 🏥 Licencias
+  - id: F10
+    name: Funcionario presenta - licencia médica

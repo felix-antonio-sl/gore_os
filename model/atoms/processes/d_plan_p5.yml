@@ -8,3 +8,27 @@ name: Evaluación Indicadores
 domain: D-PLAN
 code: P5
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
+  mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
+  phases:
+  - id: F1
+    name: 📊 Detección de Necesidades
+  - id: F2
+    name: Aplicar encuesta DNC
+  - id: F3
+    name: Análisis de brechas
+  - id: F4
+    name: Priorizar necesidades
+  - id: F5
+    name: 📋 Plan de Capacitación
+  - id: F6
+    name: Elaborar PAC anual
+  - id: F7
+    name: Comité Bipartito - aprueba
+  - id: F8
+    name: Asignar presupuesto
+  - id: F9
+    name: 🎓 Ejecución
+  - id: F10
+    name: Convocar a - funcionarios

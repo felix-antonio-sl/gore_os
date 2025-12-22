@@ -8,3 +8,28 @@ name: Licitación Pública
 domain: D-BACK
 code: P2
 process_type: BPMN
+spec:
+  bpmn_id: '`PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01`'
+  mermaid_ref: D01_actos_administrativos.md#p2-aprobacin-de-transferencias-y-convenios
+  sla: 30 días hábiles
+  phases:
+  - id: F1
+    name: 1️⃣ Iniciación
+  - id: F2
+    name: 'Área Responsable: - Elaborar borrador convenio'
+  - id: F3
+    name: 'Incluir cláusulas: - • Partes - • Objeto - • Monto - • Plazos - • Rendición'
+  - id: F4
+    name: 2️⃣ Revisión Jurídica
+  - id: F5
+    name: 'Jurídica: - Revisar legalidad'
+  - id: F6
+    name: ✅ V°B° Jurídico
+  - id: F7
+    name: ❌ Observar
+  - id: F8
+    name: 3️⃣ Visación Presupuestaria
+  - id: F9
+    name: 'DAF: - Verificar disponibilidad'
+  - id: F10
+    name: Emitir CDP

@@ -8,3 +8,31 @@ name: Release Train
 domain: D-DEV
 code: P3
 process_type: BPMN
+spec:
+  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
+  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
+  systems:
+  - SIGPER
+  - PREVIRED
+  - SIGFE
+  phases:
+  - id: F1
+    name: Inicio mes
+  - id: F2
+    name: 'Recopilar novedades: - • Licencias - • Horas extra - • Descuentos'
+  - id: F3
+    name: Calcular remuneración - bruta
+  - id: F4
+    name: 'Aplicar descuentos: - • Previsión - • Salud - • Impuestos - • Otros'
+  - id: F5
+    name: Generar liquidación
+  - id: F6
+    name: Revisión y - validación
+  - id: F7
+    name: Autorización - pago
+  - id: F8
+    name: Pagar PREVIRED - (cotizaciones)
+  - id: F9
+    name: Transferir a - cuentas funcionarios
+  - id: F10
+    name: Contabilizar - en SIGFE

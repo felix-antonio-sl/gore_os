@@ -56,6 +56,51 @@
       "type": "string",
       "pattern": "^MOD-",
       "description": "Módulo contenedor"
+    },
+    "spec": {
+      "type": "object",
+      "description": "Especificación operativa del proceso extraída de documentación BPMN",
+      "properties": {
+        "bpmn_id": {
+          "type": "string",
+          "description": "Identificador BPMN formal"
+        },
+        "period": {
+          "type": "string",
+          "description": "Periodicidad del proceso (Anual, Mensual, etc.)"
+        },
+        "sla": {
+          "type": "string",
+          "description": "Service Level Agreement esperado"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Rol/Área responsable"
+        },
+        "systems": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Sistemas involucrados"
+        },
+        "phases": {
+          "type": "array",
+          "description": "Fases del proceso",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "description": { "type": "string" },
+              "role": { "type": "string" }
+            },
+            "required": ["id", "name"]
+          }
+        },
+        "mermaid_ref": {
+          "type": "string",
+          "description": "Referencia al diagrama Mermaid en documentación"
+        }
+      }
     }
   },
   "additionalProperties": true
