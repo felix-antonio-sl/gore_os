@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_tde_p6:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-tde
 id: PROC-TDE-P6
-code: P6
 name: Gestión del Cambio TDE
 domain: D-TDE
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P6
+process_type: BPMN

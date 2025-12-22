@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:fenix_p1:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/fenix
 id: PROC-FENIX-P1
-code: P1
 name: Activación y Diagnóstico
 domain: FENIX
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P1
+process_type: BPMN

@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_dev_p2:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: plan_especificacion_ddev_dops.md
 id: PROC-DEV-P2
-code: P2
 name: Proceso de Code Review
 domain: D-DEV
-type: BPMN
-morphisms:
-  roles_ejecutores: [ROLE-DEVELOPER, ROLE-TECH-LEAD]
-  manipula: [ENT-DEV-PULLREQUEST, ENT-DEV-REVIEW-COMMENT]
-  triggers: [Pull Request Opened]
+code: P2
+process_type: BPMN

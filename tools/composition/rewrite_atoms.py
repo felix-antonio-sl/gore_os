@@ -148,6 +148,7 @@ def extract_profunctors_only(atom_type: str, limit: int) -> MigrationReport:
     extractor = {
         "stories": lambda a, r: extract_story_morphisms(a, r),
         "entities": lambda a, r: extract_entity_morphisms(a, r),
+        "processes": lambda a, r: extract_process_morphisms(a, r),
     }.get(atom_type)
 
     if not extractor:
@@ -224,9 +225,11 @@ def rewrite_atoms_only(
     atom_path = base_path / atom_type
     report = MigrationReport()
 
-    normalizer = {"stories": normalize_story, "entities": normalize_entity}.get(
-        atom_type
-    )
+    normalizer = {
+        "stories": normalize_story,
+        "entities": normalize_entity,
+        "processes": normalize_process,
+    }.get(atom_type)
 
     if not normalizer:
         report.errors.append(f"No normalizer for: {atom_type}")
@@ -299,6 +302,59 @@ def normalize_entity(atom: Dict) -> Dict:
     if atom.get("specializations"):
         new_atom["specializations"] = atom["specializations"]
     return {k: v for k, v in new_atom.items() if v or k in ["is_abstract"]}
+
+
+def extract_process_morphisms(atom: Dict, report: MigrationReport):
+    """Extrae morfismos de process sin modificar el archivo."""
+    morphisms = atom.get("morphisms", {})
+
+    # Extract role executors
+    roles = morphisms.get("roles_ejecutores", [])
+    for role in roles:
+        report.profunctor_links["process_ejecutado_por"].append(
+            {"source": atom.get("id", ""), "target": role}
+        )
+
+    # Extract entity manipulations
+    entities = morphisms.get("manipula", [])
+    for entity in entities:
+        report.profunctor_links["process_manipula"].append(
+            {"source": atom.get("id", ""), "target": entity}
+        )
+
+    # Extract triggers
+    triggers = morphisms.get("triggers", [])
+    for trigger in triggers:
+        report.profunctor_links["process_triggers"].append(
+            {"source": atom.get("id", ""), "target": trigger}
+        )
+
+
+def normalize_process(atom: Dict) -> Dict:
+    """Normaliza process según schema v3.0 (elimina morphisms embebidos)."""
+    morphisms = atom.pop("morphisms", {})
+    old_type = atom.pop("type", "BPMN")  # Remove legacy 'type' field
+
+    new_atom = {
+        "_meta": {
+            "urn": atom.get("_meta", {}).get(
+                "urn",
+                f"urn:goreos:atom:process:{atom.get('id', 'unknown').lower()}:1.0.0",
+            ),
+            "type": "Process",
+            "schema": "urn:goreos:schema:process:1.0.0",
+            "source": atom.get("_meta", {}).get("source", ""),
+        },
+        "id": atom.get("id", ""),
+        "name": atom.get("name", ""),
+        "domain": atom.get("domain", ""),
+        "code": atom.get("code", ""),
+        "subdomain": atom.get("subdomain", ""),
+        "process_type": (
+            old_type if old_type in ["BPMN", "DMN", "CMMN", "WORKFLOW"] else "BPMN"
+        ),
+    }
+    return {k: v for k, v in new_atom.items() if v}
 
 
 def save_profunctors(report: MigrationReport, dry_run: bool = False):

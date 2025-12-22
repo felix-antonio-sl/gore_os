@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_terr_p2:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-terr
 id: PROC-TERR-P2
-code: P2
 name: Publicación e Interoperabilidad
 domain: D-TERR
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P2
+process_type: BPMN

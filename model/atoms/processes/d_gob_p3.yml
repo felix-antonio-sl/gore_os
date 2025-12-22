@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_gob_p3:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-gob
 id: PROC-GOB-P3
-code: P3
 name: Gestión Crisis / GRD
 domain: D-GOB
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P3
+process_type: BPMN

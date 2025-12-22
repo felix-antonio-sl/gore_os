@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_fin_ejecutores_p8:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-fin-ejecutores
 id: PROC-FIN-EJECUTORES-P8
-code: P8
 name: Asistencia Financiera
 domain: D-FIN-EJECUTORES
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P8
+process_type: BPMN

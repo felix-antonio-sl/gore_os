@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:fenix_p2:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/fenix
 id: PROC-FENIX-P2
-code: P2
 name: Ciclo de Ejecución
 domain: FENIX
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P2
+process_type: BPMN

@@ -1,0 +1,44 @@
+_meta:
+  urn: urn:goreos:profunctor:process_manipula:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-PROCESS_MANIPULA
+urn: urn:goreos:profunctor:process_manipula:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: PROC-DEV-P1
+  target: ENT-DEV-EPIC
+- source: PROC-DEV-P1
+  target: ENT-DEV-STORY
+- source: PROC-DEV-P1
+  target: ENT-DEV-BRANCH
+- source: PROC-DEV-P2
+  target: ENT-DEV-PULLREQUEST
+- source: PROC-DEV-P2
+  target: ENT-DEV-REVIEW-COMMENT
+- source: PROC-DEV-P3
+  target: ENT-DEV-RELEASE
+- source: PROC-DEV-P3
+  target: ENT-DEV-ARTEFACTO-BUILD
+- source: PROC-DEV-P4
+  target: ENT-DEV-SPRINT
+- source: PROC-DEV-P4
+  target: ENT-DEV-STORY
+- source: PROC-DEV-P5
+  target: ENT-DEV-ADR
+- source: PROC-OPS-P1
+  target: ENT-OPS-USUARIO-SISTEMA
+- source: PROC-OPS-P1
+  target: ENT-OPS-ASIGNACION-ROL
+- source: PROC-OPS-P2
+  target: ENT-OPS-CARGA-MASIVA
+- source: PROC-OPS-P3
+  target: ENT-OPS-ALERTA
+- source: PROC-OPS-P3
+  target: ENT-OPS-TICKET
+- source: PROC-OPS-P4
+  target: ENT-OPS-BACKUP
+- source: PROC-OPS-P5
+  target: ENT-OPS-MIGRACION

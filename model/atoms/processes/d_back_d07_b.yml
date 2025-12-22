@@ -1,14 +1,11 @@
 _meta:
   urn: urn:goreos:atom:process:d_back_d07.b:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-back
 id: PROC-BACK-D07.B
-code: D07.B
 name: Bienestar Funcionario
 domain: D-BACK
+code: D07.B
 subdomain: Bienestar
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+process_type: BPMN

@@ -1,0 +1,28 @@
+_meta:
+  urn: urn:goreos:profunctor:process_triggers:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-PROCESS_TRIGGERS
+urn: urn:goreos:profunctor:process_triggers:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: PROC-DEV-P1
+  target: Backlog Grooming
+- source: PROC-DEV-P2
+  target: Pull Request Opened
+- source: PROC-DEV-P3
+  target: Scheduled Release
+- source: PROC-DEV-P5
+  target: New ADR Proposed
+- source: PROC-OPS-P1
+  target: Ingreso Personal
+- source: PROC-OPS-P2
+  target: New File Uploaded
+- source: PROC-OPS-P3
+  target: Critical Alert
+- source: PROC-OPS-P4
+  target: Scheduling
+- source: PROC-OPS-P5
+  target: Continuous Deployment

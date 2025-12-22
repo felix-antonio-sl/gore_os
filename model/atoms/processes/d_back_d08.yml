@@ -1,14 +1,11 @@
 _meta:
   urn: urn:goreos:atom:process:d_back_d08:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-back
 id: PROC-BACK-D08
-code: D08
 name: Contabilidad Operativa
 domain: D-BACK
+code: D08
 subdomain: Contabilidad
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+process_type: BPMN

@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_back_p2:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-back
 id: PROC-BACK-P2
-code: P2
 name: Licitación Pública
 domain: D-BACK
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P2
+process_type: BPMN

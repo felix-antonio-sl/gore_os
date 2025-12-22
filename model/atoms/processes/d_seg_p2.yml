@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_seg_p2:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-seg
 id: PROC-SEG-P2
-code: P2
 name: Coordinación Interinstitucional
 domain: D-SEG
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P2
+process_type: BPMN

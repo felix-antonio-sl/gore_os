@@ -4,36 +4,53 @@
   "title": "Process",
   "description": "Coálgebra c: S → F(S) que define comportamiento del sistema",
   "type": "object",
-  "required": ["id", "urn", "name", "domain"],
+  "required": ["id", "name", "domain"],
   "properties": {
     "_meta": {
       "type": "object",
       "properties": {
         "urn": { "type": "string", "pattern": "^urn:goreos:atom:process:" },
         "type": { "const": "Process" },
-        "schema": { "const": "urn:goreos:schema:process:1.0.0" }
+        "schema": { "const": "urn:goreos:schema:process:1.0.0" },
+        "source": { "type": "string" }
       },
       "required": ["urn", "type"]
     },
     "id": {
       "type": "string",
-      "pattern": "^PROC-[A-Z]+-[A-Z0-9]+$"
+      "pattern": "^PROC-[A-Z]+-[A-Za-z0-9._-]+$",
+      "description": "Identificador único del proceso"
     },
     "urn": {
       "type": "string",
-      "pattern": "^urn:goreos:atom:process:"
+      "pattern": "^urn:goreos:atom:process:",
+      "description": "URN canónico (opcional si existe en _meta)"
     },
     "name": {
       "type": "string",
-      "minLength": 5
+      "minLength": 3
     },
     "domain": {
       "type": "string",
-      "pattern": "^D-[A-Z]+$"
+      "pattern": "^(D-[A-Z]+(-[A-Z_]+)?|FENIX)$",
+      "description": "Dominio o subdominio del proceso (FENIX es caso especial)"
+    },
+    "code": {
+      "type": "string",
+      "description": "Código corto del proceso (P1, D04, etc.)"
+    },
+    "subdomain": {
+      "type": "string",
+      "description": "Subdominio funcional"
+    },
+    "process_type": {
+      "type": "string",
+      "enum": ["BPMN", "DMN", "CMMN", "WORKFLOW"],
+      "description": "Notación del proceso"
     },
     "bpmn_ref": {
       "type": "string",
-      "description": "Referencia a diagrama BPMN en docs/blueprint/processes/"
+      "description": "Referencia a diagrama BPMN en docs/processes/"
     },
     "module_id": {
       "type": "string",
@@ -41,5 +58,5 @@
       "description": "Módulo contenedor"
     }
   },
-  "additionalProperties": false
+  "additionalProperties": true
 }

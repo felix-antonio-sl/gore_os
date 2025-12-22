@@ -1,0 +1,48 @@
+_meta:
+  urn: urn:goreos:profunctor:process_ejecutado_por:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-PROCESS_EJECUTADO_POR
+urn: urn:goreos:profunctor:process_ejecutado_por:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: PROC-DEV-P1
+  target: ROLE-DEVELOPER
+- source: PROC-DEV-P1
+  target: ROLE-PO
+- source: PROC-DEV-P2
+  target: ROLE-DEVELOPER
+- source: PROC-DEV-P2
+  target: ROLE-TECH-LEAD
+- source: PROC-DEV-P3
+  target: ROLE-RELEASE-MANAGER
+- source: PROC-DEV-P3
+  target: ROLE-DEVOPS
+- source: PROC-DEV-P4
+  target: ROLE-PO
+- source: PROC-DEV-P4
+  target: ROLE-DEVELOPER
+- source: PROC-DEV-P4
+  target: ROLE-QA
+- source: PROC-DEV-P5
+  target: ROLE-TECH-LEAD
+- source: PROC-DEV-P5
+  target: ROLE-ARCHITECT
+- source: PROC-OPS-P1
+  target: ROLE-ADMIN-TI
+- source: PROC-OPS-P2
+  target: ROLE-ANALISTA
+- source: PROC-OPS-P3
+  target: ROLE-SRE
+- source: PROC-OPS-P3
+  target: ROLE-DEVOPS
+- source: PROC-OPS-P4
+  target: ROLE-ADMIN-TI
+- source: PROC-OPS-P4
+  target: ROLE-DEVOPS
+- source: PROC-OPS-P5
+  target: ROLE-DEVOPS
+- source: PROC-OPS-P5
+  target: ROLE-DBA

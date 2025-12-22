@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_plan_p4:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-plan
 id: PROC-PLAN-P4
-code: P4
 name: Gestión CP
 domain: D-PLAN
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P4
+process_type: BPMN

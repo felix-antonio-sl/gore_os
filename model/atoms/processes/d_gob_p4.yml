@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_gob_p4:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-gob
 id: PROC-GOB-P4
-code: P4
 name: Gestión Agenda & Compromisos
 domain: D-GOB
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P4
+process_type: BPMN

@@ -1,14 +1,11 @@
 _meta:
   urn: urn:goreos:atom:process:d_back_d07:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-back
 id: PROC-BACK-D07
-code: D07
 name: Gestión de Personas
 domain: D-BACK
+code: D07
 subdomain: Personas
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+process_type: BPMN

@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_norm_p1:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-norm
 id: PROC-NORM-P1
-code: P1
 name: Flujo de Resoluciones Exentas
 domain: D-NORM
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P1
+process_type: BPMN

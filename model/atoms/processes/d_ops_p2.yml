@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_ops_p2:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: plan_especificacion_ddev_dops.md
 id: PROC-OPS-P2
-code: P2
 name: Ejecución de Carga Masiva
 domain: D-OPS
-type: BPMN
-morphisms:
-  roles_ejecutores: [ROLE-ANALISTA]
-  manipula: [ENT-OPS-CARGA-MASIVA]
-  triggers: [New File Uploaded]
+code: P2
+process_type: BPMN

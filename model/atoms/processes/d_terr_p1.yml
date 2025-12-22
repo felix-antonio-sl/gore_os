@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_terr_p1:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-terr
 id: PROC-TERR-P1
-code: P1
 name: Ciclo de Vida de Datos Geoespaciales
 domain: D-TERR
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P1
+process_type: BPMN

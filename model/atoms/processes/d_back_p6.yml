@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_back_p6:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-back
 id: PROC-BACK-P6
-code: P6
 name: Viáticos Nacionales y Extranjeros (Absorción SIGPER)
 domain: D-BACK
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P6
+process_type: BPMN

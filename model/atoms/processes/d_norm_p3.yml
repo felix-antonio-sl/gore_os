@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_norm_p3:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-norm
 id: PROC-NORM-P3
-code: P3
 name: Procedimientos Administrativos (Ley 19.880)
 domain: D-NORM
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P3
+process_type: BPMN

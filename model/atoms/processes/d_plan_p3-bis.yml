@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_plan_p3_bis:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-plan
 id: PROC-PLAN-P3-bis
-code: P3-bis
 name: Elaboración y Aprobación PROT
 domain: D-PLAN
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P3-bis
+process_type: BPMN

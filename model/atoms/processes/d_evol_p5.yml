@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_evol_p5:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-evol
 id: PROC-EVOL-P5
-code: P5
 name: Clonación de Proceso Municipal Exitoso
 domain: D-EVOL
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P5
+process_type: BPMN

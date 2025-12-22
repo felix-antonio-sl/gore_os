@@ -1,14 +1,11 @@
 _meta:
   urn: urn:goreos:atom:process:d_back_d05:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-back
 id: PROC-BACK-D05
-code: D05
 name: Gestión de Inventarios y Activo Fijo
 domain: D-BACK
+code: D05
 subdomain: Inventarios
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+process_type: BPMN

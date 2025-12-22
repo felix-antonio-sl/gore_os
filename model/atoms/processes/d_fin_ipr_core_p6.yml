@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_fin_ipr_core_p6:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-fin-ipr_core
 id: PROC-FIN-IPR_CORE-P6
-code: P6
 name: Modificaciones en Ejecución
 domain: D-FIN-IPR_CORE
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P6
+process_type: BPMN

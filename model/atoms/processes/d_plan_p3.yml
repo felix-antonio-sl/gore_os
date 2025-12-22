@@ -1,13 +1,10 @@
 _meta:
   urn: urn:goreos:atom:process:d_plan_p3:1.0.0
   type: Process
+  schema: urn:goreos:schema:process:1.0.0
   source: domains/d-plan
 id: PROC-PLAN-P3
-code: P3
 name: Validación PROT
 domain: D-PLAN
-type: BPMN
-morphisms:
-  roles_ejecutores: []
-  manipula: []
-  triggers: []
+code: P3
+process_type: BPMN
