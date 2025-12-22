@@ -1,0 +1,117 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Notificacion
+# ==============================================================================
+# Domain: D-NORM (Gestión Jurídico-Administrativa)
+# Subdomain: Actos Administrativos
+# Source: LBPA Art. 45-47, KB-GN-200
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Fiscal Virtual"
+  domain: D-NORM
+  subdomain: actos_administrativos
+  kb_source:
+    - "LBPA Art. 45-47: Notificaciones"
+    - "KB-GN-200: LEY-19880-PUBLICIDAD-REVISION-01"
+
+entity:
+  id: ENT-NORM-NOTIFICACION
+  name: Notificacion
+  name_es: Notificación de Acto
+  description: |
+    Comunicación formal de un acto administrativo a sus destinatarios.
+    Puede ser electrónica (preferente según TDE), carta certificada,
+    o por comparecencia.
+
+    El acto es exigible desde su notificación (Art. 45 LBPA).
+
+  purpose: |
+    - Registrar notificaciones
+    - Acreditar conocimiento del acto
+    - Iniciar cómputo de plazos de impugnación
+    - Cumplir deber de comunicación
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_notificacion
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: acto_id
+    type: String
+    fk: ENT-NORM-ACTO
+    nullable: false
+    description: Acto notificado
+
+  - name: destinatario_tipo
+    type: Enum[Funcionario, PersonaNatural, PersonaJuridica, OrganoPublico]
+    nullable: false
+    description: Tipo de destinatario
+
+  - name: destinatario_id
+    type: String
+    nullable: true
+    description: ID del destinatario (si registrado)
+
+  - name: destinatario_nombre
+    type: String
+    nullable: false
+    description: Nombre del destinatario
+
+  - name: destinatario_email
+    type: String
+    nullable: true
+    description: Email para notificación electrónica
+
+  # Medio
+  - name: medio
+    type: Enum[Electronica, CartaCertificada, Comparecencia, DiarioOficial, DocDigital]
+    nullable: false
+    description: Medio de notificación
+
+  # Fechas
+  - name: fecha_envio
+    type: DateTime
+    nullable: false
+    description: Fecha de envío
+
+  - name: fecha_recepcion
+    type: DateTime
+    nullable: true
+    description: Fecha de recepción confirmada
+
+  # Estado
+  - name: estado
+    type: Enum[Enviada, EnTransito, Recibida, Devuelta, Fallida]
+    default: Enviada
+    description: Estado de la notificación
+
+  - name: constancia
+    type: String
+    nullable: true
+    description: Evidencia de recepción
+
+invariants:
+  - id: INV-NOT-001
+    name: recibida_requiere_fecha
+    rule: |
+      estado = 'Recibida' → fecha_recepcion IS NOT NULL
+    description: Notificación recibida requiere fecha
+    severity: error
+
+morphisms:
+  notifica: [ENT-NORM-ACTO]
+  destinatario: [ENT-BACK-FUNCIONARIO, ENT-GOB-ACTOR]
+
+audit:
+  fields_tracked:
+    - estado
+    - fecha_recepcion
+  retention_years: 10

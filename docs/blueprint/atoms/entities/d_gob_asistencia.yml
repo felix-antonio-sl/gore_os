@@ -1,0 +1,101 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Asistencia
+# ==============================================================================
+# Domain: D-GOB (Gobernanza)
+# Subdomain: Consejo Regional
+# Source: LOC GORE Art. 35, domain_d-gob.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-GOB
+  subdomain: consejo_regional
+  kb_source:
+    - "LOC GORE Art. 35: Quórum"
+    - "domain_d-gob.md M1: Consejo Regional"
+
+entity:
+  id: ENT-GOB-ASISTENCIA
+  name: Asistencia
+  name_es: Asistencia a Sesión CORE
+  description: |
+    Registro de asistencia de cada consejero a una sesión del CORE.
+    Es fundamental para determinar quórum y validez de votaciones.
+
+  purpose: |
+    - Controlar quórum de sesiones
+    - Registrar asistencia para métricas
+    - Base para dieta de consejeros
+    - Transparencia pública
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_asistencia
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: sesion_id
+    type: String
+    fk: ENT-GOB-SESION-CORE
+    nullable: false
+    description: Sesión a la que asiste
+
+  - name: consejero_id
+    type: String
+    fk: ENT-GOB-CONSEJERO
+    nullable: false
+    description: Consejero
+
+  - name: presente
+    type: Boolean
+    nullable: false
+    description: ¿Asistió a la sesión?
+
+  - name: hora_llegada
+    type: Time
+    nullable: true
+    description: Hora de llegada
+
+  - name: hora_salida
+    type: Time
+    nullable: true
+    description: Hora de salida (si se retiró antes)
+
+  - name: asistencia_completa
+    type: Boolean
+    computed: true
+    formula: presente AND (hora_salida IS NULL OR hora_salida >= sesion.hora_termino)
+    description: ¿Asistió toda la sesión?
+
+  - name: justificacion
+    type: Text
+    nullable: true
+    description: Justificación si no asistió
+
+  - name: tipo_ausencia
+    type: Enum[SinJustificar, Justificada, Licencia, ComisionServicio]
+    nullable: true
+    description: Tipo de ausencia si no presente
+
+invariants:
+  - id: INV-ASIST-001
+    name: una_asistencia_por_sesion
+    rule: UNIQUE(sesion_id, consejero_id)
+    description: Un registro por consejero por sesión
+    severity: error
+
+morphisms:
+  registra: [ENT-GOB-CONSEJERO]
+  para: [ENT-GOB-SESION-CORE]
+
+audit:
+  fields_tracked:
+    - presente
+  retention_years: 10

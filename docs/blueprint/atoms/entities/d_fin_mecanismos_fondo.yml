@@ -152,6 +152,36 @@ attributes:
     default: 0.05
     description: "5% para gastos de administración Glosa 06"
 
+  - name: es_fondo_8_pct
+    type: Boolean
+    default: false
+    description: Si corresponde al 8% de Vinculación Comunidad
+
+  - name: areas_tematicas
+    type: Array[String]
+    nullable: true
+    description: Áreas habilitadas para postulación (ej. Cultura, Deporte)
+
+  - name: requiere_gratuidad
+    type: Boolean
+    default: true
+    description: Si las actividades financiadas deben ser gratuitas
+
+  - name: plazo_ejecucion_meses
+    type: Integer
+    nullable: true
+    description: Plazo máximo típico de ejecución (ej. 8 meses para 8%)
+
+  - name: limite_gastos_admin_pct
+    type: Decimal
+    default: 0.05
+    description: Límite porcentual para gastos administrativos de la org
+
+  - name: permite_cotizacion_internet
+    type: Boolean
+    default: false
+    description: Si acepta pantallazos de internet como cotización válida
+
   # ─────────────────────────────────────────────────────────────────────────────
   # Estado
   # ─────────────────────────────────────────────────────────────────────────────

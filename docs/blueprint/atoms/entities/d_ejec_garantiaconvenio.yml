@@ -1,0 +1,139 @@
+# ==============================================================================
+# GORE_OS Entity Atom: GarantiaConvenio (Boletas y Pólizas)
+# ==============================================================================
+# Domain: D-EJEC (Execution & Monitoring)
+# Subdomain: Gestión de Convenios
+# Source: domain_d-ejec.md, Módulo 2: Gestión de Convenios
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-EJEC
+  subdomain: convenios
+  kb_source:
+    - "domain_d-ejec.md"
+    - "Ley 19.886 Compras Públicas"
+
+entity:
+  id: ENT-EJEC-GARANTIA
+  name: GarantiaConvenio
+  name_es: Garantía de Convenio
+  description: |
+    Instrumento financiero (Boleta de Garantía, Póliza de Seguro, Vale Vista)
+    entregado por el ejecutor para caucionar el fiel cumplimiento del contrato,
+    el correcto uso de anticipos, o la correcta ejecución de la obra.
+
+  purpose: |
+    - Resguardar el patrimonio fiscal ante incumplimientos
+    - Gestionar custodia y devolución de documentos valorados
+    - Alertar vencimientos próximos para renovación
+
+  categorical_type: Object
+  is_abstract: false
+  category: Asset
+
+attributes:
+  - name: id_garantia
+    type: String
+    key: true
+    description: Identificador interno
+
+  - name: convenio_id
+    type: String
+    fk: ENT-EJEC-CONVENIO
+    nullable: false
+    description: Convenio caucionado
+
+  - name: tipo_garantia
+    type: Enum[FielCumplimiento, Anticipo, CorrectaEjecucion, SeriedadOferta]
+    nullable: false
+    description: Objeto de la garantía
+
+  - name: instrumento
+    type: Enum[BoletaBancaria, PolizaSeguro, ValeVista, CertificadoFianza]
+    nullable: false
+    description: Tipo de instrumento
+
+  - name: entidad_emisora
+    type: String
+    nullable: false
+    description: Banco o Aseguradora (ej. Banco Estado, HDI Seguros)
+
+  - name: numero_documento
+    type: String
+    nullable: false
+    description: Número de serie del documento
+
+  - name: monto
+    type: Decimal
+    nullable: false
+    description: Monto asegurado
+
+  - name: moneda
+    type: Enum[CLP, UF, USD]
+    default: CLP
+    description: Moneda del documento
+
+  - name: fecha_emision
+    type: Date
+    nullable: false
+    description: Fecha emisión
+
+  - name: fecha_vencimiento
+    type: Date
+    nullable: false
+    description: Fecha expiración vigencia
+
+  - name: custodia_id
+    type: String
+    nullable: true
+    description: Código de ubicación en caja fuerte/tesorería
+
+  - name: estado
+    type: Enum[EnCustodia, PorVencer, Renovada, Devuelta, Ejecutada, Vencida]
+    default: EnCustodia
+    description: Estado actual del documento
+
+  - name: observaciones
+    type: Text
+    nullable: true
+    description: Notas adicionales
+
+invariants:
+  - id: INV-GAR-001
+    name: cobertura_vigente
+    rule: |
+      (estado = 'EnCustodia') → (fecha_vencimiento >= now())
+    description: Una garantía en custodia no debería estar vencida
+    severity: error
+
+  - id: INV-GAR-002
+    name: monto_positivo
+    rule: monto > 0
+    description: El monto debe ser positivo
+    severity: error
+
+lifecycle:
+  states:
+    - name: EnCustodia
+      description: Documento físico resguardado en Tesorería
+    - name: PorVencer
+      description: Alerta (ej. < 30 días) para solicitar renovación
+    - name: Renovada
+      description: Reemplazada por nueva garantía (canje)
+    - name: Devuelta
+      description: Entregada al ejecutor al cierre conforme
+    - name: Ejecutada
+      description: Cobrada por incumplimiento (ingreso a arcas fiscales)
+
+morphisms:
+  garantiza: [ENT-EJEC-CONVENIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - custodia_id
+  retention_years: 50 # Documentos valorados requieren larga traza

@@ -1,14 +1,249 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_back_tem_34_07:1.0.0
-  type: Entity
-  source: domains/d-back/glossary
-id: ENT-BACK-TEM_34_07
-name: Ítem 34.07
-entity_key: tem_34_07
-domain: D-BACK
-category: Reference
-description: Asignación presupuestaria para pago de deuda flotante del ejercicio anterior
+# ==============================================================================
+# GORE_OS Entity Atom: Item3407 (Deuda Flotante)
+# ==============================================================================
+# Domain: D-BACK (Backoffice)
+# Subdomain: Tesorería
+# Source: DL 1263/1975 Art. 32, Ley de Presupuestos Glosa 14
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-BACK
+  subdomain: tesoreria
+  kb_source:
+    - "DL 1263/1975 Art. 32"
+    - "Ley de Presupuestos - Glosa 14"
+    - "kb_gn_018_gestion_prpto_koda.yml"
+
+entity:
+  id: ENT-BACK-ITEM3407
+  name: Item3407
+  name_es: Ítem 34.07 - Deuda Flotante
+  description: |
+    Asignación presupuestaria específica para el pago de compromisos
+    devengados en el ejercicio anterior que quedaron pendientes de pago
+    al cierre del año fiscal. La "deuda flotante" representa obligaciones
+    legales contraídas pero no extinguidas.
+
+    Según DL 1263/1975 Art. 32, estos compromisos deben pagarse con cargo
+    al presupuesto del año siguiente, imputados al Ítem 34.07.
+
+  purpose: |
+    Modelar la gestión de deuda flotante para:
+    - Identificar compromisos arrastrados de ejercicio anterior
+    - Controlar el gasto del ítem 34.07
+    - Cumplir plazos de pago a proveedores
+    - Reportar a Contraloría
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+  extends: null
+
+  related_to:
+    - entity: ENT-FIN-COMPROMISO
+      relation: originado_en
+      cardinality: N:1
+      description: Compromiso del año anterior
+    - entity: ENT-BACK-PAGO
+      relation: extinto_por
+      cardinality: 1:0..1
+      description: Pago que cancela la deuda
+
+attributes:
+  - name: id_deuda_flotante
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: ejercicio_origen
+    type: Integer
+    nullable: false
+    description: Año en que se generó el compromiso original
+
+  - name: ejercicio_pago
+    type: Integer
+    nullable: false
+    description: Año en que se paga (ejercicio_origen + 1)
+
+  # Compromiso original
+  - name: compromiso_origen_id
+    type: String
+    fk: ENT-FIN-COMPROMISO
+    nullable: false
+    description: Compromiso que generó la deuda
+
+  - name: devengado_origen_id
+    type: String
+    fk: ENT-FIN-DEVENGO
+    nullable: false
+    description: Devengado pendiente de pago
+
+  - name: documento_respaldo
+    type: String
+    nullable: false
+    description: Factura, boleta u otro documento
+
+  # Beneficiario
+  - name: acreedor_rut
+    type: String
+    nullable: false
+    description: RUT del acreedor
+
+  - name: acreedor_nombre
+    type: String
+    nullable: false
+    description: Nombre o razón social
+
+  # Montos
+  - name: monto_original
+    type: Decimal
+    nullable: false
+    description: Monto del devengado al cierre
+
+  - name: monto_pagado
+    type: Decimal
+    default: 0
+    description: Monto ya cancelado
+
+  - name: saldo_pendiente
+    type: Decimal
+    computed: true
+    formula: monto_original - monto_pagado
+    description: Monto por pagar
+
+  # Imputación
+  - name: imputacion_original
+    type: String
+    nullable: false
+    description: Clasificador presupuestario del compromiso original
+
+  - name: imputacion_item3407
+    type: String
+    default: "34.07.001"
+    description: Clasificador del ítem de deuda flotante
+
+  # Fechas
+  - name: fecha_devengado
+    type: Date
+    nullable: false
+    description: Fecha del devengado original
+
+  - name: fecha_cierre_ejercicio
+    type: Date
+    nullable: false
+    description: 31/12 del ejercicio origen
+
+  - name: fecha_pago
+    type: Date
+    nullable: true
+    description: Fecha de extinción de la obligación
+
+  - name: dias_pendiente
+    type: Integer
+    computed: true
+    formula: fecha_actual - fecha_cierre_ejercicio
+    description: Días desde cierre sin pagar
+
+  # Estado
+  - name: estado
+    type: Enum[Pendiente, EnTramitePago, Pagado, Prescrito, EnDisputa]
+    default: Pendiente
+    description: Estado de la deuda
+
+  - name: pago_id
+    type: String
+    fk: ENT-BACK-PAGO
+    nullable: true
+    description: Pago que extinguió la deuda
+
+  # Referencias
+  - name: folio_sigfe_original
+    type: String
+    nullable: true
+    description: Folio SIGFE del devengado origen
+
+  - name: folio_sigfe_pago
+    type: String
+    nullable: true
+    description: Folio SIGFE del pago
+
+  # Observaciones
+  - name: motivo_atraso
+    type: String
+    nullable: true
+    description: Razón del no pago en ejercicio anterior
+
+  - name: notas
+    type: Text
+    nullable: true
+    description: Observaciones adicionales
+
+invariants:
+  - id: INV-DF-001
+    name: ejercicio_correlativo
+    rule: ejercicio_pago = ejercicio_origen + 1
+    description: El pago debe ser en el ejercicio siguiente
+    severity: error
+
+  - id: INV-DF-002
+    name: monto_pagado_no_excede
+    rule: monto_pagado <= monto_original
+    description: No se puede pagar más del monto original
+    severity: error
+
+  - id: INV-DF-003
+    name: pagado_tiene_pago
+    rule: |
+      (estado = 'Pagado') → pago_id IS NOT NULL
+    description: Estado pagado requiere referencia al pago
+    severity: error
+
+  - id: INV-DF-004
+    name: plazo_maximo_pago
+    rule: |
+      (estado = 'Pendiente' AND dias_pendiente > 365) → 
+      estado = 'Prescrito' OR estado = 'EnDisputa'
+    description: Alertar deudas de más de un año
+    source: DL 1263
+
+lifecycle:
+  states:
+    - name: Pendiente
+      description: Deuda identificada, pendiente de pago
+    - name: EnTramitePago
+      description: En proceso de pago
+    - name: Pagado
+      description: Obligación extinguida
+    - name: Prescrito
+      description: Superado plazo legal (excepcional)
+    - name: EnDisputa
+      description: Acreedor reclama o hay controversia
+
+  transitions:
+    - from: Pendiente
+      to: EnTramitePago
+      trigger: iniciar_pago
+    - from: EnTramitePago
+      to: Pagado
+      trigger: confirmar_pago
+      guard: pago_id IS NOT NULL
+    - from: Pendiente
+      to: EnDisputa
+      trigger: registrar_reclamo
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  originado_en: [ENT-FIN-COMPROMISO, ENT-FIN-DEVENGO]
+  extinto_por: [ENT-BACK-PAGO]
+  imputado_a: [Presupuesto-Item3407]
+
+audit:
+  fields_tracked:
+    - estado
+    - monto_pagado
+    - fecha_pago
+  retention_years: 10

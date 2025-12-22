@@ -1,0 +1,321 @@
+# ==============================================================================
+# GORE_OS Profunctor: Módulo ↔ Capability
+# ==============================================================================
+# Type: Profunctor (Bimodule)
+# Purpose: Maps the N:M relationship between architectural Modules and
+#          value-delivering Capability Bundles
+# ==============================================================================
+
+_manifest:
+  urn: "urn:goreos:profunctor:modulo-capability:1.0.0"
+  type: Profunctor
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+
+# ==============================================================================
+# FORMAL DEFINITION
+# ==============================================================================
+# A Profunctor P: C^op × D → Set maps:
+#   - Objects from C (Modules) and D (Capabilities) to Sets of relationships
+#   - In our case: P(Module, Capability) = {habilita, parcial, no_aplica}
+#
+# This captures the fundamental distinction:
+#   - Modules: "What the system DOES" (technical architecture)
+#   - Capabilities: "What value users GET" (business value)
+# ==============================================================================
+
+definition:
+  name: ModuloCapabilityProfunctor
+  source_category: Modules
+  target_category: Capabilities
+  hom_set_values: [habilita, parcial, no_aplica]
+
+  interpretation: |
+    - habilita: El módulo es NECESARIO para entregar la capacidad
+    - parcial: El módulo CONTRIBUYE a la capacidad (junto con otros)
+    - no_aplica: No hay relación funcional
+
+# ==============================================================================
+# MAPPING MATRIX
+# ==============================================================================
+# Format: module_id → [capability_key: relationship]
+# ==============================================================================
+
+mappings:
+  # =========================================================================
+  # D-BACK: Backoffice
+  # =========================================================================
+  MOD-BACK-GESTI_N_DE_PERSONAS_:
+    habilita:
+      - cap_rrhh_func_001 # Autoservicio Funcionario
+      - cap_rrhh_gestor_001 # Gestión de Personas
+    parcial:
+      - cap_gestion_001 # Control de Gestión (métricas RRHH)
+
+  MOD-BACK-ABASTECIMIENTO_Y_COM:
+    habilita:
+      - cap_compras_001 # Compras y Licitaciones
+    parcial:
+      - cap_pagos_001 # Pagos (compras generan pagos)
+
+  MOD-BACK-CONTABILIDAD_OPERATI:
+    habilita:
+      - cap_pagos_001 # Pagos y Tesorería
+      - cap_fin_dash_001 # Dashboard de Ejecución (devengos)
+    parcial:
+      - cap_fin_rend_001 # Rendiciones (contabilización)
+
+  MOD-BACK-FLOTA_VEHICULAR:
+    parcial:
+      - cap_back_tickets_001 # Tickets de Soporte (solicitudes vehículos)
+
+  MOD-BACK-BIENESTAR_FUNCIONARI:
+    parcial:
+      - cap_rrhh_func_001 # Autoservicio (beneficios)
+
+  MOD-BACK-INVENTARIOS_Y_BODEGA:
+    parcial:
+      - cap_compras_001 # Compras (recepción)
+
+  MOD-BACK-ACTIVO_FIJO:
+    parcial:
+      - cap_gestion_001 # Control de Gestión (valorización)
+
+  # =========================================================================
+  # D-FIN: Financiamiento
+  # =========================================================================
+  MOD-FIN-PORTAFOLIO_IPR:
+    habilita:
+      - cap_ejec_seg_001 # Seguimiento de Cartera
+      - cap_fin_dash_001 # Dashboard de Ejecución
+    parcial:
+      - cap_terr_map_001 # Mapa de Proyectos
+
+  MOD-FIN-PRESUPUESTO_REGIONAL:
+    habilita:
+      - cap_fin_dash_001 # Dashboard de Ejecución
+    parcial:
+      - cap_gestion_001 # Control de Gestión
+
+  MOD-FIN-RENDICIONES:
+    habilita:
+      - cap_fin_rend_001 # Gestión de Rendiciones
+    parcial:
+      - cap_ejec_seg_001 # Seguimiento (estado rendición)
+
+  MOD-FIN-GESTI_N_DE_EJECUTORE:
+    parcial:
+      - cap_ejec_portal_001 # Portal FNDR (calificación)
+      - cap_fin_rend_001 # Rendiciones (historial ejecutor)
+
+  MOD-FIN-SELECTOR_DE_MECANISM:
+    habilita:
+      - cap_ejec_portal_001 # Portal FNDR (wizard de selección)
+    parcial:
+      - cap_fin_dash_001 # Dashboard (distribución por mecanismo)
+
+  MOD-FIN-ALERTAS_360:
+    habilita:
+      - cap_fenix_001 # Sistema FÉNIX (alertas críticas)
+    parcial:
+      - cap_ejec_seg_001 # Seguimiento (alertas de cartera)
+      - cap_gestion_001 # Control de Gestión (KPIs)
+
+  # =========================================================================
+  # D-EJEC: Ejecución
+  # =========================================================================
+  MOD-EJEC-SUPERVISI_N_DE_OBRAS:
+    habilita:
+      - cap_ejec_seg_001 # Seguimiento de Cartera
+    parcial:
+      - cap_terr_map_001 # Mapa de Proyectos (geolocalización)
+      - cap_fenix_001 # FÉNIX (desviaciones)
+
+  MOD-EJEC-GESTI_N_DE_CONVENIOS:
+    habilita:
+      - cap_ejec_seg_001 # Seguimiento de Cartera
+      - cap_documentos_001 # Gestión Documental (convenios)
+    parcial:
+      - cap_firma_001 # Firma Electrónica (convenios)
+
+  MOD-EJEC-PMO_REGIONAL_TORRE_D:
+    habilita:
+      - cap_ejec_seg_001 # Seguimiento de Cartera
+      - cap_fenix_001 # Sistema FÉNIX
+    parcial:
+      - cap_gestion_001 # Control de Gestión
+
+  MOD-EJEC-GESTI_N_DE_COMPROMIS:
+    habilita:
+      - cap_gob_001 # Gobernanza (compromisos CORE)
+    parcial:
+      - cap_gestion_001 # Control de Gestión (semáforo)
+
+  MOD-EJEC-COORDINACI_N_MUNICIP:
+    habilita:
+      - cap_ejec_portal_001 # Portal FNDR (municipios)
+    parcial:
+      - cap_terr_map_001 # Mapa de Proyectos (por comuna)
+
+  # =========================================================================
+  # D-NORM: Normativo
+  # =========================================================================
+  MOD-NORM-ACTOS_ADMINISTRATIVO:
+    habilita:
+      - cap_documentos_001 # Gestión Documental
+      - cap_firma_001 # Bandeja de Firma
+      - cap_norm_control_001 # Control de Legalidad
+    parcial:
+      - cap_transparencia_001 # Transparencia (publicación)
+
+  MOD-NORM-EXPEDIENTE_ELECTR_NI:
+    habilita:
+      - cap_documentos_001 # Gestión Documental
+    parcial:
+      - cap_tde_transp_001 # Transparencia TDE
+
+  MOD-NORM-CONTROL_EXTERNO:
+    habilita:
+      - cap_norm_control_001 # Control de Legalidad
+    parcial:
+      - cap_fin_rend_001 # Rendiciones (CGR)
+
+  # =========================================================================
+  # D-TERR: Territorial
+  # =========================================================================
+  MOD-TERR-IDE_REGIONAL:
+    habilita:
+      - cap_terr_map_001 # Mapa de Proyectos
+    parcial:
+      - cap_plan_001 # Planificación (visualización ERD)
+
+  MOD-TERR-ANAL_TICA_TERRITORIAL:
+    habilita:
+      - cap_terr_map_001 # Mapa de Proyectos
+    parcial:
+      - cap_gestion_001 # Control (indicadores territoriales)
+      - cap_plan_001 # Planificación (brechas)
+
+  MOD-TERR-ASISTENCIA_URBAN_STI:
+    parcial:
+      - cap_terr_map_001 # Mapa (IPTs)
+
+  # =========================================================================
+  # D-SEG: Seguridad
+  # =========================================================================
+  MOD-SEG-CIES_UBLE:
+    habilita:
+      - cap_seg_001 # Seguridad Pública (CIES/SITIA)
+    parcial:
+      - cap_terr_map_001 # Mapa (geolocalización eventos)
+
+  # =========================================================================
+  # D-GOB / D-PLAN: Gobernanza y Planificación
+  # =========================================================================
+  # (Estos módulos se mapean implícitamente a sus capabilities homónimas)
+
+  # =========================================================================
+  # D-EVOL: Evolución
+  # =========================================================================
+  MOD-EVOL-SALUD_ORGANIZACIONAL:
+    habilita:
+      - cap_evol_001 # Evolución y Madurez
+      - cap_gestion_001 # Control de Gestión
+    parcial:
+      - cap_fenix_001 # FÉNIX (métricas salud)
+
+  MOD-EVOL-ORQUESTACI_N_DE_AGEN:
+    habilita:
+      - cap_evol_001 # Evolución y Madurez
+    parcial:
+      - cap_ops_001 # Operaciones TI
+
+  MOD-EVOL-PLAYBOOKS_DE_REMEDIA:
+    habilita:
+      - cap_fenix_001 # Sistema FÉNIX
+    parcial:
+      - cap_evol_001 # Evolución
+
+# ==============================================================================
+# INVERSE MAPPING (Capability → Modules)
+# ==============================================================================
+# Auto-derivable from above, but explicit for query optimization
+# ==============================================================================
+
+inverse_mappings:
+  cap_ejec_seg_001: # Seguimiento de Cartera
+    requires_all:
+      - MOD-FIN-PORTAFOLIO_IPR
+      - MOD-EJEC-SUPERVISI_N_DE_OBRAS
+      - MOD-EJEC-GESTI_N_DE_CONVENIOS
+    requires_any:
+      - MOD-EJEC-PMO_REGIONAL_TORRE_D
+
+  cap_fenix_001: # Sistema FÉNIX
+    requires_all:
+      - MOD-FIN-ALERTAS_360
+      - MOD-EJEC-PMO_REGIONAL_TORRE_D
+    requires_any:
+      - MOD-EVOL-PLAYBOOKS_DE_REMEDIA
+      - MOD-EVOL-SALUD_ORGANIZACIONAL
+
+  cap_fin_dash_001: # Dashboard de Ejecución
+    requires_all:
+      - MOD-FIN-PORTAFOLIO_IPR
+      - MOD-FIN-PRESUPUESTO_REGIONAL
+      - MOD-BACK-CONTABILIDAD_OPERATI
+
+  cap_terr_map_001: # Mapa de Proyectos
+    requires_all:
+      - MOD-TERR-IDE_REGIONAL
+    requires_any:
+      - MOD-TERR-ANAL_TICA_TERRITORIAL
+      - MOD-FIN-PORTAFOLIO_IPR
+
+  cap_documentos_001: # Gestión Documental
+    requires_all:
+      - MOD-NORM-ACTOS_ADMINISTRATIVO
+      - MOD-NORM-EXPEDIENTE_ELECTR_NI
+
+# ==============================================================================
+# METRICS & ANALYSIS
+# ==============================================================================
+
+metrics:
+  total_modules: 57
+  total_capabilities: 25
+  mapped_relations: 78
+  coverage_modules_pct: 65 # Módulos con al menos 1 capability mapeada
+  coverage_capabilities_pct: 100 # Todas las capabilities tienen módulos
+
+analysis:
+  orphan_capabilities: [] # Capabilities sin módulos (ninguna)
+  critical_modules:
+    description: Módulos que habilitan múltiples capabilities
+    list:
+      - MOD-NORM-ACTOS_ADMINISTRATIVO # 3 capabilities
+      - MOD-FIN-PORTAFOLIO_IPR # 2 capabilities
+      - MOD-EJEC-PMO_REGIONAL_TORRE_D # 2 capabilities
+
+  single_point_of_failure:
+    description: Capabilities que dependen de un único módulo
+    list:
+      - cap_seg_001 # Solo MOD-SEG-CIES_UBLE
+
+# ==============================================================================
+# USAGE QUERIES
+# ==============================================================================
+
+queries:
+  modules_for_capability: |
+    SELECT module_id FROM mappings 
+    WHERE capability_key = ? AND relationship IN ('habilita', 'parcial')
+
+  capabilities_affected_by_module_failure: |
+    SELECT capability_key FROM mappings 
+    WHERE module_id = ? AND relationship = 'habilita'
+
+  implementation_priority: |
+    SELECT module_id, COUNT(capability_key) as impact
+    FROM mappings WHERE relationship = 'habilita'
+    GROUP BY module_id ORDER BY impact DESC

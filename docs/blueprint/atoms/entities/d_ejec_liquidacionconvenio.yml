@@ -1,0 +1,176 @@
+# ==============================================================================
+# GORE_OS Entity Atom: LiquidacionConvenio (Cierre Formal)
+# ==============================================================================
+# Domain: D-EJEC (Execution & Monitoring)
+# Subdomain: Cierre
+# Source: D03_gestion_ipr.md P7, KB-019 Fase 7
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-EJEC
+  subdomain: cierre
+  kb_source:
+    - "D03_gestion_ipr.md P7: Cierre y Evaluación Ex Post"
+    - "KB-019 Fase 7: Cierre Técnico-Financiero"
+    - "Res. CGR 30/2015 Rendiciones"
+
+entity:
+  id: ENT-EJEC-LIQUIDACION
+  name: LiquidacionConvenio
+  name_es: Liquidación de Convenio
+  description: |
+    Acto administrativo que cierra formalmente un convenio, consolidando:
+    - Cierre técnico (recepción definitiva)
+    - Cierre financiero (rendición aprobada, saldos)
+    - Liberación de garantías
+    - Generación de reintegros si corresponde
+
+    Es el punto final del ciclo de vida del convenio en D-EJEC.
+
+  purpose: |
+    - Cerrar formalmente el convenio
+    - Consolidar montos finales (transferido, rendido, reintegrado)
+    - Liberar garantías al ejecutor
+    - Habilitar evaluación ex-post
+    - Archivar expediente
+
+  categorical_type: Object
+  is_abstract: false
+  category: Event
+
+attributes:
+  - name: id_liquidacion
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: convenio_id
+    type: String
+    fk: ENT-EJEC-CONVENIO
+    nullable: false
+    description: Convenio que se liquida
+
+  - name: resolucion_cierre_nro
+    type: String
+    nullable: false
+    description: Número de resolución de liquidación
+
+  - name: fecha_resolucion
+    type: Date
+    nullable: false
+    description: Fecha de la resolución de cierre
+
+  # Cierre Técnico
+  - name: acta_recepcion_definitiva_id
+    type: String
+    fk: ENT-EJEC-ACTA
+    nullable: false
+    description: Acta de recepción definitiva
+
+  - name: fecha_recepcion_definitiva
+    type: Date
+    nullable: false
+    description: Fecha de recepción definitiva
+
+  - name: observaciones_tecnicas
+    type: Text
+    nullable: true
+    description: Observaciones del cierre técnico
+
+  # Cierre Financiero
+  - name: monto_total_convenio
+    type: Decimal
+    nullable: false
+    description: Monto total original del convenio
+
+  - name: monto_transferido
+    type: Decimal
+    nullable: false
+    description: Total transferido al ejecutor
+
+  - name: monto_rendido_aprobado
+    type: Decimal
+    nullable: false
+    description: Total rendido y aprobado por DAF
+
+  - name: saldo_a_favor_gore
+    type: Decimal
+    computed: true
+    formula: monto_transferido - monto_rendido_aprobado
+    description: Saldo a reintegrar (si positivo)
+
+  - name: reintegro_id
+    type: String
+    fk: ENT-FIN-REINTEGRO
+    nullable: true
+    description: Reintegro generado (si aplica)
+
+  - name: rendicion_sisrec_ok
+    type: Boolean
+    default: false
+    description: ¿Rendición SISREC aprobada?
+
+  # Garantías
+  - name: garantias_liberadas
+    type: Boolean
+    default: false
+    description: ¿Se liberaron todas las garantías?
+
+  - name: fecha_liberacion_garantias
+    type: Date
+    nullable: true
+    description: Fecha de devolución de boletas/pólizas
+
+  # Estado
+  - name: estado
+    type: Enum[EnProceso, Liquidado, Observado]
+    default: EnProceso
+    description: Estado del cierre
+
+invariants:
+  - id: INV-LIQ-001
+    name: liquidado_requiere_rendicion
+    rule: |
+      (estado = 'Liquidado') → (rendicion_sisrec_ok = true)
+    description: No se puede liquidar sin rendición aprobada
+    severity: error
+
+  - id: INV-LIQ-002
+    name: reintegro_si_saldo
+    rule: |
+      (saldo_a_favor_gore > 0) → (reintegro_id IS NOT NULL OR estado != 'Liquidado')
+    description: Si hay saldo a favor GORE, debe existir reintegro
+    severity: warning
+
+  - id: INV-LIQ-003
+    name: garantias_post_liquidacion
+    rule: |
+      (estado = 'Liquidado') → (garantias_liberadas = true)
+    description: Garantías deben liberarse al liquidar
+    severity: warning
+
+lifecycle:
+  states:
+    - name: EnProceso
+      description: Consolidando cierre técnico y financiero
+    - name: Observado
+      description: Saldos pendientes o rendición incompleta
+    - name: Liquidado
+      description: Convenio cerrado formalmente
+
+morphisms:
+  cierra: [ENT-EJEC-CONVENIO]
+  libera: [ENT-EJEC-GARANTIA]
+  genera: [ENT-FIN-REINTEGRO]
+  basada_en: [ENT-EJEC-ACTA]
+
+audit:
+  fields_tracked:
+    - estado
+    - monto_rendido_aprobado
+    - garantias_liberadas
+  retention_years: 15

@@ -42,6 +42,26 @@ attributes:
     nullable: false
     description: Incluye MandatoMOP para convenios con MOP (Phase 20.2 CRM-IPR)
 
+  - name: tipo_receptor
+    type: Enum[PUBLICO, PRIVADO_SFL, ORG_COMUNITARIA, UNIVERSIDAD, MUNICIPALIDAD]
+    nullable: true
+    description: Naturaleza jurídica del receptor
+
+  - name: es_convenio_subvencion
+    type: Boolean
+    default: false
+    description: Si es convenio de subvención (8%)
+
+  - name: porcentaje_honorarios_max
+    type: Decimal
+    nullable: true
+    description: Límite máximo de honorarios sobre el total (ej. 30% en FRPD)
+
+  - name: requiere_cuenta_exclusiva
+    type: Boolean
+    default: false
+    description: Si requiere cuenta bancaria exclusiva para el proyecto
+
   # Partes
   - name: otorgante
     type: String

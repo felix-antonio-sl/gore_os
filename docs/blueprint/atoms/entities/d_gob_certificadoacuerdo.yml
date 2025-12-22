@@ -1,0 +1,85 @@
+# ==============================================================================
+# GORE_OS Entity Atom: CertificadoAcuerdo
+# ==============================================================================
+# Domain: D-GOB (Gobernanza)
+# Subdomain: Consejo Regional
+# Source: Práctica administrativa, domain_d-gob.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-GOB
+  subdomain: consejo_regional
+  kb_source:
+    - "Práctica administrativa GORE"
+    - "domain_d-gob.md M1: Consejo Regional"
+
+entity:
+  id: ENT-GOB-CERTIFICADO
+  name: CertificadoAcuerdo
+  name_es: Certificado de Acuerdo CORE
+  description: |
+    Documento oficial emitido por la Secretaría Ejecutiva del CORE
+    que certifica la adopción de un acuerdo. Es el instrumento
+    que se presenta ante terceros (Contraloría, ejecutores, etc.)
+    para acreditar la decisión del CORE.
+
+  purpose: |
+    - Certificar formalmente acuerdos
+    - Documento para ejecutores y terceros
+    - Base para toma de razón CGR
+    - Trazabilidad documental
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_certificado
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: numero_certificado
+    type: String
+    nullable: false
+    description: Número correlativo
+
+  - name: acuerdo_id
+    type: String
+    fk: ENT-GOB-ACUERDO-CORE
+    nullable: false
+    description: Acuerdo que certifica
+
+  - name: fecha_emision
+    type: Date
+    nullable: false
+    description: Fecha de emisión
+
+  - name: firmante_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Secretario Ejecutivo que firma
+
+  - name: documento_url
+    type: String
+    nullable: true
+    description: URL al documento firmado
+
+  - name: estado
+    type: Enum[Emitido, Entregado, Anulado]
+    default: Emitido
+    description: Estado del certificado
+
+morphisms:
+  certifica: [ENT-GOB-ACUERDO-CORE]
+  firmado_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+  retention_years: 20

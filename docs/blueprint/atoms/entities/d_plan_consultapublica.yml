@@ -1,14 +1,149 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_plan_consultapublica:1.0.0
-  type: Entity
-  source: domains/d-plan/entity_data
-id: ENT-PLAN-CONSULTAPUBLICA
-name: ConsultaPublica
-entity_key: consultapublica
-domain: D-PLAN
-category: Reference
-description: id, instrumento_id, tipo, fecha_inicio, fecha_fin, observaciones
+# ==============================================================================
+# GORE_OS Entity Atom: ConsultaPublica (Art. 17 bis LOC)
+# ==============================================================================
+# Domain: D-PLAN (Strategic Planning)
+# Subdomain: Participación
+# Source: domain_d-plan.md P3-bis, LOC GORE Art. 17 bis, dialogo_dplan_dterr.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-PLAN
+  subdomain: participacion
+  kb_source:
+    - "domain_d-plan.md P3-bis"
+    - "LOC GORE Art. 17 bis"
+    - "dialogo_dplan_dterr.md"
+
+entity:
+  id: ENT-PLAN-CONSULTA
+  name: ConsultaPublica
+  name_es: Consulta Pública
+  description: |
+    Registro de procesos de consulta pública formales requeridos por ley
+    para instrumentos como el PROT (60 días hábiles según Art. 17 bis LOC)
+    o la ERD.
+
+  purpose: |
+    Modelar consultas para:
+    - Cumplir Art. 17 bis LOC para PROT
+    - Registrar observaciones ciudadanas
+    - Generar informe de respuesta
+    - Trazabilidad del proceso participativo
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_consulta
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: instrumento_tipo
+    type: Enum[PROT, ERD, PoliticaRegional, PlanSectorial]
+    nullable: false
+    description: Tipo de instrumento consultado
+
+  - name: instrumento_id
+    type: String
+    nullable: false
+    description: ID del instrumento (PROT, ERD, etc.)
+
+  - name: titulo
+    type: String
+    nullable: false
+    description: Título de la consulta
+
+  # Período
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+    description: Inicio período de consulta
+
+  - name: fecha_fin
+    type: Date
+    nullable: false
+    description: Fin período de consulta
+
+  - name: dias_habiles
+    type: Integer
+    computed: true
+    description: Días hábiles de consulta
+
+  # Canales
+  - name: url_plataforma
+    type: String
+    nullable: true
+    description: URL de la plataforma de consulta
+
+  - name: email_observaciones
+    type: String
+    nullable: true
+    description: Email para recibir observaciones
+
+  # Resultados
+  - name: observaciones_recibidas
+    type: Integer
+    default: 0
+    description: Número de observaciones
+
+  - name: participantes_unicos
+    type: Integer
+    default: 0
+    description: Participantes únicos
+
+  - name: observaciones_acogidas
+    type: Integer
+    default: 0
+    description: Observaciones incorporadas
+
+  - name: observaciones_rechazadas
+    type: Integer
+    default: 0
+    description: Observaciones no acogidas
+
+  # Informe
+  - name: informe_respuesta_url
+    type: String
+    nullable: true
+    description: URL del informe de respuesta
+
+  - name: fecha_informe
+    type: Date
+    nullable: true
+    description: Fecha de publicación del informe
+
+  # Estado
+  - name: estado
+    type: Enum[Programada, Activa, Cerrada, ConInforme, Finalizada]
+    default: Programada
+    description: Estado de la consulta
+
+invariants:
+  - id: INV-CONS-001
+    name: prot_60_dias
+    rule: |
+      (instrumento_tipo = 'PROT') → (dias_habiles >= 60)
+    description: PROT requiere mínimo 60 días hábiles (Art. 17 bis)
+    severity: error
+
+  - id: INV-CONS-002
+    name: informe_requiere_cierre
+    rule: |
+      (estado = 'ConInforme') → (informe_respuesta_url IS NOT NULL)
+    description: Estado ConInforme requiere URL de informe
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  consulta: [PROT, ERD]
+  genera: [InformeRespuesta]
+
+audit:
+  fields_tracked:
+    - estado
+    - observaciones_recibidas
+  retention_years: 20

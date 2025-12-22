@@ -1,0 +1,227 @@
+# ==============================================================================
+# GORE_OS Entity Atom: IniciativaC33
+# ==============================================================================
+# Domain: D-FIN (Financial Management)
+# Subdomain: IPR Core
+# Source: kb_gn_029_guia_circ33_koda.yml
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: draft
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gestor IPR 360"
+  domain: D-FIN
+  subdomain: ipr_core
+  kb_source:
+    - "kb_gn_029_guia_circ33_koda.yml"
+
+entity:
+  id: ENT-FIN-INI-C33
+  name: IniciativaC33
+  name_es: Iniciativa Circular 33
+  description: |
+    Iniciativa de inversión financiada mediante el Oficio Circular 33 del Ministerio
+    de Hacienda, que permite procedimientos simplificados para ciertas categorías
+    de gasto que no requieren evaluación social completa en el SNI (rentabilidad).
+
+    Incluye:
+    - Estudios propios del giro (Subtítulo 22)
+    - Adquisición y reposición de Activos No Financieros - ANF (Subtítulo 29)
+    - Conservación de infraestructura pública y caminos (Subtítulo 31)
+    - Gastos por situaciones de emergencia (Subtítulo 24/31)
+
+  purpose: |
+    Modelar las reglas específicas de las iniciativas Circular 33 para:
+    - Controlar requisitos de cofinanciamiento en ANF
+    - Validar límites de costo en conservación (regla del 30%)
+    - Gestionar la tipología específica de ítems presupuestarios
+    - Trazar el cumplimiento de condiciones de admisibilidad C33
+
+  categorical_type: Object
+  is_abstract: false
+
+  extends: null
+
+  specializes: ENT-FIN-IPR # Es un tipo especial de IPR
+
+  related_to:
+    - entity: ENT-FIN-IPR
+      relation: extiende_ipr
+      cardinality: 1:1
+      description: Vinculación con la entidad IPR base
+    - entity: ENT-FIN-ACTO-ADMIN
+      relation: decreto_emergencia
+      cardinality: 0..1:1
+      description: Decreto que declara la emergencia (solo para cat. Emergencia)
+    - entity: ENT-FIN-RATE
+      relation: evaluacion_tecnica
+      cardinality: 1:N
+      description: Evaluación RATE simplificada (sin cálculo de rentabilidad social complejo)
+
+attributes:
+  - name: id_iniciativa_c33
+    type: String
+    key: true
+    description: PK única (ej. C33-2025-ANF-001)
+
+  - name: ipr_id
+    type: String
+    fk: ENT-FIN-IPR
+    nullable: false
+    description: ID de la IPR asociada en el Banco Integrado de Proyectos
+
+  - name: categoria_c33
+    type: Enum[ESTUDIO_GIRO, ANF_TERRENOS, ANF_EDIFICIOS, ANF_VEHICULOS, ANF_MAQUINARIA, ANF_MOBILIARIO, ANF_EQUIPOS_INFO, ANF_SOFTWARE, ANF_OTROS, CONSERVACION_CAMINOS, CONSERVACION_INFRA, EMERGENCIA_REHABILITACION, EMERGENCIA_RECONSTRUCCION]
+    nullable: false
+    description: |
+      Categoría específica según Guía C33:
+      - ESTUDIO_GIRO: Consultorías propias de la gestión
+      - ANF_*: Adquisición activos físicos
+      - CONSERVACION_*: Mantención de valor sin aumentar capacidad
+      - EMERGENCIA_*: Fases post-desastre
+
+  - name: subtitulo_presupuestario
+    type: Enum[22, 29, 31, 24]
+    nullable: false
+    description: |
+      Subtítulo principal:
+      22: Bienes y Servicios (Estudios)
+      29: Activos No Financieros (ANF)
+      31: Iniciativas de Inversión (Conservación, Reconstrucción)
+      24: Transferencias Corrientes (Emergencia/Rehabilitación)
+
+  - name: item_presupuestario
+    type: String
+    nullable: false
+    description: Ítem específico (ej. 29.03 para Vehículos, 29.05 para Maquinaria)
+
+  - name: descripcion_tecnica
+    type: String
+    nullable: true
+    description: Resumen técnico (marca/modelo referencial ANF, materialidad conservación)
+
+  # Reglas ANF
+  - name: cofinanciamiento_requerido
+    type: Boolean
+    default: false
+    description: Si requiere cofinanciamiento (típico en ANF)
+
+  - name: porcentaje_cofinanciamiento_minimo
+    type: Decimal
+    default: 0
+    description: Porcentaje mínimo de aporte propio exigido (ej. 20%)
+
+  - name: monto_aporte_propio
+    type: Decimal
+    default: 0
+    description: Monto aportado por la institución postulante
+
+  - name: vida_util_proyectada_anios
+    type: Integer
+    nullable: true
+    description: Vida útil según tabla SII o fabricante
+
+  # Reglas Conservación
+  - name: costo_reposicion_activo
+    type: Decimal
+    nullable: true
+    description: Costo estimado de reponer el activo totalmente nuevo
+
+  - name: costo_conservacion
+    type: Decimal
+    nullable: true
+    description: Costo del proyecto de conservación
+
+  - name: cumple_regla_30_pct
+    type: Boolean
+    default: false
+    description: Si costo_conservacion <= 30% costo_reposicion_activo
+
+  - name: requiere_evaluacion_mideso
+    type: Boolean
+    default: false
+    description: True si supera 30% o aumenta capacidad (sale de C33 pura)
+
+  # Reglas Emergencia
+  - name: decreto_emergencia_id
+    type: String
+    fk: ENT-FIN-ACTO-ADMIN
+    nullable: true
+    description: Referencia al decreto de catástrofe/emergencia
+
+  - name: fase_emergencia
+    type: Enum[Emergencia, Rehabilitacion, Reconstruccion]
+    nullable: true
+    description: Fase del ciclo de gestión de riesgo de desastres
+
+invariants:
+  - id: INV-C33-001
+    name: anf_requiere_cofinanciamiento
+    rule: |
+      (categoria_c33 STARTS_WITH 'ANF_') → 
+      (cofinanciamiento_requerido = true AND porcentaje_cofinanciamiento_minimo >= 20.0)
+    description: Adquisición de ANF exige aporte propio mínimo del 20%
+    source: kb_gn_029 Sec. 2 ANF
+    severity: warning
+
+  - id: INV-C33-002
+    name: conservacion_30_pct
+    rule: |
+      (categoria_c33 = CONSERVACION_INFRA) →
+      (cumple_regla_30_pct = true OR requiere_evaluacion_mideso = true)
+    description: Si conservación supera 30% de reposición, debe ir a MIDESO
+    source: kb_gn_029 Sec. 2 Conservación
+
+  - id: INV-C33-003
+    name: emergencia_requiere_decreto
+    rule: |
+      (categoria_c33 IN [EMERGENCIA_REHABILITACION, EMERGENCIA_RECONSTRUCCION]) →
+      decreto_emergencia_id IS NOT NULL
+    description: Gasto de emergencia requiere decreto habilitante
+    source: kb_gn_029 Sec. 2 Emergencia
+
+  - id: INV-C33-004
+    name: coherencia_vehiculo_maquinaria
+    rule: |
+      (categoria_c33 = ANF_VEHICULOS) → item_presupuestario = '29.03'
+      (categoria_c33 = ANF_MAQUINARIA) → item_presupuestario = '29.05'
+    description: Coherencia entre categoría e ítem presupuestario
+    source: kb_gn_029 Sec. 2 ANF
+
+  - id: INV-C33-005
+    name: prohibicion_estudios_basicos
+    rule: |
+      (categoria_c33 = ESTUDIO_GIRO) → subtitulo_presupuestario = 22
+    description: Estudios C33 son gastos operacionales, no inversión básica (Subt 31)
+    source: kb_gn_029 Sec. 2 Estudios
+
+lifecycle:
+  states:
+    - name: Formulacion
+      description: Preparación de antecedentes C33
+    - name: Admisibilidad
+      description: Revisión documental GORE
+    - name: EvaluacionTecnica
+      description: Análisis GORE (RATE)
+    - name: EnTomaRazon
+      description: Contraloría (si aplica monto)
+    - name: Elegible
+      description: Aprobado técnicamente (RS/Exento)
+    - name: Asignado
+      description: Con recursos priorizados (Identificación Presupuestaria)
+
+  transitions:
+    - from: Formulacion
+      to: Admisibilidad
+      trigger: postular
+    - from: Admisibilidad
+      to: EvaluacionTecnica
+      trigger: declarar_admisible
+    - from: EvaluacionTecnica
+      to: Elegible
+      trigger: aprobar_tecnicamente
+      guard: rate_resultado = 'RS' OR rate_resultado = 'ExentoRS'
+    - from: Elegible
+      to: Asignado
+      trigger: asignar_presupuesto

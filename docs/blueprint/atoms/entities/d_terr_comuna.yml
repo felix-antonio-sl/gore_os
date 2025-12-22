@@ -1,0 +1,170 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Comuna (Unidad Territorial Básica)
+# ==============================================================================
+# Domain: D-TERR (Territorial Management)
+# Subdomain: Territorio
+# Source: INE, División Político-Administrativa Región de Ñuble
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-TERR
+  subdomain: territorio
+  kb_source:
+    - "INE División Político-Administrativa"
+    - "LOC GORE"
+
+entity:
+  id: ENT-TERR-COMUNA
+  name: Comuna
+  name_es: Comuna
+  description: |
+    Unidad territorial básica de la división político-administrativa chilena.
+    La Región de Ñuble cuenta con 21 comunas distribuidas en 3 provincias.
+
+    Es el nivel de localización más frecuente para IPRs y análisis
+    de brechas territoriales.
+
+  purpose: |
+    Modelar las comunas para:
+    - Geolocalizar IPRs y beneficiarios
+    - Analizar brechas territoriales por comuna
+    - Calcular indicadores desagregados
+    - Vincular con POT y zonificación PROT
+
+  categorical_type: Object
+  is_abstract: false
+  category: Master
+
+attributes:
+  - name: id_comuna
+    type: String
+    key: true
+    description: Identificador único (código INE)
+
+  - name: codigo_ine
+    type: String
+    nullable: false
+    description: Código de corte único territorial (CUT) - 5 dígitos
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre oficial de la comuna
+
+  - name: provincia_id
+    type: String
+    fk: ENT-TERR-PROVINCIA
+    nullable: false
+    description: Provincia a la que pertenece
+
+  # Demografía
+  - name: poblacion
+    type: Integer
+    nullable: true
+    description: Población según último censo
+
+  - name: poblacion_urbana
+    type: Integer
+    nullable: true
+    description: Población zona urbana
+
+  - name: poblacion_rural
+    type: Integer
+    nullable: true
+    description: Población zona rural
+
+  - name: año_censo
+    type: Integer
+    default: 2017
+    description: Año del dato poblacional
+
+  # Geografía
+  - name: superficie_km2
+    type: Decimal
+    nullable: true
+    description: Superficie en kilómetros cuadrados
+
+  - name: densidad_hab_km2
+    type: Decimal
+    computed: true
+    formula: poblacion / superficie_km2
+    description: Densidad poblacional
+
+  # Clasificación
+  - name: tipo
+    type: Enum[Urbana, Rural, Mixta]
+    nullable: true
+    description: Clasificación urbano-rural
+
+  - name: categoria_subdere
+    type: String
+    nullable: true
+    description: Categoría SUBDERE (A1, A2, B1, etc.)
+
+  # Alcalde y Municipio
+  - name: alcalde_nombre
+    type: String
+    nullable: true
+    description: Nombre del alcalde actual
+
+  - name: municipio_email
+    type: String
+    nullable: true
+    description: Email de contacto municipal
+
+  # Métricas de inversión
+  - name: total_iprs_historicas
+    type: Integer
+    default: 0
+    description: Cantidad de IPRs ejecutadas
+
+  - name: monto_inversion_acumulado
+    type: Decimal
+    default: 0
+    description: Inversión GORE acumulada en M$
+
+  # Coordenadas cabecera
+  - name: latitud
+    type: Decimal
+    nullable: true
+    description: Latitud de la cabecera comunal
+
+  - name: longitud
+    type: Decimal
+    nullable: true
+    description: Longitud de la cabecera comunal
+
+invariants:
+  - id: INV-COM-001
+    name: codigo_ine_valido
+    rule: LENGTH(codigo_ine) = 5
+    description: El código INE debe tener 5 dígitos
+    severity: error
+
+morphisms:
+  pertenece_a: [ENT-TERR-PROVINCIA]
+  localiza: [ENT-FIN-IPR, ENT-FIN-CONVENIO]
+  medida_por: [ENT-TERR-BRECHARD]
+
+# Datos Región de Ñuble (21 comunas)
+seed_data:
+  provincias: [Diguillín, Itata, Punilla]
+  comunas_diguillin:
+    [
+      Bulnes,
+      Chillán,
+      Chillán Viejo,
+      El Carmen,
+      Pemuco,
+      Pinto,
+      Quillón,
+      San Ignacio,
+      Yungay,
+    ]
+  comunas_itata:
+    [Cobquecura, Coelemu, Ninhue, Portezuelo, Quirihue, Ránquil, Trehuaco]
+  comunas_punilla: [Coihueco, Ñiquén, San Carlos, San Fabián, San Nicolás]

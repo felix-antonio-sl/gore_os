@@ -1,14 +1,154 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_plan_cabildoterritorial:1.0.0
-  type: Entity
-  source: domains/d-plan/entity_data
-id: ENT-PLAN-CABILDOTERRITORIAL
-name: CabildoTerritorial
-entity_key: cabildoterritorial
-domain: D-PLAN
-category: Reference
-description: id, fecha, comuna, participantes, propuestas_count
+# ==============================================================================
+# GORE_OS Entity Atom: CabildoTerritorial (Instancia Participativa)
+# ==============================================================================
+# Domain: D-PLAN (Strategic Planning)
+# Subdomain: Participación
+# Source: domain_d-plan.md M6, dialogo_dplan_dterr.md, Ñuble 250
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-PLAN
+  subdomain: participacion
+  kb_source:
+    - "domain_d-plan.md M6"
+    - "dialogo_dplan_dterr.md"
+    - "Ñuble 250: 64 instancias, 2.297 participantes"
+
+entity:
+  id: ENT-PLAN-CABILDO
+  name: CabildoTerritorial
+  name_es: Cabildo Territorial
+  description: |
+    Instancia de participación ciudadana para recoger aportes al proceso
+    de planificación regional. Durante Ñuble 250 se realizaron 64 cabildos
+    con 2.297 participantes y 9 trazos temáticos.
+
+  purpose: |
+    Modelar cabildos para:
+    - Registrar instancias participativas
+    - Capturar propuestas ciudadanas
+    - Trazar aporte ciudadano a inversión
+    - Reportar participación acumulada
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_cabildo
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: tipo
+    type: Enum[Territorial, Tematico, Sectorial, Virtual, COSOC]
+    default: Territorial
+    description: Tipo de instancia participativa
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre del cabildo
+
+  - name: fecha
+    type: Date
+    nullable: false
+    description: Fecha de realización
+
+  - name: hora_inicio
+    type: Time
+    nullable: true
+    description: Hora de inicio
+
+  - name: hora_termino
+    type: Time
+    nullable: true
+    description: Hora de término
+
+  # Ubicación
+  - name: lugar
+    type: String
+    nullable: true
+    description: Lugar de realización
+
+  - name: comuna_id
+    type: String
+    fk: ENT-TERR-COMUNA
+    nullable: true
+    description: Comuna del cabildo
+
+  - name: es_virtual
+    type: Boolean
+    default: false
+    description: Si fue realizado virtualmente
+
+  # Vinculación ERD
+  - name: eje_erd_relacionado
+    type: String
+    fk: ENT-PLAN-EJE
+    nullable: true
+    description: Eje de la ERD relacionado
+
+  - name: tema_especifico
+    type: String
+    nullable: true
+    description: Tema específico tratado
+
+  # Participación
+  - name: participantes_count
+    type: Integer
+    default: 0
+    description: Número de participantes
+
+  - name: organizaciones_count
+    type: Integer
+    default: 0
+    description: Organizaciones representadas
+
+  # Equipo
+  - name: facilitador
+    type: String
+    nullable: true
+    description: Nombre del facilitador
+
+  - name: division_responsable
+    type: String
+    nullable: true
+    description: División GORE responsable
+
+  # Resultados
+  - name: propuestas_count
+    type: Integer
+    default: 0
+    description: Número de propuestas recogidas
+
+  - name: acta_url
+    type: String
+    nullable: true
+    description: URL del acta del cabildo
+
+  - name: sintesis_url
+    type: String
+    nullable: true
+    description: URL de síntesis de aportes
+
+  - name: estado
+    type: Enum[Programado, Realizado, Cancelado, Sistematizado]
+    default: Programado
+    description: Estado del cabildo
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  realizado_en: [ENT-TERR-COMUNA]
+  vinculado_a: [ENT-PLAN-EJE]
+  genera: [ENT-PLAN-PROPUESTA]
+
+audit:
+  fields_tracked:
+    - participantes_count
+    - propuestas_count
+    - estado
+  retention_years: 10

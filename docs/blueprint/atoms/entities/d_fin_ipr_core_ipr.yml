@@ -23,6 +23,7 @@ description: |
 specializations:
   - ENT-FIN-IDI
   - ENT-FIN-PPR
+  - ENT-FIN-INI-C33
 
 attributes:
   - name: id_ipr
@@ -44,7 +45,7 @@ attributes:
     nullable: true
 
   - name: tipo_ipr
-    type: Enum[IDI, PPR]
+    type: Enum[IDI, PPR_DIRECTO, PPR_TRANSFERENCIA, SUBVENCION_8, CIRCULAR_33, FRIL, CONSERVACION]
     nullable: false
 
   # Clasificación
@@ -62,6 +63,41 @@ attributes:
     type: String
     nullable: false
     description: "31 (IDI), 24 (PPR), 33 (Transferencia Capital)"
+
+  - name: via_financiamiento
+    type: Enum[FNDR, FRIL, FRPD, PCT8, EMERGENCIA, SECTORIAL]
+    nullable: true
+    description: Fuente de financiamiento principal
+
+  - name: requiere_concurso
+    type: Boolean
+    default: false
+    description: Si la asignación se realiza por concurso público
+
+  - name: es_exento_evaluacion_central
+    type: Boolean
+    default: false
+    description: Si está exento de evaluación MIDESO/DIPRES (ej. FRIL <5000 UTM, C33)
+
+  - name: codigo_chileindica
+    type: String
+    nullable: true
+    description: Código en sistema ChileIndica (presupuestario)
+
+  - name: ari_id
+    type: String
+    nullable: true
+    description: ID en Anteproyecto Regional de Inversiones (ARI)
+
+  - name: rate_actual_id
+    type: String
+    nullable: true
+    description: ID del RATE vigente
+
+  - name: es_exento_glo06
+    type: Boolean
+    default: false
+    description: Exento de glosa 06 (evaluación ex-ante programas)
 
   # Ciclo de vida
   - name: fase_actual
@@ -135,10 +171,20 @@ attributes:
     nullable: true
 
   # Vinculación estratégica
-  - name: eje_erd
+  - name: alineacion_erd_eje
     type: String
     nullable: true
     description: Eje de la Estrategia Regional de Desarrollo
+
+  - name: alineacion_erd_lineamiento
+    type: String
+    nullable: true
+    description: Lineamiento específico ERD
+
+  - name: categoria_fril
+    type: Enum[A1_SANEAMIENTO, A2_AGUA, A3_VIAL, B1_INFRA_PUBLICA, C1_EQUIP_COM, D_OTROS]
+    nullable: true
+    description: Categoría específica si es FRIL
 
   - name: es_emblematico
     type: Boolean

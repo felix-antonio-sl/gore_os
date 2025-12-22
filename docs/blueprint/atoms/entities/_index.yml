@@ -2,55 +2,147 @@ _meta:
   urn: urn:goreos:index:entities:1.0.0
   type: EntitiesIndex
   generated_at: "2025-12-21"
-total: 166
+total: 184
 items:
-  - id: ENT-BACK-PAC_COMPRAS
-    urn: urn:goreos:atom:entity:d_back_pac_compras:1.0.0
-    name: PAC-Compras
-    domain: D-BACK
-  - id: ENT-BACK-PAC_CAPACITACI_N
-    urn: urn:goreos:atom:entity:d_back_pac_capacitaci_n:1.0.0
-    name: PAC-Capacitación
-    domain: D-BACK
-  - id: ENT-BACK-DEUDA_FLOTANTE
-    urn: urn:goreos:atom:entity:d_back_deuda_flotante:1.0.0
-    name: Deuda Flotante
-    domain: D-BACK
-  - id: ENT-BACK-CONCILIACI_N
-    urn: urn:goreos:atom:entity:d_back_conciliaci_n:1.0.0
-    name: Conciliación
-    domain: D-BACK
-  - id: ENT-BACK-DEVENGADO
-    urn: urn:goreos:atom:entity:d_back_devengado:1.0.0
-    name: Devengado
-    domain: D-BACK
-  - id: ENT-BACK-COMPROMISO
-    urn: urn:goreos:atom:entity:d_back_compromiso:1.0.0
-    name: Compromiso
-    domain: D-BACK
+  # === P6 ENTITIES D-NORM (2025-12-22) - Multi-Agent Dialogue ===
+  - id: ENT-NORM-ACTO
+    urn: urn:goreos:atom:entity:d_norm_actoadministrativo:1.0.0
+    name: Acto Administrativo
+    domain: D-NORM
+  - id: ENT-NORM-EXPEDIENTE
+    urn: urn:goreos:atom:entity:d_norm_expedienteelectronico:1.0.0
+    name: Expediente Electrónico
+    domain: D-NORM
+  - id: ENT-NORM-DOCUMENTO
+    urn: urn:goreos:atom:entity:d_norm_documentoexpediente:1.0.0
+    name: Documento Expediente
+    domain: D-NORM
+  - id: ENT-NORM-FIRMA
+    urn: urn:goreos:atom:entity:d_norm_firmaacto:1.0.0
+    name: Firma Acto
+    domain: D-NORM
+  - id: ENT-NORM-VISACION
+    urn: urn:goreos:atom:entity:d_norm_visacion:1.0.0
+    name: Visación
+    domain: D-NORM
+  - id: ENT-NORM-NOTIFICACION
+    urn: urn:goreos:atom:entity:d_norm_notificacion:1.0.0
+    name: Notificación
+    domain: D-NORM
+  - id: ENT-NORM-PROCEDIMIENTO
+    urn: urn:goreos:atom:entity:d_norm_procedimientoadmin:1.0.0
+    name: Procedimiento Administrativo
+    domain: D-NORM
+  - id: ENT-NORM-RECURSO
+    urn: urn:goreos:atom:entity:d_norm_recursoadmin:1.0.0
+    name: Recurso Administrativo
+    domain: D-NORM
+  - id: ENT-NORM-TOMA-RAZON
+    urn: urn:goreos:atom:entity:d_norm_tomarazon:1.0.0
+    name: Toma de Razón CGR
+    domain: D-NORM
+  - id: ENT-NORM-DIP
+    urn: urn:goreos:atom:entity:d_norm_declaracioninteres:1.0.0
+    name: Declaración Intereses
+    domain: D-NORM
+  - id: ENT-NORM-LOBBY
+    urn: urn:goreos:atom:entity:d_norm_audiencialobby:1.0.0
+    name: Audiencia Lobby
+    domain: D-NORM
+  - id: ENT-NORM-SUMARIO
+    urn: urn:goreos:atom:entity:d_norm_sumarioadmin:1.0.0
+    name: Sumario Administrativo
+    domain: D-NORM
+  - id: ENT-NORM-AUDITORIA
+    urn: urn:goreos:atom:entity:d_norm_auditoriacgr:1.0.0
+    name: Auditoría CGR
+    domain: D-NORM
+  - id: ENT-NORM-SAI
+    urn: urn:goreos:atom:entity:d_norm_solicitudaccesoinfo:1.0.0
+    name: Solicitud Acceso Info
+    domain: D-NORM
+  # === P5 ENTITIES D-GOB (2025-12-21) - Multi-Agent Dialogue ===
+  - id: ENT-GOB-SESION-CORE
+    urn: urn:goreos:atom:entity:d_gob_sesioncore:1.0.0
+    name: Sesión CORE
+    domain: D-GOB
+  - id: ENT-GOB-ACUERDO-CORE
+    urn: urn:goreos:atom:entity:d_gob_acuerdocore:1.0.0
+    name: Acuerdo CORE
+    domain: D-GOB
+  - id: ENT-GOB-CONSEJERO
+    urn: urn:goreos:atom:entity:d_gob_consejero:1.0.0
+    name: Consejero Regional
+    domain: D-GOB
+  - id: ENT-GOB-VOTACION
+    urn: urn:goreos:atom:entity:d_gob_votacion:1.0.0
+    name: Votación
+    domain: D-GOB
+  - id: ENT-GOB-COMISION
+    urn: urn:goreos:atom:entity:d_gob_comision:1.0.0
+    name: Comisión CORE
+    domain: D-GOB
+  - id: ENT-GOB-ASISTENCIA
+    urn: urn:goreos:atom:entity:d_gob_asistencia:1.0.0
+    name: Asistencia Sesión
+    domain: D-GOB
+  - id: ENT-GOB-CERTIFICADO
+    urn: urn:goreos:atom:entity:d_gob_certificadoacuerdo:1.0.0
+    name: Certificado Acuerdo
+    domain: D-GOB
+  - id: ENT-GOB-AUDIENCIA
+    urn: urn:goreos:atom:entity:d_gob_audiencia:1.0.0
+    name: Audiencia
+    domain: D-GOB
+  - id: ENT-GOB-COMPROMISO
+    urn: urn:goreos:atom:entity:d_gob_compromisogr:1.0.0
+    name: Compromiso GR
+    domain: D-GOB
+  - id: ENT-GOB-CONSULTA-PUBLICA
+    urn: urn:goreos:atom:entity:d_gob_consultapublica:1.0.0
+    name: Consulta Pública
+    domain: D-GOB
   - id: ENT-BACK-TEM_34_07
     urn: urn:goreos:atom:entity:d_back_tem_34_07:1.0.0
     name: Ítem 34.07
-    domain: D-BACK
-  - id: ENT-BACK-CARTOLA_BANCARIA
-    urn: urn:goreos:atom:entity:d_back_cartola_bancaria:1.0.0
-    name: Cartola Bancaria
-    domain: D-BACK
-  - id: ENT-BACK-PARTIDA_PENDIENTE
-    urn: urn:goreos:atom:entity:d_back_partida_pendiente:1.0.0
-    name: Partida Pendiente
     domain: D-BACK
   - id: ENT-BACK-COMPRA_GIL
     urn: urn:goreos:atom:entity:d_back_compra_gil:1.0.0
     name: Compra Ágil
     domain: D-BACK
-  - id: ENT-BACK-FONDOS_GLOBALES
-    urn: urn:goreos:atom:entity:d_back_fondos_globales:1.0.0
-    name: Fondos Globales
-    domain: D-BACK
   - id: ENT-EJEC-CONVENIO
     urn: urn:goreos:atom:entity:d_ejec_convenio:1.0.0
     name: Convenio
+    domain: D-EJEC
+  # === P3 ENTITIES D-EJEC (2025-12-21) ===
+  - id: ENT-EJEC-EP
+    urn: urn:goreos:atom:entity:d_ejec_estadopago:1.0.0
+    name: Estado de Pago
+    domain: D-EJEC
+  - id: ENT-EJEC-GARANTIA
+    urn: urn:goreos:atom:entity:d_ejec_garantiaconvenio:1.0.0
+    name: Garantía Convenio
+    domain: D-EJEC
+  - id: ENT-EJEC-COMPROMISO
+    urn: urn:goreos:atom:entity:d_ejec_compromiso:1.0.0
+    name: Compromiso de Gestión
+    domain: D-EJEC
+  # === P4 ENTITIES D-EJEC (2025-12-21) - Multi-Agent Dialogue ===
+  - id: ENT-EJEC-ORDEN-INICIO
+    urn: urn:goreos:atom:entity:d_ejec_ordeninicio:1.0.0
+    name: Orden de Inicio
+    domain: D-EJEC
+  - id: ENT-EJEC-LIQUIDACION
+    urn: urn:goreos:atom:entity:d_ejec_liquidacionconvenio:1.0.0
+    name: Liquidación Convenio
+    domain: D-EJEC
+  - id: ENT-EJEC-SOLMOD
+    urn: urn:goreos:atom:entity:d_ejec_solicitudmodificacion:1.0.0
+    name: Solicitud Modificación
+    domain: D-EJEC
+  - id: ENT-EJEC-EXPOST
+    urn: urn:goreos:atom:entity:d_ejec_evaluacionexpost:1.0.0
+    name: Evaluación Ex-Post
     domain: D-EJEC
   - id: ENT-EJEC-EJECUTOR
     urn: urn:goreos:atom:entity:d_ejec_ejecutor:1.0.0
@@ -60,102 +152,75 @@ items:
     urn: urn:goreos:atom:entity:d_ejec_h_org:1.0.0
     name: H_org
     domain: D-EJEC
-  - id: ENT-PLAN-ESTRATEGIA_REGIONAL_
+  - id: ENT-PLAN-ERD
     urn: urn:goreos:atom:entity:d_plan_estrategia_regional_de_desarrollo:1.0.0
     name: Estrategia Regional de Desarrollo
     domain: D-PLAN
-  - id: ENT-PLAN-PLAN_REGIONAL_DE_ORD
-    urn: urn:goreos:atom:entity:d_plan_plan_regional_de_ordenamiento_territorial:1.0.0
-    name: Plan Regional de Ordenamiento Territorial
-    domain: D-PLAN
-  - id: ENT-PLAN-ANTEPROYECTO_REGIONA
-    urn: urn:goreos:atom:entity:d_plan_anteproyecto_regional_de_inversiones:1.0.0
-    name: Anteproyecto Regional de Inversiones
-    domain: D-PLAN
-  - id: ENT-PLAN-PROGRAMA_REGIONAL_DE
-    urn: urn:goreos:atom:entity:d_plan_programa_regional_de_inversiones:1.0.0
-    name: Programa Regional de Inversiones
-    domain: D-PLAN
-  - id: ENT-PLAN-CONVENIO_DE_PROGRAMA
-    urn: urn:goreos:atom:entity:d_plan_convenio_de_programaci_n:1.0.0
-    name: Convenio de Programación
-    domain: D-PLAN
-  - id: ENT-PLAN-EJE_ESTRAT_GICO
-    urn: urn:goreos:atom:entity:d_plan_eje_estrat_gico:1.0.0
+  - id: ENT-PLAN-EJEESTRATEGICO
+    urn: urn:goreos:atom:entity:d_plan_ejeestrategico:1.0.0
     name: Eje Estratégico
     domain: D-PLAN
   - id: ENT-PLAN-LINEAMIENTO
     urn: urn:goreos:atom:entity:d_plan_lineamiento:1.0.0
     name: Lineamiento
     domain: D-PLAN
-  - id: ENT-PLAN-OBJETIVO_ESTRAT_GICO
-    urn: urn:goreos:atom:entity:d_plan_objetivo_estrat_gico:1.0.0
-    name: Objetivo Estratégico
-    domain: D-PLAN
-  - id: ENT-PLAN-MACROZONA
-    urn: urn:goreos:atom:entity:d_plan_macrozona:1.0.0
-    name: Macrozona
-    domain: D-PLAN
-  - id: ENT-PLAN-DIVISI_N_DE_PLANIFIC
-    urn: urn:goreos:atom:entity:d_plan_divisi_n_de_planificaci_n_y_desarrollo:1.0.0
-    name: División de Planificación y Desarrollo
-    domain: D-PLAN
-  - id: ENT-PLAN-OBJETIVOS_DE_DESARRO
-    urn: urn:goreos:atom:entity:d_plan_objetivos_de_desarrollo_sostenible:1.0.0
-    name: Objetivos de Desarrollo Sostenible
-    domain: D-PLAN
-  - id: ENT-PLAN-ZONA_DE_INTER_S_TUR_
-    urn: urn:goreos:atom:entity:d_plan_zona_de_inter_s_tur_stico:1.0.0
-    name: Zona de Interés Turístico
-    domain: D-PLAN
-  - id: ENT-PLAN-EVALUACI_N_AMBIENTAL
-    urn: urn:goreos:atom:entity:d_plan_evaluaci_n_ambiental_estrat_gica:1.0.0
-    name: Evaluación Ambiental Estratégica
-    domain: D-PLAN
-  - id: ENT-PLAN-EJEESTRATEGICO
-    urn: urn:goreos:atom:entity:d_plan_ejeestrategico:1.0.0
-    name: EjeEstrategico
-    domain: D-PLAN
   - id: ENT-PLAN-OBJETIVOESTRATEGICO
     urn: urn:goreos:atom:entity:d_plan_objetivoestrategico:1.0.0
-    name: ObjetivoEstrategico
+    name: Objetivo Estratégico
     domain: D-PLAN
   - id: ENT-PLAN-INDICADORERD
     urn: urn:goreos:atom:entity:d_plan_indicadorerd:1.0.0
-    name: IndicadorERD
+    name: Indicador ERD
     domain: D-PLAN
-  - id: ENT-PLAN-PROPUESTACIUDADANA
-    urn: urn:goreos:atom:entity:d_plan_propuestaciudadana:1.0.0
-    name: PropuestaCiudadana
+  - id: ENT-PLAN-ARI
+    urn: urn:goreos:atom:entity:d_plan_anteproyecto_regional_de_inversiones:1.0.0
+    name: Anteproyecto Regional de Inversiones
     domain: D-PLAN
-  - id: ENT-PLAN-MEDICIONINDICADOR
-    urn: urn:goreos:atom:entity:d_plan_medicionindicador:1.0.0
-    name: MedicionIndicador
-    domain: D-PLAN
-  - id: ENT-PLAN-ZONAPROT
-    urn: urn:goreos:atom:entity:d_plan_zonaprot:1.0.0
-    name: ZonaPROT
-    domain: D-PLAN
-  - id: ENT-PLAN-LINEAARI
+  - id: ENT-PLAN-LINEA-ARI
     urn: urn:goreos:atom:entity:d_plan_lineaari:1.0.0
-    name: LineaARI
+    name: Línea ARI
     domain: D-PLAN
-  - id: ENT-PLAN-CONVENIOPROGRAMACION
+  - id: ENT-PLAN-CP
     urn: urn:goreos:atom:entity:d_plan_convenioprogramacion:1.0.0
-    name: ConvenioProgramacion
+    name: Convenio de Programación
     domain: D-PLAN
-  - id: ENT-PLAN-HITOCP
+  - id: ENT-PLAN-HITO-CP
     urn: urn:goreos:atom:entity:d_plan_hitocp:1.0.0
-    name: HitoCP
+    name: Hito CP
     domain: D-PLAN
-  - id: ENT-PLAN-CABILDOTERRITORIAL
+  - id: ENT-PLAN-ZONA-PROT
+    urn: urn:goreos:atom:entity:d_plan_zonaprot:1.0.0
+    name: Zona PROT
+    domain: D-PLAN
+  - id: ENT-PLAN-MEDICION
+    urn: urn:goreos:atom:entity:d_plan_medicionindicador:1.0.0
+    name: Medición Indicador
+    domain: D-PLAN
+  - id: ENT-PLAN-CABILDO
     urn: urn:goreos:atom:entity:d_plan_cabildoterritorial:1.0.0
-    name: CabildoTerritorial
+    name: Cabildo Territorial
     domain: D-PLAN
-  - id: ENT-PLAN-CONSULTAPUBLICA
+  - id: ENT-PLAN-PROPUESTA
+    urn: urn:goreos:atom:entity:d_plan_propuestaciudadana:1.0.0
+    name: Propuesta Ciudadana
+    domain: D-PLAN
+  - id: ENT-PLAN-CONSULTA
     urn: urn:goreos:atom:entity:d_plan_consultapublica:1.0.0
-    name: ConsultaPublica
+    name: Consulta Pública
     domain: D-PLAN
+  # === P3 ENTITIES (2025-12-21) ===
+  - id: ENT-PLAN-ACTIVIDAD
+    urn: urn:goreos:atom:entity:d_plan_actividadestrategica:1.0.0
+    name: Actividad Estratégica
+    domain: D-PLAN
+  - id: ENT-PLAN-PLADECO
+    urn: urn:goreos:atom:entity:d_plan_pladeco:1.0.0
+    name: PLADECO
+    domain: D-PLAN
+  - id: ENT-TERR-IPT
+    urn: urn:goreos:atom:entity:d_terr_ipt:1.0.0
+    name: Instrumento Planificación Territorial
+    domain: D-TERR
   - id: ENT-GOB-CONSEJO_REGIONAL
     urn: urn:goreos:atom:entity:d_gob_consejo_regional:1.0.0
     name: Consejo Regional
@@ -268,29 +333,33 @@ items:
     urn: urn:goreos:atom:entity:d_tde_single_sign_on:1.0.0
     name: Single Sign-On
     domain: D-TDE
-  - id: ENT-TERR-CAPAGEOESPACIAL
-    urn: urn:goreos:atom:entity:d_terr_capageoespacial:1.0.0
-    name: CapaGeoespacial
+  - id: ENT-TERR-COMUNA
+    urn: urn:goreos:atom:entity:d_terr_comuna:1.0.0
+    name: Comuna
     domain: D-TERR
-  - id: ENT-TERR-VISTATERRITORIALIPR
-    urn: urn:goreos:atom:entity:d_terr_vistaterritorialipr:1.0.0
-    name: VistaTerritorialIPR
+  - id: ENT-TERR-PROVINCIA
+    urn: urn:goreos:atom:entity:d_terr_provincia:1.0.0
+    name: Provincia
+    domain: D-TERR
+  - id: ENT-TERR-CAPA
+    urn: urn:goreos:atom:entity:d_terr_capageoespacial:1.0.0
+    name: Capa Geoespacial
     domain: D-TERR
   - id: ENT-TERR-METADATO
     urn: urn:goreos:atom:entity:d_terr_metadato:1.0.0
-    name: Metadato
+    name: Metadato Geoespacial
     domain: D-TERR
-  - id: ENT-TERR-ZONARIESGO
+  - id: ENT-TERR-RIESGO
     urn: urn:goreos:atom:entity:d_terr_zonariesgo:1.0.0
-    name: ZonaRiesgo
+    name: Zona de Riesgo
     domain: D-TERR
-  - id: ENT-TERR-INDICADORTERRITORIAL
+  - id: ENT-TERR-INDICADOR
     urn: urn:goreos:atom:entity:d_terr_indicadorterritorial:1.0.0
-    name: IndicadorTerritorial
+    name: Indicador Territorial
     domain: D-TERR
-  - id: ENT-TERR-BRECHAERD
+  - id: ENT-TERR-BRECHA
     urn: urn:goreos:atom:entity:d_terr_brechaerd:1.0.0
-    name: BrechaERD
+    name: Brecha ERD
     domain: D-TERR
   - id: ENT-SEG-INCIDENTE
     urn: urn:goreos:atom:entity:d_seg_incidente:1.0.0
@@ -424,18 +493,10 @@ items:
     urn: urn:goreos:atom:entity:d_fin_presupuesto_asignacionpresupuestaria:1.0.0
     name: AsignacionPresupuestaria
     domain: D-FIN-PRESUPUESTO
-  - id: ENT-FIN-PRESUPUESTO-COMPROMISO
+  - id: ENT-FIN-COMPROMISO
     urn: urn:goreos:atom:entity:d_fin_presupuesto_compromiso:1.0.0
-    name: Compromiso
-    domain: D-FIN-PRESUPUESTO
-  - id: ENT-FIN-PRESUPUESTO-DEVENGO
-    urn: urn:goreos:atom:entity:d_fin_presupuesto_devengo:1.0.0
-    name: Devengo
-    domain: D-FIN-PRESUPUESTO
-  - id: ENT-FIN-PRESUPUESTO-MODIFICACIONPRESUPUE
-    urn: urn:goreos:atom:entity:d_fin_presupuesto_modificacionpresupuestaria:1.0.0
-    name: ModificacionPresupuestaria
-    domain: D-FIN-PRESUPUESTO
+    name: CompromisoPresupuestario
+    domain: D-FIN
   - id: ENT-FIN-RENDICIONES-TRANSFERENCIA
     urn: urn:goreos:atom:entity:d_fin_rendiciones_transferencia:1.0.0
     name: Transferencia
@@ -677,4 +738,24 @@ items:
   - id: ENT-FIN-CERTIFICADO_ACUERDO_CORE
     urn: urn:goreos:atom:entity:d_fin_certificado_core:1.0.0
     name: CertificadoAcuerdoCORE
+    domain: D-FIN
+  - id: ENT-FIN-CONV-SUBV8
+    urn: urn:goreos:atom:entity:d_fin_convocatoria_subvencion8:1.0.0
+    name: ConvocatoriaSubvencion8
+    domain: D-FIN
+  - id: ENT-FIN-POST-SUBV8
+    urn: urn:goreos:atom:entity:d_fin_postulacion_subvencion8:1.0.0
+    name: PostulacionSubvencion8
+    domain: D-FIN
+  - id: ENT-FIN-MARCO-FRIL
+    urn: urn:goreos:atom:entity:d_fin_marco_fril:1.0.0
+    name: MarcoPresupuestarioFRIL
+    domain: D-FIN
+  - id: ENT-FIN-INI-C33
+    urn: urn:goreos:atom:entity:d_fin_iniciativa_c33:1.0.0
+    name: IniciativaC33
+    domain: D-FIN
+  - id: ENT-FIN-POST-FRPD
+    urn: urn:goreos:atom:entity:d_fin_postulacion_frpd:1.0.0
+    name: PostulacionFRPD
     domain: D-FIN

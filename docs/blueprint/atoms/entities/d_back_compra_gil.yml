@@ -1,14 +1,271 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_back_compra_gil:1.0.0
-  type: Entity
-  source: domains/d-back/glossary
-id: ENT-BACK-COMPRA_GIL
-name: Compra Ágil
-entity_key: compra_gil
-domain: D-BACK
-category: Reference
-description: Modalidad de compra competitiva para montos menores o iguales a 100 UTM
+# ==============================================================================
+# GORE_OS Entity Atom: CompraAgil (Compra Menor 100 UTM)
+# ==============================================================================
+# Domain: D-BACK (Backoffice)
+# Subdomain: Compras
+# Source: Ley 19.886, Reglamento de Compras, kb_gn_manual_compras
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-BACK
+  subdomain: compras
+  kb_source:
+    - "manual_2_1_compras_koda.yml"
+    - "Ley 19.886 Art. 7"
+    - "Reglamento DS 250/2004"
+
+entity:
+  id: ENT-BACK-COMPRA-AGIL
+  name: CompraAgil
+  name_es: Compra Ágil (Trato Directo Menor)
+  description: |
+    Modalidad de adquisición simplificada para montos iguales o menores
+    a 100 UTM. Permite trato directo competitivo con mínimo 3 cotizaciones
+    o uso de Convenio Marco de ChileCompra.
+
+    Regulada por Ley 19.886 (Ley de Compras 2.0) y Reglamento DS 250/2004.
+    Debe justificarse y registrarse en Mercado Público.
+
+  purpose: |
+    Modelar las compras de baja cuantía para:
+    - Agilizar adquisiciones menores con cumplimiento normativo
+    - Registrar justificación y cotizaciones
+    - Integrar con Mercado Público
+    - Trazabilidad presupuestaria
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+  extends: null
+
+  related_to:
+    - entity: ENT-FIN-CDP
+      relation: respaldada_por
+      cardinality: N:1
+      description: CDP que respalda la compra
+    - entity: ENT-FIN-ORDEN-COMPRA
+      relation: genera
+      cardinality: 1:1
+      description: OC emitida en Mercado Público
+
+attributes:
+  - name: id_compra_agil
+    type: String
+    key: true
+    description: Identificador interno
+
+  - name: numero_solicitud
+    type: String
+    nullable: false
+    description: Número de requerimiento interno
+
+  - name: fecha_solicitud
+    type: Date
+    nullable: false
+    description: Fecha de la solicitud
+
+  # Solicitante
+  - name: unidad_solicitante
+    type: String
+    nullable: false
+    description: División o departamento que requiere
+
+  - name: solicitante_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: false
+    description: Funcionario que solicita
+
+  # Objeto de la compra
+  - name: descripcion
+    type: Text
+    nullable: false
+    description: Detalle de bienes/servicios requeridos
+
+  - name: rubro
+    type: Enum[Bien, Servicio, BienServicio]
+    nullable: false
+    description: Tipo de adquisición
+
+  - name: categoria_onu
+    type: String
+    nullable: true
+    description: Código de producto/servicio ONU
+
+  # Monto
+  - name: monto_estimado
+    type: Decimal
+    nullable: false
+    description: Monto estimado en CLP
+
+  - name: monto_utm
+    type: Decimal
+    computed: true
+    formula: monto_estimado / valor_utm
+    description: Equivalente en UTM
+
+  - name: monto_adjudicado
+    type: Decimal
+    nullable: true
+    description: Monto final de la OC
+
+  # Modalidad
+  - name: modalidad
+    type: Enum[ConvenioMarco, TratoDirectoConCotizaciones, TratoDirectoUnicoProveedor, CompraMenor10UTM]
+    nullable: false
+    description: Tipo de procedimiento utilizado
+
+  - name: justificacion_modalidad
+    type: Text
+    nullable: true
+    description: Razón si es trato directo único proveedor
+
+  # Cotizaciones (si aplica)
+  - name: cantidad_cotizaciones
+    type: Integer
+    default: 0
+    description: Número de cotizaciones obtenidas
+
+  - name: cotizaciones
+    type: YAML
+    nullable: true
+    description: Lista de {proveedor_rut, proveedor_nombre, monto, fecha}
+
+  - name: cuadro_comparativo_url
+    type: String
+    nullable: true
+    description: URL del cuadro comparativo
+
+  # Proveedor seleccionado
+  - name: proveedor_rut
+    type: String
+    nullable: true
+    description: RUT del proveedor adjudicado
+
+  - name: proveedor_nombre
+    type: String
+    nullable: true
+    description: Razón social
+
+  - name: criterio_seleccion
+    type: Enum[MenorPrecio, MejorRelacionCalidadPrecio, UnicoOferente, ConvenioMarco]
+    nullable: true
+    description: Criterio de adjudicación
+
+  # Vinculación presupuestaria
+  - name: cdp_id
+    type: String
+    fk: ENT-FIN-CDP
+    nullable: false
+    description: Certificado de disponibilidad
+
+  - name: imputacion
+    type: String
+    nullable: false
+    description: Código presupuestario
+
+  # Mercado Público
+  - name: id_mercado_publico
+    type: String
+    nullable: true
+    description: ID de la OC en ChileCompra
+
+  - name: fecha_publicacion_oc
+    type: Date
+    nullable: true
+    description: Fecha de emisión de la OC
+
+  # Estado
+  - name: estado
+    type: Enum[Solicitada, EnCotizacion, Adjudicada, OCEmitida, Recibida, Pagada, Anulada]
+    default: Solicitada
+    description: Estado del proceso
+
+  # Aprobaciones
+  - name: aprobador_id
+    type: String
+    fk: ROL-JEFE-ABASTECIMIENTO
+    nullable: true
+    description: Jefatura que aprueba
+
+  - name: fecha_aprobacion
+    type: Date
+    nullable: true
+    description: Fecha de aprobación
+
+invariants:
+  - id: INV-CAG-001
+    name: monto_hasta_100_utm
+    rule: monto_utm <= 100
+    description: Compra ágil solo hasta 100 UTM
+    source: Ley 19.886 Art. 7
+    severity: error
+
+  - id: INV-CAG-002
+    name: cotizaciones_minimas
+    rule: |
+      (modalidad = 'TratoDirectoConCotizaciones') → cantidad_cotizaciones >= 3
+    description: Trato directo requiere mínimo 3 cotizaciones
+    source: Reglamento DS 250
+    severity: error
+
+  - id: INV-CAG-003
+    name: unico_proveedor_justificado
+    rule: |
+      (modalidad = 'TratoDirectoUnicoProveedor') → 
+      justificacion_modalidad IS NOT NULL
+    description: Único proveedor requiere justificación
+    severity: error
+
+lifecycle:
+  states:
+    - name: Solicitada
+      description: Requerimiento ingresado
+    - name: EnCotizacion
+      description: Solicitando cotizaciones
+    - name: Adjudicada
+      description: Proveedor seleccionado
+    - name: OCEmitida
+      description: Orden de compra en Mercado Público
+    - name: Recibida
+      description: Bienes/servicios recepcionados
+    - name: Pagada
+      description: Obligación extinguida
+    - name: Anulada
+      description: Proceso cancelado
+
+  transitions:
+    - from: Solicitada
+      to: EnCotizacion
+      trigger: iniciar_cotizacion
+    - from: EnCotizacion
+      to: Adjudicada
+      trigger: adjudicar
+      guard: cantidad_cotizaciones >= 3 OR modalidad != 'TratoDirectoConCotizaciones'
+    - from: Adjudicada
+      to: OCEmitida
+      trigger: emitir_oc
+    - from: OCEmitida
+      to: Recibida
+      trigger: recepcionar
+    - from: Recibida
+      to: Pagada
+      trigger: pagar
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  respaldada_por: [ENT-FIN-CDP]
+  genera: [ENT-FIN-ORDEN-COMPRA]
+  adjudicada_a: [ENT-FIN-PROVEEDOR]
+  aprobada_por: [ROL-JEFE-ABASTECIMIENTO]
+
+audit:
+  fields_tracked:
+    - estado
+    - monto_adjudicado
+    - proveedor_rut
+  retention_years: 6

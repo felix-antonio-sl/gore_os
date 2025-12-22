@@ -1,14 +1,218 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_plan_convenioprogramacion:1.0.0
-  type: Entity
-  source: domains/d-plan/entity_data
-id: ENT-PLAN-CONVENIOPROGRAMACION
-name: ConvenioProgramacion
-entity_key: convenioprogramacion
-domain: D-PLAN
-category: Reference
-description: id, ministerio, monto_total, vigencia_inicio, vigencia_fin, estado
+# ==============================================================================
+# GORE_OS Entity Atom: ConvenioProgramacion (Convenio de Programación)
+# ==============================================================================
+# Domain: D-PLAN (Strategic Planning)
+# Subdomain: Inversión
+# Source: domain_d-plan.md P4, LOC GORE Art. 73-79, dialogo_dplan_dterr.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-PLAN
+  subdomain: inversion
+  kb_source:
+    - "domain_d-plan.md P4: Gestión CP"
+    - "LOC GORE Art. 73-79"
+    - "dialogo_dplan_dterr.md"
+
+entity:
+  id: ENT-PLAN-CP
+  name: ConvenioProgramacion
+  name_es: Convenio de Programación
+  description: |
+    Acuerdo plurianual entre el GORE y ministerios sectoriales (MOP, MINVU,
+    MINSAL, CORFO, etc.) para financiamiento conjunto de inversiones.
+
+    Requiere Toma de Razón de CGR y seguimiento trimestral de hitos.
+    Es el mecanismo de cofinanciamiento más importante para proyectos
+    de escala regional.
+
+  purpose: |
+    Modelar los Convenios de Programación para:
+    - Gestionar acuerdos plurianuales con ministerios
+    - Controlar aportes GORE vs Sectorial
+    - Seguir hitos y cronograma financiero
+    - Trazabilidad ante CGR
+
+  categorical_type: Object
+  is_abstract: false
+  category: Master
+
+attributes:
+  - name: id_convenio
+    type: String
+    key: true
+    description: Identificador único (ej. CP-MOP-2024-001)
+
+  - name: ministerio_sectorial
+    type: Enum[MOP, MINVU, MINSAL, CORFO, MINEDUC, MINAGRICULTURA, MMA, Otro]
+    nullable: false
+    description: Ministerio contraparte
+
+  - name: titulo
+    type: String
+    nullable: false
+    description: Nombre del convenio
+
+  - name: objeto
+    type: Text
+    nullable: false
+    description: Descripción del objeto del convenio
+
+  # Montos
+  - name: monto_total
+    type: Decimal
+    nullable: false
+    description: Monto total del convenio en M$
+
+  - name: aporte_gore
+    type: Decimal
+    nullable: false
+    description: Aporte del GORE en M$
+
+  - name: aporte_sectorial
+    type: Decimal
+    nullable: false
+    description: Aporte del Ministerio en M$
+
+  - name: porcentaje_gore
+    type: Decimal
+    computed: true
+    formula: (aporte_gore / monto_total) * 100
+    description: Porcentaje aporte GORE
+
+  # Desglose anual (enriquecimiento P3)
+  - name: aporte_gore_anual
+    type: Map[Integer, Decimal]
+    nullable: true
+    description: "Mapa año→monto GORE (ej: {2024: 500, 2025: 600})"
+
+  - name: aporte_sectorial_anual
+    type: Map[Integer, Decimal]
+    nullable: true
+    description: "Mapa año→monto Sectorial por año"
+
+  - name: resolucion_afecta_nro
+    type: String
+    nullable: true
+    description: Nº Resolución Afecta aprobatoria GORE
+
+  # Vigencia
+  - name: vigencia_inicio
+    type: Date
+    nullable: false
+    description: Fecha inicio del convenio
+
+  - name: vigencia_fin
+    type: Date
+    nullable: false
+    description: Fecha término del convenio
+
+  - name: duracion_años
+    type: Integer
+    computed: true
+    description: Duración en años
+
+  # Formalización
+  - name: decreto_aprobatorio
+    type: String
+    nullable: true
+    description: Número de decreto que aprueba
+
+  - name: fecha_firma
+    type: Date
+    nullable: true
+    description: Fecha de firma del convenio
+
+  - name: fecha_toma_razon
+    type: Date
+    nullable: true
+    description: Fecha Toma de Razón CGR
+
+  - name: numero_toma_razon
+    type: String
+    nullable: true
+    description: Número de Toma de Razón
+
+  # Ejecución
+  - name: monto_transferido
+    type: Decimal
+    default: 0
+    description: Monto transferido acumulado
+
+  - name: monto_rendido
+    type: Decimal
+    default: 0
+    description: Monto rendido acumulado
+
+  - name: porcentaje_ejecucion
+    type: Decimal
+    computed: true
+    formula: (monto_rendido / monto_total) * 100
+    description: Porcentaje de ejecución financiera
+
+  # Estado
+  - name: estado
+    type: Enum[EnNegociacion, Firmado, TomaRazon, EnEjecucion, Cerrado, Renovado]
+    default: EnNegociacion
+    description: Estado del convenio
+
+  # Hitos
+  - name: cantidad_hitos
+    type: Integer
+    default: 0
+    description: Número de hitos programados
+
+  - name: hitos_cumplidos
+    type: Integer
+    default: 0
+    description: Hitos cumplidos a la fecha
+
+invariants:
+  - id: INV-CP-001
+    name: suma_aportes
+    rule: aporte_gore + aporte_sectorial = monto_total
+    description: La suma de aportes debe igualar el total
+    severity: error
+
+  - id: INV-CP-002
+    name: vigencia_valida
+    rule: vigencia_fin > vigencia_inicio
+    description: El período de vigencia debe ser coherente
+    severity: error
+
+  - id: INV-CP-003
+    name: ejecucion_requiere_toma_razon
+    rule: |
+      (estado = 'EnEjecucion') → (fecha_toma_razon IS NOT NULL)
+    description: No se puede ejecutar sin Toma de Razón
+
+lifecycle:
+  states:
+    - name: EnNegociacion
+      description: Definiendo montos y proyectos
+    - name: Firmado
+      description: Firmado por GR y Ministro
+    - name: TomaRazon
+      description: En trámite CGR
+    - name: EnEjecucion
+      description: Vigente y ejecutándose
+    - name: Cerrado
+      description: Convenio terminado
+    - name: Renovado
+      description: Reemplazado por nuevo convenio
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  compuesto_por: [ENT-PLAN-HITO-CP]
+  financia: [ENT-FIN-IPR]
+  vinculado_a: [ENT-PLAN-ERD]
+
+audit:
+  fields_tracked:
+    - estado
+    - monto_transferido
+    - monto_rendido
+  retention_years: 15

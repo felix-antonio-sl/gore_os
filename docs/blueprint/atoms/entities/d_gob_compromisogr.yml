@@ -1,0 +1,205 @@
+# ==============================================================================
+# GORE_OS Entity Atom: CompromisoGR
+# ==============================================================================
+# Domain: D-GOB (Gobernanza)
+# Subdomain: Despacho GR
+# Source: domain_d-gob.md M2, P4
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-GOB
+  subdomain: despacho_gr
+  kb_source:
+    - "domain_d-gob.md M2: Despacho Gobernador"
+    - "domain_d-gob.md P4: Gestión Agenda y Compromisos"
+
+entity:
+  id: ENT-GOB-COMPROMISO
+  name: CompromisoGR
+  name_es: Compromiso del Gobernador
+  description: |
+    Compromiso adquirido por el Gobernador Regional en audiencias,
+    visitas a terreno, sesiones CORE u otros contextos. Se gestiona
+    mediante semáforo de cumplimiento.
+
+    Estados semáforo:
+    - Verde: En plazo
+    - Amarillo: Por vencer (7 días)
+    - Rojo: Vencido
+
+  purpose: |
+    - Registrar compromisos del GR
+    - Monitorear cumplimiento
+    - Escalamiento a Gabinete
+    - Rendición de cuentas
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_compromiso
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: descripcion
+    type: Text
+    nullable: false
+    description: Descripción del compromiso
+
+  # Origen
+  - name: tipo_origen
+    type: Enum[Audiencia, VisitaTerreno, SesionCORE, ActoPublico, Correspondencia, Otro]
+    nullable: false
+    description: Tipo de origen
+
+  - name: audiencia_id
+    type: String
+    fk: ENT-GOB-AUDIENCIA
+    nullable: true
+    description: Audiencia de origen (si aplica)
+
+  - name: sesion_core_id
+    type: String
+    fk: ENT-GOB-SESION-CORE
+    nullable: true
+    description: Sesión CORE de origen (si aplica)
+
+  - name: fecha_compromiso
+    type: Date
+    nullable: false
+    description: Fecha en que se adquirió
+
+  # Beneficiario
+  - name: beneficiario_id
+    type: String
+    fk: ENT-GOB-ACTOR
+    nullable: true
+    description: Actor beneficiario
+
+  - name: beneficiario_descripcion
+    type: String
+    nullable: true
+    description: Descripción si no es actor registrado
+
+  # Gestión
+  - name: responsable_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario responsable
+
+  - name: division_responsable
+    type: String
+    nullable: true
+    description: División a cargo
+
+  - name: fecha_limite
+    type: Date
+    nullable: false
+    description: Fecha límite de cumplimiento
+
+  # Semáforo
+  - name: semaforo
+    type: Enum[Verde, Amarillo, Rojo]
+    computed: true
+    formula: |
+      IF dias_restantes > 7 THEN Verde
+      ELIF dias_restantes > 0 THEN Amarillo
+      ELSE Rojo
+    description: Estado semáforo
+
+  - name: dias_restantes
+    type: Integer
+    computed: true
+    formula: fecha_limite - TODAY()
+    description: Días hasta vencimiento
+
+  # Seguimiento
+  - name: ultimo_avance
+    type: Text
+    nullable: true
+    description: Último reporte de avance
+
+  - name: fecha_ultimo_avance
+    type: Date
+    nullable: true
+    description: Fecha del último avance
+
+  - name: porcentaje_avance
+    type: Integer
+    default: 0
+    description: Porcentaje de avance 0-100
+
+  # Cierre
+  - name: estado
+    type: Enum[Pendiente, EnCurso, Cumplido, Reprogramado, Cancelado]
+    default: Pendiente
+    description: Estado del compromiso
+
+  - name: fecha_cumplimiento
+    type: Date
+    nullable: true
+    description: Fecha efectiva de cumplimiento
+
+  - name: evidencia_cumplimiento
+    type: String
+    nullable: true
+    description: URL o descripción de evidencia
+
+  # Escalamiento
+  - name: escalado
+    type: Boolean
+    default: false
+    description: ¿Fue escalado a Gabinete?
+
+  - name: fecha_escalamiento
+    type: Date
+    nullable: true
+    description: Fecha de escalamiento
+
+invariants:
+  - id: INV-COMP-001
+    name: cumplido_requiere_evidencia
+    rule: |
+      estado = 'Cumplido' → evidencia_cumplimiento IS NOT NULL
+    description: Cumplimiento requiere evidencia
+    severity: warning
+
+  - id: INV-COMP-002
+    name: vencido_debe_escalar
+    rule: |
+      (semaforo = 'Rojo' AND estado = 'EnCurso') → escalado = true (dentro de 3 días)
+    description: Compromisos vencidos deben escalarse
+    severity: warning
+
+lifecycle:
+  states:
+    - name: Pendiente
+      description: Registrado, sin iniciar
+    - name: EnCurso
+      description: En gestión
+    - name: Cumplido
+      description: Completado con evidencia
+    - name: Reprogramado
+      description: Plazo extendido
+    - name: Cancelado
+      description: Anulado por causa justificada
+
+morphisms:
+  origina_en: [ENT-GOB-AUDIENCIA, ENT-GOB-SESION-CORE]
+  beneficia_a: [ENT-GOB-ACTOR]
+  asignado_a: [ENT-BACK-FUNCIONARIO]
+  puede_escalar_a: [FENIX]
+
+audit:
+  fields_tracked:
+    - estado
+    - semaforo
+    - porcentaje_avance
+  retention_years: 6

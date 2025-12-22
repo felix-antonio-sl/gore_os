@@ -1,0 +1,115 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Visacion
+# ==============================================================================
+# Domain: D-NORM (Gestión Jurídico-Administrativa)
+# Subdomain: Actos Administrativos
+# Source: Circular 01/2025 GORE Ñuble, Práctica administrativa
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Fiscal Virtual"
+  domain: D-NORM
+  subdomain: actos_administrativos
+  kb_source:
+    - "Circular 01/2025 GORE Ñuble"
+    - "Práctica administrativa"
+
+entity:
+  id: ENT-NORM-VISACION
+  name: Visacion
+  name_es: Visación de Acto
+  description: |
+    Registro de visación en la cadena de responsabilidad de un acto
+    administrativo. Según Circular 01/2025, oficios y resoluciones
+    deben cargarse en cadena de responsabilidad en DocDigital.
+
+    Cadena típica: Área → Jurídica → Control → DAF → Administrador/a
+
+  purpose: |
+    - Registrar visaciones de la cadena
+    - Controlar flujo de aprobación
+    - Trazabilidad de observaciones
+    - Cumplir Circular 01/2025
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_visacion
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: acto_id
+    type: String
+    fk: ENT-NORM-ACTO
+    nullable: false
+    description: Acto visado
+
+  - name: visador_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario visador
+
+  - name: rol_visador
+    type: Enum[AreaRequirente, Juridica, Control, DAF, Administrador, JefeDivision, Otro]
+    nullable: false
+    description: Rol en la cadena
+
+  - name: orden_cadena
+    type: Integer
+    nullable: false
+    description: Orden en la cadena de visación
+
+  - name: fecha_visacion
+    type: DateTime
+    nullable: true
+    description: Fecha/hora de visación
+
+  - name: resultado
+    type: Enum[Pendiente, Aprobado, Observado, Rechazado]
+    default: Pendiente
+    description: Resultado de la visación
+
+  - name: observaciones
+    type: Text
+    nullable: true
+    description: Observaciones del visador
+
+  - name: doc_digital_step_id
+    type: String
+    nullable: true
+    description: ID del paso en DocDigital
+
+invariants:
+  - id: INV-VIS-001
+    name: aprobado_requiere_fecha
+    rule: |
+      resultado = 'Aprobado' → fecha_visacion IS NOT NULL
+    description: Visación aprobada requiere fecha
+    severity: error
+
+lifecycle:
+  states:
+    - name: Pendiente
+      description: Esperando visación
+    - name: Aprobado
+      description: Visado conforme
+    - name: Observado
+      description: Con observaciones a subsanar
+    - name: Rechazado
+      description: Devuelto a origen
+
+morphisms:
+  visa: [ENT-NORM-ACTO]
+  emitida_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - resultado
+  retention_years: 10

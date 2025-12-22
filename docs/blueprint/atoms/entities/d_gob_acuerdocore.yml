@@ -1,0 +1,187 @@
+# ==============================================================================
+# GORE_OS Entity Atom: AcuerdoCORE
+# ==============================================================================
+# Domain: D-GOB (Gobernanza)
+# Subdomain: Consejo Regional
+# Source: LOC GORE Art. 36, KB-019 Fase 3, domain_d-gob.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-GOB
+  subdomain: consejo_regional
+  kb_source:
+    - "LOC GORE Art. 36: Acuerdos del Consejo"
+    - "KB-019: Gestión IPR Fase 3 - Financiamiento"
+    - "domain_d-gob.md: Entidad AcuerdoCORE"
+
+entity:
+  id: ENT-GOB-ACUERDO-CORE
+  name: AcuerdoCORE
+  name_es: Acuerdo del Consejo Regional
+  description: |
+    Decisión formal del Consejo Regional adoptada por votación.
+    Es el instrumento jurídico que autoriza:
+    - Financiamiento de IPRs
+    - Aprobación de presupuesto regional
+    - Convenios mayores
+    - Normativas regionales
+
+    Según LOC GORE, los acuerdos se adoptan por mayoría absoluta
+    de los consejeros presentes, salvo casos especiales.
+
+  purpose: |
+    - Formalizar decisiones del CORE
+    - Autorizar financiamiento de IPRs (conexión D-FIN)
+    - Habilitar convenios (conexión D-EJEC)
+    - Base de trazabilidad política
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_acuerdo
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: numero_acuerdo
+    type: String
+    nullable: false
+    description: Número correlativo (ej. ACU-2024-123)
+
+  - name: sesion_id
+    type: String
+    fk: ENT-GOB-SESION-CORE
+    nullable: false
+    description: Sesión donde se adoptó
+
+  - name: fecha_acuerdo
+    type: Date
+    nullable: false
+    description: Fecha del acuerdo
+
+  # Materia
+  - name: tipo_materia
+    type: Enum[FinanciamientoIPR, Presupuesto, Convenio, Normativa, Fiscalizacion, Otros]
+    nullable: false
+    description: Tipo de materia votada
+
+  - name: materia
+    type: String
+    nullable: false
+    description: Descripción breve de la materia
+
+  - name: descripcion_detallada
+    type: Text
+    nullable: true
+    description: Descripción completa
+
+  # Votación
+  - name: votos_afavor
+    type: Integer
+    nullable: false
+    description: Votos a favor
+
+  - name: votos_encontra
+    type: Integer
+    nullable: false
+    description: Votos en contra
+
+  - name: abstenciones
+    type: Integer
+    default: 0
+    description: Abstenciones
+
+  - name: voto_dirimente_usado
+    type: Boolean
+    default: false
+    description: ¿GR usó voto dirimente?
+
+  - name: resultado
+    type: Enum[Aprobado, Rechazado, Retirado]
+    nullable: false
+    description: Resultado de la votación
+
+  # Quórum especial
+  - name: requiere_quorum_especial
+    type: Boolean
+    default: false
+    description: ¿Requiere 2/3 u otro quórum especial?
+
+  - name: quorum_requerido
+    type: String
+    nullable: true
+    description: Descripción del quórum especial
+
+  # Vinculación D-FIN / D-EJEC
+  - name: iprs_aprobadas
+    type: Array[String]
+    nullable: true
+    description: IDs de IPRs aprobadas en este acuerdo
+
+  - name: monto_total_aprobado
+    type: Decimal
+    nullable: true
+    description: Monto total MM$ si aplica
+
+  - name: convenios_autorizados
+    type: Array[String]
+    nullable: true
+    description: IDs de convenios autorizados
+
+  # Estado
+  - name: estado
+    type: Enum[Votado, Certificado, Publicado, Ejecutado]
+    default: Votado
+    description: Estado del acuerdo
+
+  - name: certificado_id
+    type: String
+    fk: ENT-GOB-CERTIFICADO
+    nullable: true
+    description: Certificado emitido
+
+invariants:
+  - id: INV-ACU-001
+    name: aprobado_requiere_mayoria
+    rule: |
+      resultado = 'Aprobado' → votos_afavor > votos_encontra
+    description: Aprobación requiere mayoría
+    severity: error
+
+  - id: INV-ACU-002
+    name: dirimente_solo_empate
+    rule: |
+      voto_dirimente_usado = true → votos_afavor = votos_encontra (pre-dirimente)
+    description: Voto dirimente solo en empate
+    severity: warning
+
+lifecycle:
+  states:
+    - name: Votado
+      description: Decisión adoptada en sesión
+    - name: Certificado
+      description: Certificado emitido por Secretaría
+    - name: Publicado
+      description: Publicado en portal de transparencia
+    - name: Ejecutado
+      description: Ejecutado por el Gobernador
+
+morphisms:
+  adoptado_en: [ENT-GOB-SESION-CORE]
+  aprueba: [ENT-FIN-IPR]
+  autoriza: [ENT-EJEC-CONVENIO]
+  certificado_por: [ENT-GOB-CERTIFICADO]
+  compuesto_por: [ENT-GOB-VOTACION]
+
+audit:
+  fields_tracked:
+    - estado
+    - resultado
+    - monto_total_aprobado
+  retention_years: 20

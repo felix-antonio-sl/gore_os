@@ -1,14 +1,231 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_fin_ejecutores_interaccionejecutor:1.0.0
-  type: Entity
-  source: domains/d-fin-ejecutores/entity_data
-id: ENT-FIN-EJECUTORES-INTERACCIONEJECUTOR
-name: InteraccionEjecutor
-entity_key: interaccionejecutor
-domain: D-FIN-EJECUTORES
-category: Reference
-description: id, relacion_id, tipo (CONSULTA/CAPACITACION/ALERTA), fecha, canal, resumen
+# ==============================================================================
+# GORE_OS Entity Atom: InteraccionEjecutor
+# ==============================================================================
+# Domain: D-FIN (Financial Management)
+# Subdomain: Ejecutores
+# Source: kb_gn_019_gestion_ipr_koda.yml, CRM-IPR Design
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-FIN
+  subdomain: ejecutores
+  kb_source:
+    - "kb_gn_019_gestion_ipr_koda.yml"
+    - "dialogo_profundo_crm_ipr.md"
+
+entity:
+  id: ENT-FIN-INTERACCION-EJECUTOR
+  name: InteraccionEjecutor
+  name_es: Interacción con Ejecutor
+  description: |
+    Registro de cada interacción significativa entre el GORE y un ejecutor
+    de IPRs. Incluye reuniones, correos, llamadas, visitas técnicas,
+    observaciones formales y acuerdos.
+
+    Permite trazabilidad completa de la comunicación y seguimiento
+    para efectos de supervisión, auditoría y calificación del ejecutor.
+
+  purpose: |
+    Modelar el CRM de ejecutores para:
+    - Registrar todas las interacciones de seguimiento
+    - Documentar observaciones y subsanaciones
+    - Generar historial para calificación
+    - Evidenciar gestiones ante Contraloría
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+  extends: null
+
+  related_to:
+    - entity: ENT-FIN-ACTOR_IPR
+      relation: con_ejecutor
+      cardinality: N:1
+      description: Ejecutor con quien se interactúa
+    - entity: ENT-FIN-CONVENIO
+      relation: en_contexto_de
+      cardinality: N:0..1
+      description: Convenio específico si aplica
+    - entity: ENT-FIN-IPR
+      relation: sobre_ipr
+      cardinality: N:0..1
+      description: IPR específica si aplica
+
+attributes:
+  - name: id_interaccion
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: actor_id
+    type: String
+    fk: ENT-FIN-ACTOR_IPR
+    nullable: false
+    description: Ejecutor involucrado
+
+  - name: fecha_interaccion
+    type: DateTime
+    nullable: false
+    description: Fecha y hora de la interacción
+
+  # Tipo de interacción
+  - name: tipo_interaccion
+    type: Enum[ReunionPresencial, ReunionVirtual, LlamadaTelefonica, CorreoElectronico, OficioFormal, VisitaTerreno, ObservacionFormal, SolicitudSubsanacion, RecepcionDocumentos, Otro]
+    nullable: false
+    description: Modalidad de la interacción
+
+  - name: canal
+    type: Enum[Presencial, Zoom, Teams, Email, Telefono, OficinaPartes, Terreno]
+    nullable: true
+    description: Canal utilizado
+
+  # Contexto
+  - name: convenio_id
+    type: String
+    fk: ENT-FIN-CONVENIO
+    nullable: true
+    description: Convenio relacionado si aplica
+
+  - name: ipr_id
+    type: String
+    fk: ENT-FIN-IPR
+    nullable: true
+    description: IPR específica si aplica
+
+  - name: motivo
+    type: Enum[SeguimientoRutinario, Observacion, Subsanacion, CoordinacionHito, SolicitudInformacion, RespuestaConsulta, Alerta, Otro]
+    nullable: false
+    description: Propósito de la interacción
+
+  # Participantes
+  - name: funcionario_gore_id
+    type: String
+    fk: ROL-FUNCIONARIO
+    nullable: false
+    description: Funcionario GORE que registra
+
+  - name: funcionario_gore_nombre
+    type: String
+    nullable: false
+    description: Nombre del funcionario GORE
+
+  - name: contacto_ejecutor_nombre
+    type: String
+    nullable: true
+    description: Persona del ejecutor con quien se interactuó
+
+  - name: contacto_ejecutor_cargo
+    type: String
+    nullable: true
+    description: Cargo del contacto
+
+  - name: contacto_ejecutor_email
+    type: String
+    nullable: true
+    description: Email del contacto
+
+  # Contenido
+  - name: asunto
+    type: String
+    nullable: false
+    description: Tema principal de la interacción
+
+  - name: detalle
+    type: Text
+    nullable: true
+    description: Descripción detallada de lo tratado
+
+  - name: acuerdos
+    type: Text
+    nullable: true
+    description: Compromisos asumidos
+
+  - name: fecha_compromiso
+    type: Date
+    nullable: true
+    description: Fecha límite de cumplimiento acordada
+
+  # Seguimiento
+  - name: requiere_seguimiento
+    type: Boolean
+    default: false
+    description: Si requiere acción posterior
+
+  - name: estado_seguimiento
+    type: Enum[Pendiente, EnProceso, Cumplido, NoCumplido, NoAplica]
+    default: NoAplica
+    description: Estado del seguimiento
+
+  - name: fecha_seguimiento
+    type: Date
+    nullable: true
+    description: Fecha de próximo seguimiento
+
+  - name: interaccion_seguimiento_id
+    type: String
+    fk: ENT-FIN-INTERACCION-EJECUTOR
+    nullable: true
+    description: Interacción de seguimiento si existe
+
+  # Documentos
+  - name: documentos_adjuntos
+    type: Array[String]
+    nullable: true
+    description: URLs de actas, correos, oficios
+
+  # Clasificación para calificación
+  - name: es_incidencia_negativa
+    type: Boolean
+    default: false
+    description: Si es un evento negativo para la calificación
+
+  - name: es_incidencia_positiva
+    type: Boolean
+    default: false
+    description: Si es un evento positivo para la calificación
+
+  - name: impacto_calificacion
+    type: Enum[Neutro, PositivoLeve, PositivoAlto, NegativoLeve, NegativoAlto]
+    default: Neutro
+    description: Impacto en la evaluación del ejecutor
+
+invariants:
+  - id: INV-INT-001
+    name: seguimiento_tiene_fecha
+    rule: |
+      (requiere_seguimiento = true) → fecha_seguimiento IS NOT NULL
+    description: Si requiere seguimiento, debe tener fecha
+    severity: warning
+
+  - id: INV-INT-002
+    name: observacion_formal_tiene_oficio
+    rule: |
+      (tipo_interaccion = 'ObservacionFormal') → 
+      (documentos_adjuntos IS NOT NULL AND LENGTH(documentos_adjuntos) > 0)
+    description: Las observaciones formales deben tener documento
+    severity: warning
+
+  - id: INV-INT-003
+    name: incidencia_coherente
+    rule: |
+      NOT (es_incidencia_negativa = true AND es_incidencia_positiva = true)
+    description: Una interacción no puede ser positiva y negativa a la vez
+    severity: error
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  con_ejecutor: [ENT-FIN-ACTOR_IPR]
+  en_contexto_de: [ENT-FIN-CONVENIO]
+  sobre_ipr: [ENT-FIN-IPR]
+  registrada_por: [ROL-FUNCIONARIO]
+  genera_seguimiento: [ENT-FIN-INTERACCION-EJECUTOR]
+
+audit:
+  fields_tracked:
+    - estado_seguimiento
+    - impacto_calificacion
+  retention_years: 6

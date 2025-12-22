@@ -12,31 +12,21 @@ Tareas relacionadas con la definición y corrección de dominios.
 - [ ] historias de uso de cada usuario, roles y actores que usen el sistema
 - [ ] solucionar las historias de usario de rrd
 - [ ] cuando llegue el momento, debo acceder al contenido de la resoluciones y revisar los archivos linkeados por resolucion.
-
-## 2. 🧠 KODA: Inteligencia y Ontología
-
-Tareas para la evolución del cerebro digital y agentes.
-
-## 3. 💾 Data & Migración (Ingesta Real)
-
-Tareas de carga de datos vivos al sistema.
-
-- [ ] **IPRs**: "Recopilar todo iprs a inyectar".
+- [ ] revisar 1 x 1 manualmente
 - [ ] **Recursos Institucionales**: "Cargar Bbdd gabinete" y "Cargar Bbdd Gore personas".
 - [ ] **Usuarios/IAM**: "Dominio admin interno ocr, gestión usuarios, roles y permisos".
-- [ ] **Mecanismos Específicos**: "8%, fril, idis" (Configurar estos flujos en D-FIN).
-- [ ] **Migración**: "migracion gorenuble" y "desde 0 y agragar otros como 8%".
-- [ ] organigrama
-- [ ] **Para Titi**: primera solución goreos
-
-## 5. ⚙️ Infraestructura y Operaciones
-
-- [ ] **Fxeon (Server/Core)**: "fxeon funcionando con plan de mantención y garantias de no caida".
+- [ ] mínimo para titi
 - [ ] **Agente Mantención**: "agente de mantención de fxeon".
 - [ ] **Hetzner**: "quedarme con un solo servidor en hetzner".
 - [ ] **GOREOS WS**: Web Services y Namespace ("Goreos ws", "Goreos name espace").
 - [ ] **Admin Sistema**: "Dominio admin del sistema" (Panel de control técnico).
 
+## 5. [ ] migración
+
+### 5.1. preparación migración
+
+- [ ] descargar documentación tipo.
+  - [ ] muestras de - 
 ## 6. 📂 Proyectos Específicos / Externalidades
 
 - [ ] **Plataforma SENAPRED**: "plataforma senapred, modulo, migrar".

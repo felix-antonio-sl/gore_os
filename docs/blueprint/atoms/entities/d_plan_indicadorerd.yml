@@ -1,14 +1,117 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_plan_indicadorerd:1.0.0
-  type: Entity
-  source: domains/d-plan/entity_data
-id: ENT-PLAN-INDICADORERD
-name: IndicadorERD
-entity_key: indicadorerd
-domain: D-PLAN
-category: Reference
-description: id, objetivo_id, nombre, formula, linea_base, meta, año
+# ==============================================================================
+# GORE_OS Entity Atom: IndicadorERD (Medición de Objetivos)
+# ==============================================================================
+# Domain: D-PLAN (Strategic Planning)
+# Subdomain: ERD
+# Source: ERD Ñuble 2024-2030, domain_d-plan.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-PLAN
+  subdomain: erd
+  kb_source:
+    - "ERD Ñuble 2024-2030"
+    - "domain_d-plan.md"
+
+entity:
+  id: ENT-PLAN-INDICADOR-ERD
+  name: IndicadorERD
+  name_es: Indicador de ERD
+  description: |
+    Métrica definida para medir el avance de un objetivo estratégico.
+    Cada objetivo puede tener uno o más indicadores con diferentes
+    fuentes de datos y frecuencias de actualización.
+
+  purpose: |
+    Modelar indicadores para:
+    - Medir objetivamente el avance de la ERD
+    - Alimentar tableros de Observatorio
+    - Detectar brechas territoriales
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_indicador
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: objetivo_id
+    type: String
+    fk: ENT-PLAN-OE
+    nullable: false
+    description: Objetivo que mide
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre del indicador
+
+  - name: formula
+    type: String
+    nullable: true
+    description: Fórmula de cálculo
+
+  - name: unidad
+    type: String
+    nullable: false
+    description: Unidad de medida
+
+  - name: fuente
+    type: String
+    nullable: true
+    description: Fuente de datos (INE, CASEN, MINSAL, etc.)
+
+  # Línea base y metas
+  - name: linea_base
+    type: Decimal
+    nullable: true
+    description: Valor inicial
+
+  - name: año_base
+    type: Integer
+    nullable: true
+    description: Año de la línea base
+
+  - name: meta_anual
+    type: Decimal
+    nullable: true
+    description: Meta para el año en curso
+
+  - name: meta_final
+    type: Decimal
+    nullable: true
+    description: Meta al término de la ERD
+
+  # Frecuencia
+  - name: frecuencia_medicion
+    type: Enum[Mensual, Trimestral, Semestral, Anual]
+    default: Anual
+    description: Periodicidad de actualización
+
+  # Estado
+  - name: ultimo_valor
+    type: Decimal
+    nullable: true
+    description: Última medición registrada
+
+  - name: fecha_ultimo_valor
+    type: Date
+    nullable: true
+    description: Fecha de última medición
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  mide: [ENT-PLAN-OE]
+  alimentado_por: [FuenteDatos]
+  genera: [ENT-PLAN-MEDICION]
+
+audit:
+  fields_tracked:
+    - ultimo_valor
+  retention_years: 10

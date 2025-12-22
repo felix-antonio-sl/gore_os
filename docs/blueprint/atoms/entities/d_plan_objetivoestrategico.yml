@@ -1,14 +1,186 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_plan_objetivoestrategico:1.0.0
-  type: Entity
-  source: domains/d-plan/entity_data
-id: ENT-PLAN-OBJETIVOESTRATEGICO
-name: ObjetivoEstrategico
-entity_key: objetivoestrategico
-domain: D-PLAN
-category: Reference
-description: id, lineamiento_id, codigo, nombre, indicador, meta, ods_vinculados[]
+# ==============================================================================
+# GORE_OS Entity Atom: ObjetivoEstrategico (OE de la ERD)
+# ==============================================================================
+# Domain: D-PLAN (Strategic Planning)
+# Subdomain: ERD
+# Source: ERD Ñuble 2024-2030, domain_d-plan.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-PLAN
+  subdomain: erd
+  kb_source:
+    - "ERD Ñuble 2024-2030"
+    - "domain_d-plan.md"
+
+entity:
+  id: ENT-PLAN-OE
+  name: ObjetivoEstrategico
+  name_es: Objetivo Estratégico
+  description: |
+    Meta medible definida en la ERD con indicadores y metas anuales.
+    Es el nivel más granular de la jerarquía estratégica y el punto
+    de vinculación directa con las IPRs.
+
+    Cada OE tiene un indicador de cumplimiento y puede vincularse
+    a uno o más Objetivos de Desarrollo Sostenible (ODS).
+
+    ERD → Eje → Lineamiento → **ObjetivoEstrategico** ← IPR
+
+  purpose: |
+    Modelar los objetivos estratégicos para:
+    - Definir metas medibles de desarrollo regional
+    - Vincular IPRs a resultados estratégicos
+    - Monitorear avance de la ERD
+    - Alinear con ODS de la Agenda 2030
+
+  categorical_type: Object
+  is_abstract: false
+  category: Master
+
+  extends: null
+
+  related_to:
+    - entity: ENT-PLAN-LINEAMIENTO
+      relation: pertenece_a
+      cardinality: N:1
+    - entity: ENT-FIN-IPR
+      relation: alineada_con
+      cardinality: N:N
+      description: IPRs que contribuyen a este objetivo
+
+attributes:
+  - name: id_oe
+    type: String
+    key: true
+    description: Identificador único (ej. OE-E1-L1-01)
+
+  - name: lineamiento_id
+    type: String
+    fk: ENT-PLAN-LINEAMIENTO
+    nullable: false
+    description: Lineamiento al que pertenece
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: Código del objetivo (ej. OE1.1.1)
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Enunciado del objetivo
+
+  - name: descripcion
+    type: Text
+    nullable: true
+    description: Descripción detallada
+
+  # Indicador principal
+  - name: indicador_nombre
+    type: String
+    nullable: true
+    description: Nombre del indicador de medición
+
+  - name: indicador_formula
+    type: String
+    nullable: true
+    description: Fórmula de cálculo
+
+  - name: indicador_unidad
+    type: String
+    nullable: true
+    description: Unidad de medida (%, N°, M$)
+
+  - name: linea_base
+    type: Decimal
+    nullable: true
+    description: Valor del indicador al inicio de la ERD
+
+  - name: meta_final
+    type: Decimal
+    nullable: true
+    description: Meta al término de la ERD
+
+  - name: año_linea_base
+    type: Integer
+    nullable: true
+    description: Año de la línea base
+
+  # Estado actual
+  - name: valor_actual
+    type: Decimal
+    nullable: true
+    description: Último valor medido del indicador
+
+  - name: fecha_ultima_medicion
+    type: Date
+    nullable: true
+    description: Fecha de la última medición
+
+  - name: porcentaje_avance
+    type: Decimal
+    computed: true
+    formula: ((valor_actual - linea_base) / (meta_final - linea_base)) * 100
+    description: Porcentaje de avance hacia la meta
+
+  # ODS
+  - name: ods_vinculados
+    type: Array[Integer]
+    nullable: true
+    description: ODS relacionados (1-17)
+
+  # IPRs vinculadas
+  - name: cantidad_iprs
+    type: Integer
+    default: 0
+    description: Número de IPRs alineadas
+
+  - name: monto_total_iprs
+    type: Decimal
+    default: 0
+    description: Suma de montos de IPRs vinculadas
+
+  # Estado
+  - name: estado
+    type: Enum[SinAvance, EnProgreso, EnRiesgo, Cumplido, Superado]
+    default: SinAvance
+    description: Estado cualitativo del objetivo
+
+invariants:
+  - id: INV-OE-001
+    name: codigo_unico_por_lineamiento
+    rule: UNIQUE(lineamiento_id, codigo)
+    description: Código único dentro del lineamiento
+    severity: error
+
+  - id: INV-OE-002
+    name: meta_mayor_linea_base
+    rule: meta_final > linea_base OR meta_final IS NULL
+    description: La meta debe superar la línea base (salvo vacío)
+    severity: warning
+
+  - id: INV-OE-003
+    name: alerta_sin_iprs
+    rule: |
+      (estado != 'Cumplido' AND cantidad_iprs = 0) → ALERT(180 días)
+    description: Objetivo sin IPRs debe alertarse
+    source: domain_d-plan.md
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  pertenece_a: [ENT-PLAN-LINEAMIENTO]
+  alineada_con: [ENT-FIN-IPR]
+  medido_por: [ENT-PLAN-INDICADOR-ERD]
+  evaluado_en: [ENT-TERR-BRECHARD]
+
+audit:
+  fields_tracked:
+    - valor_actual
+    - porcentaje_avance
+    - estado
+    - cantidad_iprs
+  retention_years: 15

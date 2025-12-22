@@ -1,0 +1,109 @@
+# ==============================================================================
+# GORE_OS Entity Atom: FirmaActo
+# ==============================================================================
+# Domain: D-NORM (Gestión Jurídico-Administrativa)
+# Subdomain: Actos Administrativos
+# Source: Ley 19.799, KB-GN-200
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Fiscal Virtual"
+  domain: D-NORM
+  subdomain: actos_administrativos
+  kb_source:
+    - "Ley 19.799: Firma Electrónica"
+    - "KB-GN-200: LEY-21180-MASTER-01"
+
+entity:
+  id: ENT-NORM-FIRMA
+  name: FirmaActo
+  name_es: Firma de Acto Administrativo
+  description: |
+    Registro de firma electrónica aplicada a un acto administrativo.
+    La FEA (Firma Electrónica Avanzada) tiene valor equivalente
+    a firma óloga según Ley 19.799.
+
+  purpose: |
+    - Registrar firmas de actos
+    - Validar autenticidad documental
+    - Trazabilidad de firmantes
+    - Base para verificación DocDigital
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_firma
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: acto_id
+    type: String
+    fk: ENT-NORM-ACTO
+    nullable: false
+    description: Acto firmado
+
+  - name: firmante_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario firmante
+
+  - name: tipo_firma
+    type: Enum[FEA, FES, Manual]
+    nullable: false
+    description: FEA=Avanzada, FES=Simple
+
+  - name: fecha_firma
+    type: DateTime
+    nullable: false
+    description: Fecha y hora de firma
+
+  - name: rol_firmante
+    type: Enum[Autoridad, Visador, MinistroFe]
+    nullable: false
+    description: Rol del firmante
+
+  - name: orden
+    type: Integer
+    default: 1
+    description: Orden en cadena de firmas
+
+  # Verificación
+  - name: url_verificacion
+    type: String
+    nullable: true
+    description: URL para verificar firma
+
+  - name: hash_documento
+    type: String
+    nullable: true
+    description: Hash del documento firmado
+
+  - name: estado
+    type: Enum[Pendiente, Firmado, Rechazado, Anulado]
+    default: Pendiente
+    description: Estado de la firma
+
+invariants:
+  - id: INV-FIRMA-001
+    name: fea_requiere_url
+    rule: |
+      tipo_firma = 'FEA' AND estado = 'Firmado' → url_verificacion IS NOT NULL
+    description: FEA firmada requiere URL de verificación
+    severity: warning
+
+morphisms:
+  firma_de: [ENT-NORM-ACTO]
+  emitida_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - tipo_firma
+  retention_years: 20

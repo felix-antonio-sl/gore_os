@@ -1,14 +1,146 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_plan_hitocp:1.0.0
-  type: Entity
-  source: domains/d-plan/entity_data
-id: ENT-PLAN-HITOCP
-name: HitoCP
-entity_key: hitocp
-domain: D-PLAN
-category: Reference
-description: id, convenio_id, descripcion, fecha_comprometida, monto, estado
+# ==============================================================================
+# GORE_OS Entity Atom: HitoCP (Hito de Convenio de Programación)
+# ==============================================================================
+# Domain: D-PLAN (Strategic Planning)
+# Subdomain: Inversión
+# Source: domain_d-plan.md P4, dialogo_dplan_dterr.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-PLAN
+  subdomain: inversion
+  kb_source:
+    - "domain_d-plan.md P4"
+    - "dialogo_dplan_dterr.md"
+
+entity:
+  id: ENT-PLAN-HITO-CP
+  name: HitoCP
+  name_es: Hito de Convenio de Programación
+  description: |
+    Representa un evento programado dentro del Convenio de Programación.
+    Puede ser una transferencia financiera, un entregable, o un hito
+    de avance de proyecto.
+
+    El seguimiento de hitos es trimestral y alimenta los informes
+    de ejecución del convenio.
+
+  purpose: |
+    Modelar los hitos para:
+    - Seguimiento de cronograma del convenio
+    - Control de transferencias financieras
+    - Alertas de atrasos
+    - Vinculación con IPRs específicas
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_hito
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: convenio_id
+    type: String
+    fk: ENT-PLAN-CP
+    nullable: false
+    description: Convenio al que pertenece
+
+  - name: ipr_vinculada_id
+    type: String
+    fk: ENT-FIN-IPR
+    nullable: true
+    description: IPR específica si el hito es un proyecto
+
+  - name: descripcion
+    type: String
+    nullable: false
+    description: Descripción del hito
+
+  - name: tipo
+    type: Enum[Financiero, Entregable, Administrativo, Cierre]
+    default: Financiero
+    description: Tipo de hito
+
+  # Programación
+  - name: fecha_comprometida
+    type: Date
+    nullable: false
+    description: Fecha acordada para el hito
+
+  - name: fecha_real_cumplimiento
+    type: Date
+    nullable: true
+    description: Fecha real de cumplimiento
+
+  - name: dias_atraso
+    type: Integer
+    computed: true
+    formula: |
+      IF(fecha_real_cumplimiento IS NOT NULL, 
+         DATEDIFF(fecha_real_cumplimiento, fecha_comprometida),
+         IF(CURRENT_DATE > fecha_comprometida, 
+            DATEDIFF(CURRENT_DATE, fecha_comprometida), 0))
+    description: Días de atraso (positivo = atrasado)
+
+  # Montos
+  - name: monto_asociado
+    type: Decimal
+    nullable: true
+    description: Monto del hito en M$
+
+  - name: aporte_gore
+    type: Decimal
+    nullable: true
+    description: Porción GORE del monto
+
+  - name: aporte_sectorial
+    type: Decimal
+    nullable: true
+    description: Porción sectorial del monto
+
+  # Estado
+  - name: estado
+    type: Enum[Pendiente, EnProceso, Cumplido, Atrasado, Cancelado]
+    default: Pendiente
+    description: Estado del hito
+
+  - name: observaciones
+    type: Text
+    nullable: true
+    description: Notas de seguimiento
+
+  - name: evidencia_url
+    type: String
+    nullable: true
+    description: URL de documento de respaldo
+
+invariants:
+  - id: INV-HITO-001
+    name: atrasado_automatico
+    rule: |
+      (CURRENT_DATE > fecha_comprometida AND estado = 'Pendiente') → estado = 'Atrasado'
+    description: Hito pendiente posterior a fecha se marca atrasado
+    severity: warning
+
+  - id: INV-HITO-002
+    name: cumplido_requiere_fecha
+    rule: |
+      (estado = 'Cumplido') → (fecha_real_cumplimiento IS NOT NULL)
+    description: Hito cumplido debe tener fecha real
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  pertenece_a: [ENT-PLAN-CP]
+  vincula: [ENT-FIN-IPR]
+
+audit:
+  fields_tracked:
+    - estado
+    - fecha_real_cumplimiento
+  retention_years: 15

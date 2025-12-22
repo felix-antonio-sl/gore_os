@@ -1,0 +1,141 @@
+# ==============================================================================
+# GORE_OS Entity Atom: Comision
+# ==============================================================================
+# Domain: D-GOB (Gobernanza)
+# Subdomain: Consejo Regional
+# Source: LOC GORE Art. 36 bis, domain_d-gob.md
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-GOB
+  subdomain: consejo_regional
+  kb_source:
+    - "LOC GORE Art. 36 bis: Comisiones del Consejo"
+    - "Reglamento Interno CORE Ñuble"
+    - "domain_d-gob.md M1"
+
+entity:
+  id: ENT-GOB-COMISION
+  name: Comision
+  name_es: Comisión del Consejo Regional
+  description: |
+    Grupo de trabajo del CORE que analiza materias específicas
+    antes de ser sometidas al plenario. Emiten informes con
+    recomendaciones de votación.
+
+    Comisiones permanentes típicas:
+    - Hacienda y Presupuesto
+    - Desarrollo Productivo
+    - Infraestructura y Transporte
+    - Desarrollo Social
+    - Medio Ambiente
+    - Fiscalización
+
+  purpose: |
+    - Organizar trabajo previo a plenario
+    - Asignar consejeros a temáticas
+    - Emitir informes técnicos
+    - Facilitar debate informado
+
+  categorical_type: Object
+  is_abstract: false
+  category: Reference
+
+attributes:
+  - name: id_comision
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: nombre
+    type: String
+    nullable: false
+    description: Nombre de la comisión
+
+  - name: tipo
+    type: Enum[Permanente, Especial, Investigadora]
+    nullable: false
+    description: Tipo de comisión
+
+  # Composición
+  - name: presidente_id
+    type: String
+    fk: ENT-GOB-CONSEJERO
+    nullable: true
+    description: Consejero que preside
+
+  - name: integrantes_ids
+    type: Array[String]
+    nullable: true
+    description: Consejeros integrantes
+
+  - name: min_integrantes
+    type: Integer
+    default: 3
+    description: Mínimo de integrantes
+
+  - name: max_integrantes
+    type: Integer
+    default: 7
+    description: Máximo de integrantes
+
+  # Materias
+  - name: materias_competencia
+    type: Array[String]
+    nullable: true
+    description: Materias de su competencia
+
+  # Estado
+  - name: activa
+    type: Boolean
+    default: true
+    description: ¿Está activa?
+
+  - name: fecha_creacion
+    type: Date
+    nullable: true
+    description: Fecha de creación
+
+  - name: fecha_disolucion
+    type: Date
+    nullable: true
+    description: Fecha de disolución (si especial)
+
+invariants:
+  - id: INV-COM-001
+    name: presidente_es_integrante
+    rule: |
+      presidente_id IS NOT NULL → presidente_id IN integrantes_ids
+    description: El presidente debe ser integrante
+    severity: warning
+
+  - id: INV-COM-002
+    name: especial_tiene_fecha_termino
+    rule: |
+      tipo != 'Permanente' → fecha_disolucion IS NOT NULL OR activa = true
+    description: Comisión especial debe tener fecha término o estar activa
+    severity: info
+
+lifecycle:
+  states:
+    - name: Activa
+      description: En funcionamiento
+    - name: Inactiva
+      description: Sin actividad temporal
+    - name: Disuelta
+      description: Terminó su mandato
+
+morphisms:
+  integrada_por: [ENT-GOB-CONSEJERO]
+  presidida_por: [ENT-GOB-CONSEJERO]
+  emite_informe_para: [ENT-GOB-SESION-CORE]
+
+audit:
+  fields_tracked:
+    - activa
+    - integrantes_ids
+  retention_years: 10

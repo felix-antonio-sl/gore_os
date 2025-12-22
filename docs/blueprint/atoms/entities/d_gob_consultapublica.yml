@@ -1,0 +1,153 @@
+# ==============================================================================
+# GORE_OS Entity Atom: ConsultaPublica
+# ==============================================================================
+# Domain: D-GOB (Gobernanza)
+# Subdomain: Participación Ciudadana
+# Source: Ley 20.500, domain_d-gob.md M6
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-GOB
+  subdomain: participacion
+  kb_source:
+    - "Ley 20.500: Participación Ciudadana"
+    - "domain_d-gob.md M6: Participación Ciudadana"
+
+entity:
+  id: ENT-GOB-CONSULTA-PUBLICA
+  name: ConsultaPublica
+  name_es: Consulta Pública
+  description: |
+    Proceso de consulta ciudadana sobre políticas, planes o proyectos
+    regionales. Puede ser vinculante o consultiva según normativa.
+
+  purpose: |
+    - Cumplir Ley 20.500
+    - Incorporar voz ciudadana
+    - Legitimar decisiones regionales
+    - Transparencia participativa
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_consulta
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: titulo
+    type: String
+    nullable: false
+    description: Título de la consulta
+
+  - name: descripcion
+    type: Text
+    nullable: false
+    description: Descripción y objetivo
+
+  - name: tipo
+    type: Enum[Vinculante, Consultiva, Informativa]
+    default: Consultiva
+    description: Tipo de consulta
+
+  - name: materia
+    type: Enum[PlanRegional, Presupuesto, Proyecto, Politica, Otro]
+    nullable: false
+    description: Materia consultada
+
+  # Período
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+    description: Inicio del período de participación
+
+  - name: fecha_fin
+    type: Date
+    nullable: false
+    description: Fin del período
+
+  # Participación
+  - name: modalidad
+    type: Enum[Presencial, Digital, Mixta]
+    default: Digital
+    description: Modalidad de participación
+
+  - name: plataforma_url
+    type: String
+    nullable: true
+    description: URL de la plataforma digital
+
+  - name: participantes_count
+    type: Integer
+    default: 0
+    description: Total de participantes
+
+  - name: respuestas_count
+    type: Integer
+    default: 0
+    description: Total de respuestas/aportes
+
+  # Resultados
+  - name: informe_resultados_url
+    type: String
+    nullable: true
+    description: URL al informe de resultados
+
+  - name: resumen_resultados
+    type: Text
+    nullable: true
+    description: Resumen de principales hallazgos
+
+  - name: decision_adoptada
+    type: Text
+    nullable: true
+    description: Decisión tomada en base a la consulta
+
+  # Estado
+  - name: estado
+    type: Enum[EnPreparacion, Abierta, Cerrada, EnAnalisis, Finalizada]
+    default: EnPreparacion
+    description: Estado de la consulta
+
+invariants:
+  - id: INV-CONSULTA-001
+    name: periodo_coherente
+    rule: fecha_fin >= fecha_inicio
+    description: Fechas coherentes
+    severity: error
+
+  - id: INV-CONSULTA-002
+    name: finalizada_requiere_informe
+    rule: |
+      estado = 'Finalizada' → informe_resultados_url IS NOT NULL
+    description: Consulta finalizada requiere informe
+    severity: warning
+
+lifecycle:
+  states:
+    - name: EnPreparacion
+      description: Diseñando la consulta
+    - name: Abierta
+      description: Recibiendo participación
+    - name: Cerrada
+      description: Período de participación terminado
+    - name: EnAnalisis
+      description: Procesando resultados
+    - name: Finalizada
+      description: Resultados publicados
+
+morphisms:
+  vinculada_a: [ERD, PROT, IPR]
+  organizada_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+    - participantes_count
+  retention_years: 10

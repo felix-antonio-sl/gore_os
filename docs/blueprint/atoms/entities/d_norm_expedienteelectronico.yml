@@ -1,0 +1,160 @@
+# ==============================================================================
+# GORE_OS Entity Atom: ExpedienteElectronico
+# ==============================================================================
+# Domain: D-NORM (Gestión Jurídico-Administrativa)
+# Subdomain: Expediente Electrónico
+# Source: Ley 21.180 TDE, DS10, KB-GN-200 LEY-21180-MASTER-01
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Fiscal Virtual"
+  domain: D-NORM
+  subdomain: expediente_electronico
+  kb_source:
+    - "Ley 21.180: Transformación Digital del Estado"
+    - "DS10: Reglamento Expediente Electrónico"
+    - "KB-GN-200: LEY-21180-MASTER-01"
+
+entity:
+  id: ENT-NORM-EXPEDIENTE
+  name: ExpedienteElectronico
+  name_es: Expediente Electrónico
+  description: |
+    Conjunto ordenado de documentos y actuaciones que sirven de
+    antecedente y fundamento a la resolución administrativa. Es el
+    contenedor único bajo TDE (Ley 21.180).
+
+    Características:
+    - IUIE: Identificador Único Interoperable
+    - Foliación automática correlativa
+    - Índice electrónico
+    - Trazabilidad completa
+
+  purpose: |
+    - Contener todos los documentos de un procedimiento
+    - Asegurar trazabilidad TDE
+    - Base para interoperabilidad DocDigital
+    - Archivo electrónico institucional
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_expediente
+    type: String
+    key: true
+    description: Identificador único interno
+
+  - name: iuie
+    type: String
+    nullable: true
+    description: Identificador Único Interoperable del Expediente
+
+  - name: codigo
+    type: String
+    nullable: false
+    description: Código de expediente (ej. EXP-2025-00123)
+
+  - name: materia
+    type: String
+    nullable: false
+    description: Materia o asunto del expediente
+
+  - name: tipo_procedimiento
+    type: Enum[Simple, Disciplinario, Licitacion, Contratacion, Solicitud, Reclamo, Convenio, Otro]
+    nullable: false
+    description: Tipo de procedimiento
+
+  # Fechas
+  - name: fecha_inicio
+    type: Date
+    nullable: false
+    description: Fecha de apertura
+
+  - name: fecha_cierre
+    type: Date
+    nullable: true
+    description: Fecha de cierre (si cerrado)
+
+  # Foliación
+  - name: folio_actual
+    type: Integer
+    default: 0
+    description: Último folio asignado
+
+  # Responsable
+  - name: unidad_responsable
+    type: String
+    nullable: false
+    description: División/Unidad responsable
+
+  - name: funcionario_responsable_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: true
+    description: Funcionario a cargo
+
+  # Estado
+  - name: estado
+    type: Enum[Abierto, EnTramite, Suspendido, Cerrado, Archivado]
+    default: Abierto
+    description: Estado del expediente
+
+  # Reserva
+  - name: es_reservado
+    type: Boolean
+    default: false
+    description: ¿Expediente reservado?
+
+  - name: causal_reserva
+    type: Text
+    nullable: true
+    description: Causal de reserva si aplica
+
+  # Índice electrónico
+  - name: indice_electronico
+    type: Array[Object]
+    nullable: true
+    description: Índice de documentos contenidos
+
+  # DocDigital
+  - name: doc_digital_id
+    type: String
+    nullable: true
+    description: ID en plataforma DocDigital
+
+invariants:
+  - id: INV-EXP-001
+    name: cerrado_requiere_fecha
+    rule: |
+      estado = 'Cerrado' → fecha_cierre IS NOT NULL
+    description: Expediente cerrado requiere fecha de cierre
+    severity: error
+
+lifecycle:
+  states:
+    - name: Abierto
+      description: Recién creado
+    - name: EnTramite
+      description: Con actuaciones en curso
+    - name: Suspendido
+      description: Temporalmente detenido
+    - name: Cerrado
+      description: Procedimiento finalizado
+    - name: Archivado
+      description: En archivo definitivo
+
+morphisms:
+  contiene: [ENT-NORM-DOCUMENTO, ENT-NORM-ACTO]
+  gestionado_por: [ENT-BACK-FUNCIONARIO]
+  vinculado_a: [ENT-FIN-IPR]
+
+audit:
+  fields_tracked:
+    - estado
+    - folio_actual
+  retention_years: 20

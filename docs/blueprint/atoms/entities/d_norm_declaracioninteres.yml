@@ -1,0 +1,106 @@
+# ==============================================================================
+# GORE_OS Entity Atom: DeclaracionInteres
+# ==============================================================================
+# Domain: D-NORM (Gestión Jurídico-Administrativa)
+# Subdomain: Cumplimiento
+# Source: Ley 20.880, KB-GN-200 LEY-20880-DIP-01
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Fiscal Virtual"
+  domain: D-NORM
+  subdomain: cumplimiento
+  kb_source:
+    - "Ley 20.880: Probidad y Conflictos de Interés"
+    - "KB-GN-200: LEY-20880-DIP-01"
+
+entity:
+  id: ENT-NORM-DIP
+  name: DeclaracionInteres
+  name_es: Declaración de Intereses y Patrimonio
+  description: |
+    Declaración jurada de intereses y patrimonio que deben presentar
+    autoridades y funcionarios según Ley 20.880.
+
+    Plazos:
+    - 30 días desde asunción
+    - Actualización anual (marzo)
+    - 30 días desde cesación
+
+  purpose: |
+    - Cumplir Ley 20.880
+    - Detectar conflictos de interés
+    - Transparencia patrimonial
+    - Control CGR
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_dip
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: funcionario_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario declarante
+
+  - name: tipo
+    type: Enum[Inicial, Actualizacion, Cese]
+    nullable: false
+    description: Tipo de declaración
+
+  - name: periodo
+    type: String
+    nullable: false
+    description: Año de la declaración
+
+  # Fechas
+  - name: fecha_presentacion
+    type: Date
+    nullable: true
+    description: Fecha de presentación
+
+  - name: fecha_vencimiento
+    type: Date
+    nullable: false
+    description: Fecha límite de presentación
+
+  # Estado
+  - name: estado
+    type: Enum[Pendiente, Presentada, EnRevision, Observada, Aprobada, Vencida]
+    default: Pendiente
+    description: Estado de la declaración
+
+  - name: url_cgr
+    type: String
+    nullable: true
+    description: URL en plataforma CGR
+
+  - name: observaciones
+    type: Text
+    nullable: true
+    description: Observaciones de CGR
+
+invariants:
+  - id: INV-DIP-001
+    name: presentada_requiere_fecha
+    rule: |
+      estado = 'Presentada' → fecha_presentacion IS NOT NULL
+    description: DIP presentada requiere fecha
+    severity: error
+
+morphisms:
+  presentada_por: [ENT-BACK-FUNCIONARIO]
+
+audit:
+  fields_tracked:
+    - estado
+  retention_years: 10

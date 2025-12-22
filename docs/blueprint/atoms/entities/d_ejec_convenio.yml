@@ -1,15 +1,217 @@
-_meta:
-  urn: urn:goreos:atom:entity:d_ejec_convenio:1.0.0
-  type: Entity
-  source: domains/d-ejec/glossary
-id: ENT-EJEC-CONVENIO
-name: Convenio
-entity_key: convenio
-domain: D-EJEC
-category: Reference
-description: Acto administrativo formal que establece obligaciones entre GORE y un
-  ejecutor. SADV (Fuente Única de Verdad) en D-NORM
+# ==============================================================================
+# GORE_OS Entity Atom: Convenio (Acto de Ejecución)
+# ==============================================================================
+# Domain: D-EJEC (Execution & Monitoring)
+# Subdomain: Convenios
+# Source: domain_d-ejec.md M2, KB-019, LOC GORE Art. 16
+# ==============================================================================
+
+_metadata:
+  version: "2.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-EJEC
+  subdomain: convenios
+  kb_source:
+    - "domain_d-ejec.md M2: Gestión de Convenios"
+    - "KB-019: Gestión IPR Fase 4-5"
+    - "LOC GORE Art. 16"
+
+entity:
+  id: ENT-EJEC-CONVENIO
+  name: Convenio
+  name_es: Convenio de Ejecución
+  description: |
+    Acto administrativo formal que establece obligaciones entre el GORE
+    y un ejecutor para la materialización de una IPR. Es el instrumento
+    jurídico central de D-EJEC.
+
+    Tipos según domain_d-ejec.md:
+    - MANDATO: GORE encarga ejecución a otro órgano (ej. MOP)
+    - TRANSFERENCIA: GORE transfiere recursos a ejecutor
+    - COLABORACIÓN: Ejecución conjunta con aportes de ambos
+    - MARCO: Convenio paraguas para múltiples iniciativas
+    - PROGRAMACIÓN: Convenio plurianual con Ministerio
+
+  purpose: |
+    - Formalizar la relación GORE-Ejecutor
+    - Establecer montos, plazos y obligaciones
+    - Servir de SADV para la ejecución de IPR
+    - Base para todos los flujos de D-EJEC
+
+  categorical_type: Object
+  is_abstract: false
+  category: Master
+
+attributes:
+  - name: id_convenio
+    type: String
+    key: true
+    description: Identificador único (ej. CONV-2024-001)
+
+  - name: numero_decreto
+    type: String
+    nullable: true
+    description: Número del decreto aprobatorio
+
+  # Vinculación D-FIN
+  - name: ipr_id
+    type: String
+    fk: ENT-FIN-IPR
+    nullable: false
+    description: IPR que financia este convenio
+
+  - name: cdp_id
+    type: String
+    fk: ENT-FIN-CDP
+    nullable: false
+    description: Certificado de Disponibilidad Presupuestaria
+
+  # Tipo de convenio (ENRICHMENT P2)
+  - name: tipo_convenio
+    type: Enum[Mandato, Transferencia, Colaboracion, Marco, Programacion]
+    nullable: false
+    description: Tipo según domain_d-ejec.md
+
+  - name: titulo
+    type: String
+    nullable: false
+    description: Nombre del convenio
+
+  - name: objeto
+    type: Text
+    nullable: false
+    description: Descripción del objeto del convenio
+
+  # Ejecutor
+  - name: ejecutor_id
+    type: String
+    fk: ENT-EJEC-EJECUTOR
+    nullable: false
+    description: Entidad que ejecuta
+
+  - name: ejecutor_tipo
+    type: Enum[Municipalidad, ServicioPublico, Universidad, Fundacion, Corporacion, Empresa, ONG, Otro]
+    nullable: false
+    description: Tipo de ejecutor
+
+  # Montos
+  - name: monto_total
+    type: Decimal
+    nullable: false
+    description: Monto total del convenio
+
+  - name: monto_gore
+    type: Decimal
+    nullable: false
+    description: Aporte del GORE
+
+  - name: monto_contraparte
+    type: Decimal
+    default: 0
+    description: Aporte del ejecutor u otro
+
+  # Plazos
+  - name: fecha_firma
+    type: Date
+    nullable: true
+    description: Fecha de firma
+
+  - name: fecha_inicio_vigencia
+    type: Date
+    nullable: true
+    description: Fecha inicio de vigencia
+
+  - name: fecha_termino_vigencia
+    type: Date
+    nullable: true
+    description: Fecha término original
+
+  - name: plazo_ejecucion_meses
+    type: Integer
+    nullable: true
+    description: Plazo de ejecución en meses
+
+  # Estado
+  - name: estado
+    type: Enum[Borrador, EnRevisionJuridica, ParaFirma, Vigente, ProrrogaSolicitada, AddendumEnProceso, Terminado, Liquidado, Caducado]
+    default: Borrador
+    description: Estado del convenio según domain_d-ejec.md
+
+  # Ejecución acumulada
+  - name: monto_transferido
+    type: Decimal
+    default: 0
+    description: Total transferido a la fecha
+
+  - name: monto_rendido
+    type: Decimal
+    default: 0
+    description: Total rendido y aprobado
+
+  - name: avance_fisico_pct
+    type: Decimal
+    default: 0
+    description: Avance físico porcentual
+
+  - name: cantidad_ep_aprobados
+    type: Integer
+    default: 0
+    description: Estados de pago aprobados
+
+invariants:
+  - id: INV-CONV-001
+    name: suma_aportes
+    rule: monto_gore + monto_contraparte = monto_total
+    description: La suma de aportes debe igualar el total
+    severity: error
+
+  - id: INV-CONV-002
+    name: vigencia_coherente
+    rule: fecha_termino_vigencia >= fecha_inicio_vigencia
+    description: Fechas de vigencia coherentes
+    severity: error
+
+  - id: INV-CONV-003
+    name: cdp_requerido
+    rule: |
+      (estado IN ('Vigente', 'Terminado', 'Liquidado')) → (cdp_id IS NOT NULL)
+    description: Convenios activos requieren CDP
+    severity: error
+
+lifecycle:
+  states:
+    - name: Borrador
+      description: En elaboración
+    - name: EnRevisionJuridica
+      description: UJ revisando
+    - name: ParaFirma
+      description: Listo para firma
+    - name: Vigente
+      description: Firmado y en ejecución
+    - name: ProrrogaSolicitada
+      description: Prórroga en trámite
+    - name: AddendumEnProceso
+      description: Modificación en trámite
+    - name: Terminado
+      description: Ejecución finalizada, pendiente liquidación
+    - name: Liquidado
+      description: Cerrado formalmente
+    - name: Caducado
+      description: Plazo vencido sin ejecución
+
 morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+  financia_via: [ENT-FIN-IPR]
+  respaldado_por: [ENT-FIN-CDP]
+  ejecutado_por: [ENT-EJEC-EJECUTOR]
+  compuesto_por:
+    [ENT-EJEC-HITO, ENT-EJEC-EP, ENT-EJEC-GARANTIA, ENT-EJEC-MODCONV]
+
+audit:
+  fields_tracked:
+    - estado
+    - monto_transferido
+    - monto_rendido
+    - avance_fisico_pct
+  retention_years: 15

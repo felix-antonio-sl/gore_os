@@ -1,0 +1,174 @@
+# ==============================================================================
+# GORE_OS Entity Atom: EstadoPago (EP)
+# ==============================================================================
+# Domain: D-EJEC (Execution & Monitoring)
+# Subdomain: Supervisión
+# Source: domain_d-ejec.md, Módulo 1: Supervisión de Obras
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico"
+  domain: D-EJEC
+  subdomain: supervision
+  kb_source:
+    - "domain_d-ejec.md"
+    - "Triángulo de Integración Presupuestaria"
+
+entity:
+  id: ENT-EJEC-EP
+  name: EstadoPago
+  name_es: Estado de Pago
+  description: |
+    Documento técnico-administrativo que autoriza la transferencia de recursos
+    a un ejecutor basado en el avance físico validado de la obra o servicio.
+    Es el puente crítico entre ejecución (D-EJEC) y pago (D-BACK).
+
+  purpose: |
+    - Validar financieramente el avance físico
+    - Aplicar retenciones y multas si corresponde
+    - Gatillar el proceso de devengo y pago (D-BACK)
+    - Alertar desviaciones presupuestarias (PMO)
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transaction
+
+attributes:
+  - name: id_ep
+    type: String
+    key: true
+    description: Identificador único (ej. EP-2024-001)
+
+  - name: convenio_id
+    type: String
+    fk: ENT-EJEC-CONVENIO
+    nullable: false
+    description: Convenio asociado
+
+  - name: numero_correlativo
+    type: Integer
+    nullable: false
+    description: Número secuencial del EP para este convenio (1, 2, 3...)
+
+  - name: tipo_ep
+    type: Enum[Anticipo, Parcial, Final, Unico, Devolucion]
+    nullable: false
+    description: Tipo de estado de pago
+
+  # Montos
+  - name: monto_bruto_solicitado
+    type: Decimal
+    nullable: false
+    description: Monto solicitado por el ejecutor
+
+  - name: monto_aprobado_inspector
+    type: Decimal
+    nullable: false
+    description: Monto validado por el Inspector Fiscal/ITO
+
+  - name: retenciones
+    type: Decimal
+    default: 0
+    description: Montos retenidos (ej. garantías, multas)
+
+  - name: liquido_pago
+    type: Decimal
+    computed: true
+    formula: monto_aprobado_inspector - retenciones
+    description: Monto líquido a transferir
+
+  # Avance
+  - name: avance_fisico_periodo
+    type: Decimal
+    description: "% avance físico en este periodo"
+
+  - name: avance_fisico_acumulado
+    type: Decimal
+    description: "% avance físico total acumulado"
+
+  - name: avance_financiero_acumulado
+    type: Decimal
+    description: "% financiero pagado respecto al total convenio"
+
+  # Workflow
+  - name: fecha_ingreso
+    type: Date
+    nullable: false
+    description: Fecha ingreso solicitud
+
+  - name: fecha_aprobacion_tecnica
+    type: Date
+    nullable: true
+    description: Fecha V°B° Inspector/ITO
+
+  - name: fecha_autorizacion_pago
+    type: Date
+    nullable: true
+    description: Fecha autorización jefatura para pago
+
+  - name: estado
+    type: Enum[Borrador, Ingresado, EnRevisionTecnica, Observado, AprobadoTecnico, EnProcesoPago, Pagado, Rechazado]
+    default: Ingresado
+    description: Estado del flujo
+
+  # Vínculos
+  - name: informe_avance_id
+    type: String
+    fk: ENT-EJEC-INFORME
+    nullable: true
+    description: Informe técnico que respalda el EP
+
+  - name: devengo_id
+    type: String
+    fk: ENT-BACK-DEVENGO
+    nullable: true
+    description: Comprobante contable de devengo (D-BACK)
+
+invariants:
+  - id: INV-EP-001
+    name: monto_liquido_positivo
+    rule: liquido_pago >= 0
+    description: El líquido a pago no puede ser negativo
+    severity: error
+
+  - id: INV-EP-002
+    name: avance_coherente
+    rule: avance_fisico_acumulado <= 100
+    description: Avance físico no puede superar 100% (salvo obras extra)
+    severity: warning
+
+  - id: INV-EP-003
+    name: correlativo_unico_convenio
+    rule: unique(convenio_id, numero_correlativo)
+    description: No pueden existir dos EP con el mismo número para un convenio
+    severity: error
+
+lifecycle:
+  states:
+    - name: Ingresado
+      description: Ejecutor envía EP a GORE
+    - name: EnRevisionTecnica
+      description: ITO/Inspector revisando cantidades y calidad
+    - name: Observado
+      description: Devuelto al ejecutor por errores
+    - name: AprobadoTecnico
+      description: Validado técnicamente, pasa a DAF/D-FIN
+    - name: EnProcesoPago
+      description: En tesorería para transferencia
+    - name: Pagado
+      description: Transferencia realizada
+
+morphisms:
+  respalda: [ENT-BACK-DEVENGO]
+  pertenece_a: [ENT-EJEC-CONVENIO]
+  basado_en: [ENT-EJEC-INFORME]
+
+audit:
+  fields_tracked:
+    - estado
+    - monto_aprobado_inspector
+    - retenciones
+  retention_years: 10

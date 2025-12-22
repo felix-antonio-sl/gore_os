@@ -1,0 +1,211 @@
+# ==============================================================================
+# GORE_OS Entity Atom: ActoAdministrativo
+# ==============================================================================
+# Domain: D-NORM (Gestión Jurídico-Administrativa)
+# Subdomain: Actos Administrativos
+# Source: LBPA Art. 3, KB-GN-100, KB-GN-200, Circular 01/2025
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Fiscal Virtual"
+  domain: D-NORM
+  subdomain: actos_administrativos
+  kb_source:
+    - "LBPA Art. 3: Definición Acto Administrativo"
+    - "KB-GN-100: Modelos Actos Jurídicos SFD/STS"
+    - "KB-GN-200: DEF-ACTO-ADMINISTRATIVO-01"
+    - "Circular 01/2025 GORE Ñuble"
+
+entity:
+  id: ENT-NORM-ACTO
+  name: ActoAdministrativo
+  name_es: Acto Administrativo
+  description: |
+    Decisión formal y escrita que adopta la Administración en ejercicio
+    de una potestad pública. Goza de presunción de legalidad y es
+    exigible desde su entrada en vigencia.
+
+    Estructura canónica: VISTOS → CONSIDERANDO → RESUELVO
+
+    Tipos principales: Resolución (Exenta/Afecta), Decreto, Oficio,
+    Memorándum, Circular, Carta, Certificado.
+
+  purpose: |
+    - Formalizar decisiones del GORE
+    - Aprobar convenios, transferencias, nombramientos
+    - Normar procedimientos internos
+    - Base de trazabilidad jurídica
+
+  categorical_type: Object
+  is_abstract: false
+  category: Transactional
+
+attributes:
+  - name: id_acto
+    type: String
+    key: true
+    description: Identificador único
+
+  - name: tipo_acto
+    type: Enum[ResolucionExenta, ResolucionAfecta, Decreto, Oficio, Memorandum, Circular, Carta, Certificado]
+    nullable: false
+    description: Tipo de acto administrativo
+
+  - name: numero
+    type: String
+    nullable: false
+    description: Número correlativo (ej. 681/2025)
+
+  - name: materia
+    type: String
+    nullable: false
+    description: Asunto o MAT del acto
+
+  - name: fecha_emision
+    type: Date
+    nullable: false
+    description: Fecha de emisión
+
+  - name: lugar_emision
+    type: String
+    default: "Chillán"
+    description: Lugar de emisión
+
+  # Estructura formal
+  - name: vistos
+    type: Array[Text]
+    nullable: false
+    description: Sección VISTOS - competencia y antecedentes
+
+  - name: considerandos
+    type: Array[Text]
+    nullable: false
+    description: Sección CONSIDERANDO - motivación
+
+  - name: resolutivos
+    type: Array[Text]
+    nullable: false
+    description: Sección RESUELVO - articulado
+
+  # Expediente
+  - name: expediente_id
+    type: String
+    fk: ENT-NORM-EXPEDIENTE
+    nullable: true
+    description: Expediente que contiene el acto
+
+  # Control CGR
+  - name: requiere_toma_razon
+    type: Boolean
+    default: false
+    description: ¿Requiere toma de razón CGR?
+
+  - name: toma_razon_id
+    type: String
+    fk: ENT-NORM-TOMA-RAZON
+    nullable: true
+    description: Registro de toma de razón (si afecto)
+
+  # Firmante
+  - name: autoridad_firmante
+    type: Enum[Gobernador, Administrador, JefeDivision]
+    nullable: false
+    description: Autoridad que firma
+
+  - name: firmante_id
+    type: String
+    fk: ENT-BACK-FUNCIONARIO
+    nullable: false
+    description: Funcionario específico
+
+  # DocDigital
+  - name: doc_digital_url
+    type: String
+    nullable: true
+    description: URL de verificación DocDigital
+
+  - name: pdf_url
+    type: String
+    nullable: true
+    description: URL al documento PDF firmado
+
+  # Estado
+  - name: estado
+    type: Enum[Borrador, EnVisacion, PendienteFirma, Firmado, EnTomaRazon, Representado, TomaRazonOK, Notificado, Vigente, Revocado, Invalidado]
+    default: Borrador
+    description: Estado de tramitación
+
+  # Distribución
+  - name: distribucion
+    type: Array[String]
+    nullable: true
+    description: Lista de destinatarios de la distribución
+
+  # Modificaciones
+  - name: acto_modifica_id
+    type: String
+    fk: ENT-NORM-ACTO
+    nullable: true
+    description: Acto que modifica (si es modificatorio)
+
+  - name: tipo_modificacion
+    type: Enum[Rectificacion, Revocacion, Invalidacion, Modificacion, Resciliacion]
+    nullable: true
+    description: Tipo de modificación (si aplica)
+
+invariants:
+  - id: INV-ACTO-001
+    name: afecto_requiere_tdr
+    rule: |
+      tipo_acto = 'ResolucionAfecta' → requiere_toma_razon = true
+    description: Resoluciones afectas requieren TDR
+    severity: error
+
+  - id: INV-ACTO-002
+    name: firmado_requiere_vistos
+    rule: |
+      estado IN ('Firmado', 'Vigente') → LENGTH(vistos) > 0 AND LENGTH(considerandos) > 0
+    description: Acto firmado debe tener VISTOS y CONSIDERANDO
+    severity: error
+
+lifecycle:
+  states:
+    - name: Borrador
+      description: En elaboración
+    - name: EnVisacion
+      description: En cadena de visaciones
+    - name: PendienteFirma
+      description: Visado, pendiente firma autoridad
+    - name: Firmado
+      description: Firmado con FEA
+    - name: EnTomaRazon
+      description: Enviado a CGR (solo afectos)
+    - name: Representado
+      description: CGR rechazó el acto
+    - name: TomaRazonOK
+      description: CGR tomó razón
+    - name: Notificado
+      description: Notificado a interesados
+    - name: Vigente
+      description: En plena vigencia
+    - name: Revocado
+      description: Revocado por mérito
+    - name: Invalidado
+      description: Invalidado por ilegalidad
+
+morphisms:
+  contenido_en: [ENT-NORM-EXPEDIENTE]
+  firmado_por: [ENT-BACK-FUNCIONARIO]
+  visado_por: [ENT-NORM-VISACION]
+  notificado_via: [ENT-NORM-NOTIFICACION]
+  respalda: [ENT-EJEC-CONVENIO, ENT-FIN-CDP, ENT-GOB-ACUERDO-CORE]
+
+audit:
+  fields_tracked:
+    - estado
+    - tipo_acto
+    - numero
+  retention_years: 20

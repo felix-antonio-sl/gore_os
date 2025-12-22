@@ -1,0 +1,175 @@
+# ==============================================================================
+# GORE_OS Entity Atom: SesionCORE
+# ==============================================================================
+# Domain: D-GOB (Gobernanza)
+# Subdomain: Consejo Regional
+# Source: LOC GORE Art. 29-35, domain_d-gob.md M1
+# ==============================================================================
+
+_metadata:
+  version: "1.0.0"
+  status: active
+  created_at: "2025-12-21"
+  created_by: "Arquitecto Categórico + Gobernador Virtual"
+  domain: D-GOB
+  subdomain: consejo_regional
+  kb_source:
+    - "LOC GORE Art. 29: Funcionamiento del Consejo"
+    - "LOC GORE Art. 35: Quórum y votaciones"
+    - "domain_d-gob.md M1: Consejo Regional"
+
+entity:
+  id: ENT-GOB-SESION-CORE
+  name: SesionCORE
+  name_es: Sesión del Consejo Regional
+  description: |
+    Instancia formal de reunión del Consejo Regional donde se debaten
+    y votan las materias de su competencia. Es la unidad atómica del
+    ciclo legislativo regional.
+
+    Tipos:
+    - ORDINARIA: Calendario regular (bimensual)
+    - EXTRAORDINARIA: Convocada para materias específicas
+
+  purpose: |
+    - Registrar las sesiones del CORE
+    - Controlar quórum y asistencia
+    - Vincular con acuerdos generados
+    - Base para transparencia y auditoría
+
+  categorical_type: Object
+  is_abstract: false
+  category: Event
+
+attributes:
+  - name: id_sesion
+    type: String
+    key: true
+    description: Identificador único (ej. SESION-2024-12)
+
+  - name: numero_sesion
+    type: Integer
+    nullable: false
+    description: Número correlativo anual
+
+  - name: tipo
+    type: Enum[Ordinaria, Extraordinaria]
+    nullable: false
+    description: Tipo de sesión
+
+  - name: fecha
+    type: Date
+    nullable: false
+    description: Fecha de la sesión
+
+  - name: hora_inicio
+    type: Time
+    nullable: false
+    description: Hora de inicio
+
+  - name: hora_termino
+    type: Time
+    nullable: true
+    description: Hora de término
+
+  - name: lugar
+    type: String
+    default: "Sala CORE, Edificio GORE Ñuble"
+    description: Lugar de realización
+
+  # Quórum
+  - name: consejeros_titulares
+    type: Integer
+    default: 18
+    description: Total de consejeros titulares
+
+  - name: consejeros_presentes
+    type: Integer
+    nullable: true
+    description: Consejeros presentes al inicio
+
+  - name: quorum_alcanzado
+    type: Boolean
+    computed: true
+    formula: consejeros_presentes >= (consejeros_titulares / 2) + 1
+    description: ¿Se alcanzó quórum? (mayoría absoluta)
+
+  # Presidencia
+  - name: preside_gobernador
+    type: Boolean
+    default: true
+    description: ¿Preside el Gobernador?
+
+  - name: presidente_sesion_id
+    type: String
+    fk: ENT-GOB-CONSEJERO
+    nullable: true
+    description: Si no preside GR, quién preside
+
+  # Documentación
+  - name: tabla_id
+    type: String
+    fk: ENT-GOB-TABLA
+    nullable: true
+    description: Tabla de la sesión
+
+  - name: acta_url
+    type: String
+    nullable: true
+    description: URL al acta firmada
+
+  - name: transmision_url
+    type: String
+    nullable: true
+    description: URL a la grabación/transmisión
+
+  # Estado
+  - name: estado
+    type: Enum[Programada, EnCurso, Suspendida, Finalizada, Anulada]
+    default: Programada
+    description: Estado de la sesión
+
+  - name: motivo_suspension
+    type: Text
+    nullable: true
+    description: Motivo si fue suspendida
+
+invariants:
+  - id: INV-SESION-001
+    name: quorum_para_sesionar
+    rule: |
+      (estado = 'EnCurso' OR estado = 'Finalizada') → quorum_alcanzado = true
+    description: No puede sesionar sin quórum
+    severity: error
+
+  - id: INV-SESION-002
+    name: extraordinaria_requiere_motivo
+    rule: |
+      tipo = 'Extraordinaria' → tabla_id IS NOT NULL
+    description: Sesión extraordinaria debe tener tabla específica
+    severity: warning
+
+lifecycle:
+  states:
+    - name: Programada
+      description: Agendada en calendario
+    - name: EnCurso
+      description: Sesionando
+    - name: Suspendida
+      description: Interrumpida por falta de quórum u otra causa
+    - name: Finalizada
+      description: Sesión concluida con acta
+    - name: Anulada
+      description: Cancelada antes de iniciar
+
+morphisms:
+  tiene: [ENT-GOB-TABLA]
+  genera: [ENT-GOB-ACUERDO]
+  registra: [ENT-GOB-ASISTENCIA]
+  presidida_por: [ENT-GOB-GOBERNADOR, ENT-GOB-CONSEJERO]
+
+audit:
+  fields_tracked:
+    - estado
+    - consejeros_presentes
+  retention_years: 20
