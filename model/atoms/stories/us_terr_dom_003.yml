@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_terr_dom_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TERR-DOM-003
+story_key: us_terr_dom_003
+role_id: USR-MUNI-DOM
+as_a: "Director de Obras (DOM)"
+i_want: Validar si un predio se intersecta con zonas de riesgo definidas en el PROT
+so_that: Prevengo edificaciones en zonas peligrosas
+domain: D-TERR
+priority: P0
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-MUNI-DOM
+  contribuye_a: CAP-TERR-MAP-001

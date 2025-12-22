@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_pes_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-PES-001-01
+story_key: us_pes_001_01
+role_id: USR-NEW-ANALISTA-PES
+as_a: "Analista Pesca"
+i_want: un registro de caletas y organizaciones pesqueras beneficiarias
+so_that: pueda focalizar intervenciones
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-NEW-ANALISTA-PES
+  contribuye_a: CAP-EJEC-PORTAL-001

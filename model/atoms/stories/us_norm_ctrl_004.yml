@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-NORM-CTRL-004
+story_key: us_norm_ctrl_004
+role_id: USR-AUD-PROF
+as_a: "Auditor Interno"
+i_want: Informar hallazgos y recomendaciones al Gobernador y CORE
+so_that: Escalo temas relevantes
+domain: D-NORM
+priority: P1
+capability_bundle_id: CAP-DOCUMENTOS-001
+morphisms:
+  protagonizado_por: USR-AUD-PROF
+  contribuye_a: CAP-DOCUMENTOS-001

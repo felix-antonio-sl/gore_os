@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_amb_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-AMB-001-01
+story_key: us_amb_001_01
+role_id: USR-DIFOI-RIES-ANAL
+as_a: "Analista Ambiental"
+i_want: integración con el SEIA (Servicio Evaluación Ambiental)
+so_that: pueda verificar resoluciones ambientales (RCA)
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-DIFOI-RIES-ANAL
+  contribuye_a: CAP-TERR-MAP-001

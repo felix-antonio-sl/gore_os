@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ong_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ONG-002-01
+story_key: us_ong_002_01
+role_id: USR-CORP-DIR
+as_a: "Director Ejecutivo Corporación"
+i_want: postular en línea a subvenciones del 8%
+so_that: pueda ejecutar mis programas sociales
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-CORP-DIR
+  contribuye_a: CAP-EJEC-PORTAL-001

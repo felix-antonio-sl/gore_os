@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_eval_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EVAL-001-02
+story_key: us_eval_001_02
+role_id: USR-DIDES-FOND-EVAL
+as_a: "Evaluador Social"
+i_want: consultar el historial de la organización postulante
+so_that: pueda evaluar su trayectoria
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIDES-FOND-EVAL
+  contribuye_a: CAP-EJEC-PORTAL-001

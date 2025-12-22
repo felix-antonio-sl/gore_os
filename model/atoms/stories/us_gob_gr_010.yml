@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_gr_010:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-GR-010
+story_key: us_gob_gr_010
+role_id: USR-GOB-JEFE
+as_a: "Gobernador Regional"
+i_want: Representar al GORE ante autoridades nacionales e internacionales
+so_that: Gestiono relaciones institucionales
+domain: D-GOB
+priority: P1
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-GOB-JEFE
+  contribuye_a: CAP-GOB-001

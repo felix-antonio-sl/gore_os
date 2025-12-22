@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_sec_ctd_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEC-CTD-001-01
+story_key: us_sec_ctd_001_01
+role_id: USR-CTD-SEC
+as_a: "Secretario Ejecutivo CTD"
+i_want: un módulo de gestión de sesiones del CTD
+so_that: pueda generar actas y hacer seguimiento
+domain: D-TDE
+priority: P0
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-CTD-SEC
+  contribuye_a: CAP-FIRMA-001

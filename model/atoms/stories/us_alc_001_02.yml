@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_alc_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ALC-001-02
+story_key: us_alc_001_02
+role_id: USR-MUNI-ALC
+as_a: "Alcalde"
+i_want: consultar el calendario de llamados y fondos disponibles
+so_that: pueda planificar las postulaciones de mi comuna
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-MUNI-ALC
+  contribuye_a: CAP-EJEC-PORTAL-001

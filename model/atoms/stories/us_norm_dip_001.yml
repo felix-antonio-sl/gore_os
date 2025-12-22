@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-NORM-DIP-001
+story_key: us_norm_dip_001
+role_id: USR-AUD-PROF
+as_a: "Auditor Interno"
+i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
+so_that: Aseguro cumplimiento de funcionarios
+domain: D-NORM
+priority: P0
+capability_bundle_id: CAP-DOCUMENTOS-001
+morphisms:
+  protagonizado_por: USR-AUD-PROF
+  contribuye_a: CAP-DOCUMENTOS-001

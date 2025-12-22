@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gfom_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GFOM-001-01
+story_key: us_gfom_001_01
+role_id: USR-DIFOI-DEL-GEST
+as_a: "Gestor Fomento"
+i_want: estadísticas de formalización de empresas por comuna
+so_that: pueda dirigir programas de apoyo
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIFOI-DEL-GEST
+  contribuye_a: CAP-EJEC-PORTAL-001

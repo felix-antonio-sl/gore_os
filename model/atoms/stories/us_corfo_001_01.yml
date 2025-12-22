@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_corfo_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-CORFO-001-01
+story_key: us_corfo_001_01
+role_id: USR-EXT-CONAF
+as_a: "Director Regional CONAF"
+i_want: información de proyectos productivos GORE
+so_that: pueda articular instrumentos CORFO
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-EXT-CONAF
+  contribuye_a: CAP-PLAN-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_core_011:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-CORE-011
+story_key: us_gob_core_011
+role_id: USR-CORE-SEC
+as_a: "Secretario Ejecutivo CORE"
+i_want: Habilitar simulación de quórum antes de la votación real
+so_that: Verifico si tengo los votos necesarios para aprobar (Sunny/Rainy Day)
+domain: D-GOB
+priority: P2
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-CORE-SEC
+  contribuye_a: CAP-GOB-001

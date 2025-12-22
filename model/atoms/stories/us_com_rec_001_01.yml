@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_com_rec_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-COM-REC-001-01
+story_key: us_com_rec_001_01
+role_id: USR-COM-RECP
+as_a: "Miembro Comisión de Recepción"
+i_want: un acta de recepción electrónica con checklist de verificación
+so_that: el proceso sea documentado
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-COM-RECP
+  contribuye_a: CAP-EJEC-PORTAL-001

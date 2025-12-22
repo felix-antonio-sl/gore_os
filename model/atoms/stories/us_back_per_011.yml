@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_back_per_011:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BACK-PER-011
+story_key: us_back_per_011
+role_id: USR-DAF-PER-GEST
+as_a: "Gestor de Personas"
+i_want: Generar planilla Previred
+so_that: Cumplo con obligaciones previsionales
+domain: D-BACK
+priority: P0
+capability_bundle_id: CAP-PAGOS-001
+morphisms:
+  protagonizado_por: USR-DAF-PER-GEST
+  contribuye_a: CAP-PAGOS-001

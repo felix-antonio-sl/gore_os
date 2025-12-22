@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ipr_039:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-IPR-039
+story_key: us_fin_ipr_039
+role_id: USR-DIPL-DAE-PRE
+as_a: "Analista Preinversión (DAE)"
+i_want: Verificar cumplimiento de Requisitos de Información (ARI)
+so_that: Valido admisibilidad
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DIPL-DAE-PRE
+  contribuye_a: CAP-FIN-DASH-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gobprov_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOBPROV-001-01
+story_key: us_gobprov_001_01
+role_id: USR-NEW-GOBERNACION-
+as_a: "Gobernación Provincial"
+i_want: reportes de inversión GORE en la provincia
+so_that: pueda informar al territorio
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-NEW-GOBERNACION-
+  contribuye_a: CAP-PLAN-001

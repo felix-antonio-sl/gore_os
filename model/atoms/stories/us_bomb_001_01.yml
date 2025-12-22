@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BOMB-001-01
+story_key: us_bomb_001_01
+role_id: USR-EXT-BOMB
+as_a: "Bomberos de Chile"
+i_want: integración con sistema de alertas del CIES
+so_that: pueda recibir información en tiempo real
+domain: D-TERR
+priority: P0
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-EXT-BOMB
+  contribuye_a: CAP-TERR-MAP-001

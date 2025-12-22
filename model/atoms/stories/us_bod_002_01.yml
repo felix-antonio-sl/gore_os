@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_bod_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BOD-002-01
+story_key: us_bod_002_01
+role_id: USR-DAF-OPS-BOD
+as_a: "Encargado Bodega"
+i_want: un módulo de control de stock con entradas y salidas
+so_that: pueda mantener el inventario actualizado
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-OPS-BOD
+  contribuye_a: CAP-FIN-DASH-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_as_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-AS-001-01
+story_key: us_as_001_01
+role_id: USR-NEW-ASISTENTE-SO
+as_a: "Asistente Social"
+i_want: un módulo de fichas sociales con criterios de evaluación
+so_that: la evaluación sea consistente
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-NEW-ASISTENTE-SO
+  contribuye_a: CAP-EJEC-PORTAL-001

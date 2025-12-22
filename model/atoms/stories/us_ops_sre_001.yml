@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_sre_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OPS-SRE-001
+story_key: us_ops_sre_001
+role_id: BOT-KODA
+as_a: "Agente KODA"
+i_want: Escalar horizontalmente los pods según consumo de CPU/Memoria
+so_that: Mantengo el rendimiento ante picos de demanda
+domain: D-OPS
+priority: P1
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: BOT-KODA
+  contribuye_a: CAP-OPS-001

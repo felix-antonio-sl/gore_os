@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_back_comp_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BACK-COMP-003
+story_key: us_back_comp_003
+role_id: USR-DAF-RH-CAP
+as_a: "Encargado Capacitación"
+i_want: Gestionar metas de desempeño (CDC/PMG)
+so_that: Cumplo con compromisos institucionales
+domain: D-BACK
+priority: P1
+capability_bundle_id: CAP-RRHH-GESTOR-001
+morphisms:
+  protagonizado_por: USR-DAF-RH-CAP
+  contribuye_a: CAP-RRHH-GESTOR-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fisc_sum_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FISC-SUM-001-01
+story_key: us_fisc_sum_001_01
+role_id: USR-JUR-FIS
+as_a: "Fiscal Sumariante"
+i_want: herramientas para tomar declaraciones y registrar evidencia digital
+so_that: el expediente del sumario esté digitalizado y seguro
+domain: D-NORM
+priority: P1
+capability_bundle_id: CAP-DOCUMENTOS-001
+morphisms:
+  protagonizado_por: USR-JUR-FIS
+  contribuye_a: CAP-DOCUMENTOS-001

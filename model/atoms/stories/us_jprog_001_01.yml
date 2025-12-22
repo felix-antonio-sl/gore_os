@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_jprog_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-JPROG-001-01
+story_key: us_jprog_001_01
+role_id: USR-NEW-JEFE-PROGRAM
+as_a: "Jefe Programación"
+i_want: un módulo de programación plurianual de inversiones
+so_that: pueda proyectar recursos
+domain: D-PLAN
+priority: P0
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-NEW-JEFE-PROGRAM
+  contribuye_a: CAP-PLAN-001

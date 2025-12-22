@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_oirs_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OIRS-001-01
+story_key: us_oirs_001_01
+role_id: USR-ADM-OIRS
+as_a: "Encargado OIRS"
+i_want: un sistema de gestión de solicitudes con trazabilidad completa
+so_that: pueda asegurar respuesta en plazo legal
+domain: D-TDE
+priority: P0
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-ADM-OIRS
+  contribuye_a: CAP-FIRMA-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fnx_ope_002:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FNX-OPE-002
+story_key: us_fnx_ope_002
+role_id: USR-CAL-FNX-FIS
+as_a: "Interventor Fiscal"
+i_want: Ejecutar un "Bypass Administrativo" en un flujo BPMN detenido
+so_that: Fuerzo el avance de una etapa trabada por ausencia o error
+domain: D-FENIX
+priority: P0
+capability_bundle_id: CAP-FENIX-001
+morphisms:
+  protagonizado_por: USR-CAL-FNX-FIS
+  contribuye_a: CAP-FENIX-001

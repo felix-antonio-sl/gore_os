@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dir_soc_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DIR-SOC-001-01
+story_key: us_dir_soc_001_01
+role_id: USR-NEW-DIRIGENTE-SO
+as_a: "Dirigente Social"
+i_want: información de fondos concursables y consultas
+so_that: pueda representar a mi comunidad
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-NEW-DIRIGENTE-SO
+  contribuye_a: CAP-EJEC-PORTAL-001

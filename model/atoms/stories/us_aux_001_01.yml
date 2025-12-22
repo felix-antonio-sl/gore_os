@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_aux_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-AUX-001-01
+story_key: us_aux_001_01
+role_id: USR-NEW-AUXILIAR
+as_a: "Auxiliar"
+i_want: recibir solicitudes de apoyo logístico
+so_that: pueda organizar mi trabajo
+domain: D-BACK
+priority: P3
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-NEW-AUXILIAR
+  contribuye_a: CAP-BACK-TICKETS-001

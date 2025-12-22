@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_desc_007:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-DESC-007
+story_key: us_gob_desc_007
+role_id: USR-GOB-COMP
+as_a: "Encargado Competencias"
+i_want: Evaluar suficiencia de recursos financieros traspasados
+so_that: Reclamo brechas financieras
+domain: D-GOB
+priority: P0
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-GOB-COMP
+  contribuye_a: CAP-GOB-001

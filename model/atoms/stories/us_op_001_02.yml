@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_op_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OP-001-02
+story_key: us_op_001_02
+role_id: USR-OP-OF
+as_a: "Oficial de Partes"
+i_want: generar número de ingreso correlativo automático
+so_that: la trazabilidad esté garantizada
+domain: D-TDE
+priority: P0
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-OP-OF
+  contribuye_a: CAP-FIRMA-001

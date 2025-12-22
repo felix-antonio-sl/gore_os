@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_sec_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-SEC-001
+story_key: us_gob_sec_001
+role_id: USR-GAB-JEFE
+as_a: "Jefe de Gabinete"
+i_want: Coordinar agenda con gabinetes sectoriales (Seremías)
+so_that: Alineo agenda política
+domain: D-GOB
+priority: P1
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-GAB-JEFE
+  contribuye_a: CAP-GOB-001

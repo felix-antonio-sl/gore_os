@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_amuch_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-AMUCH-001-01
+story_key: us_amuch_001_01
+role_id: USR-EXT-AMUCH
+as_a: "AMUCH"
+i_want: canales de comunicación directa con el Gobernador
+so_that: se aborden problemáticas municipales transversales
+domain: D-GOB
+priority: P2
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-EXT-AMUCH
+  contribuye_a: CAP-GOB-001

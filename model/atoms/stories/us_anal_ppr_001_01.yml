@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ANAL-PPR-001-01
+story_key: us_anal_ppr_001_01
+role_id: USR-DIDES-PPR
+as_a: "Analista DAE PPR (Técnico)"
+i_want: un módulo de diseño de programas con marco lógico
+so_that: pueda estructurar objetivos, indicadores y metas
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-DIDES-PPR
+  contribuye_a: CAP-PLAN-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_desc_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DESC-001-02
+story_key: us_desc_001_02
+role_id: USR-NEW-ENCARGADO-DE
+as_a: "Encargado Descentralización"
+i_want: documentar las capacidades requeridas para cada competencia
+so_that: pueda planificar el fortalecimiento institucional
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-NEW-ENCARGADO-DE
+  contribuye_a: CAP-PLAN-001

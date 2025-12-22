@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_gest_005:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-GEST-005
+story_key: us_fin_gest_005
+role_id: USR-CAL-ANAL
+as_a: "Analista Gestión Institucional"
+i_want: Visar Cierre Técnico (Checklist recepción obras/programas)
+so_that: Certifico culminación técnica
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-CAL-ANAL
+  contribuye_a: CAP-FIN-DASH-001

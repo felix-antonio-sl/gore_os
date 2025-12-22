@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dtmuni_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DTMUNI-001-01
+story_key: us_dtmuni_001_01
+role_id: USR-MUNI-DIG
+as_a: "Encargado Digital Muni"
+i_want: reutilizar componentes de la plataforma GORE_OS
+so_that: no tengamos que desarrollar software desde cero
+domain: D-DEV
+priority: P2
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-MUNI-DIG
+  contribuye_a: CAP-DEV-001

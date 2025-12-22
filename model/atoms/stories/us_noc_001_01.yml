@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_noc_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-NOC-001-01
+story_key: us_noc_001_01
+role_id: USR-COM-SEG
+as_a: "NOC/SOC"
+i_want: correlación de eventos de seguridad (SIEM)
+so_that: pueda identificar ataques complejos
+domain: D-OPS
+priority: P0
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: USR-COM-SEG
+  contribuye_a: CAP-OPS-001

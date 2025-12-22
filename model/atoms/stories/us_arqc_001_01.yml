@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_arqc_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ARQC-001-01
+story_key: us_arqc_001_01
+role_id: USR-DEV-ARQCAT
+as_a: "Arquitecto Categórico"
+i_want: herramientas de modelado semántico integradas
+so_that: las definiciones de negocio sean coherentes en el código
+domain: D-DEV
+priority: P0
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-DEV-ARQCAT
+  contribuye_a: CAP-DEV-001

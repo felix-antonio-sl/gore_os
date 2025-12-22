@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_devops_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DEVOPS-001-01
+story_key: us_devops_001_01
+role_id: USR-DAF-TIC-DEV
+as_a: "Desarrollador DevOps"
+i_want: monitorización de infraestructura como código (IaC)
+so_that: los entornos sean reproducibles y estables
+domain: D-OPS
+priority: P0
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-DEV
+  contribuye_a: CAP-OPS-001

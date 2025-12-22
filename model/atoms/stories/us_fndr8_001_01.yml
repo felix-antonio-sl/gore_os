@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fndr8_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FNDR8-001-01
+story_key: us_fndr8_001_01
+role_id: USR-DIDES-ANAL8
+as_a: "Analista 8% (Técnico)"
+i_want: un checklist automático de admisibilidad
+so_that: pueda filtrar postulaciones rápidamente
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIDES-ANAL8
+  contribuye_a: CAP-EJEC-PORTAL-001

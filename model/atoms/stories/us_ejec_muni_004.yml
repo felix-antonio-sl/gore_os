@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EJEC-MUNI-004
+story_key: us_ejec_muni_004
+role_id: USR-MUNI-TEC
+as_a: "Unidad Técnica Municipal"
+i_want: Reportar avance periódico (validación supervisor)
+so_that: Cumplo con reporte
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-MUNI-TEC
+  contribuye_a: CAP-EJEC-PORTAL-001

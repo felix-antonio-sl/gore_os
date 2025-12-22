@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TDE-DPO-005
+story_key: us_tde_dpo_005
+role_id: USR-TDE-DPO
+as_a: "DPO"
+i_want: Mantener registro de actividades de tratamiento de datos personales (RAT)
+so_that: Demuestro accountability ante la Agencia de Protección de Datos
+domain: D-TDE
+priority: P0
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-TDE-DPO
+  contribuye_a: CAP-FIRMA-001

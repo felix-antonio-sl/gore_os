@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ec33_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EC33-001-01
+story_key: us_ec33_001_01
+role_id: USR-DIPIR-C33-ENC
+as_a: "Encargado Circular 33"
+i_want: reporte de vida útil y depreciación de activos financiados
+so_that: pueda planificar reposiciones
+domain: D-FIN
+priority: P2
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DIPIR-C33-ENC
+  contribuye_a: CAP-FIN-DASH-001

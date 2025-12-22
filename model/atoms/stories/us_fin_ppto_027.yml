@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ppto_027:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-PPTO-027
+story_key: us_fin_ppto_027
+role_id: USR-DAF-PROF
+as_a: "Profesional DAF"
+i_want: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
+so_that: Habilito ejecución financiera nacional
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-PROF
+  contribuye_a: CAP-FIN-DASH-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ope_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OPE-001-01
+story_key: us_ope_001_01
+role_id: USR-EVOL-OP
+as_a: "Operador de Sistema"
+i_want: planificador de tareas con reporte de éxito/fallo
+so_that: pueda reintentar procesos fallidos
+domain: D-OPS
+priority: P2
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: USR-EVOL-OP
+  contribuye_a: CAP-OPS-001

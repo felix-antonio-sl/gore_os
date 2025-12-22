@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_op_005:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-OP-005
+story_key: us_gob_op_005
+role_id: USR-DAF-TIC-SRE
+as_a: "Ingeniero SRE"
+i_want: Procesar la versión OCR para extraer entidades clave y pre-clasificar
+so_that: Facilito la revisión humana
+domain: D-GOB
+priority: P1
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-SRE
+  contribuye_a: CAP-GOB-001

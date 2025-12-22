@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_tde_reg_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TDE-REG-001
+story_key: us_tde_reg_001
+role_id: USR-DAF-TIC-CTD
+as_a: "Coordinador Transformación Digital (CTD)"
+i_want: Convocar y liderar la Mesa Regional de Transformación Digital
+so_that: Articulo el cumplimiento normativo en todo el territorio
+domain: D-TDE
+priority: P1
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-CTD
+  contribuye_a: CAP-FIRMA-001

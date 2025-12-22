@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ciu_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-CIU-001-02
+story_key: us_ciu_001_02
+role_id: USR-CIU-GEN
+as_a: "Ciudadano"
+i_want: consultar en qué se gasta el presupuesto regional
+so_that: pueda fiscalizar el uso de los recursos públicos
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-CIU-GEN
+  contribuye_a: CAP-FIN-DASH-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_jti_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-JTI-001-01
+story_key: us_jti_001_01
+role_id: USR-DAF-TIC-ADMIN
+as_a: "Administrador TI"
+i_want: un inventario automatizado de activos TI
+so_that: pueda planificar renovaciones tecnológicas
+domain: D-OPS
+priority: P1
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-ADMIN
+  contribuye_a: CAP-OPS-001

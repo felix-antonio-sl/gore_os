@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_f8_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-F8-001-01
+story_key: us_f8_001_01
+role_id: USR-DIDES-FOND-ENC
+as_a: "Encargado Fondos 8%"
+i_want: un módulo de gestión de concursos con etapas configurables
+so_that: pueda administrar el proceso completo
+domain: D-EJEC
+priority: P0
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIDES-FOND-ENC
+  contribuye_a: CAP-EJEC-PORTAL-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_back_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-BACK-001-01
+story_key: us_back_001_01
+role_id: USR-DAF-TIC-DEV
+as_a: "Desarrollador DevOps"
+i_want: pipelines de CI/CD automatizados
+so_that: pueda desplegar nuevas features rápidamente sin romper nada
+domain: D-DEV
+priority: P0
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-DEV
+  contribuye_a: CAP-DEV-001

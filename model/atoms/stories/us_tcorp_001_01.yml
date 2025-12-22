@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TCORP-001-01
+story_key: us_tcorp_001_01
+role_id: USR-CORP-EQ
+as_a: "Trabajador Corporación"
+i_want: permiso de acceso limitado a la intranet
+so_that: pueda coordinarme con las unidades del GORE
+domain: D-BACK
+priority: P2
+capability_bundle_id: CAP-PAGOS-001
+morphisms:
+  protagonizado_por: USR-CORP-EQ
+  contribuye_a: CAP-PAGOS-001

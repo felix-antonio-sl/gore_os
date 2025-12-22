@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_tic_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-TIC-001-02
+story_key: us_tic_001_02
+role_id: USR-DAF-TIC-JEFE
+as_a: "Jefe TIC"
+i_want: un inventario de activos TI con ciclo de vida
+so_that: pueda planificar renovaciones y obsolescencia
+domain: D-BACK
+priority: P1
+capability_bundle_id: CAP-BACK-TICKETS-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-JEFE
+  contribuye_a: CAP-BACK-TICKETS-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_arqs_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ARQS-001-01
+story_key: us_arqs_001_01
+role_id: USR-DEV-ARQ
+as_a: "Arquitecto de Sistemas"
+i_want: un repositorio central de decisiones de arquitectura (ADR)
+so_that: se mantenga la consistencia técnica del proyecto
+domain: D-DEV
+priority: P0
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-DEV-ARQ
+  contribuye_a: CAP-DEV-001

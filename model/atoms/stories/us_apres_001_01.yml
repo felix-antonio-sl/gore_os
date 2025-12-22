@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_apres_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-APRES-001-01
+story_key: us_apres_001_01
+role_id: USR-NEW-ANALISTA-PRE
+as_a: "Analista Presupuesto"
+i_want: un módulo de modificaciones presupuestarias
+so_that: pueda tramitar cambios
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-NEW-ANALISTA-PRE
+  contribuye_a: CAP-FIN-DASH-001

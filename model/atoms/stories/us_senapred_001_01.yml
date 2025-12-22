@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_senapred_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SENAPRED-001-01
+story_key: us_senapred_001_01
+role_id: USR-EXT-SENAPRED
+as_a: "SENAPRED (ex-ONEMI)"
+i_want: integración con CIES para alertas de emergencia
+so_that: la respuesta sea coordinada
+domain: D-TERR
+priority: P0
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-EXT-SENAPRED
+  contribuye_a: CAP-TERR-MAP-001

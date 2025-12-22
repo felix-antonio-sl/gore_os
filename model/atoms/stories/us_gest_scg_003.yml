@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gest_scg_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GEST-SCG-003
+story_key: us_gest_scg_003
+role_id: USR-ADM-JEFE
+as_a: "Administrador Regional"
+i_want: Generar reporte mensual de gestión institucional
+so_that: Informo al Gobernador y CORE sobre el estado de la gestión
+domain: D-GESTION
+priority: P1
+capability_bundle_id: CAP-GESTION-001
+morphisms:
+  protagonizado_por: USR-ADM-JEFE
+  contribuye_a: CAP-GESTION-001

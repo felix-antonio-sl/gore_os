@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_corp_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-CORP-001-01
+story_key: us_corp_001_01
+role_id: USR-CORP-DIR
+as_a: "Director Ejecutivo Corporación"
+i_want: transferencias corrientes para gastos operativos
+so_that: la corporación funcione administrativamente
+domain: D-FIN
+priority: P2
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-CORP-DIR
+  contribuye_a: CAP-FIN-DASH-001

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ppto_009:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-PPTO-009
+story_key: us_fin_ppto_009
+role_id: USR-DAF-PROF
+as_a: "Profesional DAF"
+i_want: Recibir alertas de glosas infringidas (03/04/06)
+so_that: Evito incumplimientos normativos
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-PROF
+  contribuye_a: CAP-FIN-DASH-001

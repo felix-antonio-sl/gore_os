@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_c33_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-C33-001-01
+story_key: us_c33_001_01
+role_id: USR-DIPIR-C33
+as_a: "Analista Operaciones C33"
+i_want: un catálogo de precios referenciales de vehículos y maquinaria
+so_that: pueda evaluar la eficiencia del gasto
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIPIR-C33
+  contribuye_a: CAP-EJEC-PORTAL-001

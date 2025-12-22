@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_plan_urb_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-PLAN-URB-001-01
+story_key: us_plan_urb_001_01
+role_id: USR-DIPL-URB
+as_a: "Planificador Urbano"
+i_want: un visor de instrumentos de planificación territorial vigentes
+so_that: pueda verificar coherencia de proyectos con PROT/PRC
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-DIPL-URB
+  contribuye_a: CAP-TERR-MAP-001

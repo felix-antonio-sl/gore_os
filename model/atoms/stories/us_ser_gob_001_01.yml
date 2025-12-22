@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ser_gob_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SER-GOB-001-01
+story_key: us_ser_gob_001_01
+role_id: USR-EXT-SEREMI-GOB
+as_a: "SEREMI Gobierno Interior"
+i_want: un canal de comunicación con el GORE para emergencias
+so_that: pueda coordinar respuestas rápidamente
+domain: D-TERR
+priority: P0
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-EXT-SEREMI-GOB
+  contribuye_a: CAP-TERR-MAP-001

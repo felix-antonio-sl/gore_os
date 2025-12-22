@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ejec_muni_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EJEC-MUNI-001
+story_key: us_ejec_muni_001
+role_id: USR-MUNI-FORM
+as_a: "Unidad Formuladora Municipal"
+i_want: Consultar guías por mecanismo
+so_that: Preparo correctamente postulaciones
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-MUNI-FORM
+  contribuye_a: CAP-EJEC-PORTAL-001

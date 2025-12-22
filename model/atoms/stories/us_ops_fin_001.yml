@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_fin_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-OPS-FIN-001
+story_key: us_ops_fin_001
+role_id: USR-OPS-FINOPS
+as_a: "FinOps Manager"
+i_want: Recibir alertas cuando el consumo proyectado exceda el presupuesto mensual
+so_that: Evito sorpresas en la facturación de servicios en la nube
+domain: D-OPS
+priority: P1
+capability_bundle_id: CAP-OPS-001
+morphisms:
+  protagonizado_por: USR-OPS-FINOPS
+  contribuye_a: CAP-OPS-001

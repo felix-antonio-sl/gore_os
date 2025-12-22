@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_geo_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GEO-002-01
+story_key: us_geo_002_01
+role_id: USR-TERR-GEONODO
+as_a: "Administrador Geonodo"
+i_want: herramientas para estandarizar formatos (Shapefile, GeoJSON)
+so_that: las capas sean interoperables
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-TERR-GEONODO
+  contribuye_a: CAP-TERR-MAP-001

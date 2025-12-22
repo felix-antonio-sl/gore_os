@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_usr_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-USR-001-01
+story_key: us_usr_001_01
+role_id: USR-CIU-GEN
+as_a: "Ciudadano"
+i_want: ingresar con Clave Única
+so_that: no tenga que recordar otra contraseña
+domain: D-GOB
+priority: P0
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-CIU-GEN
+  contribuye_a: CAP-GOB-001

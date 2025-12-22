@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-GRD-004
+story_key: us_gob_grd_004
+role_id: USR-CIES-COOR
+as_a: "Coordinador CIES"
+i_want: Presidir sesiones del Comité de Mitigación
+so_that: Coordino acciones preventivas
+domain: D-GOB
+priority: P1
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-CIES-COOR
+  contribuye_a: CAP-GOB-001

@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fnx_ana_003:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FNX-ANA-003
+story_key: us_fnx_ana_003
+role_id: USR-AUD-PROF
+as_a: "Auditor Interno"
+i_want: Visualizar zonas de la organización con mayor propensión a fallos (basado
+  en historial FENIX)
+so_that: Focalizo el plan de auditoría anual
+domain: D-FENIX
+priority: P1
+capability_bundle_id: CAP-FENIX-001
+morphisms:
+  protagonizado_por: USR-AUD-PROF
+  contribuye_a: CAP-FENIX-001

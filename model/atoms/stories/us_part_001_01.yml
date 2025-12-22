@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_part_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-PART-001-01
+story_key: us_part_001_01
+role_id: USR-DIDES-PART-ENC
+as_a: "Encargado Participación Ciudadana"
+i_want: una plataforma de votación digital segura
+so_that: la ciudadanía priorice iniciativas de inversión
+domain: D-GOB
+priority: P1
+capability_bundle_id: CAP-GOB-001
+morphisms:
+  protagonizado_por: USR-DIDES-PART-ENC
+  contribuye_a: CAP-GOB-001

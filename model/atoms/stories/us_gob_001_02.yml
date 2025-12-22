@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_gob_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-GOB-001-02
+story_key: us_gob_001_02
+role_id: USR-GOB-JEFE
+as_a: "Gobernador Regional"
+i_want: recibir alertas automáticas de desviaciones críticas en proyectos estratégicos
+so_that: pueda intervenir oportunamente antes de que escalen
+domain: D-EVOL
+priority: P1
+capability_bundle_id: CAP-EVOL-001
+morphisms:
+  protagonizado_por: USR-GOB-JEFE
+  contribuye_a: CAP-EVOL-001

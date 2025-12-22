@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_aucr_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-AUCR-001-01
+story_key: us_aucr_001_01
+role_id: USR-DAF-UCR-PROF
+as_a: "Profesional UCR"
+i_want: visores de documentos digitalizados con OCR
+so_that: pueda buscar montos y fechas rápidamente
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DAF-UCR-PROF
+  contribuye_a: CAP-FIN-DASH-001

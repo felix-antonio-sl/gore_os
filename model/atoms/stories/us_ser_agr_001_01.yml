@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ser_agr_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SER-AGR-001-01
+story_key: us_ser_agr_001_01
+role_id: USR-EXT-SEREMI-AGRI
+as_a: "SEREMI Agricultura"
+i_want: reportes de inversión GORE en sector agrícola
+so_that: pueda complementar con programas sectoriales
+domain: D-PLAN
+priority: P1
+capability_bundle_id: CAP-PLAN-001
+morphisms:
+  protagonizado_por: USR-EXT-SEREMI-AGRI
+  contribuye_a: CAP-PLAN-001

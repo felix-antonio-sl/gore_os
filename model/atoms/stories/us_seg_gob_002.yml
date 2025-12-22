@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-SEG-GOB-002
+story_key: us_seg_gob_002
+role_id: USR-CORE-CONS
+as_a: "Consejero Regional (Pleno)"
+i_want: Participar en sesiones del Consejo Regional de Seguridad Pública
+so_that: Participo en planificación regional de seguridad como COSOC
+domain: D-SEG
+priority: P2
+capability_bundle_id: CAP-SEG-001
+morphisms:
+  protagonizado_por: USR-CORE-CONS
+  contribuye_a: CAP-SEG-001

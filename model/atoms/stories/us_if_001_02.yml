@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_if_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-IF-001-02
+story_key: us_if_001_02
+role_id: USR-DIPIR-INSP-FISCAL
+as_a: "Inspector Fiscal (Obra/Estudio)"
+i_want: generar informes de fiscalización con plantillas estándar
+so_that: la documentación sea consistente
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-DIPIR-INSP-FISCAL
+  contribuye_a: CAP-EJEC-PORTAL-001

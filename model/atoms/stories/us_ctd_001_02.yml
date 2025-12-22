@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ctd_001_02:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-CTD-001-02
+story_key: us_ctd_001_02
+role_id: USR-DAF-TIC-CTD
+as_a: "Coordinador Transformación Digital (CTD)"
+i_want: un catálogo de expedientes electrónicos con estado de digitalización
+so_that: pueda identificar procesos pendientes de migrar
+domain: D-TDE
+priority: P0
+capability_bundle_id: CAP-FIRMA-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-CTD
+  contribuye_a: CAP-FIRMA-001

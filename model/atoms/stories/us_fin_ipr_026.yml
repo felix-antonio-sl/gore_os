@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ipr_026:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-IPR-026
+story_key: us_fin_ipr_026
+role_id: USR-CAL-ANAL
+as_a: "Analista Gestión Institucional"
+i_want: Gestionar devolución de garantías a ejecutores
+so_that: Libero garantías correctamente
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-CAL-ANAL
+  contribuye_a: CAP-FIN-DASH-001

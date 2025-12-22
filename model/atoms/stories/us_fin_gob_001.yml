@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-GOB-001
+story_key: us_fin_gob_001
+role_id: USR-GOB-JEFE
+as_a: "Gobernador Regional"
+i_want: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
+so_that: Filtro estratégico antes de evaluación técnica
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-GOB-JEFE
+  contribuye_a: CAP-FIN-DASH-001

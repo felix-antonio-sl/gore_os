@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_com_estr_001:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-COM-ESTR-001
+story_key: us_com_estr_001
+role_id: USR-COM-ENC
+as_a: "Encargado Comunicaciones"
+i_want: Gestionar estrategia comunicacional (web, RRSS)
+so_that: Posiciono al GORE en medios
+domain: D-COM
+priority: P1
+capability_bundle_id: CAP-COM-001
+morphisms:
+  protagonizado_por: USR-COM-ENC
+  contribuye_a: CAP-COM-001

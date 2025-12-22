@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ipr_022:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-IPR-022
+story_key: us_fin_ipr_022
+role_id: USR-DIPL-DAE-PRE
+as_a: "Analista Preinversión (DAE)"
+i_want: Evaluar Diseño con Marco Lógico detallado
+so_that: Verifico calidad del diseño programático
+domain: D-FIN
+priority: P0
+capability_bundle_id: CAP-FIN-DASH-001
+morphisms:
+  protagonizado_por: USR-DIPL-DAE-PRE
+  contribuye_a: CAP-FIN-DASH-001

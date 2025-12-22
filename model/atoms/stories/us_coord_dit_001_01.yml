@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_coord_dit_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-COORD-DIT-001-01
+story_key: us_coord_dit_001_01
+role_id: USR-DIT-COOR
+as_a: "Coordinador Sectorial"
+i_want: una vista consolidada de proyectos por sector (vial, salud, educación)
+so_that: pueda gestionar prioridades técnicas
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-SEG-001
+morphisms:
+  protagonizado_por: USR-DIT-COOR
+  contribuye_a: CAP-EJEC-SEG-001

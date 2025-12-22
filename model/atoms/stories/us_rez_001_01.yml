@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_rez_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-REZ-001-01
+story_key: us_rez_001_01
+role_id: USR-DIFOI-REZ-PROF
+as_a: "Profesional Zona Rezago"
+i_want: flexibilidad en los criterios de evaluación social (RS)
+so_that: se aprueben proyectos en zonas aisladas
+domain: D-TERR
+priority: P1
+capability_bundle_id: CAP-TERR-MAP-001
+morphisms:
+  protagonizado_por: USR-DIFOI-REZ-PROF
+  contribuye_a: CAP-TERR-MAP-001

@@ -1,0 +1,114 @@
+_meta:
+  urn: urn:goreos:index:capabilities:1.0.0
+  type: CapabilitiesIndex
+  generated_at: "2025-12-22"
+total: 27
+items:
+- id: CAP-BACK-TICKETS-001
+  urn: urn:goreos:atom:capability:cap_back_tickets_001:1.0.0
+  name: "Sistema de Tickets de Soporte"
+  domain: D-BACK
+- id: CAP-COM-001
+  urn: urn:goreos:atom:capability:cap_com_001:1.0.0
+  name: "Gestión de Comunicaciones Institucionales"
+  domain: D-COM
+- id: CAP-COMPRAS-001
+  urn: urn:goreos:atom:capability:cap_compras_001:1.0.0
+  name: "Compras y Licitaciones"
+  domain: D-BACK
+- id: CAP-DEV-001
+  urn: urn:goreos:atom:capability:cap_dev_001:1.0.0
+  name: "Desarrollo de Software y DevOps"
+  domain: D-DEV
+- id: CAP-DEV-BLUEPRINT
+  urn: urn:goreos:atom:capability:cap_dev_blueprint:1.0.0
+  name: "Blueprint Categórico y Gobernanza KODA"
+  domain: D-DEV
+- id: CAP-DOCUMENTOS-001
+  urn: urn:goreos:atom:capability:cap_documentos_001:1.0.0
+  name: "Gestión Documental"
+  domain: D-NORM
+- id: CAP-EJEC-PORTAL-001
+  urn: urn:goreos:atom:capability:cap_ejec_portal_001:1.0.0
+  name: "Portal de Postulación FNDR"
+  domain: D-EJEC
+- id: CAP-EJEC-SEG-001
+  urn: urn:goreos:atom:capability:cap_ejec_seg_001:1.0.0
+  name: "Seguimiento de Cartera de Proyectos"
+  domain: D-EJEC
+- id: CAP-EVOL-001
+  urn: urn:goreos:atom:capability:cap_evol_001:1.0.0
+  name: "Evolución y Madurez del Sistema"
+  domain: D-EVOL
+- id: CAP-FENIX-001
+  urn: urn:goreos:atom:capability:cap_fenix_001:1.0.0
+  name: "Sistema de Intervención FÉNIX"
+  domain: D-FENIX
+- id: CAP-FIN-DASH-001
+  urn: urn:goreos:atom:capability:cap_fin_dash_001:1.0.0
+  name: "Dashboard de Ejecución Presupuestaria"
+  domain: D-FIN
+- id: CAP-FIN-REND-001
+  urn: urn:goreos:atom:capability:cap_fin_rend_001:1.0.0
+  name: "Gestión de Rendiciones de Cuentas"
+  domain: D-FIN
+- id: CAP-FIRMA-001
+  urn: urn:goreos:atom:capability:cap_firma_001:1.0.0
+  name: "Bandeja de Firma Electrónica"
+  domain: D-TDE
+- id: CAP-GESTION-001
+  urn: urn:goreos:atom:capability:cap_gestion_001:1.0.0
+  name: "Sistema de Control de Gestión"
+  domain: D-GESTION
+- id: CAP-GOB-001
+  urn: urn:goreos:atom:capability:cap_gob_001:1.0.0
+  name: "Gobernanza Regional (CORE/Gobernador)"
+  domain: D-GOB
+- id: CAP-NORM-CONTROL-001
+  urn: urn:goreos:atom:capability:cap_norm_control_001:1.0.0
+  name: "Control de Legalidad"
+  domain: D-NORM
+- id: CAP-OPS-001
+  urn: urn:goreos:atom:capability:cap_ops_001:1.0.0
+  name: "Operaciones e Infraestructura TI"
+  domain: D-OPS
+- id: CAP-OPS-LEGACY
+  urn: urn:goreos:atom:capability:cap_ops_legacy:1.0.0
+  name: "Migración de Data Legacy"
+  domain: D-OPS
+- id: CAP-PAGOS-001
+  urn: urn:goreos:atom:capability:cap_pagos_001:1.0.0
+  name: "Pagos y Tesorería"
+  domain: D-BACK
+- id: CAP-PLAN-001
+  urn: urn:goreos:atom:capability:cap_plan_001:1.0.0
+  name: "Planificación Estratégica Regional"
+  domain: D-PLAN
+- id: CAP-RRHH-FUNC-001
+  urn: urn:goreos:atom:capability:cap_rrhh_func_001:1.0.0
+  name: "Autoservicio Funcionario"
+  domain: D-BACK
+- id: CAP-RRHH-GESTOR-001
+  urn: urn:goreos:atom:capability:cap_rrhh_gestor_001:1.0.0
+  name: "Gestión de Personas"
+  domain: D-BACK
+- id: CAP-SEG-001
+  urn: urn:goreos:atom:capability:cap_seg_001:1.0.0
+  name: "Seguridad Pública Regional (CIES/SITIA)"
+  domain: D-SEG
+- id: CAP-TDE-FIRMA-001
+  urn: urn:goreos:atom:capability:cap_tde_firma_001:1.0.0
+  name: "Firma Electrónica Avanzada"
+  domain: D-TDE
+- id: CAP-TDE-TRANSP-001
+  urn: urn:goreos:atom:capability:cap_tde_transp_001:1.0.0
+  name: "Transparencia Activa/Pasiva"
+  domain: D-TDE
+- id: CAP-TERR-MAP-001
+  urn: urn:goreos:atom:capability:cap_terr_map_001:1.0.0
+  name: "Mapa de Proyectos Regionales"
+  domain: D-TERR
+- id: CAP-TRANSPARENCIA-001
+  urn: urn:goreos:atom:capability:cap_transparencia_001:1.0.0
+  name: "Transparencia y Acceso Info"
+  domain: D-TDE

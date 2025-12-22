@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_devmuni_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-DEVMUNI-001-01
+story_key: us_devmuni_001_01
+role_id: USR-MUNI-TEC
+as_a: "Unidad Técnica Municipal"
+i_want: documentación clara de APIs de interoperabilidad
+so_that: pueda conectar el ERP municipal
+domain: D-DEV
+priority: P2
+capability_bundle_id: CAP-DEV-001
+morphisms:
+  protagonizado_por: USR-MUNI-TEC
+  contribuye_a: CAP-DEV-001

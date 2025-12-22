@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_itom_001_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-ITOM-001-01
+story_key: us_itom_001_01
+role_id: USR-MUNI-ITO
+as_a: "Inspector Obras (Municipal)"
+i_want: acceso restringido al sistema de inversión regional
+so_that: pueda subir estados de pago para visación
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-PORTAL-001
+morphisms:
+  protagonizado_por: USR-MUNI-ITO
+  contribuye_a: CAP-EJEC-PORTAL-001

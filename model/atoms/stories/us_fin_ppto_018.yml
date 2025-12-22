@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_fin_ppto_018:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-FIN-PPTO-018
+story_key: us_fin_ppto_018
+role_id: USR-DAF-PROF
+as_a: "Profesional DAF"
+i_want: Realizar conciliación bancaria mensual
+so_that: Verifico consistencia de cuentas
+domain: D-FIN
+priority: P1
+capability_bundle_id: CAP-FIN-REND-001
+morphisms:
+  protagonizado_por: USR-DAF-PROF
+  contribuye_a: CAP-FIN-REND-001

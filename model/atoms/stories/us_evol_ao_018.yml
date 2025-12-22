@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_evol_ao_018:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-EVOL-AO-018
+story_key: us_evol_ao_018
+role_id: USR-DAF-TIC-CTD
+as_a: "Coordinador Transformación Digital (CTD)"
+i_want: Inventariar los sistemas y tecnologías usados por municipios
+so_that: Identifico compatibilidades para la federación
+domain: D-EVOL
+priority: P1
+capability_bundle_id: CAP-EVOL-001
+morphisms:
+  protagonizado_por: USR-DAF-TIC-CTD
+  contribuye_a: CAP-EVOL-001

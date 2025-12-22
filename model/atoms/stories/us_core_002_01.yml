@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:story:us_core_002_01:1.0.0
+  type: Story
+  source: historias_usuarios/historias_usuarios.yml
+id: US-CORE-002-01
+story_key: us_core_002_01
+role_id: USR-CORE-CONS
+as_a: "Consejero Regional (Pleno)"
+i_want: consultar el estado de ejecución de proyectos que he votado favorablemente
+so_that: pueda verificar que se están ejecutando correctamente
+domain: D-EJEC
+priority: P1
+capability_bundle_id: CAP-EJEC-SEG-001
+morphisms:
+  protagonizado_por: USR-CORE-CONS
+  contribuye_a: CAP-EJEC-SEG-001
