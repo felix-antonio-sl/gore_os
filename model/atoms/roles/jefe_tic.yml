@@ -6,7 +6,7 @@ id: USR-DAF-TIC-JEFE
 role_key: jefe_tic
 title: Jefe TIC
 description: Gestión de infraestructura tecnológica, redes y seguridad.
-type: Human
+type: INTERNAL
 unit: DAF
 unit_type: Ejecutivo & Operaciones
 archetype: null
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:jefe_tic:1.0.0
+domain: D-GESTION

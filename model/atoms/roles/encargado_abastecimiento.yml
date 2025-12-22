@@ -6,7 +6,7 @@ id: USR-DAF-ABS-ENC
 role_key: encargado_abastecimiento
 title: Encargado Abastecimiento
 description: Gestión del Plan Anual de Compras y licitaciones.
-type: Human
+type: INTERNAL
 unit: DAF
 unit_type: Ejecutivo & Operaciones
 archetype: null
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:encargado_abastecimiento:1.0.0
+domain: D-GESTION

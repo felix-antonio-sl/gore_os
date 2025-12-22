@@ -1,0 +1,16 @@
+{
+  "name": "@gore-os/core",
+  "version": "0.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "echo 'lint core'",
+    "build": "echo 'no build needed for pure ts lib in bun monorepo'"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  }
+}

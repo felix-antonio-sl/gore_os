@@ -6,7 +6,7 @@ id: USR-DIFOI-RIES-ANAL
 role_key: analista_ambiental
 title: Analista Ambiental
 description: ''
-type: Human
+type: INTERNAL
 unit: DIFOI
 unit_type: Ejecutivo & Operaciones
 archetype: analista_base
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:analista_ambiental:1.0.0
+domain: D-GESTION

@@ -7,7 +7,7 @@ role_key: jefe_control_jerarquico
 title: Jefatura Control Jerárquico
 description: Responsable de ejercer control, supervisar y certificar el Informe de
   Cumplimiento de Funciones del prestador.
-type: Human
+type: INTERNAL
 unit: DAF
 unit_type: Ejecutivo & Operaciones
 archetype: null
@@ -15,3 +15,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:jefe_control_jerarquico:1.0.0
+domain: D-DEV

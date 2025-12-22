@@ -7,7 +7,7 @@ role_key: referente_transparencia
 title: Referente Transparencia (por Ítem)
 description: Funcionario designado para generar información de ítems 1-16 del Artículo
   7° Ley 20.285.
-type: Human
+type: INTERNAL
 unit: Cumplimiento Normativo (D-NORM)
 unit_type: Capacidades Transversales
 archetype: null
@@ -15,3 +15,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:referente_transparencia:1.0.0
+domain: D-GESTION

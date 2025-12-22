@@ -17,7 +17,7 @@
     },
     "id": {
       "type": "string",
-      "pattern": "^USR-[A-Z]+-[A-Z0-9]+$",
+      "pattern": "^(USR|ROL)-[A-Z0-9]+(-[A-Z0-9]+)*$",
       "description": "Identificador semántico del rol"
     },
     "urn": {
@@ -29,6 +29,10 @@
       "minLength": 3,
       "description": "Nombre legible del rol"
     },
+    "description": {
+      "type": "string",
+      "description": "Descripción del rol"
+    },
     "type": {
       "type": "string",
       "enum": ["INTERNAL", "EXTERNAL", "SYSTEM", "HYBRID"],
@@ -39,15 +43,9 @@
       "pattern": "^D-[A-Z]+$",
       "description": "Dominio principal donde opera"
     },
-    "logic_scope": {
-      "type": "string",
-      "description": "Ámbito lógico de responsabilidad"
-    },
-    "governed_by": {
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "URNs de leyes/normativas que rigen este rol"
-    }
+    "unit": { "type": "string" },
+    "morphisms_req": { "type": "object" },
+    "morphisms_ops": { "type": "object" }
   },
-  "additionalProperties": false
+  "additionalProperties": true
 }

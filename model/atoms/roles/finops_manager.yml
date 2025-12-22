@@ -6,7 +6,7 @@ id: USR-OPS-FINOPS
 role_key: finops_manager
 title: FinOps Manager
 description: Responsable de la optimización y control de costos de servicios cloud.
-type: Human
+type: INTERNAL
 unit: D-OPS
 unit_type: Fuerza de Trabajo Digital
 archetype: null
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:finops_manager:1.0.0
+domain: D-GESTION

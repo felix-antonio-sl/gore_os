@@ -1,1646 +1,1650 @@
 _meta:
   urn: urn:goreos:index:roles:1.0.0
   type: RolesIndex
-  generated_at: "2025-12-22"
+  generated_at: '2025-12-22'
 total: 410
 items:
 - id: USR-JUR-ASES-DIV
   urn: urn:goreos:atom:role:abogado_asesor_division:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ABOGADO-CONV
   urn: urn:goreos:atom:role:abogado_convenios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-JUR
   urn: urn:goreos:atom:role:abogado_daf:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-JUR-DISC
   urn: urn:goreos:atom:role:abogado_disciplinarios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ABOGADO-DNOR
   urn: urn:goreos:atom:role:abogado_dnorm:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ABOGADO-GENE
   urn: urn:goreos:atom:role:abogado_general:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-JUR-ABOG
   urn: urn:goreos:atom:role:abogado_informante:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-JUR-JUD
   urn: urn:goreos:atom:role:abogado_judiciales:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ABOGADO-LICI
   urn: urn:goreos:atom:role:abogado_licitaciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-JUR-REV
   urn: urn:goreos:atom:role:abogado_revisor:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TERR-GEONODO
   urn: urn:goreos:atom:role:admin_geonodo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-PLAT
   urn: urn:goreos:atom:role:admin_plataforma:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-ADMIN-SYS
   urn: urn:goreos:atom:role:admin_sistema:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-ADMIN
   urn: urn:goreos:atom:role:admin_ti:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-ADM-JEFE
   urn: urn:goreos:atom:role:administrador_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-APD
   urn: urn:goreos:atom:role:agencia_datos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-KODA
   urn: urn:goreos:atom:role:agente_koda:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-ALC
   urn: urn:goreos:atom:role:alcalde:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-AMUCH
   urn: urn:goreos:atom:role:amuch:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-ANAL8
   urn: urn:goreos:atom:role:analista_8_tecnico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-AGU
   urn: urn:goreos:atom:role:analista_agua_potable:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-RIES-ANAL
   urn: urn:goreos:atom:role:analista_ambiental:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ARCH-BASE-ANALISTA_BASE
   urn: urn:goreos:atom:role:analista_base:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-BIE
   urn: urn:goreos:atom:role:analista_bienestar:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-C33
   urn: urn:goreos:atom:role:analista_c33:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CAP
   urn: urn:goreos:atom:role:analista_capacitacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CAR
   urn: urn:goreos:atom:role:analista_cartera:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CIC
   urn: urn:goreos:atom:role:analista_ciclo_vida:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-COM
   urn: urn:goreos:atom:role:analista_compras:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CON
   urn: urn:goreos:atom:role:analista_conectividad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CON
   urn: urn:goreos:atom:role:analista_contable:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CASIS
   urn: urn:goreos:atom:role:analista_control_asistencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CON
   urn: urn:goreos:atom:role:analista_convenios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-CUL
   urn: urn:goreos:atom:role:analista_cultura:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-DEP
   urn: urn:goreos:atom:role:analista_deporte:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-GEN
   urn: urn:goreos:atom:role:analista_diplade:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-ANAL
   urn: urn:goreos:atom:role:analista_dit:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SUBDERE
   urn: urn:goreos:atom:role:analista_division_gobiernos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-EDU
   urn: urn:goreos:atom:role:analista_educacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EJEC-ANAL
   urn: urn:goreos:atom:role:analista_ejecutor:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-ENE
   urn: urn:goreos:atom:role:analista_energia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-TERR
   urn: urn:goreos:atom:role:analista_equidad_territorial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-EVA
   urn: urn:goreos:atom:role:analista_evaluacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-ANAL
   urn: urn:goreos:atom:role:analista_fomento:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-FUN
   urn: urn:goreos:atom:role:analista_funcional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-HON-ANAL
   urn: urn:goreos:atom:role:analista_gdp_honorarios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TERR-ANAL
   urn: urn:goreos:atom:role:analista_geoespacial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-ANAL
   urn: urn:goreos:atom:role:analista_gestion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-HON
   urn: urn:goreos:atom:role:analista_honorarios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-INV
   urn: urn:goreos:atom:role:analista_inventario:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-ANAL-INV
   urn: urn:goreos:atom:role:analista_inversion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-MDS
   urn: urn:goreos:atom:role:analista_inversiones_mds:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-MED
   urn: urn:goreos:atom:role:analista_medio_ambiente:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-MOD
   urn: urn:goreos:atom:role:analista_modificaciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-MUN
   urn: urn:goreos:atom:role:analista_municipios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-PLAN-OBS
   urn: urn:goreos:atom:role:analista_observatorio:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-PAT
   urn: urn:goreos:atom:role:analista_patrocinante_dides:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-PAT
   urn: urn:goreos:atom:role:analista_patrocinante_difoi:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-PAT
   urn: urn:goreos:atom:role:analista_patrocinante_dit:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-PES
   urn: urn:goreos:atom:role:analista_pesca:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-PLAN-ANAL
   urn: urn:goreos:atom:role:analista_planif_territorial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-PLAN
   urn: urn:goreos:atom:role:analista_planificacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-PPR
   urn: urn:goreos:atom:role:analista_ppr:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-PPR
   urn: urn:goreos:atom:role:analista_ppr_tecnico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-DAE-PRE
   urn: urn:goreos:atom:role:analista_preinversion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-PRES-ANAL
   urn: urn:goreos:atom:role:analista_presupuestario:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-PRE
   urn: urn:goreos:atom:role:analista_presupuesto:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-SEG-PREV-ANAL
   urn: urn:goreos:atom:role:analista_prevencion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-SEG-ANAL
   urn: urn:goreos:atom:role:analista_proyectos_seg:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-REM
   urn: urn:goreos:atom:role:analista_remuneraciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-SAL
   urn: urn:goreos:atom:role:analista_salud:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-DIPRES
   urn: urn:goreos:atom:role:analista_sectorial_dipres:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-INV-SEG
   urn: urn:goreos:atom:role:analista_seguimiento:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-SER
   urn: urn:goreos:atom:role:analista_servicios_generales:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-SOC
   urn: urn:goreos:atom:role:analista_social:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-SUBV-ANAL
   urn: urn:goreos:atom:role:analista_subvenciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-TER
   urn: urn:goreos:atom:role:analista_territorial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-TES
   urn: urn:goreos:atom:role:analista_tesoreria:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CGR
   urn: urn:goreos:atom:role:analista_toma_razon:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-FIN-TRANS
   urn: urn:goreos:atom:role:analista_transferencias:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-TRANS-ANAL
   urn: urn:goreos:atom:role:analista_transporte:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-TUR
   urn: urn:goreos:atom:role:analista_turismo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-VIA
   urn: urn:goreos:atom:role:analista_viaticos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANALISTA-VIV
   urn: urn:goreos:atom:role:analista_vivienda:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-ANCI
   urn: urn:goreos:atom:role:anci:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ANCORE
   urn: urn:goreos:atom:role:ancore:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NORM-TRANSP-TEC
   urn: urn:goreos:atom:role:apoyo_tecnico_transparencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NORM-ARCH
   urn: urn:goreos:atom:role:archivero_digital:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-ARQCAT
   urn: urn:goreos:atom:role:arquitecto_categorico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-ARCH-DATOS
   urn: urn:goreos:atom:role:arquitecto_datos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-INFRA-ARQ
   urn: urn:goreos:atom:role:arquitecto_revisor:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-ARQ
   urn: urn:goreos:atom:role:arquitecto_revisor_proy:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-ARQ
   urn: urn:goreos:atom:role:arquitecto_sistemas:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GAB-ASESOR
   urn: urn:goreos:atom:role:asesor_gabinete:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-SEG-ASES
   urn: urn:goreos:atom:role:asesor_seguridad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-DIGITRANS
   urn: urn:goreos:atom:role:asesor_tde:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ASISTENTE-SO
   urn: urn:goreos:atom:role:asistente_social:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-AUDIT
   urn: urn:goreos:atom:role:auditor_bot:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CTRL-AUD
   urn: urn:goreos:atom:role:auditor_control:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-AUDITOR-EXTE
   urn: urn:goreos:atom:role:auditor_externo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CAIGG
   urn: urn:goreos:atom:role:auditor_general_gobierno:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-AUD-PROF
   urn: urn:goreos:atom:role:auditor_interno:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-AUD-MIN
   urn: urn:goreos:atom:role:auditor_ministerial_interior:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ARCH-MUN-AUTORIDAD_MUNICIPAL
   urn: urn:goreos:atom:role:autoridad_municipal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-AUXILIAR
   urn: urn:goreos:atom:role:auxiliar:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-BC
   urn: urn:goreos:atom:role:banco_central:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-BENEFICIARIO
   urn: urn:goreos:atom:role:beneficiario_individual:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-SERV-BOD
   urn: urn:goreos:atom:role:bodeguero:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-BOMB
   urn: urn:goreos:atom:role:bomberos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CAMARA
   urn: urn:goreos:atom:role:camara_comercio:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CARAB
   urn: urn:goreos:atom:role:carabineros:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CDE
   urn: urn:goreos:atom:role:cde:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SINDIC
   urn: urn:goreos:atom:role:central_sindical:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CENIC
   urn: urn:goreos:atom:role:centro_investigacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-CERT
   urn: urn:goreos:atom:role:cert_manager:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-CISO
   urn: urn:goreos:atom:role:ciso:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CIU-GEN
   urn: urn:goreos:atom:role:ciudadano:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-CLASIF
   urn: urn:goreos:atom:role:clasificador:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-FIN-COGIR
   urn: urn:goreos:atom:role:cogirador_autorizado:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CCASOC
   urn: urn:goreos:atom:role:colegio_profesional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-CDR
   urn: urn:goreos:atom:role:comite_directivo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-FRPD
   urn: urn:goreos:atom:role:comite_frpd:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-GRD
   urn: urn:goreos:atom:role:comite_grd:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-ABS-COMP
   urn: urn:goreos:atom:role:comprador_publico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-COM
   urn: urn:goreos:atom:role:comunicaciones_dipir:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-COMUNICON
   urn: urn:goreos:atom:role:comunicon:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-CONDUCTOR
   urn: urn:goreos:atom:role:conductor:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CORE-CONS
   urn: urn:goreos:atom:role:consejero_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-CONSULTOR-EX
   urn: urn:goreos:atom:role:consultor_externo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-FIN-CONT
   urn: urn:goreos:atom:role:contador_gubernamental:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CGR-CONT
   urn: urn:goreos:atom:role:contraparte_contable_cgr:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-CONTRAPARTE-
   urn: urn:goreos:atom:role:contraparte_interna:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CONT
   urn: urn:goreos:atom:role:contratista:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-CTD
   urn: urn:goreos:atom:role:coord_transformacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CIES-COOR
   urn: urn:goreos:atom:role:coordinador_cies:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-ECIF-COOR
   urn: urn:goreos:atom:role:coordinador_ecif:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TERR-IDE
   urn: urn:goreos:atom:role:coordinador_ide:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-PMG-COORD
   urn: urn:goreos:atom:role:coordinador_pmg:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-PROG-COOR
   urn: urn:goreos:atom:role:coordinador_programas:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-PROPIR
   urn: urn:goreos:atom:role:coordinador_propir:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-COOR
   urn: urn:goreos:atom:role:coordinador_sectorial_dit:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-UCR-COOR
   urn: urn:goreos:atom:role:coordinador_ucr:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CORFO
   urn: urn:goreos:atom:role:corfo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-CORPORACION-
   urn: urn:goreos:atom:role:corporacion_municipal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CORTE-NUBLE
   urn: urn:goreos:atom:role:corte_apelaciones_nuble:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-COSOC
   urn: urn:goreos:atom:role:cosoc:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CPC
   urn: urn:goreos:atom:role:cpc_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CPLT
   urn: urn:goreos:atom:role:cplt:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-CTD
   urn: urn:goreos:atom:role:ctd_daf:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-CUSTODIO
   urn: urn:goreos:atom:role:custodio_datos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CIES-EVID
   urn: urn:goreos:atom:role:custodio_evidencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-OPS-DBA
   urn: urn:goreos:atom:role:dba:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-DPR
   urn: urn:goreos:atom:role:delegado_presidencial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-DPP
   urn: urn:goreos:atom:role:delegado_provincial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-DESARROLLADO
   urn: urn:goreos:atom:role:desarrollador:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-BACK
   urn: urn:goreos:atom:role:desarrollador_backend:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-DEV
   urn: urn:goreos:atom:role:desarrollador_devops:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-FRONT
   urn: urn:goreos:atom:role:desarrollador_frontend:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-DEV
   urn: urn:goreos:atom:role:desarrollador_municipal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-SYS
   urn: urn:goreos:atom:role:desarrollador_sistema:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-DIP-NUBLE
   urn: urn:goreos:atom:role:diputado_nuble:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CNR
   urn: urn:goreos:atom:role:director_cnr:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-CONAF
   urn: urn:goreos:atom:role:director_conaf:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CORP-DIR
   urn: urn:goreos:atom:role:director_corporacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-DGA
   urn: urn:goreos:atom:role:director_dga:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-DOH
   urn: urn:goreos:atom:role:director_doh:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-IND
   urn: urn:goreos:atom:role:director_ind:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-JUNJI
   urn: urn:goreos:atom:role:director_junji:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-DOM
   urn: urn:goreos:atom:role:director_obras:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SAG
   urn: urn:goreos:atom:role:director_sag:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SENCE
   urn: urn:goreos:atom:role:director_sence:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SERNAM
   urn: urn:goreos:atom:role:director_sernameg:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SERNATUR
   urn: urn:goreos:atom:role:director_sernatur:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ARCH-EXT-DIRECTOR_SERVICIO_REGIONAL
   urn: urn:goreos:atom:role:director_servicio_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SALUD-SRV
   urn: urn:goreos:atom:role:director_servicio_salud:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SERVIU
   urn: urn:goreos:atom:role:director_serviu:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SII
   urn: urn:goreos:atom:role:director_sii:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-VIALIDAD
   urn: urn:goreos:atom:role:director_vialidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-DIRIGENTE-SO
   urn: urn:goreos:atom:role:dirigente_social:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-DPO
   urn: urn:goreos:atom:role:dpo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-DUENO-DATOS
   urn: urn:goreos:atom:role:dueno_datos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ECIF
   urn: urn:goreos:atom:role:ecif:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-URAI-EJEC
   urn: urn:goreos:atom:role:ejecutivo_urai:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-EJECUTOR
   urn: urn:goreos:atom:role:ejecutor:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-EJEC-PPR
   urn: urn:goreos:atom:role:ejecutor_ppr:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-EMP
   urn: urn:goreos:atom:role:empresa_gremio:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-ABS-ENC
   urn: urn:goreos:atom:role:encargado_abastecimiento:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-OPS-AF
   urn: urn:goreos:atom:role:encargado_activo_fijo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NORM-ARCHIVO
   urn: urn:goreos:atom:role:encargado_archivo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-OPS-BOD
   urn: urn:goreos:atom:role:encargado_bodega:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-C33-ENC
   urn: urn:goreos:atom:role:encargado_c33:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-ENC
   urn: urn:goreos:atom:role:encargado_calidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-RH-CAP
   urn: urn:goreos:atom:role:encargado_capacitacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ENCARGADO-CA
   urn: urn:goreos:atom:role:encargado_capacitacion_digital:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ENCARGADO-CO
   urn: urn:goreos:atom:role:encargado_comite_paritario:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GOB-COMP
   urn: urn:goreos:atom:role:encargado_competencias:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-COM-ENC
   urn: urn:goreos:atom:role:encargado_comunicaciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ENCARGADO-CO
   urn: urn:goreos:atom:role:encargado_continuidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-CTRL
   urn: urn:goreos:atom:role:encargado_control_gestion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ENCARGADO-CS
   urn: urn:goreos:atom:role:encargado_cseu:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CTCI-ENC
   urn: urn:goreos:atom:role:encargado_cti:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ENCARGADO-DE
   urn: urn:goreos:atom:role:encargado_descentralizacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-DIG
   urn: urn:goreos:atom:role:encargado_digital_muni:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ENCARGADO-ES
   urn: urn:goreos:atom:role:encargado_estado_verde:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-OPS-FLOTA
   urn: urn:goreos:atom:role:encargado_flota:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-FOND-ENC
   urn: urn:goreos:atom:role:encargado_fondos_8:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ENCARGADO-IN
   urn: urn:goreos:atom:role:encargado_interoperabilidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NORM-LOBBY
   urn: urn:goreos:atom:role:encargado_lobby:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-MUNI-ENC
   urn: urn:goreos:atom:role:encargado_muni_cons:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GAB-250-ENC
   urn: urn:goreos:atom:role:encargado_nuble_250:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-ADM-OIRS
   urn: urn:goreos:atom:role:encargado_oirs:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-TERR-OP
   urn: urn:goreos:atom:role:encargado_operativo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-OP-ENC
   urn: urn:goreos:atom:role:encargado_partes:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-PART-ENC
   urn: urn:goreos:atom:role:encargado_participacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-SEG-PREV
   urn: urn:goreos:atom:role:encargado_prevencion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-PROY-ENC
   urn: urn:goreos:atom:role:encargado_proy_prog:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-RH-REM
   urn: urn:goreos:atom:role:encargado_remuneraciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-FIN-REND
   urn: urn:goreos:atom:role:encargado_rendiciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-PER-ENC
   urn: urn:goreos:atom:role:encargado_rrhh:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GAB-INT
   urn: urn:goreos:atom:role:encargado_rrii:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-SERV-ENC
   urn: urn:goreos:atom:role:encargado_servicios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NORM-TRANSP
   urn: urn:goreos:atom:role:encargado_transparencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-VINC-ENC
   urn: urn:goreos:atom:role:encargado_vinculacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-REZ-ENC
   urn: urn:goreos:atom:role:encargado_zonas_rezago:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CIES-ENL
   urn: urn:goreos:atom:role:enlace_cies:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-EJEC
   urn: urn:goreos:atom:role:entidad_ejecutora:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-ODIA-CAMP
   urn: urn:goreos:atom:role:equipo_campeon:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ESPECIALISTA
   urn: urn:goreos:atom:role:especialista_accesibilidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ESPECIALISTA
   urn: urn:goreos:atom:role:especialista_bi:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-FOND-EVAL
   urn: urn:goreos:atom:role:evaluador_social:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-FEMP
   urn: urn:goreos:atom:role:federacion_municipios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-OPS-FINOPS
   urn: urn:goreos:atom:role:finops_manager:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-JUR-FIS
   urn: urn:goreos:atom:role:fiscal_sumariante:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-IPR
   urn: urn:goreos:atom:role:formuevaluador:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-FORM
   urn: urn:goreos:atom:role:formulador_externo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-G7-FORM
   urn: urn:goreos:atom:role:formulador_glosa7:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-FOSIS
   urn: urn:goreos:atom:role:fosis:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-COM-FOTO
   urn: urn:goreos:atom:role:fotografo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-PER-FUN
   urn: urn:goreos:atom:role:funcionario:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-DEL-GEST
   urn: urn:goreos:atom:role:gestor_fomento:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-PER-GEST
   urn: urn:goreos:atom:role:gestor_personas:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-TERR-GEST
   urn: urn:goreos:atom:role:gestor_provincial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-GESTOR-TERR
   urn: urn:goreos:atom:role:gestor_territorial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-GOBERNACION-
   urn: urn:goreos:atom:role:gobernacion_provincial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GOB-JEFE
   urn: urn:goreos:atom:role:gobernador:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-GOREOLOGO
   urn: urn:goreos:atom:role:goreologo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-INDAP
   urn: urn:goreos:atom:role:indap:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-INF
   urn: urn:goreos:atom:role:informatico_municipal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-CON-ING
   urn: urn:goreos:atom:role:ing_vialidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-KB
   urn: urn:goreos:atom:role:ingeniero_conocimiento:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-OPS-ING
   urn: urn:goreos:atom:role:ingeniero_plataforma:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-SANE-ING
   urn: urn:goreos:atom:role:ingeniero_sanitario:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-SEC
   urn: urn:goreos:atom:role:ingeniero_seguridad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-SRE
   urn: urn:goreos:atom:role:ingeniero_sre:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-INSP-FISCAL
   urn: urn:goreos:atom:role:inspector_fiscal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-INFRA-ITO
   urn: urn:goreos:atom:role:inspector_tecnico_obra:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-FNX-OP
   urn: urn:goreos:atom:role:interventor_fenix:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-FNX-FIN
   urn: urn:goreos:atom:role:interventor_financiero:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-FNX-FIS
   urn: urn:goreos:atom:role:interventor_fiscal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-UNIV
   urn: urn:goreos:atom:role:investigador_universidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-ITO
   urn: urn:goreos:atom:role:ito_campo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-ITO
   urn: urn:goreos:atom:role:ito_municipal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-ITP
   urn: urn:goreos:atom:role:itp_programa:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-JANO
   urn: urn:goreos:atom:role:jano:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-AUD-JEFE
   urn: urn:goreos:atom:role:jefe_auditoria:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CTRL-JEFE
   urn: urn:goreos:atom:role:jefe_control:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-HON-JEFE
   urn: urn:goreos:atom:role:jefe_control_jerarquico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-DAE-JEFE
   urn: urn:goreos:atom:role:jefe_dae:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-JEFE
   urn: urn:goreos:atom:role:jefe_daf:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-JEFE-DEPTO-A
   urn: urn:goreos:atom:role:jefe_depto_abastecimiento:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-ANAL-JEFE
   urn: urn:goreos:atom:role:jefe_depto_analisis:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-JEFE-DEPTO-C
   urn: urn:goreos:atom:role:jefe_depto_contabilidad:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-JEFE-DEPTO-P
   urn: urn:goreos:atom:role:jefe_depto_personal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-PLAN-JEFE
   urn: urn:goreos:atom:role:jefe_depto_planif:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-JEFE-DEPTO-T
   urn: urn:goreos:atom:role:jefe_depto_tesoreria:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-JEFE
   urn: urn:goreos:atom:role:jefe_didesoh:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-JEFE
   urn: urn:goreos:atom:role:jefe_difoi:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-JEFE
   urn: urn:goreos:atom:role:jefe_dipir:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-JEFE
   urn: urn:goreos:atom:role:jefe_diplade:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-JEFE
   urn: urn:goreos:atom:role:jefe_dit:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-JEFE-ESTUDIO
   urn: urn:goreos:atom:role:jefe_estudios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-FNX-J
   urn: urn:goreos:atom:role:jefe_fenix:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-FIN-JEFE
   urn: urn:goreos:atom:role:jefe_finanzas:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GAB-JEFE
   urn: urn:goreos:atom:role:jefe_gabinete:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-INV-JEFE
   urn: urn:goreos:atom:role:jefe_inversion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-JUR-JEFE
   urn: urn:goreos:atom:role:jefe_juridica:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-ODIA-JEFE
   urn: urn:goreos:atom:role:jefe_odia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-JEFE-PLAN
   urn: urn:goreos:atom:role:jefe_planificacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-PRES-JEFE
   urn: urn:goreos:atom:role:jefe_presupuesto:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-JEFE-PROGRAM
   urn: urn:goreos:atom:role:jefe_programacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-RH-JEFE
   urn: urn:goreos:atom:role:jefe_rrhh:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-SEG-JEFE
   urn: urn:goreos:atom:role:jefe_seg:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TERR-JEFE
   urn: urn:goreos:atom:role:jefe_terr:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-JEFE
   urn: urn:goreos:atom:role:jefe_tic:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-TRIB-CUENTA
   urn: urn:goreos:atom:role:juez_cuentas:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-PER-JUN
   urn: urn:goreos:atom:role:junta_calificadora:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-JJVV
   urn: urn:goreos:atom:role:junta_vecinos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-JUZG-LETRAS
   urn: urn:goreos:atom:role:juzgado_letras:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-LEAD
   urn: urn:goreos:atom:role:lider_tecnico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-MEDIA-COMUNI
   urn: urn:goreos:atom:role:media_comunicacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-MEDIO-COMUNI
   urn: urn:goreos:atom:role:medio_comunicacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-MESA
   urn: urn:goreos:atom:role:mesa_ayuda:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-COM-EVAL
   urn: urn:goreos:atom:role:miembro_comision_evaluadora:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-COM-RECP
   urn: urn:goreos:atom:role:miembro_comision_recepcion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-MIEMBRO-COMI
   urn: urn:goreos:atom:role:miembro_comite_pertinencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-CSEU-MEMB
   urn: urn:goreos:atom:role:miembro_cseu:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CTD-MEMB
   urn: urn:goreos:atom:role:miembro_ctd:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-ECIF-MEMB
   urn: urn:goreos:atom:role:miembro_ecif:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-VERDE-MEMB
   urn: urn:goreos:atom:role:miembro_estado_verde:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-SCIA-MEMB
   urn: urn:goreos:atom:role:miembro_subcomite_ia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-MP
   urn: urn:goreos:atom:role:ministerio_publico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-JUR-MFE
   urn: urn:goreos:atom:role:ministro_fe:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: BOT-MORA
   urn: urn:goreos:atom:role:monitor_plazos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EVOL-MON
   urn: urn:goreos:atom:role:monitor_sistema:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-COM-SEG
   urn: urn:goreos:atom:role:noc_soc:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-NOTARIO
   urn: urn:goreos:atom:role:notario:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-NEW
   urn: urn:goreos:atom:role:nuevo_desarrollador:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-OP-OF
   urn: urn:goreos:atom:role:oficial_partes:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-ONG
   urn: urn:goreos:atom:role:ong_fundacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-ONG-REGIONAL
   urn: urn:goreos:atom:role:ong_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CIES-OP
   urn: urn:goreos:atom:role:operador_cies:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TERR-PISEE
   urn: urn:goreos:atom:role:operador_pisee:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EVOL-OP
   urn: urn:goreos:atom:role:operador_sistema:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ARCH-MUN-OPERATIVO_MUNICIPAL
   urn: urn:goreos:atom:role:operativo_municipal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-ORG-BEN
   urn: urn:goreos:atom:role:org_beneficiaria:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-ORG-POST
   urn: urn:goreos:atom:role:org_postulante:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-PDI
   urn: urn:goreos:atom:role:pdi:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-COM-PER
   urn: urn:goreos:atom:role:periodista:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-URB
   urn: urn:goreos:atom:role:planificador_urbano:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-PRENSA-REGIO
   urn: urn:goreos:atom:role:prensa_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-CPER-PRES
   urn: urn:goreos:atom:role:presidente_comite_pertinencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CORE-PRES
   urn: urn:goreos:atom:role:presidente_core:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-CSEU-PRES
   urn: urn:goreos:atom:role:presidente_cseu:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CTD-PRES
   urn: urn:goreos:atom:role:presidente_ctd:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-VERDE-PRES
   urn: urn:goreos:atom:role:presidente_estado_verde:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-SCIA-PRES
   urn: urn:goreos:atom:role:presidente_subcomite_ia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-HON-PRES
   urn: urn:goreos:atom:role:prestador_honorarios:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-PREVENCIONIS
   urn: urn:goreos:atom:role:prevencionista_riesgos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-PO
   urn: urn:goreos:atom:role:product_owner:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CORE-APOYO
   urn: urn:goreos:atom:role:profesional_apoyo_core:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ARCH-BASE-PROFESIONAL_BASE
   urn: urn:goreos:atom:role:profesional_base:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-PER-BIEN
   urn: urn:goreos:atom:role:profesional_bienestar:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-CTI-PROF
   urn: urn:goreos:atom:role:profesional_cti:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-PROF
   urn: urn:goreos:atom:role:profesional_daf:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-PROF
   urn: urn:goreos:atom:role:profesional_dit:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GAB-250-PROF
   urn: urn:goreos:atom:role:profesional_nuble_250:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-UCR-PROF
   urn: urn:goreos:atom:role:profesional_ucr:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIFOI-REZ-PROF
   urn: urn:goreos:atom:role:profesional_zona_rezago:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-QA-ANALISTA
   urn: urn:goreos:atom:role:qa_analista:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DEV-QA
   urn: urn:goreos:atom:role:qa_engineer:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-PMG-GASTO
   urn: urn:goreos:atom:role:referente_gasto:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-PMG-GEN
   urn: urn:goreos:atom:role:referente_genero:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-PMG-PSICO
   urn: urn:goreos:atom:role:referente_riesgos_psicosociales:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-PMG-TD
   urn: urn:goreos:atom:role:referente_td_pmg:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-REF-TEC
   urn: urn:goreos:atom:role:referente_tecnico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CAL-PMG-REF
   urn: urn:goreos:atom:role:referente_tecnico_pmg:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NORM-TRANSP-REF
   urn: urn:goreos:atom:role:referente_transparencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-REP-AMUCH
   urn: urn:goreos:atom:role:representante_amuch:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-ANID
   urn: urn:goreos:atom:role:representante_anid:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-TDE-RESP-SIS
   urn: urn:goreos:atom:role:responsable_sistema_ia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPIR-G7-REV
   urn: urn:goreos:atom:role:revisor_glosa7:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ROLE-MIGRADOR
   urn: urn:goreos:atom:role:migrador:1.0.0
-  name: "Migrador de Datos"
+  name: Migrador de Datos
   domain: D-OPS
 - id: USR-MUNI-SECPLA
   urn: urn:goreos:atom:role:secpla:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-SECPLA-CHILL
   urn: urn:goreos:atom:role:secpla_chillan:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-SECPLA-SAN-C
   urn: urn:goreos:atom:role:secpla_san_carlos:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-SECRETARIA-D
   urn: urn:goreos:atom:role:secretaria_division:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIPL-CPER-SEC
   urn: urn:goreos:atom:role:secretario_comite_pertinencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CORE-SEC-COM
   urn: urn:goreos:atom:role:secretario_core_comisionado:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CTCI-SEC
   urn: urn:goreos:atom:role:secretario_ctci:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CTD-SEC
   urn: urn:goreos:atom:role:secretario_ctd:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CORE-SEC
   urn: urn:goreos:atom:role:secretario_ejecutivo_core:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEN-NUBLE
   urn: urn:goreos:atom:role:senador_nuble:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SENAPRED
   urn: urn:goreos:atom:role:senapred:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SERCO
   urn: urn:goreos:atom:role:sercotec:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI
   urn: urn:goreos:atom:role:seremi:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-AGRI
   urn: urn:goreos:atom:role:seremi_agricultura:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-CULT
   urn: urn:goreos:atom:role:seremi_culturas:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-ECO
   urn: urn:goreos:atom:role:seremi_economia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-EDU
   urn: urn:goreos:atom:role:seremi_educacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-GOB
   urn: urn:goreos:atom:role:seremi_gobierno:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-HAC
   urn: urn:goreos:atom:role:seremi_hacienda:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-MDSF
   urn: urn:goreos:atom:role:seremi_mdsf:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-MEDIO
   urn: urn:goreos:atom:role:seremi_medioambiente:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-VIV
   urn: urn:goreos:atom:role:seremi_minvu:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-MOP
   urn: urn:goreos:atom:role:seremi_mop:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-MUJER
   urn: urn:goreos:atom:role:seremi_mujer:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-SALUD
   urn: urn:goreos:atom:role:seremi_salud:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ARCH-EXT-SEREMI_SECTORIAL
   urn: urn:goreos:atom:role:seremi_sectorial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SEREMI-TRAB
   urn: urn:goreos:atom:role:seremi_trabajo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SNA
   urn: urn:goreos:atom:role:sna_sofo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-PER-SOC
   urn: urn:goreos:atom:role:socio_bienestar:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIDES-TERR-SOC
   urn: urn:goreos:atom:role:sociologo_territorial:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-TIC-SUP
   urn: urn:goreos:atom:role:soporte_tecnico:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-SUBTEL
   urn: urn:goreos:atom:role:subtel_mtt:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-GOB-PAS
   urn: urn:goreos:atom:role:sujeto_pasivo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CIES-SUP
   urn: urn:goreos:atom:role:supervisor_cies:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DIT-SUP
   urn: urn:goreos:atom:role:supervisor_obras:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NORM-TRANSP-SUPL
   urn: urn:goreos:atom:role:suplente_transparencia:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: ARCH-MUN-TECNICO_MUNICIPAL
   urn: urn:goreos:atom:role:tecnico_municipal:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-FIN-TES
   urn: urn:goreos:atom:role:tesorero_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CORP-EQ
   urn: urn:goreos:atom:role:trabajador_corporacion:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-TC
   urn: urn:goreos:atom:role:tribunal_constitucional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-DAF-FIN-UCR
   urn: urn:goreos:atom:role:unidad_control_rendiciones:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-UNIDAD-COORD
   urn: urn:goreos:atom:role:unidad_coordinacion_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-FORM
   urn: urn:goreos:atom:role:unidad_formuladora:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-MUNI-TEC
   urn: urn:goreos:atom:role:unidad_tecnica:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-UNIVERSIDAD-
   urn: urn:goreos:atom:role:universidad_regional:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-EXT-UOCT
   urn: urn:goreos:atom:role:uoct_nuble:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-CIU-EXT
   urn: urn:goreos:atom:role:usuario_externo:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
 - id: USR-NEW-UTM-GENERICA
   urn: urn:goreos:atom:role:utm_generica:1.0.0
-  name: ""
-  domain: 
+  name: ''
+  domain: null
+urn: urn:goreos:index:roles:1.0.0
+domain: D-GESTION
+type: INTERNAL
+id: USR-GESTION-_INDEX

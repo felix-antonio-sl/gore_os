@@ -7,7 +7,7 @@ role_key: encargado_competencias
 title: Encargado Competencias
 description: Gestión técnica del proceso de transferencia de competencias desde el
   nivel central.
-type: Human
+type: INTERNAL
 unit: Descentralización
 unit_type: Capacidades Transversales
 archetype: null
@@ -15,3 +15,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:encargado_competencias:1.0.0
+domain: D-GESTION

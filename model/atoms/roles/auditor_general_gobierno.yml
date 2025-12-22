@@ -6,7 +6,7 @@ id: USR-EXT-CAIGG
 role_key: auditor_general_gobierno
 title: Auditor General de Gobierno
 description: Consejo de Auditoría Interna General de Gobierno (CAIGG).
-type: Human
+type: INTERNAL
 unit: Control Externo
 unit_type: Ecosistema Externo
 archetype: null
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:auditor_general_gobierno:1.0.0
+domain: D-GESTION

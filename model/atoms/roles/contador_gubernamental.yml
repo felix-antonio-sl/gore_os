@@ -6,7 +6,7 @@ id: USR-DAF-FIN-CONT
 role_key: contador_gubernamental
 title: Contador Gubernamental
 description: Registro en contabilidad SIGFE y elaboración de Balances.
-type: Human
+type: INTERNAL
 unit: DAF
 unit_type: Ejecutivo & Operaciones
 archetype: null
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:contador_gubernamental:1.0.0
+domain: D-GESTION

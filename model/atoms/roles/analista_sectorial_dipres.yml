@@ -6,7 +6,7 @@ id: USR-EXT-DIPRES
 role_key: analista_sectorial_dipres
 title: Analista Sectorial DIPRES
 description: ''
-type: Human
+type: INTERNAL
 unit: Reguladores Nacionales
 unit_type: Ecosistema Externo
 archetype: analista_base
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:analista_sectorial_dipres:1.0.0
+domain: D-GESTION

@@ -6,7 +6,7 @@ id: USR-EXT-DOH
 role_key: director_doh
 title: Director Regional DOH
 description: ''
-type: Human
+type: INTERNAL
 unit: Direcciones Regionales de Servicios
 unit_type: Ecosistema Externo
 archetype: director_servicio_regional
@@ -14,3 +14,5 @@ morphisms_req:
   es_actor_de: []
 morphisms_ops:
   ejecuta: []
+urn: urn:goreos:atom:role:director_doh:1.0.0
+domain: D-GESTION
