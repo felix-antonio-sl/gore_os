@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_ai_002:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-EVOL-AI-002
-story_key: us_evol_ai_002
+urn: urn:goreos:atom:story:us_evol_ai_002:1.0.0
 role_id: BOT-KODA
-as_a: "Agente KODA"
 i_want: Registrar en un log inmutable cada decisión tomada por un agente autónomo
 so_that: Garantizo la explicabilidad (XAI) ante auditorías
 domain: D-EVOL
 priority: P0
-capability_bundle_id: CAP-EVOL-001
-morphisms:
-  protagonizado_por: BOT-KODA
-  contribuye_a: CAP-EVOL-001
+capability_id: CAP-EVOL-001

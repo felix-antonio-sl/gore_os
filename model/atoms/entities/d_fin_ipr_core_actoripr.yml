@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_fin_ipr_core_actoripr:1.0.0
+  urn: urn:goreos:entity:d-fin-ipr_core:ENT-FIN-IPR_CORE-ACTORIPR:1.0.0
   type: Entity
-  source: domains/d-fin-ipr_core/entity_data
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-IPR_CORE-ACTORIPR
 name: ActorIPR
-entity_key: actoripr
 domain: D-FIN-IPR_CORE
 category: Reference
-description: id, ipr_id, actor_id, rol, fase, activo
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

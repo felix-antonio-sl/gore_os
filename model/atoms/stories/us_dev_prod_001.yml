@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_prod_001:1.0.0
   type: Story
-  source: plan_especificacion_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-PROD-001
-story_key: us_dev_prod_001
+urn: urn:goreos:atom:story:us_dev_prod_001:1.0.0
 role_id: ROLE-PO
-as_a: Product Owner
 i_want: gestionar el backlog con épicas y stories priorizadas
 so_that: pueda maximizar el valor entregado por el equipo
 domain: D-DEV
 priority: P0
-capability_bundle_id: CAP-DEV-001
-morphisms:
-  protagonizado_por: ROLE-PO
-  contribuye_a: CAP-DEV-001
+capability_id: CAP-DEV-001

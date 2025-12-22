@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-SECCOM-001-01
-story_key: us_seccom_001_01
+urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
 role_id: USR-CORE-SEC-COM
-as_a: "Comisionado Secretario Ejecutivo CORE"
 i_want: acceso a materias asignadas a cada comisión
 so_that: pueda preparar documentación
 domain: D-NORM
 priority: P1
-capability_bundle_id: CAP-NORM-CONTROL-001
-morphisms:
-  protagonizado_por: USR-CORE-SEC-COM
-  contribuye_a: CAP-NORM-CONTROL-001
+capability_id: CAP-NORM-CONTROL-001

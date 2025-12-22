@@ -1,146 +1,97 @@
-# Entidad: ActivoFijo (Activo Fijo)
-# Domain: D-BACK
-# Subdomain: activo_fijo
-# Generated: 2025-12-21 (Phase 20.1 Deep Modeling)
-
+_meta:
+  urn: urn:goreos:entity:d-back:activo-fijo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-BACK-ACTIVO_FIJO
-urn: "urn:goreos:entity:d-back:activo-fijo:1.0.0"
+urn: urn:goreos:entity:d-back:activo-fijo:1.0.0
 name: Activo Fijo
 domain: D-BACK
 subdomain: activo_fijo
 category: Master
-canonical_source:
-  - "urn:knowledge:gorenuble:gn:manual-activo-fijo:1.0.0"
-  - "NICSP 17: Propiedad, Planta y Equipo"
-  - "Ley 21.180: Registro electrónico obligatorio"
-
-description: |
-  Bien patrimonial del GORE con valor >= umbral de capitalización (típicamente 3 UTM).
-  Gestionado según NICSP-17 con depreciación línea recta y control de custodia.
-
+is_abstract: false
 attributes:
-  - name: id_activo
-    type: String
-    key: true
-    description: Código único alfanumérico generado por sistema
-
-  - name: codigo_etiqueta
-    type: String
-    description: Código de barras/QR de la etiqueta física
-
-  - name: descripcion
-    type: String
-    nullable: false
-
-  - name: clasificacion_naturaleza
-    type: Enum[Mueble, Inmueble, Intangible]
-    nullable: false
-
-  - name: clasificacion_tratamiento
-    type: Enum[Patrimonial, InventarioAdministrativo]
-    nullable: false
-
-  - name: estado_uso
-    type: Enum[EnUso, EnBodega, EnComodato, DadoDeBaja]
-    default: EnBodega
-
-  - name: tipo_alta
-    type: Enum[Normal, Donacion, Traspaso, Revalorizacion, Postergada]
-    nullable: false
-
-  # Datos de Adquisición
-  - name: proveedor_id
-    type: String
-    fk: ENT-FIN-PROVEEDOR
-    nullable: true
-
-  - name: numero_factura
-    type: String
-    nullable: true
-
-  - name: valor_adquisicion
-    type: Decimal
-    nullable: false
-    description: Incluye IVA no recuperable + transporte + instalación
-
-  - name: fecha_puesta_marcha
-    type: Date
-    description: Fecha inicio depreciación (mes siguiente)
-
-  # Datos Técnicos
-  - name: marca
-    type: String
-    nullable: true
-
-  - name: modelo
-    type: String
-    nullable: true
-
-  - name: numero_serie
-    type: String
-    nullable: true
-
-  - name: imagen_url
-    type: String
-    nullable: true
-
-  # Datos de Gestión
-  - name: ubicacion_fisica
-    type: String
-    description: Edificio/Piso/Sala
-
-  - name: responsable_custodia_id
-    type: String
-    fk: ROL-FUNCIONARIO
-    nullable: false
-
-  - name: centro_costo
-    type: String
-    nullable: true
-
-  # Depreciación (NICSP 17)
-  - name: vida_util_meses
-    type: Integer
-    description: Según tablas NICSP (ej. vehículo 84-120 meses)
-
-  - name: valor_residual
-    type: Decimal
-    default: 0
-
-  - name: depreciacion_acumulada
-    type: Decimal
-    computed: true
-
-  - name: valor_libro
-    type: Decimal
-    computed: true
-    formula: valor_adquisicion - depreciacion_acumulada
-
-  - name: fecha_baja
-    type: Date
-    nullable: true
-
-  - name: causal_baja
-    type: Enum[Obsolescencia, DeterioroIrreparable, Siniestro, TerminoVidaUtil, Venta, Donacion, Canje]
-    nullable: true
-
+- name: id_activo
+  type: String
+  key: true
+  description: Código único alfanumérico generado por sistema
+- name: codigo_etiqueta
+  type: String
+  description: Código de barras/QR de la etiqueta física
+- name: descripcion
+  type: String
+  nullable: false
+- name: clasificacion_naturaleza
+  type: Enum[Mueble, Inmueble, Intangible]
+  nullable: false
+- name: clasificacion_tratamiento
+  type: Enum[Patrimonial, InventarioAdministrativo]
+  nullable: false
+- name: estado_uso
+  type: Enum[EnUso, EnBodega, EnComodato, DadoDeBaja]
+  default: EnBodega
+- name: tipo_alta
+  type: Enum[Normal, Donacion, Traspaso, Revalorizacion, Postergada]
+  nullable: false
+- name: proveedor_id
+  type: String
+  fk: ENT-FIN-PROVEEDOR
+  nullable: true
+- name: numero_factura
+  type: String
+  nullable: true
+- name: valor_adquisicion
+  type: Decimal
+  nullable: false
+  description: Incluye IVA no recuperable + transporte + instalación
+- name: fecha_puesta_marcha
+  type: Date
+  description: Fecha inicio depreciación (mes siguiente)
+- name: marca
+  type: String
+  nullable: true
+- name: modelo
+  type: String
+  nullable: true
+- name: numero_serie
+  type: String
+  nullable: true
+- name: imagen_url
+  type: String
+  nullable: true
+- name: ubicacion_fisica
+  type: String
+  description: Edificio/Piso/Sala
+- name: responsable_custodia_id
+  type: String
+  fk: ROL-FUNCIONARIO
+  nullable: false
+- name: centro_costo
+  type: String
+  nullable: true
+- name: vida_util_meses
+  type: Integer
+  description: Según tablas NICSP (ej. vehículo 84-120 meses)
+- name: valor_residual
+  type: Decimal
+  default: 0
+- name: depreciacion_acumulada
+  type: Decimal
+  computed: true
+- name: valor_libro
+  type: Decimal
+  computed: true
+  formula: valor_adquisicion - depreciacion_acumulada
+- name: fecha_baja
+  type: Date
+  nullable: true
+- name: causal_baja
+  type: Enum[Obsolescencia, DeterioroIrreparable, Siniestro, TerminoVidaUtil, Venta,
+    Donacion, Canje]
+  nullable: true
 invariants:
-  - name: umbral_capitalizacion
-    rule: "valor_adquisicion >= 3 UTM para Patrimonial"
-    source: "GN-MANUAL-ACTIVO-FIJO-S01-03"
-
-  - name: responsable_obligatorio
-    rule: "responsable_custodia_id NOT NULL while estado_uso = EnUso"
-    source: "GN-MANUAL-ACTIVO-FIJO-S06-03"
-
-morphisms:
-  adquirido_por: [ENT-FIN-ORDEN_COMPRA, ENT-FIN-TRANSFERENCIA]
-  custodiado_por: [ROL-FUNCIONARIO]
-  genera: [ENT-BACK-MOVIMIENTO_ACTIVO]
-  depreciado_en: [SIGFE]
-  inventariado_en: [ENT-BACK-INVENTARIO_FISICO]
-
-related_processes:
-  - "P.BACK.ALTA.ACTIVO"
-  - "P.BACK.BAJA.ACTIVO"
-  - "P.BACK.INVENTARIO.ANUAL"
+- name: umbral_capitalizacion
+  rule: valor_adquisicion >= 3 UTM para Patrimonial
+  source: GN-MANUAL-ACTIVO-FIJO-S01-03
+- name: responsable_obligatorio
+  rule: responsable_custodia_id NOT NULL while estado_uso = EnUso
+  source: GN-MANUAL-ACTIVO-FIJO-S06-03

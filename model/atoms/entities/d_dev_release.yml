@@ -1,98 +1,45 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Release (Lanzamiento de Software)
-# ==============================================================================
-# Domain: D-DEV (Desarrollo de Software)
-# Subdomain: M3 Entrega (Delivery)
-# Source: dialogo_profundo_dev_ops.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Ingeniero GORE_OS"
-  domain: D-DEV
-  subdomain: delivery
-  kb_source:
-    - "Semantic Versioning"
-    - "dialogo_profundo_dev_ops.md"
-
-entity:
-  id: ENT-DEV-RELEASE
-  name: Release
-  name_es: Lanzamiento de Versión
-  description: |
-    Versión empaquetada e inmutable del software, lista para
-    ser desplegada en un ambiente.
-    Sigue versionamiento semántico (SemVer).
-
-  purpose: |
-    Gestionar entregas para:
-    - Controlar qué código está en producción
-    - Facilitar Rollback
-    - Documentar cambios (Changelog)
-    - Distribuir artefactos
-
-  categorical_type: Event
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_release
-    type: String
-    key: true
-    description: "REPO-TAG (ej: goreos-v1.2.0)"
-
-  - name: tag
-    type: String
-    nullable: false
-    description: "vX.Y.Z"
-
-  - name: nombre
-    type: String
-    nullable: true
-
-  - name: repositorio_id
-    type: String
-    fk: ENT-DEV-REPOSITORIO
-    nullable: false
-
-  - name: commit_hash
-    type: String
-    nullable: false
-    description: "Hash SHA del commit específico"
-
-  - name: changelog
-    type: Text
-    nullable: true
-    description: "Lista de cambios/PRs incluidos"
-
-  # Estado
-  - name: es_prerelease
-    type: Boolean
-    default: false
-
-  - name: fecha_publicacion
-    type: Timestamp
-    nullable: false
-
-  - name: publicado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-
+- name: id_release
+  type: String
+  key: true
+  description: 'REPO-TAG (ej: goreos-v1.2.0)'
+- name: tag
+  type: String
+  nullable: false
+  description: vX.Y.Z
+- name: nombre
+  type: String
+  nullable: true
+- name: repositorio_id
+  type: String
+  fk: ENT-DEV-REPOSITORIO
+  nullable: false
+- name: commit_hash
+  type: String
+  nullable: false
+  description: Hash SHA del commit específico
+- name: changelog
+  type: Text
+  nullable: true
+  description: Lista de cambios/PRs incluidos
+- name: es_prerelease
+  type: Boolean
+  default: false
+- name: fecha_publicacion
+  type: Timestamp
+  nullable: false
+- name: publicado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
 invariants:
-  - id: INV-REL-001
-    name: semver_format
-    rule: tag REGEX '^v?[0-9]+\.[0-9]+\.[0-9]+'
-    description: Tag debe seguir SemVer
-
-morphisms:
-  contiene: [ENT-DEV-PULLREQUEST]
-  desplegado_como: [ENT-OPS-DESPLIEGUE]
-
-audit:
-  fields_tracked:
-    - tag
-    - commit_hash
-  retention_years: 10
+- id: INV-REL-001
+  name: semver_format
+  rule: tag REGEX '^v?[0-9]+\.[0-9]+\.[0-9]+'
+  description: Tag debe seguir SemVer

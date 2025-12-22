@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_ito_002_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ITO-002-01
-story_key: us_ito_002_01
+urn: urn:goreos:atom:story:us_ito_002_01:1.0.0
 role_id: USR-MUNI-ITO
-as_a: "Inspector Obras (Municipal)"
 i_want: un workflow de aprobación de EP con validación de cubicaciones
 so_that: pueda certificar avances reales
 domain: D-EJEC
 priority: P0
-capability_bundle_id: CAP-EJEC-PORTAL-001
-morphisms:
-  protagonizado_por: USR-MUNI-ITO
-  contribuye_a: CAP-EJEC-PORTAL-001
+capability_id: CAP-EJEC-PORTAL-001

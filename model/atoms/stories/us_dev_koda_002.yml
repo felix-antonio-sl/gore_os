@@ -1,21 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
   type: Story
-  source: catalogo_exhaustivo_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-KODA-002
-story_key: us_dev_koda_002
+urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
 role_id: ROLE-DEV
-as_a: Desarrollador
 i_want: consultar agente Goreólogo para validación de dominio
 so_that: se obtenga respuesta contextualizada del dominio institucional
 domain: D-DEV
-module: M0-BLUEPRINT
 priority: P1
-acceptance_criteria:
-  - Consulta procesada correctamente
-  - Respuesta incluye contexto GORE Ñuble
-  - Referencias a KB citadas
-capability_bundle_id: CAP-DEV-BLUEPRINT
-morphisms:
-  protagonizado_por: ROLE-DEV
-  contribuye_a: CAP-DEV-BLUEPRINT
+capability_id: CAP-DEV-BLUEPRINT

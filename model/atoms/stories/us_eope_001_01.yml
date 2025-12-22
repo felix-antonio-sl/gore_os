@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_eope_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-EOPE-001-01
-story_key: us_eope_001_01
+urn: urn:goreos:atom:story:us_eope_001_01:1.0.0
 role_id: USR-DIDES-TERR-OP
-as_a: "Encargado Operativo Territorial"
 i_want: gestión de reserva de salas y vehículos
 so_that: se optimice el uso de recursos físicos
 domain: D-BACK
 priority: P2
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-DIDES-TERR-OP
-  contribuye_a: CAP-BACK-TICKETS-001
+capability_id: CAP-BACK-TICKETS-001

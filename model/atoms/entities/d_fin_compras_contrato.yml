@@ -1,214 +1,144 @@
-# Entidad: Contrato (Contrato Administrativo)
-# Domain: D-FIN
-# Subdomain: compras
-# Generated: 2025-12-21 (Phase 20.1b P1)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:contrato:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-CONTRATO
-urn: "urn:goreos:entity:d-fin:contrato:1.0.0"
+urn: urn:goreos:entity:d-fin:contrato:1.0.0
 name: Contrato Administrativo
 domain: D-FIN
 subdomain: compras
 category: Legal
-canonical_source:
-  - "manual_2_1_compras_koda.yml#MANUAL-COMPRAS-SEC-V-01"
-  - "Ley 19.886, Decreto 661/2024"
-
-description: |
-  Instrumento que formaliza compromisos con proveedores.
-  Obligatorio para licitaciones >100 UTM, servicios de tracto sucesivo y obras.
-
+is_abstract: false
 attributes:
-  - name: id_contrato
-    type: String
-    key: true
-
-  - name: numero_contrato
-    type: String
-    nullable: false
-
-  - name: tipo_contrato
-    type: Enum[Suministro, Servicio, Obra, ConsultoriaEstudio, Mixto]
-    nullable: false
-
-  - name: resolucion_aprobacion
-    type: String
-    nullable: false
-    description: Número de resolución (Legacy). Preferir resolucion_aprobatoria_id.
-
-  - name: resolucion_aprobatoria_id
-    type: String
-    fk: ENT-FIN-ACTO_ADMINISTRATIVO
-    nullable: true
-    description: Link al acto administrativo formal (Phase 20.2 EACS Enrichment)
-
-  - name: fecha_resolucion
-    type: Date
-    nullable: false
-
-  # Origen
-  - name: licitacion_id
-    type: String
-    fk: ENT-FIN-LICITACION
-    nullable: true
-
-  - name: trato_directo_id
-    type: String
-    nullable: true
-
-  - name: convenio_marco
-    type: Boolean
-    default: false
-
-  # Partes
-  - name: mandante
-    type: String
-    default: "GOBIERNO REGIONAL DE ÑUBLE"
-
-  - name: proveedor_id
-    type: String
-    fk: ENT-FIN-PROVEEDOR
-
-  - name: proveedor_razon_social
-    type: String
-
-  - name: representante_proveedor
-    type: String
-    nullable: true
-
-  # Objeto
-  - name: objeto
-    type: Text
-    nullable: false
-
-  - name: alcance
-    type: Text
-    nullable: true
-
-  # Montos
-  - name: monto_original
-    type: Decimal
-    nullable: false
-
-  - name: monto_vigente
-    type: Decimal
-    nullable: false
-    description: Incluye modificaciones
-
-  - name: moneda
-    type: Enum[CLP, UF, UTM]
-    default: CLP
-
-  - name: forma_pago
-    type: Enum[Unico, Hitos, Mensual, ContraEntrega]
-
-  - name: modalidad_pago
-    type: Enum[SumaAlzada, Precios, AdminDelegada, Mixta]
-    nullable: true
-
-  # Plazos
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-
-  - name: fecha_termino_original
-    type: Date
-    nullable: false
-
-  - name: fecha_termino_vigente
-    type: Date
-    nullable: false
-
-  - name: plazo_dias
-    type: Integer
-    computed: true
-
-  # Administración
-  - name: administrador_contrato_id
-    type: String
-    fk: ROL-ADM-CONTRATO
-
-  - name: inspector_tecnico_id
-    type: String
-    fk: ROL-ITO
-    nullable: true
-
-  # Garantías
-  - name: garantia_fiel_cumplimiento_id
-    type: String
-    fk: ENT-FIN-GARANTIA
-    nullable: true
-
-  - name: garantia_correcta_ejecucion_id
-    type: String
-    fk: ENT-FIN-GARANTIA
-    nullable: true
-
-  - name: plazo_responsabilidad_meses
-    type: Integer
-    default: 12
-    description: Post-recepción para obras
-
-  # Multas
-  - name: porcentaje_multa_atraso
-    type: Decimal
-    nullable: true
-
-  - name: tope_multas_pct
-    type: Decimal
-    nullable: true
-
-  - name: multas_aplicadas
-    type: Decimal
-    default: 0
-
-  # Modificaciones
-  - name: modificaciones_count
-    type: Integer
-    default: 0
-
-  - name: porcentaje_modificado
-    type: Decimal
-    computed: true
-    formula: (monto_vigente - monto_original) / monto_original * 100
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, EnFirma, EnTomaRazon, Vigente, EnModificacion, EnRecepcion, Terminado, Resciliado, Caducado]
-    default: Borrador
-    description: Incluye EnTomaRazon para contratos afectos (Phase 20.2 EACS)
-
-  - name: fecha_firma
-    type: Date
-    nullable: true
-
-  - name: fecha_recepcion_final
-    type: Date
-    nullable: true
-
-  # Libro de Obra (para obras)
-  - name: libro_obra_id
-    type: String
-    nullable: true
-
+- name: id_contrato
+  type: String
+  key: true
+- name: numero_contrato
+  type: String
+  nullable: false
+- name: tipo_contrato
+  type: Enum[Suministro, Servicio, Obra, ConsultoriaEstudio, Mixto]
+  nullable: false
+- name: resolucion_aprobacion
+  type: String
+  nullable: false
+  description: Número de resolución (Legacy). Preferir resolucion_aprobatoria_id.
+- name: resolucion_aprobatoria_id
+  type: String
+  fk: ENT-FIN-ACTO_ADMINISTRATIVO
+  nullable: true
+  description: Link al acto administrativo formal (Phase 20.2 EACS Enrichment)
+- name: fecha_resolucion
+  type: Date
+  nullable: false
+- name: licitacion_id
+  type: String
+  fk: ENT-FIN-LICITACION
+  nullable: true
+- name: trato_directo_id
+  type: String
+  nullable: true
+- name: convenio_marco
+  type: Boolean
+  default: false
+- name: mandante
+  type: String
+  default: GOBIERNO REGIONAL DE ÑUBLE
+- name: proveedor_id
+  type: String
+  fk: ENT-FIN-PROVEEDOR
+- name: proveedor_razon_social
+  type: String
+- name: representante_proveedor
+  type: String
+  nullable: true
+- name: objeto
+  type: Text
+  nullable: false
+- name: alcance
+  type: Text
+  nullable: true
+- name: monto_original
+  type: Decimal
+  nullable: false
+- name: monto_vigente
+  type: Decimal
+  nullable: false
+  description: Incluye modificaciones
+- name: moneda
+  type: Enum[CLP, UF, UTM]
+  default: CLP
+- name: forma_pago
+  type: Enum[Unico, Hitos, Mensual, ContraEntrega]
+- name: modalidad_pago
+  type: Enum[SumaAlzada, Precios, AdminDelegada, Mixta]
+  nullable: true
+- name: fecha_inicio
+  type: Date
+  nullable: false
+- name: fecha_termino_original
+  type: Date
+  nullable: false
+- name: fecha_termino_vigente
+  type: Date
+  nullable: false
+- name: plazo_dias
+  type: Integer
+  computed: true
+- name: administrador_contrato_id
+  type: String
+  fk: ROL-ADM-CONTRATO
+- name: inspector_tecnico_id
+  type: String
+  fk: ROL-ITO
+  nullable: true
+- name: garantia_fiel_cumplimiento_id
+  type: String
+  fk: ENT-FIN-GARANTIA
+  nullable: true
+- name: garantia_correcta_ejecucion_id
+  type: String
+  fk: ENT-FIN-GARANTIA
+  nullable: true
+- name: plazo_responsabilidad_meses
+  type: Integer
+  default: 12
+  description: Post-recepción para obras
+- name: porcentaje_multa_atraso
+  type: Decimal
+  nullable: true
+- name: tope_multas_pct
+  type: Decimal
+  nullable: true
+- name: multas_aplicadas
+  type: Decimal
+  default: 0
+- name: modificaciones_count
+  type: Integer
+  default: 0
+- name: porcentaje_modificado
+  type: Decimal
+  computed: true
+  formula: (monto_vigente - monto_original) / monto_original * 100
+- name: estado
+  type: Enum[Borrador, EnFirma, EnTomaRazon, Vigente, EnModificacion, EnRecepcion,
+    Terminado, Resciliado, Caducado]
+  default: Borrador
+  description: Incluye EnTomaRazon para contratos afectos (Phase 20.2 EACS)
+- name: fecha_firma
+  type: Date
+  nullable: true
+- name: fecha_recepcion_final
+  type: Date
+  nullable: true
+- name: libro_obra_id
+  type: String
+  nullable: true
 invariants:
-  - name: modificacion_30_pct
-    rule: "porcentaje_modificado <= 30 OR requiere_nueva_licitacion"
-    source: "MANUAL-COMPRAS-SEC-V-ADMIN-01"
-
-  - name: garantia_obligatoria_obra
-    rule: "IF tipo_contrato = Obra THEN garantia_fiel_cumplimiento_id NOT NULL"
-
-  - name: administrador_obligatorio
-    rule: "administrador_contrato_id NOT NULL"
-
-morphisms:
-  originado_por: [ENT-FIN-LICITACION]
-  suscrito_con: [ENT-FIN-PROVEEDOR]
-  respaldado_por: [ENT-FIN-GARANTIA]
-  administrado_por: [ROL-ADM-CONTRATO]
-  genera: [ENT-FIN-ESTADO_PAGO, ENT-FIN-ORDEN_COMPRA]
-
-related_processes:
-  - "P.FIN.FORMALIZACION.CONTRATO"
-  - "P.FIN.EJECUCION.CONTRATO"
-  - "P.FIN.CIERRE.CONTRATO"
+- name: modificacion_30_pct
+  rule: porcentaje_modificado <= 30 OR requiere_nueva_licitacion
+  source: MANUAL-COMPRAS-SEC-V-ADMIN-01
+- name: garantia_obligatoria_obra
+  rule: IF tipo_contrato = Obra THEN garantia_fiel_cumplimiento_id NOT NULL
+- name: administrador_obligatorio
+  rule: administrador_contrato_id NOT NULL

@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_aprev_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-APREV-001-01
-story_key: us_aprev_001_01
+urn: urn:goreos:atom:story:us_aprev_001_01:1.0.0
 role_id: USR-SEG-PREV-ANAL
-as_a: "Analista Prevención"
 i_want: formulario móvil de inspección de extintores y vías de escape
 so_that: pueda reportar anomalías inmediatamente
 domain: D-BACK
 priority: P2
-capability_bundle_id: CAP-RRHH-GESTOR-001
-morphisms:
-  protagonizado_por: USR-SEG-PREV-ANAL
-  contribuye_a: CAP-RRHH-GESTOR-001

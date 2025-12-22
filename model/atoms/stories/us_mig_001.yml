@@ -1,37 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_mig_001:1.0.0
   type: Story
-  source: catalogo_exhaustivo_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-MIG-001
-story_key: us_mig_001
+urn: urn:goreos:atom:story:us_mig_001:1.0.0
 role_id: ROLE-MIGRADOR
-as_a: Migrador de Datos
 i_want: ejecutar el proceso completo de inyección de data legacy
 so_that: todos los datos históricos estén disponibles en GORE_OS para arranque operacional
 domain: D-OPS
-module: M10-LEGACY
 priority: P0
-description: |
-  Historia principal que representa el flujo completo de migración legacy.
-  Agrupa todas las fuentes (IDIS, Convenios, Partes, Modificaciones, FRIL, Progs)
-  en un proceso unificado de extracción, transformación, carga y validación.
-process_phases:
-  - phase: EXTRACCIÓN
-    description: Conectar a fuentes Excel/CSV y extraer datos crudos
-  - phase: TRANSFORMACIÓN
-    description: Aplicar reglas de limpieza, normalización y enriquecimiento
-  - phase: CARGA
-    description: Insertar datos en tablas staging
-  - phase: VALIDACIÓN
-    description: Ejecutar checks de integridad y calidad
-  - phase: PROMOCIÓN
-    description: Mover de staging a producción tras aprobación
-acceptance_criteria:
-  - Proceso ejecutable de extremo a extremo
-  - Logs de cada fase disponibles
-  - Rollback implementado por fase
-  - Reporte de calidad consolidado
-capability_bundle_id: CAP-OPS-LEGACY
-morphisms:
-  protagonizado_por: ROLE-MIGRADOR
-  contribuye_a: CAP-OPS-LEGACY
+capability_id: CAP-OPS-LEGACY

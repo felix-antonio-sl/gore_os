@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_mc_002:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GEST-MC-002
-story_key: us_gest_mc_002
+urn: urn:goreos:atom:story:us_gest_mc_002:1.0.0
 role_id: USR-CAL-CTRL
-as_a: "Encargado Control de Gestión"
 i_want: Ejecutar ciclo PDCA para iniciativas de mejora priorizadas
 so_that: Implemento mejoras de manera sistemática y medible
 domain: D-GESTION
 priority: P1
-capability_bundle_id: CAP-GESTION-001
-morphisms:
-  protagonizado_por: USR-CAL-CTRL
-  contribuye_a: CAP-GESTION-001
+capability_id: CAP-GESTION-001

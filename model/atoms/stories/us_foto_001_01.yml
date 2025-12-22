@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_foto_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FOTO-001-01
-story_key: us_foto_001_01
+urn: urn:goreos:atom:story:us_foto_001_01:1.0.0
 role_id: USR-COM-FOTO
-as_a: "Fotógrafo"
 i_want: un repositorio de fotos con metadatos de evento
 so_that: Comunicaciones pueda acceder al material
 domain: D-BACK
 priority: P2
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-COM-FOTO
-  contribuye_a: CAP-BACK-TICKETS-001
+capability_id: CAP-BACK-TICKETS-001

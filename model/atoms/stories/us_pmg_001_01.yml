@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_pmg_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-PMG-001-01
-story_key: us_pmg_001_01
+urn: urn:goreos:atom:story:us_pmg_001_01:1.0.0
 role_id: USR-CAL-PMG-COORD
-as_a: "Coordinador PMG"
 i_want: un sistema de carga de evidencias PMG descentralizado
 so_that: cada unidad suba sus medios de verificación
 domain: D-PLAN
 priority: P1
-capability_bundle_id: CAP-PLAN-001
-morphisms:
-  protagonizado_por: USR-CAL-PMG-COORD
-  contribuye_a: CAP-PLAN-001
+capability_id: CAP-PLAN-001

@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-EPP-001-01
-story_key: us_epp_001_01
+urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
 role_id: USR-DIPIR-ANAL-INV
-as_a: "Analista de Inversión"
 i_want: alertas de desviación de cronograma (Gantt)
 so_that: pueda gestionar medidas correctivas
 domain: D-EJEC
 priority: P1
-capability_bundle_id: CAP-EJEC-PORTAL-001
-morphisms:
-  protagonizado_por: USR-DIPIR-ANAL-INV
-  contribuye_a: CAP-EJEC-PORTAL-001
+capability_id: CAP-EJEC-PORTAL-001

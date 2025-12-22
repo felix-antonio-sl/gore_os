@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ABOG-001-01
-story_key: us_abog_001_01
+urn: urn:goreos:atom:story:us_abog_001_01:1.0.0
 role_id: USR-JUR-ABOG
-as_a: "Abogado Informante"
 i_want: plantillas de actos administrativos con campos pre-llenados
 so_that: pueda agilizar la redacción y reducir errores
 domain: D-NORM
 priority: P0
-capability_bundle_id: CAP-DOCUMENTOS-001
-morphisms:
-  protagonizado_por: USR-JUR-ABOG
-  contribuye_a: CAP-DOCUMENTOS-001

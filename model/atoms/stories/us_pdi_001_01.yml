@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_pdi_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-PDI-001-01
-story_key: us_pdi_001_01
+urn: urn:goreos:atom:story:us_pdi_001_01:1.0.0
 role_id: USR-EXT-PDI
-as_a: "PDI (Policía de Investigaciones)"
 i_want: acceso a cámaras del CIES en investigaciones
 so_that: pueda obtener evidencia
 domain: D-TERR
 priority: P0
-capability_bundle_id: CAP-TERR-MAP-001
-morphisms:
-  protagonizado_por: USR-EXT-PDI
-  contribuye_a: CAP-TERR-MAP-001
+capability_id: CAP-TERR-MAP-001

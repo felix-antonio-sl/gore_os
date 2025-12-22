@@ -1,143 +1,96 @@
-# Entidad: InformeAvance
-# Domain: D-EJEC
-# Generated: 2025-12-21 (Phase 20.2)
-
+_meta:
+  urn: urn:goreos:entity:d-ejec:informe-avance:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-EJEC-INFORME_AVANCE
-urn: "urn:goreos:entity:d-ejec:informe-avance:1.0.0"
+urn: urn:goreos:entity:d-ejec:informe-avance:1.0.0
 name: Informe de Avance
 domain: D-EJEC
 category: Operational
-canonical_source:
-  - "domain_d-ejec.md#p2-ejecución-y-estados-de-pago"
-
-description: |
-  Reporte periódico del ejecutor sobre el avance físico y financiero.
-  Base para validación de Estados de Pago.
-  Alimenta indicadores de SaludIPR en D-FIN.
-
+is_abstract: false
 attributes:
-  - name: id_informe
-    type: String
-    key: true
-
-  - name: convenio_id
-    type: String
-    fk: ENT-FIN-CONVENIO
-    nullable: false
-
-  - name: numero_informe
-    type: Integer
-    nullable: false
-
-  # Período
-  - name: periodo
-    type: String
-    nullable: false
-    description: "YYYY-MM o rango de fechas"
-
-  - name: fecha_desde
-    type: Date
-    nullable: false
-
-  - name: fecha_hasta
-    type: Date
-    nullable: false
-
-  - name: fecha_presentacion
-    type: Date
-    nullable: false
-
-  # Avance
-  - name: avance_fisico_periodo
-    type: Decimal
-    nullable: false
-
-  - name: avance_fisico_acumulado
-    type: Decimal
-    nullable: false
-
-  - name: avance_financiero_periodo
-    type: Decimal
-    nullable: false
-
-  - name: avance_financiero_acumulado
-    type: Decimal
-    nullable: false
-
-  # Desviación
-  - name: avance_planificado
-    type: Decimal
-    nullable: true
-
-  - name: desviacion_pct
-    type: Decimal
-    computed: true
-    formula: avance_fisico_acumulado - avance_planificado
-
-  # Contenido
-  - name: resumen_actividades
-    type: Text
-    nullable: false
-
-  - name: problemas_detectados
-    type: Text
-    nullable: true
-
-  - name: soluciones_propuestas
-    type: Text
-    nullable: true
-
-  - name: actividades_proximas
-    type: Text
-    nullable: true
-
-  # Adjuntos
-  - name: fotografias
-    type: List[String]
-    nullable: true
-
-  - name: documentos_respaldo
-    type: List[String]
-    nullable: true
-
-  # Validación
-  - name: estado
-    type: Enum[Presentado, EnRevision, Aprobado, Devuelto, Rechazado]
-    default: Presentado
-
-  - name: revisor_id
-    type: String
-    fk: ROL-SUPERVISOR
-    nullable: true
-
-  - name: fecha_revision
-    type: Date
-    nullable: true
-
-  - name: observaciones_revisor
-    type: Text
-    nullable: true
-
-  # Vinculación
-  - name: genera_estado_pago
-    type: Boolean
-    default: false
-
-  - name: estado_pago_id
-    type: String
-    fk: ENT-FIN-ESTADO_PAGO
-    nullable: true
-
+- name: id_informe
+  type: String
+  key: true
+- name: convenio_id
+  type: String
+  fk: ENT-FIN-CONVENIO
+  nullable: false
+- name: numero_informe
+  type: Integer
+  nullable: false
+- name: periodo
+  type: String
+  nullable: false
+  description: YYYY-MM o rango de fechas
+- name: fecha_desde
+  type: Date
+  nullable: false
+- name: fecha_hasta
+  type: Date
+  nullable: false
+- name: fecha_presentacion
+  type: Date
+  nullable: false
+- name: avance_fisico_periodo
+  type: Decimal
+  nullable: false
+- name: avance_fisico_acumulado
+  type: Decimal
+  nullable: false
+- name: avance_financiero_periodo
+  type: Decimal
+  nullable: false
+- name: avance_financiero_acumulado
+  type: Decimal
+  nullable: false
+- name: avance_planificado
+  type: Decimal
+  nullable: true
+- name: desviacion_pct
+  type: Decimal
+  computed: true
+  formula: avance_fisico_acumulado - avance_planificado
+- name: resumen_actividades
+  type: Text
+  nullable: false
+- name: problemas_detectados
+  type: Text
+  nullable: true
+- name: soluciones_propuestas
+  type: Text
+  nullable: true
+- name: actividades_proximas
+  type: Text
+  nullable: true
+- name: fotografias
+  type: List[String]
+  nullable: true
+- name: documentos_respaldo
+  type: List[String]
+  nullable: true
+- name: estado
+  type: Enum[Presentado, EnRevision, Aprobado, Devuelto, Rechazado]
+  default: Presentado
+- name: revisor_id
+  type: String
+  fk: ROL-SUPERVISOR
+  nullable: true
+- name: fecha_revision
+  type: Date
+  nullable: true
+- name: observaciones_revisor
+  type: Text
+  nullable: true
+- name: genera_estado_pago
+  type: Boolean
+  default: false
+- name: estado_pago_id
+  type: String
+  fk: ENT-FIN-ESTADO_PAGO
+  nullable: true
 invariants:
-  - name: avance_no_retrocede
-    rule: "avance_fisico_acumulado >= avance_anterior"
-
-  - name: avance_maximo_100
-    rule: "avance_fisico_acumulado <= 100"
-
-morphisms:
-  reporta: [ENT-FIN-CONVENIO]
-  presentado_por: [Ejecutor]
-  validado_por: [ROL-SUPERVISOR]
-  genera: [ENT-FIN-ESTADO_PAGO]
-  alimenta: [ENT-FIN-SALUD_IPR]
+- name: avance_no_retrocede
+  rule: avance_fisico_acumulado >= avance_anterior
+- name: avance_maximo_100
+  rule: avance_fisico_acumulado <= 100

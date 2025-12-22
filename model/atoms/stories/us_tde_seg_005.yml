@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_005:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-TDE-SEG-005
-story_key: us_tde_seg_005
+urn: urn:goreos:atom:story:us_tde_seg_005:1.0.0
 role_id: USR-TDE-CISO
-as_a: "CISO"
 i_want: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
 so_that: Protejo información
 domain: D-TDE
 priority: P1
-capability_bundle_id: CAP-FIRMA-001
-morphisms:
-  protagonizado_por: USR-TDE-CISO
-  contribuye_a: CAP-FIRMA-001
+capability_id: CAP-FIRMA-001

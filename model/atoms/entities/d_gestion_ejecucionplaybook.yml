@@ -1,240 +1,134 @@
-# ==============================================================================
-# GORE_OS Entity Atom: EjecucionPlaybook (Instancia de Playbook)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Playbooks Operativos
-# Source: domain_d-gestion.md M3, dialogo_riguroso_d_gestion.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + AR Virtual"
-  domain: D-GESTION
-  subdomain: playbooks
-  kb_source:
-    - "domain_d-gestion.md M3: Playbooks Operativos"
-    - "dialogo_riguroso_d_gestion.md"
-
-entity:
-  id: ENT-GESTION-EJECUCION-PLAYBOOK
-  name: EjecucionPlaybook
-  name_es: Ejecución de Playbook
-  description: |
-    Instancia de ejecución de un Playbook Operativo.
-
-    Registra el proceso desde la detección del trigger hasta
-    el cierre, incluyendo pasos completados, métricas y
-    lecciones aprendidas.
-
-    Las lecciones alimentan el ciclo PDCA de mejora continua.
-
-  purpose: |
-    Registrar ejecuciones de playbooks para:
-    - Seguimiento en tiempo real
-    - Medición de tiempos y resultados
-    - Captura de bloqueos
-    - Lecciones aprendidas → PDCA
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_ejecucion
-    type: String
-    key: true
-    description: "Identificador único (ej: EXEC-P01-2025-001)"
-
-  - name: playbook_id
-    type: String
-    fk: ENT-GESTION-PLAYBOOK
-    nullable: false
-    description: Playbook que se ejecuta
-
-  # Trigger
-  - name: trigger_descripcion
-    type: Text
-    nullable: false
-    description: Descripción del evento que activó
-
-  - name: trigger_fuente_id
-    type: String
-    nullable: true
-    description: ID del elemento que disparó (H_gore, Riesgo, etc.)
-
-  - name: puntaje_hgore_trigger
-    type: String
-    fk: ENT-GESTION-PUNTAJE-HGORE
-    nullable: true
-    description: Puntaje H_gore que activó si aplica
-
-  # Temporalidad
-  - name: fecha_inicio
-    type: DateTime
-    nullable: false
-    description: Inicio de la ejecución
-
-  - name: fecha_fin
-    type: DateTime
-    nullable: true
-    description: Cierre de la ejecución
-
-  - name: duracion_real_horas
-    type: Decimal
-    computed: true
-    formula: TIMESTAMPDIFF(HOUR, fecha_inicio, fecha_fin)
-    description: Duración real en horas
-
-  - name: dentro_sla
-    type: Boolean
-    computed: true
-    description: ¿Se completó dentro del tiempo estimado?
-
-  # Progreso
-  - name: pasos_totales
-    type: Integer
-    default: 0
-    description: Número de pasos del playbook
-
-  - name: pasos_completados
-    type: Integer
-    default: 0
-    description: Pasos finalizados
-
-  - name: paso_actual
-    type: Integer
-    default: 1
-    description: Paso en ejecución
-
-  - name: avance_porcentual
-    type: Decimal
-    computed: true
-    formula: (pasos_completados / pasos_totales) * 100
-
-  - name: detalle_pasos
-    type: JSON
-    nullable: true
-    description: |
-      Detalle por paso:
-      [{
-        "paso": 1,
-        "estado": "Completado",
-        "fecha_inicio": "...",
-        "fecha_fin": "...",
-        "responsable_real": "...",
-        "notas": "..."
-      }]
-
-  # Estado
-  - name: estado
-    type: Enum[EnCurso, Bloqueado, Completado, Cancelado, Fallido]
-    default: EnCurso
-    description: Estado de la ejecución
-
-  - name: motivo_bloqueo
-    type: Text
-    nullable: true
-    description: Razón del bloqueo si aplica
-
-  - name: fecha_desbloqueo
-    type: DateTime
-    nullable: true
-    description: Cuándo se desbloqueó
-
-  # Resultado
-  - name: resultado
-    type: Enum[Exitoso, Parcial, Fallido]
-    nullable: true
-    description: Resultado final
-
-  - name: metricas_pre
-    type: JSON
-    nullable: true
-    description: Métricas antes de ejecutar
-
-  - name: metricas_post
-    type: JSON
-    nullable: true
-    description: Métricas después de ejecutar
-
-  - name: mejora_lograda
-    type: Decimal
-    computed: true
-    description: Diferencia en métrica principal
-
-  # Responsabilidad
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Responsable de la ejecución
-
-  - name: equipo_involucrado
-    type: Array[String]
-    nullable: true
-    description: IDs de funcionarios participantes
-
-  # Lecciones
-  - name: lecciones_aprendidas
-    type: Text
-    nullable: true
-    description: Aprendizajes para futuras ejecuciones
-
-  - name: oportunidad_mejora_generada_id
-    type: String
-    fk: ENT-GESTION-OPORTUNIDAD-MEJORA
-    nullable: true
-    description: Oportunidad de mejora creada
-
-  # Observaciones
-  - name: observaciones
-    type: Text
-    nullable: true
-    description: Notas generales
-
+- name: id_ejecucion
+  type: String
+  key: true
+  description: 'Identificador único (ej: EXEC-P01-2025-001)'
+- name: playbook_id
+  type: String
+  fk: ENT-GESTION-PLAYBOOK
+  nullable: false
+  description: Playbook que se ejecuta
+- name: trigger_descripcion
+  type: Text
+  nullable: false
+  description: Descripción del evento que activó
+- name: trigger_fuente_id
+  type: String
+  nullable: true
+  description: ID del elemento que disparó (H_gore, Riesgo, etc.)
+- name: puntaje_hgore_trigger
+  type: String
+  fk: ENT-GESTION-PUNTAJE-HGORE
+  nullable: true
+  description: Puntaje H_gore que activó si aplica
+- name: fecha_inicio
+  type: DateTime
+  nullable: false
+  description: Inicio de la ejecución
+- name: fecha_fin
+  type: DateTime
+  nullable: true
+  description: Cierre de la ejecución
+- name: duracion_real_horas
+  type: Decimal
+  computed: true
+  formula: TIMESTAMPDIFF(HOUR, fecha_inicio, fecha_fin)
+  description: Duración real en horas
+- name: dentro_sla
+  type: Boolean
+  computed: true
+  description: ¿Se completó dentro del tiempo estimado?
+- name: pasos_totales
+  type: Integer
+  default: 0
+  description: Número de pasos del playbook
+- name: pasos_completados
+  type: Integer
+  default: 0
+  description: Pasos finalizados
+- name: paso_actual
+  type: Integer
+  default: 1
+  description: Paso en ejecución
+- name: avance_porcentual
+  type: Decimal
+  computed: true
+  formula: (pasos_completados / pasos_totales) * 100
+- name: detalle_pasos
+  type: JSON
+  nullable: true
+  description: "Detalle por paso:\n[{\n  \"paso\": 1,\n  \"estado\": \"Completado\"\
+    ,\n  \"fecha_inicio\": \"...\",\n  \"fecha_fin\": \"...\",\n  \"responsable_real\"\
+    : \"...\",\n  \"notas\": \"...\"\n}]\n"
+- name: estado
+  type: Enum[EnCurso, Bloqueado, Completado, Cancelado, Fallido]
+  default: EnCurso
+  description: Estado de la ejecución
+- name: motivo_bloqueo
+  type: Text
+  nullable: true
+  description: Razón del bloqueo si aplica
+- name: fecha_desbloqueo
+  type: DateTime
+  nullable: true
+  description: Cuándo se desbloqueó
+- name: resultado
+  type: Enum[Exitoso, Parcial, Fallido]
+  nullable: true
+  description: Resultado final
+- name: metricas_pre
+  type: JSON
+  nullable: true
+  description: Métricas antes de ejecutar
+- name: metricas_post
+  type: JSON
+  nullable: true
+  description: Métricas después de ejecutar
+- name: mejora_lograda
+  type: Decimal
+  computed: true
+  description: Diferencia en métrica principal
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Responsable de la ejecución
+- name: equipo_involucrado
+  type: Array[String]
+  nullable: true
+  description: IDs de funcionarios participantes
+- name: lecciones_aprendidas
+  type: Text
+  nullable: true
+  description: Aprendizajes para futuras ejecuciones
+- name: oportunidad_mejora_generada_id
+  type: String
+  fk: ENT-GESTION-OPORTUNIDAD-MEJORA
+  nullable: true
+  description: Oportunidad de mejora creada
+- name: observaciones
+  type: Text
+  nullable: true
+  description: Notas generales
 invariants:
-  - id: INV-EXEC-001
-    name: completado_requiere_resultado
-    rule: estado = 'Completado' → resultado IS NOT NULL
-    description: Ejecución completada debe tener resultado
-    severity: error
-
-  - id: INV-EXEC-002
-    name: bloqueado_requiere_motivo
-    rule: estado = 'Bloqueado' → motivo_bloqueo IS NOT NULL
-    description: Bloqueo debe tener motivo
-    severity: warning
-
-  - id: INV-EXEC-003
-    name: pasos_coherentes
-    rule: pasos_completados <= pasos_totales
-    description: No pueden completarse más pasos que el total
-    severity: error
-
-lifecycle:
-  states:
-    - name: EnCurso
-      description: Ejecución activa
-    - name: Bloqueado
-      description: Esperando resolución de impedimento
-    - name: Completado
-      description: Todos los pasos finalizados
-    - name: Cancelado
-      description: Abortado por decisión
-    - name: Fallido
-      description: No se lograron criterios de éxito
-
-morphisms:
-  instancia_de: [ENT-GESTION-PLAYBOOK]
-  activado_por: [ENT-GESTION-PUNTAJE-HGORE, ENT-GESTION-RIESGO]
-  genera: [ENT-GESTION-OPORTUNIDAD-MEJORA]
-  ejecutado_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - resultado
-    - pasos_completados
-  retention_years: 5
+- id: INV-EXEC-001
+  name: completado_requiere_resultado
+  rule: estado = 'Completado' → resultado IS NOT NULL
+  description: Ejecución completada debe tener resultado
+  severity: error
+- id: INV-EXEC-002
+  name: bloqueado_requiere_motivo
+  rule: estado = 'Bloqueado' → motivo_bloqueo IS NOT NULL
+  description: Bloqueo debe tener motivo
+  severity: warning
+- id: INV-EXEC-003
+  name: pasos_coherentes
+  rule: pasos_completados <= pasos_totales
+  description: No pueden completarse más pasos que el total
+  severity: error

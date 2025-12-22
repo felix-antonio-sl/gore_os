@@ -1,113 +1,62 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Alerta
-# ==============================================================================
-# Domain: D-OPS (Operaciones del Sistema)
-# Subdomain: Monitoreo (M3)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-OPS
-  subdomain: monitoreo
-
-entity:
-  id: ENT-OPS-ALERTA
-  name: Alerta
-  name_es: Alerta de Sistema
-  description: |
-    Notificación generada cuando una métrica cruza un umbral definido.
-    Puede escalar automáticamente a ticket o PagerDuty.
-
-  purpose: |
-    Modelar alertas para:
-    - Detección proactiva de problemas
-    - Escalamiento automático
-    - Historial de incidentes
-
-  categorical_type: Event
-  is_abstract: false
-  category: Observability
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_alerta
-    type: String
-    key: true
-
-  - name: tipo
-    type: Enum[Threshold, Anomaly, Heartbeat, SLO]
-    nullable: false
-
-  - name: severidad
-    type: Enum[Info, Warning, Critical, Emergency]
-    default: Warning
-
-  - name: origen
-    type: String
-    nullable: false
-    description: "Sistema/servicio que genera la alerta"
-
-  - name: metrica_nombre
-    type: String
-    nullable: false
-
-  - name: umbral
-    type: Decimal
-    nullable: true
-
-  - name: valor_actual
-    type: Decimal
-    nullable: false
-
-  - name: condicion
-    type: Enum[Greater, Less, Equal, NotEqual]
-    nullable: true
-
-  - name: mensaje
-    type: String
-    nullable: false
-
-  - name: estado
-    type: Enum[Activa, Acknowledged, Resuelta, Silenciada]
-    default: Activa
-
-  - name: fecha_disparo
-    type: DateTime
-    nullable: false
-
-  - name: fecha_resolucion
-    type: DateTime
-    nullable: true
-
-  - name: acknowledged_por_id
-    type: String
-    fk: ENT-OPS-USUARIO-SISTEMA
-    nullable: true
-
-  - name: ticket_generado_id
-    type: String
-    fk: ENT-OPS-TICKET
-    nullable: true
-
+- name: id_alerta
+  type: String
+  key: true
+- name: tipo
+  type: Enum[Threshold, Anomaly, Heartbeat, SLO]
+  nullable: false
+- name: severidad
+  type: Enum[Info, Warning, Critical, Emergency]
+  default: Warning
+- name: origen
+  type: String
+  nullable: false
+  description: Sistema/servicio que genera la alerta
+- name: metrica_nombre
+  type: String
+  nullable: false
+- name: umbral
+  type: Decimal
+  nullable: true
+- name: valor_actual
+  type: Decimal
+  nullable: false
+- name: condicion
+  type: Enum[Greater, Less, Equal, NotEqual]
+  nullable: true
+- name: mensaje
+  type: String
+  nullable: false
+- name: estado
+  type: Enum[Activa, Acknowledged, Resuelta, Silenciada]
+  default: Activa
+- name: fecha_disparo
+  type: DateTime
+  nullable: false
+- name: fecha_resolucion
+  type: DateTime
+  nullable: true
+- name: acknowledged_por_id
+  type: String
+  fk: ENT-OPS-USUARIO-SISTEMA
+  nullable: true
+- name: ticket_generado_id
+  type: String
+  fk: ENT-OPS-TICKET
+  nullable: true
 invariants:
-  - id: INV-ALERT-001
-    name: threshold_tiene_umbral
-    rule: tipo = 'Threshold' → umbral IS NOT NULL AND condicion IS NOT NULL
-    description: "Alerta de umbral debe tener umbral y condición"
-
-  - id: INV-ALERT-002
-    name: critical_genera_ticket
-    rule: severidad = 'Critical' AND estado = 'Activa' AND duracion > 5min → ticket_generado_id IS NOT NULL
-    description: "Alerta crítica activa por 5min genera ticket"
-
-morphisms:
-  genera_ticket: [ENT-OPS-TICKET]
-  acknowledged_por: [ENT-OPS-USUARIO-SISTEMA]
-  de_metrica: [ENT-OPS-METRICA]
-
-audit:
-  fields_tracked:
-    - estado
-  retention_years: 2
+- id: INV-ALERT-001
+  name: threshold_tiene_umbral
+  rule: tipo = 'Threshold' → umbral IS NOT NULL AND condicion IS NOT NULL
+  description: Alerta de umbral debe tener umbral y condición
+- id: INV-ALERT-002
+  name: critical_genera_ticket
+  rule: severidad = 'Critical' AND estado = 'Activa' AND duracion > 5min → ticket_generado_id
+    IS NOT NULL
+  description: Alerta crítica activa por 5min genera ticket

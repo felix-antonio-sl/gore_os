@@ -1,216 +1,123 @@
-# ==============================================================================
-# GORE_OS Entity Atom: IndicadorPOA (Indicador de Plan Operativo)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Sistema de Control de Gestión (SCG)
-# Source: domain_d-gestion.md M1, kb_gn_035 GORE-CONTROL-GESTION-INDICADORES-01
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + AR Virtual"
-  domain: D-GESTION
-  subdomain: scg
-  kb_source:
-    - "domain_d-gestion.md M1: SCG"
-    - "kb_gn_035 → GORE-CONTROL-GESTION-INDICADORES-01"
-    - "dialogo_riguroso_d_gestion.md"
-
-entity:
-  id: ENT-GESTION-INDICADOR-POA
-  name: IndicadorPOA
-  name_es: Indicador de Plan Operativo Anual
-  description: |
-    Métrica SMART asociada a un objetivo del POA divisional.
-
-    Tipología según kb_gn_035:
-    - Eficacia: Logro de objetivos
-    - Eficiencia: Recursos vs resultados
-    - Calidad: Satisfacción y tiempos
-    - Impacto: Outcomes regionales
-
-    Cada indicador tiene meta, valor actual y tendencia.
-
-  purpose: |
-    Modelar indicadores POA para:
-    - Medir avance de metas divisionales
-    - Calcular puntaje H_gore
-    - Alimentar reportes de gestión
-    - Detectar desviaciones y activar acciones correctivas
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_indicador
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: poa_id
-    type: String
-    fk: ENT-GESTION-POA
-    nullable: false
-    description: POA al que pertenece
-
-  - name: codigo
-    type: String
-    nullable: false
-    description: "Código corto (ej: IND-DAF-001)"
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre descriptivo del indicador
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción detallada
-
-  # Tipología SMART
-  - name: tipo
-    type: Enum[Eficacia, Eficiencia, Calidad, Impacto]
-    nullable: false
-    description: Clasificación del indicador
-
-  - name: formula
-    type: Text
-    nullable: false
-    description: Fórmula de cálculo
-
-  - name: unidad_medida
-    type: String
-    nullable: false
-    description: "Unidad (%, días, M$, etc.)"
-
-  # Metas
-  - name: linea_base
-    type: Decimal
-    nullable: true
-    description: Valor inicial de referencia
-
-  - name: meta_anual
-    type: Decimal
-    nullable: false
-    description: Meta para el período fiscal
-
-  - name: meta_t1
-    type: Decimal
-    nullable: true
-    description: Meta Trimestre 1
-
-  - name: meta_t2
-    type: Decimal
-    nullable: true
-    description: Meta Trimestre 2
-
-  - name: meta_t3
-    type: Decimal
-    nullable: true
-    description: Meta Trimestre 3
-
-  - name: meta_t4
-    type: Decimal
-    nullable: true
-    description: Meta Trimestre 4
-
-  # Valores actuales
-  - name: valor_actual
-    type: Decimal
-    default: 0
-    description: Último valor medido
-
-  - name: fecha_actualizacion
-    type: Date
-    nullable: true
-    description: Fecha última medición
-
-  - name: avance_porcentual
-    type: Decimal
-    computed: true
-    formula: |
-      CASE 
-        WHEN meta_anual = 0 THEN 0
-        ELSE (valor_actual / meta_anual) * 100
-      END
-    description: Porcentaje de cumplimiento
-
-  # Tendencia
-  - name: tendencia
-    type: Enum[Ascendente, Estable, Descendente]
-    nullable: true
-    description: Comportamiento reciente
-
-  - name: valor_anterior
-    type: Decimal
-    nullable: true
-    description: Valor período anterior
-
-  # Semáforo
-  - name: estado_semaforo
-    type: Enum[Verde, Amarillo, Rojo]
-    computed: true
-    formula: |
-      CASE 
-        WHEN avance_porcentual >= 90 THEN 'Verde'
-        WHEN avance_porcentual >= 50 THEN 'Amarillo'
-        ELSE 'Rojo'
-      END
-    description: Estado visual del indicador
-
-  # Responsabilidad
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Funcionario responsable del indicador
-
-  - name: fuente_datos
-    type: String
-    nullable: true
-    description: "Origen de los datos (SIGFE, encuesta, etc.)"
-
-  # Vinculación presupuestaria
-  - name: item_presupuestario
-    type: String
-    nullable: true
-    description: Ítem del presupuesto asociado
-
-  - name: cdp_id
-    type: String
-    fk: ENT-FIN-CDP
-    nullable: true
-    description: CDP vinculado si aplica
-
+- name: id_indicador
+  type: String
+  key: true
+  description: Identificador único
+- name: poa_id
+  type: String
+  fk: ENT-GESTION-POA
+  nullable: false
+  description: POA al que pertenece
+- name: codigo
+  type: String
+  nullable: false
+  description: 'Código corto (ej: IND-DAF-001)'
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre descriptivo del indicador
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción detallada
+- name: tipo
+  type: Enum[Eficacia, Eficiencia, Calidad, Impacto]
+  nullable: false
+  description: Clasificación del indicador
+- name: formula
+  type: Text
+  nullable: false
+  description: Fórmula de cálculo
+- name: unidad_medida
+  type: String
+  nullable: false
+  description: Unidad (%, días, M$, etc.)
+- name: linea_base
+  type: Decimal
+  nullable: true
+  description: Valor inicial de referencia
+- name: meta_anual
+  type: Decimal
+  nullable: false
+  description: Meta para el período fiscal
+- name: meta_t1
+  type: Decimal
+  nullable: true
+  description: Meta Trimestre 1
+- name: meta_t2
+  type: Decimal
+  nullable: true
+  description: Meta Trimestre 2
+- name: meta_t3
+  type: Decimal
+  nullable: true
+  description: Meta Trimestre 3
+- name: meta_t4
+  type: Decimal
+  nullable: true
+  description: Meta Trimestre 4
+- name: valor_actual
+  type: Decimal
+  default: 0
+  description: Último valor medido
+- name: fecha_actualizacion
+  type: Date
+  nullable: true
+  description: Fecha última medición
+- name: avance_porcentual
+  type: Decimal
+  computed: true
+  formula: "CASE \n  WHEN meta_anual = 0 THEN 0\n  ELSE (valor_actual / meta_anual)\
+    \ * 100\nEND\n"
+  description: Porcentaje de cumplimiento
+- name: tendencia
+  type: Enum[Ascendente, Estable, Descendente]
+  nullable: true
+  description: Comportamiento reciente
+- name: valor_anterior
+  type: Decimal
+  nullable: true
+  description: Valor período anterior
+- name: estado_semaforo
+  type: Enum[Verde, Amarillo, Rojo]
+  computed: true
+  formula: "CASE \n  WHEN avance_porcentual >= 90 THEN 'Verde'\n  WHEN avance_porcentual\
+    \ >= 50 THEN 'Amarillo'\n  ELSE 'Rojo'\nEND\n"
+  description: Estado visual del indicador
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario responsable del indicador
+- name: fuente_datos
+  type: String
+  nullable: true
+  description: Origen de los datos (SIGFE, encuesta, etc.)
+- name: item_presupuestario
+  type: String
+  nullable: true
+  description: Ítem del presupuesto asociado
+- name: cdp_id
+  type: String
+  fk: ENT-FIN-CDP
+  nullable: true
+  description: CDP vinculado si aplica
 invariants:
-  - id: INV-IND-001
-    name: meta_positiva
-    rule: meta_anual > 0
-    description: La meta anual debe ser positiva
-    severity: error
-
-  - id: INV-IND-002
-    name: coherencia_trimestral
-    rule: |
-      (meta_t1 IS NOT NULL AND meta_t2 IS NOT NULL AND 
-       meta_t3 IS NOT NULL AND meta_t4 IS NOT NULL) →
-      (meta_t1 + meta_t2 + meta_t3 + meta_t4) = meta_anual OR
-      MAX(meta_t1, meta_t2, meta_t3, meta_t4) = meta_anual
-    description: Metas trimestrales deben ser coherentes con anual
-    severity: warning
-
-morphisms:
-  pertenece_a: [ENT-GESTION-POA]
-  genera: [ENT-GESTION-MEDICION-POA]
-  alimenta: [ENT-GESTION-PUNTAJE-HGORE]
-  vinculado_a: [ENT-FIN-CDP]
-
-audit:
-  fields_tracked:
-    - valor_actual
-    - estado_semaforo
-  retention_years: 10
+- id: INV-IND-001
+  name: meta_positiva
+  rule: meta_anual > 0
+  description: La meta anual debe ser positiva
+  severity: error
+- id: INV-IND-002
+  name: coherencia_trimestral
+  rule: "(meta_t1 IS NOT NULL AND meta_t2 IS NOT NULL AND \n meta_t3 IS NOT NULL AND\
+    \ meta_t4 IS NOT NULL) →\n(meta_t1 + meta_t2 + meta_t3 + meta_t4) = meta_anual\
+    \ OR\nMAX(meta_t1, meta_t2, meta_t3, meta_t4) = meta_anual\n"
+  description: Metas trimestrales deben ser coherentes con anual
+  severity: warning

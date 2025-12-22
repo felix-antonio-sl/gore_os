@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_ejec_h_org:1.0.0
+  urn: urn:goreos:entity:d-ejec:ENT-EJEC-H_ORG:1.0.0
   type: Entity
-  source: domains/d-ejec/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-EJEC-H_ORG
 name: H_org
-entity_key: h_org
 domain: D-EJEC
 category: Reference
-description: Panel de Salud Organizacional. Ver D-EVOL
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

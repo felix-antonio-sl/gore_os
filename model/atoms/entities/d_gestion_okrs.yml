@@ -1,203 +1,111 @@
-# ==============================================================================
-# GORE_OS Entity Atom: OKRs (Objectives & Key Results)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Sistema de Control de Gestión (SCG)
-# Source: dialogo_orquestado_dgestion_fenix.md
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-22"
-  updated_at: "2025-12-22"
-  created_by: "AR Virtual + Arquitecto ORKO"
-  domain: D-GESTION
-  subdomain: scg
-  kb_source:
-    - "domain_d-gestion.md M1: SCG"
-    - "dialogo_orquestado_dgestion_fenix.md"
-  migration_note: "Upgraded from 16-line zombie to entity linking ERD → POA"
-
-entity:
-  id: ENT-GESTION-OKRS
-  name: OKRs
-  name_es: Objetivo y Resultados Clave
-  description: |
-    Metodología de gestión por objetivos que vincula la ERD con el POA.
-
-    Estructura OKR:
-    - Objective (O): Meta cualitativa inspiracional
-    - Key Results (KR): Métricas cuantitativas que evidencian logro
-
-    Los OKRs operacionalizan los Objetivos Estratégicos (OE) de la ERD
-    en metas medibles para cada División vía el POA.
-
-  purpose: |
-    Modelar OKRs para:
-    - Vincular ERD → División → POA
-    - Definir objetivos trimestrales/anuales
-    - Establecer key results medibles
-    - Alinear esfuerzos institucionales
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_okr
-    type: String
-    key: true
-    description: "Identificador único (ej: OKR-2025-DAF-01)"
-
-  - name: codigo
-    type: String
-    nullable: true
-    description: Código corto
-
-  # Vinculación estratégica
-  - name: erd_id
-    type: String
-    fk: ENT-PLAN-ERD
-    nullable: false
-    description: ERD vigente
-
-  - name: objetivo_estrategico_id
-    type: String
-    fk: ENT-PLAN-OBJETIVO-ESTRATEGICO
-    nullable: true
-    description: Objetivo estratégico origen
-
-  - name: eje_id
-    type: String
-    fk: ENT-PLAN-EJE
-    nullable: true
-    description: Eje estratégico ERD
-
-  # División
-  - name: division_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: false
-    description: División responsable
-
-  - name: poa_id
-    type: String
-    fk: ENT-GESTION-POA
-    nullable: true
-    description: POA donde se implementa
-
-  # Objetivo
-  - name: objetivo
-    type: Text
-    nullable: false
-    description: "Objective: meta cualitativa inspiracional"
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción ampliada
-
-  # Período
-  - name: periodo
-    type: Enum[Trimestral, Semestral, Anual]
-    default: Anual
-    description: Período del OKR
-
-  - name: año
-    type: Integer
-    nullable: false
-
-  - name: trimestre
-    type: Integer
-    nullable: true
-    description: "Trimestre (1-4) si es trimestral"
-
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-
-  - name: fecha_fin
-    type: Date
-    nullable: false
-
-  # Key Results
-  - name: key_results
-    type: JSON
-    nullable: false
-    description: |
-      Resultados clave:
-      [{
-        "kr_id": "KR1",
-        "descripcion": "...",
-        "meta": 100,
-        "actual": 0,
-        "unidad": "%",
-        "peso": 0.33
-      }]
-
-  - name: total_krs
-    type: Integer
-    default: 0
-
-  - name: krs_cumplidos
-    type: Integer
-    default: 0
-
-  - name: avance_porcentual
-    type: Decimal
-    computed: true
-    formula: "AVG(key_results[*].actual / key_results[*].meta) * 100"
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, Activo, EnRevision, Cerrado]
-    default: Borrador
-
-  # Responsabilidad
-  - name: owner_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Responsable del OKR
-
-  - name: sponsor_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Sponsor (jefatura)
-
-  # Calificación
-  - name: score_final
-    type: Decimal
-    nullable: true
-    description: "Score final (0.0-1.0)"
-
-  - name: resultado
-    type: Enum[Superado, Cumplido, Parcial, NoCumplido]
-    nullable: true
-
+- name: id_okr
+  type: String
+  key: true
+  description: 'Identificador único (ej: OKR-2025-DAF-01)'
+- name: codigo
+  type: String
+  nullable: true
+  description: Código corto
+- name: erd_id
+  type: String
+  fk: ENT-PLAN-ERD
+  nullable: false
+  description: ERD vigente
+- name: objetivo_estrategico_id
+  type: String
+  fk: ENT-PLAN-OBJETIVO-ESTRATEGICO
+  nullable: true
+  description: Objetivo estratégico origen
+- name: eje_id
+  type: String
+  fk: ENT-PLAN-EJE
+  nullable: true
+  description: Eje estratégico ERD
+- name: division_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: false
+  description: División responsable
+- name: poa_id
+  type: String
+  fk: ENT-GESTION-POA
+  nullable: true
+  description: POA donde se implementa
+- name: objetivo
+  type: Text
+  nullable: false
+  description: 'Objective: meta cualitativa inspiracional'
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción ampliada
+- name: periodo
+  type: Enum[Trimestral, Semestral, Anual]
+  default: Anual
+  description: Período del OKR
+- name: año
+  type: Integer
+  nullable: false
+- name: trimestre
+  type: Integer
+  nullable: true
+  description: Trimestre (1-4) si es trimestral
+- name: fecha_inicio
+  type: Date
+  nullable: false
+- name: fecha_fin
+  type: Date
+  nullable: false
+- name: key_results
+  type: JSON
+  nullable: false
+  description: "Resultados clave:\n[{\n  \"kr_id\": \"KR1\",\n  \"descripcion\": \"\
+    ...\",\n  \"meta\": 100,\n  \"actual\": 0,\n  \"unidad\": \"%\",\n  \"peso\":\
+    \ 0.33\n}]\n"
+- name: total_krs
+  type: Integer
+  default: 0
+- name: krs_cumplidos
+  type: Integer
+  default: 0
+- name: avance_porcentual
+  type: Decimal
+  computed: true
+  formula: AVG(key_results[*].actual / key_results[*].meta) * 100
+- name: estado
+  type: Enum[Borrador, Activo, EnRevision, Cerrado]
+  default: Borrador
+- name: owner_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Responsable del OKR
+- name: sponsor_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Sponsor (jefatura)
+- name: score_final
+  type: Decimal
+  nullable: true
+  description: Score final (0.0-1.0)
+- name: resultado
+  type: Enum[Superado, Cumplido, Parcial, NoCumplido]
+  nullable: true
 invariants:
-  - id: INV-OKR-001
-    name: minimo_tres_krs
-    rule: total_krs >= 3
-    description: Mínimo 3 key results por OKR
-    severity: warning
-
-  - id: INV-OKR-002
-    name: pesos_krs_suman_uno
-    rule: SUM(key_results[*].peso) = 1.0
-    description: Pesos de KRs deben sumar 100%
-
-morphisms:
-  deriva_de: [ENT-PLAN-ERD, ENT-PLAN-OBJETIVO-ESTRATEGICO]
-  implementado_en: [ENT-GESTION-POA]
-  asignado_a: [ENT-BACK-DIVISION]
-  owned_by: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - avance_porcentual
-    - score_final
-  retention_years: 5
+- id: INV-OKR-001
+  name: minimo_tres_krs
+  rule: total_krs >= 3
+  description: Mínimo 3 key results por OKR
+  severity: warning
+- id: INV-OKR-002
+  name: pesos_krs_suman_uno
+  rule: SUM(key_results[*].peso) = 1.0
+  description: Pesos de KRs deben sumar 100%

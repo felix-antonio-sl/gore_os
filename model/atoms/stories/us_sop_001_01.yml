@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_sop_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-SOP-001-01
-story_key: us_sop_001_01
+urn: urn:goreos:atom:story:us_sop_001_01:1.0.0
 role_id: USR-DAF-TIC-SUP
-as_a: "Soporte Técnico"
 i_want: historial de mantenimiento por número de serie de equipo
 so_that: pueda detectar fallas recurrentes
 domain: D-OPS
 priority: P1
-capability_bundle_id: CAP-OPS-001
-morphisms:
-  protagonizado_por: USR-DAF-TIC-SUP
-  contribuye_a: CAP-OPS-001
+capability_id: CAP-OPS-001

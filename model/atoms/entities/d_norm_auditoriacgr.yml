@@ -1,149 +1,73 @@
-# ==============================================================================
-# GORE_OS Entity Atom: AuditoriaCGR
-# ==============================================================================
-# Domain: D-NORM (Gestión Jurídico-Administrativa)
-# Subdomain: Control Externo
-# Source: Ley 10.336, KB-GN-200
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Fiscal Virtual"
-  domain: D-NORM
-  subdomain: control_externo
-  kb_source:
-    - "Ley 10.336: Ley Orgánica CGR"
-
-entity:
-  id: ENT-NORM-AUDITORIA
-  name: AuditoriaCGR
-  name_es: Auditoría CGR
-  description: |
-    Proceso de fiscalización de la Contraloría General de la República.
-    Puede ser programada o especial.
-
-    Fases: Notificación → Planificación → Ejecución → Preinforme → Informe Final
-
-  purpose: |
-    - Registrar auditorías CGR
-    - Gestionar observaciones
-    - Seguimiento de planes de mejora
-    - Trazabilidad de fiscalización
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_auditoria
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: oficio_inicio
-    type: String
-    nullable: false
-    description: Oficio CGR de inicio
-
-  - name: tipo
-    type: Enum[Programada, Especial, Seguimiento]
-    nullable: false
-    description: Tipo de auditoría
-
-  - name: alcance
-    type: Text
-    nullable: false
-    description: Alcance de la auditoría
-
-  - name: periodo_auditado
-    type: String
-    nullable: true
-    description: Período bajo revisión
-
-  # Fechas
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-    description: Fecha de inicio
-
-  - name: fecha_preinforme
-    type: Date
-    nullable: true
-    description: Fecha de preinforme
-
-  - name: fecha_informe_final
-    type: Date
-    nullable: true
-    description: Fecha de informe final
-
-  # Contraparte
-  - name: contraparte_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Contraparte institucional
-
-  - name: areas_auditadas
-    type: Array[String]
-    nullable: true
-    description: Divisiones/Unidades auditadas
-
-  # Observaciones
-  - name: observaciones_count
-    type: Integer
-    default: 0
-    description: Número de observaciones
-
-  - name: observaciones
-    type: Array[Object]
-    nullable: true
-    description: Lista de observaciones
-
-  # Plan de mejora
-  - name: plan_mejora_id
-    type: String
-    nullable: true
-    description: ID del plan de mejora
-
-  # Estado
-  - name: estado
-    type: Enum[Notificada, EnEjecucion, Preinforme, Descargos, InformeFinal, EnSeguimiento, Cerrada]
-    default: Notificada
-    description: Estado de la auditoría
-
+- name: id_auditoria
+  type: String
+  key: true
+  description: Identificador único
+- name: oficio_inicio
+  type: String
+  nullable: false
+  description: Oficio CGR de inicio
+- name: tipo
+  type: Enum[Programada, Especial, Seguimiento]
+  nullable: false
+  description: Tipo de auditoría
+- name: alcance
+  type: Text
+  nullable: false
+  description: Alcance de la auditoría
+- name: periodo_auditado
+  type: String
+  nullable: true
+  description: Período bajo revisión
+- name: fecha_inicio
+  type: Date
+  nullable: false
+  description: Fecha de inicio
+- name: fecha_preinforme
+  type: Date
+  nullable: true
+  description: Fecha de preinforme
+- name: fecha_informe_final
+  type: Date
+  nullable: true
+  description: Fecha de informe final
+- name: contraparte_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Contraparte institucional
+- name: areas_auditadas
+  type: Array[String]
+  nullable: true
+  description: Divisiones/Unidades auditadas
+- name: observaciones_count
+  type: Integer
+  default: 0
+  description: Número de observaciones
+- name: observaciones
+  type: Array[Object]
+  nullable: true
+  description: Lista de observaciones
+- name: plan_mejora_id
+  type: String
+  nullable: true
+  description: ID del plan de mejora
+- name: estado
+  type: Enum[Notificada, EnEjecucion, Preinforme, Descargos, InformeFinal, EnSeguimiento,
+    Cerrada]
+  default: Notificada
+  description: Estado de la auditoría
 invariants:
-  - id: INV-AUD-001
-    name: cerrada_requiere_informe
-    rule: |
-      estado = 'Cerrada' → fecha_informe_final IS NOT NULL
-    description: Auditoría cerrada requiere informe final
-    severity: warning
+- id: INV-AUD-001
+  name: cerrada_requiere_informe
+  rule: 'estado = ''Cerrada'' → fecha_informe_final IS NOT NULL
 
-lifecycle:
-  states:
-    - name: Notificada
-      description: CGR notificó inicio
-    - name: EnEjecucion
-      description: Auditores en trabajo de campo
-    - name: Preinforme
-      description: CGR emitió preinforme
-    - name: Descargos
-      description: GORE presentando descargos
-    - name: InformeFinal
-      description: Informe final publicado
-    - name: EnSeguimiento
-      description: CGR dando seguimiento
-    - name: Cerrada
-      description: Proceso finalizado
-
-morphisms:
-  genera: [ENT-NORM-ACTO]
-  contraparte: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - observaciones_count
-  retention_years: 20
+    '
+  description: Auditoría cerrada requiere informe final
+  severity: warning

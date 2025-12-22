@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-COM-001-01
-story_key: us_com_001_01
+urn: urn:goreos:atom:story:us_com_001_01:1.0.0
 role_id: USR-COM-ENC
-as_a: "Encargado Comunicaciones"
 i_want: un calendario de contenidos con programación de publicaciones
 so_that: pueda planificar la comunicación institucional
 domain: D-BACK
 priority: P0
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-COM-ENC
-  contribuye_a: CAP-BACK-TICKETS-001
+capability_id: CAP-BACK-TICKETS-001

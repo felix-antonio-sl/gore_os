@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_bien_002_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-BIEN-002-01
-story_key: us_bien_002_01
+urn: urn:goreos:atom:story:us_bien_002_01:1.0.0
 role_id: USR-NEW-ANALISTA-BIE
-as_a: "Analista Bienestar"
 i_want: un módulo de beneficios y programas de bienestar
 so_that: pueda administrar solicitudes
 domain: D-BACK
 priority: P2
-capability_bundle_id: CAP-RRHH-GESTOR-001
-morphisms:
-  protagonizado_por: USR-NEW-ANALISTA-BIE
-  contribuye_a: CAP-RRHH-GESTOR-001
+capability_id: CAP-RRHH-GESTOR-001

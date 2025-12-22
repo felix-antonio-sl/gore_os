@@ -1,0 +1,24 @@
+_meta:
+  urn: urn:goreos:profunctor:entity_evalua:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-ENTITY_EVALUA
+urn: urn:goreos:profunctor:entity_evalua:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: ''
+  target: ENT-EJEC-CONVENIO
+- source: ''
+  target: ENT-FIN-IPR
+- source: ''
+  target: ENT-EVOL-SISTEMA
+- source: ''
+  target: ENT-EVOL-CAPACIDAD
+- source: ENT-FIN-EVALUACION_IPR
+  target: ENT-FIN-IPR
+- source: ENT-FIN-EVALUACION_IPR
+  target: ENT-FIN-IDI
+- source: ENT-FIN-EVALUACION_IPR
+  target: ENT-FIN-PPR

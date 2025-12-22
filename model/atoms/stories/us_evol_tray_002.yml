@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_tray_002:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-EVOL-TRAY-002
-story_key: us_evol_tray_002
+urn: urn:goreos:atom:story:us_evol_tray_002:1.0.0
 role_id: USR-EVOL-OP
-as_a: "Operador de Sistema"
 i_want: Ajustar umbrales de riesgo
 so_that: Calibro sensibilidad de alertas
 domain: D-EVOL
 priority: P1
-capability_bundle_id: CAP-EVOL-001
-morphisms:
-  protagonizado_por: USR-EVOL-OP
-  contribuye_a: CAP-EVOL-001
+capability_id: CAP-EVOL-001

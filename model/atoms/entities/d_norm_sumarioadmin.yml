@@ -1,160 +1,76 @@
-# ==============================================================================
-# GORE_OS Entity Atom: SumarioAdmin
-# ==============================================================================
-# Domain: D-NORM (Gestión Jurídico-Administrativa)
-# Subdomain: Cumplimiento
-# Source: Estatuto Administrativo Art. 119-145, KB-GN-200 LEY-18834-T5-RESP-ADM-01
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Fiscal Virtual"
-  domain: D-NORM
-  subdomain: cumplimiento
-  kb_source:
-    - "Estatuto Administrativo Art. 119-145"
-    - "KB-GN-200: LEY-18834-T5-RESP-ADM-01"
-
-entity:
-  id: ENT-NORM-SUMARIO
-  name: SumarioAdmin
-  name_es: Sumario Administrativo
-  description: |
-    Procedimiento disciplinario para investigar faltas administrativas
-    y determinar responsabilidades funcionarias.
-
-    Tipos:
-    - Investigación Sumaria: Faltas leves
-    - Sumario Administrativo: Faltas graves
-
-    Sanciones: Censura, Multa, Suspensión, Destitución
-
-  purpose: |
-    - Investigar infracciones funcionarias
-    - Determinar responsabilidades
-    - Aplicar sanciones disciplinarias
-    - Trazabilidad de procesos
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_sumario
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: tipo
-    type: Enum[InvestigacionSumaria, SumarioAdministrativo]
-    nullable: false
-    description: Tipo de procedimiento
-
-  - name: expediente_id
-    type: String
-    fk: ENT-NORM-EXPEDIENTE
-    nullable: true
-    description: Expediente del sumario
-
-  # Partes
-  - name: inculpado_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Funcionario inculpado
-
-  - name: fiscal_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Fiscal sumariante
-
-  - name: actuario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Actuario (ministro de fe)
-
-  # Fechas
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-    description: Fecha de inicio
-
-  - name: fecha_termino
-    type: Date
-    nullable: true
-    description: Fecha de término
-
-  # Hechos
-  - name: hechos_investigados
-    type: Text
-    nullable: false
-    description: Descripción de los hechos
-
-  - name: normas_infringidas
-    type: Array[String]
-    nullable: true
-    description: Normas presuntamente infringidas
-
-  # Estado y resultado
-  - name: estado
-    type: Enum[EnInvestigacion, Cargos, Descargos, Vista, Dictamen, Resolucion, Cerrado]
-    default: EnInvestigacion
-    description: Etapa del sumario
-
-  - name: resultado
-    type: Enum[Pendiente, Absolucion, Censura, Multa, Suspension, Destitucion, Sobreseimiento]
-    default: Pendiente
-    description: Resultado final
-
-  - name: resolucion_id
-    type: String
-    fk: ENT-NORM-ACTO
-    nullable: true
-    description: Resolución que cierra el sumario
-
-  # Reserva
-  - name: es_reservado
-    type: Boolean
-    default: true
-    description: Expediente reservado
-
+- name: id_sumario
+  type: String
+  key: true
+  description: Identificador único
+- name: tipo
+  type: Enum[InvestigacionSumaria, SumarioAdministrativo]
+  nullable: false
+  description: Tipo de procedimiento
+- name: expediente_id
+  type: String
+  fk: ENT-NORM-EXPEDIENTE
+  nullable: true
+  description: Expediente del sumario
+- name: inculpado_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario inculpado
+- name: fiscal_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Fiscal sumariante
+- name: actuario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Actuario (ministro de fe)
+- name: fecha_inicio
+  type: Date
+  nullable: false
+  description: Fecha de inicio
+- name: fecha_termino
+  type: Date
+  nullable: true
+  description: Fecha de término
+- name: hechos_investigados
+  type: Text
+  nullable: false
+  description: Descripción de los hechos
+- name: normas_infringidas
+  type: Array[String]
+  nullable: true
+  description: Normas presuntamente infringidas
+- name: estado
+  type: Enum[EnInvestigacion, Cargos, Descargos, Vista, Dictamen, Resolucion, Cerrado]
+  default: EnInvestigacion
+  description: Etapa del sumario
+- name: resultado
+  type: Enum[Pendiente, Absolucion, Censura, Multa, Suspension, Destitucion, Sobreseimiento]
+  default: Pendiente
+  description: Resultado final
+- name: resolucion_id
+  type: String
+  fk: ENT-NORM-ACTO
+  nullable: true
+  description: Resolución que cierra el sumario
+- name: es_reservado
+  type: Boolean
+  default: true
+  description: Expediente reservado
 invariants:
-  - id: INV-SUM-001
-    name: cerrado_requiere_resolucion
-    rule: |
-      estado = 'Cerrado' → resolucion_id IS NOT NULL
-    description: Sumario cerrado requiere resolución
-    severity: error
+- id: INV-SUM-001
+  name: cerrado_requiere_resolucion
+  rule: 'estado = ''Cerrado'' → resolucion_id IS NOT NULL
 
-lifecycle:
-  states:
-    - name: EnInvestigacion
-      description: Recopilando antecedentes
-    - name: Cargos
-      description: Formulando cargos
-    - name: Descargos
-      description: Recibiendo descargos
-    - name: Vista
-      description: En período probatorio
-    - name: Dictamen
-      description: Fiscal elaborando dictamen
-    - name: Resolucion
-      description: Autoridad resolviendo
-    - name: Cerrado
-      description: Procedimiento cerrado
-
-morphisms:
-  resuelto_por: [ENT-NORM-ACTO]
-  documentado_en: [ENT-NORM-EXPEDIENTE]
-  inculpa_a: [ENT-BACK-FUNCIONARIO]
-  instruido_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - resultado
-  retention_years: 20
+    '
+  description: Sumario cerrado requiere resolución
+  severity: error

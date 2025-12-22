@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_rrhh_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-RRHH-001-01
-story_key: us_rrhh_001_01
+urn: urn:goreos:atom:story:us_rrhh_001_01:1.0.0
 role_id: USR-DAF-RH-JEFE
-as_a: "Jefe Gestión Personas"
 i_want: un workflow digital de ingreso de funcionarios con checklist de documentos
 so_that: el proceso de incorporación sea ágil y completo
 domain: D-BACK
 priority: P0
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-DAF-RH-JEFE
-  contribuye_a: CAP-BACK-TICKETS-001
+capability_id: CAP-BACK-TICKETS-001

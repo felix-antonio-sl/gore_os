@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-SUBV-001-01
-story_key: us_subv_001_01
+urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
 role_id: USR-DIDES-SUBV-ANAL
-as_a: "Analista Subvenciones"
 i_want: un registro de organizaciones receptoras con historial
 so_that: pueda validar elegibilidad
 domain: D-FIN
 priority: P1
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DIDES-SUBV-ANAL
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

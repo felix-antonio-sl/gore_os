@@ -1,216 +1,123 @@
-# ==============================================================================
-# GORE_OS Entity Atom: PostulacionFRPD
-# ==============================================================================
-# Domain: D-FIN (Financial Management)
-# Subdomain: Mecanismos de Asignación
-# Source: kb_gn_027_guia_frpd_koda.yml
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: draft
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gestor IPR 360"
-  domain: D-FIN
-  subdomain: mecanismos
-  kb_source:
-    - "kb_gn_027_guia_frpd_koda.yml"
-
-entity:
-  id: ENT-FIN-POST-FRPD
-  name: PostulacionFRPD
-  name_es: Postulación FRPD (Royalty)
-  description: |
-    Postulación al Fondo Regional para la Productividad y el Desarrollo (FRPD),
-    financiado con recursos del Royalty Minero. Estas iniciativas buscan fomentar
-    actividades productivas, de desarrollo regional y la promoción de la 
-    investigación científica y tecnológica (CTCI).
-
-    Se rige por la Ley de Presupuestos (Glosa 08 del GORE) y bases específicas
-    que definen pilares estratégicos (Investigación, Innovación, Emprendimiento,
-    Capital Humano) y sectores prioritarios de la ERD.
-
-  purpose: |
-    Modelar las reglas de negocio específicas del FRPD para:
-    - Clasificar iniciativas por pilar estratégico y sector ERD
-    - Verificar requisitos de elegibilidad (profesional residente, % remuneraciones)
-    - Gestionar la evaluación técnica diferenciada (CTCI vs Fomento)
-    - Controlar plazos de ejecución (máx 30 meses)
-
-  categorical_type: Object
-  is_abstract: false
-
-  extends: null
-
-  related_to:
-    - entity: ENT-FIN-CONCURSO
-      relation: postula_a
-      cardinality: N:1
-      description: Concurso FRPD específico
-    - entity: ENT-ORG-ORGANIZACION
-      relation: postulante
-      cardinality: N:1
-      description: Entidad ejecutora (Pública, Privada, Universidad, etc.)
-    - entity: ENT-FIN-CONVENIO
-      relation: genera_convenio
-      cardinality: 1:0..1
-      description: Convenio de transferencia si adjudica
-    - entity: ENT-FIN-RATE
-      relation: evaluacion_tecnica
-      cardinality: 1:N
-      description: Evaluación RATE (GORE o externa)
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_postulacion_frpd
-    type: String
-    key: true
-    description: PK única
+- name: id_postulacion_frpd
+  type: String
+  key: true
+  description: PK única
+- name: concurso_id
+  type: String
+  fk: ENT-FIN-CONCURSO
+  nullable: false
+  description: Referencia al concurso FRPD
+- name: institucion_postulante_id
+  type: String
+  fk: ENT-ORG-ORGANIZACION
+  nullable: false
+  description: Entidad que postula
+- name: nombre_iniciativa
+  type: String
+  nullable: false
+  description: Título del proyecto
+- name: pilar_estrategico
+  type: Enum[INVESTIGACION_CIENTIFICA, INNOVACION, EMPRENDIMIENTO, CAPITAL_HUMANO,
+    DIFUSION_TRANSFERENCIA]
+  nullable: false
+  description: 'Pilar principal de la iniciativa:
 
-  - name: concurso_id
-    type: String
-    fk: ENT-FIN-CONCURSO
-    nullable: false
-    description: Referencia al concurso FRPD
+    - INVESTIGACION_CIENTIFICA: Generación de conocimiento
 
-  - name: institucion_postulante_id
-    type: String
-    fk: ENT-ORG-ORGANIZACION
-    nullable: false
-    description: Entidad que postula
+    - INNOVACION: Nuevos productos/procesos
 
-  - name: nombre_iniciativa
-    type: String
-    nullable: false
-    description: Título del proyecto
+    - EMPRENDIMIENTO: Creación/mejora de negocios
 
-  # Clasificación Estratégica
-  - name: pilar_estrategico
-    type: Enum[INVESTIGACION_CIENTIFICA, INNOVACION, EMPRENDIMIENTO, CAPITAL_HUMANO, DIFUSION_TRANSFERENCIA]
-    nullable: false
-    description: |
-      Pilar principal de la iniciativa:
-      - INVESTIGACION_CIENTIFICA: Generación de conocimiento
-      - INNOVACION: Nuevos productos/procesos
-      - EMPRENDIMIENTO: Creación/mejora de negocios
-      - CAPITAL_HUMANO: Formación avanzada/retención talentos
-      - DIFUSION_TRANSFERENCIA: Extensión tecnológica
+    - CAPITAL_HUMANO: Formación avanzada/retención talentos
 
-  - name: sector_prioritario_erd
-    type: Enum[SILVOAGROPECUARIO, TURISMO, COMERCIO_SERVICIOS, INDUSTRIA_MANUFACTURERA, CONSTRUCCION, ENERGIA, MINERIA, OTRO]
-    nullable: false
-    description: Sector económico priorizado en la ERD Ñuble
+    - DIFUSION_TRANSFERENCIA: Extensión tecnológica
 
-  - name: foco_tematico
-    type: String
-    nullable: true
-    description: Detalle del foco (ej. "Agricultura 4.0", "Turismo Sustentable")
+    '
+- name: sector_prioritario_erd
+  type: Enum[SILVOAGROPECUARIO, TURISMO, COMERCIO_SERVICIOS, INDUSTRIA_MANUFACTURERA,
+    CONSTRUCCION, ENERGIA, MINERIA, OTRO]
+  nullable: false
+  description: Sector económico priorizado en la ERD Ñuble
+- name: foco_tematico
+  type: String
+  nullable: true
+  description: Detalle del foco (ej. "Agricultura 4.0", "Turismo Sustentable")
+- name: es_ctci_puro
+  type: Boolean
+  default: false
+  description: 'Si es Ciencia, Tecnología, Conocimiento e Innovación puro.
 
-  # Reglas de Negocio Específicas
-  - name: es_ctci_puro
-    type: Boolean
-    default: false
-    description: |
-      Si es Ciencia, Tecnología, Conocimiento e Innovación puro.
-      Si true, puede estar exento de ciertas evaluaciones ex-ante (MIDESO)
-      según glosas presupuestarias.
+    Si true, puede estar exento de ciertas evaluaciones ex-ante (MIDESO)
 
-  - name: monto_solicitado
-    type: Decimal
-    nullable: false
-    description: Monto total solicitado al FRPD
+    según glosas presupuestarias.
 
-  - name: plazo_ejecucion_meses
-    type: Integer
-    nullable: false
-    description: Duración del proyecto (máx. 30 meses)
-
-  - name: porcentaje_remuneraciones
-    type: Decimal
-    default: 0
-    description: "% del presupuesto destinado a RRHH"
-
-  - name: profesional_residente_nuble
-    type: Boolean
-    default: true
-    description: Si el equipo cuenta con profesionales residentes en la región (Obligatorio)
-
-  - name: habilitada_subctci
-    type: Boolean
-    default: false
-    description: Si la institución está validada por la Subsecretaría de CTCI (si aplica)
-
-  # Evaluación
-  - name: puntaje_ponderado
-    type: Decimal
-    nullable: true
-    description: Nota final evaluación (1.0 - 5.0/7.0)
-
-  - name: estado_admisibilidad
-    type: Enum[Pendiente, Admisible, Inadmisible]
-    default: Pendiente
-
-  - name: estado_tecnico
-    type: Enum[Pendiente, Elegible, NoElegible, Recomendado]
-    default: Pendiente
-
+    '
+- name: monto_solicitado
+  type: Decimal
+  nullable: false
+  description: Monto total solicitado al FRPD
+- name: plazo_ejecucion_meses
+  type: Integer
+  nullable: false
+  description: Duración del proyecto (máx. 30 meses)
+- name: porcentaje_remuneraciones
+  type: Decimal
+  default: 0
+  description: '% del presupuesto destinado a RRHH'
+- name: profesional_residente_nuble
+  type: Boolean
+  default: true
+  description: Si el equipo cuenta con profesionales residentes en la región (Obligatorio)
+- name: habilitada_subctci
+  type: Boolean
+  default: false
+  description: Si la institución está validada por la Subsecretaría de CTCI (si aplica)
+- name: puntaje_ponderado
+  type: Decimal
+  nullable: true
+  description: Nota final evaluación (1.0 - 5.0/7.0)
+- name: estado_admisibilidad
+  type: Enum[Pendiente, Admisible, Inadmisible]
+  default: Pendiente
+- name: estado_tecnico
+  type: Enum[Pendiente, Elegible, NoElegible, Recomendado]
+  default: Pendiente
 invariants:
-  - id: INV-FRPD-001
-    name: max_dos_iniciativas
-    rule: |
-      COUNT(PostulacionFRPD WHERE institucion_postulante_id = THIS.institucion_id 
-            AND concurso_id = THIS.concurso_id) <= 2
-    description: Máximo 2 postulaciones por institución por concurso
-    source: kb_gn_027 Bases FRPD
+- id: INV-FRPD-001
+  name: max_dos_iniciativas
+  rule: "COUNT(PostulacionFRPD WHERE institucion_postulante_id = THIS.institucion_id\
+    \ \n      AND concurso_id = THIS.concurso_id) <= 2\n"
+  description: Máximo 2 postulaciones por institución por concurso
+  source: kb_gn_027 Bases FRPD
+- id: INV-FRPD-002
+  name: profesional_residente
+  rule: profesional_residente_nuble = true
+  description: Obligación de contar con profesionales residentes en Ñuble
+  severity: error
+  source: kb_gn_027 Requisitos
+- id: INV-FRPD-003
+  name: limite_remuneraciones
+  rule: porcentaje_remuneraciones <= 30.0
+  description: Gastos en personal no deben superar el 30% del total
+  source: kb_gn_027 Restricciones Presupuestarias
+  severity: warning
+- id: INV-FRPD-004
+  name: plazo_maximo
+  rule: plazo_ejecucion_meses <= 30
+  description: Ejecución no puede exceder 30 meses
+  source: kb_gn_027
+- id: INV-FRPD-005
+  name: elegibilidad_puntaje
+  rule: '(estado_tecnico = ''Elegible'' OR estado_tecnico = ''Recomendado'') →
 
-  - id: INV-FRPD-002
-    name: profesional_residente
-    rule: profesional_residente_nuble = true
-    description: Obligación de contar con profesionales residentes en Ñuble
-    severity: error
-    source: kb_gn_027 Requisitos
+    puntaje_ponderado >= 5.0
 
-  - id: INV-FRPD-003
-    name: limite_remuneraciones
-    rule: porcentaje_remuneraciones <= 30.0
-    description: Gastos en personal no deben superar el 30% del total
-    source: kb_gn_027 Restricciones Presupuestarias
-    severity: warning
-
-  - id: INV-FRPD-004
-    name: plazo_maximo
-    rule: plazo_ejecucion_meses <= 30
-    description: Ejecución no puede exceder 30 meses
-    source: kb_gn_027
-
-  - id: INV-FRPD-005
-    name: elegibilidad_puntaje
-    rule: |
-      (estado_tecnico = 'Elegible' OR estado_tecnico = 'Recomendado') →
-      puntaje_ponderado >= 5.0
-    description: Se requiere nota mínima 5.0 para elegibilidad técnica (Escala 1-7)
-
-lifecycle:
-  states:
-    - name: Postulada
-      description: Ingresada en plataforma
-    - name: RevisionAdmin
-      description: Revisión de antecedentes administrativos
-    - name: RevisionTecnica
-      description: Evaluación calidad técnica y pertinencia
-    - name: Recomendada
-      description: Aprobada para adjudicación
-    - name: Adjudicada
-      description: Seleccionada por CORE/Gobernador
-
-  transitions:
-    - from: Postulada
-      to: RevisionAdmin
-    - from: RevisionAdmin
-      to: RevisionTecnica
-      guard: estado_admisibilidad = 'Admisible'
-    - from: RevisionTecnica
-      to: Recomendada
-      guard: puntaje_ponderado >= 5.0
-    - from: Recomendada
-      to: Adjudicada
-      trigger: acuerdo_core_adjudicacion
+    '
+  description: Se requiere nota mínima 5.0 para elegibilidad técnica (Escala 1-7)

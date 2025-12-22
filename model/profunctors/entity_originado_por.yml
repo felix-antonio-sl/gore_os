@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:profunctor:entity_originado_por:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-ENTITY_ORIGINADO_POR
+urn: urn:goreos:profunctor:entity_originado_por:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: ENT-FIN-CONTRATO
+  target: ENT-FIN-LICITACION
+- source: ENT-FIN-ORDEN_COMPRA
+  target: ENT-FIN-LICITACION
+- source: ENT-FIN-ORDEN_COMPRA
+  target: ENT-FIN-CONVENIO_MARCO
+- source: ENT-FIN-REINTEGRO
+  target: ENT-FIN-RENDICION

@@ -1,141 +1,68 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Artefacto (KB)
-# ==============================================================================
-# Domain: D-EVOL (Evolución e Inteligencia)
-# Subdomain: Base de Conocimiento (M7)
-# Source: ORKO TF3_Information.Semantic
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Arquitecto ORKO"
-  domain: D-EVOL
-  subdomain: base_conocimiento
-  kb_source:
-    - "urn:knowledge:orko:core:tejidos:1.0.0"
-    - "dialogo_triagente_d_evol.md"
-
-entity:
-  id: ENT-EVOL-ARTEFACTO
-  name: Artefacto
-  name_es: Artefacto de Conocimiento
-  description: |
-    Documento estructurado con semántica explícita, identificado por URN
-    y registrado en el Catálogo institucional.
-
-    TF3_Information: Contenido estructurado + Propiedades Temporales + Lineage.
-
-  purpose: |
-    Modelar artefactos KB para:
-    - Inventario de conocimiento institucional
-    - Resolución determinística vía URN
-    - Trazabilidad de linaje
-    - Governance de clasificación
-
-  categorical_type: Object
-  is_abstract: false
-  category: Information
-  orko_fabric: TF3_Information.Semantic
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_artefacto
-    type: String
-    key: true
-
-  - name: urn
-    type: String
-    nullable: true
-    description: "urn:knowledge:namespace:domain:artifact:version"
-
-  - name: titulo
-    type: String
-    nullable: false
-
-  # Tipo
-  - name: tipo
-    type: Enum[Guia, Normativa, Tecnico, Operativo, Politica, Plantilla]
-    nullable: false
-
-  # Versionamiento
-  - name: version
-    type: String
-    default: "1.0.0"
-    description: "Versionamiento semántico"
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, Revision, Publicado, Deprecado]
-    default: Borrador
-
-  # Contenido
-  - name: contenido_hash
-    type: String
-    nullable: true
-    description: "SHA256 del contenido para integridad"
-
-  - name: ubicacion_fisica
-    type: String
-    nullable: true
-    description: "Path o URL al artefacto"
-
-  # Clasificación
-  - name: clasificacion
-    type: Enum[Publico, Interno, Restringido, Confidencial]
-    default: Interno
-
-  # Catálogo
-  - name: catalogo_id
-    type: String
-    fk: ENT-EVOL-CATALOGO
-    nullable: true
-
-  # Metadata
-  - name: autor_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
-  - name: fecha_creacion
-    type: Date
-    nullable: false
-
-  - name: fecha_publicacion
-    type: Date
-    nullable: true
-
-  - name: fecha_deprecacion
-    type: Date
-    nullable: true
-
-  # Vigencia (TF3)
-  - name: vigencia
-    type: String
-    nullable: true
-    description: "Permanente, Anual, Temporal, etc."
-
+- name: id_artefacto
+  type: String
+  key: true
+- name: urn
+  type: String
+  nullable: true
+  description: urn:knowledge:namespace:domain:artifact:version
+- name: titulo
+  type: String
+  nullable: false
+- name: tipo
+  type: Enum[Guia, Normativa, Tecnico, Operativo, Politica, Plantilla]
+  nullable: false
+- name: version
+  type: String
+  default: 1.0.0
+  description: Versionamiento semántico
+- name: estado
+  type: Enum[Borrador, Revision, Publicado, Deprecado]
+  default: Borrador
+- name: contenido_hash
+  type: String
+  nullable: true
+  description: SHA256 del contenido para integridad
+- name: ubicacion_fisica
+  type: String
+  nullable: true
+  description: Path o URL al artefacto
+- name: clasificacion
+  type: Enum[Publico, Interno, Restringido, Confidencial]
+  default: Interno
+- name: catalogo_id
+  type: String
+  fk: ENT-EVOL-CATALOGO
+  nullable: true
+- name: autor_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+- name: fecha_creacion
+  type: Date
+  nullable: false
+- name: fecha_publicacion
+  type: Date
+  nullable: true
+- name: fecha_deprecacion
+  type: Date
+  nullable: true
+- name: vigencia
+  type: String
+  nullable: true
+  description: Permanente, Anual, Temporal, etc.
 invariants:
-  - id: INV-ART-001
-    name: publicado_requiere_urn
-    rule: estado = 'Publicado' → urn IS NOT NULL
-    description: "Artefactos publicados requieren URN"
-
-  - id: INV-ART-002
-    name: publicado_requiere_hash
-    rule: estado = 'Publicado' → contenido_hash IS NOT NULL
-    description: "Publicados requieren hash de integridad"
-
-morphisms:
-  registrado_en: [ENT-EVOL-CATALOGO]
-  tiene_linaje: [ENT-EVOL-LINAJE]
-  autor: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - version
-    - clasificacion
-  retention_years: 10
-  legal_basis: "Framework ORKO, Gestión de Conocimiento"
+- id: INV-ART-001
+  name: publicado_requiere_urn
+  rule: estado = 'Publicado' → urn IS NOT NULL
+  description: Artefactos publicados requieren URN
+- id: INV-ART-002
+  name: publicado_requiere_hash
+  rule: estado = 'Publicado' → contenido_hash IS NOT NULL
+  description: Publicados requieren hash de integridad

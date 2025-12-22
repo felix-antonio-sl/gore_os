@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_anl_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-TERR-ANL-001
-story_key: us_terr_anl_001
+urn: urn:goreos:atom:story:us_terr_anl_001:1.0.0
 role_id: USR-DIPL-PLAN
-as_a: "Analista Planificación"
 i_want: Consultar histórico de inversiones por tipología, comuna y año
 so_that: Analizo tendencias
 domain: D-TERR
 priority: P1
-capability_bundle_id: CAP-TERR-MAP-001
-morphisms:
-  protagonizado_por: USR-DIPL-PLAN
-  contribuye_a: CAP-TERR-MAP-001
+capability_id: CAP-TERR-MAP-001

@@ -1,160 +1,74 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ActividadEstrategica (Ejecución ERD)
-# ==============================================================================
-# Domain: D-PLAN (Planificación Estratégica)
-# Subdomain: Estrategia
-# Source: KB-006 ERD Ñuble, LOC GORE Art. 16, dialogo_cobertura_rigurosa
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Goreólogo"
-  domain: D-PLAN
-  subdomain: estrategia
-  kb_source:
-    - "kb_gn_006_erd_nuble_2024_2030_koda.yml"
-    - "LOC GORE Art. 16 (funciones de planificación)"
-    - "dialogo_cobertura_rigurosa_dplan_dterr.md"
-
-entity:
-  id: ENT-PLAN-ACTIVIDAD
-  name: ActividadEstrategica
-  name_es: Actividad Estratégica
-  description: |
-    Unidad de ejecución de la ERD que define acciones concretas para
-    alcanzar un Objetivo Estratégico. Cada actividad tiene un responsable
-    sectorial, metas físicas y plazos estimados.
-
-    La ERD Ñuble 2024-2030 define ~100 actividades estratégicas distribuidas
-    en 29 objetivos, 12 lineamientos y 5 ejes.
-
-    Sin este nivel de granularidad, las IPR se vinculan solo a objetivos
-    generales, dificultando la trazabilidad y auditoría CGR.
-
-  purpose: |
-    Materializar el "cómo" de la estrategia:
-    - Vincular IPR a acciones específicas (no solo objetivos)
-    - Definir responsables sectoriales
-    - Establecer metas físicas y plazos
-    - Habilitar seguimiento operativo de la ERD
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_actividad
-    type: String
-    key: true
-    description: "Identificador único (ej: ACT-1.1.1.1)"
-
-  - name: codigo
-    type: String
-    nullable: false
-    description: "Código jerárquico (ej: 1.1.1.1 para E1.L1.OE1.A1)"
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre de la actividad estratégica
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción detallada de la actividad
-
-  # Jerarquía ERD
-  - name: objetivo_estrategico_id
-    type: String
-    fk: ENT-PLAN-OE
-    nullable: false
-    description: Objetivo Estratégico al que pertenece
-
-  # Responsabilidad
-  - name: responsable_sectorial
-    type: String
-    nullable: true
-    description: "Servicio/División responsable (ej: DIPLADE, SECTRA, MOP)"
-
-  - name: responsable_secundario
-    type: String
-    nullable: true
-    description: Corresponsable o colaborador
-
-  # Metas
-  - name: meta_fisica
-    type: String
-    nullable: true
-    description: "Meta física esperada (ej: '10 km de caminos', '500 becas')"
-
-  - name: meta_financiera_mm
-    type: Decimal
-    nullable: true
-    description: Estimación de inversión en MM$
-
-  - name: plazo_estimado
-    type: Enum[CortoP, MedianoP, LargoP]
-    default: MedianoP
-    description: "Horizonte: Corto (<2 años), Mediano (2-5), Largo (5-10)"
-
-  # Vinculación ODS
-  - name: ods_vinculados
-    type: List[Integer]
-    nullable: true
-    description: "ODS de Agenda 2030 vinculados (ej: [8, 9, 11])"
-
-  # Estado
-  - name: estado
-    type: Enum[Planificada, EnEjecucion, Completada, Suspendida]
-    default: Planificada
-    description: Estado de ejecución
-
-  - name: avance_porcentual
-    type: Integer
-    default: 0
-    description: Porcentaje de avance (0-100)
-
-  # Vinculación IPR
-  - name: iprs_vinculadas_count
-    type: Integer
-    default: 0
-    description: Cantidad de IPRs vinculadas a esta actividad
-
-morphisms:
-  pertenece_a: [ENT-PLAN-OE]
-  ejecuta_mediante: [ENT-FIN-IPR]
-  responsable: [DivisionGORE, ServicioPublico]
-  alineado_con: [ODS]
-
+- name: id_actividad
+  type: String
+  key: true
+  description: 'Identificador único (ej: ACT-1.1.1.1)'
+- name: codigo
+  type: String
+  nullable: false
+  description: 'Código jerárquico (ej: 1.1.1.1 para E1.L1.OE1.A1)'
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre de la actividad estratégica
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción detallada de la actividad
+- name: objetivo_estrategico_id
+  type: String
+  fk: ENT-PLAN-OE
+  nullable: false
+  description: Objetivo Estratégico al que pertenece
+- name: responsable_sectorial
+  type: String
+  nullable: true
+  description: 'Servicio/División responsable (ej: DIPLADE, SECTRA, MOP)'
+- name: responsable_secundario
+  type: String
+  nullable: true
+  description: Corresponsable o colaborador
+- name: meta_fisica
+  type: String
+  nullable: true
+  description: 'Meta física esperada (ej: ''10 km de caminos'', ''500 becas'')'
+- name: meta_financiera_mm
+  type: Decimal
+  nullable: true
+  description: Estimación de inversión en MM$
+- name: plazo_estimado
+  type: Enum[CortoP, MedianoP, LargoP]
+  default: MedianoP
+  description: 'Horizonte: Corto (<2 años), Mediano (2-5), Largo (5-10)'
+- name: ods_vinculados
+  type: List[Integer]
+  nullable: true
+  description: 'ODS de Agenda 2030 vinculados (ej: [8, 9, 11])'
+- name: estado
+  type: Enum[Planificada, EnEjecucion, Completada, Suspendida]
+  default: Planificada
+  description: Estado de ejecución
+- name: avance_porcentual
+  type: Integer
+  default: 0
+  description: Porcentaje de avance (0-100)
+- name: iprs_vinculadas_count
+  type: Integer
+  default: 0
+  description: Cantidad de IPRs vinculadas a esta actividad
 invariants:
-  - name: jerarquia_valida
-    condition: "objetivo_estrategico_id EXISTS in ObjetivoEstrategico"
-    severity: CRITICAL
-
-  - name: avance_coherente
-    condition: "avance_porcentual >= 0 AND avance_porcentual <= 100"
-    severity: HIGH
-
-  - name: responsable_definido
-    condition: "estado != 'EnEjecucion' OR responsable_sectorial IS NOT NULL"
-    severity: MEDIUM
-
-lifecycle:
-  states:
-    - name: Planificada
-      description: Actividad definida en ERD pero sin ejecución
-    - name: EnEjecucion
-      description: Al menos una IPR vinculada en ejecución
-    - name: Completada
-      description: Meta física alcanzada
-    - name: Suspendida
-      description: Actividad pausada por decisión estratégica
-
-audit:
-  fields_tracked:
-    - estado
-    - avance_porcentual
-    - iprs_vinculadas_count
-  retention_years: 15
+- name: jerarquia_valida
+  condition: objetivo_estrategico_id EXISTS in ObjetivoEstrategico
+  severity: CRITICAL
+- name: avance_coherente
+  condition: avance_porcentual >= 0 AND avance_porcentual <= 100
+  severity: HIGH
+- name: responsable_definido
+  condition: estado != 'EnEjecucion' OR responsable_sectorial IS NOT NULL
+  severity: MEDIUM

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:goreos:schema:role:1.0.0",
+  "title": "Role",
+  "description": "Objeto que representa un lugar de acción en la categoría G_Req. Firma: Role(id, type, logic_scope)",
+  "type": "object",
+  "required": ["id", "urn", "title", "type", "domain"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "urn": { "type": "string", "pattern": "^urn:goreos:atom:role:" },
+        "type": { "const": "Role" },
+        "schema": { "const": "urn:goreos:schema:role:1.0.0" }
+      },
+      "required": ["urn", "type"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^USR-[A-Z]+-[A-Z0-9]+$",
+      "description": "Identificador semántico del rol"
+    },
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:goreos:atom:role:"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Nombre legible del rol"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["INTERNAL", "EXTERNAL", "SYSTEM", "HYBRID"],
+      "description": "Clasificación del actor"
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^D-[A-Z]+$",
+      "description": "Dominio principal donde opera"
+    },
+    "logic_scope": {
+      "type": "string",
+      "description": "Ámbito lógico de responsabilidad"
+    },
+    "governed_by": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "URNs de leyes/normativas que rigen este rol"
+    }
+  },
+  "additionalProperties": false
+}

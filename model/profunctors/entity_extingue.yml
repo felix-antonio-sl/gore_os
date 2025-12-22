@@ -1,0 +1,12 @@
+_meta:
+  urn: urn:goreos:profunctor:entity_extingue:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-ENTITY_EXTINGUE
+urn: urn:goreos:profunctor:entity_extingue:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: ENT-BACK-PAGO
+  target: ENT-BACK-DEVENGADO

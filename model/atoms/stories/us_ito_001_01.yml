@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_ito_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ITO-001-01
-story_key: us_ito_001_01
+urn: urn:goreos:atom:story:us_ito_001_01:1.0.0
 role_id: USR-MUNI-ITO
-as_a: "Inspector Obras (Municipal)"
 i_want: una app móvil offline para el libro de obras digital
 so_that: pueda registrar hitos sin conexión a internet
 domain: D-EJEC
 priority: P0
-capability_bundle_id: CAP-EJEC-PORTAL-001
-morphisms:
-  protagonizado_por: USR-MUNI-ITO
-  contribuye_a: CAP-EJEC-PORTAL-001
+capability_id: CAP-EJEC-PORTAL-001

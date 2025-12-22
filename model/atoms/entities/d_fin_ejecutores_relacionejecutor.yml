@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_fin_ejecutores_relacionejecutor:1.0.0
+  urn: urn:goreos:entity:d-fin-ejecutores:ENT-FIN-EJECUTORES-RELACIONEJECUTOR:1.0.0
   type: Entity
-  source: domains/d-fin-ejecutores/entity_data
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-EJECUTORES-RELACIONEJECUTOR
 name: RelacionEjecutor
-entity_key: relacionejecutor
 domain: D-FIN-EJECUTORES
 category: Reference
-description: id, actor_id, estado_relacion, nivel_compromiso, fecha_ultimo_contacto
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

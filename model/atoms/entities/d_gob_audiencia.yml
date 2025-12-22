@@ -1,155 +1,90 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Audiencia
-# ==============================================================================
-# Domain: D-GOB (Gobernanza)
-# Subdomain: Despacho GR
-# Source: Ley 20.730 (Lobby), domain_d-gob.md M2
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-GOB
-  subdomain: despacho_gr
-  kb_source:
-    - "Ley 20.730: Ley del Lobby"
-    - "domain_d-gob.md M2: Despacho Gobernador"
-    - "Infolobby.cl"
-
-entity:
-  id: ENT-GOB-AUDIENCIA
-  name: Audiencia
-  name_es: Audiencia
-  description: |
-    Reunión formal del Gobernador o funcionarios de exclusiva confianza
-    con terceros externos. Debe registrarse según Ley 20.730 (Lobby)
-    y publicarse en Infolobby.
-
-  purpose: |
-    - Cumplir Ley del Lobby
-    - Registrar reuniones con stakeholders
-    - Origen de compromisos de gestión
-    - Transparencia pública
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_audiencia
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: fecha
-    type: Date
-    nullable: false
-    description: Fecha de la audiencia
-
-  - name: hora_inicio
-    type: Time
-    nullable: true
-    description: Hora de inicio
-
-  - name: hora_termino
-    type: Time
-    nullable: true
-    description: Hora de término
-
-  - name: lugar
-    type: String
-    nullable: true
-    description: Lugar de la reunión
-
-  # Participantes GORE
-  - name: funcionario_receptor_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Funcionario que recibe la audiencia
-
-  - name: cargo_receptor
-    type: String
-    nullable: true
-    description: Cargo del receptor
-
-  # Solicitante
-  - name: solicitante_id
-    type: String
-    fk: ENT-GOB-ACTOR
-    nullable: true
-    description: Actor que solicita (si registrado)
-
-  - name: solicitante_nombre
-    type: String
-    nullable: false
-    description: Nombre del solicitante
-
-  - name: solicitante_organizacion
-    type: String
-    nullable: true
-    description: Organización que representa
-
-  - name: tipo_solicitante
-    type: Enum[Persona, Empresa, ONG, Municipio, Servicio, Gremio, Otro]
-    nullable: true
-    description: Tipo de solicitante
-
-  # Contenido
-  - name: motivo
-    type: String
-    nullable: false
-    description: Motivo de la audiencia
-
-  - name: materias_tratadas
-    type: Text
-    nullable: true
-    description: Materias efectivamente tratadas
-
-  - name: documentos_entregados
-    type: Array[String]
-    nullable: true
-    description: Documentos entregados por el solicitante
-
-  # Resultado
-  - name: compromisos_generados
-    type: Array[String]
-    nullable: true
-    description: IDs de compromisos generados
-
-  # Infolobby
-  - name: publicada_infolobby
-    type: Boolean
-    default: false
-    description: ¿Publicada en Infolobby?
-
-  - name: infolobby_id
-    type: String
-    nullable: true
-    description: ID en Infolobby
-
-  - name: estado
-    type: Enum[Programada, Realizada, Cancelada, NoShow]
-    default: Programada
-    description: Estado de la audiencia
-
+- name: id_audiencia
+  type: String
+  key: true
+  description: Identificador único
+- name: fecha
+  type: Date
+  nullable: false
+  description: Fecha de la audiencia
+- name: hora_inicio
+  type: Time
+  nullable: true
+  description: Hora de inicio
+- name: hora_termino
+  type: Time
+  nullable: true
+  description: Hora de término
+- name: lugar
+  type: String
+  nullable: true
+  description: Lugar de la reunión
+- name: funcionario_receptor_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Funcionario que recibe la audiencia
+- name: cargo_receptor
+  type: String
+  nullable: true
+  description: Cargo del receptor
+- name: solicitante_id
+  type: String
+  fk: ENT-GOB-ACTOR
+  nullable: true
+  description: Actor que solicita (si registrado)
+- name: solicitante_nombre
+  type: String
+  nullable: false
+  description: Nombre del solicitante
+- name: solicitante_organizacion
+  type: String
+  nullable: true
+  description: Organización que representa
+- name: tipo_solicitante
+  type: Enum[Persona, Empresa, ONG, Municipio, Servicio, Gremio, Otro]
+  nullable: true
+  description: Tipo de solicitante
+- name: motivo
+  type: String
+  nullable: false
+  description: Motivo de la audiencia
+- name: materias_tratadas
+  type: Text
+  nullable: true
+  description: Materias efectivamente tratadas
+- name: documentos_entregados
+  type: Array[String]
+  nullable: true
+  description: Documentos entregados por el solicitante
+- name: compromisos_generados
+  type: Array[String]
+  nullable: true
+  description: IDs de compromisos generados
+- name: publicada_infolobby
+  type: Boolean
+  default: false
+  description: ¿Publicada en Infolobby?
+- name: infolobby_id
+  type: String
+  nullable: true
+  description: ID en Infolobby
+- name: estado
+  type: Enum[Programada, Realizada, Cancelada, NoShow]
+  default: Programada
+  description: Estado de la audiencia
 invariants:
-  - id: INV-AUD-001
-    name: lobby_requiere_publicacion
-    rule: |
-      (estado = 'Realizada' AND funcionario_receptor.cargo IN sujetos_lobby) → publicada_infolobby = true
-    description: Audiencias con sujetos pasivos de Lobby deben publicarse
-    severity: warning
+- id: INV-AUD-001
+  name: lobby_requiere_publicacion
+  rule: '(estado = ''Realizada'' AND funcionario_receptor.cargo IN sujetos_lobby)
+    → publicada_infolobby = true
 
-morphisms:
-  recibida_por: [ENT-BACK-FUNCIONARIO]
-  solicitada_por: [ENT-GOB-ACTOR]
-  genera: [ENT-GOB-COMPROMISO]
-
-audit:
-  fields_tracked:
-    - estado
-    - publicada_infolobby
-  retention_years: 6
+    '
+  description: Audiencias con sujetos pasivos de Lobby deben publicarse
+  severity: warning

@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:profunctor:entity_formalizado_en:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-ENTITY_FORMALIZADO_EN
+urn: urn:goreos:profunctor:entity_formalizado_en:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: ENT-FIN-IPR
+  target: ENT-FIN-CONVENIO
+- source: ENT-FIN-MODIF_PRESUPUESTARIA
+  target: ENT-FIN-ACTO_ADMINISTRATIVO

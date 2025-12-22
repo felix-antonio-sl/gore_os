@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DIDESOH-002-01
-story_key: us_didesoh_002_01
+urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
 role_id: USR-DIDES-JEFE
-as_a: "Jefe DIDESOH"
 i_want: un registro de organizaciones de la sociedad civil activas en la región
 so_that: pueda convocar a diálogos y consultas ciudadanas
 domain: D-TERR
 priority: P1
-capability_bundle_id: CAP-TERR-MAP-001
-morphisms:
-  protagonizado_por: USR-DIDES-JEFE
-  contribuye_a: CAP-TERR-MAP-001
+capability_id: CAP-TERR-MAP-001

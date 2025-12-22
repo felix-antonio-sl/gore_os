@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_ope_003:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FNX-OPE-003
-story_key: us_fnx_ope_003
+urn: urn:goreos:atom:story:us_fnx_ope_003:1.0.0
 role_id: USR-CAL-FNX-FIN
-as_a: "Interventor Financiero"
 i_want: Habilitar línea de ejecución directa para corrección de errores
 so_that: Soluciono problemas de imputación masiva
 domain: D-FENIX
 priority: P1
-capability_bundle_id: CAP-FENIX-001
-morphisms:
-  protagonizado_por: USR-CAL-FNX-FIN
-  contribuye_a: CAP-FENIX-001
+capability_id: CAP-FENIX-001

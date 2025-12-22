@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_mds_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-MDS-001-01
-story_key: us_mds_001_01
+urn: urn:goreos:atom:story:us_mds_001_01:1.0.0
 role_id: USR-EXT-MDS
-as_a: "Analista Inversiones (MDSyF)"
 i_want: acceso al banco de proyectos BIP integrado
 so_that: pueda otorgar el RS (Recomendación Satisfactoria)
 domain: D-EJEC
 priority: P0
-capability_bundle_id: CAP-EJEC-SEG-001
-morphisms:
-  protagonizado_por: USR-EXT-MDS
-  contribuye_a: CAP-EJEC-SEG-001
+capability_id: CAP-EJEC-SEG-001

@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_cont_001_02:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-CONT-001-02
-story_key: us_cont_001_02
+urn: urn:goreos:atom:story:us_cont_001_02:1.0.0
 role_id: USR-EXT-CONT
-as_a: "Contratista / Proveedor"
 i_want: cargar documentación de estados de pago en línea
 so_that: el proceso sea más ágil
 domain: D-FIN
 priority: P1
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-EXT-CONT
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

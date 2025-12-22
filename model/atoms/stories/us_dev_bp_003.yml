@@ -1,21 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_bp_003:1.0.0
   type: Story
-  source: catalogo_exhaustivo_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-BP-003
-story_key: us_dev_bp_003
+urn: urn:goreos:atom:story:us_dev_bp_003:1.0.0
 role_id: ROLE-PO
-as_a: Product Owner
 i_want: crear User Story YAML en atoms/stories vinculada a capability
 so_that: se tenga FK capability_bundle_id válida
 domain: D-DEV
-module: M0-BLUEPRINT
 priority: P0
-acceptance_criteria:
-  - Story YAML creada en atoms/stories
-  - capability_bundle_id válida (existe en capabilities)
-  - role_id válido (existe en inventario roles)
-capability_bundle_id: CAP-DEV-BLUEPRINT
-morphisms:
-  protagonizado_por: ROLE-PO
-  contribuye_a: CAP-DEV-BLUEPRINT
+capability_id: CAP-DEV-BLUEPRINT

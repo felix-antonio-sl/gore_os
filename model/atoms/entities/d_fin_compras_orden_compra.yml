@@ -1,135 +1,92 @@
-# Entidad: OrdenCompra (Orden de Compra)
-# Domain: D-FIN
-# Subdomain: compras
-# Generated: 2025-12-21 (Phase 20.1 Deep Modeling)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:orden-compra:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-ORDEN_COMPRA
-urn: "urn:goreos:entity:d-fin:orden-compra:1.0.0"
+urn: urn:goreos:entity:d-fin:orden-compra:1.0.0
 name: Orden de Compra
 domain: D-FIN
 subdomain: compras
 category: Transaction
-canonical_source:
-  - "urn:knowledge:gorenuble:gn:manual-compras-contrataciones:1.0.0#MANUAL-COMPRAS-SEC-IV-OC-01"
-  - "Ley 19.886 y Decreto 661/2024"
-
-description: |
-  Acto administrativo que formaliza el compromiso con el proveedor,
-  emitido en Mercado Público tras adjudicación o selección en Convenio Marco.
-
+is_abstract: false
 attributes:
-  - name: id_orden_compra
-    type: String
-    key: true
-    description: ID generado por Mercado Público
-
-  - name: numero_mercado_publico
-    type: String
-    nullable: false
-    description: Código único en www.mercadopublico.cl
-
-  - name: fecha_emision
-    type: Date
-    nullable: false
-
-  - name: modalidad_compra
-    type: Enum[ConvenioMarco, LicitacionPublica, TratoDirecto, CompraAgil]
-    nullable: false
-
-  - name: licitacion_id
-    type: String
-    fk: ENT-FIN-LICITACION
-    nullable: true
-    description: NULL si ConvenioMarco o TratoDirecto
-
-  - name: proveedor_id
-    type: String
-    fk: ENT-FIN-PROVEEDOR
-    nullable: false
-
-  - name: proveedor_rut
-    type: String
-    nullable: false
-
-  - name: proveedor_razon_social
-    type: String
-    nullable: false
-
-  # Contenido obligatorio según Decreto 661
-  - name: descripcion_bienes_servicios
-    type: Text
-    nullable: false
-
-  - name: cantidad
-    type: Integer
-    nullable: false
-
-  - name: precio_unitario
-    type: Decimal
-    nullable: false
-
-  - name: monto_total
-    type: Decimal
-    computed: true
-    formula: cantidad * precio_unitario
-
-  - name: plazo_entrega_dias
-    type: Integer
-    nullable: false
-
-  - name: lugar_entrega
-    type: String
-    nullable: false
-
-  # Imputación presupuestaria
-  - name: subtitulo
-    type: String
-    nullable: false
-
-  - name: item
-    type: String
-    nullable: false
-
-  - name: asignacion
-    type: String
-    nullable: true
-
-  - name: cdp_id
-    type: String
-    fk: ENT-FIN-CDP
-    nullable: false
-    description: Certificado de Disponibilidad Presupuestaria
-
-  # Estados
-  - name: estado
-    type: Enum[Emitida, Aceptada, Rechazada, EnEjecucion, RecepcionParcial, RecepcionCompleta, Cerrada]
-    default: Emitida
-
-  - name: fecha_aceptacion
-    type: DateTime
-    nullable: true
-    description: Plazo 48 hrs hábiles para aceptar
-
-  - name: fecha_recepcion_conforme
-    type: Date
-    nullable: true
-
+- name: id_orden_compra
+  type: String
+  key: true
+  description: ID generado por Mercado Público
+- name: numero_mercado_publico
+  type: String
+  nullable: false
+  description: Código único en www.mercadopublico.cl
+- name: fecha_emision
+  type: Date
+  nullable: false
+- name: modalidad_compra
+  type: Enum[ConvenioMarco, LicitacionPublica, TratoDirecto, CompraAgil]
+  nullable: false
+- name: licitacion_id
+  type: String
+  fk: ENT-FIN-LICITACION
+  nullable: true
+  description: NULL si ConvenioMarco o TratoDirecto
+- name: proveedor_id
+  type: String
+  fk: ENT-FIN-PROVEEDOR
+  nullable: false
+- name: proveedor_rut
+  type: String
+  nullable: false
+- name: proveedor_razon_social
+  type: String
+  nullable: false
+- name: descripcion_bienes_servicios
+  type: Text
+  nullable: false
+- name: cantidad
+  type: Integer
+  nullable: false
+- name: precio_unitario
+  type: Decimal
+  nullable: false
+- name: monto_total
+  type: Decimal
+  computed: true
+  formula: cantidad * precio_unitario
+- name: plazo_entrega_dias
+  type: Integer
+  nullable: false
+- name: lugar_entrega
+  type: String
+  nullable: false
+- name: subtitulo
+  type: String
+  nullable: false
+- name: item
+  type: String
+  nullable: false
+- name: asignacion
+  type: String
+  nullable: true
+- name: cdp_id
+  type: String
+  fk: ENT-FIN-CDP
+  nullable: false
+  description: Certificado de Disponibilidad Presupuestaria
+- name: estado
+  type: Enum[Emitida, Aceptada, Rechazada, EnEjecucion, RecepcionParcial, RecepcionCompleta,
+    Cerrada]
+  default: Emitida
+- name: fecha_aceptacion
+  type: DateTime
+  nullable: true
+  description: Plazo 48 hrs hábiles para aceptar
+- name: fecha_recepcion_conforme
+  type: Date
+  nullable: true
 invariants:
-  - name: cdp_obligatorio
-    rule: "cdp_id NOT NULL"
-    source: "MANUAL-COMPRAS-SEC-II-RESERVA-01"
-
-  - name: plazo_aceptacion
-    rule: "fecha_aceptacion <= fecha_emision + 48_horas_habiles OR estado = Rechazada"
-    source: "MANUAL-COMPRAS-SEC-IV-ACEPTACION-01"
-
-morphisms:
-  originado_por: [ENT-FIN-LICITACION, ENT-FIN-CONVENIO_MARCO]
-  respalda: [ENT-FIN-CDP]
-  enviado_a: [ENT-FIN-PROVEEDOR]
-  genera: [ENT-FIN-RECEPCION_CONFORME, ENT-BACK-ACTIVO_FIJO, ENT-FIN-DEVENGADO]
-  registrado_en: [MercadoPublico, SIGFE]
-
-related_processes:
-  - "P.FIN.EMISION.OC"
-  - "P.FIN.RECEPCION.BIENES"
+- name: cdp_obligatorio
+  rule: cdp_id NOT NULL
+  source: MANUAL-COMPRAS-SEC-II-RESERVA-01
+- name: plazo_aceptacion
+  rule: fecha_aceptacion <= fecha_emision + 48_horas_habiles OR estado = Rechazada
+  source: MANUAL-COMPRAS-SEC-IV-ACEPTACION-01

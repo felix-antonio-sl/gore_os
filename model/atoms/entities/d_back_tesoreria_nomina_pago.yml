@@ -1,122 +1,80 @@
-# Entidad: NominaPago
-# Domain: D-BACK
-# Subdomain: tesoreria
-# Generated: 2025-12-21 (Phase 20.1b - Gaps)
-
+_meta:
+  urn: urn:goreos:entity:d-back:nomina-pago:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-BACK-NOMINA_PAGO
-urn: "urn:goreos:entity:d-back:nomina-pago:1.0.0"
+urn: urn:goreos:entity:d-back:nomina-pago:1.0.0
 name: Nómina de Pago
 domain: D-BACK
 subdomain: tesoreria
 category: Transactional
-canonical_source:
-  - "manual_1_3_tesoreria_koda.yml"
-  - "domain_d-back.md#tesorería"
-
-description: |
-  Agrupación de múltiples pagos individuales en un lote para procesamiento
-  bancario masivo. Optimiza la gestión de tesorería y reduce costos de transacción.
-  Aplica a pagos a proveedores, ejecutores y remuneraciones.
-
+is_abstract: false
 attributes:
-  - name: id_nomina
-    type: String
-    key: true
-
-  - name: numero_nomina
-    type: String
-    nullable: false
-
-  - name: ejercicio
-    type: Integer
-    nullable: false
-
-  - name: fecha_emision
-    type: Date
-    nullable: false
-
-  - name: fecha_pago
-    type: Date
-    nullable: true
-
-  # Tipo
-  - name: tipo_nomina
-    type: Enum[Proveedores, Ejecutores, Remuneraciones, Honorarios, Viaticos, Mixta]
-    nullable: false
-
-  # Cuenta origen
-  - name: cuenta_corriente
-    type: String
-    nullable: false
-
-  - name: banco
-    type: String
-    nullable: false
-
-  # Totales
-  - name: cantidad_pagos
-    type: Integer
-    computed: true
-
-  - name: monto_total_bruto
-    type: Decimal
-    nullable: false
-
-  - name: total_retenciones
-    type: Decimal
-    default: 0
-
-  - name: monto_total_liquido
-    type: Decimal
-    computed: true
-    formula: monto_total_bruto - total_retenciones
-
-  # Estado
-  - name: estado
-    type: Enum[EnPreparacion, Autorizada, EnviadaBanco, Procesada, ConRechazos, Cerrada]
-    default: EnPreparacion
-
-  - name: cantidad_rechazos
-    type: Integer
-    default: 0
-
-  # Autorizaciones
-  - name: preparado_por_id
-    type: String
-    fk: ROL-TESORERO
-
-  - name: autorizado_por_id
-    type: String
-    fk: ROL-JEFE-DAF
-    nullable: true
-
-  - name: fecha_autorizacion
-    type: DateTime
-    nullable: true
-
-  # Archivo bancario
-  - name: archivo_banco_url
-    type: String
-    nullable: true
-    description: Archivo TXT/CSV para carga en plataforma bancaria
-
-  - name: numero_lote_banco
-    type: String
-    nullable: true
-
-  - name: comprobante_banco_url
-    type: String
-    nullable: true
-
+- name: id_nomina
+  type: String
+  key: true
+- name: numero_nomina
+  type: String
+  nullable: false
+- name: ejercicio
+  type: Integer
+  nullable: false
+- name: fecha_emision
+  type: Date
+  nullable: false
+- name: fecha_pago
+  type: Date
+  nullable: true
+- name: tipo_nomina
+  type: Enum[Proveedores, Ejecutores, Remuneraciones, Honorarios, Viaticos, Mixta]
+  nullable: false
+- name: cuenta_corriente
+  type: String
+  nullable: false
+- name: banco
+  type: String
+  nullable: false
+- name: cantidad_pagos
+  type: Integer
+  computed: true
+- name: monto_total_bruto
+  type: Decimal
+  nullable: false
+- name: total_retenciones
+  type: Decimal
+  default: 0
+- name: monto_total_liquido
+  type: Decimal
+  computed: true
+  formula: monto_total_bruto - total_retenciones
+- name: estado
+  type: Enum[EnPreparacion, Autorizada, EnviadaBanco, Procesada, ConRechazos, Cerrada]
+  default: EnPreparacion
+- name: cantidad_rechazos
+  type: Integer
+  default: 0
+- name: preparado_por_id
+  type: String
+  fk: ROL-TESORERO
+- name: autorizado_por_id
+  type: String
+  fk: ROL-JEFE-DAF
+  nullable: true
+- name: fecha_autorizacion
+  type: DateTime
+  nullable: true
+- name: archivo_banco_url
+  type: String
+  nullable: true
+  description: Archivo TXT/CSV para carga en plataforma bancaria
+- name: numero_lote_banco
+  type: String
+  nullable: true
+- name: comprobante_banco_url
+  type: String
+  nullable: true
 invariants:
-  - name: autorizacion_previa_envio
-    rule: "IF estado IN (EnviadaBanco, Procesada) THEN autorizado_por_id NOT NULL"
-
-  - name: monto_positivo
-    rule: "monto_total_bruto > 0"
-
-morphisms:
-  contiene: [ENT-BACK-PAGO]
-  autorizada_por: [ROL-JEFE-DAF]
-  procesada_en: [Banco]
-  conciliada_con: [ENT-BACK-CARTOLA_BANCARIA]
+- name: autorizacion_previa_envio
+  rule: IF estado IN (EnviadaBanco, Procesada) THEN autorizado_por_id NOT NULL
+- name: monto_positivo
+  rule: monto_total_bruto > 0

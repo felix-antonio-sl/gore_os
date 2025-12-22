@@ -1,153 +1,80 @@
-# ==============================================================================
-# GORE_OS Entity Atom: OrdenInicio (Orden de Inicio de Obras)
-# ==============================================================================
-# Domain: D-EJEC (Execution & Monitoring)
-# Subdomain: Supervisión
-# Source: D03_gestion_ipr.md P5, KB-019 Fase 5
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-EJEC
-  subdomain: supervision
-  kb_source:
-    - "D03_gestion_ipr.md P5: Ejecución y Supervisión"
-    - "KB-019 Fase 5: Inicio, Licitación, Seguimiento"
-
-entity:
-  id: ENT-EJEC-ORDEN-INICIO
-  name: OrdenInicio
-  name_es: Orden de Inicio
-  description: |
-    Acto administrativo que habilita formalmente el inicio de la ejecución
-    de una obra o servicio. Marca el "día 0" contractual a partir del cual
-    se cuentan los plazos de ejecución.
-
-    Requisitos previos:
-    - Convenio firmado y totalmente tramitado
-    - Garantías en custodia
-    - Contratista adjudicado (si aplica licitación)
-    - Terreno entregado (si aplica obra civil)
-
-  purpose: |
-    - Fijar fecha oficial de inicio de plazos contractuales
-    - Documentar entrega de terreno/activos
-    - Habilitar primera etapa de ejecución
-    - Gatillar seguimiento en PMO Regional
-
-  categorical_type: Object
-  is_abstract: false
-  category: Event
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_orden
-    type: String
-    key: true
-    description: Identificador único (ej. OI-2024-001)
-
-  - name: convenio_id
-    type: String
-    fk: ENT-EJEC-CONVENIO
-    nullable: false
-    description: Convenio que se habilita
-
-  - name: tipo_orden
-    type: Enum[EntregaTerreno, InicioServicio, InicioSuministro, InicioEstudio]
-    nullable: false
-    description: Tipo de inicio según naturaleza del proyecto
-
-  - name: fecha_orden
-    type: Date
-    nullable: false
-    description: Fecha de la orden (día 0 contractual)
-
-  - name: plazo_contractual_dias
-    type: Integer
-    nullable: false
-    description: Plazo de ejecución en días corridos
-
-  - name: fecha_termino_programada
-    type: Date
-    computed: true
-    formula: fecha_orden + plazo_contractual_dias
-    description: Fecha estimada de término
-
-  # Validaciones previas
-  - name: garantias_custodia_ok
-    type: Boolean
-    default: false
-    description: ¿Garantías recibidas en custodia?
-
-  - name: contratista_adjudicado_ok
-    type: Boolean
-    default: false
-    description: ¿Adjudicación formalizada?
-
-  - name: terreno_entregado_ok
-    type: Boolean
-    nullable: true
-    description: ¿Terreno entregado? (null si no aplica)
-
-  # Acta de entrega
-  - name: acta_entrega_ref
-    type: String
-    nullable: true
-    description: Referencia al acta de entrega de terreno
-
-  - name: observaciones_entrega
-    type: Text
-    nullable: true
-    description: Observaciones del estado del terreno/sitio
-
-  # Firmantes
-  - name: firmante_gore_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Funcionario GORE que firma
-
-  - name: firmante_ejecutor
-    type: String
-    nullable: false
-    description: Representante del ejecutor que firma
-
-  - name: estado
-    type: Enum[Borrador, Firmada, Anulada]
-    default: Borrador
-    description: Estado del documento
-
+- name: id_orden
+  type: String
+  key: true
+  description: Identificador único (ej. OI-2024-001)
+- name: convenio_id
+  type: String
+  fk: ENT-EJEC-CONVENIO
+  nullable: false
+  description: Convenio que se habilita
+- name: tipo_orden
+  type: Enum[EntregaTerreno, InicioServicio, InicioSuministro, InicioEstudio]
+  nullable: false
+  description: Tipo de inicio según naturaleza del proyecto
+- name: fecha_orden
+  type: Date
+  nullable: false
+  description: Fecha de la orden (día 0 contractual)
+- name: plazo_contractual_dias
+  type: Integer
+  nullable: false
+  description: Plazo de ejecución en días corridos
+- name: fecha_termino_programada
+  type: Date
+  computed: true
+  formula: fecha_orden + plazo_contractual_dias
+  description: Fecha estimada de término
+- name: garantias_custodia_ok
+  type: Boolean
+  default: false
+  description: ¿Garantías recibidas en custodia?
+- name: contratista_adjudicado_ok
+  type: Boolean
+  default: false
+  description: ¿Adjudicación formalizada?
+- name: terreno_entregado_ok
+  type: Boolean
+  nullable: true
+  description: ¿Terreno entregado? (null si no aplica)
+- name: acta_entrega_ref
+  type: String
+  nullable: true
+  description: Referencia al acta de entrega de terreno
+- name: observaciones_entrega
+  type: Text
+  nullable: true
+  description: Observaciones del estado del terreno/sitio
+- name: firmante_gore_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Funcionario GORE que firma
+- name: firmante_ejecutor
+  type: String
+  nullable: false
+  description: Representante del ejecutor que firma
+- name: estado
+  type: Enum[Borrador, Firmada, Anulada]
+  default: Borrador
+  description: Estado del documento
 invariants:
-  - id: INV-OI-001
-    name: requisitos_previos
-    rule: |
-      (estado = 'Firmada') → (garantias_custodia_ok = true AND contratista_adjudicado_ok = true)
-    description: No se puede firmar sin garantías y adjudicación
-    severity: error
+- id: INV-OI-001
+  name: requisitos_previos
+  rule: '(estado = ''Firmada'') → (garantias_custodia_ok = true AND contratista_adjudicado_ok
+    = true)
 
-  - id: INV-OI-002
-    name: plazo_positivo
-    rule: plazo_contractual_dias > 0
-    description: El plazo debe ser positivo
-    severity: error
-
-lifecycle:
-  states:
-    - name: Borrador
-      description: En preparación
-    - name: Firmada
-      description: Firmada por ambas partes, plazos corriendo
-    - name: Anulada
-      description: Invalidada por causa sobreviniente
-
-morphisms:
-  habilita: [ENT-EJEC-CONVENIO]
-  firmada_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - fecha_orden
-  retention_years: 10
+    '
+  description: No se puede firmar sin garantías y adjudicación
+  severity: error
+- id: INV-OI-002
+  name: plazo_positivo
+  rule: plazo_contractual_dias > 0
+  description: El plazo debe ser positivo
+  severity: error

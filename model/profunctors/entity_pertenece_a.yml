@@ -1,0 +1,38 @@
+_meta:
+  urn: urn:goreos:profunctor:entity_pertenece_a:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-ENTITY_PERTENECE_A
+urn: urn:goreos:profunctor:entity_pertenece_a:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: ''
+  target: ENT-DEV-REPOSITORIO
+- source: ''
+  target: ENT-DEV-BRANCH
+- source: ''
+  target: ENT-DEV-PIPELINE
+- source: ''
+  target: ENT-DEV-PULLREQUEST
+- source: ''
+  target: ENT-DEV-TEST-SUITE
+- source: ''
+  target: ENT-EJEC-CONVENIO
+- source: ''
+  target: ENT-BACK-DIVISION
+- source: ''
+  target: ENT-BACK-DIVISION
+- source: ''
+  target: ENT-BACK-DIVISION
+- source: ''
+  target: ENT-BACK-DIVISION
+- source: ''
+  target: ENT-GESTION-POA
+- source: ''
+  target: ENT-BACK-DIVISION
+- source: ''
+  target: ENT-GOB-CIRCUNSCRIPCION
+- source: ''
+  target: ENT-PLAN-OE

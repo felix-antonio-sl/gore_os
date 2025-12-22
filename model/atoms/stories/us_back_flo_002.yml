@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-BACK-FLO-002
-story_key: us_back_flo_002
+urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
 role_id: USR-DAF-OPS-FLOTA
-as_a: "Encargado Flota"
 i_want: Gestionar solicitudes de vehículos (asignar conductor)
 so_that: Administro uso de flota
 domain: D-BACK
 priority: P1
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-DAF-OPS-FLOTA
-  contribuye_a: CAP-BACK-TICKETS-001

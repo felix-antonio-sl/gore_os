@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ANAL-INV-001-02
-story_key: us_anal_inv_001_02
+urn: urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
 role_id: USR-DIPIR-ANAL-INV
-as_a: "Analista de Inversión"
 i_want: consultar el historial de proyectos similares evaluados anteriormente
 so_that: pueda mantener consistencia en mis criterios
 domain: D-EJEC
 priority: P2
-capability_bundle_id: CAP-EJEC-PORTAL-001
-morphisms:
-  protagonizado_por: USR-DIPIR-ANAL-INV
-  contribuye_a: CAP-EJEC-PORTAL-001

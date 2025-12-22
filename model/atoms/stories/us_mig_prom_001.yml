@@ -1,36 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
   type: Story
-  source: catalogo_exhaustivo_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-MIG-PROM-001
-story_key: us_mig_prom_001
+urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
 role_id: ROLE-ADMIN-TI
-as_a: Administrador TI
 i_want: promover datos validados de staging a producción
 so_that: los datos legacy estén disponibles para uso operacional
 domain: D-OPS
-module: M10-LEGACY
 priority: P0
-promotion_workflow:
-  preconditions:
-    - Suite de validación aprobada (US-MIG-VAL-001)
-    - Backup de tablas destino creado
-    - Ventana de mantenimiento programada
-  stages:
-    - BACKUP: Respaldo de tablas destino actuales
-    - TRUNCATE: Limpieza de tablas destino (si es carga inicial)
-    - INSERT: Copia desde staging a producción
-    - VERIFY: Conteo y checksum de registros
-    - PUBLISH: Notificación a usuarios
-  rollback:
-    - Restaurar desde backup si falla
-    - Log de errores para análisis
-acceptance_criteria:
-  - Promoción ejecutada en ventana programada
-  - Conteo de registros coincide con staging
-  - Usuarios notificados de disponibilidad
-  - Rollback no requerido o ejecutado con éxito
-capability_bundle_id: CAP-OPS-LEGACY
-morphisms:
-  protagonizado_por: ROLE-ADMIN-TI
-  contribuye_a: CAP-OPS-LEGACY
+capability_id: CAP-OPS-LEGACY

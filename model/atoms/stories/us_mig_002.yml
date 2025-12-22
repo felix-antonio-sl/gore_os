@@ -1,30 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_mig_002:1.0.0
   type: Story
-  source: catalogo_exhaustivo_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-MIG-002
-story_key: us_mig_002
+urn: urn:goreos:atom:story:us_mig_002:1.0.0
 role_id: ROLE-MIGRADOR
-as_a: Migrador de Datos
 i_want: configurar reglas de transformación y mapeo
 so_that: las reglas estén documentadas y sean reutilizables para futuras cargas
 domain: D-OPS
-module: M10-LEGACY
 priority: P0
-description: |
-  Configuración de las reglas de negocio para transformación de datos legacy,
-  incluyendo normalización de catálogos, corrección de errores conocidos, y
-  mapeo de campos origen a modelo destino.
-configuration_elements:
-  - mapping_rules: Mapeo columna origen → campo destino
-  - normalization_rules: Catálogos canónicos (tipos, canales, comunas)
-  - cleansing_rules: Corrección de errores (fechas, tildes, placeholders)
-  - validation_rules: Reglas de integridad y calidad
-acceptance_criteria:
-  - Reglas documentadas en formato YAML/JSON
-  - Reglas versionadas y auditables
-  - Aplicables a múltiples fuentes
-capability_bundle_id: CAP-OPS-LEGACY
-morphisms:
-  protagonizado_por: ROLE-MIGRADOR
-  contribuye_a: CAP-OPS-LEGACY
+capability_id: CAP-OPS-LEGACY

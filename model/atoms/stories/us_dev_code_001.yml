@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
   type: Story
-  source: plan_especificacion_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-CODE-001
-story_key: us_dev_code_001
+urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
 role_id: ROLE-DEVELOPER
-as_a: Developer
 i_want: crear branches desde stories vinculadas automáticamente
 so_that: se asegure la trazabilidad total entre el código y el requisito
 domain: D-DEV
 priority: P0
-capability_bundle_id: CAP-DEV-001
-morphisms:
-  protagonizado_por: ROLE-DEVELOPER
-  contribuye_a: CAP-DEV-001
+capability_id: CAP-DEV-001

@@ -1,122 +1,81 @@
-# Entidad: MarcoLogicoPPR
-# Domain: D-FIN
-# Subdomain: ipr_core
-# Generated: 2025-12-21 (Phase 20.2 - Deep Enrichment)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:marco-logico-ppr:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-MARCO_LOGICO_PPR
-urn: "urn:goreos:entity:d-fin:marco-logico-ppr:1.0.0"
+urn: urn:goreos:entity:d-fin:marco-logico-ppr:1.0.0
 name: Marco Lógico de PPR
 domain: D-FIN
 subdomain: ipr_core
 category: Analytical
-canonical_source:
-  - "Oficio Circular N°22 DIPRES"
-  - "kb_gn_025_guia_programas_koda.yml"
-  - "Metodología Marco Lógico (MML)"
-
-description: |
-  Estructura metodológica obligatoria para la formulación de Programas Públicos Regionales (PPR).
-  Define la jerarquía de objetivos (Fin → Propósito → Componentes → Actividades)
-  y los indicadores de medición para evaluación ex-ante DIPRES/SES.
-
+is_abstract: false
 attributes:
-  - name: id_mml
-    type: String
-    key: true
-
-  - name: ppr_id
-    type: String
-    fk: ENT-FIN-PPR
-    nullable: false
-
-  - name: version
-    type: Integer
-    default: 1
-    description: Versión del MML (se incrementa con cada revisión)
-
-  # Fin
-  - name: fin
-    type: Text
-    nullable: false
-    description: Objetivo de desarrollo al que contribuye el programa
-
-  - name: indicadores_fin
-    type: List[String]
-    nullable: true
-
-  # Propósito
-  - name: proposito
-    type: Text
-    nullable: false
-    description: Resultado esperado al finalizar el programa
-
-  - name: indicadores_proposito
-    type: List[YAML]
-    nullable: true
-    description: Lista de {nombre, formula, meta, medio_verificacion}
-
-  - name: poblacion_objetivo
-    type: Text
-    nullable: true
-
-  - name: beneficiarios_directos
-    type: Integer
-    nullable: true
-
-  # Componentes
-  - name: componentes
-    type: List[YAML]
-    nullable: false
-    description: Lista de {nombre, descripcion, indicadores[]}
-
-  - name: cantidad_componentes
-    type: Integer
-    computed: true
-
-  # Actividades
-  - name: actividades
-    type: List[YAML]
-    nullable: true
-    description: Lista de {nombre, componente_id, responsable, presupuesto}
-
-  # Supuestos y Riesgos
-  - name: supuestos
-    type: List[String]
-    nullable: true
-
-  - name: riesgos
-    type: List[String]
-    nullable: true
-
-  # Evaluación
-  - name: estado
-    type: Enum[Borrador, EnRevision, Aprobado, Rechazado, Vigente]
-    default: Borrador
-
-  - name: fecha_presentacion
-    type: Date
-    nullable: true
-
-  - name: fecha_aprobacion
-    type: Date
-    nullable: true
-
-  - name: evaluador
-    type: Enum[DIPRES, SES, GORE]
-    nullable: true
-
-  - name: observaciones_evaluador
-    type: Text
-    nullable: true
-
+- name: id_mml
+  type: String
+  key: true
+- name: ppr_id
+  type: String
+  fk: ENT-FIN-PPR
+  nullable: false
+- name: version
+  type: Integer
+  default: 1
+  description: Versión del MML (se incrementa con cada revisión)
+- name: fin
+  type: Text
+  nullable: false
+  description: Objetivo de desarrollo al que contribuye el programa
+- name: indicadores_fin
+  type: List[String]
+  nullable: true
+- name: proposito
+  type: Text
+  nullable: false
+  description: Resultado esperado al finalizar el programa
+- name: indicadores_proposito
+  type: List[YAML]
+  nullable: true
+  description: Lista de {nombre, formula, meta, medio_verificacion}
+- name: poblacion_objetivo
+  type: Text
+  nullable: true
+- name: beneficiarios_directos
+  type: Integer
+  nullable: true
+- name: componentes
+  type: List[YAML]
+  nullable: false
+  description: Lista de {nombre, descripcion, indicadores[]}
+- name: cantidad_componentes
+  type: Integer
+  computed: true
+- name: actividades
+  type: List[YAML]
+  nullable: true
+  description: Lista de {nombre, componente_id, responsable, presupuesto}
+- name: supuestos
+  type: List[String]
+  nullable: true
+- name: riesgos
+  type: List[String]
+  nullable: true
+- name: estado
+  type: Enum[Borrador, EnRevision, Aprobado, Rechazado, Vigente]
+  default: Borrador
+- name: fecha_presentacion
+  type: Date
+  nullable: true
+- name: fecha_aprobacion
+  type: Date
+  nullable: true
+- name: evaluador
+  type: Enum[DIPRES, SES, GORE]
+  nullable: true
+- name: observaciones_evaluador
+  type: Text
+  nullable: true
 invariants:
-  - name: componentes_minimo
-    rule: "cantidad_componentes >= 1"
-
-  - name: proposito_indicadores
-    rule: "IF estado = Aprobado THEN indicadores_proposito NOT NULL"
-
-morphisms:
-  estructura: [ENT-FIN-PPR]
-  evaluado_por: [DIPRES, SES]
-  genera: [RATE-RF]
+- name: componentes_minimo
+  rule: cantidad_componentes >= 1
+- name: proposito_indicadores
+  rule: IF estado = Aprobado THEN indicadores_proposito NOT NULL

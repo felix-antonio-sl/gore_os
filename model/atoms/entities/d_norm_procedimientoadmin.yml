@@ -1,155 +1,80 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ProcedimientoAdmin
-# ==============================================================================
-# Domain: D-NORM (Gestión Jurídico-Administrativa)
-# Subdomain: Procedimientos
-# Source: LBPA Art. 18-52, KB-GN-200
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Fiscal Virtual"
-  domain: D-NORM
-  subdomain: procedimientos
-  kb_source:
-    - "LBPA Art. 18-52: Procedimiento Administrativo"
-    - "KB-GN-200: LEY-19880-PROC-GENERAL-01"
-
-entity:
-  id: ENT-NORM-PROCEDIMIENTO
-  name: ProcedimientoAdmin
-  name_es: Procedimiento Administrativo
-  description: |
-    Sucesión de actos trámite vinculados entre sí que tiene por
-    finalidad producir un acto administrativo terminal.
-
-    Etapas: INICIACIÓN → INSTRUCCIÓN → FINALIZACIÓN → IMPUGNACIÓN
-
-    Plazo máximo: 6 meses (prorrogable).
-
-  purpose: |
-    - Tramitar solicitudes ciudadanas
-    - Gestionar procedimientos de oficio
-    - Controlar plazos legales
-    - Base para silencio administrativo
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_procedimiento
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: tipo
-    type: Enum[Solicitud, Denuncia, DeOficio, Disciplinario, Licitacion, Contratacion, Convenio]
-    nullable: false
-    description: Tipo de procedimiento
-
-  - name: expediente_id
-    type: String
-    fk: ENT-NORM-EXPEDIENTE
-    nullable: false
-    description: Expediente del procedimiento
-
-  # Iniciador
-  - name: iniciado_por
-    type: Enum[Ciudadano, OrganoPublico, DeOficio]
-    nullable: false
-    description: Quien inicia el procedimiento
-
-  - name: solicitante_id
-    type: String
-    nullable: true
-    description: ID del solicitante (si ciudadano)
-
-  - name: solicitante_nombre
-    type: String
-    nullable: true
-    description: Nombre del solicitante
-
-  # Fechas y plazos
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-    description: Fecha de inicio
-
-  - name: plazo_legal_dias
-    type: Integer
-    default: 180
-    description: Plazo máximo en días hábiles
-
-  - name: fecha_vencimiento
-    type: Date
-    nullable: false
-    description: Fecha de vencimiento del plazo
-
-  - name: prorrogado
-    type: Boolean
-    default: false
-    description: ¿Plazo prorrogado?
-
-  - name: fecha_termino
-    type: Date
-    nullable: true
-    description: Fecha de término efectivo
-
-  # Etapa actual
-  - name: etapa
-    type: Enum[Iniciacion, Instruccion, Finalizacion, Impugnacion, Terminado]
-    default: Iniciacion
-    description: Etapa actual del procedimiento
-
-  # Resolución
-  - name: resolucion_id
-    type: String
-    fk: ENT-NORM-ACTO
-    nullable: true
-    description: Acto terminal
-
-  - name: resultado
-    type: Enum[Pendiente, Acogido, Rechazado, Desistido, Abandonado, SilencioPositivo, SilencioNegativo]
-    default: Pendiente
-    description: Resultado del procedimiento
-
-  # Urgencia
-  - name: es_urgente
-    type: Boolean
-    default: false
-    description: ¿Procedimiento de urgencia?
-
+- name: id_procedimiento
+  type: String
+  key: true
+  description: Identificador único
+- name: tipo
+  type: Enum[Solicitud, Denuncia, DeOficio, Disciplinario, Licitacion, Contratacion,
+    Convenio]
+  nullable: false
+  description: Tipo de procedimiento
+- name: expediente_id
+  type: String
+  fk: ENT-NORM-EXPEDIENTE
+  nullable: false
+  description: Expediente del procedimiento
+- name: iniciado_por
+  type: Enum[Ciudadano, OrganoPublico, DeOficio]
+  nullable: false
+  description: Quien inicia el procedimiento
+- name: solicitante_id
+  type: String
+  nullable: true
+  description: ID del solicitante (si ciudadano)
+- name: solicitante_nombre
+  type: String
+  nullable: true
+  description: Nombre del solicitante
+- name: fecha_inicio
+  type: Date
+  nullable: false
+  description: Fecha de inicio
+- name: plazo_legal_dias
+  type: Integer
+  default: 180
+  description: Plazo máximo en días hábiles
+- name: fecha_vencimiento
+  type: Date
+  nullable: false
+  description: Fecha de vencimiento del plazo
+- name: prorrogado
+  type: Boolean
+  default: false
+  description: ¿Plazo prorrogado?
+- name: fecha_termino
+  type: Date
+  nullable: true
+  description: Fecha de término efectivo
+- name: etapa
+  type: Enum[Iniciacion, Instruccion, Finalizacion, Impugnacion, Terminado]
+  default: Iniciacion
+  description: Etapa actual del procedimiento
+- name: resolucion_id
+  type: String
+  fk: ENT-NORM-ACTO
+  nullable: true
+  description: Acto terminal
+- name: resultado
+  type: Enum[Pendiente, Acogido, Rechazado, Desistido, Abandonado, SilencioPositivo,
+    SilencioNegativo]
+  default: Pendiente
+  description: Resultado del procedimiento
+- name: es_urgente
+  type: Boolean
+  default: false
+  description: ¿Procedimiento de urgencia?
 invariants:
-  - id: INV-PROC-001
-    name: terminado_requiere_resolucion
-    rule: |
-      etapa = 'Terminado' AND resultado IN ('Acogido', 'Rechazado') → resolucion_id IS NOT NULL
-    description: Procedimiento terminado con decisión requiere resolución
-    severity: warning
+- id: INV-PROC-001
+  name: terminado_requiere_resolucion
+  rule: 'etapa = ''Terminado'' AND resultado IN (''Acogido'', ''Rechazado'') → resolucion_id
+    IS NOT NULL
 
-lifecycle:
-  states:
-    - name: Iniciacion
-      description: Recibido, en admisibilidad
-    - name: Instruccion
-      description: Recopilación de antecedentes
-    - name: Finalizacion
-      description: En elaboración de resolución
-    - name: Impugnacion
-      description: Con recurso pendiente
-    - name: Terminado
-      description: Concluido
-
-morphisms:
-  documentado_en: [ENT-NORM-EXPEDIENTE]
-  resuelto_por: [ENT-NORM-ACTO]
-  impugnado_por: [ENT-NORM-RECURSO]
-
-audit:
-  fields_tracked:
-    - etapa
-    - resultado
-  retention_years: 10
+    '
+  description: Procedimiento terminado con decisión requiere resolución
+  severity: warning

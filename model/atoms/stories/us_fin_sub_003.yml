@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-SUB-003
-story_key: us_fin_sub_003
+urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
 role_id: USR-DIDES-ANAL8
-as_a: "Analista 8% (Técnico)"
 i_want: Aplicar pauta de evaluación ciega (doble ciego opcional)
 so_that: Aseguro objetividad
 domain: D-FIN
 priority: P1
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DIDES-ANAL8
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

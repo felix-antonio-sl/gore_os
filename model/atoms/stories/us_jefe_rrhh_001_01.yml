@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_jefe_rrhh_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-JEFE-RRHH-001-01
-story_key: us_jefe_rrhh_001_01
+urn: urn:goreos:atom:story:us_jefe_rrhh_001_01:1.0.0
 role_id: USR-DAF-PER-ENC
-as_a: "Encargado RRHH"
 i_want: un expediente digital único por funcionario
 so_that: tenga toda la historia laboral centralizada
 domain: D-BACK
 priority: P0
-capability_bundle_id: CAP-RRHH-GESTOR-001
-morphisms:
-  protagonizado_por: USR-DAF-PER-ENC
-  contribuye_a: CAP-RRHH-GESTOR-001
+capability_id: CAP-RRHH-GESTOR-001

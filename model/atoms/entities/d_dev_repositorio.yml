@@ -1,105 +1,49 @@
-# ==============================================================================
-# GORE_OS Entity Atom: RepositorioCodigo (Repositorio de Código)
-# ==============================================================================
-# Domain: D-DEV (Desarrollo de Software)
-# Subdomain: M1 Gestión de Código (SCM)
-# Source: dialogo_profundo_dev_ops.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Ingeniero GORE_OS"
-  domain: D-DEV
-  subdomain: scm
-  kb_source:
-    - "Git SCM"
-    - "dialogo_profundo_dev_ops.md"
-
-entity:
-  id: ENT-DEV-REPOSITORIO
-  name: RepositorioCodigo
-  name_es: Repositorio de Código Fuente
-  description: |
-    Almacén de versionamiento de código fuente (Git) donde
-    residen los activos de software del GORE.
-    Única fuente de verdad (SSOT) para el código.
-
-  purpose: |
-    Gestionar código fuente para:
-    - Controlar versiones y cambios
-    - Habilitar colaboración (Pull Requests)
-    - Gatillar pipelines CI/CD
-    - Trazar auditoría de cambios
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_repositorio
-    type: String
-    key: true
-    description: "Slug o ID (ej: fxsl/gore_os)"
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: true
-
-  - name: url_clone
-    type: String
-    nullable: false
-    description: "URL HTTPS/SSH para clonar"
-
-  - name: tecnologia_principal
-    type: String
-    nullable: true
-    description: "Lenguaje/Framework (Python, Node, Terraform)"
-
-  # Propiedad
-  - name: propietario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO # o Equipo dev
-    nullable: false
-    description: "Tech Lead o Maintainer principal"
-
-  - name: division_responsable_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: false
-
-  # Políticas
-  - name: rama_principal
-    type: String
-    default: main
-
-  - name: requiere_pr
-    type: Boolean
-    default: true
-    description: "¿Branch protection activa?"
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Archivado, Deprecado]
-    default: Activo
-
+- name: id_repositorio
+  type: String
+  key: true
+  description: 'Slug o ID (ej: fxsl/gore_os)'
+- name: nombre
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: true
+- name: url_clone
+  type: String
+  nullable: false
+  description: URL HTTPS/SSH para clonar
+- name: tecnologia_principal
+  type: String
+  nullable: true
+  description: Lenguaje/Framework (Python, Node, Terraform)
+- name: propietario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Tech Lead o Maintainer principal
+- name: division_responsable_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: false
+- name: rama_principal
+  type: String
+  default: main
+- name: requiere_pr
+  type: Boolean
+  default: true
+  description: ¿Branch protection activa?
+- name: estado
+  type: Enum[Activo, Archivado, Deprecado]
+  default: Activo
 invariants:
-  - id: INV-REPO-001
-    name: url_valida
-    rule: url_clone LIKE 'http%' OR url_clone LIKE 'git@%'
-    description: URL debe ser válida
-
-morphisms:
-  contiene: [ENT-DEV-PULLREQUEST, ENT-DEV-RELEASE]
-  desplegado_en: [ENT-OPS-AMBIENTE]
-
-audit:
-  fields_tracked:
-    - estado
-    - propietario_id
-  retention_years: 10
+- id: INV-REPO-001
+  name: url_valida
+  rule: url_clone LIKE 'http%' OR url_clone LIKE 'git@%'
+  description: URL debe ser válida

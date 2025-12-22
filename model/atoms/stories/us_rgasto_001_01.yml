@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_rgasto_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-RGASTO-001-01
-story_key: us_rgasto_001_01
+urn: urn:goreos:atom:story:us_rgasto_001_01:1.0.0
 role_id: USR-CAL-PMG-GASTO
-as_a: "Referente Concentración Gasto"
 i_want: validación automática de clasificadores presupuestarios
 so_that: no se imputen gastos a cuentas erróneas
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-REND-001
-morphisms:
-  protagonizado_por: USR-CAL-PMG-GASTO
-  contribuye_a: CAP-FIN-REND-001
+capability_id: CAP-FIN-REND-001

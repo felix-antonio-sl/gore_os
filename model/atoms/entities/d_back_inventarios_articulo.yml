@@ -1,139 +1,93 @@
-# Entidad: ArticuloInventario
-# Domain: D-BACK
-# Subdomain: inventarios
-# Generated: 2025-12-21 (Phase 20.2 - ERP-GORE Deep Enrichment)
-
+_meta:
+  urn: urn:goreos:entity:d-back:articulo-inventario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-BACK-ARTICULO_INVENTARIO
-urn: "urn:goreos:entity:d-back:articulo-inventario:1.0.0"
+urn: urn:goreos:entity:d-back:articulo-inventario:1.0.0
 name: Artículo de Inventario
 domain: D-BACK
 subdomain: inventarios
 category: Master
-canonical_source:
-  - "agent_erp_gore.yaml#S-ACTIVO-FIJO"
-  - "manual_2_2_inventarios.yml"
-  - "NICSP (Existencias)"
-
-description: |
-  Catálogo maestro de artículos consumibles (existencias).
-  No confundir con Activo Fijo (bienes capitalizables > 3 UTM).
-  Gestionado en bodegas con control de stock mínimo/máximo.
-
+is_abstract: false
 attributes:
-  - name: id_articulo
-    type: String
-    key: true
-
-  - name: codigo_interno
-    type: String
-    nullable: false
-    unique: true
-
-  - name: codigo_barras
-    type: String
-    nullable: true
-    description: EAN-13 o Code-128
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: true
-
-  # Clasificación Jerárquica
-  - name: familia
-    type: String
-    nullable: false
-    description: Ej. Insumos de Oficina
-
-  - name: linea
-    type: String
-    nullable: true
-    description: Ej. Papelería
-
-  - name: grupo
-    type: String
-    nullable: true
-    description: Ej. Cuadernos
-
-  # Unidades
-  - name: unidad_medida
-    type: Enum[Unidad, Caja, Resma, Litro, Kilo, Metro, Pack]
-    nullable: false
-
-  - name: factor_conversion
-    type: Decimal
-    nullable: true
-    description: Ej. 1 caja = 12 unidades
-
-  # Contabilidad
-  - name: cuenta_contable
-    type: String
-    nullable: true
-
-  - name: subtitulo_presupuestario
-    type: String
-    default: "22"
-    description: Subtítulo 22 para consumibles
-
-  # Control de Stock
-  - name: stock_actual
-    type: Decimal
-    default: 0
-
-  - name: stock_minimo
-    type: Decimal
-    nullable: true
-    description: Punto de reorden
-
-  - name: stock_maximo
-    type: Decimal
-    nullable: true
-
-  - name: stock_seguridad
-    type: Decimal
-    nullable: true
-
-  # Valorización
-  - name: precio_promedio
-    type: Decimal
-    nullable: true
-    description: Precio Promedio Ponderado (PPP)
-
-  - name: valor_stock
-    type: Decimal
-    computed: true
-    formula: stock_actual * precio_promedio
-
-  # Perecibilidad
-  - name: requiere_lote
-    type: Boolean
-    default: false
-
-  - name: requiere_vencimiento
-    type: Boolean
-    default: false
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Descontinuado, Bloqueado]
-    default: Activo
-
-  # Imagen
-  - name: imagen_url
-    type: String
-    nullable: true
-
+- name: id_articulo
+  type: String
+  key: true
+- name: codigo_interno
+  type: String
+  nullable: false
+  unique: true
+- name: codigo_barras
+  type: String
+  nullable: true
+  description: EAN-13 o Code-128
+- name: nombre
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: true
+- name: familia
+  type: String
+  nullable: false
+  description: Ej. Insumos de Oficina
+- name: linea
+  type: String
+  nullable: true
+  description: Ej. Papelería
+- name: grupo
+  type: String
+  nullable: true
+  description: Ej. Cuadernos
+- name: unidad_medida
+  type: Enum[Unidad, Caja, Resma, Litro, Kilo, Metro, Pack]
+  nullable: false
+- name: factor_conversion
+  type: Decimal
+  nullable: true
+  description: Ej. 1 caja = 12 unidades
+- name: cuenta_contable
+  type: String
+  nullable: true
+- name: subtitulo_presupuestario
+  type: String
+  default: '22'
+  description: Subtítulo 22 para consumibles
+- name: stock_actual
+  type: Decimal
+  default: 0
+- name: stock_minimo
+  type: Decimal
+  nullable: true
+  description: Punto de reorden
+- name: stock_maximo
+  type: Decimal
+  nullable: true
+- name: stock_seguridad
+  type: Decimal
+  nullable: true
+- name: precio_promedio
+  type: Decimal
+  nullable: true
+  description: Precio Promedio Ponderado (PPP)
+- name: valor_stock
+  type: Decimal
+  computed: true
+  formula: stock_actual * precio_promedio
+- name: requiere_lote
+  type: Boolean
+  default: false
+- name: requiere_vencimiento
+  type: Boolean
+  default: false
+- name: estado
+  type: Enum[Activo, Descontinuado, Bloqueado]
+  default: Activo
+- name: imagen_url
+  type: String
+  nullable: true
 invariants:
-  - name: stock_no_negativo
-    rule: "stock_actual >= 0"
-
-  - name: capitalizacion_3utm
-    rule: "IF precio_promedio > 3 UTM THEN tipo = ActivoFijo"
-
-morphisms:
-  almacenado_en: [ENT-BACK-BODEGA]
-  consumido_por: [ENT-BACK-SOLICITUD_CONSUMO]
-  valorizado_por: [PPP, FIFO]
+- name: stock_no_negativo
+  rule: stock_actual >= 0
+- name: capitalizacion_3utm
+  rule: IF precio_promedio > 3 UTM THEN tipo = ActivoFijo

@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_analpres_001_02:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ANALPRES-001-02
-story_key: us_analpres_001_02
+urn: urn:goreos:atom:story:us_analpres_001_02:1.0.0
 role_id: USR-DIPIR-PRES-ANAL
-as_a: "Analista Presupuestario"
 i_want: alertas de marcos presupuestarios próximos a agotarse
 so_that: pueda informar oportunamente a la jefatura
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DIPIR-PRES-ANAL
-  contribuye_a: CAP-FIN-DASH-001

@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_cont_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-CONT-001-01
-story_key: us_cont_001_01
+urn: urn:goreos:atom:story:us_cont_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-CON
-as_a: "Analista Convenios"
 i_want: un módulo de conciliación bancaria automatizada
 so_that: pueda detectar diferencias rápidamente
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-NEW-ANALISTA-CON
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

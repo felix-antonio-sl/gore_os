@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_inc_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-INC-001
-story_key: us_ops_inc_001
+urn: urn:goreos:atom:story:us_ops_inc_001:1.0.0
 role_id: USR-DAF-TIC-SUP
-as_a: "Soporte Técnico"
 i_want: Registrar y resolver incidentes siguiendo el ciclo SDA
 so_that: Mantengo la continuidad operacional
 domain: D-OPS
 priority: P0
-capability_bundle_id: CAP-OPS-001
-morphisms:
-  protagonizado_por: USR-DAF-TIC-SUP
-  contribuye_a: CAP-OPS-001
+capability_id: CAP-OPS-001

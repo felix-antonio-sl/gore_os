@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppr_003:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-PPR-003
-story_key: us_fin_ppr_003
+urn: urn:goreos:atom:story:us_fin_ppr_003:1.0.0
 role_id: USR-NEW-ANALISTA-PPR
-as_a: "Analista PPR"
 i_want: Verificar que no existe fraccionamiento de programas
 so_that: Evito sobrepaso de topes
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-NEW-ANALISTA-PPR
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

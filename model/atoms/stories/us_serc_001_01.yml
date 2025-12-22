@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_serc_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-SERC-001-01
-story_key: us_serc_001_01
+urn: urn:goreos:atom:story:us_serc_001_01:1.0.0
 role_id: USR-EXT-SERNATUR
-as_a: "Director Regional SERNATUR"
 i_want: información de beneficiarios GORE para evitar duplicidad
 so_that: pueda focalizar instrumentos
 domain: D-EJEC
 priority: P1
-capability_bundle_id: CAP-EJEC-PORTAL-001
-morphisms:
-  protagonizado_por: USR-EXT-SERNATUR
-  contribuye_a: CAP-EJEC-PORTAL-001
+capability_id: CAP-EJEC-PORTAL-001

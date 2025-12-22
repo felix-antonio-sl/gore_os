@@ -1,186 +1,102 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Ejecutor (Entidad Ejecutora)
-# ==============================================================================
-# Domain: D-EJEC (Execution & Monitoring)
-# Subdomain: Actores
-# Source: domain_d-ejec.md, KB-019
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-EJEC
-  subdomain: actores
-  kb_source:
-    - "domain_d-ejec.md: Ejecutor"
-    - "KB-019: Calificación de ejecutores"
-    - "D-GOB.Actor"
-
-entity:
-  id: ENT-EJEC-EJECUTOR
-  name: Ejecutor
-  name_es: Entidad Ejecutora
-  description: |
-    Actor institucional habilitado para materializar proyectos financiados
-    por el GORE. Puede ser municipalidad, servicio público, universidad,
-    fundación, corporación u otra entidad.
-
-    El GORE mantiene un registro de ejecutores con su historial de
-    desempeño para informar decisiones de asignación.
-
-  purpose: |
-    - Registrar entidades habilitadas para ejecutar
-    - Mantener historial de desempeño
-    - Informar decisiones de asignación de convenios
-    - Vincular con D-GOB.Actor
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_ejecutor
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: rut
-    type: String
-    nullable: false
-    description: RUT de la entidad
-
-  - name: razon_social
-    type: String
-    nullable: false
-    description: Razón social
-
-  - name: nombre_fantasia
-    type: String
-    nullable: true
-    description: Nombre de fantasía
-
-  - name: tipo_ejecutor
-    type: Enum[Municipalidad, ServicioPublico, Universidad, Fundacion, Corporacion, EmpresaPublica, ONG, Otro]
-    nullable: false
-    description: Tipo de entidad
-
-  # Representante legal
-  - name: representante_legal
-    type: String
-    nullable: false
-    description: Nombre del representante legal
-
-  - name: cargo_representante
-    type: String
-    nullable: true
-    description: Cargo del representante
-
-  # Contacto
-  - name: direccion
-    type: String
-    nullable: true
-    description: Dirección física
-
-  - name: comuna_id
-    type: String
-    fk: ENT-TERR-COMUNA
-    nullable: true
-    description: Comuna de domicilio
-
-  - name: telefono
-    type: String
-    nullable: true
-    description: Teléfono de contacto
-
-  - name: email
-    type: String
-    nullable: true
-    description: Email institucional
-
-  # Habilitación
-  - name: habilitado
-    type: Boolean
-    default: true
-    description: ¿Habilitado para recibir recursos?
-
-  - name: fecha_habilitacion
-    type: Date
-    nullable: true
-    description: Fecha de habilitación
-
-  - name: motivo_inhabilitacion
-    type: Text
-    nullable: true
-    description: Motivo si está inhabilitado
-
-  # Historial (ENRICHMENT P2)
-  - name: cantidad_convenios_historicos
-    type: Integer
-    default: 0
-    description: Convenios ejecutados históricamente
-
-  - name: monto_acumulado_mm
-    type: Decimal
-    default: 0
-    description: Monto total ejecutado en MM$
-
-  - name: tasa_cumplimiento_plazo
-    type: Decimal
-    nullable: true
-    description: "% de convenios terminados en plazo"
-
-  - name: tasa_rendicion_oportuna
-    type: Decimal
-    nullable: true
-    description: "% de rendiciones aprobadas a tiempo"
-
-  # Calificación vigente (ENRICHMENT P2)
-  - name: calificacion_vigente_id
-    type: String
-    fk: ENT-FIN-CALIF-EJECUTOR
-    nullable: true
-    description: Última calificación del sistema de ejecutores
-
-  - name: puntaje_global
-    type: Decimal
-    nullable: true
-    description: Puntaje promedio 1-100
-
-  - name: categoria_riesgo
-    type: Enum[Bajo, Medio, Alto, Critico]
-    nullable: true
-    description: Categoría de riesgo basada en historial
-
+- name: id_ejecutor
+  type: String
+  key: true
+  description: Identificador único
+- name: rut
+  type: String
+  nullable: false
+  description: RUT de la entidad
+- name: razon_social
+  type: String
+  nullable: false
+  description: Razón social
+- name: nombre_fantasia
+  type: String
+  nullable: true
+  description: Nombre de fantasía
+- name: tipo_ejecutor
+  type: Enum[Municipalidad, ServicioPublico, Universidad, Fundacion, Corporacion,
+    EmpresaPublica, ONG, Otro]
+  nullable: false
+  description: Tipo de entidad
+- name: representante_legal
+  type: String
+  nullable: false
+  description: Nombre del representante legal
+- name: cargo_representante
+  type: String
+  nullable: true
+  description: Cargo del representante
+- name: direccion
+  type: String
+  nullable: true
+  description: Dirección física
+- name: comuna_id
+  type: String
+  fk: ENT-TERR-COMUNA
+  nullable: true
+  description: Comuna de domicilio
+- name: telefono
+  type: String
+  nullable: true
+  description: Teléfono de contacto
+- name: email
+  type: String
+  nullable: true
+  description: Email institucional
+- name: habilitado
+  type: Boolean
+  default: true
+  description: ¿Habilitado para recibir recursos?
+- name: fecha_habilitacion
+  type: Date
+  nullable: true
+  description: Fecha de habilitación
+- name: motivo_inhabilitacion
+  type: Text
+  nullable: true
+  description: Motivo si está inhabilitado
+- name: cantidad_convenios_historicos
+  type: Integer
+  default: 0
+  description: Convenios ejecutados históricamente
+- name: monto_acumulado_mm
+  type: Decimal
+  default: 0
+  description: Monto total ejecutado en MM$
+- name: tasa_cumplimiento_plazo
+  type: Decimal
+  nullable: true
+  description: '% de convenios terminados en plazo'
+- name: tasa_rendicion_oportuna
+  type: Decimal
+  nullable: true
+  description: '% de rendiciones aprobadas a tiempo'
+- name: calificacion_vigente_id
+  type: String
+  fk: ENT-FIN-CALIF-EJECUTOR
+  nullable: true
+  description: Última calificación del sistema de ejecutores
+- name: puntaje_global
+  type: Decimal
+  nullable: true
+  description: Puntaje promedio 1-100
+- name: categoria_riesgo
+  type: Enum[Bajo, Medio, Alto, Critico]
+  nullable: true
+  description: Categoría de riesgo basada en historial
 invariants:
-  - id: INV-EJEC-001
-    name: inhabilitado_sin_convenios_nuevos
-    rule: |
-      (habilitado = false) → (no puede recibir nuevos convenios)
-    description: Ejecutor inhabilitado no puede recibir nuevos convenios
-    severity: error
+- id: INV-EJEC-001
+  name: inhabilitado_sin_convenios_nuevos
+  rule: '(habilitado = false) → (no puede recibir nuevos convenios)
 
-lifecycle:
-  states:
-    - name: Activo
-      description: Habilitado para recibir recursos
-    - name: EnEvaluacion
-      description: En proceso de calificación
-    - name: Observado
-      description: Con rendiciones pendientes
-    - name: Inhabilitado
-      description: Temporalmente inhabilitado
-
-morphisms:
-  es_tipo_de: [ENT-GOB-ACTOR]
-  ejecuta: [ENT-EJEC-CONVENIO]
-  calificado_por: [ENT-FIN-CALIF-EJECUTOR]
-  ubicado_en: [ENT-TERR-COMUNA]
-
-audit:
-  fields_tracked:
-    - habilitado
-    - puntaje_global
-    - categoria_riesgo
-  retention_years: 20
+    '
+  description: Ejecutor inhabilitado no puede recibir nuevos convenios
+  severity: error

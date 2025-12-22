@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gab_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GOB-GAB-001
-story_key: us_gob_gab_001
+urn: urn:goreos:atom:story:us_gob_gab_001:1.0.0
 role_id: USR-GAB-JEFE
-as_a: "Jefe de Gabinete"
 i_want: Gestionar agenda GR (reuniones, giras, audiencias)
 so_that: Organizo el tiempo de la autoridad
 domain: D-GOB
 priority: P1
-capability_bundle_id: CAP-GOB-001
-morphisms:
-  protagonizado_por: USR-GAB-JEFE
-  contribuye_a: CAP-GOB-001
+capability_id: CAP-GOB-001

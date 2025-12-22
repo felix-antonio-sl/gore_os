@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-BACK-BIEN-001
-story_key: us_back_bien_001
+urn: urn:goreos:atom:story:us_back_bien_001:1.0.0
 role_id: USR-DAF-PER-BIEN
-as_a: "Profesional Bienestar"
 i_want: Registrar afiliaciones (socio con descuento)
 so_that: Gestiono membresía
 domain: D-BACK
 priority: P1
-capability_bundle_id: CAP-RRHH-GESTOR-001
-morphisms:
-  protagonizado_por: USR-DAF-PER-BIEN
-  contribuye_a: CAP-RRHH-GESTOR-001

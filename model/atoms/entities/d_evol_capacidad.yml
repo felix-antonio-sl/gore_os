@@ -1,160 +1,82 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Capacidad
-# ==============================================================================
-# Domain: D-EVOL (Evolución e Inteligencia)
-# Subdomain: Framework ORKO
-# Source: ORKO L0 Fundamentos - P1_Capacidad (A2)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Arquitecto ORKO"
-  domain: D-EVOL
-  subdomain: framework_orko
-  kb_source:
-    - "urn:knowledge:orko:core:fundamentos:1.0.0"
-    - "urn:knowledge:orko:core:tejidos:1.0.0"
-    - "dialogo_triagente_d_evol.md"
-
-entity:
-  id: ENT-EVOL-CAPACIDAD
-  name: Capacidad
-  name_es: Capacidad Organizacional
-  description: |
-    Potencial de ejecutar transformación (P1 ORKO). Unifica las nociones de
-    Actor (sustrato físico) y Agente (nivel cognitivo) en una abstracción
-    única que permite modelar recursos humanos, algorítmicos o mixtos.
-
-    Axioma A2: "Existe capacidad que efectúa la transformación. No ocurre 
-    espontáneamente."
-
-  purpose: |
-    Modelar capacidades para:
-    - Inventario unificado de recursos transformadores
-    - Governance HAIC con accountability humano
-    - Trazabilidad de delegación IA (M1-M6)
-    - Evolución de autonomía basada en desempeño
-
-  categorical_type: Object
-  is_abstract: false
-  category: Core
-  orko_primitive: P1_Capacidad
-  orko_axiom: A2_Existencia_Capacidad
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_capacidad
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: true
-
-  # Dimensión 1: Sustrato (¿Quién ejecuta?)
-  - name: sustrato
-    type: Enum[Humano, Algoritmico, Mecanico, Mixto]
-    nullable: false
-    description: "Identidad física del ejecutor"
-
-  # Dimensión 2: Cognición (¿Qué nivel de decisión?)
-  - name: nivel_cognitivo
-    type: Enum[C0_Ejecutar, C1_Decidir, C2_Reflexionar, C3_MetaReflexionar]
-    nullable: false
-    description: "C0=Determinístico, C1=Selección, C2=Metacognición, C3=Estratega"
-
-  # Dimensión 3: Rol en la Cadena de Valor
-  - name: rol_valor
-    type: Enum[Produccion, Habilitacion]
-    nullable: false
-    description: "Producción=directo a cliente, Habilitación=amplifica internos"
-
-  # Accountability (I5_HAIC)
-  - name: accountable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: "Humano responsable (invariante HAIC)"
-
-  # Delegación IA
-  - name: delegation_mode
-    type: Enum[M1_Monitorear, M2_Asistir, M3_Habilitar, M4_Controlar, M5_Supervisar, M6_Ejecutar]
-    nullable: true
-    description: "Modo de delegación HAIC (solo si algorítmico)"
-
-  - name: delegated_from_id
-    type: String
-    fk: ENT-EVOL-CAPACIDAD
-    nullable: true
-    description: "Capacidad humana que delega (solo si algorítmico)"
-
-  - name: override_enabled
-    type: Boolean
-    default: true
-    description: "Mecanismo de override siempre disponible (M4+)"
-
-  # Ciclo de Vida
-  - name: estado_ciclo_vida
-    type: Enum[Planning, Development, Active, Idle, Deprecated, Retired]
-    default: Planning
-
-  # Métricas
-  - name: utilizacion_avg
-    type: Decimal
-    default: 0.0
-    description: "Utilización promedio [0..1]"
-
-  - name: success_rate
-    type: Decimal
-    nullable: true
-    description: "Tasa de éxito de ejecuciones"
-
-  - name: avg_latency_ms
-    type: Integer
-    nullable: true
-    description: "Latencia promedio (algorítmico)"
-
+- name: id_capacidad
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: true
+- name: sustrato
+  type: Enum[Humano, Algoritmico, Mecanico, Mixto]
+  nullable: false
+  description: Identidad física del ejecutor
+- name: nivel_cognitivo
+  type: Enum[C0_Ejecutar, C1_Decidir, C2_Reflexionar, C3_MetaReflexionar]
+  nullable: false
+  description: C0=Determinístico, C1=Selección, C2=Metacognición, C3=Estratega
+- name: rol_valor
+  type: Enum[Produccion, Habilitacion]
+  nullable: false
+  description: Producción=directo a cliente, Habilitación=amplifica internos
+- name: accountable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Humano responsable (invariante HAIC)
+- name: delegation_mode
+  type: Enum[M1_Monitorear, M2_Asistir, M3_Habilitar, M4_Controlar, M5_Supervisar,
+    M6_Ejecutar]
+  nullable: true
+  description: Modo de delegación HAIC (solo si algorítmico)
+- name: delegated_from_id
+  type: String
+  fk: ENT-EVOL-CAPACIDAD
+  nullable: true
+  description: Capacidad humana que delega (solo si algorítmico)
+- name: override_enabled
+  type: Boolean
+  default: true
+  description: Mecanismo de override siempre disponible (M4+)
+- name: estado_ciclo_vida
+  type: Enum[Planning, Development, Active, Idle, Deprecated, Retired]
+  default: Planning
+- name: utilizacion_avg
+  type: Decimal
+  default: 0.0
+  description: Utilización promedio [0..1]
+- name: success_rate
+  type: Decimal
+  nullable: true
+  description: Tasa de éxito de ejecuciones
+- name: avg_latency_ms
+  type: Integer
+  nullable: true
+  description: Latencia promedio (algorítmico)
 invariants:
-  - id: INV-CAP-001
-    name: accountability_humano
-    rule: accountable_id.sustrato ∈ {Humano, Mixto}
-    description: "Accountability moral siempre es humana (I5_HAIC)"
-    orko_ref: I5_HAIC
-
-  - id: INV-CAP-002
-    name: algoritmico_requiere_delegacion
-    rule: sustrato = 'Algoritmico' → delegated_from_id IS NOT NULL
-    description: "Capacidad algorítmica siempre delegada desde humano"
-    orko_ref: I5_HAIC
-
-  - id: INV-CAP-003
-    name: m6_requiere_override
-    rule: delegation_mode = 'M6_Ejecutar' → override_enabled = true
-    description: "Autonomía máxima requiere override disponible"
-    orko_ref: I5_HAIC
-
-  - id: INV-CAP-004
-    name: nivel_cognitivo_algoritmico
-    rule: sustrato = 'Algoritmico' → nivel_cognitivo ∈ {C0, C1, C2}
-    description: "IA no alcanza C3 (Meta-Reflexión humana)"
-
-morphisms:
-  ejecuta: [ENT-EVOL-FLUJO]
-  delegada_de: [ENT-EVOL-CAPACIDAD]
-  accountable_por: [ENT-BACK-FUNCIONARIO]
-  registra_desempeno: [ENT-EVOL-REGISTRO-DESEMPENO]
-  tiene_delegaciones: [ENT-EVOL-DELEGACION]
-
-audit:
-  fields_tracked:
-    - estado_ciclo_vida
-    - delegation_mode
-    - success_rate
-  retention_years: 10
-  legal_basis: "Framework ORKO, Governance HAIC"
+- id: INV-CAP-001
+  name: accountability_humano
+  rule: accountable_id.sustrato ∈ {Humano, Mixto}
+  description: Accountability moral siempre es humana (I5_HAIC)
+  orko_ref: I5_HAIC
+- id: INV-CAP-002
+  name: algoritmico_requiere_delegacion
+  rule: sustrato = 'Algoritmico' → delegated_from_id IS NOT NULL
+  description: Capacidad algorítmica siempre delegada desde humano
+  orko_ref: I5_HAIC
+- id: INV-CAP-003
+  name: m6_requiere_override
+  rule: delegation_mode = 'M6_Ejecutar' → override_enabled = true
+  description: Autonomía máxima requiere override disponible
+  orko_ref: I5_HAIC
+- id: INV-CAP-004
+  name: nivel_cognitivo_algoritmico
+  rule: sustrato = 'Algoritmico' → nivel_cognitivo ∈ {C0, C1, C2}
+  description: IA no alcanza C3 (Meta-Reflexión humana)

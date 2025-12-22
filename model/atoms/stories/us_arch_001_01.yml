@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_arch_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ARCH-001-01
-story_key: us_arch_001_01
+urn: urn:goreos:atom:story:us_arch_001_01:1.0.0
 role_id: USR-NORM-ARCHIVO
-as_a: "Encargado de Archivo"
 i_want: un sistema de gestión de archivo con ubicación y digitalización
 so_that: pueda localizar documentos históricos
 domain: D-TDE
 priority: P1
-capability_bundle_id: CAP-FIRMA-001
-morphisms:
-  protagonizado_por: USR-NORM-ARCHIVO
-  contribuye_a: CAP-FIRMA-001

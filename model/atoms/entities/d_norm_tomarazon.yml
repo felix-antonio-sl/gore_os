@@ -1,121 +1,62 @@
-# ==============================================================================
-# GORE_OS Entity Atom: TomaRazon
-# ==============================================================================
-# Domain: D-NORM (Gestión Jurídico-Administrativa)
-# Subdomain: Control Externo
-# Source: Ley 10.336, Res. CGR 36/2024, KB-GN-200
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Fiscal Virtual"
-  domain: D-NORM
-  subdomain: control_externo
-  kb_source:
-    - "Ley 10.336: Ley Orgánica CGR"
-    - "Res. CGR 36/2024: Normas de exención"
-    - "KB-GN-200"
-
-entity:
-  id: ENT-NORM-TOMA-RAZON
-  name: TomaRazon
-  name_es: Toma de Razón CGR
-  description: |
-    Control preventivo de legalidad que ejerce la Contraloría General
-    de la República sobre los actos administrativos afectos.
-
-    Resultados:
-    - Toma de razón: Acto conforme a derecho
-    - Representación: Acto ilegal (no puede ejecutarse)
-    - Cursa con alcance: Con observaciones menores
-
-  purpose: |
-    - Registrar trámites ante CGR
-    - Controlar tiempos de respuesta
-    - Trazabilidad de representaciones
-    - Validación de actos afectos
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_toma_razon
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: acto_id
-    type: String
-    fk: ENT-NORM-ACTO
-    nullable: false
-    description: Acto sometido a TDR
-
-  - name: numero_ingreso_cgr
-    type: String
-    nullable: true
-    description: Número de ingreso en CGR
-
-  # Fechas
-  - name: fecha_envio
-    type: Date
-    nullable: false
-    description: Fecha de envío a CGR
-
-  - name: fecha_resolucion
-    type: Date
-    nullable: true
-    description: Fecha de pronunciamiento CGR
-
-  - name: dias_tramite
-    type: Integer
-    computed: true
-    formula: fecha_resolucion - fecha_envio
-    description: Días de tramitación
-
-  # Resultado
-  - name: resultado
-    type: Enum[Pendiente, TomaRazon, CursaConAlcance, Representado, Desistido]
-    default: Pendiente
-    description: Resultado del trámite
-
-  - name: observaciones
-    type: Text
-    nullable: true
-    description: Observaciones de CGR
-
-  - name: alcance
-    type: Text
-    nullable: true
-    description: Alcance si cursa con alcance
-
-  # Reingreso
-  - name: es_reingreso
-    type: Boolean
-    default: false
-    description: ¿Es reingreso tras representación?
-
-  - name: toma_razon_anterior_id
-    type: String
-    fk: ENT-NORM-TOMA-RAZON
-    nullable: true
-    description: TDR anterior si es reingreso
-
+- name: id_toma_razon
+  type: String
+  key: true
+  description: Identificador único
+- name: acto_id
+  type: String
+  fk: ENT-NORM-ACTO
+  nullable: false
+  description: Acto sometido a TDR
+- name: numero_ingreso_cgr
+  type: String
+  nullable: true
+  description: Número de ingreso en CGR
+- name: fecha_envio
+  type: Date
+  nullable: false
+  description: Fecha de envío a CGR
+- name: fecha_resolucion
+  type: Date
+  nullable: true
+  description: Fecha de pronunciamiento CGR
+- name: dias_tramite
+  type: Integer
+  computed: true
+  formula: fecha_resolucion - fecha_envio
+  description: Días de tramitación
+- name: resultado
+  type: Enum[Pendiente, TomaRazon, CursaConAlcance, Representado, Desistido]
+  default: Pendiente
+  description: Resultado del trámite
+- name: observaciones
+  type: Text
+  nullable: true
+  description: Observaciones de CGR
+- name: alcance
+  type: Text
+  nullable: true
+  description: Alcance si cursa con alcance
+- name: es_reingreso
+  type: Boolean
+  default: false
+  description: ¿Es reingreso tras representación?
+- name: toma_razon_anterior_id
+  type: String
+  fk: ENT-NORM-TOMA-RAZON
+  nullable: true
+  description: TDR anterior si es reingreso
 invariants:
-  - id: INV-TDR-001
-    name: representado_requiere_observaciones
-    rule: |
-      resultado = 'Representado' → observaciones IS NOT NULL
-    description: Representación requiere fundamento
-    severity: warning
+- id: INV-TDR-001
+  name: representado_requiere_observaciones
+  rule: 'resultado = ''Representado'' → observaciones IS NOT NULL
 
-morphisms:
-  controla: [ENT-NORM-ACTO]
-
-audit:
-  fields_tracked:
-    - resultado
-    - fecha_resolucion
-  retention_years: 20
+    '
+  description: Representación requiere fundamento
+  severity: warning

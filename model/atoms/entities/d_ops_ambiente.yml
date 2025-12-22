@@ -1,106 +1,49 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Ambiente (Ambiente de Despliegue)
-# ==============================================================================
-# Domain: D-OPS (Operaciones e Infraestructura)
-# Subdomain: M2 Despliegue y Ambientes
-# Source: dialogo_profundo_dev_ops.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Ingeniero GORE_OS"
-  domain: D-OPS
-  subdomain: environments
-  kb_source:
-    - "Infrastructure as Code"
-    - "dialogo_profundo_dev_ops.md"
-
-entity:
-  id: ENT-OPS-AMBIENTE
-  name: Ambiente
-  name_es: Ambiente de Despliegue
-  description: |
-    Entorno lógico y físico donde se invoca y ejecuta una versión
-    del software GORE_OS o sus módulos.
-    Aísla cargas de trabajo (Dev, QA, Prod).
-
-  purpose: |
-    Gestionar entornos para:
-    - Aislar cambios en desarrollo de producción
-    - Reproducir bugs en entornos controlados
-    - Validar releases (Staging)
-    - Servir a usuarios finales (Producción)
-
-  categorical_type: Configuration
-  is_abstract: false
-  category: Configuration
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_ambiente
-    type: String
-    key: true
-    description: "Slug (ej: goreos-prod, goreos-dev)"
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: tipo
-    type: Enum[Desarrollo, Testing, Staging, Produccion, DR]
-    nullable: false
-
-  - name: url_base
-    type: String
-    nullable: true
-    description: "URL pública de acceso"
-
-  - name: version_actual_release_id
-    type: String
-    fk: ENT-DEV-RELEASE
-    nullable: true
-    description: "Release actualmente desplegado"
-
-  # Infraestructura
-  - name: cluster_id
-    type: String
-    # fk: ENT-OPS-RECURSO (Cluster K8s)
-    nullable: true
-
-  - name: region_cloud
-    type: String
-    default: "us-east-1"
-    description: "Región AWS/Azure/GCP o Datacenter OnPrem"
-
-  # Configuración
-  - name: es_protegido
-    type: Boolean
-    default: false
-    description: "¿Requiere aprobación manual para desplegar?"
-
-  - name: ventana_mantenimiento
-    type: String
-    nullable: true
-    description: "Horario permitido para cambios (ej: 'Sun 02:00-06:00')"
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Inactivo, EnMantenimiento, Eliminado]
-    default: Activo
-
+- name: id_ambiente
+  type: String
+  key: true
+  description: 'Slug (ej: goreos-prod, goreos-dev)'
+- name: nombre
+  type: String
+  nullable: false
+- name: tipo
+  type: Enum[Desarrollo, Testing, Staging, Produccion, DR]
+  nullable: false
+- name: url_base
+  type: String
+  nullable: true
+  description: URL pública de acceso
+- name: version_actual_release_id
+  type: String
+  fk: ENT-DEV-RELEASE
+  nullable: true
+  description: Release actualmente desplegado
+- name: cluster_id
+  type: String
+  nullable: true
+- name: region_cloud
+  type: String
+  default: us-east-1
+  description: Región AWS/Azure/GCP o Datacenter OnPrem
+- name: es_protegido
+  type: Boolean
+  default: false
+  description: ¿Requiere aprobación manual para desplegar?
+- name: ventana_mantenimiento
+  type: String
+  nullable: true
+  description: 'Horario permitido para cambios (ej: ''Sun 02:00-06:00'')'
+- name: estado
+  type: Enum[Activo, Inactivo, EnMantenimiento, Eliminado]
+  default: Activo
 invariants:
-  - id: INV-ENV-001
-    name: produccion_protegida
-    rule: tipo = 'Produccion' → es_protegido = TRUE
-    description: Ambiente de Producción debe ser protegido
-
-morphisms:
-  aloja: [ENT-DEV-RELEASE]
-  compuesto_por: [ENT-OPS-RECURSO]
-
-audit:
-  fields_tracked:
-    - version_actual_release_id
-    - estado
-  retention_years: 10
+- id: INV-ENV-001
+  name: produccion_protegida
+  rule: tipo = 'Produccion' → es_protegido = TRUE
+  description: Ambiente de Producción debe ser protegido

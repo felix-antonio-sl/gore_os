@@ -1,288 +1,153 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Compromiso Presupuestario
-# ==============================================================================
-# Domain: D-FIN (Financial Management)
-# Subdomain: Presupuesto
-# Source: DL 1263/1975, Normativa SIGFE, kb_gn_018_gestion_prpto_koda.yml
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico"
-  domain: D-FIN
-  subdomain: presupuesto
-  kb_source:
-    - "DL 1263/1975 Art. 19"
-    - "Normativa SIGFE"
-    - "kb_gn_018_gestion_prpto_koda.yml"
-
-entity:
-  id: ENT-FIN-COMPROMISO
-  name: CompromisoPresupuestario
-  name_es: Compromiso Presupuestario
-  description: |
-    Obligación presupuestaria contraída formalmente mediante un acto
-    administrativo (Orden de Compra, Contrato, Resolución de Adjudicación).
-    Representa la afectación legal del presupuesto antes del devengo.
-
-    El compromiso es el segundo eslabón de la cadena presupuestaria:
-    CDP → Compromiso → Devengo → Pago
-
-  purpose: |
-    Modelar el ciclo de afectación presupuestaria para:
-    - Registrar obligaciones legales contra el presupuesto
-    - Controlar el saldo disponible en cada CDP
-    - Trazabilidad desde acto administrativo hasta pago
-    - Cumplimiento DL 1263/1975 (Ley de Administración Financiera)
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
-  extends: null
-
-  related_to:
-    - entity: ENT-FIN-CDP
-      relation: afecta
-      cardinality: N:1
-      description: Cada compromiso consume saldo de un CDP
-    - entity: ENT-FIN-ACTO-ADMIN
-      relation: formalizado_por
-      cardinality: N:1
-      description: Acto administrativo que genera el compromiso (OC, Contrato, etc.)
-    - entity: ENT-FIN-DEVENGO
-      relation: genera
-      cardinality: 1:N
-      description: Un compromiso puede generar uno o más devengos
-    - entity: ENT-FIN-IPR
-      relation: vinculado_a
-      cardinality: N:0..1
-      description: Opcionalmente vinculado a una IPR específica
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_compromiso
-    type: String
-    key: true
-    description: Identificador único del compromiso
-
-  - name: numero_compromiso
-    type: String
-    nullable: false
-    description: Número secuencial del año (ej. COMP-2025-00145)
-
-  - name: fecha_compromiso
-    type: Date
-    nullable: false
-    description: Fecha de registro del compromiso
-
-  # Vinculación presupuestaria
-  - name: cdp_id
-    type: String
-    fk: ENT-FIN-CDP
-    nullable: false
-    description: Certificado de Disponibilidad Presupuestaria que respalda
-
-  - name: imputacion_presupuestaria
-    type: String
-    nullable: false
-    description: Código clasificador presupuestario (ej. 22.04.001)
-
-  - name: programa_presupuestario
-    type: String
-    nullable: true
-    description: Programa específico si aplica
-
-  # Montos
-  - name: monto_comprometido
-    type: Decimal
-    nullable: false
-    description: Monto total del compromiso en CLP
-
-  - name: moneda
-    type: Enum[CLP, UF, USD, EUR]
-    default: CLP
-    description: Moneda del compromiso
-
-  - name: monto_devengado_acumulado
-    type: Decimal
-    default: 0
-    description: Suma de devengos realizados contra este compromiso
-
-  - name: saldo_por_devengar
-    type: Decimal
-    computed: true
-    formula: monto_comprometido - monto_devengado_acumulado
-    description: Monto pendiente de devengar
-
-  # Acto generador
-  - name: tipo_acto_generador
-    type: Enum[OrdenCompra, Contrato, Resolucion, Convenio, BoletaGarantia, Honorario]
-    nullable: false
-    description: Tipo de documento que origina el compromiso
-
-  - name: acto_id
-    type: String
-    fk: ENT-FIN-ACTO-ADMIN
-    nullable: false
-    description: ID del acto administrativo generador
-
-  - name: numero_documento_externo
-    type: String
-    nullable: true
-    description: Número de OC en ChileCompra, número de contrato, etc.
-
-  # Beneficiario
-  - name: beneficiario_rut
-    type: String
-    nullable: false
-    description: RUT del proveedor/contratista/beneficiario
-
-  - name: beneficiario_nombre
-    type: String
-    nullable: false
-    description: Razón social o nombre del beneficiario
-
-  # Vinculación opcional a IPR
-  - name: ipr_id
-    type: String
-    fk: ENT-FIN-IPR
-    nullable: true
-    description: IPR asociada si el gasto corresponde a un proyecto
-
-  - name: convenio_id
-    type: String
-    fk: ENT-FIN-CONVENIO
-    nullable: true
-    description: Convenio de transferencia si aplica
-
-  # Referencias externas
-  - name: folio_sigfe
-    type: String
-    nullable: true
-    description: ID de la transacción en sistema nacional SIGFE
-
-  - name: id_mercado_publico
-    type: String
-    nullable: true
-    description: ID de la orden de compra en Mercado Público
-
-  # Estado
-  - name: estado
-    type: Enum[Vigente, ParcialmenteDevengado, TotalmenteDevengado, Anulado, Rebajado]
-    default: Vigente
-    description: Estado del ciclo de vida del compromiso
-
-  - name: fecha_anulacion
-    type: Date
-    nullable: true
-    description: Fecha de anulación si aplica
-
-  - name: motivo_anulacion
-    type: String
-    nullable: true
-    description: Justificación de la anulación
-
-  # Glosa descriptiva
-  - name: glosa
-    type: String
-    nullable: false
-    description: Descripción del objeto del gasto
-
-  # Auditoría
-  - name: usuario_registro
-    type: String
-    nullable: false
-    description: Usuario que registró el compromiso
-
-  - name: fecha_registro
-    type: DateTime
-    nullable: false
-    description: Timestamp de creación
-
+- name: id_compromiso
+  type: String
+  key: true
+  description: Identificador único del compromiso
+- name: numero_compromiso
+  type: String
+  nullable: false
+  description: Número secuencial del año (ej. COMP-2025-00145)
+- name: fecha_compromiso
+  type: Date
+  nullable: false
+  description: Fecha de registro del compromiso
+- name: cdp_id
+  type: String
+  fk: ENT-FIN-CDP
+  nullable: false
+  description: Certificado de Disponibilidad Presupuestaria que respalda
+- name: imputacion_presupuestaria
+  type: String
+  nullable: false
+  description: Código clasificador presupuestario (ej. 22.04.001)
+- name: programa_presupuestario
+  type: String
+  nullable: true
+  description: Programa específico si aplica
+- name: monto_comprometido
+  type: Decimal
+  nullable: false
+  description: Monto total del compromiso en CLP
+- name: moneda
+  type: Enum[CLP, UF, USD, EUR]
+  default: CLP
+  description: Moneda del compromiso
+- name: monto_devengado_acumulado
+  type: Decimal
+  default: 0
+  description: Suma de devengos realizados contra este compromiso
+- name: saldo_por_devengar
+  type: Decimal
+  computed: true
+  formula: monto_comprometido - monto_devengado_acumulado
+  description: Monto pendiente de devengar
+- name: tipo_acto_generador
+  type: Enum[OrdenCompra, Contrato, Resolucion, Convenio, BoletaGarantia, Honorario]
+  nullable: false
+  description: Tipo de documento que origina el compromiso
+- name: acto_id
+  type: String
+  fk: ENT-FIN-ACTO-ADMIN
+  nullable: false
+  description: ID del acto administrativo generador
+- name: numero_documento_externo
+  type: String
+  nullable: true
+  description: Número de OC en ChileCompra, número de contrato, etc.
+- name: beneficiario_rut
+  type: String
+  nullable: false
+  description: RUT del proveedor/contratista/beneficiario
+- name: beneficiario_nombre
+  type: String
+  nullable: false
+  description: Razón social o nombre del beneficiario
+- name: ipr_id
+  type: String
+  fk: ENT-FIN-IPR
+  nullable: true
+  description: IPR asociada si el gasto corresponde a un proyecto
+- name: convenio_id
+  type: String
+  fk: ENT-FIN-CONVENIO
+  nullable: true
+  description: Convenio de transferencia si aplica
+- name: folio_sigfe
+  type: String
+  nullable: true
+  description: ID de la transacción en sistema nacional SIGFE
+- name: id_mercado_publico
+  type: String
+  nullable: true
+  description: ID de la orden de compra en Mercado Público
+- name: estado
+  type: Enum[Vigente, ParcialmenteDevengado, TotalmenteDevengado, Anulado, Rebajado]
+  default: Vigente
+  description: Estado del ciclo de vida del compromiso
+- name: fecha_anulacion
+  type: Date
+  nullable: true
+  description: Fecha de anulación si aplica
+- name: motivo_anulacion
+  type: String
+  nullable: true
+  description: Justificación de la anulación
+- name: glosa
+  type: String
+  nullable: false
+  description: Descripción del objeto del gasto
+- name: usuario_registro
+  type: String
+  nullable: false
+  description: Usuario que registró el compromiso
+- name: fecha_registro
+  type: DateTime
+  nullable: false
+  description: Timestamp de creación
 invariants:
-  - id: INV-COMP-001
-    name: compromiso_no_excede_cdp
-    rule: |
-      monto_comprometido <= cdp.saldo_disponible
-    description: El compromiso no puede exceder el saldo disponible del CDP
-    source: DL 1263/1975 Art. 19
-    severity: error
+- id: INV-COMP-001
+  name: compromiso_no_excede_cdp
+  rule: 'monto_comprometido <= cdp.saldo_disponible
 
-  - id: INV-COMP-002
-    name: devengo_no_excede_compromiso
-    rule: |
-      monto_devengado_acumulado <= monto_comprometido
-    description: Los devengos no pueden superar el monto comprometido
-    severity: error
+    '
+  description: El compromiso no puede exceder el saldo disponible del CDP
+  source: DL 1263/1975 Art. 19
+  severity: error
+- id: INV-COMP-002
+  name: devengo_no_excede_compromiso
+  rule: 'monto_devengado_acumulado <= monto_comprometido
 
-  - id: INV-COMP-003
-    name: acto_requerido
-    rule: |
-      acto_id IS NOT NULL
-    description: Todo compromiso requiere un acto administrativo de respaldo
-    severity: error
+    '
+  description: Los devengos no pueden superar el monto comprometido
+  severity: error
+- id: INV-COMP-003
+  name: acto_requerido
+  rule: 'acto_id IS NOT NULL
 
-  - id: INV-COMP-004
-    name: estado_coherente_devengo
-    rule: |
-      (monto_devengado_acumulado = 0) → estado = 'Vigente'
-      (monto_devengado_acumulado > 0 AND monto_devengado_acumulado < monto_comprometido) → estado = 'ParcialmenteDevengado'
-      (monto_devengado_acumulado = monto_comprometido) → estado = 'TotalmenteDevengado'
-    description: El estado debe reflejar el nivel de devengo
+    '
+  description: Todo compromiso requiere un acto administrativo de respaldo
+  severity: error
+- id: INV-COMP-004
+  name: estado_coherente_devengo
+  rule: '(monto_devengado_acumulado = 0) → estado = ''Vigente''
 
-  - id: INV-COMP-005
-    name: anulacion_sin_devengos
-    rule: |
-      (estado = 'Anulado') → monto_devengado_acumulado = 0
-    description: Solo se puede anular un compromiso sin devengos registrados
-    severity: error
+    (monto_devengado_acumulado > 0 AND monto_devengado_acumulado < monto_comprometido)
+    → estado = ''ParcialmenteDevengado''
 
-lifecycle:
-  states:
-    - name: Vigente
-      description: Compromiso activo, pendiente de devengo
-    - name: ParcialmenteDevengado
-      description: Con devengos parciales realizados
-    - name: TotalmenteDevengado
-      description: Monto completamente devengado
-    - name: Anulado
-      description: Compromiso anulado (libera saldo CDP)
-    - name: Rebajado
-      description: Monto reducido por modificación
+    (monto_devengado_acumulado = monto_comprometido) → estado = ''TotalmenteDevengado''
 
-  transitions:
-    - from: Vigente
-      to: ParcialmenteDevengado
-      trigger: registrar_devengo
-      guard: monto_devengado_acumulado < monto_comprometido
-    - from: Vigente
-      to: TotalmenteDevengado
-      trigger: registrar_devengo
-      guard: monto_devengado_acumulado = monto_comprometido
-    - from: ParcialmenteDevengado
-      to: TotalmenteDevengado
-      trigger: registrar_devengo
-      guard: monto_devengado_acumulado = monto_comprometido
-    - from: Vigente
-      to: Anulado
-      trigger: anular
-      guard: monto_devengado_acumulado = 0
-    - from: Vigente
-      to: Rebajado
-      trigger: rebajar_monto
+    '
+  description: El estado debe reflejar el nivel de devengo
+- id: INV-COMP-005
+  name: anulacion_sin_devengos
+  rule: '(estado = ''Anulado'') → monto_devengado_acumulado = 0
 
-morphisms:
-  afecta: [ENT-FIN-CDP]
-  formalizado_por: [ENT-FIN-ACTO-ADMIN, ENT-FIN-CONTRATO, ENT-FIN-ORDEN-COMPRA]
-  genera: [ENT-FIN-DEVENGO]
-  vinculado_a: [ENT-FIN-IPR, ENT-FIN-CONVENIO]
-  registrado_en: [SIGFE]
-
-audit:
-  fields_tracked:
-    - estado
-    - monto_comprometido
-    - monto_devengado_acumulado
-  retention_years: 10
+    '
+  description: Solo se puede anular un compromiso sin devengos registrados
+  severity: error

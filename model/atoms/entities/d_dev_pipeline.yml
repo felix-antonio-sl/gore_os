@@ -1,105 +1,54 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Pipeline
-# ==============================================================================
-# Domain: D-DEV (Desarrollo del Sistema)
-# Subdomain: CI/CD & QA (M4)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-DEV
-  subdomain: cicd_qa
-
-entity:
-  id: ENT-DEV-PIPELINE
-  name: Pipeline
-  name_es: Pipeline de CI/CD
-  description: |
-    Secuencia determinística de transformaciones (Build → Test → Deploy)
-    aplicada al código. Automatiza validación y empaquetado.
-
-  purpose: |
-    Modelar pipelines para:
-    - Automatización de integración continua
-    - Quality gates antes de merge
-    - Generación de artefactos desplegables
-
-  categorical_type: Process
-  is_abstract: false
-  category: Automation
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_pipeline
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: "Ej: CI, CD-Staging, CD-Production"
-
-  - name: tipo
-    type: Enum[CI, CD, Release, Hotfix]
-    nullable: false
-
-  - name: trigger_type
-    type: Enum[Push, PullRequest, Manual, Schedule]
-    nullable: false
-
-  - name: commit_id
-    type: String
-    fk: ENT-DEV-COMMIT
-    nullable: true
-
-  - name: pr_id
-    type: String
-    fk: ENT-DEV-PULLREQUEST
-    nullable: true
-
-  - name: estado
-    type: Enum[Pending, Running, Success, Failed, Cancelled]
-    default: Pending
-
-  - name: fecha_inicio
-    type: DateTime
-    nullable: true
-
-  - name: fecha_fin
-    type: DateTime
-    nullable: true
-
-  - name: duracion_segundos
-    type: Integer
-    computed: true
-    formula: fecha_fin - fecha_inicio
-
-  - name: ambiente_target
-    type: String
-    nullable: true
-    description: "Ambiente de despliegue (si CD)"
-
+- name: id_pipeline
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+  description: 'Ej: CI, CD-Staging, CD-Production'
+- name: tipo
+  type: Enum[CI, CD, Release, Hotfix]
+  nullable: false
+- name: trigger_type
+  type: Enum[Push, PullRequest, Manual, Schedule]
+  nullable: false
+- name: commit_id
+  type: String
+  fk: ENT-DEV-COMMIT
+  nullable: true
+- name: pr_id
+  type: String
+  fk: ENT-DEV-PULLREQUEST
+  nullable: true
+- name: estado
+  type: Enum[Pending, Running, Success, Failed, Cancelled]
+  default: Pending
+- name: fecha_inicio
+  type: DateTime
+  nullable: true
+- name: fecha_fin
+  type: DateTime
+  nullable: true
+- name: duracion_segundos
+  type: Integer
+  computed: true
+  formula: fecha_fin - fecha_inicio
+- name: ambiente_target
+  type: String
+  nullable: true
+  description: Ambiente de despliegue (si CD)
 invariants:
-  - id: INV-PIPELINE-001
-    name: tiene_trigger
-    rule: commit_id IS NOT NULL OR pr_id IS NOT NULL
-    description: "Pipeline debe ser disparado por commit o PR"
-
-  - id: INV-PIPELINE-002
-    name: success_before_deploy
-    rule: tipo = 'CD' AND estado = 'Success' → artefacto_id IS NOT NULL
-    description: "CD exitoso debe generar artefacto"
-
-morphisms:
-  disparado_por_commit: [ENT-DEV-COMMIT]
-  disparado_por_pr: [ENT-DEV-PULLREQUEST]
-  contiene_pasos: [ENT-DEV-PASO-PIPELINE]
-  genera_artefacto: [ENT-DEV-ARTEFACTO-BUILD]
-  ejecuta_tests: [ENT-DEV-TEST-SUITE]
-
-audit:
-  fields_tracked:
-    - estado
-  retention_years: 2
+- id: INV-PIPELINE-001
+  name: tiene_trigger
+  rule: commit_id IS NOT NULL OR pr_id IS NOT NULL
+  description: Pipeline debe ser disparado por commit o PR
+- id: INV-PIPELINE-002
+  name: success_before_deploy
+  rule: tipo = 'CD' AND estado = 'Success' → artefacto_id IS NOT NULL
+  description: CD exitoso debe generar artefacto

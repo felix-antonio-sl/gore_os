@@ -1,97 +1,50 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ReviewComment
-# ==============================================================================
-# Domain: D-DEV (Desarrollo del Sistema)
-# Subdomain: Desarrollo de Código (M2)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-DEV
-  subdomain: desarrollo_codigo
-
-entity:
-  id: ENT-DEV-REVIEW-COMMENT
-  name: ReviewComment
-  name_es: Comentario de Review
-  description: |
-    Comentario realizado durante el proceso de code review
-    en un Pull Request. Puede ser pregunta, sugerencia o aprobación.
-
-  purpose: |
-    Modelar comentarios para:
-    - Trazabilidad de feedback
-    - Métricas de review
-    - Knowledge sharing
-
-  categorical_type: Object
-  is_abstract: false
-  category: Collaboration
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_comment
-    type: String
-    key: true
-
-  - name: pr_id
-    type: String
-    fk: ENT-DEV-PULLREQUEST
-    nullable: false
-
-  - name: autor_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-
-  - name: tipo
-    type: Enum[Comment, Suggestion, Approval, RequestChanges]
-    nullable: false
-
-  - name: contenido
-    type: Text
-    nullable: false
-
-  - name: archivo
-    type: String
-    nullable: true
-    description: "Path del archivo comentado"
-
-  - name: linea
-    type: Integer
-    nullable: true
-    description: "Número de línea comentada"
-
-  - name: resuelto
-    type: Boolean
-    default: false
-
-  - name: fecha_creacion
-    type: DateTime
-    nullable: false
-
-  - name: fecha_resolucion
-    type: DateTime
-    nullable: true
-
+- name: id_comment
+  type: String
+  key: true
+- name: pr_id
+  type: String
+  fk: ENT-DEV-PULLREQUEST
+  nullable: false
+- name: autor_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+- name: tipo
+  type: Enum[Comment, Suggestion, Approval, RequestChanges]
+  nullable: false
+- name: contenido
+  type: Text
+  nullable: false
+- name: archivo
+  type: String
+  nullable: true
+  description: Path del archivo comentado
+- name: linea
+  type: Integer
+  nullable: true
+  description: Número de línea comentada
+- name: resuelto
+  type: Boolean
+  default: false
+- name: fecha_creacion
+  type: DateTime
+  nullable: false
+- name: fecha_resolucion
+  type: DateTime
+  nullable: true
 invariants:
-  - id: INV-RC-001
-    name: contenido_no_vacio
-    rule: LENGTH(contenido) > 0
-    description: "El comentario no puede estar vacío"
-
-  - id: INV-RC-002
-    name: resuelto_tiene_fecha
-    rule: resuelto = true → fecha_resolucion IS NOT NULL
-    description: "Comentario resuelto debe tener fecha"
-
-morphisms:
-  pertenece_a: [ENT-DEV-PULLREQUEST]
-  autor: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - resuelto
-  retention_years: 2
+- id: INV-RC-001
+  name: contenido_no_vacio
+  rule: LENGTH(contenido) > 0
+  description: El comentario no puede estar vacío
+- id: INV-RC-002
+  name: resuelto_tiene_fecha
+  rule: resuelto = true → fecha_resolucion IS NOT NULL
+  description: Comentario resuelto debe tener fecha

@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_spert_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-SPERT-001-01
-story_key: us_spert_001_01
+urn: urn:goreos:atom:story:us_spert_001_01:1.0.0
 role_id: USR-CTD-SEC
-as_a: "Secretario Ejecutivo CTD"
 i_want: generar actas automáticas a partir de la tabla de proyectos
 so_that: se agilice la comunicación de resueltos a las unidades
 domain: D-PLAN
 priority: P1
-capability_bundle_id: CAP-PLAN-001
-morphisms:
-  protagonizado_por: USR-CTD-SEC
-  contribuye_a: CAP-PLAN-001
+capability_id: CAP-PLAN-001

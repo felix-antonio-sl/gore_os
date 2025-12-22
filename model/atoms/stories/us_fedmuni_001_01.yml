@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FEDMUNI-001-01
-story_key: us_fedmuni_001_01
+urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
 role_id: USR-MUNI-ALC
-as_a: "Alcalde"
 i_want: denunciar sobrecargas laborales derivadas de convenios
 so_that: se ajusten los recursos para la ejecución
 domain: D-GOB
 priority: P2
-capability_bundle_id: CAP-GOB-001
-morphisms:
-  protagonizado_por: USR-MUNI-ALC
-  contribuye_a: CAP-GOB-001
+capability_id: CAP-GOB-001

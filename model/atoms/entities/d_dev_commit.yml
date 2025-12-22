@@ -1,107 +1,58 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Commit
-# ==============================================================================
-# Domain: D-DEV (Desarrollo del Sistema)
-# Subdomain: Desarrollo de Código (M2)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-DEV
-  subdomain: desarrollo_codigo
-
-entity:
-  id: ENT-DEV-COMMIT
-  name: Commit
-  name_es: Commit
-  description: |
-    Instantánea inmutable del código en un punto del tiempo.
-    Representa un cambio atómico con mensaje descriptivo.
-
-  purpose: |
-    Modelar commits para:
-    - Trazabilidad de cambios granular
-    - Auditoría de código
-    - Rollback a versiones anteriores
-
-  categorical_type: Event
-  is_abstract: false
-  category: Code
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_commit
-    type: String
-    key: true
-
-  - name: sha
-    type: String
-    nullable: false
-    description: "Hash SHA-1 del commit (40 chars)"
-
-  - name: mensaje
-    type: String
-    nullable: false
-    description: "Conventional Commits: type(scope): description"
-
-  - name: mensaje_completo
-    type: Text
-    nullable: true
-    description: "Cuerpo del mensaje con detalles"
-
-  - name: branch_id
-    type: String
-    fk: ENT-DEV-BRANCH
-    nullable: false
-
-  - name: autor_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
-  - name: autor_email
-    type: String
-    nullable: false
-
-  - name: fecha
-    type: DateTime
-    nullable: false
-
-  - name: archivos_modificados
-    type: Integer
-    nullable: true
-
-  - name: lineas_agregadas
-    type: Integer
-    nullable: true
-
-  - name: lineas_eliminadas
-    type: Integer
-    nullable: true
-
-  - name: parent_sha
-    type: String
-    nullable: true
-    description: "SHA del commit padre"
-
+- name: id_commit
+  type: String
+  key: true
+- name: sha
+  type: String
+  nullable: false
+  description: Hash SHA-1 del commit (40 chars)
+- name: mensaje
+  type: String
+  nullable: false
+  description: 'Conventional Commits: type(scope): description'
+- name: mensaje_completo
+  type: Text
+  nullable: true
+  description: Cuerpo del mensaje con detalles
+- name: branch_id
+  type: String
+  fk: ENT-DEV-BRANCH
+  nullable: false
+- name: autor_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+- name: autor_email
+  type: String
+  nullable: false
+- name: fecha
+  type: DateTime
+  nullable: false
+- name: archivos_modificados
+  type: Integer
+  nullable: true
+- name: lineas_agregadas
+  type: Integer
+  nullable: true
+- name: lineas_eliminadas
+  type: Integer
+  nullable: true
+- name: parent_sha
+  type: String
+  nullable: true
+  description: SHA del commit padre
 invariants:
-  - id: INV-COMMIT-001
-    name: mensaje_no_vacio
-    rule: mensaje IS NOT NULL AND LENGTH(mensaje) > 0
-    description: "El mensaje no puede estar vacío"
-
-  - id: INV-COMMIT-002
-    name: sha_formato
-    rule: LENGTH(sha) = 40
-    description: "SHA debe ser de 40 caracteres"
-
-morphisms:
-  pertenece_a: [ENT-DEV-BRANCH]
-  autor: [ENT-BACK-FUNCIONARIO]
-  dispara_pipeline: [ENT-DEV-PIPELINE]
-
-audit:
-  fields_tracked: []
-  retention_years: 10
+- id: INV-COMMIT-001
+  name: mensaje_no_vacio
+  rule: mensaje IS NOT NULL AND LENGTH(mensaje) > 0
+  description: El mensaje no puede estar vacío
+- id: INV-COMMIT-002
+  name: sha_formato
+  rule: LENGTH(sha) = 40
+  description: SHA debe ser de 40 caracteres

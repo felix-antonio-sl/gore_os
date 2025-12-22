@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_juez_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-JUEZ-001-01
-story_key: us_juez_001_01
+urn: urn:goreos:atom:story:us_juez_001_01:1.0.0
 role_id: USR-EXT-TRIB-CUENTA
-as_a: "Juez de Cuentas (CGR)"
 i_want: la remisión de expedientes originales digitalizados y certificados
 so_that: se pueda instruir el juicio de cuentas
 domain: D-NORM
 priority: P2
-capability_bundle_id: CAP-NORM-CONTROL-001
-morphisms:
-  protagonizado_por: USR-EXT-TRIB-CUENTA
-  contribuye_a: CAP-NORM-CONTROL-001
+capability_id: CAP-NORM-CONTROL-001

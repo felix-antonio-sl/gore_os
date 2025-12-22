@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_fin_presupuesto_asignacionpresupuestaria:1.0.0
+  urn: urn:goreos:entity:d-fin-presupuesto:ENT-FIN-PRESUPUESTO-ASIGNACIONPRESUPUEST:1.0.0
   type: Entity
-  source: domains/d-fin-presupuesto/entity_data
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-PRESUPUESTO-ASIGNACIONPRESUPUEST
 name: AsignacionPresupuestaria
-entity_key: asignacionpresupuestaria
 domain: D-FIN-PRESUPUESTO
 category: Reference
-description: id, subtitulo, item, asignacion, monto_inicial, monto_vigente
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

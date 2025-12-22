@@ -1,222 +1,127 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Riesgo (Riesgo Institucional)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Unidad de Control (UC)
-# Source: domain_d-gestion.md M4, kb_gn_035 GORE-RIESGOS-IDENTIFICACION-01
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + AR Virtual"
-  domain: D-GESTION
-  subdomain: uc
-  kb_source:
-    - "domain_d-gestion.md M4: Unidad de Control (UC)"
-    - "kb_gn_035 → GORE-RIESGOS-IDENTIFICACION-01"
-    - "Res. 30/2015 CGR"
-    - "dialogo_riguroso_d_gestion.md"
-
-entity:
-  id: ENT-GESTION-RIESGO
-  name: Riesgo
-  name_es: Riesgo Institucional
-  description: |
-    Representa un riesgo identificado en la matriz de riesgos de la
-    Unidad de Control (UC). 
-
-    Categorías según kb_gn_035:
-    - Político: Cambio gobierno, conflictos CORE
-    - Financiero: Subejecución, sobrecostos
-    - Operacional: Procesos deficientes
-    - Probidad: Conflictos de interés, fraude
-    - Reputacional: Crisis mediáticas
-
-    Cada riesgo tiene probabilidad × impacto = nivel de riesgo.
-
-  purpose: |
-    Modelar riesgos institucionales para:
-    - Construir matriz de riesgos UC
-    - Asociar controles mitigadores
-    - Reportar a CGR (Res. 30/2015)
-    - Alimentar proceso PDCA
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_riesgo
-    type: String
-    key: true
-    description: "Identificador único (ej: RSG-2025-001)"
-
-  - name: codigo
-    type: String
-    nullable: false
-    description: "Código corto (ej: RSG-FIN-001)"
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre descriptivo del riesgo
-
-  - name: descripcion
-    type: Text
-    nullable: false
-    description: Descripción detallada del riesgo
-
-  # Clasificación
-  - name: categoria
-    type: Enum[Politico, Financiero, Operacional, Probidad, Reputacional, Tecnologico, Legal]
-    nullable: false
-    description: Categoría del riesgo
-
-  - name: subcategoria
-    type: String
-    nullable: true
-    description: Subcategoría específica
-
-  # Contexto
-  - name: proceso_afectado
-    type: String
-    nullable: true
-    description: Proceso o área afectada
-
-  - name: division_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: true
-    description: División más afectada
-
-  - name: objetivo_poa_afectado_id
-    type: String
-    fk: ENT-GESTION-INDICADOR-POA
-    nullable: true
-    description: Objetivo POA que impacta
-
-  # Evaluación
-  - name: probabilidad
-    type: Enum[MuyBaja, Baja, Media, Alta, MuyAlta]
-    nullable: false
-    description: Probabilidad de ocurrencia
-
-  - name: impacto
-    type: Enum[Insignificante, Menor, Moderado, Mayor, Catastrofico]
-    nullable: false
-    description: Impacto si se materializa
-
-  - name: nivel_riesgo_inherente
-    type: Integer
-    computed: true
-    formula: probabilidad_num * impacto_num
-    description: Riesgo sin controles (1-25)
-
-  - name: nivel_riesgo_residual
-    type: Integer
-    nullable: true
-    description: Riesgo con controles aplicados
-
-  - name: prioridad
-    type: Enum[Critica, Alta, Media, Baja]
-    computed: true
-    formula: |
-      CASE 
-        WHEN nivel_riesgo_inherente >= 20 THEN 'Critica'
-        WHEN nivel_riesgo_inherente >= 12 THEN 'Alta'
-        WHEN nivel_riesgo_inherente >= 6 THEN 'Media'
-        ELSE 'Baja'
-      END
-
-  # Tratamiento
-  - name: estrategia_tratamiento
-    type: Enum[Evitar, Mitigar, Transferir, Aceptar]
-    nullable: true
-    description: Estrategia de respuesta
-
-  # Responsabilidad
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Dueño del riesgo
-
-  - name: supervisor_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Supervisor UC
-
-  # Fechas
-  - name: fecha_identificacion
-    type: Date
-    nullable: false
-    description: Fecha de identificación
-
-  - name: fecha_ultima_evaluacion
-    type: Date
-    nullable: true
-    description: Última evaluación del riesgo
-
-  - name: fecha_proxima_revision
-    type: Date
-    nullable: true
-    description: Próxima revisión programada
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Mitigado, Materializado, Cerrado, Transferido]
-    default: Activo
-    description: Estado actual del riesgo
-
-  # Materialización
-  - name: fecha_materializacion
-    type: Date
-    nullable: true
-    description: Fecha si se materializó
-
-  - name: impacto_real
-    type: Text
-    nullable: true
-    description: Descripción del impacto real
-
-  # CGR
-  - name: reportado_cgr
-    type: Boolean
-    default: false
-    description: ¿Reportado a CGR?
-
-  - name: observaciones_cgr
-    type: Text
-    nullable: true
-    description: Observaciones de la CGR
-
+- name: id_riesgo
+  type: String
+  key: true
+  description: 'Identificador único (ej: RSG-2025-001)'
+- name: codigo
+  type: String
+  nullable: false
+  description: 'Código corto (ej: RSG-FIN-001)'
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre descriptivo del riesgo
+- name: descripcion
+  type: Text
+  nullable: false
+  description: Descripción detallada del riesgo
+- name: categoria
+  type: Enum[Politico, Financiero, Operacional, Probidad, Reputacional, Tecnologico,
+    Legal]
+  nullable: false
+  description: Categoría del riesgo
+- name: subcategoria
+  type: String
+  nullable: true
+  description: Subcategoría específica
+- name: proceso_afectado
+  type: String
+  nullable: true
+  description: Proceso o área afectada
+- name: division_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: true
+  description: División más afectada
+- name: objetivo_poa_afectado_id
+  type: String
+  fk: ENT-GESTION-INDICADOR-POA
+  nullable: true
+  description: Objetivo POA que impacta
+- name: probabilidad
+  type: Enum[MuyBaja, Baja, Media, Alta, MuyAlta]
+  nullable: false
+  description: Probabilidad de ocurrencia
+- name: impacto
+  type: Enum[Insignificante, Menor, Moderado, Mayor, Catastrofico]
+  nullable: false
+  description: Impacto si se materializa
+- name: nivel_riesgo_inherente
+  type: Integer
+  computed: true
+  formula: probabilidad_num * impacto_num
+  description: Riesgo sin controles (1-25)
+- name: nivel_riesgo_residual
+  type: Integer
+  nullable: true
+  description: Riesgo con controles aplicados
+- name: prioridad
+  type: Enum[Critica, Alta, Media, Baja]
+  computed: true
+  formula: "CASE \n  WHEN nivel_riesgo_inherente >= 20 THEN 'Critica'\n  WHEN nivel_riesgo_inherente\
+    \ >= 12 THEN 'Alta'\n  WHEN nivel_riesgo_inherente >= 6 THEN 'Media'\n  ELSE 'Baja'\n\
+    END\n"
+- name: estrategia_tratamiento
+  type: Enum[Evitar, Mitigar, Transferir, Aceptar]
+  nullable: true
+  description: Estrategia de respuesta
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Dueño del riesgo
+- name: supervisor_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Supervisor UC
+- name: fecha_identificacion
+  type: Date
+  nullable: false
+  description: Fecha de identificación
+- name: fecha_ultima_evaluacion
+  type: Date
+  nullable: true
+  description: Última evaluación del riesgo
+- name: fecha_proxima_revision
+  type: Date
+  nullable: true
+  description: Próxima revisión programada
+- name: estado
+  type: Enum[Activo, Mitigado, Materializado, Cerrado, Transferido]
+  default: Activo
+  description: Estado actual del riesgo
+- name: fecha_materializacion
+  type: Date
+  nullable: true
+  description: Fecha si se materializó
+- name: impacto_real
+  type: Text
+  nullable: true
+  description: Descripción del impacto real
+- name: reportado_cgr
+  type: Boolean
+  default: false
+  description: ¿Reportado a CGR?
+- name: observaciones_cgr
+  type: Text
+  nullable: true
+  description: Observaciones de la CGR
 invariants:
-  - id: INV-RSG-001
-    name: materializado_requiere_fecha
-    rule: estado = 'Materializado' → fecha_materializacion IS NOT NULL
-    description: Riesgo materializado debe tener fecha
-    severity: error
-
-  - id: INV-RSG-002
-    name: critico_requiere_controles
-    rule: |
-      prioridad = 'Critica' → 
-      EXISTS (SELECT 1 FROM Control c WHERE c.riesgo_id = id_riesgo)
-    description: Riesgo crítico debe tener al menos un control
-    severity: warning
-
-morphisms:
-  mitigado_por: [ENT-GESTION-CONTROL]
-  afecta: [ENT-GESTION-POA, ENT-BACK-DIVISION]
-  genera: [ENT-GESTION-OPORTUNIDAD-MEJORA]
-  reportado_a: [CGR]
-
-audit:
-  fields_tracked:
-    - estado
-    - nivel_riesgo_residual
-    - fecha_materializacion
-  retention_years: 10
+- id: INV-RSG-001
+  name: materializado_requiere_fecha
+  rule: estado = 'Materializado' → fecha_materializacion IS NOT NULL
+  description: Riesgo materializado debe tener fecha
+  severity: error
+- id: INV-RSG-002
+  name: critico_requiere_controles
+  rule: "prioridad = 'Critica' → \nEXISTS (SELECT 1 FROM Control c WHERE c.riesgo_id\
+    \ = id_riesgo)\n"
+  description: Riesgo crítico debe tener al menos un control
+  severity: warning

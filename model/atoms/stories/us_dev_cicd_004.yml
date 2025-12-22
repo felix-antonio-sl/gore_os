@@ -1,17 +1,13 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_cicd_004:1.0.0
   type: Story
-  source: plan_especificacion_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-CICD-004
-story_key: us_dev_cicd_004
+urn: urn:goreos:atom:story:us_dev_cicd_004:1.0.0
 role_id: ROLE-QA
-as_a: QA
 i_want: ejecutar suites de tests E2E automáticamente en el ambiente de staging
-so_that: se valide la integración completa del sistema antes de autorizar el release a producción
+so_that: se valide la integración completa del sistema antes de autorizar el release
+  a producción
 domain: D-DEV
 priority: P0
-capability_bundle_id: CAP-DEV-001
-morphisms:
-  protagonizado_por: ROLE-QA
-  contribuye_a: CAP-DEV-001
-  ejecuta: ENT-DEV-TEST-SUITE
+capability_id: CAP-DEV-001

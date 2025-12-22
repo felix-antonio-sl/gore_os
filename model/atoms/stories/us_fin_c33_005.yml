@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_c33_005:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-C33-005
-story_key: us_fin_c33_005
+urn: urn:goreos:atom:story:us_fin_c33_005:1.0.0
 role_id: USR-DIPIR-C33
-as_a: "Analista Operaciones C33"
 i_want: Gestionar adquisición de activos vía Circular 33
 so_that: Ejecuto presupuesto C33
 domain: D-FIN
 priority: P1
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DIPIR-C33
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

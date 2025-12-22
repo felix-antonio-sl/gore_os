@@ -1,149 +1,101 @@
-# Entidad: Reintegro
-# Domain: D-FIN
-# Subdomain: rendiciones
-# Generated: 2025-12-21 (Phase 20.1b - Gaps)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:reintegro:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-REINTEGRO
-urn: "urn:goreos:entity:d-fin:reintegro:1.0.0"
+urn: urn:goreos:entity:d-fin:reintegro:1.0.0
 name: Reintegro
 domain: D-FIN
 subdomain: rendiciones
 category: Financial
-canonical_source:
-  - "sub_dfin_rendiciones.md"
-  - "Resolución 30/2015 CGR Art. 31"
-  - "kb_gn_020_gestion_rendiciones_koda.yml"
-
-description: |
-  Devolución de recursos no utilizados o excedentes de una transferencia.
-  Genera ingreso propio para el GORE cuando el ejecutor no consume
-  la totalidad de los fondos transferidos o cuando una rendición es rechazada.
-
+is_abstract: false
 attributes:
-  - name: id_reintegro
-    type: String
-    key: true
-
-  - name: transferencia_id
-    type: String
-    fk: ENT-FIN-TRANSFERENCIA
-    nullable: false
-
-  - name: rendicion_id
-    type: String
-    fk: ENT-FIN-RENDICION
-    nullable: true
-
-  - name: convenio_id
-    type: String
-    fk: ENT-FIN-CONVENIO
-    nullable: false
-
-  # Motivo
-  - name: motivo
-    type: Enum[ExcedenteNoUtilizado, RechazoRendicion, InteresesBancarios, RescisionConvenio, CaducidadPlazo, Multa]
-    nullable: false
-
-  # Origen Analítico (Phase 20.2 ERP Enrichment)
-  - name: tipo_origen
-    type: Enum[Administrativo, Financiero, Legal]
-    nullable: true
-    description: Clasificación analítica para contabilidad
-
-  - name: descripcion_motivo
-    type: Text
-    nullable: true
-
-  # Montos
-  - name: monto_reintegro
-    type: Decimal
-    nullable: false
-
-  - name: monto_intereses
-    type: Decimal
-    default: 0
-    description: Intereses devengados por fondos no utilizados
-
-  - name: monto_total
-    type: Decimal
-    computed: true
-    formula: monto_reintegro + monto_intereses
-
-  # Forma de devolución
-  - name: medio_reintegro
-    type: Enum[TransferenciaBancaria, DepositoCuentaGORE, Cheque, CompensacionFutura]
-    nullable: false
-
-  - name: banco_origen
-    type: String
-    nullable: true
-
-  - name: numero_comprobante
-    type: String
-    nullable: true
-
-  - name: boleta_deposito_url
-    type: String
-    nullable: true
-    description: Escaneo del comprobante de depósito
-
-  - name: rut_pagador
-    type: String
-    nullable: true
-    description: RUT de quien realizó la transferencia (puede diferir del ejecutor)
-
-  - name: fecha_reintegro
-    type: Date
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Solicitado, EnTramite, DepositoRealizado, Conciliado, Contabilizado, Rechazado]
-    default: Solicitado
-
-  - name: estado_conciliacion
-    type: Enum[Pendiente, Conciliado, Diferencia]
-    default: Pendiente
-    description: Estado de la conciliación bancaria en ERP
-
-  # Contabilización
-  - name: cuenta_ingreso
-    type: String
-    nullable: true
-    description: Cuenta contable de ingreso propio
-
-  - name: folio_sigfe
-    type: String
-    nullable: true
-
-  # Ejecutor
-  - name: ejecutor_id
-    type: String
-    fk: ENT-FIN-ACTOR_IPR
-
-  - name: ejecutor_rut
-    type: String
-    nullable: false
-
-  # Fechas
-  - name: fecha_solicitud
-    type: Date
-    nullable: false
-
-  - name: fecha_contabilizacion
-    type: Date
-    nullable: true
-
+- name: id_reintegro
+  type: String
+  key: true
+- name: transferencia_id
+  type: String
+  fk: ENT-FIN-TRANSFERENCIA
+  nullable: false
+- name: rendicion_id
+  type: String
+  fk: ENT-FIN-RENDICION
+  nullable: true
+- name: convenio_id
+  type: String
+  fk: ENT-FIN-CONVENIO
+  nullable: false
+- name: motivo
+  type: Enum[ExcedenteNoUtilizado, RechazoRendicion, InteresesBancarios, RescisionConvenio,
+    CaducidadPlazo, Multa]
+  nullable: false
+- name: tipo_origen
+  type: Enum[Administrativo, Financiero, Legal]
+  nullable: true
+  description: Clasificación analítica para contabilidad
+- name: descripcion_motivo
+  type: Text
+  nullable: true
+- name: monto_reintegro
+  type: Decimal
+  nullable: false
+- name: monto_intereses
+  type: Decimal
+  default: 0
+  description: Intereses devengados por fondos no utilizados
+- name: monto_total
+  type: Decimal
+  computed: true
+  formula: monto_reintegro + monto_intereses
+- name: medio_reintegro
+  type: Enum[TransferenciaBancaria, DepositoCuentaGORE, Cheque, CompensacionFutura]
+  nullable: false
+- name: banco_origen
+  type: String
+  nullable: true
+- name: numero_comprobante
+  type: String
+  nullable: true
+- name: boleta_deposito_url
+  type: String
+  nullable: true
+  description: Escaneo del comprobante de depósito
+- name: rut_pagador
+  type: String
+  nullable: true
+  description: RUT de quien realizó la transferencia (puede diferir del ejecutor)
+- name: fecha_reintegro
+  type: Date
+  nullable: true
+- name: estado
+  type: Enum[Solicitado, EnTramite, DepositoRealizado, Conciliado, Contabilizado,
+    Rechazado]
+  default: Solicitado
+- name: estado_conciliacion
+  type: Enum[Pendiente, Conciliado, Diferencia]
+  default: Pendiente
+  description: Estado de la conciliación bancaria en ERP
+- name: cuenta_ingreso
+  type: String
+  nullable: true
+  description: Cuenta contable de ingreso propio
+- name: folio_sigfe
+  type: String
+  nullable: true
+- name: ejecutor_id
+  type: String
+  fk: ENT-FIN-ACTOR_IPR
+- name: ejecutor_rut
+  type: String
+  nullable: false
+- name: fecha_solicitud
+  type: Date
+  nullable: false
+- name: fecha_contabilizacion
+  type: Date
+  nullable: true
 invariants:
-  - name: reintegro_positivo
-    rule: "monto_reintegro > 0"
-
-  - name: origen_valido
-    rule: "transferencia_id NOT NULL OR convenio_id NOT NULL"
-
-morphisms:
-  devuelve_de: [ENT-FIN-TRANSFERENCIA]
-  originado_por: [ENT-FIN-RENDICION]
-  genera: [IngresoPropio]
-  registrado_en: [SIGFE]
-  notificado_a: [ENT-FIN-ACTOR_IPR]
+- name: reintegro_positivo
+  rule: monto_reintegro > 0
+- name: origen_valido
+  rule: transferencia_id NOT NULL OR convenio_id NOT NULL

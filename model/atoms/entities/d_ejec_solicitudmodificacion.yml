@@ -1,179 +1,101 @@
-# ==============================================================================
-# GORE_OS Entity Atom: SolicitudModificacion (Workflow de Cambios)
-# ==============================================================================
-# Domain: D-EJEC (Execution & Monitoring)
-# Subdomain: Modificaciones
-# Source: D03_gestion_ipr.md P6, KB-019 Fase 6
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-EJEC
-  subdomain: modificaciones
-  kb_source:
-    - "D03_gestion_ipr.md P6: Modificaciones en Ejecución"
-    - "KB-019 Fase 6: Modificaciones"
-    - "Glosa 01 Ley de Presupuestos (Umbrales)"
-
-entity:
-  id: ENT-EJEC-SOLMOD
-  name: SolicitudModificacion
-  name_es: Solicitud de Modificación
-  description: |
-    Registro del workflow de solicitud de cambios durante la ejecución.
-    Captura la solicitud, análisis, y decisión previa a la formalización
-    del addendum o modificación contractual.
-
-    Umbrales según Glosa 01 (Circular 11):
-    - Hasta 10% del costo total, tope 7.000 UTM: sin reevaluación MDSF
-    - Si excede: requiere reevaluación y nuevo acuerdo CORE
-
-  purpose: |
-    - Trazar el origen y justificación de cambios
-    - Evaluar si requiere CORE/SNI según umbrales
-    - Documentar análisis técnico previo
-    - Vincular con ModificacionConvenio resultante
-
-  categorical_type: Object
-  is_abstract: false
-  category: Event
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_solicitud
-    type: String
-    key: true
-    description: Identificador único
+- name: id_solicitud
+  type: String
+  key: true
+  description: Identificador único
+- name: convenio_id
+  type: String
+  fk: ENT-EJEC-CONVENIO
+  nullable: false
+  description: Convenio a modificar
+- name: tipo_modificacion
+  type: Enum[AumentoCosto, DisminucionCosto, Prorroga, CambioAlcance, CambioEjecutor,
+    Mixto]
+  nullable: false
+  description: Tipo de cambio solicitado
+- name: descripcion
+  type: Text
+  nullable: false
+  description: Descripción detallada del cambio
+- name: justificacion
+  type: Text
+  nullable: false
+  description: Justificación técnica/operativa
+- name: fecha_solicitud
+  type: Date
+  nullable: false
+  description: Fecha de ingreso de la solicitud
+- name: solicitante
+  type: String
+  nullable: false
+  description: Unidad Técnica o Ejecutor que solicita
+- name: monto_original_convenio
+  type: Decimal
+  nullable: false
+  description: Monto vigente del convenio
+- name: monto_solicitado_adicional
+  type: Decimal
+  default: 0
+  description: Monto adicional solicitado (puede ser negativo)
+- name: porcentaje_variacion
+  type: Decimal
+  computed: true
+  formula: (monto_solicitado_adicional / monto_original_convenio) * 100
+  description: Porcentaje de variación
+- name: dias_prorroga_solicitados
+  type: Integer
+  default: 0
+  description: Días adicionales solicitados
+- name: analista_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Analista GORE asignado
+- name: informe_tecnico
+  type: Text
+  nullable: true
+  description: Análisis del supervisor GORE
+- name: altera_objetivo_ipr
+  type: Boolean
+  default: false
+  description: ¿Altera el objetivo original de la IPR?
+- name: requiere_core
+  type: Boolean
+  computed: true
+  formula: '(monto_solicitado_adicional > 7000 UTM) OR
 
-  - name: convenio_id
-    type: String
-    fk: ENT-EJEC-CONVENIO
-    nullable: false
-    description: Convenio a modificar
+    (porcentaje_variacion > 10) OR
 
-  - name: tipo_modificacion
-    type: Enum[AumentoCosto, DisminucionCosto, Prorroga, CambioAlcance, CambioEjecutor, Mixto]
-    nullable: false
-    description: Tipo de cambio solicitado
+    (altera_objetivo_ipr = true)
 
-  - name: descripcion
-    type: Text
-    nullable: false
-    description: Descripción detallada del cambio
-
-  - name: justificacion
-    type: Text
-    nullable: false
-    description: Justificación técnica/operativa
-
-  - name: fecha_solicitud
-    type: Date
-    nullable: false
-    description: Fecha de ingreso de la solicitud
-
-  - name: solicitante
-    type: String
-    nullable: false
-    description: Unidad Técnica o Ejecutor que solicita
-
-  # Impacto financiero
-  - name: monto_original_convenio
-    type: Decimal
-    nullable: false
-    description: Monto vigente del convenio
-
-  - name: monto_solicitado_adicional
-    type: Decimal
-    default: 0
-    description: Monto adicional solicitado (puede ser negativo)
-
-  - name: porcentaje_variacion
-    type: Decimal
-    computed: true
-    formula: (monto_solicitado_adicional / monto_original_convenio) * 100
-    description: Porcentaje de variación
-
-  # Impacto plazo
-  - name: dias_prorroga_solicitados
-    type: Integer
-    default: 0
-    description: Días adicionales solicitados
-
-  # Análisis
-  - name: analista_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Analista GORE asignado
-
-  - name: informe_tecnico
-    type: Text
-    nullable: true
-    description: Análisis del supervisor GORE
-
-  - name: altera_objetivo_ipr
-    type: Boolean
-    default: false
-    description: ¿Altera el objetivo original de la IPR?
-
-  # Umbrales
-  - name: requiere_core
-    type: Boolean
-    computed: true
-    formula: |
-      (monto_solicitado_adicional > 7000 UTM) OR
-      (porcentaje_variacion > 10) OR
-      (altera_objetivo_ipr = true)
-    description: ¿Requiere nuevo acuerdo CORE?
-
-  - name: requiere_reevaluacion_mdsf
-    type: Boolean
-    computed: true
-    formula: requiere_core
-    description: ¿Requiere reevaluación técnico-económica SNI?
-
-  # Resolución
-  - name: estado
-    type: Enum[Ingresada, EnAnalisis, Aprobada, Rechazada, PendienteCORE]
-    default: Ingresada
-    description: Estado de la solicitud
-
-  - name: modificacion_convenio_id
-    type: String
-    fk: ENT-EJEC-MODCONV
-    nullable: true
-    description: Modificación resultante (si aprobada)
-
+    '
+  description: ¿Requiere nuevo acuerdo CORE?
+- name: requiere_reevaluacion_mdsf
+  type: Boolean
+  computed: true
+  formula: requiere_core
+  description: ¿Requiere reevaluación técnico-económica SNI?
+- name: estado
+  type: Enum[Ingresada, EnAnalisis, Aprobada, Rechazada, PendienteCORE]
+  default: Ingresada
+  description: Estado de la solicitud
+- name: modificacion_convenio_id
+  type: String
+  fk: ENT-EJEC-MODCONV
+  nullable: true
+  description: Modificación resultante (si aprobada)
 invariants:
-  - id: INV-SOLMOD-001
-    name: rechazar_si_altera_objetivo
-    rule: |
-      (altera_objetivo_ipr = true) → (estado != 'Aprobada' OR requiere_core = true)
-    description: Cambios que alteran objetivo requieren tratamiento especial
-    severity: warning
+- id: INV-SOLMOD-001
+  name: rechazar_si_altera_objetivo
+  rule: '(altera_objetivo_ipr = true) → (estado != ''Aprobada'' OR requiere_core =
+    true)
 
-lifecycle:
-  states:
-    - name: Ingresada
-      description: Recibida por GORE
-    - name: EnAnalisis
-      description: Supervisor GORE evaluando
-    - name: Aprobada
-      description: Aprobada, procede addendum
-    - name: Rechazada
-      description: Rechazada por análisis técnico
-    - name: PendienteCORE
-      description: Requiere votación CORE
-
-morphisms:
-  modifica: [ENT-EJEC-CONVENIO]
-  deriva_en: [ENT-EJEC-MODCONV]
-  analizada_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - monto_solicitado_adicional
-  retention_years: 10
+    '
+  description: Cambios que alteran objetivo requieren tratamiento especial
+  severity: warning

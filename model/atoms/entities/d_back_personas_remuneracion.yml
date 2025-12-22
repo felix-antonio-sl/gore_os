@@ -1,406 +1,249 @@
-# ═══════════════════════════════════════════════════════════════════════════════
-# ENT-BACK-REMUNERACION | Liquidación de Remuneraciones
-# Dominio: D-BACK (Gestión de Personas)
-# Fuente: Procedimiento Solicitud, Cálculo y Pago de Remuneraciones GORE Ñuble
-# ═══════════════════════════════════════════════════════════════════════════════
-version: "1.0.0"
-
-metadata:
-  entity_id: ENT-BACK-REMUNERACION
-  name: LiquidacionRemuneracion
-  domain: D-BACK
-  subdomain: Gestión de Personas - Remuneraciones
-  description: |
-    Representa la liquidación mensual de remuneraciones de un funcionario.
-    Incluye haberes imponibles/tributables, descuentos legales y voluntarios,
-    y el cálculo del líquido a pagar según la Escala Única de Sueldos (EUS)
-    y normativa vigente.
-  legal_basis:
-    - DL 249/1973 - Escala Única de Sueldos
-    - Ley 18.834 - Estatuto Administrativo
-    - Ley 19.553 - Asignación de Modernización
-    - DL 3.501 - Incremento Previsional
-    - Ley de Presupuesto vigente
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# ATRIBUTOS
-# ═══════════════════════════════════════════════════════════════════════════════
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Identificación
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: id_liquidacion
-    type: String
-    key: true
-    description: Identificador único de la liquidación
-
-  - name: funcionario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-
-  - name: periodo_mes
-    type: Integer
-    nullable: false
-    description: Mes de la liquidación (1-12)
-
-  - name: periodo_anio
-    type: Integer
-    nullable: false
-    description: Año de la liquidación
-
-  - name: numero_resolucion_pago
-    type: String
-    nullable: true
-    description: Resolución exenta que ordena el pago
-
-  - name: fecha_pago
-    type: Date
-    nullable: true
-    description: Fecha efectiva del pago (normalmente día 19)
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Haberes Imponibles (afectos a cotizaciones previsionales)
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: sueldo_base
-    type: Decimal
-    nullable: false
-    description: Retribución según grado en EUS
-
-  - name: asignacion_antiguedad
-    type: Decimal
-    default: 0
-    description: Bienios - 2% por cada 2 años de servicio
-
-  - name: incremento_previsional_dl3501
-    type: Decimal
-    default: 0
-    description: Incremento previsional DL 3.501
-
-  - name: asignacion_profesional
-    type: Decimal
-    default: 0
-    description: Ley 18.185 - para profesionales grados A-23
-
-  - name: asignacion_responsabilidad_superior
-    type: Decimal
-    default: 0
-    description: Grados 4° o superior, exclusiva confianza
-
-  - name: asignacion_direccion_superior
-    type: Decimal
-    default: 0
-    description: Para grado 1A - autoridades de gobierno
-
-  - name: bonificacion_ley_19185
-    type: Decimal
-    default: 0
-    description: Asignación sustitutiva Art. 18 DL 19.185
-
-  - name: bonificacion_ley_18566
-    type: Decimal
-    default: 0
-    description: Compensatoria por incremento cotización salud
-
-  - name: bonificacion_ley_18675
-    type: Decimal
-    default: 0
-    description: Art. 10 - compensatoria descuentos AFP
-
-  - name: asignacion_modernizacion_base
-    type: Decimal
-    default: 0
-    description: Ley 19.553 - componente base
-
-  - name: asignacion_modernizacion_pmg
-    type: Decimal
-    default: 0
-    description: Incremento institucional PMG
-
-  - name: asignacion_modernizacion_cdc
-    type: Decimal
-    default: 0
-    description: Incremento colectivo CDC
-
-  - name: planilla_suplementaria
-    type: Decimal
-    default: 0
-    description: Por reestructuraciones, si componentes son imponibles
-
-  - name: asignacion_critica
-    type: Decimal
-    default: 0
-    description: Para cargos de difícil reemplazo
-
-  - name: total_imponible
-    type: Decimal
-    computed: true
-    description: Suma de todos los haberes imponibles
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Haberes No Imponibles
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: asignacion_zona
-    type: Decimal
-    default: 0
-    description: Por zonas geográficas especiales - no imponible
-
-  - name: gasto_representacion
-    type: Decimal
-    default: 0
-    description: Solo Gobernador Regional - no imponible
-
-  - name: horas_extraordinarias
-    type: Decimal
-    default: 0
-    description: Pago por horas extras - tributable pero no imponible
-
-  - name: asignacion_compensatoria_art8
-    type: Decimal
-    default: 0
-    description: Ley 19.553 Art. 8 - no imponible, sí tributable
-
-  - name: aguinaldo
-    type: Decimal
-    default: 0
-    description: Aguinaldo legal según tramos de sueldo
-
-  - name: bonos_especiales
-    type: Decimal
-    default: 0
-    description: Bonos extraordinarios por ley
-
-  - name: total_no_imponible
-    type: Decimal
-    computed: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Totales Tributables
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: total_tributable
-    type: Decimal
-    computed: true
-    description: Base para impuesto único Art. 42 Ley de Renta
-
-  - name: tope_imponible_uf
-    type: Decimal
-    default: 87.8
-    description: Tope imponible en UF (varía anualmente)
-
-  - name: valor_uf_aplicado
-    type: Decimal
-    nullable: true
-    description: Valor UF del período
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Descuentos Legales (obligatorios)
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: descuento_afp
-    type: Decimal
-    default: 0
-    description: Cotización previsional AFP
-
-  - name: tasa_afp
-    type: Decimal
-    nullable: true
-    description: Tasa de cotización de la AFP del funcionario
-
-  - name: descuento_salud
-    type: Decimal
-    default: 0
-    description: Cotización FONASA o ISAPRE
-
-  - name: descuento_impuesto_unico
-    type: Decimal
-    default: 0
-    description: Impuesto único según tabla mensual
-
-  - name: descuento_seguro_cesantia
-    type: Decimal
-    default: 0
-    description: AFC - aplica según tipo de contrato
-
-  - name: total_descuentos_legales
-    type: Decimal
-    computed: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Descuentos Voluntarios (requieren autorización)
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: descuento_atrasos
-    type: Decimal
-    default: 0
-    description: Por marcaciones tardías (>59 min acumulados)
-
-  - name: descuento_tiempo_menor_jornada
-    type: Decimal
-    default: 0
-
-  - name: descuento_hdi_fidelidad
-    type: Decimal
-    default: 0
-    description: Seguro HDI Fidelidad Funcionaria
-
-  - name: descuento_ahorro_voluntario
-    type: Decimal
-    default: 0
-    description: APV u otros ahorros
-
-  - name: descuento_credito_ccaf
-    type: Decimal
-    default: 0
-    description: Crédito social de Caja de Compensación
-
-  - name: descuento_bienestar
-    type: Decimal
-    default: 0
-    description: Cuota Servicio de Bienestar
-
-  - name: descuento_asociacion_funcionarios
-    type: Decimal
-    default: 0
-
-  - name: descuento_falp
-    type: Decimal
-    default: 0
-    description: Fundación Arturo López Pérez
-
-  - name: descuento_retencion_judicial
-    type: Decimal
-    default: 0
-    description: Retenciones por orden judicial
-
-  - name: descuento_cgr
-    type: Decimal
-    default: 0
-    description: Descuentos por juicios de cuentas CGR
-
-  - name: total_descuentos_voluntarios
-    type: Decimal
-    computed: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Totales
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: total_haberes
-    type: Decimal
-    computed: true
-    description: total_imponible + total_no_imponible
-
-  - name: total_descuentos
-    type: Decimal
-    computed: true
-    description: total_descuentos_legales + total_descuentos_voluntarios
-
-  - name: liquido_a_pagar
-    type: Decimal
-    computed: true
-    description: total_haberes - total_descuentos
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Estado y Control
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: estado
-    type: Enum[EnCalculo, Verificado, Aprobado, Contabilizado, Pagado, Notificado]
-    default: EnCalculo
-
-  - name: tipo_liquidacion
-    type: Enum[Mensual, Reliquidacion, PlanillaSuplementaria]
-    default: Mensual
-
-  - name: cuenta_bancaria_pago
-    type: String
-    nullable: true
-    description: Cuenta donde se deposita el líquido
-
-  - name: devengado_sigfe
-    type: Boolean
-    default: false
-    description: Si fue devengado en SIGFE
-
-  - name: numero_comprobante_sigfe
-    type: String
-    nullable: true
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# INVARIANTES
-# ═══════════════════════════════════════════════════════════════════════════════
+- name: id_liquidacion
+  type: String
+  key: true
+  description: Identificador único de la liquidación
+- name: funcionario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+- name: periodo_mes
+  type: Integer
+  nullable: false
+  description: Mes de la liquidación (1-12)
+- name: periodo_anio
+  type: Integer
+  nullable: false
+  description: Año de la liquidación
+- name: numero_resolucion_pago
+  type: String
+  nullable: true
+  description: Resolución exenta que ordena el pago
+- name: fecha_pago
+  type: Date
+  nullable: true
+  description: Fecha efectiva del pago (normalmente día 19)
+- name: sueldo_base
+  type: Decimal
+  nullable: false
+  description: Retribución según grado en EUS
+- name: asignacion_antiguedad
+  type: Decimal
+  default: 0
+  description: Bienios - 2% por cada 2 años de servicio
+- name: incremento_previsional_dl3501
+  type: Decimal
+  default: 0
+  description: Incremento previsional DL 3.501
+- name: asignacion_profesional
+  type: Decimal
+  default: 0
+  description: Ley 18.185 - para profesionales grados A-23
+- name: asignacion_responsabilidad_superior
+  type: Decimal
+  default: 0
+  description: Grados 4° o superior, exclusiva confianza
+- name: asignacion_direccion_superior
+  type: Decimal
+  default: 0
+  description: Para grado 1A - autoridades de gobierno
+- name: bonificacion_ley_19185
+  type: Decimal
+  default: 0
+  description: Asignación sustitutiva Art. 18 DL 19.185
+- name: bonificacion_ley_18566
+  type: Decimal
+  default: 0
+  description: Compensatoria por incremento cotización salud
+- name: bonificacion_ley_18675
+  type: Decimal
+  default: 0
+  description: Art. 10 - compensatoria descuentos AFP
+- name: asignacion_modernizacion_base
+  type: Decimal
+  default: 0
+  description: Ley 19.553 - componente base
+- name: asignacion_modernizacion_pmg
+  type: Decimal
+  default: 0
+  description: Incremento institucional PMG
+- name: asignacion_modernizacion_cdc
+  type: Decimal
+  default: 0
+  description: Incremento colectivo CDC
+- name: planilla_suplementaria
+  type: Decimal
+  default: 0
+  description: Por reestructuraciones, si componentes son imponibles
+- name: asignacion_critica
+  type: Decimal
+  default: 0
+  description: Para cargos de difícil reemplazo
+- name: total_imponible
+  type: Decimal
+  computed: true
+  description: Suma de todos los haberes imponibles
+- name: asignacion_zona
+  type: Decimal
+  default: 0
+  description: Por zonas geográficas especiales - no imponible
+- name: gasto_representacion
+  type: Decimal
+  default: 0
+  description: Solo Gobernador Regional - no imponible
+- name: horas_extraordinarias
+  type: Decimal
+  default: 0
+  description: Pago por horas extras - tributable pero no imponible
+- name: asignacion_compensatoria_art8
+  type: Decimal
+  default: 0
+  description: Ley 19.553 Art. 8 - no imponible, sí tributable
+- name: aguinaldo
+  type: Decimal
+  default: 0
+  description: Aguinaldo legal según tramos de sueldo
+- name: bonos_especiales
+  type: Decimal
+  default: 0
+  description: Bonos extraordinarios por ley
+- name: total_no_imponible
+  type: Decimal
+  computed: true
+- name: total_tributable
+  type: Decimal
+  computed: true
+  description: Base para impuesto único Art. 42 Ley de Renta
+- name: tope_imponible_uf
+  type: Decimal
+  default: 87.8
+  description: Tope imponible en UF (varía anualmente)
+- name: valor_uf_aplicado
+  type: Decimal
+  nullable: true
+  description: Valor UF del período
+- name: descuento_afp
+  type: Decimal
+  default: 0
+  description: Cotización previsional AFP
+- name: tasa_afp
+  type: Decimal
+  nullable: true
+  description: Tasa de cotización de la AFP del funcionario
+- name: descuento_salud
+  type: Decimal
+  default: 0
+  description: Cotización FONASA o ISAPRE
+- name: descuento_impuesto_unico
+  type: Decimal
+  default: 0
+  description: Impuesto único según tabla mensual
+- name: descuento_seguro_cesantia
+  type: Decimal
+  default: 0
+  description: AFC - aplica según tipo de contrato
+- name: total_descuentos_legales
+  type: Decimal
+  computed: true
+- name: descuento_atrasos
+  type: Decimal
+  default: 0
+  description: Por marcaciones tardías (>59 min acumulados)
+- name: descuento_tiempo_menor_jornada
+  type: Decimal
+  default: 0
+- name: descuento_hdi_fidelidad
+  type: Decimal
+  default: 0
+  description: Seguro HDI Fidelidad Funcionaria
+- name: descuento_ahorro_voluntario
+  type: Decimal
+  default: 0
+  description: APV u otros ahorros
+- name: descuento_credito_ccaf
+  type: Decimal
+  default: 0
+  description: Crédito social de Caja de Compensación
+- name: descuento_bienestar
+  type: Decimal
+  default: 0
+  description: Cuota Servicio de Bienestar
+- name: descuento_asociacion_funcionarios
+  type: Decimal
+  default: 0
+- name: descuento_falp
+  type: Decimal
+  default: 0
+  description: Fundación Arturo López Pérez
+- name: descuento_retencion_judicial
+  type: Decimal
+  default: 0
+  description: Retenciones por orden judicial
+- name: descuento_cgr
+  type: Decimal
+  default: 0
+  description: Descuentos por juicios de cuentas CGR
+- name: total_descuentos_voluntarios
+  type: Decimal
+  computed: true
+- name: total_haberes
+  type: Decimal
+  computed: true
+  description: total_imponible + total_no_imponible
+- name: total_descuentos
+  type: Decimal
+  computed: true
+  description: total_descuentos_legales + total_descuentos_voluntarios
+- name: liquido_a_pagar
+  type: Decimal
+  computed: true
+  description: total_haberes - total_descuentos
+- name: estado
+  type: Enum[EnCalculo, Verificado, Aprobado, Contabilizado, Pagado, Notificado]
+  default: EnCalculo
+- name: tipo_liquidacion
+  type: Enum[Mensual, Reliquidacion, PlanillaSuplementaria]
+  default: Mensual
+- name: cuenta_bancaria_pago
+  type: String
+  nullable: true
+  description: Cuenta donde se deposita el líquido
+- name: devengado_sigfe
+  type: Boolean
+  default: false
+  description: Si fue devengado en SIGFE
+- name: numero_comprobante_sigfe
+  type: String
+  nullable: true
 invariants:
-  - id: INV-REM-001
-    name: liquido_positivo
-    rule: liquido_a_pagar >= 0
-    description: El líquido a pagar no puede ser negativo
+- id: INV-REM-001
+  name: liquido_positivo
+  rule: liquido_a_pagar >= 0
+  description: El líquido a pagar no puede ser negativo
+- id: INV-REM-002
+  name: tope_imponible
+  rule: total_imponible <= (tope_imponible_uf * valor_uf_aplicado)
+  description: Total imponible no puede exceder el tope legal
+- id: INV-REM-003
+  name: descuentos_voluntarios_limite
+  rule: total_descuentos_voluntarios <= (0.15 * total_haberes)
+  description: Descuentos voluntarios no pueden exceder 15% de haberes
+  exception: Excepto HDI, retenciones judiciales y atrasos
+- id: INV-REM-004
+  name: fecha_pago_valida
+  rule: '(periodo_mes IN [1..8]) → fecha_pago.dia = 19
 
-  - id: INV-REM-002
-    name: tope_imponible
-    rule: total_imponible <= (tope_imponible_uf * valor_uf_aplicado)
-    description: Total imponible no puede exceder el tope legal
+    (periodo_mes IN [9..12]) → fecha_pago según Decreto Hacienda
 
-  - id: INV-REM-003
-    name: descuentos_voluntarios_limite
-    rule: total_descuentos_voluntarios <= (0.15 * total_haberes)
-    description: Descuentos voluntarios no pueden exceder 15% de haberes
-    exception: Excepto HDI, retenciones judiciales y atrasos
-
-  - id: INV-REM-004
-    name: fecha_pago_valida
-    rule: |
-      (periodo_mes IN [1..8]) → fecha_pago.dia = 19
-      (periodo_mes IN [9..12]) → fecha_pago según Decreto Hacienda
-    description: Pago el día 19, excepto último cuatrimestre
-
-  - id: INV-REM-005
-    name: bienios_maximo
-    rule: asignacion_antiguedad <= (sueldo_base * 0.30)
-    description: Bienios máximo 30% del sueldo base (15 bienios)
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# MORFISMOS
-# ═══════════════════════════════════════════════════════════════════════════════
-morphisms:
-  - source: ENT-BACK-REMUNERACION
-    target: ENT-BACK-FUNCIONARIO
-    type: N:1
-    name: funcionario_liquidacion
-    description: Funcionario titular de la liquidación
-
-  - source: ENT-BACK-REMUNERACION
-    target: ENT-FIN-ACTO_ADMINISTRATIVO
-    type: N:1
-    name: resolucion_pago
-    description: Resolución que ordena el pago de remuneraciones
-
-  - source: ENT-BACK-REMUNERACION
-    target: ENT-FIN-DEVENGADO
-    type: 1:1
-    name: devengo_sigfe
-    description: Registro de devengo en SIGFE
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# OPERACIONES
-# ═══════════════════════════════════════════════════════════════════════════════
-operations:
-  - name: calcular_liquidacion
-    description: |
-      Calcula todos los componentes de la liquidación basado en:
-      - Grado y calidad jurídica del funcionario
-      - Antigüedad (bienios acumulados)
-      - Asignaciones especiales aplicables
-      - Descuentos legales según AFP/Isapre
-      - Descuentos voluntarios autorizados
-    timeline: Entre días 15 y 17 de cada mes
-
-  - name: procesar_reliquidacion
-    description: |
-      Genera reliquidación por diferencias de haberes,
-      horas extras, función crítica u otros conceptos
-    timeline: Entre días 19 y 25 de cada mes
-
-  - name: generar_previred
-    description: |
-      Genera archivo XML para carga masiva en PreviRed
-      con cotizaciones previsionales del período
-    timeline: Entre días 25 y 30 de cada mes
-
-  - name: notificar_liquidacion
-    description: Envía liquidación al funcionario por correo o plataforma interna
+    '
+  description: Pago el día 19, excepto último cuatrimestre
+- id: INV-REM-005
+  name: bienios_maximo
+  rule: asignacion_antiguedad <= (sueldo_base * 0.30)
+  description: Bienios máximo 30% del sueldo base (15 bienios)

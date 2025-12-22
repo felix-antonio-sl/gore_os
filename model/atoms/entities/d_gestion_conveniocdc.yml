@@ -1,178 +1,89 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ConvenioDesempenoColectivo (CDC)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Gestión de Personas (M6)
-# Source: dialogo_orquestado_dgestion_fenix.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "AR Virtual + Arquitecto ORKO"
-  domain: D-GESTION
-  subdomain: gestion_personas
-  kb_source:
-    - "LOC 19.175 Art. 64 (metas institucionales)"
-    - "dialogo_orquestado_dgestion_fenix.md"
-
-entity:
-  id: ENT-GESTION-CDC
-  name: ConvenioDesempenoColectivo
-  name_es: Convenio de Desempeño Colectivo
-  description: |
-    Instrumento de gestión que establece metas colectivas para una
-    División/Departamento vinculadas a incentivos de desempeño.
-
-    El CDC es obligatorio según la normativa de modernización del
-    Estado y se alinea con el POA institucional.
-
-    Componentes:
-    - Metas de gestión (80%)
-    - Metas de eficiencia institucional (20%)
-
-  purpose: |
-    Modelar CDC para:
-    - Vincular metas colectivas con POA
-    - Gestionar incentivos por desempeño
-    - Trazar cumplimiento por equipo
-    - Alimentar evaluación de funcionarios
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_cdc
-    type: String
-    key: true
-    description: "Identificador único (ej: CDC-2025-DAF)"
-
-  - name: año
-    type: Integer
-    nullable: false
-    description: Año fiscal
-
-  # Vinculación
-  - name: division_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: false
-    description: División/Departamento
-
-  - name: poa_id
-    type: String
-    fk: ENT-GESTION-POA
-    nullable: true
-    description: POA asociado
-
-  # Metas
-  - name: metas_gestion
-    type: JSON
-    nullable: false
-    description: |
-      Metas de gestión (80%):
-      [{
-        "meta_id": "MG1",
-        "descripcion": "...",
-        "indicador": "...",
-        "ponderacion": 20,
-        "meta_valor": 100,
-        "real": 0
-      }]
-
-  - name: metas_eficiencia
-    type: JSON
-    nullable: false
-    description: |
-      Metas de eficiencia institucional (20%):
-      [{
-        "meta_id": "ME1",
-        "descripcion": "...",
-        "indicador": "...",
-        "ponderacion": 10,
-        "meta_valor": 100,
-        "real": 0
-      }]
-
-  - name: total_metas
-    type: Integer
-    default: 0
-
-  # Cumplimiento
-  - name: cumplimiento_gestion
-    type: Decimal
-    nullable: true
-    description: "Porcentaje cumplimiento metas gestión"
-
-  - name: cumplimiento_eficiencia
-    type: Decimal
-    nullable: true
-    description: "Porcentaje cumplimiento metas eficiencia"
-
-  - name: cumplimiento_global
-    type: Decimal
-    computed: true
-    formula: "(cumplimiento_gestion * 0.80) + (cumplimiento_eficiencia * 0.20)"
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, Aprobado, EnEjecucion, Cerrado]
-    default: Borrador
-
-  # Fechas
-  - name: fecha_suscripcion
-    type: Date
-    nullable: true
-    description: Fecha firma del convenio
-
-  - name: fecha_evaluacion
-    type: Date
-    nullable: true
-    description: Fecha evaluación final
-
-  # Responsabilidad
-  - name: jefe_division_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Jefe de División firmante
-
-  - name: funcionarios_afectos
-    type: Integer
-    default: 0
-    description: Cantidad de funcionarios
-
-  # Resultado
-  - name: resultado
-    type: Enum[Cumplido, NoCumplido]
-    nullable: true
-
-  - name: incentivo_aplicado
-    type: Boolean
-    default: false
-    description: ¿Se aplicó incentivo por desempeño?
-
-  - name: monto_incentivo
-    type: Decimal
-    nullable: true
-    description: Monto total incentivo si aplica
-
+- name: id_cdc
+  type: String
+  key: true
+  description: 'Identificador único (ej: CDC-2025-DAF)'
+- name: año
+  type: Integer
+  nullable: false
+  description: Año fiscal
+- name: division_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: false
+  description: División/Departamento
+- name: poa_id
+  type: String
+  fk: ENT-GESTION-POA
+  nullable: true
+  description: POA asociado
+- name: metas_gestion
+  type: JSON
+  nullable: false
+  description: "Metas de gestión (80%):\n[{\n  \"meta_id\": \"MG1\",\n  \"descripcion\"\
+    : \"...\",\n  \"indicador\": \"...\",\n  \"ponderacion\": 20,\n  \"meta_valor\"\
+    : 100,\n  \"real\": 0\n}]\n"
+- name: metas_eficiencia
+  type: JSON
+  nullable: false
+  description: "Metas de eficiencia institucional (20%):\n[{\n  \"meta_id\": \"ME1\"\
+    ,\n  \"descripcion\": \"...\",\n  \"indicador\": \"...\",\n  \"ponderacion\":\
+    \ 10,\n  \"meta_valor\": 100,\n  \"real\": 0\n}]\n"
+- name: total_metas
+  type: Integer
+  default: 0
+- name: cumplimiento_gestion
+  type: Decimal
+  nullable: true
+  description: Porcentaje cumplimiento metas gestión
+- name: cumplimiento_eficiencia
+  type: Decimal
+  nullable: true
+  description: Porcentaje cumplimiento metas eficiencia
+- name: cumplimiento_global
+  type: Decimal
+  computed: true
+  formula: (cumplimiento_gestion * 0.80) + (cumplimiento_eficiencia * 0.20)
+- name: estado
+  type: Enum[Borrador, Aprobado, EnEjecucion, Cerrado]
+  default: Borrador
+- name: fecha_suscripcion
+  type: Date
+  nullable: true
+  description: Fecha firma del convenio
+- name: fecha_evaluacion
+  type: Date
+  nullable: true
+  description: Fecha evaluación final
+- name: jefe_division_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Jefe de División firmante
+- name: funcionarios_afectos
+  type: Integer
+  default: 0
+  description: Cantidad de funcionarios
+- name: resultado
+  type: Enum[Cumplido, NoCumplido]
+  nullable: true
+- name: incentivo_aplicado
+  type: Boolean
+  default: false
+  description: ¿Se aplicó incentivo por desempeño?
+- name: monto_incentivo
+  type: Decimal
+  nullable: true
+  description: Monto total incentivo si aplica
 invariants:
-  - id: INV-CDC-001
-    name: metas_suman_100
-    rule: SUM(metas_gestion[*].ponderacion + metas_eficiencia[*].ponderacion) = 100
-    description: Ponderaciones deben sumar 100%
-    severity: error
-
-morphisms:
-  pertenece_a: [ENT-BACK-DIVISION]
-  vinculado_a: [ENT-GESTION-POA]
-  firmado_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - cumplimiento_global
-  retention_years: 5
+- id: INV-CDC-001
+  name: metas_suman_100
+  rule: SUM(metas_gestion[*].ponderacion + metas_eficiencia[*].ponderacion) = 100
+  description: Ponderaciones deben sumar 100%
+  severity: error

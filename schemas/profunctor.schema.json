@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:goreos:schema:profunctor:1.0.0",
+  "title": "Profunctor",
+  "description": "Bimodule M: C ⇸ D representando relación N:M centralizada",
+  "type": "object",
+  "required": ["id", "urn", "signature", "source_type", "target_type", "links"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "urn": { "type": "string", "pattern": "^urn:goreos:profunctor:" },
+        "type": { "const": "Profunctor" },
+        "schema": { "const": "urn:goreos:schema:profunctor:1.0.0" }
+      },
+      "required": ["urn", "type"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^PROF-[A-Z_]+$",
+      "description": "Identificador del profunctor (ej. PROF-ACTOR_OF)"
+    },
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:goreos:profunctor:"
+    },
+    "signature": {
+      "type": "string",
+      "description": "Firma categórica (ej. 'Role ⊗ Story → 2')"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": ["Role", "Story", "Capability", "Module", "Process", "Entity"],
+      "description": "Tipo del objeto fuente"
+    },
+    "target_type": {
+      "type": "string",
+      "enum": ["Role", "Story", "Capability", "Module", "Process", "Entity"],
+      "description": "Tipo del objeto destino"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target"],
+        "properties": {
+          "source": { "type": "string" },
+          "target": { "type": "string" },
+          "weight": { "type": "number", "default": 1 },
+          "metadata": { "type": "object" }
+        }
+      },
+      "description": "Lista de pares (source, target) que pertenecen al conjunto de relaciones"
+    }
+  },
+  "additionalProperties": false
+}

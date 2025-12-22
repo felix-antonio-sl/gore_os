@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_op_cies_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-OP-CIES-001-01
-story_key: us_op_cies_001_01
+urn: urn:goreos:atom:story:us_op_cies_001_01:1.0.0
 role_id: USR-CIES-OP
-as_a: "Operador CIES"
 i_want: una consola de monitoreo con alertas priorizadas
 so_that: pueda detectar incidentes rápidamente
 domain: D-TERR
 priority: P0
-capability_bundle_id: CAP-TERR-MAP-001
-morphisms:
-  protagonizado_por: USR-CIES-OP
-  contribuye_a: CAP-TERR-MAP-001
+capability_id: CAP-TERR-MAP-001

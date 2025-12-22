@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_form_005:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-FORM-005
-story_key: us_fin_form_005
+urn: urn:goreos:atom:story:us_fin_form_005:1.0.0
 role_id: USR-DAF-PROF
-as_a: "Profesional DAF"
 i_want: Crear provisiones presupuestarias para FRIL/FRPD
 so_that: Reservo fondos por concurso
 domain: D-FIN
 priority: P1
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DAF-PROF
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

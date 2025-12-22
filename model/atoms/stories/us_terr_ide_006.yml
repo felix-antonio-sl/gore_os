@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_ide_006:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-TERR-IDE-006
-story_key: us_terr_ide_006
+urn: urn:goreos:atom:story:us_terr_ide_006:1.0.0
 role_id: USR-CIU-GEN
-as_a: "Ciudadano"
 i_want: Reportar georreferencias de interés (microbasurales, puntos turísticos)
 so_that: Enriquezco el mapa regional con datos comunitarios
 domain: D-TERR
 priority: P1
-capability_bundle_id: CAP-TERR-MAP-001
-morphisms:
-  protagonizado_por: USR-CIU-GEN
-  contribuye_a: CAP-TERR-MAP-001
+capability_id: CAP-TERR-MAP-001

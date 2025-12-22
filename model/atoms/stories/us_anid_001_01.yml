@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_anid_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ANID-001-01
-story_key: us_anid_001_01
+urn: urn:goreos:atom:story:us_anid_001_01:1.0.0
 role_id: USR-EXT-ANID
-as_a: "Representante ANID"
 i_want: acceso a indicadores de capital humano avanzado
 so_that: se evite la fuga de cerebros
 domain: D-PLAN
 priority: P2
-capability_bundle_id: CAP-PLAN-001
-morphisms:
-  protagonizado_por: USR-EXT-ANID
-  contribuye_a: CAP-PLAN-001

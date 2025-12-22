@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_admin_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-ADMIN-001-01
-story_key: us_admin_001_01
+urn: urn:goreos:atom:story:us_admin_001_01:1.0.0
 role_id: USR-DAF-TIC-ADMIN
-as_a: "Administrador TI"
 i_want: un panel de administración centralizado de usuarios y permisos
 so_that: pueda gestionar el acceso a los sistemas
 domain: D-TDE
 priority: P0
-capability_bundle_id: CAP-FIRMA-001
-morphisms:
-  protagonizado_por: USR-DAF-TIC-ADMIN
-  contribuye_a: CAP-FIRMA-001

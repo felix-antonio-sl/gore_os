@@ -1,124 +1,65 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Story (Backlog Item)
-# ==============================================================================
-# Domain: D-DEV (Desarrollo del Sistema)
-# Subdomain: Gestión de Producto (M1)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-DEV
-  subdomain: gestion_producto
-
-entity:
-  id: ENT-DEV-STORY
-  name: Story
-  name_es: Historia de Usuario / Item de Backlog
-  description: |
-    Unidad de trabajo que aporta valor o resuelve deuda técnica.
-    Formato: "Como [WHO] quiero [WHAT] para [WHY]"
-
-    Reglas:
-    - Beneficial: Cada story debe aportar valor de negocio
-    - Small: Entregable en días, no semanas
-
-  purpose: |
-    Modelar historias para:
-    - Trazabilidad requisito → código → test
-    - Planificación de sprints
-    - Estimación y velocidad del equipo
-
-  categorical_type: Object
-  is_abstract: false
-  category: Product
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_story
-    type: String
-    key: true
-
-  - name: codigo
-    type: String
-    nullable: false
-    description: "Código único ej: US-DEV-001"
-
-  - name: titulo
-    type: String
-    nullable: false
-
-  - name: tipo
-    type: Enum[Feature, Bug, TechDebt, Spike, Chore]
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: "As a [WHO] I want [WHAT] So that [WHY]"
-
-  - name: acceptance_criteria
-    type: Array[String]
-    nullable: false
-    description: "Criterios de aceptación verificables"
-
-  - name: estado
-    type: Enum[Backlog, Ready, InProgress, InReview, Done, Cancelled]
-    default: Backlog
-
-  - name: prioridad
-    type: Enum[P0_Critica, P1_Alta, P2_Media, P3_Baja]
-    default: P2_Media
-
-  - name: story_points
-    type: Integer
-    nullable: true
-    description: "Estimación en puntos (Fibonacci)"
-
-  - name: epic_id
-    type: String
-    fk: ENT-DEV-EPIC
-    nullable: true
-
-  - name: sprint_id
-    type: String
-    fk: ENT-DEV-SPRINT
-    nullable: true
-
-  - name: asignado_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
-  - name: fecha_creacion
-    type: Date
-    nullable: false
-
-  - name: fecha_completado
-    type: Date
-    nullable: true
-
+- name: id_story
+  type: String
+  key: true
+- name: codigo
+  type: String
+  nullable: false
+  description: 'Código único ej: US-DEV-001'
+- name: titulo
+  type: String
+  nullable: false
+- name: tipo
+  type: Enum[Feature, Bug, TechDebt, Spike, Chore]
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: true
+  description: As a [WHO] I want [WHAT] So that [WHY]
+- name: acceptance_criteria
+  type: Array[String]
+  nullable: false
+  description: Criterios de aceptación verificables
+- name: estado
+  type: Enum[Backlog, Ready, InProgress, InReview, Done, Cancelled]
+  default: Backlog
+- name: prioridad
+  type: Enum[P0_Critica, P1_Alta, P2_Media, P3_Baja]
+  default: P2_Media
+- name: story_points
+  type: Integer
+  nullable: true
+  description: Estimación en puntos (Fibonacci)
+- name: epic_id
+  type: String
+  fk: ENT-DEV-EPIC
+  nullable: true
+- name: sprint_id
+  type: String
+  fk: ENT-DEV-SPRINT
+  nullable: true
+- name: asignado_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+- name: fecha_creacion
+  type: Date
+  nullable: false
+- name: fecha_completado
+  type: Date
+  nullable: true
 invariants:
-  - id: INV-STORY-001
-    name: acceptance_criteria_required
-    rule: acceptance_criteria.length > 0
-    description: "Toda story debe tener criterios de aceptación"
-
-  - id: INV-STORY-002
-    name: done_requires_date
-    rule: estado = 'Done' → fecha_completado IS NOT NULL
-    description: "Story completada debe tener fecha"
-
-morphisms:
-  pertenece_a_epic: [ENT-DEV-EPIC]
-  asignada_a_sprint: [ENT-DEV-SPRINT]
-  implementada_en_pr: [ENT-DEV-PULLREQUEST]
-  asignada_a: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - sprint_id
-    - asignado_id
-  retention_years: 5
+- id: INV-STORY-001
+  name: acceptance_criteria_required
+  rule: acceptance_criteria.length > 0
+  description: Toda story debe tener criterios de aceptación
+- id: INV-STORY-002
+  name: done_requires_date
+  rule: estado = 'Done' → fecha_completado IS NOT NULL
+  description: Story completada debe tener fecha

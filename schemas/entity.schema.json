@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:goreos:schema:entity:1.0.0",
+  "title": "Entity",
+  "description": "Objeto en la categoría de esquemas S. Herencia via Slice Category G/Entity_Abstract",
+  "type": "object",
+  "required": ["id", "urn", "name", "domain", "category"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "urn": { "type": "string", "pattern": "^urn:goreos:" },
+        "type": { "const": "Entity" },
+        "schema": { "const": "urn:goreos:schema:entity:1.0.0" }
+      },
+      "required": ["urn", "type"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^ENT-[A-Z]+-[A-Z0-9_]+$"
+    },
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:goreos:entity:"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^D-[A-Z]+$"
+    },
+    "subdomain": {
+      "type": "string",
+      "description": "Subdominio específico (snake_case)"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["Master", "Transaction", "Reference", "Event", "Aggregate"],
+      "description": "Clasificación DDD"
+    },
+    "is_abstract": {
+      "type": "boolean",
+      "default": false,
+      "description": "Si es true, define un objeto terminal local para especializaciones (Slice Category)"
+    },
+    "extends": {
+      "type": "string",
+      "pattern": "^ENT-",
+      "description": "Entidad padre en la categoría slice"
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "key": { "type": "boolean" },
+          "nullable": { "type": "boolean" },
+          "fk": { "type": "string", "pattern": "^ENT-" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "rule"],
+        "properties": {
+          "name": { "type": "string" },
+          "rule": { "type": "string" }
+        }
+      },
+      "description": "Restricciones formalizable como ecualizadores"
+    }
+  },
+  "additionalProperties": false
+}

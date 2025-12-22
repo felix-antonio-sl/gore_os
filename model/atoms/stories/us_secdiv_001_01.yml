@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-SECDIV-001-01
-story_key: us_secdiv_001_01
+urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
 role_id: USR-NEW-SECRETARIA-D
-as_a: "Secretaria División"
 i_want: un módulo de gestión de correspondencia entrante y saliente
 so_that: pueda mantener trazabilidad
 domain: D-BACK
 priority: P1
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-NEW-SECRETARIA-D
-  contribuye_a: CAP-BACK-TICKETS-001
+capability_id: CAP-BACK-TICKETS-001

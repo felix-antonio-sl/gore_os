@@ -1,117 +1,63 @@
-# ==============================================================================
-# GORE_OS Entity Atom: UsuarioSistema
-# ==============================================================================
-# Domain: D-OPS (Operaciones del Sistema)
-# Subdomain: Gestión IAM (M1)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-OPS
-  subdomain: gestion_iam
-
-entity:
-  id: ENT-OPS-USUARIO-SISTEMA
-  name: UsuarioSistema
-  name_es: Usuario del Sistema
-  description: |
-    Identidad digital de un agente (humano o servicio) en GORE_OS.
-    Gestiona autenticación, autorización y ciclo de vida de accesos.
-
-  purpose: |
-    Modelar usuarios para:
-    - Control de acceso centralizado
-    - Auditoría de acciones
-    - Integración con ClaveÚnica/SSO
-
-  categorical_type: Object
-  is_abstract: false
-  category: Identity
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_usuario
-    type: String
-    key: true
-
-  - name: email
-    type: String
-    nullable: false
-
-  - name: nombre_completo
-    type: String
-    nullable: false
-
-  - name: rut
-    type: String
-    nullable: true
-    description: "RUT para integración ClaveÚnica"
-
-  - name: tipo
-    type: Enum[Funcionario, Externo, Servicio, Sistema]
-    nullable: false
-
-  - name: funcionario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: "Vinculación con funcionario si aplica"
-
-  - name: estado
-    type: Enum[Pendiente, Activo, Suspendido, Inactivo]
-    default: Pendiente
-
-  - name: metodo_autenticacion
-    type: Enum[Password, ClaveUnica, SSO, APIKey]
-    default: ClaveUnica
-
-  - name: ultimo_acceso
-    type: DateTime
-    nullable: true
-
-  - name: intentos_fallidos
-    type: Integer
-    default: 0
-
-  - name: bloqueado_hasta
-    type: DateTime
-    nullable: true
-
-  - name: fecha_creacion
-    type: Date
-    nullable: false
-
-  - name: fecha_expiracion
-    type: Date
-    nullable: true
-    description: "Para usuarios temporales"
-
+- name: id_usuario
+  type: String
+  key: true
+- name: email
+  type: String
+  nullable: false
+- name: nombre_completo
+  type: String
+  nullable: false
+- name: rut
+  type: String
+  nullable: true
+  description: RUT para integración ClaveÚnica
+- name: tipo
+  type: Enum[Funcionario, Externo, Servicio, Sistema]
+  nullable: false
+- name: funcionario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Vinculación con funcionario si aplica
+- name: estado
+  type: Enum[Pendiente, Activo, Suspendido, Inactivo]
+  default: Pendiente
+- name: metodo_autenticacion
+  type: Enum[Password, ClaveUnica, SSO, APIKey]
+  default: ClaveUnica
+- name: ultimo_acceso
+  type: DateTime
+  nullable: true
+- name: intentos_fallidos
+  type: Integer
+  default: 0
+- name: bloqueado_hasta
+  type: DateTime
+  nullable: true
+- name: fecha_creacion
+  type: Date
+  nullable: false
+- name: fecha_expiracion
+  type: Date
+  nullable: true
+  description: Para usuarios temporales
 invariants:
-  - id: INV-USR-001
-    name: email_unico
-    rule: UNIQUE(email)
-    description: "Email debe ser único en el sistema"
-
-  - id: INV-USR-002
-    name: activo_tiene_rol
-    rule: estado = 'Activo' → roles.count > 0
-    description: "Usuario activo debe tener al menos un rol"
-
-  - id: INV-USR-003
-    name: bloqueo_por_intentos
-    rule: intentos_fallidos >= 5 → bloqueado_hasta IS NOT NULL
-    description: "5 intentos fallidos bloquean la cuenta"
-
-morphisms:
-  vinculado_a: [ENT-BACK-FUNCIONARIO]
-  tiene_roles: [ENT-OPS-ASIGNACION-ROL]
-  genera_logs: [ENT-OPS-LOG-AUDITORIA]
-
-audit:
-  fields_tracked:
-    - estado
-    - ultimo_acceso
-    - intentos_fallidos
-  retention_years: 10
+- id: INV-USR-001
+  name: email_unico
+  rule: UNIQUE(email)
+  description: Email debe ser único en el sistema
+- id: INV-USR-002
+  name: activo_tiene_rol
+  rule: estado = 'Activo' → roles.count > 0
+  description: Usuario activo debe tener al menos un rol
+- id: INV-USR-003
+  name: bloqueo_por_intentos
+  rule: intentos_fallidos >= 5 → bloqueado_hasta IS NOT NULL
+  description: 5 intentos fallidos bloquean la cuenta

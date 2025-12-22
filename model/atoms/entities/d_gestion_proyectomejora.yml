@@ -1,211 +1,101 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ProyectoMejora (Proyecto de Mejora PDCA)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Mejora Continua (PDCA)
-# Source: domain_d-gestion.md M5, dialogo_riguroso_d_gestion.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + AR Virtual"
-  domain: D-GESTION
-  subdomain: pdca
-  kb_source:
-    - "domain_d-gestion.md M5: Mejora Continua (PDCA)"
-    - "dialogo_riguroso_d_gestion.md"
-
-entity:
-  id: ENT-GESTION-PROYECTO-MEJORA
-  name: ProyectoMejora
-  name_es: Proyecto de Mejora
-  description: |
-    Implementación estructurada de una OportunidadMejora aprobada
-    siguiendo el ciclo PDCA (Plan-Do-Check-Act).
-
-    El proyecto documenta cada fase del ciclo y captura
-    métricas de impacto para evaluar efectividad.
-
-  purpose: |
-    Gestionar proyectos de mejora para:
-    - Estructurar implementación PDCA
-    - Medir impacto de las mejoras
-    - Documentar lecciones aprendidas
-    - Estandarizar mejoras exitosas
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_proyecto
-    type: String
-    key: true
-    description: "Identificador único (ej: PM-2025-001)"
-
-  - name: oportunidad_id
-    type: String
-    fk: ENT-GESTION-OPORTUNIDAD-MEJORA
-    nullable: false
-    description: Oportunidad que origina el proyecto
-
-  - name: titulo
-    type: String
-    nullable: false
-    description: Título del proyecto
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción del proyecto
-
-  # PDCA
-  - name: plan_pdca
-    type: JSON
-    nullable: false
-    description: |
-      Estructura PDCA:
-      {
-        "plan": {
-          "objetivo": "...",
-          "acciones": ["..."],
-          "recursos": ["..."],
-          "responsables": ["..."]
-        },
-        "do": {
-          "actividades": ["..."],
-          "fechas": {"inicio": "...", "fin": "..."}
-        },
-        "check": {
-          "indicadores": ["..."],
-          "metodo_evaluacion": "..."
-        },
-        "act": {
-          "decision": "Estandarizar|Ajustar|Descartar",
-          "acciones_siguientes": ["..."]
-        }
-      }
-
-  - name: fase_actual
-    type: Enum[Plan, Do, Check, Act, Cerrado]
-    default: Plan
-    description: Fase actual del ciclo
-
-  # Temporalidad
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-    description: Inicio del proyecto
-
-  - name: fecha_fin_planificada
-    type: Date
-    nullable: false
-    description: Fecha objetivo de cierre
-
-  - name: fecha_fin_real
-    type: Date
-    nullable: true
-    description: Fecha real de cierre
-
-  - name: dias_atraso
-    type: Integer
-    computed: true
-    formula: |
-      CASE 
-        WHEN fecha_fin_real IS NOT NULL 
-        THEN DATEDIFF(fecha_fin_real, fecha_fin_planificada)
-        WHEN CURRENT_DATE > fecha_fin_planificada 
-        THEN DATEDIFF(CURRENT_DATE, fecha_fin_planificada)
-        ELSE 0
-      END
-
-  # Responsabilidad
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Responsable del proyecto
-
-  - name: equipo
-    type: Array[String]
-    nullable: true
-    description: IDs de funcionarios involucrados
-
-  # Métricas
-  - name: metricas_impacto
-    type: JSON
-    nullable: true
-    description: |
-      Métricas de impacto:
-      {
-        "indicador": "...",
-        "valor_inicial": 0,
-        "valor_meta": 0,
-        "valor_final": 0
-      }
-
-  - name: roi_estimado
-    type: Decimal
-    nullable: true
-    description: Retorno sobre inversión estimado
-
-  # Estado y resultado
-  - name: estado
-    type: Enum[EnCurso, Pausado, Completado, Cancelado]
-    default: EnCurso
-    description: Estado del proyecto
-
-  - name: resultado
-    type: Enum[Exitoso, Parcial, Fallido]
-    nullable: true
-    description: Resultado final
-
-  - name: lecciones_aprendidas
-    type: Text
-    nullable: true
-    description: Aprendizajes del proyecto
-
-  - name: estandarizado
-    type: Boolean
-    default: false
-    description: ¿La mejora se estandarizó?
-
+- name: id_proyecto
+  type: String
+  key: true
+  description: 'Identificador único (ej: PM-2025-001)'
+- name: oportunidad_id
+  type: String
+  fk: ENT-GESTION-OPORTUNIDAD-MEJORA
+  nullable: false
+  description: Oportunidad que origina el proyecto
+- name: titulo
+  type: String
+  nullable: false
+  description: Título del proyecto
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción del proyecto
+- name: plan_pdca
+  type: JSON
+  nullable: false
+  description: "Estructura PDCA:\n{\n  \"plan\": {\n    \"objetivo\": \"...\",\n \
+    \   \"acciones\": [\"...\"],\n    \"recursos\": [\"...\"],\n    \"responsables\"\
+    : [\"...\"]\n  },\n  \"do\": {\n    \"actividades\": [\"...\"],\n    \"fechas\"\
+    : {\"inicio\": \"...\", \"fin\": \"...\"}\n  },\n  \"check\": {\n    \"indicadores\"\
+    : [\"...\"],\n    \"metodo_evaluacion\": \"...\"\n  },\n  \"act\": {\n    \"decision\"\
+    : \"Estandarizar|Ajustar|Descartar\",\n    \"acciones_siguientes\": [\"...\"]\n\
+    \  }\n}\n"
+- name: fase_actual
+  type: Enum[Plan, Do, Check, Act, Cerrado]
+  default: Plan
+  description: Fase actual del ciclo
+- name: fecha_inicio
+  type: Date
+  nullable: false
+  description: Inicio del proyecto
+- name: fecha_fin_planificada
+  type: Date
+  nullable: false
+  description: Fecha objetivo de cierre
+- name: fecha_fin_real
+  type: Date
+  nullable: true
+  description: Fecha real de cierre
+- name: dias_atraso
+  type: Integer
+  computed: true
+  formula: "CASE \n  WHEN fecha_fin_real IS NOT NULL \n  THEN DATEDIFF(fecha_fin_real,\
+    \ fecha_fin_planificada)\n  WHEN CURRENT_DATE > fecha_fin_planificada \n  THEN\
+    \ DATEDIFF(CURRENT_DATE, fecha_fin_planificada)\n  ELSE 0\nEND\n"
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Responsable del proyecto
+- name: equipo
+  type: Array[String]
+  nullable: true
+  description: IDs de funcionarios involucrados
+- name: metricas_impacto
+  type: JSON
+  nullable: true
+  description: "Métricas de impacto:\n{\n  \"indicador\": \"...\",\n  \"valor_inicial\"\
+    : 0,\n  \"valor_meta\": 0,\n  \"valor_final\": 0\n}\n"
+- name: roi_estimado
+  type: Decimal
+  nullable: true
+  description: Retorno sobre inversión estimado
+- name: estado
+  type: Enum[EnCurso, Pausado, Completado, Cancelado]
+  default: EnCurso
+  description: Estado del proyecto
+- name: resultado
+  type: Enum[Exitoso, Parcial, Fallido]
+  nullable: true
+  description: Resultado final
+- name: lecciones_aprendidas
+  type: Text
+  nullable: true
+  description: Aprendizajes del proyecto
+- name: estandarizado
+  type: Boolean
+  default: false
+  description: ¿La mejora se estandarizó?
 invariants:
-  - id: INV-PM-001
-    name: completado_requiere_resultado
-    rule: estado = 'Completado' → resultado IS NOT NULL
-    description: Proyecto completado debe tener resultado
-    severity: error
-
-  - id: INV-PM-002
-    name: check_requiere_metricas
-    rule: fase_actual IN ('Check', 'Act', 'Cerrado') → metricas_impacto IS NOT NULL
-    description: Fase Check requiere métricas
-    severity: warning
-
-lifecycle:
-  states:
-    - name: Plan
-      description: Planificando acciones
-    - name: Do
-      description: Ejecutando acciones
-    - name: Check
-      description: Evaluando resultados
-    - name: Act
-      description: Decidiendo estandarización
-    - name: Cerrado
-      description: Proyecto finalizado
-
-morphisms:
-  responde_a: [ENT-GESTION-OPORTUNIDAD-MEJORA]
-  ejecutado_por: [ENT-BACK-FUNCIONARIO]
-  alimenta: [ENT-GESTION-PLAYBOOK]
-
-audit:
-  fields_tracked:
-    - fase_actual
-    - estado
-    - resultado
-  retention_years: 5
+- id: INV-PM-001
+  name: completado_requiere_resultado
+  rule: estado = 'Completado' → resultado IS NOT NULL
+  description: Proyecto completado debe tener resultado
+  severity: error
+- id: INV-PM-002
+  name: check_requiere_metricas
+  rule: fase_actual IN ('Check', 'Act', 'Cerrado') → metricas_impacto IS NOT NULL
+  description: Fase Check requiere métricas
+  severity: warning

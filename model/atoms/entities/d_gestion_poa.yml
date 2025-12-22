@@ -1,222 +1,121 @@
-# ==============================================================================
-# GORE_OS Entity Atom: POA (Plan Operativo Anual)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Sistema de Control de Gestión (SCG)
-# Source: domain_d-gestion.md M1, kb_gn_035_estrategia_gestion_koda.yml
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + AR Virtual"
-  domain: D-GESTION
-  subdomain: scg
-  kb_source:
-    - "domain_d-gestion.md M1: SCG"
-    - "kb_gn_035 → GORE-CONTROL-GESTION-VINCULACION-01"
-    - "dialogo_riguroso_d_gestion.md"
-
-entity:
-  id: ENT-GESTION-POA
-  name: POA
-  name_es: Plan Operativo Anual
-  description: |
-    Instrumento de gestión que desagrega los objetivos de la ERD en metas
-    divisionales concretas, medibles y con indicadores SMART.
-
-    El POA vincula la estrategia regional con el presupuesto anual y es
-    la base del Sistema de Control de Gestión (SCG).
-
-    Cada División debe tener un POA aprobado antes del 31 de enero.
-    El ciclo POA→Ejecución→Evaluación→Retroalimentación es continuo.
-
-  purpose: |
-    Modelar el POA divisional para:
-    - Alinear metas divisionales con ERD
-    - Vincular objetivos operativos a ítems presupuestarios
-    - Medir avance mediante indicadores SMART
-    - Generar reportes de gestión mensuales/trimestrales
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_poa
-    type: String
-    key: true
-    description: "Identificador único (ej: POA-DAF-2025)"
-
-  - name: division_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: false
-    description: División responsable del POA
-
-  - name: periodo_fiscal
-    type: Integer
-    nullable: false
-    description: Año fiscal del POA
-
-  - name: erd_vigente_id
-    type: String
-    fk: ENT-PLAN-ERD
-    nullable: false
-    description: ERD que orienta el POA
-
-  - name: eje_estrategico_id
-    type: String
-    fk: ENT-PLAN-EJE
-    nullable: true
-    description: Eje ERD prioritario para la división
-
-  # Elaboración
-  - name: fecha_elaboracion
-    type: Date
-    nullable: true
-    description: Fecha de elaboración inicial
-
-  - name: elaborador_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Funcionario que elaboró el POA
-
-  # Aprobaciones
-  - name: fecha_aprobacion_jefe
-    type: Date
-    nullable: true
-    description: Aprobación del Jefe de División
-
-  - name: fecha_aprobacion_ar
-    type: Date
-    nullable: true
-    description: Aprobación del Administrador Regional
-
-  - name: fecha_aprobacion_gr
-    type: Date
-    nullable: true
-    description: Aprobación del Gobernador Regional
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, EnRevision, AprobadoJefe, AprobadoAR, AprobadoGR, EnEjecucion, CierreParcial, Cerrado]
-    default: Borrador
-    description: Estado del ciclo del POA
-
-  # Metas
-  - name: objetivos_totales
-    type: Integer
-    default: 0
-    description: Número de objetivos definidos
-
-  - name: metas_totales
-    type: Integer
-    default: 0
-    description: Número de metas asociadas
-
-  - name: metas_cumplidas
-    type: Integer
-    default: 0
-    description: Metas con cumplimiento ≥90%
-
-  - name: metas_en_riesgo
-    type: Integer
-    default: 0
-    description: Metas con cumplimiento <50%
-
-  - name: avance_porcentual
-    type: Decimal
-    computed: true
-    formula: |
-      CASE 
-        WHEN metas_totales = 0 THEN 0
-        ELSE (metas_cumplidas / metas_totales) * 100
-      END
-    description: Porcentaje global de cumplimiento
-
-  # Vinculación presupuestaria
-  - name: presupuesto_vinculado
-    type: Decimal
-    default: 0
-    description: Monto presupuestario asociado en M$
-
-  - name: cdps_asociados
-    type: Array[String]
-    nullable: true
-    description: IDs de CDPs vinculados a metas
-
-  # Observaciones
-  - name: observaciones_ar
-    type: Text
-    nullable: true
-    description: Observaciones del AR en revisión
-
-  - name: observaciones_gr
-    type: Text
-    nullable: true
-    description: Observaciones del Gobernador
-
+- name: id_poa
+  type: String
+  key: true
+  description: 'Identificador único (ej: POA-DAF-2025)'
+- name: division_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: false
+  description: División responsable del POA
+- name: periodo_fiscal
+  type: Integer
+  nullable: false
+  description: Año fiscal del POA
+- name: erd_vigente_id
+  type: String
+  fk: ENT-PLAN-ERD
+  nullable: false
+  description: ERD que orienta el POA
+- name: eje_estrategico_id
+  type: String
+  fk: ENT-PLAN-EJE
+  nullable: true
+  description: Eje ERD prioritario para la división
+- name: fecha_elaboracion
+  type: Date
+  nullable: true
+  description: Fecha de elaboración inicial
+- name: elaborador_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario que elaboró el POA
+- name: fecha_aprobacion_jefe
+  type: Date
+  nullable: true
+  description: Aprobación del Jefe de División
+- name: fecha_aprobacion_ar
+  type: Date
+  nullable: true
+  description: Aprobación del Administrador Regional
+- name: fecha_aprobacion_gr
+  type: Date
+  nullable: true
+  description: Aprobación del Gobernador Regional
+- name: estado
+  type: Enum[Borrador, EnRevision, AprobadoJefe, AprobadoAR, AprobadoGR, EnEjecucion,
+    CierreParcial, Cerrado]
+  default: Borrador
+  description: Estado del ciclo del POA
+- name: objetivos_totales
+  type: Integer
+  default: 0
+  description: Número de objetivos definidos
+- name: metas_totales
+  type: Integer
+  default: 0
+  description: Número de metas asociadas
+- name: metas_cumplidas
+  type: Integer
+  default: 0
+  description: Metas con cumplimiento ≥90%
+- name: metas_en_riesgo
+  type: Integer
+  default: 0
+  description: Metas con cumplimiento <50%
+- name: avance_porcentual
+  type: Decimal
+  computed: true
+  formula: "CASE \n  WHEN metas_totales = 0 THEN 0\n  ELSE (metas_cumplidas / metas_totales)\
+    \ * 100\nEND\n"
+  description: Porcentaje global de cumplimiento
+- name: presupuesto_vinculado
+  type: Decimal
+  default: 0
+  description: Monto presupuestario asociado en M$
+- name: cdps_asociados
+  type: Array[String]
+  nullable: true
+  description: IDs de CDPs vinculados a metas
+- name: observaciones_ar
+  type: Text
+  nullable: true
+  description: Observaciones del AR en revisión
+- name: observaciones_gr
+  type: Text
+  nullable: true
+  description: Observaciones del Gobernador
 invariants:
-  - id: INV-POA-001
-    name: aprobacion_secuencial
-    rule: |
-      fecha_aprobacion_ar IS NOT NULL → fecha_aprobacion_jefe IS NOT NULL
-    description: AR aprueba después del Jefe de División
-    severity: error
+- id: INV-POA-001
+  name: aprobacion_secuencial
+  rule: 'fecha_aprobacion_ar IS NOT NULL → fecha_aprobacion_jefe IS NOT NULL
 
-  - id: INV-POA-002
-    name: gr_aprueba_post_ar
-    rule: |
-      fecha_aprobacion_gr IS NOT NULL → fecha_aprobacion_ar IS NOT NULL
-    description: GR aprueba después del AR
-    severity: error
+    '
+  description: AR aprueba después del Jefe de División
+  severity: error
+- id: INV-POA-002
+  name: gr_aprueba_post_ar
+  rule: 'fecha_aprobacion_gr IS NOT NULL → fecha_aprobacion_ar IS NOT NULL
 
-  - id: INV-POA-003
-    name: ejecucion_requiere_aprobacion_gr
-    rule: |
-      estado = 'EnEjecucion' → fecha_aprobacion_gr IS NOT NULL
-    description: Solo POA aprobado por GR entra en ejecución
+    '
+  description: GR aprueba después del AR
+  severity: error
+- id: INV-POA-003
+  name: ejecucion_requiere_aprobacion_gr
+  rule: 'estado = ''EnEjecucion'' → fecha_aprobacion_gr IS NOT NULL
 
-  - id: INV-POA-004
-    name: plazo_aprobacion
-    rule: |
-      fecha_aprobacion_gr <= MAKE_DATE(periodo_fiscal, 1, 31) OR 
-      estado IN ('Borrador', 'EnRevision')
-    description: POA debe aprobarse antes del 31 de enero
-    severity: warning
-
-lifecycle:
-  states:
-    - name: Borrador
-      description: División elaborando el POA
-    - name: EnRevision
-      description: En revisión por Jefe o AR
-    - name: AprobadoJefe
-      description: Jefe de División aprobó
-    - name: AprobadoAR
-      description: Administrador Regional aprobó
-    - name: AprobadoGR
-      description: Gobernador Regional aprobó
-    - name: EnEjecucion
-      description: Año fiscal en curso
-    - name: CierreParcial
-      description: Cierre trimestral
-    - name: Cerrado
-      description: Evaluación anual completada
-
-morphisms:
-  alineado_con: [ENT-PLAN-ERD, ENT-PLAN-EJE]
-  pertenece_a: [ENT-BACK-DIVISION]
-  compuesto_por: [ENT-GESTION-INDICADOR-POA]
-  alimenta: [ENT-GESTION-PUNTAJE-HGORE]
-  genera: [ENT-GESTION-REPORTE]
-
-audit:
-  fields_tracked:
-    - estado
-    - avance_porcentual
-    - metas_cumplidas
-  retention_years: 10
+    '
+  description: Solo POA aprobado por GR entra en ejecución
+- id: INV-POA-004
+  name: plazo_aprobacion
+  rule: "fecha_aprobacion_gr <= MAKE_DATE(periodo_fiscal, 1, 31) OR \nestado IN ('Borrador',\
+    \ 'EnRevision')\n"
+  description: POA debe aprobarse antes del 31 de enero
+  severity: warning

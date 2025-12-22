@@ -1,180 +1,98 @@
-# ==============================================================================
-# GORE_OS Entity Atom: EvaluacionExPost (Aprendizaje Institucional)
-# ==============================================================================
-# Domain: D-EJEC (Execution & Monitoring)
-# Subdomain: Evaluación
-# Source: D03_gestion_ipr.md P7, LOC GORE Art. 16, KB-019 Fase 7
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-EJEC
-  subdomain: evaluacion
-  kb_source:
-    - "D03_gestion_ipr.md P7: Evaluación Ex Post"
-    - "LOC GORE Art. 16: Realizar estudios sobre desarrollo regional"
-    - "Metodología MDSF Evaluación Ex-Post"
-
-entity:
-  id: ENT-EJEC-EXPOST
-  name: EvaluacionExPost
-  name_es: Evaluación Ex-Post
-  description: |
-    Estudio evaluativo realizado posterior al cierre de un convenio/proyecto
-    para medir resultados, impacto y extraer lecciones aprendidas.
-
-    Según LOC GORE Art. 16, el GORE debe "realizar estudios, análisis y
-    proposiciones sobre desarrollo regional". La evaluación ex-post
-    alimenta el ciclo de mejora continua.
-
-  purpose: |
-    - Medir resultados vs objetivos originales
-    - Evaluar eficiencia y eficacia
-    - Documentar lecciones aprendidas
-    - Alimentar banco de experiencias
-    - Mejorar formulación futura de IPR
-
-  categorical_type: Object
-  is_abstract: false
-  category: Event
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_evaluacion
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: convenio_id
-    type: String
-    fk: ENT-EJEC-CONVENIO
-    nullable: false
-    description: Convenio evaluado
-
-  - name: ipr_id
-    type: String
-    fk: ENT-FIN-IPR
-    nullable: false
-    description: IPR evaluada
-
-  - name: tipo_evaluacion
-    type: Enum[Simplificada, Profunda, Impacto]
-    nullable: false
-    description: Nivel de profundidad del estudio
-
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-    description: Inicio del estudio evaluativo
-
-  - name: fecha_termino
-    type: Date
-    nullable: true
-    description: Término del estudio
-
-  # Equipo evaluador
-  - name: evaluador_responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Funcionario GORE a cargo
-
-  - name: consultora_externa
-    type: String
-    nullable: true
-    description: Consultora externa (si aplica)
-
-  # Resultados
-  - name: objetivo_original
-    type: Text
-    nullable: false
-    description: Objetivo declarado en la IPR
-
-  - name: resultado_obtenido
-    type: Text
-    nullable: true
-    description: Resultado efectivamente logrado
-
-  - name: indicador_eficiencia
-    type: Decimal
-    nullable: true
-    description: "Costo real / Costo estimado * 100"
-
-  - name: indicador_eficacia
-    type: Decimal
-    nullable: true
-    description: "Resultado obtenido / Meta * 100"
-
-  - name: indicador_pertinencia
-    type: Enum[Alta, Media, Baja]
-    nullable: true
-    description: ¿El proyecto sigue siendo pertinente?
-
-  - name: indicador_sostenibilidad
-    type: Enum[Alta, Media, Baja]
-    nullable: true
-    description: ¿Los beneficios se mantienen en el tiempo?
-
-  # Lecciones
-  - name: lecciones_aprendidas
-    type: Text
-    nullable: true
-    description: Principales aprendizajes
-
-  - name: recomendaciones
-    type: Text
-    nullable: true
-    description: Recomendaciones para proyectos futuros
-
-  - name: buenas_practicas
-    type: Array[String]
-    nullable: true
-    description: Lista de buenas prácticas identificadas
-
-  - name: errores_evitar
-    type: Array[String]
-    nullable: true
-    description: Lista de errores a evitar
-
-  # Estado
-  - name: estado
-    type: Enum[Programada, EnCurso, Finalizada, Publicada]
-    default: Programada
-    description: Estado del estudio
-
-  - name: informe_final_url
-    type: String
-    nullable: true
-    description: URL al informe final publicado
-
+- name: id_evaluacion
+  type: String
+  key: true
+  description: Identificador único
+- name: convenio_id
+  type: String
+  fk: ENT-EJEC-CONVENIO
+  nullable: false
+  description: Convenio evaluado
+- name: ipr_id
+  type: String
+  fk: ENT-FIN-IPR
+  nullable: false
+  description: IPR evaluada
+- name: tipo_evaluacion
+  type: Enum[Simplificada, Profunda, Impacto]
+  nullable: false
+  description: Nivel de profundidad del estudio
+- name: fecha_inicio
+  type: Date
+  nullable: false
+  description: Inicio del estudio evaluativo
+- name: fecha_termino
+  type: Date
+  nullable: true
+  description: Término del estudio
+- name: evaluador_responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario GORE a cargo
+- name: consultora_externa
+  type: String
+  nullable: true
+  description: Consultora externa (si aplica)
+- name: objetivo_original
+  type: Text
+  nullable: false
+  description: Objetivo declarado en la IPR
+- name: resultado_obtenido
+  type: Text
+  nullable: true
+  description: Resultado efectivamente logrado
+- name: indicador_eficiencia
+  type: Decimal
+  nullable: true
+  description: Costo real / Costo estimado * 100
+- name: indicador_eficacia
+  type: Decimal
+  nullable: true
+  description: Resultado obtenido / Meta * 100
+- name: indicador_pertinencia
+  type: Enum[Alta, Media, Baja]
+  nullable: true
+  description: ¿El proyecto sigue siendo pertinente?
+- name: indicador_sostenibilidad
+  type: Enum[Alta, Media, Baja]
+  nullable: true
+  description: ¿Los beneficios se mantienen en el tiempo?
+- name: lecciones_aprendidas
+  type: Text
+  nullable: true
+  description: Principales aprendizajes
+- name: recomendaciones
+  type: Text
+  nullable: true
+  description: Recomendaciones para proyectos futuros
+- name: buenas_practicas
+  type: Array[String]
+  nullable: true
+  description: Lista de buenas prácticas identificadas
+- name: errores_evitar
+  type: Array[String]
+  nullable: true
+  description: Lista de errores a evitar
+- name: estado
+  type: Enum[Programada, EnCurso, Finalizada, Publicada]
+  default: Programada
+  description: Estado del estudio
+- name: informe_final_url
+  type: String
+  nullable: true
+  description: URL al informe final publicado
 invariants:
-  - id: INV-EXPOST-001
-    name: publicada_requiere_informe
-    rule: |
-      (estado = 'Publicada') → (informe_final_url IS NOT NULL)
-    description: Para publicar debe existir el informe
-    severity: error
+- id: INV-EXPOST-001
+  name: publicada_requiere_informe
+  rule: '(estado = ''Publicada'') → (informe_final_url IS NOT NULL)
 
-lifecycle:
-  states:
-    - name: Programada
-      description: Seleccionada en muestra anual
-    - name: EnCurso
-      description: Estudio en ejecución
-    - name: Finalizada
-      description: Informe entregado
-    - name: Publicada
-      description: Disponible públicamente
-
-morphisms:
-  evalua: [ENT-EJEC-CONVENIO, ENT-FIN-IPR]
-  realizada_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - indicador_eficiencia
-    - indicador_eficacia
-  retention_years: 20
+    '
+  description: Para publicar debe existir el informe
+  severity: error

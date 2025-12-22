@@ -1,113 +1,62 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Backup
-# ==============================================================================
-# Domain: D-OPS (Operaciones del Sistema)
-# Subdomain: Backup (M5)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-OPS
-  subdomain: backup
-
-entity:
-  id: ENT-OPS-BACKUP
-  name: Backup
-  name_es: Respaldo
-  description: |
-    Copia de seguridad de datos o configuraciones del sistema.
-    Base para recuperación ante desastres.
-
-  purpose: |
-    Modelar backups para:
-    - Continuidad de negocio
-    - Recuperación ante desastres
-    - Compliance (retención de datos)
-
-  categorical_type: Object
-  is_abstract: false
-  category: Continuity
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_backup
-    type: String
-    key: true
-
-  - name: tipo
-    type: Enum[Full, Incremental, Differential, Snapshot]
-    nullable: false
-
-  - name: origen
-    type: String
-    nullable: false
-    description: "Base de datos, sistema, servicio"
-
-  - name: ubicacion
-    type: String
-    nullable: false
-    description: "Path o URL del backup"
-
-  - name: tamaño_mb
-    type: Decimal
-    nullable: true
-
-  - name: checksum
-    type: String
-    nullable: true
-    description: "Hash para verificación de integridad"
-
-  - name: estado
-    type: Enum[EnProgreso, Completado, Fallido, Verificado, Expirado]
-    default: EnProgreso
-
-  - name: fecha_inicio
-    type: DateTime
-    nullable: false
-
-  - name: fecha_fin
-    type: DateTime
-    nullable: true
-
-  - name: duracion_segundos
-    type: Integer
-    computed: true
-
-  - name: retencion_dias
-    type: Integer
-    default: 30
-
-  - name: fecha_expiracion
-    type: Date
-    computed: true
-    formula: fecha_inicio + retencion_dias
-
-  - name: verificado
-    type: Boolean
-    default: false
-
-  - name: fecha_verificacion
-    type: DateTime
-    nullable: true
-
+- name: id_backup
+  type: String
+  key: true
+- name: tipo
+  type: Enum[Full, Incremental, Differential, Snapshot]
+  nullable: false
+- name: origen
+  type: String
+  nullable: false
+  description: Base de datos, sistema, servicio
+- name: ubicacion
+  type: String
+  nullable: false
+  description: Path o URL del backup
+- name: tamaño_mb
+  type: Decimal
+  nullable: true
+- name: checksum
+  type: String
+  nullable: true
+  description: Hash para verificación de integridad
+- name: estado
+  type: Enum[EnProgreso, Completado, Fallido, Verificado, Expirado]
+  default: EnProgreso
+- name: fecha_inicio
+  type: DateTime
+  nullable: false
+- name: fecha_fin
+  type: DateTime
+  nullable: true
+- name: duracion_segundos
+  type: Integer
+  computed: true
+- name: retencion_dias
+  type: Integer
+  default: 30
+- name: fecha_expiracion
+  type: Date
+  computed: true
+  formula: fecha_inicio + retencion_dias
+- name: verificado
+  type: Boolean
+  default: false
+- name: fecha_verificacion
+  type: DateTime
+  nullable: true
 invariants:
-  - id: INV-BAK-001
-    name: completado_tiene_checksum
-    rule: estado = 'Completado' → checksum IS NOT NULL
-    description: "Backup completado debe tener checksum"
-
-  - id: INV-BAK-002
-    name: verificado_tiene_fecha
-    rule: verificado = true → fecha_verificacion IS NOT NULL
-    description: "Backup verificado debe tener fecha"
-
-morphisms:
-  restaurado_a: [ENT-OPS-AMBIENTE]
-
-audit:
-  fields_tracked:
-    - estado
-    - verificado
-  retention_years: 5
+- id: INV-BAK-001
+  name: completado_tiene_checksum
+  rule: estado = 'Completado' → checksum IS NOT NULL
+  description: Backup completado debe tener checksum
+- id: INV-BAK-002
+  name: verificado_tiene_fecha
+  rule: verificado = true → fecha_verificacion IS NOT NULL
+  description: Backup verificado debe tener fecha

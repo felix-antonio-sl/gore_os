@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_serv_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-SERV-001-01
-story_key: us_serv_001_01
+urn: urn:goreos:atom:story:us_serv_001_01:1.0.0
 role_id: USR-DAF-SERV-ENC
-as_a: "Encargado Servicios Generales"
 i_want: gestión de contratos de aseo y vigilancia
 so_that: el edificio opere sin interrupciones
 domain: D-BACK
 priority: P1
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-DAF-SERV-ENC
-  contribuye_a: CAP-BACK-TICKETS-001
+capability_id: CAP-BACK-TICKETS-001

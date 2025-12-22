@@ -1,178 +1,91 @@
-# ==============================================================================
-# GORE_OS Entity Atom: H_gore (Índice de Salud Institucional)
-# ==============================================================================
-# Domain: D-GESTION (Control de Gestión y Operación)
-# Subdomain: Sistema de Control de Gestión (SCG)
-# Source: dialogo_orquestado_dgestion_fenix.md
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-22"
-  updated_at: "2025-12-22"
-  created_by: "AR Virtual + Arquitecto ORKO"
-  domain: D-GESTION
-  subdomain: scg
-  kb_source:
-    - "domain_d-gestion.md M2: H_gore"
-    - "dialogo_orquestado_dgestion_fenix.md"
-  migration_note: "Upgraded from 16-line zombie to rich entity"
-
-entity:
-  id: ENT-GESTION-H_GORE
-  name: H_gore
-  name_es: Índice de Salud Institucional
-  description: |
-    Indicador compuesto que mide la "salud" operativa del GORE en tiempo real.
-
-    H_gore es la agregación ponderada de las 7 DimensionSalud:
-    1. Ejecución Presupuestaria (20%)
-    2. Cartera IPR (20%)
-    3. Responsabilidades (20%)
-    4. Cumplimiento Normativo (15%)
-    5. Clima Organizacional (10%)
-    6. Satisfacción Ciudadana (10%)
-    7. Madurez Digital (5%)
-
-    Escala: 0-100 puntos
-    - >= 80: Óptimo (verde)
-    - 60-79: Atención (amarillo)
-    - 50-59: Crítico (naranja) → Notificación a Jefatura
-    - < 50: Emergencia (rojo) → Activación obligatoria FÉNIX
-
-  purpose: |
-    Modelar H_gore como entidad de configuración para:
-    - Definir fórmula de cálculo
-    - Configurar umbrales de alerta
-    - Vincular con dimensiones de salud
-    - Establecer triggers automáticos FENIX
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_hgore
-    type: String
-    key: true
-    description: "Identificador único (ej: HGORE-V1)"
+- name: id_hgore
+  type: String
+  key: true
+  description: 'Identificador único (ej: HGORE-V1)'
+- name: version
+  type: String
+  nullable: false
+  default: '1.0'
+  description: Versión de la fórmula
+- name: nombre
+  type: String
+  default: H_gore
+  description: Nombre del indicador
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción de esta versión
+- name: formula
+  type: Text
+  nullable: false
+  description: 'Fórmula de cálculo:
 
-  - name: version
-    type: String
-    nullable: false
-    default: "1.0"
-    description: Versión de la fórmula
+    H_gore = Σ(dimension_i.valor * dimension_i.peso)
 
-  - name: nombre
-    type: String
-    default: "H_gore"
-    description: Nombre del indicador
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción de esta versión
-
-  # Fórmula
-  - name: formula
-    type: Text
-    nullable: false
-    description: |
-      Fórmula de cálculo:
-      H_gore = Σ(dimension_i.valor * dimension_i.peso)
-
-  - name: dimensiones_activas
-    type: Array[String]
-    nullable: false
-    description: IDs de DimensionSalud que participan
-
-  - name: pesos_vigentes
-    type: JSON
-    nullable: false
-    description: |
-      Pesos por dimensión:
-      {
-        "ejecucion_presupuestaria": 0.20,
-        "cartera_ipr": 0.20,
-        "responsabilidades": 0.20,
-        "cumplimiento_normativo": 0.15,
-        "clima_organizacional": 0.10,
-        "satisfaccion_ciudadana": 0.10,
-        "madurez_digital": 0.05
-      }
-
-  # Umbrales
-  - name: umbral_optimo
-    type: Integer
-    default: 80
-    description: "Mínimo para estado óptimo"
-
-  - name: umbral_atencion
-    type: Integer
-    default: 60
-    description: "Mínimo para estado atención"
-
-  - name: umbral_critico
-    type: Integer
-    default: 50
-    description: "Mínimo para estado crítico"
-
-  - name: umbral_emergencia
-    type: Integer
-    default: 50
-    description: "Debajo de este → FENIX obligatorio"
-
-  # Triggers
-  - name: dias_sostenido_critico
-    type: Integer
-    default: 14
-    description: "Días en crítico antes de notificación"
-
-  - name: activa_fenix_automatico
-    type: Boolean
-    default: true
-    description: "¿Activa FENIX al llegar a emergencia?"
-
-  # Frecuencia
-  - name: frecuencia_calculo
-    type: Enum[Diaria, Semanal, Quincenal, Mensual]
-    default: Semanal
-    description: Frecuencia de recálculo
-
-  # Estado
-  - name: activo
-    type: Boolean
-    default: true
-    description: ¿Versión vigente?
-
-  - name: fecha_vigencia_desde
-    type: Date
-    nullable: false
-
-  - name: fecha_vigencia_hasta
-    type: Date
-    nullable: true
-
+    '
+- name: dimensiones_activas
+  type: Array[String]
+  nullable: false
+  description: IDs de DimensionSalud que participan
+- name: pesos_vigentes
+  type: JSON
+  nullable: false
+  description: "Pesos por dimensión:\n{\n  \"ejecucion_presupuestaria\": 0.20,\n \
+    \ \"cartera_ipr\": 0.20,\n  \"responsabilidades\": 0.20,\n  \"cumplimiento_normativo\"\
+    : 0.15,\n  \"clima_organizacional\": 0.10,\n  \"satisfaccion_ciudadana\": 0.10,\n\
+    \  \"madurez_digital\": 0.05\n}\n"
+- name: umbral_optimo
+  type: Integer
+  default: 80
+  description: Mínimo para estado óptimo
+- name: umbral_atencion
+  type: Integer
+  default: 60
+  description: Mínimo para estado atención
+- name: umbral_critico
+  type: Integer
+  default: 50
+  description: Mínimo para estado crítico
+- name: umbral_emergencia
+  type: Integer
+  default: 50
+  description: Debajo de este → FENIX obligatorio
+- name: dias_sostenido_critico
+  type: Integer
+  default: 14
+  description: Días en crítico antes de notificación
+- name: activa_fenix_automatico
+  type: Boolean
+  default: true
+  description: ¿Activa FENIX al llegar a emergencia?
+- name: frecuencia_calculo
+  type: Enum[Diaria, Semanal, Quincenal, Mensual]
+  default: Semanal
+  description: Frecuencia de recálculo
+- name: activo
+  type: Boolean
+  default: true
+  description: ¿Versión vigente?
+- name: fecha_vigencia_desde
+  type: Date
+  nullable: false
+- name: fecha_vigencia_hasta
+  type: Date
+  nullable: true
 invariants:
-  - id: INV-HG-001
-    name: pesos_suman_uno
-    rule: SUM(pesos_vigentes.values) = 1.0
-    description: Los pesos deben sumar 100%
-    severity: error
-
-  - id: INV-HG-002
-    name: umbrales_ordenados
-    rule: umbral_emergencia <= umbral_critico <= umbral_atencion <= umbral_optimo
-    description: Umbrales deben estar ordenados
-
-morphisms:
-  compuesto_de: [ENT-GESTION-DIMENSION-SALUD]
-  genera: [ENT-GESTION-PUNTAJE-HGORE]
-  activa: [ENT-FENIX-ALERTA]
-
-audit:
-  fields_tracked:
-    - pesos_vigentes
-    - activo
-  retention_years: 10
+- id: INV-HG-001
+  name: pesos_suman_uno
+  rule: SUM(pesos_vigentes.values) = 1.0
+  description: Los pesos deben sumar 100%
+  severity: error
+- id: INV-HG-002
+  name: umbrales_ordenados
+  rule: umbral_emergencia <= umbral_critico <= umbral_atencion <= umbral_optimo
+  description: Umbrales deben estar ordenados

@@ -1,153 +1,105 @@
-# Entidad: Funcionario
-# Domain: D-BACK
-# Subdomain: personas
-# Generated: 2025-12-21 (Phase 20.2 - ERP-GORE Deep Enrichment)
-
+_meta:
+  urn: urn:goreos:entity:d-back:funcionario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-BACK-FUNCIONARIO
-urn: "urn:goreos:entity:d-back:funcionario:1.0.0"
+urn: urn:goreos:entity:d-back:funcionario:1.0.0
 name: Funcionario
 domain: D-BACK
 subdomain: personas
 category: Master
-canonical_source:
-  - "agent_erp_gore.yaml#S-RRHH"
-  - "manual_3_1_ciclo_vida_koda.yml"
-  - "Ley 18.834 (Estatuto Administrativo)"
-
-description: |
-  Entidad central de RRHH. Representa a toda persona que presta servicios
-  al GORE bajo cualquier calidad jurídica (Planta, Contrata, Honorarios, Código Trabajo).
-  Ciclo de vida: Postulación → Selección → Nombramiento → Inducción → Desarrollo → Egreso.
-
+is_abstract: false
 attributes:
-  - name: id_funcionario
-    type: String
-    key: true
-
-  - name: rut
-    type: String
-    nullable: false
-    unique: true
-
-  - name: nombres
-    type: String
-    nullable: false
-
-  - name: apellido_paterno
-    type: String
-    nullable: false
-
-  - name: apellido_materno
-    type: String
-    nullable: true
-
-  - name: email_institucional
-    type: String
-    nullable: true
-
-  # Clasificación Estatutaria
-  - name: calidad_juridica
-    type: Enum[Planta, Contrata, Honorarios, CodigoTrabajo, Practicante]
-    nullable: false
-
-  - name: estamento
-    type: Enum[Directivo, Profesional, Tecnico, Administrativo, Auxiliar]
-    nullable: true
-
-  - name: grado
-    type: String
-    nullable: true
-    description: Grado en el escalafón (ej. 4°, 8°, 15°)
-
-  # Ubicación Organizacional
-  - name: division_id
-    type: String
-    nullable: true
-    description: División a la que pertenece
-
-  - name: unidad_id
-    type: String
-    nullable: true
-
-  - name: cargo
-    type: String
-    nullable: false
-
-  - name: jefatura_directa_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
-  # Dotación
-  - name: dotacion_id
-    type: String
-    fk: ENT-BACK-DOTACION
-    nullable: true
-    description: Vinculación con cupo presupuestario
-
-  # Fechas Ciclo de Vida
-  - name: fecha_ingreso
-    type: Date
-    nullable: false
-
-  - name: fecha_egreso
-    type: Date
-    nullable: true
-
-  - name: causal_egreso
-    type: Enum[Renuncia, Jubilacion, Destitucion, TerminoContrata, SaludIncompatible, Fallecimiento, VacanciaCargo]
-    nullable: true
-
-  - name: estado
-    type: Enum[Activo, LicenciaMedica, ComisionServicio, PermisoSinGoce, Suspendido, Egresado]
-    default: Activo
-
-  # SIAPER
-  - name: numero_siaper
-    type: String
-    nullable: true
-    description: Identificador en sistema SIAPER
-
-  # Inducción (Ley Karin)
-  - name: induccion_completada
-    type: Boolean
-    default: false
-
-  - name: fecha_firma_protocolos
-    type: Date
-    nullable: true
-    description: Firma recepción protocolos Ley Karin
-
-  # Probidad (Phase 20.2 EACS Enrichment)
-  - name: tiene_declaracion_patrimonio_vigente
-    type: Boolean
-    default: false
-
-  - name: tiene_declaracion_intereses_vigente
-    type: Boolean
-    default: false
-
-  - name: fecha_ultima_declaracion_probidad
-    type: Date
-    nullable: true
-
-  - name: requiere_declaracion
-    type: Boolean
-    computed: true
-    description: true si calidad_juridica permite acceso a info privilegiada
-
+- name: id_funcionario
+  type: String
+  key: true
+- name: rut
+  type: String
+  nullable: false
+  unique: true
+- name: nombres
+  type: String
+  nullable: false
+- name: apellido_paterno
+  type: String
+  nullable: false
+- name: apellido_materno
+  type: String
+  nullable: true
+- name: email_institucional
+  type: String
+  nullable: true
+- name: calidad_juridica
+  type: Enum[Planta, Contrata, Honorarios, CodigoTrabajo, Practicante]
+  nullable: false
+- name: estamento
+  type: Enum[Directivo, Profesional, Tecnico, Administrativo, Auxiliar]
+  nullable: true
+- name: grado
+  type: String
+  nullable: true
+  description: Grado en el escalafón (ej. 4°, 8°, 15°)
+- name: division_id
+  type: String
+  nullable: true
+  description: División a la que pertenece
+- name: unidad_id
+  type: String
+  nullable: true
+- name: cargo
+  type: String
+  nullable: false
+- name: jefatura_directa_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+- name: dotacion_id
+  type: String
+  fk: ENT-BACK-DOTACION
+  nullable: true
+  description: Vinculación con cupo presupuestario
+- name: fecha_ingreso
+  type: Date
+  nullable: false
+- name: fecha_egreso
+  type: Date
+  nullable: true
+- name: causal_egreso
+  type: Enum[Renuncia, Jubilacion, Destitucion, TerminoContrata, SaludIncompatible,
+    Fallecimiento, VacanciaCargo]
+  nullable: true
+- name: estado
+  type: Enum[Activo, LicenciaMedica, ComisionServicio, PermisoSinGoce, Suspendido,
+    Egresado]
+  default: Activo
+- name: numero_siaper
+  type: String
+  nullable: true
+  description: Identificador en sistema SIAPER
+- name: induccion_completada
+  type: Boolean
+  default: false
+- name: fecha_firma_protocolos
+  type: Date
+  nullable: true
+  description: Firma recepción protocolos Ley Karin
+- name: tiene_declaracion_patrimonio_vigente
+  type: Boolean
+  default: false
+- name: tiene_declaracion_intereses_vigente
+  type: Boolean
+  default: false
+- name: fecha_ultima_declaracion_probidad
+  type: Date
+  nullable: true
+- name: requiere_declaracion
+  type: Boolean
+  computed: true
+  description: true si calidad_juridica permite acceso a info privilegiada
 invariants:
-  - name: rut_unico
-    rule: "rut IS UNIQUE"
-
-  - name: egreso_coherente
-    rule: "IF estado = Egresado THEN fecha_egreso NOT NULL AND causal_egreso NOT NULL"
-
-  - name: dotacion_planta_contrata
-    rule: "IF calidad_juridica IN (Planta, Contrata) THEN dotacion_id NOT NULL"
-
-morphisms:
-  reporta_a: [ENT-BACK-FUNCIONARIO]
-  ocupa: [ENT-BACK-DOTACION]
-  registrado_en: [SIAPER]
-  genera: [ENT-BACK-PAGO, ENT-BACK-CONTRATO_HONORARIO]
+- name: rut_unico
+  rule: rut IS UNIQUE
+- name: egreso_coherente
+  rule: IF estado = Egresado THEN fecha_egreso NOT NULL AND causal_egreso NOT NULL
+- name: dotacion_planta_contrata
+  rule: IF calidad_juridica IN (Planta, Contrata) THEN dotacion_id NOT NULL

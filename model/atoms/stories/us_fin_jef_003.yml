@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_jef_003:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-JEF-003
-story_key: us_fin_jef_003
+urn: urn:goreos:atom:story:us_fin_jef_003:1.0.0
 role_id: USR-DIPIR-JEFE
-as_a: "Jefe DIPIR"
 i_want: Ver problemas críticos escalados en lista priorizada
 so_that: Gestiono lo urgente primero
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DIPIR-JEFE
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

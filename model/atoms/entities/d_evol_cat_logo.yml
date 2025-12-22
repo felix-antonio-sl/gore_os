@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_evol_cat_logo:1.0.0
+  urn: urn:goreos:entity:d-evol:ENT-EVOL-CAT_LOGO:1.0.0
   type: Entity
-  source: domains/d-evol/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-EVOL-CAT_LOGO
 name: Catálogo
-entity_key: cat_logo
 domain: D-EVOL
 category: Reference
-description: Inventario maestro de artefactos de conocimiento con metadatos.
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

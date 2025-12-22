@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:goreos:schema:story:1.0.0",
+  "title": "Story",
+  "description": "Morfismo entre estado de carencia y beneficio, encapsulado como objeto. Firma: Story(id, role, intent, logic_benefit, domain)",
+  "type": "object",
+  "required": ["id", "urn", "role_id", "i_want", "so_that", "domain"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "urn": { "type": "string", "pattern": "^urn:goreos:atom:story:" },
+        "type": { "const": "Story" },
+        "schema": { "const": "urn:goreos:schema:story:1.0.0" }
+      },
+      "required": ["urn", "type"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^US-[A-Z]+-[A-Z0-9]+-[0-9]+$",
+      "description": "Identificador semántico de la historia"
+    },
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:goreos:atom:story:"
+    },
+    "role_id": {
+      "type": "string",
+      "pattern": "^USR-",
+      "description": "Referencia al rol protagonista (actor_of)"
+    },
+    "i_want": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Intent - qué desea lograr el actor"
+    },
+    "so_that": {
+      "type": "string",
+      "minLength": 5,
+      "description": "Logic Benefit - regla de beneficio (post-condición)"
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^D-[A-Z]+$"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2", "P3"],
+      "description": "Prioridad de implementación"
+    },
+    "capability_id": {
+      "type": "string",
+      "pattern": "^CAP-",
+      "description": "Referencia a la capacidad que agrega (contributes_to)"
+    }
+  },
+  "additionalProperties": false
+}

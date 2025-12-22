@@ -1,293 +1,179 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ConvocatoriaSubvencion8
-# ==============================================================================
-# Domain: D-FIN (Financial Management)
-# Subdomain: Mecanismos de Asignación
-# Source: kb_gn_028_instructivo_subvencion_8_koda.yml
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: draft
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gestor IPR 360"
-  domain: D-FIN
-  subdomain: mecanismos
-  kb_source:
-    - "kb_gn_028_instructivo_subvencion_8_koda.yml"
-
-entity:
-  id: ENT-FIN-CONV-SUBV8
-  name: ConvocatoriaSubvencion8
-  name_es: Convocatoria Subvención 8%
-  description: |
-    Convocatoria anual del Concurso de Vinculación con la Comunidad 8%, que
-    administra los fondos temáticos (Cultura, Social, Género, Deporte, Adulto
-    Mayor, Medio Ambiente, Seguridad) para subvenciones a instituciones privadas
-    sin fines de lucro, organizaciones comunitarias y municipalidades.
-
-    Cada convocatoria define áreas postulables, montos tope por área, fechas
-    de apertura/cierre, y criterios de evaluación según el instructivo anual.
-
-  purpose: |
-    Modelar el ciclo de convocatorias del Concurso 8% para:
-    - Controlar los recursos disponibles por fondo y área temática
-    - Gestionar plazos de postulación y cierre automático
-    - Habilitar la recepción de postulaciones ciudadanas
-    - Aplicar reglas de admisibilidad y evaluación técnica
-
-  categorical_type: Object
-  is_abstract: false
-
-  extends: null
-
-  specializes: ENT-FIN-CONCURSO # Especializa Concurso genérico
-
-  related_to:
-    - entity: ENT-FIN-FONDO
-      relation: organiza_convocatoria_para
-      cardinality: N:1
-      description: Cada convocatoria corresponde a un fondo temático del 8%
-    - entity: ENT-FIN-POST-SUBV8
-      relation: recibe_postulaciones
-      cardinality: 1:N
-      description: Una convocatoria recibe múltiples postulaciones
-    - entity: ENT-ORG-ORGANIZACION
-      relation: dirigida_a
-      cardinality: N:M
-      description: Convocatoria abierta a tipos de organizaciones habilitadas
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_convocatoria
-    type: String
-    key: true
-    description: Identificador único de la convocatoria (ej. CONV8-2025-CULTURA-01)
+- name: id_convocatoria
+  type: String
+  key: true
+  description: Identificador único de la convocatoria (ej. CONV8-2025-CULTURA-01)
+- name: anio_presupuestario
+  type: Integer
+  nullable: false
+  description: Año presupuestario del concurso
+- name: fondo_id
+  type: String
+  fk: ENT-FIN-FONDO
+  nullable: false
+  description: 'Fondo temático al que pertenece:
 
-  - name: anio_presupuestario
-    type: Integer
-    nullable: false
-    description: Año presupuestario del concurso
+    - CULTURA
 
-  - name: fondo_id
-    type: String
-    fk: ENT-FIN-FONDO
-    nullable: false
-    description: |
-      Fondo temático al que pertenece:
-      - CULTURA
-      - SOCIAL_INCLUSION
-      - EQUIDAD_GENERO
-      - DEPORTE
-      - ADULTO_MAYOR
-      - MEDIO_AMBIENTE
-      - SEGURIDAD_CIUDADANA
+    - SOCIAL_INCLUSION
 
-  - name: nombre_convocatoria
-    type: String
-    nullable: false
-    description: Nombre oficial de la convocatoria
+    - EQUIDAD_GENERO
 
-  - name: monto_total_disponible
-    type: Decimal
-    nullable: false
-    description: Presupuesto total asignado a esta convocatoria (M$)
+    - DEPORTE
 
-  - name: fecha_apertura
-    type: Date
-    nullable: false
-    description: Fecha de inicio del período de postulación
+    - ADULTO_MAYOR
 
-  - name: fecha_cierre
-    type: DateTime
-    nullable: false
-    description: Fecha y hora de cierre (típicamente 23:59)
+    - MEDIO_AMBIENTE
 
-  - name: es_concurso_especial
-    type: Boolean
-    default: false
-    description: |
-      Si es concurso especial para:
-      - Representación artística/cultural/deportiva (regional, nacional, internacional)
-      - Producción de películas
-      - Festivales de cine, música o teatro
-      - Creación de libros
+    - SEGURIDAD_CIUDADANA
 
-  - name: tipo_concurso_especial
-    type: Enum[REPRESENTACION, PRODUCCION_PELICULAS, FESTIVALES, LITERATURA]
-    nullable: true
-    description: Tipo de concurso especial si aplica
+    '
+- name: nombre_convocatoria
+  type: String
+  nullable: false
+  description: Nombre oficial de la convocatoria
+- name: monto_total_disponible
+  type: Decimal
+  nullable: false
+  description: Presupuesto total asignado a esta convocatoria (M$)
+- name: fecha_apertura
+  type: Date
+  nullable: false
+  description: Fecha de inicio del período de postulación
+- name: fecha_cierre
+  type: DateTime
+  nullable: false
+  description: Fecha y hora de cierre (típicamente 23:59)
+- name: es_concurso_especial
+  type: Boolean
+  default: false
+  description: 'Si es concurso especial para:
 
-  - name: destinatarios_habilitados
-    type: Array[Enum]
-    nullable: false
-    default: "[PRIV_SFL, ORG_COMUNITARIA]"
-    description: |
-      Tipos de organizaciones que pueden postular:
-      - PRIV_SFL: Instituciones privadas sin fines de lucro
-      - ORG_COMUNITARIA: Organizaciones comunitarias (Ley 19.418)
-      - MUNICIPALIDAD: Solo en fondos específicos
-      - ORG_ADULTO_MAYOR: Solo en Fondo Personas Mayores
+    - Representación artística/cultural/deportiva (regional, nacional, internacional)
 
-  - name: areas_postulables
-    type: Array[String]
-    nullable: false
-    description: |
-      Áreas temáticas habilitadas para postulación.
-      Ejemplo Cultura: [Artes escénicas, Audiovisuales, Visuales, Musicales, 
-                        Literatura, Cultura tradicional, Patrimonio, Cultura y ciencias]
+    - Producción de películas
 
-  - name: monto_tope_por_area
-    type: Map[String, Decimal]
-    nullable: false
-    description: |
-      Límite de financiamiento por área e institución.
-      Estructura: { "area::tipo_institucion": monto_maximo }
+    - Festivales de cine, música o teatro
 
-  - name: monto_adjudicado
-    type: Decimal
-    default: 0
-    description: Suma de montos adjudicados en esta convocatoria
+    - Creación de libros
 
-  - name: estado
-    type: Enum[Preparacion, Publicada, Abierta, Cerrada, EnEvaluacion, Adjudicada, Cerrada_Ejercicio]
-    default: Preparacion
-    description: Estado actual de la convocatoria
+    '
+- name: tipo_concurso_especial
+  type: Enum[REPRESENTACION, PRODUCCION_PELICULAS, FESTIVALES, LITERATURA]
+  nullable: true
+  description: Tipo de concurso especial si aplica
+- name: destinatarios_habilitados
+  type: Array[Enum]
+  nullable: false
+  default: '[PRIV_SFL, ORG_COMUNITARIA]'
+  description: 'Tipos de organizaciones que pueden postular:
 
-  - name: fecha_publicacion_web
-    type: Date
-    nullable: true
-    description: Fecha de publicación en sitio web GORE
+    - PRIV_SFL: Instituciones privadas sin fines de lucro
 
-  - name: fecha_adjudicacion
-    type: Date
-    nullable: true
-    description: Fecha de adjudicación oficial
+    - ORG_COMUNITARIA: Organizaciones comunitarias (Ley 19.418)
 
-  - name: resolucion_aprobatoria_id
-    type: String
-    nullable: true
-    description: ID de la resolución que aprueba el instructivo
+    - MUNICIPALIDAD: Solo en fondos específicos
 
-  - name: acuerdo_core_id
-    type: String
-    fk: ENT-FIN-CERT-CORE
-    nullable: true
-    description: Certificado CORE que aprueba el instructivo
+    - ORG_ADULTO_MAYOR: Solo en Fondo Personas Mayores
 
-  - name: plazo_ejecucion_meses
-    type: Integer
-    default: 8
-    description: Plazo máximo de ejecución de proyectos adjudicados (8 meses típico)
+    '
+- name: areas_postulables
+  type: Array[String]
+  nullable: false
+  description: "Áreas temáticas habilitadas para postulación.\nEjemplo Cultura: [Artes\
+    \ escénicas, Audiovisuales, Visuales, Musicales, \n                  Literatura,\
+    \ Cultura tradicional, Patrimonio, Cultura y ciencias]\n"
+- name: monto_tope_por_area
+  type: Map[String, Decimal]
+  nullable: false
+  description: 'Límite de financiamiento por área e institución.
 
-  - name: requiere_gratuidad
-    type: Boolean
-    default: true
-    description: Si GORE financia 100%, actividades deben ser gratuitas
+    Estructura: { "area::tipo_institucion": monto_maximo }
 
-  - name: porcentaje_difusion_min
-    type: Decimal
-    default: 3.0
-    description: Porcentaje mínimo del presupuesto para difusión
-
-  - name: porcentaje_difusion_max
-    type: Decimal
-    default: 10.0
-    description: Porcentaje máximo del presupuesto para difusión
-
-  - name: valores_hora_honorarios
-    type: Map[String, Decimal]
-    default: '{"profesional": 25000, "tecnico": 23000, "monitor": 18000}'
-    description: Valores hora máximos por tipo de recurso humano
-
-  - name: observaciones
-    type: String
-    nullable: true
-    description: Notas adicionales sobre la convocatoria
-
+    '
+- name: monto_adjudicado
+  type: Decimal
+  default: 0
+  description: Suma de montos adjudicados en esta convocatoria
+- name: estado
+  type: Enum[Preparacion, Publicada, Abierta, Cerrada, EnEvaluacion, Adjudicada, Cerrada_Ejercicio]
+  default: Preparacion
+  description: Estado actual de la convocatoria
+- name: fecha_publicacion_web
+  type: Date
+  nullable: true
+  description: Fecha de publicación en sitio web GORE
+- name: fecha_adjudicacion
+  type: Date
+  nullable: true
+  description: Fecha de adjudicación oficial
+- name: resolucion_aprobatoria_id
+  type: String
+  nullable: true
+  description: ID de la resolución que aprueba el instructivo
+- name: acuerdo_core_id
+  type: String
+  fk: ENT-FIN-CERT-CORE
+  nullable: true
+  description: Certificado CORE que aprueba el instructivo
+- name: plazo_ejecucion_meses
+  type: Integer
+  default: 8
+  description: Plazo máximo de ejecución de proyectos adjudicados (8 meses típico)
+- name: requiere_gratuidad
+  type: Boolean
+  default: true
+  description: Si GORE financia 100%, actividades deben ser gratuitas
+- name: porcentaje_difusion_min
+  type: Decimal
+  default: 3.0
+  description: Porcentaje mínimo del presupuesto para difusión
+- name: porcentaje_difusion_max
+  type: Decimal
+  default: 10.0
+  description: Porcentaje máximo del presupuesto para difusión
+- name: valores_hora_honorarios
+  type: Map[String, Decimal]
+  default: '{"profesional": 25000, "tecnico": 23000, "monitor": 18000}'
+  description: Valores hora máximos por tipo de recurso humano
+- name: observaciones
+  type: String
+  nullable: true
+  description: Notas adicionales sobre la convocatoria
 invariants:
-  - id: INV-CONV8-001
-    name: monto_adjudicado_no_excede
-    rule: monto_adjudicado <= monto_total_disponible
-    description: El total adjudicado no puede superar el presupuesto disponible
-    source: kb_gn_028 Glosa 07
-
-  - id: INV-CONV8-002
-    name: fechas_coherentes
-    rule: fecha_cierre > fecha_apertura
-    description: La fecha de cierre debe ser posterior a la apertura
-    severity: error
-
-  - id: INV-CONV8-003
-    name: publicacion_antes_apertura
-    rule: fecha_publicacion_web <= fecha_apertura
-    description: Debe publicarse antes o el mismo día de la apertura
-    severity: warning
-
-  - id: INV-CONV8-004
-    name: adulto_mayor_exclusivo
-    rule: |
-      (fondo_id = 'ADULTO_MAYOR') → 
-      destinatarios_habilitados = ['ORG_ADULTO_MAYOR']
-    description: Fondo Adulto Mayor es exclusivo para organizaciones de AM
-    source: kb_gn_028 Sec. 7
-
-  - id: INV-CONV8-005
-    name: concurso_especial_requiere_tipo
-    rule: |
-      (es_concurso_especial = true) → 
-      tipo_concurso_especial IS NOT NULL
-    description: Si es especial, debe indicar el tipo
-    severity: error
-
-  - id: INV-CONV8-006
-    name: cierre_23_59
-    rule: TIME(fecha_cierre) = '23:59:00'
-    description: El cierre es automático a las 23:59
-    source: kb_gn_028 Sec. 2
-
-lifecycle:
-  states:
-    - name: Preparacion
-      description: Borrador del instructivo en elaboración
-    - name: Publicada
-      description: Instructivo publicado, previo a apertura
-    - name: Abierta
-      description: Período de postulación activo
-    - name: Cerrada
-      description: Postulación cerrada, en revisión admisibilidad
-    - name: EnEvaluacion
-      description: Evaluación técnica en curso
-    - name: Adjudicada
-      description: Resultados publicados y recursos asignados
-    - name: Cerrada_Ejercicio
-      description: Ciclo anual cerrado
-
-  transitions:
-    - from: Preparacion
-      to: Publicada
-      trigger: aprobar_instructivo
-      guard: acuerdo_core_id IS NOT NULL AND resolucion_aprobatoria_id IS NOT NULL
-    - from: Publicada
-      to: Abierta
-      trigger: iniciar_postulacion
-      guard: fecha_actual >= fecha_apertura
-    - from: Abierta
-      to: Cerrada
-      trigger: cerrar_postulacion
-      guard: fecha_actual >= fecha_cierre
-    - from: Cerrada
-      to: EnEvaluacion
-      trigger: iniciar_evaluacion
-    - from: EnEvaluacion
-      to: Adjudicada
-      trigger: adjudicar
-    - from: Adjudicada
-      to: Cerrada_Ejercicio
-      trigger: cerrar_ejercicio
-
-audit:
-  fields_tracked:
-    - estado
-    - monto_adjudicado
-    - fecha_adjudicacion
-  retention_years: 6
+- id: INV-CONV8-001
+  name: monto_adjudicado_no_excede
+  rule: monto_adjudicado <= monto_total_disponible
+  description: El total adjudicado no puede superar el presupuesto disponible
+  source: kb_gn_028 Glosa 07
+- id: INV-CONV8-002
+  name: fechas_coherentes
+  rule: fecha_cierre > fecha_apertura
+  description: La fecha de cierre debe ser posterior a la apertura
+  severity: error
+- id: INV-CONV8-003
+  name: publicacion_antes_apertura
+  rule: fecha_publicacion_web <= fecha_apertura
+  description: Debe publicarse antes o el mismo día de la apertura
+  severity: warning
+- id: INV-CONV8-004
+  name: adulto_mayor_exclusivo
+  rule: "(fondo_id = 'ADULTO_MAYOR') → \ndestinatarios_habilitados = ['ORG_ADULTO_MAYOR']\n"
+  description: Fondo Adulto Mayor es exclusivo para organizaciones de AM
+  source: kb_gn_028 Sec. 7
+- id: INV-CONV8-005
+  name: concurso_especial_requiere_tipo
+  rule: "(es_concurso_especial = true) → \ntipo_concurso_especial IS NOT NULL\n"
+  description: Si es especial, debe indicar el tipo
+  severity: error
+- id: INV-CONV8-006
+  name: cierre_23_59
+  rule: TIME(fecha_cierre) = '23:59:00'
+  description: El cierre es automático a las 23:59
+  source: kb_gn_028 Sec. 2

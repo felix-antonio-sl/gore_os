@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_sect_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-COM-SECT-001-01
-story_key: us_com_sect_001_01
+urn: urn:goreos:atom:story:us_com_sect_001_01:1.0.0
 role_id: USR-COM-PER
-as_a: "Periodista"
 i_want: información actualizada de proyectos para comunicados
 so_that: pueda difundir logros
 domain: D-EJEC
 priority: P2
-capability_bundle_id: CAP-EJEC-PORTAL-001
-morphisms:
-  protagonizado_por: USR-COM-PER
-  contribuye_a: CAP-EJEC-PORTAL-001
+capability_id: CAP-EJEC-PORTAL-001

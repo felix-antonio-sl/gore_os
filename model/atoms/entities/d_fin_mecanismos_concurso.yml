@@ -1,226 +1,131 @@
-# ═══════════════════════════════════════════════════════════════════════════════
-# ENT-FIN-CONCURSO | Concurso de Financiamiento Regional
-# Dominio: D-FIN
-# Subdomain: mecanismos
-# Fuente: kb_gn_011_selector_ipr_koda.yml, Glosa 07
-# ═══════════════════════════════════════════════════════════════════════════════
-version: "1.0.0"
-
-metadata:
-  entity_id: ENT-FIN-CONCURSO
-  name: ConcursoFinanciamiento
-  domain: D-FIN
-  subdomain: mecanismos
-  description: |
-    Representa un llamado a concurso para asignación de recursos de inversión
-    regional. Aplica a FRIL, 8% Vinculación, FRPD y otros fondos concursables.
-  legal_basis:
-    - LOC GORE Art. 36
-    - Ley de Presupuestos Glosa 07, 12
-    - Art. 23-27 Ley 21.796 (Transferencias a privados)
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# ATRIBUTOS
-# ═══════════════════════════════════════════════════════════════════════════════
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_concurso
-    type: String
-    key: true
-
-  - name: fondo_id
-    type: String
-    fk: ENT-FIN-FONDO
-    nullable: false
-
-  - name: nombre_llamado
-    type: String
-    nullable: false
-    description: "Ej: Concurso FRIL 2026 - Primer Llamado"
-
-  - name: ejercicio
-    type: Integer
-    nullable: false
-
-  - name: numero_llamado
-    type: Integer
-    default: 1
-    description: Número de llamado en el ejercicio
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Bases y Requisitos
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: bases_resolucion_id
-    type: String
-    fk: ENT-FIN-ACTO_ADMINISTRATIVO
-    nullable: true
-    description: Resolución que aprueba las bases
-
-  - name: bases_documento_ref
-    type: String
-    nullable: true
-    description: Referencia al documento de bases
-
-  - name: pauta_evaluacion_ref
-    type: String
-    nullable: true
-
-  - name: tipos_proyecto_admitidos
-    type: Array[String]
-    nullable: true
-    description: Tipologías de proyecto admitidas
-
-  - name: sectores_admitidos
-    type: Array[String]
-    nullable: true
-    description: Sectores/áreas temáticas admitidas
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Cronograma
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: fecha_publicacion_bases
-    type: Date
-    nullable: false
-
-  - name: fecha_apertura_postulacion
-    type: Date
-    nullable: false
-
-  - name: fecha_cierre_postulacion
-    type: Date
-    nullable: false
-
-  - name: fecha_evaluacion_inicio
-    type: Date
-    nullable: true
-
-  - name: fecha_adjudicacion
-    type: Date
-    nullable: true
-
-  - name: fecha_publicacion_resultados
-    type: Date
-    nullable: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Recursos
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: monto_disponible
-    type: Decimal
-    nullable: false
-
-  - name: monto_adjudicado
-    type: Decimal
-    default: 0
-
-  - name: monto_saldo
-    type: Decimal
-    computed: true
-    formula: monto_disponible - monto_adjudicado
-
-  - name: cupo_iniciativas
-    type: Integer
-    nullable: true
-    description: Número máximo de iniciativas a adjudicar
-
-  - name: monto_maximo_por_iniciativa
-    type: Decimal
-    nullable: true
-
-  - name: monto_minimo_por_iniciativa
-    type: Decimal
-    nullable: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Evaluación
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: comision_evaluadora_ids
-    type: Array[String]
-    nullable: true
-    description: IDs de los funcionarios de la comisión
-
-  - name: puntaje_minimo_aprobacion
-    type: Decimal
-    nullable: true
-
-  - name: criterios_evaluacion
-    type: Array[String]
-    nullable: true
-    description: Lista de criterios de la pauta
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Resultados
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: total_postulaciones
-    type: Integer
-    default: 0
-
-  - name: total_admisibles
-    type: Integer
-    default: 0
-
-  - name: total_adjudicadas
-    type: Integer
-    default: 0
-
-  - name: total_rechazadas
-    type: Integer
-    default: 0
-
-  - name: acuerdo_core_adjudicacion_id
-    type: String
-    fk: ENT-FIN-CERTIFICADO_ACUERDO_CORE
-    nullable: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Estado
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: estado
-    type: Enum[Preparacion, BasesAprobadas, Abierto, Cerrado, EnEvaluacion, ParaCORE, Adjudicado, EnEjecucion, Cerrado_Ejercicio]
-    default: Preparacion
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# INVARIANTES
-# ═══════════════════════════════════════════════════════════════════════════════
+- name: id_concurso
+  type: String
+  key: true
+- name: fondo_id
+  type: String
+  fk: ENT-FIN-FONDO
+  nullable: false
+- name: nombre_llamado
+  type: String
+  nullable: false
+  description: 'Ej: Concurso FRIL 2026 - Primer Llamado'
+- name: ejercicio
+  type: Integer
+  nullable: false
+- name: numero_llamado
+  type: Integer
+  default: 1
+  description: Número de llamado en el ejercicio
+- name: bases_resolucion_id
+  type: String
+  fk: ENT-FIN-ACTO_ADMINISTRATIVO
+  nullable: true
+  description: Resolución que aprueba las bases
+- name: bases_documento_ref
+  type: String
+  nullable: true
+  description: Referencia al documento de bases
+- name: pauta_evaluacion_ref
+  type: String
+  nullable: true
+- name: tipos_proyecto_admitidos
+  type: Array[String]
+  nullable: true
+  description: Tipologías de proyecto admitidas
+- name: sectores_admitidos
+  type: Array[String]
+  nullable: true
+  description: Sectores/áreas temáticas admitidas
+- name: fecha_publicacion_bases
+  type: Date
+  nullable: false
+- name: fecha_apertura_postulacion
+  type: Date
+  nullable: false
+- name: fecha_cierre_postulacion
+  type: Date
+  nullable: false
+- name: fecha_evaluacion_inicio
+  type: Date
+  nullable: true
+- name: fecha_adjudicacion
+  type: Date
+  nullable: true
+- name: fecha_publicacion_resultados
+  type: Date
+  nullable: true
+- name: monto_disponible
+  type: Decimal
+  nullable: false
+- name: monto_adjudicado
+  type: Decimal
+  default: 0
+- name: monto_saldo
+  type: Decimal
+  computed: true
+  formula: monto_disponible - monto_adjudicado
+- name: cupo_iniciativas
+  type: Integer
+  nullable: true
+  description: Número máximo de iniciativas a adjudicar
+- name: monto_maximo_por_iniciativa
+  type: Decimal
+  nullable: true
+- name: monto_minimo_por_iniciativa
+  type: Decimal
+  nullable: true
+- name: comision_evaluadora_ids
+  type: Array[String]
+  nullable: true
+  description: IDs de los funcionarios de la comisión
+- name: puntaje_minimo_aprobacion
+  type: Decimal
+  nullable: true
+- name: criterios_evaluacion
+  type: Array[String]
+  nullable: true
+  description: Lista de criterios de la pauta
+- name: total_postulaciones
+  type: Integer
+  default: 0
+- name: total_admisibles
+  type: Integer
+  default: 0
+- name: total_adjudicadas
+  type: Integer
+  default: 0
+- name: total_rechazadas
+  type: Integer
+  default: 0
+- name: acuerdo_core_adjudicacion_id
+  type: String
+  fk: ENT-FIN-CERTIFICADO_ACUERDO_CORE
+  nullable: true
+- name: estado
+  type: Enum[Preparacion, BasesAprobadas, Abierto, Cerrado, EnEvaluacion, ParaCORE,
+    Adjudicado, EnEjecucion, Cerrado_Ejercicio]
+  default: Preparacion
 invariants:
-  - id: INV-CONC-001
-    name: monto_adjudicado_no_excede
-    rule: monto_adjudicado <= monto_disponible
+- id: INV-CONC-001
+  name: monto_adjudicado_no_excede
+  rule: monto_adjudicado <= monto_disponible
+- id: INV-CONC-002
+  name: cierre_posterior_apertura
+  rule: fecha_cierre_postulacion > fecha_apertura_postulacion
+- id: INV-CONC-003
+  name: adjudicacion_requiere_core
+  rule: "(estado = Adjudicado) → \nacuerdo_core_adjudicacion_id IS NOT NULL\n"
+  description: Adjudicación requiere acuerdo CORE
+- id: INV-CONC-004
+  name: publicacion_actas_transparencia
+  rule: 'Actas de evaluación deben publicarse en transparencia activa
 
-  - id: INV-CONC-002
-    name: cierre_posterior_apertura
-    rule: fecha_cierre_postulacion > fecha_apertura_postulacion
-
-  - id: INV-CONC-003
-    name: adjudicacion_requiere_core
-    rule: |
-      (estado = Adjudicado) → 
-      acuerdo_core_adjudicacion_id IS NOT NULL
-    description: Adjudicación requiere acuerdo CORE
-
-  - id: INV-CONC-004
-    name: publicacion_actas_transparencia
-    rule: |
-      Actas de evaluación deben publicarse en transparencia activa
-    source: Glosa 16 / Ley 19.886
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# MORFISMOS
-# ═══════════════════════════════════════════════════════════════════════════════
-morphisms:
-  - source: ENT-FIN-CONCURSO
-    target: ENT-FIN-FONDO
-    type: N:1
-    name: fondo_concurso
-    description: Fondo del cual provienen los recursos
-
-  - source: ENT-FIN-CONCURSO
-    target: ENT-FIN-IPR
-    type: 1:N
-    name: iprs_postuladas
-    description: IPRs postuladas al concurso
-
-  - source: ENT-FIN-CONCURSO
-    target: ENT-FIN-CERTIFICADO_ACUERDO_CORE
-    type: N:1
-    name: acuerdo_adjudicacion
-    description: Acuerdo CORE que aprueba adjudicación
+    '
+  source: Glosa 16 / Ley 19.886

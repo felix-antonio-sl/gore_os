@@ -1,142 +1,78 @@
-# ==============================================================================
-# GORE_OS Entity Atom: RecursoAdmin
-# ==============================================================================
-# Domain: D-NORM (Gestión Jurídico-Administrativa)
-# Subdomain: Procedimientos
-# Source: LBPA Art. 59-60, KB-GN-200, KB-GN-100 FORM-ESCRITO-REPO-01
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Fiscal Virtual"
-  domain: D-NORM
-  subdomain: procedimientos
-  kb_source:
-    - "LBPA Art. 59-60: Recursos Administrativos"
-    - "KB-GN-100: FORM-ESCRITO-REPO-01"
-
-entity:
-  id: ENT-NORM-RECURSO
-  name: RecursoAdmin
-  name_es: Recurso Administrativo
-  description: |
-    Impugnación de un acto administrativo en sede administrativa.
-
-    Tipos:
-    - Reposición: Ante la misma autoridad (5 días)
-    - Jerárquico: Ante el superior (5 días)
-    - Extraordinario de Revisión: Causales graves
-
-  purpose: |
-    - Registrar recursos contra actos
-    - Controlar plazos de respuesta
-    - Trazabilidad de impugnaciones
-    - Base para modificar actos
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_recurso
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: procedimiento_id
-    type: String
-    fk: ENT-NORM-PROCEDIMIENTO
-    nullable: true
-    description: Procedimiento padre
-
-  - name: acto_impugnado_id
-    type: String
-    fk: ENT-NORM-ACTO
-    nullable: false
-    description: Acto que se impugna
-
-  - name: tipo_recurso
-    type: Enum[Reposicion, Jerarquico, ExtraordinarioRevision]
-    nullable: false
-    description: Tipo de recurso
-
-  # Recurrente
-  - name: recurrente_nombre
-    type: String
-    nullable: false
-    description: Nombre del recurrente
-
-  - name: recurrente_id
-    type: String
-    nullable: true
-    description: ID del recurrente (si registrado)
-
-  # Fechas
-  - name: fecha_interposicion
-    type: Date
-    nullable: false
-    description: Fecha de presentación
-
-  - name: plazo_respuesta_dias
-    type: Integer
-    default: 30
-    description: Plazo para resolver (días hábiles)
-
-  - name: fecha_vencimiento
-    type: Date
-    nullable: false
-    description: Fecha límite de respuesta
-
-  - name: fecha_resolucion
-    type: Date
-    nullable: true
-    description: Fecha de resolución efectiva
-
-  # Fundamentos
-  - name: fundamentos
-    type: Text
-    nullable: false
-    description: Argumentos del recurrente
-
-  - name: vicios_alegados
-    type: Array[String]
-    nullable: true
-    description: Vicios de legalidad alegados
-
-  # Resultado
-  - name: estado
-    type: Enum[Presentado, EnAnalisis, Resuelto, Desistido]
-    default: Presentado
-    description: Estado del recurso
-
-  - name: resultado
-    type: Enum[Pendiente, Acogido, AcogidoParcial, Rechazado, Inadmisible]
-    default: Pendiente
-    description: Resultado
-
-  - name: resolucion_id
-    type: String
-    fk: ENT-NORM-ACTO
-    nullable: true
-    description: Resolución que resuelve el recurso
-
+- name: id_recurso
+  type: String
+  key: true
+  description: Identificador único
+- name: procedimiento_id
+  type: String
+  fk: ENT-NORM-PROCEDIMIENTO
+  nullable: true
+  description: Procedimiento padre
+- name: acto_impugnado_id
+  type: String
+  fk: ENT-NORM-ACTO
+  nullable: false
+  description: Acto que se impugna
+- name: tipo_recurso
+  type: Enum[Reposicion, Jerarquico, ExtraordinarioRevision]
+  nullable: false
+  description: Tipo de recurso
+- name: recurrente_nombre
+  type: String
+  nullable: false
+  description: Nombre del recurrente
+- name: recurrente_id
+  type: String
+  nullable: true
+  description: ID del recurrente (si registrado)
+- name: fecha_interposicion
+  type: Date
+  nullable: false
+  description: Fecha de presentación
+- name: plazo_respuesta_dias
+  type: Integer
+  default: 30
+  description: Plazo para resolver (días hábiles)
+- name: fecha_vencimiento
+  type: Date
+  nullable: false
+  description: Fecha límite de respuesta
+- name: fecha_resolucion
+  type: Date
+  nullable: true
+  description: Fecha de resolución efectiva
+- name: fundamentos
+  type: Text
+  nullable: false
+  description: Argumentos del recurrente
+- name: vicios_alegados
+  type: Array[String]
+  nullable: true
+  description: Vicios de legalidad alegados
+- name: estado
+  type: Enum[Presentado, EnAnalisis, Resuelto, Desistido]
+  default: Presentado
+  description: Estado del recurso
+- name: resultado
+  type: Enum[Pendiente, Acogido, AcogidoParcial, Rechazado, Inadmisible]
+  default: Pendiente
+  description: Resultado
+- name: resolucion_id
+  type: String
+  fk: ENT-NORM-ACTO
+  nullable: true
+  description: Resolución que resuelve el recurso
 invariants:
-  - id: INV-REC-001
-    name: resuelto_requiere_resultado
-    rule: |
-      estado = 'Resuelto' → resultado != 'Pendiente'
-    description: Recurso resuelto requiere resultado
-    severity: error
+- id: INV-REC-001
+  name: resuelto_requiere_resultado
+  rule: 'estado = ''Resuelto'' → resultado != ''Pendiente''
 
-morphisms:
-  impugna: [ENT-NORM-ACTO]
-  parte_de: [ENT-NORM-PROCEDIMIENTO]
-  resuelto_por: [ENT-NORM-ACTO]
-
-audit:
-  fields_tracked:
-    - estado
-    - resultado
-  retention_years: 10
+    '
+  description: Recurso resuelto requiere resultado
+  severity: error

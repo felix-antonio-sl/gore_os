@@ -1,124 +1,83 @@
-# Entidad: OrdenTrabajoVehicular
-# Domain: D-BACK
-# Subdomain: flotas
-# Generated: 2025-12-21 (Phase 20.2 - ERP-GORE Deep Enrichment)
-
+_meta:
+  urn: urn:goreos:entity:d-back:ot-vehicular:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-BACK-OT_VEHICULAR
-urn: "urn:goreos:entity:d-back:ot-vehicular:1.0.0"
+urn: urn:goreos:entity:d-back:ot-vehicular:1.0.0
 name: Orden de Trabajo Vehicular
 domain: D-BACK
 subdomain: flotas
 category: Transactional
-canonical_source:
-  - "manual_2_4_servicios_flotas_koda.yml#GN-MANUAL-SERV-FLOTAS-SEC-IV-OT-01"
-
-description: |
-  Registro de intervenciones de mantención preventiva, correctiva o mayor
-  realizadas a vehículos institucionales. Alimenta la hoja de vida del vehículo.
-
+is_abstract: false
 attributes:
-  - name: id_orden
-    type: String
-    key: true
-
-  - name: numero_orden
-    type: String
-    nullable: true
-
-  - name: vehiculo_id
-    type: String
-    fk: ENT-BACK-VEHICULO
-    nullable: false
-
-  # Tipo de Mantención
-  - name: tipo_mantencion
-    type: Enum[Preventiva, Correctiva, Mayor, Emergencia]
-    nullable: false
-
-  - name: descripcion_falla
-    type: Text
-    nullable: true
-
-  - name: descripcion_trabajos
-    type: Text
-    nullable: true
-
-  # Kilometraje
-  - name: kilometraje_intervencion
-    type: Integer
-    nullable: false
-
-  # Taller
-  - name: tipo_taller
-    type: Enum[Interno, Externo]
-    nullable: false
-
-  - name: proveedor_id
-    type: String
-    fk: ENT-FIN-PROVEEDOR
-    nullable: true
-    description: Si es taller externo
-
-  - name: nombre_taller
-    type: String
-    nullable: true
-
-  # Costos
-  - name: costo_mano_obra
-    type: Decimal
-    default: 0
-
-  - name: costo_repuestos
-    type: Decimal
-    default: 0
-
-  - name: costo_total
-    type: Decimal
-    computed: true
-    formula: costo_mano_obra + costo_repuestos
-
-  # Repuestos
-  - name: repuestos_utilizados
-    type: List[YAML]
-    nullable: true
-    description: Lista de {codigo, nombre, cantidad, precio_unitario}
-
-  # Fechas
-  - name: fecha_solicitud
-    type: Date
-    nullable: false
-
-  - name: fecha_ingreso_taller
-    type: Date
-    nullable: true
-
-  - name: fecha_entrega
-    type: Date
-    nullable: true
-
-  - name: dias_taller
-    type: Integer
-    computed: true
-
-  # Estado
-  - name: estado
-    type: Enum[Solicitada, Aprobada, EnTaller, Terminada, Entregada, Rechazada]
-    default: Solicitada
-
-  # Próxima Mantención
-  - name: proxima_mantencion_km
-    type: Integer
-    nullable: true
-
-  - name: proxima_mantencion_fecha
-    type: Date
-    nullable: true
-
+- name: id_orden
+  type: String
+  key: true
+- name: numero_orden
+  type: String
+  nullable: true
+- name: vehiculo_id
+  type: String
+  fk: ENT-BACK-VEHICULO
+  nullable: false
+- name: tipo_mantencion
+  type: Enum[Preventiva, Correctiva, Mayor, Emergencia]
+  nullable: false
+- name: descripcion_falla
+  type: Text
+  nullable: true
+- name: descripcion_trabajos
+  type: Text
+  nullable: true
+- name: kilometraje_intervencion
+  type: Integer
+  nullable: false
+- name: tipo_taller
+  type: Enum[Interno, Externo]
+  nullable: false
+- name: proveedor_id
+  type: String
+  fk: ENT-FIN-PROVEEDOR
+  nullable: true
+  description: Si es taller externo
+- name: nombre_taller
+  type: String
+  nullable: true
+- name: costo_mano_obra
+  type: Decimal
+  default: 0
+- name: costo_repuestos
+  type: Decimal
+  default: 0
+- name: costo_total
+  type: Decimal
+  computed: true
+  formula: costo_mano_obra + costo_repuestos
+- name: repuestos_utilizados
+  type: List[YAML]
+  nullable: true
+  description: Lista de {codigo, nombre, cantidad, precio_unitario}
+- name: fecha_solicitud
+  type: Date
+  nullable: false
+- name: fecha_ingreso_taller
+  type: Date
+  nullable: true
+- name: fecha_entrega
+  type: Date
+  nullable: true
+- name: dias_taller
+  type: Integer
+  computed: true
+- name: estado
+  type: Enum[Solicitada, Aprobada, EnTaller, Terminada, Entregada, Rechazada]
+  default: Solicitada
+- name: proxima_mantencion_km
+  type: Integer
+  nullable: true
+- name: proxima_mantencion_fecha
+  type: Date
+  nullable: true
 invariants:
-  - name: externo_con_proveedor
-    rule: "IF tipo_taller = Externo THEN proveedor_id NOT NULL OR nombre_taller NOT NULL"
-
-morphisms:
-  interviene: [ENT-BACK-VEHICULO]
-  ejecutado_por: [ENT-FIN-PROVEEDOR]
-  genera: [AsientoContable]
+- name: externo_con_proveedor
+  rule: IF tipo_taller = Externo THEN proveedor_id NOT NULL OR nombre_taller NOT NULL

@@ -1,145 +1,95 @@
-# Entidad: IDI (Iniciativa de Inversión)
-# Domain: D-FIN
-# Subdomain: ipr_core
-# Generated: 2025-12-21 (Phase 20.1a Core IPR)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:idi:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-IDI
-urn: "urn:goreos:entity:d-fin:idi:1.0.0"
+urn: urn:goreos:entity:d-fin:idi:1.0.0
 name: Iniciativa de Inversión
 domain: D-FIN
 subdomain: ipr_core
 category: Master
-extends: ENT-FIN-IPR
-canonical_source:
-  - "sub_dfin_ipr_core.md"
-  - "sub_dfin_mecanismos.md"
-  - "Metodología SNI (MDSF)"
-
-description: |
-  Intervención de gasto de capital (Subtítulo 31/33).
-  Requiere RS/AD de MDSF. Registro obligatorio en BIP.
-  Tipos: SNI General, FRIL, FRPD, C33.
-
-inherits_from: ENT-FIN-IPR
-
+is_abstract: false
 attributes:
-  # Hereda todos los atributos de IPR más:
-
-  - name: codigo_bip
-    type: String
-    nullable: true
-    description: Código BIP identificador
-
-  # Carpeta Digital BIP (Phase 20.2 CRM-IPR Enrichment)
-  - name: url_carpeta_bip
-    type: String
-    nullable: true
-    description: URL a la carpeta digital en Banco Integrado de Proyectos
-
-  - name: estado_carpeta
-    type: Enum[Incompleta, Completa, Validada, Observada]
-    default: Incompleta
-    description: Estado de la documentación en carpeta BIP
-
-  - name: etapa_bip
-    type: Enum[Prefactibilidad, Factibilidad, Diseño, Ejecucion]
-    nullable: false
-
-  - name: sector
-    type: String
-    nullable: true
-    description: Sector ministerial asociado
-
-  # Específico por mecanismo
-  - name: mecanismo_idi
-    type: Enum[SNI, FRIL, FRPD_IDI, C33_CONSERVACION, C33_ANF, C33_ESTUDIO]
-    nullable: false
-
-  # FRIL específico
-  - name: es_fril
-    type: Boolean
-    computed: true
-    formula: mecanismo_idi = FRIL
-
-  - name: municipio_ejecutor
-    type: String
-    nullable: true
-    description: Obligatorio si es FRIL
-
-  # C33 específico
-  - name: tipo_c33
-    type: Enum[Conservacion, ANF, Estudio]
-    nullable: true
-
-  - name: porcentaje_reposicion
-    type: Decimal
-    nullable: true
-    description: Máximo 30% para Conservación
-
-  # Evaluación SNI
-  - name: van
-    type: Decimal
-    nullable: true
-
-  - name: tir
-    type: Decimal
-    nullable: true
-
-  - name: vac
-    type: Decimal
-    nullable: true
-
-  - name: beneficiarios_directos
-    type: Integer
-    nullable: true
-
-  # Indicadores adicionales (Phase 20.2 Enrichment)
-  - name: cae
-    type: Decimal
-    nullable: true
-    description: Costo Anual Equivalente - para proyectos de conservación y comparación alternativas
-
-  - name: indicador_costo_eficiencia
-    type: Decimal
-    nullable: true
-    description: Costo por beneficiario ($/beneficiario)
-
-  - name: poblacion_objetivo
-    type: Integer
-    nullable: true
-    description: Población total afectada (distinta de beneficiarios directos)
-
-  # Ejecución física
-  - name: avance_fisico_pct
-    type: Decimal
-    default: 0
-
-  - name: avance_financiero_pct
-    type: Decimal
-    default: 0
-
-  - name: fecha_termino_estimada
-    type: Date
-    nullable: true
-
-  - name: fecha_termino_real
-    type: Date
-    nullable: true
-
+- name: codigo_bip
+  type: String
+  nullable: true
+  description: Código BIP identificador
+- name: url_carpeta_bip
+  type: String
+  nullable: true
+  description: URL a la carpeta digital en Banco Integrado de Proyectos
+- name: estado_carpeta
+  type: Enum[Incompleta, Completa, Validada, Observada]
+  default: Incompleta
+  description: Estado de la documentación en carpeta BIP
+- name: etapa_bip
+  type: Enum[Prefactibilidad, Factibilidad, Diseño, Ejecucion]
+  nullable: false
+- name: sector
+  type: String
+  nullable: true
+  description: Sector ministerial asociado
+- name: mecanismo_idi
+  type: Enum[SNI, FRIL, FRPD_IDI, C33_CONSERVACION, C33_ANF, C33_ESTUDIO]
+  nullable: false
+- name: es_fril
+  type: Boolean
+  computed: true
+  formula: mecanismo_idi = FRIL
+- name: municipio_ejecutor
+  type: String
+  nullable: true
+  description: Obligatorio si es FRIL
+- name: tipo_c33
+  type: Enum[Conservacion, ANF, Estudio]
+  nullable: true
+- name: porcentaje_reposicion
+  type: Decimal
+  nullable: true
+  description: Máximo 30% para Conservación
+- name: van
+  type: Decimal
+  nullable: true
+- name: tir
+  type: Decimal
+  nullable: true
+- name: vac
+  type: Decimal
+  nullable: true
+- name: beneficiarios_directos
+  type: Integer
+  nullable: true
+- name: cae
+  type: Decimal
+  nullable: true
+  description: Costo Anual Equivalente - para proyectos de conservación y comparación
+    alternativas
+- name: indicador_costo_eficiencia
+  type: Decimal
+  nullable: true
+  description: Costo por beneficiario ($/beneficiario)
+- name: poblacion_objetivo
+  type: Integer
+  nullable: true
+  description: Población total afectada (distinta de beneficiarios directos)
+- name: avance_fisico_pct
+  type: Decimal
+  default: 0
+- name: avance_financiero_pct
+  type: Decimal
+  default: 0
+- name: fecha_termino_estimada
+  type: Date
+  nullable: true
+- name: fecha_termino_real
+  type: Date
+  nullable: true
 invariants:
-  - name: fril_tope
-    rule: "IF es_fril THEN costo_total_estimado <= 5000 UTM"
-    source: "Glosa 12"
-
-  - name: c33_conservacion_tope
-    rule: "IF tipo_c33 = Conservacion THEN porcentaje_reposicion <= 30%"
-    source: "sub_dfin_mecanismos.md"
-
-  - name: municipio_requerido_fril
-    rule: "IF es_fril THEN municipio_ejecutor NOT NULL"
-
-morphisms:
-  es_un: [ENT-FIN-IPR]
-  evaluado_por: [MDSF_SNI]
-  registrado_en: [BIP]
-  genera: [ENT-FIN-ESTADO_PAGO]
+- name: fril_tope
+  rule: IF es_fril THEN costo_total_estimado <= 5000 UTM
+  source: Glosa 12
+- name: c33_conservacion_tope
+  rule: IF tipo_c33 = Conservacion THEN porcentaje_reposicion <= 30%
+  source: sub_dfin_mecanismos.md
+- name: municipio_requerido_fril
+  rule: IF es_fril THEN municipio_ejecutor NOT NULL

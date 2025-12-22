@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_lobby_002:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-NORM-LOBBY-002
-story_key: us_norm_lobby_002
+urn: urn:goreos:atom:story:us_norm_lobby_002:1.0.0
 role_id: USR-NORM-TRANSP
-as_a: "Encargado Transparencia Activa/Pasiva"
 i_want: Coordinar nómina de sujetos pasivos
 so_that: Identifico obligados a registrar
 domain: D-NORM
 priority: P1
-capability_bundle_id: CAP-DOCUMENTOS-001
-morphisms:
-  protagonizado_por: USR-NORM-TRANSP
-  contribuye_a: CAP-DOCUMENTOS-001
+capability_id: CAP-DOCUMENTOS-001

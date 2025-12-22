@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_018:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-IPR-018
-story_key: us_fin_ipr_018
+urn: urn:goreos:atom:story:us_fin_ipr_018:1.0.0
 role_id: USR-EXT-EJEC
-as_a: "Ejecutor / Entidad Ejecutora"
 i_want: Solicitar Recepción Provisoria/Definitiva de Obras
 so_that: Cierro formalmente la ejecución
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-EXT-EJEC
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

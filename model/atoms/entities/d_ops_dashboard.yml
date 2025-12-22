@@ -1,90 +1,44 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Dashboard
-# ==============================================================================
-# Domain: D-OPS (Operaciones del Sistema)
-# Subdomain: Monitoreo (M3)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-OPS
-  subdomain: monitoreo
-
-entity:
-  id: ENT-OPS-DASHBOARD
-  name: Dashboard
-  name_es: Dashboard de Monitoreo
-  description: |
-    Panel visual que agrupa métricas y visualizaciones
-    para observabilidad del sistema.
-
-  purpose: |
-    Modelar dashboards para:
-    - Visualización de estado del sistema
-    - NOC/SOC wallboards
-    - Reportes ejecutivos
-
-  categorical_type: Object
-  is_abstract: false
-  category: Observability
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_dashboard
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: String
-    nullable: true
-
-  - name: tipo
-    type: Enum[Operacional, Ejecutivo, SRE, Custom]
-    default: Operacional
-
-  - name: propietario_id
-    type: String
-    fk: ENT-OPS-USUARIO-SISTEMA
-    nullable: true
-
-  - name: widgets
-    type: Json
-    nullable: true
-    description: "Configuración de widgets/paneles"
-
-  - name: refresh_segundos
-    type: Integer
-    default: 30
-
-  - name: publico
-    type: Boolean
-    default: false
-    description: "Visible para todos los usuarios"
-
-  - name: url
-    type: String
-    nullable: true
-    description: "URL pública si aplica"
-
-  - name: fecha_creacion
-    type: Date
-    nullable: false
-
-  - name: ultima_modificacion
-    type: DateTime
-    nullable: true
-
-morphisms:
-  propietario: [ENT-OPS-USUARIO-SISTEMA]
-  visualiza_metricas: [ENT-OPS-METRICA]
-
-audit:
-  fields_tracked:
-    - widgets
-  retention_years: 2
+- name: id_dashboard
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+- name: descripcion
+  type: String
+  nullable: true
+- name: tipo
+  type: Enum[Operacional, Ejecutivo, SRE, Custom]
+  default: Operacional
+- name: propietario_id
+  type: String
+  fk: ENT-OPS-USUARIO-SISTEMA
+  nullable: true
+- name: widgets
+  type: Json
+  nullable: true
+  description: Configuración de widgets/paneles
+- name: refresh_segundos
+  type: Integer
+  default: 30
+- name: publico
+  type: Boolean
+  default: false
+  description: Visible para todos los usuarios
+- name: url
+  type: String
+  nullable: true
+  description: URL pública si aplica
+- name: fecha_creacion
+  type: Date
+  nullable: false
+- name: ultima_modificacion
+  type: DateTime
+  nullable: true

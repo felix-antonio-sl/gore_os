@@ -1,137 +1,96 @@
-# Entidad: Garantia (Boleta de Garantía)
-# Domain: D-FIN
-# Subdomain: compras
-# Generated: 2025-12-21 (Phase 20.1 Deep Modeling)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:garantia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-GARANTIA
-urn: "urn:goreos:entity:d-fin:garantia:1.0.0"
+urn: urn:goreos:entity:d-fin:garantia:1.0.0
 name: Boleta de Garantía
 domain: D-FIN
 subdomain: compras
 category: Financial
-canonical_source:
-  - "urn:knowledge:gorenuble:gn:manual-compras-contrataciones:1.0.0#MANUAL-COMPRAS-SEC-V-GARANTIAS-01"
-
-description: |
-  Instrumento financiero que asegura el cumplimiento de obligaciones contractuales.
-  Tipos: Seriedad de Oferta, Fiel Cumplimiento, Correcta Ejecución.
-
+is_abstract: false
 attributes:
-  - name: id_garantia
-    type: String
-    key: true
-
-  - name: numero_documento
-    type: String
-    nullable: false
-    description: Número de boleta o póliza
-
-  - name: tipo_garantia
-    type: Enum[SeriedadOferta, FielCumplimiento, CorrectaEjecucion]
-    nullable: false
-
-  - name: tipo_instrumento
-    type: Enum[BoletaBancaria, Poliza, Vale Vista, Certificado]
-    nullable: false
-
-  - name: entidad_emisora
-    type: String
-    nullable: false
-    description: Banco, aseguradora, etc.
-
-  - name: beneficiario
-    type: String
-    default: "GOBIERNO REGIONAL DE ÑUBLE"
-
-  - name: tomador
-    type: String
-    nullable: false
-    description: Proveedor/Contratista
-
-  - name: monto
-    type: Decimal
-    nullable: false
-
-  - name: moneda
-    type: Enum[CLP, UF, UTM]
-    default: CLP
-
-  - name: fecha_emision
-    type: Date
-    nullable: false
-
-  - name: fecha_vencimiento
-    type: Date
-    nullable: false
-
-  - name: glosa
-    type: String
-    nullable: true
-    description: Descripción del objeto garantizado
-
-  # Asociación
-  - name: licitacion_id
-    type: String
-    fk: ENT-FIN-LICITACION
-    nullable: true
-
-  - name: contrato_id
-    type: String
-    fk: ENT-FIN-CONTRATO
-    nullable: true
-
-  # Estado y custodia
-  - name: estado
-    type: Enum[Vigente, Devuelta, Ejecutada, Vencida]
-    default: Vigente
-
-  - name: ubicacion_custodia
-    type: String
-    default: "Tesorería"
-    description: Lugar físico o sistema de garantías electrónicas
-
-  - name: responsable_custodia_id
-    type: String
-    fk: ROL-TESORERO
-
-  # Alertas
-  - name: dias_para_vencimiento
-    type: Integer
-    computed: true
-    formula: fecha_vencimiento - TODAY()
-
-  - name: alerta_vencimiento_enviada
-    type: Boolean
-    default: false
-
-  # Devolución/Ejecución
-  - name: fecha_devolucion
-    type: Date
-    nullable: true
-
-  - name: resolucion_devolucion
-    type: String
-    nullable: true
-
-  - name: fecha_ejecucion
-    type: Date
-    nullable: true
-
-  - name: motivo_ejecucion
-    type: String
-    nullable: true
-
+- name: id_garantia
+  type: String
+  key: true
+- name: numero_documento
+  type: String
+  nullable: false
+  description: Número de boleta o póliza
+- name: tipo_garantia
+  type: Enum[SeriedadOferta, FielCumplimiento, CorrectaEjecucion]
+  nullable: false
+- name: tipo_instrumento
+  type: Enum[BoletaBancaria, Poliza, Vale Vista, Certificado]
+  nullable: false
+- name: entidad_emisora
+  type: String
+  nullable: false
+  description: Banco, aseguradora, etc.
+- name: beneficiario
+  type: String
+  default: GOBIERNO REGIONAL DE ÑUBLE
+- name: tomador
+  type: String
+  nullable: false
+  description: Proveedor/Contratista
+- name: monto
+  type: Decimal
+  nullable: false
+- name: moneda
+  type: Enum[CLP, UF, UTM]
+  default: CLP
+- name: fecha_emision
+  type: Date
+  nullable: false
+- name: fecha_vencimiento
+  type: Date
+  nullable: false
+- name: glosa
+  type: String
+  nullable: true
+  description: Descripción del objeto garantizado
+- name: licitacion_id
+  type: String
+  fk: ENT-FIN-LICITACION
+  nullable: true
+- name: contrato_id
+  type: String
+  fk: ENT-FIN-CONTRATO
+  nullable: true
+- name: estado
+  type: Enum[Vigente, Devuelta, Ejecutada, Vencida]
+  default: Vigente
+- name: ubicacion_custodia
+  type: String
+  default: Tesorería
+  description: Lugar físico o sistema de garantías electrónicas
+- name: responsable_custodia_id
+  type: String
+  fk: ROL-TESORERO
+- name: dias_para_vencimiento
+  type: Integer
+  computed: true
+  formula: fecha_vencimiento - TODAY()
+- name: alerta_vencimiento_enviada
+  type: Boolean
+  default: false
+- name: fecha_devolucion
+  type: Date
+  nullable: true
+- name: resolucion_devolucion
+  type: String
+  nullable: true
+- name: fecha_ejecucion
+  type: Date
+  nullable: true
+- name: motivo_ejecucion
+  type: String
+  nullable: true
 invariants:
-  - name: alerta_30_dias
-    rule: "IF dias_para_vencimiento <= 30 THEN generar_alerta"
-    source: "US-FIN-CONV-005"
-
-  - name: custodia_obligatoria
-    rule: "responsable_custodia_id NOT NULL while estado = Vigente"
-    source: "MANUAL-COMPRAS-SEC-V-GARANTIAS-01"
-
-morphisms:
-  respalda: [ENT-FIN-LICITACION, ENT-FIN-CONTRATO]
-  custodiado_por: [ROL-TESORERO]
-  devuelta_a: [ENT-FIN-PROVEEDOR]
-  ejecutada_contra: [ENT-FIN-PROVEEDOR]
+- name: alerta_30_dias
+  rule: IF dias_para_vencimiento <= 30 THEN generar_alerta
+  source: US-FIN-CONV-005
+- name: custodia_obligatoria
+  rule: responsable_custodia_id NOT NULL while estado = Vigente
+  source: MANUAL-COMPRAS-SEC-V-GARANTIAS-01

@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_uoct_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-UOCT-001-01
-story_key: us_uoct_001_01
+urn: urn:goreos:atom:story:us_uoct_001_01:1.0.0
 role_id: USR-EXT-UOCT
-as_a: "UOCT Ñuble (en transferencia)"
 i_want: información de proyectos viales GORE
 so_that: pueda articular con semáforos y señalética
 domain: D-TERR
 priority: P1
-capability_bundle_id: CAP-TERR-MAP-001
-morphisms:
-  protagonizado_por: USR-EXT-UOCT
-  contribuye_a: CAP-TERR-MAP-001
+capability_id: CAP-TERR-MAP-001

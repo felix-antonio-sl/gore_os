@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FNX-INT-001
-story_key: us_fnx_int_001
+urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
 role_id: BOT-KODA
-as_a: "Agente KODA"
 i_want: Consumir métricas de D-EVOL en tiempo real
 so_that: Detecto condiciones de activación
 domain: D-FENIX
 priority: P1
-capability_bundle_id: CAP-FENIX-001
-morphisms:
-  protagonizado_por: BOT-KODA
-  contribuye_a: CAP-FENIX-001
+capability_id: CAP-FENIX-001

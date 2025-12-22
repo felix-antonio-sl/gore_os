@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_mesa_002_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-MESA-002-01
-story_key: us_mesa_002_01
+urn: urn:goreos:atom:story:us_mesa_002_01:1.0.0
 role_id: USR-DAF-TIC-MESA
-as_a: "Mesa de Ayuda"
 i_want: visualizar la cola de tickets asignados a mi grupo
 so_that: pueda gestionar eficientemente las solicitudes pendientes
 domain: D-BACK
 priority: P1
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-DAF-TIC-MESA
-  contribuye_a: CAP-BACK-TICKETS-001
+capability_id: CAP-BACK-TICKETS-001

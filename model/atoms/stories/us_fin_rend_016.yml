@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-REND-016
-story_key: us_fin_rend_016
+urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
 role_id: USR-DAF-FIN-REND
-as_a: "Encargado Rendiciones"
 i_want: Controlar tope 5% de gastos administrativos
 so_that: Verifico cumplimiento de límite
 domain: D-FIN
 priority: P1
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DAF-FIN-REND
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

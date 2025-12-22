@@ -1,304 +1,197 @@
-# ==============================================================================
-# GORE_OS Entity Atom: CalificacionEjecutor
-# ==============================================================================
-# Domain: D-FIN (Financial Management)
-# Subdomain: Ejecutores
-# Source: kb_gn_001, kb_gn_019_gestion_ipr_koda.yml, Resolución 30/2015 CGR
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico"
-  domain: D-FIN
-  subdomain: ejecutores
-  kb_source:
-    - "kb_gn_001_transferencia_ppr_koda.yml"
-    - "kb_gn_019_gestion_ipr_koda.yml"
-    - "Resolución 30/2015 CGR"
-
-entity:
-  id: ENT-FIN-CALIFICACION-EJECUTOR
-  name: CalificacionEjecutor
-  name_es: Calificación de Ejecutor
-  description: |
-    Evaluación periódica del desempeño de un ejecutor (municipio, servicio,
-    ONG, universidad) que recibe recursos del GORE para IPRs. La calificación
-    se basa en criterios objetivos de cumplimiento, rendición y calidad técnica.
-
-    Determina el nivel de riesgo del ejecutor (A/B/C/D) para la asignación
-    de nuevos recursos y el nivel de supervisión requerido.
-
-  purpose: |
-    Modelar la gestión de riesgo de ejecutores para:
-    - Evaluar desempeño histórico en convenios previos
-    - Determinar nivel de riesgo para nuevas asignaciones
-    - Orientar la intensidad de supervisión requerida
-    - Fundamentar decisiones de exclusión o habilitación
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
-  extends: null
-
-  related_to:
-    - entity: ENT-FIN-ACTOR_IPR
-      relation: califica_a
-      cardinality: N:1
-      description: Actor evaluado
-    - entity: ENT-FIN-CONVENIO
-      relation: basada_en
-      cardinality: N:N
-      description: Convenios considerados en la evaluación
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_calificacion
-    type: String
-    key: true
-    description: Identificador único de la calificación
+- name: id_calificacion
+  type: String
+  key: true
+  description: Identificador único de la calificación
+- name: actor_id
+  type: String
+  fk: ENT-FIN-ACTOR_IPR
+  nullable: false
+  description: Ejecutor evaluado
+- name: periodo_evaluacion
+  type: String
+  nullable: false
+  description: Período evaluado (ej. "2023-2024", "Anual 2024")
+- name: fecha_evaluacion
+  type: Date
+  nullable: false
+  description: Fecha de corte de la evaluación
+- name: puntaje_cumplimiento_plazos
+  type: Decimal
+  nullable: false
+  description: Cumplimiento de cronogramas y plazos de hitos (1-7)
+- name: puntaje_calidad_rendiciones
+  type: Decimal
+  nullable: false
+  description: Calidad y oportunidad de las rendiciones (1-7)
+- name: puntaje_ejecucion_presupuestaria
+  type: Decimal
+  nullable: false
+  description: Porcentaje de ejecución vs programado (1-7)
+- name: puntaje_calidad_tecnica
+  type: Decimal
+  nullable: false
+  description: Calidad de productos y resultados (1-7)
+- name: puntaje_respuesta_observaciones
+  type: Decimal
+  nullable: false
+  description: Oportunidad en subsanar observaciones (1-7)
+- name: puntaje_probidad
+  type: Decimal
+  default: 7.0
+  description: Cumplimiento normas de probidad (1-7, default máximo)
+- name: ponderacion_plazos
+  type: Decimal
+  default: 0.2
+  description: Peso del criterio plazos
+- name: ponderacion_rendiciones
+  type: Decimal
+  default: 0.25
+  description: Peso del criterio rendiciones
+- name: ponderacion_ejecucion
+  type: Decimal
+  default: 0.2
+  description: Peso del criterio ejecución
+- name: ponderacion_calidad
+  type: Decimal
+  default: 0.2
+  description: Peso del criterio calidad técnica
+- name: ponderacion_observaciones
+  type: Decimal
+  default: 0.1
+  description: Peso del criterio observaciones
+- name: ponderacion_probidad
+  type: Decimal
+  default: 0.05
+  description: Peso del criterio probidad
+- name: puntaje_total
+  type: Decimal
+  computed: true
+  formula: '(puntaje_cumplimiento_plazos * ponderacion_plazos) +
 
-  - name: actor_id
-    type: String
-    fk: ENT-FIN-ACTOR_IPR
-    nullable: false
-    description: Ejecutor evaluado
+    (puntaje_calidad_rendiciones * ponderacion_rendiciones) +
 
-  - name: periodo_evaluacion
-    type: String
-    nullable: false
-    description: Período evaluado (ej. "2023-2024", "Anual 2024")
+    (puntaje_ejecucion_presupuestaria * ponderacion_ejecucion) +
 
-  - name: fecha_evaluacion
-    type: Date
-    nullable: false
-    description: Fecha de corte de la evaluación
+    (puntaje_calidad_tecnica * ponderacion_calidad) +
 
-  # Criterios de Evaluación (escala 1-7)
-  - name: puntaje_cumplimiento_plazos
-    type: Decimal
-    nullable: false
-    description: Cumplimiento de cronogramas y plazos de hitos (1-7)
+    (puntaje_respuesta_observaciones * ponderacion_observaciones) +
 
-  - name: puntaje_calidad_rendiciones
-    type: Decimal
-    nullable: false
-    description: Calidad y oportunidad de las rendiciones (1-7)
+    (puntaje_probidad * ponderacion_probidad)
 
-  - name: puntaje_ejecucion_presupuestaria
-    type: Decimal
-    nullable: false
-    description: Porcentaje de ejecución vs programado (1-7)
+    '
+  description: Puntaje ponderado final (1.0 - 7.0)
+- name: nivel_ejecutor
+  type: Enum[A, B, C, D, INHABILITADO]
+  nullable: false
+  description: 'A (6.0-7.0): Ejecutor de excelencia - Supervisión mínima
 
-  - name: puntaje_calidad_tecnica
-    type: Decimal
-    nullable: false
-    description: Calidad de productos y resultados (1-7)
+    B (5.0-5.9): Ejecutor estándar - Supervisión normal
 
-  - name: puntaje_respuesta_observaciones
-    type: Decimal
-    nullable: false
-    description: Oportunidad en subsanar observaciones (1-7)
+    C (4.0-4.9): Ejecutor con observaciones - Supervisión reforzada
 
-  - name: puntaje_probidad
-    type: Decimal
-    default: 7.0
-    description: Cumplimiento normas de probidad (1-7, default máximo)
+    D (3.0-3.9): Ejecutor en riesgo - Supervisión intensiva
 
-  # Ponderaciones
-  - name: ponderacion_plazos
-    type: Decimal
-    default: 0.20
-    description: Peso del criterio plazos
+    INHABILITADO (<3.0): No elegible para nuevos recursos
 
-  - name: ponderacion_rendiciones
-    type: Decimal
-    default: 0.25
-    description: Peso del criterio rendiciones
-
-  - name: ponderacion_ejecucion
-    type: Decimal
-    default: 0.20
-    description: Peso del criterio ejecución
-
-  - name: ponderacion_calidad
-    type: Decimal
-    default: 0.20
-    description: Peso del criterio calidad técnica
-
-  - name: ponderacion_observaciones
-    type: Decimal
-    default: 0.10
-    description: Peso del criterio observaciones
-
-  - name: ponderacion_probidad
-    type: Decimal
-    default: 0.05
-    description: Peso del criterio probidad
-
-  # Resultado
-  - name: puntaje_total
-    type: Decimal
-    computed: true
-    formula: |
-      (puntaje_cumplimiento_plazos * ponderacion_plazos) +
-      (puntaje_calidad_rendiciones * ponderacion_rendiciones) +
-      (puntaje_ejecucion_presupuestaria * ponderacion_ejecucion) +
-      (puntaje_calidad_tecnica * ponderacion_calidad) +
-      (puntaje_respuesta_observaciones * ponderacion_observaciones) +
-      (puntaje_probidad * ponderacion_probidad)
-    description: Puntaje ponderado final (1.0 - 7.0)
-
-  - name: nivel_ejecutor
-    type: Enum[A, B, C, D, INHABILITADO]
-    nullable: false
-    description: |
-      A (6.0-7.0): Ejecutor de excelencia - Supervisión mínima
-      B (5.0-5.9): Ejecutor estándar - Supervisión normal
-      C (4.0-4.9): Ejecutor con observaciones - Supervisión reforzada
-      D (3.0-3.9): Ejecutor en riesgo - Supervisión intensiva
-      INHABILITADO (<3.0): No elegible para nuevos recursos
-
-  # Convenios evaluados
-  - name: cantidad_convenios_evaluados
-    type: Integer
-    nullable: false
-    description: Número de convenios incluidos en la evaluación
-
-  - name: monto_total_gestionado
-    type: Decimal
-    nullable: true
-    description: Suma de montos de convenios evaluados
-
-  - name: convenios_ids
-    type: Array[String]
-    nullable: true
-    description: Lista de IDs de convenios considerados
-
-  # Observaciones cualitativas
-  - name: fortalezas
-    type: Text
-    nullable: true
-    description: Aspectos positivos destacables
-
-  - name: debilidades
-    type: Text
-    nullable: true
-    description: Áreas de mejora identificadas
-
-  - name: recomendaciones
-    type: Text
-    nullable: true
-    description: Acciones sugeridas para mejorar desempeño
-
-  # Antecedentes especiales
-  - name: tiene_rendiciones_pendientes
-    type: Boolean
-    default: false
-    description: Si tiene rendiciones vencidas
-
-  - name: tiene_incumplimiento_grave
-    type: Boolean
-    default: false
-    description: Si registra incumplimientos graves o fraude
-
-  - name: fecha_inhabilitacion
-    type: Date
-    nullable: true
-    description: Fecha de inhabilitación si aplica
-
-  - name: motivo_inhabilitacion
-    type: String
-    nullable: true
-    description: Causa de la inhabilitación
-
-  # Auditoría
-  - name: evaluador_id
-    type: String
-    fk: ROL-FUNCIONARIO
-    nullable: false
-    description: Funcionario responsable de la evaluación
-
-  - name: visado_por_id
-    type: String
-    fk: ROL-JEFE-DAF
-    nullable: true
-    description: Jefatura que visó la evaluación
-
+    '
+- name: cantidad_convenios_evaluados
+  type: Integer
+  nullable: false
+  description: Número de convenios incluidos en la evaluación
+- name: monto_total_gestionado
+  type: Decimal
+  nullable: true
+  description: Suma de montos de convenios evaluados
+- name: convenios_ids
+  type: Array[String]
+  nullable: true
+  description: Lista de IDs de convenios considerados
+- name: fortalezas
+  type: Text
+  nullable: true
+  description: Aspectos positivos destacables
+- name: debilidades
+  type: Text
+  nullable: true
+  description: Áreas de mejora identificadas
+- name: recomendaciones
+  type: Text
+  nullable: true
+  description: Acciones sugeridas para mejorar desempeño
+- name: tiene_rendiciones_pendientes
+  type: Boolean
+  default: false
+  description: Si tiene rendiciones vencidas
+- name: tiene_incumplimiento_grave
+  type: Boolean
+  default: false
+  description: Si registra incumplimientos graves o fraude
+- name: fecha_inhabilitacion
+  type: Date
+  nullable: true
+  description: Fecha de inhabilitación si aplica
+- name: motivo_inhabilitacion
+  type: String
+  nullable: true
+  description: Causa de la inhabilitación
+- name: evaluador_id
+  type: String
+  fk: ROL-FUNCIONARIO
+  nullable: false
+  description: Funcionario responsable de la evaluación
+- name: visado_por_id
+  type: String
+  fk: ROL-JEFE-DAF
+  nullable: true
+  description: Jefatura que visó la evaluación
 invariants:
-  - id: INV-CALIF-001
-    name: nivel_coherente_puntaje
-    rule: |
-      (puntaje_total >= 6.0) → nivel_ejecutor = 'A'
-      (puntaje_total >= 5.0 AND puntaje_total < 6.0) → nivel_ejecutor = 'B'
-      (puntaje_total >= 4.0 AND puntaje_total < 5.0) → nivel_ejecutor = 'C'
-      (puntaje_total >= 3.0 AND puntaje_total < 4.0) → nivel_ejecutor = 'D'
-      (puntaje_total < 3.0) → nivel_ejecutor = 'INHABILITADO'
-    description: El nivel debe corresponder al rango de puntaje
-    severity: error
+- id: INV-CALIF-001
+  name: nivel_coherente_puntaje
+  rule: '(puntaje_total >= 6.0) → nivel_ejecutor = ''A''
 
-  - id: INV-CALIF-002
-    name: ponderaciones_suman_uno
-    rule: |
-      ponderacion_plazos + ponderacion_rendiciones + ponderacion_ejecucion +
-      ponderacion_calidad + ponderacion_observaciones + ponderacion_probidad = 1.0
-    description: Las ponderaciones deben sumar 100%
-    severity: error
+    (puntaje_total >= 5.0 AND puntaje_total < 6.0) → nivel_ejecutor = ''B''
 
-  - id: INV-CALIF-003
-    name: inhabilitacion_requiere_motivo
-    rule: |
-      (nivel_ejecutor = 'INHABILITADO') → 
-      (motivo_inhabilitacion IS NOT NULL AND fecha_inhabilitacion IS NOT NULL)
-    description: La inhabilitación requiere fundamentación
-    severity: error
+    (puntaje_total >= 4.0 AND puntaje_total < 5.0) → nivel_ejecutor = ''C''
 
-  - id: INV-CALIF-004
-    name: incumplimiento_grave_inhabilita
-    rule: |
-      (tiene_incumplimiento_grave = true) → nivel_ejecutor = 'INHABILITADO'
-    description: Incumplimiento grave implica inhabilitación automática
-    source: Resolución 30/2015 CGR
+    (puntaje_total >= 3.0 AND puntaje_total < 4.0) → nivel_ejecutor = ''D''
 
-  - id: INV-CALIF-005
-    name: puntajes_en_rango
-    rule: |
-      ALL puntaje_* BETWEEN 1.0 AND 7.0
-    description: Todos los puntajes deben estar en escala 1-7
+    (puntaje_total < 3.0) → nivel_ejecutor = ''INHABILITADO''
 
-lifecycle:
-  states:
-    - name: Borrador
-      description: Evaluación en preparación
-    - name: EnRevision
-      description: Pendiente de visación
-    - name: Vigente
-      description: Calificación activa
-    - name: Vencida
-      description: Superada por nueva evaluación
+    '
+  description: El nivel debe corresponder al rango de puntaje
+  severity: error
+- id: INV-CALIF-002
+  name: ponderaciones_suman_uno
+  rule: 'ponderacion_plazos + ponderacion_rendiciones + ponderacion_ejecucion +
 
-  transitions:
-    - from: Borrador
-      to: EnRevision
-      trigger: solicitar_visacion
-    - from: EnRevision
-      to: Vigente
-      trigger: visar
-      guard: visado_por_id IS NOT NULL
-    - from: Vigente
-      to: Vencida
-      trigger: nueva_evaluacion
+    ponderacion_calidad + ponderacion_observaciones + ponderacion_probidad = 1.0
 
-morphisms:
-  califica_a: [ENT-FIN-ACTOR_IPR]
-  basada_en: [ENT-FIN-CONVENIO]
-  visada_por: [ROL-JEFE-DAF]
-  determina_elegibilidad: [D-FIN-ASIGNACION]
+    '
+  description: Las ponderaciones deben sumar 100%
+  severity: error
+- id: INV-CALIF-003
+  name: inhabilitacion_requiere_motivo
+  rule: "(nivel_ejecutor = 'INHABILITADO') → \n(motivo_inhabilitacion IS NOT NULL\
+    \ AND fecha_inhabilitacion IS NOT NULL)\n"
+  description: La inhabilitación requiere fundamentación
+  severity: error
+- id: INV-CALIF-004
+  name: incumplimiento_grave_inhabilita
+  rule: '(tiene_incumplimiento_grave = true) → nivel_ejecutor = ''INHABILITADO''
 
-audit:
-  fields_tracked:
-    - nivel_ejecutor
-    - puntaje_total
-    - tiene_incumplimiento_grave
-  retention_years: 10
+    '
+  description: Incumplimiento grave implica inhabilitación automática
+  source: Resolución 30/2015 CGR
+- id: INV-CALIF-005
+  name: puntajes_en_rango
+  rule: 'ALL puntaje_* BETWEEN 1.0 AND 7.0
+
+    '
+  description: Todos los puntajes deben estar en escala 1-7

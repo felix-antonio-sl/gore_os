@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_scg_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GEST-SCG-001
-story_key: us_gest_scg_001
+urn: urn:goreos:atom:story:us_gest_scg_001:1.0.0
 role_id: USR-DAF-JEFE
-as_a: "Jefe DAF"
 i_want: Definir Plan Operativo Anual (POA) divisional alineado con objetivos ERD
 so_that: Aseguro coherencia entre planificación estratégica y operativa
 domain: D-GESTION
 priority: P0
-capability_bundle_id: CAP-GESTION-001
-morphisms:
-  protagonizado_por: USR-DAF-JEFE
-  contribuye_a: CAP-GESTION-001
+capability_id: CAP-GESTION-001

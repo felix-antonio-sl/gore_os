@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_glosa7_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GLOSA7-001-01
-story_key: us_glosa7_001_01
+urn: urn:goreos:atom:story:us_glosa7_001_01:1.0.0
 role_id: USR-DIPIR-G7-FORM
-as_a: "Formulador Programas Glosa 7"
 i_want: formatos estandarizados para proyectos de cámaras y luminarias
 so_that: se agilice la admisibilidad
 domain: D-SEG
 priority: P1
-capability_bundle_id: CAP-SEG-001
-morphisms:
-  protagonizado_por: USR-DIPIR-G7-FORM
-  contribuye_a: CAP-SEG-001
+capability_id: CAP-SEG-001

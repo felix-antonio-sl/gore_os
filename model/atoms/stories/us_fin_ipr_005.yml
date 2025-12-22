@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-IPR-005
-story_key: us_fin_ipr_005
+urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
 role_id: USR-EXT-FORM
-as_a: "Formulador Externo"
 i_want: Recibir notificación de observaciones de admisibilidad (plazo 60d)
 so_that: Puedo subsanar a tiempo
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-EXT-FORM
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

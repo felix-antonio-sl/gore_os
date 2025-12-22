@@ -1,92 +1,59 @@
-# Entidad: Devengo
-# Domain: D-FIN
-# Subdomain: contabilidad
-# Generated: 2025-12-21 (Phase 20.2 - ERP Deep Enrichment)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:devengo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-DEVENGO
-urn: "urn:goreos:entity:d-fin:devengo:1.0.0"
+urn: urn:goreos:entity:d-fin:devengo:1.0.0
 name: Devengo Contable
 domain: D-FIN
 subdomain: rendiciones
 category: Transactional
-canonical_source:
-  - "agent_erp_gore.yaml#S-CONTABILIDAD"
-  - "Normativa SIGFE"
-  - "DL 1263/1975"
-
-description: |
-  Reconocimiento contable de una obligación de pago.
-  Momento en que se afecta el patrimonio y se consume el presupuesto,
-  independientemente del flujo de efectivo asociado.
-
+is_abstract: false
 attributes:
-  - name: id_devengo
-    type: String
-    key: true
-
-  - name: fecha_devengo
-    type: Date
-    nullable: false
-
-  - name: glosa_contable
-    type: String
-    nullable: false
-
-  # Montos
-  - name: monto_devengado
-    type: Decimal
-    nullable: false
-
-  - name: moneda
-    type: Enum[CLP, UF, USD]
-    default: CLP
-
-  # Imputación
-  - name: imputacion_presupuestaria
-    type: String
-    nullable: false
-    description: Código clasificador presupuestario (ej. 24.01.001)
-
-  - name: cdp_id
-    type: String
-    fk: ENT-FIN-CDP
-    nullable: false
-    description: Certificado que avala la disponibilidad
-
-  # Respaldo
-  - name: documento_respaldo_tipo
-    type: Enum[Factura, BoletaHonorarios, EstadoPago, Resolucion, Sentencia]
-    nullable: false
-
-  - name: documento_respaldo_id
-    type: String
-    nullable: false
-    description: ID interno o externo del documento
-
-  # Referencias Externas
-  - name: folio_sigfe
-    type: String
-    nullable: true
-    description: ID de la transacción en sistema nacional SIGFE
-
-  - name: ipr_id
-    type: String
-    fk: ENT-FIN-IPR
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, Validado, Contabilizado, Anulado]
-    default: Borrador
-
+- name: id_devengo
+  type: String
+  key: true
+- name: fecha_devengo
+  type: Date
+  nullable: false
+- name: glosa_contable
+  type: String
+  nullable: false
+- name: monto_devengado
+  type: Decimal
+  nullable: false
+- name: moneda
+  type: Enum[CLP, UF, USD]
+  default: CLP
+- name: imputacion_presupuestaria
+  type: String
+  nullable: false
+  description: Código clasificador presupuestario (ej. 24.01.001)
+- name: cdp_id
+  type: String
+  fk: ENT-FIN-CDP
+  nullable: false
+  description: Certificado que avala la disponibilidad
+- name: documento_respaldo_tipo
+  type: Enum[Factura, BoletaHonorarios, EstadoPago, Resolucion, Sentencia]
+  nullable: false
+- name: documento_respaldo_id
+  type: String
+  nullable: false
+  description: ID interno o externo del documento
+- name: folio_sigfe
+  type: String
+  nullable: true
+  description: ID de la transacción en sistema nacional SIGFE
+- name: ipr_id
+  type: String
+  fk: ENT-FIN-IPR
+  nullable: true
+- name: estado
+  type: Enum[Borrador, Validado, Contabilizado, Anulado]
+  default: Borrador
 invariants:
-  - name: devengo_con_respaldo
-    rule: "monto_devengado <= cdp.saldo_disponible"
-
-  - name: sigfe_obligatorio
-    rule: "IF estado = Contabilizado THEN folio_sigfe NOT NULL"
-
-morphisms:
-  afecta: [ENT-FIN-CDP, ENT-FIN-PRESUPUESTO]
-  genera: [AsientoContable, CuentasPorPagar]
-  precede: [ENT-BACK-PAGO]
+- name: devengo_con_respaldo
+  rule: monto_devengado <= cdp.saldo_disponible
+- name: sigfe_obligatorio
+  rule: IF estado = Contabilizado THEN folio_sigfe NOT NULL

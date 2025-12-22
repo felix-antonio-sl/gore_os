@@ -1,0 +1,12 @@
+_meta:
+  urn: urn:goreos:profunctor:entity_registra_uso:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-ENTITY_REGISTRA_USO
+urn: urn:goreos:profunctor:entity_registra_uso:1.0.0
+signature: Source ⊗ Target → 2
+source_type: Mixed
+target_type: Mixed
+links:
+- source: ENT-BACK-BITACORA_VIAJE
+  target: ENT-BACK-VEHICULO

@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GEN-001-01
-story_key: us_gen_001_01
+urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
 role_id: USR-CAL-PMG-GEN
-as_a: "Referente Equidad de Género"
 i_want: indicadores desagregados por sexo en todos los reportes
 so_that: visualice brechas de género
 domain: D-PLAN
 priority: P2
-capability_bundle_id: CAP-PLAN-001
-morphisms:
-  protagonizado_por: USR-CAL-PMG-GEN
-  contribuye_a: CAP-PLAN-001
+capability_id: CAP-PLAN-001

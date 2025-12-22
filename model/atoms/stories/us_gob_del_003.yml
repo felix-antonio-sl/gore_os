@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_del_003:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GOB-DEL-003
-story_key: us_gob_del_003
+urn: urn:goreos:atom:story:us_gob_del_003:1.0.0
 role_id: USR-EXT-DPR
-as_a: "Delegado Presidencial Regional"
 i_want: Resolver recursos jerárquicos administrativos
 so_that: Ejerzo tutela administrativa
 domain: D-GOB
 priority: P1
-capability_bundle_id: CAP-GOB-001
-morphisms:
-  protagonizado_por: USR-EXT-DPR
-  contribuye_a: CAP-GOB-001
+capability_id: CAP-GOB-001

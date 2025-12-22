@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GOB-GAB-007
-story_key: us_gob_gab_007
+urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
 role_id: USR-GAB-250-PROF
-as_a: "Profesional Ñuble 250"
 i_want: Gestionar acuerdos y misiones con regiones extranjeras
 so_that: Fomento la cooperación internacional descentralizada
 domain: D-GOB
 priority: P1
-capability_bundle_id: CAP-GOB-001
-morphisms:
-  protagonizado_por: USR-GAB-250-PROF
-  contribuye_a: CAP-GOB-001
+capability_id: CAP-GOB-001

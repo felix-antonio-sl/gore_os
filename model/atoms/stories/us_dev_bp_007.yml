@@ -1,21 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_bp_007:1.0.0
   type: Story
-  source: catalogo_exhaustivo_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-BP-007
-story_key: us_dev_bp_007
+urn: urn:goreos:atom:story:us_dev_bp_007:1.0.0
 role_id: ROLE-ARQUITECTO
-as_a: Arquitecto
 i_want: generar diagrama Mermaid desde compositions/domains
 so_that: se tenga visualización auto-generada exportable a GraphML
 domain: D-DEV
-module: M0-BLUEPRINT
 priority: P2
-acceptance_criteria:
-  - Diagrama Mermaid generado
-  - Exportable a GraphML
-  - Entidades y relaciones visibles
-capability_bundle_id: CAP-DEV-BLUEPRINT
-morphisms:
-  protagonizado_por: ROLE-ARQUITECTO
-  contribuye_a: CAP-DEV-BLUEPRINT
+capability_id: CAP-DEV-BLUEPRINT

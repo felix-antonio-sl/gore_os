@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_qa_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-QA-001-01
-story_key: us_qa_001_01
+urn: urn:goreos:atom:story:us_qa_001_01:1.0.0
 role_id: USR-DEV-QA
-as_a: "QA Engineer"
 i_want: un entorno de staging idéntico a producción
 so_that: las pruebas sean fiables
 domain: D-OPS
 priority: P1
-capability_bundle_id: CAP-OPS-001
-morphisms:
-  protagonizado_por: USR-DEV-QA
-  contribuye_a: CAP-OPS-001
+capability_id: CAP-OPS-001

@@ -1,145 +1,101 @@
-# Entidad: RiesgoConvenio
-# Domain: D-EJEC
-# Generated: 2025-12-21 (Phase 20.2)
-
+_meta:
+  urn: urn:goreos:entity:d-ejec:riesgo-convenio:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-EJEC-RIESGO_CONVENIO
-urn: "urn:goreos:entity:d-ejec:riesgo-convenio:1.0.0"
+urn: urn:goreos:entity:d-ejec:riesgo-convenio:1.0.0
 name: Riesgo de Convenio
 domain: D-EJEC
 category: Control
-canonical_source:
-  - "domain_d-ejec.md#pmo-regional"
-  - "PMBOK - Gestión de Riesgos"
-
-description: |
-  Registro de riesgos identificados en la ejecución de convenios.
-  Parte de la matriz de riesgos del PMO Regional.
-  Seguimiento desde identificación hasta cierre o materialización.
-
+is_abstract: false
 attributes:
-  - name: id_riesgo
-    type: String
-    key: true
-
-  - name: convenio_id
-    type: String
-    fk: ENT-FIN-CONVENIO
-    nullable: false
-
-  - name: codigo_riesgo
-    type: String
-    nullable: false
-    description: R-XXX identificador único
-
-  # Descripción
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: false
-
-  - name: categoria
-    type: Enum[Tecnico, Financiero, Legal, Ambiental, Social, Politico, Operacional, Externo]
-    nullable: false
-
-  # Evaluación
-  - name: probabilidad
-    type: Enum[MuyBaja, Baja, Media, Alta, MuyAlta]
-    nullable: false
-
-  - name: probabilidad_valor
-    type: Integer
-    description: "1-5"
-
-  - name: impacto
-    type: Enum[MuyBajo, Bajo, Medio, Alto, MuyAlto]
-    nullable: false
-
-  - name: impacto_valor
-    type: Integer
-    description: "1-5"
-
-  - name: severidad
-    type: Integer
-    computed: true
-    formula: probabilidad_valor * impacto_valor
-    description: "1-25, matriz P×I"
-
-  - name: nivel_riesgo
-    type: Enum[Bajo, Moderado, Alto, Critico]
-    computed: true
-
-  # Respuesta
-  - name: estrategia_respuesta
-    type: Enum[Evitar, Mitigar, Transferir, Aceptar]
-    nullable: true
-
-  - name: plan_mitigacion
-    type: Text
-    nullable: true
-
-  - name: plan_contingencia
-    type: Text
-    nullable: true
-
-  - name: responsable_mitigacion_id
-    type: String
-    fk: ROL-FUNCIONARIO
-    nullable: true
-
-  # Fechas
-  - name: fecha_identificacion
-    type: Date
-    nullable: false
-
-  - name: fecha_ultima_revision
-    type: Date
-    nullable: true
-
-  - name: fecha_cierre
-    type: Date
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Identificado, EnAnalisis, Mitigando, Materializado, Cerrado]
-    default: Identificado
-
-  - name: materializado
-    type: Boolean
-    default: false
-
-  - name: problema_generado_id
-    type: String
-    fk: ENT-EJEC-PROBLEMA_IPR
-    nullable: true
-
-  - name: garantia_vinculada_id
-    type: String
-    fk: ENT-FIN-GARANTIA
-    nullable: true
-    description: Garantía que podría cobrarse si el riesgo se materializa (Phase 20.2 Enrichment)
-
-  # Indicadores
-  - name: costo_mitigacion_estimado
-    type: Decimal
-    nullable: true
-
-  - name: impacto_financiero_potencial
-    type: Decimal
-    nullable: true
-
+- name: id_riesgo
+  type: String
+  key: true
+- name: convenio_id
+  type: String
+  fk: ENT-FIN-CONVENIO
+  nullable: false
+- name: codigo_riesgo
+  type: String
+  nullable: false
+  description: R-XXX identificador único
+- name: nombre
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: false
+- name: categoria
+  type: Enum[Tecnico, Financiero, Legal, Ambiental, Social, Politico, Operacional,
+    Externo]
+  nullable: false
+- name: probabilidad
+  type: Enum[MuyBaja, Baja, Media, Alta, MuyAlta]
+  nullable: false
+- name: probabilidad_valor
+  type: Integer
+  description: 1-5
+- name: impacto
+  type: Enum[MuyBajo, Bajo, Medio, Alto, MuyAlto]
+  nullable: false
+- name: impacto_valor
+  type: Integer
+  description: 1-5
+- name: severidad
+  type: Integer
+  computed: true
+  formula: probabilidad_valor * impacto_valor
+  description: 1-25, matriz P×I
+- name: nivel_riesgo
+  type: Enum[Bajo, Moderado, Alto, Critico]
+  computed: true
+- name: estrategia_respuesta
+  type: Enum[Evitar, Mitigar, Transferir, Aceptar]
+  nullable: true
+- name: plan_mitigacion
+  type: Text
+  nullable: true
+- name: plan_contingencia
+  type: Text
+  nullable: true
+- name: responsable_mitigacion_id
+  type: String
+  fk: ROL-FUNCIONARIO
+  nullable: true
+- name: fecha_identificacion
+  type: Date
+  nullable: false
+- name: fecha_ultima_revision
+  type: Date
+  nullable: true
+- name: fecha_cierre
+  type: Date
+  nullable: true
+- name: estado
+  type: Enum[Identificado, EnAnalisis, Mitigando, Materializado, Cerrado]
+  default: Identificado
+- name: materializado
+  type: Boolean
+  default: false
+- name: problema_generado_id
+  type: String
+  fk: ENT-EJEC-PROBLEMA_IPR
+  nullable: true
+- name: garantia_vinculada_id
+  type: String
+  fk: ENT-FIN-GARANTIA
+  nullable: true
+  description: Garantía que podría cobrarse si el riesgo se materializa (Phase 20.2
+    Enrichment)
+- name: costo_mitigacion_estimado
+  type: Decimal
+  nullable: true
+- name: impacto_financiero_potencial
+  type: Decimal
+  nullable: true
 invariants:
-  - name: critico_requiere_mitigacion
-    rule: "IF nivel_riesgo = Critico THEN plan_mitigacion NOT NULL"
-
-  - name: materializado_genera_problema
-    rule: "IF materializado = true THEN problema_generado_id NOT NULL"
-
-morphisms:
-  amenaza: [ENT-FIN-CONVENIO]
-  monitoreado_por: [PMO_Regional]
-  puede_generar: [ENT-EJEC-PROBLEMA_IPR]
-  alimenta: [ENT-FIN-PUNTAJE_IMPACTO]
+- name: critico_requiere_mitigacion
+  rule: IF nivel_riesgo = Critico THEN plan_mitigacion NOT NULL
+- name: materializado_genera_problema
+  rule: IF materializado = true THEN problema_generado_id NOT NULL

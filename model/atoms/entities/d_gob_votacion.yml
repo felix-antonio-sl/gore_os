@@ -1,96 +1,43 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Votacion
-# ==============================================================================
-# Domain: D-GOB (Gobernanza)
-# Subdomain: Consejo Regional
-# Source: LOC GORE Art. 35-36, domain_d-gob.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-GOB
-  subdomain: consejo_regional
-  kb_source:
-    - "LOC GORE Art. 35: Quórum y votaciones"
-    - "LOC GORE Art. 36: Adopción de acuerdos"
-    - "domain_d-gob.md: Entidad Votacion"
-
-entity:
-  id: ENT-GOB-VOTACION
-  name: Votacion
-  name_es: Votación de Consejero
-  description: |
-    Registro nominal del voto emitido por cada consejero en un acuerdo.
-    Permite trazabilidad completa de las decisiones del CORE.
-
-    Opciones:
-    - A: A favor
-    - R: En contra (Rechaza)
-    - Ab: Abstención
-
-  purpose: |
-    - Registrar voto nominal de cada consejero
-    - Permitir análisis de votación
-    - Base para transparencia
-    - Fundamento de decisiones
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_votacion
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: acuerdo_id
-    type: String
-    fk: ENT-GOB-ACUERDO-CORE
-    nullable: false
-    description: Acuerdo votado
-
-  - name: consejero_id
-    type: String
-    fk: ENT-GOB-CONSEJERO
-    nullable: false
-    description: Consejero que vota
-
-  - name: opcion
-    type: Enum[A, R, Ab]
-    nullable: false
-    description: "A=Favor, R=Contra, Ab=Abstención"
-
-  - name: fundamento
-    type: Text
-    nullable: true
-    description: Fundamento del voto (si lo declara)
-
-  - name: fecha_hora
-    type: DateTime
-    nullable: false
-    description: Momento del voto
-
-  - name: es_voto_secreto
-    type: Boolean
-    default: false
-    description: ¿Votación secreta?
-
+- name: id_votacion
+  type: String
+  key: true
+  description: Identificador único
+- name: acuerdo_id
+  type: String
+  fk: ENT-GOB-ACUERDO-CORE
+  nullable: false
+  description: Acuerdo votado
+- name: consejero_id
+  type: String
+  fk: ENT-GOB-CONSEJERO
+  nullable: false
+  description: Consejero que vota
+- name: opcion
+  type: Enum[A, R, Ab]
+  nullable: false
+  description: A=Favor, R=Contra, Ab=Abstención
+- name: fundamento
+  type: Text
+  nullable: true
+  description: Fundamento del voto (si lo declara)
+- name: fecha_hora
+  type: DateTime
+  nullable: false
+  description: Momento del voto
+- name: es_voto_secreto
+  type: Boolean
+  default: false
+  description: ¿Votación secreta?
 invariants:
-  - id: INV-VOT-001
-    name: un_voto_por_acuerdo
-    rule: UNIQUE(acuerdo_id, consejero_id)
-    description: Un consejero solo vota una vez por acuerdo
-    severity: error
-
-morphisms:
-  emitida_por: [ENT-GOB-CONSEJERO]
-  para: [ENT-GOB-ACUERDO-CORE]
-
-audit:
-  fields_tracked:
-    - opcion
-  retention_years: 20
+- id: INV-VOT-001
+  name: un_voto_por_acuerdo
+  rule: UNIQUE(acuerdo_id, consejero_id)
+  description: Un consejero solo vota una vez por acuerdo
+  severity: error

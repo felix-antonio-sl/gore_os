@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_notif_002:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-TDE-NOTIF-002
-story_key: us_tde_notif_002
+urn: urn:goreos:atom:story:us_tde_notif_002:1.0.0
 role_id: BOT-KODA
-as_a: "Agente KODA"
 i_want: Resolver DDU del destinatario y aplicar canal correcto (DS8)
 so_that: Notifico por el canal registrado
 domain: D-TDE
 priority: P0
-capability_bundle_id: CAP-FIRMA-001
-morphisms:
-  protagonizado_por: BOT-KODA
-  contribuye_a: CAP-FIRMA-001
+capability_id: CAP-FIRMA-001

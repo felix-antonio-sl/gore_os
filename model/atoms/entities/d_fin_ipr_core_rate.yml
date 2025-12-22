@@ -1,253 +1,138 @@
-# ═══════════════════════════════════════════════════════════════════════════════
-# ENT-FIN-RATE | Resultado Análisis Técnico-Económico
-# Dominio: D-FIN
-# Subdomain: ipr_core
-# Fuente: kb_gn_019_gestion_ipr_koda.yml, kb_gn_011_selector_ipr_koda.yml
-# ═══════════════════════════════════════════════════════════════════════════════
-version: "1.0.0"
-
-metadata:
-  entity_id: ENT-FIN-RATE
-  name: ResultadoAnalisisTecnicoEconomico
-  domain: D-FIN
-  subdomain: ipr_core
-  description: |
-    Representa el resultado de la evaluación técnico-económica de una IPR.
-    Es emitido por MDSF (para IDI) o DIPRES/SES (para PPR) y determina
-    si la iniciativa puede acceder a financiamiento regional.
-  legal_basis:
-    - Art. 19 bis DL N°1.263/1975
-    - Ley 20.530 (Crea MDSF)
-    - Normas del SNI
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# ATRIBUTOS
-# ═══════════════════════════════════════════════════════════════════════════════
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_rate
-    type: String
-    key: true
+- name: id_rate
+  type: String
+  key: true
+- name: ipr_id
+  type: String
+  fk: ENT-FIN-IPR
+  nullable: false
+  description: IPR evaluada
+- name: codigo_bip
+  type: String
+  nullable: true
+  description: Código BIP asociado (para IDI)
+- name: tipo_rate
+  type: Enum[RS, AD, RF, ITF, FI, OT, ExentoRS]
+  nullable: false
+  description: 'RS: Recomendado Satisfactoriamente (IDI SNI)
 
-  - name: ipr_id
-    type: String
-    fk: ENT-FIN-IPR
-    nullable: false
-    description: IPR evaluada
+    AD: Admisible (Conservación)
 
-  - name: codigo_bip
-    type: String
-    nullable: true
-    description: Código BIP asociado (para IDI)
+    RF: Recomendación Favorable (PPR Glosa 06)
 
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Tipo y Resultado
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: tipo_rate
-    type: Enum[RS, AD, RF, ITF, FI, OT, ExentoRS]
-    nullable: false
-    description: |
-      RS: Recomendado Satisfactoriamente (IDI SNI)
-      AD: Admisible (Conservación)
-      RF: Recomendación Favorable (PPR Glosa 06)
-      ITF: Informe Técnico Favorable (Programas continuidad)
-      FI: Falta Información (requiere subsanación)
-      OT: Objetado Técnicamente (rechazado)
-      ExentoRS: Sin evaluación MDSF (<5.000 UTM, FRIL)
+    ITF: Informe Técnico Favorable (Programas continuidad)
 
-  - name: tipo_ipr_evaluada
-    type: Enum[IDI, PPR]
-    nullable: false
+    FI: Falta Información (requiere subsanación)
 
-  - name: mecanismo_evaluacion
-    type: Enum[SNI_Estandar, SNI_Enriquecido, Conservacion, Glosa06, FRIL, Circular33, ExentoMenor5000UTM]
-    nullable: false
+    OT: Objetado Técnicamente (rechazado)
 
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Organismo Evaluador
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: organismo_evaluador
-    type: Enum[MDSF, DIPRES_SES, GORE]
-    nullable: false
+    ExentoRS: Sin evaluación MDSF (<5.000 UTM, FRIL)
 
-  - name: analista_evaluador
-    type: String
-    nullable: true
-    description: Nombre del analista que evaluó
-
-  - name: numero_oficio_evaluacion
-    type: String
-    nullable: true
-    description: Número del oficio que comunica el RATE
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Fechas
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: fecha_envio_evaluacion
-    type: Date
-    nullable: false
-    description: Fecha de envío de la IPR a evaluación
-
-  - name: fecha_emision_rate
-    type: Date
-    nullable: true
-    description: Fecha en que se emitió el RATE
-
-  - name: fecha_notificacion_gore
-    type: Date
-    nullable: true
-    description: Fecha en que GORE fue notificado del resultado
-
-  - name: fecha_vencimiento_subsanacion
-    type: Date
-    nullable: true
-    description: Fecha límite para subsanar (60 días hábiles desde FI)
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Observaciones y Subsanación
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: tiene_observaciones
-    type: Boolean
-    default: false
-
-  - name: observaciones
-    type: Text
-    nullable: true
-    description: Detalle de observaciones técnicas
-
-  - name: categorias_observacion
-    type: Array[Enum[Formulacion, Antecedentes, Presupuesto, Marco_Logico, Indicadores, Diseño, Sostenibilidad, Duplicidad, Competencias]]
-    nullable: true
-
-  - name: numero_subsanaciones_presentadas
-    type: Integer
-    default: 0
-
-  - name: fecha_ultima_subsanacion
-    type: Date
-    nullable: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Estado
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: estado
-    type: Enum[EnEvaluacion, Emitido, EnSubsanacion, Vencido, Reemplazado, Vigente]
-    default: EnEvaluacion
-
-  - name: es_rate_vigente
-    type: Boolean
-    computed: true
-    description: True si es el RATE más reciente para la IPR
-
-  - name: rate_anterior_id
-    type: String
-    fk: ENT-FIN-RATE
-    nullable: true
-    description: RATE previo que fue reemplazado
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Vigencia Técnica
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: vigencia_tecnica_años
-    type: Integer
-    default: 3
-    description: Años de vigencia del RS (normalmente 3)
-
-  - name: fecha_vencimiento_vigencia
-    type: Date
-    nullable: true
-    description: Fecha hasta la cual el RS es válido
-
-  - name: requiere_actualizacion
-    type: Boolean
-    computed: true
-    description: True si se acerca al vencimiento de vigencia técnica
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# INVARIANTES
-# ═══════════════════════════════════════════════════════════════════════════════
+    '
+- name: tipo_ipr_evaluada
+  type: Enum[IDI, PPR]
+  nullable: false
+- name: mecanismo_evaluacion
+  type: Enum[SNI_Estandar, SNI_Enriquecido, Conservacion, Glosa06, FRIL, Circular33,
+    ExentoMenor5000UTM]
+  nullable: false
+- name: organismo_evaluador
+  type: Enum[MDSF, DIPRES_SES, GORE]
+  nullable: false
+- name: analista_evaluador
+  type: String
+  nullable: true
+  description: Nombre del analista que evaluó
+- name: numero_oficio_evaluacion
+  type: String
+  nullable: true
+  description: Número del oficio que comunica el RATE
+- name: fecha_envio_evaluacion
+  type: Date
+  nullable: false
+  description: Fecha de envío de la IPR a evaluación
+- name: fecha_emision_rate
+  type: Date
+  nullable: true
+  description: Fecha en que se emitió el RATE
+- name: fecha_notificacion_gore
+  type: Date
+  nullable: true
+  description: Fecha en que GORE fue notificado del resultado
+- name: fecha_vencimiento_subsanacion
+  type: Date
+  nullable: true
+  description: Fecha límite para subsanar (60 días hábiles desde FI)
+- name: tiene_observaciones
+  type: Boolean
+  default: false
+- name: observaciones
+  type: Text
+  nullable: true
+  description: Detalle de observaciones técnicas
+- name: categorias_observacion
+  type: Array[Enum[Formulacion, Antecedentes, Presupuesto, Marco_Logico, Indicadores,
+    Diseño, Sostenibilidad, Duplicidad, Competencias]]
+  nullable: true
+- name: numero_subsanaciones_presentadas
+  type: Integer
+  default: 0
+- name: fecha_ultima_subsanacion
+  type: Date
+  nullable: true
+- name: estado
+  type: Enum[EnEvaluacion, Emitido, EnSubsanacion, Vencido, Reemplazado, Vigente]
+  default: EnEvaluacion
+- name: es_rate_vigente
+  type: Boolean
+  computed: true
+  description: True si es el RATE más reciente para la IPR
+- name: rate_anterior_id
+  type: String
+  fk: ENT-FIN-RATE
+  nullable: true
+  description: RATE previo que fue reemplazado
+- name: vigencia_tecnica_años
+  type: Integer
+  default: 3
+  description: Años de vigencia del RS (normalmente 3)
+- name: fecha_vencimiento_vigencia
+  type: Date
+  nullable: true
+  description: Fecha hasta la cual el RS es válido
+- name: requiere_actualizacion
+  type: Boolean
+  computed: true
+  description: True si se acerca al vencimiento de vigencia técnica
 invariants:
-  - id: INV-RATE-001
-    name: plazo_subsanacion_60dias
-    rule: |
-      (tipo_rate = FI) → 
-      fecha_vencimiento_subsanacion = fecha_emision_rate + 60 días hábiles
-    description: Plazo legal de subsanación para FI es 60 días hábiles
+- id: INV-RATE-001
+  name: plazo_subsanacion_60dias
+  rule: "(tipo_rate = FI) → \nfecha_vencimiento_subsanacion = fecha_emision_rate +\
+    \ 60 días hábiles\n"
+  description: Plazo legal de subsanación para FI es 60 días hábiles
+- id: INV-RATE-002
+  name: rs_habilita_financiamiento
+  rule: "(IPR.estado IN [EnCarteraCORE, EnEjecucion]) → \nrate_tipo IN [RS, AD, RF,\
+    \ ITF, ExentoRS]\n"
+  description: Solo RATE favorables habilitan financiamiento
+- id: INV-RATE-003
+  name: vigencia_tecnica_3años
+  rule: "(tipo_rate = RS) → \nfecha_vencimiento_vigencia = fecha_emision_rate + vigencia_tecnica_años\n"
+  description: RS tienen vigencia técnica de 3 años por defecto
+- id: INV-RATE-004
+  name: ot_bloquea_ipr
+  rule: '(tipo_rate = OT) → IPR.estado NOT IN [EnEjecucion, Cerrada]
 
-  - id: INV-RATE-002
-    name: rs_habilita_financiamiento
-    rule: |
-      (IPR.estado IN [EnCarteraCORE, EnEjecucion]) → 
-      rate_tipo IN [RS, AD, RF, ITF, ExentoRS]
-    description: Solo RATE favorables habilitan financiamiento
-
-  - id: INV-RATE-003
-    name: vigencia_tecnica_3años
-    rule: |
-      (tipo_rate = RS) → 
-      fecha_vencimiento_vigencia = fecha_emision_rate + vigencia_tecnica_años
-    description: RS tienen vigencia técnica de 3 años por defecto
-
-  - id: INV-RATE-004
-    name: ot_bloquea_ipr
-    rule: |
-      (tipo_rate = OT) → IPR.estado NOT IN [EnEjecucion, Cerrada]
-    description: OT bloquea la IPR para financiamiento
-
-  - id: INV-RATE-005
-    name: plazo_admisibilidad_mdsf
-    rule: |
-      (organismo_evaluador = MDSF) → 
-      (fecha_emision_rate - fecha_envio_evaluacion) <= 15 días hábiles (admisibilidad + ATE)
-    description: Plazos orientativos MDSF (5 días admisibilidad + 10 días ATE)
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# MORFISMOS
-# ═══════════════════════════════════════════════════════════════════════════════
-morphisms:
-  - source: ENT-FIN-RATE
-    target: ENT-FIN-IPR
-    type: N:1
-    name: ipr_evaluada
-    description: IPR que fue evaluada
-
-  - source: ENT-FIN-RATE
-    target: ENT-FIN-RATE
-    type: N:1
-    name: rate_anterior
-    description: RATE previo que fue reemplazado (historial)
-
-  - source: ENT-FIN-RATE
-    target: ENT-GOB-ACTOR
-    type: N:1
-    name: organismo_emisor
-    description: MDSF, DIPRES/SES o GORE
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# OPERACIONES
-# ═══════════════════════════════════════════════════════════════════════════════
-operations:
-  - name: registrar_rate
-    description: |
-      Registra un nuevo RATE para una IPR.
-      Si ya existe un RATE previo, lo marca como Reemplazado.
-    input:
-      - ipr_id: String
-      - tipo_rate: Enum
-      - fecha_emision: Date
-      - observaciones: Text (opcional)
-    output: id_rate
-
-  - name: iniciar_subsanacion
-    description: |
-      Marca el RATE como en subsanación y calcula la fecha límite.
-    precondition: tipo_rate = FI
-    input:
-      - id_rate: String
-    output: fecha_vencimiento_subsanacion
-
-  - name: verificar_vigencia_tecnica
-    description: |
-      Verifica si el RS está próximo a vencer y marca para actualización.
-    input:
-      - id_rate: String
-    output: requiere_actualizacion
+    '
+  description: OT bloquea la IPR para financiamiento
+- id: INV-RATE-005
+  name: plazo_admisibilidad_mdsf
+  rule: "(organismo_evaluador = MDSF) → \n(fecha_emision_rate - fecha_envio_evaluacion)\
+    \ <= 15 días hábiles (admisibilidad + ATE)\n"
+  description: Plazos orientativos MDSF (5 días admisibilidad + 10 días ATE)

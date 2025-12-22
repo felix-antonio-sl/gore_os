@@ -1,107 +1,51 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Despliegue (Deployment)
-# ==============================================================================
-# Domain: D-OPS (Operaciones e Infraestructura)
-# Subdomain: M2 Despliegue y Ambientes
-# Source: dialogo_profundo_dev_ops.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Ingeniero GORE_OS"
-  domain: D-OPS
-  subdomain: deployment
-  kb_source:
-    - "Continuous Delivery"
-    - "dialogo_profundo_dev_ops.md"
-
-entity:
-  id: ENT-OPS-DESPLIEGUE
-  name: Despliegue
-  name_es: Evento de Despliegue
-  description: |
-    Acción de promover un Release específico a un Ambiente específico.
-    Puede ser manual o automatizado vía Pipeline.
-
-  purpose: |
-    Trazar cambios en infraestructura para:
-    - Auditoría (Quién desplegó qué, dónde y cuándo)
-    - Rollback rápido ante incidentes
-    - Medir métricas DORA (Deployment Frequency, Lead Time)
-
-  categorical_type: Transaction
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_despliegue
-    type: String
-    key: true
-    description: "UUID"
-
-  # Relación
-  - name: release_id
-    type: String
-    fk: ENT-DEV-RELEASE
-    nullable: false
-
-  - name: ambiente_id
-    type: String
-    fk: ENT-OPS-AMBIENTE
-    nullable: false
-
-  # Ejecución
-  - name: desplegado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO # o System User (CI Bot)
-    nullable: false
-
-  - name: fecha_inicio
-    type: Timestamp
-    nullable: false
-
-  - name: fecha_fin
-    type: Timestamp
-    nullable: true
-
-  - name: duracion_segundos
-    type: Integer
-    computed: true
-    formula: fecha_fin - fecha_inicio
-
-  # Resultado
-  - name: estado
-    type: Enum[EnProgreso, Exitoso, Fallido, Cancelado, Rollback]
-    default: EnProgreso
-
-  - name: logs_url
-    type: String
-    nullable: true
-    description: "Link a logs del pipeline"
-
-  # Aprobación
-  - name: aprobado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: "Quien autorizó (si el ambiente es protegido)"
-
+- name: id_despliegue
+  type: String
+  key: true
+  description: UUID
+- name: release_id
+  type: String
+  fk: ENT-DEV-RELEASE
+  nullable: false
+- name: ambiente_id
+  type: String
+  fk: ENT-OPS-AMBIENTE
+  nullable: false
+- name: desplegado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+- name: fecha_inicio
+  type: Timestamp
+  nullable: false
+- name: fecha_fin
+  type: Timestamp
+  nullable: true
+- name: duracion_segundos
+  type: Integer
+  computed: true
+  formula: fecha_fin - fecha_inicio
+- name: estado
+  type: Enum[EnProgreso, Exitoso, Fallido, Cancelado, Rollback]
+  default: EnProgreso
+- name: logs_url
+  type: String
+  nullable: true
+  description: Link a logs del pipeline
+- name: aprobado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Quien autorizó (si el ambiente es protegido)
 invariants:
-  - id: INV-DEPLOY-001
-    name: ambiente_protegido_requiere_aprobacion
-    rule: |
-      (SELECT es_protegido FROM Ambiente WHERE id_ambiente = ambiente_id) = TRUE 
-      → aprobado_por_id IS NOT NULL
-    description: Despliegue en ambiente protegido requiere aprobación
-
-morphisms:
-  actualiza: [ENT-OPS-AMBIENTE]
-  instancia: [ENT-DEV-RELEASE]
-
-audit:
-  fields_tracked:
-    - estado
-    - aprobado_por_id
-  retention_years: 5
+- id: INV-DEPLOY-001
+  name: ambiente_protegido_requiere_aprobacion
+  rule: "(SELECT es_protegido FROM Ambiente WHERE id_ambiente = ambiente_id) = TRUE\
+    \ \n→ aprobado_por_id IS NOT NULL\n"
+  description: Despliegue en ambiente protegido requiere aprobación

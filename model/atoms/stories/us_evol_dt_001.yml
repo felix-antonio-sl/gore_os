@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-EVOL-DT-001
-story_key: us_evol_dt_001
+urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
 role_id: USR-DEV-LEAD
-as_a: "Líder Técnico"
 i_want: Gestionar deuda técnica (inventario)
 so_that: Controlo pasivos técnicos
 domain: D-EVOL
 priority: P1
-capability_bundle_id: CAP-EVOL-001
-morphisms:
-  protagonizado_por: USR-DEV-LEAD
-  contribuye_a: CAP-EVOL-001
+capability_id: CAP-EVOL-001

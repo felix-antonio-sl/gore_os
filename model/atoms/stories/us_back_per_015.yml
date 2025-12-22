@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_015:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-BACK-PER-015
-story_key: us_back_per_015
+urn: urn:goreos:atom:story:us_back_per_015:1.0.0
 role_id: USR-DAF-PER-GEST
-as_a: "Gestor de Personas"
 i_want: Gestionar concursos públicos
 so_that: Recluto personal
 domain: D-BACK
 priority: P1
-capability_bundle_id: CAP-PAGOS-001
-morphisms:
-  protagonizado_por: USR-DAF-PER-GEST
-  contribuye_a: CAP-PAGOS-001

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:goreos:schema:process:1.0.0",
+  "title": "Process",
+  "description": "Coálgebra c: S → F(S) que define comportamiento del sistema",
+  "type": "object",
+  "required": ["id", "urn", "name", "domain"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "urn": { "type": "string", "pattern": "^urn:goreos:atom:process:" },
+        "type": { "const": "Process" },
+        "schema": { "const": "urn:goreos:schema:process:1.0.0" }
+      },
+      "required": ["urn", "type"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^PROC-[A-Z]+-[A-Z0-9]+$"
+    },
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:goreos:atom:process:"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 5
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^D-[A-Z]+$"
+    },
+    "bpmn_ref": {
+      "type": "string",
+      "description": "Referencia a diagrama BPMN en docs/blueprint/processes/"
+    },
+    "module_id": {
+      "type": "string",
+      "pattern": "^MOD-",
+      "description": "Módulo contenedor"
+    }
+  },
+  "additionalProperties": false
+}

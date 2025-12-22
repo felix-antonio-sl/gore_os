@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dba_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DBA-001-01
-story_key: us_dba_001_01
+urn: urn:goreos:atom:story:us_dba_001_01:1.0.0
 role_id: USR-OPS-DBA
-as_a: "DBA"
 i_want: un panel de monitoreo de bases de datos
 so_that: pueda detectar problemas de rendimiento
 domain: D-TDE
 priority: P0
-capability_bundle_id: CAP-FIRMA-001
-morphisms:
-  protagonizado_por: USR-OPS-DBA
-  contribuye_a: CAP-FIRMA-001
+capability_id: CAP-FIRMA-001

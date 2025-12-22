@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_finops_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FINOPS-001-01
-story_key: us_finops_001_01
+urn: urn:goreos:atom:story:us_finops_001_01:1.0.0
 role_id: USR-OPS-FINOPS
-as_a: "FinOps Manager"
 i_want: reportes de consumo de créditos cloud por proyecto
 so_that: pueda imputar costos a cada división
 domain: D-OPS
 priority: P2
-capability_bundle_id: CAP-OPS-001
-morphisms:
-  protagonizado_por: USR-OPS-FINOPS
-  contribuye_a: CAP-OPS-001
+capability_id: CAP-OPS-001

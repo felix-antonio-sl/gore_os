@@ -1,182 +1,97 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ARI (Anteproyecto Regional de Inversiones)
-# ==============================================================================
-# Domain: D-PLAN (Strategic Planning)
-# Subdomain: Inversión
-# Source: domain_d-plan.md P2, KB-006 ERD, LOC GORE Art. 73-79
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-PLAN
-  subdomain: inversion
-  kb_source:
-    - "domain_d-plan.md P2: Ciclo ARI/PROPIR"
-    - "LOC GORE Art. 73-79"
-    - "dialogo_dplan_dterr.md"
-
-entity:
-  id: ENT-PLAN-ARI
-  name: AnteproyectoRegionalInversiones
-  name_es: Anteproyecto Regional de Inversiones
-  description: |
-    Planificación presupuestaria anual que consolida iniciativas de inversión
-    para presentación al CORE (ciclo mayo-agosto-septiembre).
-
-    Es el instrumento de conexión entre la ERD y el presupuesto regional.
-    Cada ARI agrupa LineaARI que vinculan IPRs a objetivos estratégicos.
-
-  purpose: |
-    Modelar el ARI para:
-    - Consolidar solicitudes de inversión por división
-    - Priorizar iniciativas según alineamiento ERD
-    - Presentar cartera al CORE para aprobación
-    - Alimentar el PROPIR del año siguiente
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_ari
-    type: String
-    key: true
-    description: Identificador único (ej. ARI-2025)
-
-  - name: año_fiscal
-    type: Integer
-    nullable: false
-    description: Año presupuestario objetivo
-
-  - name: erd_id
-    type: String
-    fk: ENT-PLAN-ERD
-    nullable: false
-    description: ERD vigente para el ARI
-
-  # Ciclo
-  - name: fecha_apertura_solicitudes
-    type: Date
-    nullable: true
-    description: Inicio período de solicitud (abril)
-
-  - name: fecha_cierre_solicitudes
-    type: Date
-    nullable: true
-    description: Fin período de solicitud (junio)
-
-  - name: fecha_priorizacion
-    type: Date
-    nullable: true
-    description: Fecha consolidación técnica
-
-  - name: fecha_presentacion_core
-    type: Date
-    nullable: true
-    description: Sesión CORE de presentación
-
-  # Aprobación
-  - name: acuerdo_core_aprobatorio
-    type: String
-    nullable: true
-    description: Número de acuerdo CORE
-
-  - name: fecha_aprobacion
-    type: Date
-    nullable: true
-    description: Fecha sesión aprobatoria
-
-  # Montos
-  - name: monto_total_solicitado
-    type: Decimal
-    default: 0
-    description: Suma de solicitudes en M$
-
-  - name: monto_asignado
-    type: Decimal
-    default: 0
-    description: Monto final aprobado CORE en M$
-
-  # Conteos
-  - name: cantidad_iniciativas
-    type: Integer
-    default: 0
-    description: Número de LineaARI
-
-  - name: iniciativas_priorizadas
-    type: Integer
-    default: 0
-    description: Iniciativas con asignación > 0
-
-  # Estado
-  - name: estado
-    type: Enum[EnElaboracion, EnPriorizacion, PresentadoCORE, Aprobado, Ejecutando]
-    default: EnElaboracion
-    description: Estado del ciclo ARI
-
-  # Distribución por fuente
-  - name: monto_fndr
-    type: Decimal
-    default: 0
-    description: Asignación FNDR
-
-  - name: monto_frpd
-    type: Decimal
-    default: 0
-    description: Asignación Royalty
-
-  - name: monto_isar
-    type: Decimal
-    default: 0
-    description: Asignación Inversión Sectorial
-
-  - name: monto_8porciento
-    type: Decimal
-    default: 0
-    description: Asignación 8% Subvención
-
+- name: id_ari
+  type: String
+  key: true
+  description: Identificador único (ej. ARI-2025)
+- name: año_fiscal
+  type: Integer
+  nullable: false
+  description: Año presupuestario objetivo
+- name: erd_id
+  type: String
+  fk: ENT-PLAN-ERD
+  nullable: false
+  description: ERD vigente para el ARI
+- name: fecha_apertura_solicitudes
+  type: Date
+  nullable: true
+  description: Inicio período de solicitud (abril)
+- name: fecha_cierre_solicitudes
+  type: Date
+  nullable: true
+  description: Fin período de solicitud (junio)
+- name: fecha_priorizacion
+  type: Date
+  nullable: true
+  description: Fecha consolidación técnica
+- name: fecha_presentacion_core
+  type: Date
+  nullable: true
+  description: Sesión CORE de presentación
+- name: acuerdo_core_aprobatorio
+  type: String
+  nullable: true
+  description: Número de acuerdo CORE
+- name: fecha_aprobacion
+  type: Date
+  nullable: true
+  description: Fecha sesión aprobatoria
+- name: monto_total_solicitado
+  type: Decimal
+  default: 0
+  description: Suma de solicitudes en M$
+- name: monto_asignado
+  type: Decimal
+  default: 0
+  description: Monto final aprobado CORE en M$
+- name: cantidad_iniciativas
+  type: Integer
+  default: 0
+  description: Número de LineaARI
+- name: iniciativas_priorizadas
+  type: Integer
+  default: 0
+  description: Iniciativas con asignación > 0
+- name: estado
+  type: Enum[EnElaboracion, EnPriorizacion, PresentadoCORE, Aprobado, Ejecutando]
+  default: EnElaboracion
+  description: Estado del ciclo ARI
+- name: monto_fndr
+  type: Decimal
+  default: 0
+  description: Asignación FNDR
+- name: monto_frpd
+  type: Decimal
+  default: 0
+  description: Asignación Royalty
+- name: monto_isar
+  type: Decimal
+  default: 0
+  description: Asignación Inversión Sectorial
+- name: monto_8porciento
+  type: Decimal
+  default: 0
+  description: Asignación 8% Subvención
 invariants:
-  - id: INV-ARI-001
-    name: monto_coherente
-    rule: monto_asignado <= monto_total_solicitado
-    description: No se puede asignar más de lo solicitado
-    severity: error
+- id: INV-ARI-001
+  name: monto_coherente
+  rule: monto_asignado <= monto_total_solicitado
+  description: No se puede asignar más de lo solicitado
+  severity: error
+- id: INV-ARI-002
+  name: suma_fuentes
+  rule: monto_fndr + monto_frpd + monto_isar + monto_8porciento = monto_asignado
+  description: La suma de fuentes debe igualar el monto asignado
+  severity: warning
+- id: INV-ARI-003
+  name: aprobacion_requiere_core
+  rule: '(estado = ''Aprobado'') → (acuerdo_core_aprobatorio IS NOT NULL)
 
-  - id: INV-ARI-002
-    name: suma_fuentes
-    rule: monto_fndr + monto_frpd + monto_isar + monto_8porciento = monto_asignado
-    description: La suma de fuentes debe igualar el monto asignado
-    severity: warning
-
-  - id: INV-ARI-003
-    name: aprobacion_requiere_core
-    rule: |
-      (estado = 'Aprobado') → (acuerdo_core_aprobatorio IS NOT NULL)
-    description: Estado Aprobado requiere acuerdo CORE
-
-lifecycle:
-  states:
-    - name: EnElaboracion
-      description: Divisiones ingresando solicitudes
-    - name: EnPriorizacion
-      description: DIPLADE priorizando técnicamente
-    - name: PresentadoCORE
-      description: En sesión CORE para votación
-    - name: Aprobado
-      description: Aprobado por CORE
-    - name: Ejecutando
-      description: Año fiscal en curso
-
-morphisms:
-  vinculado_a: [ENT-PLAN-ERD]
-  compuesto_por: [ENT-PLAN-LINEA-ARI]
-  genera: [PROPIR]
-
-audit:
-  fields_tracked:
-    - estado
-    - monto_asignado
-  retention_years: 10
+    '
+  description: Estado Aprobado requiere acuerdo CORE

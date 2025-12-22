@@ -1,137 +1,69 @@
-# ==============================================================================
-# GORE_OS Entity Atom: DeudaTecnica
-# ==============================================================================
-# Domain: D-EVOL (Evolución e Inteligencia)
-# Subdomain: Gestión de Deuda
-# Source: ORKO P4_Limite, I7_Emergencia
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Arquitecto ORKO"
-  domain: D-EVOL
-  subdomain: gestion_deuda
-  kb_source:
-    - "urn:knowledge:orko:core:fundamentos:1.0.0"
-    - "dialogo_triagente_d_evol.md"
-
-entity:
-  id: ENT-EVOL-DEUDA-TECNICA
-  name: DeudaTecnica
-  name_es: Deuda Técnica
-  description: |
-    Item de deuda técnica identificado, priorizado con RICE y planificado
-    para pago. Representa restricciones (P4) que acotan el espacio de
-    posibilidades de evolución.
-
-  purpose: |
-    Modelar deuda técnica para:
-    - Inventario centralizado de debt
-    - Priorización con scoring RICE
-    - Planificación de pago (sprints)
-    - Tracking de resolución
-
-  categorical_type: Object
-  is_abstract: false
-  category: Governance
-  orko_primitive: P4_Limite
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_deuda
-    type: String
-    key: true
-
-  - name: titulo
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: false
-
-  # Origen
-  - name: fuente
-    type: Enum[Legacy, Workaround, Debt_Conscious, Emergencia, Externo]
-    nullable: false
-    description: "Legacy=sistemas antiguos, Workaround=solución temporal, Debt_Conscious=decisión consciente"
-
-  # Sistema Afectado
-  - name: sistema_afectado_id
-    type: String
-    fk: ENT-EVOL-SISTEMA
-    nullable: true
-
-  - name: dominio_afectado
-    type: String
-    nullable: true
-    description: "D-FIN, D-PLAN, etc."
-
-  # RICE Score
-  - name: reach
-    type: Integer
-    nullable: true
-    description: "Alcance: usuarios/procesos afectados"
-
-  - name: impact
-    type: Enum[Critico, Alto, Medio, Bajo]
-    nullable: false
-
-  - name: confidence
-    type: Decimal
-    nullable: true
-    description: "Confianza estimación (0..1)"
-
-  - name: effort_hours
-    type: Integer
-    nullable: false
-    description: "Esfuerzo estimado en horas"
-
-  - name: score_rice
-    type: Decimal
-    computed: true
-    formula: (reach * impact_value * confidence) / effort_hours
-
-  # Planificación
-  - name: plan_pago
-    type: Text
-    nullable: true
-    description: "Descripción del plan de remediación"
-
-  - name: sprint_planificado
-    type: String
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Identificado, Analizado, Planificado, EnPago, Pagado, Aceptado]
-    default: Identificado
-    description: "Aceptado=debt consciente sin plan de pago"
-
-  # Fechas
-  - name: fecha_identificacion
-    type: Date
-    nullable: false
-
-  - name: fecha_pago
-    type: Date
-    nullable: true
-
-  # Responsable
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
-morphisms:
-  afecta: [ENT-EVOL-SISTEMA]
-  pertenece_a: [ENT-BACK-DIVISION]
-
-audit:
-  fields_tracked:
-    - estado
-    - score_rice
-  retention_years: 5
-  legal_basis: "Framework ORKO, Gestión de Deuda"
+- name: id_deuda
+  type: String
+  key: true
+- name: titulo
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: false
+- name: fuente
+  type: Enum[Legacy, Workaround, Debt_Conscious, Emergencia, Externo]
+  nullable: false
+  description: Legacy=sistemas antiguos, Workaround=solución temporal, Debt_Conscious=decisión
+    consciente
+- name: sistema_afectado_id
+  type: String
+  fk: ENT-EVOL-SISTEMA
+  nullable: true
+- name: dominio_afectado
+  type: String
+  nullable: true
+  description: D-FIN, D-PLAN, etc.
+- name: reach
+  type: Integer
+  nullable: true
+  description: 'Alcance: usuarios/procesos afectados'
+- name: impact
+  type: Enum[Critico, Alto, Medio, Bajo]
+  nullable: false
+- name: confidence
+  type: Decimal
+  nullable: true
+  description: Confianza estimación (0..1)
+- name: effort_hours
+  type: Integer
+  nullable: false
+  description: Esfuerzo estimado en horas
+- name: score_rice
+  type: Decimal
+  computed: true
+  formula: (reach * impact_value * confidence) / effort_hours
+- name: plan_pago
+  type: Text
+  nullable: true
+  description: Descripción del plan de remediación
+- name: sprint_planificado
+  type: String
+  nullable: true
+- name: estado
+  type: Enum[Identificado, Analizado, Planificado, EnPago, Pagado, Aceptado]
+  default: Identificado
+  description: Aceptado=debt consciente sin plan de pago
+- name: fecha_identificacion
+  type: Date
+  nullable: false
+- name: fecha_pago
+  type: Date
+  nullable: true
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true

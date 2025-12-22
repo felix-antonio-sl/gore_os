@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:goreos:schema:module:1.0.0",
+  "title": "Module",
+  "description": "Funtor que organiza procesos y entidades. Module = Σ(Process_k × Entity_k)",
+  "type": "object",
+  "required": ["id", "urn", "name", "domain"],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "properties": {
+        "urn": { "type": "string", "pattern": "^urn:goreos:atom:module:" },
+        "type": { "const": "Module" },
+        "schema": { "const": "urn:goreos:schema:module:1.0.0" }
+      },
+      "required": ["urn", "type"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^MOD-[A-Z]+-[A-Z0-9]+$"
+    },
+    "urn": {
+      "type": "string",
+      "pattern": "^urn:goreos:atom:module:"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^D-[A-Z]+$"
+    },
+    "pillar": {
+      "type": "string",
+      "enum": ["Core", "Support", "Transversal"],
+      "description": "Clasificación arquitectónica"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,107 +1,57 @@
-# ==============================================================================
-# GORE_OS Entity Atom: SLA
-# ==============================================================================
-# Domain: D-OPS (Operaciones del Sistema)
-# Subdomain: SLA/SLO Management (M8)
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Ingeniero Software Composicional"
-  domain: D-OPS
-  subdomain: sla_management
-
-entity:
-  id: ENT-OPS-SLA
-  name: SLA
-  name_es: Acuerdo de Nivel de Servicio
-  description: |
-    Definición de objetivo de servicio medible.
-    SLI = métrica, SLO = objetivo, SLA = compromiso.
-
-  purpose: |
-    Modelar SLAs para:
-    - Governance de calidad de servicio
-    - Alertas de incumplimiento
-    - Reportes ejecutivos
-
-  categorical_type: Object
-  is_abstract: false
-  category: Governance
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_sla
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: servicio
-    type: String
-    nullable: false
-    description: "Servicio o sistema al que aplica"
-
-  - name: tipo
-    type: Enum[Disponibilidad, Latencia, ErrorRate, Throughput, MTTR]
-    nullable: false
-
-  - name: descripcion
-    type: String
-    nullable: true
-
-  - name: sli_nombre
-    type: String
-    nullable: false
-    description: "Indicador de nivel de servicio (métrica)"
-
-  - name: slo_objetivo
-    type: Decimal
-    nullable: false
-    description: "Objetivo (ej: 99.5%, 200ms, <1%)"
-
-  - name: slo_unidad
-    type: String
-    nullable: false
-    description: "%, ms, count, etc."
-
-  - name: ventana_medicion
-    type: Enum[Diario, Semanal, Mensual, Trimestral]
-    default: Mensual
-
-  - name: valor_actual
-    type: Decimal
-    nullable: true
-
-  - name: cumpliendo
-    type: Boolean
-    computed: true
-    formula: valor_actual >= slo_objetivo (o <= según tipo)
-
-  - name: fecha_ultima_medicion
-    type: DateTime
-    nullable: true
-
-  - name: propietario_id
-    type: String
-    fk: ENT-OPS-USUARIO-SISTEMA
-    nullable: true
-
+- name: id_sla
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+- name: servicio
+  type: String
+  nullable: false
+  description: Servicio o sistema al que aplica
+- name: tipo
+  type: Enum[Disponibilidad, Latencia, ErrorRate, Throughput, MTTR]
+  nullable: false
+- name: descripcion
+  type: String
+  nullable: true
+- name: sli_nombre
+  type: String
+  nullable: false
+  description: Indicador de nivel de servicio (métrica)
+- name: slo_objetivo
+  type: Decimal
+  nullable: false
+  description: 'Objetivo (ej: 99.5%, 200ms, <1%)'
+- name: slo_unidad
+  type: String
+  nullable: false
+  description: '%, ms, count, etc.'
+- name: ventana_medicion
+  type: Enum[Diario, Semanal, Mensual, Trimestral]
+  default: Mensual
+- name: valor_actual
+  type: Decimal
+  nullable: true
+- name: cumpliendo
+  type: Boolean
+  computed: true
+  formula: valor_actual >= slo_objetivo (o <= según tipo)
+- name: fecha_ultima_medicion
+  type: DateTime
+  nullable: true
+- name: propietario_id
+  type: String
+  fk: ENT-OPS-USUARIO-SISTEMA
+  nullable: true
 invariants:
-  - id: INV-SLA-001
-    name: objetivo_valido
-    rule: slo_objetivo > 0
-    description: "Objetivo debe ser positivo"
-
-morphisms:
-  propietario: [ENT-OPS-USUARIO-SISTEMA]
-  mide_metrica: [ENT-OPS-METRICA]
-
-audit:
-  fields_tracked:
-    - valor_actual
-    - cumpliendo
-  retention_years: 5
+- id: INV-SLA-001
+  name: objetivo_valido
+  rule: slo_objetivo > 0
+  description: Objetivo debe ser positivo

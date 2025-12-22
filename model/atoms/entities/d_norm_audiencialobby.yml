@@ -1,123 +1,68 @@
-# ==============================================================================
-# GORE_OS Entity Atom: AudienciaLobby
-# ==============================================================================
-# Domain: D-NORM (Gestión Jurídico-Administrativa)
-# Subdomain: Cumplimiento
-# Source: Ley 20.730, KB-GN-200
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Fiscal Virtual"
-  domain: D-NORM
-  subdomain: cumplimiento
-  kb_source:
-    - "Ley 20.730: Ley del Lobby"
-
-entity:
-  id: ENT-NORM-LOBBY
-  name: AudienciaLobby
-  name_es: Audiencia Ley del Lobby
-  description: |
-    Registro de audiencia o reunión con sujetos pasivos de la Ley
-    del Lobby (Ley 20.730) que debe publicarse en Infolobby.
-
-    Incluye audiencias, donativos y viajes del funcionario.
-
-  purpose: |
-    - Cumplir Ley del Lobby
-    - Publicar en Infolobby
-    - Transparencia de gestiones
-    - Prevenir conflictos de interés
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_audiencia
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: funcionario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Funcionario receptor
-
-  - name: cargo_funcionario
-    type: String
-    nullable: false
-    description: Cargo del funcionario
-
-  - name: fecha
-    type: Date
-    nullable: false
-    description: Fecha de la audiencia
-
-  - name: lugar
-    type: String
-    nullable: true
-    description: Lugar de la reunión
-
-  # Solicitante
-  - name: solicitante_nombre
-    type: String
-    nullable: false
-    description: Nombre del solicitante
-
-  - name: solicitante_organizacion
-    type: String
-    nullable: true
-    description: Organización que representa
-
-  - name: tipo_solicitante
-    type: Enum[Lobbista, GestorInteres, Otro]
-    nullable: true
-    description: Tipo de solicitante
-
-  # Contenido
-  - name: materia
-    type: String
-    nullable: false
-    description: Materia tratada
-
-  - name: especifico
-    type: Text
-    nullable: true
-    description: Especificación de la materia
-
-  # Infolobby
-  - name: publicada
-    type: Boolean
-    default: false
-    description: ¿Publicada en Infolobby?
-
-  - name: infolobby_id
-    type: String
-    nullable: true
-    description: ID en Infolobby
-
-  - name: fecha_publicacion
-    type: Date
-    nullable: true
-    description: Fecha de publicación
-
+- name: id_audiencia
+  type: String
+  key: true
+  description: Identificador único
+- name: funcionario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Funcionario receptor
+- name: cargo_funcionario
+  type: String
+  nullable: false
+  description: Cargo del funcionario
+- name: fecha
+  type: Date
+  nullable: false
+  description: Fecha de la audiencia
+- name: lugar
+  type: String
+  nullable: true
+  description: Lugar de la reunión
+- name: solicitante_nombre
+  type: String
+  nullable: false
+  description: Nombre del solicitante
+- name: solicitante_organizacion
+  type: String
+  nullable: true
+  description: Organización que representa
+- name: tipo_solicitante
+  type: Enum[Lobbista, GestorInteres, Otro]
+  nullable: true
+  description: Tipo de solicitante
+- name: materia
+  type: String
+  nullable: false
+  description: Materia tratada
+- name: especifico
+  type: Text
+  nullable: true
+  description: Especificación de la materia
+- name: publicada
+  type: Boolean
+  default: false
+  description: ¿Publicada en Infolobby?
+- name: infolobby_id
+  type: String
+  nullable: true
+  description: ID en Infolobby
+- name: fecha_publicacion
+  type: Date
+  nullable: true
+  description: Fecha de publicación
 invariants:
-  - id: INV-LOBBY-001
-    name: publicada_requiere_id
-    rule: |
-      publicada = true → infolobby_id IS NOT NULL
-    description: Audiencia publicada requiere ID Infolobby
-    severity: warning
+- id: INV-LOBBY-001
+  name: publicada_requiere_id
+  rule: 'publicada = true → infolobby_id IS NOT NULL
 
-morphisms:
-  registrada_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - publicada
-  retention_years: 6
+    '
+  description: Audiencia publicada requiere ID Infolobby
+  severity: warning

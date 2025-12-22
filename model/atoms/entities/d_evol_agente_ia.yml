@@ -1,15 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_evol_agente_ia:1.0.0
+  urn: urn:goreos:entity:d-evol:ENT-EVOL-AGENTE_IA:1.0.0
   type: Entity
-  source: domains/d-evol/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-EVOL-AGENTE_IA
 name: Agente IA
-entity_key: agente_ia
 domain: D-EVOL
 category: Reference
-description: Capacidad declarativa con comportamiento determinístico gobernada por
-  HAIC.
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

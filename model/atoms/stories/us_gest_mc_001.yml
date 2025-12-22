@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_mc_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GEST-MC-001
-story_key: us_gest_mc_001
+urn: urn:goreos:atom:story:us_gest_mc_001:1.0.0
 role_id: USR-DAF-PER-FUN
-as_a: "Funcionario"
 i_want: Registrar una oportunidad de mejora en procesos o servicios
 so_that: Contribuyo a la mejora continua institucional
 domain: D-GESTION
 priority: P1
-capability_bundle_id: CAP-GESTION-001
-morphisms:
-  protagonizado_por: USR-DAF-PER-FUN
-  contribuye_a: CAP-GESTION-001
+capability_id: CAP-GESTION-001

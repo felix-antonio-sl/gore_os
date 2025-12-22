@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_diplade_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DIPLADE-001-01
-story_key: us_diplade_001_01
+urn: urn:goreos:atom:story:us_diplade_001_01:1.0.0
 role_id: USR-DIPL-JEFE
-as_a: "Jefe DIPLADE"
 i_want: un módulo de gestión de la Estrategia Regional de Desarrollo (ERD)
 so_that: pueda hacer seguimiento de objetivos e indicadores estratégicos
 domain: D-PLAN
 priority: P0
-capability_bundle_id: CAP-PLAN-001
-morphisms:
-  protagonizado_por: USR-DIPL-JEFE
-  contribuye_a: CAP-PLAN-001
+capability_id: CAP-PLAN-001

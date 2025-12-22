@@ -1,17 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_cfg_003:1.0.0
   type: Story
-  source: plan_especificacion_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-CFG-003
-story_key: us_ops_cfg_003
+urn: urn:goreos:atom:story:us_ops_cfg_003:1.0.0
 role_id: ROLE-DEVOPS
-as_a: DevOps
 i_want: realizar rollouts graduales de funcionalidades basados en porcentajes de usuarios
 so_that: se minimice el impacto ante posibles fallos en nuevas características
 domain: D-OPS
 priority: P1
-capability_bundle_id: CAP-OPS-001
-morphisms:
-  protagonizado_por: ROLE-DEVOPS
-  contribuye_a: CAP-OPS-001
-  usa: ENT-OPS-FEATURE-FLAG
+capability_id: CAP-OPS-001

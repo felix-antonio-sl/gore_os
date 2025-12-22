@@ -1,332 +1,161 @@
-# ==============================================================================
-# GORE_OS Entity Atom: MarcoPresupuestarioFRIL
-# ==============================================================================
-# Domain: D-FIN (Financial Management)
-# Subdomain: Mecanismos de Asignación
-# Source: kb_gn_026_guia_fril_koda.yml
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: draft
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gestor IPR 360"
-  domain: D-FIN
-  subdomain: mecanismos
-  kb_source:
-    - "kb_gn_026_guia_fril_koda.yml"
-
-entity:
-  id: ENT-FIN-MARCO-FRIL
-  name: MarcoPresupuestarioFRIL
-  name_es: Marco Presupuestario FRIL por Comuna
-  description: |
-    Marco presupuestario asignado a cada una de las 21 comunas de la Región
-    de Ñuble para el Fondo Regional de Iniciativa Local (FRIL). Controla
-    los límites de iniciativas postulables y montos máximos por comuna en
-    cada año presupuestario.
-
-    Las comunas pueden postular hasta 5 iniciativas en el período regular,
-    con un monto máximo de M$1.000.000, salvo excepciones para categorías
-    A2 (Acceso al Agua) y A3 (Vial) que no cuentan para el límite.
-
-  purpose: |
-    Modelar el control de cupos comunales FRIL para:
-    - Limitar el número de iniciativas por comuna
-    - Controlar el monto acumulado de postulaciones
-    - Aplicar excepciones para categorías prioritarias (agua, vialidad)
-    - Gestionar llamados extraordinarios por comuna
-
-  categorical_type: Object
-  is_abstract: false
-
-  extends: null
-
-  related_to:
-    - entity: ENT-TERR-COMUNA
-      relation: asignado_a
-      cardinality: 1:1
-      description: Marco por cada comuna de Ñuble
-    - entity: ENT-FIN-FONDO
-      relation: controla_uso_de
-      cardinality: N:1
-      description: Marco asociado al fondo FRIL
-    - entity: ENT-FIN-IPR
-      relation: limita_postulacion
-      cardinality: 1:N
-      description: Controla las IPR FRIL de la comuna
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_marco
-    type: String
-    key: true
-    description: Identificador único (ej. MARCO-FRIL-2025-CHILLAN)
+- name: id_marco
+  type: String
+  key: true
+  description: Identificador único (ej. MARCO-FRIL-2025-CHILLAN)
+- name: anio_presupuestario
+  type: Integer
+  nullable: false
+  description: Año del marco presupuestario
+- name: comuna_id
+  type: String
+  fk: ENT-TERR-COMUNA
+  nullable: false
+  description: "Código de la comuna (21 comunas de Ñuble):\nChillán, Chillán Viejo,\
+    \ San Carlos, Los Ángeles, Bulnes, Coihueco, \nCoelemu, El Carmen, Ninhue, Ñiquén,\
+    \ Pemuco, Pinto, Portezuelo, \nQuillón, Quirihue, Ránquil, San Fabián, San Ignacio,\
+    \ San Nicolás, \nTrehuaco, Yungay\n"
+- name: fondo_id
+  type: String
+  fk: ENT-FIN-FONDO
+  default: FRIL
+  description: Referencia al fondo FRIL
+- name: monto_maximo_regular
+  type: Decimal
+  default: 1000000000
+  description: Monto máximo a postular en período regular (CLP)
+- name: max_iniciativas_regular
+  type: Integer
+  default: 5
+  description: Máximo de iniciativas en período regular
+- name: monto_minimo_por_proyecto
+  type: Decimal
+  default: 100000000
+  description: Monto mínimo por proyecto FRIL
+- name: monto_maximo_por_proyecto
+  type: Decimal
+  default: 306464805
+  description: "Monto máximo por proyecto (4.545 UTM).\nSe descuenta 10% del máximo\
+    \ normativo de 5.000 UTM para \ncubrir posibles aumentos de obra.\n"
+- name: monto_postulado
+  type: Decimal
+  default: 0
+  description: Suma de montos de iniciativas postuladas (sin excepción)
+- name: monto_adjudicado
+  type: Decimal
+  default: 0
+  description: Suma de montos de iniciativas adjudicadas
+- name: iniciativas_postuladas
+  type: Integer
+  default: 0
+  description: Cantidad de iniciativas postuladas (sin excepción)
+- name: iniciativas_adjudicadas
+  type: Integer
+  default: 0
+  description: Cantidad de iniciativas adjudicadas
+- name: categorias_exceptuadas
+  type: Array[Enum]
+  default: '[A2_ACCESO_AGUA, A3_VIAL]'
+  description: 'Categorías que no cuentan para el límite de 5 iniciativas:
 
-  - name: anio_presupuestario
-    type: Integer
-    nullable: false
-    description: Año del marco presupuestario
+    - A2: Acceso al Agua (sistemas APR, alcantarillado, etc.)
 
-  - name: comuna_id
-    type: String
-    fk: ENT-TERR-COMUNA
-    nullable: false
-    description: |
-      Código de la comuna (21 comunas de Ñuble):
-      Chillán, Chillán Viejo, San Carlos, Los Ángeles, Bulnes, Coihueco, 
-      Coelemu, El Carmen, Ninhue, Ñiquén, Pemuco, Pinto, Portezuelo, 
-      Quillón, Quirihue, Ránquil, San Fabián, San Ignacio, San Nicolás, 
-      Trehuaco, Yungay
+    - A3: Vial (aceras, baches, caminos, veredas, etc.)
 
-  - name: fondo_id
-    type: String
-    fk: ENT-FIN-FONDO
-    default: "FRIL"
-    description: Referencia al fondo FRIL
-
-  # Límites del período regular
-  - name: monto_maximo_regular
-    type: Decimal
-    default: 1000000000 # M$1.000.000
-    description: Monto máximo a postular en período regular (CLP)
-
-  - name: max_iniciativas_regular
-    type: Integer
-    default: 5
-    description: Máximo de iniciativas en período regular
-
-  - name: monto_minimo_por_proyecto
-    type: Decimal
-    default: 100000000 # $100.000.000
-    description: Monto mínimo por proyecto FRIL
-
-  - name: monto_maximo_por_proyecto
-    type: Decimal
-    default: 306464805 # 4.545 UTM al 01.01.2025
-    description: |
-      Monto máximo por proyecto (4.545 UTM).
-      Se descuenta 10% del máximo normativo de 5.000 UTM para 
-      cubrir posibles aumentos de obra.
-
-  # Uso actual
-  - name: monto_postulado
-    type: Decimal
-    default: 0
-    description: Suma de montos de iniciativas postuladas (sin excepción)
-
-  - name: monto_adjudicado
-    type: Decimal
-    default: 0
-    description: Suma de montos de iniciativas adjudicadas
-
-  - name: iniciativas_postuladas
-    type: Integer
-    default: 0
-    description: Cantidad de iniciativas postuladas (sin excepción)
-
-  - name: iniciativas_adjudicadas
-    type: Integer
-    default: 0
-    description: Cantidad de iniciativas adjudicadas
-
-  # Categorías exceptuadas del conteo
-  - name: categorias_exceptuadas
-    type: Array[Enum]
-    default: "[A2_ACCESO_AGUA, A3_VIAL]"
-    description: |
-      Categorías que no cuentan para el límite de 5 iniciativas:
-      - A2: Acceso al Agua (sistemas APR, alcantarillado, etc.)
-      - A3: Vial (aceras, baches, caminos, veredas, etc.)
-
-  - name: iniciativas_exceptuadas_postuladas
-    type: Integer
-    default: 0
-    description: Iniciativas en categorías exceptuadas
-
-  - name: monto_exceptuado_postulado
-    type: Decimal
-    default: 0
-    description: Monto de iniciativas exceptuadas
-
-  # Llamados extraordinarios
-  - name: tiene_llamado_extraordinario
-    type: Boolean
-    default: false
-    description: Si hay llamado extraordinario para esta comuna
-
-  - name: monto_extraordinario_disponible
-    type: Decimal
-    nullable: true
-    description: Monto adicional de llamado extraordinario
-
-  - name: iniciativas_extraordinarias_permitidas
-    type: Integer
-    nullable: true
-    description: Cupos adicionales del llamado extraordinario
-
-  - name: resolucion_extraordinario_id
-    type: String
-    nullable: true
-    description: Resolución que aprueba el llamado extraordinario
-
-  # Estado y trazabilidad
-  - name: estado
-    type: Enum[Activo, Cerrado, EnLlamadoExtraordinario]
-    default: Activo
-    description: Estado del marco presupuestario
-
-  - name: fecha_cierre_1er_llamado
-    type: Date
-    nullable: true
-    description: Fecha límite del primer llamado
-
-  - name: fecha_cierre_2do_llamado
-    type: Date
-    nullable: true
-    description: Fecha límite del segundo llamado (Sep 1-30)
-
-  - name: observaciones
-    type: String
-    nullable: true
-    description: Notas sobre el marco comunal
-
+    '
+- name: iniciativas_exceptuadas_postuladas
+  type: Integer
+  default: 0
+  description: Iniciativas en categorías exceptuadas
+- name: monto_exceptuado_postulado
+  type: Decimal
+  default: 0
+  description: Monto de iniciativas exceptuadas
+- name: tiene_llamado_extraordinario
+  type: Boolean
+  default: false
+  description: Si hay llamado extraordinario para esta comuna
+- name: monto_extraordinario_disponible
+  type: Decimal
+  nullable: true
+  description: Monto adicional de llamado extraordinario
+- name: iniciativas_extraordinarias_permitidas
+  type: Integer
+  nullable: true
+  description: Cupos adicionales del llamado extraordinario
+- name: resolucion_extraordinario_id
+  type: String
+  nullable: true
+  description: Resolución que aprueba el llamado extraordinario
+- name: estado
+  type: Enum[Activo, Cerrado, EnLlamadoExtraordinario]
+  default: Activo
+  description: Estado del marco presupuestario
+- name: fecha_cierre_1er_llamado
+  type: Date
+  nullable: true
+  description: Fecha límite del primer llamado
+- name: fecha_cierre_2do_llamado
+  type: Date
+  nullable: true
+  description: Fecha límite del segundo llamado (Sep 1-30)
+- name: observaciones
+  type: String
+  nullable: true
+  description: Notas sobre el marco comunal
 invariants:
-  - id: INV-MARCO-FRIL-001
-    name: limite_iniciativas_regular
-    rule: |
-      iniciativas_postuladas <= max_iniciativas_regular
-    description: No puede exceder el límite de iniciativas regulares
-    exception: Categorías A2 y A3 no cuentan para este límite
-    source: kb_gn_026 Sec. 3
+- id: INV-MARCO-FRIL-001
+  name: limite_iniciativas_regular
+  rule: 'iniciativas_postuladas <= max_iniciativas_regular
 
-  - id: INV-MARCO-FRIL-002
-    name: limite_monto_regular
-    rule: |
-      monto_postulado <= monto_maximo_regular
-    description: El monto postulado no puede exceder el marco
-    source: kb_gn_026 Sec. 3
+    '
+  description: No puede exceder el límite de iniciativas regulares
+  exception: Categorías A2 y A3 no cuentan para este límite
+  source: kb_gn_026 Sec. 3
+- id: INV-MARCO-FRIL-002
+  name: limite_monto_regular
+  rule: 'monto_postulado <= monto_maximo_regular
 
-  - id: INV-MARCO-FRIL-003
-    name: proyecto_dentro_rango
-    rule: |
-      FOR_ALL ipr IN iniciativas_postuladas:
-        ipr.monto >= monto_minimo_por_proyecto AND
-        ipr.monto <= monto_maximo_por_proyecto
-    description: Cada proyecto debe estar entre $100M y ~$306M
-    source: kb_gn_026 Sec. 3
+    '
+  description: El monto postulado no puede exceder el marco
+  source: kb_gn_026 Sec. 3
+- id: INV-MARCO-FRIL-003
+  name: proyecto_dentro_rango
+  rule: "FOR_ALL ipr IN iniciativas_postuladas:\n  ipr.monto >= monto_minimo_por_proyecto\
+    \ AND\n  ipr.monto <= monto_maximo_por_proyecto\n"
+  description: Cada proyecto debe estar entre $100M y ~$306M
+  source: kb_gn_026 Sec. 3
+- id: INV-MARCO-FRIL-004
+  name: extraordinario_requiere_resolucion
+  rule: "(tiene_llamado_extraordinario = true) → \nresolucion_extraordinario_id IS\
+    \ NOT NULL\n"
+  description: Llamado extraordinario requiere resolución exenta
+  source: kb_gn_026 Sec. 3
+- id: INV-MARCO-FRIL-005
+  name: 21_comunas_nuble
+  rule: "comuna_id IN [\n  'CHILLAN', 'CHILLAN_VIEJO', 'SAN_CARLOS', 'BULNES', \n\
+    \  'COIHUECO', 'COELEMU', 'EL_CARMEN', 'NINHUE', 'NIQUEN',\n  'PEMUCO', 'PINTO',\
+    \ 'PORTEZUELO', 'QUILLON', 'QUIRIHUE',\n  'RANQUIL', 'SAN_FABIAN', 'SAN_IGNACIO',\
+    \ 'SAN_NICOLAS',\n  'TREHUACO', 'YUNGAY', 'COBQUECURA'\n]\n"
+  description: Solo comunas de la Región de Ñuble
+  severity: error
+- id: INV-MARCO-FRIL-006
+  name: monto_maximo_4545_utm
+  rule: 'monto_maximo_por_proyecto <= 5000 * valor_utm * 0.909
 
-  - id: INV-MARCO-FRIL-004
-    name: extraordinario_requiere_resolucion
-    rule: |
-      (tiene_llamado_extraordinario = true) → 
-      resolucion_extraordinario_id IS NOT NULL
-    description: Llamado extraordinario requiere resolución exenta
-    source: kb_gn_026 Sec. 3
+    '
+  description: "Tope del 90% del máximo normativo (5.000 UTM) para \ncubrir posibles\
+    \ aumentos de obra\n"
+  source: kb_gn_026 Sec. 3
+- id: INV-MARCO-FRIL-007
+  name: adjudicado_no_excede_postulado
+  rule: 'monto_adjudicado <= monto_postulado + monto_exceptuado_postulado
 
-  - id: INV-MARCO-FRIL-005
-    name: 21_comunas_nuble
-    rule: |
-      comuna_id IN [
-        'CHILLAN', 'CHILLAN_VIEJO', 'SAN_CARLOS', 'BULNES', 
-        'COIHUECO', 'COELEMU', 'EL_CARMEN', 'NINHUE', 'NIQUEN',
-        'PEMUCO', 'PINTO', 'PORTEZUELO', 'QUILLON', 'QUIRIHUE',
-        'RANQUIL', 'SAN_FABIAN', 'SAN_IGNACIO', 'SAN_NICOLAS',
-        'TREHUACO', 'YUNGAY', 'COBQUECURA'
-      ]
-    description: Solo comunas de la Región de Ñuble
-    severity: error
-
-  - id: INV-MARCO-FRIL-006
-    name: monto_maximo_4545_utm
-    rule: |
-      monto_maximo_por_proyecto <= 5000 * valor_utm * 0.909
-    description: |
-      Tope del 90% del máximo normativo (5.000 UTM) para 
-      cubrir posibles aumentos de obra
-    source: kb_gn_026 Sec. 3
-
-  - id: INV-MARCO-FRIL-007
-    name: adjudicado_no_excede_postulado
-    rule: |
-      monto_adjudicado <= monto_postulado + monto_exceptuado_postulado
-    description: No se puede adjudicar más de lo postulado
-
-computed_properties:
-  - name: cupo_iniciativas_disponible
-    formula: max_iniciativas_regular - iniciativas_postuladas
-    description: Cupos restantes para postular
-
-  - name: monto_disponible
-    formula: monto_maximo_regular - monto_postulado
-    description: Monto restante disponible
-
-  - name: total_iniciativas_comuna
-    formula: iniciativas_postuladas + iniciativas_exceptuadas_postuladas
-    description: Total de iniciativas incluyendo exceptuadas
-
-  - name: total_monto_comuna
-    formula: monto_postulado + monto_exceptuado_postulado
-    description: Monto total postulado incluyendo exceptuados
-
-lifecycle:
-  states:
-    - name: Activo
-      description: Marco vigente para postulaciones
-    - name: EnLlamadoExtraordinario
-      description: Período de llamado extraordinario activo
-    - name: Cerrado
-      description: Marco cerrado para el año presupuestario
-
-  transitions:
-    - from: Activo
-      to: EnLlamadoExtraordinario
-      trigger: abrir_extraordinario
-      guard: tiene_llamado_extraordinario
-    - from: Activo
-      to: Cerrado
-      trigger: cerrar_marco
-    - from: EnLlamadoExtraordinario
-      to: Cerrado
-      trigger: cerrar_extraordinario
-
-methods:
-  - name: registrar_postulacion
-    params:
-      - ipr_id: String
-      - monto: Decimal
-      - categoria: Enum
-    returns: Boolean
-    description: |
-      Registra una nueva postulación FRIL en el marco comunal.
-      Valida límites y aplica lógica de excepciones.
-    logic: |
-      IF categoria IN categorias_exceptuadas:
-        iniciativas_exceptuadas_postuladas += 1
-        monto_exceptuado_postulado += monto
-      ELSE:
-        IF iniciativas_postuladas >= max_iniciativas_regular:
-          RETURN false  # Sin cupo
-        IF monto_postulado + monto > monto_maximo_regular:
-          RETURN false  # Excede marco
-        iniciativas_postuladas += 1
-        monto_postulado += monto
-      RETURN true
-
-  - name: registrar_adjudicacion
-    params:
-      - ipr_id: String
-      - monto_adjudicado: Decimal
-    returns: void
-    description: Registra la adjudicación de una iniciativa
-    logic: |
-      iniciativas_adjudicadas += 1
-      monto_adjudicado += monto_adjudicado
-
-audit:
-  fields_tracked:
-    - estado
-    - monto_postulado
-    - monto_adjudicado
-    - iniciativas_postuladas
-    - iniciativas_adjudicadas
-  retention_years: 6
+    '
+  description: No se puede adjudicar más de lo postulado

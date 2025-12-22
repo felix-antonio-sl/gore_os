@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_po_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-PO-001-01
-story_key: us_po_001_01
+urn: urn:goreos:atom:story:us_po_001_01:1.0.0
 role_id: USR-DEV-PO
-as_a: "Product Owner"
 i_want: herramientas para gestionar user stories y criterios de aceptación
 so_that: el equipo desarrolle lo que el negocio necesita
 domain: D-PLAN
 priority: P0
-capability_bundle_id: CAP-PLAN-001
-morphisms:
-  protagonizado_por: USR-DEV-PO
-  contribuye_a: CAP-PLAN-001
+capability_id: CAP-PLAN-001

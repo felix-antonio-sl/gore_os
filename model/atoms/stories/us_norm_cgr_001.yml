@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-NORM-CGR-001
-story_key: us_norm_cgr_001
+urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
 role_id: USR-EXT-CGR
-as_a: "Analista Toma de Razón (CGR)"
 i_want: Recibir actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
 so_that: Ejerzo control preventivo
 domain: D-NORM
 priority: P0
-capability_bundle_id: CAP-DOCUMENTOS-001
-morphisms:
-  protagonizado_por: USR-EXT-CGR
-  contribuye_a: CAP-DOCUMENTOS-001
+capability_id: CAP-DOCUMENTOS-001

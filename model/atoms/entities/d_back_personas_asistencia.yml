@@ -1,198 +1,106 @@
-# ═══════════════════════════════════════════════════════════════════════════════
-# ENT-BACK-ASISTENCIA | Registro de Asistencia
-# Dominio: D-BACK (Gestión de Personas)
-# Fuente: Manual General GDP GORE Ñuble - Control de Asistencia
-# ═══════════════════════════════════════════════════════════════════════════════
-version: "1.0.0"
-
-metadata:
-  entity_id: ENT-BACK-ASISTENCIA
-  name: RegistroAsistencia
-  domain: D-BACK
-  subdomain: Gestión de Personas - Control de Asistencia
-  description: |
-    Representa el registro diario de marcaciones de asistencia de un funcionario.
-    Incluye marcaciones de entrada/salida, cálculo de atrasos y tiempo menor
-    de jornada, con impacto en las remuneraciones según normativa.
-  legal_basis:
-    - Ley 18.834 - Estatuto Administrativo
-    - Normativa interna GORE Ñuble sobre control de asistencia
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# ATRIBUTOS
-# ═══════════════════════════════════════════════════════════════════════════════
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_registro
-    type: String
-    key: true
-
-  - name: funcionario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-
-  - name: fecha
-    type: Date
-    nullable: false
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Marcaciones
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: hora_entrada_esperada
-    type: Time
-    nullable: false
-    description: Hora de entrada según jornada asignada
-
-  - name: hora_salida_esperada
-    type: Time
-    nullable: false
-    description: Hora de salida según jornada asignada
-
-  - name: hora_entrada_real
-    type: Time
-    nullable: true
-    description: Hora efectiva de marcación de entrada
-
-  - name: hora_salida_real
-    type: Time
-    nullable: true
-    description: Hora efectiva de marcación de salida
-
-  - name: metodo_marcacion
-    type: Enum[Biometrico, Tarjeta, Manual, Teletrabajo]
-    nullable: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Cálculos de Jornada
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: minutos_atraso
-    type: Integer
-    computed: true
-    default: 0
-    description: Minutos de atraso en entrada
-
-  - name: minutos_tiempo_menor
-    type: Integer
-    computed: true
-    default: 0
-    description: Minutos de salida anticipada o jornada incompleta
-
-  - name: horas_trabajadas
-    type: Decimal
-    computed: true
-    description: Total de horas trabajadas en el día
-
-  - name: tiene_colacion
-    type: Boolean
-    default: true
-    description: Si aplica tiempo de colación
-
-  - name: minutos_colacion
-    type: Integer
-    default: 60
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Justificaciones
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: atraso_justificado
-    type: Boolean
-    default: false
-
-  - name: justificacion_atraso
-    type: Text
-    nullable: true
-
-  - name: justificado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Jefatura que justifica el atraso
-
-  - name: fecha_justificacion
-    type: Date
-    nullable: true
-
-  # ─────────────────────────────────────────────────────────────────────────────
-  # Estado y Tipo de Día
-  # ─────────────────────────────────────────────────────────────────────────────
-  - name: tipo_dia
-    type: Enum[Laboral, Feriado, FinDeSemana, Licencia, Permiso, Cometido, Teletrabajo, Feriado_Legal]
-    default: Laboral
-
-  - name: estado
-    type: Enum[Pendiente, Marcado, Justificado, ParaDescuento, Procesado]
-    default: Pendiente
-
-  - name: aplica_descuento
-    type: Boolean
-    computed: true
-    description: True si atraso + tiempo_menor > 59 min en el mes sin justificar
-
-  - name: permiso_asociado_id
-    type: String
-    fk: ENT-BACK-PERMISO
-    nullable: true
-    description: Referencia a permiso si el día es de licencia/permiso
-
-  - name: cometido_asociado_id
-    type: String
-    fk: ENT-BACK-COMETIDO
-    nullable: true
-    description: Referencia a cometido si el día es de cometido
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# INVARIANTES
-# ═══════════════════════════════════════════════════════════════════════════════
+- name: id_registro
+  type: String
+  key: true
+- name: funcionario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+- name: fecha
+  type: Date
+  nullable: false
+- name: hora_entrada_esperada
+  type: Time
+  nullable: false
+  description: Hora de entrada según jornada asignada
+- name: hora_salida_esperada
+  type: Time
+  nullable: false
+  description: Hora de salida según jornada asignada
+- name: hora_entrada_real
+  type: Time
+  nullable: true
+  description: Hora efectiva de marcación de entrada
+- name: hora_salida_real
+  type: Time
+  nullable: true
+  description: Hora efectiva de marcación de salida
+- name: metodo_marcacion
+  type: Enum[Biometrico, Tarjeta, Manual, Teletrabajo]
+  nullable: true
+- name: minutos_atraso
+  type: Integer
+  computed: true
+  default: 0
+  description: Minutos de atraso en entrada
+- name: minutos_tiempo_menor
+  type: Integer
+  computed: true
+  default: 0
+  description: Minutos de salida anticipada o jornada incompleta
+- name: horas_trabajadas
+  type: Decimal
+  computed: true
+  description: Total de horas trabajadas en el día
+- name: tiene_colacion
+  type: Boolean
+  default: true
+  description: Si aplica tiempo de colación
+- name: minutos_colacion
+  type: Integer
+  default: 60
+- name: atraso_justificado
+  type: Boolean
+  default: false
+- name: justificacion_atraso
+  type: Text
+  nullable: true
+- name: justificado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Jefatura que justifica el atraso
+- name: fecha_justificacion
+  type: Date
+  nullable: true
+- name: tipo_dia
+  type: Enum[Laboral, Feriado, FinDeSemana, Licencia, Permiso, Cometido, Teletrabajo,
+    Feriado_Legal]
+  default: Laboral
+- name: estado
+  type: Enum[Pendiente, Marcado, Justificado, ParaDescuento, Procesado]
+  default: Pendiente
+- name: aplica_descuento
+  type: Boolean
+  computed: true
+  description: True si atraso + tiempo_menor > 59 min en el mes sin justificar
+- name: permiso_asociado_id
+  type: String
+  fk: ENT-BACK-PERMISO
+  nullable: true
+  description: Referencia a permiso si el día es de licencia/permiso
+- name: cometido_asociado_id
+  type: String
+  fk: ENT-BACK-COMETIDO
+  nullable: true
+  description: Referencia a cometido si el día es de cometido
 invariants:
-  - id: INV-ASIS-001
-    name: salida_posterior_entrada
-    rule: hora_salida_real > hora_entrada_real
-    description: Salida debe ser posterior a entrada
-
-  - id: INV-ASIS-002
-    name: descuento_umbral_mensual
-    rule: |
-      aplica_descuento = true ↔ 
-      SUM(minutos_atraso + minutos_tiempo_menor WHERE mes AND NOT justificado) > 59
-    description: Descuento solo si supera 59 minutos mensuales
-
-  - id: INV-ASIS-003
-    name: justificacion_dentro_plazo
-    rule: fecha_justificacion <= fecha + 5 días hábiles
-    description: Justificación debe hacerse dentro de 5 días hábiles
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# MORFISMOS
-# ═══════════════════════════════════════════════════════════════════════════════
-morphisms:
-  - source: ENT-BACK-ASISTENCIA
-    target: ENT-BACK-FUNCIONARIO
-    type: N:1
-    name: funcionario_asistencia
-
-  - source: ENT-BACK-ASISTENCIA
-    target: ENT-BACK-PERMISO
-    type: N:1
-    name: permiso_dia
-    description: Si el día corresponde a un permiso
-
-  - source: ENT-BACK-ASISTENCIA
-    target: ENT-BACK-COMETIDO
-    type: N:1
-    name: cometido_dia
-    description: Si el día corresponde a un cometido
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# AGREGACIONES
-# ═══════════════════════════════════════════════════════════════════════════════
-aggregations:
-  - name: resumen_mensual_asistencia
-    description: |
-      Agrega los registros diarios para generar el resumen mensual
-      con totales de atrasos, tiempos menores y días trabajados
-    attributes:
-      - dias_trabajados: COUNT(tipo_dia = Laboral AND marcado)
-      - total_minutos_atraso: SUM(minutos_atraso)
-      - total_minutos_tiempo_menor: SUM(minutos_tiempo_menor)
-      - total_minutos_sin_justificar: SUM WHERE NOT justificado
-      - genera_descuento: total_minutos_sin_justificar > 59
+- id: INV-ASIS-001
+  name: salida_posterior_entrada
+  rule: hora_salida_real > hora_entrada_real
+  description: Salida debe ser posterior a entrada
+- id: INV-ASIS-002
+  name: descuento_umbral_mensual
+  rule: "aplica_descuento = true ↔ \nSUM(minutos_atraso + minutos_tiempo_menor WHERE\
+    \ mes AND NOT justificado) > 59\n"
+  description: Descuento solo si supera 59 minutos mensuales
+- id: INV-ASIS-003
+  name: justificacion_dentro_plazo
+  rule: fecha_justificacion <= fecha + 5 días hábiles
+  description: Justificación debe hacerse dentro de 5 días hábiles

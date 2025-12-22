@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_evol_orquestador:1.0.0
+  urn: urn:goreos:entity:d-evol:ENT-EVOL-ORQUESTADOR:1.0.0
   type: Entity
-  source: domains/d-evol/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-EVOL-ORQUESTADOR
 name: Orquestador
-entity_key: orquestador
 domain: D-EVOL
 category: Reference
-description: Agente que coordina una flota de sub-agentes para tareas complejas.
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

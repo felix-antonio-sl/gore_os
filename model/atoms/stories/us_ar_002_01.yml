@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_ar_002_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-AR-002-01
-story_key: us_ar_002_01
+urn: urn:goreos:atom:story:us_ar_002_01:1.0.0
 role_id: USR-ADM-JEFE
-as_a: "Administrador Regional"
 i_want: visualizar métricas de ausentismo, rotación y capacitación del personal
 so_that: pueda tomar decisiones de gestión de talento
 domain: D-BACK
 priority: P1
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-ADM-JEFE
-  contribuye_a: CAP-BACK-TICKETS-001

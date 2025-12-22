@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_026:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-FIN-PPTO-026
-story_key: us_fin_ppto_026
+urn: urn:goreos:atom:story:us_fin_ppto_026:1.0.0
 role_id: USR-DAF-PROF
-as_a: "Profesional DAF"
 i_want: Devengar gastos asociados a facturas recibidas
 so_that: Registro la obligación
 domain: D-FIN
 priority: P0
-capability_bundle_id: CAP-FIN-DASH-001
-morphisms:
-  protagonizado_por: USR-DAF-PROF
-  contribuye_a: CAP-FIN-DASH-001
+capability_id: CAP-FIN-DASH-001

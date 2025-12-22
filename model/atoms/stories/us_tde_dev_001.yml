@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_dev_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-TDE-DEV-001
-story_key: us_tde_dev_001
+urn: urn:goreos:atom:story:us_tde_dev_001:1.0.0
 role_id: USR-NEW-DESARROLLADO
-as_a: "Desarrollador"
 i_want: acceso a documentación técnica y APIs
 so_that: pueda integrar sistemas
 domain: D-TDE
 priority: P0
-capability_bundle_id: CAP-FIRMA-001
-morphisms:
-  protagonizado_por: USR-NEW-DESARROLLADO
-  contribuye_a: CAP-FIRMA-001
+capability_id: CAP-FIRMA-001

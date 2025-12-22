@@ -1,16 +1,11 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_af_001:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-BACK-AF-001
-story_key: us_back_af_001
+urn: urn:goreos:atom:story:us_back_af_001:1.0.0
 role_id: USR-DAF-OPS-AF
-as_a: "Encargado Activo Fijo"
 i_want: Registrar alta de activo fijo (código, depreciación)
 so_that: Incorporo bienes al patrimonio
 domain: D-BACK
 priority: P0
-capability_bundle_id: CAP-BACK-TICKETS-001
-morphisms:
-  protagonizado_por: USR-DAF-OPS-AF
-  contribuye_a: CAP-BACK-TICKETS-001

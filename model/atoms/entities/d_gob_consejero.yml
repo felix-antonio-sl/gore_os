@@ -1,184 +1,98 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Consejero
-# ==============================================================================
-# Domain: D-GOB (Gobernanza)
-# Subdomain: Consejo Regional
-# Source: LOC GORE Art. 30-34, domain_d-gob.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-GOB
-  subdomain: consejo_regional
-  kb_source:
-    - "LOC GORE Art. 30: Composición del Consejo"
-    - "LOC GORE Art. 31-34: Requisitos e incompatibilidades"
-    - "domain_d-gob.md M1: Consejo Regional"
-
-entity:
-  id: ENT-GOB-CONSEJERO
-  name: Consejero
-  name_es: Consejero Regional
-  description: |
-    Miembro electo del Consejo Regional. Ñuble tiene 18 consejeros
-    distribuidos en 3 circunscripciones:
-    - Diguillín: 8 consejeros
-    - Punilla: 5 consejeros
-    - Itata: 5 consejeros
-
-    El cargo dura 4 años y pueden ser reelectos.
-
-  purpose: |
-    - Registrar consejeros regionales
-    - Asignar a circunscripciones y comisiones
-    - Vincular con votaciones y asistencias
-    - Base para análisis de votación
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_consejero
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: rut
-    type: String
-    nullable: false
-    description: RUT del consejero
-
-  - name: nombre_completo
-    type: String
-    nullable: false
-    description: Nombre completo
-
-  - name: foto_url
-    type: String
-    nullable: true
-    description: URL a foto oficial
-
-  # Circunscripción
-  - name: circunscripcion_id
-    type: String
-    fk: ENT-GOB-CIRCUNSCRIPCION
-    nullable: false
-    description: Circunscripción que representa
-
-  # Periodo
-  - name: periodo_inicio
-    type: Date
-    nullable: false
-    description: Fecha de inicio del mandato
-
-  - name: periodo_termino
-    type: Date
-    nullable: false
-    description: Fecha de término del mandato
-
-  - name: es_reelecto
-    type: Boolean
-    default: false
-    description: ¿Es período de reelección?
-
-  # Afiliación
-  - name: partido_politico
-    type: String
-    nullable: true
-    description: Partido político (si aplica)
-
-  - name: pacto_electoral
-    type: String
-    nullable: true
-    description: Pacto electoral
-
-  # Comisiones
-  - name: comisiones_ids
-    type: Array[String]
-    nullable: true
-    description: Comisiones donde participa
-
-  - name: preside_comision_id
-    type: String
-    fk: ENT-GOB-COMISION
-    nullable: true
-    description: Comisión que preside (si aplica)
-
-  # Contacto
-  - name: email_institucional
-    type: String
-    nullable: true
-    description: Email institucional GORE
-
-  - name: telefono
-    type: String
-    nullable: true
-    description: Teléfono de contacto
-
-  # Estado
-  - name: activo
-    type: Boolean
-    default: true
-    description: ¿Está en ejercicio?
-
-  - name: motivo_cese
-    type: Enum[FinPeriodo, Renuncia, Inhabilidad, Fallecimiento, Destitución]
-    nullable: true
-    description: Motivo de cese si no activo
-
-  - name: fecha_cese
-    type: Date
-    nullable: true
-    description: Fecha de cese
-
-  # Métricas
-  - name: asistencia_pct
-    type: Decimal
-    nullable: true
-    description: Porcentaje de asistencia a sesiones
-
-  - name: votaciones_count
-    type: Integer
-    default: 0
-    description: Total de votaciones participadas
-
+- name: id_consejero
+  type: String
+  key: true
+  description: Identificador único
+- name: rut
+  type: String
+  nullable: false
+  description: RUT del consejero
+- name: nombre_completo
+  type: String
+  nullable: false
+  description: Nombre completo
+- name: foto_url
+  type: String
+  nullable: true
+  description: URL a foto oficial
+- name: circunscripcion_id
+  type: String
+  fk: ENT-GOB-CIRCUNSCRIPCION
+  nullable: false
+  description: Circunscripción que representa
+- name: periodo_inicio
+  type: Date
+  nullable: false
+  description: Fecha de inicio del mandato
+- name: periodo_termino
+  type: Date
+  nullable: false
+  description: Fecha de término del mandato
+- name: es_reelecto
+  type: Boolean
+  default: false
+  description: ¿Es período de reelección?
+- name: partido_politico
+  type: String
+  nullable: true
+  description: Partido político (si aplica)
+- name: pacto_electoral
+  type: String
+  nullable: true
+  description: Pacto electoral
+- name: comisiones_ids
+  type: Array[String]
+  nullable: true
+  description: Comisiones donde participa
+- name: preside_comision_id
+  type: String
+  fk: ENT-GOB-COMISION
+  nullable: true
+  description: Comisión que preside (si aplica)
+- name: email_institucional
+  type: String
+  nullable: true
+  description: Email institucional GORE
+- name: telefono
+  type: String
+  nullable: true
+  description: Teléfono de contacto
+- name: activo
+  type: Boolean
+  default: true
+  description: ¿Está en ejercicio?
+- name: motivo_cese
+  type: Enum[FinPeriodo, Renuncia, Inhabilidad, Fallecimiento, Destitución]
+  nullable: true
+  description: Motivo de cese si no activo
+- name: fecha_cese
+  type: Date
+  nullable: true
+  description: Fecha de cese
+- name: asistencia_pct
+  type: Decimal
+  nullable: true
+  description: Porcentaje de asistencia a sesiones
+- name: votaciones_count
+  type: Integer
+  default: 0
+  description: Total de votaciones participadas
 invariants:
-  - id: INV-CONSEJERO-001
-    name: periodo_coherente
-    rule: periodo_termino > periodo_inicio
-    description: Fechas de período coherentes
-    severity: error
+- id: INV-CONSEJERO-001
+  name: periodo_coherente
+  rule: periodo_termino > periodo_inicio
+  description: Fechas de período coherentes
+  severity: error
+- id: INV-CONSEJERO-002
+  name: inactivo_requiere_motivo
+  rule: 'activo = false → motivo_cese IS NOT NULL
 
-  - id: INV-CONSEJERO-002
-    name: inactivo_requiere_motivo
-    rule: |
-      activo = false → motivo_cese IS NOT NULL
-    description: Si no está activo, debe tener motivo
-    severity: warning
-
-lifecycle:
-  states:
-    - name: Electo
-      description: Electo, pendiente asunción
-    - name: EnEjercicio
-      description: En ejercicio de funciones
-    - name: Suspendido
-      description: Suspendido temporalmente
-    - name: Cesado
-      description: Cese de funciones
-
-morphisms:
-  pertenece_a: [ENT-GOB-CIRCUNSCRIPCION]
-  integra: [ENT-GOB-COMISION]
-  emite: [ENT-GOB-VOTACION]
-  asiste_a: [ENT-GOB-SESION-CORE]
-
-audit:
-  fields_tracked:
-    - activo
-    - comisiones_ids
-  retention_years: 20
+    '
+  description: Si no está activo, debe tener motivo
+  severity: warning

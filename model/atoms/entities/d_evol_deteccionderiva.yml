@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_evol_deteccionderiva:1.0.0
+  urn: urn:goreos:entity:d-evol:ENT-EVOL-DETECCIONDERIVA:1.0.0
   type: Entity
-  source: domains/d-evol/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-EVOL-DETECCIONDERIVA
 name: DeteccionDeriva
-entity_key: deteccionderiva
 domain: D-EVOL
 category: Reference
-description: Detección de degradación del modelo de IA respecto a una línea base (DriftDetection).
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

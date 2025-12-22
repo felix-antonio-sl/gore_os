@@ -1,294 +1,157 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Oportunidad (Pipeline IPR)
-# ==============================================================================
-# Domain: D-FIN (Financial Management)
-# Subdomain: Portafolio
-# Source: kb_gn_019_gestion_ipr_koda.yml, CRM-IPR Design
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico"
-  domain: D-FIN
-  subdomain: portafolio
-  kb_source:
-    - "kb_gn_019_gestion_ipr_koda.yml"
-    - "dialogo_profundo_crm_ipr.md"
-
-entity:
-  id: ENT-FIN-OPORTUNIDAD
-  name: Oportunidad
-  name_es: Oportunidad de Inversión
-  description: |
-    Registro de una oportunidad de inversión pública regional detectada
-    antes de su formalización como IPR. Representa la etapa más temprana
-    del "embudo" de gestión de inversiones (CRM-IPR).
-
-    Las oportunidades pueden originarse de: demandas territoriales,
-    compromisos de gobierno, brechas ERD, propuestas ciudadanas,
-    continuidad de programas, o emergencias.
-
-  purpose: |
-    Modelar el pipeline de inversiones para:
-    - Capturar demandas e ideas antes de ser proyectos formales
-    - Priorizar oportunidades según impacto y viabilidad
-    - Conectar con la ERD y compromisos de gobierno
-    - Trazabilidad desde idea hasta IPR ejecutada
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
-  extends: null
-
-  related_to:
-    - entity: ENT-FIN-IPR
-      relation: se_convierte_en
-      cardinality: 0..1:1
-      description: Una oportunidad puede convertirse en IPR
-    - entity: ENT-PLAN-EJE-ERD
-      relation: alineada_con
-      cardinality: N:0..1
-      description: Vinculación estratégica con ERD
-    - entity: ENT-TERR-COMUNA
-      relation: localizada_en
-      cardinality: N:1
-      description: Territorio de la oportunidad
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_oportunidad
-    type: String
-    key: true
-    description: Identificador único (ej. OPP-2025-0001)
-
-  - name: titulo
-    type: String
-    nullable: false
-    description: Nombre descriptivo de la oportunidad
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Detalle del problema u oportunidad detectada
-
-  - name: fecha_deteccion
-    type: Date
-    nullable: false
-    description: Cuándo se identificó la oportunidad
-
-  # Origen/Fuente
-  - name: fuente_origen
-    type: Enum[DemandaTerritorial, CompromisoGobernador, BrechaERD, PropuestaCiudadana, ContinuidadPrograma, Emergencia, ProactivoGORE, SolicitudServicio]
-    nullable: false
-    description: Cómo se originó la oportunidad
-
-  - name: referencia_origen
-    type: String
-    nullable: true
-    description: Documento, reunión o evento de origen
-
-  - name: solicitante_nombre
-    type: String
-    nullable: true
-    description: Persona o entidad que planteó la demanda
-
-  - name: solicitante_institucion
-    type: String
-    nullable: true
-    description: Institución del solicitante
-
-  # Localización
-  - name: comuna_id
-    type: String
-    fk: ENT-TERR-COMUNA
-    nullable: true
-    description: Comuna principal afectada
-
-  - name: comunas_adicionales
-    type: Array[String]
-    nullable: true
-    description: Otras comunas si es intercomunal
-
-  - name: sector_erd
-    type: String
-    nullable: true
-    description: Sector de la ERD relacionado
-
-  - name: eje_erd_id
-    type: String
-    fk: ENT-PLAN-EJE-ERD
-    nullable: true
-    description: Eje estratégico ERD
-
-  # Clasificación preliminar
-  - name: tipo_intervencion_probable
-    type: Enum[IDI, PPR, FRIL, SUBVENCION_8, CIRCULAR_33, FRPD, POR_DEFINIR]
-    default: POR_DEFINIR
-    description: Tipo de IPR más probable
-
-  - name: subtitulo_probable
-    type: String
-    nullable: true
-    description: Subtítulo presupuestario estimado (31, 24, etc.)
-
-  - name: monto_estimado
-    type: Decimal
-    nullable: true
-    description: Costo estimado preliminar
-
-  - name: beneficiarios_estimados
-    type: Integer
-    nullable: true
-    description: Población beneficiaria estimada
-
-  # Estado del embudo
-  - name: fase_embudo
-    type: Enum[Detectada, EnAnalisis, Priorizada, EnFormulacion, Descartada, ConvertidaIPR]
-    default: Detectada
-    description: Estado en el pipeline de oportunidades
-
-  - name: fecha_cambio_fase
-    type: Date
-    nullable: true
-    description: Última transición de fase
-
-  # Priorización
-  - name: puntaje_impacto
-    type: Decimal
-    nullable: true
-    description: Score de impacto (1-10)
-
-  - name: puntaje_viabilidad
-    type: Decimal
-    nullable: true
-    description: Score de viabilidad técnica/financiera (1-10)
-
-  - name: puntaje_urgencia
-    type: Decimal
-    nullable: true
-    description: Score de urgencia (1-10)
-
-  - name: puntaje_alineacion_erd
-    type: Decimal
-    nullable: true
-    description: Score de alineación estratégica (1-10)
-
-  - name: puntaje_total
-    type: Decimal
-    computed: true
-    formula: (puntaje_impacto * 0.3) + (puntaje_viabilidad * 0.25) + (puntaje_urgencia * 0.2) + (puntaje_alineacion_erd * 0.25)
-    description: Puntaje ponderado para ranking
-
-  # Vinculación
-  - name: ipr_generada_id
-    type: String
-    fk: ENT-FIN-IPR
-    nullable: true
-    description: IPR si fue convertida
-
-  - name: motivo_descarte
-    type: String
-    nullable: true
-    description: Razón si fue descartada
-
-  # Responsable
-  - name: analista_asignado_id
-    type: String
-    fk: ROL-FUNCIONARIO
-    nullable: true
-    description: Funcionario responsable del seguimiento
-
-  - name: division_responsable
-    type: Enum[DIPLADE, DAE, DAF, DOST, OTRA]
-    nullable: true
-    description: División que lidera el análisis
-
-  # Trazabilidad
-  - name: notas
-    type: Text
-    nullable: true
-    description: Observaciones y seguimiento
-
-  - name: documentos_adjuntos
-    type: Array[String]
-    nullable: true
-    description: URLs de documentos de respaldo
-
+- name: id_oportunidad
+  type: String
+  key: true
+  description: Identificador único (ej. OPP-2025-0001)
+- name: titulo
+  type: String
+  nullable: false
+  description: Nombre descriptivo de la oportunidad
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Detalle del problema u oportunidad detectada
+- name: fecha_deteccion
+  type: Date
+  nullable: false
+  description: Cuándo se identificó la oportunidad
+- name: fuente_origen
+  type: Enum[DemandaTerritorial, CompromisoGobernador, BrechaERD, PropuestaCiudadana,
+    ContinuidadPrograma, Emergencia, ProactivoGORE, SolicitudServicio]
+  nullable: false
+  description: Cómo se originó la oportunidad
+- name: referencia_origen
+  type: String
+  nullable: true
+  description: Documento, reunión o evento de origen
+- name: solicitante_nombre
+  type: String
+  nullable: true
+  description: Persona o entidad que planteó la demanda
+- name: solicitante_institucion
+  type: String
+  nullable: true
+  description: Institución del solicitante
+- name: comuna_id
+  type: String
+  fk: ENT-TERR-COMUNA
+  nullable: true
+  description: Comuna principal afectada
+- name: comunas_adicionales
+  type: Array[String]
+  nullable: true
+  description: Otras comunas si es intercomunal
+- name: sector_erd
+  type: String
+  nullable: true
+  description: Sector de la ERD relacionado
+- name: eje_erd_id
+  type: String
+  fk: ENT-PLAN-EJE-ERD
+  nullable: true
+  description: Eje estratégico ERD
+- name: tipo_intervencion_probable
+  type: Enum[IDI, PPR, FRIL, SUBVENCION_8, CIRCULAR_33, FRPD, POR_DEFINIR]
+  default: POR_DEFINIR
+  description: Tipo de IPR más probable
+- name: subtitulo_probable
+  type: String
+  nullable: true
+  description: Subtítulo presupuestario estimado (31, 24, etc.)
+- name: monto_estimado
+  type: Decimal
+  nullable: true
+  description: Costo estimado preliminar
+- name: beneficiarios_estimados
+  type: Integer
+  nullable: true
+  description: Población beneficiaria estimada
+- name: fase_embudo
+  type: Enum[Detectada, EnAnalisis, Priorizada, EnFormulacion, Descartada, ConvertidaIPR]
+  default: Detectada
+  description: Estado en el pipeline de oportunidades
+- name: fecha_cambio_fase
+  type: Date
+  nullable: true
+  description: Última transición de fase
+- name: puntaje_impacto
+  type: Decimal
+  nullable: true
+  description: Score de impacto (1-10)
+- name: puntaje_viabilidad
+  type: Decimal
+  nullable: true
+  description: Score de viabilidad técnica/financiera (1-10)
+- name: puntaje_urgencia
+  type: Decimal
+  nullable: true
+  description: Score de urgencia (1-10)
+- name: puntaje_alineacion_erd
+  type: Decimal
+  nullable: true
+  description: Score de alineación estratégica (1-10)
+- name: puntaje_total
+  type: Decimal
+  computed: true
+  formula: (puntaje_impacto * 0.3) + (puntaje_viabilidad * 0.25) + (puntaje_urgencia
+    * 0.2) + (puntaje_alineacion_erd * 0.25)
+  description: Puntaje ponderado para ranking
+- name: ipr_generada_id
+  type: String
+  fk: ENT-FIN-IPR
+  nullable: true
+  description: IPR si fue convertida
+- name: motivo_descarte
+  type: String
+  nullable: true
+  description: Razón si fue descartada
+- name: analista_asignado_id
+  type: String
+  fk: ROL-FUNCIONARIO
+  nullable: true
+  description: Funcionario responsable del seguimiento
+- name: division_responsable
+  type: Enum[DIPLADE, DAE, DAF, DOST, OTRA]
+  nullable: true
+  description: División que lidera el análisis
+- name: notas
+  type: Text
+  nullable: true
+  description: Observaciones y seguimiento
+- name: documentos_adjuntos
+  type: Array[String]
+  nullable: true
+  description: URLs de documentos de respaldo
 invariants:
-  - id: INV-OPP-001
-    name: convertida_tiene_ipr
-    rule: |
-      (fase_embudo = 'ConvertidaIPR') → ipr_generada_id IS NOT NULL
-    description: Si está convertida, debe tener IPR vinculada
-    severity: error
+- id: INV-OPP-001
+  name: convertida_tiene_ipr
+  rule: '(fase_embudo = ''ConvertidaIPR'') → ipr_generada_id IS NOT NULL
 
-  - id: INV-OPP-002
-    name: descartada_tiene_motivo
-    rule: |
-      (fase_embudo = 'Descartada') → motivo_descarte IS NOT NULL
-    description: El descarte requiere justificación
-    severity: warning
+    '
+  description: Si está convertida, debe tener IPR vinculada
+  severity: error
+- id: INV-OPP-002
+  name: descartada_tiene_motivo
+  rule: '(fase_embudo = ''Descartada'') → motivo_descarte IS NOT NULL
 
-  - id: INV-OPP-003
-    name: priorizada_tiene_puntaje
-    rule: |
-      (fase_embudo = 'Priorizada') → puntaje_total IS NOT NULL
-    description: La priorización requiere evaluación previa
+    '
+  description: El descarte requiere justificación
+  severity: warning
+- id: INV-OPP-003
+  name: priorizada_tiene_puntaje
+  rule: '(fase_embudo = ''Priorizada'') → puntaje_total IS NOT NULL
 
-  - id: INV-OPP-004
-    name: puntajes_en_rango
-    rule: |
-      ALL puntaje_* BETWEEN 1.0 AND 10.0
-    description: Los puntajes deben estar en escala 1-10
+    '
+  description: La priorización requiere evaluación previa
+- id: INV-OPP-004
+  name: puntajes_en_rango
+  rule: 'ALL puntaje_* BETWEEN 1.0 AND 10.0
 
-lifecycle:
-  states:
-    - name: Detectada
-      description: Oportunidad identificada, pendiente de análisis
-    - name: EnAnalisis
-      description: En evaluación de pertinencia y viabilidad
-    - name: Priorizada
-      description: Evaluada positivamente, en cola para formulación
-    - name: EnFormulacion
-      description: Se está preparando como IPR formal
-    - name: Descartada
-      description: No se dará curso (sin recursos, no pertinente, etc.)
-    - name: ConvertidaIPR
-      description: Transformada en IPR (IDI, PPR, etc.)
-
-  transitions:
-    - from: Detectada
-      to: EnAnalisis
-      trigger: iniciar_analisis
-    - from: EnAnalisis
-      to: Priorizada
-      trigger: priorizar
-      guard: puntaje_total >= 5.0
-    - from: EnAnalisis
-      to: Descartada
-      trigger: descartar
-    - from: Priorizada
-      to: EnFormulacion
-      trigger: iniciar_formulacion
-    - from: EnFormulacion
-      to: ConvertidaIPR
-      trigger: registrar_ipr
-      guard: ipr_generada_id IS NOT NULL
-    - from: Priorizada
-      to: Descartada
-      trigger: descartar
-
-morphisms:
-  se_convierte_en: [ENT-FIN-IPR]
-  alineada_con: [ENT-PLAN-EJE-ERD]
-  localizada_en: [ENT-TERR-COMUNA]
-  gestionada_por: [ROL-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - fase_embudo
-    - puntaje_total
-    - ipr_generada_id
-  retention_years: 5
+    '
+  description: Los puntajes deben estar en escala 1-10

@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_col_001_01:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-COL-001-01
-story_key: us_col_001_01
+urn: urn:goreos:atom:story:us_col_001_01:1.0.0
 role_id: USR-NEW-REP-AMUCH
-as_a: "Representante AMUCH"
 i_want: registro público de consultores sancionados
 so_that: se resguarde la fe pública
 domain: D-NORM
 priority: P2
-capability_bundle_id: CAP-DOCUMENTOS-001
-morphisms:
-  protagonizado_por: USR-NEW-REP-AMUCH
-  contribuye_a: CAP-DOCUMENTOS-001
+capability_id: CAP-DOCUMENTOS-001

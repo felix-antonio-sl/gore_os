@@ -1,21 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_bp_001:1.0.0
   type: Story
-  source: catalogo_exhaustivo_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-BP-001
-story_key: us_dev_bp_001
+urn: urn:goreos:atom:story:us_dev_bp_001:1.0.0
 role_id: ROLE-ARQUITECTO
-as_a: Arquitecto
 i_want: sincronizar entidades YAML de atoms/entities con el modelo de datos
 so_that: se garantice URN válido y morfismos verificados
 domain: D-DEV
-module: M0-BLUEPRINT
 priority: P0
-acceptance_criteria:
-  - URN válido según patrón urn:goreos:atom:entity:*
-  - Morfismos verificados (relacionado_con, produce, consume)
-  - Sin entidades huérfanas
-capability_bundle_id: CAP-DEV-BLUEPRINT
-morphisms:
-  protagonizado_por: ROLE-ARQUITECTO
-  contribuye_a: CAP-DEV-BLUEPRINT
+capability_id: CAP-DEV-BLUEPRINT

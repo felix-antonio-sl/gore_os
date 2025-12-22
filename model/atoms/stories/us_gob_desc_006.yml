@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_desc_006:1.0.0
   type: Story
-  source: historias_usuarios/historias_usuarios.yml
+  schema: urn:goreos:schema:story:1.0.0
 id: US-GOB-DESC-006
-story_key: us_gob_desc_006
+urn: urn:goreos:atom:story:us_gob_desc_006:1.0.0
 role_id: USR-GOB-COMP
-as_a: "Encargado Competencias"
 i_want: Emitir informe final de proceso de instalación
 so_that: Cierro el traspaso
 domain: D-GOB
 priority: P1
-capability_bundle_id: CAP-GOB-001
-morphisms:
-  protagonizado_por: USR-GOB-COMP
-  contribuye_a: CAP-GOB-001
+capability_id: CAP-GOB-001

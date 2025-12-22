@@ -1,16 +1,12 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_cicd_001:1.0.0
   type: Story
-  source: plan_especificacion_ddev_dops.md
+  schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-CICD-001
-story_key: us_dev_cicd_001
+urn: urn:goreos:atom:story:us_dev_cicd_001:1.0.0
 role_id: ROLE-DEVOPS
-as_a: DevOps
 i_want: pipelines que ejecuten tests y linting automáticamente
 so_that: se prevengan regresiones y se mantenga la calidad del código
 domain: D-DEV
 priority: P0
-capability_bundle_id: CAP-DEV-001
-morphisms:
-  protagonizado_por: ROLE-DEVOPS
-  contribuye_a: CAP-DEV-001
+capability_id: CAP-DEV-001

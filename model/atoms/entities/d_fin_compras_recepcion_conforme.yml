@@ -1,136 +1,91 @@
-# Entidad: RecepcionConforme
-# Domain: D-FIN
-# Subdomain: compras
-# Generated: 2025-12-21 (Phase 20.1b P1)
-
+_meta:
+  urn: urn:goreos:entity:d-fin:recepcion-conforme:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-FIN-RECEPCION_CONFORME
-urn: "urn:goreos:entity:d-fin:recepcion-conforme:1.0.0"
+urn: urn:goreos:entity:d-fin:recepcion-conforme:1.0.0
 name: Recepción Conforme
 domain: D-FIN
 subdomain: compras
 category: Control
-canonical_source:
-  - "manual_2_1_compras_koda.yml#MANUAL-COMPRAS-SEC-IV-RECEPCION-01"
-
-description: |
-  Hito crítico que habilita el devengo y posterior pago.
-  Valida que el bien o servicio fue entregado conforme a la OC.
-  Genera automáticamente el devengo presupuestario y pasivo contable.
-
+is_abstract: false
 attributes:
-  - name: id_recepcion
-    type: String
-    key: true
-
-  - name: orden_compra_id
-    type: String
-    fk: ENT-FIN-ORDEN_COMPRA
-
-  - name: tipo_recepcion
-    type: Enum[Bienes, Servicios, ObraParcial, ObraFinal]
-    nullable: false
-
-  - name: fecha_recepcion
-    type: Date
-    nullable: false
-
-  # Para bienes
-  - name: guia_despacho
-    type: String
-    nullable: true
-
-  - name: factura_numero
-    type: String
-    nullable: true
-
-  - name: factura_fecha
-    type: Date
-    nullable: true
-
-  - name: factura_monto
-    type: Decimal
-    nullable: true
-
-  # Verificación
-  - name: cantidad_recibida
-    type: Integer
-    nullable: true
-
-  - name: cantidad_esperada
-    type: Integer
-    nullable: true
-
-  - name: verificacion_calidad
-    type: Boolean
-    default: true
-
-  - name: verificacion_concordancia_oc
-    type: Boolean
-    default: true
-
-  # Responsables
-  - name: receptor_id
-    type: String
-    fk: ROL-FUNCIONARIO
-    description: Funcionario que recibe físicamente
-
-  - name: area_solicitante
-    type: String
-    nullable: false
-
-  # Para servicios
-  - name: informe_conformidad
-    type: Boolean
-    nullable: true
-
-  - name: periodo_servicio
-    type: String
-    nullable: true
-    description: "YYYY-MM para servicios mensuales"
-
-  # Estado
-  - name: estado
-    type: Enum[Pendiente, Conforme, ConObservaciones, Rechazado]
-    default: Pendiente
-
-  - name: observaciones
-    type: Text
-    nullable: true
-
-  - name: fecha_reclamo_sii
-    type: Date
-    nullable: true
-    description: Plazo 8 días para reclamar factura
-
-  # Documentación
-  - name: acta_recepcion_url
-    type: String
-    nullable: true
-
-  - name: fotografias_url
-    type: String
-    nullable: true
-
-  # Integración contable
-  - name: genera_devengo
-    type: Boolean
-    default: true
-
-  - name: devengado_id
-    type: String
-    fk: ENT-FIN-DEVENGO
-    nullable: true
-
+- name: id_recepcion
+  type: String
+  key: true
+- name: orden_compra_id
+  type: String
+  fk: ENT-FIN-ORDEN_COMPRA
+- name: tipo_recepcion
+  type: Enum[Bienes, Servicios, ObraParcial, ObraFinal]
+  nullable: false
+- name: fecha_recepcion
+  type: Date
+  nullable: false
+- name: guia_despacho
+  type: String
+  nullable: true
+- name: factura_numero
+  type: String
+  nullable: true
+- name: factura_fecha
+  type: Date
+  nullable: true
+- name: factura_monto
+  type: Decimal
+  nullable: true
+- name: cantidad_recibida
+  type: Integer
+  nullable: true
+- name: cantidad_esperada
+  type: Integer
+  nullable: true
+- name: verificacion_calidad
+  type: Boolean
+  default: true
+- name: verificacion_concordancia_oc
+  type: Boolean
+  default: true
+- name: receptor_id
+  type: String
+  fk: ROL-FUNCIONARIO
+  description: Funcionario que recibe físicamente
+- name: area_solicitante
+  type: String
+  nullable: false
+- name: informe_conformidad
+  type: Boolean
+  nullable: true
+- name: periodo_servicio
+  type: String
+  nullable: true
+  description: YYYY-MM para servicios mensuales
+- name: estado
+  type: Enum[Pendiente, Conforme, ConObservaciones, Rechazado]
+  default: Pendiente
+- name: observaciones
+  type: Text
+  nullable: true
+- name: fecha_reclamo_sii
+  type: Date
+  nullable: true
+  description: Plazo 8 días para reclamar factura
+- name: acta_recepcion_url
+  type: String
+  nullable: true
+- name: fotografias_url
+  type: String
+  nullable: true
+- name: genera_devengo
+  type: Boolean
+  default: true
+- name: devengado_id
+  type: String
+  fk: ENT-FIN-DEVENGO
+  nullable: true
 invariants:
-  - name: plazo_reclamo_factura
-    rule: "fecha_reclamo_sii <= fecha_recepcion + 8 días"
-    source: "MANUAL-COMPRAS-SEC-IV-DEVOLUCIONES-01"
-
-  - name: cantidad_no_excede
-    rule: "cantidad_recibida <= cantidad_esperada OR requiere_justificacion"
-
-morphisms:
-  valida: [ENT-FIN-ORDEN_COMPRA]
-  ejecutado_por: [ROL-BODEGA, ROL-AREA-SOLICITANTE]
-  genera: [ENT-FIN-DEVENGO]
-  registrado_en: [SIGFE]
+- name: plazo_reclamo_factura
+  rule: fecha_reclamo_sii <= fecha_recepcion + 8 días
+  source: MANUAL-COMPRAS-SEC-IV-DEVOLUCIONES-01
+- name: cantidad_no_excede
+  rule: cantidad_recibida <= cantidad_esperada OR requiere_justificacion
