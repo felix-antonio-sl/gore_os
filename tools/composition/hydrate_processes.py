@@ -24,7 +24,7 @@ class ProcessSpec:
     sla: str = ""
     owner: str = ""
     systems: List[str] = field(default_factory=list)
-    phases: List[Dict] = field(default_factory=list)
+    mermaid: str = ""  # Full Mermaid diagram
     mermaid_ref: str = ""
     source_file: str = ""
     source_section: str = ""
@@ -119,36 +119,15 @@ def parse_process_spec(section: Dict, source_file: str) -> ProcessSpec:
         systems_str = systems_match.group(1).strip()
         spec.systems = [s.strip() for s in re.split(r"[,\n]", systems_str) if s.strip()]
 
-    # Extract phases from Mermaid flowchart
-    phases = []
+    # Extract COMPLETE Mermaid flowchart (preserves flow logic)
     mermaid_match = re.search(r"```mermaid\s*\n(.*?)```", content, re.DOTALL)
     if mermaid_match:
-        mermaid_content = mermaid_match.group(1)
-
-        # Extract nodes: A["Node Name"] or A["Line1<br/>Line2"]
-        node_pattern = r'(\w+)\["([^"]+)"\]'
-        phase_num = 1
-        seen_nodes = set()
-
-        for match in re.finditer(node_pattern, mermaid_content):
-            node_id = match.group(1)
-            node_text = match.group(2)
-
-            if node_id not in seen_nodes:
-                seen_nodes.add(node_id)
-                # Clean HTML breaks
-                node_text = re.sub(r"<br\s*/?\s*>", " - ", node_text)
-                # Only include substantive nodes (not just arrows)
-                if len(node_text) > 3:
-                    phases.append(
-                        {
-                            "id": f"F{phase_num}",
-                            "name": node_text[:80],  # Truncate long names
-                        }
-                    )
-                    phase_num += 1
-
-    spec.phases = phases[:10]  # Limit to first 10 phases
+        mermaid_content = mermaid_match.group(1).strip()
+        # Only include flowcharts (not pie charts, etc.)
+        if mermaid_content.startswith("flowchart") or mermaid_content.startswith(
+            "graph"
+        ):
+            spec.mermaid = mermaid_content
 
     # Create mermaid reference
     section_anchor = section["header"].lower().replace(" ", "-").replace(":", "")
@@ -223,8 +202,8 @@ def hydrate_atom(atom: Dict, spec: ProcessSpec) -> Dict:
         spec_dict["owner"] = spec.owner
     if spec.systems:
         spec_dict["systems"] = spec.systems
-    if spec.phases:
-        spec_dict["phases"] = spec.phases
+    if spec.mermaid:
+        spec_dict["mermaid"] = spec.mermaid
 
     atom["spec"] = spec_dict
     return atom

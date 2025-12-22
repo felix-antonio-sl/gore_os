@@ -15,24 +15,10 @@ spec:
   - SIGPER
   - PREVIRED
   - SIGFE
-  phases:
-  - id: F1
-    name: Inicio mes
-  - id: F2
-    name: 'Recopilar novedades: - • Licencias - • Horas extra - • Descuentos'
-  - id: F3
-    name: Calcular remuneración - bruta
-  - id: F4
-    name: 'Aplicar descuentos: - • Previsión - • Salud - • Impuestos - • Otros'
-  - id: F5
-    name: Generar liquidación
-  - id: F6
-    name: Revisión y - validación
-  - id: F7
-    name: Autorización - pago
-  - id: F8
-    name: Pagar PREVIRED - (cotizaciones)
-  - id: F9
-    name: Transferir a - cuentas funcionarios
-  - id: F10
-    name: Contabilizar - en SIGFE
+  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
+    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
+    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
+    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
+    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
+    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
+    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"

@@ -11,20 +11,10 @@ process_type: BPMN
 spec:
   bpmn_id: '`BPMN-GN-RRHH-EGRESO-01`'
   mermaid_ref: D07_rrhh.md#p7-egreso-y-desvinculacin
-  phases:
-  - id: F1
-    name: Egreso de - funcionario
-  - id: F2
-    name: Renuncia - voluntaria
-  - id: F3
-    name: Retiro por - pensión
-  - id: F4
-    name: No renovación - 31/12
-  - id: F5
-    name: Eliminación - por nota
-  - id: F6
-    name: Destitución
-  - id: F7
-    name: Incompatibilidad - de salud
-  - id: F8
-    name: Procedimiento - de cierre
+  mermaid: "flowchart TD\n    A[\"Egreso de<br/>funcionario\"] --> B{\"Causal\"}\n\
+    \    \n    B -->|\"Voluntario\"| C[\"Renuncia<br/>voluntaria\"]\n    B -->|\"\
+    Jubilación\"| D[\"Retiro por<br/>pensión\"]\n    B -->|\"Término contrata\"| E[\"\
+    No renovación<br/>31/12\"]\n    B -->|\"Calificación\"| F[\"Eliminación<br/>por\
+    \ nota\"]\n    B -->|\"Disciplinario\"| G[\"Destitución\"]\n    B -->|\"Salud\"\
+    | H[\"Incompatibilidad<br/>de salud\"]\n\n    C & D & E & F & G & H --> I[\"Procedimiento<br/>de\
+    \ cierre\"]\n\n    style I fill:#607D8B,color:#fff"

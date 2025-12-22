@@ -11,24 +11,14 @@ process_type: BPMN
 spec:
   bpmn_id: '`BPMN-GN-RRHH-BIENESTAR-01`'
   mermaid_ref: D07_rrhh.md#p6-bienestar-y-calidad-de-vida
-  phases:
-  - id: F1
-    name: 📋 Afiliación
-  - id: F2
-    name: Funcionario ingresa
-  - id: F3
-    name: Invitar a - Servicio de Bienestar
-  - id: F4
-    name: Aceptar y afiliar
-  - id: F5
-    name: Descuento mensual - por planilla
-  - id: F6
-    name: 🎁 Prestaciones
-  - id: F7
-    name: 'Solicitar beneficio: - • Médico - • Económico - • Préstamo - • Convenio'
-  - id: F8
-    name: Unidad Bienestar - evalúa
-  - id: F9
-    name: Consejo Administrativo - aprueba si requiere
-  - id: F10
-    name: Otorgar beneficio
+  mermaid: "flowchart TD\n    subgraph AFILIACION[\"\U0001F4CB Afiliación\"]\n   \
+    \     A[\"Funcionario ingresa\"]\n        B[\"Invitar a<br/>Servicio de Bienestar\"\
+    ]\n        C[\"Aceptar y afiliar\"]\n        D[\"Descuento mensual<br/>por planilla\"\
+    ]\n    end\n\n    subgraph PRESTACIONES[\"\U0001F381 Prestaciones\"]\n       \
+    \ E[\"Solicitar beneficio:<br/>• Médico<br/>• Económico<br/>• Préstamo<br/>• Convenio\"\
+    ]\n        F[\"Unidad Bienestar<br/>evalúa\"]\n        G[\"Consejo Administrativo<br/>aprueba\
+    \ si requiere\"]\n        H[\"Otorgar beneficio\"]\n    end\n\n    subgraph ACTIVIDADES[\"\
+    \U0001F389 Actividades\"]\n        I[\"Planificar eventos:<br/>• Deportivos<br/>•\
+    \ Recreativos<br/>• Culturales\"]\n        J[\"Ejecutar actividad\"]\n       \
+    \ K[\"Evaluar satisfacción\"]\n    end\n\n    A --> B --> C --> D\n    E --> F\
+    \ --> G --> H\n    I --> J --> K\n\n    style H fill:#4CAF50,color:#fff"

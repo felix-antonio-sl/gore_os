@@ -82,19 +82,9 @@
           "items": { "type": "string" },
           "description": "Sistemas involucrados"
         },
-        "phases": {
-          "type": "array",
-          "description": "Fases del proceso",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": { "type": "string" },
-              "name": { "type": "string" },
-              "description": { "type": "string" },
-              "role": { "type": "string" }
-            },
-            "required": ["id", "name"]
-          }
+        "mermaid": {
+          "type": "string",
+          "description": "Diagrama Mermaid completo del flujo del proceso"
         },
         "mermaid_ref": {
           "type": "string",

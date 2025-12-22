@@ -11,24 +11,15 @@ process_type: BPMN
 spec:
   bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
   mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
-  phases:
-  - id: F1
-    name: 📊 Detección de Necesidades
-  - id: F2
-    name: Aplicar encuesta DNC
-  - id: F3
-    name: Análisis de brechas
-  - id: F4
-    name: Priorizar necesidades
-  - id: F5
-    name: 📋 Plan de Capacitación
-  - id: F6
-    name: Elaborar PAC anual
-  - id: F7
-    name: Comité Bipartito - aprueba
-  - id: F8
-    name: Asignar presupuesto
-  - id: F9
-    name: 🎓 Ejecución
-  - id: F10
-    name: Convocar a - funcionarios
+  mermaid: "flowchart TD\n    subgraph DNC[\"\U0001F4CA Detección de Necesidades\"\
+    ]\n        A[\"Aplicar encuesta DNC\"]\n        B[\"Análisis de brechas\"]\n \
+    \       C[\"Priorizar necesidades\"]\n    end\n\n    subgraph PAC_CAP[\"\U0001F4CB\
+    \ Plan de Capacitación\"]\n        D[\"Elaborar PAC anual\"]\n        E[\"Comité\
+    \ Bipartito<br/>aprueba\"]\n        F[\"Asignar presupuesto\"]\n    end\n\n  \
+    \  subgraph EJECUCION[\"\U0001F393 Ejecución\"]\n        G[\"Convocar a<br/>funcionarios\"\
+    ]\n        H[\"Ejecutar<br/>capacitaciones\"]\n        I[\"Evaluar aprendizaje\"\
+    ]\n        J[\"Certificar\"]\n    end\n\n    subgraph SEGUIMIENTO[\"\U0001F4C8\
+    \ Seguimiento\"]\n        K[\"Medir transferencia<br/>al puesto\"]\n        L[\"\
+    Evaluar impacto\"]\n        M[\"Retroalimentar<br/>próximo ciclo\"]\n    end\n\
+    \n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L -->\
+    \ M\n\n    style J fill:#4CAF50,color:#fff"
