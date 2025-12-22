@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_terr:ENT-TERR-CAPAGEOESPACIAL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -119,3 +119,7 @@ invariants:
 
     '
   description: Capa publicada requiere licencia
+id: ENT-TERR-CAPAGEOESPACIAL
+urn: urn:goreos:entity:d_terr:ENT-TERR-CAPAGEOESPACIAL:1.0.0
+name: Capageoespacial
+domain: D-TERR

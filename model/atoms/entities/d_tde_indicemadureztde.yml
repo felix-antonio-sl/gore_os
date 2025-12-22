@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-INDICEMADUREZTDE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -58,3 +58,7 @@ invariants:
   name: puntaje_rango_valido
   rule: puntaje_global BETWEEN 1 AND 5
   description: Puntaje debe estar en rango 1-5
+id: ENT-TDE-INDICEMADUREZTDE
+urn: urn:goreos:entity:d_tde:ENT-TDE-INDICEMADUREZTDE:1.0.0
+name: Indicemadureztde
+domain: D-TDE

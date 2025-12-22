@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_evol:ENT-EVOL-MAPEOTDE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -34,3 +34,7 @@ attributes:
   type: String
   nullable: true
   description: Sistema/API que provee la métrica de cumplimiento
+id: ENT-EVOL-MAPEOTDE
+urn: urn:goreos:entity:d_evol:ENT-EVOL-MAPEOTDE:1.0.0
+name: Mapeotde
+domain: D-EVOL

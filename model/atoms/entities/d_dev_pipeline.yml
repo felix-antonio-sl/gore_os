@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-PIPELINE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -52,3 +52,7 @@ invariants:
   name: success_before_deploy
   rule: tipo = 'CD' AND estado = 'Success' → artefacto_id IS NOT NULL
   description: CD exitoso debe generar artefacto
+id: ENT-DEV-PIPELINE
+urn: urn:goreos:entity:d_dev:ENT-DEV-PIPELINE:1.0.0
+name: Pipeline
+domain: D-DEV

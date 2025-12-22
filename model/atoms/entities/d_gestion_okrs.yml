@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-OKRS:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -109,3 +109,7 @@ invariants:
   name: pesos_krs_suman_uno
   rule: SUM(key_results[*].peso) = 1.0
   description: Pesos de KRs deben sumar 100%
+id: ENT-GESTION-OKRS
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-OKRS:1.0.0
+name: Okrs
+domain: D-GESTION

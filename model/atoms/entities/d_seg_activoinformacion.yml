@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_seg:ENT-SEG-ACTIVOINFORMACION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -69,3 +69,7 @@ invariants:
   name: info_requiere_clasificacion
   rule: tipo = 'Informacion' → clasificacion_informacion != 'NoAplica'
   description: Activos tipo Información deben tener clasificación
+id: ENT-SEG-ACTIVOINFORMACION
+urn: urn:goreos:entity:d_seg:ENT-SEG-ACTIVOINFORMACION:1.0.0
+name: Activoinformacion
+domain: D-SEG

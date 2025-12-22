@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-MIGRACION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -55,3 +55,7 @@ invariants:
   name: aplicada_tiene_fecha
   rule: estado = 'Aplicada' → fecha_aplicacion IS NOT NULL
   description: Migración aplicada debe tener fecha
+id: ENT-OPS-MIGRACION
+urn: urn:goreos:entity:d_ops:ENT-OPS-MIGRACION:1.0.0
+name: Migracion
+domain: D-OPS

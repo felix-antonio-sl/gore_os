@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-INDICADORPOA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -121,3 +121,7 @@ invariants:
     \ OR\nMAX(meta_t1, meta_t2, meta_t3, meta_t4) = meta_anual\n"
   description: Metas trimestrales deben ser coherentes con anual
   severity: warning
+id: ENT-GESTION-INDICADORPOA
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-INDICADORPOA:1.0.0
+name: Indicadorpoa
+domain: D-GESTION

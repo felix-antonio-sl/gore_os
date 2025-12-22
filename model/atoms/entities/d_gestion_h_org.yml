@@ -9,3 +9,4 @@ category: Reference
 is_abstract: true
 description: Entidad abstracta del dominio para la cual no existe definición de estructura
   de datos en el conocimiento actual.
+urn: urn:goreos:entity:d-gestion:ENT-GESTION-H_ORG:1.0.0

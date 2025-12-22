@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-TESTSUITE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -59,3 +59,7 @@ invariants:
   name: totales_consistentes
   rule: total_tests = tests_passed + tests_failed + tests_skipped
   description: Los totales deben ser consistentes
+id: ENT-DEV-TESTSUITE
+urn: urn:goreos:entity:d_dev:ENT-DEV-TESTSUITE:1.0.0
+name: Testsuite
+domain: D-DEV

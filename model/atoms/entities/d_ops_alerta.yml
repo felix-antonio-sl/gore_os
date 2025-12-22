@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-ALERTA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -60,3 +60,7 @@ invariants:
   rule: severidad = 'Critical' AND estado = 'Activa' AND duracion > 5min → ticket_generado_id
     IS NOT NULL
   description: Alerta crítica activa por 5min genera ticket
+id: ENT-OPS-ALERTA
+urn: urn:goreos:entity:d_ops:ENT-OPS-ALERTA:1.0.0
+name: Alerta
+domain: D-OPS

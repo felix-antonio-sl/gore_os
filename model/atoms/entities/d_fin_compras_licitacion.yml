@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:licitacion:1.0.0
 name: Licitación Pública
 domain: D-FIN
 subdomain: compras
-category: Process-Entity
+category: Aggregate
 is_abstract: false
 attributes:
 - name: id_licitacion

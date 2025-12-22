@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-DELEGADO_PROTECCI_N_DATOS:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -80,3 +80,7 @@ invariants:
   name: email_obligatorio
   rule: email_contacto IS NOT NULL
   description: Debe existir email de contacto para titulares
+id: ENT-TDE-DELEGADO_PROTECCI_N_DATOS
+urn: urn:goreos:entity:d_tde:ENT-TDE-DELEGADO_PROTECCI_N_DATOS:1.0.0
+name: Delegado Protecci N Datos
+domain: D-TDE

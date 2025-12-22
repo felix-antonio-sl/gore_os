@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-EJECUTORES_CALIFICACIONEJECUTOR:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -195,3 +195,7 @@ invariants:
 
     '
   description: Todos los puntajes deben estar en escala 1-7
+id: ENT-FIN-EJECUTORES_CALIFICACIONEJECUTOR
+urn: urn:goreos:entity:d_fin:ENT-FIN-EJECUTORES_CALIFICACIONEJECUTOR:1.0.0
+name: Ejecutores Calificacionejecutor
+domain: D-FIN

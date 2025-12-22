@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-ZONAPROT:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -78,3 +78,7 @@ invariants:
   rule: UNIQUE(prot_id, codigo_zona)
   description: Código único dentro del PROT
   severity: error
+id: ENT-PLAN-ZONAPROT
+urn: urn:goreos:entity:d_plan:ENT-PLAN-ZONAPROT:1.0.0
+name: Zonaprot
+domain: D-PLAN

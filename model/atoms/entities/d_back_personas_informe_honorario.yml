@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:informe-honorario:1.0.0
 name: Informe de Actividades Honorarios
 domain: D-BACK
 subdomain: personas
-category: Control
+category: Reference
 is_abstract: false
 attributes:
 - name: id_informe

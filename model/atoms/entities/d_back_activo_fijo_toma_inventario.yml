@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:toma-inventario:1.0.0
 name: Toma de Inventario
 domain: D-BACK
 subdomain: activo_fijo
-category: Control
+category: Reference
 is_abstract: false
 attributes:
 - name: id_toma

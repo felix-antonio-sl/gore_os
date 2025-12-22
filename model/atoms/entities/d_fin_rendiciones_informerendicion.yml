@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-RENDICIONES_INFORMERENDICION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -95,3 +95,7 @@ invariants:
   name: rechazo_requiere_motivo
   rule: estado_sisrec = 'Rechazado' → motivo_rechazo IS NOT NULL
   description: El rechazo debe estar fundamentado
+id: ENT-FIN-RENDICIONES_INFORMERENDICION
+urn: urn:goreos:entity:d_fin:ENT-FIN-RENDICIONES_INFORMERENDICION:1.0.0
+name: Rendiciones Informerendicion
+domain: D-FIN

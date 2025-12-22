@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:marco-logico-ppr:1.0.0
 name: Marco Lógico de PPR
 domain: D-FIN
 subdomain: ipr_core
-category: Analytical
+category: Aggregate
 is_abstract: false
 attributes:
 - name: id_mml

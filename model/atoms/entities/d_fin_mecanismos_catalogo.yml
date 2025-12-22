@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:mecanismo-financiamiento:1.0.0
 name: Mecanismo de Financiamiento
 domain: D-FIN
 subdomain: mecanismos
-category: Catalog
+category: Reference
 is_abstract: false
 attributes:
 - name: id

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_COMETIDO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -175,3 +175,7 @@ invariants:
   name: solicitud_anticipada_internacional
   rule: "(ambito = Internacional) → \n(fecha_solicitud <= fecha_inicio - 15 días hábiles)\n"
   description: Cometidos internacionales requieren 15 días de anticipación
+id: ENT-BACK-PERSONAS_COMETIDO
+urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_COMETIDO:1.0.0
+name: Personas Cometido
+domain: D-BACK

@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:evaluacion-ipr:1.0.0
 name: Evaluación de IPR (RATE)
 domain: D-FIN
 subdomain: ipr_core
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_evaluacion

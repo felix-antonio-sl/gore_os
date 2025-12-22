@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-PLAYBOOK:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -109,3 +109,7 @@ invariants:
   rule: raci.accountable IS NOT NULL
   description: Debe haber un accountable definido
   severity: error
+id: ENT-GESTION-PLAYBOOK
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-PLAYBOOK:1.0.0
+name: Playbook
+domain: D-GESTION

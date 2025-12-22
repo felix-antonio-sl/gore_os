@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-BACKUP:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -60,3 +60,7 @@ invariants:
   name: verificado_tiene_fecha
   rule: verificado = true → fecha_verificacion IS NOT NULL
   description: Backup verificado debe tener fecha
+id: ENT-OPS-BACKUP
+urn: urn:goreos:entity:d_ops:ENT-OPS-BACKUP:1.0.0
+name: Backup
+domain: D-OPS

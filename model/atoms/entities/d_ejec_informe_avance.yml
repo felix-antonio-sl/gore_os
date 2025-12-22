@@ -6,7 +6,7 @@ id: ENT-EJEC-INFORME_AVANCE
 urn: urn:goreos:entity:d-ejec:informe-avance:1.0.0
 name: Informe de Avance
 domain: D-EJEC
-category: Operational
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_informe

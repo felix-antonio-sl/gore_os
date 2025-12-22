@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_seg:ENT-SEG-POLITICASEGURIDAD:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -51,3 +51,7 @@ invariants:
   name: vigente_requiere_aprobacion
   rule: estado = 'Vigente' → fecha_aprobacion IS NOT NULL
   description: Política vigente debe estar aprobada
+id: ENT-SEG-POLITICASEGURIDAD
+urn: urn:goreos:entity:d_seg:ENT-SEG-POLITICASEGURIDAD:1.0.0
+name: Politicaseguridad
+domain: D-SEG

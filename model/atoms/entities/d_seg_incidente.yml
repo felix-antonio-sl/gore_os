@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_seg:ENT-SEG-INCIDENTE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -70,3 +70,7 @@ invariants:
   name: cierre_requiere_fecha
   rule: estado = 'Cerrado' → fecha_hora_cierre IS NOT NULL
   description: Incidente cerrado debe tener fecha de cierre
+id: ENT-SEG-INCIDENTE
+urn: urn:goreos:entity:d_seg:ENT-SEG-INCIDENTE:1.0.0
+name: Incidente
+domain: D-SEG

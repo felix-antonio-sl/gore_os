@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-SLA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -55,3 +55,7 @@ invariants:
   name: objetivo_valido
   rule: slo_objetivo > 0
   description: Objetivo debe ser positivo
+id: ENT-OPS-SLA
+urn: urn:goreos:entity:d_ops:ENT-OPS-SLA:1.0.0
+name: Sla
+domain: D-OPS

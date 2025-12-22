@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-CARGAMASIVA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -60,3 +60,7 @@ invariants:
   name: promovido_sin_errores
   rule: estado = 'Promovido' → filas_fallidas = 0
   description: Solo se promociona si no hay errores
+id: ENT-OPS-CARGAMASIVA
+urn: urn:goreos:entity:d_ops:ENT-OPS-CARGAMASIVA:1.0.0
+name: Cargamasiva
+domain: D-OPS

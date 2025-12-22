@@ -6,7 +6,7 @@ id: ENT-EJEC-MODIFICACION_CONVENIO
 urn: urn:goreos:entity:d-ejec:modificacion-convenio:1.0.0
 name: Modificación de Convenio
 domain: D-EJEC
-category: Legal
+category: Reference
 is_abstract: false
 attributes:
 - name: id_modificacion

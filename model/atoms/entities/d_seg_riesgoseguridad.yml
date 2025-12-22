@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_seg:ENT-SEG-RIESGOSEGURIDAD:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -81,3 +81,7 @@ invariants:
   name: residual_menor_inherente
   rule: nivel_riesgo_residual <= nivel_riesgo_inherente
   description: El riesgo residual no debería ser mayor al inherente (salvo error)
+id: ENT-SEG-RIESGOSEGURIDAD
+urn: urn:goreos:entity:d_seg:ENT-SEG-RIESGOSEGURIDAD:1.0.0
+name: Riesgoseguridad
+domain: D-SEG

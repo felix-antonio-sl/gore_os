@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_terr:ENT-TERR-INDICADORTERRITORIAL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -91,3 +91,7 @@ attributes:
   type: String
   nullable: true
   description: URL de la fuente original
+id: ENT-TERR-INDICADORTERRITORIAL
+urn: urn:goreos:entity:d_terr:ENT-TERR-INDICADORTERRITORIAL:1.0.0
+name: Indicadorterritorial
+domain: D-TERR

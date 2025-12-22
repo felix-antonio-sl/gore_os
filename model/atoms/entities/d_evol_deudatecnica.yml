@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_evol:ENT-EVOL-DEUDATECNICA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -67,3 +67,7 @@ attributes:
   type: String
   fk: ENT-BACK-FUNCIONARIO
   nullable: true
+id: ENT-EVOL-DEUDATECNICA
+urn: urn:goreos:entity:d_evol:ENT-EVOL-DEUDATECNICA:1.0.0
+name: Deudatecnica
+domain: D-EVOL

@@ -6,7 +6,7 @@ id: ENT-EJEC-VISITA_TERRENO
 urn: urn:goreos:entity:d-ejec:visita-terreno:1.0.0
 name: Visita a Terreno
 domain: D-EJEC
-category: Operational
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_visita

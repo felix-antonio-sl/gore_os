@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-RIESGO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -125,3 +125,7 @@ invariants:
     \ = id_riesgo)\n"
   description: Riesgo crítico debe tener al menos un control
   severity: warning
+id: ENT-GESTION-RIESGO
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-RIESGO:1.0.0
+name: Riesgo
+domain: D-GESTION

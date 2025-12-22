@@ -6,7 +6,7 @@ id: ENT-EJEC-ACTA_RECEPCION
 urn: urn:goreos:entity:d-ejec:acta-recepcion:1.0.0
 name: Acta de Recepción
 domain: D-EJEC
-category: Legal
+category: Reference
 is_abstract: false
 attributes:
 - name: id_acta

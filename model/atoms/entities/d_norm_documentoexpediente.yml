@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_norm:ENT-NORM-DOCUMENTOEXPEDIENTE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -66,3 +66,7 @@ invariants:
   rule: UNIQUE(expediente_id, folio)
   description: Folio único dentro del expediente
   severity: error
+id: ENT-NORM-DOCUMENTOEXPEDIENTE
+urn: urn:goreos:entity:d_norm:ENT-NORM-DOCUMENTOEXPEDIENTE:1.0.0
+name: Documentoexpediente
+domain: D-NORM

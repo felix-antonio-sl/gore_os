@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_terr:ENT-TERR-COMUNA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -85,3 +85,7 @@ invariants:
   rule: LENGTH(codigo_ine) = 5
   description: El código INE debe tener 5 dígitos
   severity: error
+id: ENT-TERR-COMUNA
+urn: urn:goreos:entity:d_terr:ENT-TERR-COMUNA:1.0.0
+name: Comuna
+domain: D-TERR

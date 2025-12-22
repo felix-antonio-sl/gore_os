@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-PERMISO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -43,3 +43,7 @@ invariants:
   name: critico_requiere_mfa
   rule: nivel_riesgo = 'Critico' → requiere_mfa = true
   description: Permisos críticos requieren MFA
+id: ENT-OPS-PERMISO
+urn: urn:goreos:entity:d_ops:ENT-OPS-PERMISO:1.0.0
+name: Permiso
+domain: D-OPS

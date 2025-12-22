@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:seguimiento-ipr:1.0.0
 name: Seguimiento de IPR
 domain: D-FIN
 subdomain: ipr_core
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_seguimiento

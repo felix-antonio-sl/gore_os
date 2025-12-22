@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-PORTAFOLIO_ALERTACICLO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -145,3 +145,7 @@ invariants:
 
     '
   description: Alertas críticas deben tener definido escalamiento
+id: ENT-FIN-PORTAFOLIO_ALERTACICLO
+urn: urn:goreos:entity:d_fin:ENT-FIN-PORTAFOLIO_ALERTACICLO:1.0.0
+name: Portafolio Alertaciclo
+domain: D-FIN

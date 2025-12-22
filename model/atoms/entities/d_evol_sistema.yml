@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_evol:ENT-EVOL-SISTEMA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -54,3 +54,7 @@ attributes:
   type: Decimal
   nullable: true
   description: 'SLA de disponibilidad (ej: 99.5)'
+id: ENT-EVOL-SISTEMA
+urn: urn:goreos:entity:d_evol:ENT-EVOL-SISTEMA:1.0.0
+name: Sistema
+domain: D-EVOL

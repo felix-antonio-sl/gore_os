@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:modif-presupuestaria:1.0.0
 name: Modificación Presupuestaria
 domain: D-FIN
 subdomain: presupuesto
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_modificacion

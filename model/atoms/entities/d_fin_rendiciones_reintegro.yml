@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:reintegro:1.0.0
 name: Reintegro
 domain: D-FIN
 subdomain: rendiciones
-category: Financial
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_reintegro

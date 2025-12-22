@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_norm:ENT-NORM-DECLARACIONINTERES:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -50,3 +50,7 @@ invariants:
     '
   description: DIP presentada requiere fecha
   severity: error
+id: ENT-NORM-DECLARACIONINTERES
+urn: urn:goreos:entity:d_norm:ENT-NORM-DECLARACIONINTERES:1.0.0
+name: Declaracioninteres
+domain: D-NORM

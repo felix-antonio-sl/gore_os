@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-RECURSOINFRAESTRUCTURA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -49,3 +49,7 @@ invariants:
   name: ip_valida
   rule: ip_address IS NOT NULL → ip_address REGEX '^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$'
   description: IP debe tener formato válido (IPv4 simplificado)
+id: ENT-OPS-RECURSOINFRAESTRUCTURA
+urn: urn:goreos:entity:d_ops:ENT-OPS-RECURSOINFRAESTRUCTURA:1.0.0
+name: Recursoinfraestructura
+domain: D-OPS

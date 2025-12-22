@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-USUARIOSISTEMA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -61,3 +61,7 @@ invariants:
   name: bloqueo_por_intentos
   rule: intentos_fallidos >= 5 → bloqueado_hasta IS NOT NULL
   description: 5 intentos fallidos bloquean la cuenta
+id: ENT-OPS-USUARIOSISTEMA
+urn: urn:goreos:entity:d_ops:ENT-OPS-USUARIOSISTEMA:1.0.0
+name: Usuariosistema
+domain: D-OPS

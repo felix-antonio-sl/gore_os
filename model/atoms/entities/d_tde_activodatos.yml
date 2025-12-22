@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-ACTIVODATOS:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -61,3 +61,7 @@ invariants:
   name: publico_requiere_formato
   rule: es_dato_abierto = TRUE → formato_distribucion IS NOT NULL
   description: Dato abierto debe especificar formato de distribución
+id: ENT-TDE-ACTIVODATOS
+urn: urn:goreos:entity:d_tde:ENT-TDE-ACTIVODATOS:1.0.0
+name: Activodatos
+domain: D-TDE

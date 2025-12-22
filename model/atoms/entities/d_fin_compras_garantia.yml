@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:garantia:1.0.0
 name: Boleta de Garantía
 domain: D-FIN
 subdomain: compras
-category: Financial
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_garantia

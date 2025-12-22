@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gob:ENT-GOB-CERTIFICADOACUERDO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -35,3 +35,7 @@ attributes:
   type: Enum[Emitido, Entregado, Anulado]
   default: Emitido
   description: Estado del certificado
+id: ENT-GOB-CERTIFICADOACUERDO
+urn: urn:goreos:entity:d_gob:ENT-GOB-CERTIFICADOACUERDO:1.0.0
+name: Certificadoacuerdo
+domain: D-GOB

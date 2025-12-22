@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-POA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -119,3 +119,7 @@ invariants:
     \ 'EnRevision')\n"
   description: POA debe aprobarse antes del 31 de enero
   severity: warning
+id: ENT-GESTION-POA
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-POA:1.0.0
+name: Poa
+domain: D-GESTION

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_intervencion:ENT-INTERVENCION-FENIX_INTERVENCION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -169,3 +169,7 @@ invariants:
   name: ejecucion_requiere_autorizacion
   rule: estado = 'EnEjecucion' → fecha_autorizacion IS NOT NULL
   description: Ejecución requiere autorización previa
+id: ENT-INTERVENCION-FENIX_INTERVENCION
+urn: urn:goreos:entity:d_intervencion:ENT-INTERVENCION-FENIX_INTERVENCION:1.0.0
+name: Fenix Intervencion
+domain: D-INTERVENCION

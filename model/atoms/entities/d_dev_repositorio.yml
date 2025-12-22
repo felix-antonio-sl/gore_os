@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-REPOSITORIO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -47,3 +47,7 @@ invariants:
   name: url_valida
   rule: url_clone LIKE 'http%' OR url_clone LIKE 'git@%'
   description: URL debe ser válida
+id: ENT-DEV-REPOSITORIO
+urn: urn:goreos:entity:d_dev:ENT-DEV-REPOSITORIO:1.0.0
+name: Repositorio
+domain: D-DEV

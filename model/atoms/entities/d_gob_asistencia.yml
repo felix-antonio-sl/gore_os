@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gob:ENT-GOB-ASISTENCIA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -50,3 +50,7 @@ invariants:
   rule: UNIQUE(sesion_id, consejero_id)
   description: Un registro por consejero por sesión
   severity: error
+id: ENT-GOB-ASISTENCIA
+urn: urn:goreos:entity:d_gob:ENT-GOB-ASISTENCIA:1.0.0
+name: Asistencia
+domain: D-GOB

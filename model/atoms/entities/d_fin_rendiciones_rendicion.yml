@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-RENDICIONES_RENDICION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -123,3 +123,7 @@ invariants:
   name: observada_tiene_observaciones
   rule: estado = 'Observada' → cantidad_observaciones > 0
   description: Estado observada requiere al menos una observación
+id: ENT-FIN-RENDICIONES_RENDICION
+urn: urn:goreos:entity:d_fin:ENT-FIN-RENDICIONES_RENDICION:1.0.0
+name: Rendiciones Rendicion
+domain: D-FIN

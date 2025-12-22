@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-TESTCASE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -44,3 +44,7 @@ invariants:
   name: failed_has_error
   rule: estado = 'Failed' → error_mensaje IS NOT NULL
   description: Test fallido debe tener mensaje de error
+id: ENT-DEV-TESTCASE
+urn: urn:goreos:entity:d_dev:ENT-DEV-TESTCASE:1.0.0
+name: Testcase
+domain: D-DEV

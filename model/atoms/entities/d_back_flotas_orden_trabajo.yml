@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:ot-vehicular:1.0.0
 name: Orden de Trabajo Vehicular
 domain: D-BACK
 subdomain: flotas
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_orden

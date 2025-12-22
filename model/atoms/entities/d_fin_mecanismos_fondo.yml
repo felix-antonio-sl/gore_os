@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_FONDO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -156,3 +156,7 @@ invariants:
   name: emergencia_3pct_limite
   rule: "(codigo_fondo = EMERGENCIA) → \npresupuesto_vigente <= 0.03 * total_inversion_regional\n"
   description: Emergencias limitadas al 3% del presupuesto de inversión
+id: ENT-FIN-MECANISMOS_FONDO
+urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_FONDO:1.0.0
+name: Mecanismos Fondo
+domain: D-FIN

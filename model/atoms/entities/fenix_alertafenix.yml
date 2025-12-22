@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_alertafenix:ENT-ALERTAFENIX-FENIX_ALERTAFENIX:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -107,3 +107,7 @@ invariants:
     <= 4
   description: Alertas críticas deben evaluarse en 4 horas
   severity: warning
+id: ENT-ALERTAFENIX-FENIX_ALERTAFENIX
+urn: urn:goreos:entity:d_alertafenix:ENT-ALERTAFENIX-FENIX_ALERTAFENIX:1.0.0
+name: Fenix Alertafenix
+domain: D-ALERTAFENIX

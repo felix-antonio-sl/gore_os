@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_aprendizajeinstitucional:ENT-APRENDIZAJEINSTITUCIONAL-FENIX_APRENDIZAJEINSTITUCIONAL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -122,3 +122,7 @@ invariants:
     '
   description: Impacto institucional requiere proyecto formal
   severity: warning
+id: ENT-APRENDIZAJEINSTITUCIONAL-FENIX_APRENDIZAJEINSTITUCIONAL
+urn: urn:goreos:entity:d_aprendizajeinstitucional:ENT-APRENDIZAJEINSTITUCIONAL-FENIX_APRENDIZAJEINSTITUCIONAL:1.0.0
+name: Fenix Aprendizajeinstitucional
+domain: D-APRENDIZAJEINSTITUCIONAL

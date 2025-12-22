@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-PUNTAJESALUDGORE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -86,3 +86,7 @@ invariants:
   name: critico_activa_fenix
   rule: valor_compuesto < 50 → tipo_alerta = 'ActivacionFENIX'
   description: Puntaje crítico activa FÉNIX
+id: ENT-GESTION-PUNTAJESALUDGORE
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-PUNTAJESALUDGORE:1.0.0
+name: Puntajesaludgore
+domain: D-GESTION

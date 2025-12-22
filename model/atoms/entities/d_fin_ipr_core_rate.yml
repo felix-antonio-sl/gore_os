@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-IPR_CORE_RATE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -136,3 +136,7 @@ invariants:
   rule: "(organismo_evaluador = MDSF) → \n(fecha_emision_rate - fecha_envio_evaluacion)\
     \ <= 15 días hábiles (admisibilidad + ATE)\n"
   description: Plazos orientativos MDSF (5 días admisibilidad + 10 días ATE)
+id: ENT-FIN-IPR_CORE_RATE
+urn: urn:goreos:entity:d_fin:ENT-FIN-IPR_CORE_RATE:1.0.0
+name: Ipr Core Rate
+domain: D-FIN

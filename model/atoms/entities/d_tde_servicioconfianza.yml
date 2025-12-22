@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-SERVICIOCONFIANZA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -48,3 +48,7 @@ invariants:
   rule: tipo = 'FirmaElectronica' AND nivel_confianza = 'Alto' → es_proveedor_acreditado
     = TRUE
   description: FEA requiere proveedor acreditado
+id: ENT-TDE-SERVICIOCONFIANZA
+urn: urn:goreos:entity:d_tde:ENT-TDE-SERVICIOCONFIANZA:1.0.0
+name: Servicioconfianza
+domain: D-TDE

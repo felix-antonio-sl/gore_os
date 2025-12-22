@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-AMBIENTE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -47,3 +47,7 @@ invariants:
   name: produccion_protegida
   rule: tipo = 'Produccion' → es_protegido = TRUE
   description: Ambiente de Producción debe ser protegido
+id: ENT-OPS-AMBIENTE
+urn: urn:goreos:entity:d_ops:ENT-OPS-AMBIENTE:1.0.0
+name: Ambiente
+domain: D-OPS

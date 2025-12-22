@@ -6,7 +6,7 @@ id: ENT-EJEC-BITACORA_OBRA
 urn: urn:goreos:entity:d-ejec:bitacora-obra:1.0.0
 name: Bitácora de Obra
 domain: D-EJEC
-category: Operational
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_entrada

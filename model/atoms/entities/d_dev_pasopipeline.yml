@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-PASOPIPELINE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -46,3 +46,7 @@ invariants:
   name: failed_has_logs
   rule: estado = 'Failed' → logs_url IS NOT NULL
   description: Paso fallido debe tener logs
+id: ENT-DEV-PASOPIPELINE
+urn: urn:goreos:entity:d_dev:ENT-DEV-PASOPIPELINE:1.0.0
+name: Pasopipeline
+domain: D-DEV

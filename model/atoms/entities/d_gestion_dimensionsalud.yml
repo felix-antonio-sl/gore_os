@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-DIMENSIONSALUD:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -72,3 +72,7 @@ invariants:
   rule: umbral_critico < umbral_amarillo AND umbral_amarillo < umbral_verde
   description: Los umbrales deben estar ordenados
   severity: error
+id: ENT-GESTION-DIMENSIONSALUD
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-DIMENSIONSALUD:1.0.0
+name: Dimensionsalud
+domain: D-GESTION

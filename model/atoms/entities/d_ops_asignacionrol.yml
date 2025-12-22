@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-ASIGNACIONROL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -51,3 +51,7 @@ invariants:
   rule: estado = 'Revocada' → revocado_por_id IS NOT NULL AND fecha_revocacion IS
     NOT NULL
   description: Asignación revocada debe tener auditoría
+id: ENT-OPS-ASIGNACIONROL
+urn: urn:goreos:entity:d_ops:ENT-OPS-ASIGNACIONROL:1.0.0
+name: Asignacionrol
+domain: D-OPS

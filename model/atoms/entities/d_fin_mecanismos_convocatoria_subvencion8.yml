@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_CONVOCATORIA_SUBVENCION8:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -177,3 +177,7 @@ invariants:
   rule: TIME(fecha_cierre) = '23:59:00'
   description: El cierre es automático a las 23:59
   source: kb_gn_028 Sec. 2
+id: ENT-FIN-MECANISMOS_CONVOCATORIA_SUBVENCION8
+urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_CONVOCATORIA_SUBVENCION8:1.0.0
+name: Mecanismos Convocatoria Subvencion8
+domain: D-FIN

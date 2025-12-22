@@ -7,4 +7,6 @@ name: Gobernador Regional
 domain: D-GOB
 category: Reference
 is_abstract: true
-description: "Máxima autoridad ejecutiva del Gobierno Regional, elegido por sufragio universal directo, a quien corresponde la administración superior de la región."
+description: Máxima autoridad ejecutiva del Gobierno Regional, elegido por sufragio
+  universal directo, a quien corresponde la administración superior de la región.
+urn: urn:goreos:entity:d-gob:ENT-GOB-GOBERNADOR_REGIONAL:1.0.0

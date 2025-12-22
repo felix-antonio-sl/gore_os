@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:recepcion-conforme:1.0.0
 name: Recepción Conforme
 domain: D-FIN
 subdomain: compras
-category: Control
+category: Reference
 is_abstract: false
 attributes:
 - name: id_recepcion

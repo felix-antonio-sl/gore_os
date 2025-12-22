@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-INDICADORERD:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -58,3 +58,7 @@ attributes:
   type: Date
   nullable: true
   description: Fecha de última medición
+id: ENT-PLAN-INDICADORERD
+urn: urn:goreos:entity:d_plan:ENT-PLAN-INDICADORERD:1.0.0
+name: Indicadorerd
+domain: D-PLAN

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_seg:ENT-SEG-CONTROLSEGURIDAD:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -56,3 +56,7 @@ invariants:
   rule: estado_implementacion = 'Operativo' → responsable_implementacion_id IS NOT
     NULL
   description: Control operativo debe tener responsable asignado
+id: ENT-SEG-CONTROLSEGURIDAD
+urn: urn:goreos:entity:d_seg:ENT-SEG-CONTROLSEGURIDAD:1.0.0
+name: Controlseguridad
+domain: D-SEG

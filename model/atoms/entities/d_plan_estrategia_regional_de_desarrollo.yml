@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-ESTRATEGIA_REGIONAL_DE_DESARROLLO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -88,3 +88,7 @@ invariants:
 
     '
   description: Una ERD vigente requiere aprobación CORE
+id: ENT-PLAN-ESTRATEGIA_REGIONAL_DE_DESARROLLO
+urn: urn:goreos:entity:d_plan:ENT-PLAN-ESTRATEGIA_REGIONAL_DE_DESARROLLO:1.0.0
+name: Estrategia Regional De Desarrollo
+domain: D-PLAN

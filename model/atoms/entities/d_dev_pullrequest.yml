@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-PULLREQUEST:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -58,3 +58,7 @@ invariants:
   rule: estado = 'Merged' → estado_ci = 'Exitoso'
   description: No mercar si CI falló (soft rule para hotfix)
   severity: warning
+id: ENT-DEV-PULLREQUEST
+urn: urn:goreos:entity:d_dev:ENT-DEV-PULLREQUEST:1.0.0
+name: Pullrequest
+domain: D-DEV

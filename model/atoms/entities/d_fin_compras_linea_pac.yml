@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:linea-pac:1.0.0
 name: Línea de Plan de Compras
 domain: D-FIN
 subdomain: compras
-category: Detail
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_linea

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-ARTEFACTOBUILD:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -57,3 +57,7 @@ invariants:
   name: version_formato
   rule: version MATCHES '^[0-9]+\\.[0-9]+\\.[0-9]+' OR version MATCHES '^[a-f0-9]{7,40}$'
   description: Version debe ser SemVer o commit hash
+id: ENT-DEV-ARTEFACTOBUILD
+urn: urn:goreos:entity:d_dev:ENT-DEV-ARTEFACTOBUILD:1.0.0
+name: Artefactobuild
+domain: D-DEV

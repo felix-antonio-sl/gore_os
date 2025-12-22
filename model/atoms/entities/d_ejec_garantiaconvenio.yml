@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ejec:ENT-EJEC-GARANTIACONVENIO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -71,3 +71,7 @@ invariants:
   rule: monto > 0
   description: El monto debe ser positivo
   severity: error
+id: ENT-EJEC-GARANTIACONVENIO
+urn: urn:goreos:entity:d_ejec:ENT-EJEC-GARANTIACONVENIO:1.0.0
+name: Garantiaconvenio
+domain: D-EJEC

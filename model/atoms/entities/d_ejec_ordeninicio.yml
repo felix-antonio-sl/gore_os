@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ejec:ENT-EJEC-ORDENINICIO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -78,3 +78,7 @@ invariants:
   rule: plazo_contractual_dias > 0
   description: El plazo debe ser positivo
   severity: error
+id: ENT-EJEC-ORDENINICIO
+urn: urn:goreos:entity:d_ejec:ENT-EJEC-ORDENINICIO:1.0.0
+name: Ordeninicio
+domain: D-EJEC

@@ -6,7 +6,7 @@ id: ENT-EJEC-HITO_CONVENIO
 urn: urn:goreos:entity:d-ejec:hito-convenio:1.0.0
 name: Hito de Convenio
 domain: D-EJEC
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_hito

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-CAT_LOGO_PROCEDIMIENTOS:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -138,3 +138,7 @@ invariants:
   name: simple_requiere_url
   rule: integrado_simple = TRUE → url_simple IS NOT NULL
   description: Integrado en SIMPLE debe tener URL
+id: ENT-TDE-CAT_LOGO_PROCEDIMIENTOS
+urn: urn:goreos:entity:d_tde:ENT-TDE-CAT_LOGO_PROCEDIMIENTOS:1.0.0
+name: Cat Logo Procedimientos
+domain: D-TDE

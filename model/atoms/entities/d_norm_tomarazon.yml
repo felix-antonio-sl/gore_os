@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_norm:ENT-NORM-TOMARAZON:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -60,3 +60,7 @@ invariants:
     '
   description: Representación requiere fundamento
   severity: warning
+id: ENT-NORM-TOMARAZON
+urn: urn:goreos:entity:d_norm:ENT-NORM-TOMARAZON:1.0.0
+name: Tomarazon
+domain: D-NORM

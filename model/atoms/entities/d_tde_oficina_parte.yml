@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-OFICINA_PARTE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -44,3 +44,7 @@ invariants:
   name: produccion_requiere_habilitacion
   rule: estado = 'Produccion' → fecha_produccion IS NOT NULL
   description: Oficinas en producción requieren fecha
+id: ENT-TDE-OFICINA_PARTE
+urn: urn:goreos:entity:d_tde:ENT-TDE-OFICINA_PARTE:1.0.0
+name: Oficina Parte
+domain: D-TDE

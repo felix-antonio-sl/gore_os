@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-ENTIDADREGIONAL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -100,3 +100,7 @@ invariants:
   name: municipio_requiere_comuna
   rule: tipo = 'Municipalidad' → comuna_id IS NOT NULL
   description: Municipio debe tener comuna asociada
+id: ENT-TDE-ENTIDADREGIONAL
+urn: urn:goreos:entity:d_tde:ENT-TDE-ENTIDADREGIONAL:1.0.0
+name: Entidadregional
+domain: D-TDE

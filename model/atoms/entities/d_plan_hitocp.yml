@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-HITOCP:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -81,3 +81,7 @@ invariants:
 
     '
   description: Hito cumplido debe tener fecha real
+id: ENT-PLAN-HITOCP
+urn: urn:goreos:entity:d_plan:ENT-PLAN-HITOCP:1.0.0
+name: Hitocp
+domain: D-PLAN

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-CABILDOTERRITORIAL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -83,3 +83,7 @@ attributes:
   type: Enum[Programado, Realizado, Cancelado, Sistematizado]
   default: Programado
   description: Estado del cabildo
+id: ENT-PLAN-CABILDOTERRITORIAL
+urn: urn:goreos:entity:d_plan:ENT-PLAN-CABILDOTERRITORIAL:1.0.0
+name: Cabildoterritorial
+domain: D-PLAN

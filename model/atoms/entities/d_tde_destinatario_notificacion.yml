@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-DESTINATARIO_NOTIFICACION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -57,3 +57,7 @@ invariants:
   name: lectura_requiere_entrega
   rule: fecha_lectura IS NOT NULL → fecha_entrega IS NOT NULL
   description: No puede marcarse como leído sin estar entregado
+id: ENT-TDE-DESTINATARIO_NOTIFICACION
+urn: urn:goreos:entity:d_tde:ENT-TDE-DESTINATARIO_NOTIFICACION:1.0.0
+name: Destinatario Notificacion
+domain: D-TDE

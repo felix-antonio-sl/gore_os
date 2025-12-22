@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_REMUNERACION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -247,3 +247,7 @@ invariants:
   name: bienios_maximo
   rule: asignacion_antiguedad <= (sueldo_base * 0.30)
   description: Bienios máximo 30% del sueldo base (15 bienios)
+id: ENT-BACK-PERSONAS_REMUNERACION
+urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_REMUNERACION:1.0.0
+name: Personas Remuneracion
+domain: D-BACK

@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:convenio:1.0.0
 name: Convenio de Transferencia
 domain: D-FIN
 subdomain: ipr_core
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_convenio

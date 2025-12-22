@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-DOCUMENTO_ELECTR_NICO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -123,3 +123,7 @@ invariants:
   name: firmado_requiere_datos
   rule: firmado = TRUE → firmante_id IS NOT NULL AND fecha_firma IS NOT NULL
   description: Documento firmado debe tener datos de firma
+id: ENT-TDE-DOCUMENTO_ELECTR_NICO
+urn: urn:goreos:entity:d_tde:ENT-TDE-DOCUMENTO_ELECTR_NICO:1.0.0
+name: Documento Electr Nico
+domain: D-TDE

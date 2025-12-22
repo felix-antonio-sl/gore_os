@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_seg:ENT-SEG-EVIDENCIA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -49,3 +49,7 @@ invariants:
   name: integridad_hash
   rule: hash_sha256 IS NOT NULL
   description: Evidencia debe tener Hash SHA-256 para integridad
+id: ENT-SEG-EVIDENCIA
+urn: urn:goreos:entity:d_seg:ENT-SEG-EVIDENCIA:1.0.0
+name: Evidencia
+domain: D-SEG

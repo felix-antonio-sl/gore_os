@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_back:ENT-BACK-TEM_34_07:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -126,3 +126,7 @@ invariants:
     \ OR estado = 'EnDisputa'\n"
   description: Alertar deudas de más de un año
   source: DL 1263
+id: ENT-BACK-TEM_34_07
+urn: urn:goreos:entity:d_back:ENT-BACK-TEM_34_07:1.0.0
+name: Tem 34 07
+domain: D-BACK

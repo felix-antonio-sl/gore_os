@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-ACUERDOINTERCAMBIODATOS:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -95,3 +95,7 @@ invariants:
   name: personales_requiere_finalidad
   rule: contiene_datos_personales = TRUE → finalidad IS NOT NULL
   description: Datos personales requieren finalidad explícita
+id: ENT-TDE-ACUERDOINTERCAMBIODATOS
+urn: urn:goreos:entity:d_tde:ENT-TDE-ACUERDOINTERCAMBIODATOS:1.0.0
+name: Acuerdointercambiodatos
+domain: D-TDE

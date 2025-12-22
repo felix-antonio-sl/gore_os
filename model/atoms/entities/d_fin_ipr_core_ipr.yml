@@ -157,7 +157,3 @@ invariants:
     IF estado = Cerrada THEN fase_actual = Cierre
 
     '
-specializations:
-- ENT-FIN-IDI
-- ENT-FIN-PPR
-- ENT-FIN-INI-C33

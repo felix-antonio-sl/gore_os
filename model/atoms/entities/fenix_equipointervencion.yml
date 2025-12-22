@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_equipointervencion:ENT-EQUIPOINTERVENCION-FENIX_EQUIPOINTERVENCION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -84,3 +84,7 @@ invariants:
   name: desvinculacion_post_incorporacion
   rule: fecha_desvinculacion IS NULL OR fecha_desvinculacion >= fecha_incorporacion
   description: Desvinculación no puede ser antes de incorporación
+id: ENT-EQUIPOINTERVENCION-FENIX_EQUIPOINTERVENCION
+urn: urn:goreos:entity:d_equipointervencion:ENT-EQUIPOINTERVENCION-FENIX_EQUIPOINTERVENCION:1.0.0
+name: Fenix Equipointervencion
+domain: D-EQUIPOINTERVENCION

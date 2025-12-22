@@ -6,7 +6,7 @@ id: ENT-EJEC-EVENTO_MULTA
 urn: urn:goreos:entity:d-ejec:evento-multa:1.0.0
 name: Evento de Multa
 domain: D-EJEC
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_multa

@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:nomina-pago:1.0.0
 name: Nómina de Pago
 domain: D-BACK
 subdomain: tesoreria
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_nomina

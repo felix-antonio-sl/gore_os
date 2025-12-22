@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-SERVICIO_INTEROPERABILIDAD:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -65,3 +65,7 @@ invariants:
   name: deprecado_requiere_fecha
   rule: estado = 'Deprecado' → fecha_deprecacion IS NOT NULL
   description: Servicios deprecados deben tener fecha
+id: ENT-TDE-SERVICIO_INTEROPERABILIDAD
+urn: urn:goreos:entity:d_tde:ENT-TDE-SERVICIO_INTEROPERABILIDAD:1.0.0
+name: Servicio Interoperabilidad
+domain: D-TDE

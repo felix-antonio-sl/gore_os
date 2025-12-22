@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:pago:1.0.0
 name: Pago
 domain: D-BACK
 subdomain: tesoreria
-category: Financial
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_pago

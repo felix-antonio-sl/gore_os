@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:bitacora-viaje:1.0.0
 name: Bitácora de Viaje
 domain: D-BACK
 subdomain: flota
-category: Operational
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_bitacora

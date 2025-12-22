@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:contrato:1.0.0
 name: Contrato Administrativo
 domain: D-FIN
 subdomain: compras
-category: Legal
+category: Reference
 is_abstract: false
 attributes:
 - name: id_contrato

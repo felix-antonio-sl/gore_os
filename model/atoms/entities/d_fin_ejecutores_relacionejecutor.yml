@@ -1,11 +1,13 @@
 _meta:
-  urn: urn:goreos:entity:d-fin-ejecutores:ENT-FIN-EJECUTORES-RELACIONEJECUTOR:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-EJECUTORES_RELACIONEJECUTOR:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
-id: ENT-FIN-EJECUTORES-RELACIONEJECUTOR
+id: ENT-FIN-EJECUTORES_RELACIONEJECUTOR
 name: RelacionEjecutor
-domain: D-FIN-EJECUTORES
+domain: D-FIN
 category: Reference
 is_abstract: true
 description: Entidad abstracta del dominio para la cual no existe definición de estructura
   de datos en el conocimiento actual.
+urn: urn:goreos:entity:d_fin:ENT-FIN-EJECUTORES_RELACIONEJECUTOR:1.0.0
+subdomain: ejecutores

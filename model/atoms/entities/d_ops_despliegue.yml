@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-DESPLIEGUE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -49,3 +49,7 @@ invariants:
   rule: "(SELECT es_protegido FROM Ambiente WHERE id_ambiente = ambiente_id) = TRUE\
     \ \n→ aprobado_por_id IS NOT NULL\n"
   description: Despliegue en ambiente protegido requiere aprobación
+id: ENT-OPS-DESPLIEGUE
+urn: urn:goreos:entity:d_ops:ENT-OPS-DESPLIEGUE:1.0.0
+name: Despliegue
+domain: D-OPS

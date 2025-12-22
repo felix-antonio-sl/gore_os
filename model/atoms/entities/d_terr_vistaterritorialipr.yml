@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_terr:ENT-TERR-VISTATERRITORIALIPR:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -96,3 +96,7 @@ invariants:
     '
   description: Vista disponible requiere fecha
   severity: error
+id: ENT-TERR-VISTATERRITORIALIPR
+urn: urn:goreos:entity:d_terr:ENT-TERR-VISTATERRITORIALIPR:1.0.0
+name: Vistaterritorialipr
+domain: D-TERR

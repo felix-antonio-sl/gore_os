@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:declaracion-jurada:1.0.0
 name: Declaración Jurada de Probidad
 domain: D-BACK
 subdomain: personas
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_declaracion

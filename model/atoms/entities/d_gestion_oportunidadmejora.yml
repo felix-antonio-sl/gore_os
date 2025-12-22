@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-OPORTUNIDADMEJORA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -100,3 +100,7 @@ invariants:
   rule: estado = 'Descartada' → motivo_descarte IS NOT NULL
   description: Descarte debe justificarse
   severity: warning
+id: ENT-GESTION-OPORTUNIDADMEJORA
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-OPORTUNIDADMEJORA:1.0.0
+name: Oportunidadmejora
+domain: D-GESTION

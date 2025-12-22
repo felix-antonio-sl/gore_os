@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-ADR:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -61,3 +61,7 @@ invariants:
   name: superseded_has_replacement
   rule: estado = 'Superseded' → superseded_by IS NOT NULL
   description: ADR reemplazado debe referenciar su reemplazo
+id: ENT-DEV-ADR
+urn: urn:goreos:entity:d_dev:ENT-DEV-ADR:1.0.0
+name: Adr
+domain: D-DEV

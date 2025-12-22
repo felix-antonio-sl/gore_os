@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:cdp:1.0.0
 name: Certificado de Disponibilidad Presupuestaria
 domain: D-FIN
 subdomain: presupuesto
-category: Control
+category: Reference
 is_abstract: false
 attributes:
 - name: id_cdp

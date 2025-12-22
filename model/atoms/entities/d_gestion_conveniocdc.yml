@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-CONVENIOCDC:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -87,3 +87,7 @@ invariants:
   rule: SUM(metas_gestion[*].ponderacion + metas_eficiencia[*].ponderacion) = 100
   description: Ponderaciones deben sumar 100%
   severity: error
+id: ENT-GESTION-CONVENIOCDC
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-CONVENIOCDC:1.0.0
+name: Conveniocdc
+domain: D-GESTION

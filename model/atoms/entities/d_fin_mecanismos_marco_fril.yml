@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_MARCO_FRIL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -159,3 +159,7 @@ invariants:
 
     '
   description: No se puede adjudicar más de lo postulado
+id: ENT-FIN-MECANISMOS_MARCO_FRIL
+urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_MARCO_FRIL:1.0.0
+name: Mecanismos Marco Fril
+domain: D-FIN

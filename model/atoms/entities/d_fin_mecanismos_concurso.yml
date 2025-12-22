@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_CONCURSO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -129,3 +129,7 @@ invariants:
 
     '
   source: Glosa 16 / Ley 19.886
+id: ENT-FIN-MECANISMOS_CONCURSO
+urn: urn:goreos:entity:d_fin:ENT-FIN-MECANISMOS_CONCURSO:1.0.0
+name: Mecanismos Concurso
+domain: D-FIN

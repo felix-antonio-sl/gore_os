@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-MEDICIONINDICADOR:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -70,3 +70,7 @@ invariants:
   rule: periodo MATCHES '^[0-9]{4}(-T[1-4])?$'
   description: Formato de período válido (2024 o 2024-T3)
   severity: warning
+id: ENT-PLAN-MEDICIONINDICADOR
+urn: urn:goreos:entity:d_plan:ENT-PLAN-MEDICIONINDICADOR:1.0.0
+name: Medicionindicador
+domain: D-PLAN

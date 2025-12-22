@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gestion:ENT-GESTION-PROYECTOMEJORA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -99,3 +99,7 @@ invariants:
   rule: fase_actual IN ('Check', 'Act', 'Cerrado') → metricas_impacto IS NOT NULL
   description: Fase Check requiere métricas
   severity: warning
+id: ENT-GESTION-PROYECTOMEJORA
+urn: urn:goreos:entity:d_gestion:ENT-GESTION-PROYECTOMEJORA:1.0.0
+name: Proyectomejora
+domain: D-GESTION

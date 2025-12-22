@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-PLATAFORMA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -83,3 +83,7 @@ invariants:
   name: produccion_requiere_url
   rule: estado_integracion = 'Produccion' → url_produccion IS NOT NULL
   description: Plataforma en producción debe tener URL
+id: ENT-TDE-PLATAFORMA
+urn: urn:goreos:entity:d_tde:ENT-TDE-PLATAFORMA:1.0.0
+name: Plataforma
+domain: D-TDE

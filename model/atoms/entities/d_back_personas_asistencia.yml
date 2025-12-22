@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_ASISTENCIA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -104,3 +104,7 @@ invariants:
   name: justificacion_dentro_plazo
   rule: fecha_justificacion <= fecha + 5 días hábiles
   description: Justificación debe hacerse dentro de 5 días hábiles
+id: ENT-BACK-PERSONAS_ASISTENCIA
+urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_ASISTENCIA:1.0.0
+name: Personas Asistencia
+domain: D-BACK

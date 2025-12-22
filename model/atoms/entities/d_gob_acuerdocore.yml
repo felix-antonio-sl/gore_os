@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_gob:ENT-GOB-ACUERDOCORE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -98,3 +98,7 @@ invariants:
     '
   description: Voto dirimente solo en empate
   severity: warning
+id: ENT-GOB-ACUERDOCORE
+urn: urn:goreos:entity:d_gob:ENT-GOB-ACUERDOCORE:1.0.0
+name: Acuerdocore
+domain: D-GOB

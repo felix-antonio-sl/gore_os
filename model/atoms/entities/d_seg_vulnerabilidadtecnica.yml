@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_seg:ENT-SEG-VULNERABILIDADTECNICA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -52,3 +52,7 @@ invariants:
   name: resuelta_requiere_fecha
   rule: estado = 'Mitigada' → fecha_resolucion IS NOT NULL
   description: Vulnerabilidad mitigada debe tener fecha
+id: ENT-SEG-VULNERABILIDADTECNICA
+urn: urn:goreos:entity:d_seg:ENT-SEG-VULNERABILIDADTECNICA:1.0.0
+name: Vulnerabilidadtecnica
+domain: D-SEG

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_evol:ENT-EVOL-NIVELMADUREZ:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -65,3 +65,7 @@ invariants:
     'Algoritmico'
   description: L4/L5 requiere capacidades algorítmicas (I7_Emergencia)
   orko_ref: I7_Emergencia
+id: ENT-EVOL-NIVELMADUREZ
+urn: urn:goreos:entity:d_evol:ENT-EVOL-NIVELMADUREZ:1.0.0
+name: Nivelmadurez
+domain: D-EVOL

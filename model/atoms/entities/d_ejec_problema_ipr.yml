@@ -6,7 +6,7 @@ id: ENT-EJEC-PROBLEMA_IPR
 urn: urn:goreos:entity:d-ejec:problema-ipr:1.0.0
 name: Problema de IPR
 domain: D-EJEC
-category: Operational
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_problema

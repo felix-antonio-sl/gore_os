@@ -6,7 +6,7 @@ id: ENT-EJEC-RIESGO_CONVENIO
 urn: urn:goreos:entity:d-ejec:riesgo-convenio:1.0.0
 name: Riesgo de Convenio
 domain: D-EJEC
-category: Control
+category: Reference
 is_abstract: false
 attributes:
 - name: id_riesgo

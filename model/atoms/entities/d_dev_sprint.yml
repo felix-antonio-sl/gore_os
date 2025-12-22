@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_dev:ENT-DEV-SPRINT:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -52,3 +52,7 @@ invariants:
   name: numero_unico
   rule: UNIQUE(numero)
   description: El número de sprint debe ser único
+id: ENT-DEV-SPRINT
+urn: urn:goreos:entity:d_dev:ENT-DEV-SPRINT:1.0.0
+name: Sprint
+domain: D-DEV

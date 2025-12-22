@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-OBJETIVOESTRATEGICO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -97,3 +97,7 @@ invariants:
     '
   description: Objetivo sin IPRs debe alertarse
   source: domain_d-plan.md
+id: ENT-PLAN-OBJETIVOESTRATEGICO
+urn: urn:goreos:entity:d_plan:ENT-PLAN-OBJETIVOESTRATEGICO:1.0.0
+name: Objetivoestrategico
+domain: D-PLAN

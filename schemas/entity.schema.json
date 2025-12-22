@@ -40,6 +40,10 @@
       "enum": ["Master", "Transaction", "Reference", "Event", "Aggregate"],
       "description": "Clasificación DDD"
     },
+    "description": {
+      "type": "string",
+      "description": "Descripción conceptual de la entidad"
+    },
     "is_abstract": {
       "type": "boolean",
       "default": false,
@@ -60,7 +64,7 @@
           "type": { "type": "string" },
           "key": { "type": "boolean" },
           "nullable": { "type": "boolean" },
-          "fk": { "type": "string", "pattern": "^ENT-" },
+          "fk": { "type": "string", "pattern": "^(ENT|ROL)-" },
           "description": { "type": "string" }
         }
       }

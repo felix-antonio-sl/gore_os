@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-EXPEDIENTE_ELECTR_NICO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -143,3 +143,7 @@ invariants:
   rule: total_folios = COUNT(DocumentoElectronico WHERE expediente_id = this.id)
   description: Total folios debe coincidir con documentos
   severity: warning
+id: ENT-TDE-EXPEDIENTE_ELECTR_NICO
+urn: urn:goreos:entity:d_tde:ENT-TDE-EXPEDIENTE_ELECTR_NICO:1.0.0
+name: Expediente Electr Nico
+domain: D-TDE

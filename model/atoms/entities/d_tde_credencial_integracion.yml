@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-CREDENCIAL_INTEGRACION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -83,3 +83,7 @@ invariants:
   rule: ambiente = 'Produccion' → NOT ANY(uri IN redirect_uris WHERE uri CONTAINS
     'localhost')
   description: No se permite localhost en producción
+id: ENT-TDE-CREDENCIAL_INTEGRACION
+urn: urn:goreos:entity:d_tde:ENT-TDE-CREDENCIAL_INTEGRACION:1.0.0
+name: Credencial Integracion
+domain: D-TDE

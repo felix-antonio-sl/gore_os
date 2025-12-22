@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_bitacoraintervencion:ENT-BITACORAINTERVENCION-FENIX_BITACORAINTERVENCION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -69,3 +69,7 @@ invariants:
   rule: requiere_seguimiento = TRUE → seguimiento_id IS NOT NULL OR seguimiento_completado
     = FALSE
   description: Seguimiento pendiente o referenciado
+id: ENT-BITACORAINTERVENCION-FENIX_BITACORAINTERVENCION
+urn: urn:goreos:entity:d_bitacoraintervencion:ENT-BITACORAINTERVENCION-FENIX_BITACORAINTERVENCION:1.0.0
+name: Fenix Bitacoraintervencion
+domain: D-BITACORAINTERVENCION

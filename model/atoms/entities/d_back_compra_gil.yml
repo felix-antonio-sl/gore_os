@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_back:ENT-BACK-COMPRA_GIL:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -136,3 +136,7 @@ invariants:
     \ NOT NULL\n"
   description: Único proveedor requiere justificación
   severity: error
+id: ENT-BACK-COMPRA_GIL
+urn: urn:goreos:entity:d_back:ENT-BACK-COMPRA_GIL:1.0.0
+name: Compra Gil
+domain: D-BACK

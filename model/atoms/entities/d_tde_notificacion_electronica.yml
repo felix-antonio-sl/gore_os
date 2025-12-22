@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-NOTIFICACION_ELECTRONICA:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -91,3 +91,7 @@ invariants:
   name: procedimiento_obligatorio_si_notificacion
   rule: tipo_mensaje = 'NT' → procedimiento_code IS NOT NULL
   description: Notificaciones requieren código de procedimiento
+id: ENT-TDE-NOTIFICACION_ELECTRONICA
+urn: urn:goreos:entity:d_tde:ENT-TDE-NOTIFICACION_ELECTRONICA:1.0.0
+name: Notificacion Electronica
+domain: D-TDE

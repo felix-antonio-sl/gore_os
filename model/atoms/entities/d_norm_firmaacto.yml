@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_norm:ENT-NORM-FIRMAACTO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -55,3 +55,7 @@ invariants:
     '
   description: FEA firmada requiere URL de verificación
   severity: warning
+id: ENT-NORM-FIRMAACTO
+urn: urn:goreos:entity:d_norm:ENT-NORM-FIRMAACTO:1.0.0
+name: Firmaacto
+domain: D-NORM

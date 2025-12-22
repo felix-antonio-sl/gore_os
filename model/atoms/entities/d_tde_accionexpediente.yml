@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-ACCIONEXPEDIENTE:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -86,3 +86,7 @@ invariants:
   rule: tipo_accion = 'Derivar' → custodia_anterior_id IS NOT NULL AND custodia_nueva_id
     IS NOT NULL
   description: Derivación debe registrar custodias
+id: ENT-TDE-ACCIONEXPEDIENTE
+urn: urn:goreos:entity:d_tde:ENT-TDE-ACCIONEXPEDIENTE:1.0.0
+name: Accionexpediente
+domain: D-TDE

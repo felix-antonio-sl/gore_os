@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_plan:ENT-PLAN-ANTEPROYECTO_REGIONAL_DE_INVERSIONES:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -95,3 +95,7 @@ invariants:
 
     '
   description: Estado Aprobado requiere acuerdo CORE
+id: ENT-PLAN-ANTEPROYECTO_REGIONAL_DE_INVERSIONES
+urn: urn:goreos:entity:d_plan:ENT-PLAN-ANTEPROYECTO_REGIONAL_DE_INVERSIONES:1.0.0
+name: Anteproyecto Regional De Inversiones
+domain: D-PLAN

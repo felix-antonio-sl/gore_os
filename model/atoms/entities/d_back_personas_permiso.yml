@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_PERMISO:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -159,3 +159,7 @@ invariants:
   rule: fecha_solicitud <= fecha_inicio
   description: La solicitud debe ser previa al permiso
   exception: Licencias médicas pueden ser posteriores
+id: ENT-BACK-PERSONAS_PERMISO
+urn: urn:goreos:entity:d_back:ENT-BACK-PERSONAS_PERMISO:1.0.0
+name: Personas Permiso
+domain: D-BACK

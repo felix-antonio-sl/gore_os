@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_tde:ENT-TDE-CONJUNTO_DATOS_ABIERTOS:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -69,3 +69,7 @@ invariants:
   name: al_menos_tres_estrellas
   rule: formato_principal IN ('CSV', 'JSON', 'XML', 'GeoJSON')
   description: Formatos deben alcanzar al menos 3 estrellas Tim Berners-Lee
+id: ENT-TDE-CONJUNTO_DATOS_ABIERTOS
+urn: urn:goreos:entity:d_tde:ENT-TDE-CONJUNTO_DATOS_ABIERTOS:1.0.0
+name: Conjunto Datos Abiertos
+domain: D-TDE

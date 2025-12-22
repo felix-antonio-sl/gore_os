@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-CONFIGURACION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -51,3 +51,7 @@ invariants:
   name: secreto_tipo_consistente
   rule: es_secreto = true → tipo_valor = 'Secret'
   description: Secretos deben marcarse correctamente
+id: ENT-OPS-CONFIGURACION
+urn: urn:goreos:entity:d_ops:ENT-OPS-CONFIGURACION:1.0.0
+name: Configuracion
+domain: D-OPS

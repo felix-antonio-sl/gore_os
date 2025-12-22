@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_recursointervencion:ENT-RECURSOINTERVENCION-FENIX_RECURSOINTERVENCION:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -98,3 +98,7 @@ invariants:
   rule: tipo_recurso = 'Financiero' → item_presupuestario_id IS NOT NULL
   description: Recurso financiero debe tener ítem presupuestario
   severity: warning
+id: ENT-RECURSOINTERVENCION-FENIX_RECURSOINTERVENCION
+urn: urn:goreos:entity:d_recursointervencion:ENT-RECURSOINTERVENCION-FENIX_RECURSOINTERVENCION:1.0.0
+name: Fenix Recursointervencion
+domain: D-RECURSOINTERVENCION

@@ -1,5 +1,5 @@
 _meta:
-  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  urn: urn:goreos:entity:d_ops:ENT-OPS-TICKET:1.0.0
   type: Entity
   schema: urn:goreos:schema:entity:1.0.0
 category: Master
@@ -72,3 +72,7 @@ invariants:
   name: critico_tiene_asignado
   rule: severidad = 'Critico' AND estado ≠ 'Nuevo' → asignado_a_id IS NOT NULL
   description: Ticket crítico debe tener asignado
+id: ENT-OPS-TICKET
+urn: urn:goreos:entity:d_ops:ENT-OPS-TICKET:1.0.0
+name: Ticket
+domain: D-OPS

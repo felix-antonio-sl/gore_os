@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:solicitud-vehiculo:1.0.0
 name: Solicitud de Vehículo
 domain: D-BACK
 subdomain: flotas
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_solicitud

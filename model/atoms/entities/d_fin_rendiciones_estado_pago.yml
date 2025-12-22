@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-fin:estado-pago:1.0.0
 name: Estado de Pago
 domain: D-FIN
 subdomain: rendiciones
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_estado_pago

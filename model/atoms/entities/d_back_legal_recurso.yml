@@ -7,7 +7,7 @@ urn: urn:goreos:entity:d-back:recurso-administrativo:1.0.0
 name: Recurso Administrativo
 domain: D-BACK
 subdomain: legal
-category: Transactional
+category: Transaction
 is_abstract: false
 attributes:
 - name: id_recurso
