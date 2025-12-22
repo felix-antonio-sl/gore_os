@@ -1,133 +1,72 @@
-# ==============================================================================
-# GORE_OS Entity Atom: MedicionIndicador (Serie Temporal de Indicadores)
-# ==============================================================================
-# Domain: D-PLAN (Strategic Planning)
-# Subdomain: Observatorio
-# Source: domain_d-plan.md P5, dialogo_dplan_dterr.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-PLAN
-  subdomain: observatorio
-  kb_source:
-    - "domain_d-plan.md P5"
-    - "dialogo_dplan_dterr.md"
-
-entity:
-  id: ENT-PLAN-MEDICION
-  name: MedicionIndicador
-  name_es: Medición de Indicador ERD
-  description: |
-    Registro de una medición específica de un indicador ERD en un período
-    determinado. Forma la serie temporal que alimenta el tablero de
-    avance de la ERD y el Observatorio Regional.
-
-  purpose: |
-    Modelar mediciones para:
-    - Series temporales de indicadores
-    - Comparación con metas ERD
-    - Cálculo de brechas
-    - Alimentar dashboards de avance
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_medicion
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: indicador_id
-    type: String
-    fk: ENT-PLAN-INDICADOR-ERD
-    nullable: false
-    description: Indicador medido
-
-  - name: comuna_id
-    type: String
-    fk: ENT-TERR-COMUNA
-    nullable: true
-    description: Comuna para desagregación (null = regional)
-
-  # Temporalidad
-  - name: periodo
-    type: String
-    nullable: false
-    description: Período de la medición (ej. "2024-T3", "2024")
-
-  - name: año
-    type: Integer
-    nullable: false
-    description: Año de la medición
-
-  - name: trimestre
-    type: Integer
-    nullable: true
-    description: Trimestre (1-4) si aplica
-
-  # Valor
-  - name: valor_real
-    type: Decimal
-    nullable: false
-    description: Valor medido del indicador
-
-  - name: meta_periodo
-    type: Decimal
-    nullable: true
-    description: Meta para este período
-
-  - name: avance_porcentual
-    type: Decimal
-    computed: true
-    formula: (valor_real / meta_periodo) * 100
-    description: Porcentaje de cumplimiento
-
-  # Fuente
-  - name: fuente_dato
-    type: String
-    nullable: true
-    description: Origen del dato (INE, CASEN, etc.)
-
-  - name: url_fuente
-    type: String
-    nullable: true
-    description: URL de la fuente original
-
-  - name: fecha_registro
-    type: Date
-    nullable: false
-    description: Fecha de registro en el sistema
-
-  # Calidad
-  - name: confiabilidad
-    type: Enum[Alta, Media, Baja]
-    default: Media
-    description: Nivel de confianza en el dato
-
-  - name: observaciones
-    type: Text
-    nullable: true
-    description: Notas sobre la medición
-
+- name: id_medicion
+  type: String
+  key: true
+  description: Identificador único
+- name: indicador_id
+  type: String
+  fk: ENT-PLAN-INDICADOR-ERD
+  nullable: false
+  description: Indicador medido
+- name: comuna_id
+  type: String
+  fk: ENT-TERR-COMUNA
+  nullable: true
+  description: Comuna para desagregación (null = regional)
+- name: periodo
+  type: String
+  nullable: false
+  description: Período de la medición (ej. "2024-T3", "2024")
+- name: año
+  type: Integer
+  nullable: false
+  description: Año de la medición
+- name: trimestre
+  type: Integer
+  nullable: true
+  description: Trimestre (1-4) si aplica
+- name: valor_real
+  type: Decimal
+  nullable: false
+  description: Valor medido del indicador
+- name: meta_periodo
+  type: Decimal
+  nullable: true
+  description: Meta para este período
+- name: avance_porcentual
+  type: Decimal
+  computed: true
+  formula: (valor_real / meta_periodo) * 100
+  description: Porcentaje de cumplimiento
+- name: fuente_dato
+  type: String
+  nullable: true
+  description: Origen del dato (INE, CASEN, etc.)
+- name: url_fuente
+  type: String
+  nullable: true
+  description: URL de la fuente original
+- name: fecha_registro
+  type: Date
+  nullable: false
+  description: Fecha de registro en el sistema
+- name: confiabilidad
+  type: Enum[Alta, Media, Baja]
+  default: Media
+  description: Nivel de confianza en el dato
+- name: observaciones
+  type: Text
+  nullable: true
+  description: Notas sobre la medición
 invariants:
-  - id: INV-MED-001
-    name: periodo_formato
-    rule: periodo MATCHES '^[0-9]{4}(-T[1-4])?$'
-    description: Formato de período válido (2024 o 2024-T3)
-    severity: warning
-
-morphisms:
-  mide: [ENT-PLAN-INDICADOR-ERD]
-  localizada_en: [ENT-TERR-COMUNA]
-  genera: [ENT-TERR-BRECHARD]
-
-audit:
-  fields_tracked:
-    - valor_real
-  retention_years: 15
+- id: INV-MED-001
+  name: periodo_formato
+  rule: periodo MATCHES '^[0-9]{4}(-T[1-4])?$'
+  description: Formato de período válido (2024 o 2024-T3)
+  severity: warning

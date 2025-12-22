@@ -9,20 +9,10 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-EJEC-HITO
+  target: ENT-PLAN-HITO-CP
 - source: ''
-  target: ENT-EJEC-EP
+  target: ENT-PLAN-LINEAMIENTO
 - source: ''
-  target: ENT-EJEC-GARANTIA
+  target: ENT-PLAN-OE
 - source: ''
-  target: ENT-EJEC-MODCONV
-- source: ''
-  target: ENT-GESTION-INDICADOR-POA
-- source: ''
-  target: ENT-GESTION-DIMENSION-SALUD
-- source: ''
-  target: ENT-GOB-VOTACION
-- source: ''
-  target: ENT-OPS-RECURSO
-- source: ''
-  target: ENT-PLAN-LINEA-ARI
+  target: ENT-PLAN-ZONA-PROT

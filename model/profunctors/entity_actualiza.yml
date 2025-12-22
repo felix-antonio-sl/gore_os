@@ -9,4 +9,6 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-OPS-AMBIENTE
+  target: Procedimiento
+- source: ''
+  target: Manual

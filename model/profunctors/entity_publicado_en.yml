@@ -8,5 +8,9 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-FIN-LICITACION
+- source: ENT-FIN-PLAN_COMPRAS
   target: MercadoPublico
+- source: ''
+  target: ENT-TDE-PLATAFORMA
+- source: ''
+  target: Observatorio

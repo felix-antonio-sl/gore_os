@@ -1,157 +1,86 @@
-# ==============================================================================
-# GORE_OS Entity Atom: EquipoIntervencion (Equipo de Intervención)
-# ==============================================================================
-# Domain: FENIX (Unidad de Intervención Institucional)
-# Subdomain: Core
-# Source: domain_fenix.md, dialogo_riguroso_fenix.md
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-22"
-  updated_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + AR Virtual + Arquitecto ORKO"
-  domain: FENIX
-  subdomain: core
-  kb_source:
-    - "domain_fenix.md"
-    - "dialogo_orquestado_dgestion_fenix.md (P2 refinement)"
-
-entity:
-  id: ENT-FENIX-EQUIPO
-  name: EquipoIntervencion
-  name_es: Equipo de Intervención
-  description: |
-    Vincula funcionarios a una intervención institucional.
-
-    Equipo base (3-4 funcionarios):
-    - Jefe de Intervención
-    - Analista de Gestión
-    - Asesor Jurídico
-    - Especialista en Procesos
-    - Referente Técnico (enlace con área intervenida)
-
-    Especialistas de apoyo se incorporan según dominio afectado.
-
-  purpose: |
-    Modelar equipos de intervención para:
-    - Asignar funcionarios a intervenciones
-    - Definir roles y especialidades
-    - Registrar horas dedicadas
-    - Balancear carga de trabajo
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_asignacion
-    type: String
-    key: true
-    description: "Identificador único de asignación"
-
-  - name: intervencion_id
-    type: String
-    fk: ENT-FENIX-INTERVENCION
-    nullable: false
-    description: Intervención a la que pertenece
-
-  - name: funcionario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Funcionario asignado
-
-  # Rol
-  - name: rol
-    type: Enum[Jefe, Analista, Juridico, Procesos, ReferenteTecnico, Apoyo]
-    nullable: false
-    description: Rol en la intervención
-
-  - name: area_especialidad
-    type: Enum[D-FIN, D-EJEC, D-GOB, D-NORM, D-BACK, D-TDE, D-EVOL, D-SEG, D-PLAN, D-TERR, General]
-    nullable: true
-    description: Dominio de especialidad
-
-  # Dedicación
-  - name: horas_asignadas
-    type: Integer
-    default: 0
-    description: Horas planificadas
-
-  - name: horas_efectivas
-    type: Integer
-    default: 0
-    description: Horas reales trabajadas
-
-  - name: dedicacion_porcentual
-    type: Integer
-    nullable: true
-    description: "Porcentaje de dedicación (0-100)"
-
-  # Período
-  - name: fecha_incorporacion
-    type: Date
-    nullable: false
-    description: Fecha de incorporación al equipo
-
-  - name: fecha_desvinculacion
-    type: Date
-    nullable: true
-    description: Fecha de salida del equipo
-
-  - name: activo
-    type: Boolean
-    default: true
-    description: ¿Actualmente activo en el equipo?
-
-  # Observaciones
-  - name: observaciones
-    type: Text
-    nullable: true
-    description: Notas sobre el funcionario en la intervención
-
-  # ===== ATRIBUTOS P2 (dialogo_orquestado) =====
-  - name: es_subrogante
-    type: Boolean
-    default: false
-    description: "¿Reemplaza a otro miembro del equipo?"
-
-  - name: subroga_a_id
-    type: String
-    nullable: true
-    description: ID del miembro original si es subrogante
-
-  - name: es_externo
-    type: Boolean
-    default: false
-    description: "¿Es asesor/experto externo (no funcionario GORE)?"
-
-  - name: nombre_externo
-    type: String
-    nullable: true
-    description: "Nombre completo si es externo"
-
+- name: id_asignacion
+  type: String
+  key: true
+  description: Identificador único de asignación
+- name: intervencion_id
+  type: String
+  fk: ENT-FENIX-INTERVENCION
+  nullable: false
+  description: Intervención a la que pertenece
+- name: funcionario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Funcionario asignado
+- name: rol
+  type: Enum[Jefe, Analista, Juridico, Procesos, ReferenteTecnico, Apoyo]
+  nullable: false
+  description: Rol en la intervención
+- name: area_especialidad
+  type: Enum[D-FIN, D-EJEC, D-GOB, D-NORM, D-BACK, D-TDE, D-EVOL, D-SEG, D-PLAN, D-TERR,
+    General]
+  nullable: true
+  description: Dominio de especialidad
+- name: horas_asignadas
+  type: Integer
+  default: 0
+  description: Horas planificadas
+- name: horas_efectivas
+  type: Integer
+  default: 0
+  description: Horas reales trabajadas
+- name: dedicacion_porcentual
+  type: Integer
+  nullable: true
+  description: Porcentaje de dedicación (0-100)
+- name: fecha_incorporacion
+  type: Date
+  nullable: false
+  description: Fecha de incorporación al equipo
+- name: fecha_desvinculacion
+  type: Date
+  nullable: true
+  description: Fecha de salida del equipo
+- name: activo
+  type: Boolean
+  default: true
+  description: ¿Actualmente activo en el equipo?
+- name: observaciones
+  type: Text
+  nullable: true
+  description: Notas sobre el funcionario en la intervención
+- name: es_subrogante
+  type: Boolean
+  default: false
+  description: ¿Reemplaza a otro miembro del equipo?
+- name: subroga_a_id
+  type: String
+  nullable: true
+  description: ID del miembro original si es subrogante
+- name: es_externo
+  type: Boolean
+  default: false
+  description: ¿Es asesor/experto externo (no funcionario GORE)?
+- name: nombre_externo
+  type: String
+  nullable: true
+  description: Nombre completo si es externo
 invariants:
-  - id: INV-EQ-001
-    name: un_jefe_por_intervencion
-    rule: |
-      COUNT(WHERE rol = 'Jefe' AND intervencion_id = X AND activo = TRUE) = 1
-    description: Cada intervención tiene exactamente un jefe activo
-    severity: error
+- id: INV-EQ-001
+  name: un_jefe_por_intervencion
+  rule: 'COUNT(WHERE rol = ''Jefe'' AND intervencion_id = X AND activo = TRUE) = 1
 
-  - id: INV-EQ-002
-    name: desvinculacion_post_incorporacion
-    rule: fecha_desvinculacion IS NULL OR fecha_desvinculacion >= fecha_incorporacion
-    description: Desvinculación no puede ser antes de incorporación
-
-morphisms:
-  pertenece_a: [ENT-FENIX-INTERVENCION]
-  asigna_a: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - activo
-    - horas_efectivas
-  retention_years: 5
+    '
+  description: Cada intervención tiene exactamente un jefe activo
+  severity: error
+- id: INV-EQ-002
+  name: desvinculacion_post_incorporacion
+  rule: fecha_desvinculacion IS NULL OR fecha_desvinculacion >= fecha_incorporacion
+  description: Desvinculación no puede ser antes de incorporación

@@ -8,31 +8,7 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-TOMA_INVENTARIO
-  target: ComisionInventario
-- source: ENT-BACK-BITACORA_VIAJE
-  target: ROL-FUNCIONARIO
-- source: ENT-BACK-OT_VEHICULAR
-  target: ENT-FIN-PROVEEDOR
-- source: ENT-BACK-MOVIMIENTO_ACTIVO
-  target: ROL-ENC-ACTIVO-FIJO
+- source: ENT-FIN-LINEA_PAC
+  target: ENT-FIN-ORDEN_COMPRA
 - source: ''
-  target: ENT-EJEC-EJECUTOR
-- source: ENT-FIN-RECEPCION_CONFORME
-  target: ROL-BODEGA
-- source: ENT-FIN-RECEPCION_CONFORME
-  target: ROL-AREA-SOLICITANTE
-- source: ENT-FIN-IPR
-  target: ENT-FIN-ACTOR_IPR
-- source: ENT-FIN-PPR
-  target: GORE_Directo
-- source: ENT-FIN-PPR
-  target: EntidadReceptora
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: ENT-OPS-USUARIO-SISTEMA
+  target: ENT-FENIX-EQUIPO

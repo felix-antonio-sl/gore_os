@@ -1,171 +1,98 @@
-# ==============================================================================
-# GORE_OS Entity Atom: VistaTerritorialIPR (Agregación Geoespacial de IPRs)
-# ==============================================================================
-# Domain: D-TERR (Inteligencia Territorial)
-# Subdomain: Infraestructura de Datos Espaciales
-# Source: domain_d-terr.md M2, dialogo_dplan_dterr.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + Goreólogo"
-  domain: D-TERR
-  subdomain: ide
-  kb_source:
-    - "domain_d-terr.md M2: Visor Inversiones"
-    - "dialogo_dplan_dterr.md"
-
-entity:
-  id: ENT-TERR-VISTA-IPR
-  name: VistaTerritorialIPR
-  name_es: Vista Territorial de IPRs
-  description: |
-    Materialización de una vista geoespacial que agrega IPRs por
-    criterios territoriales (comuna, provincia, zonaPROT, etc.).
-
-    Permite generar mapas temáticos de inversión regional para
-    el visor web público y dashboards internos.
-
-    Cada vista representa un snapshot de agregación con su
-    fecha de generación y filtros aplicados.
-
-  purpose: |
-    Modelar agregaciones geoespaciales para:
-    - Mapas de calor de inversión por comuna
-    - Distribución territorial de fondos (FNDR, FRPD, etc.)
-    - Análisis de equidad territorial
-    - Exposición pública de inversiones (transparencia)
-
-  categorical_type: Object
-  is_abstract: false
-  category: Derived
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_vista
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre descriptivo de la vista
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción del propósito
-
-  # Agregación
-  - name: tipo_agregacion
-    type: Enum[PorComuna, PorProvincia, PorZonaPROT, PorEje, PorFuente, Personalizado]
-    nullable: false
-    description: Tipo de agregación territorial
-
-  - name: campo_agregacion
-    type: String
-    nullable: true
-    description: Campo por el que se agrupa
-
-  - name: funcion_agregacion
-    type: Enum[Count, Sum, Avg, Max, Min]
-    default: Sum
-    description: Función de agregación sobre montos
-
-  # Filtros
-  - name: filtro_estado_ipr
-    type: Array[String]
-    nullable: true
-    description: Estados de IPR incluidos
-
-  - name: filtro_fuente
-    type: Array[String]
-    nullable: true
-    description: Fuentes de financiamiento incluidas
-
-  - name: filtro_anio_inicio
-    type: Integer
-    nullable: true
-    description: Año mínimo de las IPRs
-
-  - name: filtro_anio_fin
-    type: Integer
-    nullable: true
-    description: Año máximo de las IPRs
-
-  - name: filtro_eje_erd
-    type: String
-    fk: ENT-PLAN-EJE
-    nullable: true
-    description: Filtrar por eje ERD específico
-
-  # Resultado
-  - name: fecha_generacion
-    type: DateTime
-    nullable: false
-    description: Fecha/hora de generación del snapshot
-
-  - name: cantidad_iprs
-    type: Integer
-    default: 0
-    description: Número de IPRs en la vista
-
-  - name: monto_total
-    type: Decimal
-    default: 0
-    description: Suma de montos en M$
-
-  - name: geometria_agregada
-    type: Geometry
-    geometry_type: GeometryCollection
-    nullable: true
-    description: Geometría resultante de la agregación
-
-  # Publicación
-  - name: es_publica
-    type: Boolean
-    default: false
-    description: ¿Visible en visor público?
-
-  - name: capa_id
-    type: String
-    fk: ENT-TERR-CAPA
-    nullable: true
-    description: Capa geoespacial asociada
-
-  # Estado
-  - name: estado
-    type: Enum[Generando, Disponible, Expirada, Error]
-    default: Generando
-    description: Estado de la vista
-
-  - name: url_geojson
-    type: String
-    nullable: true
-    description: URL del GeoJSON generado
-
-  - name: url_wms
-    type: String
-    nullable: true
-    description: URL del servicio WMS si aplica
-
+- name: id_vista
+  type: String
+  key: true
+  description: Identificador único
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre descriptivo de la vista
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción del propósito
+- name: tipo_agregacion
+  type: Enum[PorComuna, PorProvincia, PorZonaPROT, PorEje, PorFuente, Personalizado]
+  nullable: false
+  description: Tipo de agregación territorial
+- name: campo_agregacion
+  type: String
+  nullable: true
+  description: Campo por el que se agrupa
+- name: funcion_agregacion
+  type: Enum[Count, Sum, Avg, Max, Min]
+  default: Sum
+  description: Función de agregación sobre montos
+- name: filtro_estado_ipr
+  type: Array[String]
+  nullable: true
+  description: Estados de IPR incluidos
+- name: filtro_fuente
+  type: Array[String]
+  nullable: true
+  description: Fuentes de financiamiento incluidas
+- name: filtro_anio_inicio
+  type: Integer
+  nullable: true
+  description: Año mínimo de las IPRs
+- name: filtro_anio_fin
+  type: Integer
+  nullable: true
+  description: Año máximo de las IPRs
+- name: filtro_eje_erd
+  type: String
+  fk: ENT-PLAN-EJE
+  nullable: true
+  description: Filtrar por eje ERD específico
+- name: fecha_generacion
+  type: DateTime
+  nullable: false
+  description: Fecha/hora de generación del snapshot
+- name: cantidad_iprs
+  type: Integer
+  default: 0
+  description: Número de IPRs en la vista
+- name: monto_total
+  type: Decimal
+  default: 0
+  description: Suma de montos en M$
+- name: geometria_agregada
+  type: Geometry
+  geometry_type: GeometryCollection
+  nullable: true
+  description: Geometría resultante de la agregación
+- name: es_publica
+  type: Boolean
+  default: false
+  description: ¿Visible en visor público?
+- name: capa_id
+  type: String
+  fk: ENT-TERR-CAPA
+  nullable: true
+  description: Capa geoespacial asociada
+- name: estado
+  type: Enum[Generando, Disponible, Expirada, Error]
+  default: Generando
+  description: Estado de la vista
+- name: url_geojson
+  type: String
+  nullable: true
+  description: URL del GeoJSON generado
+- name: url_wms
+  type: String
+  nullable: true
+  description: URL del servicio WMS si aplica
 invariants:
-  - id: INV-VISTA-001
-    name: disponible_requiere_fecha
-    rule: |
-      (estado = 'Disponible') → (fecha_generacion IS NOT NULL)
-    description: Vista disponible requiere fecha
-    severity: error
+- id: INV-VISTA-001
+  name: disponible_requiere_fecha
+  rule: '(estado = ''Disponible'') → (fecha_generacion IS NOT NULL)
 
-morphisms:
-  agrega: [ENT-FIN-IPR]
-  publicada_en: [ENT-TERR-CAPA]
-  filtra_por: [ENT-PLAN-EJE, ENT-TERR-COMUNA]
-
-audit:
-  fields_tracked:
-    - estado
-    - fecha_generacion
-  retention_years: 5
+    '
+  description: Vista disponible requiere fecha
+  severity: error

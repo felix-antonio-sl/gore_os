@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_seg_proyecto_seguridad:1.0.0
+  urn: urn:goreos:entity:d-seg:ENT-SEG-PROYECTO_SEGURIDAD:1.0.0
   type: Entity
-  source: domains/d-seg/entity_data
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-SEG-PROYECTO_SEGURIDAD
 name: Proyecto_Seguridad
-entity_key: proyecto_seguridad
 domain: D-SEG
 category: Reference
-description: hereda IPR + tipo_prevencion, validacion_spd
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

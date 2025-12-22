@@ -1,246 +1,147 @@
-# ==============================================================================
-# GORE_OS Entity Atom: IncidenteCiber (Incidente de Ciberseguridad)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M4 Ciberseguridad
-# Source: dialogo_riguroso_d_tde.md, Ley 21.663
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: ciberseguridad
-  kb_source:
-    - "Ley 21.663: Ley Marco de Ciberseguridad"
-    - "DS 7/2020: Norma Técnica Seguridad"
-    - "dialogo_riguroso_d_tde.md"
-
-entity:
-  id: ENT-TDE-INCIDENTE-CIBER
-  name: IncidenteCiber
-  name_es: Incidente de Ciberseguridad
-  description: |
-    Evento de seguridad informática que afecta o puede afectar
-    la confidencialidad, integridad o disponibilidad de los
-    activos de información del GORE.
-
-    Conforme a Ley 21.663, los incidentes críticos y altos
-    deben reportarse a ANCI (Agencia Nacional de Ciberseguridad)
-    en plazos establecidos.
-
-    Ciclo de vida NIST:
-    Detectado → EnAnálisis → Contenido → Erradicado → Recuperado → Cerrado
-
-  purpose: |
-    Modelar incidentes de ciberseguridad para:
-    - Cumplir Ley 21.663 (reporte ANCI)
-    - Gestionar respuesta a incidentes
-    - Documentar lecciones aprendidas
-    - Alimentar FENIX si es crítico
-
-  categorical_type: Object
-  is_abstract: false
-  category: Event
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_incidente
-    type: String
-    key: true
-    description: "Identificador único"
-
-  - name: codigo
-    type: String
-    nullable: true
-    description: "Código interno (ej: INC-2025-001)"
-
-  # Detección
-  - name: fecha_deteccion
-    type: DateTime
-    nullable: false
-    description: Fecha y hora de detección
-
-  - name: fuente_deteccion
-    type: Enum[SOC, Usuario, Automatico, CSIRT, Tercero]
-    nullable: false
-    description: Cómo se detectó el incidente
-
-  - name: detectado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Funcionario que detectó
-
-  # Clasificación
-  - name: tipo
-    type: Enum[Malware, Phishing, Intrusion, FugaDatos, DDoS, Ransomware, AccesoNoAutorizado, VulnerabilidadExplotada, Otro]
-    nullable: false
-    description: Tipo de incidente
-
-  - name: severidad
-    type: Enum[Critica, Alta, Media, Baja]
-    nullable: false
-    description: Severidad del incidente
-
-  - name: vector_ataque
-    type: String
-    nullable: true
-    description: Vector de ataque identificado
-
-  # Afectación
-  - name: activos_afectados
-    type: Array[String]
-    nullable: true
-    description: IDs de ActivoTI afectados
-
-  - name: servicios_afectados
-    type: Array[String]
-    nullable: true
-    description: Servicios institucionales afectados
-
-  - name: datos_comprometidos
-    type: Boolean
-    default: false
-    description: ¿Se comprometieron datos personales?
-
-  - name: cantidad_registros_afectados
-    type: Integer
-    nullable: true
-    description: Cantidad de registros si hay fuga
-
-  # Estado
-  - name: estado
-    type: Enum[Detectado, EnAnalisis, Contenido, Erradicado, Recuperado, Cerrado]
-    default: Detectado
-    description: Estado del ciclo de vida
-
-  # Reporte ANCI
-  - name: reportado_anci
-    type: Boolean
-    default: false
-    description: ¿Reportado a ANCI?
-
-  - name: fecha_reporte_anci
-    type: DateTime
-    nullable: true
-    description: Fecha de reporte a ANCI
-
-  - name: id_ticket_anci
-    type: String
-    nullable: true
-    description: ID de ticket en sistema ANCI
-
-  - name: plazo_reporte_horas
-    type: Integer
-    default: 24
-    description: Plazo máximo para reportar (según severidad)
-
-  - name: dentro_plazo_reporte
-    type: Boolean
-    computed: true
-    formula: fecha_reporte_anci <= fecha_deteccion + plazo_reporte_horas
-
-  # Respuesta
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: CISO o responsable asignado
-
-  - name: equipo_respuesta
-    type: Array[String]
-    nullable: true
-    description: IDs funcionarios del equipo de respuesta
-
-  # Tiempos
-  - name: fecha_contencion
-    type: DateTime
-    nullable: true
-
-  - name: fecha_erradicacion
-    type: DateTime
-    nullable: true
-
-  - name: fecha_recuperacion
-    type: DateTime
-    nullable: true
-
-  - name: fecha_cierre
-    type: DateTime
-    nullable: true
-
-  - name: tiempo_contencion_horas
-    type: Decimal
-    computed: true
-    formula: DATEDIFF_HOURS(fecha_contencion, fecha_deteccion)
-
-  - name: tiempo_total_horas
-    type: Decimal
-    computed: true
-    formula: DATEDIFF_HOURS(fecha_cierre, fecha_deteccion)
-
-  # Análisis
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción del incidente
-
-  - name: causa_raiz
-    type: Text
-    nullable: true
-    description: Análisis de causa raíz
-
-  - name: lecciones_aprendidas
-    type: Text
-    nullable: true
-    description: Lecciones para prevención futura
-
-  - name: acciones_correctivas
-    type: JSON
-    nullable: true
-    description: |
-      Acciones tomadas:
-      [{
-        "accion": "...",
-        "responsable": "...",
-        "estado": "Pendiente|Completada"
-      }]
-
-  # Vinculación FENIX
-  - name: alerta_fenix_id
-    type: String
-    fk: ENT-FENIX-ALERTA
-    nullable: true
-    description: Alerta FENIX si escaló
-
+- name: id_incidente
+  type: String
+  key: true
+  description: Identificador único
+- name: codigo
+  type: String
+  nullable: true
+  description: 'Código interno (ej: INC-2025-001)'
+- name: fecha_deteccion
+  type: DateTime
+  nullable: false
+  description: Fecha y hora de detección
+- name: fuente_deteccion
+  type: Enum[SOC, Usuario, Automatico, CSIRT, Tercero]
+  nullable: false
+  description: Cómo se detectó el incidente
+- name: detectado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario que detectó
+- name: tipo
+  type: Enum[Malware, Phishing, Intrusion, FugaDatos, DDoS, Ransomware, AccesoNoAutorizado,
+    VulnerabilidadExplotada, Otro]
+  nullable: false
+  description: Tipo de incidente
+- name: severidad
+  type: Enum[Critica, Alta, Media, Baja]
+  nullable: false
+  description: Severidad del incidente
+- name: vector_ataque
+  type: String
+  nullable: true
+  description: Vector de ataque identificado
+- name: activos_afectados
+  type: Array[String]
+  nullable: true
+  description: IDs de ActivoTI afectados
+- name: servicios_afectados
+  type: Array[String]
+  nullable: true
+  description: Servicios institucionales afectados
+- name: datos_comprometidos
+  type: Boolean
+  default: false
+  description: ¿Se comprometieron datos personales?
+- name: cantidad_registros_afectados
+  type: Integer
+  nullable: true
+  description: Cantidad de registros si hay fuga
+- name: estado
+  type: Enum[Detectado, EnAnalisis, Contenido, Erradicado, Recuperado, Cerrado]
+  default: Detectado
+  description: Estado del ciclo de vida
+- name: reportado_anci
+  type: Boolean
+  default: false
+  description: ¿Reportado a ANCI?
+- name: fecha_reporte_anci
+  type: DateTime
+  nullable: true
+  description: Fecha de reporte a ANCI
+- name: id_ticket_anci
+  type: String
+  nullable: true
+  description: ID de ticket en sistema ANCI
+- name: plazo_reporte_horas
+  type: Integer
+  default: 24
+  description: Plazo máximo para reportar (según severidad)
+- name: dentro_plazo_reporte
+  type: Boolean
+  computed: true
+  formula: fecha_reporte_anci <= fecha_deteccion + plazo_reporte_horas
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: CISO o responsable asignado
+- name: equipo_respuesta
+  type: Array[String]
+  nullable: true
+  description: IDs funcionarios del equipo de respuesta
+- name: fecha_contencion
+  type: DateTime
+  nullable: true
+- name: fecha_erradicacion
+  type: DateTime
+  nullable: true
+- name: fecha_recuperacion
+  type: DateTime
+  nullable: true
+- name: fecha_cierre
+  type: DateTime
+  nullable: true
+- name: tiempo_contencion_horas
+  type: Decimal
+  computed: true
+  formula: DATEDIFF_HOURS(fecha_contencion, fecha_deteccion)
+- name: tiempo_total_horas
+  type: Decimal
+  computed: true
+  formula: DATEDIFF_HOURS(fecha_cierre, fecha_deteccion)
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción del incidente
+- name: causa_raiz
+  type: Text
+  nullable: true
+  description: Análisis de causa raíz
+- name: lecciones_aprendidas
+  type: Text
+  nullable: true
+  description: Lecciones para prevención futura
+- name: acciones_correctivas
+  type: JSON
+  nullable: true
+  description: "Acciones tomadas:\n[{\n  \"accion\": \"...\",\n  \"responsable\":\
+    \ \"...\",\n  \"estado\": \"Pendiente|Completada\"\n}]\n"
+- name: alerta_fenix_id
+  type: String
+  fk: ENT-FENIX-ALERTA
+  nullable: true
+  description: Alerta FENIX si escaló
 invariants:
-  - id: INV-INC-001
-    name: critico_requiere_anci
-    rule: severidad IN ('Critica', 'Alta') → reportado_anci = TRUE
-    description: Incidentes críticos/altos deben reportarse a ANCI
-    severity: warning
-
-  - id: INV-INC-002
-    name: anci_requiere_fecha
-    rule: reportado_anci = TRUE → fecha_reporte_anci IS NOT NULL
-    description: Reporte ANCI debe tener fecha
-
-  - id: INV-INC-003
-    name: fuga_requiere_cantidad
-    rule: datos_comprometidos = TRUE → cantidad_registros_afectados IS NOT NULL
-    description: Fuga de datos debe cuantificarse
-    severity: warning
-
-morphisms:
-  afecta: [ActivoTI]
-  genera: [ENT-FENIX-ALERTA]
-  gestionado_por: [ENT-BACK-FUNCIONARIO]
-
-audit:
-  fields_tracked:
-    - estado
-    - severidad
-    - reportado_anci
-  retention_years: 10
+- id: INV-INC-001
+  name: critico_requiere_anci
+  rule: severidad IN ('Critica', 'Alta') → reportado_anci = TRUE
+  description: Incidentes críticos/altos deben reportarse a ANCI
+  severity: warning
+- id: INV-INC-002
+  name: anci_requiere_fecha
+  rule: reportado_anci = TRUE → fecha_reporte_anci IS NOT NULL
+  description: Reporte ANCI debe tener fecha
+- id: INV-INC-003
+  name: fuga_requiere_cantidad
+  rule: datos_comprometidos = TRUE → cantidad_registros_afectados IS NOT NULL
+  description: Fuga de datos debe cuantificarse
+  severity: warning

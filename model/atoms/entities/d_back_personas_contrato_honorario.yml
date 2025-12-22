@@ -1,172 +1,72 @@
-# Entidad: ContratoHonorario (Contrato a Honorarios)
-# Domain: D-BACK
-# Subdomain: personas
-# Generated: 2025-12-21 (Phase 20.1 Deep Modeling)
-
+_meta:
+  urn: urn:goreos:entity:d-back:contrato-honorario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-BACK-CONTRATO_HONORARIO
-urn: "urn:goreos:entity:d-back:contrato-honorario:1.0.0"
+urn: urn:goreos:entity:d-back:contrato-honorario:1.0.0
 name: Contrato a Honorarios
 domain: D-BACK
 subdomain: personas
 category: Transaction
-canonical_source:
-  - "Estatuto Administrativo (Ley 18.834) Art. 11"
-  - "US-HON-001-01"
-
-description: |
-  Contrato de prestación de servicios profesionales a honorarios.
-  Requiere informe de cumplimiento mensual para pago.
-
+is_abstract: false
 attributes:
-  - name: id_contrato
-    type: String
-    key: true
-
-  - name: numero_resolucion
-    type: String
-    nullable: false
-
-  - name: fecha_resolucion
-    type: Date
-    nullable: false
-
-  - name: prestador_rut
-    type: String
-    nullable: false
-
-  - name: prestador_nombre
-    type: String
-    nullable: false
-
-  - name: prestador_email
-    type: String
-    nullable: true
-
-  - name: prestador_telefono
-    type: String
-    nullable: true
-
-  - name: profesion
-    type: String
-    nullable: false
-
-  - name: descripcion_servicios
-    type: Text
-    nullable: false
-
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-
-  - name: fecha_termino
-    type: Date
-    nullable: false
-
-  - name: monto_mensual_bruto
-    type: Decimal
-    nullable: false
-
-  - name: monto_total_contrato
-    type: Decimal
-    computed: true
-
-  - name: division_destino
-    type: String
-    nullable: false
-
-  - name: supervisor_id
-    type: String
-    fk: ROL-JEFE-DIVISION
-    nullable: false
-
-  # Imputación presupuestaria
-  - name: subtitulo
-    type: String
-    default: "21.03"
-    description: Honorarios sum. S.21.03
-
-  - name: item
-    type: String
-    nullable: false
-
-  - name: codigo_bip
-    type: String
-    nullable: true
-    description: Si se financia con proyecto de inversión
-
-  - name: estado
-    type: Enum[Vigente, Terminado, Renovado, AnuladoAnticipado]
-    default: Vigente
-
-morphisms:
-  supervisado_por: [ROL-JEFE-DIVISION]
-  genera: [ENT-BACK-INFORME_HONORARIO]
-  pagado_mediante: [ENT-FIN-DEVENGADO]
-
----
-# Entidad: InformeHonorario (Informe Mensual de Honorarios)
-
-id: ENT-BACK-INFORME_HONORARIO
-urn: "urn:goreos:entity:d-back:informe-honorario:1.0.0"
-name: Informe de Actividades Honorarios
-domain: D-BACK
-subdomain: personas
-category: Control
-
-attributes:
-  - name: id_informe
-    type: String
-    key: true
-
-  - name: contrato_id
-    type: String
-    fk: ENT-BACK-CONTRATO_HONORARIO
-
-  - name: periodo
-    type: String
-    format: YYYY-MM
-
-  - name: fecha_presentacion
-    type: Date
-    nullable: false
-
-  - name: actividades_realizadas
-    type: Text
-    nullable: false
-
-  - name: horas_trabajadas
-    type: Integer
-    nullable: true
-
-  - name: productos_entregados
-    type: Text
-    nullable: true
-
-  - name: numero_boleta
-    type: String
-    nullable: false
-
-  - name: monto_boleta
-    type: Decimal
-    nullable: false
-
-  - name: estado_aprobacion
-    type: Enum[Pendiente, Aprobado, Observado, Rechazado]
-    default: Pendiente
-
-  - name: supervisor_aprobador_id
-    type: String
-    fk: ROL-JEFE-DIVISION
-
-  - name: fecha_aprobacion
-    type: Date
-    nullable: true
-
-  - name: observaciones
-    type: Text
-    nullable: true
-
-morphisms:
-  parte_de: [ENT-BACK-CONTRATO_HONORARIO]
-  aprobado_por: [ROL-JEFE-DIVISION]
-  genera: [ENT-FIN-DEVENGADO]
+- name: id_contrato
+  type: String
+  key: true
+- name: numero_resolucion
+  type: String
+  nullable: false
+- name: fecha_resolucion
+  type: Date
+  nullable: false
+- name: prestador_rut
+  type: String
+  nullable: false
+- name: prestador_nombre
+  type: String
+  nullable: false
+- name: prestador_email
+  type: String
+  nullable: true
+- name: prestador_telefono
+  type: String
+  nullable: true
+- name: profesion
+  type: String
+  nullable: false
+- name: descripcion_servicios
+  type: Text
+  nullable: false
+- name: fecha_inicio
+  type: Date
+  nullable: false
+- name: fecha_termino
+  type: Date
+  nullable: false
+- name: monto_mensual_bruto
+  type: Decimal
+  nullable: false
+- name: monto_total_contrato
+  type: Decimal
+  computed: true
+- name: division_destino
+  type: String
+  nullable: false
+- name: supervisor_id
+  type: String
+  fk: ROL-JEFE-DIVISION
+  nullable: false
+- name: subtitulo
+  type: String
+  default: '21.03'
+  description: Honorarios sum. S.21.03
+- name: item
+  type: String
+  nullable: false
+- name: codigo_bip
+  type: String
+  nullable: true
+  description: Si se financia con proyecto de inversión
+- name: estado
+  type: Enum[Vigente, Terminado, Renovado, AnuladoAnticipado]
+  default: Vigente

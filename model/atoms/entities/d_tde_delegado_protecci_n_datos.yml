@@ -1,159 +1,82 @@
-# ==============================================================================
-# GORE_OS Entity Atom: DelegadoProteccionDatos (DPO)
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Protección de Datos Personales
-# Source: Ley 21.719, Art. 54
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: proteccion_datos
-  kb_source:
-    - "urn:knowledge:tde:leyes:ley_21719_datos_personales:1.0.0"
-    - "dialogo_legislativo_d_tde.md"
-
-entity:
-  id: ENT-TDE-DELEGADO-PROTECCION-DATOS
-  name: DelegadoProteccionDatos
-  name_es: Delegado de Protección de Datos (DPO)
-  description: |
-    Encargado de Prevención o Delegado de Protección de Datos Personales.
-
-    Funcionario designado por el responsable de tratamiento para:
-    - Velar por el cumplimiento de la Ley 21.719
-    - Servir como punto de contacto con la APDP
-    - Atender solicitudes ARCO de titulares
-
-    Obligatorio para órganos públicos (Art. 54 Ley 21.719).
-
-  purpose: |
-    Modelar el rol DPO para:
-    - Registrar designación formal
-    - Notificación obligatoria a la APDP
-    - Enlace con gestión de solicitudes ARCO
-    - Trazabilidad de responsabilidades
-
-  categorical_type: Role
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_delegado
-    type: String
-    key: true
-
-  # Funcionario
-  - name: funcionario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: "Funcionario designado como DPO"
-
-  - name: nombre_completo
-    type: String
-    nullable: false
-
-  - name: email_contacto
-    type: String
-    nullable: false
-    description: "Email público para solicitudes de titulares"
-
-  - name: telefono_contacto
-    type: String
-    nullable: true
-
-  # Organismo
-  - name: responsable_id
-    type: String
-    fk: ENT-TDE-RESPONSABLE-TRATAMIENTO
-    nullable: false
-    description: "Responsable de tratamiento que designa al DPO"
-
-  - name: organo_publico_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: true
-    description: "Órgano público (si aplica Art. 54)"
-
-  # Designación
-  - name: fecha_designacion
-    type: Date
-    nullable: false
-
-  - name: acto_designacion_id
-    type: String
-    fk: ENT-NORM-ACTO
-    nullable: true
-    description: "Resolución o acto administrativo de designación"
-
-  - name: tipo_designacion
-    type: Enum[Exclusiva, Compartida]
-    default: Compartida
-    description: "¿Dedicación exclusiva o compatibiliza con otras funciones?"
-
-  # Notificación APDP (Art. 54)
-  - name: notificado_agencia
-    type: Boolean
-    default: false
-    description: "¿Se notificó la designación a la APDP?"
-
-  - name: fecha_notificacion_agencia
-    type: Date
-    nullable: true
-
-  # Capacitación
-  - name: certificado_capacitacion
-    type: Boolean
-    default: false
-    description: "¿Cuenta con certificación en protección de datos?"
-
-  - name: capacitaciones
-    type: Array[String]
-    nullable: true
-    description: "Lista de cursos/certificaciones"
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Inactivo, Reemplazado]
-    default: Activo
-
-  - name: fecha_termino
-    type: Date
-    nullable: true
-
-  - name: sucesor_id
-    type: String
-    fk: ENT-TDE-DELEGADO-PROTECCION-DATOS
-    nullable: true
-    description: "DPO que reemplaza a este"
-
+- name: id_delegado
+  type: String
+  key: true
+- name: funcionario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Funcionario designado como DPO
+- name: nombre_completo
+  type: String
+  nullable: false
+- name: email_contacto
+  type: String
+  nullable: false
+  description: Email público para solicitudes de titulares
+- name: telefono_contacto
+  type: String
+  nullable: true
+- name: responsable_id
+  type: String
+  fk: ENT-TDE-RESPONSABLE-TRATAMIENTO
+  nullable: false
+  description: Responsable de tratamiento que designa al DPO
+- name: organo_publico_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: true
+  description: Órgano público (si aplica Art. 54)
+- name: fecha_designacion
+  type: Date
+  nullable: false
+- name: acto_designacion_id
+  type: String
+  fk: ENT-NORM-ACTO
+  nullable: true
+  description: Resolución o acto administrativo de designación
+- name: tipo_designacion
+  type: Enum[Exclusiva, Compartida]
+  default: Compartida
+  description: ¿Dedicación exclusiva o compatibiliza con otras funciones?
+- name: notificado_agencia
+  type: Boolean
+  default: false
+  description: ¿Se notificó la designación a la APDP?
+- name: fecha_notificacion_agencia
+  type: Date
+  nullable: true
+- name: certificado_capacitacion
+  type: Boolean
+  default: false
+  description: ¿Cuenta con certificación en protección de datos?
+- name: capacitaciones
+  type: Array[String]
+  nullable: true
+  description: Lista de cursos/certificaciones
+- name: estado
+  type: Enum[Activo, Inactivo, Reemplazado]
+  default: Activo
+- name: fecha_termino
+  type: Date
+  nullable: true
+- name: sucesor_id
+  type: String
+  fk: ENT-TDE-DELEGADO-PROTECCION-DATOS
+  nullable: true
+  description: DPO que reemplaza a este
 invariants:
-  - id: INV-DPO-001
-    name: notificacion_obligatoria_organos_publicos
-    rule: organo_publico_id IS NOT NULL → notificado_agencia = TRUE
-    description: "Órganos públicos deben notificar designación a la APDP"
-
-  - id: INV-DPO-002
-    name: email_obligatorio
-    rule: email_contacto IS NOT NULL
-    description: "Debe existir email de contacto para titulares"
-
-morphisms:
-  designado_por: [ENT-TDE-RESPONSABLE-TRATAMIENTO]
-  atiende: [ENT-TDE-SOLICITUD-ARCO]
-  reporta_a: [ENT-TDE-AGENCIA-PROTECCION-DATOS]
-  sucedido_por: [ENT-TDE-DELEGADO-PROTECCION-DATOS]
-
-audit:
-  fields_tracked:
-    - estado
-    - notificado_agencia
-    - fecha_termino
-  retention_years: 10
-  legal_basis: "Ley 21.719, Art. 54"
+- id: INV-DPO-001
+  name: notificacion_obligatoria_organos_publicos
+  rule: organo_publico_id IS NOT NULL → notificado_agencia = TRUE
+  description: Órganos públicos deben notificar designación a la APDP
+- id: INV-DPO-002
+  name: email_obligatorio
+  rule: email_contacto IS NOT NULL
+  description: Debe existir email de contacto para titulares

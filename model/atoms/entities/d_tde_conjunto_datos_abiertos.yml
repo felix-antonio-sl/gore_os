@@ -1,141 +1,71 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ConjuntoDatosAbiertos
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Plataformas Compartidas - Datos Abiertos
-# Source: KB-028 Datos.gob Datos Abiertos
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: plataformas_datos_abiertos
-  kb_source:
-    - "urn:knowledge:tde:lineamientos:plataforma_datosgob_datos_abiertos:1.0.0"
-    - "dialogo_plataformas_d_tde.md"
-
-entity:
-  id: ENT-TDE-CONJUNTO-DATOS-ABIERTOS
-  name: ConjuntoDatosAbiertos
-  name_es: Conjunto de Datos Abiertos (Dataset)
-  description: |
-    Colección de datos representados en formatos de uso común, idealmente
-    estructurados, relacionados entre sí y descritos por sus metadatos.
-    Publicado en Datos.gob.cl bajo licencia abierta.
-
-  purpose: |
-    Modelar datasets para:
-    - Registro de publicaciones abiertas
-    - Metadatos DCAT/Dublin Core
-    - Trazabilidad de versiones
-    - Cumplimiento licenciamiento
-
-  categorical_type: Object
-  is_abstract: false
-  category: Data
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_dataset
-    type: String
-    key: true
-
-  - name: catalogo_id
-    type: String
-    fk: ENT-TDE-CATALOGO-DATOS-ABIERTOS
-    nullable: false
-
-  # Metadatos Obligatorios
-  - name: titulo
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: false
-
-  - name: fecha_version
-    type: Date
-    nullable: false
-
-  # Metadatos Recomendados
-  - name: frecuencia_actualizacion
-    type: String
-    nullable: true
-    description: "Ej: mensual, anual, tiempo real"
-
-  - name: cobertura_temporal
-    type: String
-    nullable: true
-    description: "Período que cubren los datos"
-
-  # Licenciamiento
-  - name: licencia
-    type: Enum[CC0, CC_BY_4_0, PDDL, ODC_By, Otra]
-    default: CC0
-    description: "Licencia de uso (CC0 por defecto)"
-
-  # Formato
-  - name: formato_principal
-    type: Enum[CSV, JSON, XML, XLS, XLSX, GeoJSON, Otro]
-    nullable: false
-
-  - name: diccionario_variables
-    type: Array[String]
-    nullable: true
-    description: "Lista de campos del dataset"
-
-  # Acceso
-  - name: url_acceso
-    type: String
-    nullable: false
-    description: "URL de descarga o API"
-
-  # Métricas
-  - name: n_recursos
-    type: Integer
-    default: 1
-    description: "Número de archivos/recursos"
-
-  - name: n_descargas
-    type: Integer
-    default: 0
-
-  # Estado
-  - name: estado
-    type: Enum[Publicado, Borrador, Deprecado]
-    default: Publicado
-
-  # Fechas
-  - name: fecha_publicacion
-    type: Date
-    nullable: true
-
-  - name: fecha_deprecacion
-    type: Date
-    nullable: true
-
+- name: id_dataset
+  type: String
+  key: true
+- name: catalogo_id
+  type: String
+  fk: ENT-TDE-CATALOGO-DATOS-ABIERTOS
+  nullable: false
+- name: titulo
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: false
+- name: fecha_version
+  type: Date
+  nullable: false
+- name: frecuencia_actualizacion
+  type: String
+  nullable: true
+  description: 'Ej: mensual, anual, tiempo real'
+- name: cobertura_temporal
+  type: String
+  nullable: true
+  description: Período que cubren los datos
+- name: licencia
+  type: Enum[CC0, CC_BY_4_0, PDDL, ODC_By, Otra]
+  default: CC0
+  description: Licencia de uso (CC0 por defecto)
+- name: formato_principal
+  type: Enum[CSV, JSON, XML, XLS, XLSX, GeoJSON, Otro]
+  nullable: false
+- name: diccionario_variables
+  type: Array[String]
+  nullable: true
+  description: Lista de campos del dataset
+- name: url_acceso
+  type: String
+  nullable: false
+  description: URL de descarga o API
+- name: n_recursos
+  type: Integer
+  default: 1
+  description: Número de archivos/recursos
+- name: n_descargas
+  type: Integer
+  default: 0
+- name: estado
+  type: Enum[Publicado, Borrador, Deprecado]
+  default: Publicado
+- name: fecha_publicacion
+  type: Date
+  nullable: true
+- name: fecha_deprecacion
+  type: Date
+  nullable: true
 invariants:
-  - id: INV-DS-001
-    name: publicado_requiere_url
-    rule: estado = 'Publicado' → url_acceso IS NOT NULL
-    description: "Datasets publicados requieren URL de acceso"
-
-  - id: INV-DS-002
-    name: al_menos_tres_estrellas
-    rule: formato_principal IN ('CSV', 'JSON', 'XML', 'GeoJSON')
-    description: "Formatos deben alcanzar al menos 3 estrellas Tim Berners-Lee"
-
-morphisms:
-  pertenece_a: [ENT-TDE-CATALOGO-DATOS-ABIERTOS]
-  derivado_de: [ENT-TDE-ACTIVO-DATOS]
-
-audit:
-  fields_tracked:
-    - estado
-    - n_descargas
-  retention_years: 5
-  legal_basis: "Estándares Datos Abiertos"
+- id: INV-DS-001
+  name: publicado_requiere_url
+  rule: estado = 'Publicado' → url_acceso IS NOT NULL
+  description: Datasets publicados requieren URL de acceso
+- id: INV-DS-002
+  name: al_menos_tres_estrellas
+  rule: formato_principal IN ('CSV', 'JSON', 'XML', 'GeoJSON')
+  description: Formatos deben alcanzar al menos 3 estrellas Tim Berners-Lee

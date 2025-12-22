@@ -1,109 +1,46 @@
-# ==============================================================================
-# GORE_OS Entity Atom: OficinaParte
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Plataformas Compartidas - DocDigital
-# Source: KB-026 DocDigital
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: plataformas_docdigital
-  kb_source:
-    - "urn:knowledge:tde:lineamientos:plataforma_docdigital:1.0.0"
-    - "dialogo_plataformas_d_tde.md"
-
-entity:
-  id: ENT-TDE-OFICINA-PARTE
-  name: OficinaParte
-  name_es: Oficina de Partes
-  description: |
-    Unidad institucional conectada a DocDigital para enviar y recibir
-    comunicaciones oficiales entre OAEs.
-
-    Cada institución configura sus oficinas de partes según estructura
-    organizacional.
-
-  purpose: |
-    Modelar oficinas de partes para:
-    - Registro de unidades habilitadas en DocDigital
-    - Gestión de permisos y administradores
-    - Trazabilidad de comunicaciones por unidad
-
-  categorical_type: Object
-  is_abstract: false
-  category: Organizational
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_oficina
-    type: String
-    key: true
-
-  # Institución
-  - name: entidad_id
-    type: String
-    fk: ENT-TDE-ENTIDAD-REGIONAL
-    nullable: false
-
-  # Datos
-  - name: nombre
-    type: String
-    nullable: false
-    description: "Nombre de la oficina de partes"
-
-  - name: codigo
-    type: String
-    nullable: true
-    description: "Código interno"
-
-  # Administración
-  - name: admin_principal_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: "Administrador Principal designado (máx. 3 por institución)"
-
-  # Estado
-  - name: estado
-    type: Enum[Demo, Produccion, Inactiva]
-    default: Demo
-
-  # Fechas
-  - name: fecha_habilitacion
-    type: Date
-    nullable: true
-
-  - name: fecha_produccion
-    type: Date
-    nullable: true
-
-  # Dependencia
-  - name: division_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: true
-    description: "División a la que pertenece la oficina"
-
+- name: id_oficina
+  type: String
+  key: true
+- name: entidad_id
+  type: String
+  fk: ENT-TDE-ENTIDAD-REGIONAL
+  nullable: false
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre de la oficina de partes
+- name: codigo
+  type: String
+  nullable: true
+  description: Código interno
+- name: admin_principal_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Administrador Principal designado (máx. 3 por institución)
+- name: estado
+  type: Enum[Demo, Produccion, Inactiva]
+  default: Demo
+- name: fecha_habilitacion
+  type: Date
+  nullable: true
+- name: fecha_produccion
+  type: Date
+  nullable: true
+- name: division_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: true
+  description: División a la que pertenece la oficina
 invariants:
-  - id: INV-OP-001
-    name: produccion_requiere_habilitacion
-    rule: estado = 'Produccion' → fecha_produccion IS NOT NULL
-    description: "Oficinas en producción requieren fecha"
-
-morphisms:
-  pertenece_a: [ENT-TDE-ENTIDAD-REGIONAL]
-  administrada_por: [ENT-BACK-FUNCIONARIO]
-  envia: [ENT-TDE-COMUNICACION-OFICIAL]
-  recibe: [ENT-TDE-COMUNICACION-OFICIAL]
-
-audit:
-  fields_tracked:
-    - estado
-    - admin_principal_id
-  retention_years: 10
-  legal_basis: "STD 2025, Manual DocDigital"
+- id: INV-OP-001
+  name: produccion_requiere_habilitacion
+  rule: estado = 'Produccion' → fecha_produccion IS NOT NULL
+  description: Oficinas en producción requieren fecha

@@ -1,146 +1,71 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ActivoInformacion (Activo de Información)
-# ==============================================================================
-# Domain: D-SEG (Ciberseguridad)
-# Subdomain: M2 Gestión de Riesgos (ISO 27005)
-# Source: dialogo_riguroso_d_seg.md, ISO 27001
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + CISO Virtual"
-  domain: D-SEG
-  subdomain: gestion_riesgos
-  kb_source:
-    - "ISO/IEC 27001:2022 A.5.9 Inventory of information and other associated assets"
-    - "ISO/IEC 27005: Risk Assessment"
-    - "dialogo_riguroso_d_seg.md"
-
-entity:
-  id: ENT-SEG-ACTIVO-INFORMACION
-  name: ActivoInformacion
-  name_es: Activo de Información
-  description: |
-    Cualquier elemento que tenga valor para la organización y 
-    necesite ser protegido. Base del análisis de riesgos.
-
-    Tipos:
-    - Información (Datos, Archivos)
-    - Hardware (Servidores, Notebooks)
-    - Software (Sistemas, Licencias)
-    - Personas (Usuarios clave)
-    - Sitios (Datacenter, Oficinas)
-    - Intangibles (Reputación, Marcas)
-
-  purpose: |
-    Inventariar activos para:
-    - Realizar análisis de riesgos (Amenazas vs Vulnerabilidades)
-    - Clasificar información (Confidencialidad)
-    - Asignar propiedad (Asset Owner)
-    - Aplicar controles de seguridad
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_activo
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: "Nombre del activo (ej: Servidor Base de Datos Finanzas)"
-
-  - name: descripcion
-    type: Text
-    nullable: true
-
-  - name: tipo
-    type: Enum[Informacion, Hardware, Software, Servicio, Personas, Ubicacion, Intangible]
-    nullable: false
-
-  # Valoración (CIA Rating)
-  - name: valor_confidencialidad
-    type: Integer
-    nullable: false
-    description: "1-5 (Bajo a Crítico)"
-
-  - name: valor_integridad
-    type: Integer
-    nullable: false
-    description: "1-5 (Bajo a Crítico)"
-
-  - name: valor_disponibilidad
-    type: Integer
-    nullable: false
-    description: "1-5 (Bajo a Crítico)"
-
-  - name: criticidad_global
-    type: Integer
-    computed: true
-    formula: MAX(valor_confidencialidad, valor_integridad, valor_disponibilidad)
-    description: "Nivel más alto de los tres vectores"
-
-  # Clasificación
-  - name: clasificacion_informacion
-    type: Enum[Publico, Interno, Confidencial, Secreto, NoAplica]
-    default: Interno
-    description: Si es tipo Información
-
-  # Propiedad
-  - name: propietario_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: "Asset Owner (Responsable ante riesgos)"
-
-  - name: custodio_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: "Custodio técnico (ej: Jefe Infraestructura)"
-
-  # Ubicación / Relación
-  - name: ubicacion_fisica
-    type: String
-    nullable: true
-
-  - name: activo_datos_relacionado_id
-    type: String
-    fk: ENT-TDE-ACTIVO-DATOS
-    nullable: true
-    description: "Link a ActivoDatos (D-TDE) si corresponde"
-
-  - name: plataforma_relacionada_id
-    type: String
-    fk: ENT-TDE-PLATAFORMA
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, DeBaja, EnMantencion, Extraviado]
-    default: Activo
-
+- name: id_activo
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+  description: 'Nombre del activo (ej: Servidor Base de Datos Finanzas)'
+- name: descripcion
+  type: Text
+  nullable: true
+- name: tipo
+  type: Enum[Informacion, Hardware, Software, Servicio, Personas, Ubicacion, Intangible]
+  nullable: false
+- name: valor_confidencialidad
+  type: Integer
+  nullable: false
+  description: 1-5 (Bajo a Crítico)
+- name: valor_integridad
+  type: Integer
+  nullable: false
+  description: 1-5 (Bajo a Crítico)
+- name: valor_disponibilidad
+  type: Integer
+  nullable: false
+  description: 1-5 (Bajo a Crítico)
+- name: criticidad_global
+  type: Integer
+  computed: true
+  formula: MAX(valor_confidencialidad, valor_integridad, valor_disponibilidad)
+  description: Nivel más alto de los tres vectores
+- name: clasificacion_informacion
+  type: Enum[Publico, Interno, Confidencial, Secreto, NoAplica]
+  default: Interno
+  description: Si es tipo Información
+- name: propietario_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Asset Owner (Responsable ante riesgos)
+- name: custodio_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: 'Custodio técnico (ej: Jefe Infraestructura)'
+- name: ubicacion_fisica
+  type: String
+  nullable: true
+- name: activo_datos_relacionado_id
+  type: String
+  fk: ENT-TDE-ACTIVO-DATOS
+  nullable: true
+  description: Link a ActivoDatos (D-TDE) si corresponde
+- name: plataforma_relacionada_id
+  type: String
+  fk: ENT-TDE-PLATAFORMA
+  nullable: true
+- name: estado
+  type: Enum[Activo, DeBaja, EnMantencion, Extraviado]
+  default: Activo
 invariants:
-  - id: INV-ACT-001
-    name: info_requiere_clasificacion
-    rule: tipo = 'Informacion' → clasificacion_informacion != 'NoAplica'
-    description: Activos tipo Información deben tener clasificación
-
-morphisms:
-  posee_vulnerabilidad: [ENT-SEG-VULNERABILIDAD]
-  amenazado_por: [ENT-SEG-AMENAZA]
-  protegido_por: [ENT-SEG-CONTROL]
-
-audit:
-  fields_tracked:
-    - valor_confidencialidad
-    - valor_integridad
-    - valor_disponibilidad
-    - estado
-    - propietario_id
-  retention_years: 10
+- id: INV-ACT-001
+  name: info_requiere_clasificacion
+  rule: tipo = 'Informacion' → clasificacion_informacion != 'NoAplica'
+  description: Activos tipo Información deben tener clasificación

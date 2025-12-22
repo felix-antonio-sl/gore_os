@@ -1,211 +1,124 @@
-# ==============================================================================
-# GORE_OS Entity Atom: AprendizajeInstitucional (Aprendizaje Institucional)
-# ==============================================================================
-# Domain: FENIX (Unidad de Intervención Institucional)
-# Subdomain: Core
-# Source: domain_fenix.md, dialogo_riguroso_fenix.md
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-22"
-  updated_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + AR Virtual + Arquitecto ORKO"
-  domain: FENIX
-  subdomain: core
-  kb_source:
-    - "domain_fenix.md"
-    - "dialogo_orquestado_dgestion_fenix.md (P2 refinement)"
-
-entity:
-  id: ENT-FENIX-APRENDIZAJE
-  name: AprendizajeInstitucional
-  name_es: Aprendizaje Institucional
-  description: |
-    Lección aprendida de una intervención institucional.
-
-    Categorías:
-    - PROCESO: Mejoras de procedimientos
-    - PERSONAS: Capacitación, roles
-    - TECNOLOGIA: Herramientas, sistemas
-    - NORMATIVA: Actualización de normativas
-    - COORDINACION: Mejoras de coordinación
-    - COMUNICACION: Protocolos de comunicación
-
-    Los aprendizajes alimentan D-GESTION (Mejora Continua).
-
-  purpose: |
-    Capturar aprendizajes para:
-    - Documentar lecciones de intervenciones
-    - Alimentar ciclo PDCA de D-GESTION
-    - Actualizar procedimientos
-    - Prevenir recurrencias
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_aprendizaje
-    type: String
-    key: true
-    description: "Identificador único"
-
-  - name: intervencion_id
-    type: String
-    fk: ENT-FENIX-INTERVENCION
-    nullable: false
-    description: Intervención de origen
-
-  # Clasificación
-  - name: categoria
-    type: Enum[Proceso, Personas, Tecnologia, Normativa, Coordinacion, Comunicacion]
-    nullable: false
-    description: Categoría del aprendizaje
-
-  - name: tipo
-    type: Enum[Hallazgo, BuenaPractica, AlertaPrevencion, RecomendacionMejora]
-    default: Hallazgo
-    description: Tipo de aprendizaje
-
-  # Contenido
-  - name: titulo
-    type: String
-    nullable: false
-    description: Título del aprendizaje
-
-  - name: hallazgo
-    type: Text
-    nullable: false
-    description: Situación identificada
-
-  - name: causa_raiz
-    type: Text
-    nullable: true
-    description: Análisis de causa raíz (5 por qués, Ishikawa)
-
-  - name: recomendacion
-    type: Text
-    nullable: false
-    description: Acción correctiva/preventiva sugerida
-
-  # Impacto
-  - name: nivel_impacto
-    type: Enum[Institucional, Divisional, Proceso, Puntual]
-    nullable: false
-    description: Alcance del impacto
-
-  - name: dominios_afectados
-    type: Array[String]
-    nullable: true
-    description: Dominios que deben actuar
-
-  - name: urgencia_implementacion
-    type: Enum[Inmediata, CortoPlaza, MedioPlaza, LargoPlazo]
-    nullable: false
-    description: Urgencia de implementación
-
-  # Vinculación D-GESTION
-  - name: oportunidad_mejora_id
-    type: String
-    fk: ENT-GESTION-OPORTUNIDAD-MEJORA
-    nullable: true
-    description: Oportunidad generada en D-GESTION
-
-  - name: proyecto_mejora_id
-    type: String
-    fk: ENT-GESTION-PROYECTO-MEJORA
-    nullable: true
-    description: Proyecto PDCA si se implementó
-
-  # Actualización de procedimientos
-  - name: procedimiento_actualizado
-    type: Boolean
-    default: false
-    description: ¿Se actualizó algún procedimiento?
-
-  - name: procedimiento_id
-    type: String
-    nullable: true
-    description: ID del procedimiento modificado
-
-  - name: manual_afectado
-    type: String
-    nullable: true
-    description: Manual que requiere actualización
-
-  # ===== VINCULACIÓN D-EVOL (P2) =====
-  - name: dimension_evol_afectada
-    type: Enum[Personas, Procesos, Tecnologia, Datos, Gobierno]
-    nullable: true
-    description: Dimensión de madurez D-EVOL afectada
-
-  - name: nivel_madurez_pre
-    type: Integer
-    nullable: true
-    description: "Nivel madurez antes (1-5)"
-
-  - name: nivel_madurez_post_esperado
-    type: Integer
-    nullable: true
-    description: "Nivel madurez esperado después (1-5)"
-
-  - name: impacto_hgore_esperado
-    type: Integer
-    nullable: true
-    description: "Puntos H_gore que se espera ganar"
-
-  # Estado
-  - name: estado
-    type: Enum[Pendiente, EnEvaluacion, Aprobado, Implementado, Descartado]
-    default: Pendiente
-    description: Estado del aprendizaje
-
-  - name: fecha_registro
-    type: Date
-    nullable: false
-
-  - name: fecha_implementacion
-    type: Date
-    nullable: true
-
-  # Responsabilidad
-  - name: registrado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-
-  - name: responsable_implementacion_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
+- name: id_aprendizaje
+  type: String
+  key: true
+  description: Identificador único
+- name: intervencion_id
+  type: String
+  fk: ENT-FENIX-INTERVENCION
+  nullable: false
+  description: Intervención de origen
+- name: categoria
+  type: Enum[Proceso, Personas, Tecnologia, Normativa, Coordinacion, Comunicacion]
+  nullable: false
+  description: Categoría del aprendizaje
+- name: tipo
+  type: Enum[Hallazgo, BuenaPractica, AlertaPrevencion, RecomendacionMejora]
+  default: Hallazgo
+  description: Tipo de aprendizaje
+- name: titulo
+  type: String
+  nullable: false
+  description: Título del aprendizaje
+- name: hallazgo
+  type: Text
+  nullable: false
+  description: Situación identificada
+- name: causa_raiz
+  type: Text
+  nullable: true
+  description: Análisis de causa raíz (5 por qués, Ishikawa)
+- name: recomendacion
+  type: Text
+  nullable: false
+  description: Acción correctiva/preventiva sugerida
+- name: nivel_impacto
+  type: Enum[Institucional, Divisional, Proceso, Puntual]
+  nullable: false
+  description: Alcance del impacto
+- name: dominios_afectados
+  type: Array[String]
+  nullable: true
+  description: Dominios que deben actuar
+- name: urgencia_implementacion
+  type: Enum[Inmediata, CortoPlaza, MedioPlaza, LargoPlazo]
+  nullable: false
+  description: Urgencia de implementación
+- name: oportunidad_mejora_id
+  type: String
+  fk: ENT-GESTION-OPORTUNIDAD-MEJORA
+  nullable: true
+  description: Oportunidad generada en D-GESTION
+- name: proyecto_mejora_id
+  type: String
+  fk: ENT-GESTION-PROYECTO-MEJORA
+  nullable: true
+  description: Proyecto PDCA si se implementó
+- name: procedimiento_actualizado
+  type: Boolean
+  default: false
+  description: ¿Se actualizó algún procedimiento?
+- name: procedimiento_id
+  type: String
+  nullable: true
+  description: ID del procedimiento modificado
+- name: manual_afectado
+  type: String
+  nullable: true
+  description: Manual que requiere actualización
+- name: dimension_evol_afectada
+  type: Enum[Personas, Procesos, Tecnologia, Datos, Gobierno]
+  nullable: true
+  description: Dimensión de madurez D-EVOL afectada
+- name: nivel_madurez_pre
+  type: Integer
+  nullable: true
+  description: Nivel madurez antes (1-5)
+- name: nivel_madurez_post_esperado
+  type: Integer
+  nullable: true
+  description: Nivel madurez esperado después (1-5)
+- name: impacto_hgore_esperado
+  type: Integer
+  nullable: true
+  description: Puntos H_gore que se espera ganar
+- name: estado
+  type: Enum[Pendiente, EnEvaluacion, Aprobado, Implementado, Descartado]
+  default: Pendiente
+  description: Estado del aprendizaje
+- name: fecha_registro
+  type: Date
+  nullable: false
+- name: fecha_implementacion
+  type: Date
+  nullable: true
+- name: registrado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+- name: responsable_implementacion_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
 invariants:
-  - id: INV-AP-001
-    name: implementado_genera_mejora
-    rule: |
-      estado = 'Implementado' → 
-      oportunidad_mejora_id IS NOT NULL OR procedimiento_actualizado = TRUE
-    description: Aprendizaje implementado debe generar mejora o actualizar procedimiento
-    severity: warning
+- id: INV-AP-001
+  name: implementado_genera_mejora
+  rule: "estado = 'Implementado' → \noportunidad_mejora_id IS NOT NULL OR procedimiento_actualizado\
+    \ = TRUE\n"
+  description: Aprendizaje implementado debe generar mejora o actualizar procedimiento
+  severity: warning
+- id: INV-AP-002
+  name: institucional_requiere_proyecto
+  rule: 'nivel_impacto = ''Institucional'' AND estado = ''Implementado'' →
 
-  - id: INV-AP-002
-    name: institucional_requiere_proyecto
-    rule: |
-      nivel_impacto = 'Institucional' AND estado = 'Implementado' →
-      proyecto_mejora_id IS NOT NULL
-    description: Impacto institucional requiere proyecto formal
-    severity: warning
+    proyecto_mejora_id IS NOT NULL
 
-morphisms:
-  originado_en: [ENT-FENIX-INTERVENCION]
-  genera: [ENT-GESTION-OPORTUNIDAD-MEJORA, ENT-GESTION-PROYECTO-MEJORA]
-  actualiza: [Procedimiento, Manual]
-  afecta_madurez: [ENT-EVOL-NIVEL-MADUREZ]
-
-audit:
-  fields_tracked:
-    - estado
-    - fecha_implementacion
-  retention_years: 10
+    '
+  description: Impacto institucional requiere proyecto formal
+  severity: warning

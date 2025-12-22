@@ -10,7 +10,3 @@ target_type: Mixed
 links:
 - source: ''
   target: ENT-PLAN-ERD
-- source: ''
-  target: ENT-PLAN-EJE
-- source: ''
-  target: ODS

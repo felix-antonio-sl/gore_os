@@ -8,13 +8,7 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-EJEC-HITO_CONVENIO
-  target: ENT-FIN-CONVENIO
-- source: ENT-FIN-ESTADO_PAGO
-  target: ENT-FIN-CONTRATO
-- source: ENT-FIN-ESTADO_PAGO
-  target: ENT-FIN-CONVENIO
-- source: ''
-  target: ENT-FIN-RENDICION
-- source: ''
-  target: ENT-NORM-PROCEDIMIENTO
+- source: ENT-BACK-INFORME_HONORARIO
+  target: ENT-BACK-CONTRATO_HONORARIO
+- source: ENT-FIN-LINEA_PAC
+  target: ENT-FIN-PLAN_COMPRAS

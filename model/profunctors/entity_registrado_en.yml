@@ -8,31 +8,5 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-FUNCIONARIO
-  target: SIAPER
-- source: ENT-BACK-PAGO
-  target: SIGFE
-- source: ENT-BACK-PAGO
-  target: Banco
 - source: ''
-  target: ENT-EVOL-CATALOGO
-- source: ENT-FIN-ORDEN_COMPRA
-  target: MercadoPublico
-- source: ENT-FIN-ORDEN_COMPRA
-  target: SIGFE
-- source: ENT-FIN-PROVEEDOR
-  target: ChileProveedores
-- source: ENT-FIN-PROVEEDOR
-  target: MercadoPublico
-- source: ENT-FIN-RECEPCION_CONFORME
-  target: SIGFE
-- source: ENT-FIN-EVALUACION_IPR
-  target: BIP
-- source: ENT-FIN-IDI
-  target: BIP
-- source: ENT-FIN-CDP
-  target: SIGFE
-- source: ''
-  target: SIGFE
-- source: ENT-FIN-REINTEGRO
-  target: SIGFE
+  target: ENT-TDE-SGD

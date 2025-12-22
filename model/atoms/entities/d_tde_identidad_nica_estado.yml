@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_tde_identidad_nica_estado:1.0.0
+  urn: urn:goreos:entity:d-tde:ENT-TDE-IDENTIDAD_NICA_ESTAD:1.0.0
   type: Entity
-  source: domains/d-tde/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-TDE-IDENTIDAD_NICA_ESTAD
 name: Identidad Única Estado
-entity_key: identidad_nica_estado
 domain: D-TDE
 category: Reference
-description: IUIe
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

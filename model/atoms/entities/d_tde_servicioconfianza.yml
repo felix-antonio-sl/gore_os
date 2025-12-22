@@ -1,112 +1,50 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ServicioConfianza (Servicio de Confianza)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M7 Identidad y Confianza
-# Source: Estrategia de Identidad Digital
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: identidad_confianza
-  kb_source:
-    - "Estrategia de Identidad Digital"
-    - "KB TDE Estrategias 002"
-
-entity:
-  id: ENT-TDE-SERVICIO-CONFIANZA
-  name: ServicioConfianza
-  name_es: Servicio de Confianza Digital
-  description: |
-    Servicio electrónico que otorga garantías de seguridad,
-    autenticidad e integridad en transacciones digitales,
-    parte del ecosistema de identidad digital.
-
-    Tipos:
-    - Autenticación (ClaveÚnica, Biometría)
-    - Firma Electrónica (Avanzada, Simple)
-    - Sellado de Tiempo
-    - Verificación de Identidad (KYC Digital)
-
-  purpose: |
-    Proveer garantías de confianza para:
-    - Autenticar ciudadanos y funcionarios
-    - Firmar documentos con valor probatorio
-    - Validar trazabilidad temporal
-    - Prevenir suplantación de identidad
-
-  categorical_type: Object
-  is_abstract: false
-  category: Service
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_servicio
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: tipo
-    type: Enum[Autenticacion, FirmaElectronica, SelloTiempo, VerificacionIdentidad, EntregaCertificada]
-    nullable: false
-
-  # Proveedor
-  - name: proveedor_id
-    type: String
-    fk: ENT-TDE-ENTIDAD-REGIONAL
-    nullable: true
-    description: Puede ser GORE (si actúa como autoridad) o externo
-
-  - name: es_proveedor_acreditado
-    type: Boolean
-    default: true
-    description: ¿Acreditado por MINECON/Entidad Acreditadora?
-
-  # Nivel de Confianza (LoA)
-  - name: nivel_confianza
-    type: Enum[Bajo, Medio, Alto, MuyAlto]
-    default: Medio
-    description: Level of Assurance (NIST/eIDAS)
-
-  # Broker
-  - name: integrado_broker_id
-    type: Boolean
-    default: false
-    description: ¿Integrado al Broker de Identidad del Estado?
-
-  # Operativo
-  - name: endpoint_validacion
-    type: String
-    nullable: true
-
-  - name: estandar_tecnico
-    type: String
-    nullable: true
-    description: "Estandard usado (OIDC, SAML, X.509, TS 101 861)"
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Suspendido, Revocado]
-    default: Activo
-
+- name: id_servicio
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+- name: tipo
+  type: Enum[Autenticacion, FirmaElectronica, SelloTiempo, VerificacionIdentidad,
+    EntregaCertificada]
+  nullable: false
+- name: proveedor_id
+  type: String
+  fk: ENT-TDE-ENTIDAD-REGIONAL
+  nullable: true
+  description: Puede ser GORE (si actúa como autoridad) o externo
+- name: es_proveedor_acreditado
+  type: Boolean
+  default: true
+  description: ¿Acreditado por MINECON/Entidad Acreditadora?
+- name: nivel_confianza
+  type: Enum[Bajo, Medio, Alto, MuyAlto]
+  default: Medio
+  description: Level of Assurance (NIST/eIDAS)
+- name: integrado_broker_id
+  type: Boolean
+  default: false
+  description: ¿Integrado al Broker de Identidad del Estado?
+- name: endpoint_validacion
+  type: String
+  nullable: true
+- name: estandar_tecnico
+  type: String
+  nullable: true
+  description: Estandard usado (OIDC, SAML, X.509, TS 101 861)
+- name: estado
+  type: Enum[Activo, Suspendido, Revocado]
+  default: Activo
 invariants:
-  - id: INV-CONF-001
-    name: firma_requiere_acreditacion
-    rule: tipo = 'FirmaElectronica' AND nivel_confianza = 'Alto' → es_proveedor_acreditado = TRUE
-    description: FEA requiere proveedor acreditado
-
-morphisms:
-  provee_garantia: [ENT-TDE-TRANSACCION-PISEE]
-  utilizado_en: [ENT-TDE-PROCEDIMIENTO]
-
-audit:
-  fields_tracked:
-    - estado
-    - es_proveedor_acreditado
-  retention_years: 10
+- id: INV-CONF-001
+  name: firma_requiere_acreditacion
+  rule: tipo = 'FirmaElectronica' AND nivel_confianza = 'Alto' → es_proveedor_acreditado
+    = TRUE
+  description: FEA requiere proveedor acreditado

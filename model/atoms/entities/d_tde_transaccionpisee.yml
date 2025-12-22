@@ -1,125 +1,65 @@
-# ==============================================================================
-# GORE_OS Entity Atom: TransaccionPISEE (Transacción de Interoperabilidad)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M3 Interoperabilidad
-# Source: dialogo_riguroso_d_tde.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: interoperabilidad
-  kb_source:
-    - "dialogo_riguroso_d_tde.md"
-
-entity:
-  id: ENT-TDE-TRANSACCION-PISEE
-  name: TransaccionPISEE
-  name_es: Transacción de Interoperabilidad PISEE
-  description: |
-    Registro de una transacción de intercambio de datos
-    a través de PISEE. Log auditable e inmutable.
-
-  purpose: |
-    Registrar transacciones para:
-    - Auditar intercambios de datos
-    - Monitorear disponibilidad
-    - Detectar anomalías
-    - Cumplir trazabilidad legal
-
-  categorical_type: Object
-  is_abstract: false
-  category: Event
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_transaccion
-    type: String
-    key: true
-
-  - name: servicio_id
-    type: String
-    fk: ENT-TDE-SERVICIO-PISEE
-    nullable: false
-
-  # Temporalidad
-  - name: timestamp
-    type: DateTime
-    nullable: false
-
-  - name: duracion_ms
-    type: Integer
-    nullable: true
-    description: Tiempo de respuesta en milisegundos
-
-  # Tipo
-  - name: tipo_operacion
-    type: Enum[Query, Push, Sync]
-    default: Query
-
-  - name: metodo_http
-    type: Enum[GET, POST, PUT, DELETE]
-    nullable: true
-
-  # Resultado
-  - name: status_code
-    type: Integer
-    nullable: false
-    description: Código de respuesta HTTP
-
-  - name: exitosa
-    type: Boolean
-    computed: true
-    formula: status_code >= 200 AND status_code < 300
-
-  - name: mensaje_error
-    type: String
-    nullable: true
-
-  # Payload (no almacenar datos, solo métricas)
-  - name: payload_hash
-    type: String
-    nullable: true
-    description: Hash del payload (sin almacenar contenido)
-
-  - name: registros_intercambiados
-    type: Integer
-    nullable: true
-    description: Cantidad de registros
-
-  - name: tamaño_bytes
-    type: Integer
-    nullable: true
-
-  # Origen
-  - name: ip_origen
-    type: String
-    nullable: true
-
-  - name: usuario_sistema
-    type: String
-    nullable: true
-    description: Usuario o sistema que originó la petición
-
-  # Correlación
-  - name: correlation_id
-    type: String
-    nullable: true
-    description: ID para trazar operaciones correlacionadas
-
+- name: id_transaccion
+  type: String
+  key: true
+- name: servicio_id
+  type: String
+  fk: ENT-TDE-SERVICIO-PISEE
+  nullable: false
+- name: timestamp
+  type: DateTime
+  nullable: false
+- name: duracion_ms
+  type: Integer
+  nullable: true
+  description: Tiempo de respuesta en milisegundos
+- name: tipo_operacion
+  type: Enum[Query, Push, Sync]
+  default: Query
+- name: metodo_http
+  type: Enum[GET, POST, PUT, DELETE]
+  nullable: true
+- name: status_code
+  type: Integer
+  nullable: false
+  description: Código de respuesta HTTP
+- name: exitosa
+  type: Boolean
+  computed: true
+  formula: status_code >= 200 AND status_code < 300
+- name: mensaje_error
+  type: String
+  nullable: true
+- name: payload_hash
+  type: String
+  nullable: true
+  description: Hash del payload (sin almacenar contenido)
+- name: registros_intercambiados
+  type: Integer
+  nullable: true
+  description: Cantidad de registros
+- name: tamaño_bytes
+  type: Integer
+  nullable: true
+- name: ip_origen
+  type: String
+  nullable: true
+- name: usuario_sistema
+  type: String
+  nullable: true
+  description: Usuario o sistema que originó la petición
+- name: correlation_id
+  type: String
+  nullable: true
+  description: ID para trazar operaciones correlacionadas
 invariants:
-  - id: INV-TRX-001
-    name: timestamp_obligatorio
-    rule: timestamp IS NOT NULL
-    description: Toda transacción debe tener timestamp
-
-morphisms:
-  pertenece_a: [ENT-TDE-SERVICIO-PISEE]
-
-audit:
-  fields_tracked: []
-  retention_years: 5
-  immutable: true
+- id: INV-TRX-001
+  name: timestamp_obligatorio
+  rule: timestamp IS NOT NULL
+  description: Toda transacción debe tener timestamp

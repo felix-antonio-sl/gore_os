@@ -8,5 +8,7 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-FUNCIONARIO
-  target: ENT-BACK-FUNCIONARIO
+- source: ''
+  target: ENT-TDE-AGENCIA-PROTECCION-DATOS
+- source: ''
+  target: ENT-TDE-AGENCIA-PROTECCION-DATOS

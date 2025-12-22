@@ -1,197 +1,90 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Estrategia Regional de Desarrollo (ERD)
-# ==============================================================================
-# Domain: D-PLAN (Strategic Planning)
-# Subdomain: ERD
-# Source: LOC GORE Art. 16, ERD Ñuble 2024-2030
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico"
-  domain: D-PLAN
-  subdomain: erd
-  kb_source:
-    - "LOC GORE Art. 16"
-    - "ERD Ñuble 2024-2030"
-    - "domain_d-plan.md"
-
-entity:
-  id: ENT-PLAN-ERD
-  name: EstrategiaRegionalDesarrollo
-  name_es: Estrategia Regional de Desarrollo
-  description: |
-    Instrumento de planificación de largo plazo (10 años) que define la visión,
-    ejes estratégicos y objetivos para el desarrollo de la región.
-
-    Es el documento rector que orienta la inversión pública regional y
-    contra el cual se mide el alineamiento de todas las IPRs.
-
-  purpose: |
-    Modelar la ERD para:
-    - Estructurar la jerarquía estratégica (Ejes → Lineamientos → Objetivos)
-    - Vincular IPRs a objetivos específicos
-    - Medir avance por eje estratégico
-    - Gestionar ciclo de actualización decenal
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
-  extends: null
-
-  related_to:
-    - entity: ENT-PLAN-EJE
-      relation: compuesta_por
-      cardinality: 1:N
-      description: Una ERD tiene 4-6 ejes estratégicos
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_erd
-    type: String
-    key: true
-    description: Identificador único (ej. ERD-NUBLE-2024)
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre oficial de la ERD
-
-  - name: vision
-    type: Text
-    nullable: false
-    description: Declaración de visión regional a 10 años
-
-  - name: periodo_inicio
-    type: Integer
-    nullable: false
-    description: Año de inicio de vigencia
-
-  - name: periodo_fin
-    type: Integer
-    nullable: false
-    description: Año de término de vigencia
-
-  - name: region_id
-    type: String
-    nullable: false
-    description: Código de la región (16 para Ñuble)
-
-  # Contenido
-  - name: diagnostico_url
-    type: String
-    nullable: true
-    description: URL del documento de diagnóstico
-
-  - name: documento_oficial_url
-    type: String
-    nullable: true
-    description: URL del documento ERD aprobado
-
-  # Aprobación
-  - name: acuerdo_core
-    type: String
-    nullable: true
-    description: Número de acuerdo CORE aprobatorio
-
-  - name: fecha_aprobacion
-    type: Date
-    nullable: true
-    description: Fecha de sesión CORE aprobatoria
-
-  - name: diario_oficial
-    type: Date
-    nullable: true
-    description: Fecha de publicación en Diario Oficial
-
-  # Estado
-  - name: estado
-    type: Enum[EnElaboracion, EnConsultaPublica, Aprobada, Vigente, EnActualizacion, Reemplazada]
-    default: EnElaboracion
-    description: Estado del ciclo de vida
-
-  # Métricas
-  - name: cantidad_ejes
-    type: Integer
-    default: 0
-    description: Número de ejes estratégicos
-
-  - name: cantidad_objetivos
-    type: Integer
-    default: 0
-    description: Total de objetivos estratégicos
-
-  - name: porcentaje_cumplimiento
-    type: Decimal
-    nullable: true
-    description: Avance global calculado de la ERD
-
-  # ODS
-  - name: ods_priorizados
-    type: Array[Integer]
-    nullable: true
-    description: ODS de la Agenda 2030 priorizados en esta ERD
-
+- name: id_erd
+  type: String
+  key: true
+  description: Identificador único (ej. ERD-NUBLE-2024)
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre oficial de la ERD
+- name: vision
+  type: Text
+  nullable: false
+  description: Declaración de visión regional a 10 años
+- name: periodo_inicio
+  type: Integer
+  nullable: false
+  description: Año de inicio de vigencia
+- name: periodo_fin
+  type: Integer
+  nullable: false
+  description: Año de término de vigencia
+- name: region_id
+  type: String
+  nullable: false
+  description: Código de la región (16 para Ñuble)
+- name: diagnostico_url
+  type: String
+  nullable: true
+  description: URL del documento de diagnóstico
+- name: documento_oficial_url
+  type: String
+  nullable: true
+  description: URL del documento ERD aprobado
+- name: acuerdo_core
+  type: String
+  nullable: true
+  description: Número de acuerdo CORE aprobatorio
+- name: fecha_aprobacion
+  type: Date
+  nullable: true
+  description: Fecha de sesión CORE aprobatoria
+- name: diario_oficial
+  type: Date
+  nullable: true
+  description: Fecha de publicación en Diario Oficial
+- name: estado
+  type: Enum[EnElaboracion, EnConsultaPublica, Aprobada, Vigente, EnActualizacion,
+    Reemplazada]
+  default: EnElaboracion
+  description: Estado del ciclo de vida
+- name: cantidad_ejes
+  type: Integer
+  default: 0
+  description: Número de ejes estratégicos
+- name: cantidad_objetivos
+  type: Integer
+  default: 0
+  description: Total de objetivos estratégicos
+- name: porcentaje_cumplimiento
+  type: Decimal
+  nullable: true
+  description: Avance global calculado de la ERD
+- name: ods_priorizados
+  type: Array[Integer]
+  nullable: true
+  description: ODS de la Agenda 2030 priorizados en esta ERD
 invariants:
-  - id: INV-ERD-001
-    name: periodo_valido
-    rule: periodo_fin > periodo_inicio
-    description: El período de vigencia debe ser coherente
-    severity: error
+- id: INV-ERD-001
+  name: periodo_valido
+  rule: periodo_fin > periodo_inicio
+  description: El período de vigencia debe ser coherente
+  severity: error
+- id: INV-ERD-002
+  name: periodo_decenal
+  rule: periodo_fin - periodo_inicio = 10
+  description: La ERD tiene vigencia de 10 años
+  severity: warning
+- id: INV-ERD-003
+  name: vigente_con_aprobacion
+  rule: '(estado = ''Vigente'') → (acuerdo_core IS NOT NULL AND fecha_aprobacion IS
+    NOT NULL)
 
-  - id: INV-ERD-002
-    name: periodo_decenal
-    rule: periodo_fin - periodo_inicio = 10
-    description: La ERD tiene vigencia de 10 años
-    severity: warning
-
-  - id: INV-ERD-003
-    name: vigente_con_aprobacion
-    rule: |
-      (estado = 'Vigente') → (acuerdo_core IS NOT NULL AND fecha_aprobacion IS NOT NULL)
-    description: Una ERD vigente requiere aprobación CORE
-
-lifecycle:
-  states:
-    - name: EnElaboracion
-      description: ERD en proceso de formulación técnica
-    - name: EnConsultaPublica
-      description: Período de participación ciudadana
-    - name: Aprobada
-      description: Aprobada por CORE, pendiente de publicación
-    - name: Vigente
-      description: Publicada y en ejecución
-    - name: EnActualizacion
-      description: En proceso de actualización parcial
-    - name: Reemplazada
-      description: Superada por nueva ERD
-
-  transitions:
-    - from: EnElaboracion
-      to: EnConsultaPublica
-      trigger: iniciar_consulta
-    - from: EnConsultaPublica
-      to: Aprobada
-      trigger: aprobar_core
-    - from: Aprobada
-      to: Vigente
-      trigger: publicar
-    - from: Vigente
-      to: EnActualizacion
-      trigger: iniciar_actualizacion
-    - from: Vigente
-      to: Reemplazada
-      trigger: nueva_erd
-
-morphisms:
-  compuesta_por: [ENT-PLAN-EJE]
-  orienta: [ENT-FIN-IPR, ENT-PLAN-ARI]
-  evaluada_por: [ENT-TERR-BRECHARD]
-
-audit:
-  fields_tracked:
-    - estado
-    - porcentaje_cumplimiento
-  retention_years: 20
+    '
+  description: Una ERD vigente requiere aprobación CORE

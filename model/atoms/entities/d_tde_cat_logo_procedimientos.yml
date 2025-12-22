@@ -1,235 +1,140 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Procedimiento (CPAT - Catálogo de Procedimientos)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M1 Cumplimiento TDE
-# Source: dialogo_riguroso_d_tde.md, DS 11/2020
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: cumplimiento_tde
-  kb_source:
-    - "DS 11/2020: Norma Técnica Catálogo Procedimientos (CPAT)"
-    - "dialogo_riguroso_d_tde.md"
-
-entity:
-  id: ENT-TDE-PROCEDIMIENTO
-  name: Procedimiento
-  name_es: Procedimiento Administrativo (CPAT)
-  description: |
-    Trámite o procedimiento administrativo registrado en el
-    Catálogo de Procedimientos Administrativos (CPAT) conforme a DS 11/2020.
-
-    Niveles de digitalización (0-5):
-    - 0: Sin información en línea
-    - 1: Información disponible en web
-    - 2: Formulario descargable
-    - 3: Inicio en línea
-    - 4: Seguimiento en línea
-    - 5: Totalmente digital (100%)
-
-    Meta Ley 21.180: Nivel 5 para todos los procedimientos.
-
-  purpose: |
-    Modelar procedimientos para:
-    - Mantener catálogo CPAT actualizado
-    - Medir nivel de digitalización
-    - Priorizar trámites a digitalizar
-    - Reportar avance TDE
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_procedimiento
-    type: String
-    key: true
-    description: "Identificador único"
-
-  - name: cpat_id
-    type: String
-    nullable: true
-    unique: true
-    description: "ID oficial en catálogo CPAT nacional"
-
-  - name: codigo
-    type: String
-    nullable: true
-    description: Código interno GORE
-
-  # Identificación
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre del procedimiento
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción del trámite
-
-  - name: tipo
-    type: Enum[Tramite, ServicioInterno, Autorizacion, Certificacion, Consulta, Reclamo, Otro]
-    default: Tramite
-
-  # Clasificación
-  - name: categoria
-    type: String
-    nullable: true
-    description: Categoría temática
-
-  - name: subcategoria
-    type: String
-    nullable: true
-
-  - name: materia
-    type: String
-    nullable: true
-
-  # Responsabilidad
-  - name: division_responsable_id
-    type: String
-    fk: ENT-BACK-DIVISION
-    nullable: false
-    description: División responsable
-
-  - name: encargado_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Funcionario encargado del procedimiento
-
-  # Nivel de digitalización
-  - name: nivel_digital
-    type: Integer
-    nullable: false
-    description: "Nivel 0-5 según CPAT"
-
-  - name: nivel_digital_meta
-    type: Integer
-    default: 5
-    description: Nivel objetivo
-
-  - name: brecha_nivel
-    type: Integer
-    computed: true
-    formula: nivel_digital_meta - nivel_digital
-
-  - name: fecha_ultima_evaluacion
-    type: Date
-    nullable: true
-    description: Última evaluación del nivel
-
-  # Principios Digitales
-  - name: principio_once_only
-    type: Boolean
-    default: false
-    description: "¿Cumple principio 'Solo una vez' reutilizando datos?"
-
-  - name: nivel_automatizacion
-    type: Enum[Manual, Asistido, Automatizado, Proactivo]
-    default: Manual
-    description: Nivel de automatización del flujo
-
-  - name: datos_reutilizados
-    type: Array[String]
-    nullable: true
-    description: IDs de ActivoDatos reutilizados
-
-  # Características
-  - name: requiere_firma
-    type: Boolean
-    default: false
-    description: ¿Requiere firma electrónica?
-
-  - name: requiere_pago
-    type: Boolean
-    default: false
-    description: ¿Tiene costo asociado?
-
-  - name: monto_arancel
-    type: Decimal
-    nullable: true
-    description: Monto del arancel si aplica
-
-  - name: plazo_legal_dias
-    type: Integer
-    nullable: true
-    description: Plazo legal de respuesta
-
-  - name: silencio_administrativo
-    type: Enum[Positivo, Negativo, NoAplica]
-    default: NoAplica
-
-  # Integración
-  - name: integrado_simple
-    type: Boolean
-    default: false
-    description: ¿Publicado en SIMPLE?
-
-  - name: url_simple
-    type: String
-    nullable: true
-
-  - name: integrado_claveunica
-    type: Boolean
-    default: false
-    description: ¿Integrado con ClaveÚnica?
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, EnDigitalizacion, Obsoleto, Suspendido]
-    default: Activo
-
-  - name: fecha_publicacion
-    type: Date
-    nullable: true
-
-  - name: fecha_actualizacion
-    type: Date
-    nullable: true
-
-  # Normativa
-  - name: base_legal
-    type: Text
-    nullable: true
-    description: Normativa que sustenta el procedimiento
-
-  # Métricas
-  - name: solicitudes_año
-    type: Integer
-    default: 0
-    description: Cantidad de solicitudes anuales
-
-  - name: tiempo_promedio_dias
-    type: Decimal
-    nullable: true
-    description: Tiempo promedio de resolución
-
+- name: id_procedimiento
+  type: String
+  key: true
+  description: Identificador único
+- name: cpat_id
+  type: String
+  nullable: true
+  unique: true
+  description: ID oficial en catálogo CPAT nacional
+- name: codigo
+  type: String
+  nullable: true
+  description: Código interno GORE
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre del procedimiento
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción del trámite
+- name: tipo
+  type: Enum[Tramite, ServicioInterno, Autorizacion, Certificacion, Consulta, Reclamo,
+    Otro]
+  default: Tramite
+- name: categoria
+  type: String
+  nullable: true
+  description: Categoría temática
+- name: subcategoria
+  type: String
+  nullable: true
+- name: materia
+  type: String
+  nullable: true
+- name: division_responsable_id
+  type: String
+  fk: ENT-BACK-DIVISION
+  nullable: false
+  description: División responsable
+- name: encargado_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario encargado del procedimiento
+- name: nivel_digital
+  type: Integer
+  nullable: false
+  description: Nivel 0-5 según CPAT
+- name: nivel_digital_meta
+  type: Integer
+  default: 5
+  description: Nivel objetivo
+- name: brecha_nivel
+  type: Integer
+  computed: true
+  formula: nivel_digital_meta - nivel_digital
+- name: fecha_ultima_evaluacion
+  type: Date
+  nullable: true
+  description: Última evaluación del nivel
+- name: principio_once_only
+  type: Boolean
+  default: false
+  description: ¿Cumple principio 'Solo una vez' reutilizando datos?
+- name: nivel_automatizacion
+  type: Enum[Manual, Asistido, Automatizado, Proactivo]
+  default: Manual
+  description: Nivel de automatización del flujo
+- name: datos_reutilizados
+  type: Array[String]
+  nullable: true
+  description: IDs de ActivoDatos reutilizados
+- name: requiere_firma
+  type: Boolean
+  default: false
+  description: ¿Requiere firma electrónica?
+- name: requiere_pago
+  type: Boolean
+  default: false
+  description: ¿Tiene costo asociado?
+- name: monto_arancel
+  type: Decimal
+  nullable: true
+  description: Monto del arancel si aplica
+- name: plazo_legal_dias
+  type: Integer
+  nullable: true
+  description: Plazo legal de respuesta
+- name: silencio_administrativo
+  type: Enum[Positivo, Negativo, NoAplica]
+  default: NoAplica
+- name: integrado_simple
+  type: Boolean
+  default: false
+  description: ¿Publicado en SIMPLE?
+- name: url_simple
+  type: String
+  nullable: true
+- name: integrado_claveunica
+  type: Boolean
+  default: false
+  description: ¿Integrado con ClaveÚnica?
+- name: estado
+  type: Enum[Activo, EnDigitalizacion, Obsoleto, Suspendido]
+  default: Activo
+- name: fecha_publicacion
+  type: Date
+  nullable: true
+- name: fecha_actualizacion
+  type: Date
+  nullable: true
+- name: base_legal
+  type: Text
+  nullable: true
+  description: Normativa que sustenta el procedimiento
+- name: solicitudes_año
+  type: Integer
+  default: 0
+  description: Cantidad de solicitudes anuales
+- name: tiempo_promedio_dias
+  type: Decimal
+  nullable: true
+  description: Tiempo promedio de resolución
 invariants:
-  - id: INV-PROC-001
-    name: nivel_rango_valido
-    rule: nivel_digital >= 0 AND nivel_digital <= 5
-    description: Nivel digital debe estar en rango 0-5
-
-  - id: INV-PROC-002
-    name: simple_requiere_url
-    rule: integrado_simple = TRUE → url_simple IS NOT NULL
-    description: Integrado en SIMPLE debe tener URL
-
-morphisms:
-  ejecutado_en: [ENT-TDE-EXPEDIENTE]
-  responsable: [ENT-BACK-DIVISION]
-
-audit:
-  fields_tracked:
-    - nivel_digital
-    - estado
-    - integrado_simple
-  retention_years: 10
+- id: INV-PROC-001
+  name: nivel_rango_valido
+  rule: nivel_digital >= 0 AND nivel_digital <= 5
+  description: Nivel digital debe estar en rango 0-5
+- id: INV-PROC-002
+  name: simple_requiere_url
+  rule: integrado_simple = TRUE → url_simple IS NOT NULL
+  description: Integrado en SIMPLE debe tener URL

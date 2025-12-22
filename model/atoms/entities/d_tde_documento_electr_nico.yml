@@ -1,212 +1,125 @@
-# ==============================================================================
-# GORE_OS Entity Atom: DocumentoElectronico (Documento Electrónico)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M7 Expediente Electrónico
-# Source: dialogo_riguroso_d_tde.md, DS 9/2020
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: expediente_electronico
-  kb_source:
-    - "DS 9/2020: Norma Técnica Documento Electrónico"
-    - "Ley 21.180 Art. 5-6"
-    - "dialogo_riguroso_d_tde.md"
-
-entity:
-  id: ENT-TDE-DOCUMENTO
-  name: DocumentoElectronico
-  name_es: Documento Electrónico
-  description: |
-    Documento nativo digital con validez legal equivalente al papel,
-    conforme a DS 9/2020. Contiene hash, timestamp y firma electrónica.
-
-    Tipos de documento:
-    - Solicitud: Ingreso de ciudadano
-    - Resolución: Acto administrativo
-    - Informe: Documento técnico
-    - Oficio: Comunicación oficial
-    - Certificado: Documento probatorio
-    - Anexo: Documento adjunto
-
-  purpose: |
-    Modelar documentos electrónicos para:
-    - Cumplir DS 9/2020 (Ley 21.180)
-    - Garantizar integridad con hash
-    - Vincular con expediente y folio
-    - Soportar firma electrónica
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_documento
-    type: String
-    key: true
-    description: "Identificador único"
-
-  - name: expediente_id
-    type: String
-    fk: ENT-TDE-EXPEDIENTE
-    nullable: false
-    description: Expediente al que pertenece
-
-  # Foliado
-  - name: folio
-    type: Integer
-    nullable: false
-    description: Número de folio secuencial en expediente
-
-  - name: subfolio
-    type: String
-    nullable: true
-    description: "Subfolio si aplica (ej: 15-A, 15-B)"
-
-  # Clasificación
-  - name: tipo_documento
-    type: Enum[Solicitud, Resolucion, Informe, Oficio, Certificado, Anexo, Decreto, Memorandum, Acta, Otro]
-    nullable: false
-    description: Tipo de documento
-
-  - name: titulo
-    type: String
-    nullable: false
-    description: Título o asunto del documento
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción del contenido
-
-  # Integridad
-  - name: hash_sha256
-    type: String
-    nullable: false
-    description: Hash SHA-256 del contenido
-
-  - name: timestamp_sellado
-    type: DateTime
-    nullable: false
-    description: Timestamp de sellado de tiempo
-
-  - name: algoritmo_hash
-    type: String
-    default: "SHA-256"
-    description: Algoritmo utilizado
-
-  # Archivo físico
-  - name: formato
-    type: Enum[PDF, PDFА, XML, JSON, HTML, TXT, Otro]
-    default: PDF
-    description: Formato del archivo
-
-  - name: tamaño_bytes
-    type: Integer
-    nullable: true
-    description: Tamaño del archivo
-
-  - name: nombre_archivo
-    type: String
-    nullable: false
-    description: Nombre original del archivo
-
-  - name: url_almacenamiento
-    type: String
-    nullable: true
-    description: URL de almacenamiento (DocDigital, S3, etc.)
-
-  # Firma
-  - name: firmado
-    type: Boolean
-    default: false
-    description: ¿Tiene firma electrónica?
-
-  - name: tipo_firma
-    type: Enum[Simple, Avanzada, Calificada]
-    nullable: true
-    description: Tipo de firma electrónica
-
-  - name: firmante_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: Funcionario firmante
-
-  - name: fecha_firma
-    type: DateTime
-    nullable: true
-
-  - name: certificado_firma
-    type: String
-    nullable: true
-    description: Datos del certificado de firma
-
-  # Metadatos DS 9
-  - name: fecha_documento
-    type: Date
-    nullable: false
-    description: Fecha del documento
-
-  - name: autor_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: Autor/creador del documento
-
-  - name: clasificacion
-    type: Enum[Publico, Reservado, Secreto]
-    default: Publico
-
-  - name: idioma
-    type: String
-    default: "es-CL"
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, Vigente, Anulado, Reemplazado]
-    default: Borrador
-
-  - name: version
-    type: Integer
-    default: 1
-
-  - name: documento_reemplaza_id
-    type: String
-    fk: ENT-TDE-DOCUMENTO
-    nullable: true
-    description: Documento que reemplaza (si es versión nueva)
-
+- name: id_documento
+  type: String
+  key: true
+  description: Identificador único
+- name: expediente_id
+  type: String
+  fk: ENT-TDE-EXPEDIENTE
+  nullable: false
+  description: Expediente al que pertenece
+- name: folio
+  type: Integer
+  nullable: false
+  description: Número de folio secuencial en expediente
+- name: subfolio
+  type: String
+  nullable: true
+  description: 'Subfolio si aplica (ej: 15-A, 15-B)'
+- name: tipo_documento
+  type: Enum[Solicitud, Resolucion, Informe, Oficio, Certificado, Anexo, Decreto,
+    Memorandum, Acta, Otro]
+  nullable: false
+  description: Tipo de documento
+- name: titulo
+  type: String
+  nullable: false
+  description: Título o asunto del documento
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción del contenido
+- name: hash_sha256
+  type: String
+  nullable: false
+  description: Hash SHA-256 del contenido
+- name: timestamp_sellado
+  type: DateTime
+  nullable: false
+  description: Timestamp de sellado de tiempo
+- name: algoritmo_hash
+  type: String
+  default: SHA-256
+  description: Algoritmo utilizado
+- name: formato
+  type: Enum[PDF, PDFА, XML, JSON, HTML, TXT, Otro]
+  default: PDF
+  description: Formato del archivo
+- name: tamaño_bytes
+  type: Integer
+  nullable: true
+  description: Tamaño del archivo
+- name: nombre_archivo
+  type: String
+  nullable: false
+  description: Nombre original del archivo
+- name: url_almacenamiento
+  type: String
+  nullable: true
+  description: URL de almacenamiento (DocDigital, S3, etc.)
+- name: firmado
+  type: Boolean
+  default: false
+  description: ¿Tiene firma electrónica?
+- name: tipo_firma
+  type: Enum[Simple, Avanzada, Calificada]
+  nullable: true
+  description: Tipo de firma electrónica
+- name: firmante_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario firmante
+- name: fecha_firma
+  type: DateTime
+  nullable: true
+- name: certificado_firma
+  type: String
+  nullable: true
+  description: Datos del certificado de firma
+- name: fecha_documento
+  type: Date
+  nullable: false
+  description: Fecha del documento
+- name: autor_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Autor/creador del documento
+- name: clasificacion
+  type: Enum[Publico, Reservado, Secreto]
+  default: Publico
+- name: idioma
+  type: String
+  default: es-CL
+- name: estado
+  type: Enum[Borrador, Vigente, Anulado, Reemplazado]
+  default: Borrador
+- name: version
+  type: Integer
+  default: 1
+- name: documento_reemplaza_id
+  type: String
+  fk: ENT-TDE-DOCUMENTO
+  nullable: true
+  description: Documento que reemplaza (si es versión nueva)
 invariants:
-  - id: INV-DOC-001
-    name: hash_obligatorio
-    rule: hash_sha256 IS NOT NULL
-    description: Todo documento debe tener hash
-    severity: error
-
-  - id: INV-DOC-002
-    name: folio_unico_en_expediente
-    rule: UNIQUE(expediente_id, folio)
-    description: Folio único por expediente
-
-  - id: INV-DOC-003
-    name: firmado_requiere_datos
-    rule: firmado = TRUE → firmante_id IS NOT NULL AND fecha_firma IS NOT NULL
-    description: Documento firmado debe tener datos de firma
-
-morphisms:
-  pertenece_a: [ENT-TDE-EXPEDIENTE]
-  firmado_por: [ENT-BACK-FUNCIONARIO]
-  reemplaza: [ENT-TDE-DOCUMENTO]
-
-audit:
-  fields_tracked:
-    - estado
-    - firmado
-    - hash_sha256
-  retention_years: 20
+- id: INV-DOC-001
+  name: hash_obligatorio
+  rule: hash_sha256 IS NOT NULL
+  description: Todo documento debe tener hash
+  severity: error
+- id: INV-DOC-002
+  name: folio_unico_en_expediente
+  rule: UNIQUE(expediente_id, folio)
+  description: Folio único por expediente
+- id: INV-DOC-003
+  name: firmado_requiere_datos
+  rule: firmado = TRUE → firmante_id IS NOT NULL AND fecha_firma IS NOT NULL
+  description: Documento firmado debe tener datos de firma

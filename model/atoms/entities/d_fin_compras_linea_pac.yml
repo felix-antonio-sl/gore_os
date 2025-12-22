@@ -1,0 +1,54 @@
+_meta:
+  urn: urn:goreos:entity:d-fin:linea-pac:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-LINEA_PAC
+urn: urn:goreos:entity:d-fin:linea-pac:1.0.0
+name: Línea de Plan de Compras
+domain: D-FIN
+subdomain: compras
+category: Detail
+is_abstract: false
+attributes:
+- name: id_linea
+  type: String
+  key: true
+- name: pac_id
+  type: String
+  fk: ENT-FIN-PLAN_COMPRAS
+- name: division_solicitante
+  type: String
+  nullable: false
+- name: descripcion_bien_servicio
+  type: String
+  nullable: false
+- name: codigo_onu
+  type: String
+  nullable: true
+  description: Código clasificador ONU de productos
+- name: cantidad_estimada
+  type: Integer
+  nullable: false
+- name: unidad_medida
+  type: String
+  nullable: false
+- name: monto_estimado
+  type: Decimal
+  nullable: false
+- name: mes_estimado_compra
+  type: Integer
+  description: 1-12
+- name: modalidad_probable
+  type: Enum[ConvenioMarco, LicitacionPublica, TratoDirecto, CompraAgil]
+- name: prioridad
+  type: Enum[Alta, Media, Baja]
+- name: tipo_requerimiento
+  type: Enum[Planificado, Extraordinario, Urgente]
+  default: Planificado
+- name: estado_ejecucion
+  type: Enum[Pendiente, EnProceso, Ejecutado, Cancelado]
+  default: Pendiente
+- name: orden_compra_id
+  type: String
+  fk: ENT-FIN-ORDEN_COMPRA
+  nullable: true

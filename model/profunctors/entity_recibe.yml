@@ -8,5 +8,7 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-FIN-PROVEEDOR
-  target: ENT-FIN-ORDEN_COMPRA
+- source: ''
+  target: ENT-TDE-COMUNICACION-OFICIAL
+- source: ''
+  target: ENT-TDE-CONSENTIMIENTO

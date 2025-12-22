@@ -9,10 +9,4 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ROL-ANALISTA-RENDICIONES
-- source: ''
-  target: ENT-GOB-CONSEJERO
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
+  target: ENT-TDE-OFICINA-PARTE

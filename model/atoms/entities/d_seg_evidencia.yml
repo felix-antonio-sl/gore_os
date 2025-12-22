@@ -1,114 +1,51 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Evidencia (Evidencia Digital)
-# ==============================================================================
-# Domain: D-SEG (Ciberseguridad)
-# Subdomain: M3 Operaciones y Respuesta (Forense)
-# Source: dialogo_riguroso_d_seg.md, ISO 27037
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + CISO Virtual"
-  domain: D-SEG
-  subdomain: operaciones_forense
-  kb_source:
-    - "ISO/IEC 27037: Digital evidence identification, collection, acquisition and preservation"
-    - "RFC 3227: Guidelines for Evidence Collection and Archiving"
-
-entity:
-  id: ENT-SEG-EVIDENCIA
-  name: Evidencia
-  name_es: Evidencia Digital
-  description: |
-    Información o dato probatorio recolectado durante la investigación
-    de un incidente, preservado garantizando su integridad y cadena de custodia.
-
-    Ejemplos:
-    - Imagen de disco duro (dd)
-    - Dump de memoria RAM
-    - Archivo de Logs preservado
-    - Captura de tráfico de red (pcap)
-
-  purpose: |
-    Preservar evidencia para:
-    - Análisis forense
-    - Acciones legales o administrativas (Sumarios)
-    - Determinar causa raíz
-    - Garantizar no repudio
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_evidencia
-    type: String
-    key: true
-
-  - name: incidente_id
-    type: String
-    fk: ENT-SEG-INCIDENTE
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: false
-
-  - name: tipo
-    type: Enum[Disco, Memoria, Logs, TraficoRed, Documento, Hardware, Otro]
-    nullable: false
-
-  # Integridad (Hashing)
-  - name: hash_md5
-    type: String
-    nullable: true
-    description: "Hash MD5 (Legacy)"
-
-  - name: hash_sha256
-    type: String
-    nullable: false
-    description: "Hash SHA-256 (Estándar actual)"
-
-  # Custodia
-  - name: cadena_custodia_log
-    type: Text
-    nullable: false
-    description: "Registro de quién recolectó, almacenó y accedió (JSON o Texto)"
-
-  - name: recolectada_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-
-  - name: fecha_recoleccion
-    type: Timestamp
-    nullable: false
-
-  - name: ubicacion_almacenamiento
-    type: String
-    nullable: false
-    description: "Lugar físico o lógico seguro (Caja fuerte, S3 Inmutable)"
-
-  # Estado
-  - name: estado
-    type: Enum[Recolectada, Analizada, Preservada, Destruida, EntregadaFiscalia]
-    default: Recolectada
-
+- name: id_evidencia
+  type: String
+  key: true
+- name: incidente_id
+  type: String
+  fk: ENT-SEG-INCIDENTE
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: false
+- name: tipo
+  type: Enum[Disco, Memoria, Logs, TraficoRed, Documento, Hardware, Otro]
+  nullable: false
+- name: hash_md5
+  type: String
+  nullable: true
+  description: Hash MD5 (Legacy)
+- name: hash_sha256
+  type: String
+  nullable: false
+  description: Hash SHA-256 (Estándar actual)
+- name: cadena_custodia_log
+  type: Text
+  nullable: false
+  description: Registro de quién recolectó, almacenó y accedió (JSON o Texto)
+- name: recolectada_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+- name: fecha_recoleccion
+  type: Timestamp
+  nullable: false
+- name: ubicacion_almacenamiento
+  type: String
+  nullable: false
+  description: Lugar físico o lógico seguro (Caja fuerte, S3 Inmutable)
+- name: estado
+  type: Enum[Recolectada, Analizada, Preservada, Destruida, EntregadaFiscalia]
+  default: Recolectada
 invariants:
-  - id: INV-EVID-001
-    name: integridad_hash
-    rule: hash_sha256 IS NOT NULL
-    description: Evidencia debe tener Hash SHA-256 para integridad
-
-morphisms:
-  soporta: [ENT-SEG-INCIDENTE]
-  analizada_en: [InformeForense]
-
-audit:
-  fields_tracked:
-    - estado
-    - ubicacion_almacenamiento
-    - cadena_custodia_log
-  retention_years: 10
+- id: INV-EVID-001
+  name: integridad_hash
+  rule: hash_sha256 IS NOT NULL
+  description: Evidencia debe tener Hash SHA-256 para integridad

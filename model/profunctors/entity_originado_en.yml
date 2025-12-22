@@ -9,8 +9,4 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-FIN-COMPROMISO
-- source: ''
-  target: ENT-FIN-DEVENGO
-- source: ''
-  target: ENT-GESTION-INSTANCIA
+  target: ENT-FENIX-INTERVENCION

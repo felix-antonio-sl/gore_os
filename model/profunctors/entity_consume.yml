@@ -8,5 +8,5 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-FIN-CDP
-  target: ENT-FIN-ASIGNACION_PRESUPUESTARIA
+- source: ''
+  target: ENT-TDE-SERVICIO-INTEROPERABILIDAD

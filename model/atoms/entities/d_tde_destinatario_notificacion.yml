@@ -1,118 +1,59 @@
-# ==============================================================================
-# GORE_OS Entity Atom: DestinatarioNotificacion
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Plataformas Compartidas - Notificaciones
-# Source: KB-016 Plataforma Notificaciones Estado
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: plataformas_notificaciones
-  kb_source:
-    - "urn:knowledge:tde:lineamientos:plataforma_notificaciones_estado:1.0.0"
-    - "dialogo_plataformas_d_tde.md"
-
-entity:
-  id: ENT-TDE-DESTINATARIO-NOTIFICACION
-  name: DestinatarioNotificacion
-  name_es: Destinatario de Notificación
-  description: |
-    Registro de entrega de una notificación electrónica a un destinatario específico.
-    Cada notificación puede tener hasta 250 destinatarios, cada uno con su propio
-    estado de entrega según configuración de DDU.
-
-  purpose: |
-    Modelar la entrega por destinatario para:
-    - Trazabilidad individual de estados
-    - Cumplimiento de notificación personal
-    - Gestión de errores de entrega
-    - Acuse de recibo/lectura
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_destinatario
-    type: String
-    key: true
-
-  - name: notificacion_id
-    type: String
-    fk: ENT-TDE-NOTIFICACION-ELECTRONICA
-    nullable: false
-
-  # Identificación del Destinatario
-  - name: rol_unico
-    type: String
-    nullable: false
-    description: "RUN o RUT sin dígito verificador"
-
-  # Configuración DDU
-  - name: tipo_ddu
-    type: Enum[casilla, email, not_configured, excepcion]
-    nullable: false
-    description: "Tipo de Domicilio Digital del destinatario"
-
-  # Estado de Entrega
-  - name: estado_mensaje
-    type: Enum[pending, delivered, error, error_rejected, error_undetermined_undetermined, error_permanent_general, error_permanent_no_email, error_permanent_supressed, error_permanent_on_account_suspension_list, error_transient_general, error_transient_mailbox_full, error_transient_message_too_large, error_transient_content_rejected, error_transient_attachment_rejected, error_send_message_mail]
-    default: pending
-    description: "Estado detallado de entrega según API"
-
-  # Método de Entrega
-  - name: metodo_entrega
-    type: String
-    nullable: true
-    description: "Método usado para la entrega (casilla, email)"
-
-  # Temporalidad
-  - name: fecha_entrega
-    type: Timestamp
-    nullable: true
-    description: "Fecha en que se entregó el mensaje"
-
-  - name: fecha_lectura
-    type: Timestamp
-    nullable: true
-    description: "Fecha en que el destinatario leyó el mensaje"
-
-  # Indicadores
-  - name: entregado
-    type: Boolean
-    computed: true
-    formula: estado_mensaje = 'delivered'
-
-  - name: leido
-    type: Boolean
-    computed: true
-    formula: fecha_lectura IS NOT NULL
-
+- name: id_destinatario
+  type: String
+  key: true
+- name: notificacion_id
+  type: String
+  fk: ENT-TDE-NOTIFICACION-ELECTRONICA
+  nullable: false
+- name: rol_unico
+  type: String
+  nullable: false
+  description: RUN o RUT sin dígito verificador
+- name: tipo_ddu
+  type: Enum[casilla, email, not_configured, excepcion]
+  nullable: false
+  description: Tipo de Domicilio Digital del destinatario
+- name: estado_mensaje
+  type: Enum[pending, delivered, error, error_rejected, error_undetermined_undetermined,
+    error_permanent_general, error_permanent_no_email, error_permanent_supressed,
+    error_permanent_on_account_suspension_list, error_transient_general, error_transient_mailbox_full,
+    error_transient_message_too_large, error_transient_content_rejected, error_transient_attachment_rejected,
+    error_send_message_mail]
+  default: pending
+  description: Estado detallado de entrega según API
+- name: metodo_entrega
+  type: String
+  nullable: true
+  description: Método usado para la entrega (casilla, email)
+- name: fecha_entrega
+  type: Timestamp
+  nullable: true
+  description: Fecha en que se entregó el mensaje
+- name: fecha_lectura
+  type: Timestamp
+  nullable: true
+  description: Fecha en que el destinatario leyó el mensaje
+- name: entregado
+  type: Boolean
+  computed: true
+  formula: estado_mensaje = 'delivered'
+- name: leido
+  type: Boolean
+  computed: true
+  formula: fecha_lectura IS NOT NULL
 invariants:
-  - id: INV-DEST-001
-    name: rol_unico_valido
-    rule: rol_unico MATCHES '^[0-9]+$'
-    description: "RUN/RUT debe ser numérico sin DV"
-
-  - id: INV-DEST-002
-    name: lectura_requiere_entrega
-    rule: fecha_lectura IS NOT NULL → fecha_entrega IS NOT NULL
-    description: "No puede marcarse como leído sin estar entregado"
-
-morphisms:
-  corresponde_a: [ENT-TDE-NOTIFICACION-ELECTRONICA]
-  identificado_por: [ENT-TDE-DOMICILIO-DIGITAL-UNICO]
-
-audit:
-  fields_tracked:
-    - estado_mensaje
-    - fecha_entrega
-    - fecha_lectura
-  retention_years: 10
-  legal_basis: "Ley 21.180, Art. 46 Ley 19.880"
+- id: INV-DEST-001
+  name: rol_unico_valido
+  rule: rol_unico MATCHES '^[0-9]+$'
+  description: RUN/RUT debe ser numérico sin DV
+- id: INV-DEST-002
+  name: lectura_requiere_entrega
+  rule: fecha_lectura IS NOT NULL → fecha_entrega IS NOT NULL
+  description: No puede marcarse como leído sin estar entregado

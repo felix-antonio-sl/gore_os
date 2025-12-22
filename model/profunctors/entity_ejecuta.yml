@@ -9,6 +9,4 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-EJEC-CONVENIO
-- source: ''
-  target: ENT-EVOL-FLUJO
+  target: ENT-TDE-TRANSACCION-PISEE

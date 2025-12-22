@@ -10,3 +10,5 @@ target_type: Mixed
 links:
 - source: ''
   target: ENT-TERR-COMUNA
+- source: ''
+  target: ENT-TERR-COMUNA

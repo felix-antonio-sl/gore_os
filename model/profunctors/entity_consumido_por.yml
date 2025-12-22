@@ -8,5 +8,5 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-ARTICULO_INVENTARIO
-  target: ENT-BACK-SOLICITUD_CONSUMO
+- source: ''
+  target: ENT-TDE-NODO-INTEROPERABILIDAD

@@ -1,147 +1,72 @@
-# ==============================================================================
-# GORE_OS Entity Atom: IncidenteSeguridad (Incidente de Ciberseguridad)
-# ==============================================================================
-# Domain: D-SEG (Ciberseguridad)
-# Subdomain: M3 Operaciones y Respuesta (CSIRT)
-# Source: dialogo_riguroso_d_seg.md, NIST SP 800-61, D.S. 273 (CSIRT Gob)
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + CISO Virtual"
-  domain: D-SEG
-  subdomain: operaciones_csirt
-  kb_source:
-    - "NIST SP 800-61: Computer Security Incident Handling Guide"
-    - "Decreto Supremo 273: Política Nacional de Ciberseguridad"
-    - "Protocolo CSIRT Gobierno"
-
-entity:
-  id: ENT-SEG-INCIDENTE
-  name: IncidenteSeguridad
-  name_es: Incidente de Seguridad de Información
-  description: |
-    Evento adverso que compromete la confidencialidad, integridad o
-    disponibilidad de un activo de información, o viola una política
-    de seguridad.
-
-    Fases (NIST):
-    1. Preparación
-    2. Detección y Análisis
-    3. Contención, Erradicación y Recuperación
-    4. Actividad Post-Incidente
-
-  purpose: |
-    Gestionar ciclo de vida de incidentes para:
-    - Minimizar impacto operacional
-    - Recopilar evidencia forense
-    - Reportar a CSIRT Gobierno
-    - Restaurar servicios (Continuidad)
-
-  categorical_type: Transaction
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_incidente
-    type: String
-    key: true
-    description: "ID único (ej: INC-2025-X84)"
-
-  - name: titulo
-    type: String
-    nullable: false
-    description: "Resumen corto (ej: Ransomware en Servidor Finanzas)"
-
-  # Clasificación TLP (Traffic Light Protocol)
-  - name: tlp
-    type: Enum[RED, AMBER, GREEN, CLEAR]
-    default: AMBER
-    description: Nivel de confidencialidad de la información del incidente
-
-  # Tipificación
-  - name: tipo
-    type: Enum[Malware, Phishing, DDoS, AccesoNoAutorizado, FugaDatos, IngenieriaSocial, Desconocido]
-    nullable: false
-
-  - name: severidad_inicial
-    type: Enum[Baja, Media, Alta, Critica]
-    nullable: false
-    description: Evaluación inicial de impacto
-
-  - name: vector_ataque
-    type: String
-    nullable: true
-    description: "Cómo ocurrió (Correo, Web, USB, etc.)"
-
-  # Impacto CIA
-  - name: impacto_confidencialidad
-    type: Boolean
-    default: false
-    description: "¿Datos expuestos?"
-
-  - name: impacto_integridad
-    type: Boolean
-    default: false
-    description: "¿Datos alterados?"
-
-  - name: impacto_disponibilidad
-    type: Boolean
-    default: false
-    description: "¿Servicios caídos?"
-
-  # Activos afectados
-  - name: activo_principal_id
-    type: String
-    fk: ENT-SEG-ACTIVO-INFORMACION
-    nullable: true
-    description: "Activo principal comprometido"
-
-  # Origen
-  - name: detectado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
-  - name: fuente_deteccion
-    type: Enum[Usuario, SIEM, Antivirus, Externo, CSIRT_Nacional]
-    nullable: false
-
-  # Tiempos
-  - name: fecha_hora_ocurrencia
-    type: Timestamp
-    nullable: true
-
-  - name: fecha_hora_deteccion
-    type: Timestamp
-    nullable: false
-
-  - name: fecha_hora_cierre
-    type: Timestamp
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Abierto, EnContencion, EnAnalisis, Resuelto, Cerrado, FalsoPositivo]
-    default: Abierto
-
+- name: id_incidente
+  type: String
+  key: true
+  description: 'ID único (ej: INC-2025-X84)'
+- name: titulo
+  type: String
+  nullable: false
+  description: 'Resumen corto (ej: Ransomware en Servidor Finanzas)'
+- name: tlp
+  type: Enum[RED, AMBER, GREEN, CLEAR]
+  default: AMBER
+  description: Nivel de confidencialidad de la información del incidente
+- name: tipo
+  type: Enum[Malware, Phishing, DDoS, AccesoNoAutorizado, FugaDatos, IngenieriaSocial,
+    Desconocido]
+  nullable: false
+- name: severidad_inicial
+  type: Enum[Baja, Media, Alta, Critica]
+  nullable: false
+  description: Evaluación inicial de impacto
+- name: vector_ataque
+  type: String
+  nullable: true
+  description: Cómo ocurrió (Correo, Web, USB, etc.)
+- name: impacto_confidencialidad
+  type: Boolean
+  default: false
+  description: ¿Datos expuestos?
+- name: impacto_integridad
+  type: Boolean
+  default: false
+  description: ¿Datos alterados?
+- name: impacto_disponibilidad
+  type: Boolean
+  default: false
+  description: ¿Servicios caídos?
+- name: activo_principal_id
+  type: String
+  fk: ENT-SEG-ACTIVO-INFORMACION
+  nullable: true
+  description: Activo principal comprometido
+- name: detectado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+- name: fuente_deteccion
+  type: Enum[Usuario, SIEM, Antivirus, Externo, CSIRT_Nacional]
+  nullable: false
+- name: fecha_hora_ocurrencia
+  type: Timestamp
+  nullable: true
+- name: fecha_hora_deteccion
+  type: Timestamp
+  nullable: false
+- name: fecha_hora_cierre
+  type: Timestamp
+  nullable: true
+- name: estado
+  type: Enum[Abierto, EnContencion, EnAnalisis, Resuelto, Cerrado, FalsoPositivo]
+  default: Abierto
 invariants:
-  - id: INV-INC-001
-    name: cierre_requiere_fecha
-    rule: estado = 'Cerrado' → fecha_hora_cierre IS NOT NULL
-    description: Incidente cerrado debe tener fecha de cierre
-
-morphisms:
-  contiene: [ENT-SEG-EVIDENCIA]
-  gatilla: [ENT-SEG-ACCIONRESPUESTA]
-  afecta: [ENT-SEG-ACTIVO-INFORMACION]
-  reportado_a: [CSIRT_Nacional]
-
-audit:
-  fields_tracked:
-    - estado
-    - severidad_inicial
-    - tlp
-  retention_years: 5
+- id: INV-INC-001
+  name: cierre_requiere_fecha
+  rule: estado = 'Cerrado' → fecha_hora_cierre IS NOT NULL
+  description: Incidente cerrado debe tener fecha de cierre

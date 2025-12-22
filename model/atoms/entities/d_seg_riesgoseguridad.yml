@@ -1,159 +1,83 @@
-# ==============================================================================
-# GORE_OS Entity Atom: RiesgoSeguridad (Riesgo de Seguridad)
-# ==============================================================================
-# Domain: D-SEG (Ciberseguridad)
-# Subdomain: M2 Gestión de Riesgos (ISO 27005)
-# Source: dialogo_riguroso_d_seg.md, ISO 27005
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + CISO Virtual"
-  domain: D-SEG
-  subdomain: gestion_riesgos
-  kb_source:
-    - "ISO/IEC 27005: Information security risk management"
-    - "dialogo_riguroso_d_seg.md"
-
-entity:
-  id: ENT-SEG-RIESGO
-  name: RiesgoSeguridad
-  name_es: Riesgo de Seguridad de Información
-  description: |
-    Potencial de que una amenaza explote una vulnerabilidad de
-    un activo de información y cause daño a la organización.
-
-    Componentes:
-    Riesgo = Probabilidad(Amenaza x Vulnerabilidad) x Impacto(Activo)
-
-  purpose: |
-    Gestionar riesgos de seguridad para:
-    - Calcular exposición al riesgo (Inherente y Residual)
-    - Decidir tratamiento (Mitigar, Aceptar, etc.)
-    - Justificar inversión en controles
-    - Cumplir normativa (ENS, Ley Marco)
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_riesgo
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: "Resumen del escenario (ej: Fuga de datos por malware)"
-
-  - name: descripcion
-    type: Text
-    nullable: true
-
-  # Componentes del Riesgo (Escenario)
-  - name: activo_afectado_id
-    type: String
-    fk: ENT-SEG-ACTIVO-INFORMACION
-    nullable: false
-    description: Activo principal en riesgo
-
-  - name: amenaza_id
-    type: String
-    # fk: ENT-SEG-AMENAZA (Simplificado como String o Enum en primera iteración si no existe entidad)
-    nullable: false
-    description: "ID de Amenaza (ej: AME-001 Ransomware)"
-
-  - name: vulnerabilidad_id
-    type: String
-    # fk: ENT-SEG-VULNERABILIDAD
-    nullable: true
-    description: "ID de Vulnerabilidad explotada"
-
-  # Evaluación Inherente (Sin controles)
-  - name: probabilidad_inherente
-    type: Integer
-    nullable: false
-    description: "1-5 (Muy Baja a Muy Alta)"
-
-  - name: impacto_inherente
-    type: Integer
-    nullable: false
-    description: "1-5 (Insignificante a Catastrófico)"
-
-  - name: nivel_riesgo_inherente
-    type: Integer
-    computed: true
-    formula: probabilidad_inherente * impacto_inherente
-    description: "1-25"
-
-  # Evaluación Residual (Con controles actuales)
-  - name: controles_existentes_ids
-    type: Array[String]
-    # fk: ENT-SEG-CONTROL
-    nullable: true
-    description: Controles ya implementados
-
-  - name: probabilidad_residual
-    type: Integer
-    nullable: false
-
-  - name: impacto_residual
-    type: Integer
-    nullable: false
-
-  - name: nivel_riesgo_residual
-    type: Integer
-    computed: true
-    formula: probabilidad_residual * impacto_residual
-    description: "1-25"
-
-  # Tratamiento
-  - name: opcion_tratamiento
-    type: Enum[Mitigar, Aceptar, Transferir, Evitar]
-    default: Mitigar
-
-  - name: justificacion_tratamiento
-    type: Text
-    nullable: true
-
-  - name: plan_tratamiento_id
-    type: String
-    # fk: ENT-SEG-PLAN-TRATAMIENTO
-    nullable: true
-
-  # Relación Institucional
-  - name: riesgo_institucional_id
-    type: String
-    fk: ENT-GESTION-RIESGO
-    nullable: true
-    description: "Link a Riesgo Institucional (D-GESTION) si escala"
-
-  # Estado
-  - name: estado
-    type: Enum[Identificado, Analizado, EnTratamiento, Monitoreado, Cerrado]
-    default: Identificado
-
-  - name: fecha_revision
-    type: Date
-    nullable: false
-
+- name: id_riesgo
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+  description: 'Resumen del escenario (ej: Fuga de datos por malware)'
+- name: descripcion
+  type: Text
+  nullable: true
+- name: activo_afectado_id
+  type: String
+  fk: ENT-SEG-ACTIVO-INFORMACION
+  nullable: false
+  description: Activo principal en riesgo
+- name: amenaza_id
+  type: String
+  nullable: false
+  description: 'ID de Amenaza (ej: AME-001 Ransomware)'
+- name: vulnerabilidad_id
+  type: String
+  nullable: true
+  description: ID de Vulnerabilidad explotada
+- name: probabilidad_inherente
+  type: Integer
+  nullable: false
+  description: 1-5 (Muy Baja a Muy Alta)
+- name: impacto_inherente
+  type: Integer
+  nullable: false
+  description: 1-5 (Insignificante a Catastrófico)
+- name: nivel_riesgo_inherente
+  type: Integer
+  computed: true
+  formula: probabilidad_inherente * impacto_inherente
+  description: 1-25
+- name: controles_existentes_ids
+  type: Array[String]
+  nullable: true
+  description: Controles ya implementados
+- name: probabilidad_residual
+  type: Integer
+  nullable: false
+- name: impacto_residual
+  type: Integer
+  nullable: false
+- name: nivel_riesgo_residual
+  type: Integer
+  computed: true
+  formula: probabilidad_residual * impacto_residual
+  description: 1-25
+- name: opcion_tratamiento
+  type: Enum[Mitigar, Aceptar, Transferir, Evitar]
+  default: Mitigar
+- name: justificacion_tratamiento
+  type: Text
+  nullable: true
+- name: plan_tratamiento_id
+  type: String
+  nullable: true
+- name: riesgo_institucional_id
+  type: String
+  fk: ENT-GESTION-RIESGO
+  nullable: true
+  description: Link a Riesgo Institucional (D-GESTION) si escala
+- name: estado
+  type: Enum[Identificado, Analizado, EnTratamiento, Monitoreado, Cerrado]
+  default: Identificado
+- name: fecha_revision
+  type: Date
+  nullable: false
 invariants:
-  - id: INV-SEG-RSG-001
-    name: residual_menor_inherente
-    rule: nivel_riesgo_residual <= nivel_riesgo_inherente
-    description: El riesgo residual no debería ser mayor al inherente (salvo error)
-
-morphisms:
-  afecta_activo: [ENT-SEG-ACTIVO-INFORMACION]
-  mitigado_por: [ENT-SEG-CONTROL]
-  escala_a: [ENT-GESTION-RIESGO]
-
-audit:
-  fields_tracked:
-    - nivel_riesgo_residual
-    - opcion_tratamiento
-    - estado
-  retention_years: 10
+- id: INV-SEG-RSG-001
+  name: residual_menor_inherente
+  rule: nivel_riesgo_residual <= nivel_riesgo_inherente
+  description: El riesgo residual no debería ser mayor al inherente (salvo error)

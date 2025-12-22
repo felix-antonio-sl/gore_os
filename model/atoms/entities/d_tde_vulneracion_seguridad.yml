@@ -1,150 +1,80 @@
-# ==============================================================================
-# GORE_OS Entity Atom: VulneracionMedidasSeguridad (Brecha de Datos)
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Protección de Datos Personales
-# Source: Ley 21.719, Art. 14 sexies
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: proteccion_datos
-  kb_source:
-    - "urn:knowledge:tde:leyes:ley_21719_datos_personales:1.0.0"
-    - "dialogo_legislativo_d_tde.md"
-
-entity:
-  id: ENT-TDE-VULNERACION-SEGURIDAD
-  name: VulneracionMedidasSeguridad
-  name_es: Vulneración de Medidas de Seguridad (Brecha de Datos)
-  description: |
-    Evento de seguridad que ocasiona destrucción, filtración, pérdida,
-    alteración accidental o ilícita, o comunicación/acceso no autorizado
-    de datos personales.
-
-    Requiere reporte obligatorio a la APDP según Art. 14 sexies.
-
-  purpose: |
-    Registrar y gestionar brechas de datos para:
-    - Cumplir obligación de reporte a la APDP
-    - Comunicar a titulares afectados (datos sensibles)
-    - Documentar medidas adoptadas
-    - Trazabilidad ante fiscalización
-
-  categorical_type: Event
-  is_abstract: false
-  category: Incident
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_vulneracion
-    type: String
-    key: true
-
-  - name: responsable_id
-    type: String
-    fk: ENT-TDE-RESPONSABLE-TRATAMIENTO
-    nullable: false
-
-  # Detección
-  - name: fecha_deteccion
-    type: Timestamp
-    nullable: false
-
-  - name: fecha_ocurrencia_estimada
-    type: Timestamp
-    nullable: true
-
-  # Naturaleza
-  - name: naturaleza
-    type: Enum[Destruccion, Filtracion, Perdida, Alteracion, AccesoNoAutorizado, ComunicacionNoAutorizada]
-    nullable: false
-
-  - name: descripcion
-    type: String
-    nullable: false
-
-  # Impacto
-  - name: categorias_datos_afectados
-    type: Array[Enum[DatosIdentificacion, DatosSensibles, DatosSalud, DatosBiometricos, DatosNNA, DatosFinancieros]]
-    nullable: false
-
-  - name: numero_titulares_afectados
-    type: Integer
-    nullable: true
-    description: "Número aproximado"
-
-  - name: riesgo_para_titulares
-    type: Enum[Bajo, Medio, Alto, MuyAlto]
-    nullable: false
-
-  # Reporte APDP
-  - name: fecha_reporte_agencia
-    type: Timestamp
-    nullable: true
-
-  - name: reporte_agencia_expedito
-    type: Boolean
-    computed: true
-    formula: fecha_reporte_agencia IS NOT NULL AND (fecha_reporte_agencia - fecha_deteccion) <= 72 HOURS
-    description: "Reportado sin dilaciones indebidas (referencia 72h)"
-
-  # Comunicación a Titulares
-  - name: requiere_comunicacion_titulares
-    type: Boolean
-    computed: true
-    formula: "'DatosSensibles' IN categorias_datos_afectados OR 'DatosNNA' IN categorias_datos_afectados OR 'DatosFinancieros' IN categorias_datos_afectados"
-
-  - name: fecha_comunicacion_titulares
-    type: Timestamp
-    nullable: true
-
-  - name: medio_comunicacion
-    type: Enum[Individual, MassComunicacion]
-    nullable: true
-    description: "Individual o aviso en medio masivo si no es posible"
-
-  # Gestión
-  - name: medidas_adoptadas
-    type: Array[String]
-    nullable: false
-
-  - name: estado
-    type: Enum[Detectada, Reportada, EnGestion, Cerrada]
-    default: Detectada
-
-  # Relación con Incidente Seguridad (D-SEG)
-  - name: incidente_seguridad_id
-    type: String
-    fk: ENT-SEG-INCIDENTE
-    nullable: true
-    description: "Si se gestiona también como Incidente de Seguridad"
-
+- name: id_vulneracion
+  type: String
+  key: true
+- name: responsable_id
+  type: String
+  fk: ENT-TDE-RESPONSABLE-TRATAMIENTO
+  nullable: false
+- name: fecha_deteccion
+  type: Timestamp
+  nullable: false
+- name: fecha_ocurrencia_estimada
+  type: Timestamp
+  nullable: true
+- name: naturaleza
+  type: Enum[Destruccion, Filtracion, Perdida, Alteracion, AccesoNoAutorizado, ComunicacionNoAutorizada]
+  nullable: false
+- name: descripcion
+  type: String
+  nullable: false
+- name: categorias_datos_afectados
+  type: Array[Enum[DatosIdentificacion, DatosSensibles, DatosSalud, DatosBiometricos,
+    DatosNNA, DatosFinancieros]]
+  nullable: false
+- name: numero_titulares_afectados
+  type: Integer
+  nullable: true
+  description: Número aproximado
+- name: riesgo_para_titulares
+  type: Enum[Bajo, Medio, Alto, MuyAlto]
+  nullable: false
+- name: fecha_reporte_agencia
+  type: Timestamp
+  nullable: true
+- name: reporte_agencia_expedito
+  type: Boolean
+  computed: true
+  formula: fecha_reporte_agencia IS NOT NULL AND (fecha_reporte_agencia - fecha_deteccion)
+    <= 72 HOURS
+  description: Reportado sin dilaciones indebidas (referencia 72h)
+- name: requiere_comunicacion_titulares
+  type: Boolean
+  computed: true
+  formula: '''DatosSensibles'' IN categorias_datos_afectados OR ''DatosNNA'' IN categorias_datos_afectados
+    OR ''DatosFinancieros'' IN categorias_datos_afectados'
+- name: fecha_comunicacion_titulares
+  type: Timestamp
+  nullable: true
+- name: medio_comunicacion
+  type: Enum[Individual, MassComunicacion]
+  nullable: true
+  description: Individual o aviso en medio masivo si no es posible
+- name: medidas_adoptadas
+  type: Array[String]
+  nullable: false
+- name: estado
+  type: Enum[Detectada, Reportada, EnGestion, Cerrada]
+  default: Detectada
+- name: incidente_seguridad_id
+  type: String
+  fk: ENT-SEG-INCIDENTE
+  nullable: true
+  description: Si se gestiona también como Incidente de Seguridad
 invariants:
-  - id: INV-VUL-001
-    name: reporte_obligatorio
-    rule: riesgo_para_titulares IN ('Alto', 'MuyAlto') → fecha_reporte_agencia IS NOT NULL
-    description: "Brechas de alto riesgo deben reportarse a la APDP"
-
-  - id: INV-VUL-002
-    name: comunicacion_titulares_sensibles
-    rule: requiere_comunicacion_titulares = TRUE → fecha_comunicacion_titulares IS NOT NULL
-    description: "Si afecta datos sensibles/NNA/financieros, debe comunicarse a titulares"
-
-morphisms:
-  afecta: [ENT-TDE-ACTIVO-DATOS]
-  reportada_a: [ENT-TDE-AGENCIA-PROTECCION-DATOS]
-  gestionada_por: [ENT-TDE-RESPONSABLE-TRATAMIENTO]
-  correlacionada_con: [ENT-SEG-INCIDENTE]
-
-audit:
-  fields_tracked:
-    - estado
-    - fecha_reporte_agencia
-    - fecha_comunicacion_titulares
-  retention_years: 10
-  legal_basis: "Ley 21.719, Art. 14 sexies"
+- id: INV-VUL-001
+  name: reporte_obligatorio
+  rule: riesgo_para_titulares IN ('Alto', 'MuyAlto') → fecha_reporte_agencia IS NOT
+    NULL
+  description: Brechas de alto riesgo deben reportarse a la APDP
+- id: INV-VUL-002
+  name: comunicacion_titulares_sensibles
+  rule: requiere_comunicacion_titulares = TRUE → fecha_comunicacion_titulares IS NOT
+    NULL
+  description: Si afecta datos sensibles/NNA/financieros, debe comunicarse a titulares

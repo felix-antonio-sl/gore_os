@@ -8,5 +8,5 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-EJEC-HITO_CONVENIO
-  target: ENT-FIN-ESTADO_PAGO
+- source: ''
+  target: ENT-SEG-ACCIONRESPUESTA

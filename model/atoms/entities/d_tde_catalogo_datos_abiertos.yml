@@ -1,119 +1,55 @@
-# ==============================================================================
-# GORE_OS Entity Atom: CatalogoDatosAbiertos
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Plataformas Compartidas - Datos Abiertos
-# Source: KB-028 Datos.gob Datos Abiertos
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: plataformas_datos_abiertos
-  kb_source:
-    - "urn:knowledge:tde:lineamientos:plataforma_datosgob_datos_abiertos:1.0.0"
-    - "dialogo_plataformas_d_tde.md"
-
-entity:
-  id: ENT-TDE-CATALOGO-DATOS-ABIERTOS
-  name: CatalogoDatosAbiertos
-  name_es: Catálogo de Datos Abiertos
-  description: |
-    Repositorio institucional de datasets publicados en Datos.gob.cl.
-    Centraliza, almacena y disponibiliza conjuntos de datos abiertos
-    estructurados y descritos por metadatos (DCAT, Dublin Core).
-
-  purpose: |
-    Modelar catálogos institucionales para:
-    - Gobernanza de datos abiertos
-    - Cumplimiento estándares apertura
-    - Trazabilidad de publicaciones
-    - Alineación con Estrategia de Datos
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_catalogo
-    type: String
-    key: true
-
-  # Institución
-  - name: entidad_id
-    type: String
-    fk: ENT-TDE-ENTIDAD-REGIONAL
-    nullable: false
-
-  # Metadatos DCAT
-  - name: titulo
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: true
-
-  - name: cobertura_geografica
-    type: String
-    nullable: true
-    description: "País, Región, Provincia, Comuna"
-
-  # Métricas
-  - name: n_datasets
-    type: Integer
-    default: 0
-    description: "Número de conjuntos de datos"
-
-  - name: n_recursos
-    type: Integer
-    default: 0
-    description: "Número total de recursos"
-
-  - name: n_visitas
-    type: Integer
-    default: 0
-    description: "Visitas acumuladas"
-
-  # Gobernanza
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-    description: "Funcionario responsable del catálogo"
-
-  # Fechas
-  - name: fecha_creacion
-    type: Date
-    nullable: false
-
-  - name: fecha_ultima_actualizacion
-    type: Date
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Inactivo]
-    default: Activo
-
+- name: id_catalogo
+  type: String
+  key: true
+- name: entidad_id
+  type: String
+  fk: ENT-TDE-ENTIDAD-REGIONAL
+  nullable: false
+- name: titulo
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: true
+- name: cobertura_geografica
+  type: String
+  nullable: true
+  description: País, Región, Provincia, Comuna
+- name: n_datasets
+  type: Integer
+  default: 0
+  description: Número de conjuntos de datos
+- name: n_recursos
+  type: Integer
+  default: 0
+  description: Número total de recursos
+- name: n_visitas
+  type: Integer
+  default: 0
+  description: Visitas acumuladas
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+  description: Funcionario responsable del catálogo
+- name: fecha_creacion
+  type: Date
+  nullable: false
+- name: fecha_ultima_actualizacion
+  type: Date
+  nullable: true
+- name: estado
+  type: Enum[Activo, Inactivo]
+  default: Activo
 invariants:
-  - id: INV-CAT-001
-    name: datasets_coherente
-    rule: n_datasets >= 0
-    description: "Número de datasets no puede ser negativo"
-
-morphisms:
-  pertenece_a: [ENT-TDE-ENTIDAD-REGIONAL]
-  contiene: [ENT-TDE-CONJUNTO-DATOS-ABIERTOS]
-  publicado_en: [ENT-TDE-PLATAFORMA] # Datos.gob.cl
-
-audit:
-  fields_tracked:
-    - n_datasets
-    - estado
-  retention_years: 5
-  legal_basis: "Estándares Datos Abiertos, Estrategia de Datos"
+- id: INV-CAT-001
+  name: datasets_coherente
+  rule: n_datasets >= 0
+  description: Número de datasets no puede ser negativo

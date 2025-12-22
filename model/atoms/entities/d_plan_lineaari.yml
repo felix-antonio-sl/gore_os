@@ -1,153 +1,89 @@
-# ==============================================================================
-# GORE_OS Entity Atom: LineaARI (Línea de Anteproyecto)
-# ==============================================================================
-# Domain: D-PLAN (Strategic Planning)
-# Subdomain: Inversión
-# Source: domain_d-plan.md P2, dialogo_dplan_dterr.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-PLAN
-  subdomain: inversion
-  kb_source:
-    - "domain_d-plan.md P2"
-    - "dialogo_dplan_dterr.md"
-
-entity:
-  id: ENT-PLAN-LINEA-ARI
-  name: LineaARI
-  name_es: Línea de Anteproyecto Regional de Inversiones
-  description: |
-    Representa la inclusión de una iniciativa (IPR) en el Anteproyecto
-    Regional de Inversiones de un año específico.
-
-    Es un morfismo IPR → ARI que indica la priorización de una iniciativa
-    para el proceso presupuestario anual.
-
-  purpose: |
-    Modelar cada línea del ARI para:
-    - Vincular IPRs a objetivos ERD explícitamente
-    - Registrar prioridad técnica asignada
-    - Controlar montos solicitados vs asignados
-    - Trazabilidad de decisiones de priorización
-
-  categorical_type: Morphism
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_linea
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: ari_id
-    type: String
-    fk: ENT-PLAN-ARI
-    nullable: false
-    description: ARI al que pertenece
-
-  - name: ipr_id
-    type: String
-    fk: ENT-FIN-IPR
-    nullable: false
-    description: Iniciativa de inversión
-
-  - name: objetivo_erd_id
-    type: String
-    fk: ENT-PLAN-OE
-    nullable: false
-    description: Objetivo estratégico al que aporta
-
-  - name: division_solicitante
-    type: String
-    nullable: false
-    description: División que solicita la iniciativa
-
-  # Priorización
-  - name: prioridad_tecnica
-    type: Integer
-    nullable: true
-    description: Puntaje de priorización (1-100)
-
-  - name: puntaje_alineacion
-    type: Decimal
-    nullable: true
-    description: Score de alineamiento con ERD
-
-  - name: puntaje_impacto
-    type: Decimal
-    nullable: true
-    description: Score de impacto territorial
-
-  - name: puntaje_factibilidad
-    type: Decimal
-    nullable: true
-    description: Score de factibilidad técnica
-
-  # Montos
-  - name: monto_solicitado
-    type: Decimal
-    nullable: false
-    description: Monto solicitado por división en M$
-
-  - name: monto_asignado
-    type: Decimal
-    default: 0
-    description: Monto asignado por CORE en M$
-
-  - name: fuente_financiamiento
-    type: Enum[FNDR, FRPD, ISAR, Subvencion8, Mixto]
-    nullable: true
-    description: Fuente de los fondos
-
-  # Estado
-  - name: estado
-    type: Enum[Propuesta, EnEvaluacion, Priorizada, Excluida, Aprobada, Rechazada]
-    default: Propuesta
-    description: Estado en el proceso ARI
-
-  - name: justificacion_prioridad
-    type: Text
-    nullable: true
-    description: Fundamentación de la priorización
-
-  - name: observaciones_core
-    type: Text
-    nullable: true
-    description: Observaciones del CORE
-
+- name: id_linea
+  type: String
+  key: true
+  description: Identificador único
+- name: ari_id
+  type: String
+  fk: ENT-PLAN-ARI
+  nullable: false
+  description: ARI al que pertenece
+- name: ipr_id
+  type: String
+  fk: ENT-FIN-IPR
+  nullable: false
+  description: Iniciativa de inversión
+- name: objetivo_erd_id
+  type: String
+  fk: ENT-PLAN-OE
+  nullable: false
+  description: Objetivo estratégico al que aporta
+- name: division_solicitante
+  type: String
+  nullable: false
+  description: División que solicita la iniciativa
+- name: prioridad_tecnica
+  type: Integer
+  nullable: true
+  description: Puntaje de priorización (1-100)
+- name: puntaje_alineacion
+  type: Decimal
+  nullable: true
+  description: Score de alineamiento con ERD
+- name: puntaje_impacto
+  type: Decimal
+  nullable: true
+  description: Score de impacto territorial
+- name: puntaje_factibilidad
+  type: Decimal
+  nullable: true
+  description: Score de factibilidad técnica
+- name: monto_solicitado
+  type: Decimal
+  nullable: false
+  description: Monto solicitado por división en M$
+- name: monto_asignado
+  type: Decimal
+  default: 0
+  description: Monto asignado por CORE en M$
+- name: fuente_financiamiento
+  type: Enum[FNDR, FRPD, ISAR, Subvencion8, Mixto]
+  nullable: true
+  description: Fuente de los fondos
+- name: estado
+  type: Enum[Propuesta, EnEvaluacion, Priorizada, Excluida, Aprobada, Rechazada]
+  default: Propuesta
+  description: Estado en el proceso ARI
+- name: justificacion_prioridad
+  type: Text
+  nullable: true
+  description: Fundamentación de la priorización
+- name: observaciones_core
+  type: Text
+  nullable: true
+  description: Observaciones del CORE
 invariants:
-  - id: INV-LINARI-001
-    name: monto_asignado_menor_solicitado
-    rule: monto_asignado <= monto_solicitado
-    description: No se puede asignar más de lo solicitado
-    severity: error
+- id: INV-LINARI-001
+  name: monto_asignado_menor_solicitado
+  rule: monto_asignado <= monto_solicitado
+  description: No se puede asignar más de lo solicitado
+  severity: error
+- id: INV-LINARI-002
+  name: prioridad_requiere_evaluacion
+  rule: '(prioridad_tecnica IS NOT NULL) → (estado IN (''EnEvaluacion'', ''Priorizada'',
+    ''Aprobada''))
 
-  - id: INV-LINARI-002
-    name: prioridad_requiere_evaluacion
-    rule: |
-      (prioridad_tecnica IS NOT NULL) → (estado IN ('EnEvaluacion', 'Priorizada', 'Aprobada'))
-    description: Solo iniciativas evaluadas tienen puntaje
+    '
+  description: Solo iniciativas evaluadas tienen puntaje
+- id: INV-LINARI-003
+  name: aprobada_requiere_asignacion
+  rule: '(estado = ''Aprobada'') → (monto_asignado > 0)
 
-  - id: INV-LINARI-003
-    name: aprobada_requiere_asignacion
-    rule: |
-      (estado = 'Aprobada') → (monto_asignado > 0)
-    description: Iniciativa aprobada debe tener monto
-
-morphisms:
-  pertenece_a: [ENT-PLAN-ARI]
-  vincula: [ENT-FIN-IPR]
-  alineada_con: [ENT-PLAN-OE]
-
-audit:
-  fields_tracked:
-    - estado
-    - monto_asignado
-    - prioridad_tecnica
-  retention_years: 10
+    '
+  description: Iniciativa aprobada debe tener monto

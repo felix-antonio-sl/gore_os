@@ -9,8 +9,4 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: DivisionGORE
-- source: ''
-  target: ServicioPublico
+  target: ENT-BACK-DIVISION

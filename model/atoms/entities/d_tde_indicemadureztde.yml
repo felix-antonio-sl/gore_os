@@ -1,126 +1,60 @@
-# ==============================================================================
-# GORE_OS Entity Atom: IndiceMadurezTDE (Índice Madurez TDE Regional)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M5 Liderazgo Digital Regional
-# Source: dialogo_riguroso_d_tde.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: liderazgo_regional
-  kb_source:
-    - "dialogo_riguroso_d_tde.md"
-    - "KPI D-TDE: Índice TDE Regional"
-
-entity:
-  id: ENT-TDE-INDICE-MADUREZ
-  name: IndiceMadurezTDE
-  name_es: Índice de Madurez TDE Regional
-  description: |
-    Indicador agregado de madurez digital de un territorio
-    (comuna, provincia o región) para un período determinado.
-
-    Meta: ≥ 2.5 (L2+) para el promedio regional de 21 comunas.
-
-    Alimenta la dimensión `madurez_digital` del H_gore.
-
-  purpose: |
-    Agregar índices para:
-    - Medir avance TDE territorial
-    - Comparar comunas (ranking)
-    - Reportar a Mesa Regional
-    - Alimentar H_gore
-
-  categorical_type: Object
-  is_abstract: false
-  category: Configuration
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_indice
-    type: String
-    key: true
-
-  - name: periodo
-    type: String
-    nullable: false
-    description: "Período (ej: 2025-Q1)"
-
-  - name: tipo_agregacion
-    type: Enum[Comuna, Provincia, Region]
-    nullable: false
-
-  - name: entidad_id
-    type: String
-    fk: ENT-TDE-ENTIDAD-REGIONAL
-    nullable: true
-    description: Entidad si es por comuna
-
-  - name: provincia_id
-    type: String
-    fk: ENT-TERR-PROVINCIA
-    nullable: true
-
-  # Puntaje
-  - name: puntaje_global
-    type: Decimal
-    nullable: false
-    description: "Promedio ponderado (1-5)"
-
-  - name: dimensiones
-    type: JSON
-    nullable: true
-    description: |
-      Desglose por dimensión:
-      {
-        "gobierno_digital": 3.2,
-        "servicios_digitales": 2.8,
-        "interoperabilidad": 2.1,
-        "ciberseguridad": 3.5,
-        "capacidades": 2.4
-      }
-
-  # Comparación
-  - name: variacion_periodo_anterior
-    type: Decimal
-    nullable: true
-    description: Variación vs período anterior
-
-  - name: ranking_regional
-    type: Integer
-    nullable: true
-    description: Posición en ranking regional
-
-  # Diagnósticos fuente
-  - name: cantidad_diagnosticos
-    type: Integer
-    default: 0
-    description: Cantidad de diagnósticos incluidos
-
-  - name: fecha_calculo
-    type: DateTime
-    nullable: false
-
-  - name: calculado_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
+- name: id_indice
+  type: String
+  key: true
+- name: periodo
+  type: String
+  nullable: false
+  description: 'Período (ej: 2025-Q1)'
+- name: tipo_agregacion
+  type: Enum[Comuna, Provincia, Region]
+  nullable: false
+- name: entidad_id
+  type: String
+  fk: ENT-TDE-ENTIDAD-REGIONAL
+  nullable: true
+  description: Entidad si es por comuna
+- name: provincia_id
+  type: String
+  fk: ENT-TERR-PROVINCIA
+  nullable: true
+- name: puntaje_global
+  type: Decimal
+  nullable: false
+  description: Promedio ponderado (1-5)
+- name: dimensiones
+  type: JSON
+  nullable: true
+  description: "Desglose por dimensión:\n{\n  \"gobierno_digital\": 3.2,\n  \"servicios_digitales\"\
+    : 2.8,\n  \"interoperabilidad\": 2.1,\n  \"ciberseguridad\": 3.5,\n  \"capacidades\"\
+    : 2.4\n}\n"
+- name: variacion_periodo_anterior
+  type: Decimal
+  nullable: true
+  description: Variación vs período anterior
+- name: ranking_regional
+  type: Integer
+  nullable: true
+  description: Posición en ranking regional
+- name: cantidad_diagnosticos
+  type: Integer
+  default: 0
+  description: Cantidad de diagnósticos incluidos
+- name: fecha_calculo
+  type: DateTime
+  nullable: false
+- name: calculado_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
 invariants:
-  - id: INV-IND-001
-    name: puntaje_rango_valido
-    rule: puntaje_global BETWEEN 1 AND 5
-    description: Puntaje debe estar en rango 1-5
-
-morphisms:
-  agrega: [ENT-TDE-DIAGNOSTICO-MUNI]
-  alimenta: [ENT-GESTION-DIMENSION-SALUD]
-
-audit:
-  fields_tracked:
-    - puntaje_global
-  retention_years: 10
+- id: INV-IND-001
+  name: puntaje_rango_valido
+  rule: puntaje_global BETWEEN 1 AND 5
+  description: Puntaje debe estar en rango 1-5

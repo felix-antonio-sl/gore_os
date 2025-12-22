@@ -8,31 +8,9 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-BITACORA_VIAJE
-  target: Cometido
-- source: ENT-EJEC-BITACORA_OBRA
-  target: ENT-EJEC-VISITA_TERRENO
-- source: ENT-EJEC-BITACORA_OBRA
-  target: ENT-EJEC-HITO_CONVENIO
-- source: ''
-  target: ENT-FIN-IPR
-- source: ENT-FIN-IPR
-  target: ERD_Eje
-- source: ENT-FIN-IPR
-  target: Nuble250
-- source: ''
-  target: ENT-FIN-IPR
-- source: ''
-  target: ENT-FIN-CONVENIO
-- source: ''
-  target: ENT-GESTION-POA
-- source: ''
-  target: ENT-FIN-CDP
-- source: ''
-  target: ENT-FIN-IPR
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
 - source: ''
   target: ENT-PLAN-ERD
 - source: ''
-  target: ENT-PLAN-EJE
+  target: ENT-TDE-PROCEDIMIENTO
+- source: ''
+  target: ENT-PLAN-ERD

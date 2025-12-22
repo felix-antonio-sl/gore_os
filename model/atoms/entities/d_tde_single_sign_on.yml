@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_tde_single_sign_on:1.0.0
+  urn: urn:goreos:entity:d-tde:ENT-TDE-SINGLE_SIGN_ON:1.0.0
   type: Entity
-  source: domains/d-tde/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-TDE-SINGLE_SIGN_ON
 name: Single Sign-On
-entity_key: single_sign_on
 domain: D-TDE
 category: Reference
-description: SSO
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

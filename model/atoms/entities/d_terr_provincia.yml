@@ -1,100 +1,43 @@
-# ==============================================================================
-# GORE_OS Entity Atom: Provincia
-# ==============================================================================
-# Domain: D-TERR (Territorial Management)
-# Subdomain: Territorio
-# Source: INE, División Político-Administrativa Región de Ñuble
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico"
-  domain: D-TERR
-  subdomain: territorio
-  kb_source:
-    - "INE División Político-Administrativa"
-
-entity:
-  id: ENT-TERR-PROVINCIA
-  name: Provincia
-  name_es: Provincia
-  description: |
-    Nivel intermedio de la división político-administrativa entre
-    región y comuna. La Región de Ñuble tiene 3 provincias:
-    Diguillín (capital regional), Itata y Punilla.
-
-  purpose: |
-    Modelar las provincias para:
-    - Agrupar comunas geográficamente
-    - Coordinar con Gobernaciones Provinciales
-    - Análisis territorial agregado
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_provincia
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: codigo_ine
-    type: String
-    nullable: false
-    description: Código de corte único territorial - 3 dígitos
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre de la provincia
-
-  - name: region_id
-    type: String
-    nullable: false
-    description: Código de la región (16 para Ñuble)
-
-  - name: capital
-    type: String
-    nullable: true
-    description: Nombre de la comuna capital
-
-  # Demografía agregada
-  - name: poblacion_total
-    type: Integer
-    nullable: true
-    description: Suma de poblaciones comunales
-
-  - name: superficie_km2
-    type: Decimal
-    nullable: true
-    description: Superficie total
-
-  - name: cantidad_comunas
-    type: Integer
-    nullable: false
-    description: Número de comunas en la provincia
-
-  # Gobernación
-  - name: gobernador_provincial
-    type: String
-    nullable: true
-    description: Nombre del Gobernador Provincial
-
-morphisms:
-  pertenece_a: [Region]
-  agrupa: [ENT-TERR-COMUNA]
-
-# Datos Región de Ñuble
-seed_data:
-  - nombre: Diguillín
-    capital: Chillán
-    comunas: 9
-  - nombre: Itata
-    capital: Quirihue
-    comunas: 7
-  - nombre: Punilla
-    capital: San Carlos
-    comunas: 5
+- name: id_provincia
+  type: String
+  key: true
+  description: Identificador único
+- name: codigo_ine
+  type: String
+  nullable: false
+  description: Código de corte único territorial - 3 dígitos
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre de la provincia
+- name: region_id
+  type: String
+  nullable: false
+  description: Código de la región (16 para Ñuble)
+- name: capital
+  type: String
+  nullable: true
+  description: Nombre de la comuna capital
+- name: poblacion_total
+  type: Integer
+  nullable: true
+  description: Suma de poblaciones comunales
+- name: superficie_km2
+  type: Decimal
+  nullable: true
+  description: Superficie total
+- name: cantidad_comunas
+  type: Integer
+  nullable: false
+  description: Número de comunas en la provincia
+- name: gobernador_provincial
+  type: String
+  nullable: true
+  description: Nombre del Gobernador Provincial

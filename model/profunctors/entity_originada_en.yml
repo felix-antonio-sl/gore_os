@@ -9,10 +9,10 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-GESTION-RIESGO
+  target: ENT-PLAN-CABILDO
 - source: ''
-  target: ENT-GESTION-EJECUCION-PLAYBOOK
+  target: ENT-GESTION-PUNTAJE-HGORE
 - source: ''
-  target: FENIX
+  target: ENT-FIN-IPR
 - source: ''
-  target: CGR
+  target: ENT-EJEC-CONVENIO

@@ -8,19 +8,11 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-TOMA_INVENTARIO
-  target: ROL-JEFE-DAF
-- source: ENT-FIN-MODIF_PRESUPUESTARIA
-  target: DAF
-- source: ENT-FIN-MODIF_PRESUPUESTARIA
-  target: GORE
-- source: ENT-FIN-MODIF_PRESUPUESTARIA
-  target: DIPRES
-- source: ENT-FIN-ESTADO_PAGO
-  target: ROL-ITO
-- source: ENT-FIN-ESTADO_PAGO
-  target: ROL-SUPERVISOR-OBRA
-- source: ENT-FIN-ESTADO_PAGO
-  target: ROL-ADM-CONTRATO
+- source: ENT-BACK-INFORME_HONORARIO
+  target: ROL-JEFE-DIVISION
+- source: ENT-FIN-PLAN_COMPRAS
+  target: ROL-ADM-REGIONAL
+- source: ''
+  target: ENT-NORM-ACTO
 - source: ''
   target: ENT-BACK-FUNCIONARIO

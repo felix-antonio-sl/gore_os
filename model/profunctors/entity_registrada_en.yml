@@ -8,5 +8,5 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-DECLARACION_JURADA
-  target: InfoProbidadCGR
+- source: ''
+  target: ENT-FENIX-BITACORA

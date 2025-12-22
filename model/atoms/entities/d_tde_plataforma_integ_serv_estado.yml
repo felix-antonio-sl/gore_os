@@ -1,178 +1,100 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ServicioPISEE (Servicio de Interoperabilidad PISEE)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M3 Interoperabilidad
-# Source: dialogo_riguroso_d_tde.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: interoperabilidad
-  kb_source:
-    - "PISEE: Plataforma de Interoperabilidad"
-    - "dialogo_riguroso_d_tde.md"
-
-entity:
-  id: ENT-TDE-SERVICIO-PISEE
-  name: ServicioPISEE
-  name_es: Servicio de Interoperabilidad PISEE
-  description: |
-    Servicio web publicado o consumido a través de la Plataforma
-    Integrada de Servicios Electrónicos del Estado (PISEE).
-
-    Tipos de servicio:
-    - Publicado: El GORE ofrece datos a otras instituciones
-    - Consumido: El GORE obtiene datos de otras instituciones
-
-  purpose: |
-    Catalogar servicios PISEE para:
-    - Registrar integraciones activas
-    - Monitorear disponibilidad
-    - Auditar transacciones
-    - Documentar proveedores/consumidores
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_servicio
-    type: String
-    key: true
-
-  - name: codigo
-    type: String
-    nullable: true
-    description: "Código PISEE"
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: true
-
-  # Tipo
-  - name: tipo
-    type: Enum[Publicado, Consumido]
-    nullable: false
-
-  - name: categoria
-    type: String
-    nullable: true
-    description: "Categoría temática (ej: Personas, Empresas, Trámites)"
-
-  # Instituciones
-  - name: institucion_proveedora
-    type: String
-    nullable: false
-    description: Institución que provee el servicio
-
-  - name: rut_proveedor
-    type: String
-    nullable: true
-
-  - name: institucion_consumidora
-    type: String
-    nullable: true
-    description: Si tipo=Consumido, quién consume
-
-  # Técnico
-  - name: endpoint
-    type: String
-    nullable: true
-    description: URL del endpoint
-
-  - name: wsdl_swagger
-    type: String
-    nullable: true
-    description: URL de WSDL o Swagger
-
-  - name: protocolo
-    type: Enum[SOAP, REST, GraphQL]
-    default: REST
-
-  - name: version_api
-    type: String
-    nullable: true
-
-  - name: formato_datos
-    type: Enum[JSON, XML, CSV]
-    default: JSON
-
-  # Datos intercambiados
-  - name: campos_datos
-    type: Array[String]
-    nullable: true
-    description: Campos de datos intercambiados
-
-  - name: contiene_datos_personales
-    type: Boolean
-    default: false
-
-  - name: nivel_sensibilidad
-    type: Enum[Publico, Interno, Reservado]
-    default: Interno
-
-  # Estado
-  - name: estado
-    type: Enum[Desarrollo, Certificacion, Produccion, Suspendido, Deprecado]
-    default: Desarrollo
-
-  - name: fecha_certificacion
-    type: Date
-    nullable: true
-
-  - name: fecha_produccion
-    type: Date
-    nullable: true
-
-  # Acuerdo
-  - name: acuerdo_id
-    type: String
-    fk: ENT-TDE-ACUERDO-INTERCAMBIO
-    nullable: true
-    description: Acuerdo de intercambio asociado
-
-  # Responsable
-  - name: responsable_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: true
-
-  # SLA
-  - name: sla_disponibilidad
-    type: Decimal
-    nullable: true
-    description: "SLA acordado (ej: 99.5%)"
-
-  - name: tiempo_respuesta_ms
-    type: Integer
-    nullable: true
-    description: Tiempo de respuesta esperado
-
+- name: id_servicio
+  type: String
+  key: true
+- name: codigo
+  type: String
+  nullable: true
+  description: Código PISEE
+- name: nombre
+  type: String
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: true
+- name: tipo
+  type: Enum[Publicado, Consumido]
+  nullable: false
+- name: categoria
+  type: String
+  nullable: true
+  description: 'Categoría temática (ej: Personas, Empresas, Trámites)'
+- name: institucion_proveedora
+  type: String
+  nullable: false
+  description: Institución que provee el servicio
+- name: rut_proveedor
+  type: String
+  nullable: true
+- name: institucion_consumidora
+  type: String
+  nullable: true
+  description: Si tipo=Consumido, quién consume
+- name: endpoint
+  type: String
+  nullable: true
+  description: URL del endpoint
+- name: wsdl_swagger
+  type: String
+  nullable: true
+  description: URL de WSDL o Swagger
+- name: protocolo
+  type: Enum[SOAP, REST, GraphQL]
+  default: REST
+- name: version_api
+  type: String
+  nullable: true
+- name: formato_datos
+  type: Enum[JSON, XML, CSV]
+  default: JSON
+- name: campos_datos
+  type: Array[String]
+  nullable: true
+  description: Campos de datos intercambiados
+- name: contiene_datos_personales
+  type: Boolean
+  default: false
+- name: nivel_sensibilidad
+  type: Enum[Publico, Interno, Reservado]
+  default: Interno
+- name: estado
+  type: Enum[Desarrollo, Certificacion, Produccion, Suspendido, Deprecado]
+  default: Desarrollo
+- name: fecha_certificacion
+  type: Date
+  nullable: true
+- name: fecha_produccion
+  type: Date
+  nullable: true
+- name: acuerdo_id
+  type: String
+  fk: ENT-TDE-ACUERDO-INTERCAMBIO
+  nullable: true
+  description: Acuerdo de intercambio asociado
+- name: responsable_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: true
+- name: sla_disponibilidad
+  type: Decimal
+  nullable: true
+  description: 'SLA acordado (ej: 99.5%)'
+- name: tiempo_respuesta_ms
+  type: Integer
+  nullable: true
+  description: Tiempo de respuesta esperado
 invariants:
-  - id: INV-PISEE-001
-    name: produccion_requiere_endpoint
-    rule: estado = 'Produccion' → endpoint IS NOT NULL
-    description: Servicio en producción debe tener endpoint
-
-  - id: INV-PISEE-002
-    name: datos_personales_requiere_acuerdo
-    rule: contiene_datos_personales = TRUE → acuerdo_id IS NOT NULL
-    description: Datos personales requieren acuerdo formal
-
-morphisms:
-  regulado_por: [ENT-TDE-ACUERDO-INTERCAMBIO]
-  transacciona: [ENT-TDE-TRANSACCION-PISEE]
-
-audit:
-  fields_tracked:
-    - estado
-  retention_years: 5
+- id: INV-PISEE-001
+  name: produccion_requiere_endpoint
+  rule: estado = 'Produccion' → endpoint IS NOT NULL
+  description: Servicio en producción debe tener endpoint
+- id: INV-PISEE-002
+  name: datos_personales_requiere_acuerdo
+  rule: contiene_datos_personales = TRUE → acuerdo_id IS NOT NULL
+  description: Datos personales requieren acuerdo formal

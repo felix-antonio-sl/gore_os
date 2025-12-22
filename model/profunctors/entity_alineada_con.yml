@@ -9,4 +9,10 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-PLAN-EJE-ERD
+  target: ENT-PLAN-OE
+- source: ''
+  target: ENT-FIN-IPR
+- source: ''
+  target: ENT-PLAN-OE
+- source: ''
+  target: ENT-PLAN-EJE

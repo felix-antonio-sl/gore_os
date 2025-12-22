@@ -9,8 +9,6 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ERD
+  target: ENT-FIN-IPR
 - source: ''
-  target: PROT
-- source: ''
-  target: IPR
+  target: ENT-PLAN-OE

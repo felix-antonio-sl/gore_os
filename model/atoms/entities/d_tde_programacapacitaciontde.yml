@@ -1,117 +1,57 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ProgramaCapacitacionTDE (Programa Formación TDE)
-# ==============================================================================
-# Domain: D-TDE (Gobernanza Digital)
-# Subdomain: M8 Talento Digital
-# Source: Estrategia de Capacitaciones TDE
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: talento_digital
-  kb_source:
-    - "Estrategia de Capacitaciones Transformación Digital del Estado"
-    - "KB TDE Estrategias 004"
-
-entity:
-  id: ENT-TDE-PROGRAMA-CAPACITACION
-  name: ProgramaCapacitacionTDE
-  name_es: Programa de Capacitación TDE
-  description: |
-    Programa de formación diseñado para cerrar brechas de
-    competencias digitales en funcionarios y directivos,
-    alineado con la malla de perfiles TDE.
-
-    Perfiles foco:
-    - Directivos (Liderazgo digital)
-    - Coordinadores TDE (Gestión del cambio)
-    - Equipos Jurídicos/Partes (Normativa digital)
-    - Equipos TI (Ciberseguridad, Datos)
-
-  purpose: |
-    Desarrollar talento digital para:
-    - Habilitar la transformación digital
-    - Cumplir requisitos de la Ley 21.180
-    - Gestionar el cambio cultural
-    - Mejorar índice de madurez institucional
-
-  categorical_type: Object
-  is_abstract: false
-  category: Configuration
-
+_meta:
+  urn: urn:goreos:entity:d-tde:programa-capacitacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-TDE-PROGRAMA-CAPACITACION
+urn: urn:goreos:entity:d-tde:programa-capacitacion:1.0.0
+name: Programa de Capacitación TDE
+domain: D-TDE
+subdomain: M8 Talento Digital
+category: Configuration
+is_abstract: false
 attributes:
-  - name: id_programa
-    type: String
-    key: true
-
-  - name: nombre
-    type: String
-    nullable: false
-
-  - name: malla_perfil
-    type: Enum[Directivo, CoordinadorTDE, Juridico, TI, Operativo, Transversal]
-    nullable: false
-    description: Perfil al que apunta la malla
-
-  # Contenido
-  - name: competencias_objetivo
-    type: Array[String]
-    nullable: false
-    description: Competencias a desarrollar (ej: Ciberseguridad, DocDigital)
-
-  - name: modalidad
-    type: Enum[Elearning, Presencial, Hibrido]
-    default: Elearning
-
-  - name: proveedor_id
-    type: String
-    nullable: true
-    description: Servicio Civil, Universidades, Interno
-
-  # Ejecución
-  - name: cupos_totales
-    type: Integer
-    default: 0
-
-  - name: fecha_inicio
-    type: Date
-    nullable: false
-
-  - name: fecha_termino
-    type: Date
-    nullable: true
-
-  # Métricas Impacto
-  - name: porcentaje_aprobacion_meta
-    type: Decimal
-    default: 80.0
-
-  - name: brecha_digital_reducida
-    type: Boolean
-    default: false
-    description: ¿Impacta directamente en reducción de brecha medida?
-
-  # Estado
-  - name: estado
-    type: Enum[Planificado, EnEjecucion, Finalizado, Cancelado]
-    default: Planificado
-
+- name: id_programa
+  type: String
+  key: true
+- name: nombre
+  type: String
+  nullable: false
+- name: malla_perfil
+  type: Enum[Directivo, CoordinadorTDE, Juridico, TI, Operativo, Transversal]
+  nullable: false
+  description: Perfil al que apunta la malla
+- name: competencias_objetivo
+  type: Array[String]
+  nullable: false
+  description: 'Competencias a desarrollar (ej: Ciberseguridad, DocDigital)'
+- name: modalidad
+  type: Enum[Elearning, Presencial, Hibrido]
+  default: Elearning
+- name: proveedor_id
+  type: String
+  nullable: true
+  description: Servicio Civil, Universidades, Interno
+- name: cupos_totales
+  type: Integer
+  default: 0
+- name: fecha_inicio
+  type: Date
+  nullable: false
+- name: fecha_termino
+  type: Date
+  nullable: true
+- name: porcentaje_aprobacion_meta
+  type: Decimal
+  default: 80.0
+- name: brecha_digital_reducida
+  type: Boolean
+  default: false
+  description: ¿Impacta directamente en reducción de brecha medida?
+- name: estado
+  type: Enum[Planificado, EnEjecucion, Finalizado, Cancelado]
+  default: Planificado
 invariants:
-  - id: INV-CAP-001
-    name: fechas_coherentes
-    rule: fecha_termino >= fecha_inicio
-    description: Fecha término posterior a inicio
-
-morphisms:
-  dirigido_a: [ENT-BACK-FUNCIONARIO]
-  impacta: [ENT-TDE-INDICE-MADUREZ]
-
-audit:
-  fields_tracked:
-    - estado
-    - porcentaje_aprobacion_meta
-  retention_years: 5
+- id: INV-CAP-001
+  name: fechas_coherentes
+  rule: fecha_termino >= fecha_inicio
+  description: Fecha término posterior a inicio

@@ -1,171 +1,93 @@
-# ==============================================================================
-# GORE_OS Entity Atom: NotificacionElectronica
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Plataformas Compartidas - Notificaciones
-# Source: KB-016 Plataforma Notificaciones Estado
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: plataformas_notificaciones
-  kb_source:
-    - "urn:knowledge:tde:lineamientos:plataforma_notificaciones_estado:1.0.0"
-    - "dialogo_plataformas_d_tde.md"
-
-entity:
-  id: ENT-TDE-NOTIFICACION-ELECTRONICA
-  name: NotificacionElectronica
-  name_es: Notificación Electrónica
-  description: |
-    Mensaje formal enviado a través de la Plataforma de Notificaciones del Estado
-    a uno o más destinatarios, en el marco de un procedimiento administrativo.
-
-    Obligatoria según Ley 21.180 y Ley 19.880 para actos administrativos que
-    requieren notificación a interesados.
-
-  purpose: |
-    Modelar notificaciones electrónicas para:
-    - Cumplimiento Ley 21.180 (Art. 46 Ley 19.880)
-    - Trazabilidad de comunicaciones en procedimientos
-    - Integración con DDU/CasillaÚnica
-    - Seguimiento de estados de entrega
-
-  categorical_type: Transaction
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_notificacion
-    type: String
-    key: true
-    description: "UUID interno"
-
-  - name: message_data_id
-    type: String
-    nullable: true
-    description: "ID retornado por API de Notificaciones"
-
-  # Contexto Procedimental
-  - name: expediente_id
-    type: String
-    fk: ENT-TDE-EXPEDIENTE-ELECTRONICO
-    nullable: true
-    description: "Expediente al que pertenece la notificación"
-
-  - name: procedimiento_code
-    type: String
-    nullable: false
-    description: "Código CPAT del procedimiento administrativo"
-
-  - name: etapa_procedimiento
-    type: Enum[Inicio, Instruccion, Finalizacion]
-    nullable: true
-    description: "1=Inicio, 2=Instrucción, 3=Finalización"
-
-  # Tipo de Mensaje
-  - name: tipo_mensaje
-    type: Enum[NT, CP, CI]
-    nullable: false
-    description: "NT=Notificación, CP=Comunicación Personal, CI=Comunicado Institucional"
-
-  # Contenido
-  - name: asunto
-    type: String
-    nullable: false
-    max_length: 150
-
-  - name: contenido
-    type: Text
-    nullable: false
-
-  - name: content_type
-    type: String
-    default: "text/html"
-    description: "MIME type del contenido"
-
-  # Firma Institucional
-  - name: firma_institucional_uid
-    type: String
-    nullable: true
-    description: "UUID de firma institucional configurada"
-
-  # Adjuntos
-  - name: adjuntos_count
-    type: Integer
-    default: 0
-    description: "Número de adjuntos (máx. 50)"
-
-  - name: adjuntos_peso_mb
-    type: Decimal
-    default: 0
-    description: "Peso total de adjuntos en MB (máx. 20)"
-
-  # Webhook
-  - name: webhook_url
-    type: String
-    nullable: true
-    description: "URL para recibir estado del procesamiento"
-
-  # Temporalidad
-  - name: fecha_envio
-    type: Timestamp
-    nullable: false
-
-  - name: fecha_procesado
-    type: Timestamp
-    nullable: true
-
-  # Estado
-  - name: estado_global
-    type: Enum[pending, processed, delivered, error]
-    default: pending
-
-  - name: destinatarios_count
-    type: Integer
-    nullable: false
-    description: "Número de destinatarios (máx. 250)"
-
-  # Entidad Emisora
-  - name: entidad_emisora_id
-    type: String
-    fk: ENT-TDE-ENTIDAD-REGIONAL
-    nullable: false
-
+- name: id_notificacion
+  type: String
+  key: true
+  description: UUID interno
+- name: message_data_id
+  type: String
+  nullable: true
+  description: ID retornado por API de Notificaciones
+- name: expediente_id
+  type: String
+  fk: ENT-TDE-EXPEDIENTE-ELECTRONICO
+  nullable: true
+  description: Expediente al que pertenece la notificación
+- name: procedimiento_code
+  type: String
+  nullable: false
+  description: Código CPAT del procedimiento administrativo
+- name: etapa_procedimiento
+  type: Enum[Inicio, Instruccion, Finalizacion]
+  nullable: true
+  description: 1=Inicio, 2=Instrucción, 3=Finalización
+- name: tipo_mensaje
+  type: Enum[NT, CP, CI]
+  nullable: false
+  description: NT=Notificación, CP=Comunicación Personal, CI=Comunicado Institucional
+- name: asunto
+  type: String
+  nullable: false
+  max_length: 150
+- name: contenido
+  type: Text
+  nullable: false
+- name: content_type
+  type: String
+  default: text/html
+  description: MIME type del contenido
+- name: firma_institucional_uid
+  type: String
+  nullable: true
+  description: UUID de firma institucional configurada
+- name: adjuntos_count
+  type: Integer
+  default: 0
+  description: Número de adjuntos (máx. 50)
+- name: adjuntos_peso_mb
+  type: Decimal
+  default: 0
+  description: Peso total de adjuntos en MB (máx. 20)
+- name: webhook_url
+  type: String
+  nullable: true
+  description: URL para recibir estado del procesamiento
+- name: fecha_envio
+  type: Timestamp
+  nullable: false
+- name: fecha_procesado
+  type: Timestamp
+  nullable: true
+- name: estado_global
+  type: Enum[pending, processed, delivered, error]
+  default: pending
+- name: destinatarios_count
+  type: Integer
+  nullable: false
+  description: Número de destinatarios (máx. 250)
+- name: entidad_emisora_id
+  type: String
+  fk: ENT-TDE-ENTIDAD-REGIONAL
+  nullable: false
 invariants:
-  - id: INV-NOTIF-001
-    name: asunto_max_length
-    rule: LENGTH(asunto) <= 150
-    description: "Asunto no puede exceder 150 caracteres"
-
-  - id: INV-NOTIF-002
-    name: max_destinatarios
-    rule: destinatarios_count <= 250
-    description: "Máximo 250 destinatarios por mensaje"
-
-  - id: INV-NOTIF-003
-    name: max_adjuntos_peso
-    rule: adjuntos_peso_mb <= 20
-    description: "Peso total de adjuntos no puede exceder 20 MB"
-
-  - id: INV-NOTIF-004
-    name: procedimiento_obligatorio_si_notificacion
-    rule: tipo_mensaje = 'NT' → procedimiento_code IS NOT NULL
-    description: "Notificaciones requieren código de procedimiento"
-
-morphisms:
-  pertenece_a: [ENT-TDE-EXPEDIENTE-ELECTRONICO]
-  enviada_por: [ENT-TDE-ENTIDAD-REGIONAL]
-  tiene_destinatarios: [ENT-TDE-DESTINATARIO-NOTIFICACION]
-
-audit:
-  fields_tracked:
-    - estado_global
-    - fecha_procesado
-  retention_years: 10
-  legal_basis: "Ley 21.180, Art. 46 Ley 19.880"
+- id: INV-NOTIF-001
+  name: asunto_max_length
+  rule: LENGTH(asunto) <= 150
+  description: Asunto no puede exceder 150 caracteres
+- id: INV-NOTIF-002
+  name: max_destinatarios
+  rule: destinatarios_count <= 250
+  description: Máximo 250 destinatarios por mensaje
+- id: INV-NOTIF-003
+  name: max_adjuntos_peso
+  rule: adjuntos_peso_mb <= 20
+  description: Peso total de adjuntos no puede exceder 20 MB
+- id: INV-NOTIF-004
+  name: procedimiento_obligatorio_si_notificacion
+  rule: tipo_mensaje = 'NT' → procedimiento_code IS NOT NULL
+  description: Notificaciones requieren código de procedimiento

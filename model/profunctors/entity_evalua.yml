@@ -9,16 +9,8 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-EJEC-CONVENIO
+  target: ENT-TDE-ENTIDAD-REGIONAL
 - source: ''
-  target: ENT-FIN-IPR
+  target: ENT-TDE-ACTIVO-DATOS
 - source: ''
-  target: ENT-EVOL-SISTEMA
-- source: ''
-  target: ENT-EVOL-CAPACIDAD
-- source: ENT-FIN-EVALUACION_IPR
-  target: ENT-FIN-IPR
-- source: ENT-FIN-EVALUACION_IPR
-  target: ENT-FIN-IDI
-- source: ENT-FIN-EVALUACION_IPR
-  target: ENT-FIN-PPR
+  target: ENT-PLAN-OE

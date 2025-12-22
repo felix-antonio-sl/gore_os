@@ -9,6 +9,4 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-DEV-STORY
-- source: ''
-  target: HistoriaUsuario
+  target: EstrategiaGobiernoDigital

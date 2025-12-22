@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_tde_domicilio_digital_nico:1.0.0
+  urn: urn:goreos:entity:d-tde:ENT-TDE-DOMICILIO_DIGITAL_NI:1.0.0
   type: Entity
-  source: domains/d-tde/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-TDE-DOMICILIO_DIGITAL_NI
 name: Domicilio Digital Único
-entity_key: domicilio_digital_nico
 domain: D-TDE
 category: Reference
-description: DDU
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

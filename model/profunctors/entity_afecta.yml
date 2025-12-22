@@ -8,25 +8,11 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-MOVIMIENTO_ACTIVO
-  target: ENT-BACK-ACTIVO_FIJO
-- source: ENT-EJEC-PROBLEMA_IPR
-  target: ENT-FIN-IPR
-- source: ENT-EJEC-PROBLEMA_IPR
-  target: ENT-FIN-CONVENIO
 - source: ''
-  target: ENT-EVOL-SISTEMA
+  target: ENT-SEG-ACTIVO-INFORMACION
 - source: ''
-  target: ENT-FIN-CDP
-- source: ENT-FIN-DEVENGO
-  target: ENT-FIN-CDP
-- source: ENT-FIN-DEVENGO
-  target: ENT-FIN-PRESUPUESTO
+  target: ENT-TDE-DOCUMENTO
 - source: ''
-  target: ENT-FIN-CDP
+  target: ActivoTI
 - source: ''
-  target: ENT-FIN-DEVENGO
-- source: ''
-  target: ENT-GESTION-POA
-- source: ''
-  target: ENT-BACK-DIVISION
+  target: ENT-TDE-ACTIVO-DATOS

@@ -1,201 +1,121 @@
-# ==============================================================================
-# GORE_OS Entity Atom: CapaGeoespacial (Capa de Datos Territoriales)
-# ==============================================================================
-# Domain: D-TERR (Territorial Intelligence)
-# Subdomain: IDE
-# Source: KB-090 Gestión Info Geoespacial, ISO 19115-1, domain_d-terr.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-TERR
-  subdomain: ide
-  kb_source:
-    - "kb_gn_090_gestion_informacion_geoespacial_koda.yml"
-    - "ISO 19115-1"
-    - "domain_d-terr.md P1"
-
-entity:
-  id: ENT-TERR-CAPA
-  name: CapaGeoespacial
-  name_es: Capa Geoespacial
-  description: |
-    Recurso de información geográfica publicado en la IDE regional.
-    Puede ser una capa vectorial (puntos, líneas, polígonos), un raster,
-    o una cobertura. Se publica mediante servicios OGC (WMS/WFS/WCS).
-
-    Cumple con el ciclo de vida de datos geoespaciales del KB-090:
-    Planificar → Capturar → Calidad → Documentar → Publicar → Usar
-
-  purpose: |
-    Modelar capas para:
-    - Gestión del catálogo IDE regional
-    - Publicación de servicios OGC
-    - Cumplimiento ISO 19115-1
-    - Integración con Geonodo
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_capa
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre técnico de la capa
-
-  - name: titulo
-    type: String
-    nullable: false
-    description: Título para usuarios
-
-  - name: resumen
-    type: Text
-    nullable: false
-    description: Descripción de la capa
-
-  # Clasificación
-  - name: tipo
-    type: Enum[Vectorial, Raster, Cobertura, Teselas]
-    default: Vectorial
-    description: Tipo de dato geoespacial
-
-  - name: geometria_tipo
-    type: Enum[Point, Line, Polygon, Multipolygon, Raster, NA]
-    nullable: true
-    description: Tipo de geometría (si vectorial)
-
-  - name: tematica
-    type: String
-    nullable: false
-    description: Categoría temática (ej. Planificación, Riesgos)
-
-  - name: palabras_clave
-    type: Array[String]
-    nullable: true
-    description: Keywords para búsqueda
-
-  # Referencia espacial
-  - name: sistema_referencia
-    type: String
-    default: "EPSG:4326"
-    description: Sistema de referencia espacial
-
-  - name: extension_geografica
-    type: Geometry
-    geometry_type: Polygon
-    nullable: true
-    description: Bounding box de la capa
-
-  # Temporal
-  - name: fecha_creacion
-    type: Date
-    nullable: false
-    description: Fecha de creación original
-
-  - name: fecha_publicacion
-    type: Date
-    nullable: true
-    description: Fecha de publicación en IDE
-
-  - name: fecha_actualizacion
-    type: Date
-    nullable: true
-    description: Última actualización
-
-  - name: frecuencia_actualizacion
-    type: Enum[Diaria, Semanal, Mensual, Trimestral, Anual, Eventual]
-    default: Eventual
-    description: Frecuencia de actualización
-
-  # Servicios OGC
-  - name: url_wms
-    type: String
-    nullable: true
-    description: URL del servicio WMS
-
-  - name: url_wfs
-    type: String
-    nullable: true
-    description: URL del servicio WFS
-
-  - name: url_wcs
-    type: String
-    nullable: true
-    description: URL del servicio WCS (raster)
-
-  - name: url_descarga
-    type: String
-    nullable: true
-    description: URL de descarga directa
-
-  # Licenciamiento (KB-090 §341-352)
-  - name: licencia
-    type: Enum[CC_BY_4_0, ODbL, Restringida, InstitucionalUso]
-    default: CC_BY_4_0
-    description: Licencia de uso
-
-  - name: restricciones_acceso
-    type: Text
-    nullable: true
-    description: Restricciones si aplican
-
-  # Responsabilidad
-  - name: propietario
-    type: String
-    nullable: false
-    description: División/unidad propietaria
-
-  - name: contacto_email
-    type: String
-    nullable: true
-    description: Email de contacto
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, EnRevision, Publicada, Despublicada, Obsoleta]
-    default: Borrador
-    description: Estado de la capa
-
-  # Calidad (ISO 19157)
-  - name: precision_posicional_m
-    type: Decimal
-    nullable: true
-    description: Precisión posicional en metros
-
-  - name: completitud_pct
-    type: Decimal
-    nullable: true
-    description: Porcentaje de completitud
-
+- name: id_capa
+  type: String
+  key: true
+  description: Identificador único
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre técnico de la capa
+- name: titulo
+  type: String
+  nullable: false
+  description: Título para usuarios
+- name: resumen
+  type: Text
+  nullable: false
+  description: Descripción de la capa
+- name: tipo
+  type: Enum[Vectorial, Raster, Cobertura, Teselas]
+  default: Vectorial
+  description: Tipo de dato geoespacial
+- name: geometria_tipo
+  type: Enum[Point, Line, Polygon, Multipolygon, Raster, NA]
+  nullable: true
+  description: Tipo de geometría (si vectorial)
+- name: tematica
+  type: String
+  nullable: false
+  description: Categoría temática (ej. Planificación, Riesgos)
+- name: palabras_clave
+  type: Array[String]
+  nullable: true
+  description: Keywords para búsqueda
+- name: sistema_referencia
+  type: String
+  default: EPSG:4326
+  description: Sistema de referencia espacial
+- name: extension_geografica
+  type: Geometry
+  geometry_type: Polygon
+  nullable: true
+  description: Bounding box de la capa
+- name: fecha_creacion
+  type: Date
+  nullable: false
+  description: Fecha de creación original
+- name: fecha_publicacion
+  type: Date
+  nullable: true
+  description: Fecha de publicación en IDE
+- name: fecha_actualizacion
+  type: Date
+  nullable: true
+  description: Última actualización
+- name: frecuencia_actualizacion
+  type: Enum[Diaria, Semanal, Mensual, Trimestral, Anual, Eventual]
+  default: Eventual
+  description: Frecuencia de actualización
+- name: url_wms
+  type: String
+  nullable: true
+  description: URL del servicio WMS
+- name: url_wfs
+  type: String
+  nullable: true
+  description: URL del servicio WFS
+- name: url_wcs
+  type: String
+  nullable: true
+  description: URL del servicio WCS (raster)
+- name: url_descarga
+  type: String
+  nullable: true
+  description: URL de descarga directa
+- name: licencia
+  type: Enum[CC_BY_4_0, ODbL, Restringida, InstitucionalUso]
+  default: CC_BY_4_0
+  description: Licencia de uso
+- name: restricciones_acceso
+  type: Text
+  nullable: true
+  description: Restricciones si aplican
+- name: propietario
+  type: String
+  nullable: false
+  description: División/unidad propietaria
+- name: contacto_email
+  type: String
+  nullable: true
+  description: Email de contacto
+- name: estado
+  type: Enum[Borrador, EnRevision, Publicada, Despublicada, Obsoleta]
+  default: Borrador
+  description: Estado de la capa
+- name: precision_posicional_m
+  type: Decimal
+  nullable: true
+  description: Precisión posicional en metros
+- name: completitud_pct
+  type: Decimal
+  nullable: true
+  description: Porcentaje de completitud
 invariants:
-  - id: INV-CAPA-001
-    name: publicada_requiere_url
-    rule: |
-      (estado = 'Publicada') → (url_wms IS NOT NULL OR url_wfs IS NOT NULL)
-    description: Capa publicada debe tener al menos un servicio
+- id: INV-CAPA-001
+  name: publicada_requiere_url
+  rule: '(estado = ''Publicada'') → (url_wms IS NOT NULL OR url_wfs IS NOT NULL)
 
-  - id: INV-CAPA-002
-    name: licencia_definida
-    rule: |
-      (estado = 'Publicada') → (licencia IS NOT NULL)
-    description: Capa publicada requiere licencia
+    '
+  description: Capa publicada debe tener al menos un servicio
+- id: INV-CAPA-002
+  name: licencia_definida
+  rule: '(estado = ''Publicada'') → (licencia IS NOT NULL)
 
-morphisms:
-  documentada_por: [ENT-TERR-METADATO]
-  publicada_en: [Geonodo, Geoportal]
-  representada_por: [ENT-PLAN-ZONA-PROT, ENT-TERR-RIESGO]
-
-audit:
-  fields_tracked:
-    - estado
-    - fecha_actualizacion
-  retention_years: 10
+    '
+  description: Capa publicada requiere licencia

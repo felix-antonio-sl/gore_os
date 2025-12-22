@@ -9,10 +9,4 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-GESTION-POA
-- source: ''
-  target: ENT-FIN
-- source: ''
-  target: ENT-EJEC
-- source: ''
-  target: ENT-NORM
+  target: FuenteDatos

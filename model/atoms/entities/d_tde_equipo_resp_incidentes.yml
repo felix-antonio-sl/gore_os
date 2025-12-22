@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_tde_equipo_resp_incidentes:1.0.0
+  urn: urn:goreos:entity:d-tde:ENT-TDE-EQUIPO_RESP_INCIDENT:1.0.0
   type: Entity
-  source: domains/d-tde/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-TDE-EQUIPO_RESP_INCIDENT
 name: Equipo Resp. Incidentes
-entity_key: equipo_resp_incidentes
 domain: D-TDE
 category: Reference
-description: CSIRT
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

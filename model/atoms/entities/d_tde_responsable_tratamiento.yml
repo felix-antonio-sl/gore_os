@@ -1,133 +1,63 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ResponsableTratamiento (Data Protection)
-# ==============================================================================
-# Domain: D-TDE (Transformación Digital del Estado)
-# Subdomain: Protección de Datos Personales
-# Source: Ley 21.719, Art. 2
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + DigiTrans"
-  domain: D-TDE
-  subdomain: proteccion_datos
-  kb_source:
-    - "urn:knowledge:tde:leyes:ley_21719_datos_personales:1.0.0"
-    - "dialogo_legislativo_d_tde.md"
-
-entity:
-  id: ENT-TDE-RESPONSABLE-TRATAMIENTO
-  name: ResponsableTratamiento
-  name_es: Responsable de Tratamiento de Datos
-  description: |
-    Persona natural o jurídica, pública o privada, que decide
-    sobre los fines y medios del tratamiento de datos personales.
-
-    Sujeto obligado ante la Agencia de Protección de Datos Personales.
-    Distinto del "Custodio" (rol interno de governance en ActivoDatos).
-
-  purpose: |
-    Identificar al sujeto legalmente responsable para:
-    - Responder solicitudes ARCO de titulares (Art. 10-11)
-    - Reportar vulneraciones de seguridad (Art. 14 sexies)
-    - Ser fiscalizado por la APDP
-    - Designar Delegado de Protección de Datos
-
-  categorical_type: Role
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  # Identificación
-  - name: id_responsable
-    type: String
-    key: true
-    description: "RUT o UUID"
-
-  - name: tipo
-    type: Enum[PersonaNatural, PersonaJuridica, OrganoPublico]
-    nullable: false
-
-  - name: razon_social
-    type: String
-    nullable: false
-    description: "Nombre o razón social"
-
-  - name: rut
-    type: String
-    nullable: false
-
-  # Contacto (obligatorio Art. 14)
-  - name: domicilio_postal
-    type: String
-    nullable: true
-
-  - name: contacto_electronico
-    type: String
-    nullable: false
-    description: "Email o medio electrónico para ejercicio de derechos"
-
-  # Establecimiento
-  - name: establecido_en_chile
-    type: Boolean
-    default: true
-
-  - name: pais_establecimiento
-    type: String
-    nullable: true
-    description: "Si no está en Chile, indicar país"
-
-  # Gobernanza Interna
-  - name: delegado_proteccion_datos_id
-    type: String
-    fk: ENT-TDE-DELEGADO-PROTECCION-DATOS
-    nullable: true
-    description: "Encargado de Prevención designado (Art. 54)"
-
-  - name: politica_tratamiento_url
-    type: String
-    nullable: true
-    description: "URL a política pública de tratamiento (Art. 14 ter)"
-
-  # Registro APDP
-  - name: notificado_agencia
-    type: Boolean
-    default: false
-    description: "Si ha notificado designación de Delegado a la APDP"
-
-  - name: fecha_notificacion_agencia
-    type: Date
-    nullable: true
-
-  # Estado
-  - name: estado
-    type: Enum[Activo, Inactivo, Sancionado]
-    default: Activo
-
+- name: id_responsable
+  type: String
+  key: true
+  description: RUT o UUID
+- name: tipo
+  type: Enum[PersonaNatural, PersonaJuridica, OrganoPublico]
+  nullable: false
+- name: razon_social
+  type: String
+  nullable: false
+  description: Nombre o razón social
+- name: rut
+  type: String
+  nullable: false
+- name: domicilio_postal
+  type: String
+  nullable: true
+- name: contacto_electronico
+  type: String
+  nullable: false
+  description: Email o medio electrónico para ejercicio de derechos
+- name: establecido_en_chile
+  type: Boolean
+  default: true
+- name: pais_establecimiento
+  type: String
+  nullable: true
+  description: Si no está en Chile, indicar país
+- name: delegado_proteccion_datos_id
+  type: String
+  fk: ENT-TDE-DELEGADO-PROTECCION-DATOS
+  nullable: true
+  description: Encargado de Prevención designado (Art. 54)
+- name: politica_tratamiento_url
+  type: String
+  nullable: true
+  description: URL a política pública de tratamiento (Art. 14 ter)
+- name: notificado_agencia
+  type: Boolean
+  default: false
+  description: Si ha notificado designación de Delegado a la APDP
+- name: fecha_notificacion_agencia
+  type: Date
+  nullable: true
+- name: estado
+  type: Enum[Activo, Inactivo, Sancionado]
+  default: Activo
 invariants:
-  - id: INV-RESP-001
-    name: contacto_obligatorio_extranjero
-    rule: NOT establecido_en_chile → contacto_electronico IS NOT NULL
-    description: "Responsables no establecidos en Chile DEBEN tener contacto electrónico"
-
-  - id: INV-RESP-002
-    name: rut_valido
-    rule: rut MATCHES '^[0-9]+-[0-9Kk]$'
-    description: "RUT debe tener formato válido"
-
-morphisms:
-  trata: [ENT-TDE-ACTIVO-DATOS]
-  recibe: [ENT-TDE-CONSENTIMIENTO]
-  designa: [ENT-TDE-DELEGADO-PROTECCION-DATOS]
-  reporta_a: [ENT-TDE-AGENCIA-PROTECCION-DATOS]
-  responde: [ENT-TDE-SOLICITUD-ARCO]
-
-audit:
-  fields_tracked:
-    - estado
-    - delegado_proteccion_datos_id
-    - notificado_agencia
-  retention_years: 10
-  legal_basis: "Ley 21.719, Art. 2, 14"
+- id: INV-RESP-001
+  name: contacto_obligatorio_extranjero
+  rule: NOT establecido_en_chile → contacto_electronico IS NOT NULL
+  description: Responsables no establecidos en Chile DEBEN tener contacto electrónico
+- id: INV-RESP-002
+  name: rut_valido
+  rule: rut MATCHES '^[0-9]+-[0-9Kk]$'
+  description: RUT debe tener formato válido

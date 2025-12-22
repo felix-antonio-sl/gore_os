@@ -8,7 +8,7 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-ACTIVO_FIJO
-  target: ROL-FUNCIONARIO
-- source: ENT-FIN-GARANTIA
-  target: ROL-TESORERO
+- source: ''
+  target: ENT-BACK-DIVISION
+- source: ''
+  target: ENT-BACK-FUNCIONARIO

@@ -1,6 +1,6 @@
 # Stack Tecnológico GORE OS
 
-> **Versión:** 1.0  
+> **Versión:** 2.0  
 > **Última actualización:** Diciembre 2025  
 > **Paradigma:** Ingeniería Composicional (Functorial Pipeline)
 
@@ -31,19 +31,21 @@
 
 ### 2.1. Patrón Composicional: Frontera/Núcleo/Puente
 
+Vea [categorical-view/pipeline.md](categorical-view/pipeline.md) para más detalle.
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         ARQUITECTURA COMPOSICIONAL                          │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │   FRONTERA (I/O)              PUENTE               NÚCLEO (Puro)            │
-│   ┌──────────────┐       ┌──────────────┐       ┌──────────────┐           │
-│   │   Zod        │       │   tRPC       │       │  Effect-TS   │           │
-│   │   Schemas    │──────►│   Handler    │──────►│   Programs   │           │
-│   └──────────────┘       └──────────────┘       └──────────────┘           │
+│   ┌──────────────┐       ┌──────────────┐       ┌──────────────┐            │
+│   │   Zod        │       │   tRPC       │       │  Effect-TS   │            │
+│   │   Schemas    │──────►│   Handler    │──────►│   Programs   │            │
+│   └──────────────┘       └──────────────┘       └──────────────┘            │
 │         ▲                       │                       │                   │
 │         │                       ▼                       ▼                   │
-│   React/Forms             Effect.runPromise        Drizzle ORM             │
+│   React/Forms             Effect.runPromise        Drizzle ORM              │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -73,7 +75,17 @@ t.procedure
 
 ---
 
-## 3. Reglas de Desarrollo
+## 3. Estructura Arquitectónica C4
+
+Para una descripción detallada, consulte los documentos en los subdirectorios:
+
+- **[C1 Contexto](c1_context/system_context.md)**: GORE_OS en el ecosistema regional.
+- **[C2 Contenedores](c2_containers/containers.md)**: Despliegue de servicios (API, Web, DB, Workers).
+- **[C3 Componentes](c3_components/components.md)**: Estructura interna de la API (Módulos, Shared Kernel).
+
+---
+
+## 4. Reglas de Desarrollo
 
 | Regla                    | Descripción                                                 |
 | ------------------------ | ----------------------------------------------------------- |
@@ -85,7 +97,7 @@ t.procedure
 
 ---
 
-## 4. Frontend (Enfoque Híbrido)
+## 5. Frontend (Enfoque Híbrido)
 
 | Enfoque        | Tecnología          | Uso Recomendado                            |
 | -------------- | ------------------- | ------------------------------------------ |
@@ -96,103 +108,16 @@ t.procedure
 
 ---
 
-## 5. Infraestructura
+## 6. Infraestructura y Operaciones
 
-### 5.1. Topología de Producción
+Consulte la arquitectura de contenedores y despliegue en [C2 Contenedores](c2_containers/containers.md).
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Hetzner Ubuntu Server                     │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────┐                                                │
-│  │  Caddy  │ ◄── TLS (Let's Encrypt)                        │
-│  │ (proxy) │                                                 │
-│  └────┬────┘                                                │
-│       │                                                      │
-│  ┌────┴────────────────────────────────────────────────┐    │
-│  │              Docker Network (internal)               │    │
-│  │  ┌─────┐  ┌─────┐  ┌────────┐  ┌─────┐  ┌───────┐  │    │
-│  │  │ api │  │ web │  │keycloak│  │redis│  │postgres│  │    │
-│  │  └─────┘  └─────┘  └────────┘  └─────┘  └───────┘  │    │
-│  └──────────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### 5.2. Servicios Docker
-
-| Servicio   | Imagen                         | Propósito           |
-| ---------- | ------------------------------ | ------------------- |
-| `postgres` | `postgis/postgis:16-3.4`       | Base de datos + geo |
-| `redis`    | `redis:7-alpine`               | Queue + Cache       |
-| `keycloak` | `quay.io/keycloak/keycloak:24` | Identity Provider   |
-| `api`      | Build local                    | Backend Hono + tRPC |
-| `web`      | Build local                    | Frontend React/Vite |
-| `worker`   | Build local                    | Jobs async          |
-| `caddy`    | `caddy:2-alpine`               | Reverse proxy + TLS |
-
-### 5.3. Observabilidad (Opcional)
-
-| Servicio         | Propósito           |
-| ---------------- | ------------------- |
-| `prometheus`     | Métricas            |
-| `grafana`        | Dashboards          |
-| `loki`           | Agregación de logs  |
-| `otel-collector` | Traces distribuidos |
-| `minio`          | Object storage S3   |
-
----
-
-## 6. Operaciones
-
-### 6.1. Persistencia y Backups
-
-| Componente     | Estrategia                               |
-| -------------- | ---------------------------------------- |
-| **PostgreSQL** | `pg_dump` diario + WAL archiving         |
-| **Redis**      | RDB snapshots (si durabilidad requerida) |
-| **Keycloak**   | Export de realm + backup de DB           |
-| **Documentos** | S3/MinIO con replicación                 |
-
-### 6.2. Seguridad
-
-| Control  | Implementación                  |
-| -------- | ------------------------------- |
-| SSH      | Solo llaves, sin password       |
-| Firewall | UFW: 22, 80, 443                |
-| Fail2ban | Activo para SSH                 |
-| Updates  | Unattended-upgrades habilitado  |
-| Secrets  | Variables de entorno, no en git |
-
-### 6.3. CI/CD (GitHub Actions)
-
-```yaml
-name: Deploy
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build and Push
-        run: |
-          docker build -t ghcr.io/gore-nuble/api:${{ github.sha }} ./apps/api
-          docker push ghcr.io/gore-nuble/api:${{ github.sha }}
-          
-      - name: Deploy
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.HETZNER_HOST }}
-          username: deploy
-          key: ${{ secrets.HETZNER_SSH_KEY }}
-          script: |
-            cd /opt/gore-os
-            docker compose -f docker-compose.prod.yml pull
-            docker compose -f docker-compose.prod.yml up -d
-```
+### Resumen de Producción
+- **Hosting**: Hetzner Cloud (Ubuntu Server)
+- **Proxy**: Caddy (Auto-HTTPS)
+- **CI/CD**: GitHub Actions (Build -> Docker Registry -> SSH Deploy)
+- **Backups**: `pg_dump` diario a S3
+- **Seguridad**: Firewall estricto, SSH keys only, Secretos en env vars
 
 ---
 

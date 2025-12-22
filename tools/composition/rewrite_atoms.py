@@ -192,12 +192,23 @@ def extract_entity_morphisms(atom: Dict, report: MigrationReport):
     morphisms = atom.get("morphisms", {})
     related_processes = atom.get("related_processes", [])
 
-    for morph_name, targets in morphisms.items():
-        if isinstance(targets, list):
-            for target in targets:
+    if isinstance(morphisms, list):
+        for m in morphisms:
+            # Handle list of dicts: [{name, target, ...}, ...]
+            morph_name = m.get("name")
+            target = m.get("target")
+            if morph_name and target:
                 report.profunctor_links[f"entity_{morph_name}"].append(
                     {"source": atom.get("id", ""), "target": target}
                 )
+
+    elif isinstance(morphisms, dict):
+        for morph_name, targets in morphisms.items():
+            if isinstance(targets, list):
+                for target in targets:
+                    report.profunctor_links[f"entity_{morph_name}"].append(
+                        {"source": atom.get("id", ""), "target": target}
+                    )
 
     for proc in related_processes:
         report.profunctor_links["manipula"].append(

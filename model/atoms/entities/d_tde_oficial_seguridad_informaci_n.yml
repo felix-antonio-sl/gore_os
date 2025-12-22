@@ -1,14 +1,9 @@
 _meta:
-  urn: urn:goreos:atom:entity:d_tde_oficial_seguridad_informaci_n:1.0.0
+  urn: urn:goreos:entity:d-tde:ENT-TDE-OFICIAL_SEGURIDAD_IN:1.0.0
   type: Entity
-  source: domains/d-tde/glossary
+  schema: urn:goreos:schema:entity:1.0.0
 id: ENT-TDE-OFICIAL_SEGURIDAD_IN
 name: Oficial Seguridad Información
-entity_key: oficial_seguridad_informaci_n
 domain: D-TDE
 category: Reference
-description: CISO
-morphisms:
-  manipulado_por: []
-  mencionado_en: []
-  relacionado_con: []
+is_abstract: false

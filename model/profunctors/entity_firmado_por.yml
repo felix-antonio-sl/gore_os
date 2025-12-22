@@ -10,9 +10,3 @@ target_type: Mixed
 links:
 - source: ''
   target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: ENT-BACK-FUNCIONARIO
-- source: ''
-  target: ENT-NORM-FIRMA

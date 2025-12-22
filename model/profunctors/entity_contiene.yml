@@ -8,17 +8,9 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-BACK-NOMINA_PAGO
-  target: ENT-BACK-PAGO
 - source: ''
-  target: ENT-DEV-PULLREQUEST
+  target: ENT-SEG-EVIDENCIA
 - source: ''
-  target: ENT-DEV-PULLREQUEST
+  target: ENT-TDE-CONJUNTO-DATOS-ABIERTOS
 - source: ''
-  target: ENT-DEV-RELEASE
-- source: ''
-  target: ENT-FIN-RENDICIONES-INFORMERENDICION
-- source: ''
-  target: ENT-NORM-DOCUMENTO
-- source: ''
-  target: ENT-NORM-ACTO
+  target: ENT-TDE-DOCUMENTO

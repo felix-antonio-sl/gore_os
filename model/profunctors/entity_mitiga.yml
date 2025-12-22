@@ -9,4 +9,6 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ENT-GESTION-RIESGO
+  target: ENT-SEG-INCIDENTE
+- source: ''
+  target: ENT-SEG-RIESGO

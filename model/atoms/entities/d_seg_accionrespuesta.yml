@@ -1,108 +1,48 @@
-# ==============================================================================
-# GORE_OS Entity Atom: AccionRespuesta (Respuesta a Incidentes)
-# ==============================================================================
-# Domain: D-SEG (Ciberseguridad)
-# Subdomain: M3 Operaciones y Respuesta (CSIRT)
-# Source: dialogo_riguroso_d_seg.md, NIST SP 800-61
-# ==============================================================================
-
-_metadata:
-  version: "2.0.0"
-  status: active
-  created_at: "2025-12-22"
-  created_by: "Arquitecto Categórico + CISO Virtual"
-  domain: D-SEG
-  subdomain: operaciones_csirt
-  kb_source:
-    - "NIST SP 800-61: Incident Handling"
-
-entity:
-  id: ENT-SEG-ACCIONRESPUESTA
-  name: AccionRespuesta
-  name_es: Acción de Respuesta a Incidente
-  description: |
-    Acción técnica o administrativa ejecutada para contener,
-    erradicar o recuperarse de un incidente de seguridad.
-
-    Ejemplos:
-    - Aislar equipo de la red
-    - Bloquear IP en firewall
-    - Restaurar base de datos desde backup
-    - Cambiar contraseñas comprometidas
-    - Notificar a autoridades (CSIRT Gob)
-
-  purpose: |
-    Trazar la respuesta a incidentes para:
-    - Documentar la debida diligencia
-    - Coordinar esfuerzos del equipo CSIRT
-    - Evitar re-infección
-    - Aprender lecciones (Post-Incident Review)
-
-  categorical_type: Transaction
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_accion
-    type: String
-    key: true
-
-  - name: incidente_id
-    type: String
-    fk: ENT-SEG-INCIDENTE
-    nullable: false
-
-  - name: tipo
-    type: Enum[Contencion, Erradicacion, Recuperacion, Comunicacion, Analisis]
-    nullable: false
-
-  - name: descripcion
-    type: Text
-    nullable: false
-    description: "Detalle técnico de la acción realizada"
-
-  # Ejecución
-  - name: ejecutada_por_id
-    type: String
-    fk: ENT-BACK-FUNCIONARIO
-    nullable: false
-    description: "Miembro del CSIRT/TI que ejecutó"
-
-  - name: fecha_hora_inicio
-    type: Timestamp
-    nullable: false
-
-  - name: fecha_hora_fin
-    type: Timestamp
-    nullable: true
-
-  - name: resultado
-    type: Enum[Exitosa, Fallida, Parcial, EnProgreso]
-    default: EnProgreso
-
-  # Efectividad
-  - name: efectividad_observada
-    type: Text
-    nullable: true
-    description: "¿Logró contener/erradicar la amenaza?"
-
-  - name: costo_asociado
-    type: Decimal
-    nullable: true
-    description: "Costo de la respuesta (horas hombre, servicios externos)"
-
+- name: id_accion
+  type: String
+  key: true
+- name: incidente_id
+  type: String
+  fk: ENT-SEG-INCIDENTE
+  nullable: false
+- name: tipo
+  type: Enum[Contencion, Erradicacion, Recuperacion, Comunicacion, Analisis]
+  nullable: false
+- name: descripcion
+  type: Text
+  nullable: false
+  description: Detalle técnico de la acción realizada
+- name: ejecutada_por_id
+  type: String
+  fk: ENT-BACK-FUNCIONARIO
+  nullable: false
+  description: Miembro del CSIRT/TI que ejecutó
+- name: fecha_hora_inicio
+  type: Timestamp
+  nullable: false
+- name: fecha_hora_fin
+  type: Timestamp
+  nullable: true
+- name: resultado
+  type: Enum[Exitosa, Fallida, Parcial, EnProgreso]
+  default: EnProgreso
+- name: efectividad_observada
+  type: Text
+  nullable: true
+  description: ¿Logró contener/erradicar la amenaza?
+- name: costo_asociado
+  type: Decimal
+  nullable: true
+  description: Costo de la respuesta (horas hombre, servicios externos)
 invariants:
-  - id: INV-RESP-001
-    name: finalizada_requiere_resultado
-    rule: fecha_hora_fin IS NOT NULL → resultado IN ('Exitosa', 'Fallida', 'Parcial')
-    description: Acción finalizada debe tener resultado
-
-morphisms:
-  ejecutada_sobre: [ENT-SEG-ACTIVO-INFORMACION]
-  mitiga: [ENT-SEG-INCIDENTE]
-
-audit:
-  fields_tracked:
-    - resultado
-    - fecha_hora_fin
-  retention_years: 5
+- id: INV-RESP-001
+  name: finalizada_requiere_resultado
+  rule: fecha_hora_fin IS NOT NULL → resultado IN ('Exitosa', 'Fallida', 'Parcial')
+  description: Acción finalizada debe tener resultado

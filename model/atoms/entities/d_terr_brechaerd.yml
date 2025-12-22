@@ -1,149 +1,87 @@
-# ==============================================================================
-# GORE_OS Entity Atom: BrechaERD (Gap de Objetivo Estratégico)
-# ==============================================================================
-# Domain: D-TERR (Territorial Management)
-# Subdomain: Observatorio
-# Source: domain_d-plan.md, domain_d-terr.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico"
-  domain: D-TERR
-  subdomain: observatorio
-  kb_source:
-    - "domain_d-plan.md"
-    - "domain_d-terr.md"
-
-entity:
-  id: ENT-TERR-BRECHARD
-  name: BrechaERD
-  name_es: Brecha de Objetivo ERD
-  description: |
-    Representa la diferencia (gap) entre la meta de un objetivo
-    estratégico de la ERD y su valor actual, medido a nivel territorial.
-
-    Permite identificar comunas o territorios con mayor rezago
-    en el cumplimiento de los objetivos de desarrollo regional.
-
-  purpose: |
-    Modelar brechas territoriales para:
-    - Identificar territorios con mayor rezago
-    - Priorizar inversión según gaps
-    - Alertar desviaciones significativas
-    - Alimentar tableros del Observatorio
-
-  categorical_type: Object
-  is_abstract: false
-  category: Transactional
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_brecha
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: objetivo_erd_id
-    type: String
-    fk: ENT-PLAN-OE
-    nullable: false
-    description: Objetivo estratégico evaluado
-
-  - name: comuna_id
-    type: String
-    fk: ENT-TERR-COMUNA
-    nullable: true
-    description: Comuna específica (null = regional)
-
-  - name: periodo
-    type: String
-    nullable: false
-    description: Período de medición (ej. "2024-T3")
-
-  # Valores
-  - name: meta
-    type: Decimal
-    nullable: false
-    description: Meta del indicador para el período
-
-  - name: valor_actual
-    type: Decimal
-    nullable: false
-    description: Valor medido del indicador
-
-  - name: gap
-    type: Decimal
-    computed: true
-    formula: meta - valor_actual
-    description: Brecha absoluta (positivo = rezago)
-
-  - name: gap_porcentual
-    type: Decimal
-    computed: true
-    formula: ((meta - valor_actual) / meta) * 100
-    description: Brecha como porcentaje de la meta
-
-  # Clasificación
-  - name: severidad
-    type: Enum[Leve, Moderada, Alta, Critica]
-    nullable: false
-    description: Clasificación de la brecha
-
-  - name: tendencia
-    type: Enum[Mejorando, Estable, Empeorando]
-    nullable: true
-    description: Tendencia respecto a período anterior
-
-  # Fechas
-  - name: fecha_calculo
-    type: Date
-    nullable: false
-    description: Fecha de cálculo de la brecha
-
-  - name: fecha_fuente
-    type: Date
-    nullable: true
-    description: Fecha del dato fuente
-
-  # Alerta
-  - name: requiere_intervencion
-    type: Boolean
-    default: false
-    description: Si amerita acción FÉNIX
-
-  - name: intervencion_id
-    type: String
-    nullable: true
-    description: ID de intervención FÉNIX si existe
-
+- name: id_brecha
+  type: String
+  key: true
+  description: Identificador único
+- name: objetivo_erd_id
+  type: String
+  fk: ENT-PLAN-OE
+  nullable: false
+  description: Objetivo estratégico evaluado
+- name: comuna_id
+  type: String
+  fk: ENT-TERR-COMUNA
+  nullable: true
+  description: Comuna específica (null = regional)
+- name: periodo
+  type: String
+  nullable: false
+  description: Período de medición (ej. "2024-T3")
+- name: meta
+  type: Decimal
+  nullable: false
+  description: Meta del indicador para el período
+- name: valor_actual
+  type: Decimal
+  nullable: false
+  description: Valor medido del indicador
+- name: gap
+  type: Decimal
+  computed: true
+  formula: meta - valor_actual
+  description: Brecha absoluta (positivo = rezago)
+- name: gap_porcentual
+  type: Decimal
+  computed: true
+  formula: ((meta - valor_actual) / meta) * 100
+  description: Brecha como porcentaje de la meta
+- name: severidad
+  type: Enum[Leve, Moderada, Alta, Critica]
+  nullable: false
+  description: Clasificación de la brecha
+- name: tendencia
+  type: Enum[Mejorando, Estable, Empeorando]
+  nullable: true
+  description: Tendencia respecto a período anterior
+- name: fecha_calculo
+  type: Date
+  nullable: false
+  description: Fecha de cálculo de la brecha
+- name: fecha_fuente
+  type: Date
+  nullable: true
+  description: Fecha del dato fuente
+- name: requiere_intervencion
+  type: Boolean
+  default: false
+  description: Si amerita acción FÉNIX
+- name: intervencion_id
+  type: String
+  nullable: true
+  description: ID de intervención FÉNIX si existe
 invariants:
-  - id: INV-BRE-001
-    name: severidad_coherente_gap
-    rule: |
-      (gap_porcentual <= 10) → severidad = 'Leve'
-      (gap_porcentual > 10 AND gap_porcentual <= 25) → severidad = 'Moderada'
-      (gap_porcentual > 25 AND gap_porcentual <= 50) → severidad = 'Alta'
-      (gap_porcentual > 50) → severidad = 'Critica'
-    description: La severidad debe corresponder al gap
-    severity: warning
+- id: INV-BRE-001
+  name: severidad_coherente_gap
+  rule: '(gap_porcentual <= 10) → severidad = ''Leve''
 
-  - id: INV-BRE-002
-    name: critica_requiere_intervencion
-    rule: |
-      (severidad = 'Critica') → requiere_intervencion = true
-    description: Brecha crítica activa intervención
+    (gap_porcentual > 10 AND gap_porcentual <= 25) → severidad = ''Moderada''
 
-morphisms:
-  evalua: [ENT-PLAN-OE]
-  localizada_en: [ENT-TERR-COMUNA]
-  activa: [ENT-FENIX-INTERVENCION]
-  mostrada_en: [Observatorio]
+    (gap_porcentual > 25 AND gap_porcentual <= 50) → severidad = ''Alta''
 
-audit:
-  fields_tracked:
-    - severidad
-    - gap_porcentual
-    - requiere_intervencion
-  retention_years: 10
+    (gap_porcentual > 50) → severidad = ''Critica''
+
+    '
+  description: La severidad debe corresponder al gap
+  severity: warning
+- id: INV-BRE-002
+  name: critica_requiere_intervencion
+  rule: '(severidad = ''Critica'') → requiere_intervencion = true
+
+    '
+  description: Brecha crítica activa intervención

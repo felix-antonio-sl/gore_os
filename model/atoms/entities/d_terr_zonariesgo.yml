@@ -1,197 +1,117 @@
-# ==============================================================================
-# GORE_OS Entity Atom: ZonaRiesgo (Mapa de Riesgos SENAPRED)
-# ==============================================================================
-# Domain: D-TERR (Territorial Intelligence)
-# Subdomain: Riesgos
-# Source: KB-090, Ley 21.364 SENAPRED, ERD OE 1.1.3, dialogo_dplan_dterr.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Gobernador Virtual"
-  domain: D-TERR
-  subdomain: riesgos
-  kb_source:
-    - "kb_gn_090_gestion_informacion_geoespacial_koda.yml"
-    - "Ley 21.364 (SENAPRED)"
-    - "ERD Ñuble OE 1.1.3"
-    - "dialogo_dplan_dterr.md"
-
-entity:
-  id: ENT-TERR-RIESGO
-  name: ZonaRiesgo
-  name_es: Zona de Riesgo
-  description: |
-    Representa una zona geográfica con exposición a riesgos de desastres
-    naturales o antrópicos. Integrada con SENAPRED (Ley 21.364) y
-    vinculada al objetivo ERD 1.1.3: "Fortalecer las capacidades
-    resilientes regionales ante riesgos de desastres y cambio climático".
-
-  purpose: |
-    Modelar zonas de riesgo para:
-    - Validar IPRs (restricción territorial)
-    - Planificar inversiones preventivas
-    - Integrar con mapas SENAPRED
-    - Alertas de proyectos en zonas críticas
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_zona
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: tipo_riesgo
-    type: Enum[Inundacion, Incendio, Sismo, Tsunami, Remocion, Sequia, Volcanico, Aluvion, Multiple]
-    nullable: false
-    description: Tipo de riesgo principal
-
-  - name: nombre
-    type: String
-    nullable: true
-    description: Nombre de la zona
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción del riesgo
-
-  # Severidad
-  - name: severidad
-    type: Enum[Baja, Media, Alta, MuyAlta, Critica]
-    nullable: false
-    description: Nivel de severidad
-
-  - name: probabilidad
-    type: Enum[Rara, Ocasional, Frecuente, MuyFrecuente]
-    nullable: true
-    description: Probabilidad de ocurrencia
-
-  - name: impacto_potencial
-    type: Text
-    nullable: true
-    description: Descripción del impacto potencial
-
-  # Nivel de restricción normativa (enriquecimiento P3)
-  - name: nivel_restriccion_normativa
-    type: Enum[SinRestriccion, CondicionadoLeve, CondicionadoMedio, Prohibido]
-    default: SinRestriccion
-    description: "Nivel de restricción según SENAPRED/LGUC para construcción"
-
-  - name: gravada_en_ipt
-    type: Boolean
-    default: false
-    description: "¿Esta zona está reconocida en el PRC/PRI/PROT local?"
-
-  - name: ipt_id
-    type: String
-    fk: ENT-TERR-IPT
-    nullable: true
-    description: IPT que registra esta zona como gravada
-
-  # Geometría
-  - name: geometria
-    type: Geometry
-    geometry_type: Polygon
-    nullable: false
-    description: Polígono de la zona
-
-  - name: superficie_ha
-    type: Decimal
-    nullable: true
-    description: Superficie en hectáreas
-
-  # Fuente
-  - name: fuente
-    type: String
-    nullable: false
-    description: Origen del dato (SENAPRED, SERNAGEOMIN, etc.)
-
-  - name: estudio_base
-    type: String
-    nullable: true
-    description: Estudio que define la zona
-
-  - name: fecha_estudio
-    type: Date
-    nullable: true
-    description: Fecha del estudio base
-
-  - name: fecha_actualizacion
-    type: Date
-    nullable: true
-    description: Última actualización
-
-  # Territorio
-  - name: comunas_afectadas
-    type: Array[String]
-    nullable: true
-    description: Códigos de comunas que intersecta
-
-  - name: poblacion_expuesta
-    type: Integer
-    nullable: true
-    description: Población en la zona
-
-  - name: viviendas_expuestas
-    type: Integer
-    nullable: true
-    description: Viviendas en la zona
-
-  # Infraestructura crítica
-  - name: infraestructura_critica
-    type: Array[String]
-    nullable: true
-    description: Infraestructura crítica expuesta
-
-  # Mitigación
-  - name: medidas_mitigacion
-    type: Text
-    nullable: true
-    description: Medidas de mitigación aplicables
-
-  - name: plan_evacuacion
-    type: Boolean
-    default: false
-    description: ¿Tiene plan de evacuación?
-
-  # Vinculación ERD
-  - name: objetivo_erd_id
-    type: String
-    fk: ENT-PLAN-OE
-    nullable: true
-    default: "OE-1.1.3"
-    description: Objetivo ERD relacionado
-
-  # Estado
-  - name: estado
-    type: Enum[Borrador, Vigente, EnActualizacion, Obsoleta]
-    default: Vigente
-    description: Estado de la zona
-
+- name: id_zona
+  type: String
+  key: true
+  description: Identificador único
+- name: tipo_riesgo
+  type: Enum[Inundacion, Incendio, Sismo, Tsunami, Remocion, Sequia, Volcanico, Aluvion,
+    Multiple]
+  nullable: false
+  description: Tipo de riesgo principal
+- name: nombre
+  type: String
+  nullable: true
+  description: Nombre de la zona
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción del riesgo
+- name: severidad
+  type: Enum[Baja, Media, Alta, MuyAlta, Critica]
+  nullable: false
+  description: Nivel de severidad
+- name: probabilidad
+  type: Enum[Rara, Ocasional, Frecuente, MuyFrecuente]
+  nullable: true
+  description: Probabilidad de ocurrencia
+- name: impacto_potencial
+  type: Text
+  nullable: true
+  description: Descripción del impacto potencial
+- name: nivel_restriccion_normativa
+  type: Enum[SinRestriccion, CondicionadoLeve, CondicionadoMedio, Prohibido]
+  default: SinRestriccion
+  description: Nivel de restricción según SENAPRED/LGUC para construcción
+- name: gravada_en_ipt
+  type: Boolean
+  default: false
+  description: ¿Esta zona está reconocida en el PRC/PRI/PROT local?
+- name: ipt_id
+  type: String
+  fk: ENT-TERR-IPT
+  nullable: true
+  description: IPT que registra esta zona como gravada
+- name: geometria
+  type: Geometry
+  geometry_type: Polygon
+  nullable: false
+  description: Polígono de la zona
+- name: superficie_ha
+  type: Decimal
+  nullable: true
+  description: Superficie en hectáreas
+- name: fuente
+  type: String
+  nullable: false
+  description: Origen del dato (SENAPRED, SERNAGEOMIN, etc.)
+- name: estudio_base
+  type: String
+  nullable: true
+  description: Estudio que define la zona
+- name: fecha_estudio
+  type: Date
+  nullable: true
+  description: Fecha del estudio base
+- name: fecha_actualizacion
+  type: Date
+  nullable: true
+  description: Última actualización
+- name: comunas_afectadas
+  type: Array[String]
+  nullable: true
+  description: Códigos de comunas que intersecta
+- name: poblacion_expuesta
+  type: Integer
+  nullable: true
+  description: Población en la zona
+- name: viviendas_expuestas
+  type: Integer
+  nullable: true
+  description: Viviendas en la zona
+- name: infraestructura_critica
+  type: Array[String]
+  nullable: true
+  description: Infraestructura crítica expuesta
+- name: medidas_mitigacion
+  type: Text
+  nullable: true
+  description: Medidas de mitigación aplicables
+- name: plan_evacuacion
+  type: Boolean
+  default: false
+  description: ¿Tiene plan de evacuación?
+- name: objetivo_erd_id
+  type: String
+  fk: ENT-PLAN-OE
+  nullable: true
+  default: OE-1.1.3
+  description: Objetivo ERD relacionado
+- name: estado
+  type: Enum[Borrador, Vigente, EnActualizacion, Obsoleta]
+  default: Vigente
+  description: Estado de la zona
 invariants:
-  - id: INV-RIESGO-001
-    name: critica_requiere_plan
-    rule: |
-      (severidad = 'Critica' OR severidad = 'MuyAlta') → (medidas_mitigacion IS NOT NULL)
-    description: Zonas críticas requieren medidas de mitigación
-    severity: warning
+- id: INV-RIESGO-001
+  name: critica_requiere_plan
+  rule: '(severidad = ''Critica'' OR severidad = ''MuyAlta'') → (medidas_mitigacion
+    IS NOT NULL)
 
-morphisms:
-  intersecta: [ENT-TERR-COMUNA]
-  restringe: [ENT-FIN-IPR]
-  vinculada_a: [ENT-PLAN-OE]
-  publicada_en: [ENT-TERR-CAPA]
-  integrada_con: [SENAPRED]
-
-audit:
-  fields_tracked:
-    - severidad
-    - poblacion_expuesta
-    - estado
-  retention_years: 20
+    '
+  description: Zonas críticas requieren medidas de mitigación
+  severity: warning

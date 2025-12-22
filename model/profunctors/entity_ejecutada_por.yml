@@ -8,5 +8,5 @@ signature: Source ⊗ Target → 2
 source_type: Mixed
 target_type: Mixed
 links:
-- source: ENT-EJEC-VISITA_TERRENO
-  target: ROL-SUPERVISOR
+- source: ''
+  target: ENT-BACK-FUNCIONARIO

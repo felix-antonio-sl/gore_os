@@ -1,169 +1,74 @@
-# ==============================================================================
-# GORE_OS Entity Atom: EjeEstrategico
-# ==============================================================================
-# Domain: D-PLAN (Strategic Planning)
-# Subdomain: ERD
-# Source: ERD Ñuble 2024-2030, domain_d-plan.md
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico"
-  domain: D-PLAN
-  subdomain: erd
-  kb_source:
-    - "ERD Ñuble 2024-2030"
-    - "domain_d-plan.md"
-
-entity:
-  id: ENT-PLAN-EJE
-  name: EjeEstrategico
-  name_es: Eje Estratégico
-  description: |
-    Gran área de desarrollo regional definida en la ERD.
-    Cada ERD tiene típicamente 4-6 ejes que agrupan lineamientos
-    y objetivos estratégicos temáticamente relacionados.
-
-    Ejemplos ERD Ñuble: Desarrollo Económico, Desarrollo Social,
-    Sustentabilidad Ambiental, Conectividad, Capital Humano.
-
-  purpose: |
-    Modelar los ejes estratégicos para:
-    - Agrupar lineamientos y objetivos por área temática
-    - Clasificar alineamiento de IPRs (tipo_alineacion_erd)
-    - Medir avance estratégico por eje
-    - Priorizar inversión por área
-
-  categorical_type: Object
-  is_abstract: false
-  category: Master
-
-  extends: null
-
-  related_to:
-    - entity: ENT-PLAN-ERD
-      relation: pertenece_a
-      cardinality: N:1
-      description: Cada eje pertenece a una ERD
-    - entity: ENT-PLAN-LINEAMIENTO
-      relation: compuesto_por
-      cardinality: 1:N
-      description: Un eje tiene 2-4 lineamientos
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_eje
-    type: String
-    key: true
-    description: Identificador único (ej. EJE-ECO-01)
-
-  - name: erd_id
-    type: String
-    fk: ENT-PLAN-ERD
-    nullable: false
-    description: ERD a la que pertenece
-
-  - name: codigo
-    type: String
-    nullable: false
-    description: Código corto del eje (ej. E1, E2, E3)
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: Nombre del eje estratégico
-
-  - name: descripcion
-    type: Text
-    nullable: true
-    description: Descripción del alcance del eje
-
-  - name: orden
-    type: Integer
-    default: 1
-    description: Orden de presentación (1-6)
-
-  # Color/Ícono para visualización
-  - name: color_hex
-    type: String
-    nullable: true
-    description: Color para dashboards (ej. #3B82F6)
-
-  - name: icono
-    type: String
-    nullable: true
-    description: Identificador de ícono (ej. chart-line)
-
-  # Métricas
-  - name: cantidad_lineamientos
-    type: Integer
-    default: 0
-    description: Número de lineamientos en este eje
-
-  - name: cantidad_objetivos
-    type: Integer
-    default: 0
-    description: Total de OE bajo este eje
-
-  - name: cantidad_iprs_vinculadas
-    type: Integer
-    default: 0
-    description: IPRs alineadas a este eje
-
-  - name: monto_total_asignado
-    type: Decimal
-    default: 0
-    description: Suma de montos de IPRs vinculadas
-
-  - name: porcentaje_cumplimiento
-    type: Decimal
-    nullable: true
-    description: Avance ponderado del eje
-
-  # ODS
-  - name: ods_vinculados
-    type: Array[Integer]
-    nullable: true
-    description: ODS relacionados con este eje (1-17)
-
+- name: id_eje
+  type: String
+  key: true
+  description: Identificador único (ej. EJE-ECO-01)
+- name: erd_id
+  type: String
+  fk: ENT-PLAN-ERD
+  nullable: false
+  description: ERD a la que pertenece
+- name: codigo
+  type: String
+  nullable: false
+  description: Código corto del eje (ej. E1, E2, E3)
+- name: nombre
+  type: String
+  nullable: false
+  description: Nombre del eje estratégico
+- name: descripcion
+  type: Text
+  nullable: true
+  description: Descripción del alcance del eje
+- name: orden
+  type: Integer
+  default: 1
+  description: Orden de presentación (1-6)
+- name: color_hex
+  type: String
+  nullable: true
+  description: Color para dashboards (ej.
+- name: icono
+  type: String
+  nullable: true
+  description: Identificador de ícono (ej. chart-line)
+- name: cantidad_lineamientos
+  type: Integer
+  default: 0
+  description: Número de lineamientos en este eje
+- name: cantidad_objetivos
+  type: Integer
+  default: 0
+  description: Total de OE bajo este eje
+- name: cantidad_iprs_vinculadas
+  type: Integer
+  default: 0
+  description: IPRs alineadas a este eje
+- name: monto_total_asignado
+  type: Decimal
+  default: 0
+  description: Suma de montos de IPRs vinculadas
+- name: porcentaje_cumplimiento
+  type: Decimal
+  nullable: true
+  description: Avance ponderado del eje
+- name: ods_vinculados
+  type: Array[Integer]
+  nullable: true
+  description: ODS relacionados con este eje (1-17)
 invariants:
-  - id: INV-EJE-001
-    name: codigo_unico_por_erd
-    rule: UNIQUE(erd_id, codigo)
-    description: El código del eje es único dentro de su ERD
-    severity: error
-
-  - id: INV-EJE-002
-    name: orden_valido
-    rule: orden BETWEEN 1 AND 10
-    description: El orden debe estar en rango válido
-
-lifecycle:
-  states:
-    - name: Definido
-      description: Eje creado con estructura básica
-    - name: Activo
-      description: Eje con objetivos e IPRs vinculadas
-    - name: Inactivo
-      description: Eje de ERD reemplazada
-
-  transitions:
-    - from: Definido
-      to: Activo
-      trigger: vincular_objetivo
-    - from: Activo
-      to: Inactivo
-      trigger: reemplazar_erd
-
-morphisms:
-  pertenece_a: [ENT-PLAN-ERD]
-  compuesto_por: [ENT-PLAN-LINEAMIENTO]
-  alinea_a: [ENT-FIN-IPR, ENT-FIN-OPORTUNIDAD]
-  medido_por: [ENT-TERR-BRECHARD]
-
-audit:
-  fields_tracked:
-    - porcentaje_cumplimiento
-    - cantidad_iprs_vinculadas
-  retention_years: 15
+- id: INV-EJE-001
+  name: codigo_unico_por_erd
+  rule: UNIQUE(erd_id, codigo)
+  description: El código del eje es único dentro de su ERD
+  severity: error
+- id: INV-EJE-002
+  name: orden_valido
+  rule: orden BETWEEN 1 AND 10
+  description: El orden debe estar en rango válido

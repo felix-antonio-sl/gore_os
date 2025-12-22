@@ -9,6 +9,4 @@ source_type: Mixed
 target_type: Mixed
 links:
 - source: ''
-  target: ROL-JEFATURA
-- source: ''
-  target: FENIX
+  target: ENT-GESTION-RIESGO

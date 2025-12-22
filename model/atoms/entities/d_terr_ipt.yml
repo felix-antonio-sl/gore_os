@@ -1,177 +1,92 @@
-# ==============================================================================
-# GORE_OS Entity Atom: IPT (Instrumento de Planificación Territorial)
-# ==============================================================================
-# Domain: D-TERR (Inteligencia Territorial)
-# Subdomain: Regulación Urbana
-# Source: LGUC DFL 458, LOC GORE Art. 17, dialogo_cobertura_rigurosa
-# ==============================================================================
-
-_metadata:
-  version: "1.0.0"
-  status: active
-  created_at: "2025-12-21"
-  created_by: "Arquitecto Categórico + Goreólogo"
-  domain: D-TERR
-  subdomain: regulacion_urbana
-  kb_source:
-    - "LGUC DFL 458: Ley General de Urbanismo y Construcciones"
-    - "LOC GORE Art. 17: PROT vinculante"
-    - "dialogo_cobertura_rigurosa_dplan_dterr.md"
-
-entity:
-  id: ENT-TERR-IPT
-  name: IPT
-  name_es: Instrumento de Planificación Territorial
-  description: |
-    Abstracción de los instrumentos normativos que regulan el uso del suelo.
-    Incluye Planes Reguladores Comunales (PRC), Intercomunales (PRI),
-    Límites Urbanos y el PROT regional.
-
-    Jerarquía legal: PROT → PRI → PRC
-    El instrumento inferior no puede contradecir al superior.
-
-    Habilita el módulo "Asistencia Urbanística DOM" para que el GORE
-    pueda asesorar a municipios en actualización de sus IPTs.
-
-  purpose: |
-    Modelar IPTs para:
-    - Conocer estado de vigencia de PRC por comuna
-    - Detectar instrumentos desactualizados
-    - Validar compatibilidad de IPR con normativa de suelo
-    - Apoyar asistencia técnica urbanística (M5)
-
-  categorical_type: Object
-  is_abstract: false
-  category: Reference
-
+_meta:
+  urn: urn:goreos:entity:unknown:unknown:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+category: Master
+is_abstract: false
 attributes:
-  - name: id_ipt
-    type: String
-    key: true
-    description: Identificador único
-
-  - name: tipo
-    type: Enum[PRC, PRI, LimiteUrbano, Seccional, PROT]
-    nullable: false
-    description: Tipo de instrumento
-
-  - name: nombre
-    type: String
-    nullable: false
-    description: "Nombre del instrumento (ej: PRC Chillán 2018)"
-
-  # Territorio
-  - name: comuna_id
-    type: String
-    fk: ENT-TERR-COMUNA
-    nullable: true
-    description: Comuna (aplica a PRC, Límite Urbano, Seccional)
-
-  - name: comunas_ids
-    type: List[String]
-    nullable: true
-    description: Comunas cubiertas (aplica a PRI)
-
-  - name: cobertura_regional
-    type: Boolean
-    default: false
-    description: ¿Cubre toda la región? (aplica a PROT)
-
-  # Vigencia
-  - name: estado
-    type: Enum[Vigente, Modificacion, Estudio, Derogado, Historico]
-    default: Vigente
-    description: Estado del instrumento
-
-  - name: fecha_publicacion_do
-    type: Date
-    nullable: true
-    description: Fecha de publicación en Diario Oficial
-
-  - name: decreto_aprobatorio
-    type: String
-    nullable: true
-    description: "Decreto/Resolución (ej: DA 123/2018, Res. GORE 45/2023)"
-
-  # Contenido
-  - name: memoria_explicativa_url
-    type: String
-    nullable: true
-    description: URL de la memoria explicativa
-
-  - name: ordenanza_local_url
-    type: String
-    nullable: true
-    description: URL de la ordenanza local
-
-  - name: planos_url
-    type: String
-    nullable: true
-    description: URL de planos reguladores
-
-  # Calidad
-  - name: antiguedad_anos
-    type: Integer
-    nullable: true
-    description: Años desde publicación (derivado)
-
-  - name: requiere_actualizacion
-    type: Boolean
-    default: false
-    description: ¿Supera 10 años sin actualización?
-
-  # Vinculación geoespacial
-  - name: capa_geoespacial_id
-    type: String
-    fk: ENT-TERR-CAPA
-    nullable: true
-    description: Capa GIS asociada
-
-  # Jerarquía
-  - name: ipt_superior_id
-    type: String
-    fk: ENT-TERR-IPT
-    nullable: true
-    description: IPT de nivel superior (PRC → PRI → PROT)
-
-morphisms:
-  regula: [ENT-TERR-COMUNA]
-  subordinado_a: [ENT-TERR-IPT]
-  representado_en: [ENT-TERR-CAPA]
-  restringe: [ENT-FIN-IPR]
-
+- name: id_ipt
+  type: String
+  key: true
+  description: Identificador único
+- name: tipo
+  type: Enum[PRC, PRI, LimiteUrbano, Seccional, PROT]
+  nullable: false
+  description: Tipo de instrumento
+- name: nombre
+  type: String
+  nullable: false
+  description: 'Nombre del instrumento (ej: PRC Chillán 2018)'
+- name: comuna_id
+  type: String
+  fk: ENT-TERR-COMUNA
+  nullable: true
+  description: Comuna (aplica a PRC, Límite Urbano, Seccional)
+- name: comunas_ids
+  type: List[String]
+  nullable: true
+  description: Comunas cubiertas (aplica a PRI)
+- name: cobertura_regional
+  type: Boolean
+  default: false
+  description: ¿Cubre toda la región? (aplica a PROT)
+- name: estado
+  type: Enum[Vigente, Modificacion, Estudio, Derogado, Historico]
+  default: Vigente
+  description: Estado del instrumento
+- name: fecha_publicacion_do
+  type: Date
+  nullable: true
+  description: Fecha de publicación en Diario Oficial
+- name: decreto_aprobatorio
+  type: String
+  nullable: true
+  description: 'Decreto/Resolución (ej: DA 123/2018, Res. GORE 45/2023)'
+- name: memoria_explicativa_url
+  type: String
+  nullable: true
+  description: URL de la memoria explicativa
+- name: ordenanza_local_url
+  type: String
+  nullable: true
+  description: URL de la ordenanza local
+- name: planos_url
+  type: String
+  nullable: true
+  description: URL de planos reguladores
+- name: antiguedad_anos
+  type: Integer
+  nullable: true
+  description: Años desde publicación (derivado)
+- name: requiere_actualizacion
+  type: Boolean
+  default: false
+  description: ¿Supera 10 años sin actualización?
+- name: capa_geoespacial_id
+  type: String
+  fk: ENT-TERR-CAPA
+  nullable: true
+  description: Capa GIS asociada
+- name: ipt_superior_id
+  type: String
+  fk: ENT-TERR-IPT
+  nullable: true
+  description: IPT de nivel superior (PRC → PRI → PROT)
 invariants:
-  - name: tipo_territorio_coherente
-    condition: |
-      (tipo = 'PRC' AND comuna_id IS NOT NULL) OR
-      (tipo = 'PRI' AND comunas_ids IS NOT NULL) OR
-      (tipo = 'PROT' AND cobertura_regional = TRUE)
-    severity: CRITICAL
+- name: tipo_territorio_coherente
+  condition: '(tipo = ''PRC'' AND comuna_id IS NOT NULL) OR
 
-  - name: jerarquia_valida
-    condition: |
-      tipo = 'PRC' IMPLIES ipt_superior_id.tipo IN ('PRI', 'PROT', NULL)
-    severity: HIGH
+    (tipo = ''PRI'' AND comunas_ids IS NOT NULL) OR
 
-  - name: antiguedad_alerta
-    condition: "antiguedad_anos > 10 IMPLIES requiere_actualizacion = TRUE"
-    severity: MEDIUM
+    (tipo = ''PROT'' AND cobertura_regional = TRUE)
 
-lifecycle:
-  states:
-    - name: Estudio
-      description: En proceso de elaboración técnica
-    - name: Vigente
-      description: Publicado en D.O. y aplicable
-    - name: Modificacion
-      description: Proceso de modificación en curso
-    - name: Derogado
-      description: Reemplazado por nuevo instrumento
-    - name: Historico
-      description: Conservado para referencia histórica
+    '
+  severity: CRITICAL
+- name: jerarquia_valida
+  condition: 'tipo = ''PRC'' IMPLIES ipt_superior_id.tipo IN (''PRI'', ''PROT'', NULL)
 
-audit:
-  fields_tracked:
-    - estado
-    - requiere_actualizacion
-  retention_years: 50
+    '
+  severity: HIGH
+- name: antiguedad_alerta
+  condition: antiguedad_anos > 10 IMPLIES requiere_actualizacion = TRUE
+  severity: MEDIUM
