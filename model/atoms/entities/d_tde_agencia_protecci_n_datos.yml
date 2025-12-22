@@ -6,4 +6,6 @@ id: ENT-TDE-AGENCIA_PROTECCI_N_D
 name: Agencia Protección Datos
 domain: D-TDE
 category: Reference
-is_abstract: false
+is_abstract: true
+description: Entidad abstracta del dominio para la cual no existe definición de estructura
+  de datos en el conocimiento actual.

@@ -6,4 +6,6 @@ id: ENT-FIN-PORTAFOLIO-SALUDIPR
 name: SaludIPR
 domain: D-FIN-PORTAFOLIO
 category: Reference
-is_abstract: false
+is_abstract: true
+description: Entidad abstracta del dominio para la cual no existe definición de estructura
+  de datos en el conocimiento actual.

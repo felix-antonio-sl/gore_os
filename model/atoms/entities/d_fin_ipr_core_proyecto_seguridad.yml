@@ -6,4 +6,6 @@ id: ENT-FIN-IPR_CORE-PROYECTO_SEGURIDAD
 name: Proyecto_Seguridad
 domain: D-FIN-IPR_CORE
 category: Reference
-is_abstract: false
+is_abstract: true
+description: Entidad abstracta del dominio para la cual no existe definición de estructura
+  de datos en el conocimiento actual.

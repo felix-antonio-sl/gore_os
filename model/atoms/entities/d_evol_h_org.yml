@@ -6,4 +6,6 @@ id: ENT-EVOL-H_ORG
 name: H_org
 domain: D-EVOL
 category: Reference
-is_abstract: false
+is_abstract: true
+description: Entidad abstracta del dominio para la cual no existe definición de estructura
+  de datos en el conocimiento actual.

@@ -6,4 +6,8 @@ id: ENT-GOB-ACTOR
 name: Actor
 domain: D-GOB
 category: Reference
-is_abstract: false
+is_abstract: true
+description: Pronunciamiento técnico-económico favorable emitido por el Ministerio
+  de Desarrollo Social y Familia (MDSF) para una Iniciativa de Inversión (IDI), que
+  certifica que el proyecto es socialmente rentable y cumple con la normativa del
+  Sistema Nacional de Inversiones (SNI).

@@ -6,4 +6,5 @@ id: ENT-GOB-CONSEJO_REGIONAL
 name: Consejo Regional
 domain: D-GOB
 category: Reference
-is_abstract: false
+is_abstract: true
+description: "Órgano colegiado del Gobierno Regional, con facultades normativas, resolutivas y fiscalizadoras, encargado de hacer efectiva la participación de la comunidad regional."
