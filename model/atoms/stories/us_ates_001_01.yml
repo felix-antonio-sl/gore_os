@@ -9,3 +9,4 @@ i_want: un módulo de emisión de pagos con validación presupuestaria
 so_that: los pagos sean correctos
 domain: D-FIN
 priority: P0
+acceptance_criteria: []

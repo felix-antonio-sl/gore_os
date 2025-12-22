@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-REL-003
 urn: urn:goreos:atom:story:us_dev_rel_003:1.0.0
-role_id: ROLE-RELEASE-MANAGER
+role_id: ROL-RELEASE-MANAGER
 i_want: realizar rollback a una versión anterior con un solo click
 so_that: se pueda recuperar la operatividad inmediata ante fallos en producción
 domain: D-DEV
 priority: P0
 capability_id: CAP-DEV-001
+acceptance_criteria: []

@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-MON-003
 urn: urn:goreos:atom:story:us_ops_mon_003:1.0.0
-role_id: ROLE-SRE
+role_id: ROL-SRE
 i_want: correlacionar logs de auditoría con métricas de rendimiento en una misma vista
 so_that: se facilite el troubleshooting y la identificación de la causa raíz de incidentes
 domain: D-OPS
 priority: P1
 capability_id: CAP-OPS-001
+acceptance_criteria: []

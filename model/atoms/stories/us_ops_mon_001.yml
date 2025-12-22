@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-MON-001
 urn: urn:goreos:atom:story:us_ops_mon_001:1.0.0
-role_id: ROLE-SRE
+role_id: ROL-SRE
 i_want: configurar alertas con umbrales personalizados basados en métricas
 so_that: el equipo sea proactivo ante posibles fallos del sistema
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-001
+acceptance_criteria: []

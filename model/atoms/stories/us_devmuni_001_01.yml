@@ -10,3 +10,4 @@ so_that: pueda conectar el ERP municipal
 domain: D-DEV
 priority: P2
 capability_id: CAP-DEV-001
+acceptance_criteria: []

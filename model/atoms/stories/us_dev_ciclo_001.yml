@@ -10,3 +10,4 @@ so_that: Aseguro una evolución controlada del Blueprint al Código
 domain: D-DEV
 priority: P0
 capability_id: CAP-DEV-001
+acceptance_criteria: []

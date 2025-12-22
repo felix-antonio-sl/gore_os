@@ -10,3 +10,4 @@ so_that: pueda resolver tickets en la primera llamada
 domain: D-OPS
 priority: P1
 capability_id: CAP-OPS-001
+acceptance_criteria: []

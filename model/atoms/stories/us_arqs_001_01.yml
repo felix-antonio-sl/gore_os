@@ -9,3 +9,4 @@ i_want: un repositorio central de decisiones de arquitectura (ADR)
 so_that: se mantenga la consistencia técnica del proyecto
 domain: D-DEV
 priority: P0
+acceptance_criteria: []

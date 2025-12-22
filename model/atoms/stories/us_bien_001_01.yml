@@ -10,3 +10,4 @@ so_that: pueda gestionar reembolsos médicos
 domain: D-BACK
 priority: P1
 capability_id: CAP-RRHH-GESTOR-001
+acceptance_criteria: []

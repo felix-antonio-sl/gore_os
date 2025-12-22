@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-KODA-001
 urn: urn:goreos:atom:story:us_dev_koda_001:1.0.0
-role_id: ROLE-ARQUITECTO
+role_id: ROL-ARQUITECTO
 i_want: cargar Knowledge Base en agente KODA
 so_that: se tenga la KB parseada correctamente para consultas
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-BLUEPRINT
+acceptance_criteria: []

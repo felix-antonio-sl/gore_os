@@ -10,3 +10,4 @@ so_that: Centralizo autenticación
 domain: D-TDE
 priority: P0
 capability_id: CAP-FIRMA-001
+acceptance_criteria: []

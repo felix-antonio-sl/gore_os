@@ -10,3 +10,4 @@ so_that: el pago sea correcto y oportuno
 domain: D-BACK
 priority: P0
 capability_id: CAP-BACK-TICKETS-001
+acceptance_criteria: []

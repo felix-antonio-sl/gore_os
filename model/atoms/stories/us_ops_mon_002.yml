@@ -4,10 +4,11 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-MON-002
 urn: urn:goreos:atom:story:us_ops_mon_002:1.0.0
-role_id: ROLE-SRE
+role_id: ROL-SRE
 i_want: visualizar dashboards con métricas de salud y rendimiento del sistema en tiempo
   real
 so_that: se tenga una visibilidad completa del estado operativo de la plataforma
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-001
+acceptance_criteria: []

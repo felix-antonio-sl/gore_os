@@ -1,41 +1,44 @@
-# GORE_OS
+# GORE_OS Monorepo
 
-Sistema de Gestión Integral para Gobiernos Regionales - Ontología Categórica v3.0
+> **Architecture:** Bun + Turborepo + Docker  
+> **Approach:** Container-First Development
 
-## Estructura del Repositorio
+## Estructura
 
-```
+```text
 gore_os/
-├── ontology/             # Especificación formal (Norma Superior)
-├── model/                # Modelo categórico
-│   ├── atoms/            # Roles, Stories, Capabilities, Modules, Processes, Entities
-│   ├── profunctors/      # Relaciones N:M centralizadas
-│   ├── compositions/     # Dominios (Σ-Lifts)
-│   └── catalog/          # Catálogo maestro
-├── architecture/         # Arquitectura C4 + ADRs
-├── etl/                  # Pipelines de migración (sources, sinks, transforms)
-├── tools/                # Scripts de validación y composición
-├── schemas/              # JSON Schemas
-├── docs/                 # Guías, procesos BPMN, diseño
-└── archive/              # Artefactos históricos
+├── apps/
+│   ├── api/            # Backend (Hono) [To Be Created]
+│   └── web/            # Frontend (React/Vite) [To Be Created]
+├── packages/
+│   ├── core/           # Shared Logic & Schemas
+│   └── ui/             # Design System (React + Tailwind)
+├── docker-compose.yml  # Infraestructura Local (DB + Auth)
+├── package.json        # Workspace Root
+└── turbo.json          # Pipeline Construction
 ```
 
-## Ontología
+## Quick Start
 
-La ontología v3.0 define el sistema como una **Categoría de Grothendieck** con tres subcategorías:
-- **$\mathcal{G}_{Req}$**: Requisitos (Roles, Stories, Capabilities)
-- **$\mathcal{G}_{Impl}$**: Implementación (Modules, Processes, Entities)
-- **$\mathcal{G}_{Ops}$**: Operación (Services, Events)
+### 1. Prerrequisitos
+- [Docker & Docker Compose](https://www.docker.com/)
+- [Bun](https://bun.sh/) (`curl -fsSL https://bun.sh/install | bash`)
 
-Ver: [ontology/ontologia_categorica_goreos.md](ontology/ontologia_categorica_goreos.md)
+### 2. Infraestructura
+Levantar servicios base (PostgreSQL + Keycloak):
+```bash
+docker-compose up -d
+```
 
-## Herramientas
+### 3. Desarrollo
+Instalar dependencias y correr en modo dev (cuando existan las apps):
+```bash
+bun install
+bun run dev
+```
 
-| Script                                 | Descripción                        |
-| -------------------------------------- | ---------------------------------- |
-| `tools/validation/verify_ontology.py`  | Verifica conformidad con ontología |
-| `tools/composition/compose_domains.py` | Genera dominios como Σ-Lifts       |
-
-## Licencia
-
-Propiedad de Gobierno Regional. Uso interno.
+## Docker Strategy
+Este proyecto utiliza una estrategia **Container-First**.
+- El entorno local replica producción usando contenedores.
+- `apps/*` tendrán sus propios `Dockerfile` para builds multicapa.
+- La base de datos y autenticación son siempre externas al código, gestionadas por `docker-compose`.

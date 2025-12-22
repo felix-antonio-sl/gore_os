@@ -10,3 +10,4 @@ so_that: Evito configuration drift y permito recuperación ante desastres
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-001
+acceptance_criteria: []

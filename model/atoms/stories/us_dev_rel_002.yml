@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-REL-002
 urn: urn:goreos:atom:story:us_dev_rel_002:1.0.0
-role_id: ROLE-RELEASE-MANAGER
+role_id: ROL-RELEASE-MANAGER
 i_want: etiquetar las releases con SemVer (Semantic Versioning) de forma automática
 so_that: se mantenga un versionamiento consistente y predecible de los componentes
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-001
+acceptance_criteria: []

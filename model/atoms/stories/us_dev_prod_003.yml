@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-PROD-003
 urn: urn:goreos:atom:story:us_dev_prod_003:1.0.0
-role_id: ROLE-TECH-LEAD
+role_id: ROL-TECH-LEAD
 i_want: registrar ADRs y vincularlas a stories
 so_that: se mantenga la trazabilidad de las decisiones arquitectónicas
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-001
+acceptance_criteria: []

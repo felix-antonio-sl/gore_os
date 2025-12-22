@@ -9,3 +9,4 @@ i_want: gestión centralizada de permisos y roles
 so_that: se cumpla el principio de menor privilegio
 domain: D-OPS
 priority: P0
+acceptance_criteria: []

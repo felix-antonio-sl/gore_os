@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-MIG-PROM-001
 urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
-role_id: ROLE-ADMIN-TI
+role_id: ROL-ADMIN-TI
 i_want: promover datos validados de staging a producción
 so_that: los datos legacy estén disponibles para uso operacional
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-LEGACY
+acceptance_criteria: []

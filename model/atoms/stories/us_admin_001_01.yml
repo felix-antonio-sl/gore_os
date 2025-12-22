@@ -9,3 +9,4 @@ i_want: un panel de administración centralizado de usuarios y permisos
 so_that: pueda gestionar el acceso a los sistemas
 domain: D-TDE
 priority: P0
+acceptance_criteria: []

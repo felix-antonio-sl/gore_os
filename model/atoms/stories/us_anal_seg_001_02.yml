@@ -9,3 +9,4 @@ i_want: recibir alertas automáticas de proyectos con desviación >15%
 so_that: pueda gestionar proactivamente
 domain: D-EJEC
 priority: P0
+acceptance_criteria: []

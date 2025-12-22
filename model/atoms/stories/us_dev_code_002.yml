@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-CODE-002
 urn: urn:goreos:atom:story:us_dev_code_002:1.0.0
-role_id: ROLE-DEVELOPER
+role_id: ROL-DEVELOPER
 i_want: recibir feedback del linter en tiempo real sobre el cumplimiento de estándares
 so_that: pueda corregir errores de estilo y calidad antes de realizar el commit
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-001
+acceptance_criteria: []

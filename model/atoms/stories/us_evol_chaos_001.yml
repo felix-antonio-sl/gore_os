@@ -10,3 +10,4 @@ so_that: Verifico que los protocolos de contingencia manual se activen
 domain: D-EVOL
 priority: P2
 capability_id: CAP-EVOL-001
+acceptance_criteria: []

@@ -9,3 +9,4 @@ i_want: pipelines de CI/CD automatizados
 so_that: pueda desplegar nuevas features rápidamente sin romper nada
 domain: D-DEV
 priority: P0
+acceptance_criteria: []

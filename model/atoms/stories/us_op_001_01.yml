@@ -10,3 +10,4 @@ so_that: se asegure la trazabilidad de cada ingreso
 domain: D-BACK
 priority: P0
 capability_id: CAP-BACK-TICKETS-001
+acceptance_criteria: []

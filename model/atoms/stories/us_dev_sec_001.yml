@@ -10,3 +10,4 @@ so_that: Identifico vulnerabilidades comunes (OWASP Top 10) antes de desplegar
 domain: D-DEV
 priority: P0
 capability_id: CAP-DEV-001
+acceptance_criteria: []

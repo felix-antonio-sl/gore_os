@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-MIG-002
 urn: urn:goreos:atom:story:us_mig_002:1.0.0
-role_id: ROLE-MIGRADOR
+role_id: ROL-MIGRADOR
 i_want: configurar reglas de transformación y mapeo
 so_that: las reglas estén documentadas y sean reutilizables para futuras cargas
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-LEGACY
+acceptance_criteria: []

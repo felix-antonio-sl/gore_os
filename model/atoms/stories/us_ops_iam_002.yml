@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-IAM-002
 urn: urn:goreos:atom:story:us_ops_iam_002:1.0.0
-role_id: ROLE-ADMIN-TI
+role_id: ROL-ADMIN-TI
 i_want: asignar y revocar roles con logs de auditoría automáticos
 so_that: se cumplan las normativas de seguridad y transparencia en los accesos
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-001
+acceptance_criteria: []

@@ -10,3 +10,4 @@ so_that: pueda acceder a fotos, videos y gráficas oficiales
 domain: D-BACK
 priority: P1
 capability_id: CAP-BACK-TICKETS-001
+acceptance_criteria: []

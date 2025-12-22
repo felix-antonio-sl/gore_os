@@ -10,3 +10,4 @@ so_that: Comunicaciones pueda acceder al material
 domain: D-BACK
 priority: P2
 capability_id: CAP-BACK-TICKETS-001
+acceptance_criteria: []

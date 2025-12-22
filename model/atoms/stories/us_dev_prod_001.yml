@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-PROD-001
 urn: urn:goreos:atom:story:us_dev_prod_001:1.0.0
-role_id: ROLE-PO
+role_id: ROL-PO
 i_want: gestionar el backlog con épicas y stories priorizadas
 so_that: pueda maximizar el valor entregado por el equipo
 domain: D-DEV
 priority: P0
 capability_id: CAP-DEV-001
+acceptance_criteria: []

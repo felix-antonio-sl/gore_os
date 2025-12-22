@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-CODE-001
 urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
-role_id: ROLE-DEVELOPER
+role_id: ROL-DEVELOPER
 i_want: crear branches desde stories vinculadas automáticamente
 so_that: se asegure la trazabilidad total entre el código y el requisito
 domain: D-DEV
 priority: P0
 capability_id: CAP-DEV-001
+acceptance_criteria: []

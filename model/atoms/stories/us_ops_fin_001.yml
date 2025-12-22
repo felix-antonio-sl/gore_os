@@ -10,3 +10,4 @@ so_that: Evito sorpresas en la facturación de servicios en la nube
 domain: D-OPS
 priority: P1
 capability_id: CAP-OPS-001
+acceptance_criteria: []

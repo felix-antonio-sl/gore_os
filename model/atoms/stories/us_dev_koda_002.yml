@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-KODA-002
 urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
-role_id: ROLE-DEV
+role_id: ROL-DEV
 i_want: consultar agente Goreólogo para validación de dominio
 so_that: se obtenga respuesta contextualizada del dominio institucional
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-BLUEPRINT
+acceptance_criteria: []

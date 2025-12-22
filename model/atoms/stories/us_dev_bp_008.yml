@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-BP-008
 urn: urn:goreos:atom:story:us_dev_bp_008:1.0.0
-role_id: ROLE-PO
+role_id: ROL-PO
 i_want: sincronizar capability_bundle con roles de inventario
 so_that: se asegure Beneficiaries ⊆ Role Set
 domain: D-DEV
 priority: P2
 capability_id: CAP-DEV-BLUEPRINT
+acceptance_criteria: []

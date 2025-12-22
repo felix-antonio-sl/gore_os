@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-MIG-001
 urn: urn:goreos:atom:story:us_mig_001:1.0.0
-role_id: ROLE-MIGRADOR
+role_id: ROL-MIGRADOR
 i_want: ejecutar el proceso completo de inyección de data legacy
 so_that: todos los datos históricos estén disponibles en GORE_OS para arranque operacional
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-LEGACY
+acceptance_criteria: []

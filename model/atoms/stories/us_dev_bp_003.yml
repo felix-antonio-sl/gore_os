@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-BP-003
 urn: urn:goreos:atom:story:us_dev_bp_003:1.0.0
-role_id: ROLE-PO
+role_id: ROL-PO
 i_want: crear User Story YAML en atoms/stories vinculada a capability
 so_that: se tenga FK capability_bundle_id válida
 domain: D-DEV
 priority: P0
 capability_id: CAP-DEV-BLUEPRINT
+acceptance_criteria: []

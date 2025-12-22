@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-SUP-002
 urn: urn:goreos:atom:story:us_ops_sup_002:1.0.0
-role_id: ROLE-HELP-DESK
+role_id: ROL-HELP-DESK
 i_want: clasificar los tickets de soporte automáticamente mediante IA según su contenido
 so_that: se mejore la eficiencia en la asignación y resolución de incidentes
 domain: D-OPS
 priority: P1
 capability_id: CAP-OPS-001
+acceptance_criteria: []

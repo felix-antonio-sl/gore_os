@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-BP-007
 urn: urn:goreos:atom:story:us_dev_bp_007:1.0.0
-role_id: ROLE-ARQUITECTO
+role_id: ROL-ARQUITECTO
 i_want: generar diagrama Mermaid desde compositions/domains
 so_that: se tenga visualización auto-generada exportable a GraphML
 domain: D-DEV
 priority: P2
 capability_id: CAP-DEV-BLUEPRINT
+acceptance_criteria: []

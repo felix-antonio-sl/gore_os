@@ -9,3 +9,4 @@ i_want: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sist
 so_that: Detecto posibles fraudes o errores de reloj
 domain: D-BACK
 priority: P2
+acceptance_criteria: []

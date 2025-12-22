@@ -9,3 +9,4 @@ i_want: un módulo de emisión de CDP con validación automática de saldo
 so_that: no pueda comprometer recursos sin disponibilidad
 domain: D-FIN
 priority: P0
+acceptance_criteria: []

@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-KODA-004
 urn: urn:goreos:atom:story:us_dev_koda_004:1.0.0
-role_id: ROLE-ARQUITECTO
+role_id: ROL-ARQUITECTO
 i_want: auditar atom con koda-tester
 so_that: se tenga score de compliance ≥ 80%
 domain: D-DEV
 priority: P2
 capability_id: CAP-DEV-BLUEPRINT
+acceptance_criteria: []

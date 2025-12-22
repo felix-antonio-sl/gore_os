@@ -11,3 +11,4 @@ so_that: Mantengo auditoría de accesos conforme a DS9
 domain: D-TDE
 priority: P1
 capability_id: CAP-FIRMA-001
+acceptance_criteria: []

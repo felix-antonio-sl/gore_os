@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-OPS-DAT-004
 urn: urn:goreos:atom:story:us_ops_dat_004:1.0.0
-role_id: ROLE-ADMIN
+role_id: ROL-ADMIN
 i_want: visualizar el historial de todas las cargas masivas realizadas con sus resultados
 so_that: se mantenga una trazabilidad completa de los datos ingresados al sistema
 domain: D-OPS
 priority: P2
 capability_id: CAP-OPS-001
+acceptance_criteria: []

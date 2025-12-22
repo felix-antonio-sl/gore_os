@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  # 🌍 Database (PostGIS)
+  # Core persistence layer with geospatial capabilities (D-TERR)
+  db:
+    image: postgis/postgis:15-3.3-alpine
+    container_name: gore_db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER:-gore}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-gore_secret}
+      POSTGRES_DB: ${DB_NAME:-gore_os}
+    ports:
+      - "5432:5432"
+    networks:
+      - gore_net
+
+  # 🔑 Auth Service (Keycloak)
+  # Identity and Access Management for GORE_OS
+  auth:
+    image: quay.io/keycloak/keycloak:23.0
+    container_name: gore_auth
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db:5432/keycloak
+      KC_DB_USERNAME: ${DB_USER:-gore}
+      KC_DB_PASSWORD: ${DB_PASSWORD:-gore_secret}
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - gore_net
+
+networks:
+  gore_net:
+    driver: bridge
+
+volumes:
+  postgres_data:

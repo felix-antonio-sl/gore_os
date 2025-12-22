@@ -4,9 +4,10 @@ _meta:
   schema: urn:goreos:schema:story:1.0.0
 id: US-DEV-PROD-002
 urn: urn:goreos:atom:story:us_dev_prod_002:1.0.0
-role_id: ROLE-PO
+role_id: ROL-PO
 i_want: visualizar el roadmap de releases
 so_that: pueda comunicar las expectativas a los stakeholders
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-001
+acceptance_criteria: []

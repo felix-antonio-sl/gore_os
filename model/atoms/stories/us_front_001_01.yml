@@ -10,3 +10,4 @@ so_that: la UI sea consistente en todos los módulos
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-001
+acceptance_criteria: []

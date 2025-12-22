@@ -10,3 +10,4 @@ so_that: se mantenga una 'Golden Record' de ciudadanos y entidades
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-001
+acceptance_criteria: []

@@ -1,2750 +1,2752 @@
 _meta:
   urn: urn:goreos:index:stories:1.0.0
   type: StoriesIndex
-  generated_at: "2025-12-22"
+  generated_at: '2025-12-22'
 total: 686
 items:
 - id: US-ABAST-001-01
   urn: urn:goreos:atom:story:us_abast_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-ABAST-001-02
   urn: urn:goreos:atom:story:us_abast_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-ABOG-001-01
   urn: urn:goreos:atom:story:us_abog_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ABOG-001-02
   urn: urn:goreos:atom:story:us_abog_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ABOG-CONV-001-01
   urn: urn:goreos:atom:story:us_abog_conv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ABOG-DAF-001-01
   urn: urn:goreos:atom:story:us_abog_daf_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-ABOG-DISC-001-01
   urn: urn:goreos:atom:story:us_abog_disc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ABOG-INF-001-01
   urn: urn:goreos:atom:story:us_abog_inf_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ABOG-JUD-001-01
   urn: urn:goreos:atom:story:us_abog_jud_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ABOG-LIC-001-01
   urn: urn:goreos:atom:story:us_abog_lic_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ABOG-REV-001-01
   urn: urn:goreos:atom:story:us_abog_rev_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ACC-001-01
   urn: urn:goreos:atom:story:us_acc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-ACONV-001-01
   urn: urn:goreos:atom:story:us_aconv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ACV-001-01
   urn: urn:goreos:atom:story:us_acv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-ADM-PLAT-001-01
   urn: urn:goreos:atom:story:us_adm_plat_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-ADMIN-001-01
   urn: urn:goreos:atom:story:us_admin_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-AEVAL-001-01
   urn: urn:goreos:atom:story:us_aeval_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ALC-001-02
   urn: urn:goreos:atom:story:us_alc_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ALC-CHI-001-01
   urn: urn:goreos:atom:story:us_alc_chi_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ALC-CHV-001-01
   urn: urn:goreos:atom:story:us_alc_chv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ALC-SC-001-01
   urn: urn:goreos:atom:story:us_alc_sc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-AMB-001-01
   urn: urn:goreos:atom:story:us_amb_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-AMOD-001-01
   urn: urn:goreos:atom:story:us_amod_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-AMUCH-001-01
   urn: urn:goreos:atom:story:us_amuch_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-ANAL-INV-001-01
   urn: urn:goreos:atom:story:us_anal_inv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ANAL-INV-001-02
   urn: urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ANAL-PPR-001-01
   urn: urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-ANAL-SEG-001-02
   urn: urn:goreos:atom:story:us_anal_seg_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ANALPRES-001-01
   urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-ANALPRES-001-02
   urn: urn:goreos:atom:story:us_analpres_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-ANCI-001-01
   urn: urn:goreos:atom:story:us_anci_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-ANID-001-01
   urn: urn:goreos:atom:story:us_anid_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-AP-CORE-001-01
   urn: urn:goreos:atom:story:us_ap_core_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-APRES-001-01
   urn: urn:goreos:atom:story:us_apres_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-APREV-001-01
   urn: urn:goreos:atom:story:us_aprev_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-APT-001-01
   urn: urn:goreos:atom:story:us_apt_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-AR-001-02
   urn: urn:goreos:atom:story:us_ar_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-AR-002-01
   urn: urn:goreos:atom:story:us_ar_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-AR-003-01
   urn: urn:goreos:atom:story:us_ar_003_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-ARCH-001-01
   urn: urn:goreos:atom:story:us_arch_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-ARQ-001-01
   urn: urn:goreos:atom:story:us_arq_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ARQ-DAT-001-01
   urn: urn:goreos:atom:story:us_arq_dat_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-ARQC-001-01
   urn: urn:goreos:atom:story:us_arqc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-ARQP-001-01
   urn: urn:goreos:atom:story:us_arqp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-ARQS-001-01
   urn: urn:goreos:atom:story:us_arqs_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-AS-001-01
   urn: urn:goreos:atom:story:us_as_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ASERV-001-01
   urn: urn:goreos:atom:story:us_aserv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-ASES-001-01
   urn: urn:goreos:atom:story:us_ases_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-ASIS-001-01
   urn: urn:goreos:atom:story:us_asis_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-AT-001-01
   urn: urn:goreos:atom:story:us_at_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-ATES-001-01
   urn: urn:goreos:atom:story:us_ates_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-ATRA-001-01
   urn: urn:goreos:atom:story:us_atra_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-ATRANS-001-01
   urn: urn:goreos:atom:story:us_atrans_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-AUCR-001-01
   urn: urn:goreos:atom:story:us_aucr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-AUD-001-01
   urn: urn:goreos:atom:story:us_aud_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-AUD-001-02
   urn: urn:goreos:atom:story:us_aud_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-AUD-CTRL-001-01
   urn: urn:goreos:atom:story:us_aud_ctrl_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-AUD-EXT-001-01
   urn: urn:goreos:atom:story:us_aud_ext_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-AUX-001-01
   urn: urn:goreos:atom:story:us_aux_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-001-01
   urn: urn:goreos:atom:story:us_back_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-BACK-ABS-002
   urn: urn:goreos:atom:story:us_back_abs_002:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-ABS-004
   urn: urn:goreos:atom:story:us_back_abs_004:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-ABS-005
   urn: urn:goreos:atom:story:us_back_abs_005:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-AF-001
   urn: urn:goreos:atom:story:us_back_af_001:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-AF-002
   urn: urn:goreos:atom:story:us_back_af_002:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-AF-004
   urn: urn:goreos:atom:story:us_back_af_004:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-AUTO-001
   urn: urn:goreos:atom:story:us_back_auto_001:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-AUTO-002
   urn: urn:goreos:atom:story:us_back_auto_002:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-001
   urn: urn:goreos:atom:story:us_back_bien_001:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-002
   urn: urn:goreos:atom:story:us_back_bien_002:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-003
   urn: urn:goreos:atom:story:us_back_bien_003:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-004
   urn: urn:goreos:atom:story:us_back_bien_004:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-006
   urn: urn:goreos:atom:story:us_back_bien_006:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-007
   urn: urn:goreos:atom:story:us_back_bien_007:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-008
   urn: urn:goreos:atom:story:us_back_bien_008:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-009
   urn: urn:goreos:atom:story:us_back_bien_009:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-010
   urn: urn:goreos:atom:story:us_back_bien_010:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-011
   urn: urn:goreos:atom:story:us_back_bien_011:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BIEN-012
   urn: urn:goreos:atom:story:us_back_bien_012:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BOD-001
   urn: urn:goreos:atom:story:us_back_bod_001:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-BOD-003
   urn: urn:goreos:atom:story:us_back_bod_003:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-COMP-002
   urn: urn:goreos:atom:story:us_back_comp_002:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-COMP-003
   urn: urn:goreos:atom:story:us_back_comp_003:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-CRIS-001
   urn: urn:goreos:atom:story:us_back_cris_001:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-FLO-001
   urn: urn:goreos:atom:story:us_back_flo_001:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-FLO-002
   urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-001
   urn: urn:goreos:atom:story:us_back_per_001:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-002
   urn: urn:goreos:atom:story:us_back_per_002:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-010
   urn: urn:goreos:atom:story:us_back_per_010:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-011
   urn: urn:goreos:atom:story:us_back_per_011:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-012
   urn: urn:goreos:atom:story:us_back_per_012:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-013
   urn: urn:goreos:atom:story:us_back_per_013:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-014
   urn: urn:goreos:atom:story:us_back_per_014:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-PER-015
   urn: urn:goreos:atom:story:us_back_per_015:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-004
   urn: urn:goreos:atom:story:us_back_tes_004:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-005
   urn: urn:goreos:atom:story:us_back_tes_005:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-006
   urn: urn:goreos:atom:story:us_back_tes_006:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-007
   urn: urn:goreos:atom:story:us_back_tes_007:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-008
   urn: urn:goreos:atom:story:us_back_tes_008:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-009
   urn: urn:goreos:atom:story:us_back_tes_009:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-011
   urn: urn:goreos:atom:story:us_back_tes_011:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-013
   urn: urn:goreos:atom:story:us_back_tes_013:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-014
   urn: urn:goreos:atom:story:us_back_tes_014:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-015
   urn: urn:goreos:atom:story:us_back_tes_015:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-016
   urn: urn:goreos:atom:story:us_back_tes_016:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BACK-TES-017
   urn: urn:goreos:atom:story:us_back_tes_017:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BCP-001-01
   urn: urn:goreos:atom:story:us_bcp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-BI-001-01
   urn: urn:goreos:atom:story:us_bi_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-BIEN-001-01
   urn: urn:goreos:atom:story:us_bien_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BIEN-002-01
   urn: urn:goreos:atom:story:us_bien_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BOD-001-01
   urn: urn:goreos:atom:story:us_bod_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-BOD-002-01
   urn: urn:goreos:atom:story:us_bod_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-BOMB-001-01
   urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-C33-001-01
   urn: urn:goreos:atom:story:us_c33_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-CAL-001-02
   urn: urn:goreos:atom:story:us_cal_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-CAP-001-01
   urn: urn:goreos:atom:story:us_cap_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-CAPDIG-001-01
   urn: urn:goreos:atom:story:us_capdig_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-CAR-001-01
   urn: urn:goreos:atom:story:us_car_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-CC-001-01
   urn: urn:goreos:atom:story:us_cc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-CDE-001-01
   urn: urn:goreos:atom:story:us_cde_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-CGPE-001-01
   urn: urn:goreos:atom:story:us_cgpe_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-CGR-001-01
   urn: urn:goreos:atom:story:us_cgr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-CGR-CONT-001-01
   urn: urn:goreos:atom:story:us_cgr_cont_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-CIES-001-02
   urn: urn:goreos:atom:story:us_cies_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-CIU-001-02
   urn: urn:goreos:atom:story:us_ciu_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-CIU-002-01
   urn: urn:goreos:atom:story:us_ciu_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-COL-001-01
   urn: urn:goreos:atom:story:us_col_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-COM-001-01
   urn: urn:goreos:atom:story:us_com_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-COM-001-02
   urn: urn:goreos:atom:story:us_com_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-COM-002-01
   urn: urn:goreos:atom:story:us_com_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-COM-ESTR-001
   urn: urn:goreos:atom:story:us_com_estr_001:1.0.0
-  name: ""
+  name: ''
   domain: D-COM
 - id: US-COM-ESTR-002
   urn: urn:goreos:atom:story:us_com_estr_002:1.0.0
-  name: ""
+  name: ''
   domain: D-COM
 - id: US-COM-ESTR-003
   urn: urn:goreos:atom:story:us_com_estr_003:1.0.0
-  name: ""
+  name: ''
   domain: D-COM
 - id: US-COM-ESTR-004
   urn: urn:goreos:atom:story:us_com_estr_004:1.0.0
-  name: ""
+  name: ''
   domain: D-COM
 - id: US-COM-ESTR-006
   urn: urn:goreos:atom:story:us_com_estr_006:1.0.0
-  name: ""
+  name: ''
   domain: D-COM
 - id: US-COM-EV-001-01
   urn: urn:goreos:atom:story:us_com_ev_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-COM-REC-001-01
   urn: urn:goreos:atom:story:us_com_rec_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-COM-SEC-001
   urn: urn:goreos:atom:story:us_com_sec_001:1.0.0
-  name: ""
+  name: ''
   domain: D-COM
 - id: US-COM-SEC-002
   urn: urn:goreos:atom:story:us_com_sec_002:1.0.0
-  name: ""
+  name: ''
   domain: D-COM
 - id: US-COM-SECT-001-01
   urn: urn:goreos:atom:story:us_com_sect_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-COMP-001-01
   urn: urn:goreos:atom:story:us_comp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-COMP-001-02
   urn: urn:goreos:atom:story:us_comp_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-COMPERT-001-01
   urn: urn:goreos:atom:story:us_compert_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-COMPERT-001-02
   urn: urn:goreos:atom:story:us_compert_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-COMPT-001-01
   urn: urn:goreos:atom:story:us_compt_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-CONAF-001-01
   urn: urn:goreos:atom:story:us_conaf_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-COND-001-01
   urn: urn:goreos:atom:story:us_cond_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-CONT-001-01
   urn: urn:goreos:atom:story:us_cont_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-CONT-001-02
   urn: urn:goreos:atom:story:us_cont_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-COORD-DIT-001-01
   urn: urn:goreos:atom:story:us_coord_dit_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-CORE-001-01
   urn: urn:goreos:atom:story:us_core_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-CORE-002-01
   urn: urn:goreos:atom:story:us_core_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-CORFO-001-01
   urn: urn:goreos:atom:story:us_corfo_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-CORP-001-01
   urn: urn:goreos:atom:story:us_corp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-CORTE-001-01
   urn: urn:goreos:atom:story:us_corte_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-CP-001-01
   urn: urn:goreos:atom:story:us_cp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-CSEU-001-01
   urn: urn:goreos:atom:story:us_cseu_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-CSEU-002-01
   urn: urn:goreos:atom:story:us_cseu_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-CTD-001-02
   urn: urn:goreos:atom:story:us_ctd_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-CUST-001-01
   urn: urn:goreos:atom:story:us_cust_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-CUST-DAT-001-01
   urn: urn:goreos:atom:story:us_cust_dat_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-CUT-001-01
   urn: urn:goreos:atom:story:us_cut_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-DAF-001-01
   urn: urn:goreos:atom:story:us_daf_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-DATA-001-01
   urn: urn:goreos:atom:story:us_data_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DBA-001-01
   urn: urn:goreos:atom:story:us_dba_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-DESC-001-02
   urn: urn:goreos:atom:story:us_desc_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-DEV-001-01
   urn: urn:goreos:atom:story:us_dev_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-DEV-BP-001
   urn: urn:goreos:atom:story:us_dev_bp_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-BP-002
   urn: urn:goreos:atom:story:us_dev_bp_002:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-BP-003
   urn: urn:goreos:atom:story:us_dev_bp_003:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-BP-004
   urn: urn:goreos:atom:story:us_dev_bp_004:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-BP-005
   urn: urn:goreos:atom:story:us_dev_bp_005:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-BP-006
   urn: urn:goreos:atom:story:us_dev_bp_006:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-BP-007
   urn: urn:goreos:atom:story:us_dev_bp_007:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-BP-008
   urn: urn:goreos:atom:story:us_dev_bp_008:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CICD-001
   urn: urn:goreos:atom:story:us_dev_cicd_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CICD-002
   urn: urn:goreos:atom:story:us_dev_cicd_002:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CICD-003
   urn: urn:goreos:atom:story:us_dev_cicd_003:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CICD-004
   urn: urn:goreos:atom:story:us_dev_cicd_004:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CICLO-001
   urn: urn:goreos:atom:story:us_dev_ciclo_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CODE-001
   urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CODE-002
   urn: urn:goreos:atom:story:us_dev_code_002:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-CODE-003
   urn: urn:goreos:atom:story:us_dev_code_003:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-DOC-001
   urn: urn:goreos:atom:story:us_dev_doc_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-DX-001
   urn: urn:goreos:atom:story:us_dev_dx_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-DX-002
   urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-FEAT-001
   urn: urn:goreos:atom:story:us_dev_feat_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-KODA-001
   urn: urn:goreos:atom:story:us_dev_koda_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-KODA-002
   urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-KODA-003
   urn: urn:goreos:atom:story:us_dev_koda_003:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-KODA-004
   urn: urn:goreos:atom:story:us_dev_koda_004:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-PROD-001
   urn: urn:goreos:atom:story:us_dev_prod_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-PROD-002
   urn: urn:goreos:atom:story:us_dev_prod_002:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-PROD-003
   urn: urn:goreos:atom:story:us_dev_prod_003:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-QA-001
   urn: urn:goreos:atom:story:us_dev_qa_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-REL-001
   urn: urn:goreos:atom:story:us_dev_rel_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-REL-002
   urn: urn:goreos:atom:story:us_dev_rel_002:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-REL-003
   urn: urn:goreos:atom:story:us_dev_rel_003:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEV-SEC-001
   urn: urn:goreos:atom:story:us_dev_sec_001:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEVMUNI-001-01
   urn: urn:goreos:atom:story:us_devmuni_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DEVOPS-001-01
   urn: urn:goreos:atom:story:us_devops_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-DIDESOH-002-01
   urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-DIFOI-001-02
   urn: urn:goreos:atom:story:us_difoi_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-DIP-001-01
   urn: urn:goreos:atom:story:us_dip_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-DIPIR-001-02
   urn: urn:goreos:atom:story:us_dipir_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-DIPLADE-001-01
   urn: urn:goreos:atom:story:us_diplade_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-DIPLADE-001-02
   urn: urn:goreos:atom:story:us_diplade_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-DIPLADE-002-01
   urn: urn:goreos:atom:story:us_diplade_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-DIR-SOC-001-01
   urn: urn:goreos:atom:story:us_dir_soc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-DIT-002-01
   urn: urn:goreos:atom:story:us_dit_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-DPO-001-01
   urn: urn:goreos:atom:story:us_dpo_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-DPR-002-01
   urn: urn:goreos:atom:story:us_dpr_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-DSEG-001-02
   urn: urn:goreos:atom:story:us_dseg_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-DTMUNI-001-01
   urn: urn:goreos:atom:story:us_dtmuni_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-DUENO-001-01
   urn: urn:goreos:atom:story:us_dueno_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-EC33-001-01
   urn: urn:goreos:atom:story:us_ec33_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-ECIF-001-01
   urn: urn:goreos:atom:story:us_ecif_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-EDU-001-01
   urn: urn:goreos:atom:story:us_edu_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-AR-005
   urn: urn:goreos:atom:story:us_ejec_ar_005:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-AR-006
   urn: urn:goreos:atom:story:us_ejec_ar_006:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-AR-007
   urn: urn:goreos:atom:story:us_ejec_ar_007:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-AR-008
   urn: urn:goreos:atom:story:us_ejec_ar_008:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-AR-009
   urn: urn:goreos:atom:story:us_ejec_ar_009:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-EO-002
   urn: urn:goreos:atom:story:us_ejec_eo_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-EO-003
   urn: urn:goreos:atom:story:us_ejec_eo_003:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-EO-005
   urn: urn:goreos:atom:story:us_ejec_eo_005:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-EO-006
   urn: urn:goreos:atom:story:us_ejec_eo_006:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-EO-007
   urn: urn:goreos:atom:story:us_ejec_eo_007:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-JD-002
   urn: urn:goreos:atom:story:us_ejec_jd_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-JD-005
   urn: urn:goreos:atom:story:us_ejec_jd_005:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-JD-006
   urn: urn:goreos:atom:story:us_ejec_jd_006:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-MUNI-001
   urn: urn:goreos:atom:story:us_ejec_muni_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-MUNI-002
   urn: urn:goreos:atom:story:us_ejec_muni_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-MUNI-003
   urn: urn:goreos:atom:story:us_ejec_muni_003:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-MUNI-004
   urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-MUNI-005
   urn: urn:goreos:atom:story:us_ejec_muni_005:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-PER-001
   urn: urn:goreos:atom:story:us_ejec_per_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-SEC-001
   urn: urn:goreos:atom:story:us_ejec_sec_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-SUP-003
   urn: urn:goreos:atom:story:us_ejec_sup_003:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EJEC-SUP-005
   urn: urn:goreos:atom:story:us_ejec_sup_005:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EMP-001-01
   urn: urn:goreos:atom:story:us_emp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ENL-CIES-001-01
   urn: urn:goreos:atom:story:us_enl_cies_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-EOPE-001-01
   urn: urn:goreos:atom:story:us_eope_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-EPP-001-01
   urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EVAL-001-01
   urn: urn:goreos:atom:story:us_eval_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EVAL-001-02
   urn: urn:goreos:atom:story:us_eval_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-EVERDE-001-01
   urn: urn:goreos:atom:story:us_everde_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-EVOL-AI-001
   urn: urn:goreos:atom:story:us_evol_ai_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-AI-002
   urn: urn:goreos:atom:story:us_evol_ai_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-AO-018
   urn: urn:goreos:atom:story:us_evol_ao_018:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-CHAOS-001
   urn: urn:goreos:atom:story:us_evol_chaos_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-DT-001
   urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-DT-002
   urn: urn:goreos:atom:story:us_evol_dt_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-GOV-001
   urn: urn:goreos:atom:story:us_evol_gov_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-GOV-002
   urn: urn:goreos:atom:story:us_evol_gov_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-H-002
   urn: urn:goreos:atom:story:us_evol_h_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-KB-008
   urn: urn:goreos:atom:story:us_evol_kb_008:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-PILOT-002
   urn: urn:goreos:atom:story:us_evol_pilot_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-PLAY-001
   urn: urn:goreos:atom:story:us_evol_play_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-PLAY-002
   urn: urn:goreos:atom:story:us_evol_play_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-PUENTE-001
   urn: urn:goreos:atom:story:us_evol_puente_001:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-EVOL-TRAY-002
   urn: urn:goreos:atom:story:us_evol_tray_002:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-F8-001-01
   urn: urn:goreos:atom:story:us_f8_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-F8-001-02
   urn: urn:goreos:atom:story:us_f8_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-FEDMUNI-001-01
   urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-FENIX-001-01
   urn: urn:goreos:atom:story:us_fenix_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-FIN-001-01
   urn: urn:goreos:atom:story:us_fin_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-APR-001
   urn: urn:goreos:atom:story:us_fin_apr_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-C33-001
   urn: urn:goreos:atom:story:us_fin_c33_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-C33-002
   urn: urn:goreos:atom:story:us_fin_c33_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-C33-005
   urn: urn:goreos:atom:story:us_fin_c33_005:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-CONV-003
   urn: urn:goreos:atom:story:us_fin_conv_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-CONV-005
   urn: urn:goreos:atom:story:us_fin_conv_005:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-FORM-003
   urn: urn:goreos:atom:story:us_fin_form_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-FORM-004
   urn: urn:goreos:atom:story:us_fin_form_004:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-FORM-005
   urn: urn:goreos:atom:story:us_fin_form_005:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-FRIL-001
   urn: urn:goreos:atom:story:us_fin_fril_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-FRPD-001
   urn: urn:goreos:atom:story:us_fin_frpd_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-FRPD-002
   urn: urn:goreos:atom:story:us_fin_frpd_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-FRPD-003
   urn: urn:goreos:atom:story:us_fin_frpd_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-GEST-002
   urn: urn:goreos:atom:story:us_fin_gest_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-GEST-003
   urn: urn:goreos:atom:story:us_fin_gest_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-GEST-005
   urn: urn:goreos:atom:story:us_fin_gest_005:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-GOB-001
   urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-005
   urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-006
   urn: urn:goreos:atom:story:us_fin_ipr_006:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-007
   urn: urn:goreos:atom:story:us_fin_ipr_007:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-008
   urn: urn:goreos:atom:story:us_fin_ipr_008:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-011
   urn: urn:goreos:atom:story:us_fin_ipr_011:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-015
   urn: urn:goreos:atom:story:us_fin_ipr_015:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-017
   urn: urn:goreos:atom:story:us_fin_ipr_017:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-018
   urn: urn:goreos:atom:story:us_fin_ipr_018:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-022
   urn: urn:goreos:atom:story:us_fin_ipr_022:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-026
   urn: urn:goreos:atom:story:us_fin_ipr_026:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-027
   urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-031
   urn: urn:goreos:atom:story:us_fin_ipr_031:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-034
   urn: urn:goreos:atom:story:us_fin_ipr_034:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-035
   urn: urn:goreos:atom:story:us_fin_ipr_035:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-036
   urn: urn:goreos:atom:story:us_fin_ipr_036:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-039
   urn: urn:goreos:atom:story:us_fin_ipr_039:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-IPR-040
   urn: urn:goreos:atom:story:us_fin_ipr_040:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-JEF-002
   urn: urn:goreos:atom:story:us_fin_jef_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-JEF-003
   urn: urn:goreos:atom:story:us_fin_jef_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-JEF-004
   urn: urn:goreos:atom:story:us_fin_jef_004:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-MOD-002
   urn: urn:goreos:atom:story:us_fin_mod_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPR-002
   urn: urn:goreos:atom:story:us_fin_ppr_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPR-003
   urn: urn:goreos:atom:story:us_fin_ppr_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPR-004
   urn: urn:goreos:atom:story:us_fin_ppr_004:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPR-006
   urn: urn:goreos:atom:story:us_fin_ppr_006:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-004
   urn: urn:goreos:atom:story:us_fin_ppto_004:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-006
   urn: urn:goreos:atom:story:us_fin_ppto_006:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-009
   urn: urn:goreos:atom:story:us_fin_ppto_009:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-010
   urn: urn:goreos:atom:story:us_fin_ppto_010:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-011
   urn: urn:goreos:atom:story:us_fin_ppto_011:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-012
   urn: urn:goreos:atom:story:us_fin_ppto_012:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-013
   urn: urn:goreos:atom:story:us_fin_ppto_013:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-017
   urn: urn:goreos:atom:story:us_fin_ppto_017:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-018
   urn: urn:goreos:atom:story:us_fin_ppto_018:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-019
   urn: urn:goreos:atom:story:us_fin_ppto_019:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-020
   urn: urn:goreos:atom:story:us_fin_ppto_020:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-021
   urn: urn:goreos:atom:story:us_fin_ppto_021:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-022
   urn: urn:goreos:atom:story:us_fin_ppto_022:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-026
   urn: urn:goreos:atom:story:us_fin_ppto_026:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-027
   urn: urn:goreos:atom:story:us_fin_ppto_027:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-PPTO-031
   urn: urn:goreos:atom:story:us_fin_ppto_031:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-REND-014
   urn: urn:goreos:atom:story:us_fin_rend_014:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-REND-015
   urn: urn:goreos:atom:story:us_fin_rend_015:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-REND-016
   urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-REND-018
   urn: urn:goreos:atom:story:us_fin_rend_018:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-SUB-001
   urn: urn:goreos:atom:story:us_fin_sub_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-SUB-002
   urn: urn:goreos:atom:story:us_fin_sub_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-SUB-003
   urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-SUB-004
   urn: urn:goreos:atom:story:us_fin_sub_004:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-SUB-005
   urn: urn:goreos:atom:story:us_fin_sub_005:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FIN-SUP-002
   urn: urn:goreos:atom:story:us_fin_sup_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-FINOPS-001-01
   urn: urn:goreos:atom:story:us_finops_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-FISC-001-01
   urn: urn:goreos:atom:story:us_fisc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-FISC-SUM-001-01
   urn: urn:goreos:atom:story:us_fisc_sum_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-FLOTA-001-01
   urn: urn:goreos:atom:story:us_flota_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-FNDR8-001-01
   urn: urn:goreos:atom:story:us_fndr8_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-FNX-ACT-001
   urn: urn:goreos:atom:story:us_fnx_act_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-ACT-003
   urn: urn:goreos:atom:story:us_fnx_act_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-ANA-001
   urn: urn:goreos:atom:story:us_fnx_ana_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-ANA-003
   urn: urn:goreos:atom:story:us_fnx_ana_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-CIE-002
   urn: urn:goreos:atom:story:us_fnx_cie_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-CIE-003
   urn: urn:goreos:atom:story:us_fnx_cie_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-GES-001
   urn: urn:goreos:atom:story:us_fnx_ges_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-INT-001
   urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-INT-002
   urn: urn:goreos:atom:story:us_fnx_int_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-INT-003
   urn: urn:goreos:atom:story:us_fnx_int_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-OPE-002
   urn: urn:goreos:atom:story:us_fnx_ope_002:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FNX-OPE-003
   urn: urn:goreos:atom:story:us_fnx_ope_003:1.0.0
-  name: ""
+  name: ''
   domain: D-FENIX
 - id: US-FOTO-001-01
   urn: urn:goreos:atom:story:us_foto_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-FRONT-001-01
   urn: urn:goreos:atom:story:us_front_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-FRPD-001-01
   urn: urn:goreos:atom:story:us_frpd_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-FUNC-001-01
   urn: urn:goreos:atom:story:us_func_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-FUNC-001-02
   urn: urn:goreos:atom:story:us_func_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-G7-001-01
   urn: urn:goreos:atom:story:us_g7_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-GAB-001-01
   urn: urn:goreos:atom:story:us_gab_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-GAB-002-01
   urn: urn:goreos:atom:story:us_gab_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-GEN-001-01
   urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-GEO-001-01
   urn: urn:goreos:atom:story:us_geo_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-GEO-002-01
   urn: urn:goreos:atom:story:us_geo_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-GEST-COORD-002
   urn: urn:goreos:atom:story:us_gest_coord_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-HG-002
   urn: urn:goreos:atom:story:us_gest_hg_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-HG-003
   urn: urn:goreos:atom:story:us_gest_hg_003:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-MC-001
   urn: urn:goreos:atom:story:us_gest_mc_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-MC-002
   urn: urn:goreos:atom:story:us_gest_mc_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-PB-001
   urn: urn:goreos:atom:story:us_gest_pb_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-PB-002
   urn: urn:goreos:atom:story:us_gest_pb_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-PB-003
   urn: urn:goreos:atom:story:us_gest_pb_003:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-PER-002
   urn: urn:goreos:atom:story:us_gest_per_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-PROC-001
   urn: urn:goreos:atom:story:us_gest_proc_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-SCG-001
   urn: urn:goreos:atom:story:us_gest_scg_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-SCG-003
   urn: urn:goreos:atom:story:us_gest_scg_003:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GEST-UCI-002
   urn: urn:goreos:atom:story:us_gest_uci_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GESTION
 - id: US-GFOM-001-01
   urn: urn:goreos:atom:story:us_gfom_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-GLOSA7-001-01
   urn: urn:goreos:atom:story:us_glosa7_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-GOB-001-02
   urn: urn:goreos:atom:story:us_gob_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EVOL
 - id: US-GOB-002-01
   urn: urn:goreos:atom:story:us_gob_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-GOB-CORE-004
   urn: urn:goreos:atom:story:us_gob_core_004:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-CORE-006
   urn: urn:goreos:atom:story:us_gob_core_006:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-CORE-007
   urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-CORE-010
   urn: urn:goreos:atom:story:us_gob_core_010:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-CORE-011
   urn: urn:goreos:atom:story:us_gob_core_011:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-DEL-001
   urn: urn:goreos:atom:story:us_gob_del_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-DEL-003
   urn: urn:goreos:atom:story:us_gob_del_003:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-DEL-004
   urn: urn:goreos:atom:story:us_gob_del_004:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-DESC-002
   urn: urn:goreos:atom:story:us_gob_desc_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-DESC-005
   urn: urn:goreos:atom:story:us_gob_desc_005:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-DESC-006
   urn: urn:goreos:atom:story:us_gob_desc_006:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-DESC-007
   urn: urn:goreos:atom:story:us_gob_desc_007:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GAB-001
   urn: urn:goreos:atom:story:us_gob_gab_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GAB-003
   urn: urn:goreos:atom:story:us_gob_gab_003:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GAB-004
   urn: urn:goreos:atom:story:us_gob_gab_004:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GAB-005
   urn: urn:goreos:atom:story:us_gob_gab_005:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GAB-007
   urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GR-001
   urn: urn:goreos:atom:story:us_gob_gr_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GR-004
   urn: urn:goreos:atom:story:us_gob_gr_004:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GR-005
   urn: urn:goreos:atom:story:us_gob_gr_005:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GR-009
   urn: urn:goreos:atom:story:us_gob_gr_009:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GR-010
   urn: urn:goreos:atom:story:us_gob_gr_010:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GR-013
   urn: urn:goreos:atom:story:us_gob_gr_013:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GR-014
   urn: urn:goreos:atom:story:us_gob_gr_014:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GRD-001
   urn: urn:goreos:atom:story:us_gob_grd_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GRD-002
   urn: urn:goreos:atom:story:us_gob_grd_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GRD-003
   urn: urn:goreos:atom:story:us_gob_grd_003:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-GRD-004
   urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-LOB-001
   urn: urn:goreos:atom:story:us_gob_lob_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-LOB-002
   urn: urn:goreos:atom:story:us_gob_lob_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-OP-002
   urn: urn:goreos:atom:story:us_gob_op_002:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-OP-005
   urn: urn:goreos:atom:story:us_gob_op_005:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOB-SEC-001
   urn: urn:goreos:atom:story:us_gob_sec_001:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-GOBPROV-001-01
   urn: urn:goreos:atom:story:us_gobprov_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-GPROV-001-01
   urn: urn:goreos:atom:story:us_gprov_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-GRD-001-01
   urn: urn:goreos:atom:story:us_grd_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-HON-001-01
   urn: urn:goreos:atom:story:us_hon_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-HON-002-01
   urn: urn:goreos:atom:story:us_hon_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-ICON-001-01
   urn: urn:goreos:atom:story:us_icon_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-IDE-001-01
   urn: urn:goreos:atom:story:us_ide_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-IF-001-02
   urn: urn:goreos:atom:story:us_if_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-INDAP-001-01
   urn: urn:goreos:atom:story:us_indap_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-INTER-001-01
   urn: urn:goreos:atom:story:us_inter_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-INTFIN-001-01
   urn: urn:goreos:atom:story:us_intfin_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-INTFIS-001-01
   urn: urn:goreos:atom:story:us_intfis_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-INV-001-01
   urn: urn:goreos:atom:story:us_inv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-INV-DEP-001-01
   urn: urn:goreos:atom:story:us_inv_dep_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-IPLAT-001-01
   urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-ISAN-001-01
   urn: urn:goreos:atom:story:us_isan_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-ISEG-001-01
   urn: urn:goreos:atom:story:us_iseg_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-ITMUNI-001-01
   urn: urn:goreos:atom:story:us_itmuni_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-ITO-001-01
   urn: urn:goreos:atom:story:us_ito_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ITO-001-02
   urn: urn:goreos:atom:story:us_ito_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ITO-002-01
   urn: urn:goreos:atom:story:us_ito_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ITOM-001-01
   urn: urn:goreos:atom:story:us_itom_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ITP-001-01
   urn: urn:goreos:atom:story:us_itp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-IVIAL-001-01
   urn: urn:goreos:atom:story:us_ivial_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-JAUD-001-01
   urn: urn:goreos:atom:story:us_jaud_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-JCAL-001-01
   urn: urn:goreos:atom:story:us_jcal_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-JCONT-001-01
   urn: urn:goreos:atom:story:us_jcont_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-JD-ANA-001-01
   urn: urn:goreos:atom:story:us_jd_ana_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-JEFE-RRHH-001-01
   urn: urn:goreos:atom:story:us_jefe_rrhh_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-JER-001-01
   urn: urn:goreos:atom:story:us_jer_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-JEST-001-01
   urn: urn:goreos:atom:story:us_jest_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-JPRE-001-01
   urn: urn:goreos:atom:story:us_jpre_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-JPROG-001-01
   urn: urn:goreos:atom:story:us_jprog_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-JTERR-001-01
   urn: urn:goreos:atom:story:us_jterr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-JTES-001-01
   urn: urn:goreos:atom:story:us_jtes_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-JTI-001-01
   urn: urn:goreos:atom:story:us_jti_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-JUEZ-001-01
   urn: urn:goreos:atom:story:us_juez_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-LOBBY-001-01
   urn: urn:goreos:atom:story:us_lobby_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-MCTD-001-01
   urn: urn:goreos:atom:story:us_mctd_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-MDS-001-01
   urn: urn:goreos:atom:story:us_mds_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-MECIF-001-01
   urn: urn:goreos:atom:story:us_mecif_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-MESA-001-01
   urn: urn:goreos:atom:story:us_mesa_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-MESA-002-01
   urn: urn:goreos:atom:story:us_mesa_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-MIG-001
   urn: urn:goreos:atom:story:us_mig_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-MIG-002
   urn: urn:goreos:atom:story:us_mig_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-MIG-003
   urn: urn:goreos:atom:story:us_mig_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-MIG-PROM-001
   urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-MON-001-01
   urn: urn:goreos:atom:story:us_mon_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-MSIA-001-01
   urn: urn:goreos:atom:story:us_msia_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-NDEV-001-01
   urn: urn:goreos:atom:story:us_ndev_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-NOC-001-01
   urn: urn:goreos:atom:story:us_noc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-NORM-ACTO-002
   urn: urn:goreos:atom:story:us_norm_acto_002:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ACTO-003
   urn: urn:goreos:atom:story:us_norm_acto_003:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ACTO-004
   urn: urn:goreos:atom:story:us_norm_acto_004:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ACTO-005
   urn: urn:goreos:atom:story:us_norm_acto_005:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ACTO-006
   urn: urn:goreos:atom:story:us_norm_acto_006:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ACTO-008
   urn: urn:goreos:atom:story:us_norm_acto_008:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ACTO-011
   urn: urn:goreos:atom:story:us_norm_acto_011:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ACTO-012
   urn: urn:goreos:atom:story:us_norm_acto_012:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-ATT-001
   urn: urn:goreos:atom:story:us_norm_att_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-CGR-001
   urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-CGR-003
   urn: urn:goreos:atom:story:us_norm_cgr_003:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-CRIS-001
   urn: urn:goreos:atom:story:us_norm_cris_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-CTRL-001
   urn: urn:goreos:atom:story:us_norm_ctrl_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-CTRL-004
   urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-CTRL-005
   urn: urn:goreos:atom:story:us_norm_ctrl_005:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-DIP-001
   urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-EXP-001
   urn: urn:goreos:atom:story:us_norm_exp_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-EXP-003
   urn: urn:goreos:atom:story:us_norm_exp_003:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-LOBBY-001
   urn: urn:goreos:atom:story:us_norm_lobby_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-LOBBY-002
   urn: urn:goreos:atom:story:us_norm_lobby_002:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-SIM-001
   urn: urn:goreos:atom:story:us_norm_sim_001:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-NORM-TRANS-002
   urn: urn:goreos:atom:story:us_norm_trans_002:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-OBS-001-01
   urn: urn:goreos:atom:story:us_obs_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-OBS-001-02
   urn: urn:goreos:atom:story:us_obs_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-OIRS-001-01
   urn: urn:goreos:atom:story:us_oirs_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-OIRS-001-02
   urn: urn:goreos:atom:story:us_oirs_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-ONG-001-01
   urn: urn:goreos:atom:story:us_ong_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-ONG-002-01
   urn: urn:goreos:atom:story:us_ong_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-OP-001-01
   urn: urn:goreos:atom:story:us_op_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-OP-001-02
   urn: urn:goreos:atom:story:us_op_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-OP-002-01
   urn: urn:goreos:atom:story:us_op_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-OP-CIES-001-01
   urn: urn:goreos:atom:story:us_op_cies_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-OPE-001-01
   urn: urn:goreos:atom:story:us_ope_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-BACK-001
   urn: urn:goreos:atom:story:us_ops_back_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-BAK-001
   urn: urn:goreos:atom:story:us_ops_bak_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-BAK-002
   urn: urn:goreos:atom:story:us_ops_bak_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-BAK-003
   urn: urn:goreos:atom:story:us_ops_bak_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-CFG-001
   urn: urn:goreos:atom:story:us_ops_cfg_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-CFG-002
   urn: urn:goreos:atom:story:us_ops_cfg_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-CFG-003
   urn: urn:goreos:atom:story:us_ops_cfg_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-DAT-001
   urn: urn:goreos:atom:story:us_ops_dat_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-DAT-002
   urn: urn:goreos:atom:story:us_ops_dat_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-DAT-003
   urn: urn:goreos:atom:story:us_ops_dat_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-DAT-004
   urn: urn:goreos:atom:story:us_ops_dat_004:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-FIN-001
   urn: urn:goreos:atom:story:us_ops_fin_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-IAC-001
   urn: urn:goreos:atom:story:us_ops_iac_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-IAM-001
   urn: urn:goreos:atom:story:us_ops_iam_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-IAM-002
   urn: urn:goreos:atom:story:us_ops_iam_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-IAM-003
   urn: urn:goreos:atom:story:us_ops_iam_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-IAM-004
   urn: urn:goreos:atom:story:us_ops_iam_004:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-IAM-005
   urn: urn:goreos:atom:story:us_ops_iam_005:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-INC-001
   urn: urn:goreos:atom:story:us_ops_inc_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-MIG-001
   urn: urn:goreos:atom:story:us_ops_mig_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-MIG-002
   urn: urn:goreos:atom:story:us_ops_mig_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-MIG-003
   urn: urn:goreos:atom:story:us_ops_mig_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-MON-001
   urn: urn:goreos:atom:story:us_ops_mon_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-MON-002
   urn: urn:goreos:atom:story:us_ops_mon_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-MON-003
   urn: urn:goreos:atom:story:us_ops_mon_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-MON-004
   urn: urn:goreos:atom:story:us_ops_mon_004:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-PERF-001
   urn: urn:goreos:atom:story:us_ops_perf_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-SEC-001
   urn: urn:goreos:atom:story:us_ops_sec_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-SRE-001
   urn: urn:goreos:atom:story:us_ops_sre_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-SUP-001
   urn: urn:goreos:atom:story:us_ops_sup_001:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-SUP-002
   urn: urn:goreos:atom:story:us_ops_sup_002:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-SUP-003
   urn: urn:goreos:atom:story:us_ops_sup_003:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-OPS-SUP-004
   urn: urn:goreos:atom:story:us_ops_sup_004:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-PART-001-01
   urn: urn:goreos:atom:story:us_part_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-PAT-DID-001-01
   urn: urn:goreos:atom:story:us_pat_did_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-PAT-DIF-001-01
   urn: urn:goreos:atom:story:us_pat_dif_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-PAT-DIT-001-01
   urn: urn:goreos:atom:story:us_pat_dit_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-PCSEU-001-01
   urn: urn:goreos:atom:story:us_pcseu_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-PDI-001-01
   urn: urn:goreos:atom:story:us_pdi_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-PER-001-01
   urn: urn:goreos:atom:story:us_per_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-PES-001-01
   urn: urn:goreos:atom:story:us_pes_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-PEVER-001-01
   urn: urn:goreos:atom:story:us_pever_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-PLAN-URB-001-01
   urn: urn:goreos:atom:story:us_plan_urb_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-PMG-001-01
   urn: urn:goreos:atom:story:us_pmg_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-PO-001-01
   urn: urn:goreos:atom:story:us_po_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-PPERT-001-01
   urn: urn:goreos:atom:story:us_ppert_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-PPR-001-01
   urn: urn:goreos:atom:story:us_ppr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-PREINV-001-01
   urn: urn:goreos:atom:story:us_preinv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-PRES-CORE-001-01
   urn: urn:goreos:atom:story:us_pres_core_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-PREV-001-01
   urn: urn:goreos:atom:story:us_prev_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-PREV-002-01
   urn: urn:goreos:atom:story:us_prev_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-PROF-N250-001-01
   urn: urn:goreos:atom:story:us_prof_n250_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-PROF-REZ-001-01
   urn: urn:goreos:atom:story:us_prof_rez_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-QA-001-01
   urn: urn:goreos:atom:story:us_qa_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-REM-001-01
   urn: urn:goreos:atom:story:us_rem_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-REM-002-01
   urn: urn:goreos:atom:story:us_rem_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-REND-002-01
   urn: urn:goreos:atom:story:us_rend_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-REZ-001-01
   urn: urn:goreos:atom:story:us_rez_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-RGASTO-001-01
   urn: urn:goreos:atom:story:us_rgasto_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-RPMG-001-01
   urn: urn:goreos:atom:story:us_rpmg_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-RPSICO-001-01
   urn: urn:goreos:atom:story:us_rpsico_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-RRHH-001-01
   urn: urn:goreos:atom:story:us_rrhh_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-RRHH-001-02
   urn: urn:goreos:atom:story:us_rrhh_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-RRHH-002-01
   urn: urn:goreos:atom:story:us_rrhh_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-RTD-001-01
   urn: urn:goreos:atom:story:us_rtd_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-RTEC-001-01
   urn: urn:goreos:atom:story:us_rtec_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SAG-001-01
   urn: urn:goreos:atom:story:us_sag_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SEC-CTCI-001-01
   urn: urn:goreos:atom:story:us_sec_ctci_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-SEC-CTD-001-01
   urn: urn:goreos:atom:story:us_sec_ctd_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-SECCOM-001-01
   urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-SECCORE-001-01
   urn: urn:goreos:atom:story:us_seccore_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-SECCORE-001-02
   urn: urn:goreos:atom:story:us_seccore_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-SECDIV-001-01
   urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-SECPLA-001-01
   urn: urn:goreos:atom:story:us_secpla_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SECPLA-001-02
   urn: urn:goreos:atom:story:us_secpla_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SEG-CIES-001
   urn: urn:goreos:atom:story:us_seg_cies_001:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-CIES-003
   urn: urn:goreos:atom:story:us_seg_cies_003:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-CIES-004
   urn: urn:goreos:atom:story:us_seg_cies_004:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-CIES-006
   urn: urn:goreos:atom:story:us_seg_cies_006:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-CIES-008
   urn: urn:goreos:atom:story:us_seg_cies_008:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-CIES-009
   urn: urn:goreos:atom:story:us_seg_cies_009:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-CIES-010
   urn: urn:goreos:atom:story:us_seg_cies_010:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-EVID-001
   urn: urn:goreos:atom:story:us_seg_evid_001:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-EVID-003
   urn: urn:goreos:atom:story:us_seg_evid_003:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-GOB-002
   urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-GOB-004
   urn: urn:goreos:atom:story:us_seg_gob_004:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-PREV-003
   urn: urn:goreos:atom:story:us_seg_prev_003:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-PREV-006
   urn: urn:goreos:atom:story:us_seg_prev_006:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-PREV-007
   urn: urn:goreos:atom:story:us_seg_prev_007:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-PREV-008
   urn: urn:goreos:atom:story:us_seg_prev_008:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-PREV-009
   urn: urn:goreos:atom:story:us_seg_prev_009:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEG-PREV-010
   urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
-  name: ""
+  name: ''
   domain: D-SEG
 - id: US-SEN-001-01
   urn: urn:goreos:atom:story:us_sen_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-SENAPRED-001-01
   urn: urn:goreos:atom:story:us_senapred_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-SER-AGR-001-01
   urn: urn:goreos:atom:story:us_ser_agr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-SER-GOB-001-01
   urn: urn:goreos:atom:story:us_ser_gob_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-SER-MOP-001-01
   urn: urn:goreos:atom:story:us_ser_mop_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SERC-001-01
   urn: urn:goreos:atom:story:us_serc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SEREMI-001-02
   urn: urn:goreos:atom:story:us_seremi_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-SERV-001-01
   urn: urn:goreos:atom:story:us_serv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-SERVIU-001-01
   urn: urn:goreos:atom:story:us_serviu_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SOC-001-01
   urn: urn:goreos:atom:story:us_soc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-EJEC
 - id: US-SOCIO-001-01
   urn: urn:goreos:atom:story:us_socio_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-SOFO-001-01
   urn: urn:goreos:atom:story:us_sofo_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-SOP-001-01
   urn: urn:goreos:atom:story:us_sop_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-SPERT-001-01
   urn: urn:goreos:atom:story:us_spert_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-SRE-001-01
   urn: urn:goreos:atom:story:us_sre_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-OPS
 - id: US-SUBV-001-01
   urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-SUJ-001-01
   urn: urn:goreos:atom:story:us_suj_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-SUP-CIES-001-01
   urn: urn:goreos:atom:story:us_sup_cies_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-SUP-OBRA-001-01
   urn: urn:goreos:atom:story:us_sup_obra_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-SUP-TRANS-001-01
   urn: urn:goreos:atom:story:us_sup_trans_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-TC-001-01
   urn: urn:goreos:atom:story:us_tc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-NORM
 - id: US-TCORP-001-01
   urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-TDE-ADMIN-001
   urn: urn:goreos:atom:story:us_tde_admin_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-ADMIN-002
   urn: urn:goreos:atom:story:us_tde_admin_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-ADMIN-004
   urn: urn:goreos:atom:story:us_tde_admin_004:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-ADMIN-006
   urn: urn:goreos:atom:story:us_tde_admin_006:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-ADMIN-007
   urn: urn:goreos:atom:story:us_tde_admin_007:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-ADMIN-008
   urn: urn:goreos:atom:story:us_tde_admin_008:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AUTH-001
   urn: urn:goreos:atom:story:us_tde_auth_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AUTH-002
   urn: urn:goreos:atom:story:us_tde_auth_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AUTH-003
   urn: urn:goreos:atom:story:us_tde_auth_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AUTH-004
   urn: urn:goreos:atom:story:us_tde_auth_004:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AUTH-005
   urn: urn:goreos:atom:story:us_tde_auth_005:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AUTH-006
   urn: urn:goreos:atom:story:us_tde_auth_006:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AVANCE-002
   urn: urn:goreos:atom:story:us_tde_avance_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-AVANCE-003
   urn: urn:goreos:atom:story:us_tde_avance_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-CALIDAD-002
   urn: urn:goreos:atom:story:us_tde_calidad_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-CALIDAD-003
   urn: urn:goreos:atom:story:us_tde_calidad_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-CRIS-001
   urn: urn:goreos:atom:story:us_tde_cris_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-DEV-001
   urn: urn:goreos:atom:story:us_tde_dev_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-DOCDIG-002
   urn: urn:goreos:atom:story:us_tde_docdig_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-DPO-001
   urn: urn:goreos:atom:story:us_tde_dpo_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-DPO-003
   urn: urn:goreos:atom:story:us_tde_dpo_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-DPO-005
   urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-DPO-007
   urn: urn:goreos:atom:story:us_tde_dpo_007:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-DPO-008
   urn: urn:goreos:atom:story:us_tde_dpo_008:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-FIRMA-002
   urn: urn:goreos:atom:story:us_tde_firma_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-INTEROP-001
   urn: urn:goreos:atom:story:us_tde_interop_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-INTEROP-002
   urn: urn:goreos:atom:story:us_tde_interop_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-INTEROP-003
   urn: urn:goreos:atom:story:us_tde_interop_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-INTEROP-004
   urn: urn:goreos:atom:story:us_tde_interop_004:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-INTEROP-005
   urn: urn:goreos:atom:story:us_tde_interop_005:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-INTEROP-007
   urn: urn:goreos:atom:story:us_tde_interop_007:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-MUNI-001
   urn: urn:goreos:atom:story:us_tde_muni_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-MUNI-002
   urn: urn:goreos:atom:story:us_tde_muni_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-MUNI-004
   urn: urn:goreos:atom:story:us_tde_muni_004:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-NOTIF-001
   urn: urn:goreos:atom:story:us_tde_notif_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-NOTIF-002
   urn: urn:goreos:atom:story:us_tde_notif_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-NOTIF-003
   urn: urn:goreos:atom:story:us_tde_notif_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-NOTIF-004
   urn: urn:goreos:atom:story:us_tde_notif_004:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-NOTIF-005
   urn: urn:goreos:atom:story:us_tde_notif_005:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-NOTIF-006
   urn: urn:goreos:atom:story:us_tde_notif_006:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-QA-001
   urn: urn:goreos:atom:story:us_tde_qa_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-REG-001
   urn: urn:goreos:atom:story:us_tde_reg_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEC-001
   urn: urn:goreos:atom:story:us_tde_sec_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-001
   urn: urn:goreos:atom:story:us_tde_seg_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-002
   urn: urn:goreos:atom:story:us_tde_seg_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-003
   urn: urn:goreos:atom:story:us_tde_seg_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-004
   urn: urn:goreos:atom:story:us_tde_seg_004:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-005
   urn: urn:goreos:atom:story:us_tde_seg_005:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-006
   urn: urn:goreos:atom:story:us_tde_seg_006:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-007
   urn: urn:goreos:atom:story:us_tde_seg_007:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-008
   urn: urn:goreos:atom:story:us_tde_seg_008:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-009
   urn: urn:goreos:atom:story:us_tde_seg_009:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-010
   urn: urn:goreos:atom:story:us_tde_seg_010:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-SEG-011
   urn: urn:goreos:atom:story:us_tde_seg_011:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-TIC-002
   urn: urn:goreos:atom:story:us_tde_tic_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-TIC-004
   urn: urn:goreos:atom:story:us_tde_tic_004:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TDE-VINC-002
   urn: urn:goreos:atom:story:us_tde_vinc_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-TERR-ANL-001
   urn: urn:goreos:atom:story:us_terr_anl_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-DOM-002
   urn: urn:goreos:atom:story:us_terr_dom_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-DOM-003
   urn: urn:goreos:atom:story:us_terr_dom_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-IDE-002
   urn: urn:goreos:atom:story:us_terr_ide_002:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-IDE-003
   urn: urn:goreos:atom:story:us_terr_ide_003:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-IDE-006
   urn: urn:goreos:atom:story:us_terr_ide_006:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-PLAN-001
   urn: urn:goreos:atom:story:us_terr_plan_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-PLAN-005
   urn: urn:goreos:atom:story:us_terr_plan_005:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TERR-PRG-001
   urn: urn:goreos:atom:story:us_terr_prg_001:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-TES-001-01
   urn: urn:goreos:atom:story:us_tes_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-FIN
 - id: US-TIC-001-02
   urn: urn:goreos:atom:story:us_tic_001_02:1.0.0
-  name: ""
+  name: ''
   domain: D-BACK
 - id: US-TLEAD-001-01
   urn: urn:goreos:atom:story:us_tlead_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-DEV
 - id: US-TRANSP-002-01
   urn: urn:goreos:atom:story:us_transp_002_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TDE
 - id: US-UCR-001-01
   urn: urn:goreos:atom:story:us_ucr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-UF-001-01
   urn: urn:goreos:atom:story:us_uf_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-PLAN
 - id: US-UOCT-001-01
   urn: urn:goreos:atom:story:us_uoct_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-TERR
 - id: US-USR-001-01
   urn: urn:goreos:atom:story:us_usr_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
 - id: US-VINC-001-01
   urn: urn:goreos:atom:story:us_vinc_001_01:1.0.0
-  name: ""
+  name: ''
   domain: D-GOB
+acceptance_criteria: []
+role_id: USR-UNKNOWN

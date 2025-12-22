@@ -10,3 +10,4 @@ so_that: pueda gestionar medidas correctivas
 domain: D-EJEC
 priority: P1
 capability_id: CAP-EJEC-PORTAL-001
+acceptance_criteria: []

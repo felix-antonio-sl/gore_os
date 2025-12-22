@@ -10,3 +10,4 @@ so_that: Mido el tiempo de detección y respuesta del equipo
 domain: D-TDE
 priority: P1
 capability_id: CAP-FIRMA-001
+acceptance_criteria: []
