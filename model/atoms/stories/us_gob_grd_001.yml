@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_grd_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Sancionar el Plan Regional de Reducción del Riesgo
 id: US-GOB-GRD-001
 urn: urn:goreos:atom:story:us_gob_grd_001:1.0.0
 role_id: USR-CIES-COOR
+as_a: Coordinador CIES
 i_want: Sancionar el Plan Regional de Reducción del Riesgo
 so_that: Formalizo la estrategia de GRD
 domain: D-GOB

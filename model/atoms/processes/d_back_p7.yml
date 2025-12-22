@@ -2,19 +2,23 @@ _meta:
   urn: urn:goreos:atom:process:d_back_p7:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-back
+  source: archive/legacy_domains/domain_d-back.md
 id: PROC-BACK-P7
-name: Desarrollo Organizacional (Absorción SIGPER)
+name: Baja de Bienes
 domain: D-BACK
 code: P7
+subdomain: Inventarios
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-EGRESO-01`'
-  mermaid_ref: D07_rrhh.md#p7-egreso-y-desvinculacin
-  mermaid: "flowchart TD\n    A[\"Egreso de<br/>funcionario\"] --> B{\"Causal\"}\n\
-    \    \n    B -->|\"Voluntario\"| C[\"Renuncia<br/>voluntaria\"]\n    B -->|\"\
-    Jubilación\"| D[\"Retiro por<br/>pensión\"]\n    B -->|\"Término contrata\"| E[\"\
-    No renovación<br/>31/12\"]\n    B -->|\"Calificación\"| F[\"Eliminación<br/>por\
-    \ nota\"]\n    B -->|\"Disciplinario\"| G[\"Destitución\"]\n    B -->|\"Salud\"\
-    | H[\"Incompatibilidad<br/>de salud\"]\n\n    C & D & E & F & G & H --> I[\"Procedimiento<br/>de\
-    \ cierre\"]\n\n    style I fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-BACK-BAJABIENES-01
+  mermaid_ref: domain_d-back.md#baja-de-bienes
+  mermaid: |
+    flowchart TD
+        A["Identificar bien"] --> B{"Causal"}
+        B -->|"Deterioro"| C["Informe técnico"]
+        B -->|"Obsolescencia"| D["Informe funcional"]
+        B -->|"Pérdida/Hurto"| E["Denuncia + Sumario"]
+        B -->|"Donación"| F["Autorización"]
+        C & D & E & F --> G["Resolución de baja"]
+        G --> H["Baja en Sistema"]
+        H --> I["Contabilizar SIGFE"]

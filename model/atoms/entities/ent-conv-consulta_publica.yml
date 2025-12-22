@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:consulta_publica:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-CONSULTA_PUBLICA
+name: Consulta Pública
+domain: D-CONV
+category: Transaction
+extends: ENT-SYS-ACTO
+attributes:
+  - {name: id_consulta, type: UUID, key: true}
+  - {name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA}
+  - {name: nombre, type: String}
+  - {name: materia, type: Text}
+  - {name: fecha_inicio, type: Date}
+  - {name: fecha_termino, type: Date}
+  - {name: modalidad, type: String}
+  - {name: participantes, type: Integer}

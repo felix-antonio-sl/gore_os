@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_gest_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visar Cierre Técnico (Checklist recepción obras/programas)
 id: US-FIN-GEST-005
 urn: urn:goreos:atom:story:us_fin_gest_005:1.0.0
 role_id: USR-CAL-ANAL
+as_a: Analista Gestión Institucional
 i_want: Visar Cierre Técnico (Checklist recepción obras/programas)
 so_that: Certifico culminación técnica
 domain: D-FIN

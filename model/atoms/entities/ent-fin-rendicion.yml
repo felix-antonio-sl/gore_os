@@ -1,0 +1,25 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:rendicion:1.1.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-RENDICION
+name: Rendición
+domain: D-FIN
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_rendicion, type: UUID, key: true}
+  - {name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO}
+  - {name: numero, type: Integer}
+  - {name: monto_rendido, type: Decimal}
+  - {name: fecha_presentacion, type: Date}
+  - {name: estado, type: String}
+  - {name: correlativo, type: String, nullable: true}
+  - {name: tipo_documento_rendicion, type: String, nullable: true}
+  - {name: fecha_ingreso, type: Date, nullable: true}
+  - {name: monto_reintegrado, type: Decimal, nullable: true}
+  - {name: saldo_pendiente, type: Decimal, nullable: true}
+  - {name: observado, type: Boolean, nullable: true}
+  - {name: rendicion_a_tiempo, type: Boolean, nullable: true}
+  - {name: recepcionado_por, type: String, nullable: true}

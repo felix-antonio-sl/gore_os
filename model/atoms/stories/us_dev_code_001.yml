@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Branches desde stories vinculadas automáticamente
 id: US-DEV-CODE-001
 urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
 role_id: ROL-DEVELOPER
+as_a: Rol no encontrado (ROL-DEVELOPER)
 i_want: crear branches desde stories vinculadas automáticamente
 so_that: se asegure la trazabilidad total entre el código y el requisito
 domain: D-DEV

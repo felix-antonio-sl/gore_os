@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_anci_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Compartir buenas prácticas legislativas regionales
 id: US-ANCI-001-01
 urn: urn:goreos:atom:story:us_anci_001_01:1.0.0
 role_id: USR-NEW-ANCORE
+as_a: Representante ANCORE
 i_want: compartir buenas prácticas legislativas regionales
 so_that: se mejore la gestión de los consejos
 domain: D-GOB

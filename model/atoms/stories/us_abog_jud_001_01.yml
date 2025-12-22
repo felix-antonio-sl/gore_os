@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_abog_jud_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un calendario procesal con alertas de plazos fatales
 id: US-ABOG-JUD-001-01
 urn: urn:goreos:atom:story:us_abog_jud_001_01:1.0.0
 role_id: USR-JUR-JUD
+as_a: Abogado Asuntos Judiciales
 i_want: un calendario procesal con alertas de plazos fatales
 so_that: no se pierdan instancias judiciales
 domain: D-NORM

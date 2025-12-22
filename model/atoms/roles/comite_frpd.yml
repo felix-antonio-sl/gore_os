@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:comite_frpd:1.0.0
+  urn: "urn:goreos:atom:role:comite_frpd:2.0.0"
   type: Role
-  source: organization
-id: USR-DIFOI-FRPD
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-FRPD"
 role_key: comite_frpd
 title: Comité FRPD
 description: Gestión del Fondo Regional de Producción y Desarrollo.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: DIFOI
 unit_type: Ejecutivo & Operaciones
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:comite_frpd:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_acto_008:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Devolver trámite con observaciones jurídicas para corrección
 id: US-NORM-ACTO-008
 urn: urn:goreos:atom:story:us_norm_acto_008:1.0.0
 role_id: USR-JUR-ABOG
+as_a: Abogado Informante
 i_want: Devolver trámite con observaciones jurídicas para corrección
 so_that: Corrijo antes de firma
 domain: D-NORM

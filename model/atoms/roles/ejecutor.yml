@@ -1,19 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:ejecutor:1.0.0
+  urn: "urn:goreos:atom:role:ejecutor:2.0.0"
   type: Role
-  source: organization
-id: USR-NEW-EJECUTOR
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-EJEC-EJECUTOR"
 role_key: ejecutor
 title: Ejecutor
 description: Entidad o persona natural responsable de la ejecución de proyectos de
-  inversión.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: Roles Adicionales (Concordancia)
 unit_type: Mixto
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:ejecutor:1.0.0
 domain: D-EJEC
+archetype: null
+extends: null

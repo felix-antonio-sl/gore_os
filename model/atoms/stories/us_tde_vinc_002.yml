@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_vinc_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE)
 id: US-TDE-VINC-002
 urn: urn:goreos:atom:story:us_tde_vinc_002:1.0.0
 role_id: USR-MUNI-DEV
+as_a: Desarrollador Municipal
 i_want: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE)
   y del GORE
 so_that: Integro mis sistemas locales (DOM, Tránsito) sin gestionar convenios individuales

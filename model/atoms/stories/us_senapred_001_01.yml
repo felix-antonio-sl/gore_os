@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_senapred_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Integración con CIES para alertas de emergencia
 id: US-SENAPRED-001-01
 urn: urn:goreos:atom:story:us_senapred_001_01:1.0.0
 role_id: USR-EXT-SENAPRED
+as_a: SENAPRED (ex-ONEMI)
 i_want: integración con CIES para alertas de emergencia
 so_that: la respuesta sea coordinada
 domain: D-TERR

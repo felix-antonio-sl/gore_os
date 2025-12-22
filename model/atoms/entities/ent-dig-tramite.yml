@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:tramite:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-TRAMITE
+name: Trámite
+domain: D-DIG
+category: Transaction
+attributes:
+  - {name: id_tramite, type: UUID, key: true}
+  - {name: expediente_id, type: UUID, fk: ENT-DIG-EXPEDIENTE}
+  - {name: tipo, type: String}
+  - {name: solicitante_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: fecha_inicio, type: DateTime}
+  - {name: fecha_termino, type: DateTime, nullable: true}
+  - {name: estado, type: String}

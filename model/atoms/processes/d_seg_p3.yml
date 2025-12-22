@@ -2,23 +2,34 @@ _meta:
   urn: urn:goreos:atom:process:d_seg_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-seg
+  source: archive/legacy_domains/domain_d-seg.md
 id: PROC-SEG-P3
 name: Gestión de Evidencias Digitales
 domain: D-SEG
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-SEG-EVIDENCIAS-01
+  mermaid_ref: domain_d-seg.md#p3-gestión-de-evidencias-digitales
+  mermaid: |
+    flowchart TD
+        subgraph SOLICITUD["📋 Solicitud"]
+            A["Fiscalía/Tribunal<br/>solicita evidencia"]
+            B["Recepción oficio"]
+            C["Verificar orden judicial"]
+        end
+
+        subgraph EXTRACCION["🎬 Extracción"]
+            D["Supervisor autoriza"]
+            E["Localizar grabación"]
+            F["Exportar clip seguro"]
+            G["Subir a SITIA-Evidencia"]
+        end
+
+        subgraph ENTREGA["📤 Entrega"]
+            H["Generar cadena custodia"]
+            I["Entrega controlada"]
+            J["Acta de entrega"]
+        end
+
+        A --> B --> C --> D --> E --> F --> G --> H --> I --> J

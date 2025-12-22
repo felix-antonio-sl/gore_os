@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un registro de organizaciones de la sociedad civil activas en la región
 id: US-DIDESOH-002-01
 urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
 role_id: USR-DIDES-JEFE
+as_a: Jefe DIDESOH
 i_want: un registro de organizaciones de la sociedad civil activas en la región
 so_that: pueda convocar a diálogos y consultas ciudadanas
 domain: D-TERR

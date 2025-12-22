@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Integración con sistema de alertas del CIES
 id: US-BOMB-001-01
 urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
 role_id: USR-EXT-BOMB
+as_a: Bomberos de Chile
 i_want: integración con sistema de alertas del CIES
 so_that: pueda recibir información en tiempo real
 domain: D-TERR

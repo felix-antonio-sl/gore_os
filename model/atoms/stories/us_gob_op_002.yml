@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_op_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Derivar antecedentes a DIPIR mediante ruta automática
 id: US-GOB-OP-002
 urn: urn:goreos:atom:story:us_gob_op_002:1.0.0
 role_id: USR-OP-OF
+as_a: Oficial de Partes
 i_want: Derivar antecedentes a DIPIR mediante ruta automática
 so_that: Distribuyo la carga de trabajo
 domain: D-GOB

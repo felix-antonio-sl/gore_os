@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:acta_recepcion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-ACTA_RECEPCION
+name: Acta de Recepción
+domain: D-EJE
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_acta, type: UUID, key: true}
+  - {name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO}
+  - {name: tipo, type: String}
+  - {name: fecha, type: Date}
+  - {name: observaciones, type: Text}
+  - {name: conforme, type: Boolean}

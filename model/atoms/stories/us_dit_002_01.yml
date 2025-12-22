@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dit_002_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de gestión de contratos con plazos, garantías y estados de pago
 id: US-DIT-002-01
 urn: urn:goreos:atom:story:us_dit_002_01:1.0.0
 role_id: USR-DIT-JEFE
+as_a: Jefe DIT
 i_want: un módulo de gestión de contratos con plazos, garantías y estados de pago
 so_that: pueda asegurar el cumplimiento contractual
 domain: D-EJEC

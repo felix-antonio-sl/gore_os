@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_ope_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un "Bypass Administrativo" en un flujo BPMN detenido
 id: US-FNX-OPE-002
 urn: urn:goreos:atom:story:us_fnx_ope_002:1.0.0
 role_id: USR-CAL-FNX-FIS
+as_a: Interventor Fiscal
 i_want: Ejecutar un "Bypass Administrativo" en un flujo BPMN detenido
 so_that: Fuerzo el avance de una etapa trabada por ausencia o error
 domain: D-FENIX

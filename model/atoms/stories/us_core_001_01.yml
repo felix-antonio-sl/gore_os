@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_core_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: La tabla de sesión y documentos de respaldo con anticipación
 id: US-CORE-001-01
 urn: urn:goreos:atom:story:us_core_001_01:1.0.0
 role_id: USR-CORE-CONS
+as_a: Consejero Regional (Pleno)
 i_want: recibir la tabla de sesión y documentos de respaldo con anticipación
 so_that: pueda estudiar las materias antes de votar
 domain: D-NORM

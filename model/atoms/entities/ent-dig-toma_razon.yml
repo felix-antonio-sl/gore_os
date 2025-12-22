@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:toma_razon:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-TOMA_RAZON
+name: Toma de Razón
+domain: D-DIG
+category: Transaction
+attributes:
+  - {name: id_toma_razon, type: UUID, key: true}
+  - {name: acto_id, type: UUID, fk: ENT-SYS-ACTO}
+  - {name: fecha_ingreso, type: Date}
+  - {name: fecha_pronunciamiento, type: Date, nullable: true}
+  - {name: resultado, type: String}
+  - {name: observaciones, type: Text}
+
+# --- SALUS: Fibra de Salud Institucional ---

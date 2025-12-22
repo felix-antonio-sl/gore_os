@@ -1,0 +1,26 @@
+---
+# --- mod_plan_anteproyecto_inversiones.yml ---
+_meta:
+  urn: urn:goreos:atom:module:plan_anteproyecto_inversiones:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-PLAN-ANTEPROYECTO-INVERSIONES
+name: Anteproyecto Regional de Inversiones (ARI)
+domain: D-PLAN
+description: Priorización y propuesta presupuestaria de inversiones.
+composition:
+  processes:
+    [
+      urn:goreos:atom:process:d_plan_p5:1.0.0,
+      urn:goreos:atom:process:d_plan_p6:1.0.0,
+    ]
+  entities:
+    [
+      urn:goreos:atom:entity:d_plan_anteproyecto_regional_de_inversiones:1.0.0,
+      urn:goreos:atom:entity:d_plan_lineaari:1.0.0,
+      urn:goreos:atom:entity:d_plan_programa_regional_de_inversiones:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:plan_estrategia_regional:1.0.0]

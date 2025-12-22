@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_terr_ide_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-TERR-IDE-001
+name: IDE Regional
+domain: D-TERR
+type: CORE
+description: Infraestructura de Datos Espaciales regional.
+stories:
+- us_terr_ide_001
+- us_terr_ide_002
+- us_terr_ide_003
+- us_ide_001_01
+ofrecida_por: null

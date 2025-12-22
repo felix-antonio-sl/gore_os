@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_acto_006:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Clasificar convenio AFECTA/EXENTA según normativa CGR
 id: US-NORM-ACTO-006
 urn: urn:goreos:atom:story:us_norm_acto_006:1.0.0
 role_id: USR-CAL-ANAL
+as_a: Analista Gestión Institucional
 i_want: Clasificar convenio AFECTA/EXENTA según normativa CGR
 so_that: Determino flujo de aprobación correcto
 domain: D-NORM

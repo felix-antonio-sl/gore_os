@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_evol_puente_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Integrar el cumplimiento TDE como una variable del Health Score
 id: US-EVOL-PUENTE-001
 urn: urn:goreos:atom:story:us_evol_puente_001:1.0.0
 role_id: USR-EVOL-MON
+as_a: Monitor de Sistema
 i_want: Integrar el cumplimiento TDE como una variable del Health Score
 so_that: La salud organizacional refleja el cumplimiento legal
 domain: D-EVOL

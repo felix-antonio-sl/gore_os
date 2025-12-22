@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_capdig_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un LMS con cursos de herramientas del GORE
 id: US-CAPDIG-001-01
 urn: urn:goreos:atom:story:us_capdig_001_01:1.0.0
 role_id: USR-NEW-ENCARGADO-CA
+as_a: Encargado Capacitación Digital
 i_want: un LMS con cursos de herramientas del GORE
 so_that: pueda formar a los funcionarios
 domain: D-TDE

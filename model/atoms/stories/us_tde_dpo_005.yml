@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Mantener registro de actividades de tratamiento de datos personales (RAT)
 id: US-TDE-DPO-005
 urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
 role_id: USR-TDE-DPO
+as_a: DPO
 i_want: Mantener registro de actividades de tratamiento de datos personales (RAT)
 so_that: Demuestro accountability ante la Agencia de Protección de Datos
 domain: D-TDE

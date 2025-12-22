@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_acto_011:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alerta de actos pendientes de firma >5 días
 id: US-NORM-ACTO-011
 urn: urn:goreos:atom:story:us_norm_acto_011:1.0.0
 role_id: USR-OP-OF
+as_a: Oficial de Partes
 i_want: Recibir alerta de actos pendientes de firma >5 días
 so_that: Gestiono demoras
 domain: D-NORM

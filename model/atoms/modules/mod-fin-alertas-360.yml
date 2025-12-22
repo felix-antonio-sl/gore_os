@@ -1,0 +1,17 @@
+---
+# --- mod_fin_alertas_360.yml ---
+_meta:
+  urn: urn:goreos:atom:module:fin_alertas_360:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-FIN-ALERTAS-360
+name: Alertas 360
+domain: D-FIN
+description: Alertas tempranas para gestión de inversiones.
+composition:
+  processes: []
+  entities: [urn:goreos:atom:entity:d_fin_portafolio_alertaciclo:1.0.0]
+morphisms:
+  implements_capability: [urn:goreos:atom:capability:cap_fin_dash_001:1.0.0]
+  depends_on: [urn:goreos:atom:module:fin_portafolio_ipr:1.0.0]

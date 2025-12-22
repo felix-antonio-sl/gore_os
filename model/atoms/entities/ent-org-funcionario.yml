@@ -1,0 +1,23 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:funcionario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-FUNCIONARIO
+name: Funcionario
+domain: D-ORG
+category: Master
+extends: ENT-SYS-ACTOR
+attributes:
+  - {name: id_funcionario, type: UUID, key: true}
+  - {name: rut, type: String}
+  - {name: nombres, type: String}
+  - {name: apellido_paterno, type: String}
+  - {name: apellido_materno, type: String}
+  - {name: email_institucional, type: String}
+  - {name: cargo_id, type: UUID, fk: ENT-ORG-CARGO}
+  - {name: division_id, type: UUID, fk: ENT-ORG-DIVISION}
+  - {name: fecha_ingreso, type: Date}
+  - {name: calidad_juridica, type: String}
+  - {name: grado, type: Integer}
+  - {name: estado, type: String}

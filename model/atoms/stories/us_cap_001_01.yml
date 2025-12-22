@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_cap_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de gestión de capacitación con inscripciones
 id: US-CAP-001-01
 urn: urn:goreos:atom:story:us_cap_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-CAP
+as_a: Analista Capacitación
 i_want: un módulo de gestión de capacitación con inscripciones
 so_that: pueda administrar el PAC
 domain: D-BACK

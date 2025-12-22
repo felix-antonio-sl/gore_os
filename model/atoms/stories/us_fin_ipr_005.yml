@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Notificación de observaciones de admisibilidad (plazo 60d)
 id: US-FIN-IPR-005
 urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
 role_id: USR-EXT-FORM
+as_a: Formulador Externo
 i_want: Recibir notificación de observaciones de admisibilidad (plazo 60d)
 so_that: Puedo subsanar a tiempo
 domain: D-FIN

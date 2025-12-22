@@ -2,33 +2,28 @@ _meta:
   urn: urn:goreos:atom:process:d_ejec_p2:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-ejec
+  source: archive/legacy_domains/domain_d-ejec.md
 id: PROC-EJEC-P2
 name: Ejecución y Estados de Pago
 domain: D-EJEC
 code: P2
 process_type: BPMN
 spec:
-  bpmn_id: '`PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01`'
-  mermaid_ref: D01_actos_administrativos.md#p2-aprobacin-de-transferencias-y-convenios
-  sla: 30 días hábiles
-  mermaid: "flowchart TD\n    subgraph FASE1[\"1️⃣ Iniciación\"]\n        A[\"Área\
-    \ Responsable:<br/>Elaborar borrador convenio\"]\n        B[\"Incluir cláusulas:<br/>•\
-    \ Partes<br/>• Objeto<br/>• Monto<br/>• Plazos<br/>• Rendición\"]\n    end\n\n\
-    \    subgraph FASE2[\"2️⃣ Revisión Jurídica\"]\n        C[\"Jurídica:<br/>Revisar\
-    \ legalidad\"]\n        D{\"¿Cumple<br/>normativa?\"}\n        E[\"✅ V°B° Jurídico\"\
-    ]\n        F[\"❌ Observar\"]\n    end\n\n    subgraph FASE3[\"3️⃣ Visación Presupuestaria\"\
-    ]\n        G[\"DAF:<br/>Verificar disponibilidad\"]\n        H[\"Emitir CDP\"\
-    ]\n        I[\"V°B° DAF\"]\n    end\n\n    subgraph FASE4[\"4️⃣ Control Interno\"\
-    ]\n        J[\"U. Control:<br/>Verificar procedencia\"]\n        K[\"V°B° Control\"\
-    ]\n    end\n\n    subgraph FASE5[\"5️⃣ Firma Partes\"]\n        L[\"Coordinar\
-    \ firma:<br/>• Gobernador/a GORE<br/>• Representante Entidad\"]\n    end\n\n \
-    \   subgraph FASE6[\"6️⃣ Resolución Aprobatoria\"]\n        M[\"Elaborar resolución<br/>que\
-    \ aprueba convenio\"]\n        N{\"¿Requiere<br/>Toma de Razón?\"}\n        O[\"\
-    Enviar a CGR\"]\n        P[\"Tramitar exento\"]\n    end\n\n    subgraph FASE7[\"\
-    7️⃣ Publicación y Archivo\"]\n        Q[\"Publicar en<br/>Transparencia\"]\n \
-    \       R[\"Registrar en SIGFE\"]\n        S[\"Archivar expediente\"]\n    end\n\
-    \n    A --> B --> C --> D\n    D -->|\"Sí\"| E --> G --> H --> I --> J --> K -->\
-    \ L --> M --> N\n    D -->|\"No\"| F --> A\n    N -->|\"Sí\"| O --> Q\n    N -->|\"\
-    No\"| P --> Q\n    Q --> R --> S\n\n    style L fill:#4CAF50,color:#fff\n    style\
-    \ S fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-EJEC-ESTADOPAGO-01
+  mermaid_ref: domain_d-ejec.md#p2-ejecución-y-estados-de-pago
+  mermaid: |
+    flowchart TD
+        A["Convenio vigente"] --> B["Transferencia<br/>anticipo (si aplica)"]
+        B --> C["Ejecutor inicia<br/>ejecución"]
+        C --> D["UT reporta<br/>avance periódico"]
+        D --> E["Supervisor revisa<br/>informe"]
+        E --> F{"¿Conforme?"}
+        F -->|"No"| G["Devolver con<br/>observaciones"]
+        G --> D
+        F -->|"Sí"| H["Aprobar informe"]
+        H --> I["Generar Estado<br/>de Pago"]
+        I --> J["Validación DAF & Rendición SISREC (si aplica)"]
+        J --> K["Autorizar pago<br/>(D-FIN)"]
+        K --> L{"¿Último EP?"}
+        L -->|"No"| D
+        L -->|"Sí"| M["Iniciar cierre"]

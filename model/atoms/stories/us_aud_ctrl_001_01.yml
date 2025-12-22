@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_aud_ctrl_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Registros de transacciones y aprobaciones
 id: US-AUD-CTRL-001-01
 urn: urn:goreos:atom:story:us_aud_ctrl_001_01:1.0.0
 role_id: USR-CTRL-AUD
+as_a: Auditor de Control
 i_want: acceder a registros de transacciones y aprobaciones
 so_that: pueda verificar trazabilidad
 domain: D-NORM

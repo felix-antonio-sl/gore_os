@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_006:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Subsanar observaciones sin trámite presencial
 id: US-FIN-IPR-006
 urn: urn:goreos:atom:story:us_fin_ipr_006:1.0.0
 role_id: USR-EXT-FORM
+as_a: Formulador Externo
 i_want: Subsanar observaciones sin trámite presencial
 so_that: Agilizo el proceso de admisibilidad
 domain: D-FIN

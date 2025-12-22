@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:evaluacion_expost:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-EVALUACION_EXPOST
+name: Evaluación Ex-Post
+domain: D-EJE
+category: Transaction
+attributes:
+  - {name: id_evaluacion, type: UUID, key: true}
+  - {name: ipr_id, type: UUID, fk: ENT-FIN-IPR}
+  - {name: fecha, type: Date}
+  - {name: metodologia, type: String}
+  - {name: resultado, type: Text}
+  - {name: recomendaciones, type: Text}
+
+# --- NEXUS: Fibra Digital ---

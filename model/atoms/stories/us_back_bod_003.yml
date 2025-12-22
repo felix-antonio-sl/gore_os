@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_bod_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Realizar inventario físico (ajustes diferencia)
 id: US-BACK-BOD-003
 urn: urn:goreos:atom:story:us_back_bod_003:1.0.0
 role_id: USR-DAF-OPS-BOD
+as_a: Encargado Bodega
 i_want: Realizar inventario físico (ajustes diferencia)
 so_that: Concilio existencias
 domain: D-BACK

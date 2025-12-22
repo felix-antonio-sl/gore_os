@@ -2,19 +2,44 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ipr_core_p7:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-fin-ipr_core
+  source: docs/processes/D03_gestion_ipr.md
 id: PROC-FIN-IPR_CORE-P7
-name: Cierre Técnico-Financiero
+name: Cierre Técnico-Financiero y Evaluación Ex Post
 domain: D-FIN-IPR_CORE
 code: P7
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-EGRESO-01`'
-  mermaid_ref: D07_rrhh.md#p7-egreso-y-desvinculacin
-  mermaid: "flowchart TD\n    A[\"Egreso de<br/>funcionario\"] --> B{\"Causal\"}\n\
-    \    \n    B -->|\"Voluntario\"| C[\"Renuncia<br/>voluntaria\"]\n    B -->|\"\
-    Jubilación\"| D[\"Retiro por<br/>pensión\"]\n    B -->|\"Término contrata\"| E[\"\
-    No renovación<br/>31/12\"]\n    B -->|\"Calificación\"| F[\"Eliminación<br/>por\
-    \ nota\"]\n    B -->|\"Disciplinario\"| G[\"Destitución\"]\n    B -->|\"Salud\"\
-    | H[\"Incompatibilidad<br/>de salud\"]\n\n    C & D & E & F & G & H --> I[\"Procedimiento<br/>de\
-    \ cierre\"]\n\n    style I fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-IPR-FASE7-01
+  mermaid_ref: D03_gestion_ipr.md#p7-cierre-técnico-financiero-y-evaluación-ex-post
+  subprocesos: ["Cierre Técnico", "Cierre Financiero", "Ex Post"]
+  mermaid: |
+    flowchart TD
+        subgraph CIERRE_TEC["📋 Cierre Técnico"]
+            A["Recepción provisoria"]
+            B["Período garantía"]
+            C["Recepción definitiva"]
+            D["Informe final<br/>técnico"]
+        end
+
+        subgraph CIERRE_FIN["💰 Cierre Financiero"]
+            E["Rendición final<br/>SISREC"]
+            F["Revisión DAF"]
+            G{"¿Saldos?"}
+            H["Reintegro"]
+            I["Resolución cierre<br/>convenio"]
+            J["Devolución<br/>garantías"]
+        end
+
+        subgraph EXPOST["📊 Evaluación Ex Post"]
+            K["Selección muestra"]
+            L["Estudio evaluativo"]
+            M["Lecciones aprendidas"]
+        end
+
+        A --> B --> C --> D
+        D --> E --> F --> G
+        G -->|"Sí"| H --> I
+        G -->|"No"| I
+        I --> J --> K --> L --> M
+
+        style M fill:#9C27B0,color:#fff

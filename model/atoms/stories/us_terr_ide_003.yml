@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_terr_ide_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Modelar datos ISO 19110 (catálogo objetos)
 id: US-TERR-IDE-003
 urn: urn:goreos:atom:story:us_terr_ide_003:1.0.0
 role_id: USR-TERR-IDE
+as_a: Coordinador IDE
 i_want: Modelar datos ISO 19110 (catálogo objetos)
 so_that: Estandarizo estructura de datos
 domain: D-TERR

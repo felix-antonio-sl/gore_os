@@ -2,23 +2,40 @@ _meta:
   urn: urn:goreos:atom:process:fenix_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/fenix
+  source: archive/legacy_domains/domain_fenix.md
 id: PROC-FENIX-P1
-name: Activación y Diagnóstico
+name: Activación y Diagnóstico (Intervención)
 domain: FENIX
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-FENIX-ACTIVACION-01
+  mermaid_ref: domain_fenix.md#p1-activación-y-diagnóstico
+  mermaid: |
+    flowchart TD
+        subgraph TRIGGER["Disparador (Trigger)"]
+            A{"¿Origen?"}
+            A -->|"Automático"| B["Alerta H_gore<br/>(D-GESTION)"]
+            A -->|"Manual"| C["Solicitud de Jefatura"]
+        end
+
+        subgraph FENIX_UNIT["🔥 Unidad FÉNIX"]
+            D["Evaluar Criticidad"]
+            E{"¿Amerita<br/>Intervención?"}
+            F["Conformar Equipo<br/>(Fuerza de Tarea)"]
+            G["Definir Plan de<br/>Acción"]
+            H["Rechazar/Derivar"]
+        end
+
+        subgraph AUTORIDAD["🏛️ Gobernador/a"]
+            I{"¿Autoriza?"}
+            J["✅ Activar Protocolo"]
+            K["📢 Notificar Comisión<br/>de Control CORE<br/>(Nivel I y II)"]
+        end
+
+        B & C --> D --> E
+        E -->|"No"| H
+        E -->|"Sí"| F --> G --> I
+        I -->|"Sí"| J
+        J --> K
+        I -->|"No"| H

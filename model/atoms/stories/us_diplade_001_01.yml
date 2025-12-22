@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_diplade_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de gestión de la Estrategia Regional de Desarrollo (ERD)
 id: US-DIPLADE-001-01
 urn: urn:goreos:atom:story:us_diplade_001_01:1.0.0
 role_id: USR-DIPL-JEFE
+as_a: Jefe DIPLADE
 i_want: un módulo de gestión de la Estrategia Regional de Desarrollo (ERD)
 so_that: pueda hacer seguimiento de objetivos e indicadores estratégicos
 domain: D-PLAN

@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:inventario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-INVENTARIO
+name: Inventario
+domain: D-ORG
+subdomain: recursos
+category: Transaction
+attributes:
+  - {name: id_inventario, type: UUID, key: true}
+  - {name: fecha, type: Date}
+  - {name: tipo, type: String}
+  - {name: responsable_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: estado, type: String}
+
+# --- FISCUS: Fibra Financiera ---

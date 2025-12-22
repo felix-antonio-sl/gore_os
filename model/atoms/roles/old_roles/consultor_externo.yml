@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:consultor_externo:1.0.0
+  type: Role
+  source: organization
+id: USR-NEW-CONSULTOR-EX
+role_key: consultor_externo
+title: Consultor Externo
+description: Rol agregado para concordancia con historias de usuario.
+type: INTERNAL
+unit: Roles Adicionales (Concordancia)
+unit_type: Mixto
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:consultor_externo:1.0.0
+domain: D-GESTION

@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:visita_terreno:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-VISITA_TERRENO
+name: Visita a Terreno
+domain: D-EJE
+category: Transaction
+attributes:
+  - {name: id_visita, type: UUID, key: true}
+  - {name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO}
+  - {name: fecha, type: Date}
+  - {name: inspector_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: objetivo, type: Text}
+  - {name: observaciones, type: Text}
+  - {name: avance_fisico, type: Decimal}

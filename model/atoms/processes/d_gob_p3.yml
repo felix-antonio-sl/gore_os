@@ -2,23 +2,28 @@ _meta:
   urn: urn:goreos:atom:process:d_gob_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-gob
+  source: archive/legacy_domains/domain_d-gob.md
 id: PROC-GOB-P3
-name: Gestión Crisis / GRD
+name: Gestión de Crisis / GRD
 domain: D-GOB
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-GOB-GRD-01
+  mermaid_ref: domain_d-gob.md#p3-gestión-crisis--grd
+  frecuencia: "Eventual (Emergencias)"
+  mermaid: |
+    flowchart TB
+        subgraph P3["P3: Gestión de Crisis / GRD"]
+            P3_1["3.1 Alerta<br/>Evento"]
+            P3_2["3.2 Constitución<br/>COGRID"]
+            P3_3["3.3 Despliegue<br/>Recursos"]
+            P3_4["3.4 Recuperación<br/>Temprana"]
+        end
+
+        P3_1 --> P3_2 --> P3_3 --> P3_4
+
+        P3_1 -.- N1["SENAPRED/CENCO<br/>Nivel alerta"]
+        P3_2 -.- N2["Gobernador preside<br/>Enlaces técnicos"]
+        P3_3 -.- N3["Fondos Emergencia<br/>(5% FNDR)"]
+        P3_4 -.- N4["Catastro daños<br/>Plan reconstrucción"]

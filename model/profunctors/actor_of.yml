@@ -1,1184 +1,3101 @@
 _meta:
-  urn: urn:goreos:profunctor:actor_of:1.0.0
+  urn: "urn:goreos:profunctor:actor_of:1.0.0"
   type: Profunctor
-  schema: urn:goreos:schema:profunctor:1.0.0
-id: PROF-ACTOR_OF
-urn: urn:goreos:profunctor:actor_of:1.0.0
-signature: Source ⊗ Target → 2
-source_type: Mixed
-target_type: Mixed
-links:
-- source: USR-DAF-FIN-CONT
-  target: US-BACK-TES-009
-- source: USR-DAF-FIN-CONT
-  target: US-BACK-TES-011
-- source: USR-DAF-FIN-CONT
-  target: US-BACK-TES-013
-- source: USR-DAF-JEFE
-  target: US-BACK-TES-014
-- source: USR-DAF-FIN-CONT
-  target: US-BACK-TES-015
-- source: USR-DAF-FIN-CONT
-  target: US-BACK-TES-016
-- source: USR-DAF-FIN-CONT
-  target: US-BACK-TES-017
-- source: USR-NEW-ENCARGADO-CO
-  target: US-BCP-001-01
-- source: USR-NEW-ESPECIALISTA
-  target: US-BI-001-01
-- source: USR-DAF-PER-BIEN
-  target: US-BIEN-001-01
-- source: USR-NEW-ANALISTA-BIE
-  target: US-BIEN-002-01
-- source: USR-DAF-SERV-BOD
-  target: US-BOD-001-01
-- source: USR-DAF-OPS-BOD
-  target: US-BOD-002-01
-- source: USR-EXT-BOMB
-  target: US-BOMB-001-01
-- source: USR-DIPIR-C33
-  target: US-C33-001-01
-- source: USR-CAL-ENC
-  target: US-CAL-001-02
-- source: USR-NEW-ANALISTA-CAP
-  target: US-CAP-001-01
-- source: USR-NEW-ENCARGADO-CA
-  target: US-CAPDIG-001-01
-- source: USR-EXT-CARAB
-  target: US-CAR-001-01
-- source: USR-EXT-CAMARA
-  target: US-CC-001-01
-- source: USR-JUR-JUD
-  target: US-CDE-001-01
-- source: USR-CAL-CTRL
-  target: US-CGPE-001-01
-- source: USR-EXT-CGR
-  target: US-CGR-001-01
-- source: USR-EXT-CGR-CONT
-  target: US-CGR-CONT-001-01
-- source: USR-CIES-COOR
-  target: US-CIES-001-02
-- source: USR-CIU-GEN
-  target: US-CIU-001-02
-- source: USR-CIU-GEN
-  target: US-CIU-002-01
-- source: USR-NEW-REP-AMUCH
-  target: US-COL-001-01
-- source: USR-COM-ENC
-  target: US-COM-001-01
-- source: USR-COM-ENC
-  target: US-COM-001-02
-- source: USR-COM-ENC
-  target: US-COM-002-01
-- source: USR-COM-ENC
-  target: US-COM-ESTR-001
-- source: USR-COM-ENC
-  target: US-COM-ESTR-002
-- source: USR-COM-ENC
-  target: US-COM-ESTR-003
-- source: USR-COM-ENC
-  target: US-COM-ESTR-004
-- source: USR-COM-ENC
-  target: US-COM-ESTR-006
-- source: USR-COM-EVAL
-  target: US-COM-EV-001-01
-- source: USR-COM-RECP
-  target: US-COM-REC-001-01
-- source: USR-COM-ENC
-  target: US-COM-SEC-001
-- source: USR-COM-ENC
-  target: US-COM-SEC-002
-- source: USR-COM-PER
-  target: US-COM-SECT-001-01
-- source: USR-DAF-ABS-COMP
-  target: US-COMP-001-01
-- source: USR-DAF-ABS-COMP
-  target: US-COMP-001-02
-- source: USR-NEW-MIEMBRO-COMI
-  target: US-COMPERT-001-01
-- source: USR-NEW-MIEMBRO-COMI
-  target: US-COMPERT-001-02
-- source: USR-GOB-COMP
-  target: US-COMPT-001-01
-- source: USR-EXT-CONAF
-  target: US-CONAF-001-01
-- source: USR-NEW-CONDUCTOR
-  target: US-COND-001-01
-- source: USR-NEW-ANALISTA-CON
-  target: US-CONT-001-01
-- source: USR-EXT-CONT
-  target: US-CONT-001-02
-- source: USR-DIT-COOR
-  target: US-COORD-DIT-001-01
-- source: USR-CORE-CONS
-  target: US-CORE-001-01
-- source: USR-CORE-CONS
-  target: US-CORE-002-01
-- source: USR-EXT-CONAF
-  target: US-CORFO-001-01
-- source: USR-CORP-DIR
-  target: US-CORP-001-01
-- source: USR-EXT-TRIB-CUENTA
-  target: US-CORTE-001-01
-- source: USR-NEW-ENCARGADO-CO
-  target: US-CP-001-01
-- source: USR-NEW-ENCARGADO-CS
-  target: US-CSEU-001-01
-- source: USR-COM-EVAL
-  target: US-CSEU-002-01
-- source: USR-DAF-TIC-CTD
-  target: US-CTD-001-02
-- source: USR-CIES-EVID
-  target: US-CUST-001-01
-- source: USR-TDE-CUSTODIO
-  target: US-CUST-DAT-001-01
-- source: USR-NEW-DIRIGENTE-SO
-  target: US-CUT-001-01
-- source: USR-DAF-JEFE
-  target: US-DAF-001-01
-- source: USR-EXT-APD
-  target: US-DATA-001-01
-- source: USR-OPS-DBA
-  target: US-DBA-001-01
-- source: USR-NEW-ENCARGADO-DE
-  target: US-DESC-001-02
-- source: USR-NEW-DESARROLLADO
-  target: US-DEV-001-01
-- source: ROLE-ARQUITECTO
-  target: US-DEV-BP-001
-- source: ROLE-ARQUITECTO
-  target: US-DEV-BP-002
-- source: ROLE-PO
-  target: US-DEV-BP-003
-- source: ROLE-ARQUITECTO
-  target: US-DEV-BP-004
-- source: ROLE-DEV
-  target: US-DEV-BP-005
-- source: ROLE-ARQUITECTO
-  target: US-DEV-BP-006
-- source: ROLE-ARQUITECTO
-  target: US-DEV-BP-007
-- source: ROLE-PO
-  target: US-DEV-BP-008
-- source: ROLE-DEVOPS
-  target: US-DEV-CICD-001
-- source: ROLE-DEVOPS
-  target: US-DEV-CICD-002
-- source: ROLE-QA
-  target: US-DEV-CICD-003
-- source: ROLE-QA
-  target: US-DEV-CICD-004
-- source: USR-DEV-LEAD
-  target: US-DEV-CICLO-001
-- source: ROLE-DEVELOPER
-  target: US-DEV-CODE-001
-- source: ROLE-DEVELOPER
-  target: US-DEV-CODE-002
-- source: ROLE-DEVELOPER
-  target: US-DEV-CODE-003
-- source: USR-DEV-ARQ
-  target: US-DEV-DOC-001
-- source: USR-DEV-NEW
-  target: US-DEV-DX-001
-- source: USR-DEV-BACK
-  target: US-DEV-DX-002
-- source: USR-DEV-PO
-  target: US-DEV-FEAT-001
-- source: ROLE-ARQUITECTO
-  target: US-DEV-KODA-001
-- source: ROLE-DEV
-  target: US-DEV-KODA-002
-- source: ROLE-ARQUITECTO
-  target: US-DEV-KODA-003
-- source: ROLE-ARQUITECTO
-  target: US-DEV-KODA-004
-- source: ROLE-PO
-  target: US-DEV-PROD-001
-- source: ROLE-PO
-  target: US-DEV-PROD-002
-- source: ROLE-TECH-LEAD
-  target: US-DEV-PROD-003
-- source: USR-DAF-TIC-DEV
-  target: US-DEV-QA-001
-- source: ROLE-RELEASE-MANAGER
-  target: US-DEV-REL-001
-- source: ROLE-RELEASE-MANAGER
-  target: US-DEV-REL-002
-- source: ROLE-RELEASE-MANAGER
-  target: US-DEV-REL-003
-- source: USR-DEV-SEC
-  target: US-DEV-SEC-001
-- source: USR-MUNI-TEC
-  target: US-DEVMUNI-001-01
-- source: USR-DAF-TIC-DEV
-  target: US-DEVOPS-001-01
-- source: USR-DIDES-JEFE
-  target: US-DIDESOH-002-01
-- source: USR-DIFOI-JEFE
-  target: US-DIFOI-001-02
-- source: USR-CORE-CONS
-  target: US-DIP-001-01
-- source: USR-DIPIR-JEFE
-  target: US-DIPIR-001-02
-- source: USR-DIPL-JEFE
-  target: US-DIPLADE-001-01
-- source: USR-DIPL-JEFE
-  target: US-DIPLADE-001-02
-- source: USR-DIPL-JEFE
-  target: US-DIPLADE-002-01
-- source: USR-NEW-DIRIGENTE-SO
-  target: US-DIR-SOC-001-01
-- source: USR-DIT-JEFE
-  target: US-DIT-002-01
-- source: USR-TDE-DPO
-  target: US-DPO-001-01
-- source: USR-EXT-DPR
-  target: US-DPR-002-01
-- source: USR-SEG-JEFE
-  target: US-DSEG-001-02
-- source: USR-MUNI-DIG
-  target: US-DTMUNI-001-01
-- source: USR-TDE-DUENO-DATOS
-  target: US-DUENO-001-01
-- source: USR-DIPIR-C33-ENC
-  target: US-EC33-001-01
-- source: USR-NEW-ECIF
-  target: US-ECIF-001-01
-- source: USR-NEW-ANALISTA-EDU
-  target: US-EDU-001-01
-- source: USR-ADM-JEFE
-  target: US-EJEC-AR-005
-- source: USR-ADM-JEFE
-  target: US-EJEC-AR-006
-- source: USR-ADM-JEFE
-  target: US-EJEC-AR-007
-- source: USR-ADM-JEFE
-  target: US-EJEC-AR-008
-- source: USR-ADM-JEFE
-  target: US-EJEC-AR-009
-- source: USR-DIDES-TERR-OP
-  target: US-EJEC-EO-002
-- source: USR-DIDES-TERR-OP
-  target: US-EJEC-EO-003
-- source: USR-DIDES-TERR-OP
-  target: US-EJEC-EO-005
-- source: USR-DIDES-TERR-OP
-  target: US-EJEC-EO-006
-- source: USR-DIDES-TERR-OP
-  target: US-EJEC-EO-007
-- source: USR-DAF-JEFE
-  target: US-EJEC-JD-002
-- source: USR-DAF-JEFE
-  target: US-EJEC-JD-005
-- source: USR-DAF-JEFE
-  target: US-EJEC-JD-006
-- source: USR-MUNI-FORM
-  target: US-EJEC-MUNI-001
-- source: USR-MUNI-FORM
-  target: US-EJEC-MUNI-002
-- source: USR-MUNI-TEC
-  target: US-EJEC-MUNI-003
-- source: USR-MUNI-TEC
-  target: US-EJEC-MUNI-004
-- source: USR-MUNI-FORM
-  target: US-EJEC-MUNI-005
-- source: USR-COM-PER
-  target: US-EJEC-PER-001
-- source: USR-DIT-COOR
-  target: US-EJEC-SEC-001
-- source: USR-CIES-SUP
-  target: US-EJEC-SUP-003
-- source: USR-CIES-SUP
-  target: US-EJEC-SUP-005
-- source: USR-EXT-CAMARA
-  target: US-EMP-001-01
-- source: USR-CIES-ENL
-  target: US-ENL-CIES-001-01
-- source: USR-DIDES-TERR-OP
-  target: US-EOPE-001-01
-- source: USR-DIPIR-ANAL-INV
-  target: US-EPP-001-01
-- source: USR-DIDES-FOND-EVAL
-  target: US-EVAL-001-01
-- source: USR-DIDES-FOND-EVAL
-  target: US-EVAL-001-02
-- source: USR-CAL-VERDE-MEMB
-  target: US-EVERDE-001-01
-- source: USR-CTD-PRES
-  target: US-EVOL-AI-001
-- source: BOT-KODA
-  target: US-EVOL-AI-002
-- source: USR-DAF-TIC-CTD
-  target: US-EVOL-AO-018
-- source: USR-DAF-TIC-SRE
-  target: US-EVOL-CHAOS-001
-- source: USR-DEV-LEAD
-  target: US-EVOL-DT-001
-- source: USR-DEV-LEAD
-  target: US-EVOL-DT-002
-- source: USR-CTD-PRES
-  target: US-EVOL-GOV-001
-- source: USR-CTD-PRES
-  target: US-EVOL-GOV-002
-- source: USR-EVOL-OP
-  target: US-EVOL-H-002
-- source: USR-DEV-SYS
-  target: US-EVOL-KB-008
-- source: USR-DEV-LEAD
-  target: US-EVOL-PILOT-002
-- source: USR-EVOL-OP
-  target: US-EVOL-PLAY-001
-- source: USR-EVOL-OP
-  target: US-EVOL-PLAY-002
-- source: USR-EVOL-MON
-  target: US-EVOL-PUENTE-001
-- source: USR-EVOL-OP
-  target: US-EVOL-TRAY-002
-- source: USR-DIDES-FOND-ENC
-  target: US-F8-001-01
-- source: USR-DIDES-FOND-ENC
-  target: US-F8-001-02
-- source: USR-MUNI-ALC
-  target: US-FEDMUNI-001-01
-- source: USR-CAL-FNX-J
-  target: US-FENIX-001-01
-- source: USR-DAF-FIN-JEFE
-  target: US-FIN-001-01
-- source: USR-GOB-JEFE
-  target: US-FIN-APR-001
-- source: USR-DIPIR-C33
-  target: US-FIN-C33-001
-- source: USR-DIPIR-C33
-  target: US-FIN-C33-002
-- source: USR-DIPIR-C33
-  target: US-FIN-C33-005
-- source: USR-DAF-PROF
-  target: US-FIN-CONV-003
-- source: USR-DAF-PROF
-  target: US-FIN-CONV-005
-- source: USR-DAF-PROF
-  target: US-FIN-FORM-003
-- source: USR-DAF-PROF
-  target: US-FIN-FORM-004
-- source: USR-DAF-PROF
-  target: US-FIN-FORM-005
-- source: USR-DIPIR-ANAL-INV
-  target: US-FIN-FRIL-001
-- source: USR-DIFOI-FRPD
-  target: US-FIN-FRPD-001
-- source: USR-DIFOI-ANAL
-  target: US-FIN-FRPD-002
-- source: USR-DIFOI-ANAL
-  target: US-FIN-FRPD-003
-- source: USR-CAL-ANAL
-  target: US-FIN-GEST-002
-- source: USR-CAL-ANAL
-  target: US-FIN-GEST-003
-- source: USR-CAL-ANAL
-  target: US-FIN-GEST-005
-- source: USR-GOB-JEFE
-  target: US-FIN-GOB-001
-- source: USR-EXT-FORM
-  target: US-FIN-IPR-005
-- source: USR-EXT-FORM
-  target: US-FIN-IPR-006
-- source: USR-EXT-FORM
-  target: US-FIN-IPR-007
-- source: USR-EXT-FORM
-  target: US-FIN-IPR-008
-- source: USR-EXT-EJEC
-  target: US-FIN-IPR-011
-- source: USR-EXT-EJEC
-  target: US-FIN-IPR-015
-- source: USR-EXT-EJEC
-  target: US-FIN-IPR-017
-- source: USR-EXT-EJEC
-  target: US-FIN-IPR-018
-- source: USR-DIPL-DAE-PRE
-  target: US-FIN-IPR-022
-- source: USR-CAL-ANAL
-  target: US-FIN-IPR-026
-- source: USR-DIPL-DAE-PRE
-  target: US-FIN-IPR-027
-- source: USR-DIPL-DAE-PRE
-  target: US-FIN-IPR-031
-- source: USR-DIPIR-JEFE
-  target: US-FIN-IPR-034
-- source: USR-DIPIR-JEFE
-  target: US-FIN-IPR-035
-- source: USR-DIPIR-JEFE
-  target: US-FIN-IPR-036
-- source: USR-DIPL-DAE-PRE
-  target: US-FIN-IPR-039
-- source: USR-DIPL-DAE-PRE
-  target: US-FIN-IPR-040
-- source: USR-DIPIR-JEFE
-  target: US-FIN-JEF-002
-- source: USR-DIPIR-JEFE
-  target: US-FIN-JEF-003
-- source: USR-DIPIR-JEFE
-  target: US-FIN-JEF-004
-- source: USR-DAF-PROF
-  target: US-FIN-MOD-002
-- source: USR-NEW-ANALISTA-PPR
-  target: US-FIN-PPR-002
-- source: USR-NEW-ANALISTA-PPR
-  target: US-FIN-PPR-003
-- source: USR-NEW-ANALISTA-PPR
-  target: US-FIN-PPR-004
-- source: USR-EXT-EJEC-PPR
-  target: US-FIN-PPR-006
-- source: USR-NEW-ANALISTA-PRE
-  target: US-FIN-PPTO-004
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-006
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-009
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-010
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-011
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-012
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-013
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-017
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-018
-- source: USR-DAF-JEFE
-  target: US-FIN-PPTO-019
-- source: USR-DAF-JEFE
-  target: US-FIN-PPTO-020
-- source: USR-DAF-JEFE
-  target: US-FIN-PPTO-021
-- source: USR-DAF-JEFE
-  target: US-FIN-PPTO-022
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-026
-- source: USR-DAF-PROF
-  target: US-FIN-PPTO-027
-- source: USR-DAF-JEFE
-  target: US-FIN-PPTO-031
-- source: USR-DAF-FIN-REND
-  target: US-FIN-REND-014
-- source: USR-DAF-FIN-REND
-  target: US-FIN-REND-015
-- source: USR-DAF-FIN-REND
-  target: US-FIN-REND-016
-- source: USR-DAF-FIN-REND
-  target: US-FIN-REND-018
-- source: USR-DIDES-ANAL8
-  target: US-FIN-SUB-001
-- source: USR-DIDES-ANAL8
-  target: US-FIN-SUB-002
-- source: USR-DIDES-ANAL8
-  target: US-FIN-SUB-003
-- source: USR-DIDES-ANAL8
-  target: US-FIN-SUB-004
-- source: USR-NEW-EJECUTOR
-  target: US-FIN-SUB-005
-- source: USR-MUNI-ALC
-  target: US-FIN-SUP-002
-- source: USR-OPS-FINOPS
-  target: US-FINOPS-001-01
-- source: USR-JUR-FIS
-  target: US-FISC-001-01
-- source: USR-JUR-FIS
-  target: US-FISC-SUM-001-01
-- source: USR-DAF-OPS-FLOTA
-  target: US-FLOTA-001-01
-- source: USR-DIDES-ANAL8
-  target: US-FNDR8-001-01
-- source: USR-CAL-FNX-J
-  target: US-FNX-ACT-001
-- source: USR-GOB-JEFE
-  target: US-FNX-ACT-003
-- source: USR-CAL-ANAL
-  target: US-FNX-ANA-001
-- source: USR-AUD-PROF
-  target: US-FNX-ANA-003
-- source: USR-AUD-PROF
-  target: US-FNX-CIE-002
-- source: USR-CAL-FNX-J
-  target: US-FNX-CIE-003
-- source: USR-CAL-FNX-J
-  target: US-FNX-GES-001
-- source: BOT-KODA
-  target: US-FNX-INT-001
-- source: BOT-KODA
-  target: US-FNX-INT-002
-- source: BOT-KODA
-  target: US-FNX-INT-003
-- source: USR-CAL-FNX-FIS
-  target: US-FNX-OPE-002
-- source: USR-CAL-FNX-FIN
-  target: US-FNX-OPE-003
-- source: USR-COM-FOTO
-  target: US-FOTO-001-01
-- source: USR-DAF-TIC-DEV
-  target: US-FRONT-001-01
-- source: USR-DIFOI-FRPD
-  target: US-FRPD-001-01
-- source: USR-DAF-PER-FUN
-  target: US-FUNC-001-01
-- source: USR-DAF-PER-FUN
-  target: US-FUNC-001-02
-- source: USR-DIPIR-G7-REV
-  target: US-G7-001-01
-- source: USR-GAB-JEFE
-  target: US-GAB-001-01
-- source: USR-GAB-JEFE
-  target: US-GAB-002-01
-- source: USR-CAL-PMG-GEN
-  target: US-GEN-001-01
-- source: USR-TERR-ANAL
-  target: US-GEO-001-01
-- source: USR-TERR-GEONODO
-  target: US-GEO-002-01
-- source: USR-ADM-JEFE
-  target: US-GEST-COORD-002
-- source: USR-ADM-JEFE
-  target: US-GEST-HG-002
-- source: USR-DAF-JEFE
-  target: US-GEST-HG-003
-- source: USR-DAF-PER-FUN
-  target: US-GEST-MC-001
-- source: USR-CAL-CTRL
-  target: US-GEST-MC-002
-- source: USR-ADM-JEFE
-  target: US-GEST-PB-001
-- source: USR-ADM-JEFE
-  target: US-GEST-PB-002
-- source: USR-CAL-CTRL
-  target: US-GEST-PB-003
-- source: USR-DAF-PER-ENC
-  target: US-GEST-PER-002
-- source: USR-DAF-PER-FUN
-  target: US-GEST-PROC-001
-- source: USR-DAF-JEFE
-  target: US-GEST-SCG-001
-- source: USR-ADM-JEFE
-  target: US-GEST-SCG-003
-- source: USR-AUD-PROF
-  target: US-GEST-UCI-002
-- source: USR-DIFOI-DEL-GEST
-  target: US-GFOM-001-01
-- source: USR-DIPIR-G7-FORM
-  target: US-GLOSA7-001-01
-- source: USR-GOB-JEFE
-  target: US-GOB-001-02
-- source: USR-GOB-JEFE
-  target: US-GOB-002-01
-- source: USR-CORE-CONS
-  target: US-GOB-CORE-004
-- source: USR-CORE-CONS
-  target: US-GOB-CORE-006
-- source: USR-CORE-CONS
-  target: US-GOB-CORE-007
-- source: USR-CORE-CONS
-  target: US-GOB-CORE-010
-- source: USR-CORE-SEC
-  target: US-GOB-CORE-011
-- source: USR-EXT-DPR
-  target: US-GOB-DEL-001
-- source: USR-EXT-DPR
-  target: US-GOB-DEL-003
-- source: USR-EXT-DPR
-  target: US-GOB-DEL-004
-- source: USR-GOB-JEFE
-  target: US-GOB-DESC-002
-- source: USR-GOB-COMP
-  target: US-GOB-DESC-005
-- source: USR-GOB-COMP
-  target: US-GOB-DESC-006
-- source: USR-GOB-COMP
-  target: US-GOB-DESC-007
-- source: USR-GAB-JEFE
-  target: US-GOB-GAB-001
-- source: USR-GAB-JEFE
-  target: US-GOB-GAB-003
-- source: USR-GAB-JEFE
-  target: US-GOB-GAB-004
-- source: USR-GAB-JEFE
-  target: US-GOB-GAB-005
-- source: USR-GAB-250-PROF
-  target: US-GOB-GAB-007
-- source: USR-GOB-JEFE
-  target: US-GOB-GR-001
-- source: USR-GOB-JEFE
-  target: US-GOB-GR-004
-- source: USR-GOB-JEFE
-  target: US-GOB-GR-005
-- source: USR-GOB-JEFE
-  target: US-GOB-GR-009
-- source: USR-GOB-JEFE
-  target: US-GOB-GR-010
-- source: USR-GOB-JEFE
-  target: US-GOB-GR-013
-- source: USR-GOB-JEFE
-  target: US-GOB-GR-014
-- source: USR-CIES-COOR
-  target: US-GOB-GRD-001
-- source: USR-CIES-COOR
-  target: US-GOB-GRD-002
-- source: USR-CIES-COOR
-  target: US-GOB-GRD-003
-- source: USR-CIES-COOR
-  target: US-GOB-GRD-004
-- source: USR-GOB-PAS
-  target: US-GOB-LOB-001
-- source: USR-DAF-PER-FUN
-  target: US-GOB-LOB-002
-- source: USR-OP-OF
-  target: US-GOB-OP-002
-- source: USR-DAF-TIC-SRE
-  target: US-GOB-OP-005
-- source: USR-GAB-JEFE
-  target: US-GOB-SEC-001
-- source: USR-NEW-GOBERNACION-
-  target: US-GOBPROV-001-01
-- source: USR-DIDES-TERR-GEST
-  target: US-GPROV-001-01
-- source: USR-CIES-COOR
-  target: US-GRD-001-01
-- source: USR-NEW-ANALISTA-HON
-  target: US-HON-001-01
-- source: USR-DAF-HON-PRES
-  target: US-HON-002-01
-- source: USR-DEV-KB
-  target: US-ICON-001-01
-- source: USR-TERR-IDE
-  target: US-IDE-001-01
-- source: USR-DIPIR-INSP-FISCAL
-  target: US-IF-001-02
-- source: USR-EXT-IND
-  target: US-INDAP-001-01
-- source: USR-NEW-ENCARGADO-IN
-  target: US-INTER-001-01
-- source: USR-CAL-FNX-FIN
-  target: US-INTFIN-001-01
-- source: USR-CAL-FNX-FIS
-  target: US-INTFIS-001-01
-- source: USR-NEW-ANALISTA-INV
-  target: US-INV-001-01
-- source: USR-DIPIR-INV-JEFE
-  target: US-INV-DEP-001-01
-- source: USR-OPS-ING
-  target: US-IPLAT-001-01
-- source: USR-DIT-SANE-ING
-  target: US-ISAN-001-01
-- source: USR-DEV-SEC
-  target: US-ISEG-001-01
-- source: USR-MUNI-INF
-  target: US-ITMUNI-001-01
-- source: USR-MUNI-ITO
-  target: US-ITO-001-01
-- source: USR-MUNI-ITO
-  target: US-ITO-001-02
-- source: USR-MUNI-ITO
-  target: US-ITO-002-01
-- source: USR-MUNI-ITO
-  target: US-ITOM-001-01
-- source: USR-MUNI-ITO
-  target: US-ITP-001-01
-- source: USR-EXT-VIALIDAD
-  target: US-IVIAL-001-01
-- source: USR-AUD-JEFE
-  target: US-JAUD-001-01
-- source: USR-DAF-PER-JUN
-  target: US-JCAL-001-01
-- source: USR-NEW-JEFE-DEPTO-C
-  target: US-JCONT-001-01
-- source: USR-DIPL-ANAL-JEFE
-  target: US-JD-ANA-001-01
-- source: USR-DAF-PER-ENC
-  target: US-JEFE-RRHH-001-01
-- source: USR-DAF-JEFE
-  target: US-JER-001-01
-- source: USR-DIPL-PLAN-ANAL
-  target: US-JEST-001-01
-- source: USR-DIPIR-PRES-JEFE
-  target: US-JPRE-001-01
-- source: USR-NEW-JEFE-PROGRAM
-  target: US-JPROG-001-01
-- source: USR-NEW-GESTOR-TERR
-  target: US-JTERR-001-01
-- source: USR-NEW-JEFE-DEPTO-T
-  target: US-JTES-001-01
-- source: USR-DAF-TIC-ADMIN
-  target: US-JTI-001-01
-- source: USR-EXT-TRIB-CUENTA
-  target: US-JUEZ-001-01
-- source: USR-NORM-LOBBY
-  target: US-LOBBY-001-01
-- source: USR-CTD-MEMB
-  target: US-MCTD-001-01
-- source: USR-EXT-MDS
-  target: US-MDS-001-01
-- source: USR-ECIF-MEMB
-  target: US-MECIF-001-01
-- source: USR-DAF-TIC-MESA
-  target: US-MESA-001-01
-- source: USR-DAF-TIC-MESA
-  target: US-MESA-002-01
-- source: ROLE-MIGRADOR
-  target: US-MIG-001
-- source: ROLE-MIGRADOR
-  target: US-MIG-002
-- source: ROLE-QA
-  target: US-MIG-003
-- source: ROLE-ADMIN-TI
-  target: US-MIG-PROM-001
-- source: USR-EVOL-MON
-  target: US-MON-001-01
-- source: USR-SCIA-MEMB
-  target: US-MSIA-001-01
-- source: USR-DEV-NEW
-  target: US-NDEV-001-01
-- source: USR-COM-SEG
-  target: US-NOC-001-01
-- source: USR-JUR-ABOG
-  target: US-NORM-ACTO-002
-- source: USR-JUR-ABOG
-  target: US-NORM-ACTO-003
-- source: USR-JUR-ABOG
-  target: US-NORM-ACTO-004
-- source: USR-JUR-ABOG
-  target: US-NORM-ACTO-005
-- source: USR-CAL-ANAL
-  target: US-NORM-ACTO-006
-- source: USR-JUR-ABOG
-  target: US-NORM-ACTO-008
-- source: USR-OP-OF
-  target: US-NORM-ACTO-011
-- source: USR-JUR-MFE
-  target: US-NORM-ACTO-012
-- source: USR-NORM-TRANSP-TEC
-  target: US-NORM-ATT-001
-- source: USR-EXT-CGR
-  target: US-NORM-CGR-001
-- source: USR-EXT-CGR
-  target: US-NORM-CGR-003
-- source: USR-NORM-TRANSP
-  target: US-NORM-CRIS-001
-- source: USR-AUD-PROF
-  target: US-NORM-CTRL-001
-- source: USR-AUD-PROF
-  target: US-NORM-CTRL-004
-- source: USR-JUR-FIS
-  target: US-NORM-CTRL-005
-- source: USR-AUD-PROF
-  target: US-NORM-DIP-001
-- source: USR-DAF-TIC-ADMIN
-  target: US-NORM-EXP-001
-- source: USR-DAF-TIC-ADMIN
-  target: US-NORM-EXP-003
-- source: USR-NORM-TRANSP
-  target: US-NORM-LOBBY-001
-- source: USR-NORM-TRANSP
-  target: US-NORM-LOBBY-002
-- source: USR-JUR-REV
-  target: US-NORM-SIM-001
-- source: USR-NORM-TRANSP
-  target: US-NORM-TRANS-002
-- source: USR-PLAN-OBS
-  target: US-OBS-001-01
-- source: USR-PLAN-OBS
-  target: US-OBS-001-02
-- source: USR-ADM-OIRS
-  target: US-OIRS-001-01
-- source: USR-ADM-OIRS
-  target: US-OIRS-001-02
-- source: USR-NEW-ONG-REGIONAL
-  target: US-ONG-001-01
-- source: USR-CORP-DIR
-  target: US-ONG-002-01
-- source: USR-OP-OF
-  target: US-OP-001-01
-- source: USR-OP-OF
-  target: US-OP-001-02
-- source: USR-OP-OF
-  target: US-OP-002-01
-- source: USR-CIES-OP
-  target: US-OP-CIES-001-01
-- source: USR-EVOL-OP
-  target: US-OPE-001-01
-- source: USR-DAF-TIC-PLAT
-  target: US-OPS-BACK-001
-- source: ROLE-ADMIN-TI
-  target: US-OPS-BAK-001
-- source: ROLE-ADMIN-TI
-  target: US-OPS-BAK-002
-- source: ROLE-ADMIN-TI
-  target: US-OPS-BAK-003
-- source: ROLE-DEVOPS
-  target: US-OPS-CFG-001
-- source: ROLE-PO
-  target: US-OPS-CFG-002
-- source: ROLE-DEVOPS
-  target: US-OPS-CFG-003
-- source: ROLE-ANALISTA
-  target: US-OPS-DAT-001
-- source: ROLE-ANALISTA
-  target: US-OPS-DAT-002
-- source: ROLE-ADMIN
-  target: US-OPS-DAT-003
-- source: ROLE-ADMIN
-  target: US-OPS-DAT-004
-- source: USR-OPS-FINOPS
-  target: US-OPS-FIN-001
-- source: USR-OPS-ING
-  target: US-OPS-IAC-001
-- source: ROLE-ADMIN-TI
-  target: US-OPS-IAM-001
-- source: ROLE-ADMIN-TI
-  target: US-OPS-IAM-002
-- source: ROLE-ADMIN-TI
-  target: US-OPS-IAM-003
-- source: ROLE-ADMIN-TI
-  target: US-OPS-IAM-004
-- source: ROLE-USUARIO
-  target: US-OPS-IAM-005
-- source: USR-DAF-TIC-SUP
-  target: US-OPS-INC-001
-- source: ROLE-DEVOPS
-  target: US-OPS-MIG-001
-- source: ROLE-DEVOPS
-  target: US-OPS-MIG-002
-- source: ROLE-DEVOPS
-  target: US-OPS-MIG-003
-- source: ROLE-SRE
-  target: US-OPS-MON-001
-- source: ROLE-SRE
-  target: US-OPS-MON-002
-- source: ROLE-SRE
-  target: US-OPS-MON-003
-- source: ROLE-SRE
-  target: US-OPS-MON-004
-- source: USR-ADM-JEFE
-  target: US-OPS-PERF-001
-- source: USR-TDE-CISO
-  target: US-OPS-SEC-001
-- source: BOT-KODA
-  target: US-OPS-SRE-001
-- source: ROLE-USUARIO
-  target: US-OPS-SUP-001
-- source: ROLE-HELP-DESK
-  target: US-OPS-SUP-002
-- source: ROLE-USUARIO
-  target: US-OPS-SUP-003
-- source: ROLE-HELP-DESK
-  target: US-OPS-SUP-004
-- source: USR-DIDES-PART-ENC
-  target: US-PART-001-01
-- source: USR-DIDES-PAT
-  target: US-PAT-DID-001-01
-- source: USR-DIFOI-PAT
-  target: US-PAT-DIF-001-01
-- source: USR-DIT-PAT
-  target: US-PAT-DIT-001-01
-- source: USR-CAL-CSEU-PRES
-  target: US-PCSEU-001-01
-- source: USR-EXT-PDI
-  target: US-PDI-001-01
-- source: USR-COM-PER
-  target: US-PER-001-01
-- source: USR-NEW-ANALISTA-PES
-  target: US-PES-001-01
-- source: USR-CAL-VERDE-PRES
-  target: US-PEVER-001-01
-- source: USR-DIPL-URB
-  target: US-PLAN-URB-001-01
-- source: USR-CAL-PMG-COORD
-  target: US-PMG-001-01
-- source: USR-DEV-PO
-  target: US-PO-001-01
-- source: USR-DIPL-CPER-PRES
-  target: US-PPERT-001-01
-- source: USR-NEW-ANALISTA-PPR
-  target: US-PPR-001-01
-- source: USR-DIPL-DAE-PRE
-  target: US-PREINV-001-01
-- source: USR-CORE-PRES
-  target: US-PRES-CORE-001-01
-- source: USR-NEW-PREVENCIONIS
-  target: US-PREV-001-01
-- source: USR-NEW-PREVENCIONIS
-  target: US-PREV-002-01
-- source: USR-GAB-250-PROF
-  target: US-PROF-N250-001-01
-- source: USR-DIFOI-REZ-PROF
-  target: US-PROF-REZ-001-01
-- source: USR-DEV-QA
-  target: US-QA-001-01
-- source: USR-NEW-ANALISTA-REM
-  target: US-REM-001-01
-- source: USR-DAF-RH-REM
-  target: US-REM-002-01
-- source: USR-DAF-FIN-REND
-  target: US-REND-002-01
-- source: USR-DIFOI-REZ-PROF
-  target: US-REZ-001-01
-- source: USR-CAL-PMG-GASTO
-  target: US-RGASTO-001-01
-- source: USR-CAL-PMG-REF
-  target: US-RPMG-001-01
-- source: USR-CAL-PMG-PSICO
-  target: US-RPSICO-001-01
-- source: USR-DAF-RH-JEFE
-  target: US-RRHH-001-01
-- source: USR-DAF-RH-JEFE
-  target: US-RRHH-001-02
-- source: USR-DAF-RH-JEFE
-  target: US-RRHH-002-01
-- source: USR-DAF-TIC-CTD
-  target: US-RTD-001-01
-- source: USR-DIPIR-REF-TEC
-  target: US-RTEC-001-01
-- source: USR-EXT-SAG
-  target: US-SAG-001-01
-- source: USR-CTCI-SEC
-  target: US-SEC-CTCI-001-01
-- source: USR-CTD-SEC
-  target: US-SEC-CTD-001-01
-- source: USR-CORE-SEC-COM
-  target: US-SECCOM-001-01
-- source: USR-CORE-SEC
-  target: US-SECCORE-001-01
-- source: USR-CORE-SEC
-  target: US-SECCORE-001-02
-- source: USR-NEW-SECRETARIA-D
-  target: US-SECDIV-001-01
-- source: USR-MUNI-SECPLA
-  target: US-SECPLA-001-01
-- source: USR-MUNI-SECPLA
-  target: US-SECPLA-001-02
-- source: USR-CIES-OP
-  target: US-SEG-CIES-001
-- source: USR-CIES-OP
-  target: US-SEG-CIES-003
-- source: USR-CIES-OP
-  target: US-SEG-CIES-004
-- source: USR-CIES-SUP
-  target: US-SEG-CIES-006
-- source: USR-CIES-SUP
-  target: US-SEG-CIES-008
-- source: USR-CIES-ENL
-  target: US-SEG-CIES-009
-- source: USR-CIES-SUP
-  target: US-SEG-CIES-010
-- source: USR-CIES-EVID
-  target: US-SEG-EVID-001
-- source: USR-CIES-EVID
-  target: US-SEG-EVID-003
-- source: USR-CORE-CONS
-  target: US-SEG-GOB-002
-- source: USR-CIU-GEN
-  target: US-SEG-GOB-004
-- source: USR-SEG-PREV
-  target: US-SEG-PREV-003
-- source: USR-SEG-ANAL
-  target: US-SEG-PREV-006
-- source: USR-SEG-ANAL
-  target: US-SEG-PREV-007
-- source: USR-DIT-PROF
-  target: US-SEG-PREV-008
-- source: USR-CIES-COOR
-  target: US-SEG-PREV-009
-- source: USR-SEG-PREV-ANAL
-  target: US-SEG-PREV-010
-- source: USR-CORE-CONS
-  target: US-SEN-001-01
-- source: USR-EXT-SENAPRED
-  target: US-SENAPRED-001-01
-- source: USR-EXT-SEREMI-AGRI
-  target: US-SER-AGR-001-01
-- source: USR-EXT-SEREMI-GOB
-  target: US-SER-GOB-001-01
-- source: USR-EXT-SEREMI-MOP
-  target: US-SER-MOP-001-01
-- source: USR-EXT-SERNATUR
-  target: US-SERC-001-01
-- source: USR-EXT-SEREMI
-  target: US-SEREMI-001-02
-- source: USR-DAF-SERV-ENC
-  target: US-SERV-001-01
-- source: USR-EXT-SERVIU
-  target: US-SERVIU-001-01
-- source: USR-NEW-ANALISTA-SOC
-  target: US-SOC-001-01
-- source: USR-DAF-PER-SOC
-  target: US-SOCIO-001-01
-- source: USR-NEW-DIRIGENTE-SO
-  target: US-SOFO-001-01
-- source: USR-DAF-TIC-SUP
-  target: US-SOP-001-01
-- source: USR-CTD-SEC
-  target: US-SPERT-001-01
-- source: USR-DAF-TIC-SRE
-  target: US-SRE-001-01
-- source: USR-DIDES-SUBV-ANAL
-  target: US-SUBV-001-01
-- source: USR-GOB-PAS
-  target: US-SUJ-001-01
-- source: USR-CIES-SUP
-  target: US-SUP-CIES-001-01
-- source: USR-DIT-SUP
-  target: US-SUP-OBRA-001-01
-- source: USR-NORM-TRANSP-SUPL
-  target: US-SUP-TRANS-001-01
-- source: USR-JUR-MFE
-  target: US-TC-001-01
-- source: USR-CORP-EQ
-  target: US-TCORP-001-01
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-ADMIN-001
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-ADMIN-002
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-ADMIN-004
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-ADMIN-006
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-ADMIN-007
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-ADMIN-008
-- source: USR-NEW-DESARROLLADO
-  target: US-TDE-AUTH-001
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-AUTH-002
-- source: USR-NEW-DESARROLLADO
-  target: US-TDE-AUTH-003
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-AUTH-004
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-AUTH-005
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-AUTH-006
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-AVANCE-002
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-AVANCE-003
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-CALIDAD-002
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-CALIDAD-003
-- source: USR-TERR-PISEE
-  target: US-TDE-CRIS-001
-- source: USR-NEW-DESARROLLADO
-  target: US-TDE-DEV-001
-- source: USR-JUR-ABOG
-  target: US-TDE-DOCDIG-002
-- source: USR-TDE-DPO
-  target: US-TDE-DPO-001
-- source: USR-TDE-DPO
-  target: US-TDE-DPO-003
-- source: USR-TDE-DPO
-  target: US-TDE-DPO-005
-- source: USR-TDE-DPO
-  target: US-TDE-DPO-007
-- source: USR-TDE-DPO
-  target: US-TDE-DPO-008
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-FIRMA-002
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-INTEROP-001
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-INTEROP-002
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-INTEROP-003
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-INTEROP-004
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-INTEROP-005
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-INTEROP-007
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-MUNI-001
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-MUNI-002
-- source: USR-MUNI-DIG
-  target: US-TDE-MUNI-004
-- source: USR-NEW-DESARROLLADO
-  target: US-TDE-NOTIF-001
-- source: BOT-KODA
-  target: US-TDE-NOTIF-002
-- source: BOT-KODA
-  target: US-TDE-NOTIF-003
-- source: BOT-KODA
-  target: US-TDE-NOTIF-004
-- source: BOT-KODA
-  target: US-TDE-NOTIF-005
-- source: BOT-KODA
-  target: US-TDE-NOTIF-006
-- source: USR-NEW-ANALISTA-FUN
-  target: US-TDE-QA-001
-- source: USR-DAF-TIC-CTD
-  target: US-TDE-REG-001
-- source: USR-TDE-CISO
-  target: US-TDE-SEC-001
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-001
-- source: USR-GOB-JEFE
-  target: US-TDE-SEG-002
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-003
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-004
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-005
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-006
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-007
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-008
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-009
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-010
-- source: USR-TDE-CISO
-  target: US-TDE-SEG-011
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-TIC-002
-- source: USR-DAF-TIC-ADMIN
-  target: US-TDE-TIC-004
-- source: USR-MUNI-DEV
-  target: US-TDE-VINC-002
-- source: USR-DIPL-PLAN
-  target: US-TERR-ANL-001
-- source: USR-MUNI-DOM
-  target: US-TERR-DOM-002
-- source: USR-MUNI-DOM
-  target: US-TERR-DOM-003
-- source: USR-TERR-IDE
-  target: US-TERR-IDE-002
-- source: USR-TERR-IDE
-  target: US-TERR-IDE-003
-- source: USR-CIU-GEN
-  target: US-TERR-IDE-006
-- source: USR-DIPL-PLAN
-  target: US-TERR-PLAN-001
-- source: USR-GOB-JEFE
-  target: US-TERR-PLAN-005
-- source: USR-DIPL-PLAN
-  target: US-TERR-PRG-001
-- source: USR-DAF-FIN-TES
-  target: US-TES-001-01
-- source: USR-DAF-TIC-JEFE
-  target: US-TIC-001-02
-- source: USR-DEV-ARQ
-  target: US-TLEAD-001-01
-- source: USR-NORM-TRANSP
-  target: US-TRANSP-002-01
-- source: USR-DAF-FIN-UCR
-  target: US-UCR-001-01
-- source: USR-MUNI-FORM
-  target: US-UF-001-01
-- source: USR-EXT-UOCT
-  target: US-UOCT-001-01
-- source: USR-CIU-GEN
-  target: US-USR-001-01
-- source: USR-DIPL-VINC-ENC
-  target: US-VINC-001-01
+  schema: "urn:goreos:schema:profunctor:1.0.0"
+  ontology_version: "3.0.0"
+
+signature:
+  source_type: Role
+  target_type: Story
+  codomain: "2"
+
+relations:
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_016:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.647959"
+  - source: "urn:goreos:atom:role:jefe_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gab_001:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.647992"
+  - source: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_039:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-DAE-PRE"
+      extracted_at: "2025-12-22T14:56:41.647996"
+  - source: "urn:goreos:atom:role:referente_gasto:2.0.0"
+    target: "urn:goreos:atom:story:us_rgasto_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-PMG-GASTO"
+      extracted_at: "2025-12-22T14:56:41.647998"
+  - source: "urn:goreos:atom:role:formulador_externo:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_005:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-FORM"
+      extracted_at: "2025-12-22T14:56:41.648000"
+  - source: "urn:goreos:atom:role:entidad_ejecutora:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_011:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-EJEC"
+      extracted_at: "2025-12-22T14:56:41.648002"
+  - source: "urn:goreos:atom:role:secpla:2.0.0"
+    target: "urn:goreos:atom:story:us_secpla_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-SECPLA"
+      extracted_at: "2025-12-22T14:56:41.648004"
+  - source: "urn:goreos:atom:role:encargado_operativo:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_eo_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-TERR-OP"
+      extracted_at: "2025-12-22T14:56:41.648006"
+  - source: "urn:goreos:atom:role:desarrollador_devops:2.0.0"
+    target: "urn:goreos:atom:story:us_devops_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-DEV"
+      extracted_at: "2025-12-22T14:56:41.648007"
+  - source: "urn:goreos:atom:role:arquitecto_sistemas:2.0.0"
+    target: "urn:goreos:atom:story:us_arqs_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-ARQ"
+      extracted_at: "2025-12-22T14:56:41.648009"
+  - source: "urn:goreos:atom:role:analista_patrocinante_dides:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_did_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-PAT"
+      extracted_at: "2025-12-22T14:56:41.648011"
+  - source: "urn:goreos:atom:role:analista_c33:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_c33_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-C33"
+      extracted_at: "2025-12-22T14:56:41.648012"
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_uf_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-FORM"
+      extracted_at: "2025-12-22T14:56:41.648013"
+  - source: "urn:goreos:atom:role:jefe_fenix:2.0.0"
+    target: "urn:goreos:atom:story:us_fenix_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-J"
+      extracted_at: "2025-12-22T14:56:41.648015"
+  - source: "urn:goreos:atom:role:oficial_partes:2.0.0"
+    target: "urn:goreos:atom:story:us_op_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-OP-OF"
+      extracted_at: "2025-12-22T14:56:41.648016"
+  - source: "urn:goreos:atom:role:analista_planif_territorial:2.0.0"
+    target: "urn:goreos:atom:story:us_apt_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-PLAN-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648018"
+  - source: "urn:goreos:atom:role:analista_prevencion:2.0.0"
+    target: "urn:goreos:atom:story:us_aprev_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-SEG-PREV-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648019"
+  - source: "urn:goreos:atom:role:alcalde:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sup_002:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ALC"
+      extracted_at: "2025-12-22T14:56:41.648021"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_001:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648022"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_docdig_002:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648024"
+  - source: "urn:goreos:atom:role:analista_seguimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_seg_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-INV-SEG"
+      extracted_at: "2025-12-22T14:56:41.648025"
+  - source: "urn:goreos:atom:role:jefe_dit:2.0.0"
+    target: "urn:goreos:atom:story:us_dit_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648027"
+  - source: "urn:goreos:atom:role:comite_frpd:2.0.0"
+    target: "urn:goreos:atom:story:us_frpd_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-FRPD"
+      extracted_at: "2025-12-22T14:56:41.648028"
+  - source: "urn:goreos:atom:role:encargado_operativo:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_eo_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-TERR-OP"
+      extracted_at: "2025-12-22T14:56:41.648029"
+  - source: "urn:goreos:atom:role:operador_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_tray_002:1.0.0"
+    metadata:
+      role_id_original: "USR-EVOL-OP"
+      extracted_at: "2025-12-22T14:56:41.648031"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_017:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.648033"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_015:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.648035"
+  - source: "urn:goreos:atom:role:director_conaf:2.0.0"
+    target: "urn:goreos:atom:story:us_corfo_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CONAF"
+      extracted_at: "2025-12-22T14:56:41.648036"
+  - source: "urn:goreos:atom:role:analista_servicios_generales:2.0.0"
+    target: "urn:goreos:atom:story:us_aserv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-SER"
+      extracted_at: "2025-12-22T14:56:41.648039"
+  - source: "urn:goreos:atom:role:secpla:2.0.0"
+    target: "urn:goreos:atom:story:us_secpla_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-SECPLA"
+      extracted_at: "2025-12-22T14:56:41.648040"
+  - source: "urn:goreos:atom:role:formulador_externo:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_006:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-FORM"
+      extracted_at: "2025-12-22T14:56:41.648041"
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_muni_004:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-TEC"
+      extracted_at: "2025-12-22T14:56:41.648044"
+  - source: "urn:goreos:atom:role:coordinador_ide:2.0.0"
+    target: "urn:goreos:atom:story:us_ide_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-TERR-IDE"
+      extracted_at: "2025-12-22T14:56:41.648046"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_003:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648048"
+  - source: "urn:goreos:atom:role:analista_c33:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_c33_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-C33"
+      extracted_at: "2025-12-22T14:56:41.648049"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_dip_001:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.648051"
+  - source: "urn:goreos:atom:role:oficial_partes:2.0.0"
+    target: "urn:goreos:atom:story:us_op_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-OP-OF"
+      extracted_at: "2025-12-22T14:56:41.648052"
+  - source: "urn:goreos:atom:role:ciudadano:2.0.0"
+    target: "urn:goreos:atom:story:us_ciu_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-CIU-GEN"
+      extracted_at: "2025-12-22T14:56:41.648053"
+  - source: "urn:goreos:atom:role:enlace_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_cies_009:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-ENL"
+      extracted_at: "2025-12-22T14:56:41.648055"
+  - source: "urn:goreos:atom:role:supervisor_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_cies_008:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-SUP"
+      extracted_at: "2025-12-22T14:56:41.648056"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648057"
+  - source: "urn:goreos:atom:role:encargado_digital_muni:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_muni_004:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-DIG"
+      extracted_at: "2025-12-22T14:56:41.648061"
+  - source: "urn:goreos:atom:role:analista_c33:2.0.0"
+    target: "urn:goreos:atom:story:us_c33_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-C33"
+      extracted_at: "2025-12-22T14:56:41.648062"
+  - source: "urn:goreos:atom:role:asistente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_as_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ASISTENTE-SO"
+      extracted_at: "2025-12-22T14:56:41.648064"
+  - source: "urn:goreos:atom:role:arquitecto_datos:2.0.0"
+    target: "urn:goreos:atom:story:us_arq_dat_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-ARCH-DATOS"
+      extracted_at: "2025-12-22T14:56:41.648065"
+  - source: "urn:goreos:atom:role:director_vialidad:2.0.0"
+    target: "urn:goreos:atom:story:us_ivial_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-VIALIDAD"
+      extracted_at: "2025-12-22T14:56:41.648067"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_admin_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648068"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_002:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648070"
+  - source: "urn:goreos:atom:role:periodista:2.0.0"
+    target: "urn:goreos:atom:story:us_per_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-PER"
+      extracted_at: "2025-12-22T14:56:41.648071"
+  - source: "urn:goreos:atom:role:ong_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_ong_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ONG-REGIONAL"
+      extracted_at: "2025-12-22T14:56:41.648073"
+  - source: "urn:goreos:atom:role:gobernacion_provincial:2.0.0"
+    target: "urn:goreos:atom:story:us_gobprov_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-GOBERNACION-"
+      extracted_at: "2025-12-22T14:56:41.648074"
+  - source: "urn:goreos:atom:role:noc_soc:2.0.0"
+    target: "urn:goreos:atom:story:us_noc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-SEG"
+      extracted_at: "2025-12-22T14:56:41.648076"
+  - source: "urn:goreos:atom:role:jefe_rrhh:2.0.0"
+    target: "urn:goreos:atom:story:us_rrhh_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-RH-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648077"
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_muni_005:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-FORM"
+      extracted_at: "2025-12-22T14:56:41.648079"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_plan_005:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648080"
+  - source: "urn:goreos:atom:role:formulador_externo:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_007:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-FORM"
+      extracted_at: "2025-12-22T14:56:41.648082"
+  - source: "urn:goreos:atom:role:coordinador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_grd_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-COOR"
+      extracted_at: "2025-12-22T14:56:41.648083"
+  - source: "urn:goreos:atom:role:alcalde:2.0.0"
+    target: "urn:goreos:atom:story:us_alc_chv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ALC"
+      extracted_at: "2025-12-22T14:56:41.648085"
+  - source: "urn:goreos:atom:role:jefe_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gab_003:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648086"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_014:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648088"
+  - source: "urn:goreos:atom:role:miembro_comite_pertinencia:2.0.0"
+    target: "urn:goreos:atom:story:us_compert_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-MIEMBRO-COMI"
+      extracted_at: "2025-12-22T14:56:41.648090"
+  - source: "urn:goreos:atom:role:supervisor_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_sup_obra_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-SUP"
+      extracted_at: "2025-12-22T14:56:41.648091"
+  - source: "urn:goreos:atom:role:profesional_nuble_250:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gab_007:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-250-PROF"
+      extracted_at: "2025-12-22T14:56:41.648092"
+  - source: "urn:goreos:atom:role:tesorero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-TES"
+      extracted_at: "2025-12-22T14:56:41.648094"
+  - source: "urn:goreos:atom:role:encargado_control_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_cgpe_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-CTRL"
+      extracted_at: "2025-12-22T14:56:41.648096"
+  - source: "urn:goreos:atom:role:entidad_ejecutora:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_017:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-EJEC"
+      extracted_at: "2025-12-22T14:56:41.648097"
+  - source: "urn:goreos:atom:role:abogado_disciplinarios:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_disc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-DISC"
+      extracted_at: "2025-12-22T14:56:41.648099"
+  - source: "urn:goreos:atom:role:lider_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_pilot_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-LEAD"
+      extracted_at: "2025-12-22T14:56:41.648100"
+  - source: "urn:goreos:atom:role:encargado_control_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_pb_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-CTRL"
+      extracted_at: "2025-12-22T14:56:41.648102"
+  - source: "urn:goreos:atom:role:coordinador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_009:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-COOR"
+      extracted_at: "2025-12-22T14:56:41.648103"
+  - source: "urn:goreos:atom:role:encargado_operativo:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_eo_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-TERR-OP"
+      extracted_at: "2025-12-22T14:56:41.648104"
+  - source: "urn:goreos:atom:role:secretario_ejecutivo_core:2.0.0"
+    target: "urn:goreos:atom:story:us_seccore_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-SEC"
+      extracted_at: "2025-12-22T14:56:41.648106"
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_muni_001:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-FORM"
+      extracted_at: "2025-12-22T14:56:41.648107"
+  - source: "urn:goreos:atom:role:analista_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_plan_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-PLAN"
+      extracted_at: "2025-12-22T14:56:41.648109"
+  - source: "urn:goreos:atom:role:encargado_digital_muni:2.0.0"
+    target: "urn:goreos:atom:story:us_dtmuni_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-DIG"
+      extracted_at: "2025-12-22T14:56:41.648111"
+  - source: "urn:goreos:atom:role:director_sernatur:2.0.0"
+    target: "urn:goreos:atom:story:us_serc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SERNATUR"
+      extracted_at: "2025-12-22T14:56:41.648112"
+  - source: "urn:goreos:atom:role:analista_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_hon_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-HON"
+      extracted_at: "2025-12-22T14:56:41.648114"
+  - source: "urn:goreos:atom:role:jefe_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_jpre_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-PRES-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648116"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_006:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648118"
+  - source: "urn:goreos:atom:role:encargado_competencias:2.0.0"
+    target: "urn:goreos:atom:story:us_compt_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-COMP"
+      extracted_at: "2025-12-22T14:56:41.648119"
+  - source: "urn:goreos:atom:role:analista_presupuestario:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-PRES-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648121"
+  - source: "urn:goreos:atom:role:analista_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_anl_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-PLAN"
+      extracted_at: "2025-12-22T14:56:41.648122"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gob_001:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648123"
+  - source: "urn:goreos:atom:role:encargado_lobby:2.0.0"
+    target: "urn:goreos:atom:story:us_lobby_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-LOBBY"
+      extracted_at: "2025-12-22T14:56:41.648125"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_muni_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648127"
+  - source: "urn:goreos:atom:role:jefe_didesoh:2.0.0"
+    target: "urn:goreos:atom:story:us_didesoh_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648128"
+  - source: "urn:goreos:atom:role:analista_c33:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_c33_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-C33"
+      extracted_at: "2025-12-22T14:56:41.648129"
+  - source: "urn:goreos:atom:role:evaluador_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-FOND-EVAL"
+      extracted_at: "2025-12-22T14:56:41.648130"
+  - source: "urn:goreos:atom:role:camara_comercio:2.0.0"
+    target: "urn:goreos:atom:story:us_cc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CAMARA"
+      extracted_at: "2025-12-22T14:56:41.648132"
+  - source: "urn:goreos:atom:role:gestor_fomento:2.0.0"
+    target: "urn:goreos:atom:story:us_gfom_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-DEL-GEST"
+      extracted_at: "2025-12-22T14:56:41.648134"
+  - source: "urn:goreos:atom:role:arquitecto_sistemas:2.0.0"
+    target: "urn:goreos:atom:story:us_tlead_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-ARQ"
+      extracted_at: "2025-12-22T14:56:41.648137"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_007:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648138"
+  - source: "urn:goreos:atom:role:analista_modificaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_amod_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-MOD"
+      extracted_at: "2025-12-22T14:56:41.648140"
+  - source: "urn:goreos:atom:role:desarrollador_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_kb_008:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-SYS"
+      extracted_at: "2025-12-22T14:56:41.648143"
+  - source: "urn:goreos:atom:role:agencia_datos:2.0.0"
+    target: "urn:goreos:atom:story:us_data_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-APD"
+      extracted_at: "2025-12-22T14:56:41.648144"
+  - source: "urn:goreos:atom:role:profesional_apoyo_core:2.0.0"
+    target: "urn:goreos:atom:story:us_ap_core_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-APOYO"
+      extracted_at: "2025-12-22T14:56:41.648145"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_act_003:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648147"
+  - source: "urn:goreos:atom:role:profesional_dit:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_008:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-PROF"
+      extracted_at: "2025-12-22T14:56:41.648149"
+  - source: "urn:goreos:atom:role:encargado_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_abast_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-ABS-ENC"
+      extracted_at: "2025-12-22T14:56:41.648151"
+  - source: "urn:goreos:atom:role:ito_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ITO"
+      extracted_at: "2025-12-22T14:56:41.648152"
+  - source: "urn:goreos:atom:role:tesorero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-TES"
+      extracted_at: "2025-12-22T14:56:41.648153"
+  - source: "urn:goreos:atom:role:encargado_fondos_8:2.0.0"
+    target: "urn:goreos:atom:story:us_f8_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-FOND-ENC"
+      extracted_at: "2025-12-22T14:56:41.648155"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_011:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.648157"
+  - source: "urn:goreos:atom:role:desarrollador_devops:2.0.0"
+    target: "urn:goreos:atom:story:us_back_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-DEV"
+      extracted_at: "2025-12-22T14:56:41.648158"
+  - source: "urn:goreos:atom:role:miembro_comite_pertinencia:2.0.0"
+    target: "urn:goreos:atom:story:us_compert_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-MIEMBRO-COMI"
+      extracted_at: "2025-12-22T14:56:41.648159"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_007:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.648161"
+  - source: "urn:goreos:atom:role:seremi_gobierno:2.0.0"
+    target: "urn:goreos:atom:story:us_ser_gob_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SEREMI-GOB"
+      extracted_at: "2025-12-22T14:56:41.648164"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_dip_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648166"
+  - source: "urn:goreos:atom:role:jefe_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gab_004:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648167"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_013:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.648169"
+  - source: "urn:goreos:atom:role:miembro_ecif:2.0.0"
+    target: "urn:goreos:atom:story:us_mecif_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-ECIF-MEMB"
+      extracted_at: "2025-12-22T14:56:41.648170"
+  - source: "urn:goreos:atom:role:dirigente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_sofo_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DIRIGENTE-SO"
+      extracted_at: "2025-12-22T14:56:41.648172"
+  - source: "urn:goreos:atom:role:secretario_ejecutivo_core:2.0.0"
+    target: "urn:goreos:atom:story:us_seccore_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-SEC"
+      extracted_at: "2025-12-22T14:56:41.648173"
+  - source: "urn:goreos:atom:role:unidad_formuladora:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_muni_002:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-FORM"
+      extracted_at: "2025-12-22T14:56:41.648175"
+  - source: "urn:goreos:atom:role:encargado_interoperabilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_inter_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ENCARGADO-IN"
+      extracted_at: "2025-12-22T14:56:41.648177"
+  - source: "urn:goreos:atom:role:encargado_operativo:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_eo_006:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-TERR-OP"
+      extracted_at: "2025-12-22T14:56:41.648178"
+  - source: "urn:goreos:atom:role:ingeniero_seguridad:2.0.0"
+    target: "urn:goreos:atom:story:us_iseg_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-SEC"
+      extracted_at: "2025-12-22T14:56:41.648179"
+  - source: "urn:goreos:atom:role:jefe_fenix:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_act_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-J"
+      extracted_at: "2025-12-22T14:56:41.648180"
+  - source: "urn:goreos:atom:role:senapred:2.0.0"
+    target: "urn:goreos:atom:story:us_senapred_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SENAPRED"
+      extracted_at: "2025-12-22T14:56:41.648182"
+  - source: "urn:goreos:atom:role:encargado_comite_paritario:2.0.0"
+    target: "urn:goreos:atom:story:us_cp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ENCARGADO-CO"
+      extracted_at: "2025-12-22T14:56:41.648183"
+  - source: "urn:goreos:atom:role:bodeguero:2.0.0"
+    target: "urn:goreos:atom:story:us_bod_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-SERV-BOD"
+      extracted_at: "2025-12-22T14:56:41.648184"
+  - source: "urn:goreos:atom:role:profesional_ucr:2.0.0"
+    target: "urn:goreos:atom:story:us_aucr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-UCR-PROF"
+      extracted_at: "2025-12-22T14:56:41.648186"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_011:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648187"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_005:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648188"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.648189"
+  - source: "urn:goreos:atom:role:ito_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itom_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ITO"
+      extracted_at: "2025-12-22T14:56:41.648192"
+  - source: "urn:goreos:atom:role:encargado_capacitacion:2.0.0"
+    target: "urn:goreos:atom:story:us_back_comp_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-RH-CAP"
+      extracted_at: "2025-12-22T14:56:41.648193"
+  - source: "urn:goreos:atom:role:ingeniero_sre:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_chaos_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-SRE"
+      extracted_at: "2025-12-22T14:56:41.648194"
+  - source: "urn:goreos:atom:role:analista_presupuestario:2.0.0"
+    target: "urn:goreos:atom:story:us_analpres_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-PRES-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648196"
+  - source: "urn:goreos:atom:role:secretario_ctd:2.0.0"
+    target: "urn:goreos:atom:story:us_sec_ctd_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CTD-SEC"
+      extracted_at: "2025-12-22T14:56:41.648198"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_muni_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648199"
+  - source: "urn:goreos:atom:role:evaluador_social:2.0.0"
+    target: "urn:goreos:atom:story:us_eval_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-FOND-EVAL"
+      extracted_at: "2025-12-22T14:56:41.648201"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_rtd_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648202"
+  - source: "urn:goreos:atom:role:ingeniero_sanitario:2.0.0"
+    target: "urn:goreos:atom:story:us_isan_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-SANE-ING"
+      extracted_at: "2025-12-22T14:56:41.648204"
+  - source: "urn:goreos:atom:role:encargado_capacitacion:2.0.0"
+    target: "urn:goreos:atom:story:us_back_comp_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-RH-CAP"
+      extracted_at: "2025-12-22T14:56:41.648205"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_004:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648207"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_010:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648208"
+  - source: "urn:goreos:atom:role:ingeniero_seguridad:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_sec_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-SEC"
+      extracted_at: "2025-12-22T14:56:41.648209"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_jti_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648211"
+  - source: "urn:goreos:atom:role:jefe_diplade:2.0.0"
+    target: "urn:goreos:atom:story:us_diplade_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648212"
+  - source: "urn:goreos:atom:role:abogado_convenios:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_conv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ABOGADO-CONV"
+      extracted_at: "2025-12-22T14:56:41.648214"
+  - source: "urn:goreos:atom:role:analista_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_apres_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-PRE"
+      extracted_at: "2025-12-22T14:56:41.648215"
+  - source: "urn:goreos:atom:role:representante_amuch:2.0.0"
+    target: "urn:goreos:atom:story:us_col_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-REP-AMUCH"
+      extracted_at: "2025-12-22T14:56:41.648217"
+  - source: "urn:goreos:atom:role:encargado_operativo:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_eo_007:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-TERR-OP"
+      extracted_at: "2025-12-22T14:56:41.648218"
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_muni_003:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-TEC"
+      extracted_at: "2025-12-22T14:56:41.648219"
+  - source: "urn:goreos:atom:role:ito_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ITO"
+      extracted_at: "2025-12-22T14:56:41.648221"
+  - source: "urn:goreos:atom:role:encargado_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_abast_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-ABS-ENC"
+      extracted_at: "2025-12-22T14:56:41.648223"
+  - source: "urn:goreos:atom:role:entidad_ejecutora:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_015:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-EJEC"
+      extracted_at: "2025-12-22T14:56:41.648224"
+  - source: "urn:goreos:atom:role:jefe_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gab_005:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648225"
+  - source: "urn:goreos:atom:role:encargado_fondos_8:2.0.0"
+    target: "urn:goreos:atom:story:us_f8_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-FOND-ENC"
+      extracted_at: "2025-12-22T14:56:41.648227"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_006:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.648228"
+  - source: "urn:goreos:atom:role:referente_tecnico_pmg:2.0.0"
+    target: "urn:goreos:atom:story:us_rpmg_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-PMG-REF"
+      extracted_at: "2025-12-22T14:56:41.648230"
+  - source: "urn:goreos:atom:role:analista_subvenciones:2.0.0"
+    target: "urn:goreos:atom:story:us_subv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-SUBV-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648231"
+  - source: "urn:goreos:atom:role:alcalde:2.0.0"
+    target: "urn:goreos:atom:story:us_fedmuni_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ALC"
+      extracted_at: "2025-12-22T14:56:41.648233"
+  - source: "urn:goreos:atom:role:operador_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_h_002:1.0.0"
+    metadata:
+      role_id_original: "USR-EVOL-OP"
+      extracted_at: "2025-12-22T14:56:41.648234"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_026:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648236"
+  - source: "urn:goreos:atom:role:dpo:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_dpo_008:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-DPO"
+      extracted_at: "2025-12-22T14:56:41.648237"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_ctrl_004:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.648238"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_notif_005:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648240"
+  - source: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ana_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648241"
+  - source: "urn:goreos:atom:role:desarrollador:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_auth_001:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DESARROLLADO"
+      extracted_at: "2025-12-22T14:56:41.648243"
+  - source: "urn:goreos:atom:role:socio_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_socio_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-SOC"
+      extracted_at: "2025-12-22T14:56:41.648244"
+  - source: "urn:goreos:atom:role:socio_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_011:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-SOC"
+      extracted_at: "2025-12-22T14:56:41.648245"
+  - source: "urn:goreos:atom:role:desarrollador_devops:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_qa_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-DEV"
+      extracted_at: "2025-12-22T14:56:41.648247"
+  - source: "urn:goreos:atom:role:jefe_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_gab_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648249"
+  - source: "urn:goreos:atom:role:seremi_agricultura:2.0.0"
+    target: "urn:goreos:atom:story:us_ser_agr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SEREMI-AGRI"
+      extracted_at: "2025-12-22T14:56:41.648250"
+  - source: "urn:goreos:atom:role:desarrollador:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_dev_001:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DESARROLLADO"
+      extracted_at: "2025-12-22T14:56:41.648252"
+  - source: "urn:goreos:atom:role:encargado_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_back_abs_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-ABS-ENC"
+      extracted_at: "2025-12-22T14:56:41.648253"
+  - source: "urn:goreos:atom:role:miembro_estado_verde:2.0.0"
+    target: "urn:goreos:atom:story:us_everde_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-VERDE-MEMB"
+      extracted_at: "2025-12-22T14:56:41.648256"
+  - source: "urn:goreos:atom:role:encargado_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_back_abs_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-ABS-ENC"
+      extracted_at: "2025-12-22T14:56:41.648257"
+  - source: "urn:goreos:atom:role:analista_observatorio:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-PLAN-OBS"
+      extracted_at: "2025-12-22T14:56:41.648259"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648261"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648262"
+  - source: "urn:goreos:atom:role:jefe_difoi:2.0.0"
+    target: "urn:goreos:atom:story:us_difoi_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648268"
+  - source: "urn:goreos:atom:role:socio_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_010:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-SOC"
+      extracted_at: "2025-12-22T14:56:41.648270"
+  - source: "urn:goreos:atom:role:ingeniero_sre:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_op_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-SRE"
+      extracted_at: "2025-12-22T14:56:41.648271"
+  - source: "urn:goreos:atom:role:encargado_descentralizacion:2.0.0"
+    target: "urn:goreos:atom:story:us_desc_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ENCARGADO-DE"
+      extracted_at: "2025-12-22T14:56:41.648273"
+  - source: "urn:goreos:atom:role:contratista:2.0.0"
+    target: "urn:goreos:atom:story:us_cont_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CONT"
+      extracted_at: "2025-12-22T14:56:41.648275"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_notif_004:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648276"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_027:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648277"
+  - source: "urn:goreos:atom:role:fiscal_sumariante:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_ctrl_005:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-FIS"
+      extracted_at: "2025-12-22T14:56:41.648279"
+  - source: "urn:goreos:atom:role:ejecutor_ppr:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_006:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-EJEC-PPR"
+      extracted_at: "2025-12-22T14:56:41.648281"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_reg_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648282"
+  - source: "urn:goreos:atom:role:jefe_depto_analisis:2.0.0"
+    target: "urn:goreos:atom:story:us_jd_ana_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-ANAL-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648283"
+  - source: "urn:goreos:atom:role:analista_patrocinante_difoi:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dif_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-PAT"
+      extracted_at: "2025-12-22T14:56:41.648285"
+  - source: "urn:goreos:atom:role:gestor_provincial:2.0.0"
+    target: "urn:goreos:atom:story:us_gprov_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-TERR-GEST"
+      extracted_at: "2025-12-22T14:56:41.648287"
+  - source: "urn:goreos:atom:role:ciudadano:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_gob_004:1.0.0"
+    metadata:
+      role_id_original: "USR-CIU-GEN"
+      extracted_at: "2025-12-22T14:56:41.648288"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_008:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648290"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_019:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648291"
+  - source: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_004:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-PPR"
+      extracted_at: "2025-12-22T14:56:41.648292"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_031:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648293"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_notif_006:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648295"
+  - source: "urn:goreos:atom:role:prevencionista_riesgos:2.0.0"
+    target: "urn:goreos:atom:story:us_prev_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-PREVENCIONIS"
+      extracted_at: "2025-12-22T14:56:41.648297"
+  - source: "urn:goreos:atom:role:encargado_participacion:2.0.0"
+    target: "urn:goreos:atom:story:us_part_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-PART-ENC"
+      extracted_at: "2025-12-22T14:56:41.648298"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_auth_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648299"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_admin_008:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648300"
+  - source: "urn:goreos:atom:role:ingeniero_conocimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_icon_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-KB"
+      extracted_at: "2025-12-22T14:56:41.648302"
+  - source: "urn:goreos:atom:role:sujeto_pasivo:2.0.0"
+    target: "urn:goreos:atom:story:us_suj_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-PAS"
+      extracted_at: "2025-12-22T14:56:41.648303"
+  - source: "urn:goreos:atom:role:finops_manager:2.0.0"
+    target: "urn:goreos:atom:story:us_ops_fin_001:1.0.0"
+    metadata:
+      role_id_original: "USR-OPS-FINOPS"
+      extracted_at: "2025-12-22T14:56:41.648305"
+  - source: "urn:goreos:atom:role:analista_remuneraciones:2.0.0"
+    target: "urn:goreos:atom:story:us_rem_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-REM"
+      extracted_at: "2025-12-22T14:56:41.648306"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_006:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648308"
+  - source: "urn:goreos:atom:role:socio_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_012:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-SOC"
+      extracted_at: "2025-12-22T14:56:41.648311"
+  - source: "urn:goreos:atom:role:miembro_comision_evaluadora:2.0.0"
+    target: "urn:goreos:atom:story:us_com_ev_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-EVAL"
+      extracted_at: "2025-12-22T14:56:41.648312"
+  - source: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_epp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-ANAL-INV"
+      extracted_at: "2025-12-22T14:56:41.648314"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648315"
+  - source: "urn:goreos:atom:role:analista_observatorio:2.0.0"
+    target: "urn:goreos:atom:story:us_obs_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-PLAN-OBS"
+      extracted_at: "2025-12-22T14:56:41.648317"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_007:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648318"
+  - source: "urn:goreos:atom:role:miembro_comision_evaluadora:2.0.0"
+    target: "urn:goreos:atom:story:us_cseu_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-EVAL"
+      extracted_at: "2025-12-22T14:56:41.648319"
+  - source: "urn:goreos:atom:role:interventor_financiero:2.0.0"
+    target: "urn:goreos:atom:story:us_intfin_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-FIN"
+      extracted_at: "2025-12-22T14:56:41.648320"
+  - source: "urn:goreos:atom:role:mesa_ayuda:2.0.0"
+    target: "urn:goreos:atom:story:us_mesa_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-MESA"
+      extracted_at: "2025-12-22T14:56:41.648322"
+  - source: "urn:goreos:atom:role:analista_contable:2.0.0"
+    target: "urn:goreos:atom:story:us_cont_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-CON"
+      extracted_at: "2025-12-22T14:56:41.648323"
+  - source: "urn:goreos:atom:role:desarrollador:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_auth_003:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DESARROLLADO"
+      extracted_at: "2025-12-22T14:56:41.648325"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ana_003:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.648326"
+  - source: "urn:goreos:atom:role:gestor_personas:2.0.0"
+    target: "urn:goreos:atom:story:us_back_cris_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-GEST"
+      extracted_at: "2025-12-22T14:56:41.648328"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_inf_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648329"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_018:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648330"
+  - source: "urn:goreos:atom:role:abogado_judiciales:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_jud_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-JUD"
+      extracted_at: "2025-12-22T14:56:41.648332"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_core_004:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648333"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_core_010:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648335"
+  - source: "urn:goreos:atom:role:custodio_evidencia:2.0.0"
+    target: "urn:goreos:atom:story:us_cust_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-EVID"
+      extracted_at: "2025-12-22T14:56:41.648336"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_020:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648337"
+  - source: "urn:goreos:atom:role:analista_inventario:2.0.0"
+    target: "urn:goreos:atom:story:us_inv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-INV"
+      extracted_at: "2025-12-22T14:56:41.648339"
+  - source: "urn:goreos:atom:role:jefe_seg:2.0.0"
+    target: "urn:goreos:atom:story:us_dseg_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-SEG-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648341"
+  - source: "urn:goreos:atom:role:operador_pisee:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_cris_001:1.0.0"
+    metadata:
+      role_id_original: "USR-TERR-PISEE"
+      extracted_at: "2025-12-22T14:56:41.648342"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_calidad_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648344"
+  - source: "urn:goreos:atom:role:custodio_evidencia:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_evid_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-EVID"
+      extracted_at: "2025-12-22T14:56:41.648345"
+  - source: "urn:goreos:atom:role:inspector_fiscal:2.0.0"
+    target: "urn:goreos:atom:story:us_if_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-INSP-FISCAL"
+      extracted_at: "2025-12-22T14:56:41.648347"
+  - source: "urn:goreos:atom:role:analista_ciclo_vida:2.0.0"
+    target: "urn:goreos:atom:story:us_acv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-CIC"
+      extracted_at: "2025-12-22T14:56:41.648349"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_notif_003:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648350"
+  - source: "urn:goreos:atom:role:analista_territorial:2.0.0"
+    target: "urn:goreos:atom:story:us_at_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-TER"
+      extracted_at: "2025-12-22T14:56:41.648351"
+  - source: "urn:goreos:atom:role:profesional_nuble_250:2.0.0"
+    target: "urn:goreos:atom:story:us_prof_n250_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-250-PROF"
+      extracted_at: "2025-12-22T14:56:41.648353"
+  - source: "urn:goreos:atom:role:jefe_depto_tesoreria:2.0.0"
+    target: "urn:goreos:atom:story:us_jtes_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-JEFE-DEPTO-T"
+      extracted_at: "2025-12-22T14:56:41.648354"
+  - source: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_fndr8_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-ANAL8"
+      extracted_at: "2025-12-22T14:56:41.648356"
+  - source: "urn:goreos:atom:role:oficial_partes:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_op_002:1.0.0"
+    metadata:
+      role_id_original: "USR-OP-OF"
+      extracted_at: "2025-12-22T14:56:41.648357"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648360"
+  - source: "urn:goreos:atom:role:encargado_rendiciones:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_rend_016:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-REND"
+      extracted_at: "2025-12-22T14:56:41.648362"
+  - source: "urn:goreos:atom:role:encargado_abastecimiento:2.0.0"
+    target: "urn:goreos:atom:story:us_back_abs_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-ABS-ENC"
+      extracted_at: "2025-12-22T14:56:41.648363"
+  - source: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-ANAL-INV"
+      extracted_at: "2025-12-22T14:56:41.648364"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648365"
+  - source: "urn:goreos:atom:role:lider_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_dt_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-LEAD"
+      extracted_at: "2025-12-22T14:56:41.648367"
+  - source: "urn:goreos:atom:role:director_serviu:2.0.0"
+    target: "urn:goreos:atom:story:us_serviu_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SERVIU"
+      extracted_at: "2025-12-22T14:56:41.648369"
+  - source: "urn:goreos:atom:role:encargado_operativo:2.0.0"
+    target: "urn:goreos:atom:story:us_eope_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-TERR-OP"
+      extracted_at: "2025-12-22T14:56:41.648370"
+  - source: "urn:goreos:atom:role:analista_transferencias:2.0.0"
+    target: "urn:goreos:atom:story:us_atrans_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-FIN-TRANS"
+      extracted_at: "2025-12-22T14:56:41.648372"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_notif_002:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648373"
+  - source: "urn:goreos:atom:role:encargado_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_lobby_001:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-TRANSP"
+      extracted_at: "2025-12-22T14:56:41.648375"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_auth_006:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648376"
+  - source: "urn:goreos:atom:role:encargado_rendiciones:2.0.0"
+    target: "urn:goreos:atom:story:us_rend_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-REND"
+      extracted_at: "2025-12-22T14:56:41.648378"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_009:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648380"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_calidad_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648381"
+  - source: "urn:goreos:atom:role:analista_funcional:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_qa_001:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-FUN"
+      extracted_at: "2025-12-22T14:56:41.648383"
+  - source: "urn:goreos:atom:role:abogado_judiciales:2.0.0"
+    target: "urn:goreos:atom:story:us_cde_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-JUD"
+      extracted_at: "2025-12-22T14:56:41.648384"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_021:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648385"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_gob_002:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648387"
+  - source: "urn:goreos:atom:role:secretario_ejecutivo_core:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_core_011:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-SEC"
+      extracted_at: "2025-12-22T14:56:41.648388"
+  - source: "urn:goreos:atom:role:analista_geoespacial:2.0.0"
+    target: "urn:goreos:atom:story:us_geo_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-TERR-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648390"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_core_007:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648392"
+  - source: "urn:goreos:atom:role:tesorero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_tes_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-TES"
+      extracted_at: "2025-12-22T14:56:41.648393"
+  - source: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_002:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-PPR"
+      extracted_at: "2025-12-22T14:56:41.648394"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_ctrl_001:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.648397"
+  - source: "urn:goreos:atom:role:soporte_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_ops_inc_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-SUP"
+      extracted_at: "2025-12-22T14:56:41.648398"
+  - source: "urn:goreos:atom:role:coordinador_pmg:2.0.0"
+    target: "urn:goreos:atom:story:us_pmg_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-PMG-COORD"
+      extracted_at: "2025-12-22T14:56:41.648399"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_auth_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648401"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_cie_002:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.648402"
+  - source: "urn:goreos:atom:role:interventor_financiero:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-FIN"
+      extracted_at: "2025-12-22T14:56:41.648404"
+  - source: "urn:goreos:atom:role:lider_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_ciclo_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-LEAD"
+      extracted_at: "2025-12-22T14:56:41.648405"
+  - source: "urn:goreos:atom:role:analista_ppr_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-PPR"
+      extracted_at: "2025-12-22T14:56:41.648407"
+  - source: "urn:goreos:atom:role:analista_planificacion:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_prg_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-PLAN"
+      extracted_at: "2025-12-22T14:56:41.648408"
+  - source: "urn:goreos:atom:role:jefe_programacion:2.0.0"
+    target: "urn:goreos:atom:story:us_jprog_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-JEFE-PROGRAM"
+      extracted_at: "2025-12-22T14:56:41.648410"
+  - source: "urn:goreos:atom:role:encargado_rendiciones:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_rend_014:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-REND"
+      extracted_at: "2025-12-22T14:56:41.648412"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_uci_002:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.648413"
+  - source: "urn:goreos:atom:role:encargado_comite_paritario:2.0.0"
+    target: "urn:goreos:atom:story:us_bcp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ENCARGADO-CO"
+      extracted_at: "2025-12-22T14:56:41.648414"
+  - source: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_anal_inv_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-ANAL-INV"
+      extracted_at: "2025-12-22T14:56:41.648416"
+  - source: "urn:goreos:atom:role:encargado_rendiciones:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_rend_015:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-REND"
+      extracted_at: "2025-12-22T14:56:41.648417"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_firma_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648419"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648420"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gr_009:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648422"
+  - source: "urn:goreos:atom:role:alcalde:2.0.0"
+    target: "urn:goreos:atom:story:us_alc_sc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ALC"
+      extracted_at: "2025-12-22T14:56:41.648424"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_core_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648426"
+  - source: "urn:goreos:atom:role:lider_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_dt_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-LEAD"
+      extracted_at: "2025-12-22T14:56:41.648428"
+  - source: "urn:goreos:atom:role:unidad_tecnica:2.0.0"
+    target: "urn:goreos:atom:story:us_devmuni_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-TEC"
+      extracted_at: "2025-12-22T14:56:41.648429"
+  - source: "urn:goreos:atom:role:interventor_fiscal:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ope_002:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-FIS"
+      extracted_at: "2025-12-22T14:56:41.648431"
+  - source: "urn:goreos:atom:role:encargado_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_lobby_002:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-TRANSP"
+      extracted_at: "2025-12-22T14:56:41.648433"
+  - source: "urn:goreos:atom:role:jefe_fenix:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_cie_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-J"
+      extracted_at: "2025-12-22T14:56:41.648435"
+  - source: "urn:goreos:atom:role:desarrollador:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_notif_001:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DESARROLLADO"
+      extracted_at: "2025-12-22T14:56:41.648436"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_auth_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648437"
+  - source: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    target: "urn:goreos:atom:story:us_ppr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-PPR"
+      extracted_at: "2025-12-22T14:56:41.648439"
+  - source: "urn:goreos:atom:role:custodio_evidencia:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_evid_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-EVID"
+      extracted_at: "2025-12-22T14:56:41.648440"
+  - source: "urn:goreos:atom:role:director_ind:2.0.0"
+    target: "urn:goreos:atom:story:us_indap_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-IND"
+      extracted_at: "2025-12-22T14:56:41.648442"
+  - source: "urn:goreos:atom:role:enlace_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_enl_cies_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-ENL"
+      extracted_at: "2025-12-22T14:56:41.648443"
+  - source: "urn:goreos:atom:role:analista_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_bien_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-BIE"
+      extracted_at: "2025-12-22T14:56:41.648445"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_022:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648446"
+  - source: "urn:goreos:atom:role:abogado_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_daf_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JUR"
+      extracted_at: "2025-12-22T14:56:41.648448"
+  - source: "urn:goreos:atom:role:analista_ppr:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppr_003:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-PPR"
+      extracted_at: "2025-12-22T14:56:41.648449"
+  - source: "urn:goreos:atom:role:encargado_rrhh:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_per_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-ENC"
+      extracted_at: "2025-12-22T14:56:41.648450"
+  - source: "urn:goreos:atom:role:abogado_licitaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_lic_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ABOGADO-LICI"
+      extracted_at: "2025-12-22T14:56:41.648452"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_core_006:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648454"
+  - source: "urn:goreos:atom:role:funcionario:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-FUN"
+      extracted_at: "2025-12-22T14:56:41.648456"
+  - source: "urn:goreos:atom:role:dpo:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_dpo_001:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-DPO"
+      extracted_at: "2025-12-22T14:56:41.648457"
+  - source: "urn:goreos:atom:role:gestor_personas:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_015:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-GEST"
+      extracted_at: "2025-12-22T14:56:41.648458"
+  - source: "urn:goreos:atom:role:nuevo_desarrollador:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_dx_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-NEW"
+      extracted_at: "2025-12-22T14:56:41.648460"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_013:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648461"
+  - source: "urn:goreos:atom:role:jefe_diplade:2.0.0"
+    target: "urn:goreos:atom:story:us_diplade_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648462"
+  - source: "urn:goreos:atom:role:contraparte_contable_cgr:2.0.0"
+    target: "urn:goreos:atom:story:us_cgr_cont_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CGR-CONT"
+      extracted_at: "2025-12-22T14:56:41.648464"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_admin_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648465"
+  - source: "urn:goreos:atom:role:auxiliar:2.0.0"
+    target: "urn:goreos:atom:story:us_aux_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-AUXILIAR"
+      extracted_at: "2025-12-22T14:56:41.648467"
+  - source: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-ANAL8"
+      extracted_at: "2025-12-22T14:56:41.648469"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_hg_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648470"
+  - source: "urn:goreos:atom:role:ito_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_ito_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ITO"
+      extracted_at: "2025-12-22T14:56:41.648471"
+  - source: "urn:goreos:atom:role:auditor_externo:2.0.0"
+    target: "urn:goreos:atom:story:us_aud_ext_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-AUDITOR-EXTE"
+      extracted_at: "2025-12-22T14:56:41.648472"
+  - source: "urn:goreos:atom:role:funcionario:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_mc_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-FUN"
+      extracted_at: "2025-12-22T14:56:41.648474"
+  - source: "urn:goreos:atom:role:trabajador_corporacion:2.0.0"
+    target: "urn:goreos:atom:story:us_tcorp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORP-EQ"
+      extracted_at: "2025-12-22T14:56:41.648476"
+  - source: "urn:goreos:atom:role:coordinador_sectorial_dit:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_sec_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-COOR"
+      extracted_at: "2025-12-22T14:56:41.648477"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gr_004:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648479"
+  - source: "urn:goreos:atom:role:ito_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ITO"
+      extracted_at: "2025-12-22T14:56:41.648480"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gr_010:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648481"
+  - source: "urn:goreos:atom:role:formulador_glosa7:2.0.0"
+    target: "urn:goreos:atom:story:us_glosa7_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-G7-FORM"
+      extracted_at: "2025-12-22T14:56:41.648483"
+  - source: "urn:goreos:atom:role:periodista:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_per_001:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-PER"
+      extracted_at: "2025-12-22T14:56:41.648484"
+  - source: "urn:goreos:atom:role:encargado_rendiciones:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_rend_018:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-REND"
+      extracted_at: "2025-12-22T14:56:41.648486"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_jd_006:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648488"
+  - source: "urn:goreos:atom:role:ministro_fe:2.0.0"
+    target: "urn:goreos:atom:story:us_tc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-MFE"
+      extracted_at: "2025-12-22T14:56:41.648489"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.648490"
+  - source: "urn:goreos:atom:role:prestador_honorarios:2.0.0"
+    target: "urn:goreos:atom:story:us_hon_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-HON-PRES"
+      extracted_at: "2025-12-22T14:56:41.648492"
+  - source: "urn:goreos:atom:role:delegado_presidencial:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_del_003:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-DPR"
+      extracted_at: "2025-12-22T14:56:41.648493"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gr_005:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648495"
+  - source: "urn:goreos:atom:role:secretario_core_comisionado:2.0.0"
+    target: "urn:goreos:atom:story:us_seccom_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-SEC-COM"
+      extracted_at: "2025-12-22T14:56:41.648496"
+  - source: "urn:goreos:atom:role:presidente_ctd:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_ai_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CTD-PRES"
+      extracted_at: "2025-12-22T14:56:41.648497"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_ctd_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648498"
+  - source: "urn:goreos:atom:role:suplente_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_sup_trans_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-TRANSP-SUPL"
+      extracted_at: "2025-12-22T14:56:41.648500"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_006:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648501"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_012:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648503"
+  - source: "urn:goreos:atom:role:gestor_personas:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_014:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-GEST"
+      extracted_at: "2025-12-22T14:56:41.648504"
+  - source: "urn:goreos:atom:role:secretario_ctci:2.0.0"
+    target: "urn:goreos:atom:story:us_sec_ctci_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CTCI-SEC"
+      extracted_at: "2025-12-22T14:56:41.648505"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_003:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648507"
+  - source: "urn:goreos:atom:role:funcionario:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-FUN"
+      extracted_at: "2025-12-22T14:56:41.648508"
+  - source: "urn:goreos:atom:role:jefe_diplade:2.0.0"
+    target: "urn:goreos:atom:story:us_diplade_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648510"
+  - source: "urn:goreos:atom:role:analista_presupuesto:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_004:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-PRE"
+      extracted_at: "2025-12-22T14:56:41.648511"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_010:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648513"
+  - source: "urn:goreos:atom:role:desarrollador_backend:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_dx_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-BACK"
+      extracted_at: "2025-12-22T14:56:41.648514"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_admin_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648516"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_sen_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.648517"
+  - source: "urn:goreos:atom:role:encargado_c33:2.0.0"
+    target: "urn:goreos:atom:story:us_ec33_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-C33-ENC"
+      extracted_at: "2025-12-22T14:56:41.648519"
+  - source: "urn:goreos:atom:role:admin_plataforma:2.0.0"
+    target: "urn:goreos:atom:story:us_ops_back_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-PLAT"
+      extracted_at: "2025-12-22T14:56:41.648522"
+  - source: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-ANAL8"
+      extracted_at: "2025-12-22T14:56:41.648523"
+  - source: "urn:goreos:atom:role:presidente_cseu:2.0.0"
+    target: "urn:goreos:atom:story:us_pcseu_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-CSEU-PRES"
+      extracted_at: "2025-12-22T14:56:41.648525"
+  - source: "urn:goreos:atom:role:encargado_control_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_mc_002:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-CTRL"
+      extracted_at: "2025-12-22T14:56:41.648527"
+  - source: "urn:goreos:atom:role:encargado_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_transp_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-TRANSP"
+      extracted_at: "2025-12-22T14:56:41.648529"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gr_013:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648531"
+  - source: "urn:goreos:atom:role:delegado_presidencial:2.0.0"
+    target: "urn:goreos:atom:story:us_dpr_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-DPR"
+      extracted_at: "2025-12-22T14:56:41.648532"
+  - source: "urn:goreos:atom:role:delegado_presidencial:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_del_001:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-DPR"
+      extracted_at: "2025-12-22T14:56:41.648534"
+  - source: "urn:goreos:atom:role:ecif:2.0.0"
+    target: "urn:goreos:atom:story:us_ecif_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ECIF"
+      extracted_at: "2025-12-22T14:56:41.648536"
+  - source: "urn:goreos:atom:role:camara_comercio:2.0.0"
+    target: "urn:goreos:atom:story:us_emp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CAMARA"
+      extracted_at: "2025-12-22T14:56:41.648537"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_jd_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648539"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.648541"
+  - source: "urn:goreos:atom:role:analista_toma_razon:2.0.0"
+    target: "urn:goreos:atom:story:us_cgr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CGR"
+      extracted_at: "2025-12-22T14:56:41.648543"
+  - source: "urn:goreos:atom:role:pdi:2.0.0"
+    target: "urn:goreos:atom:story:us_pdi_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-PDI"
+      extracted_at: "2025-12-22T14:56:41.648545"
+  - source: "urn:goreos:atom:role:director_sag:2.0.0"
+    target: "urn:goreos:atom:story:us_sag_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SAG"
+      extracted_at: "2025-12-22T14:56:41.648546"
+  - source: "urn:goreos:atom:role:profesional_zona_rezago:2.0.0"
+    target: "urn:goreos:atom:story:us_prof_rez_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-REZ-PROF"
+      extracted_at: "2025-12-22T14:56:41.648547"
+  - source: "urn:goreos:atom:role:encargado_bodega:2.0.0"
+    target: "urn:goreos:atom:story:us_bod_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-BOD"
+      extracted_at: "2025-12-22T14:56:41.648548"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_ai_002:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648550"
+  - source: "urn:goreos:atom:role:funcionario:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_proc_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-FUN"
+      extracted_at: "2025-12-22T14:56:41.648569"
+  - source: "urn:goreos:atom:role:analista_capacitacion:2.0.0"
+    target: "urn:goreos:atom:story:us_cap_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-CAP"
+      extracted_at: "2025-12-22T14:56:41.648572"
+  - source: "urn:goreos:atom:role:jefe_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_dipir_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648574"
+  - source: "urn:goreos:atom:role:monitor_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_puente_001:1.0.0"
+    metadata:
+      role_id_original: "USR-EVOL-MON"
+      extracted_at: "2025-12-22T14:56:41.648576"
+  - source: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-ANAL8"
+      extracted_at: "2025-12-22T14:56:41.648577"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_011:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648579"
+  - source: "urn:goreos:atom:role:jefe_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_inv_dep_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-INV-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648581"
+  - source: "urn:goreos:atom:role:encargado_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_trans_002:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-TRANSP"
+      extracted_at: "2025-12-22T14:56:41.648582"
+  - source: "urn:goreos:atom:role:dpo:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_dpo_003:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-DPO"
+      extracted_at: "2025-12-22T14:56:41.648583"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_002:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648585"
+  - source: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_006:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648587"
+  - source: "urn:goreos:atom:role:comprador_publico:2.0.0"
+    target: "urn:goreos:atom:story:us_comp_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-ABS-COMP"
+      extracted_at: "2025-12-22T14:56:41.648588"
+  - source: "urn:goreos:atom:role:encargado_bodega:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bod_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-BOD"
+      extracted_at: "2025-12-22T14:56:41.648589"
+  - source: "urn:goreos:atom:role:ministro_fe:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_012:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-MFE"
+      extracted_at: "2025-12-22T14:56:41.648591"
+  - source: "urn:goreos:atom:role:analista_planif_territorial:2.0.0"
+    target: "urn:goreos:atom:story:us_jest_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-PLAN-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648593"
+  - source: "urn:goreos:atom:role:jefe_rrhh:2.0.0"
+    target: "urn:goreos:atom:story:us_rrhh_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-RH-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648594"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_int_002:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648596"
+  - source: "urn:goreos:atom:role:gestor_personas:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_013:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-GEST"
+      extracted_at: "2025-12-22T14:56:41.648598"
+  - source: "urn:goreos:atom:role:dpo:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_dpo_007:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-DPO"
+      extracted_at: "2025-12-22T14:56:41.648599"
+  - source: "urn:goreos:atom:role:especialista_bi:2.0.0"
+    target: "urn:goreos:atom:story:us_acc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ESPECIALISTA"
+      extracted_at: "2025-12-22T14:56:41.648601"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_admin_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648602"
+  - source: "urn:goreos:atom:role:comite_frpd:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-FRPD"
+      extracted_at: "2025-12-22T14:56:41.648604"
+  - source: "urn:goreos:atom:role:abogado_revisor:2.0.0"
+    target: "urn:goreos:atom:story:us_abog_rev_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-REV"
+      extracted_at: "2025-12-22T14:56:41.648605"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648606"
+  - source: "urn:goreos:atom:role:dueno_datos:2.0.0"
+    target: "urn:goreos:atom:story:us_dueno_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-DUENO-DATOS"
+      extracted_at: "2025-12-22T14:56:41.648608"
+  - source: "urn:goreos:atom:role:delegado_presidencial:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_del_004:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-DPR"
+      extracted_at: "2025-12-22T14:56:41.648609"
+  - source: "urn:goreos:atom:role:admin_plataforma:2.0.0"
+    target: "urn:goreos:atom:story:us_adm_plat_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-PLAT"
+      extracted_at: "2025-12-22T14:56:41.648611"
+  - source: "urn:goreos:atom:role:presidente_ctd:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_gov_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CTD-PRES"
+      extracted_at: "2025-12-22T14:56:41.648613"
+  - source: "urn:goreos:atom:role:conductor:2.0.0"
+    target: "urn:goreos:atom:story:us_cond_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-CONDUCTOR"
+      extracted_at: "2025-12-22T14:56:41.648614"
+  - source: "urn:goreos:atom:role:ciudadano:2.0.0"
+    target: "urn:goreos:atom:story:us_ciu_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CIU-GEN"
+      extracted_at: "2025-12-22T14:56:41.648615"
+  - source: "urn:goreos:atom:role:encargado_archivo:2.0.0"
+    target: "urn:goreos:atom:story:us_arch_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-ARCHIVO"
+      extracted_at: "2025-12-22T14:56:41.648617"
+  - source: "urn:goreos:atom:role:desarrollador_devops:2.0.0"
+    target: "urn:goreos:atom:story:us_front_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-DEV"
+      extracted_at: "2025-12-22T14:56:41.648619"
+  - source: "urn:goreos:atom:role:representante_anid:2.0.0"
+    target: "urn:goreos:atom:story:us_anid_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-ANID"
+      extracted_at: "2025-12-22T14:56:41.648620"
+  - source: "urn:goreos:atom:role:gestor_personas:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_012:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-GEST"
+      extracted_at: "2025-12-22T14:56:41.648622"
+  - source: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_040:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-DAE-PRE"
+      extracted_at: "2025-12-22T14:56:41.648623"
+  - source: "urn:goreos:atom:role:operador_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_play_002:1.0.0"
+    metadata:
+      role_id_original: "USR-EVOL-OP"
+      extracted_at: "2025-12-22T14:56:41.648624"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_int_003:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648627"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_exp_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648628"
+  - source: "urn:goreos:atom:role:jefe_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_sec_001:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648630"
+  - source: "urn:goreos:atom:role:arquitecto_sistemas:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_doc_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-ARQ"
+      extracted_at: "2025-12-22T14:56:41.648632"
+  - source: "urn:goreos:atom:role:oficial_partes:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_011:1.0.0"
+    metadata:
+      role_id_original: "USR-OP-OF"
+      extracted_at: "2025-12-22T14:56:41.648633"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_005:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648634"
+  - source: "urn:goreos:atom:role:comprador_publico:2.0.0"
+    target: "urn:goreos:atom:story:us_comp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-ABS-COMP"
+      extracted_at: "2025-12-22T14:56:41.648636"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_exp_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648638"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_int_001:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648639"
+  - source: "urn:goreos:atom:role:jefe_rrhh:2.0.0"
+    target: "urn:goreos:atom:story:us_rrhh_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-RH-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648642"
+  - source: "urn:goreos:atom:role:analista_educacion:2.0.0"
+    target: "urn:goreos:atom:story:us_edu_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-EDU"
+      extracted_at: "2025-12-22T14:56:41.648643"
+  - source: "urn:goreos:atom:role:fiscal_sumariante:2.0.0"
+    target: "urn:goreos:atom:story:us_fisc_sum_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-FIS"
+      extracted_at: "2025-12-22T14:56:41.648644"
+  - source: "urn:goreos:atom:role:gestor_personas:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_010:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-GEST"
+      extracted_at: "2025-12-22T14:56:41.648646"
+  - source: "urn:goreos:atom:role:apoyo_tecnico_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_att_001:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-TRANSP-TEC"
+      extracted_at: "2025-12-22T14:56:41.648647"
+  - source: "urn:goreos:atom:role:dirigente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_dir_soc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DIRIGENTE-SO"
+      extracted_at: "2025-12-22T14:56:41.648649"
+  - source: "urn:goreos:atom:role:jefe_tic:2.0.0"
+    target: "urn:goreos:atom:story:us_tic_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648651"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_admin_007:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648653"
+  - source: "urn:goreos:atom:role:secretario_ctd:2.0.0"
+    target: "urn:goreos:atom:story:us_spert_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CTD-SEC"
+      extracted_at: "2025-12-22T14:56:41.648654"
+  - source: "urn:goreos:atom:role:analista_8_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DIDES-ANAL8"
+      extracted_at: "2025-12-22T14:56:41.648656"
+  - source: "urn:goreos:atom:role:unidad_control_rendiciones:2.0.0"
+    target: "urn:goreos:atom:story:us_ucr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-UCR"
+      extracted_at: "2025-12-22T14:56:41.648657"
+  - source: "urn:goreos:atom:role:ingeniero_plataforma:2.0.0"
+    target: "urn:goreos:atom:story:us_ops_iac_001:1.0.0"
+    metadata:
+      role_id_original: "USR-OPS-ING"
+      extracted_at: "2025-12-22T14:56:41.648659"
+  - source: "urn:goreos:atom:role:analista_fomento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648660"
+  - source: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    target: "urn:goreos:atom:story:us_preinv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-DAE-PRE"
+      extracted_at: "2025-12-22T14:56:41.648662"
+  - source: "urn:goreos:atom:role:abogado_revisor:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_sim_001:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-REV"
+      extracted_at: "2025-12-22T14:56:41.648663"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_009:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648666"
+  - source: "urn:goreos:atom:role:miembro_ctd:2.0.0"
+    target: "urn:goreos:atom:story:us_mctd_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CTD-MEMB"
+      extracted_at: "2025-12-22T14:56:41.648667"
+  - source: "urn:goreos:atom:role:product_owner:2.0.0"
+    target: "urn:goreos:atom:story:us_po_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-PO"
+      extracted_at: "2025-12-22T14:56:41.648668"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gr_001:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648673"
+  - source: "urn:goreos:atom:role:alcalde:2.0.0"
+    target: "urn:goreos:atom:story:us_alc_chi_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ALC"
+      extracted_at: "2025-12-22T14:56:41.648674"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_daf_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648675"
+  - source: "urn:goreos:atom:role:director_corporacion:2.0.0"
+    target: "urn:goreos:atom:story:us_ong_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORP-DIR"
+      extracted_at: "2025-12-22T14:56:41.648677"
+  - source: "urn:goreos:atom:role:dba:2.0.0"
+    target: "urn:goreos:atom:story:us_dba_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-OPS-DBA"
+      extracted_at: "2025-12-22T14:56:41.648705"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_jd_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648708"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_gr_014:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648710"
+  - source: "urn:goreos:atom:role:director_corporacion:2.0.0"
+    target: "urn:goreos:atom:story:us_corp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORP-DIR"
+      extracted_at: "2025-12-22T14:56:41.648711"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bien_008:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.648713"
+  - source: "urn:goreos:atom:role:auditor_control:2.0.0"
+    target: "urn:goreos:atom:story:us_aud_ctrl_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CTRL-AUD"
+      extracted_at: "2025-12-22T14:56:41.648714"
+  - source: "urn:goreos:atom:role:presidente_ctd:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_gov_002:1.0.0"
+    metadata:
+      role_id_original: "USR-CTD-PRES"
+      extracted_at: "2025-12-22T14:56:41.648717"
+  - source: "urn:goreos:atom:role:analista_fomento:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_frpd_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648718"
+  - source: "urn:goreos:atom:role:oficial_partes:2.0.0"
+    target: "urn:goreos:atom:story:us_op_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-OP-OF"
+      extracted_at: "2025-12-22T14:56:41.648720"
+  - source: "urn:goreos:atom:role:presidente_core:2.0.0"
+    target: "urn:goreos:atom:story:us_pres_core_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-PRES"
+      extracted_at: "2025-12-22T14:56:41.648721"
+  - source: "urn:goreos:atom:role:interventor_fiscal:2.0.0"
+    target: "urn:goreos:atom:story:us_intfis_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-FIS"
+      extracted_at: "2025-12-22T14:56:41.648723"
+  - source: "urn:goreos:atom:role:ejecutor:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_sub_005:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-EJECUTOR"
+      extracted_at: "2025-12-22T14:56:41.648725"
+  - source: "urn:goreos:atom:role:director_conaf:2.0.0"
+    target: "urn:goreos:atom:story:us_conaf_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CONAF"
+      extracted_at: "2025-12-22T14:56:41.648727"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_admin_006:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.648728"
+  - source: "urn:goreos:atom:role:gestor_personas:2.0.0"
+    target: "urn:goreos:atom:story:us_back_per_011:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-GEST"
+      extracted_at: "2025-12-22T14:56:41.648729"
+  - source: "urn:goreos:atom:role:dpo:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_dpo_005:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-DPO"
+      extracted_at: "2025-12-22T14:56:41.648732"
+  - source: "urn:goreos:atom:role:periodista:2.0.0"
+    target: "urn:goreos:atom:story:us_com_sect_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-PER"
+      extracted_at: "2025-12-22T14:56:41.648733"
+  - source: "urn:goreos:atom:role:fotografo:2.0.0"
+    target: "urn:goreos:atom:story:us_foto_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-FOTO"
+      extracted_at: "2025-12-22T14:56:41.648735"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ppto_017:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648736"
+  - source: "urn:goreos:atom:role:operador_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_play_001:1.0.0"
+    metadata:
+      role_id_original: "USR-EVOL-OP"
+      extracted_at: "2025-12-22T14:56:41.648737"
+  - source: "urn:goreos:atom:role:analista_pesca:2.0.0"
+    target: "urn:goreos:atom:story:us_pes_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-PES"
+      extracted_at: "2025-12-22T14:56:41.648742"
+  - source: "urn:goreos:atom:role:encargado_bodega:2.0.0"
+    target: "urn:goreos:atom:story:us_back_bod_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-BOD"
+      extracted_at: "2025-12-22T14:56:41.648743"
+  - source: "urn:goreos:atom:role:abogado_informante:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_acto_004:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-ABOG"
+      extracted_at: "2025-12-22T14:56:41.648745"
+  - source: "urn:goreos:atom:role:planificador_urbano:2.0.0"
+    target: "urn:goreos:atom:story:us_plan_urb_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-URB"
+      extracted_at: "2025-12-22T14:56:41.648747"
+  - source: "urn:goreos:atom:role:finops_manager:2.0.0"
+    target: "urn:goreos:atom:story:us_finops_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-OPS-FINOPS"
+      extracted_at: "2025-12-22T14:56:41.648748"
+  - source: "urn:goreos:atom:role:entidad_ejecutora:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_018:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-EJEC"
+      extracted_at: "2025-12-22T14:56:41.648750"
+  - source: "urn:goreos:atom:role:funcionario:2.0.0"
+    target: "urn:goreos:atom:story:us_func_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-FUN"
+      extracted_at: "2025-12-22T14:56:41.648752"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_sec_001:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648754"
+  - source: "urn:goreos:atom:role:monitor_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_mon_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EVOL-MON"
+      extracted_at: "2025-12-22T14:56:41.648755"
+  - source: "urn:goreos:atom:role:encargado_capacitacion_digital:2.0.0"
+    target: "urn:goreos:atom:story:us_capdig_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ENCARGADO-CA"
+      extracted_at: "2025-12-22T14:56:41.648756"
+  - source: "urn:goreos:atom:role:encargado_oirs:2.0.0"
+    target: "urn:goreos:atom:story:us_oirs_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-ADM-OIRS"
+      extracted_at: "2025-12-22T14:56:41.648758"
+  - source: "urn:goreos:atom:role:analista_proyectos_seg:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_006:1.0.0"
+    metadata:
+      role_id_original: "USR-SEG-ANAL"
+      extracted_at: "2025-12-22T14:56:41.648761"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_estr_004:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.648763"
+  - source: "urn:goreos:atom:role:supervisor_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_sup_cies_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-SUP"
+      extracted_at: "2025-12-22T14:56:41.648764"
+  - source: "urn:goreos:atom:role:coordinador_ide:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_ide_002:1.0.0"
+    metadata:
+      role_id_original: "USR-TERR-IDE"
+      extracted_at: "2025-12-22T14:56:41.648766"
+  - source: "urn:goreos:atom:role:encargado_servicios:2.0.0"
+    target: "urn:goreos:atom:story:us_back_flo_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-SERV-ENC"
+      extracted_at: "2025-12-22T14:56:41.648767"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_form_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.648770"
+  - source: "urn:goreos:atom:role:encargado_competencias:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_desc_005:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-COMP"
+      extracted_at: "2025-12-22T14:56:41.648771"
+  - source: "urn:goreos:atom:role:miembro_subcomite_ia:2.0.0"
+    target: "urn:goreos:atom:story:us_msia_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-SCIA-MEMB"
+      extracted_at: "2025-12-22T14:56:41.648772"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_009:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.648773"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_scg_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648776"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_ops_sre_001:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.648777"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_interop_007:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.648778"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_aud_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.648780"
+  - source: "urn:goreos:atom:role:analista_toma_razon:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_003:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CGR"
+      extracted_at: "2025-12-22T14:56:41.648782"
+  - source: "urn:goreos:atom:role:operador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_cies_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-OP"
+      extracted_at: "2025-12-22T14:56:41.648783"
+  - source: "urn:goreos:atom:role:referente_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_rtec_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-REF-TEC"
+      extracted_at: "2025-12-22T14:56:41.648785"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_apr_001:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.648788"
+  - source: "urn:goreos:atom:role:juez_cuentas:2.0.0"
+    target: "urn:goreos:atom:story:us_juez_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-TRIB-CUENTA"
+      extracted_at: "2025-12-22T14:56:41.648789"
+  - source: "urn:goreos:atom:role:revisor_glosa7:2.0.0"
+    target: "urn:goreos:atom:story:us_g7_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-G7-REV"
+      extracted_at: "2025-12-22T14:56:41.649141"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_tic_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.649145"
+  - source: "urn:goreos:atom:role:junta_calificadora:2.0.0"
+    target: "urn:goreos:atom:story:us_jcal_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-JUN"
+      extracted_at: "2025-12-22T14:56:41.649147"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_seg_008:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.649148"
+  - source: "urn:goreos:atom:role:encargado_activo_fijo:2.0.0"
+    target: "urn:goreos:atom:story:us_back_af_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-AF"
+      extracted_at: "2025-12-22T14:56:41.649150"
+  - source: "urn:goreos:atom:role:supervisor_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_sup_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-SUP"
+      extracted_at: "2025-12-22T14:56:41.649152"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_form_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.649153"
+  - source: "urn:goreos:atom:role:coordinador_ide:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_ide_003:1.0.0"
+    metadata:
+      role_id_original: "USR-TERR-IDE"
+      extracted_at: "2025-12-22T14:56:41.649155"
+  - source: "urn:goreos:atom:role:desarrollador:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DESARROLLADO"
+      extracted_at: "2025-12-22T14:56:41.649157"
+  - source: "urn:goreos:atom:role:analista_proyectos_seg:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_007:1.0.0"
+    metadata:
+      role_id_original: "USR-SEG-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649158"
+  - source: "urn:goreos:atom:role:coordinador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_cies_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-COOR"
+      extracted_at: "2025-12-22T14:56:41.649160"
+  - source: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_031:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-DAE-PRE"
+      extracted_at: "2025-12-22T14:56:41.649161"
+  - source: "urn:goreos:atom:role:encargado_calidad:2.0.0"
+    target: "urn:goreos:atom:story:us_cal_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-ENC"
+      extracted_at: "2025-12-22T14:56:41.649163"
+  - source: "urn:goreos:atom:role:referente_riesgos_psicosociales:2.0.0"
+    target: "urn:goreos:atom:story:us_rpsico_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-PMG-PSICO"
+      extracted_at: "2025-12-22T14:56:41.649164"
+  - source: "urn:goreos:atom:role:analista_evaluacion:2.0.0"
+    target: "urn:goreos:atom:story:us_aeval_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-EVA"
+      extracted_at: "2025-12-22T14:56:41.649166"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_008:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.649167"
+  - source: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649169"
+  - source: "urn:goreos:atom:role:funcionario:2.0.0"
+    target: "urn:goreos:atom:story:us_func_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-FUN"
+      extracted_at: "2025-12-22T14:56:41.649171"
+  - source: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_027:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-DAE-PRE"
+      extracted_at: "2025-12-22T14:56:41.649173"
+  - source: "urn:goreos:atom:role:encargado_oirs:2.0.0"
+    target: "urn:goreos:atom:story:us_oirs_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-ADM-OIRS"
+      extracted_at: "2025-12-22T14:56:41.649174"
+  - source: "urn:goreos:atom:role:nuevo_desarrollador:2.0.0"
+    target: "urn:goreos:atom:story:us_ndev_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-NEW"
+      extracted_at: "2025-12-22T14:56:41.649175"
+  - source: "urn:goreos:atom:role:carabineros:2.0.0"
+    target: "urn:goreos:atom:story:us_car_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CARAB"
+      extracted_at: "2025-12-22T14:56:41.649177"
+  - source: "urn:goreos:atom:role:jefe_auditoria:2.0.0"
+    target: "urn:goreos:atom:story:us_jaud_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649179"
+  - source: "urn:goreos:atom:role:coordinador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_grd_004:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-COOR"
+      extracted_at: "2025-12-22T14:56:41.649181"
+  - source: "urn:goreos:atom:role:encargado_competencias:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_desc_006:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-COMP"
+      extracted_at: "2025-12-22T14:56:41.649182"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_conv_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.649184"
+  - source: "urn:goreos:atom:role:encargado_flota:2.0.0"
+    target: "urn:goreos:atom:story:us_back_flo_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-FLOTA"
+      extracted_at: "2025-12-22T14:56:41.649186"
+  - source: "urn:goreos:atom:role:profesional_bienestar:2.0.0"
+    target: "urn:goreos:atom:story:us_bien_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-BIEN"
+      extracted_at: "2025-12-22T14:56:41.649187"
+  - source: "urn:goreos:atom:role:referente_genero:2.0.0"
+    target: "urn:goreos:atom:story:us_gen_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-PMG-GEN"
+      extracted_at: "2025-12-22T14:56:41.649189"
+  - source: "urn:goreos:atom:role:fiscal_sumariante:2.0.0"
+    target: "urn:goreos:atom:story:us_fisc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-JUR-FIS"
+      extracted_at: "2025-12-22T14:56:41.649190"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_interop_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649192"
+  - source: "urn:goreos:atom:role:ancore:2.0.0"
+    target: "urn:goreos:atom:story:us_anci_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANCORE"
+      extracted_at: "2025-12-22T14:56:41.649194"
+  - source: "urn:goreos:atom:role:auditor_interno:2.0.0"
+    target: "urn:goreos:atom:story:us_aud_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-AUD-PROF"
+      extracted_at: "2025-12-22T14:56:41.649195"
+  - source: "urn:goreos:atom:role:coordinador_sectorial_dit:2.0.0"
+    target: "urn:goreos:atom:story:us_coord_dit_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-COOR"
+      extracted_at: "2025-12-22T14:56:41.649197"
+  - source: "urn:goreos:atom:role:consejero_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_core_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CORE-CONS"
+      extracted_at: "2025-12-22T14:56:41.649199"
+  - source: "urn:goreos:atom:role:dirigente_social:2.0.0"
+    target: "urn:goreos:atom:story:us_cut_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-DIRIGENTE-SO"
+      extracted_at: "2025-12-22T14:56:41.649200"
+  - source: "urn:goreos:atom:role:analista_control_asistencia:2.0.0"
+    target: "urn:goreos:atom:story:us_asis_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-CASIS"
+      extracted_at: "2025-12-22T14:56:41.649201"
+  - source: "urn:goreos:atom:role:analista_inversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_fril_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-ANAL-INV"
+      extracted_at: "2025-12-22T14:56:41.649202"
+  - source: "urn:goreos:atom:role:operador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_cies_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-OP"
+      extracted_at: "2025-12-22T14:56:41.649204"
+  - source: "urn:goreos:atom:role:analista_toma_razon:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cgr_001:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-CGR"
+      extracted_at: "2025-12-22T14:56:41.649205"
+  - source: "urn:goreos:atom:role:encargado_flota:2.0.0"
+    target: "urn:goreos:atom:story:us_flota_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-FLOTA"
+      extracted_at: "2025-12-22T14:56:41.649206"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_interop_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649208"
+  - source: "urn:goreos:atom:role:jefe_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_jef_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649209"
+  - source: "urn:goreos:atom:role:presidente_estado_verde:2.0.0"
+    target: "urn:goreos:atom:story:us_pever_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-VERDE-PRES"
+      extracted_at: "2025-12-22T14:56:41.649211"
+  - source: "urn:goreos:atom:role:dpo:2.0.0"
+    target: "urn:goreos:atom:story:us_dpo_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-DPO"
+      extracted_at: "2025-12-22T14:56:41.649212"
+  - source: "urn:goreos:atom:role:jefe_finanzas:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649214"
+  - source: "urn:goreos:atom:role:encargado_activo_fijo:2.0.0"
+    target: "urn:goreos:atom:story:us_back_af_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-AF"
+      extracted_at: "2025-12-22T14:56:41.649215"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_evol_ao_018:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649217"
+  - source: "urn:goreos:atom:role:encargado_competencias:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_desc_007:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-COMP"
+      extracted_at: "2025-12-22T14:56:41.649218"
+  - source: "urn:goreos:atom:role:admin_geonodo:2.0.0"
+    target: "urn:goreos:atom:story:us_geo_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-TERR-GEONODO"
+      extracted_at: "2025-12-22T14:56:41.649219"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_estr_006:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.649221"
+  - source: "urn:goreos:atom:role:analista_prevencion:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_010:1.0.0"
+    metadata:
+      role_id_original: "USR-SEG-PREV-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649222"
+  - source: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_026:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649223"
+  - source: "urn:goreos:atom:role:profesional_zona_rezago:2.0.0"
+    target: "urn:goreos:atom:story:us_rez_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-REZ-PROF"
+      extracted_at: "2025-12-22T14:56:41.649225"
+  - source: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_002:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649226"
+  - source: "urn:goreos:atom:role:contador_gubernamental:2.0.0"
+    target: "urn:goreos:atom:story:us_back_tes_009:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-FIN-CONT"
+      extracted_at: "2025-12-22T14:56:41.649228"
+  - source: "urn:goreos:atom:role:operador_sistema:2.0.0"
+    target: "urn:goreos:atom:story:us_ope_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EVOL-OP"
+      extracted_at: "2025-12-22T14:56:41.649229"
+  - source: "urn:goreos:atom:role:bomberos:2.0.0"
+    target: "urn:goreos:atom:story:us_bomb_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-BOMB"
+      extracted_at: "2025-12-22T14:56:41.649230"
+  - source: "urn:goreos:atom:role:jefe_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_036:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649232"
+  - source: "urn:goreos:atom:role:analista_preinversion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_022:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-DAE-PRE"
+      extracted_at: "2025-12-22T14:56:41.649233"
+  - source: "urn:goreos:atom:role:coordinador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_grd_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-COOR"
+      extracted_at: "2025-12-22T14:56:41.649234"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_back_auto_001:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.649237"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_estr_002:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.649238"
+  - source: "urn:goreos:atom:role:analista_contable:2.0.0"
+    target: "urn:goreos:atom:story:us_aconv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-CON"
+      extracted_at: "2025-12-22T14:56:41.649239"
+  - source: "urn:goreos:atom:role:director_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_dom_002:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-DOM"
+      extracted_at: "2025-12-22T14:56:41.649241"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_form_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.649242"
+  - source: "urn:goreos:atom:role:ciudadano:2.0.0"
+    target: "urn:goreos:atom:story:us_usr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CIU-GEN"
+      extracted_at: "2025-12-22T14:56:41.649243"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_interop_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649246"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_mod_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.649247"
+  - source: "urn:goreos:atom:role:jefe_fenix:2.0.0"
+    target: "urn:goreos:atom:story:us_fnx_ges_001:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-FNX-J"
+      extracted_at: "2025-12-22T14:56:41.649249"
+  - source: "urn:goreos:atom:role:analista_ambiental:2.0.0"
+    target: "urn:goreos:atom:story:us_amb_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIFOI-RIES-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649255"
+  - source: "urn:goreos:atom:role:encargado_servicios:2.0.0"
+    target: "urn:goreos:atom:story:us_serv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-SERV-ENC"
+      extracted_at: "2025-12-22T14:56:41.649257"
+  - source: "urn:goreos:atom:role:encargado_vinculacion:2.0.0"
+    target: "urn:goreos:atom:story:us_vinc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-VINC-ENC"
+      extracted_at: "2025-12-22T14:56:41.649258"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_avance_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649260"
+  - source: "urn:goreos:atom:role:supervisor_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_cies_010:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-SUP"
+      extracted_at: "2025-12-22T14:56:41.649262"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_avance_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649264"
+  - source: "urn:goreos:atom:role:arquitecto_revisor_proy:2.0.0"
+    target: "urn:goreos:atom:story:us_arqp_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-ARQ"
+      extracted_at: "2025-12-22T14:56:41.649266"
+  - source: "urn:goreos:atom:role:operador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_cies_004:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-OP"
+      extracted_at: "2025-12-22T14:56:41.649267"
+  - source: "urn:goreos:atom:role:alcalde:2.0.0"
+    target: "urn:goreos:atom:story:us_alc_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-ALC"
+      extracted_at: "2025-12-22T14:56:41.649268"
+  - source: "urn:goreos:atom:role:jefe_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_jer_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649270"
+  - source: "urn:goreos:atom:role:jefe_depto_contabilidad:2.0.0"
+    target: "urn:goreos:atom:story:us_jcont_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-JEFE-DEPTO-C"
+      extracted_at: "2025-12-22T14:56:41.649271"
+  - source: "urn:goreos:atom:role:uoct_nuble:2.0.0"
+    target: "urn:goreos:atom:story:us_uoct_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-UOCT"
+      extracted_at: "2025-12-22T14:56:41.649273"
+  - source: "urn:goreos:atom:role:product_owner:2.0.0"
+    target: "urn:goreos:atom:story:us_dev_feat_001:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-PO"
+      extracted_at: "2025-12-22T14:56:41.649274"
+  - source: "urn:goreos:atom:role:operador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_op_cies_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-OP"
+      extracted_at: "2025-12-22T14:56:41.649275"
+  - source: "urn:goreos:atom:role:admin_ti:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_tic_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-ADMIN"
+      extracted_at: "2025-12-22T14:56:41.649277"
+  - source: "urn:goreos:atom:role:analista_social:2.0.0"
+    target: "urn:goreos:atom:story:us_soc_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-SOC"
+      extracted_at: "2025-12-22T14:56:41.649279"
+  - source: "urn:goreos:atom:role:jefe_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_gab_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649280"
+  - source: "urn:goreos:atom:role:encargado_activo_fijo:2.0.0"
+    target: "urn:goreos:atom:story:us_back_af_004:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-OPS-AF"
+      extracted_at: "2025-12-22T14:56:41.649281"
+  - source: "urn:goreos:atom:role:gobernador:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_desc_002:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649283"
+  - source: "urn:goreos:atom:role:director_obras:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_dom_003:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-DOM"
+      extracted_at: "2025-12-22T14:56:41.649284"
+  - source: "urn:goreos:atom:role:supervisor_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_ejec_sup_005:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-SUP"
+      extracted_at: "2025-12-22T14:56:41.649286"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_estr_003:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.649287"
+  - source: "urn:goreos:atom:role:juez_cuentas:2.0.0"
+    target: "urn:goreos:atom:story:us_corte_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-TRIB-CUENTA"
+      extracted_at: "2025-12-22T14:56:41.649289"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_sec_002:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.649290"
+  - source: "urn:goreos:atom:role:analista_transporte:2.0.0"
+    target: "urn:goreos:atom:story:us_atra_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-TRANS-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649292"
+  - source: "urn:goreos:atom:role:funcionario:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_lob_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-FUN"
+      extracted_at: "2025-12-22T14:56:41.649294"
+  - source: "urn:goreos:atom:role:analista_gestion:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_gest_005:1.0.0"
+    metadata:
+      role_id_original: "USR-CAL-ANAL"
+      extracted_at: "2025-12-22T14:56:41.649295"
+  - source: "urn:goreos:atom:role:soporte_tecnico:2.0.0"
+    target: "urn:goreos:atom:story:us_sop_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-SUP"
+      extracted_at: "2025-12-22T14:56:41.649297"
+  - source: "urn:goreos:atom:role:analista_patrocinante_dit:2.0.0"
+    target: "urn:goreos:atom:story:us_pat_dit_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-PAT"
+      extracted_at: "2025-12-22T14:56:41.649299"
+  - source: "urn:goreos:atom:role:analista_tesoreria:2.0.0"
+    target: "urn:goreos:atom:story:us_ates_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ANALISTA-TES"
+      extracted_at: "2025-12-22T14:56:41.649301"
+  - source: "urn:goreos:atom:role:informatico_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_itmuni_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-INF"
+      extracted_at: "2025-12-22T14:56:41.649302"
+  - source: "urn:goreos:atom:role:jefe_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_035:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649303"
+  - source: "urn:goreos:atom:role:amuch:2.0.0"
+    target: "urn:goreos:atom:story:us_amuch_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-AMUCH"
+      extracted_at: "2025-12-22T14:56:41.649306"
+  - source: "urn:goreos:atom:role:coordinador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_grd_002:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-COOR"
+      extracted_at: "2025-12-22T14:56:41.649307"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_estr_001:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.649308"
+  - source: "urn:goreos:atom:role:encargado_prevencion:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_prev_003:1.0.0"
+    metadata:
+      role_id_original: "USR-SEG-PREV"
+      extracted_at: "2025-12-22T14:56:41.649310"
+  - source: "urn:goreos:atom:role:agente_koda:2.0.0"
+    target: "urn:goreos:atom:story:us_back_auto_002:1.0.0"
+    metadata:
+      role_id_original: "BOT-KODA"
+      extracted_at: "2025-12-22T14:56:41.649312"
+  - source: "urn:goreos:atom:role:asesor_gabinete:2.0.0"
+    target: "urn:goreos:atom:story:us_ases_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-GAB-ASESOR"
+      extracted_at: "2025-12-22T14:56:41.649313"
+  - source: "urn:goreos:atom:role:profesional_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_conv_005:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PROF"
+      extracted_at: "2025-12-22T14:56:41.649315"
+  - source: "urn:goreos:atom:role:arquitecto_revisor:2.0.0"
+    target: "urn:goreos:atom:story:us_arq_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIT-INFRA-ARQ"
+      extracted_at: "2025-12-22T14:56:41.649316"
+  - source: "urn:goreos:atom:role:ciso:2.0.0"
+    target: "urn:goreos:atom:story:us_ops_sec_001:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CISO"
+      extracted_at: "2025-12-22T14:56:41.649318"
+  - source: "urn:goreos:atom:role:analista_inversiones_mds:2.0.0"
+    target: "urn:goreos:atom:story:us_mds_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-MDS"
+      extracted_at: "2025-12-22T14:56:41.649321"
+  - source: "urn:goreos:atom:role:seremi_mop:2.0.0"
+    target: "urn:goreos:atom:story:us_ser_mop_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SEREMI-MOP"
+      extracted_at: "2025-12-22T14:56:41.649322"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_interop_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649324"
+  - source: "urn:goreos:atom:role:jefe_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_jef_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649325"
+  - source: "urn:goreos:atom:role:seremi:2.0.0"
+    target: "urn:goreos:atom:story:us_seremi_001_02:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-SEREMI"
+      extracted_at: "2025-12-22T14:56:41.649327"
+  - source: "urn:goreos:atom:role:miembro_comision_recepcion:2.0.0"
+    target: "urn:goreos:atom:story:us_com_rec_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-RECP"
+      extracted_at: "2025-12-22T14:56:41.649329"
+  - source: "urn:goreos:atom:role:mesa_ayuda:2.0.0"
+    target: "urn:goreos:atom:story:us_mesa_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-MESA"
+      extracted_at: "2025-12-22T14:56:41.649330"
+  - source: "urn:goreos:atom:role:encargado_cseu:2.0.0"
+    target: "urn:goreos:atom:story:us_cseu_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ENCARGADO-CS"
+      extracted_at: "2025-12-22T14:56:41.649336"
+  - source: "urn:goreos:atom:role:qa_engineer:2.0.0"
+    target: "urn:goreos:atom:story:us_qa_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DEV-QA"
+      extracted_at: "2025-12-22T14:56:41.649337"
+  - source: "urn:goreos:atom:role:encargado_transparencia:2.0.0"
+    target: "urn:goreos:atom:story:us_norm_cris_001:1.0.0"
+    metadata:
+      role_id_original: "USR-NORM-TRANSP"
+      extracted_at: "2025-12-22T14:56:41.649338"
+  - source: "urn:goreos:atom:role:supervisor_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_seg_cies_006:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-SUP"
+      extracted_at: "2025-12-22T14:56:41.649340"
+  - source: "urn:goreos:atom:role:encargado_remuneraciones:2.0.0"
+    target: "urn:goreos:atom:story:us_rem_002_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-RH-REM"
+      extracted_at: "2025-12-22T14:56:41.649341"
+  - source: "urn:goreos:atom:role:especialista_bi:2.0.0"
+    target: "urn:goreos:atom:story:us_bi_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-ESPECIALISTA"
+      extracted_at: "2025-12-22T14:56:41.649342"
+  - source: "urn:goreos:atom:role:desarrollador_municipal:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_vinc_002:1.0.0"
+    metadata:
+      role_id_original: "USR-MUNI-DEV"
+      extracted_at: "2025-12-22T14:56:41.649345"
+  - source: "urn:goreos:atom:role:jefe_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_jef_002:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649348"
+  - source: "urn:goreos:atom:role:ctd_daf:2.0.0"
+    target: "urn:goreos:atom:story:us_tde_interop_003:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-CTD"
+      extracted_at: "2025-12-22T14:56:41.649349"
+  - source: "urn:goreos:atom:role:secretaria_division:2.0.0"
+    target: "urn:goreos:atom:story:us_secdiv_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-SECRETARIA-D"
+      extracted_at: "2025-12-22T14:56:41.649351"
+  - source: "urn:goreos:atom:role:gestor_territorial:2.0.0"
+    target: "urn:goreos:atom:story:us_jterr_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-GESTOR-TERR"
+      extracted_at: "2025-12-22T14:56:41.649353"
+  - source: "urn:goreos:atom:role:custodio_datos:2.0.0"
+    target: "urn:goreos:atom:story:us_cust_dat_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-TDE-CUSTODIO"
+      extracted_at: "2025-12-22T14:56:41.649355"
+  - source: "urn:goreos:atom:role:ingeniero_sre:2.0.0"
+    target: "urn:goreos:atom:story:us_sre_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-TIC-SRE"
+      extracted_at: "2025-12-22T14:56:41.649356"
+  - source: "urn:goreos:atom:role:ciudadano:2.0.0"
+    target: "urn:goreos:atom:story:us_terr_ide_006:1.0.0"
+    metadata:
+      role_id_original: "USR-CIU-GEN"
+      extracted_at: "2025-12-22T14:56:41.649357"
+  - source: "urn:goreos:atom:role:encargado_comunicaciones:2.0.0"
+    target: "urn:goreos:atom:story:us_com_sec_001:1.0.0"
+    metadata:
+      role_id_original: "USR-COM-ENC"
+      extracted_at: "2025-12-22T14:56:41.649358"
+  - source: "urn:goreos:atom:role:encargado_rrhh:2.0.0"
+    target: "urn:goreos:atom:story:us_jefe_rrhh_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DAF-PER-ENC"
+      extracted_at: "2025-12-22T14:56:41.649359"
+  - source: "urn:goreos:atom:role:coordinador_cies:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_grd_003:1.0.0"
+    metadata:
+      role_id_original: "USR-CIES-COOR"
+      extracted_at: "2025-12-22T14:56:41.649361"
+  - source: "urn:goreos:atom:role:formulador_externo:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_008:1.0.0"
+    metadata:
+      role_id_original: "USR-EXT-FORM"
+      extracted_at: "2025-12-22T14:56:41.649363"
+  - source: "urn:goreos:atom:role:jefe_dipir:2.0.0"
+    target: "urn:goreos:atom:story:us_fin_ipr_034:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPIR-JEFE"
+      extracted_at: "2025-12-22T14:56:41.649393"
+  - source: "urn:goreos:atom:role:sujeto_pasivo:2.0.0"
+    target: "urn:goreos:atom:story:us_gob_lob_001:1.0.0"
+    metadata:
+      role_id_original: "USR-GOB-PAS"
+      extracted_at: "2025-12-22T14:56:41.649400"
+  - source: "urn:goreos:atom:role:ingeniero_plataforma:2.0.0"
+    target: "urn:goreos:atom:story:us_iplat_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-OPS-ING"
+      extracted_at: "2025-12-22T14:56:41.649401"
+  - source: "urn:goreos:atom:role:prevencionista_riesgos:2.0.0"
+    target: "urn:goreos:atom:story:us_prev_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-NEW-PREVENCIONIS"
+      extracted_at: "2025-12-22T14:56:41.649403"
+  - source: "urn:goreos:atom:role:presidente_comite_pertinencia:2.0.0"
+    target: "urn:goreos:atom:story:us_ppert_001_01:1.0.0"
+    metadata:
+      role_id_original: "USR-DIPL-CPER-PRES"
+      extracted_at: "2025-12-22T14:56:41.649405"
+
+  - source: "urn:goreos:atom:role:arquitecto_categorico:2.0.0"
+    target: "urn:goreos:atom:story:us_arqc_001_01:1.0.0"
+  - source: "urn:goreos:atom:role:arquitecto_categorico:2.0.0"
+    target: "urn:goreos:atom:story:us_arqc_001_01:1.0.0"
+  - source: "urn:goreos:atom:role:administrador_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_coord_002:1.0.0"
+  - source: "urn:goreos:atom:role:administrador_regional:2.0.0"
+    target: "urn:goreos:atom:story:us_gest_coord_002:1.0.0"

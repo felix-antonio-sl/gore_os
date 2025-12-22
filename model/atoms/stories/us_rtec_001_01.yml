@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_rtec_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Hitos técnicos en sistema
 id: US-RTEC-001-01
 urn: urn:goreos:atom:story:us_rtec_001_01:1.0.0
 role_id: USR-DIPIR-REF-TEC
+as_a: Referente Técnico GORE
 i_want: aprobar hitos técnicos en sistema
 so_that: se autorice el pago administrativo
 domain: D-EJEC

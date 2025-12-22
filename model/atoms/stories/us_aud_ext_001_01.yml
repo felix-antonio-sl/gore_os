@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_aud_ext_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso controlado a expedientes y registros financieros
 id: US-AUD-EXT-001-01
 urn: urn:goreos:atom:story:us_aud_ext_001_01:1.0.0
 role_id: USR-NEW-AUDITOR-EXTE
+as_a: Auditor Externo
 i_want: acceso controlado a expedientes y registros financieros
 so_that: pueda realizar mi trabajo de auditoría
 domain: D-NORM

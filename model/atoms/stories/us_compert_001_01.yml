@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_compert_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: La documentación de iniciativas antes de la sesión
 id: US-COMPERT-001-01
 urn: urn:goreos:atom:story:us_compert_001_01:1.0.0
 role_id: USR-NEW-MIEMBRO-COMI
+as_a: Miembro Comité Pertinencia
 i_want: acceder a la documentación de iniciativas antes de la sesión
 so_that: pueda evaluarlas con tiempo
 domain: D-EJEC

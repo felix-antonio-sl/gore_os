@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_intfin_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso total de auditoría al ERP financiero
 id: US-INTFIN-001-01
 urn: urn:goreos:atom:story:us_intfin_001_01:1.0.0
 role_id: USR-CAL-FNX-FIN
+as_a: Interventor Financiero
 i_want: acceso total de auditoría al ERP financiero
 so_that: pueda identificar descuadres históricos
 domain: D-FIN

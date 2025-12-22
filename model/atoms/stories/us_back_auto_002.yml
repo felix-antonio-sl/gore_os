@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_auto_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
 id: US-BACK-AUTO-002
 urn: urn:goreos:atom:story:us_back_auto_002:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
 so_that: Detecto posibles fraudes o errores de reloj
 domain: D-BACK

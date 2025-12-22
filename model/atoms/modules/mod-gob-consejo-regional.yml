@@ -1,0 +1,27 @@
+---
+# --- mod_gob_consejo_regional.yml ---
+_meta:
+  urn: urn:goreos:atom:module:gob_consejo_regional:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-GOB-CONSEJO-REGIONAL
+name: Consejo Regional
+domain: D-GOB
+description: Sesiones, tablas, votaciones y acuerdos del CORE.
+composition:
+  processes:
+    [
+      urn:goreos:atom:process:d_gob_p1:1.0.0,
+      urn:goreos:atom:process:d_gob_p2:1.0.0,
+    ]
+  entities:
+    [
+      urn:goreos:atom:entity:d_gob_consejo_regional:1.0.0,
+      urn:goreos:atom:entity:d_gob_tabla_de_sesion:1.0.0,
+      urn:goreos:atom:entity:d_gob_voto_dirimente:1.0.0,
+      urn:goreos:atom:entity:d_gob_circunscripcion:1.0.0,
+    ]
+morphisms:
+  implements_capability: [urn:goreos:atom:capability:cap_gob_001:1.0.0]
+  depends_on: []

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_intfis_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Expedientes de sumarios administrativos digitalizados
 id: US-INTFIS-001-01
 urn: urn:goreos:atom:story:us_intfis_001_01:1.0.0
 role_id: USR-CAL-FNX-FIS
+as_a: Interventor Fiscal
 i_want: expedientes de sumarios administrativos digitalizados
 so_that: pueda formular cargos fundados
 domain: D-NORM

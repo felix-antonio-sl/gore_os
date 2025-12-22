@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver cumplimiento de acuerdos (estado/evidencia)
 id: US-GOB-CORE-007
 urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
 role_id: USR-CORE-CONS
+as_a: Consejero Regional (Pleno)
 i_want: Ver cumplimiento de acuerdos (estado/evidencia)
 so_that: Fiscalizo ejecución del ejecutivo
 domain: D-GOB

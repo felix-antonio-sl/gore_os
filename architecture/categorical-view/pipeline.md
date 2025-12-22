@@ -11,17 +11,20 @@ El proceso de construcción de software se modela como una composición de funto
 $$ \mathcal{C}_{Req} \xrightarrow{\mathcal{F}_{Impl}} \mathcal{C}_{Arch} \xrightarrow{\mathcal{F}_{Code}} \mathcal{C}_{Runtime} $$
 
 ### 1. Categoría de Requisitos ($\mathcal{C}_{Req}$)
+
 - **Objetos**: Roles, Stories, Capabilities.
 - **Morfismos**: `contributes_to`, `actor_of`.
 - **Artefactos**: Archivos en `model/atoms/stories`, `model/atoms/roles`.
 
 ### 2. Categoría de Arquitectura ($\mathcal{C}_{Arch}$)
+
 - **Objetos**: Módulos, Contenedores, Componentes.
 - **Morfismos**: `depends_on`, `composes`.
 - **Artefactos**: Diagramas C4, Definiciones YAML de Módulos.
 - **Funtor $\mathcal{F}_{Impl}$**: Transforma una Capacidad (conjunto de historias) en un Módulo Arquitectónico.
 
 ### 3. Categoría de Código ($\mathcal{C}_{Code}$)
+
 - **Objetos**: Tipos (Types/Interfaces), Clases.
 - **Morfismos**: Funciones puras, Métodos.
 - **Artefactos**: Código fuente TypeScript (Zod schemas, tRPC routers).
@@ -42,11 +45,11 @@ $$ \mathcal{C}_{Req} \xrightarrow{\mathcal{F}_{Impl}} \mathcal{C}_{Arch} \xright
 
 Para que el sistema sea correcto por construcción, mantenemos ciertos invariantes:
 
-1.  **Preservación de Trazabilidad**: Todo componente de código debe ser rastreable hasta una User Story y un Rol.
+1. **Preservación de Trazabilidad**: Todo componente de código debe ser rastreable hasta una User Story y un Rol.
     - *Implementación*: Decoradores o metadatos en los routers tRPC que referencian los IDs de las Stories.
 
-2.  **Validación en Frontera (Adjunción)**: La validación de tipos no ocurre "dentro" de la lógica pura, sino en la frontera.
+2. **Validación en Frontera (Adjunción)**: La validación de tipos no ocurre "dentro" de la lógica pura, sino en la frontera.
     - *Implementación*: Zod actúa como el *parser* que convierte datos no estructurados (`unknown`) en tipos del dominio (`DomainType`).
 
-3.  **Manejo de Efectos (Mónadas)**: Los efectos secundarios (DB, API calls) están encapsulados.
+3. **Manejo de Efectos (Mónadas)**: Los efectos secundarios (DB, API calls) están encapsulados.
     - *Implementación*: Uso de `Effect<Success, Error, Context>` para explicitar dependencias y fallos posibles.

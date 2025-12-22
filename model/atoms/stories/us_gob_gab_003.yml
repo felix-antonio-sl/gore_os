@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_gab_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Crisis comunicacionales y políticas
 id: US-GOB-GAB-003
 urn: urn:goreos:atom:story:us_gob_gab_003:1.0.0
 role_id: USR-GAB-JEFE
+as_a: Jefe de Gabinete
 i_want: Gestionar crisis comunicacionales y políticas
 so_that: Respondo a contingencias
 domain: D-GOB

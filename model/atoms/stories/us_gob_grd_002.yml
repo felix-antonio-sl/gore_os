@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_grd_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Asegurar coherencia entre mapas de riesgo y ordenamiento territorial
 id: US-GOB-GRD-002
 urn: urn:goreos:atom:story:us_gob_grd_002:1.0.0
 role_id: USR-CIES-COOR
+as_a: Coordinador CIES
 i_want: Asegurar coherencia entre mapas de riesgo y ordenamiento territorial
 so_that: Planifico con enfoque de riesgo
 domain: D-GOB

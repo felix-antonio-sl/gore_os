@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gab_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un sistema de gestión de agenda integrado con compromisos
 id: US-GAB-001-01
 urn: urn:goreos:atom:story:us_gab_001_01:1.0.0
 role_id: USR-GAB-JEFE
+as_a: Jefe de Gabinete
 i_want: un sistema de gestión de agenda integrado con compromisos
 so_that: pueda organizar las actividades del Gobernador y hacer seguimiento
 domain: D-BACK

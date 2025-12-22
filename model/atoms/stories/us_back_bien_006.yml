@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_bien_006:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Aplicar descuento de cuotas (automático planilla)
 id: US-BACK-BIEN-006
 urn: urn:goreos:atom:story:us_back_bien_006:1.0.0
 role_id: USR-DAF-PER-BIEN
+as_a: Profesional Bienestar
 i_want: Aplicar descuento de cuotas (automático planilla)
 so_that: Recupero préstamos
 domain: D-BACK

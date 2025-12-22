@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_trans_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Solicitudes OIRS/SAI integradas (respuesta 20 días hábiles)
 id: US-NORM-TRANS-002
 urn: urn:goreos:atom:story:us_norm_trans_002:1.0.0
 role_id: USR-NORM-TRANSP
+as_a: Encargado Transparencia Activa/Pasiva
 i_want: Gestionar solicitudes OIRS/SAI integradas (respuesta 20 días hábiles)
 so_that: Respondo en plazo legal
 domain: D-NORM

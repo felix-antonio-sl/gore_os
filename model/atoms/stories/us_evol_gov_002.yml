@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_evol_gov_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Realizar arbitraje de prioridades (RICE)
 id: US-EVOL-GOV-002
 urn: urn:goreos:atom:story:us_evol_gov_002:1.0.0
 role_id: USR-CTD-PRES
+as_a: Presidente Comité TD
 i_want: Realizar arbitraje de prioridades (RICE)
 so_that: Optimizo recursos
 domain: D-EVOL

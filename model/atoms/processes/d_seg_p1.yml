@@ -2,23 +2,36 @@ _meta:
   urn: urn:goreos:atom:process:d_seg_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-seg
+  source: archive/legacy_domains/domain_d-seg.md
 id: PROC-SEG-P1
 name: Monitoreo, Detección y Escalamiento
 domain: D-SEG
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-SEG-MONITOREO-01
+  mermaid_ref: domain_d-seg.md#p1-monitoreo-detección-y-escalamiento
+  mermaid: |
+    flowchart TD
+        subgraph MONITOREO["🎥 Monitoreo Continuo"]
+            A["Operador CIES<br/>monitorea cámaras"]
+            B["Sistemas SITIA<br/>detectan automáticamente:<br/>• Patentes alertadas<br/>• Armas visibles"]
+        end
+
+        subgraph DETECCION["⚡ Detección"]
+            C["Identificar evento"]
+            D{"Clasificar<br/>prioridad"}
+            D -->|"🔴 Alta"| E["Alarma inmediata"]
+            D -->|"🟠 Media"| F["Registro y seguimiento"]
+            D -->|"🟢 Baja"| G["Solo registro"]
+        end
+
+        subgraph ESCALAMIENTO["📢 Escalamiento"]
+            E --> H["Supervisor evalúa"]
+            H --> I["Activar protocolo"]
+            I --> J["Coordinar con:<br/>• Carabineros<br/>• PDI<br/>• Bomberos<br/>• SAMU"]
+        end
+
+        A --> C
+        B --> C
+        C --> D

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_gest_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reevaluación (si supera 10% / cambio sustancial)
 id: US-FIN-GEST-003
 urn: urn:goreos:atom:story:us_fin_gest_003:1.0.0
 role_id: USR-CAL-ANAL
+as_a: Analista Gestión Institucional
 i_want: Gestionar Reevaluación (si supera 10% / cambio sustancial)
 so_that: Cumplo con normativa de modificaciones
 domain: D-FIN

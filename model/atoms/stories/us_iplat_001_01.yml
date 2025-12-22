@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Catálogo de servicios autogestionado (Base de datos, Cache)
 id: US-IPLAT-001-01
 urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
 role_id: USR-OPS-ING
+as_a: Ingeniero de Plataforma
 i_want: catálogo de servicios autogestionado (Base de datos, Cache)
 so_that: los desarrolladores no pierdan tiempo configurando infraestructura
 domain: D-OPS

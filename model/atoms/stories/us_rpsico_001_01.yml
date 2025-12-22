@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_rpsico_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Encuestas de clima laboral anónimas y digitales
 id: US-RPSICO-001-01
 urn: urn:goreos:atom:story:us_rpsico_001_01:1.0.0
 role_id: USR-CAL-PMG-PSICO
+as_a: Referente Riesgos Psicosociales
 i_want: encuestas de clima laboral anónimas y digitales
 so_that: se garantice la confidencialidad de los datos
 domain: D-BACK

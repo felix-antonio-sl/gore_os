@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:incidente_seguridad:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-INCIDENTE_SEGURIDAD
+name: Incidente de Seguridad
+domain: D-DIG
+category: Event
+attributes:
+  - {name: id_incidente, type: UUID, key: true}
+  - {name: activo_afectado_id, type: UUID, fk: ENT-DIG-ACTIVO_DATOS}
+  - {name: tipo, type: String}
+  - {name: severidad, type: String}
+  - {name: fecha_deteccion, type: DateTime}
+  - {name: descripcion, type: Text}
+  - {name: estado, type: String}
+  - {name: resolucion, type: Text}

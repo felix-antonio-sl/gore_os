@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:soporte_tecnico:1.0.0
+  urn: "urn:goreos:atom:role:soporte_tecnico:2.0.0"
   type: Role
-  source: organization
-id: USR-DAF-TIC-SUP
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-OPS-TIC-SUP"
 role_key: soporte_tecnico
 title: Soporte Técnico
 description: Atención de Mesa de Ayuda y soporte a usuarios Nivel 1.
 type: INTERNAL
+logic_scope: OPERATIONAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: DAF
 unit_type: Ejecutivo & Operaciones
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:soporte_tecnico:1.0.0
 domain: D-OPS
+archetype: null
+extends: null

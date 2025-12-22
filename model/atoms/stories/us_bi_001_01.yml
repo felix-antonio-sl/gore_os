@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_bi_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso a datos consolidados para análisis
 id: US-BI-001-01
 urn: urn:goreos:atom:story:us_bi_001_01:1.0.0
 role_id: USR-NEW-ESPECIALISTA
+as_a: Especialista BI
 i_want: acceso a datos consolidados para análisis
 so_that: pueda crear visualizaciones para la gestión
 domain: D-TDE

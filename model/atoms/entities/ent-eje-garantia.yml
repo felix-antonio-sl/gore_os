@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:garantia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-GARANTIA
+name: Garantía de Convenio
+domain: D-EJE
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_garantia, type: UUID, key: true}
+  - {name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO}
+  - {name: tipo, type: String}
+  - {name: numero, type: String}
+  - {name: institucion, type: String}
+  - {name: monto, type: Decimal}
+  - {name: fecha_vencimiento, type: Date}
+  - {name: estado, type: String}

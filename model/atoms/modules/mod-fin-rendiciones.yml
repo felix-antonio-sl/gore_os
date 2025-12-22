@@ -1,0 +1,23 @@
+---
+# --- mod_fin_rendiciones.yml ---
+_meta:
+  urn: urn:goreos:atom:module:fin_rendiciones:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-FIN-RENDICIONES
+name: Rendiciones
+domain: D-FIN
+description: Proceso de rendición de cuentas de ejecutores.
+composition:
+  processes: []
+  entities:
+    [
+      urn:goreos:atom:entity:d_fin_rendiciones_rendicion:1.0.0,
+      urn:goreos:atom:entity:d_fin_rendiciones_informerendicion:1.0.0,
+      urn:goreos:atom:entity:d_fin_rendiciones_observacion:1.0.0,
+      urn:goreos:atom:entity:d_fin_rendiciones_transferencia:1.0.0,
+    ]
+morphisms:
+  implements_capability: [urn:goreos:atom:capability:cap_fin_rend_001:1.0.0]
+  depends_on: [urn:goreos:atom:module:fin_gestion_ejecutores:1.0.0]

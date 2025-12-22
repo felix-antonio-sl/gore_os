@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_core_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver mapa de inversiones (geolocalización + filtros)
 id: US-GOB-CORE-004
 urn: urn:goreos:atom:story:us_gob_core_004:1.0.0
 role_id: USR-CORE-CONS
+as_a: Consejero Regional (Pleno)
 i_want: Ver mapa de inversiones (geolocalización + filtros)
 so_that: Visualizo distribución territorial
 domain: D-GOB

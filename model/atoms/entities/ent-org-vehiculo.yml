@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:vehiculo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-VEHICULO
+name: Vehículo
+domain: D-ORG
+subdomain: recursos
+category: Master
+extends: ENT-ORG-ACTIVO
+attributes:
+  - {name: id_vehiculo, type: UUID, key: true}
+  - {name: patente, type: String}
+  - {name: tipo, type: String}
+  - {name: marca, type: String}
+  - {name: modelo, type: String}
+  - {name: anio, type: Integer}
+  - {name: kilometraje, type: Integer}

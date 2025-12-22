@@ -2,9 +2,38 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ejecutores_p8:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-fin-ejecutores
+  source: gorenuble/knowledge/domains/gn/arquitectura/bpmn/D08_rendiciones_koda.yml
 id: PROC-FIN-EJECUTORES-P8
-name: Asistencia Financiera
-domain: D-FIN-EJECUTORES
+name: Rendición por Tipología de Fondos
+domain: D-FIN-REND
 code: P8
+subdomain: Ejecutores
 process_type: BPMN
+spec:
+  bpmn_id: BPMN-GN-REND-TIPOLOGIA-01
+  mermaid_ref: D08_rendiciones_koda.yml#p3-rendición-por-tipología-de-fondos
+  tipologias: 7
+  mermaid: |
+    flowchart TD
+        subgraph FNDR["💰 FNDR"]
+            F1["Subtítulo 31<br/>(Ejecución GORE)"]
+            F2["Subtítulo 33<br/>(Transferencias)"]
+        end
+
+        subgraph MECANISMOS["📋 Mecanismos Específicos"]
+            M1["FRIL"]
+            M2["FRPD"]
+            M3["8% FNDR"]
+            M4["Programas Subt. 24"]
+            M5["Circular 33"]
+        end
+
+        F1 --> R1["Imputación BIP/SIGFE<br/>Actualizar avance BIP"]
+        F2 --> R2["SISREC obligatorio<br/>RTF + UCR revisan"]
+        M1 --> R3["SISREC + Informe ITO"]
+        M2 --> R4["SISREC + Seguimiento<br/>división patrocinante"]
+        M3 --> R5["SISREC + Medios<br/>verificación"]
+        M4 --> R6["Tope 5% gastos admin"]
+        M5 --> R7["BIP + RATE + Conservación"]
+
+        style R2 fill:#4CAF50,color:#fff

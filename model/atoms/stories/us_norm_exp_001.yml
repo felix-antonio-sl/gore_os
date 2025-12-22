@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_exp_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
 id: US-NORM-EXP-001
 urn: urn:goreos:atom:story:us_norm_exp_001:1.0.0
 role_id: USR-DAF-TIC-ADMIN
+as_a: Administrador TI
 i_want: Gestionar Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
 so_that: Cumplo con Ley TDE
 domain: D-NORM

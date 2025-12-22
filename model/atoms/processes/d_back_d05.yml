@@ -2,7 +2,7 @@ _meta:
   urn: urn:goreos:atom:process:d_back_d05:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-back
+  source: archive/legacy_domains/domain_d-back.md
 id: PROC-BACK-D05
 name: Gestión de Inventarios y Activo Fijo
 domain: D-BACK
@@ -10,12 +10,6 @@ code: D05
 subdomain: Inventarios
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-INVENTARIOS-BODEGAS-01`'
-  mermaid_ref: D05_inventarios_activo_fijo.md#p1-gestin-de-inventarios-y-bodegas
-  systems:
-  - SIGAS
-  mermaid: "flowchart TD\n    A[\"Identificar necesidad<br/>de nuevo ítem\"] --> B[\"\
-    Verificar si<br/>existe código\"]\n    B --> C{\"¿Existe?\"}\n    C -->|\"Sí\"\
-    | D[\"Usar código<br/>existente\"]\n    C -->|\"No\"| E[\"Crear nuevo<br/>código\
-    \ en SIGAS\"]\n    E --> F[\"Asignar:<br/>• Nombre<br/>• Unidad medida<br/>• Categoría<br/>•\
-    \ Valorización\"]\n\n    style F fill:#2196F3,color:#fff"
+  bpmn_id: BPMN-GN-BACK-INVENTARIOS-MAPA-01
+  mermaid_ref: domain_d-back.md#d05-gestión-de-inventarios-y-activo-fijo
+  descripcion: Dominio que agrupa Recepción de Bienes (P5), Alta de Activo Fijo (P6) y Baja de Bienes (P7)

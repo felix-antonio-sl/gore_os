@@ -1,0 +1,12 @@
+---
+_meta:
+  urn: urn:goreos:profunctor:usa_canal:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-USA-CANAL
+name: usa_canal
+description: "Catálogo: documento/evento usa un canal de comunicación"
+source: ENT-SYS-DOCUMENTO
+target: ENT-DIG-CANAL
+cardinality: "N:1"
+semantics: "Un documento usa un canal para recepción y/o despacho"

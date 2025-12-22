@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_plan_pros_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-PLAN-PROS-001
+name: Prospectiva Regional
+domain: D-PLAN
+type: CORE
+description: Estudios prospectivos y escenarios regionales.
+stories:
+- us_plan_pros_001
+- us_plan_pros_002
+ofrecida_por: null

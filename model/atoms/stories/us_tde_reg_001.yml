@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_reg_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Convocar y liderar la Mesa Regional de Transformación Digital
 id: US-TDE-REG-001
 urn: urn:goreos:atom:story:us_tde_reg_001:1.0.0
 role_id: USR-DAF-TIC-CTD
+as_a: Coordinador Transformación Digital (CTD)
 i_want: Convocar y liderar la Mesa Regional de Transformación Digital
 so_that: Articulo el cumplimiento normativo en todo el territorio
 domain: D-TDE

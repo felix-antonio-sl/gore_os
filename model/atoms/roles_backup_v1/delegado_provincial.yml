@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:delegado_provincial:1.0.0
+  type: Role
+  source: organization
+id: USR-EXT-DPP
+role_key: delegado_provincial
+title: Delegado Presidencial Provincial
+description: Representante del Presidente en la provincia.
+type: INTERNAL
+unit: Gobierno Interior
+unit_type: Ecosistema Externo
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:delegado_provincial:1.0.0
+domain: D-GESTION

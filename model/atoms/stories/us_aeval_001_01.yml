@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_aeval_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Una ficha de evaluación con criterios estándar
 id: US-AEVAL-001-01
 urn: urn:goreos:atom:story:us_aeval_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-EVA
+as_a: Analista Evaluación
 i_want: una ficha de evaluación con criterios estándar
 so_that: la evaluación sea consistente
 domain: D-EJEC

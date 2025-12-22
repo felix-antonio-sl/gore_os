@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_sre_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Escalar horizontalmente los pods según consumo de CPU/Memoria
 id: US-OPS-SRE-001
 urn: urn:goreos:atom:story:us_ops_sre_001:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Escalar horizontalmente los pods según consumo de CPU/Memoria
 so_that: Mantengo el rendimiento ante picos de demanda
 domain: D-OPS

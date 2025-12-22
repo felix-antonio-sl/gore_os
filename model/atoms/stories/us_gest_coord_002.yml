@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gest_coord_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Coordinar acciones con Delegado Presidencial Regional
 id: US-GEST-COORD-002
 urn: urn:goreos:atom:story:us_gest_coord_002:1.0.0
 role_id: USR-ADM-JEFE
+as_a: Administrador Regional
 i_want: Coordinar acciones con Delegado Presidencial Regional
 so_that: Alineo gestión GORE con gobierno interior
 domain: D-GESTION

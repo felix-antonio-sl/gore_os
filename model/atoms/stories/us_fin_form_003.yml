@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_form_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Proyectar gastos de funcionamiento (Subtítulo 21-22)
 id: US-FIN-FORM-003
 urn: urn:goreos:atom:story:us_fin_form_003:1.0.0
 role_id: USR-DAF-PROF
+as_a: Profesional DAF
 i_want: Proyectar gastos de funcionamiento (Subtítulo 21-22)
 so_that: Planifico el presupuesto operacional
 domain: D-FIN

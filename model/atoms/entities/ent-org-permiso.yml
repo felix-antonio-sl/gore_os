@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:permiso:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-PERMISO
+name: Permiso Administrativo
+domain: D-ORG
+category: Transaction
+attributes:
+  - {name: id_permiso, type: UUID, key: true}
+  - {name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: tipo, type: String}
+  - {name: fecha_inicio, type: Date}
+  - {name: fecha_termino, type: Date}
+  - {name: horas, type: Decimal}
+  - {name: motivo, type: Text}
+  - {name: estado, type: String}

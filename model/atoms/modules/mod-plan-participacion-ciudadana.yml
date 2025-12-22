@@ -1,0 +1,22 @@
+---
+# --- mod_plan_participacion_ciudadana.yml ---
+_meta:
+  urn: urn:goreos:atom:module:plan_participacion_ciudadana:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-PLAN-PARTICIPACION-CIUDADANA
+name: Participación Ciudadana
+domain: D-PLAN
+description: Consultas públicas, cabildos y propuestas ciudadanas.
+composition:
+  processes: [urn:goreos:atom:process:d_plan_p7:1.0.0]
+  entities:
+    [
+      urn:goreos:atom:entity:d_plan_cabildoterritorial:1.0.0,
+      urn:goreos:atom:entity:d_plan_consultapublica:1.0.0,
+      urn:goreos:atom:entity:d_plan_propuestaciudadana:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

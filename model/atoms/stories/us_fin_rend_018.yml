@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_rend_018:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Proceso de reintegro de fondos
 id: US-FIN-REND-018
 urn: urn:goreos:atom:story:us_fin_rend_018:1.0.0
 role_id: USR-DAF-FIN-REND
+as_a: Encargado Rendiciones
 i_want: Gestionar proceso de reintegro de fondos
 so_that: Recupero saldos no ejecutados
 domain: D-FIN

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seg_prev_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Coordinar sesiones del Consejo Regional de Seguridad Pública
 id: US-SEG-PREV-003
 urn: urn:goreos:atom:story:us_seg_prev_003:1.0.0
 role_id: USR-SEG-PREV
+as_a: Encargado Prevención
 i_want: Coordinar sesiones del Consejo Regional de Seguridad Pública
 so_that: Articulo gobernanza de seguridad
 domain: D-SEG

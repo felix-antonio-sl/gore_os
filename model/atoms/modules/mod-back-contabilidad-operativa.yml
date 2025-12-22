@@ -1,0 +1,29 @@
+---
+# --- mod_back_contabilidad_operativa.yml ---
+_meta:
+  urn: urn:goreos:atom:module:back_contabilidad_operativa:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-BACK-CONTABILIDAD-OPERATIVA
+name: Contabilidad Operativa
+domain: D-BACK
+description: "Registro contable: devengos, compromisos, conciliaciones, deuda flotante."
+composition:
+  processes:
+    [
+      urn:goreos:atom:process:d_back_d05:1.0.0,
+      urn:goreos:atom:process:d_back_d06:1.0.0,
+    ]
+  entities:
+    [
+      urn:goreos:atom:entity:d_back_compromiso:1.0.0,
+      urn:goreos:atom:entity:d_back_devengado:1.0.0,
+      urn:goreos:atom:entity:d_back_deuda_flotante:1.0.0,
+      urn:goreos:atom:entity:d_back_conciliacion:1.0.0,
+      urn:goreos:atom:entity:d_back_cartola_bancaria:1.0.0,
+      urn:goreos:atom:entity:d_back_partida_pendiente:1.0.0,
+    ]
+morphisms:
+  implements_capability: [urn:goreos:atom:capability:cap_pagos_001:1.0.0]
+  depends_on: []

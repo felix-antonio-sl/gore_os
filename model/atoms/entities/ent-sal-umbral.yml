@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:umbral:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-UMBRAL
+name: Umbral
+domain: D-SAL
+category: Reference
+attributes:
+  - {name: id_umbral, type: UUID, key: true}
+  - {name: dimension_id, type: UUID, fk: ENT-SAL-DIMENSION}
+  - {name: nivel, type: String}
+  - {name: valor_min, type: Decimal}
+  - {name: valor_max, type: Decimal}
+  - {name: color, type: String}

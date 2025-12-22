@@ -2,23 +2,26 @@ _meta:
   urn: urn:goreos:atom:process:d_evol_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-evol
+  source: archive/legacy_domains/domain_d-evol.md
 id: PROC-EVOL-P1
 name: Evaluación y Monitoreo H_org
 domain: D-EVOL
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-EVOL-HORG-01
+  mermaid_ref: domain_d-evol.md#p1-evaluación-y-monitoreo-h_org
+  mermaid: |
+    flowchart TD
+        A["Calcular H_org<br/>semanal"] --> B{"¿Estado?"}
+        B -->|"< 0.50"| C["🔴 Crítico<br/>Activar Kit Survival"]
+        B -->|"0.50-0.70"| D["🟡 Estable<br/>Activar Kit Minimal"]
+        B -->|"> 0.70"| E["🟢 Saludable<br/>Activar Kit Avanzado"]
+        C --> F["Ejecutar P01_Low_H_org<br/>Recovery Playbook"]
+        F --> G["Monitoreo diario<br/>hasta H_org ≥ 0.65"]
+        D --> H["Monitoreo semanal<br/>Health Standup"]
+        E --> I["Habilitar pilotos<br/>de autonomía M5-M6"]
+        G --> J["Recalcular H_org"]
+        H --> J
+        I --> J
+        J --> A

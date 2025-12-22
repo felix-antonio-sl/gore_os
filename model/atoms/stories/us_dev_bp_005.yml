@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_bp_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Script verify_ontology.py en CI
 id: US-DEV-BP-005
 urn: urn:goreos:atom:story:us_dev_bp_005:1.0.0
 role_id: ROL-DEV
+as_a: Rol no encontrado (ROL-DEV)
 i_want: ejecutar script verify_ontology.py en CI
 so_that: se detecten errores de integridad antes de merge
 domain: D-DEV

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_gab_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Coordinar articulación política con actores regionales
 id: US-GOB-GAB-004
 urn: urn:goreos:atom:story:us_gob_gab_004:1.0.0
 role_id: USR-GAB-JEFE
+as_a: Jefe de Gabinete
 i_want: Coordinar articulación política con actores regionales
 so_that: Gestiono relaciones estratégicas
 domain: D-GOB

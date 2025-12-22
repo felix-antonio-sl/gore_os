@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_pcseu_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Actas de selección automáticas con puntajes consolidados
 id: US-PCSEU-001-01
 urn: urn:goreos:atom:story:us_pcseu_001_01:1.0.0
 role_id: USR-CAL-CSEU-PRES
+as_a: Presidente Comité CSEU
 i_want: actas de selección automáticas con puntajes consolidados
 so_that: se proponga la terna a la autoridad
 domain: D-BACK

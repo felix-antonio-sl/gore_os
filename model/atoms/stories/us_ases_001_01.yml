@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ases_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Información consolidada de los temas que asesoro
 id: US-ASES-001-01
 urn: urn:goreos:atom:story:us_ases_001_01:1.0.0
 role_id: USR-GAB-ASESOR
+as_a: Asesor de Gabinete
 i_want: acceder a información consolidada de los temas que asesoro
 so_that: pueda preparar informes y recomendaciones
 domain: D-PLAN

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_fril_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Marcos Presupuestarios (Cuota por Comuna)
 id: US-FIN-FRIL-001
 urn: urn:goreos:atom:story:us_fin_fril_001:1.0.0
 role_id: USR-DIPIR-ANAL-INV
+as_a: Analista de Inversión
 i_want: Configurar Marcos Presupuestarios (Cuota por Comuna)
 so_that: Controlo asignación comunal
 domain: D-FIN

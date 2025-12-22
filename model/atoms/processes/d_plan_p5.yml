@@ -2,24 +2,26 @@ _meta:
   urn: urn:goreos:atom:process:d_plan_p5:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-plan
+  source: archive/legacy_domains/domain_d-plan.md
 id: PROC-PLAN-P5
-name: Evaluación Indicadores
+name: Evaluación Indicadores Territoriales
 domain: D-PLAN
 code: P5
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
-  mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
-  mermaid: "flowchart TD\n    subgraph DNC[\"\U0001F4CA Detección de Necesidades\"\
-    ]\n        A[\"Aplicar encuesta DNC\"]\n        B[\"Análisis de brechas\"]\n \
-    \       C[\"Priorizar necesidades\"]\n    end\n\n    subgraph PAC_CAP[\"\U0001F4CB\
-    \ Plan de Capacitación\"]\n        D[\"Elaborar PAC anual\"]\n        E[\"Comité\
-    \ Bipartito<br/>aprueba\"]\n        F[\"Asignar presupuesto\"]\n    end\n\n  \
-    \  subgraph EJECUCION[\"\U0001F393 Ejecución\"]\n        G[\"Convocar a<br/>funcionarios\"\
-    ]\n        H[\"Ejecutar<br/>capacitaciones\"]\n        I[\"Evaluar aprendizaje\"\
-    ]\n        J[\"Certificar\"]\n    end\n\n    subgraph SEGUIMIENTO[\"\U0001F4C8\
-    \ Seguimiento\"]\n        K[\"Medir transferencia<br/>al puesto\"]\n        L[\"\
-    Evaluar impacto\"]\n        M[\"Retroalimentar<br/>próximo ciclo\"]\n    end\n\
-    \n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L -->\
-    \ M\n\n    style J fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-PLAN-INDICADORES-01
+  mermaid_ref: domain_d-plan.md#p5-evaluación-indicadores
+  frecuencia: "Mensual/Trimestral"
+  mermaid: |
+    flowchart TB
+        subgraph P5["P5: Evaluación Indicadores Territoriales"]
+            P5_1["5.1 Recolección<br/>Datos"]
+            P5_2["5.2 Análisis<br/>Brechas"]
+            P5_3["5.3 Publicación<br/>Tablero"]
+        end
+
+        P5_1 --> P5_2 --> P5_3
+
+        P5_1 -.- N1["Fuentes: INE, CASEN<br/>BCN, servicios"]
+        P5_2 -.- N2["Comparación con<br/>metas ERD"]
+        P5_3 -.- N3["Panel público<br/>Observatorio Regional"]

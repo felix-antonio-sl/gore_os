@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso a materias asignadas a cada comisión
 id: US-SECCOM-001-01
 urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
 role_id: USR-CORE-SEC-COM
+as_a: Comisionado Secretario Ejecutivo CORE
 i_want: acceso a materias asignadas a cada comisión
 so_that: pueda preparar documentación
 domain: D-NORM

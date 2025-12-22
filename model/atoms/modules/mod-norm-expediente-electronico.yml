@@ -1,0 +1,17 @@
+---
+# --- mod_norm_expediente_electronico.yml ---
+_meta:
+  urn: urn:goreos:atom:module:norm_expediente_electronico:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-NORM-EXPEDIENTE-ELECTRONICO
+name: Expediente Electrónico
+domain: D-NORM
+description: Gestión documental electrónica y firma digital.
+composition:
+  processes: []
+  entities: []
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:norm_actos_administrativos:1.0.0]

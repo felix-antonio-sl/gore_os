@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:cometido:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-COMETIDO
+name: Cometido Funcionario
+domain: D-ORG
+category: Transaction
+attributes:
+  - {name: id_cometido, type: UUID, key: true}
+  - {name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: destino, type: String}
+  - {name: motivo, type: Text}
+  - {name: fecha_inicio, type: Date}
+  - {name: fecha_termino, type: Date}
+  - {name: viatico, type: Decimal}
+  - {name: resolucion, type: String}
+  - {name: estado, type: String}

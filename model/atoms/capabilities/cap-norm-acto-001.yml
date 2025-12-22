@@ -1,0 +1,20 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_norm_acto_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-NORM-ACTO-001
+name: Gestión de Actos Administrativos
+domain: D-NORM
+type: CORE
+description: Ciclo de actos administrativos conforme Ley 19.880.
+stories:
+- us_norm_acto_002
+- us_norm_acto_003
+- us_norm_acto_004
+- us_norm_acto_005
+- us_norm_acto_006
+- us_norm_acto_008
+- us_norm_acto_011
+- us_norm_acto_012
+ofrecida_por: null

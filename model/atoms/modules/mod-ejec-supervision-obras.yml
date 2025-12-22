@@ -1,0 +1,17 @@
+---
+# --- mod_ejec_supervision_obras.yml ---
+_meta:
+  urn: urn:goreos:atom:module:ejec_supervision_obras:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EJEC-SUPERVISION-OBRAS
+name: Supervisión de Obras
+domain: D-EJEC
+description: "Inspección técnica: estados de pago, recepciones."
+composition:
+  processes: []
+  entities: []
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:ejec_gestion_convenios:1.0.0]

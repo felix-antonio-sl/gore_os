@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_aconv_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un workflow de convenios con checklist de requisitos
 id: US-ACONV-001-01
 urn: urn:goreos:atom:story:us_aconv_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-CON
+as_a: Analista Contable
 i_want: un workflow de convenios con checklist de requisitos
 so_that: pueda verificar completitud
 domain: D-EJEC

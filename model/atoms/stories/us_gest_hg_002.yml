@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gest_hg_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Umbrales de alerta para dimensiones de H_gore
 id: US-GEST-HG-002
 urn: urn:goreos:atom:story:us_gest_hg_002:1.0.0
 role_id: USR-ADM-JEFE
+as_a: Administrador Regional
 i_want: Configurar umbrales de alerta para dimensiones de H_gore
 so_that: Recibo notificaciones automáticas ante degradación
 domain: D-GESTION

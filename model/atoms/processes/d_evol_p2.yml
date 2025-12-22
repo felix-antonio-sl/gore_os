@@ -2,33 +2,27 @@ _meta:
   urn: urn:goreos:atom:process:d_evol_p2:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-evol
+  source: archive/legacy_domains/domain_d-evol.md
 id: PROC-EVOL-P2
 name: Progresión de Modo HAIC (M1→M6)
 domain: D-EVOL
 code: P2
 process_type: BPMN
 spec:
-  bpmn_id: '`PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01`'
-  mermaid_ref: D01_actos_administrativos.md#p2-aprobacin-de-transferencias-y-convenios
-  sla: 30 días hábiles
-  mermaid: "flowchart TD\n    subgraph FASE1[\"1️⃣ Iniciación\"]\n        A[\"Área\
-    \ Responsable:<br/>Elaborar borrador convenio\"]\n        B[\"Incluir cláusulas:<br/>•\
-    \ Partes<br/>• Objeto<br/>• Monto<br/>• Plazos<br/>• Rendición\"]\n    end\n\n\
-    \    subgraph FASE2[\"2️⃣ Revisión Jurídica\"]\n        C[\"Jurídica:<br/>Revisar\
-    \ legalidad\"]\n        D{\"¿Cumple<br/>normativa?\"}\n        E[\"✅ V°B° Jurídico\"\
-    ]\n        F[\"❌ Observar\"]\n    end\n\n    subgraph FASE3[\"3️⃣ Visación Presupuestaria\"\
-    ]\n        G[\"DAF:<br/>Verificar disponibilidad\"]\n        H[\"Emitir CDP\"\
-    ]\n        I[\"V°B° DAF\"]\n    end\n\n    subgraph FASE4[\"4️⃣ Control Interno\"\
-    ]\n        J[\"U. Control:<br/>Verificar procedencia\"]\n        K[\"V°B° Control\"\
-    ]\n    end\n\n    subgraph FASE5[\"5️⃣ Firma Partes\"]\n        L[\"Coordinar\
-    \ firma:<br/>• Gobernador/a GORE<br/>• Representante Entidad\"]\n    end\n\n \
-    \   subgraph FASE6[\"6️⃣ Resolución Aprobatoria\"]\n        M[\"Elaborar resolución<br/>que\
-    \ aprueba convenio\"]\n        N{\"¿Requiere<br/>Toma de Razón?\"}\n        O[\"\
-    Enviar a CGR\"]\n        P[\"Tramitar exento\"]\n    end\n\n    subgraph FASE7[\"\
-    7️⃣ Publicación y Archivo\"]\n        Q[\"Publicar en<br/>Transparencia\"]\n \
-    \       R[\"Registrar en SIGFE\"]\n        S[\"Archivar expediente\"]\n    end\n\
-    \n    A --> B --> C --> D\n    D -->|\"Sí\"| E --> G --> H --> I --> J --> K -->\
-    \ L --> M --> N\n    D -->|\"No\"| F --> A\n    N -->|\"Sí\"| O --> Q\n    N -->|\"\
-    No\"| P --> Q\n    Q --> R --> S\n\n    style L fill:#4CAF50,color:#fff\n    style\
-    \ S fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-EVOL-HAIC-01
+  mermaid_ref: domain_d-evol.md#p2-progresión-de-modo-haic-m1m6
+  mermaid: |
+    flowchart TD
+        A["Capacidad IA en<br/>modo actual Mn"] --> B["Accumulate<br/>TrajectoryLog"]
+        B --> C{"¿Evidencia<br/>suficiente?"}
+        C -->|"No"| D["Continuar en<br/>modo actual"]
+        D --> B
+        C -->|"Sí"| E["Evaluar métricas:<br/>precision, latency, success"]
+        E --> F{"¿Aprobado<br/>para promoción?"}
+        F -->|"No"| G["Registrar gaps<br/>y plan de mejora"]
+        G --> D
+        F -->|"Sí"| H["Promoción a<br/>modo Mn+1"]
+        H --> I["Configurar<br/>accountability humana"]
+        I --> J["Actualizar<br/>explainability (si M3+)"]
+        J --> K["Capacidad IA en<br/>nuevo modo"]
+        K --> B

@@ -1,0 +1,31 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_fin_ppto_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-FIN-PPTO-001
+name: Gestión Presupuestaria
+domain: D-FIN
+type: CORE
+description: Ciclo presupuestario regional conforme Ley de Presupuestos y DIPRES.
+stories:
+- us_fin_ppto_004
+- us_fin_ppto_006
+- us_fin_ppto_009
+- us_fin_ppto_010
+- us_fin_ppto_011
+- us_fin_ppto_012
+- us_fin_ppto_013
+- us_fin_ppto_017
+- us_fin_ppto_018
+- us_fin_ppto_019
+- us_fin_ppto_020
+- us_fin_ppto_021
+- us_fin_ppto_022
+- us_fin_ppto_026
+- us_fin_ppto_027
+- us_fin_ppto_031
+- us_analpres_001_01
+- us_analpres_001_02
+- us_jpre_001_01
+ofrecida_por: null

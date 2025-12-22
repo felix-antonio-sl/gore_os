@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seg_prev_008:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Asesorar a municipios en la formulación de sus planes comunales de seguridad
 id: US-SEG-PREV-008
 urn: urn:goreos:atom:story:us_seg_prev_008:1.0.0
 role_id: USR-DIT-PROF
+as_a: Profesional DIT
 i_want: Asesorar a municipios en la formulación de sus planes comunales de seguridad
 so_that: Cumplo mandato legal de apoyo técnico
 domain: D-SEG

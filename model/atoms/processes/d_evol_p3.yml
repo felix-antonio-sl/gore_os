@@ -2,23 +2,24 @@ _meta:
   urn: urn:goreos:atom:process:d_evol_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-evol
+  source: archive/legacy_domains/domain_d-evol.md
 id: PROC-EVOL-P3
 name: Gestión de Base de Conocimiento
 domain: D-EVOL
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-EVOL-KB-01
+  mermaid_ref: domain_d-evol.md#p3-gestión-de-base-de-conocimiento
+  mermaid: |
+    flowchart TD
+        A["Identificar necesidad<br/>de conocimiento"] --> B["Crear/Actualizar<br/>artefacto"]
+        B --> C["Asignar URN<br/>y metadatos"]
+        C --> D["Clasificar:<br/>Público/Interno/Confidencial"]
+        D --> E["Registrar en<br/>Catálogo"]
+        E --> F["Validar resolución<br/>URN → Contenido"]
+        F --> G{"¿Resolución OK?"}
+        G -->|"No"| H["Corregir<br/>configuración"]
+        H --> F
+        G -->|"Sí"| I["Artefacto<br/>disponible"]
+        I --> J["Vincular a<br/>agentes/usuarios"]

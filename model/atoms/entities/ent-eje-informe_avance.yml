@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:informe_avance:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-INFORME_AVANCE
+name: Informe de Avance
+domain: D-EJE
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_informe, type: UUID, key: true}
+  - {name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO}
+  - {name: periodo, type: String}
+  - {name: avance_fisico, type: Decimal}
+  - {name: avance_financiero, type: Decimal}
+  - {name: observaciones, type: Text}
+  - {name: fecha, type: Date}

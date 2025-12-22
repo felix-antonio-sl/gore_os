@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_seg_006:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Incidentes de seguridad (CSIRT)
 id: US-TDE-SEG-006
 urn: urn:goreos:atom:story:us_tde_seg_006:1.0.0
 role_id: USR-TDE-CISO
+as_a: CISO
 i_want: Gestionar incidentes de seguridad (CSIRT)
 so_that: Respondo a amenazas
 domain: D-TDE

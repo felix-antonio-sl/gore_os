@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_cgr_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Fiscalizar DIP detectando incumplimientos
 id: US-NORM-CGR-003
 urn: urn:goreos:atom:story:us_norm_cgr_003:1.0.0
 role_id: USR-EXT-CGR
+as_a: Analista Toma de Razón (CGR)
 i_want: Fiscalizar DIP detectando incumplimientos
 so_that: Aseguro probidad
 domain: D-NORM

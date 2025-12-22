@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_cgr_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Expedientes electrónicos completos vía interoperabilidad
 id: US-CGR-001-01
 urn: urn:goreos:atom:story:us_cgr_001_01:1.0.0
 role_id: USR-EXT-CGR
+as_a: Analista Toma de Razón (CGR)
 i_want: recibir expedientes electrónicos completos vía interoperabilidad
 so_that: pueda revisar sin solicitar documentos adicionales
 domain: D-TDE

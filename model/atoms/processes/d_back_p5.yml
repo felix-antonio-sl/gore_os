@@ -2,24 +2,22 @@ _meta:
   urn: urn:goreos:atom:process:d_back_p5:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-back
+  source: archive/legacy_domains/domain_d-back.md
 id: PROC-BACK-P5
-name: Control de Asistencia (Absorción SIGPER)
+name: Recepción de Bienes (Inventarios)
 domain: D-BACK
 code: P5
+subdomain: Inventarios
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
-  mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
-  mermaid: "flowchart TD\n    subgraph DNC[\"\U0001F4CA Detección de Necesidades\"\
-    ]\n        A[\"Aplicar encuesta DNC\"]\n        B[\"Análisis de brechas\"]\n \
-    \       C[\"Priorizar necesidades\"]\n    end\n\n    subgraph PAC_CAP[\"\U0001F4CB\
-    \ Plan de Capacitación\"]\n        D[\"Elaborar PAC anual\"]\n        E[\"Comité\
-    \ Bipartito<br/>aprueba\"]\n        F[\"Asignar presupuesto\"]\n    end\n\n  \
-    \  subgraph EJECUCION[\"\U0001F393 Ejecución\"]\n        G[\"Convocar a<br/>funcionarios\"\
-    ]\n        H[\"Ejecutar<br/>capacitaciones\"]\n        I[\"Evaluar aprendizaje\"\
-    ]\n        J[\"Certificar\"]\n    end\n\n    subgraph SEGUIMIENTO[\"\U0001F4C8\
-    \ Seguimiento\"]\n        K[\"Medir transferencia<br/>al puesto\"]\n        L[\"\
-    Evaluar impacto\"]\n        M[\"Retroalimentar<br/>próximo ciclo\"]\n    end\n\
-    \n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L -->\
-    \ M\n\n    style J fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-BACK-RECEPCION-01
+  mermaid_ref: domain_d-back.md#d05-gestión-de-inventarios-y-activo-fijo
+  mermaid: |
+    flowchart TD
+        A["OC aceptada"] --> B["Proveedor entrega"]
+        B --> C["Bodeguero verifica:<br/>• Cantidad<br/>• Calidad<br/>• Guía"]
+        C --> D{"¿Conforme?"}
+        D -->|"Sí"| E["Firmar guía"]
+        D -->|"No"| F["Rechazar"]
+        E --> G["Ingresar en Sistema"]
+        G --> H["Actualizar stock"]

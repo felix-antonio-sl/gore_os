@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Usar wizard de vía de financiamiento (recomendación fundamentada)
 id: US-EJEC-MUNI-002
 urn: urn:goreos:atom:story:us_ejec_muni_002:1.0.0
 role_id: USR-MUNI-FORM
+as_a: Unidad Formuladora Municipal
 i_want: Usar wizard de vía de financiamiento (recomendación fundamentada)
 so_that: Elijo mecanismo correcto
 domain: D-EJEC

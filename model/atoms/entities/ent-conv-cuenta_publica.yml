@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:cuenta_publica:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-CUENTA_PUBLICA
+name: Cuenta Pública
+domain: D-CONV
+category: Transaction
+attributes:
+  - {name: id_cuenta, type: UUID, key: true}
+  - {name: anio, type: Integer}
+  - {name: gobernador_id, type: UUID, fk: ENT-GOV-GOBERNADOR}
+  - {name: fecha, type: Date}
+  - {name: documento_id, type: UUID, fk: ENT-SYS-DOCUMENTO}
+
+# --- IMPERIUM: Fibra de Gobernanza ---

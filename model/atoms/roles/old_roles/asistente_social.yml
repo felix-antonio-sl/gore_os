@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:asistente_social:1.0.0
+  type: Role
+  source: organization
+id: USR-NEW-ASISTENTE-SO
+role_key: asistente_social
+title: Asistente Social
+description: Rol agregado para concordancia con historias de usuario.
+type: INTERNAL
+unit: Roles Adicionales (Concordancia)
+unit_type: Mixto
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:asistente_social:1.0.0
+domain: D-GESTION

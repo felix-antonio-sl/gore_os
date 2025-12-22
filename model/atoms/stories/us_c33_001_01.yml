@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_c33_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un catálogo de precios referenciales de vehículos y maquinaria
 id: US-C33-001-01
 urn: urn:goreos:atom:story:us_c33_001_01:1.0.0
 role_id: USR-DIPIR-C33
+as_a: Analista Operaciones C33
 i_want: un catálogo de precios referenciales de vehículos y maquinaria
 so_that: pueda evaluar la eficiencia del gasto
 domain: D-EJEC

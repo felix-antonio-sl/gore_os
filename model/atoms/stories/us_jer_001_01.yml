@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_jer_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Trazabilidad completa de las asignaciones de tareas
 id: US-JER-001-01
 urn: urn:goreos:atom:story:us_jer_001_01:1.0.0
 role_id: USR-DAF-JEFE
+as_a: Jefe DAF
 i_want: trazabilidad completa de las asignaciones de tareas
 so_that: pueda ejercer el control jerárquico efectivo
 domain: D-GOB

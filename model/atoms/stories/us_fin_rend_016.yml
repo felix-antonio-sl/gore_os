@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Controlar tope 5% de gastos administrativos
 id: US-FIN-REND-016
 urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
 role_id: USR-DAF-FIN-REND
+as_a: Encargado Rendiciones
 i_want: Controlar tope 5% de gastos administrativos
 so_that: Verifico cumplimiento de límite
 domain: D-FIN

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_tes_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Mantener el libro de caja institucional actualizado
 id: US-BACK-TES-004
 urn: urn:goreos:atom:story:us_back_tes_004:1.0.0
 role_id: USR-DAF-FIN-TES
+as_a: Tesorero Regional
 i_want: Mantener el libro de caja institucional actualizado
 so_that: Tengo control cronológico de movimientos de efectivo
 domain: D-BACK

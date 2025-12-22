@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_cseu_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de registro de incidentes de atención
 id: US-CSEU-001-01
 urn: urn:goreos:atom:story:us_cseu_001_01:1.0.0
 role_id: USR-NEW-ENCARGADO-CS
+as_a: Encargado CSEU
 i_want: un módulo de registro de incidentes de atención
 so_that: pueda mejorar la calidad de servicio
 domain: D-BACK

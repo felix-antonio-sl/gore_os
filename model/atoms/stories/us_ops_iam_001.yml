@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_iam_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Usuarios del sistema con CRUD completo
 id: US-OPS-IAM-001
 urn: urn:goreos:atom:story:us_ops_iam_001:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: gestionar usuarios del sistema con CRUD completo
 so_that: pueda controlar de forma centralizada quién tiene acceso a GORE_OS
 domain: D-OPS

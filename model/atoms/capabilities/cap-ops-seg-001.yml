@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_ops_seg_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-OPS-SEG-001
+name: Seguridad Informática
+domain: D-OPS
+type: CORE
+description: Ciberseguridad y gestión de accesos.
+stories:
+- us_ops_seg_001
+- us_ops_seg_002
+- us_ops_seg_003
+- us_ciber_001_01
+ofrecida_por: null

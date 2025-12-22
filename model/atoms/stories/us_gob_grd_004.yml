@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Presidir sesiones del Comité de Mitigación
 id: US-GOB-GRD-004
 urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
 role_id: USR-CIES-COOR
+as_a: Coordinador CIES
 i_want: Presidir sesiones del Comité de Mitigación
 so_that: Coordino acciones preventivas
 domain: D-GOB

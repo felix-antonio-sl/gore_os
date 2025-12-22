@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:declaracion_jurada:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-DECLARACION_JURADA
+name: Declaración Jurada
+domain: D-ORG
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_declaracion, type: UUID, key: true}
+  - {name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: tipo, type: String}
+  - {name: fecha_presentacion, type: Date}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}

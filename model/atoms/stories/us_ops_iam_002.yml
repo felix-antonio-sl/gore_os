@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_iam_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Asignar y revocar roles con logs de auditoría automáticos
 id: US-OPS-IAM-002
 urn: urn:goreos:atom:story:us_ops_iam_002:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: asignar y revocar roles con logs de auditoría automáticos
 so_that: se cumplan las normativas de seguridad y transparencia en los accesos
 domain: D-OPS

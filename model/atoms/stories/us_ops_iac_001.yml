@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_iac_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Provisionar y gestionar toda la infraestructura mediante código (Terraform)
 id: US-OPS-IAC-001
 urn: urn:goreos:atom:story:us_ops_iac_001:1.0.0
 role_id: USR-OPS-ING
+as_a: Ingeniero de Plataforma
 i_want: Provisionar y gestionar toda la infraestructura mediante código (Terraform)
 so_that: Evito configuration drift y permito recuperación ante desastres
 domain: D-OPS

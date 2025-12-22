@@ -1,0 +1,30 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_fin_ipr_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-FIN-IPR-001
+name: Gestión de Inversión Pública Regional
+domain: D-FIN
+type: CORE
+description: Ciclo IPR conforme metodología SNI y normativa SUBDERE.
+stories:
+- us_fin_ipr_005
+- us_fin_ipr_006
+- us_fin_ipr_007
+- us_fin_ipr_008
+- us_fin_ipr_011
+- us_fin_ipr_015
+- us_fin_ipr_017
+- us_fin_ipr_018
+- us_fin_ipr_022
+- us_fin_ipr_026
+- us_fin_ipr_027
+- us_fin_ipr_031
+- us_fin_ipr_034
+- us_fin_ipr_035
+- us_fin_ipr_036
+- us_fin_ipr_039
+- us_fin_ipr_040
+- us_inv_001_01
+ofrecida_por: null

@@ -1,0 +1,37 @@
+_meta:
+  urn: urn:goreos:atom:process:d_fin_rend_p1:1.0.0
+  type: Process
+  schema: urn:goreos:schema:process:1.0.0
+  source: docs/processes/D08_rendiciones.md
+id: PROC-FIN-REND-P1
+name: Rendición Tradicional (sin SISREC)
+domain: D-FIN
+code: P1
+process_type: BPMN
+spec:
+  bpmn_id: BPMN-GN-RENDICIONES-TRADICIONAL-01
+  mermaid_ref: docs/processes/D08_rendiciones.md#p1-rendición-tradicional-sin-sisrec
+  sla: "18 días hábiles GORE + 15 días EE"
+  mermaid: |
+    flowchart TD
+        subgraph EE["🏢 Entidad Ejecutora"]
+            A["Preparar rendición<br/>en papel/digital"]
+        end
+
+        subgraph GORE["🏛️ GORE Ñuble"]
+            B["📬 OP: Recepcionar<br/>(2 días)"]
+            C["📊 UCR: Registrar y<br/>asignar (2 días)"]
+            D["🔍 RTF: Revisión<br/>técnico-financiera<br/>(7 días)"]
+            E{"¿OK?"}
+            F["✅ Certificado<br/>aprobación"]
+            G["❌ Observar"]
+            H["📊 UCR: Control<br/>final (4 días)"]
+            I["💰 Contabilizar<br/>SIGFE (2 días)"]
+            J["📁 Archivar<br/>(1 día)"]
+        end
+
+        A -->|"15 días<br/>del mes sig."| B --> C --> D --> E
+        E -->|"OK"| F --> H --> I --> J
+        E -->|"Observa"| G --> A
+
+        style J fill:#4CAF50,color:#fff

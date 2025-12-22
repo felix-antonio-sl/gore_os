@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:devengo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-DEVENGO
+name: Devengo Contable
+domain: D-FIN
+category: Transaction
+attributes:
+  - {name: id_devengo, type: UUID, key: true}
+  - {name: compromiso_id, type: UUID, fk: ENT-FIN-COMPROMISO_PRESUPUESTARIO}
+  - {name: monto, type: Decimal}
+  - {name: fecha, type: Date}
+  - {name: documento_respaldo, type: String}

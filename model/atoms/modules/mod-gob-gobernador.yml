@@ -1,0 +1,21 @@
+---
+# --- mod_gob_gobernador.yml ---
+_meta:
+  urn: urn:goreos:atom:module:gob_gobernador:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-GOB-GOBERNADOR
+name: Despacho del Gobernador
+domain: D-GOB
+description: Agenda, audiencias y comunicaciones del Gobernador.
+composition:
+  processes: [urn:goreos:atom:process:d_gob_p4:1.0.0]
+  entities:
+    [
+      urn:goreos:atom:entity:d_gob_gobernador_regional:1.0.0,
+      urn:goreos:atom:entity:d_gob_actor:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

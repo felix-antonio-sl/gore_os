@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_suj_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un formulario de registro de audiencias simplificado
 id: US-SUJ-001-01
 urn: urn:goreos:atom:story:us_suj_001_01:1.0.0
 role_id: USR-GOB-PAS
+as_a: Sujeto Pasivo (Autoridad)
 i_want: un formulario de registro de audiencias simplificado
 so_that: pueda cumplir con la Ley del Lobby
 domain: D-NORM

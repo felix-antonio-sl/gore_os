@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_tic_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertas de ciberseguridad (CSIRT, Incidentes)
 id: US-TDE-TIC-004
 urn: urn:goreos:atom:story:us_tde_tic_004:1.0.0
 role_id: USR-DAF-TIC-ADMIN
+as_a: Administrador TI
 i_want: Recibir alertas de ciberseguridad (CSIRT, Incidentes)
 so_that: Respondo a amenazas
 domain: D-TDE

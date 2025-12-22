@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_iam_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Integrar el sistema con ClaveÚnica para SSO
 id: US-OPS-IAM-004
 urn: urn:goreos:atom:story:us_ops_iam_004:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: integrar el sistema con ClaveÚnica para SSO
 so_that: los funcionarios tengan una autenticación centralizada y segura
 domain: D-OPS

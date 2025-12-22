@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seccore_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Notificar a consejeros las materias a tratar con antelación
 id: US-SECCORE-001-02
 urn: urn:goreos:atom:story:us_seccore_001_02:1.0.0
 role_id: USR-CORE-SEC
+as_a: Secretario Ejecutivo CORE
 i_want: notificar a consejeros las materias a tratar con antelación
 so_that: puedan prepararse para la sesión
 domain: D-NORM

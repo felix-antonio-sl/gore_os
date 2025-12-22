@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_sec_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Revisar logs de acceso y acciones críticas
 id: US-OPS-SEC-001
 urn: urn:goreos:atom:story:us_ops_sec_001:1.0.0
 role_id: USR-TDE-CISO
+as_a: CISO
 i_want: Revisar logs de acceso y acciones críticas
 so_that: Garantizo el cumplimiento de la Ley 21.663 (Ciberseguridad)
 domain: D-OPS

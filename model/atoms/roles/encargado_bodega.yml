@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:encargado_bodega:1.0.0
+  urn: "urn:goreos:atom:role:encargado_bodega:2.0.0"
   type: Role
-  source: organization
-id: USR-DAF-OPS-BOD
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-BACK-OPS-BOD"
 role_key: encargado_bodega
 title: Encargado Bodega
 description: Gestión física de existencia de bienes fungibles.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: DAF
 unit_type: Ejecutivo & Operaciones
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:encargado_bodega:1.0.0
 domain: D-BACK
+archetype: null
+extends: null

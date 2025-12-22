@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_msia_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Evaluaciones de riesgo de proyectos IA
 id: US-MSIA-001-01
 urn: urn:goreos:atom:story:us_msia_001_01:1.0.0
 role_id: USR-SCIA-MEMB
+as_a: Miembro Subcomité IA
 i_want: acceder a evaluaciones de riesgo de proyectos IA
 so_that: pueda votar informadamente
 domain: D-TDE

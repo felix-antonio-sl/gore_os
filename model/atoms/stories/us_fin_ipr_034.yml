@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_034:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver tiempos promedio por fase del ciclo
 id: US-FIN-IPR-034
 urn: urn:goreos:atom:story:us_fin_ipr_034:1.0.0
 role_id: USR-DIPIR-JEFE
+as_a: Jefe DIPIR
 i_want: Ver tiempos promedio por fase del ciclo
 so_that: Identifico cuellos de botella
 domain: D-FIN

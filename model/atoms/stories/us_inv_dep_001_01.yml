@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_inv_dep_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Priorizar proyectos en el anteproyecto regional de inversiones
 id: US-INV-DEP-001-01
 urn: urn:goreos:atom:story:us_inv_dep_001_01:1.0.0
 role_id: USR-DIPIR-INV-JEFE
+as_a: Jefe Depto. Inversión
 i_want: priorizar proyectos en el anteproyecto regional de inversiones
 so_that: se negocie el presupuesto anual con DIPRES
 domain: D-PLAN

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gest_hg_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
 id: US-GEST-HG-003
 urn: urn:goreos:atom:story:us_gest_hg_003:1.0.0
 role_id: USR-DAF-JEFE
+as_a: Jefe DAF
 i_want: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
 so_that: Identifico causas raíz de degradación en mi área
 domain: D-GESTION

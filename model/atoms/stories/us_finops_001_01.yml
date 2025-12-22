@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_finops_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportes de consumo de créditos cloud por proyecto
 id: US-FINOPS-001-01
 urn: urn:goreos:atom:story:us_finops_001_01:1.0.0
 role_id: USR-OPS-FINOPS
+as_a: FinOps Manager
 i_want: reportes de consumo de créditos cloud por proyecto
 so_that: pueda imputar costos a cada división
 domain: D-OPS

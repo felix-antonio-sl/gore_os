@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ar_003_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de gestión de subrogancias con fechas y resoluciones
 id: US-AR-003-01
 urn: urn:goreos:atom:story:us_ar_003_01:1.0.0
 role_id: USR-ADM-JEFE
+as_a: Administrador Regional
 i_want: un módulo de gestión de subrogancias con fechas y resoluciones
 so_that: la continuidad operativa esté siempre garantizada
 domain: D-BACK

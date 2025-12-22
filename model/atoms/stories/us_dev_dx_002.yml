@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: La documentación técnica generada directamente desde el código
 id: US-DEV-DX-002
 urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
 role_id: USR-DEV-BACK
+as_a: Desarrollador Backend
 i_want: Consultar la documentación técnica generada directamente desde el código
 so_that: Evito consultar wikis desactualizadas
 domain: D-DEV

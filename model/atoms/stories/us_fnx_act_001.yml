@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_act_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertas automáticas cuando el índice H_gore baje de 60
 id: US-FNX-ACT-001
 urn: urn:goreos:atom:story:us_fnx_act_001:1.0.0
 role_id: USR-CAL-FNX-J
+as_a: Jefe FENIX
 i_want: Recibir alertas automáticas cuando el índice H_gore baje de 60
 so_that: Puedo iniciar la evaluación de intervención proactiva
 domain: D-FENIX

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_af_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Traslado de bienes (cambio ubicación)
 id: US-BACK-AF-002
 urn: urn:goreos:atom:story:us_back_af_002:1.0.0
 role_id: USR-DAF-OPS-AF
+as_a: Encargado Activo Fijo
 i_want: Registrar traslado de bienes (cambio ubicación)
 so_that: Actualizo ubicación de activos
 domain: D-BACK

@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:solicitud_arco:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-SOLICITUD_ARCO
+name: Solicitud ARCO
+domain: D-DIG
+category: Transaction
+attributes:
+  - {name: id_solicitud, type: UUID, key: true}
+  - {name: tipo, type: String}
+  - {name: solicitante_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: fecha_solicitud, type: DateTime}
+  - {name: fecha_respuesta, type: DateTime, nullable: true}
+  - {name: estado, type: String}

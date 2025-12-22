@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:auditor_general_gobierno:1.0.0
+  urn: "urn:goreos:atom:role:auditor_general_gobierno:2.0.0"
   type: Role
-  source: organization
-id: USR-EXT-CAIGG
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-CAIGG"
 role_key: auditor_general_gobierno
 title: Auditor General de Gobierno
 description: Consejo de Auditoría Interna General de Gobierno (CAIGG).
 type: INTERNAL
+logic_scope: OPERATIONAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: Control Externo
 unit_type: Ecosistema Externo
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:auditor_general_gobierno:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

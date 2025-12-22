@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Agente Goreólogo para validación de dominio
 id: US-DEV-KODA-002
 urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
 role_id: ROL-DEV
+as_a: Rol no encontrado (ROL-DEV)
 i_want: consultar agente Goreólogo para validación de dominio
 so_that: se obtenga respuesta contextualizada del dominio institucional
 domain: D-DEV

@@ -1,0 +1,21 @@
+---
+# --- mod_gob_transferencia_competencias.yml ---
+_meta:
+  urn: urn:goreos:atom:module:gob_transferencia_competencias:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-GOB-TRANSFERENCIA-COMPETENCIAS
+name: Transferencia de Competencias
+domain: D-GOB
+description: Gestión de transferencia de competencias desde nivel central.
+composition:
+  processes: [urn:goreos:atom:process:d_gob_p5:1.0.0]
+  entities:
+    [
+      urn:goreos:atom:entity:d_gob_transferencia_competencia:1.0.0,
+      urn:goreos:atom:entity:d_gob_glosa_02_16:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

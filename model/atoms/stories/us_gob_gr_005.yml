@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_gr_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Coordinar respuesta a emergencias (Comité Gestión Riesgos)
 id: US-GOB-GR-005
 urn: urn:goreos:atom:story:us_gob_gr_005:1.0.0
 role_id: USR-GOB-JEFE
+as_a: Gobernador Regional
 i_want: Coordinar respuesta a emergencias (Comité Gestión Riesgos)
 so_that: Lidero la respuesta regional
 domain: D-GOB

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_g7_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de control de programación de caja con cuotas
 id: US-G7-001-01
 urn: urn:goreos:atom:story:us_g7_001_01:1.0.0
 role_id: USR-DIPIR-G7-REV
+as_a: Revisor Programas Glosa 7
 i_want: un módulo de control de programación de caja con cuotas
 so_that: pueda asegurar el cumplimiento del flujo de caja
 domain: D-FIN

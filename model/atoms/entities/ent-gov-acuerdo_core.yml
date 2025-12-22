@@ -1,0 +1,20 @@
+---
+_meta:
+  urn: urn:goreos:entity:imperium:acuerdo_core:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-GOV-ACUERDO_CORE
+name: Acuerdo del CORE
+domain: D-GOV
+category: Transaction
+extends: ENT-SYS-ACTO
+attributes:
+  - {name: id_acuerdo_core, type: UUID, key: true}
+  - {name: sesion_core_id, type: UUID, fk: ENT-GOV-SESION_CORE}
+  - {name: numero, type: Integer}
+  - {name: materia, type: String}
+  - {name: asunto, type: Text}
+  - {name: votos_favor, type: Integer}
+  - {name: votos_contra, type: Integer}
+  - {name: abstenciones, type: Integer}
+  - {name: resultado, type: String}

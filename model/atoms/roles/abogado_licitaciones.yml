@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:abogado_licitaciones:1.0.0
+  urn: "urn:goreos:atom:role:abogado_licitaciones:2.0.0"
   type: Role
-  source: organization
-id: USR-NEW-ABOGADO-LICI
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-NORM-ABOGADO-LICI"
 role_key: abogado_licitaciones
 title: Abogado Licitaciones
 description: Rol agregado para concordancia con historias de usuario.
 type: INTERNAL
+logic_scope: OPERATIONAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: Roles Adicionales (Concordancia)
 unit_type: Mixto
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:abogado_licitaciones:1.0.0
 domain: D-NORM
+archetype: null
+extends: null

@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:aprendizaje:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-APRENDIZAJE
+name: Aprendizaje Institucional
+domain: D-SAL
+category: Transaction
+attributes:
+  - {name: id_aprendizaje, type: UUID, key: true}
+  - {name: intervencion_id, type: UUID, fk: ENT-SAL-INTERVENCION}
+  - {name: tipo, type: String}
+  - {name: descripcion, type: Text}
+  - {name: fecha, type: Date}
+  - {name: aplicable_a, type: "Array[String]"}

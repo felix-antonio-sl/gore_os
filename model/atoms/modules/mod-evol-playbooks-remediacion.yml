@@ -1,0 +1,17 @@
+---
+# --- mod_evol_playbooks_remediacion.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_playbooks_remediacion:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-PLAYBOOKS-REMEDIACION
+name: Playbooks de Remediación
+domain: D-EVOL
+description: Procedimientos automatizados de remediación.
+composition:
+  processes: []
+  entities: [urn:goreos:atom:entity:d_evol_playbook:1.0.0]
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:evol_deuda_tecnica:1.0.0]

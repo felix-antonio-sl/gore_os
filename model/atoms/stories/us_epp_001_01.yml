@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertas de desviación de cronograma (Gantt)
 id: US-EPP-001-01
 urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
 role_id: USR-DIPIR-ANAL-INV
+as_a: Analista de Inversión
 i_want: alertas de desviación de cronograma (Gantt)
 so_that: pueda gestionar medidas correctivas
 domain: D-EJEC

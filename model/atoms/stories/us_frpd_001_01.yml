@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_frpd_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso a expedientes técnicos de proyectos FRPD
 id: US-FRPD-001-01
 urn: urn:goreos:atom:story:us_frpd_001_01:1.0.0
 role_id: USR-DIFOI-FRPD
+as_a: Comité FRPD
 i_want: acceso a expedientes técnicos de proyectos FRPD
 so_that: pueda calificar iniciativas
 domain: D-EJEC

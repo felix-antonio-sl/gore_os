@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:abogado_daf:1.0.0
+  type: Role
+  source: organization
+id: USR-DAF-JUR
+role_key: abogado_daf
+title: Abogado DAF
+description: Asesor jurídico de la DAF para control de legalidad en contratos y bases.
+type: INTERNAL
+unit: DAF
+unit_type: Ejecutivo & Operaciones
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:abogado_daf:1.0.0
+domain: D-NORM

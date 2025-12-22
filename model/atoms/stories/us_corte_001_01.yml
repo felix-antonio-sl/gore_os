@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_corte_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: La remisión inmediata de informes sobre actos impugnados
 id: US-CORTE-001-01
 urn: urn:goreos:atom:story:us_corte_001_01:1.0.0
 role_id: USR-EXT-TRIB-CUENTA
+as_a: Juez de Cuentas (CGR)
 i_want: la remisión inmediata de informes sobre actos impugnados
 so_that: se administre justicia oportunamente
 domain: D-NORM

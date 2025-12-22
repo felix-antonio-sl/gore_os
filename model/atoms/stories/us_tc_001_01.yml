@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tc_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Expedientes completos sobre controversias legales
 id: US-TC-001-01
 urn: urn:goreos:atom:story:us_tc_001_01:1.0.0
 role_id: USR-JUR-MFE
+as_a: Ministro de Fe
 i_want: expedientes completos sobre controversias legales
 so_that: pueda fallar conforma a derecho
 domain: D-NORM

@@ -1,0 +1,12 @@
+---
+_meta:
+  urn: urn:goreos:profunctor:tiene_enlace:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-TIENE-ENLACE
+name: tiene_enlace
+description: "Morfismo a repositorio externo: documento tiene enlaces a Drive/SharePoint"
+source: ENT-DIG-ENLACE
+target: ENT-SYS-DOCUMENTO
+cardinality: "N:1"
+semantics: "Un documento puede tener N enlaces a repositorios externos"

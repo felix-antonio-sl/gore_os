@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_sup_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Una base de conocimiento con errores frecuentes y soluciones
 id: US-FIN-SUP-002
 urn: urn:goreos:atom:story:us_fin_sup_002:1.0.0
 role_id: USR-MUNI-ALC
+as_a: Alcalde
 i_want: Consultar una base de conocimiento con errores frecuentes y soluciones
 so_that: Resuelva dudas comunes sin contactar a soporte
 domain: D-FIN

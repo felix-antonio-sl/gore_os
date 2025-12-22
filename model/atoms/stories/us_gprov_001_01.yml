@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gprov_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso remoto a todos los sistemas GORE
 id: US-GPROV-001-01
 urn: urn:goreos:atom:story:us_gprov_001_01:1.0.0
 role_id: USR-DIDES-TERR-GEST
+as_a: Gestor Provincial
 i_want: acceso remoto a todos los sistemas GORE
 so_that: pueda atender consultas en delegaciones provinciales
 domain: D-TERR

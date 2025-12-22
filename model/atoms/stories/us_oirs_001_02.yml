@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_oirs_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportes de satisfacción ciudadana
 id: US-OIRS-001-02
 urn: urn:goreos:atom:story:us_oirs_001_02:1.0.0
 role_id: USR-ADM-OIRS
+as_a: Encargado OIRS
 i_want: generar reportes de satisfacción ciudadana
 so_that: pueda mejorar el servicio
 domain: D-BACK

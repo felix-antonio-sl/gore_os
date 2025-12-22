@@ -2,23 +2,28 @@ _meta:
   urn: urn:goreos:atom:process:d_plan_p3_bis:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-plan
-id: PROC-PLAN-P3-bis
+  source: archive/legacy_domains/domain_d-plan.md
+id: PROC-PLAN-P3-BIS
 name: Elaboración y Aprobación PROT
 domain: D-PLAN
 code: P3-bis
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-PLAN-PROT-ELAB-01
+  mermaid_ref: domain_d-plan.md#p3-bis-elaboración-y-aprobación-prot
+  mermaid: |
+    flowchart TB
+        subgraph P3bis["P3-bis: Elaboración y Aprobación PROT"]
+            A["3b.1 Diagnóstico<br/>Territorial"]
+            B["3b.2 Consulta Pública<br/>(60 días hábiles)"]
+            C["3b.3 Evaluación<br/>Ambiental (EAE)"]
+            D["3b.4 Aprobación<br/>CORE"]
+            E["3b.5 Toma de Razón<br/>CGR"]
+            F["3b.6 Publicación<br/>Diario Oficial"]
+        end
+        
+        A --> B --> C --> D --> E --> F
+        
+        B -.- N1["Participación ciudadana<br/>Art. 17 bis LOC"]
+        C -.- N2["Ley 19.300<br/>Párrafo 1 bis"]
+        D -.- N3["Votación CORE<br/>Art. 36 literal b)"]

@@ -1,0 +1,20 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:compromiso:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-COMPROMISO
+name: Compromiso
+domain: D-CONV
+category: Transaction
+attributes:
+  - {name: id_compromiso, type: UUID, key: true}
+  - {name: acuerdo_id, type: UUID, fk: ENT-CONV-ACUERDO, nullable: true}
+  - {name: sesion_id, type: UUID, fk: ENT-CONV-SESION}
+  - {name: descripcion, type: Text}
+  - {name: responsable_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: fecha_compromiso, type: Date}
+  - {name: fecha_limite, type: Date}
+  - {name: prioridad, type: String}
+  - {name: estado, type: String}
+  - {name: porcentaje_avance, type: Integer}

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_secpla_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Proyectos similares ejecutados en otras comunas
 id: US-SECPLA-001-02
 urn: urn:goreos:atom:story:us_secpla_001_02:1.0.0
 role_id: USR-MUNI-SECPLA
+as_a: SECPLA
 i_want: consultar proyectos similares ejecutados en otras comunas
 so_that: pueda aprender de buenas prácticas y costos referenciales
 domain: D-EJEC

@@ -2,19 +2,27 @@ _meta:
   urn: urn:goreos:atom:process:d_tde_p7:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-tde
+  source: archive/legacy_domains/domain_d-tde.md
 id: PROC-TDE-P7
 name: Federación de Firma Municipal
 domain: D-TDE
 code: P7
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-EGRESO-01`'
-  mermaid_ref: D07_rrhh.md#p7-egreso-y-desvinculacin
-  mermaid: "flowchart TD\n    A[\"Egreso de<br/>funcionario\"] --> B{\"Causal\"}\n\
-    \    \n    B -->|\"Voluntario\"| C[\"Renuncia<br/>voluntaria\"]\n    B -->|\"\
-    Jubilación\"| D[\"Retiro por<br/>pensión\"]\n    B -->|\"Término contrata\"| E[\"\
-    No renovación<br/>31/12\"]\n    B -->|\"Calificación\"| F[\"Eliminación<br/>por\
-    \ nota\"]\n    B -->|\"Disciplinario\"| G[\"Destitución\"]\n    B -->|\"Salud\"\
-    | H[\"Incompatibilidad<br/>de salud\"]\n\n    C & D & E & F & G & H --> I[\"Procedimiento<br/>de\
-    \ cierre\"]\n\n    style I fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-TDE-FIRMA-FEDERADA-01
+  mermaid_ref: domain_d-tde.md#p7-federación-de-firma-municipal
+  frecuencia: "Bajo demanda"
+  mermaid: |
+    flowchart TD
+        A["Municipio solicita<br/>firma federada"] --> B["GORE verifica<br/>convenio vigente"]
+        B --> C{"¿Convenio OK?"}
+        C -->|"No"| D["Iniciar proceso<br/>de convenio"]
+        D --> B
+        C -->|"Sí"| E["Municipio sube<br/>documento a firmar"]
+        E --> F["GORE valida<br/>documento"]
+        F --> G{"¿Válido?"}
+        G -->|"No"| H["Devolver con<br/>observaciones"]
+        H --> E
+        G -->|"Sí"| I["GORE firma con<br/>FirmaGob"]
+        I --> J["Documento firmado<br/>disponible"]
+        J --> K["Log en registro<br/>federación"]

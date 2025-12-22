@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_abog_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Actos similares anteriores
 id: US-ABOG-001-02
 urn: urn:goreos:atom:story:us_abog_001_02:1.0.0
 role_id: USR-JUR-ABOG
+as_a: Abogado Informante
 i_want: consultar actos similares anteriores
 so_that: pueda mantener consistencia jurídica
 domain: D-NORM

@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:ari:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-ARI
+name: Anteproyecto Regional de Inversiones
+domain: D-FIN
+category: Transaction
+attributes:
+  - {name: id_ari, type: UUID, key: true}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
+  - {name: region_id, type: UUID, fk: ENT-LOC-REGION}
+  - {name: monto_total, type: Decimal}
+  - {name: estado, type: String}

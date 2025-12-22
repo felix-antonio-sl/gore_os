@@ -1,0 +1,14 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_norm_exp_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-NORM-EXP-001
+name: Expediente Electrónico
+domain: D-NORM
+type: CORE
+description: Expediente electrónico conforme Ley 21.180.
+stories:
+- us_norm_exp_001
+- us_norm_exp_003
+ofrecida_por: null

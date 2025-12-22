@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_dat_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visualizar el historial de todas las cargas masivas realizadas con sus resultados
 id: US-OPS-DAT-004
 urn: urn:goreos:atom:story:us_ops_dat_004:1.0.0
 role_id: ROL-ADMIN
+as_a: Rol no encontrado (ROL-ADMIN)
 i_want: visualizar el historial de todas las cargas masivas realizadas con sus resultados
 so_that: se mantenga una trazabilidad completa de los datos ingresados al sistema
 domain: D-OPS

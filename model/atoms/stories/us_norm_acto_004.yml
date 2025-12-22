@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_acto_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Litigios y defensa judicial regional
 id: US-NORM-ACTO-004
 urn: urn:goreos:atom:story:us_norm_acto_004:1.0.0
 role_id: USR-JUR-ABOG
+as_a: Abogado Informante
 i_want: Gestionar litigios y defensa judicial regional
 so_that: Defiendo intereses del GORE
 domain: D-NORM

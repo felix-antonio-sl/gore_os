@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:gabinete:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-GABINETE
+name: Gabinete Regional
+domain: D-CONV
+category: Master
+extends: ENT-CONV-INSTANCIA
+attributes:
+  - {name: id_gabinete, type: UUID, key: true}
+  - {name: gobernador_id, type: UUID, fk: ENT-GOV-GOBERNADOR}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
+  - {name: miembros, type: "Array[UUID]"}

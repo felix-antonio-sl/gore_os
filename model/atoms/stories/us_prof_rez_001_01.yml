@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_prof_rez_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso a expedientes de proyectos rezagados
 id: US-PROF-REZ-001-01
 urn: urn:goreos:atom:story:us_prof_rez_001_01:1.0.0
 role_id: USR-DIFOI-REZ-PROF
+as_a: Profesional Zona Rezago
 i_want: acceso a expedientes de proyectos rezagados
 so_that: pueda diagnosticar problemas
 domain: D-EJEC

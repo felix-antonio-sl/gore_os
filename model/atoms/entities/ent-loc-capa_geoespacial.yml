@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:locus:capa_geoespacial:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-LOC-CAPA_GEOESPACIAL
+name: Capa Geoespacial
+domain: D-LOC
+category: Master
+attributes:
+  - {name: id_capa, type: UUID, key: true}
+  - {name: region_id, type: UUID, fk: ENT-LOC-REGION}
+  - {name: nombre, type: String}
+  - {name: tipo, type: String}
+  - {name: formato, type: String}
+  - {name: url_servicio, type: String}
+  - {name: srid, type: Integer, default: 4326}

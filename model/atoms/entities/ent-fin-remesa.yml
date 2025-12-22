@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:remesa:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-REMESA
+name: Remesa
+domain: D-FIN
+category: Transaction
+description: "Morfismo de factorización: Transferencia → Cuotas. Captura pagos parciales (1°, 2°, 3° remesa)."
+attributes:
+  - {name: id_remesa, type: UUID, key: true}
+  - {name: transferencia_id, type: UUID, fk: ENT-FIN-TRANSFERENCIA}
+  - {name: numero, type: Integer}
+  - {name: monto, type: Decimal}
+  - {name: fecha, type: Date}
+  - {name: estado, type: String}

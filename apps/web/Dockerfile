@@ -1,11 +1,6 @@
-FROM oven/bun:1.1.0-alpine as builder
-WORKDIR /app
-COPY . .
-RUN bun install
-WORKDIR /app/apps/web
-RUN bun run build
-
+# Simple Dockerfile that serves the locally built 'dist' folder
 FROM nginx:alpine
-COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
+COPY apps/web/dist /usr/share/nginx/html
+COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

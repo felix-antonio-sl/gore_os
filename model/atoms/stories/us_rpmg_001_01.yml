@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_rpmg_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Cargar medios de verificación validados
 id: US-RPMG-001-01
 urn: urn:goreos:atom:story:us_rpmg_001_01:1.0.0
 role_id: USR-CAL-PMG-REF
+as_a: Referente Técnico PMG
 i_want: cargar medios de verificación validados
 so_that: se apruebe el cumplimiento de la etapa
 domain: D-PLAN

@@ -2,23 +2,31 @@ _meta:
   urn: urn:goreos:atom:process:d_tde_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-tde
+  source: archive/legacy_domains/domain_d-tde.md
 id: PROC-TDE-P3
-name: Ciberseguridad & Protección Datos
+name: Ciberseguridad y Protección Datos
 domain: D-TDE
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-TDE-CIBERSEGURIDAD-01
+  mermaid_ref: domain_d-tde.md#p3-ciberseguridad--protección-datos
+  frecuencia: "Continua (Monitoreo) / Incidentes"
+  mermaid: |
+    flowchart TB
+        subgraph P3["P3: Ciberseguridad & Datos"]
+            P3_1["3.1 Identificar<br/>Activos/Riesgos"]
+            P3_2["3.2 Proteger<br/>(Controles)"]
+            P3_3["3.3 Detectar<br/>Incidente"]
+            P3_4["3.4 Responder<br/>& Recuperar"]
+            P3_5["3.5 Gestión<br/>Privacidad"]
+        end
+
+        P3_1 --> P3_2
+        P3_3 --> P3_4
+        P3_1 -.-> P3_5
+
+        P3_1 -.- N1["Inventario Activos<br/>Clasificación CIA"]
+        P3_3 -.- N2["Monitoreo SOC<br/>Alertas"]
+        P3_4 -.- N3["Reporte ANCI/CSIRT<br/>Continuidad BCP"]
+        P3_5 -.- N4["Solicitudes ARCO<br/>Reporte Brecha a APD"]

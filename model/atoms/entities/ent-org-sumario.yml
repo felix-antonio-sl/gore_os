@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:sumario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-SUMARIO
+name: Sumario Administrativo
+domain: D-ORG
+category: Transaction
+attributes:
+  - {name: id_sumario, type: UUID, key: true}
+  - {name: numero, type: String}
+  - {name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: fiscal_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: hechos, type: Text}
+  - {name: fecha_inicio, type: Date}
+  - {name: sancion, type: String}
+  - {name: estado, type: String}

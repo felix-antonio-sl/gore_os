@@ -2,23 +2,26 @@ _meta:
   urn: urn:goreos:atom:process:d_plan_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-plan
+  source: archive/legacy_domains/domain_d-plan.md
 id: PROC-PLAN-P3
 name: Validación PROT
 domain: D-PLAN
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-PLAN-PROT-01
+  mermaid_ref: domain_d-plan.md#p3-validación-prot
+  frecuencia: "Por demanda"
+  mermaid: |
+    flowchart TB
+        subgraph P3["P3: Validación PROT"]
+            P3_1["3.1 Solicitud<br/>Validación"]
+            P3_2["3.2 Análisis<br/>Territorial"]
+            P3_3["3.3 Emisión<br/>Dictamen"]
+        end
+
+        P3_1 --> P3_2 --> P3_3
+
+        P3_1 -.- N1["Proponente remite<br/>ubicación y tipo proyecto"]
+        P3_2 -.- N2["DIPLADE + D-TERR<br/>verifican zonificación"]
+        P3_3 -.- N3["Compatible /<br/>Incompatible / Condicionado"]

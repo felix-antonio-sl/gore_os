@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_per_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visualizar mi ficha de funcionario (hoja de vida)
 id: US-BACK-PER-001
 urn: urn:goreos:atom:story:us_back_per_001:1.0.0
 role_id: USR-DAF-PER-FUN
+as_a: Funcionario
 i_want: Visualizar mi ficha de funcionario (hoja de vida)
 so_that: Consulto mi información laboral
 domain: D-BACK

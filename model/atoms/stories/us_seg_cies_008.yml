@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seg_cies_008:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Estadística de incidentes/horarios/zonas calientes
 id: US-SEG-CIES-008
 urn: urn:goreos:atom:story:us_seg_cies_008:1.0.0
 role_id: USR-CIES-SUP
+as_a: Supervisor CIES
 i_want: Generar estadística de incidentes/horarios/zonas calientes
 so_that: Analizo patrones
 domain: D-SEG

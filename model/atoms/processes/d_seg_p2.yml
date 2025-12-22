@@ -2,33 +2,26 @@ _meta:
   urn: urn:goreos:atom:process:d_seg_p2:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-seg
+  source: archive/legacy_domains/domain_d-seg.md
 id: PROC-SEG-P2
 name: Coordinación Interinstitucional
 domain: D-SEG
 code: P2
 process_type: BPMN
 spec:
-  bpmn_id: '`PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01`'
-  mermaid_ref: D01_actos_administrativos.md#p2-aprobacin-de-transferencias-y-convenios
-  sla: 30 días hábiles
-  mermaid: "flowchart TD\n    subgraph FASE1[\"1️⃣ Iniciación\"]\n        A[\"Área\
-    \ Responsable:<br/>Elaborar borrador convenio\"]\n        B[\"Incluir cláusulas:<br/>•\
-    \ Partes<br/>• Objeto<br/>• Monto<br/>• Plazos<br/>• Rendición\"]\n    end\n\n\
-    \    subgraph FASE2[\"2️⃣ Revisión Jurídica\"]\n        C[\"Jurídica:<br/>Revisar\
-    \ legalidad\"]\n        D{\"¿Cumple<br/>normativa?\"}\n        E[\"✅ V°B° Jurídico\"\
-    ]\n        F[\"❌ Observar\"]\n    end\n\n    subgraph FASE3[\"3️⃣ Visación Presupuestaria\"\
-    ]\n        G[\"DAF:<br/>Verificar disponibilidad\"]\n        H[\"Emitir CDP\"\
-    ]\n        I[\"V°B° DAF\"]\n    end\n\n    subgraph FASE4[\"4️⃣ Control Interno\"\
-    ]\n        J[\"U. Control:<br/>Verificar procedencia\"]\n        K[\"V°B° Control\"\
-    ]\n    end\n\n    subgraph FASE5[\"5️⃣ Firma Partes\"]\n        L[\"Coordinar\
-    \ firma:<br/>• Gobernador/a GORE<br/>• Representante Entidad\"]\n    end\n\n \
-    \   subgraph FASE6[\"6️⃣ Resolución Aprobatoria\"]\n        M[\"Elaborar resolución<br/>que\
-    \ aprueba convenio\"]\n        N{\"¿Requiere<br/>Toma de Razón?\"}\n        O[\"\
-    Enviar a CGR\"]\n        P[\"Tramitar exento\"]\n    end\n\n    subgraph FASE7[\"\
-    7️⃣ Publicación y Archivo\"]\n        Q[\"Publicar en<br/>Transparencia\"]\n \
-    \       R[\"Registrar en SIGFE\"]\n        S[\"Archivar expediente\"]\n    end\n\
-    \n    A --> B --> C --> D\n    D -->|\"Sí\"| E --> G --> H --> I --> J --> K -->\
-    \ L --> M --> N\n    D -->|\"No\"| F --> A\n    N -->|\"Sí\"| O --> Q\n    N -->|\"\
-    No\"| P --> Q\n    Q --> R --> S\n\n    style L fill:#4CAF50,color:#fff\n    style\
-    \ S fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-SEG-COORDINACION-01
+  mermaid_ref: domain_d-seg.md#p2-coordinación-interinstitucional
+  mermaid: |
+    flowchart TD
+        A["Incidente clasificado"] --> B["Enlace CIES activa canal"]
+        B --> C{"Tipo de emergencia"}
+        
+        C -->|"Seguridad"| D["📞 Carabineros 133"]
+        C -->|"Investigación"| E["📞 PDI 134"]
+        C -->|"Incendio"| F["📞 Bomberos 132"]
+        C -->|"Salud"| G["📞 SAMU 131"]
+        
+        D & E & F & G --> H["Confirmar recepción"]
+        H --> I["Seguimiento tiempo real"]
+        I --> K["Activar COGRID / Mesa Operativa (si amerita)"]
+        K --> J["Cierre de incidente"]

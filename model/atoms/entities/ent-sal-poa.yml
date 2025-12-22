@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:poa:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-POA
+name: Plan Operativo Anual
+domain: D-SAL
+category: Master
+attributes:
+  - {name: id_poa, type: UUID, key: true}
+  - {name: division_id, type: UUID, fk: ENT-ORG-DIVISION}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
+  - {name: estado, type: String}

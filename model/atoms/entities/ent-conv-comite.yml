@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:comite:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-COMITE
+name: Comité
+domain: D-CONV
+category: Master
+extends: ENT-CONV-INSTANCIA
+attributes:
+  - {name: id_comite, type: UUID, key: true}
+  - {name: tipo, type: String}
+  - {name: territorio_id, type: UUID, nullable: true}
+  - {name: normativa, type: String}

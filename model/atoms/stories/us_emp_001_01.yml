@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_emp_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un calendario único de postulaciones a fondos
 id: US-EMP-001-01
 urn: urn:goreos:atom:story:us_emp_001_01:1.0.0
 role_id: USR-EXT-CAMARA
+as_a: Cámara de Comercio
 i_want: un calendario único de postulaciones a fondos
 so_that: no pierda oportunidades de co-financiamiento
 domain: D-EJEC

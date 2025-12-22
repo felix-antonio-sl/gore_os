@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Informar hallazgos y recomendaciones al Gobernador y CORE
 id: US-NORM-CTRL-004
 urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
 role_id: USR-AUD-PROF
+as_a: Auditor Interno
 i_want: Informar hallazgos y recomendaciones al Gobernador y CORE
 so_that: Escalo temas relevantes
 domain: D-NORM

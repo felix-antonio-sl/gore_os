@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:cargo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-CARGO
+name: Cargo
+domain: D-ORG
+category: Reference
+attributes:
+  - {name: id_cargo, type: UUID, key: true}
+  - {name: codigo, type: String}
+  - {name: nombre, type: String}
+  - {name: division_id, type: UUID, fk: ENT-ORG-DIVISION}
+  - {name: estamento, type: String}
+  - {name: grado_min, type: Integer}
+  - {name: grado_max, type: Integer}
+  - {name: jefatura, type: Boolean}

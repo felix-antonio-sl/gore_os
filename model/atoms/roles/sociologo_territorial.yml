@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:sociologo_territorial:1.0.0
+  urn: "urn:goreos:atom:role:sociologo_territorial:2.0.0"
   type: Role
-  source: organization
-id: USR-DIDES-TERR-SOC
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-TERR-TERR-SOC"
 role_key: sociologo_territorial
 title: Sociólogo Territorial
 description: Diagnóstico social y análisis de brechas comunales.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: DIDESOH
 unit_type: Ejecutivo & Operaciones
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:sociologo_territorial:1.0.0
 domain: D-TERR
+archetype: null
+extends: null

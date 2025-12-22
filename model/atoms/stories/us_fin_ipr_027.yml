@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver bandeja de postulaciones ordenada FIFO
 id: US-FIN-IPR-027
 urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
 role_id: USR-DIPL-DAE-PRE
+as_a: Analista Preinversión (DAE)
 i_want: Ver bandeja de postulaciones ordenada FIFO
 so_that: Proceso en orden de llegada
 domain: D-FIN

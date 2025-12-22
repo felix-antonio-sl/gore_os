@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:activo_datos:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-ACTIVO_DATOS
+name: Activo de Datos
+domain: D-DIG
+category: Master
+attributes:
+  - {name: id_activo, type: UUID, key: true}
+  - {name: nombre, type: String}
+  - {name: descripcion, type: Text}
+  - {name: tipo, type: String}
+  - {name: clasificacion, type: String}
+  - {name: custodio_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}

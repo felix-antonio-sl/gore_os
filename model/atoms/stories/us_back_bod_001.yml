@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_bod_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ingresos (aumenta stock)
 id: US-BACK-BOD-001
 urn: urn:goreos:atom:story:us_back_bod_001:1.0.0
 role_id: USR-DAF-OPS-BOD
+as_a: Encargado Bodega
 i_want: Registrar ingresos (aumenta stock)
 so_that: Actualizo inventario
 domain: D-BACK

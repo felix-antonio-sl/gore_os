@@ -2,23 +2,49 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ipr_core_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-fin-ipr_core
+  source: docs/processes/D03_gestion_ipr.md
 id: PROC-FIN-IPR_CORE-P1
 name: Ingreso, Pertinencia y Admisibilidad
 domain: D-FIN-IPR_CORE
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-IPR-FASE1-01
+  mermaid_ref: D03_gestion_ipr.md#p1-ingreso-pertinencia-y-admisibilidad
+  subprocesos: ["Recepción", "CDR", "Admisibilidad Documental"]
+  mermaid: |
+    flowchart TD
+        subgraph EE["🏢 Entidad Externa"]
+            A["📄 Postulación<br/>preparada"]
+        end
+
+        subgraph GORE["🏛️ GORE Ñuble"]
+            B["📬 Oficina Partes:<br/>Recepcionar y registrar"]
+            C["📊 DIPIR:<br/>Registrar en sistema"]
+            D["👥 CDR:<br/>Evaluar pertinencia"]
+            E{"¿Pre-admisible?"}
+            F["✅ PRE-ADMISIBLE"]
+            G["❌ NO PRE-ADMISIBLE"]
+            H["🔍 Analista:<br/>Revisión documental"]
+            I{"Estado<br/>admisibilidad"}
+            J["✅ ADMISIBLE"]
+            K["⚠️ CON OBSERVACIONES"]
+            L["❌ INADMISIBLE"]
+        end
+
+        subgraph SUBSANACION["🔄 Subsanación"]
+            M["Corregir en plazo"]
+            N{"¿OK?"}
+        end
+
+        A --> B --> C --> D --> E
+        E -->|"Sí"| F --> H --> I
+        E -->|"No"| G
+        I -->|"OK"| J
+        I -->|"Observa"| K --> M --> N
+        I -->|"Rechaza"| L
+        N -->|"Sí"| J
+        N -->|"No"| L
+
+        style J fill:#4CAF50,color:#fff
+        style L fill:#f44336,color:#fff

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_027:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
 id: US-FIN-PPTO-027
 urn: urn:goreos:atom:story:us_fin_ppto_027:1.0.0
 role_id: USR-DAF-PROF
+as_a: Profesional DAF
 i_want: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
 so_that: Habilito ejecución financiera nacional
 domain: D-FIN

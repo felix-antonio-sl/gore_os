@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Guías por mecanismo
 id: US-EJEC-MUNI-001
 urn: urn:goreos:atom:story:us_ejec_muni_001:1.0.0
 role_id: USR-MUNI-FORM
+as_a: Unidad Formuladora Municipal
 i_want: Consultar guías por mecanismo
 so_that: Preparo correctamente postulaciones
 domain: D-EJEC

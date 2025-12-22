@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_core_011:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Habilitar simulación de quórum antes de la votación real
 id: US-GOB-CORE-011
 urn: urn:goreos:atom:story:us_gob_core_011:1.0.0
 role_id: USR-CORE-SEC
+as_a: Secretario Ejecutivo CORE
 i_want: Habilitar simulación de quórum antes de la votación real
 so_that: Verifico si tengo los votos necesarios para aprobar (Sunny/Rainy Day)
 domain: D-GOB

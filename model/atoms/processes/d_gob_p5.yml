@@ -2,24 +2,35 @@ _meta:
   urn: urn:goreos:atom:process:d_gob_p5:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-gob
+  source: archive/legacy_domains/domain_d-gob.md
 id: PROC-GOB-P5
-name: Registro y Vinculación de Actores *(Nuevo)*
+name: Registro y Vinculación de Actores
 domain: D-GOB
 code: P5
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
-  mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
-  mermaid: "flowchart TD\n    subgraph DNC[\"\U0001F4CA Detección de Necesidades\"\
-    ]\n        A[\"Aplicar encuesta DNC\"]\n        B[\"Análisis de brechas\"]\n \
-    \       C[\"Priorizar necesidades\"]\n    end\n\n    subgraph PAC_CAP[\"\U0001F4CB\
-    \ Plan de Capacitación\"]\n        D[\"Elaborar PAC anual\"]\n        E[\"Comité\
-    \ Bipartito<br/>aprueba\"]\n        F[\"Asignar presupuesto\"]\n    end\n\n  \
-    \  subgraph EJECUCION[\"\U0001F393 Ejecución\"]\n        G[\"Convocar a<br/>funcionarios\"\
-    ]\n        H[\"Ejecutar<br/>capacitaciones\"]\n        I[\"Evaluar aprendizaje\"\
-    ]\n        J[\"Certificar\"]\n    end\n\n    subgraph SEGUIMIENTO[\"\U0001F4C8\
-    \ Seguimiento\"]\n        K[\"Medir transferencia<br/>al puesto\"]\n        L[\"\
-    Evaluar impacto\"]\n        M[\"Retroalimentar<br/>próximo ciclo\"]\n    end\n\
-    \n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L -->\
-    \ M\n\n    style J fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-GOB-ACTORES-01
+  mermaid_ref: domain_d-gob.md#p5-registro-y-vinculación-de-actores-nuevo
+  frecuencia: "A demanda"
+  mermaid: |
+    flowchart TD
+        A["Solicitud de registro<br/>(interno o externo)"] --> B{"¿Actor existe<br/>en sistema?"}
+        B -->|"No"| C["Crear ficha Actor:<br/>• RUT/Razón Social<br/>• Tipo<br/>• Contactos<br/>• Comuna"]
+        B -->|"Sí"| D["Actualizar datos"]
+        C --> E["Validar RUT con<br/>SII/ChileProveedores"]
+        D --> E
+        E --> F{"¿Validación OK?"}
+        F -->|"Sí"| G["Actor Activo"]
+        F -->|"No"| H["Revisar datos"]
+        H --> C
+        G --> I{"¿Qué rol<br/>adicional?"}
+        I -->|"Ejecutor"| J["Verificar capacidades:<br/>• PJ vigente<br/>• Directorio actualizado<br/>• Sin deuda GORE"]
+        I -->|"Proveedor"| K["Verificar en<br/>ChileProveedores"]
+        J --> L{"¿Habilitado?"}
+        K --> M{"¿Habilitado?"}
+        L -->|"Sí"| N["Asignar rol EJECUTOR<br/>+ crear enlace D-FIN"]
+        L -->|"No"| O["Rechazar con motivo"]
+        M -->|"Sí"| P["Asignar rol PROVEEDOR<br/>+ habilitar para OC"]
+        M -->|"No"| Q["Solicitar registro MP"]
+        N --> R["Actor con roles<br/>múltiples habilitados"]
+        P --> R

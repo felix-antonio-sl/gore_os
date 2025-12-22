@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_frpd_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Admisibilidad de beneficiario (Empresa/Gremio)
 id: US-FIN-FRPD-002
 urn: urn:goreos:atom:story:us_fin_frpd_002:1.0.0
 role_id: USR-DIFOI-ANAL
+as_a: Analista Fomento
 i_want: Evaluar admisibilidad de beneficiario (Empresa/Gremio)
 so_that: Verifico elegibilidad
 domain: D-FIN

@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_gob_rel_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-GOB-REL-001
+name: Relaciones Institucionales
+domain: D-GOB
+type: CORE
+description: Gestión de relaciones con otros organismos.
+stories:
+- us_gob_rel_001
+- us_gob_rel_002
+- us_gob_rel_003
+ofrecida_por: null

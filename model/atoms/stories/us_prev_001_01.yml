@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_prev_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de evaluación de riesgos laborales
 id: US-PREV-001-01
 urn: urn:goreos:atom:story:us_prev_001_01:1.0.0
 role_id: USR-NEW-PREVENCIONIS
+as_a: Prevencionista Riesgos
 i_want: un módulo de evaluación de riesgos laborales
 so_that: pueda cumplir con normativa
 domain: D-BACK

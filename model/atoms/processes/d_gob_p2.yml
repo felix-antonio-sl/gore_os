@@ -2,33 +2,30 @@ _meta:
   urn: urn:goreos:atom:process:d_gob_p2:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-gob
+  source: archive/legacy_domains/domain_d-gob.md
 id: PROC-GOB-P2
-name: Transferencia Competencias
+name: Transferencia de Competencias
 domain: D-GOB
 code: P2
 process_type: BPMN
 spec:
-  bpmn_id: '`PROC-GORE-BPMN-TRAMITACION-CONVENIOS-01`'
-  mermaid_ref: D01_actos_administrativos.md#p2-aprobacin-de-transferencias-y-convenios
-  sla: 30 días hábiles
-  mermaid: "flowchart TD\n    subgraph FASE1[\"1️⃣ Iniciación\"]\n        A[\"Área\
-    \ Responsable:<br/>Elaborar borrador convenio\"]\n        B[\"Incluir cláusulas:<br/>•\
-    \ Partes<br/>• Objeto<br/>• Monto<br/>• Plazos<br/>• Rendición\"]\n    end\n\n\
-    \    subgraph FASE2[\"2️⃣ Revisión Jurídica\"]\n        C[\"Jurídica:<br/>Revisar\
-    \ legalidad\"]\n        D{\"¿Cumple<br/>normativa?\"}\n        E[\"✅ V°B° Jurídico\"\
-    ]\n        F[\"❌ Observar\"]\n    end\n\n    subgraph FASE3[\"3️⃣ Visación Presupuestaria\"\
-    ]\n        G[\"DAF:<br/>Verificar disponibilidad\"]\n        H[\"Emitir CDP\"\
-    ]\n        I[\"V°B° DAF\"]\n    end\n\n    subgraph FASE4[\"4️⃣ Control Interno\"\
-    ]\n        J[\"U. Control:<br/>Verificar procedencia\"]\n        K[\"V°B° Control\"\
-    ]\n    end\n\n    subgraph FASE5[\"5️⃣ Firma Partes\"]\n        L[\"Coordinar\
-    \ firma:<br/>• Gobernador/a GORE<br/>• Representante Entidad\"]\n    end\n\n \
-    \   subgraph FASE6[\"6️⃣ Resolución Aprobatoria\"]\n        M[\"Elaborar resolución<br/>que\
-    \ aprueba convenio\"]\n        N{\"¿Requiere<br/>Toma de Razón?\"}\n        O[\"\
-    Enviar a CGR\"]\n        P[\"Tramitar exento\"]\n    end\n\n    subgraph FASE7[\"\
-    7️⃣ Publicación y Archivo\"]\n        Q[\"Publicar en<br/>Transparencia\"]\n \
-    \       R[\"Registrar en SIGFE\"]\n        S[\"Archivar expediente\"]\n    end\n\
-    \n    A --> B --> C --> D\n    D -->|\"Sí\"| E --> G --> H --> I --> J --> K -->\
-    \ L --> M --> N\n    D -->|\"No\"| F --> A\n    N -->|\"Sí\"| O --> Q\n    N -->|\"\
-    No\"| P --> Q\n    Q --> R --> S\n\n    style L fill:#4CAF50,color:#fff\n    style\
-    \ S fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-GOB-TRANSFERENCIA-01
+  mermaid_ref: domain_d-gob.md#p2-transferencia-competencias
+  frecuencia: "Anual / Por ventana de solicitud"
+  mermaid: |
+    flowchart TB
+        subgraph P2["P2: Transferencia de Competencias"]
+            P2_1["2.1 Solicitud<br/>Fundada"]
+            P2_2["2.2 Negociación<br/>Comité"]
+            P2_3["2.3 Decreto<br/>Traspaso"]
+            P2_4["2.4 Periodo<br/>Instalación"]
+            P2_5["2.5 Evaluación<br/>Desempeño"]
+        end
+
+        P2_1 --> P2_2 --> P2_3 --> P2_4 --> P2_5
+
+        P2_1 -.- N1["Aprobación CORE<br/>Estudio técnico"]
+        P2_2 -.- N2["Comité Interministerial<br/>Recursos financ."]
+        P2_3 -.- N3["DTO Toma Razón<br/>Inicio vigencia"]
+        P2_4 -.- N4["Traslado personas<br/>Habilitación TI"]
+        P2_5 -.- N5["KPIs servicio<br/>Reporte subdere"]

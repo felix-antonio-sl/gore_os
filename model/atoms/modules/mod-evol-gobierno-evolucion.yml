@@ -1,0 +1,17 @@
+---
+# --- mod_evol_gobierno_evolucion.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_gobierno_evolucion:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-GOBIERNO-EVOLUCION
+name: Gobierno de Evolución
+domain: D-EVOL
+description: Gobernanza del proceso evolutivo institucional.
+composition:
+  processes: [urn:goreos:atom:process:d_evol_p4:1.0.0]
+  entities: []
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:evol_salud_organizacional:1.0.0]

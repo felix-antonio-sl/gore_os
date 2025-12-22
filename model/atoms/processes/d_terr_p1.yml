@@ -2,23 +2,25 @@ _meta:
   urn: urn:goreos:atom:process:d_terr_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-terr
+  source: archive/legacy_domains/domain_d-terr.md
 id: PROC-TERR-P1
 name: Ciclo de Vida de Datos Geoespaciales
 domain: D-TERR
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-GEO-CICLO-DATOS-01
+  mermaid_ref: domain_d-terr.md#p1-ciclo-de-vida-de-datos-geoespaciales
+  mermaid: |
+    flowchart LR
+        subgraph FLUJO["📋 Ciclo de Vida"]
+            A["1. Planificar<br/>(UN-IGIF)"]
+            B["2. Capturar/<br/>Integrar"]
+            C["3. Calidad<br/>(ISO 19157)"]
+            D["4. Documentar<br/>(ISO 19115)"]
+            E["5. Publicar<br/>(OGC)"]
+            F["6. Usar y<br/>Evaluar"]
+        end
+
+        A --> B --> C --> D --> E --> F
+        F -.->|"Mejora continua"| A

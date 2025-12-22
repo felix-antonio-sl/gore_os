@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_auth_006:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Prohibir mecanismos propios de autenticación para ciudadanía
 id: US-TDE-AUTH-006
 urn: urn:goreos:atom:story:us_tde_auth_006:1.0.0
 role_id: USR-DAF-TIC-CTD
+as_a: Coordinador Transformación Digital (CTD)
 i_want: Prohibir mecanismos propios de autenticación para ciudadanía
 so_that: Cumplo con DS9
 domain: D-TDE

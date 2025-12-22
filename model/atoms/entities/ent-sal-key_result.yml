@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:key_result:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-KEY_RESULT
+name: Key Result
+domain: D-SAL
+category: Transaction
+attributes:
+  - {name: id_kr, type: UUID, key: true}
+  - {name: okr_id, type: UUID, fk: ENT-SAL-OKR}
+  - {name: descripcion, type: String}
+  - {name: meta, type: Decimal}
+  - {name: actual, type: Decimal}
+  - {name: unidad, type: String}

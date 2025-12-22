@@ -1,0 +1,16 @@
+_meta:
+  urn: "urn:goreos:profunctor:ejecuta:1.0.0"
+  type: Profunctor
+  schema: "urn:goreos:schema:profunctor:1.0.0"
+  ontology_version: "3.0.0"
+
+signature:
+  source_type: Role
+  target_type: Process
+  codomain: "2"
+
+semantics: |
+  Define qué roles tienen autorización para ejecutar qué procesos.
+  Cada proceso es una coálgebra c: S → F(S) que define comportamiento.
+
+relations: []

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
 id: US-SEG-PREV-010
 urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
 role_id: USR-SEG-PREV-ANAL
+as_a: Analista Prevención
 i_want: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
 so_that: Planifico patrullajes preventivos focalizados
 domain: D-SEG

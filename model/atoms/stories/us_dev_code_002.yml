@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_code_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Feedback del linter en tiempo real sobre el cumplimiento de estándares
 id: US-DEV-CODE-002
 urn: urn:goreos:atom:story:us_dev_code_002:1.0.0
 role_id: ROL-DEVELOPER
+as_a: Rol no encontrado (ROL-DEVELOPER)
 i_want: recibir feedback del linter en tiempo real sobre el cumplimiento de estándares
 so_that: pueda corregir errores de estilo y calidad antes de realizar el commit
 domain: D-DEV

@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:seremi_minvu:1.0.0
+  urn: "urn:goreos:atom:role:seremi_minvu:2.0.0"
   type: Role
-  source: organization
-id: USR-EXT-SEREMI-VIV
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-SEREMI-VIV"
 role_key: seremi_minvu
 title: SEREMI MINVU
-description: ''
+description: 
 type: INTERNAL
+logic_scope: OPERATIONAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: Secretarías Regionales Ministeriales (SEREMI)
 unit_type: Ecosistema Externo
-archetype: seremi_sectorial
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:seremi_minvu:1.0.0
 domain: D-GESTION
+archetype: seremi_sectorial
+extends: null

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_geo_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un administrador de capas GIS con metadatos y permisos
 id: US-GEO-001-01
 urn: urn:goreos:atom:story:us_geo_001_01:1.0.0
 role_id: USR-TERR-ANAL
+as_a: Analista Geoespacial
 i_want: un administrador de capas GIS con metadatos y permisos
 so_that: pueda mantener la IDE actualizada y organizada
 domain: D-TERR

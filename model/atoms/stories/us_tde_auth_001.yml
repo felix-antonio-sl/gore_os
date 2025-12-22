@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_auth_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
 id: US-TDE-AUTH-001
 urn: urn:goreos:atom:story:us_tde_auth_001:1.0.0
 role_id: USR-NEW-DESARROLLADO
+as_a: Desarrollador
 i_want: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
 so_that: Cumplo con DS9 y habilito SSO para ciudadanos y funcionarios
 domain: D-TDE

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_sag_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Información de proyectos agrícolas financiados por GORE
 id: US-SAG-001-01
 urn: urn:goreos:atom:story:us_sag_001_01:1.0.0
 role_id: USR-EXT-SAG
+as_a: Director Regional SAG
 i_want: información de proyectos agrícolas financiados por GORE
 so_that: pueda verificar cumplimiento fitosanitario
 domain: D-EJEC

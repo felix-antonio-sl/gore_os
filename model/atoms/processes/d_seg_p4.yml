@@ -2,26 +2,31 @@ _meta:
   urn: urn:goreos:atom:process:d_seg_p4:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-seg
+  source: archive/legacy_domains/domain_d-seg.md
 id: PROC-SEG-P4
 name: Asesoría y Coordinación Municipal
 domain: D-SEG
 code: P4
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-TIEMPO-AUSENTISMO-01`'
-  mermaid_ref: D07_rrhh.md#p4-tiempo-asistencia-y-ausentismo
-  mermaid: "flowchart TD\n    subgraph REGISTRO[\"\U0001F4CB Registro\"]\n       \
-    \ A[\"Funcionario marca<br/>entrada/salida\"]\n        B[\"Sistema registra<br/>en\
-    \ reloj control\"]\n        C[\"Generar reporte<br/>diario\"]\n    end\n\n   \
-    \ subgraph PERMISOS[\"\U0001F4DD Permisos\"]\n        D[\"Solicitar permiso:<br/>•\
-    \ Administrativo<br/>• Particular\"]\n        E[\"Jefatura aprueba/<br/>rechaza\"\
-    ]\n        F[\"Registrar en<br/>sistema\"]\n    end\n\n    subgraph LICENCIAS[\"\
-    \U0001F3E5 Licencias\"]\n        G[\"Funcionario presenta<br/>licencia médica\"\
-    ]\n        H[\"RRHH recepciona<br/>y valida\"]\n        I[\"Enviar a Isapre/<br/>COMPIN\"\
-    ]\n        J[\"Resolución:<br/>• Aprobada<br/>• Rechazada\"]\n        K[\"Ajustar<br/>remuneración\"\
-    ]\n    end\n\n    subgraph FERIADOS[\"\U0001F334 Feriados\"]\n        L[\"Solicitar\
-    \ feriado<br/>legal/progresivo\"]\n        M[\"Verificar saldo<br/>disponible\"\
-    ]\n        N[\"Jefatura autoriza\"]\n        O[\"Descontar días\"]\n    end\n\n\
-    \    A --> B --> C\n    D --> E --> F\n    G --> H --> I --> J --> K\n    L -->\
-    \ M --> N --> O\n\n    style K fill:#FF9800,color:#fff"
+  bpmn_id: BPMN-GN-SEG-ASESORIA-MUNI-01
+  mermaid_ref: domain_d-seg.md#p4-asesoría-y-coordinación-municipal
+  mermaid: |
+    flowchart TD
+        subgraph SOLICITUD["📩 Solicitud"]
+            A["Municipio solicita<br/>asesoría técnica"]
+            B["Revisión de<br/>Antecedentes"]
+        end
+
+        subgraph ASESORIA["🛠️ Asesoría"]
+            C["Diagnóstico<br/>Comunal (STOP)"]
+            D["Asistencia<br/>Técnica"]
+            E["Formulación<br/>Plan Comunal"]
+        end
+
+        subgraph VALIDACION["✅ Validación"]
+            F["Revisión<br/>División Prevención"]
+            G["Aprobación<br/>Consejo Comunal"]
+        end
+
+        A --> B --> C --> D --> E --> F --> G

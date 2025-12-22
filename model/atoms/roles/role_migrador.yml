@@ -1,37 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:migrador:1.0.0
+  urn: "urn:goreos:atom:role:role_migrador:2.0.0"
   type: Role
-id: ROLE-MIGRADOR
-name: Migrador de Datos
-domain: D-OPS
-type: TECHNICAL
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-OPS-MIGRADOR"
+role_key: role_migrador
+title: 
 description: Especialista en ETL responsable de extraer, transformar y cargar datos
-  desde fuentes legacy hacia el modelo GORE_OS.
-responsibilities:
-- Importar hojas Excel/CSV desde fuentes legacy
-- Normalizar tipos de datos y formatos
-- Limpiar y corregir anomalías (placeholders, fechas, tildes)
-- Verificar integridad referencial post-carga
-- Documentar transformaciones aplicadas
-permissions:
-- LEGACY_READ
-- STAGING_WRITE
-- TRANSFORM_EXECUTE
-- VALIDATION_RUN
-sources_access:
-- IDIS
-- Convenios
-- Partes
-- Modificaciones
-- FRIL
-- Progs
-stories:
-- US-OPS-LEG-001
-- US-OPS-LEG-002
-- US-OPS-LEG-003
-- US-OPS-LEG-010
-- US-OPS-LEG-020
-- US-OPS-LEG-030
-- US-OPS-LEG-040
-- US-OPS-LEG-041
-urn: urn:goreos:atom:role:migrador:1.0.0
+type: TECHNICAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
+unit: 
+unit_type: 
+domain: D-OPS
+archetype: null
+extends: null

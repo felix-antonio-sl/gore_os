@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_020:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visar resoluciones de cometidos funcionarios
 id: US-FIN-PPTO-020
 urn: urn:goreos:atom:story:us_fin_ppto_020:1.0.0
 role_id: USR-DAF-JEFE
+as_a: Jefe DAF
 i_want: Visar resoluciones de cometidos funcionarios
 so_that: Autorizo viáticos
 domain: D-FIN

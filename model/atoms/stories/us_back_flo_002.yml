@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Solicitudes de vehículos (asignar conductor)
 id: US-BACK-FLO-002
 urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
 role_id: USR-DAF-OPS-FLOTA
+as_a: Encargado Flota
 i_want: Gestionar solicitudes de vehículos (asignar conductor)
 so_that: Administro uso de flota
 domain: D-BACK

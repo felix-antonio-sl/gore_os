@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:orden_compra:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-ORDEN_COMPRA
+name: Orden de Compra
+domain: D-FIN
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_oc, type: UUID, key: true}
+  - {name: numero, type: String}
+  - {name: proveedor_id, type: UUID, fk: ENT-FIN-PROVEEDOR}
+  - {name: monto, type: Decimal}
+  - {name: fecha_emision, type: Date}
+  - {name: estado, type: String}

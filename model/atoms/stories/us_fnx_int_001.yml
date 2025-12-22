@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Consumir métricas de D-EVOL en tiempo real
 id: US-FNX-INT-001
 urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Consumir métricas de D-EVOL en tiempo real
 so_that: Detecto condiciones de activación
 domain: D-FENIX

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_geo_002_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Herramientas para estandarizar formatos (Shapefile, GeoJSON)
 id: US-GEO-002-01
 urn: urn:goreos:atom:story:us_geo_002_01:1.0.0
 role_id: USR-TERR-GEONODO
+as_a: Administrador Geonodo
 i_want: herramientas para estandarizar formatos (Shapefile, GeoJSON)
 so_that: las capas sean interoperables
 domain: D-TERR

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ppert_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visar el acta de pertinencia con firma digital
 id: US-PPERT-001-01
 urn: urn:goreos:atom:story:us_ppert_001_01:1.0.0
 role_id: USR-DIPL-CPER-PRES
+as_a: Presidente Comité de Pertinencia
 i_want: visar el acta de pertinencia con firma digital
 so_that: los proyectos pasen a etapa de análisis técnico
 domain: D-PLAN

@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:compromiso_presupuestario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-COMPROMISO_PRESUPUESTARIO
+name: Compromiso Presupuestario
+domain: D-FIN
+category: Transaction
+attributes:
+  - {name: id_compromiso, type: UUID, key: true}
+  - {name: cdp_id, type: UUID, fk: ENT-FIN-CDP}
+  - {name: monto, type: Decimal}
+  - {name: fecha, type: Date}
+  - {name: descripcion, type: Text}
+  - {name: estado, type: String}

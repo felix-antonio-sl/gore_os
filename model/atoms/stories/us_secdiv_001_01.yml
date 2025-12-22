@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de gestión de correspondencia entrante y saliente
 id: US-SECDIV-001-01
 urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
 role_id: USR-NEW-SECRETARIA-D
+as_a: Secretaria División
 i_want: un módulo de gestión de correspondencia entrante y saliente
 so_that: pueda mantener trazabilidad
 domain: D-BACK

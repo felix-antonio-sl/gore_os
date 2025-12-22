@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_iam_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Definir permisos granulares por recurso y acción
 id: US-OPS-IAM-003
 urn: urn:goreos:atom:story:us_ops_iam_003:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: definir permisos granulares por recurso y acción
 so_that: se aplique el principio de mínimo privilegio en toda la plataforma
 domain: D-OPS

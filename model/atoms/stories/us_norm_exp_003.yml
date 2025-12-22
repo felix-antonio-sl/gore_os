@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_exp_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Trazabilidad de acciones sobre expediente (DS10)
 id: US-NORM-EXP-003
 urn: urn:goreos:atom:story:us_norm_exp_003:1.0.0
 role_id: USR-DAF-TIC-ADMIN
+as_a: Administrador TI
 i_want: Registrar trazabilidad de acciones sobre expediente (DS10)
 so_that: Garantizo auditoría
 domain: D-NORM

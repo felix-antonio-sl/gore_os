@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_front_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Una biblioteca de componentes de diseño (Design System)
 id: US-FRONT-001-01
 urn: urn:goreos:atom:story:us_front_001_01:1.0.0
 role_id: USR-DAF-TIC-DEV
+as_a: Desarrollador DevOps
 i_want: una biblioteca de componentes de diseño (Design System)
 so_that: la UI sea consistente en todos los módulos
 domain: D-DEV

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_acto_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Asesorar legalmente y revisar bases/convenios
 id: US-NORM-ACTO-002
 urn: urn:goreos:atom:story:us_norm_acto_002:1.0.0
 role_id: USR-JUR-ABOG
+as_a: Abogado Informante
 i_want: Asesorar legalmente y revisar bases/convenios
 so_that: Prevengo riesgos legales
 domain: D-NORM

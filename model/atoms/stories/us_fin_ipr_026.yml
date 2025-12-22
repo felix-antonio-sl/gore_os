@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_026:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Devolución de garantías a ejecutores
 id: US-FIN-IPR-026
 urn: urn:goreos:atom:story:us_fin_ipr_026:1.0.0
 role_id: USR-CAL-ANAL
+as_a: Analista Gestión Institucional
 i_want: Gestionar devolución de garantías a ejecutores
 so_that: Libero garantías correctamente
 domain: D-FIN

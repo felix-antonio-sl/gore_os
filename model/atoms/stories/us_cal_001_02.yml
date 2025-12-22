@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_cal_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportes de cumplimiento para DIPRES
 id: US-CAL-001-02
 urn: urn:goreos:atom:story:us_cal_001_02:1.0.0
 role_id: USR-CAL-ENC
+as_a: Encargado de Calidad
 i_want: generar reportes de cumplimiento para DIPRES
 so_that: pueda reportar en formato oficial
 domain: D-NORM

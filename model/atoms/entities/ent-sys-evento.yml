@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:nucleus:evento:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SYS-EVENTO
+name: Evento
+domain: D-SYS
+category: Abstract
+is_abstract: true
+description: "Coalgebra base: captura transición de estado en el tiempo. Objeto terminal para todos los eventos del sistema."
+attributes:
+  - {name: id_evento, type: UUID, key: true}
+  - {name: tipo_evento, type: String}
+  - {name: fecha_evento, type: DateTime}
+  - {name: actor_id, type: UUID, fk: ENT-SYS-ACTOR, nullable: true}
+  - {name: entidad_tipo, type: String, nullable: true}
+  - {name: entidad_id, type: UUID, nullable: true}
+  - {name: observacion, type: Text, nullable: true}

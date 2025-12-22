@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_pever_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Certificar al GORE en niveles superiores de Estado Verde
 id: US-PEVER-001-01
 urn: urn:goreos:atom:story:us_pever_001_01:1.0.0
 role_id: USR-CAL-VERDE-PRES
+as_a: Presidente Comité Estado Verde
 i_want: certificar al GORE en niveles superiores de Estado Verde
 so_that: se reconozca el compromiso ambiental institucional
 domain: D-GOB

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_sofo_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertas tempranas de emergencias agrícolas (sequía, heladas)
 id: US-SOFO-001-01
 urn: urn:goreos:atom:story:us_sofo_001_01:1.0.0
 role_id: USR-NEW-DIRIGENTE-SO
+as_a: Dirigente Social
 i_want: alertas tempranas de emergencias agrícolas (sequía, heladas)
 so_that: se activen fondos de emergencia a tiempo
 domain: D-TERR

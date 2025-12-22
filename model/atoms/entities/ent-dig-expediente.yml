@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:expediente:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-EXPEDIENTE
+name: Expediente Electrónico
+domain: D-DIG
+category: Master
+attributes:
+  - {name: id_expediente, type: UUID, key: true}
+  - {name: numero, type: String}
+  - {name: materia, type: String}
+  - {name: fecha_creacion, type: DateTime}
+  - {name: estado, type: String}
+  - {name: reservado, type: Boolean}

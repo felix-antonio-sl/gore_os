@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_cies_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Eventos de emergencia con timeline de acciones
 id: US-CIES-001-02
 urn: urn:goreos:atom:story:us_cies_001_02:1.0.0
 role_id: USR-CIES-COOR
+as_a: Coordinador CIES
 i_want: registrar eventos de emergencia con timeline de acciones
 so_that: pueda documentar la gestión para análisis posterior
 domain: D-TERR

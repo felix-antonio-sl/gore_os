@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_dat_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reglas de validación personalizadas por tipo de carga masiva
 id: US-OPS-DAT-003
 urn: urn:goreos:atom:story:us_ops_dat_003:1.0.0
 role_id: ROL-ADMIN
+as_a: Rol no encontrado (ROL-ADMIN)
 i_want: configurar reglas de validación personalizadas por tipo de carga masiva
 so_that: se tenga flexibilidad para adaptar las ingestas a diferentes formatos y requisitos
 domain: D-OPS

@@ -2,26 +2,45 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ejecutores_p4_bis:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-fin-ejecutores
-id: PROC-FIN-EJECUTORES-P4-bis
-name: Inducción de Ejecutor
-domain: D-FIN-EJECUTORES
-code: P4-bis
+  source: gorenuble/knowledge/domains/gn/arquitectura/bpmn/D08_rendiciones_koda.yml
+id: PROC-FIN-EJECUTORES-P4-BIS
+name: Flujo Entidad Ejecutora (SISREC)
+domain: D-FIN-REND
+code: P4-BIS
+subdomain: Ejecutores
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-TIEMPO-AUSENTISMO-01`'
-  mermaid_ref: D07_rrhh.md#p4-tiempo-asistencia-y-ausentismo
-  mermaid: "flowchart TD\n    subgraph REGISTRO[\"\U0001F4CB Registro\"]\n       \
-    \ A[\"Funcionario marca<br/>entrada/salida\"]\n        B[\"Sistema registra<br/>en\
-    \ reloj control\"]\n        C[\"Generar reporte<br/>diario\"]\n    end\n\n   \
-    \ subgraph PERMISOS[\"\U0001F4DD Permisos\"]\n        D[\"Solicitar permiso:<br/>•\
-    \ Administrativo<br/>• Particular\"]\n        E[\"Jefatura aprueba/<br/>rechaza\"\
-    ]\n        F[\"Registrar en<br/>sistema\"]\n    end\n\n    subgraph LICENCIAS[\"\
-    \U0001F3E5 Licencias\"]\n        G[\"Funcionario presenta<br/>licencia médica\"\
-    ]\n        H[\"RRHH recepciona<br/>y valida\"]\n        I[\"Enviar a Isapre/<br/>COMPIN\"\
-    ]\n        J[\"Resolución:<br/>• Aprobada<br/>• Rechazada\"]\n        K[\"Ajustar<br/>remuneración\"\
-    ]\n    end\n\n    subgraph FERIADOS[\"\U0001F334 Feriados\"]\n        L[\"Solicitar\
-    \ feriado<br/>legal/progresivo\"]\n        M[\"Verificar saldo<br/>disponible\"\
-    ]\n        N[\"Jefatura autoriza\"]\n        O[\"Descontar días\"]\n    end\n\n\
-    \    A --> B --> C\n    D --> E --> F\n    G --> H --> I --> J --> K\n    L -->\
-    \ M --> N --> O\n\n    style K fill:#FF9800,color:#fff"
+  bpmn_id: BPMN-GN-REND-EJECUTOR-01
+  mermaid_ref: D08_rendiciones_koda.yml#flujo-entidad-ejecutora
+  mermaid: |
+    flowchart TD
+        subgraph ANALISTA["👤 Analista Ejecutor"]
+            A["Recibir transferencia<br/>en SISREC"]
+            B["Aceptar transferencia"]
+            C["Crear informe rendición:<br/>• Mensual<br/>• Regularización<br/>• Sin movimiento"]
+            D["Ingresar transacciones"]
+            E["Adjuntar respaldos<br/>digitalizados"]
+            F["Enviar a Ministro Fe"]
+        end
+
+        subgraph MF["⚖️ Ministro de Fe"]
+            G["Revisar autenticidad"]
+            H{"¿Auténtico?"}
+            I["✅ Certificar"]
+            J["❌ Devolver"]
+        end
+
+        subgraph ENCARGADO["👔 Encargado Ejecutor"]
+            K["Revisar informe"]
+            L{"¿Conforme?"}
+            M["✅ Firmar FEA<br/>y enviar a GORE"]
+            N["❌ Devolver"]
+        end
+
+        A --> B --> C --> D --> E --> F --> G --> H
+        H -->|"Sí"| I --> K --> L
+        H -->|"No"| J --> D
+        L -->|"Sí"| M
+        L -->|"No"| N --> D
+
+        style M fill:#4CAF50,color:#fff

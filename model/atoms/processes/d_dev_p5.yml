@@ -2,24 +2,14 @@ _meta:
   urn: urn:goreos:atom:process:d_dev_p5:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: plan_especificacion_ddev_dops.md
+  source: TBD
 id: PROC-DEV-P5
-name: Aprobación de ADR
+name: (Placeholder) Proceso de Desarrollo P5
 domain: D-DEV
 code: P5
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
-  mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
-  mermaid: "flowchart TD\n    subgraph DNC[\"\U0001F4CA Detección de Necesidades\"\
-    ]\n        A[\"Aplicar encuesta DNC\"]\n        B[\"Análisis de brechas\"]\n \
-    \       C[\"Priorizar necesidades\"]\n    end\n\n    subgraph PAC_CAP[\"\U0001F4CB\
-    \ Plan de Capacitación\"]\n        D[\"Elaborar PAC anual\"]\n        E[\"Comité\
-    \ Bipartito<br/>aprueba\"]\n        F[\"Asignar presupuesto\"]\n    end\n\n  \
-    \  subgraph EJECUCION[\"\U0001F393 Ejecución\"]\n        G[\"Convocar a<br/>funcionarios\"\
-    ]\n        H[\"Ejecutar<br/>capacitaciones\"]\n        I[\"Evaluar aprendizaje\"\
-    ]\n        J[\"Certificar\"]\n    end\n\n    subgraph SEGUIMIENTO[\"\U0001F4C8\
-    \ Seguimiento\"]\n        K[\"Medir transferencia<br/>al puesto\"]\n        L[\"\
-    Evaluar impacto\"]\n        M[\"Retroalimentar<br/>próximo ciclo\"]\n    end\n\
-    \n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L -->\
-    \ M\n\n    style J fill:#4CAF50,color:#fff"
+  status: "Definición Pendiente"
+  mermaid: |
+    graph TD
+        A[Inicio] --> B[Definición Pendiente] --> C[Fin]

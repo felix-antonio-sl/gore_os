@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_obs_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportes temáticos con visualizaciones
 id: US-OBS-001-02
 urn: urn:goreos:atom:story:us_obs_001_02:1.0.0
 role_id: USR-PLAN-OBS
+as_a: Analista Observatorio
 i_want: generar reportes temáticos con visualizaciones
 so_that: pueda comunicar hallazgos a tomadores de decisión
 domain: D-TERR

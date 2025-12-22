@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_acto_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Supervisar cumplimiento normativo (sumarios)
 id: US-NORM-ACTO-005
 urn: urn:goreos:atom:story:us_norm_acto_005:1.0.0
 role_id: USR-JUR-ABOG
+as_a: Abogado Informante
 i_want: Supervisar cumplimiento normativo (sumarios)
 so_that: Mantengo disciplina administrativa
 domain: D-NORM

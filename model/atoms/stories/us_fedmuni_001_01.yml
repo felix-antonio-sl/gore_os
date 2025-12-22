@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Denunciar sobrecargas laborales derivadas de convenios
 id: US-FEDMUNI-001-01
 urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
 role_id: USR-MUNI-ALC
+as_a: Alcalde
 i_want: denunciar sobrecargas laborales derivadas de convenios
 so_that: se ajusten los recursos para la ejecución
 domain: D-GOB

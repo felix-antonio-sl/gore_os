@@ -1,0 +1,22 @@
+---
+# --- mod_fin_captacion_oportunidades.yml ---
+_meta:
+  urn: urn:goreos:atom:module:fin_captacion_oportunidades:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-FIN-CAPTACION-OPORTUNIDADES
+name: Captación de Oportunidades
+domain: D-FIN
+description: Embudo de proyectos y scoring de impacto.
+composition:
+  processes: [urn:goreos:atom:process:d_fin_ipr_core_p1:1.0.0]
+  entities:
+    [
+      urn:goreos:atom:entity:d_fin_portafolio_oportunidad:1.0.0,
+      urn:goreos:atom:entity:d_fin_portafolio_faseembudo:1.0.0,
+      urn:goreos:atom:entity:d_fin_portafolio_puntajeimpacto:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

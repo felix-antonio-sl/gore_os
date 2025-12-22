@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_noc_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Correlación de eventos de seguridad (SIEM)
 id: US-NOC-001-01
 urn: urn:goreos:atom:story:us_noc_001_01:1.0.0
 role_id: USR-COM-SEG
+as_a: NOC/SOC
 i_want: correlación de eventos de seguridad (SIEM)
 so_that: pueda identificar ataques complejos
 domain: D-OPS

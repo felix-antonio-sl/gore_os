@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_admin_007:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver logs de actividad (filtro usuario/acción)
 id: US-TDE-ADMIN-007
 urn: urn:goreos:atom:story:us_tde_admin_007:1.0.0
 role_id: USR-DAF-TIC-ADMIN
+as_a: Administrador TI
 i_want: Ver logs de actividad (filtro usuario/acción)
 so_that: Audito uso del sistema
 domain: D-TDE

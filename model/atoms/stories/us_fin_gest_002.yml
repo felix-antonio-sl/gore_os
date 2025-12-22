@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_gest_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Solicitud de Modificación (Informe Técnico)
 id: US-FIN-GEST-002
 urn: urn:goreos:atom:story:us_fin_gest_002:1.0.0
 role_id: USR-CAL-ANAL
+as_a: Analista Gestión Institucional
 i_want: Evaluar Solicitud de Modificación (Informe Técnico)
 so_that: Fundamento la decisión
 domain: D-FIN

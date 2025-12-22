@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_cris_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Activar protocolo de ingreso manual ante caída de Nodo PISEE
 id: US-TDE-CRIS-001
 urn: urn:goreos:atom:story:us_tde_cris_001:1.0.0
 role_id: USR-TERR-PISEE
+as_a: Operador PISEE
 i_want: Activar protocolo de ingreso manual ante caída de Nodo PISEE
 so_that: Mantengo la operación crítica del servicio
 domain: D-TDE

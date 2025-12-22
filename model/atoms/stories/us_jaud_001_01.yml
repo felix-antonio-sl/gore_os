@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_jaud_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de planificación de auditoría basado en riesgos
 id: US-JAUD-001-01
 urn: urn:goreos:atom:story:us_jaud_001_01:1.0.0
 role_id: USR-AUD-JEFE
+as_a: Jefe Unidad de Auditoría
 i_want: un módulo de planificación de auditoría basado en riesgos
 so_that: pueda focalizar recursos en áreas críticas
 domain: D-NORM

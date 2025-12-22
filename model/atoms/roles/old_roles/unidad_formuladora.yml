@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:unidad_formuladora:1.0.0
+  type: Role
+  source: organization
+id: USR-MUNI-FORM
+role_key: unidad_formuladora
+title: Unidad Formuladora Municipal
+description: Equipo municipal encargado del diseño y postulación de iniciativas.
+type: INTERNAL
+unit: Municipios
+unit_type: Ecosistema Externo
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:unidad_formuladora:1.0.0
+domain: D-GESTION

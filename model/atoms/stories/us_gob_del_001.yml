@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_del_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Convocar a SEREMIS para alineamiento de políticas
 id: US-GOB-DEL-001
 urn: urn:goreos:atom:story:us_gob_del_001:1.0.0
 role_id: USR-EXT-DPR
+as_a: Delegado Presidencial Regional
 i_want: Convocar a SEREMIS para alineamiento de políticas
 so_that: Coordino gobierno interior
 domain: D-GOB

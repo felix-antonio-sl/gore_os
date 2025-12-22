@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
 id: US-NORM-CGR-001
 urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
 role_id: USR-EXT-CGR
+as_a: Analista Toma de Razón (CGR)
 i_want: Recibir actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
 so_that: Ejerzo control preventivo
 domain: D-NORM

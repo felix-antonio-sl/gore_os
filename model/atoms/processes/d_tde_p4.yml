@@ -2,26 +2,28 @@ _meta:
   urn: urn:goreos:atom:process:d_tde_p4:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-tde
+  source: archive/legacy_domains/domain_d-tde.md
 id: PROC-TDE-P4
 name: Gestión Interoperabilidad
 domain: D-TDE
 code: P4
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-TIEMPO-AUSENTISMO-01`'
-  mermaid_ref: D07_rrhh.md#p4-tiempo-asistencia-y-ausentismo
-  mermaid: "flowchart TD\n    subgraph REGISTRO[\"\U0001F4CB Registro\"]\n       \
-    \ A[\"Funcionario marca<br/>entrada/salida\"]\n        B[\"Sistema registra<br/>en\
-    \ reloj control\"]\n        C[\"Generar reporte<br/>diario\"]\n    end\n\n   \
-    \ subgraph PERMISOS[\"\U0001F4DD Permisos\"]\n        D[\"Solicitar permiso:<br/>•\
-    \ Administrativo<br/>• Particular\"]\n        E[\"Jefatura aprueba/<br/>rechaza\"\
-    ]\n        F[\"Registrar en<br/>sistema\"]\n    end\n\n    subgraph LICENCIAS[\"\
-    \U0001F3E5 Licencias\"]\n        G[\"Funcionario presenta<br/>licencia médica\"\
-    ]\n        H[\"RRHH recepciona<br/>y valida\"]\n        I[\"Enviar a Isapre/<br/>COMPIN\"\
-    ]\n        J[\"Resolución:<br/>• Aprobada<br/>• Rechazada\"]\n        K[\"Ajustar<br/>remuneración\"\
-    ]\n    end\n\n    subgraph FERIADOS[\"\U0001F334 Feriados\"]\n        L[\"Solicitar\
-    \ feriado<br/>legal/progresivo\"]\n        M[\"Verificar saldo<br/>disponible\"\
-    ]\n        N[\"Jefatura autoriza\"]\n        O[\"Descontar días\"]\n    end\n\n\
-    \    A --> B --> C\n    D --> E --> F\n    G --> H --> I --> J --> K\n    L -->\
-    \ M --> N --> O\n\n    style K fill:#FF9800,color:#fff"
+  bpmn_id: BPMN-GN-TDE-INTEROPERABILIDAD-01
+  mermaid_ref: domain_d-tde.md#p4-gestión-interoperabilidad
+  frecuencia: "A demanda"
+  mermaid: |
+    flowchart TB
+        subgraph P4["P4: Gestión Interoperabilidad"]
+            P4_1["4.1 Definición<br/>Necesidad"]
+            P4_2["4.2 Acuerdo<br/>Intercambio"]
+            P4_3["4.3 Habilitación<br/>Técnica"]
+            P4_4["4.4 Operación<br/>& Auditoría"]
+        end
+
+        P4_1 --> P4_2 --> P4_3 --> P4_4
+
+        P4_1 -.- N1["Datos requeridos<br/>Justificación legal"]
+        P4_2 -.- N2["Convenio inst.<br/>Protocolo datos"]
+        P4_3 -.- N3["Config Nodo PISEE<br/>Mapeo campos"]
+        P4_4 -.- N4["Log transaccional<br/>SLA disponibilidad"]

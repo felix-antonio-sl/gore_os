@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_sec_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Escaneos automáticos de seguridad (SAST) en el código fuente
 id: US-DEV-SEC-001
 urn: urn:goreos:atom:story:us_dev_sec_001:1.0.0
 role_id: USR-DEV-SEC
+as_a: Ingeniero de Seguridad
 i_want: Ejecutar escaneos automáticos de seguridad (SAST) en el código fuente
 so_that: Identifico vulnerabilidades comunes (OWASP Top 10) antes de desplegar
 domain: D-DEV

@@ -2,23 +2,25 @@ _meta:
   urn: urn:goreos:atom:process:d_terr_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-terr
+  source: archive/legacy_domains/domain_d-terr.md
 id: PROC-TERR-P3
 name: Gobernanza de Datos Geoespaciales
 domain: D-TERR
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-GEO-GOBERNANZA-01
+  mermaid_ref: domain_d-terr.md#p3-gobernanza-de-datos-geoespaciales
+  mermaid: |
+    flowchart TD
+        subgraph COMITE["👥 Comité Geo"]
+            A["Gobernador/a<br/>(Patrocinio)"]
+        end
+
+        subgraph OPERATIVO["⚙️ Nivel Operativo"]
+            B["Coord. Regional IDE"]
+            C["UGIT / Equipo SIG"]
+            D["Puntos Focales"]
+        end
+
+        A --> B --> C & D

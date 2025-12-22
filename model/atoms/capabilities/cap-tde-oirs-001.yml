@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_tde_oirs_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-TDE-OIRS-001
+name: OIRS y Atención Ciudadana
+domain: D-TDE
+type: CORE
+description: Gestión de solicitudes ciudadanas.
+stories:
+- us_tde_oirs_001
+- us_tde_oirs_002
+- us_tde_oirs_003
+- us_oirs_001_01
+- us_oirs_001_02
+ofrecida_por: null

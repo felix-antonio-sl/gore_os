@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_int_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
 id: US-FNX-INT-003
 urn: urn:goreos:atom:story:us_fnx_int_003:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
 so_that: Evito que el problema crezca mientras se interviene
 domain: D-FENIX

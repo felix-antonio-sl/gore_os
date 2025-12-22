@@ -2,23 +2,29 @@ _meta:
   urn: urn:goreos:atom:process:d_dev_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: plan_especificacion_ddev_dops.md
+  source: archive/legacy_domains/domain_d-dev.md
 id: PROC-DEV-P3
-name: Release Train
+name: Despliegue a Producción
 domain: D-DEV
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-DEV-RELEASE-01
+  mermaid_ref: domain_d-dev.md#73-p3-despliegue-a-producción
+  trigger: "Cambios en main"
+  output: "Release completo"
+  mermaid: |
+    flowchart TD
+        A["Cambios en<br/>main"] --> B["Pipeline de<br/>release"]
+        B --> C["Build<br/>producción"]
+        C --> D["Deploy a<br/>staging"]
+        D --> E["Validación<br/>staging"]
+        E --> F{"¿OK?"}
+        F -->|"No"| G["Rollback<br/>y fix"]
+        G --> A
+        F -->|"Sí"| H["Deploy a<br/>producción"]
+        H --> I["Monitorear<br/>15min"]
+        I --> J{"¿Estable?"}
+        J -->|"No"| K["Rollback<br/>automático"]
+        J -->|"Sí"| L["Release<br/>completo"]
+        L --> M["Notificar<br/>a D-OPS"]

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_iseg_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Escaneo automático de vulnerabilidades en el código
 id: US-ISEG-001-01
 urn: urn:goreos:atom:story:us_iseg_001_01:1.0.0
 role_id: USR-DEV-SEC
+as_a: Ingeniero de Seguridad
 i_want: escaneo automático de vulnerabilidades en el código
 so_that: se detecten fallos de seguridad antes de desplegar
 domain: D-OPS

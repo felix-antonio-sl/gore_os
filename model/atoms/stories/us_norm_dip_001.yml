@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alerta vencimiento DIP (30 días antes de marzo)
 id: US-NORM-DIP-001
 urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
 role_id: USR-AUD-PROF
+as_a: Auditor Interno
 i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
 so_that: Aseguro cumplimiento de funcionarios
 domain: D-NORM

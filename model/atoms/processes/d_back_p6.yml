@@ -2,23 +2,22 @@ _meta:
   urn: urn:goreos:atom:process:d_back_p6:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-back
+  source: archive/legacy_domains/domain_d-back.md
 id: PROC-BACK-P6
-name: Viáticos Nacionales y Extranjeros (Absorción SIGPER)
+name: Alta de Activo Fijo
 domain: D-BACK
 code: P6
+subdomain: Inventarios
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-BIENESTAR-01`'
-  mermaid_ref: D07_rrhh.md#p6-bienestar-y-calidad-de-vida
-  mermaid: "flowchart TD\n    subgraph AFILIACION[\"\U0001F4CB Afiliación\"]\n   \
-    \     A[\"Funcionario ingresa\"]\n        B[\"Invitar a<br/>Servicio de Bienestar\"\
-    ]\n        C[\"Aceptar y afiliar\"]\n        D[\"Descuento mensual<br/>por planilla\"\
-    ]\n    end\n\n    subgraph PRESTACIONES[\"\U0001F381 Prestaciones\"]\n       \
-    \ E[\"Solicitar beneficio:<br/>• Médico<br/>• Económico<br/>• Préstamo<br/>• Convenio\"\
-    ]\n        F[\"Unidad Bienestar<br/>evalúa\"]\n        G[\"Consejo Administrativo<br/>aprueba\
-    \ si requiere\"]\n        H[\"Otorgar beneficio\"]\n    end\n\n    subgraph ACTIVIDADES[\"\
-    \U0001F389 Actividades\"]\n        I[\"Planificar eventos:<br/>• Deportivos<br/>•\
-    \ Recreativos<br/>• Culturales\"]\n        J[\"Ejecutar actividad\"]\n       \
-    \ K[\"Evaluar satisfacción\"]\n    end\n\n    A --> B --> C --> D\n    E --> F\
-    \ --> G --> H\n    I --> J --> K\n\n    style H fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-BACK-ALTAAF-01
+  mermaid_ref: domain_d-back.md#alta-de-activo-fijo
+  mermaid: |
+    flowchart TD
+        A["Bien adquirido"] --> B{"Valor ≥ 3 UTM<br/>y vida útil > 1 año"}
+        B -->|"Sí"| C["Activo Fijo"]
+        B -->|"No"| D["Gasto del período"]
+        C --> E["Asignar N° inventario"]
+        E --> F["Plaquetear bien"]
+        F --> G["Registrar en Sistema"]
+        G --> H["Contabilizar SIGFE"]

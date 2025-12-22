@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_bak_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Backups automáticos programados para todas las bases de datos
 id: US-OPS-BAK-001
 urn: urn:goreos:atom:story:us_ops_bak_001:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: configurar backups automáticos programados para todas las bases de datos
 so_that: se garantice la continuidad del negocio ante desastres
 domain: D-OPS

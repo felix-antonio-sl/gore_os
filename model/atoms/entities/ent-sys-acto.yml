@@ -1,0 +1,20 @@
+---
+_meta:
+  urn: urn:goreos:entity:nucleus:acto:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SYS-ACTO
+name: Acto Administrativo
+domain: D-SYS
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_acto, type: UUID, key: true}
+  - {name: tipo_acto, type: String}
+  - {name: materia, type: String}
+  - {name: autoridad_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: fecha_dictacion, type: Date}
+  - {name: requiere_toma_razon, type: Boolean}
+  - {name: estado_tramitacion, type: String}
+
+# --- LOCUS: Fibra Territorial ---

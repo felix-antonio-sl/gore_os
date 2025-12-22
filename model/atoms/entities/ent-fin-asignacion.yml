@@ -1,0 +1,21 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:asignacion:1.1.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-ASIGNACION
+name: Asignación Presupuestaria
+domain: D-FIN
+category: Transaction
+attributes:
+  - {name: id_asignacion, type: UUID, key: true}
+  - {name: presupuesto_id, type: UUID, fk: ENT-FIN-PRESUPUESTO}
+  - {name: subtitulo, type: String}
+  - {name: item, type: String}
+  - {name: asignacion, type: String}
+  - {name: monto_inicial, type: Decimal}
+  - {name: monto_vigente, type: Decimal}
+  - {name: monto_ejecutado, type: Decimal}
+  - {name: denominacion, type: String, nullable: true}
+  - {name: nombre_linea, type: String, nullable: true}
+  - {name: marca_cm, type: String, nullable: true}

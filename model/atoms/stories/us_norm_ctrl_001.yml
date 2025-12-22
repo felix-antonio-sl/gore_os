@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_ctrl_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Notificaciones de cruces entre evaluadores y postulantes
 id: US-NORM-CTRL-001
 urn: urn:goreos:atom:story:us_norm_ctrl_001:1.0.0
 role_id: USR-AUD-PROF
+as_a: Auditor Interno
 i_want: Recibir notificaciones de cruces entre evaluadores y postulantes
 so_that: Prevengo conflictos de interés
 domain: D-NORM

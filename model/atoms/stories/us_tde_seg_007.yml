@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_seg_007:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Políticas de acceso y roles (IAM)
 id: US-TDE-SEG-007
 urn: urn:goreos:atom:story:us_tde_seg_007:1.0.0
 role_id: USR-TDE-CISO
+as_a: CISO
 i_want: Configurar políticas de acceso y roles (IAM)
 so_that: Controlo accesos
 domain: D-TDE

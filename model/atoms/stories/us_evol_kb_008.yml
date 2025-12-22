@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_evol_kb_008:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: El patrón técnico y administrativo de links de verificación
 id: US-EVOL-KB-008
 urn: urn:goreos:atom:story:us_evol_kb_008:1.0.0
 role_id: USR-DEV-SYS
+as_a: Desarrollador Sistema
 i_want: Registrar el patrón técnico y administrativo de links de verificación
 so_that: Estandarizo la reducción de papel en resoluciones
 domain: D-EVOL

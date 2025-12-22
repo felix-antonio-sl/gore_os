@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:idi:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-IDI
+name: Iniciativa de Inversión
+domain: D-FIN
+category: Master
+attributes:
+  - {name: id_idi, type: UUID, key: true}
+  - {name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA}
+  - {name: division_responsable_id, type: UUID, fk: ENT-ORG-DIVISION}
+  - {name: codigo_bip, type: String}
+  - {name: nombre, type: String}
+  - {name: tipo, type: String}
+  - {name: etapa_sni, type: String}
+  - {name: monto_solicitado, type: Decimal}
+  - {name: estado, type: String}

@@ -1,0 +1,21 @@
+---
+# --- mod_evol_base_conocimiento.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_base_conocimiento:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-BASE-CONOCIMIENTO
+name: Base de Conocimiento Institucional
+domain: D-EVOL
+description: Repositorio KODA de conocimiento institucional.
+composition:
+  processes: []
+  entities:
+    [
+      urn:goreos:atom:entity:d_evol_linaje:1.0.0,
+      urn:goreos:atom:entity:d_evol_custodiodatos:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

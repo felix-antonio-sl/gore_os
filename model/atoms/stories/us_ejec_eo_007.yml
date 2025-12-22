@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ejec_eo_007:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Notificaciones de próximo vencimiento
 id: US-EJEC-EO-007
 urn: urn:goreos:atom:story:us_ejec_eo_007:1.0.0
 role_id: USR-DIDES-TERR-OP
+as_a: Encargado Operativo Territorial
 i_want: Recibir notificaciones de próximo vencimiento
 so_that: Actúo a tiempo
 domain: D-EJEC

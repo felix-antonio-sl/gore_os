@@ -2,23 +2,65 @@ _meta:
   urn: urn:goreos:atom:process:d_norm_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-norm
+  source: docs/processes/D01_actos_administrativos.md
 id: PROC-NORM-P1
 name: Flujo de Resoluciones Exentas
 domain: D-NORM
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-RES-EXENTAS-FLUJO-01
+  mermaid_ref: D01_actos_administrativos.md#p1-flujo-de-resoluciones-exentas
+  phases: 7
+  sla: "15 días hábiles"
+  mermaid: |
+    flowchart TD
+        subgraph FASE1["1️⃣ Iniciación"]
+            A["Área Requirente:<br/>Elaborar borrador"]
+            B["Adjuntar<br/>antecedentes"]
+            C["Ingresar al SGD"]
+        end
+
+        subgraph FASE2["2️⃣ Revisión Jurídica"]
+            D["Jurídica recibe<br/>expediente"]
+            E["Verificar legalidad<br/>y forma"]
+            F{"¿OK?"}
+            G["✅ V°B° Jurídico"]
+            H["❌ Observar"]
+        end
+
+        subgraph FASE3["3️⃣ Gestión"]
+            I["Centro Gestión:<br/>Asignar N° resolución"]
+            J["Completar<br/>formalidades"]
+        end
+
+        subgraph FASE4["4️⃣ Control"]
+            K["Unidad Control:<br/>Verificar procedencia"]
+            L{"¿Conforme?"}
+            M["✅ V°B° Control"]
+            N["❌ Reparar"]
+        end
+
+        subgraph FASE5["5️⃣ V°B° Administrador/a"]
+            O["Administrador/a Regional:<br/>Revisar y visar"]
+        end
+
+        subgraph FASE6["6️⃣ Firma"]
+            P["Gobernador/a:<br/>Firma con FEA"]
+        end
+
+        subgraph FASE7["7️⃣ Notificación y Archivo"]
+            Q["Oficina Partes:<br/>Numerar y fechar"]
+            R["Notificar a<br/>interesados"]
+            S["Publicar si<br/>corresponde"]
+            T["Archivar expediente"]
+        end
+
+        A --> B --> C --> D --> E --> F
+        F -->|"Sí"| G --> I --> J --> K --> L
+        F -->|"No"| H --> A
+        L -->|"Sí"| M --> O --> P --> Q --> R --> S --> T
+        L -->|"No"| N --> A
+
+        style P fill:#4CAF50,color:#fff
+        style T fill:#607D8B,color:#fff

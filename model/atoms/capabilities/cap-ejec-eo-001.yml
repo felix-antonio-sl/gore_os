@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_ejec_eo_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-EJEC-EO-001
+name: Gestión Encargado Operativo
+domain: D-EJEC
+type: CORE
+description: Herramientas para encargados operativos.
+stories:
+- us_ejec_eo_002
+- us_ejec_eo_003
+- us_ejec_eo_005
+- us_ejec_eo_006
+- us_ejec_eo_007
+ofrecida_por: null

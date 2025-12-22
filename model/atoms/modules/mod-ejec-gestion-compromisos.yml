@@ -1,0 +1,17 @@
+---
+# --- mod_ejec_gestion_compromisos.yml ---
+_meta:
+  urn: urn:goreos:atom:module:ejec_gestion_compromisos:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EJEC-GESTION-COMPROMISOS
+name: Gestión de Compromisos
+domain: D-EJEC
+description: Seguimiento de compromisos gubernamentales.
+composition:
+  processes: [urn:goreos:atom:process:d_ejec_p2:1.0.0]
+  entities: []
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:ejec_gestion_convenios:1.0.0]

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_evol_ai_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un reporte automático de sesgo en los modelos predictivos (FENIX/D-SEG)
 id: US-EVOL-AI-001
 urn: urn:goreos:atom:story:us_evol_ai_001:1.0.0
 role_id: USR-CTD-PRES
+as_a: Presidente Comité TD
 i_want: Recibir un reporte automático de sesgo en los modelos predictivos (FENIX/D-SEG)
 so_that: Evito discriminación automatizada y cumplo Ley de Protección de Datos
 domain: D-EVOL

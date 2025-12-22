@@ -1,0 +1,30 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:ipr:1.1.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-IPR
+name: Intervención Pública Regional
+domain: D-FIN
+category: Master
+description: "Objeto central del ciclo de inversión"
+attributes:
+  - {name: id_ipr, type: UUID, key: true}
+  - {name: codigo_bip, type: String}
+  - {name: nombre, type: String}
+  - {name: descripcion, type: Text}
+  - {name: tipo, type: String}
+  - {name: mecanismo_id, type: UUID, fk: ENT-FIN-MECANISMO}
+  - {name: monto_total, type: Decimal}
+  - {name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA}
+  - {name: estado_ciclo, type: String}
+  - {name: etapa_actual, type: String}
+  - {name: fecha_rs, type: Date}
+  - {name: vigencia, type: String, nullable: true}
+  - {name: tipologia, type: String, nullable: true}
+  - {name: origen, type: String, nullable: true}
+  - {name: fuente, type: String, nullable: true}
+  - {name: sub_estado, type: String, nullable: true}
+  - {name: rate_actual, type: String, nullable: true}
+  - {name: fecha_rate, type: Date, nullable: true}
+  - {name: n_rates_emitidos, type: Integer, nullable: true}

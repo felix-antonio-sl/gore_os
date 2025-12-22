@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:audiencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-AUDIENCIA
+name: Audiencia
+domain: D-CONV
+category: Transaction
+attributes:
+  - {name: id_audiencia, type: UUID, key: true}
+  - {name: tipo, type: String}
+  - {name: solicitante_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: autoridad_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: fecha, type: DateTime}
+  - {name: materia, type: Text}
+  - {name: registro_ley_lobby, type: Boolean}

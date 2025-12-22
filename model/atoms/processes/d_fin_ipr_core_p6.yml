@@ -2,23 +2,28 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ipr_core_p6:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-fin-ipr_core
+  source: docs/processes/D03_gestion_ipr.md
 id: PROC-FIN-IPR_CORE-P6
 name: Modificaciones en Ejecución
 domain: D-FIN-IPR_CORE
 code: P6
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-BIENESTAR-01`'
-  mermaid_ref: D07_rrhh.md#p6-bienestar-y-calidad-de-vida
-  mermaid: "flowchart TD\n    subgraph AFILIACION[\"\U0001F4CB Afiliación\"]\n   \
-    \     A[\"Funcionario ingresa\"]\n        B[\"Invitar a<br/>Servicio de Bienestar\"\
-    ]\n        C[\"Aceptar y afiliar\"]\n        D[\"Descuento mensual<br/>por planilla\"\
-    ]\n    end\n\n    subgraph PRESTACIONES[\"\U0001F381 Prestaciones\"]\n       \
-    \ E[\"Solicitar beneficio:<br/>• Médico<br/>• Económico<br/>• Préstamo<br/>• Convenio\"\
-    ]\n        F[\"Unidad Bienestar<br/>evalúa\"]\n        G[\"Consejo Administrativo<br/>aprueba\
-    \ si requiere\"]\n        H[\"Otorgar beneficio\"]\n    end\n\n    subgraph ACTIVIDADES[\"\
-    \U0001F389 Actividades\"]\n        I[\"Planificar eventos:<br/>• Deportivos<br/>•\
-    \ Recreativos<br/>• Culturales\"]\n        J[\"Ejecutar actividad\"]\n       \
-    \ K[\"Evaluar satisfacción\"]\n    end\n\n    A --> B --> C --> D\n    E --> F\
-    \ --> G --> H\n    I --> J --> K\n\n    style H fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-IPR-FASE6-01
+  mermaid_ref: D03_gestion_ipr.md#p6-modificaciones-en-ejecución
+  subprocesos: ["Solicitud", "Evaluación", "Tramitación"]
+  mermaid: |
+    flowchart TD
+        A["Detectar necesidad<br/>de modificación"] --> B["UT prepara<br/>informe técnico"]
+        B --> C["Oficio formal<br/>al GORE"]
+        C --> D["Supervisor GORE<br/>analiza"]
+        D --> E{"¿Altera<br/>objetivo?"}
+        E -->|"Sí"| F["❌ Rechazar"]
+        E -->|"No"| G["Verificar<br/>umbrales"]
+        G --> H{"¿Requiere<br/>CORE/SNI?"}
+        H -->|"Sí"| I["Tramitar como<br/>nueva aprobación"]
+        H -->|"No"| J["Aprobar<br/>internamente"]
+        I & J --> K["Convenio<br/>modificatorio"]
+
+        style F fill:#f44336,color:#fff
+        style K fill:#4CAF50,color:#fff

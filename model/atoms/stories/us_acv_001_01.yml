@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_acv_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un workflow de onboarding con checklist de documentos
 id: US-ACV-001-01
 urn: urn:goreos:atom:story:us_acv_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-CIC
+as_a: Analista Ciclo de Vida
 i_want: un workflow de onboarding con checklist de documentos
 so_that: el ingreso de funcionarios sea completo
 domain: D-BACK

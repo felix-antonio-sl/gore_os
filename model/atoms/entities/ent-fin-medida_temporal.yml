@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:medida_temporal:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-MEDIDA_TEMPORAL
+name: Medida Temporal
+domain: D-FIN
+category: Fact
+description: "Integral de Grothendieck: medida financiera indexada por período. Captura series temporales (ejecución mensual, saldos anuales, arrastres)."
+attributes:
+  - {name: id_medida, type: UUID, key: true}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
+  - {name: entidad_tipo, type: String}
+  - {name: entidad_id, type: UUID}
+  - {name: asignacion_id, type: UUID, fk: ENT-FIN-ASIGNACION, nullable: true}
+  - {name: tipo_medida, type: String}
+  - {name: monto, type: Decimal}
+  - {name: unidad, type: String, nullable: true}

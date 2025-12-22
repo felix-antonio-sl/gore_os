@@ -1,0 +1,29 @@
+---
+# ============================================================================
+# PARTE 1: DOMINIOS D-BACK, D-EJEC, D-EVOL
+# ============================================================================
+
+# --- mod_back_abastecimiento_compras.yml ---
+_meta:
+  urn: urn:goreos:atom:module:back_abastecimiento_compras:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-BACK-ABASTECIMIENTO-COMPRAS
+name: Abastecimiento y Compras
+domain: D-BACK
+description: "Gestión del ciclo de adquisiciones: PAC, licitaciones, OC, recepción."
+composition:
+  processes:
+    [
+      urn:goreos:atom:process:d_back_p1:1.0.0,
+      urn:goreos:atom:process:d_back_p2:1.0.0,
+    ]
+  entities:
+    [
+      urn:goreos:atom:entity:d_back_pac_compras:1.0.0,
+      urn:goreos:atom:entity:d_back_compra_gil:1.0.0,
+    ]
+morphisms:
+  implements_capability: [urn:goreos:atom:capability:cap_compras_001:1.0.0]
+  depends_on: []

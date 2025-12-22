@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_bak_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Restaurar un backup a un punto específico en el tiempo
 id: US-OPS-BAK-002
 urn: urn:goreos:atom:story:us_ops_bak_002:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: restaurar un backup a un punto específico en el tiempo
 so_that: se pueda recuperar la información ante una pérdida de datos accidental o
   maliciosa

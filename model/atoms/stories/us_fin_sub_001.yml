@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_sub_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Verificar que evaluadores no tengan relación con postulantes (declaración
 id: US-FIN-SUB-001
 urn: urn:goreos:atom:story:us_fin_sub_001:1.0.0
 role_id: USR-DIDES-ANAL8
+as_a: Analista 8% (Técnico)
 i_want: Verificar que evaluadores no tengan relación con postulantes (declaración
   de inhabilidad)
 so_that: Evito conflictos de interés

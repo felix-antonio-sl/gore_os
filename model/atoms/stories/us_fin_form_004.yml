@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_form_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Verificar clasificador presupuestario vigente
 id: US-FIN-FORM-004
 urn: urn:goreos:atom:story:us_fin_form_004:1.0.0
 role_id: USR-DAF-PROF
+as_a: Profesional DAF
 i_want: Verificar clasificador presupuestario vigente
 so_that: Uso códigos correctos
 domain: D-FIN

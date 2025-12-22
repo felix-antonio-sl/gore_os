@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_jest_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un repositorio de estudios con buscador temático
 id: US-JEST-001-01
 urn: urn:goreos:atom:story:us_jest_001_01:1.0.0
 role_id: USR-DIPL-PLAN-ANAL
+as_a: Analista Planificación Territorial
 i_want: un repositorio de estudios con buscador temático
 so_that: pueda reutilizar conocimiento
 domain: D-TERR

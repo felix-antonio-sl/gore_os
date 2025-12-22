@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_015:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reintegrar saldos no ejecutados
 id: US-FIN-IPR-015
 urn: urn:goreos:atom:story:us_fin_ipr_015:1.0.0
 role_id: USR-EXT-EJEC
+as_a: Ejecutor / Entidad Ejecutora
 i_want: Reintegrar saldos no ejecutados
 so_that: Cumplo con devolución de recursos
 domain: D-FIN

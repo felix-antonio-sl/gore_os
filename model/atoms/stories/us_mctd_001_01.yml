@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_mctd_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Las minutas y acuerdos del CTD
 id: US-MCTD-001-01
 urn: urn:goreos:atom:story:us_mctd_001_01:1.0.0
 role_id: USR-CTD-MEMB
+as_a: Miembro Comité TD
 i_want: acceder a las minutas y acuerdos del CTD
 so_that: pueda dar seguimiento en mi división
 domain: D-TDE

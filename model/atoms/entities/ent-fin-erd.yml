@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:erd:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-ERD
+name: Estrategia Regional de Desarrollo
+domain: D-FIN
+category: Master
+attributes:
+  - {name: id_erd, type: UUID, key: true}
+  - {name: region_id, type: UUID, fk: ENT-LOC-REGION}
+  - {name: periodo_inicio, type: Integer}
+  - {name: periodo_termino, type: Integer}
+  - {name: vision, type: Text}
+  - {name: estado, type: String}

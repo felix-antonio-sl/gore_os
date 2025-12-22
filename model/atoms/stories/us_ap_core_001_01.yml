@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ap_core_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Antecedentes de materias a tratar
 id: US-AP-CORE-001-01
 urn: urn:goreos:atom:story:us_ap_core_001_01:1.0.0
 role_id: USR-CORE-APOYO
+as_a: Profesional Apoyo CORE
 i_want: acceder a antecedentes de materias a tratar
 so_that: pueda preparar minutas y resúmenes
 domain: D-NORM

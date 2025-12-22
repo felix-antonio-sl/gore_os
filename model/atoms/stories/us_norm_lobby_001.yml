@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_lobby_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Verificar registros de audiencias y donativos
 id: US-NORM-LOBBY-001
 urn: urn:goreos:atom:story:us_norm_lobby_001:1.0.0
 role_id: USR-NORM-TRANSP
+as_a: Encargado Transparencia Activa/Pasiva
 i_want: Verificar registros de audiencias y donativos
 so_that: Cumplo con Ley de Lobby
 domain: D-NORM

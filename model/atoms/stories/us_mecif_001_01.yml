@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_mecif_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso al registro de dirigentes sociales
 id: US-MECIF-001-01
 urn: urn:goreos:atom:story:us_mecif_001_01:1.0.0
 role_id: USR-ECIF-MEMB
+as_a: Miembro ECIF
 i_want: acceso al registro de dirigentes sociales
 so_that: se validen los interlocutores en el territorio
 domain: D-TERR

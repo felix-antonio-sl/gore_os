@@ -1,0 +1,17 @@
+---
+# --- mod_norm_cumplimiento_control.yml ---
+_meta:
+  urn: urn:goreos:atom:module:norm_cumplimiento_control:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-NORM-CUMPLIMIENTO-CONTROL
+name: Cumplimiento y Control Interno
+domain: D-NORM
+description: Matrices de riesgo, controles y mitigación.
+composition:
+  processes: [urn:goreos:atom:process:d_norm_p4:1.0.0]
+  entities: []
+morphisms:
+  implements_capability: []
+  depends_on: []

@@ -2,23 +2,29 @@ _meta:
   urn: urn:goreos:atom:process:d_tde_p6:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-tde
+  source: archive/legacy_domains/domain_d-tde.md
 id: PROC-TDE-P6
 name: Gestión del Cambio TDE
 domain: D-TDE
 code: P6
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-BIENESTAR-01`'
-  mermaid_ref: D07_rrhh.md#p6-bienestar-y-calidad-de-vida
-  mermaid: "flowchart TD\n    subgraph AFILIACION[\"\U0001F4CB Afiliación\"]\n   \
-    \     A[\"Funcionario ingresa\"]\n        B[\"Invitar a<br/>Servicio de Bienestar\"\
-    ]\n        C[\"Aceptar y afiliar\"]\n        D[\"Descuento mensual<br/>por planilla\"\
-    ]\n    end\n\n    subgraph PRESTACIONES[\"\U0001F381 Prestaciones\"]\n       \
-    \ E[\"Solicitar beneficio:<br/>• Médico<br/>• Económico<br/>• Préstamo<br/>• Convenio\"\
-    ]\n        F[\"Unidad Bienestar<br/>evalúa\"]\n        G[\"Consejo Administrativo<br/>aprueba\
-    \ si requiere\"]\n        H[\"Otorgar beneficio\"]\n    end\n\n    subgraph ACTIVIDADES[\"\
-    \U0001F389 Actividades\"]\n        I[\"Planificar eventos:<br/>• Deportivos<br/>•\
-    \ Recreativos<br/>• Culturales\"]\n        J[\"Ejecutar actividad\"]\n       \
-    \ K[\"Evaluar satisfacción\"]\n    end\n\n    A --> B --> C --> D\n    E --> F\
-    \ --> G --> H\n    I --> J --> K\n\n    style H fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-TDE-CAMBIO-01
+  mermaid_ref: domain_d-tde.md#p6-gestión-del-cambio-tde
+  frecuencia: "Anual (Plan) / Continua (Ejecución)"
+  mermaid: |
+    flowchart TB
+        subgraph P6["P6: Gestión del Cambio TDE"]
+            P6_1["6.1 Diagnóstico<br/>Cultura Digital"]
+            P6_2["6.2 Plan de<br/>Capacitación"]
+            P6_3["6.3 Ejecución<br/>Programa"]
+            P6_4["6.4 Evaluación<br/>Impacto"]
+        end
+
+        P6_1 --> P6_2 --> P6_3 --> P6_4
+        P6_4 -.-> P6_1
+
+        P6_1 -.- N1["Encuesta madurez<br/>Resistencias identificadas"]
+        P6_2 -.- N2["Cronograma talleres<br/>Contenidos priorizados"]
+        P6_3 -.- N3["Capacitaciones DS 7-12<br/>Herramientas digitales"]
+        P6_4 -.- N4["Evaluación pre/post<br/>Adopción medida"]

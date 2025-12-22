@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:auditor_bot:1.0.0
+  urn: "urn:goreos:atom:role:auditor_bot:2.0.0"
   type: Role
-  source: organization
-id: BOT-AUDIT
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-NORM-AUDIT"
 role_key: auditor_bot
 title: Fiscalizador Bot
 description: Agente de auditoría contínua y detección de anomalías (Madurez 5).
 type: Bot
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: GORE_OS AI
 unit_type: Fuerza de Trabajo Digital
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:auditor_bot:1.0.0
 domain: D-NORM
+archetype: null
+extends: null

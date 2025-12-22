@@ -1,0 +1,34 @@
+_meta:
+  urn: urn:goreos:atom:process:d_fin_rend_p2:1.0.0
+  type: Process
+  schema: urn:goreos:schema:process:1.0.0
+  source: docs/processes/D08_rendiciones.md
+id: PROC-FIN-REND-P2
+name: Rendición vía SISREC
+domain: D-FIN
+code: P2
+process_type: BPMN
+spec:
+  bpmn_id: BPMN-GN-REND-SISREC-01
+  mermaid_ref: docs/processes/D08_rendiciones.md#p2-rendición-vía-sisrec
+  mermaid: |
+    flowchart LR
+        subgraph GORE["🏛️ GORE (Otorgante)"]
+            G1["Crear programa"]
+            G2["Registrar transferencia"]
+            G3["Revisar rendición"]
+            G4["Aprobar/Observar"]
+            G5["Contabilizar"]
+        end
+
+        subgraph EE["🏢 Entidad Ejecutora"]
+            E1["Aceptar transferencia"]
+            E2["Crear informe"]
+            E3["Ingresar transacciones"]
+            E4["Ministro Fe certifica"]
+            E5["Firmar y enviar"]
+        end
+
+        G1 --> G2 --> E1 --> E2 --> E3 --> E4 --> E5 --> G3 --> G4 --> G5
+
+        style G5 fill:#4CAF50,color:#fff

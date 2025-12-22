@@ -2,24 +2,31 @@ _meta:
   urn: urn:goreos:atom:process:d_terr_p5:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-terr
+  source: archive/legacy_domains/domain_d-terr.md
 id: PROC-TERR-P5
 name: Visualización y Análisis PROPIR
 domain: D-TERR
 code: P5
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
-  mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
-  mermaid: "flowchart TD\n    subgraph DNC[\"\U0001F4CA Detección de Necesidades\"\
-    ]\n        A[\"Aplicar encuesta DNC\"]\n        B[\"Análisis de brechas\"]\n \
-    \       C[\"Priorizar necesidades\"]\n    end\n\n    subgraph PAC_CAP[\"\U0001F4CB\
-    \ Plan de Capacitación\"]\n        D[\"Elaborar PAC anual\"]\n        E[\"Comité\
-    \ Bipartito<br/>aprueba\"]\n        F[\"Asignar presupuesto\"]\n    end\n\n  \
-    \  subgraph EJECUCION[\"\U0001F393 Ejecución\"]\n        G[\"Convocar a<br/>funcionarios\"\
-    ]\n        H[\"Ejecutar<br/>capacitaciones\"]\n        I[\"Evaluar aprendizaje\"\
-    ]\n        J[\"Certificar\"]\n    end\n\n    subgraph SEGUIMIENTO[\"\U0001F4C8\
-    \ Seguimiento\"]\n        K[\"Medir transferencia<br/>al puesto\"]\n        L[\"\
-    Evaluar impacto\"]\n        M[\"Retroalimentar<br/>próximo ciclo\"]\n    end\n\
-    \n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L -->\
-    \ M\n\n    style J fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-GEO-PROPIR-01
+  mermaid_ref: domain_d-terr.md#p5-visualización-y-análisis-propir
+  mermaid: |
+    flowchart LR
+        subgraph FUENTES["📊 Fuentes de Datos"]
+            A["D-FIN: IPR<br/>(geolocalización)"]
+            B["D-PLAN: Ciclo ARI<br/>(priorización)"]
+        end
+
+        subgraph PROCESAMIENTO["⚙️ Procesamiento"]
+            C["Extracción<br/>ETL PostGIS"]
+            D["Clasificación<br/>por estado/sector"]
+        end
+
+        subgraph VISUALIZACION["🗺️ Visualización"]
+            E["Mapa de calor<br/>(inversión $)"]
+            F["Clusters<br/>(por fase)"]
+            G["Capas temáticas<br/>(sector)"]
+        end
+
+        A & B --> C --> D --> E & F & G

@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:folio:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-FOLIO
+name: Folio
+domain: D-DIG
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_folio, type: UUID, key: true}
+  - {name: expediente_id, type: UUID, fk: ENT-DIG-EXPEDIENTE}
+  - {name: numero, type: Integer}
+  - {name: tipo_documento, type: String}
+  - {name: fecha_incorporacion, type: DateTime}
+  - {name: hash, type: String}

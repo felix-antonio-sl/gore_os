@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_evol_gov_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Cambios críticos (Gobierno)
 id: US-EVOL-GOV-001
 urn: urn:goreos:atom:story:us_evol_gov_001:1.0.0
 role_id: USR-CTD-PRES
+as_a: Presidente Comité TD
 i_want: Aprobar cambios críticos (Gobierno)
 so_that: Controlo cambios mayores
 domain: D-EVOL

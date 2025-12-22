@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_com_sec_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Coordinar difusión conjunta con municipios
 id: US-COM-SEC-001
 urn: urn:goreos:atom:story:us_com_sec_001:1.0.0
 role_id: USR-COM-ENC
+as_a: Encargado Comunicaciones
 i_want: Coordinar difusión conjunta con municipios
 so_that: Potencio alcance local
 domain: D-COM

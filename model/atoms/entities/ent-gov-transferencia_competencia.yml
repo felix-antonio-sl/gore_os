@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:imperium:transferencia_competencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-GOV-TRANSFERENCIA_COMPETENCIA
+name: Transferencia de Competencia
+domain: D-GOV
+category: Master
+attributes:
+  - {name: id_transferencia, type: UUID, key: true}
+  - {name: division_receptora_id, type: UUID, fk: ENT-ORG-DIVISION}
+  - {name: nombre, type: String}
+  - {name: ministerio_origen, type: String}
+  - {name: decreto_transferencia, type: String}
+  - {name: fecha_transferencia, type: Date}
+  - {name: recursos_asociados, type: Decimal}
+  - {name: estado, type: String}

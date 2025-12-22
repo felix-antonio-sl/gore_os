@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Deuda técnica (inventario)
 id: US-EVOL-DT-001
 urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
 role_id: USR-DEV-LEAD
+as_a: Líder Técnico
 i_want: Gestionar deuda técnica (inventario)
 so_that: Controlo pasivos técnicos
 domain: D-EVOL

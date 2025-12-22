@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_jcont_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un checklist de cierre mensual automatizado
 id: US-JCONT-001-01
 urn: urn:goreos:atom:story:us_jcont_001_01:1.0.0
 role_id: USR-NEW-JEFE-DEPTO-C
+as_a: Jefe Depto. Contabilidad
 i_want: un checklist de cierre mensual automatizado
 so_that: pueda verificar completitud del proceso
 domain: D-FIN

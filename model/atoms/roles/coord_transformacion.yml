@@ -1,19 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:coord_transformacion:1.0.0
+  urn: "urn:goreos:atom:role:coord_transformacion:2.0.0"
   type: Role
-  source: organization
-id: USR-TDE-CTD
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-CTD"
 role_key: coord_transformacion
 title: Coordinador Transformación Digital
 description: Líder de la implementación de Ley de Transformación Digital (Res. Ex.
-  2034).
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: D-TDE
 unit_type: Capacidades Transversales
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:coord_transformacion:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

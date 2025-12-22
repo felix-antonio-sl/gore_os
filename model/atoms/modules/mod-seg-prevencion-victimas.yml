@@ -1,0 +1,17 @@
+---
+# --- mod_seg_prevencion_victimas.yml ---
+_meta:
+  urn: urn:goreos:atom:module:seg_prevencion_victimas:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-SEG-PREVENCION-VICTIMAS
+name: Prevención y Apoyo a Víctimas
+domain: D-SEG
+description: Programas de prevención y atención a víctimas.
+composition:
+  processes: [urn:goreos:atom:process:d_seg_p4:1.0.0]
+  entities: [urn:goreos:atom:entity:d_seg_proyecto_seguridad:1.0.0]
+morphisms:
+  implements_capability: []
+  depends_on: []

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_abog_rev_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un workflow de revisión de resoluciones con control de versiones
 id: US-ABOG-REV-001-01
 urn: urn:goreos:atom:story:us_abog_rev_001_01:1.0.0
 role_id: USR-JUR-REV
+as_a: Abogado Revisor
 i_want: un workflow de revisión de resoluciones con control de versiones
 so_that: pueda asegurar la integridad del acto administrativo
 domain: D-NORM

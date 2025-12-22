@@ -1,0 +1,17 @@
+---
+# --- mod_evol_trayectoria_sistema.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_trayectoria_sistema:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-TRAYECTORIA-SISTEMA
+name: Trayectoria del Sistema
+domain: D-EVOL
+description: Registro histórico de evolución y ADRs.
+composition:
+  processes: []
+  entities: []
+morphisms:
+  implements_capability: []
+  depends_on: []

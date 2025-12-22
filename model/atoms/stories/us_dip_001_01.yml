@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dip_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: El estado de proyectos comunales específicos
 id: US-DIP-001-01
 urn: urn:goreos:atom:story:us_dip_001_01:1.0.0
 role_id: USR-CORE-CONS
+as_a: Consejero Regional (Pleno)
 i_want: consultar el estado de proyectos comunales específicos
 so_that: pueda responder a mis electores
 domain: D-GOB

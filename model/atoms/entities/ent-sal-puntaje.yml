@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:puntaje:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-PUNTAJE
+name: Puntaje
+domain: D-SAL
+category: Transaction
+attributes:
+  - {name: id_puntaje, type: UUID, key: true}
+  - {name: hgore_id, type: UUID, fk: ENT-SAL-H_GORE}
+  - {name: dimension_id, type: UUID, fk: ENT-SAL-DIMENSION}
+  - {name: valor, type: Decimal}
+  - {name: fecha_calculo, type: Date}

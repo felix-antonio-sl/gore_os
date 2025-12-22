@@ -2,23 +2,24 @@ _meta:
   urn: urn:goreos:atom:process:d_dev_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: plan_especificacion_ddev_dops.md
+  source: archive/legacy_domains/domain_d-dev.md
 id: PROC-DEV-P1
 name: Ciclo de Vida de Feature
 domain: D-DEV
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-DEV-FEATURE-01
+  mermaid_ref: domain_d-dev.md#71-p1-desarrollo-de-feature
+  trigger: "Item en ToDo"
+  output: "Feature en Prod"
+  mermaid: |
+    flowchart TD
+        A["Tomar item\nde sprint"] --> B["Crear branch\nde feature"]
+        B --> C["Implementar\ncódigo"]
+        C --> D["Escribir\ntests"]
+        D --> E["Validar\nlocalmente"]
+        E --> F{"¿Funciona?"}
+        F -->|"No"| C
+        F -->|"Sí"| G["Abrir\nPull Request"]
+        G --> H["Solicitar\nreview"]

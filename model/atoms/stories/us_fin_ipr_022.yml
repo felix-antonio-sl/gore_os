@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_022:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Diseño con Marco Lógico detallado
 id: US-FIN-IPR-022
 urn: urn:goreos:atom:story:us_fin_ipr_022:1.0.0
 role_id: USR-DIPL-DAE-PRE
+as_a: Analista Preinversión (DAE)
 i_want: Evaluar Diseño con Marco Lógico detallado
 so_that: Verifico calidad del diseño programático
 domain: D-FIN

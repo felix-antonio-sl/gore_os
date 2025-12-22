@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_auto_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
 id: US-BACK-AUTO-001
 urn: urn:goreos:atom:story:us_back_auto_001:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Calcular propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
 so_that: Reduzco errores y tiempos de término
 domain: D-BACK

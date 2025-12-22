@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_gestion_okr_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-GESTION-OKR-001
+name: OKRs Institucionales
+domain: D-GESTION
+type: CORE
+description: Gestión de objetivos y resultados clave.
+stories:
+- us_gestion_okr_001
+- us_gestion_okr_002
+- us_gestion_okr_003
+- us_gestion_okr_004
+- us_okr_001_01
+ofrecida_por: null

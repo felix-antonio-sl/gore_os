@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ejec_sup_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Revisar informes UT (aprobar/observar)
 id: US-EJEC-SUP-003
 urn: urn:goreos:atom:story:us_ejec_sup_003:1.0.0
 role_id: USR-CIES-SUP
+as_a: Supervisor CIES
 i_want: Revisar informes UT (aprobar/observar)
 so_that: Valido reportes de ejecutor
 domain: D-EJEC

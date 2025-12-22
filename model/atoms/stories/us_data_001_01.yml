@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_data_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Herramientas de limpieza y deduplicación de registros
 id: US-DATA-001-01
 urn: urn:goreos:atom:story:us_data_001_01:1.0.0
 role_id: USR-EXT-APD
+as_a: Agencia de Protección de Datos
 i_want: herramientas de limpieza y deduplicación de registros
 so_that: se mantenga una 'Golden Record' de ciudadanos y entidades
 domain: D-DEV

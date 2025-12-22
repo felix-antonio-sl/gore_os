@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:contrato_honorario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-CONTRATO_HONORARIO
+name: Contrato a Honorarios
+domain: D-ORG
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_contrato, type: UUID, key: true}
+  - {name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: numero_contrato, type: String}
+  - {name: objeto, type: Text}
+  - {name: monto_bruto, type: Decimal}
+  - {name: fecha_inicio, type: Date}
+  - {name: fecha_termino, type: Date}
+  - {name: estado, type: String}

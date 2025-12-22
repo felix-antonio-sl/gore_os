@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_dev_devops_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-DEV-DEVOPS-001
+name: DevOps y CI/CD
+domain: D-DEV
+type: CORE
+description: Pipelines de integración y despliegue.
+stories:
+- us_dev_devops_001
+- us_dev_devops_002
+- us_dev_devops_003
+ofrecida_por: null

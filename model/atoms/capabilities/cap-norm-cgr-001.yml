@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_norm_cgr_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-NORM-CGR-001
+name: Relación con Contraloría
+domain: D-NORM
+type: CORE
+description: Toma de razón, oficios y observaciones CGR.
+stories:
+- us_norm_cgr_001
+- us_norm_cgr_003
+- us_cgr_001_01
+ofrecida_por: null

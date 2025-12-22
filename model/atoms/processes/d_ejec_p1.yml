@@ -2,23 +2,26 @@ _meta:
   urn: urn:goreos:atom:process:d_ejec_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-ejec
+  source: archive/legacy_domains/domain_d-ejec.md
 id: PROC-EJEC-P1
 name: Elaboración y Firma de Convenio
 domain: D-EJEC
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-EJEC-CONVENIO-01
+  mermaid_ref: domain_d-ejec.md#p1-elaboración-y-firma-de-convenio
+  mermaid: |
+    flowchart TD
+        A["IPR aprobada<br/>(D-FIN)"] --> B["Elaborar borrador<br/>convenio"]
+        B --> C["Revisión técnica<br/>DIPIR"]
+        C --> D["Revisión jurídica<br/>UJ"]
+        D --> E{"¿Observaciones?"}
+        E -->|"Sí"| F["Corregir borrador"]
+        F --> D
+        E -->|"No"| G["V°B° jurídico"]
+        G --> H["Generar decreto<br/>aprobatorio"]
+        H --> I["Firma Gobernador"]
+        I --> J["Firma Ejecutor"]
+        J --> K["Convenio VIGENTE"]
+        K --> L["Notificar a<br/>D-FIN para Compromiso"]

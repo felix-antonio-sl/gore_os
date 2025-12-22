@@ -1,0 +1,26 @@
+---
+# ============================================================================
+# PARTE 2: DOMINIOS D-EVOL, D-FIN
+# ============================================================================
+
+# --- mod_evol_agentes_ia.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_agentes_ia:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-AGENTES-IA
+name: Agentes IA Especializados
+domain: D-EVOL
+description: Catálogo y gobernanza de agentes IA institucionales.
+composition:
+  processes: [urn:goreos:atom:process:d_evol_p1:1.0.0]
+  entities:
+    [
+      urn:goreos:atom:entity:d_evol_agente_ia:1.0.0,
+      urn:goreos:atom:entity:d_evol_catalogo:1.0.0,
+      urn:goreos:atom:entity:d_evol_sesgo:1.0.0,
+    ]
+morphisms:
+  implements_capability: [urn:goreos:atom:capability:cap_evol_001:1.0.0]
+  depends_on: [urn:goreos:atom:module:evol_base_conocimiento:1.0.0]

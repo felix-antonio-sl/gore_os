@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_notif_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Notificaciones vía API /notificador/sendMessage vía Nodo PISEE
 id: US-TDE-NOTIF-003
 urn: urn:goreos:atom:story:us_tde_notif_003:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Enviar notificaciones vía API /notificador/sendMessage vía Nodo PISEE
 so_that: Uso infraestructura estatal
 domain: D-TDE

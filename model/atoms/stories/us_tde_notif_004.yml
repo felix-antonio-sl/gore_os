@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_notif_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Estado de notificación vía API o webhook
 id: US-TDE-NOTIF-004
 urn: urn:goreos:atom:story:us_tde_notif_004:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Consultar estado de notificación vía API o webhook
 so_that: Verifico entrega
 domain: D-TDE

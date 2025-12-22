@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:analista_servicios_generales:1.0.0
+  urn: "urn:goreos:atom:role:analista_servicios_generales:2.0.0"
   type: Role
-  source: organization
-id: USR-NEW-ANALISTA-SER
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-ANALISTA-SER"
 role_key: analista_servicios_generales
 title: Analista Servicios Generales
-description: ''
+description: 
 type: INTERNAL
+logic_scope: OPERATIONAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: DAF
 unit_type: Ejecutivo & Operaciones
-archetype: analista_base
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:analista_servicios_generales:1.0.0
 domain: D-GESTION
+archetype: analista_base
+extends: null

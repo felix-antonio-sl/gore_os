@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:nodo_interop:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-NODO_INTEROP
+name: Nodo de Interoperabilidad
+domain: D-DIG
+category: Master
+attributes:
+  - {name: id_nodo, type: UUID, key: true}
+  - {name: division_propietaria_id, type: UUID, fk: ENT-ORG-DIVISION}
+  - {name: nombre, type: String}
+  - {name: institucion, type: String}
+  - {name: url_endpoint, type: String}
+  - {name: protocolo, type: String}
+  - {name: estado, type: String}

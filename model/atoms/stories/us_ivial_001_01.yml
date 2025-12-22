@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ivial_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Integración con normas de diseño vial MOP
 id: US-IVIAL-001-01
 urn: urn:goreos:atom:story:us_ivial_001_01:1.0.0
 role_id: USR-EXT-VIALIDAD
+as_a: Director Regional Vialidad
 i_want: integración con normas de diseño vial MOP
 so_that: los proyectos cumplan estándares sectoriales
 domain: D-TERR

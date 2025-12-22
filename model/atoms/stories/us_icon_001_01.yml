@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_icon_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Herramientas para curar y versionar prompts y contextos
 id: US-ICON-001-01
 urn: urn:goreos:atom:story:us_icon_001_01:1.0.0
 role_id: USR-DEV-KB
+as_a: Ingeniero de Conocimiento
 i_want: herramientas para curar y versionar prompts y contextos
 so_that: los agentes respondan con precisión
 domain: D-DEV

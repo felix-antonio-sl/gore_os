@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Firmas Convenio (Gore - Ejecutor)
 id: US-FIN-PPTO-004
 urn: urn:goreos:atom:story:us_fin_ppto_004:1.0.0
 role_id: USR-NEW-ANALISTA-PRE
+as_a: Analista Presupuesto
 i_want: Gestionar firmas Convenio (Gore - Ejecutor)
 so_that: Obtengo firmas de ambas partes
 domain: D-FIN

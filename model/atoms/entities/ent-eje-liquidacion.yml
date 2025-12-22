@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:liquidacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-LIQUIDACION
+name: Liquidación de Convenio
+domain: D-EJE
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_liquidacion, type: UUID, key: true}
+  - {name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO}
+  - {name: monto_transferido, type: Decimal}
+  - {name: monto_rendido, type: Decimal}
+  - {name: saldo, type: Decimal}
+  - {name: fecha, type: Date}
+  - {name: estado, type: String}

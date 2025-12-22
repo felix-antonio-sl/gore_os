@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_int_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertas críticas de seguridad pública (D-SEG)
 id: US-FNX-INT-002
 urn: urn:goreos:atom:story:us_fnx_int_002:1.0.0
 role_id: BOT-KODA
+as_a: Agente KODA
 i_want: Recibir alertas críticas de seguridad pública (D-SEG)
 so_that: Activo protocolos de crisis nivel I
 domain: D-FENIX

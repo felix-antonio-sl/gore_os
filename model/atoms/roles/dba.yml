@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:dba:1.0.0
+  urn: "urn:goreos:atom:role:dba:2.0.0"
   type: Role
-  source: organization
-id: USR-OPS-DBA
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-DBA"
 role_key: dba
 title: DBA
 description: Administración de bases de datos, respaldos, performance y migraciones.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: D-OPS
 unit_type: Fuerza de Trabajo Digital
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:dba:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_at_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso a la IDE regional con capas actualizadas
 id: US-AT-001-01
 urn: urn:goreos:atom:story:us_at_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-TER
+as_a: Analista Territorial
 i_want: acceso a la IDE regional con capas actualizadas
 so_that: pueda realizar análisis espaciales
 domain: D-TERR

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_sub_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Nómina de adjudicación para CORE
 id: US-FIN-SUB-004
 urn: urn:goreos:atom:story:us_fin_sub_004:1.0.0
 role_id: USR-DIDES-ANAL8
+as_a: Analista 8% (Técnico)
 i_want: Generar nómina de adjudicación para CORE
 so_that: Preparo aprobación colegiada
 domain: D-FIN

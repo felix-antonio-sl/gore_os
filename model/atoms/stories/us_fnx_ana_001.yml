@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_ana_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Analizar patrones de intervenciones pasadas
 id: US-FNX-ANA-001
 urn: urn:goreos:atom:story:us_fnx_ana_001:1.0.0
 role_id: USR-CAL-ANAL
+as_a: Analista Gestión Institucional
 i_want: Analizar patrones de intervenciones pasadas
 so_that: Identifico debilidades estructurales sistémicas
 domain: D-FENIX

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_bak_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Automáticamente la integridad de los backups mediante checksums
 id: US-OPS-BAK-003
 urn: urn:goreos:atom:story:us_ops_bak_003:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: validar automáticamente la integridad de los backups mediante checksums
 so_that: se tenga la certeza de que los respaldos son utilizables en caso de emergencia
 domain: D-OPS

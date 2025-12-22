@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:asesor_tde:1.0.0
+  urn: "urn:goreos:atom:role:asesor_tde:2.0.0"
   type: Role
-  source: organization
-id: BOT-DIGITRANS
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-DIGITRANS"
 role_key: asesor_tde
 title: Digitrans (Asesor TDE)
 description: Agente IA asesor de cumplimiento normativo TDE (Madurez 4).
 type: Bot
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: GORE_OS AI
 unit_type: Fuerza de Trabajo Digital
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:asesor_tde:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

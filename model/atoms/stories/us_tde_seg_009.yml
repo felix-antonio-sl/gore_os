@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_seg_009:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Simulaciones de phishing para concientización
 id: US-TDE-SEG-009
 urn: urn:goreos:atom:story:us_tde_seg_009:1.0.0
 role_id: USR-TDE-CISO
+as_a: CISO
 i_want: Ejecutar simulaciones de phishing para concientización
 so_that: Educo a funcionarios
 domain: D-TDE

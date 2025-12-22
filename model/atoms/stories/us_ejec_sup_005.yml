@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ejec_sup_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertar desviaciones >10% (recomendación)
 id: US-EJEC-SUP-005
 urn: urn:goreos:atom:story:us_ejec_sup_005:1.0.0
 role_id: USR-CIES-SUP
+as_a: Supervisor CIES
 i_want: Alertar desviaciones >10% (recomendación)
 so_that: Activo gestión de modificaciones
 domain: D-EJEC

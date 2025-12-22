@@ -2,23 +2,25 @@ _meta:
   urn: urn:goreos:atom:process:d_gestion_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-gestion
+  source: archive/legacy_domains/domain_d-gestion.md
 id: PROC-GESTION-P3
 name: Ejecución de Playbooks Operativos
 domain: D-GESTION
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-GESTION-PLAYBOOK-01
+  mermaid_ref: domain_d-gestion.md#p3-ejecución-de-playbooks-operativos
+  mermaid: |
+    flowchart TD
+        A["Detectar<br/>trigger"] --> B["Seleccionar<br/>playbook"]
+        B --> C["Asignar<br/>responsable"]
+        C --> D["Ejecutar<br/>pasos"]
+        D --> E{"¿Paso<br/>completado?"}
+        E -->|"No"| F["Resolver<br/>bloqueo"]
+        F --> D
+        E -->|"Sí"| G{"¿Más<br/>pasos?"}
+        G -->|"Sí"| D
+        G -->|"No"| H["Evaluar<br/>resultados"]
+        H --> I["Registrar<br/>lecciones"]
+        I --> J["Cerrar<br/>playbook"]

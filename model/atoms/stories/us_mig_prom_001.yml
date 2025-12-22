@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Promover datos validados de staging a producción
 id: US-MIG-PROM-001
 urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
 role_id: ROL-ADMIN-TI
+as_a: Rol no encontrado (ROL-ADMIN-TI)
 i_want: promover datos validados de staging a producción
 so_that: los datos legacy estén disponibles para uso operacional
 domain: D-OPS

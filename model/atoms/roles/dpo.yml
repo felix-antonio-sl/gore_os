@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:dpo:1.0.0
+  urn: "urn:goreos:atom:role:dpo:2.0.0"
   type: Role
-  source: organization
-id: USR-TDE-DPO
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-DPO"
 role_key: dpo
 title: DPO
 description: Data Protection Officer. Encargado de protección de datos personales.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: D-TDE
 unit_type: Capacidades Transversales
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:dpo:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

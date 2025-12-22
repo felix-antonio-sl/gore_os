@@ -1,0 +1,22 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:ejecutor:1.1.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-EJECUTOR
+name: Ejecutor
+domain: D-EJE
+category: Master
+extends: ENT-SYS-ACTOR
+attributes:
+  - {name: id_ejecutor, type: UUID, key: true}
+  - {name: rut, type: String}
+  - {name: razon_social, type: String}
+  - {name: tipo, type: String}
+  - {name: direccion, type: String}
+  - {name: representante_legal, type: String}
+  - {name: calificacion, type: Decimal}
+  - {name: estado, type: String}
+  - {name: correo, type: String, nullable: true}
+  - {name: correo_2, type: String, nullable: true}
+  - {name: telefono, type: String, nullable: true}

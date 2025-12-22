@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:director_servicio_regional:1.0.0
+  urn: "urn:goreos:atom:role:director_servicio_regional:2.0.0"
   type: Role
-  source: archetypes.external
-id: ARCH-EXT-DIRECTOR_SERVICIO_REGIONAL
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-DIRECTOR_SERVICIO_REGIONAL"
 role_key: director_servicio_regional
 title: Director Servicio Regional
 description: Director de servicio público regional. Ejecuta programas con cofinanciamiento
-  GORE.
 type: External
-archetype: null
-parameter: servicio
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:director_servicio_regional:1.0.0
+logic_scope: STRATEGIC
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
+unit: 
+unit_type: 
 domain: D-GESTION
+archetype: null
+extends: null

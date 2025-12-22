@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_039:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Verificar cumplimiento de Requisitos de Información (ARI)
 id: US-FIN-IPR-039
 urn: urn:goreos:atom:story:us_fin_ipr_039:1.0.0
 role_id: USR-DIPL-DAE-PRE
+as_a: Analista Preinversión (DAE)
 i_want: Verificar cumplimiento de Requisitos de Información (ARI)
 so_that: Valido admisibilidad
 domain: D-FIN

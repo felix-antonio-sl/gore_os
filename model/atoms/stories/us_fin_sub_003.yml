@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Aplicar pauta de evaluación ciega (doble ciego opcional)
 id: US-FIN-SUB-003
 urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
 role_id: USR-DIDES-ANAL8
+as_a: Analista 8% (Técnico)
 i_want: Aplicar pauta de evaluación ciega (doble ciego opcional)
 so_that: Aseguro objetividad
 domain: D-FIN

@@ -1,0 +1,20 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:licitacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-LICITACION
+name: Licitación
+domain: D-FIN
+category: Transaction
+extends: ENT-SYS-ACTO
+attributes:
+  - {name: id_licitacion, type: UUID, key: true}
+  - {name: idi_asociada_id, type: UUID, fk: ENT-FIN-IDI}
+  - {name: codigo_mercado_publico, type: String}
+  - {name: nombre, type: String}
+  - {name: tipo, type: String}
+  - {name: monto_estimado, type: Decimal}
+  - {name: fecha_publicacion, type: Date}
+  - {name: fecha_cierre, type: Date}
+  - {name: estado, type: String}

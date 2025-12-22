@@ -2,26 +2,29 @@ _meta:
   urn: urn:goreos:atom:process:d_evol_p4:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-evol
+  source: archive/legacy_domains/domain_d-evol.md
 id: PROC-EVOL-P4
 name: Ciclo de Vida de Agente IA
 domain: D-EVOL
 code: P4
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-TIEMPO-AUSENTISMO-01`'
-  mermaid_ref: D07_rrhh.md#p4-tiempo-asistencia-y-ausentismo
-  mermaid: "flowchart TD\n    subgraph REGISTRO[\"\U0001F4CB Registro\"]\n       \
-    \ A[\"Funcionario marca<br/>entrada/salida\"]\n        B[\"Sistema registra<br/>en\
-    \ reloj control\"]\n        C[\"Generar reporte<br/>diario\"]\n    end\n\n   \
-    \ subgraph PERMISOS[\"\U0001F4DD Permisos\"]\n        D[\"Solicitar permiso:<br/>•\
-    \ Administrativo<br/>• Particular\"]\n        E[\"Jefatura aprueba/<br/>rechaza\"\
-    ]\n        F[\"Registrar en<br/>sistema\"]\n    end\n\n    subgraph LICENCIAS[\"\
-    \U0001F3E5 Licencias\"]\n        G[\"Funcionario presenta<br/>licencia médica\"\
-    ]\n        H[\"RRHH recepciona<br/>y valida\"]\n        I[\"Enviar a Isapre/<br/>COMPIN\"\
-    ]\n        J[\"Resolución:<br/>• Aprobada<br/>• Rechazada\"]\n        K[\"Ajustar<br/>remuneración\"\
-    ]\n    end\n\n    subgraph FERIADOS[\"\U0001F334 Feriados\"]\n        L[\"Solicitar\
-    \ feriado<br/>legal/progresivo\"]\n        M[\"Verificar saldo<br/>disponible\"\
-    ]\n        N[\"Jefatura autoriza\"]\n        O[\"Descontar días\"]\n    end\n\n\
-    \    A --> B --> C\n    D --> E --> F\n    G --> H --> I --> J --> K\n    L -->\
-    \ M --> N --> O\n\n    style K fill:#FF9800,color:#fff"
+  bpmn_id: BPMN-GN-EVOL-AGENTE-01
+  mermaid_ref: domain_d-evol.md#p4-ciclo-de-vida-de-agente-ia
+  mermaid: |
+    flowchart TD
+        A["Definir identidad:<br/>Rol, Objetivo, Audiencia"] --> B["Configurar KB:<br/>Catálogo + Artefactos"]
+        B --> C["Diseñar comportamiento:<br/>States + Workflows"]
+        C --> D["Configurar guardrails<br/>de seguridad"]
+        D --> E["Validar definición<br/>vs schema"]
+        E --> F{"¿Válido?"}
+        F -->|"No"| G["Corregir<br/>definición"]
+        G --> E
+        F -->|"Sí"| H["Desplegar agente<br/>(mode M1)"]
+        H --> I["Accumulate<br/>TrajectoryLog"]
+        I --> J{"¿Drift<br/>detectado?"}
+        J -->|"Sí"| K["Activar drift<br/>alert"]
+        K --> L["Recalibrar o<br/>degradar modo"]
+        J -->|"No"| M["Evaluar para<br/>promoción"]
+        M --> I
+        L --> I

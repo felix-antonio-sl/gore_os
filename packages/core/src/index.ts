@@ -7,3 +7,11 @@ export const HealthCheckSchema = z.object({
 });
 
 export type HealthCheck = z.infer<typeof HealthCheckSchema>;
+
+export const LogSchema = z.object({
+  id: z.string().uuid().optional(),
+  message: z.string().min(1),
+  createdAt: z.string().optional()
+});
+
+export type Log = z.infer<typeof LogSchema>;

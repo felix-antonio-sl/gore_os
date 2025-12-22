@@ -1,0 +1,17 @@
+---
+# --- mod_gob_gestion_riesgos_desastres.yml ---
+_meta:
+  urn: urn:goreos:atom:module:gob_gestion_riesgos_desastres:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-GOB-GESTION-RIESGOS-DESASTRES
+name: Gestión de Riesgos y Desastres (GRD)
+domain: D-GOB
+description: Coordinación regional para emergencias y desastres.
+composition:
+  processes: []
+  entities: [urn:goreos:atom:entity:d_gob_comite_grd:1.0.0]
+morphisms:
+  implements_capability: []
+  depends_on: []

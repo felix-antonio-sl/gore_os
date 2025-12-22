@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:okr:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-OKR
+name: OKR
+domain: D-SAL
+category: Master
+attributes:
+  - {name: id_okr, type: UUID, key: true}
+  - {name: objetivo, type: String}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
+  - {name: responsable_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: estado, type: String}

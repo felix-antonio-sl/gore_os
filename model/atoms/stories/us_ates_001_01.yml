@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ates_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de emisión de pagos con validación presupuestaria
 id: US-ATES-001-01
 urn: urn:goreos:atom:story:us_ates_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-TES
+as_a: Analista Tesorería
 i_want: un módulo de emisión de pagos con validación presupuestaria
 so_that: los pagos sean correctos
 domain: D-FIN

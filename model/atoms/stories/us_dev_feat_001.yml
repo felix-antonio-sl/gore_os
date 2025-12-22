@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_feat_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
 id: US-DEV-FEAT-001
 urn: urn:goreos:atom:story:us_dev_feat_001:1.0.0
 role_id: USR-DEV-PO
+as_a: Product Owner
 i_want: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
 so_that: Valido innovaciones antes del despliegue masivo
 domain: D-DEV

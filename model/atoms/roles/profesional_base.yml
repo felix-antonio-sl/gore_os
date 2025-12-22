@@ -1,19 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:profesional_base:1.0.0
+  urn: "urn:goreos:atom:role:profesional_base:2.0.0"
   type: Role
-  source: archetypes.internal_bases
-id: ARCH-BASE-PROFESIONAL_BASE
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-PROFESIONAL_BASE"
 role_key: profesional_base
 title: Profesional {area}
 description: Profesional de apoyo técnico en su área de especialización.
 type: INTERNAL
-archetype: null
-responsibilities:
-- Ejecutar tareas técnicas especializadas
-- Apoyar procesos de su unidad
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:profesional_base:1.0.0
+logic_scope: OPERATIONAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
+unit: 
+unit_type: 
 domain: D-GESTION
+archetype: BASE
+extends: null

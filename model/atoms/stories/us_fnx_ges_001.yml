@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_ges_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un expediente digital de intervención (ID, Objetivo, Equipo)
 id: US-FNX-GES-001
 urn: urn:goreos:atom:story:us_fnx_ges_001:1.0.0
 role_id: USR-CAL-FNX-J
+as_a: Jefe FENIX
 i_want: Crear un expediente digital de intervención (ID, Objetivo, Equipo)
 so_that: Centralizo la gestión y documentación del caso
 domain: D-FENIX

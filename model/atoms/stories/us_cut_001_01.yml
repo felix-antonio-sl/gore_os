@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_cut_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acceso a actas del Consejo de la Sociedad Civil
 id: US-CUT-001-01
 urn: urn:goreos:atom:story:us_cut_001_01:1.0.0
 role_id: USR-NEW-DIRIGENTE-SO
+as_a: Dirigente Social
 i_want: acceso a actas del Consejo de la Sociedad Civil
 so_that: pueda monitorear compromisos laborales
 domain: D-GOB

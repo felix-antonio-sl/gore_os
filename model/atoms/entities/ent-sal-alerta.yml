@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:alerta:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-ALERTA
+name: Alerta
+domain: D-SAL
+category: Event
+attributes:
+  - {name: id_alerta, type: UUID, key: true}
+  - {name: tipo, type: String}
+  - {name: severidad, type: String}
+  - {name: origen, type: String}
+  - {name: mensaje, type: Text}
+  - {name: fecha, type: DateTime}
+  - {name: atendida, type: Boolean}

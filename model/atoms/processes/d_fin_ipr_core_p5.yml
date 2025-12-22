@@ -2,24 +2,42 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ipr_core_p5:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-fin-ipr_core
+  source: docs/processes/D03_gestion_ipr.md
 id: PROC-FIN-IPR_CORE-P5
 name: Ejecución y Supervisión
 domain: D-FIN-IPR_CORE
 code: P5
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-DESARROLLO-ORG-01`'
-  mermaid_ref: D07_rrhh.md#p5-desarrollo-organizacional-y-capacitacin
-  mermaid: "flowchart TD\n    subgraph DNC[\"\U0001F4CA Detección de Necesidades\"\
-    ]\n        A[\"Aplicar encuesta DNC\"]\n        B[\"Análisis de brechas\"]\n \
-    \       C[\"Priorizar necesidades\"]\n    end\n\n    subgraph PAC_CAP[\"\U0001F4CB\
-    \ Plan de Capacitación\"]\n        D[\"Elaborar PAC anual\"]\n        E[\"Comité\
-    \ Bipartito<br/>aprueba\"]\n        F[\"Asignar presupuesto\"]\n    end\n\n  \
-    \  subgraph EJECUCION[\"\U0001F393 Ejecución\"]\n        G[\"Convocar a<br/>funcionarios\"\
-    ]\n        H[\"Ejecutar<br/>capacitaciones\"]\n        I[\"Evaluar aprendizaje\"\
-    ]\n        J[\"Certificar\"]\n    end\n\n    subgraph SEGUIMIENTO[\"\U0001F4C8\
-    \ Seguimiento\"]\n        K[\"Medir transferencia<br/>al puesto\"]\n        L[\"\
-    Evaluar impacto\"]\n        M[\"Retroalimentar<br/>próximo ciclo\"]\n    end\n\
-    \n    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K --> L -->\
-    \ M\n\n    style J fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-IPR-FASE5-01
+  mermaid_ref: D03_gestion_ipr.md#p5-ejecución-y-supervisión
+  subprocesos: ["Inicio", "Licitación", "Seguimiento"]
+  mermaid: |
+    flowchart TD
+        subgraph INICIO["🚀 Inicio"]
+            A["Chequeo documentación<br/>técnica"]
+            B["Reunión coordinación<br/>GORE-UT"]
+            C["Carpeta de<br/>seguimiento"]
+        end
+
+        subgraph LICITACION["📋 Licitación (si aplica)"]
+            D["Bases y publicación<br/>Mercado Público"]
+            E["Adjudicación"]
+            F["Contrato"]
+            G["Entrega terreno/<br/>Orden inicio"]
+        end
+
+        subgraph SEGUIMIENTO["📊 Seguimiento"]
+            H["Visitas a terreno"]
+            I["Revisión informes<br/>avance"]
+            J["Estados de Pago"]
+            K["Actualizar BIP"]
+            L["Monitoreo financiero<br/>SIGFE"]
+            M["Comité seguimiento"]
+        end
+
+        A --> B --> C --> D --> E --> F --> G
+        G --> H --> I --> J --> K
+        L --> M
+
+        style K fill:#4CAF50,color:#fff

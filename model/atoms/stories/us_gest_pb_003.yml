@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gest_pb_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Resultados de ejecución de playbooks
 id: US-GEST-PB-003
 urn: urn:goreos:atom:story:us_gest_pb_003:1.0.0
 role_id: USR-CAL-CTRL
+as_a: Encargado Control de Gestión
 i_want: Registrar resultados de ejecución de playbooks
 so_that: Genero base de conocimiento para mejora continua
 domain: D-GESTION

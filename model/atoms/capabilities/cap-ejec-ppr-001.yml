@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_ejec_ppr_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-EJEC-PPR-001
+name: Ejecución Programas Regionales
+domain: D-EJEC
+type: CORE
+description: Ejecución de F8, FRPD, PPR.
+stories:
+- us_ppr_001_01
+- us_f8_001_01
+- us_f8_001_02
+- us_fndr8_001_01
+- us_preinv_001_01
+ofrecida_por: null

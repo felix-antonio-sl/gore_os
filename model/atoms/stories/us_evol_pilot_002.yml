@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_evol_pilot_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Escalar configuración a nueva división
 id: US-EVOL-PILOT-002
 urn: urn:goreos:atom:story:us_evol_pilot_002:1.0.0
 role_id: USR-DEV-LEAD
+as_a: Líder Técnico
 i_want: Escalar configuración a nueva división
 so_that: Expando funcionalidades
 domain: D-EVOL

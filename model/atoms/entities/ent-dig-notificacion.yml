@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:notificacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-NOTIFICACION
+name: Notificación Electrónica
+domain: D-DIG
+category: Transaction
+attributes:
+  - {name: id_notificacion, type: UUID, key: true}
+  - {name: documento_id, type: UUID, fk: ENT-SYS-DOCUMENTO}
+  - {name: destinatario_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: canal, type: String}
+  - {name: fecha_envio, type: DateTime}
+  - {name: fecha_lectura, type: DateTime, nullable: true}
+  - {name: estado, type: String}

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_c33_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
 id: US-FIN-C33-001
 urn: urn:goreos:atom:story:us_fin_c33_001:1.0.0
 role_id: USR-DIPIR-C33
+as_a: Analista Operaciones C33
 i_want: Ejecutar Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
 so_that: Respondo a urgencias
 domain: D-FIN

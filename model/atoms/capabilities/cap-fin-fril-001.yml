@@ -1,0 +1,13 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_fin_fril_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-FIN-FRIL-001
+name: FRIL
+domain: D-FIN
+type: CORE
+description: Fondo Regional de Iniciativa Local.
+stories:
+- us_fin_fril_001
+ofrecida_por: null

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_jterr_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Vistas geográficas de la inversión per cápita por comuna
 id: US-JTERR-001-01
 urn: urn:goreos:atom:story:us_jterr_001_01:1.0.0
 role_id: USR-NEW-GESTOR-TERR
+as_a: Gestor Territorial
 i_want: vistas geográficas de la inversión per cápita por comuna
 so_that: pueda corregir inequidades territoriales
 domain: D-TERR

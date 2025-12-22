@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_jef_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver propuesta de priorización (ranking ERD/urgencia/monto)
 id: US-FIN-JEF-004
 urn: urn:goreos:atom:story:us_fin_jef_004:1.0.0
 role_id: USR-DIPIR-JEFE
+as_a: Jefe DIPIR
 i_want: Ver propuesta de priorización (ranking ERD/urgencia/monto)
 so_that: Optimizo uso de recursos
 domain: D-FIN

@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:objetivo_estrategico:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-OBJETIVO_ESTRATEGICO
+name: Objetivo Estratégico
+domain: D-FIN
+category: Reference
+attributes:
+  - {name: id_objetivo, type: UUID, key: true}
+  - {name: eje_id, type: UUID, fk: ENT-FIN-EJE_ESTRATEGICO}
+  - {name: nombre, type: String}
+  - {name: indicador, type: String}
+  - {name: meta, type: String}

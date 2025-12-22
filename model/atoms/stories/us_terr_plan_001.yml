@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_terr_plan_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visualizar brechas territoriales (brecha vs meta con mapa)
 id: US-TERR-PLAN-001
 urn: urn:goreos:atom:story:us_terr_plan_001:1.0.0
 role_id: USR-DIPL-PLAN
+as_a: Analista Planificación
 i_want: Visualizar brechas territoriales (brecha vs meta con mapa)
 so_that: Identifico necesidades territoriales
 domain: D-TERR

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de emisión de CDP con validación automática de saldo
 id: US-ANALPRES-001-01
 urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
 role_id: USR-DIPIR-PRES-ANAL
+as_a: Analista Presupuestario
 i_want: un módulo de emisión de CDP con validación automática de saldo
 so_that: no pueda comprometer recursos sin disponibilidad
 domain: D-FIN

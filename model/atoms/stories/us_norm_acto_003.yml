@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_acto_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Tramitar actos ante CGR (toma de razón)
 id: US-NORM-ACTO-003
 urn: urn:goreos:atom:story:us_norm_acto_003:1.0.0
 role_id: USR-JUR-ABOG
+as_a: Abogado Informante
 i_want: Tramitar actos ante CGR (toma de razón)
 so_that: Cumplo con control preventivo
 domain: D-NORM

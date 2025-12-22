@@ -1,0 +1,17 @@
+---
+# --- mod_evol_pilotos_autonomia.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_pilotos_autonomia:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-PILOTOS-AUTONOMIA
+name: Pilotos de Autonomía
+domain: D-EVOL
+description: Experimentación con procesos autónomos.
+composition:
+  processes: [urn:goreos:atom:process:d_evol_p5:1.0.0]
+  entities: [urn:goreos:atom:entity:d_evol_registrodesempeno:1.0.0]
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:evol_agentes_ia:1.0.0]

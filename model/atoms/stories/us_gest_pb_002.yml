@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gest_pb_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
 id: US-GEST-PB-002
 urn: urn:goreos:atom:story:us_gest_pb_002:1.0.0
 role_id: USR-ADM-JEFE
+as_a: Administrador Regional
 i_want: Ejecutar playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
 so_that: Gestiono brechas de expectativas antes de que escalen
 domain: D-GESTION

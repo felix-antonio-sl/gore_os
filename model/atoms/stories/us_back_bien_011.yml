@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_bien_011:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Solicitar préstamo (ver condiciones)
 id: US-BACK-BIEN-011
 urn: urn:goreos:atom:story:us_back_bien_011:1.0.0
 role_id: USR-DAF-PER-SOC
+as_a: Socio Bienestar
 i_want: Solicitar préstamo (ver condiciones)
 so_that: Accedo a financiamiento
 domain: D-BACK

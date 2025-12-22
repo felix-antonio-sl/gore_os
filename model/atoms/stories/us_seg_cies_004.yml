@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seg_cies_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alerta automática de vehículos con encargo de búsqueda (SITIA-LPR)
 id: US-SEG-CIES-004
 urn: urn:goreos:atom:story:us_seg_cies_004:1.0.0
 role_id: USR-CIES-OP
+as_a: Operador CIES
 i_want: Recibir alerta automática de vehículos con encargo de búsqueda (SITIA-LPR)
 so_that: Activo protocolo de búsqueda coordinado con Carabineros y PDI
 domain: D-SEG

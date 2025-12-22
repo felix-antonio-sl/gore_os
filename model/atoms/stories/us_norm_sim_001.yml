@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_sim_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Simular si una imputación presupuestaria cumple con las reglas de la Glosa
 id: US-NORM-SIM-001
 urn: urn:goreos:atom:story:us_norm_sim_001:1.0.0
 role_id: USR-JUR-REV
+as_a: Abogado Revisor
 i_want: Simular si una imputación presupuestaria cumple con las reglas de la Glosa
   vigente
 so_that: Detecto rechazos probables antes de enviar a firma

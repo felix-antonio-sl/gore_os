@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_serviu_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver proyectos de vivienda con cofinanciamiento GORE
 id: US-SERVIU-001-01
 urn: urn:goreos:atom:story:us_serviu_001_01:1.0.0
 role_id: USR-EXT-SERVIU
+as_a: Director Regional SERVIU
 i_want: ver proyectos de vivienda con cofinanciamiento GORE
 so_that: pueda articular recursos sectoriales
 domain: D-EJEC

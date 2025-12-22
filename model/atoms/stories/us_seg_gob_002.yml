@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Participar en sesiones del Consejo Regional de Seguridad Pública
 id: US-SEG-GOB-002
 urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
 role_id: USR-CORE-CONS
+as_a: Consejero Regional (Pleno)
 i_want: Participar en sesiones del Consejo Regional de Seguridad Pública
 so_that: Participo en planificación regional de seguridad como COSOC
 domain: D-SEG

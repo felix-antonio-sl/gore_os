@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_arqc_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Herramientas de modelado semántico integradas
 id: US-ARQC-001-01
 urn: urn:goreos:atom:story:us_arqc_001_01:1.0.0
 role_id: USR-DEV-ARQCAT
+as_a: Arquitecto Categórico
 i_want: herramientas de modelado semántico integradas
 so_that: las definiciones de negocio sean coherentes en el código
 domain: D-DEV

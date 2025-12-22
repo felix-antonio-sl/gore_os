@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_rez_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Flexibilidad en los criterios de evaluación social (RS)
 id: US-REZ-001-01
 urn: urn:goreos:atom:story:us_rez_001_01:1.0.0
 role_id: USR-DIFOI-REZ-PROF
+as_a: Profesional Zona Rezago
 i_want: flexibilidad en los criterios de evaluación social (RS)
 so_that: se aprueben proyectos en zonas aisladas
 domain: D-TERR

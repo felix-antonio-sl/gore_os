@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_tde_transp_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-TDE-TRANSP-001
+name: Transparencia Activa/Pasiva
+domain: D-TDE
+type: CORE
+description: Cumplimiento Ley 20.285 de Transparencia.
+stories:
+- us_tde_transp_001
+- us_tde_transp_002
+- us_tde_transp_003
+- us_tde_transp_004
+- us_transp_001_01
+ofrecida_por: null

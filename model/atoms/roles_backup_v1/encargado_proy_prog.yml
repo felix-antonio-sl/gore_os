@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:encargado_proy_prog:1.0.0
+  type: Role
+  source: organization
+id: USR-DIPL-PROY-ENC
+role_key: encargado_proy_prog
+title: Encargado Unidad de Proyectos y Programas
+description: Evaluación técnica de proyectos y programas regionales (Bajo DAE/DIPLADE).
+type: INTERNAL
+unit: DIPLADE
+unit_type: Ejecutivo & Operaciones
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:encargado_proy_prog:1.0.0
+domain: D-GESTION

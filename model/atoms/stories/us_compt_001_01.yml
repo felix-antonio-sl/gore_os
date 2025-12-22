@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_compt_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Formularios digitales de evaluación 360
 id: US-COMPT-001-01
 urn: urn:goreos:atom:story:us_compt_001_01:1.0.0
 role_id: USR-GOB-COMP
+as_a: Encargado Competencias
 i_want: formularios digitales de evaluación 360
 so_that: pueda identificar brechas de competencia
 domain: D-BACK

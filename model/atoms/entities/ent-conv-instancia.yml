@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:instancia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-INSTANCIA
+name: Instancia de Coordinación
+domain: D-CONV
+category: Master
+attributes:
+  - {name: id_instancia, type: UUID, key: true}
+  - {name: nombre, type: String}
+  - {name: tipo, type: String}
+  - {name: periodicidad, type: String}
+  - {name: convocante_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: activa, type: Boolean, default: true}

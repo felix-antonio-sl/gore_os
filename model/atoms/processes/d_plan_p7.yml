@@ -2,19 +2,28 @@ _meta:
   urn: urn:goreos:atom:process:d_plan_p7:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-plan
+  source: archive/legacy_domains/domain_d-plan.md
 id: PROC-PLAN-P7
 name: Evaluación Ex-Post de Proyectos
 domain: D-PLAN
 code: P7
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-EGRESO-01`'
-  mermaid_ref: D07_rrhh.md#p7-egreso-y-desvinculacin
-  mermaid: "flowchart TD\n    A[\"Egreso de<br/>funcionario\"] --> B{\"Causal\"}\n\
-    \    \n    B -->|\"Voluntario\"| C[\"Renuncia<br/>voluntaria\"]\n    B -->|\"\
-    Jubilación\"| D[\"Retiro por<br/>pensión\"]\n    B -->|\"Término contrata\"| E[\"\
-    No renovación<br/>31/12\"]\n    B -->|\"Calificación\"| F[\"Eliminación<br/>por\
-    \ nota\"]\n    B -->|\"Disciplinario\"| G[\"Destitución\"]\n    B -->|\"Salud\"\
-    | H[\"Incompatibilidad<br/>de salud\"]\n\n    C & D & E & F & G & H --> I[\"Procedimiento<br/>de\
-    \ cierre\"]\n\n    style I fill:#607D8B,color:#fff"
+  bpmn_id: BPMN-GN-PLAN-EXPOST-01
+  mermaid_ref: domain_d-plan.md#p7-evaluación-ex-post-de-proyectos
+  frecuencia: "Anual"
+  mermaid: |
+    flowchart TD
+        subgraph P7["P7: Evaluación Ex-Post"]
+            P7_1["7.1 Selección<br/>Muestra"]
+            P7_2["7.2 Recopilación<br/>Datos"]
+            P7_3["7.3 Análisis<br/>Impacto"]
+            P7_4["7.4 Informe y<br/>Lecciones"]
+        end
+
+        P7_1 --> P7_2 --> P7_3 --> P7_4
+
+        P7_1 -.- N1["Proyectos cerrados<br/>>MM$500 o estratégicos"]
+        P7_2 -.- N2["Encuestas beneficiarios<br/>Indicadores objetivos"]
+        P7_3 -.- N3["Comparación con RS<br/>Impacto real vs esperado"]
+        P7_4 -.- N4["Retroalimentación a<br/>ARI y ERD"]

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Indicadores desagregados por sexo en todos los reportes
 id: US-GEN-001-01
 urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
 role_id: USR-CAL-PMG-GEN
+as_a: Referente Equidad de Género
 i_want: indicadores desagregados por sexo en todos los reportes
 so_that: visualice brechas de género
 domain: D-PLAN

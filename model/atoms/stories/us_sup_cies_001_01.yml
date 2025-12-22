@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_sup_cies_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportes de eventos por turno y operador
 id: US-SUP-CIES-001-01
 urn: urn:goreos:atom:story:us_sup_cies_001_01:1.0.0
 role_id: USR-CIES-SUP
+as_a: Supervisor CIES
 i_want: reportes de eventos por turno y operador
 so_that: pueda evaluar desempeño
 domain: D-TERR

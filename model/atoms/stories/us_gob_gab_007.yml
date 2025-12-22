@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acuerdos y misiones con regiones extranjeras
 id: US-GOB-GAB-007
 urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
 role_id: USR-GAB-250-PROF
+as_a: Profesional Ñuble 250
 i_want: Gestionar acuerdos y misiones con regiones extranjeras
 so_that: Fomento la cooperación internacional descentralizada
 domain: D-GOB

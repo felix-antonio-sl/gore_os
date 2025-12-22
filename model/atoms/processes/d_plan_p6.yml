@@ -2,23 +2,32 @@ _meta:
   urn: urn:goreos:atom:process:d_plan_p6:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-plan
+  source: archive/legacy_domains/domain_d-plan.md
 id: PROC-PLAN-P6
 name: Asistencia Técnica Municipal
 domain: D-PLAN
 code: P6
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-BIENESTAR-01`'
-  mermaid_ref: D07_rrhh.md#p6-bienestar-y-calidad-de-vida
-  mermaid: "flowchart TD\n    subgraph AFILIACION[\"\U0001F4CB Afiliación\"]\n   \
-    \     A[\"Funcionario ingresa\"]\n        B[\"Invitar a<br/>Servicio de Bienestar\"\
-    ]\n        C[\"Aceptar y afiliar\"]\n        D[\"Descuento mensual<br/>por planilla\"\
-    ]\n    end\n\n    subgraph PRESTACIONES[\"\U0001F381 Prestaciones\"]\n       \
-    \ E[\"Solicitar beneficio:<br/>• Médico<br/>• Económico<br/>• Préstamo<br/>• Convenio\"\
-    ]\n        F[\"Unidad Bienestar<br/>evalúa\"]\n        G[\"Consejo Administrativo<br/>aprueba\
-    \ si requiere\"]\n        H[\"Otorgar beneficio\"]\n    end\n\n    subgraph ACTIVIDADES[\"\
-    \U0001F389 Actividades\"]\n        I[\"Planificar eventos:<br/>• Deportivos<br/>•\
-    \ Recreativos<br/>• Culturales\"]\n        J[\"Ejecutar actividad\"]\n       \
-    \ K[\"Evaluar satisfacción\"]\n    end\n\n    A --> B --> C --> D\n    E --> F\
-    \ --> G --> H\n    I --> J --> K\n\n    style H fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-PLAN-ASISTENCIA-01
+  mermaid_ref: domain_d-plan.md#p6-asistencia-técnica-municipal
+  mermaid: |
+    flowchart TD
+        subgraph SOLICITUD["🆘 Solicitud Asistencia"]
+            A["Municipio detecta<br/>necesidad"]
+            B["Solicitud Soporte<br/>(D-PLAN)"]
+        end
+
+        subgraph ASESORIA["🛠️ Intervención"]
+            C["Asignación Analista<br/>DIPLADE"]
+            D{"Tipo Asesoría"}
+            D -->|Formulación| E["Revisión Metodológica<br/>(MIDESO/FNDR)"]
+            D -->|Estratégica| F["Alineamiento<br/>PLADECO-ERD"]
+        end
+
+        subgraph RESULTADO["✅ Resultado"]
+            E --> G["Iniciativa RS<br/>(Elegible)"]
+            F --> H["PLADECO Actualizado"]
+        end
+
+        A --> B --> C --> D

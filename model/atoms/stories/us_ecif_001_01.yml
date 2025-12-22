@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ecif_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportes de cumplimiento de controles financieros
 id: US-ECIF-001-01
 urn: urn:goreos:atom:story:us_ecif_001_01:1.0.0
 role_id: USR-NEW-ECIF
+as_a: Equipo ECIF
 i_want: reportes de cumplimiento de controles financieros
 so_that: pueda identificar debilidades
 domain: D-FIN

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_com_rec_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un acta de recepción electrónica con checklist de verificación
 id: US-COM-REC-001-01
 urn: urn:goreos:atom:story:us_com_rec_001_01:1.0.0
 role_id: USR-COM-RECP
+as_a: Miembro Comisión de Recepción
 i_want: un acta de recepción electrónica con checklist de verificación
 so_that: el proceso sea documentado
 domain: D-EJEC

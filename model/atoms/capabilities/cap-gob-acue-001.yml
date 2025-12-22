@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_gob_acue_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-GOB-ACUE-001
+name: Acuerdos CORE
+domain: D-GOB
+type: CORE
+description: Gestión y seguimiento de acuerdos CORE.
+stories:
+- us_gob_acue_001
+- us_gob_acue_002
+- us_gob_acue_003
+- us_gob_acue_004
+ofrecida_por: null

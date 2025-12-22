@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
 id: US-FIN-GOB-001
 urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
 role_id: USR-GOB-JEFE
+as_a: Gobernador Regional
 i_want: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
 so_that: Filtro estratégico antes de evaluación técnica
 domain: D-FIN

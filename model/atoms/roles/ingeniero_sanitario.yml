@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:ingeniero_sanitario:1.0.0
+  urn: "urn:goreos:atom:role:ingeniero_sanitario:2.0.0"
   type: Role
-  source: organization
-id: USR-DIT-SANE-ING
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-SANE-ING"
 role_key: ingeniero_sanitario
 title: Ingeniero Sanitario
 description: Diseño y revisión de proyectos de agua potable rural y alcantarillado.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: DIT
 unit_type: Ejecutivo & Operaciones
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:ingeniero_sanitario:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

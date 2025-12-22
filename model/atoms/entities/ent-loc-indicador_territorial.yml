@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:locus:indicador_territorial:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-LOC-INDICADOR_TERRITORIAL
+name: Indicador Territorial
+domain: D-LOC
+category: Transaction
+attributes:
+  - {name: id_indicador, type: UUID, key: true}
+  - {name: nombre, type: String}
+  - {name: dimension, type: String}
+  - {name: valor, type: Decimal}
+  - {name: territorio_id, type: UUID}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}

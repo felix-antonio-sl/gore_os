@@ -1,0 +1,17 @@
+---
+# --- mod_gestion_procesos_criticos.yml ---
+_meta:
+  urn: urn:goreos:atom:module:gestion_procesos_criticos:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-GESTION-PROCESOS-CRITICOS
+name: Procesos Operativos Críticos
+domain: D-GESTION
+description: Documentación y monitoreo de procesos críticos.
+composition:
+  processes: []
+  entities: []
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:gestion_playbooks_operativos:1.0.0]

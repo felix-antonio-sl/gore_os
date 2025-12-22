@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_007:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Estado de mi postulación en tiempo real (timeline visual)
 id: US-FIN-IPR-007
 urn: urn:goreos:atom:story:us_fin_ipr_007:1.0.0
 role_id: USR-EXT-FORM
+as_a: Formulador Externo
 i_want: Consultar estado de mi postulación en tiempo real (timeline visual)
 so_that: Tengo visibilidad del avance del trámite
 domain: D-FIN

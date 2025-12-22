@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_inter_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un catálogo de APIs y servicios web disponibles
 id: US-INTER-001-01
 urn: urn:goreos:atom:story:us_inter_001_01:1.0.0
 role_id: USR-NEW-ENCARGADO-IN
+as_a: Encargado Interoperabilidad
 i_want: un catálogo de APIs y servicios web disponibles
 so_that: pueda facilitar integraciones
 domain: D-TDE

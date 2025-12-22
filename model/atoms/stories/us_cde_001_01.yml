@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_cde_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Antecedentes completos de litigios donde el GORE es parte
 id: US-CDE-001-01
 urn: urn:goreos:atom:story:us_cde_001_01:1.0.0
 role_id: USR-JUR-JUD
+as_a: Abogado Asuntos Judiciales
 i_want: antecedentes completos de litigios donde el GORE es parte
 so_that: pueda asumir la defensa fiscal
 domain: D-NORM

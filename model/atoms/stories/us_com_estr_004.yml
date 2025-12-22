@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_com_estr_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Menciones en medios y gestionar crisis
 id: US-COM-ESTR-004
 urn: urn:goreos:atom:story:us_com_estr_004:1.0.0
 role_id: USR-COM-ENC
+as_a: Encargado Comunicaciones
 i_want: Monitorear menciones en medios y gestionar crisis
 so_that: Respondo a contingencias comunicacionales
 domain: D-COM

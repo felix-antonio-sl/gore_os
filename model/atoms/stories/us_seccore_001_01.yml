@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seccore_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un sistema de gestión de sesiones con tabla, votaciones y actas
 id: US-SECCORE-001-01
 urn: urn:goreos:atom:story:us_seccore_001_01:1.0.0
 role_id: USR-CORE-SEC
+as_a: Secretario Ejecutivo CORE
 i_want: un sistema de gestión de sesiones con tabla, votaciones y actas
 so_that: las sesiones sean trazables y documentadas
 domain: D-NORM

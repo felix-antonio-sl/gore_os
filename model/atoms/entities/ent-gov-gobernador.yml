@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:imperium:gobernador:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-GOV-GOBERNADOR
+name: Gobernador Regional
+domain: D-GOV
+category: Master
+extends: ENT-SYS-ACTOR
+attributes:
+  - {name: id_gobernador, type: UUID, key: true}
+  - {name: persona_id, type: UUID, fk: ENT-SYS-ACTOR}
+  - {name: region_id, type: UUID, fk: ENT-LOC-REGION}
+  - {name: periodo_inicio, type: Date}
+  - {name: periodo_termino, type: Date}
+  - {name: estado, type: String}

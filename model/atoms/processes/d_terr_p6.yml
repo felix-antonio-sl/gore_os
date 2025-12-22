@@ -2,23 +2,41 @@ _meta:
   urn: urn:goreos:atom:process:d_terr_p6:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-terr
+  source: archive/legacy_domains/domain_d-terr.md
 id: PROC-TERR-P6
-name: Observatorio Regional (Realidad Territorial)
+name: Observatorio Regional
 domain: D-TERR
 code: P6
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-BIENESTAR-01`'
-  mermaid_ref: D07_rrhh.md#p6-bienestar-y-calidad-de-vida
-  mermaid: "flowchart TD\n    subgraph AFILIACION[\"\U0001F4CB Afiliación\"]\n   \
-    \     A[\"Funcionario ingresa\"]\n        B[\"Invitar a<br/>Servicio de Bienestar\"\
-    ]\n        C[\"Aceptar y afiliar\"]\n        D[\"Descuento mensual<br/>por planilla\"\
-    ]\n    end\n\n    subgraph PRESTACIONES[\"\U0001F381 Prestaciones\"]\n       \
-    \ E[\"Solicitar beneficio:<br/>• Médico<br/>• Económico<br/>• Préstamo<br/>• Convenio\"\
-    ]\n        F[\"Unidad Bienestar<br/>evalúa\"]\n        G[\"Consejo Administrativo<br/>aprueba\
-    \ si requiere\"]\n        H[\"Otorgar beneficio\"]\n    end\n\n    subgraph ACTIVIDADES[\"\
-    \U0001F389 Actividades\"]\n        I[\"Planificar eventos:<br/>• Deportivos<br/>•\
-    \ Recreativos<br/>• Culturales\"]\n        J[\"Ejecutar actividad\"]\n       \
-    \ K[\"Evaluar satisfacción\"]\n    end\n\n    A --> B --> C --> D\n    E --> F\
-    \ --> G --> H\n    I --> J --> K\n\n    style H fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-GEO-OBSERVATORIO-01
+  mermaid_ref: domain_d-terr.md#p6-observatorio-regional-realidad-territorial
+  mermaid: |
+    flowchart LR
+        subgraph FUENTES["📊 Fuentes Externas"]
+            A["BCN Indicadores<br/>(800+ métricas)"]
+            B["INE Censo<br/>2024"]
+            C["CASEN<br/>(Pobreza, Social)"]
+            D["SINIM<br/>(Municipal)"]
+            E["DEIS-MINSAL<br/>(Salud)"]
+        end
+
+        subgraph PROCESAMIENTO["⚙️ ETL y Calidad"]
+            F["Extracción<br/>Periódica"]
+            G["Validación<br/>ISO 19157"]
+            H["Georreferenciación<br/>a Comuna"]
+        end
+
+        subgraph ALMACENAMIENTO["💾 Repositorio"]
+            I["IndicadorTerritorial"]
+            J["BrechaERD"]
+        end
+
+        subgraph PUBLICACION["🌐 Servicios"]
+            K["WMS/WFS<br/>Capas Temáticas"]
+            L["API REST<br/>Observatorio"]
+            M["Dashboard<br/>Público"]
+        end
+
+        A & B & C & D & E --> F --> G --> H --> I & J
+        I & J --> K & L & M

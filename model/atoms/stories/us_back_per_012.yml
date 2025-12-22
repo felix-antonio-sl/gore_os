@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_back_per_012:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Horas extraordinarias (F2)
 id: US-BACK-PER-012
 urn: urn:goreos:atom:story:us_back_per_012:1.0.0
 role_id: USR-DAF-PER-GEST
+as_a: Gestor de Personas
 i_want: Gestionar horas extraordinarias (F2)
 so_that: Controlo sobretiempo
 domain: D-BACK

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_rtd_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportar el porcentaje de trámites digitalizados
 id: US-RTD-001-01
 urn: urn:goreos:atom:story:us_rtd_001_01:1.0.0
 role_id: USR-DAF-TIC-CTD
+as_a: Coordinador Transformación Digital (CTD)
 i_want: reportar el porcentaje de trámites digitalizados
 so_that: el servicio cumpla la ley de transformación digital
 domain: D-DEV

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Permiso de acceso limitado a la intranet
 id: US-TCORP-001-01
 urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
 role_id: USR-CORP-EQ
+as_a: Trabajador Corporación
 i_want: permiso de acceso limitado a la intranet
 so_that: pueda coordinarme con las unidades del GORE
 domain: D-BACK

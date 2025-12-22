@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_f8_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un módulo de gestión de concursos con etapas configurables
 id: US-F8-001-01
 urn: urn:goreos:atom:story:us_f8_001_01:1.0.0
 role_id: USR-DIDES-FOND-ENC
+as_a: Encargado Fondos 8%
 i_want: un módulo de gestión de concursos con etapas configurables
 so_that: pueda administrar el proceso completo
 domain: D-EJEC

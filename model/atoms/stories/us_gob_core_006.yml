@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_core_006:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver historial de votaciones (resultado y acuerdo)
 id: US-GOB-CORE-006
 urn: urn:goreos:atom:story:us_gob_core_006:1.0.0
 role_id: USR-CORE-CONS
+as_a: Consejero Regional (Pleno)
 i_want: Ver historial de votaciones (resultado y acuerdo)
 so_that: Consulto decisiones pasadas
 domain: D-GOB

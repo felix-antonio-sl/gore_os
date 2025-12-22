@@ -1,0 +1,21 @@
+---
+# --- mod_gob_gabinete_regional.yml ---
+_meta:
+  urn: urn:goreos:atom:module:gob_gabinete_regional:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-GOB-GABINETE-REGIONAL
+name: Gabinete Regional
+domain: D-GOB
+description: "Coordinación del gabinete: agenda, minutas, acuerdos."
+composition:
+  processes: [urn:goreos:atom:process:d_gob_p3:1.0.0]
+  entities:
+    [
+      urn:goreos:atom:entity:d_gob_gabinete_regional:1.0.0,
+      urn:goreos:atom:entity:d_gob_comite_de_coordinacion:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

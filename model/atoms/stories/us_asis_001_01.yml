@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_asis_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Integración con sistema biométrico y reportes automáticos
 id: US-ASIS-001-01
 urn: urn:goreos:atom:story:us_asis_001_01:1.0.0
 role_id: USR-NEW-ANALISTA-CASIS
+as_a: Analista Control Asistencia
 i_want: integración con sistema biométrico y reportes automáticos
 so_that: pueda detectar irregularidades
 domain: D-BACK

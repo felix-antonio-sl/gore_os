@@ -1,0 +1,21 @@
+---
+# --- mod_terr_ide_regional.yml ---
+_meta:
+  urn: urn:goreos:atom:module:terr_ide_regional:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-TERR-IDE-REGIONAL
+name: IDE Regional
+domain: D-TERR
+description: Infraestructura de Datos Espaciales regional.
+composition:
+  processes: [urn:goreos:atom:process:d_terr_p5:1.0.0]
+  entities:
+    [
+      urn:goreos:atom:entity:d_terr_capageoespacial:1.0.0,
+      urn:goreos:atom:entity:d_terr_metadato:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

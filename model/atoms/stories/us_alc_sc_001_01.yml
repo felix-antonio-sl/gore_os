@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_alc_sc_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Estado de todos los proyectos de mi comuna
 id: US-ALC-SC-001-01
 urn: urn:goreos:atom:story:us_alc_sc_001_01:1.0.0
 role_id: USR-MUNI-ALC
+as_a: Alcalde
 i_want: ver el estado de todos los proyectos de mi comuna
 so_that: pueda informar a la comunidad
 domain: D-EJEC

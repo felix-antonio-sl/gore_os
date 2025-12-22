@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_018:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Realizar conciliación bancaria mensual
 id: US-FIN-PPTO-018
 urn: urn:goreos:atom:story:us_fin_ppto_018:1.0.0
 role_id: USR-DAF-PROF
+as_a: Profesional DAF
 i_want: Realizar conciliación bancaria mensual
 so_that: Verifico consistencia de cuentas
 domain: D-FIN

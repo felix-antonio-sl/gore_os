@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_com_estr_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Publicar noticias oficiales en portal y RRSS
 id: US-COM-ESTR-002
 urn: urn:goreos:atom:story:us_com_estr_002:1.0.0
 role_id: USR-COM-ENC
+as_a: Encargado Comunicaciones
 i_want: Publicar noticias oficiales en portal y RRSS
 so_that: Informo a la ciudadanía
 domain: D-COM

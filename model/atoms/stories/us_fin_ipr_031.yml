@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_031:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Carpeta digital para sesión CORE
 id: US-FIN-IPR-031
 urn: urn:goreos:atom:story:us_fin_ipr_031:1.0.0
 role_id: USR-DIPL-DAE-PRE
+as_a: Analista Preinversión (DAE)
 i_want: Generar carpeta digital para sesión CORE
 so_that: Distribuyo antecedentes
 domain: D-FIN

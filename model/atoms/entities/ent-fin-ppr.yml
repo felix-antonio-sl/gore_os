@@ -1,0 +1,18 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:ppr:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-FIN-PPR
+name: Programa Público Regional
+domain: D-FIN
+category: Master
+attributes:
+  - {name: id_ppr, type: UUID, key: true}
+  - {name: codigo, type: String}
+  - {name: nombre, type: String}
+  - {name: objetivo, type: Text}
+  - {name: poblacion_objetivo, type: Text}
+  - {name: presupuesto_anual, type: Decimal}
+  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
+  - {name: estado, type: String}

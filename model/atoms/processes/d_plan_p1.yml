@@ -2,23 +2,29 @@ _meta:
   urn: urn:goreos:atom:process:d_plan_p1:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-plan
+  source: archive/legacy_domains/domain_d-plan.md
 id: PROC-PLAN-P1
 name: Actualización ERD
 domain: D-PLAN
 code: P1
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-FLOTA-VEHICULAR-01`'
-  mermaid_ref: D06_flota_vehicular.md#p1-gestin-de-flota-vehicular
-  mermaid: "flowchart TD\n    subgraph VEHICULOS[\"\U0001F697 Registro de Vehículos\"\
-    ]\n        A[\"Adquisición de<br/>vehículo\"]\n        B[\"Registrar en<br/>sistema\
-    \ interno\"]\n        C[\"Datos:<br/>• Patente<br/>• Modelo<br/>• Año<br/>• Tipo\
-    \ combustible\"]\n        D[\"Asignar a<br/>división/área\"]\n        E[\"Inscribir\
-    \ en<br/>Registro Automotor\"]\n    end\n\n    subgraph CONDUCTORES[\"\U0001F464\
-    \ Registro de Conductores\"]\n        F[\"Funcionario solicita<br/>autorización\"\
-    ]\n        G[\"Verificar:<br/>• Licencia vigente<br/>• Clase apropiada<br/>• Hoja\
-    \ de vida\"]\n        H[\"Autorización de<br/>Jefe Servicios\"]\n        I[\"\
-    Registrar en<br/>nómina conductores\"]\n    end\n\n    A --> B --> C --> D -->\
-    \ E\n    F --> G --> H --> I\n\n    style E fill:#2196F3,color:#fff\n    style\
-    \ I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-PLAN-ERD-01
+  mermaid_ref: domain_d-plan.md#p1-actualización-erd
+  mermaid: |
+    flowchart TB
+        subgraph P1["P1: Actualización ERD"]
+            P1_1["1.1 Evaluación<br/>Estado Actual"]
+            P1_2["1.2 Diagnóstico<br/>Participativo"]
+            P1_3["1.3 Formulación<br/>Técnica"]
+            P1_4["1.4 Aprobación<br/>CORE"]
+            P1_5["1.5 Publicación<br/>Vigencia"]
+        end
+
+        P1_1 --> P1_2 --> P1_3 --> P1_4 --> P1_5
+
+        P1_1 -.- N1["Indicadores de avance<br/>Brechas identificadas"]
+        P1_2 -.- N2["Cabildos territoriales<br/>Consultas sectoriales"]
+        P1_3 -.- N3["Ejes, lineamientos, OE<br/>Indicadores y metas"]
+        P1_4 -.- N4["Votación CORE<br/>Resolución aprobatoria"]
+        P1_5 -.- N5["Diario Oficial<br/>Plataforma GORE"]

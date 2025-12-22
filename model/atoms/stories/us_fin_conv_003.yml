@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_conv_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Alertas de convenios por vencer (prórroga/cierre)
 id: US-FIN-CONV-003
 urn: urn:goreos:atom:story:us_fin_conv_003:1.0.0
 role_id: USR-DAF-PROF
+as_a: Profesional DAF
 i_want: Recibir alertas de convenios por vencer (prórroga/cierre)
 so_that: Actúo antes del vencimiento
 domain: D-FIN

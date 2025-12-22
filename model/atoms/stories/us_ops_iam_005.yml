@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ops_iam_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Resetear mi contraseña de forma autónoma mediante self-service
 id: US-OPS-IAM-005
 urn: urn:goreos:atom:story:us_ops_iam_005:1.0.0
 role_id: ROL-USUARIO
+as_a: Rol no encontrado (ROL-USUARIO)
 i_want: resetear mi contraseña de forma autónoma mediante self-service
 so_that: pueda recuperar el acceso sin necesidad de abrir un ticket de soporte
 domain: D-OPS

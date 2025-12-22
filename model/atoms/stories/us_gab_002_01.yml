@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gab_002_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un protocolo de comunicación de crisis digitalizado
 id: US-GAB-002-01
 urn: urn:goreos:atom:story:us_gab_002_01:1.0.0
 role_id: USR-GAB-JEFE
+as_a: Jefe de Gabinete
 i_want: un protocolo de comunicación de crisis digitalizado
 so_that: la respuesta sea rápida y coordinada
 domain: D-BACK

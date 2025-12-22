@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un registro de organizaciones receptoras con historial
 id: US-SUBV-001-01
 urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
 role_id: USR-DIDES-SUBV-ANAL
+as_a: Analista Subvenciones
 i_want: un registro de organizaciones receptoras con historial
 so_that: pueda validar elegibilidad
 domain: D-FIN

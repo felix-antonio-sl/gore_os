@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ejec_sec_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Convenios sectoriales (marco)
 id: US-EJEC-SEC-001
 urn: urn:goreos:atom:story:us_ejec_sec_001:1.0.0
 role_id: USR-DIT-COOR
+as_a: Coordinador Sectorial
 i_want: Gestionar convenios sectoriales (marco)
 so_that: Formalizo relación con ministerios
 domain: D-EJEC

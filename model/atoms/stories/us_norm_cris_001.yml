@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_cris_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un pico de solicitudes de información (>50 simultáneas) coordinado
 id: US-NORM-CRIS-001
 urn: urn:goreos:atom:story:us_norm_cris_001:1.0.0
 role_id: USR-NORM-TRANSP
+as_a: Encargado Transparencia Activa/Pasiva
 i_want: Gestionar un pico de solicitudes de información (>50 simultáneas) coordinado
 so_that: Evito caer en silencio administrativo masivo
 domain: D-NORM

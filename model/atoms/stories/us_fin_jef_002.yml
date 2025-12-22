@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_jef_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Ver distribución de carga por analista con métricas de tiempos
 id: US-FIN-JEF-002
 urn: urn:goreos:atom:story:us_fin_jef_002:1.0.0
 role_id: USR-DIPIR-JEFE
+as_a: Jefe DIPIR
 i_want: Ver distribución de carga por analista con métricas de tiempos
 so_that: Balanceo trabajo del equipo
 domain: D-FIN

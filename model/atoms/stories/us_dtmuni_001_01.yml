@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dtmuni_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reutilizar componentes de la plataforma GORE_OS
 id: US-DTMUNI-001-01
 urn: urn:goreos:atom:story:us_dtmuni_001_01:1.0.0
 role_id: USR-MUNI-DIG
+as_a: Encargado Digital Muni
 i_want: reutilizar componentes de la plataforma GORE_OS
 so_that: no tengamos que desarrollar software desde cero
 domain: D-DEV

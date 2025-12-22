@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dev_code_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Visualizar la historia de cambios detallada de cualquier archivo del repositorio
 id: US-DEV-CODE-003
 urn: urn:goreos:atom:story:us_dev_code_003:1.0.0
 role_id: ROL-DEVELOPER
+as_a: Rol no encontrado (ROL-DEVELOPER)
 i_want: visualizar la historia de cambios detallada de cualquier archivo del repositorio
 so_that: pueda entender el contexto y la evolución de una funcionalidad específica
 domain: D-DEV

@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:role:jefe_diplade:1.0.0
+  type: Role
+  source: organization
+id: USR-DIPL-JEFE
+role_key: jefe_diplade
+title: Jefe DIPLADE
+description: Jefatura de la División de Planificación y Desarrollo Regional.
+type: INTERNAL
+unit: DIPLADE
+unit_type: Ejecutivo & Operaciones
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:jefe_diplade:1.0.0
+domain: D-GESTION

@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:auditoria_cgr:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-AUDITORIA_CGR
+name: Auditoría CGR
+domain: D-DIG
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_auditoria, type: UUID, key: true}
+  - {name: numero, type: String}
+  - {name: tipo, type: String}
+  - {name: materia, type: Text}
+  - {name: fecha_inicio, type: Date}
+  - {name: fecha_informe, type: Date, nullable: true}
+  - {name: hallazgos, type: Integer}
+  - {name: estado, type: String}

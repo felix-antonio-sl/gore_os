@@ -1,0 +1,17 @@
+---
+# --- mod_evol_orquestacion_agentes.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_orquestacion_agentes:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-ORQUESTACION-AGENTES
+name: Orquestación de Agentes
+domain: D-EVOL
+description: Coordinación y flujo entre agentes IA.
+composition:
+  processes: []
+  entities: [urn:goreos:atom:entity:d_evol_orquestador:1.0.0]
+morphisms:
+  implements_capability: []
+  depends_on: [urn:goreos:atom:module:evol_agentes_ia:1.0.0]

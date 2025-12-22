@@ -1,0 +1,17 @@
+---
+# --- mod_gob_actores_stakeholders.yml ---
+_meta:
+  urn: urn:goreos:atom:module:gob_actores_stakeholders:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-GOB-ACTORES-STAKEHOLDERS
+name: Gestión de Actores (SADV)
+domain: D-GOB
+description: Mapeo y gestión de stakeholders regionales.
+composition:
+  processes: []
+  entities: [urn:goreos:atom:entity:d_gob_sadv_de_actores:1.0.0]
+morphisms:
+  implements_capability: []
+  depends_on: []

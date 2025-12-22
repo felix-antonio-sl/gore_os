@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_del_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Coordinar gestión del orden público regional
 id: US-GOB-DEL-004
 urn: urn:goreos:atom:story:us_gob_del_004:1.0.0
 role_id: USR-EXT-DPR
+as_a: Delegado Presidencial Regional
 i_want: Coordinar gestión del orden público regional
 so_that: Mantengo seguridad institucional
 domain: D-GOB

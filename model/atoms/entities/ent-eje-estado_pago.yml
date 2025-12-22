@@ -1,0 +1,19 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:estado_pago:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-ESTADO_PAGO
+name: Estado de Pago
+domain: D-EJE
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - {name: id_ep, type: UUID, key: true}
+  - {name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO}
+  - {name: numero, type: Integer}
+  - {name: monto_solicitado, type: Decimal}
+  - {name: monto_aprobado, type: Decimal}
+  - {name: fecha_presentacion, type: Date}
+  - {name: fecha_aprobacion, type: Date, nullable: true}
+  - {name: estado, type: String}

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_auth_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Logs de autenticación con trazabilidad completa (usuario, fecha,
 id: US-TDE-AUTH-004
 urn: urn:goreos:atom:story:us_tde_auth_004:1.0.0
 role_id: USR-DAF-TIC-ADMIN
+as_a: Administrador TI
 i_want: Registrar logs de autenticación con trazabilidad completa (usuario, fecha,
   IP)
 so_that: Mantengo auditoría de accesos conforme a DS9

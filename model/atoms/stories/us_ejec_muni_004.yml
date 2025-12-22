@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportar avance periódico (validación supervisor)
 id: US-EJEC-MUNI-004
 urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
 role_id: USR-MUNI-TEC
+as_a: Unidad Técnica Municipal
 i_want: Reportar avance periódico (validación supervisor)
 so_that: Cumplo con reporte
 domain: D-EJEC

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_c33_002:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Tipología Activo (Vehículo, Maquinaria, Equipo)
 id: US-FIN-C33-002
 urn: urn:goreos:atom:story:us_fin_c33_002:1.0.0
 role_id: USR-DIPIR-C33
+as_a: Analista Operaciones C33
 i_want: Validar tipología Activo (Vehículo, Maquinaria, Equipo)
 so_that: Clasifico correctamente
 domain: D-FIN

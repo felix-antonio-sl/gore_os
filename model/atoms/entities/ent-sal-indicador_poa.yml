@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:salus:indicador_poa:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SAL-INDICADOR_POA
+name: Indicador POA
+domain: D-SAL
+category: Transaction
+attributes:
+  - {name: id_indicador, type: UUID, key: true}
+  - {name: poa_id, type: UUID, fk: ENT-SAL-POA}
+  - {name: nombre, type: String}
+  - {name: meta, type: Decimal}
+  - {name: actual, type: Decimal}
+  - {name: ponderacion, type: Decimal}

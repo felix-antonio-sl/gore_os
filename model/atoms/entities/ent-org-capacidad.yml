@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:capacidad:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-CAPACIDAD
+name: Capacidad
+domain: D-ORG
+category: Reference
+attributes:
+  - {name: id_capacidad, type: UUID, key: true}
+  - {name: division_id, type: UUID, fk: ENT-ORG-DIVISION}
+  - {name: nombre, type: String}
+  - {name: tipo, type: String}
+  - {name: nivel_requerido, type: String}
+  - {name: descripcion, type: Text}

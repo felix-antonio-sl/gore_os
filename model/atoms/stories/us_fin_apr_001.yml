@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fin_apr_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
 id: US-FIN-APR-001
 urn: urn:goreos:atom:story:us_fin_apr_001:1.0.0
 role_id: USR-GOB-JEFE
+as_a: Gobernador Regional
 i_want: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
 so_that: Cumplo con obligación legal
 domain: D-FIN

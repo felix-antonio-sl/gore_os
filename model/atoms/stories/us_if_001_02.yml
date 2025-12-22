@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_if_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Informes de fiscalización con plantillas estándar
 id: US-IF-001-02
 urn: urn:goreos:atom:story:us_if_001_02:1.0.0
 role_id: USR-DIPIR-INSP-FISCAL
+as_a: Inspector Fiscal (Obra/Estudio)
 i_want: generar informes de fiscalización con plantillas estándar
 so_that: la documentación sea consistente
 domain: D-EJEC

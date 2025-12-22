@@ -1,0 +1,20 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:activo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-ACTIVO
+name: Activo Fijo
+domain: D-ORG
+subdomain: recursos
+category: Master
+attributes:
+  - {name: id_activo, type: UUID, key: true}
+  - {name: codigo_inventario, type: String}
+  - {name: descripcion, type: String}
+  - {name: tipo, type: String}
+  - {name: valor_adquisicion, type: Decimal}
+  - {name: fecha_adquisicion, type: Date}
+  - {name: vida_util_anios, type: Integer}
+  - {name: responsable_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: estado, type: String}

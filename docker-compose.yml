@@ -38,6 +38,34 @@ services:
     networks:
       - gore_net
 
+  # 🚀 Backend API (Hono + Bun)
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: gore_api
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://${DB_USER:-gore}:${DB_PASSWORD:-gore_secret}@db:5432/${DB_NAME:-gore_os}
+    depends_on:
+      - db
+    networks:
+      - gore_net
+
+  # 💻 Frontend Web (React + Vite + Nginx)
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: gore_web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - gore_net
+
 networks:
   gore_net:
     driver: bridge

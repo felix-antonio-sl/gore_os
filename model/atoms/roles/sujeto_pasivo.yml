@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:sujeto_pasivo:1.0.0
+  urn: "urn:goreos:atom:role:sujeto_pasivo:2.0.0"
   type: Role
-  source: organization
-id: USR-GOB-PAS
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-PAS"
 role_key: sujeto_pasivo
 title: Sujeto Pasivo (Autoridad)
 description: Rol legal para Ley de Lobby; encargado de recibir y registrar audiencias.
 type: INTERNAL
+logic_scope: TACTICAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: Gobernador Regional
 unit_type: Gobernanza Estratégica
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:sujeto_pasivo:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

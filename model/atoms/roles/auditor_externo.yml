@@ -1,18 +1,22 @@
 _meta:
-  urn: urn:goreos:atom:role:auditor_externo:1.0.0
+  urn: "urn:goreos:atom:role:auditor_externo:2.0.0"
   type: Role
-  source: organization
-id: USR-NEW-AUDITOR-EXTE
+  schema: "urn:goreos:schema:role:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "ROL-GESTION-AUDITOR-EXTE"
 role_key: auditor_externo
 title: Auditor Externo
 description: Rol agregado para concordancia con historias de usuario.
 type: INTERNAL
+logic_scope: OPERATIONAL
+
+morphisms:
+  actor_of: []
+  governed_by: []
+
 unit: Roles Adicionales (Concordancia)
 unit_type: Mixto
-archetype: null
-morphisms_req:
-  es_actor_de: []
-morphisms_ops:
-  ejecuta: []
-urn: urn:goreos:atom:role:auditor_externo:1.0.0
 domain: D-GESTION
+archetype: null
+extends: null

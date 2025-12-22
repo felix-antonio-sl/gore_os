@@ -1,0 +1,19 @@
+_meta:
+  urn: urn:goreos:atom:capability:cap_back_abs_001:1.0.0
+  type: Capability
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CAP-BACK-ABS-001
+name: Abastecimiento y Compras
+domain: D-BACK
+type: CORE
+description: Compras conforme Ley 19.886 y ChileCompra.
+stories:
+- us_back_abs_002
+- us_back_abs_004
+- us_back_abs_005
+- us_abast_001_01
+- us_abast_001_02
+- us_back_comp_002
+- us_back_comp_003
+ofrecida_por: null

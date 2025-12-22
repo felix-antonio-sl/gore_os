@@ -1,0 +1,19 @@
+_meta:
+  urn: urn:goreos:atom:role:itp_programa:1.0.0
+  type: Role
+  source: organization
+id: USR-DIPIR-ITP
+role_key: itp_programa
+title: Inspector Técnico de Programa (ITP)
+description: Supervisión técnica de ejecución, avance y revisión de rendiciones de
+  programas (Referente Técnico).
+type: INTERNAL
+unit: DIPIR
+unit_type: Ejecutivo & Operaciones
+archetype: null
+morphisms_req:
+  es_actor_de: []
+morphisms_ops:
+  ejecuta: []
+urn: urn:goreos:atom:role:itp_programa:1.0.0
+domain: D-EJEC

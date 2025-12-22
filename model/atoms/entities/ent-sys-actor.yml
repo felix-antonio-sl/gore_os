@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:nucleus:actor:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-SYS-ACTOR
+name: Actor
+domain: D-SYS
+category: Master
+is_abstract: true
+description: "Objeto terminal - cualquier agente del sistema"
+attributes:
+  - {name: id_actor, type: UUID, key: true}
+  - {name: tipo_actor, type: String}
+  - {name: identificador, type: String}
+  - {name: nombre, type: String}
+  - {name: activo, type: Boolean, default: true}

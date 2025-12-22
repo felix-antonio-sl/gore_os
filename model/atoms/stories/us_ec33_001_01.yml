@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_ec33_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reporte de vida útil y depreciación de activos financiados
 id: US-EC33-001-01
 urn: urn:goreos:atom:story:us_ec33_001_01:1.0.0
 role_id: USR-DIPIR-C33-ENC
+as_a: Encargado Circular 33
 i_want: reporte de vida útil y depreciación de activos financiados
 so_that: pueda planificar reposiciones
 domain: D-FIN

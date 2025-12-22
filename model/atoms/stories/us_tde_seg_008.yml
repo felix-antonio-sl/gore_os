@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_seg_008:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Logs de acceso a datos sensibles
 id: US-TDE-SEG-008
 urn: urn:goreos:atom:story:us_tde_seg_008:1.0.0
 role_id: USR-TDE-CISO
+as_a: CISO
 i_want: Auditar logs de acceso a datos sensibles
 so_that: Detecto anomalías
 domain: D-TDE

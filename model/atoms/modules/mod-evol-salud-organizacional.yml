@@ -1,0 +1,21 @@
+---
+# --- mod_evol_salud_organizacional.yml ---
+_meta:
+  urn: urn:goreos:atom:module:evol_salud_organizacional:1.0.0
+  type: Module
+  version: 1.0.0
+  generated_at: "2025-12-22"
+id: MOD-EVOL-SALUD-ORGANIZACIONAL
+name: Salud Organizacional (H_ORG)
+domain: D-EVOL
+description: Indicadores de salud y madurez institucional.
+composition:
+  processes: []
+  entities:
+    [
+      urn:goreos:atom:entity:d_evol_h_gore:1.0.0,
+      urn:goreos:atom:entity:d_evol_h_org:1.0.0,
+    ]
+morphisms:
+  implements_capability: []
+  depends_on: []

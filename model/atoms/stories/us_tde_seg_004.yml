@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_seg_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Reportar incidentes de seguridad a CSIRT MININT y ANCI
 id: US-TDE-SEG-004
 urn: urn:goreos:atom:story:us_tde_seg_004:1.0.0
 role_id: USR-TDE-CISO
+as_a: CISO
 i_want: Reportar incidentes de seguridad a CSIRT MININT y ANCI
 so_that: Notifico al Estado
 domain: D-TDE

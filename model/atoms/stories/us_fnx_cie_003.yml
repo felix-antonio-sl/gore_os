@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_fnx_cie_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: El desempeño de los miembros de la Fuerza de Tarea
 id: US-FNX-CIE-003
 urn: urn:goreos:atom:story:us_fnx_cie_003:1.0.0
 role_id: USR-CAL-FNX-J
+as_a: Jefe FENIX
 i_want: Evaluar el desempeño de los miembros de la Fuerza de Tarea
 so_that: Reconozco el mérito y mejoro futuras asignaciones
 domain: D-FENIX

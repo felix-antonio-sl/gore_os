@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_core_010:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Actas de sesiones anteriores
 id: US-GOB-CORE-010
 urn: urn:goreos:atom:story:us_gob_core_010:1.0.0
 role_id: USR-CORE-CONS
+as_a: Consejero Regional (Pleno)
 i_want: Acceder a actas de sesiones anteriores
 so_that: Consulto decisiones previas
 domain: D-GOB

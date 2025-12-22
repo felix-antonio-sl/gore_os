@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_eval_001_01:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Un formulario de evaluación con criterios ponderados
 id: US-EVAL-001-01
 urn: urn:goreos:atom:story:us_eval_001_01:1.0.0
 role_id: USR-DIDES-FOND-EVAL
+as_a: Evaluador Social
 i_want: un formulario de evaluación con criterios ponderados
 so_that: la evaluación sea objetiva y trazable
 domain: D-EJEC

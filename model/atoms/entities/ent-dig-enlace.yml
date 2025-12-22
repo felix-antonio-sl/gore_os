@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:nexus:enlace:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-ENLACE
+name: Enlace Externo
+domain: D-DIG
+category: Reference
+description: "Morfismo a repositorios externos: preserva links a Drive, SharePoint, SIGFE, etc."
+attributes:
+  - {name: id_enlace, type: UUID, key: true}
+  - {name: documento_id, type: UUID, fk: ENT-SYS-DOCUMENTO}
+  - {name: url, type: String}
+  - {name: tipo_repositorio, type: String}
+  - {name: fecha_verificacion, type: DateTime, nullable: true}
+  - {name: estado, type: String}

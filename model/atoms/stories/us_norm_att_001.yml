@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_norm_att_001:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Herramientas de validación de formatos de archivos
 id: US-NORM-ATT-001
 urn: urn:goreos:atom:story:us_norm_att_001:1.0.0
 role_id: USR-NORM-TRANSP-TEC
+as_a: Apoyo Técnico Transparencia
 i_want: herramientas de validación de formatos de archivos
 so_that: los documentos cumplan estándares
 domain: D-NORM

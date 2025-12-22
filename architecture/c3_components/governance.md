@@ -18,23 +18,28 @@ GORE_OS está diseñado para maximizar el puntaje en la evaluación **EVALTIC** 
 La arquitectura implementa las 5 funciones del Framework NIST Cybersecurity, obligatorio por instructivo presidencial.
 
 ### 2.1. Identificar (Identify)
+
 - **Activos como Código**: Toda la infraestructura está definida en `docker-compose.yml` y codigo fuente (IaC). No hay "servidores mascota".
 - **Clasificación de Datos**: El esquema de base de datos (`schema.ts`) distingue explícitamente datos sensibles (PII) usando tipos dedicados.
 
 ### 2.2. Proteger (Protect)
+
 - **Zero Trust Network**: Los contenedores de DB y Redis no exponen puertos al host público; solo son accesibles vía red interna de Docker por la API.
 - **Autenticación Robusta**: Delegada a Keycloak/ClaveÚnica (OIDC). GORE_OS no almacena credenciales.
 - **Principio de Mínimo Privilegio**: Los roles de base de datos (Postgres) se segregan entre `app_user` (CRUD limitado) y `migration_user` (DDL).
 
 ### 2.3. Detectar (Detect)
+
 - **Logging Estructurado**: Uso de `Pino` para logs en formato JSON.
 - **Trazabilidad**: Cada request recibe un `requestId` (UUID) que viaja desde el balanceador (Caddy) hasta la base de datos, permitiendo correlación total de eventos.
 
 ### 2.4. Responder (Respond)
+
 - **Health Checks**: Endpoints `/health` y `/ready` para que el orquestador reinicie automáticamente servicios degradados.
 - **Modo Degradado**: El sistema puede operar en modo "solo lectura" si la base de datos primaria falla o entra en mantenimiento.
 
 ### 2.5. Recuperar (Recover)
+
 - **Inmutabilidad**: Los backups de la base de datos se envían a almacenamiento de objetos (S3) con versionado y bloqueo de eliminación (Object Lock) para protección contra Ransomware.
 - **RTO/RPO**: Arquitectura diseñada para RTO < 1 hora y RPO < 15 min.
 

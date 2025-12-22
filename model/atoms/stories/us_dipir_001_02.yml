@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_dipir_001_02:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: CDPs digitalmente con validación automática de saldo
 id: US-DIPIR-001-02
 urn: urn:goreos:atom:story:us_dipir_001_02:1.0.0
 role_id: USR-DIPIR-JEFE
+as_a: Jefe DIPIR
 i_want: aprobar CDPs digitalmente con validación automática de saldo
 so_that: no se comprometan recursos sin disponibilidad
 domain: D-FIN

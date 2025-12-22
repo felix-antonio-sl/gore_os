@@ -2,23 +2,25 @@ _meta:
   urn: urn:goreos:atom:process:d_ops_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: plan_especificacion_ddev_dops.md
+  source: archive/legacy_domains/domain_d-ops.md
 id: PROC-OPS-P3
-name: Respuesta a Incidente Proactiva
+name: Gestión de Incidentes
 domain: D-OPS
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-OPS-INCIDENTE-01
+  mermaid_ref: domain_d-ops.md#73-p3-gestión-de-incidentes
+  mermaid: |
+    flowchart TD
+        A["Usuario reporta<br/>falla"] --> B["Registrar<br/>ticket"]
+        B --> C["Clasificar<br/>severidad"]
+        C --> D["Asignar a<br/>responsable"]
+        D --> E["Diagnosticar"]
+        E --> F{"¿Solución<br/>conocida?"}
+        F -->|"Sí"| G["Aplicar<br/>runbook"]
+        F -->|"No"| H["Escalar a<br/>D-DEV"]
+        G --> I["Resolver y<br/>notificar"]
+        H --> I
+        I --> J["Cerrar ticket<br/>y documentar"]
+        J --> K["Actualizar<br/>KB si aplica"]

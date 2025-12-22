@@ -1,0 +1,17 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:rol:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-ROL
+name: Rol
+domain: D-ORG
+category: Reference
+attributes:
+  - {name: id_rol, type: UUID, key: true}
+  - {name: plataforma_id, type: UUID, fk: ENT-DIG-PLATAFORMA}
+  - {name: codigo, type: String}
+  - {name: nombre, type: String}
+  - {name: descripcion, type: Text}
+  - {name: permisos, type: "Array[String]"}
+  - {name: activo, type: Boolean}

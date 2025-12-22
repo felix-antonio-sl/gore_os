@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_tde_interop_004:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Acuerdos previos antes de consumir servicios
 id: US-TDE-INTEROP-004
 urn: urn:goreos:atom:story:us_tde_interop_004:1.0.0
 role_id: USR-DAF-TIC-CTD
+as_a: Coordinador Transformación Digital (CTD)
 i_want: Gestionar acuerdos previos antes de consumir servicios
 so_that: Formalizo intercambios
 domain: D-TDE

@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_seg_cies_003:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Tomar control manual de cámara PTZ ante incidente flagrante
 id: US-SEG-CIES-003
 urn: urn:goreos:atom:story:us_seg_cies_003:1.0.0
 role_id: USR-CIES-OP
+as_a: Operador CIES
 i_want: Tomar control manual de cámara PTZ ante incidente flagrante
 so_that: Enfoco el evento
 domain: D-SEG

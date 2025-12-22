@@ -2,9 +2,11 @@ _meta:
   urn: urn:goreos:atom:story:us_gob_desc_005:1.0.0
   type: Story
   schema: urn:goreos:schema:story:1.0.0
+name: Elaborar plan de instalación de competencia transferida
 id: US-GOB-DESC-005
 urn: urn:goreos:atom:story:us_gob_desc_005:1.0.0
 role_id: USR-GOB-COMP
+as_a: Encargado Competencias
 i_want: Elaborar plan de instalación de competencia transferida
 so_that: Aseguro operatividad
 domain: D-GOB

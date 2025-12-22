@@ -1,0 +1,12 @@
+---
+_meta:
+  urn: urn:goreos:profunctor:tiene_evento:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+id: PROF-TIENE-EVENTO
+name: tiene_evento
+description: "Coalgebra: entidad transaccional genera eventos de cambio de estado"
+source: ENT-SYS-EVENTO
+target: "*"
+cardinality: "N:1"
+semantics: "Un evento pertenece a una entidad; una entidad puede tener N eventos"

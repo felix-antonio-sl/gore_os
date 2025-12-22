@@ -2,23 +2,40 @@ _meta:
   urn: urn:goreos:atom:process:d_fin_ipr_core_p3:1.0.0
   type: Process
   schema: urn:goreos:schema:process:1.0.0
-  source: domains/d-fin-ipr_core
+  source: docs/processes/D03_gestion_ipr.md
 id: PROC-FIN-IPR_CORE-P3
 name: Obtención de Financiamiento
 domain: D-FIN-IPR_CORE
 code: P3
 process_type: BPMN
 spec:
-  bpmn_id: '`BPMN-GN-RRHH-REMUNERACIONES-01`'
-  mermaid_ref: D07_rrhh.md#p3-remuneraciones-y-compensaciones
-  systems:
-  - SIGPER
-  - PREVIRED
-  - SIGFE
-  mermaid: "flowchart TD\n    A[\"Inicio mes\"] --> B[\"Recopilar novedades:<br/>•\
-    \ Licencias<br/>• Horas extra<br/>• Descuentos\"]\n    B --> C[\"Calcular remuneración<br/>bruta\"\
-    ]\n    C --> D[\"Aplicar descuentos:<br/>• Previsión<br/>• Salud<br/>• Impuestos<br/>•\
-    \ Otros\"]\n    D --> E[\"Generar liquidación\"]\n    E --> F[\"Revisión y<br/>validación\"\
-    ]\n    F --> G[\"Autorización<br/>pago\"]\n    G --> H[\"Pagar PREVIRED<br/>(cotizaciones)\"\
-    ]\n    H --> I[\"Transferir a<br/>cuentas funcionarios\"]\n    I --> J[\"Contabilizar<br/>en\
-    \ SIGFE\"]\n    J --> K[\"Archivar<br/>liquidaciones\"]\n\n    style I fill:#4CAF50,color:#fff"
+  bpmn_id: BPMN-GN-IPR-FASE3-01
+  mermaid_ref: D03_gestion_ipr.md#p3-obtención-de-financiamiento
+  rutas: ["A (Sin CORE)", "B (Con CORE)"]
+  mermaid: |
+    flowchart TD
+        A["IPR con RS/RF"] --> B{"¿Requiere<br/>Acuerdo CORE?"}
+        
+        subgraph RUTA_A["Ruta A: Sin CORE"]
+            C["Solicitar CDP"]
+            D["DAF emite CDP"]
+            E["Instrucción a<br/>Depto. Presupuesto"]
+        end
+
+        subgraph RUTA_B["Ruta B: Con CORE"]
+            F["Preparar carpeta<br/>CORE"]
+            G["Envío formal<br/>al CORE"]
+            H["Votación CORE"]
+            I{"¿Aprobado?"}
+            J["Certificado<br/>Acuerdo CORE"]
+            K["Solicitar creación<br/>presupuestaria"]
+        end
+
+        B -->|"No"| C --> D --> E
+        B -->|"Sí"| F --> G --> H --> I
+        I -->|"✅"| J --> K
+        I -->|"❌"| L["Rechazado"]
+
+        style E fill:#4CAF50,color:#fff
+        style K fill:#4CAF50,color:#fff
+        style L fill:#f44336,color:#fff

@@ -1,0 +1,16 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:asistencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-ORG-ASISTENCIA
+name: Asistencia
+domain: D-ORG
+category: Event
+attributes:
+  - {name: id_asistencia, type: UUID, key: true}
+  - {name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
+  - {name: fecha, type: Date}
+  - {name: hora_entrada, type: Time}
+  - {name: hora_salida, type: Time}
+  - {name: tipo, type: String}
