@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:alerta_mora:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ALERTA-MORA"
+id: ENT-ALERTA-MORA
+name: "AlertaMoraPagoRegional"
+description: "Notificación generada por retraso o mora en pagos del GORE Ñuble. Incluye alertas por vencimiento de facturas, plazos de pago a proveedores, obligaciones contractuales y otros compromisos financieros, permitiendo gestión oportuna y evitando recargos, intereses o sanciones."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

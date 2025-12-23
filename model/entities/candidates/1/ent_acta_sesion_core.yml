@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:gob:acta_sesion_core:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-GOB-ACTA-SESION-CORE"
+id: ENT-ACTA-SESION-CORE
+name: "ActaSesionCORE"
+description: "Registro oficial de cada sesión del Consejo Regional de Ñuble (CORE). Documenta nómina de asistentes, orden del día, mociones presentadas, resultados de votaciones y acuerdos adoptados con sus fundamentos legales. Es el instrumento legal que da validez a las decisiones del órgano de gobierno regional y debe ser transcrita y publicada según normativa."
+tags: [GOB]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

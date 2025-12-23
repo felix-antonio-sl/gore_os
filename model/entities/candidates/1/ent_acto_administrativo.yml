@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:norm:acto_administrativo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-NORM-ACTO-ADMINISTRATIVO"
+id: ENT-ACTO-ADMINISTRATIVO
+name: "ActoAdministrativo"
+description: "Decisión formal o declaración de voluntad emitida por autoridad competente del GORE Ñuble en ejercicio de sus facultades legales. Incluye decretos del Gobernador, resoluciones de servicios, acuerdos del CORE y otros actos que producen efectos jurídicos, deben ser notificados según Ley 19.880 y pueden ser impugnados mediante recursos administrativos o jurisdiccionales."
+tags: [NORM]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

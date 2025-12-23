@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:soc:alcance_local:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SOC-ALCANCE-LOCAL"
+id: ENT-ALCANCE-LOCAL
+name: "AlcanceTerritorialLocal"
+description: "Delimitación geográfica y poblacional de proyectos o intervenciones del GORE Ñuble. Define el territorio específico de influencia, comunas involucradas, población beneficiaria y área de cobertura, permitiendo focalizar acciones y medir impactos a nivel local según criterios de territorialidad y desarrollo regional."
+tags: [SOC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

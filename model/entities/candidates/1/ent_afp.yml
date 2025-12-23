@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:org:afp:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-ORG-AFP"
+id: ENT-AFP
+name: "AdministradoraPensionesRegional"
+description: "Administradora de Fondos de Pensiones (AFP) con la cual el GORE Ñuble mantiene relación contractual o cotizaciones previsionales. Registra información de AFPs de funcionarios, cotizaciones previsionales obligatorias y voluntarias, traspaso de fondos, cotizaciones de salud y beneficios de pensiones, asegurando cumplimiento con normativa previsional chilena (Ley 20.255)."
+tags: [ORG]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

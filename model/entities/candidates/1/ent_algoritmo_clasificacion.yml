@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:algoritmo_clasificacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ALGORITMO-CLASIFICACION"
+id: ENT-ALGORITMO-CLASIFICACION
+name: "AlgoritmoClasificacionGORE"
+description: "Modelo automatizado para clasificar documentos del GORE Ñuble según tipo, confidencialidad y prioridad. Utiliza inteligencia artificial para categorizar expedientes, correspondencia, actas y otros documentos, facilitando su organización, búsqueda y gestión según normativa de archivos y protección de datos."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

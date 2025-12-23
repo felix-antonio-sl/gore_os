@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:activo_fijo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-ACTIVO-FIJO"
+id: ENT-ACTIVO-FIJO
+name: "ActivoFijo"
+description: "Bien tangible o intangible de larga duración propiedad del GORE Ñuble que forma parte del patrimonio regional. Incluye edificios públicos, terrenos, vehículos institucionales, maquinaria especializada y equipos utilizados en operaciones regionales. Es depreciado según normas de contabilidad gubernamental y normativa de la Contraloría General de la República."
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

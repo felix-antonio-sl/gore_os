@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:soc:bitacora_terreno:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SOC-BITACORA-TERRENO"
+id: ENT-BITACORA-TERRENO
+name: "Bitácora de Terreno"
+description: "Documentación de actividades, observaciones y eventos registrados durante visitas de inspección o supervisión en terreno de proyectos y obras."
+tags: [SOC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

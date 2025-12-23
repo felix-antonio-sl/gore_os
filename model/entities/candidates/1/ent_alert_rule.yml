@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:tde:alert_rule:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-TDE-ALERT-RULE"
+id: ENT-ALERT-RULE
+name: "ReglaAlertaSistemaGORE"
+description: "Configuración de regla automatizada para generar alertas en sistemas de monitoreo del GORE Ñuble. Define condiciones, umbrales, frecuencias de verificación y acciones a ejecutar cuando se detectan anomalías en procesos críticos, sistemas TDE o indicadores de gestión regional."
+tags: [TDE]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

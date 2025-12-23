@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:norm:acto_impugnado:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-NORM-ACTO-IMPUGNADO"
+id: ENT-ACTO-IMPUGNADO
+name: "ActoAdministrativoImpugnado"
+description: "Acto administrativo que ha sido objeto de recurso o reclamación ante autoridad competente. Incluye recursos de reposición, jerárquico o reclamación ilegalidad, con sus fundamentos, estado actual y resolución, permitiendo el seguimiento de impugnaciones contra decisiones del GORE."
+tags: [NORM]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

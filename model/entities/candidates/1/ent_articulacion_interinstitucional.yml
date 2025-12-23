@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:gob:articulacion_interinstitucional:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-GOB-ARTICULACION-INTERINSTITUCIONAL"
+id: ENT-ARTICULACION-INTERINSTITUCIONAL
+name: "ArticulacionInterinstitucional"
+description: "Mecanismo de coordinación entre el GORE Ñuble y otras instituciones públicas, privadas o sociales. Incluye convenios, mesas de trabajo, comités técnicos y otras instancias de colaboración para el desarrollo regional y la gestión integrada de políticas públicas."
+tags: [GOB]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

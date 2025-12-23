@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:conv:acuerdo_internacional:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-CONV-ACUERDO-INTERNACIONAL"
+id: ENT-ACUERDO-INTERNACIONAL
+name: "ConvenioCooperacionInternacional"
+description: "Acuerdo binacional o multilateral formal celebrado entre el GORE Ñuble y organismos extranjeros. Incluye convenios de cooperación técnica internacional, hermanamiento de ciudades, proyectos de desarrollo transfronterizo y acuerdos de colaboración que requieren aprobación ministerial y registro según normativa del Ministerio de Relaciones Exteriores de Chile."
+tags: [CONV]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

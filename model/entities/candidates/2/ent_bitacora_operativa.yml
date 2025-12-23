@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:bitacora_operativa:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-BITACORA-OPERATIVA"
+id: ENT-BITACORA-OPERATIVA
+name: "Bitácora Operativa"
+description: "Registro sistemático de operaciones y eventos críticos del sistema GORE_OS, incluyendo auditoría de cambios, accesos y procesos ejecutados."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:agenda:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-AGENDA"
+id: ENT-AGENDA
+name: "AgendaActividadesRegional"
+description: "Registro sistematizado de actividades, reuniones y compromisos programados del GORE Ñuble. Incluye fecha, hora, participantes, lugar, temas a tratar y recursos necesarios, permitiendo la organización eficiente, coordinación de eventos institucionales y gestión óptima del tiempo de autoridades y funcionarios según protocolos de planificación."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

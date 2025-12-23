@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:busqueda:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-BUSQUEDA"
+id: ENT-BUSQUEDA
+name: "Búsqueda"
+description: "Consulta parametrizada en repositorios de información del GORE para encontrar documentos, expedientes o datos específicos."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

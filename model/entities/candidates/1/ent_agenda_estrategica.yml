@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:gob:agenda_estrategica:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-GOB-AGENDA-ESTRATEGICA"
+id: ENT-AGENDA-ESTRATEGICA
+name: "AgendaEstrategicaRegional"
+description: "Planificación estratégica de largo plazo con objetivos, metas e iniciativas prioritarias del GORE Ñuble. Incluye proyectos estructurales, hitos de desarrollo regional, programas estratégicos y acciones clave alineadas con la Estrategia Regional de Desarrollo 2024-2030, con seguimiento periódico de avances e indicadores de cumplimiento."
+tags: [GOB]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

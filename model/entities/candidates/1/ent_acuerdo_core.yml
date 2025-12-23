@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:gov:acuerdo_core:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-GOV-ACUERDO-CORE"
+id: ENT-ACUERDO-CORE
+name: "AcuerdoConsejoRegionalFNDR"
+description: "Decisión formal vinculante adoptada por el Consejo Regional de Ñuble mediante votación reglamentaria. Incluye acuerdos sobre asignación presupuestaria FNDR, aprobación de proyectos estratégicos, políticas regionales de desarrollo y otras materias de competencia exclusiva regional, con registro detallado de consejeros que votaron a favor, en contra o se abstuvieron según LOC GORE."
+tags: [GOV]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

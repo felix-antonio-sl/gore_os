@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:apalancamiento_sectorial:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-APALANCAMIENTO-SECTORIAL"
+id: ENT-APALANCAMIENTO-SECTORIAL
+name: "ApalancamientoInversionSectorial"
+description: "Mecanismo financiero para maximizar el impacto de recursos del GORE Ñuble mediante cofinanciamiento y leverage. Incluye aportes de privados, fondos concursables, programas nacionales e internacionales que complementan la inversión regional, multiplicando el efecto de los recursos públicos."
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

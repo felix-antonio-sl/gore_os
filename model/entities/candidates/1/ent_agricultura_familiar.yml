@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:terr:agricultura_familiar:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-TERR-AGRICULTURA-FAMILIAR"
+id: ENT-AGRICULTURA-FAMILIAR
+name: "AgriculturaFamiliarCampesina"
+description: "Actividad agrícola desarrollada por pequeños productores familiares de la región de Ñuble. Incluye registro de agricultores, tipos de cultivos, superficie, producción, programas de apoyo y fomento del INDAP, buscando mejorar la competitividad y sostenibilidad del sector familiar campesino según políticas de desarrollo rural."
+tags: [TERR]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

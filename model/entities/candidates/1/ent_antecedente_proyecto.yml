@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:doc:antecedente_proyecto:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-DOC-ANTECEDENTE-PROYECTO"
+id: ENT-ANTECEDENTE-PROYECTO
+name: "AntecedenteTecnicoProyecto"
+description: "Documento técnico que fundamenta y respalda un proyecto del GORE Ñuble. Incluye estudios de prefactibilidad, diseños, especificaciones, análisis de impacto y otros elementos técnicos necesarios para la evaluación y aprobación de iniciativas de inversión regional."
+tags: [DOC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

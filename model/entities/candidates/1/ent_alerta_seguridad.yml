@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:alerta_seguridad:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ALERTA-SEGURIDAD"
+id: ENT-ALERTA-SEGURIDAD
+name: "AlertaSeguridadRegional"
+description: "Notificación crítica sobre brechas de seguridad, accesos no autorizados o incidentes de ciberseguridad en sistemas del GORE Ñuble. Incluye intentos de intrusión, malware, vulnerabilidades explotadas y otros eventos que comprometen la integridad, confidencialidad o disponibilidad de la información institucional."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

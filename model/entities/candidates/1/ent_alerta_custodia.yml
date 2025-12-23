@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:alerta_custodia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ALERTA-CUSTODIA"
+id: ENT-ALERTA-CUSTODIA
+name: "AlertaSeguridadCustodiaRegional"
+description: "Notificación de brecha o riesgo en la custodia de documentos, activos o información sensible del GORE Ñuble. Incluye accesos no autorizados, pérdida de documentos, manipulación indebida y otros eventos que comprometen la integridad y confidencialidad de bienes bajo resguardo regional."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

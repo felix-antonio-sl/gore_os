@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:arquitectura_sistema:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ARQUITECTURA-SISTEMA"
+id: ENT-ARQUITECTURA-SISTEMA
+name: "ArquitecturaSistema"
+description: "Diseño estructural y componentes del ecosistema GORE_OS. Incluye microservicios, APIs, bases de datos, patrones de integración, despliegue y monitoreo, definiendo la arquitectura tecnológica que soporta todos los procesos regionales."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

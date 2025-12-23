@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:activo_adquirido:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-ACTIVO-ADQUIRIDO"
+id: ENT-ACTIVO-ADQUIRIDO
+name: "ActivoAdquirido"
+description: "Bien o recurso incorporado al patrimonio del GORE Ñuble a través de compra, donación o transferencia. Incluye identificación del bien, fecha de adquisición, costo, proveedor, vida útil y estado actual. Forma parte del inventario de activos regionales y debe registrarse según normas de contabilidad gubernamental y manual de activos fijos."
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:plan:brecha_territorial:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-PLAN-BRECHA-TERRITORIAL"
+id: ENT-BRECHA-TERRITORIAL
+name: "Brecha Territorial"
+description: "Asimetrías en acceso, cobertura o calidad de servicios entre diferentes comunas o zonas de la región, identificando territorios prioritarios."
+tags: [PLAN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

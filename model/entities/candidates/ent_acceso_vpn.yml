@@ -6,7 +6,8 @@ _meta:
   origin: candidate
   source_id: "ENT-SYS-ACCESO-VPN"
 id: ENT-ACCESO-VPN
-name: "uLuAuCuCuEuSuOu uVuPuNu"
+name: "SesionVPNRemota"
+description: "Registra cada sesión de conexión VPN establecida por funcionarios autorizados para acceso remoto seguro a sistemas del GORE. Incluye identificación del usuario, dispositivo, IP origen, fecha/hora de conexión y desconexión, y duración. Es esencial para auditoría de ciberseguridad, cumplimiento de normativa TDE (Ley 21.180) y detección de accesos no autorizados o patrones anómalos de conexión."
 tags: [SYS]
 category: Master
 attributes:

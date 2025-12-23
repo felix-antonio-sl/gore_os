@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:adr:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ADR"
+id: ENT-ADR
+name: "ResolucionAlternativaDisputasGORE"
+description: "Mecanismo de Resolución Alternativa de Disputas (ADR) implementado por el GORE para resolver conflictos extrajudicialmente. Incluye mediación, conciliación y arbitraje para controversias con ciudadanos, proveedores u otras entidades, evitando litigios judiciales, reduciendo costos y agilizando la solución de disputas según normativa de procedimientos administrativos."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

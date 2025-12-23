@@ -6,7 +6,8 @@ _meta:
   origin: candidate
   source_id: "ENT-ORG-ACCIDENTE-TRABAJO"
 id: ENT-ACCIDENTE-TRABAJO
-name: "uLuAuCuCuIuDuEuNuTuEu uTuRuAuBuAuJuOu"
+name: "AccidenteTrabajoGORE"
+description: "Suceso imprevisto ocurrido en el lugar de trabajo o con ocasión del trabajo que produce lesiones corporales al trabajador. Debe ser denunciado dentro de 24 horas a la aseguradora, investigado por el Comité Paritario de Seguridad, y registrado en el sistema del GORE. Incluye medidas preventivas, tratamiento médico y seguimiento hasta el alta laboral según normativa Ley 16.744."
 tags: [ORG]
 category: Master
 attributes:

@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:analisis_causa_raiz:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ANALISIS-CAUSA-RAIZ"
+id: ENT-ANALISIS-CAUSA-RAIZ
+name: "AnalisisCausaRaiz"
+description: "Metodología sistemática para identificar causas fundamentales de problemas o incidentes en el GORE Ñuble. Utiliza técnicas como Ishikawa, 5 Porqués y análisis de árbol de fallos para determinar el origen root de problemas operativos, financieros o de gestión, permitiendo soluciones definitivas y preventivas."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

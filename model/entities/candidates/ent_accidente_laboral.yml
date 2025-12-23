@@ -5,7 +5,8 @@ _meta:
   schema: urn:goreos:schema:entity:2.0.0
   origin: candidate_collision_resolved
 id: ENT-ACCIDENTE_LABORAL
-name: "Accidente Laboral"
+name: "AccidenteLaboralGORE"
+description: "Evento no deseado que causa daño al trabajador en el lugar de trabajo o con ocasión del trabajo. Incluye lesiones físicas, intoxicaciones, enfermedades profesionales y cuasicontravenciones. Debe ser denunciado a la Superintendencia de Seguridad Social, investigado según normativa laboral (Ley 16.744), y gestionado con seguimiento médico, licencias y medidas preventivas para evitar recurrencia."
 tags: [ORG]
 category: Master
 attributes:

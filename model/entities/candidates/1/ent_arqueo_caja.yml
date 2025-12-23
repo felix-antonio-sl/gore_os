@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:arqueo_caja:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-ARQUEO-CAJA"
+id: ENT-ARQUEO-CAJA
+name: "ArqueoCaja"
+description: "Verificación física de fondos en caja del GORE Ñuble. Incluye conteo de efectivo, conciliación con registros contables, identificación de diferencias y regularización, asegurando control y custodia de recursos monetarios según normativa de tesorería."
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

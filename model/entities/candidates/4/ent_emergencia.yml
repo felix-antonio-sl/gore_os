@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:emergencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-EMERGENCIA"
+id: ENT-EMERGENCIA
+name: "Emergencia"
+tags: [SYS]
+category: Master
+description: "Evento o situación extraordinaria que requiere respuesta inmediata de las autoridades del GORE para proteger la vida, la salud o el patrimonio de las personas. Incluye desastres naturales, emergencias sanitarias, incendios, inundaciones u otros eventos que activan el plan de emergencia regional."
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

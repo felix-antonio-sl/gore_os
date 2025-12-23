@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:gov:acta_core:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate_collision_resolved
+id: ENT-ACTA_CORE
+name: "ActaCOREÑuble"
+description: "Registro oficial y documento legal de las sesiones del Consejo Regional de Ñuble (CORE). Documenta en detalle los acuerdos, votaciones, mociones y decisiones tomadas por los consejeros regionales, constituyendo el respaldo jurídico fundamental de las actuaciones del máximo órgano de deliberación y decisión regional según LOC GORE. Debe ser firmada por el Gobernador y Secretario Regional Ministerial."
+tags: [GOV]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

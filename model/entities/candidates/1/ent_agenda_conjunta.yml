@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:gob:agenda_conjunta:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-GOB-AGENDA-CONJUNTA"
+id: ENT-AGENDA-CONJUNTA
+name: "AgendaCoordinacionInterinstitucional"
+description: "Calendario coordinado de actividades entre múltiples unidades del GORE Ñuble o con instituciones externas. Facilita la planificación conjunta de eventos, reuniones interinstitucionales, acciones coordinadas y trabajo colaborativo, evitando superposiciones, optimizando el uso de recursos compartidos y fortaleciendo la articulación público-privada."
+tags: [GOB]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

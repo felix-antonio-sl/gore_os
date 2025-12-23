@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:alerta_reputacional:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ALERTA-REPUTACIONAL"
+id: ENT-ALERTA-REPUTACIONAL
+name: "AlertaRiesgoReputacionalRegional"
+description: "Notificación sobre eventos o situaciones que pueden afectar la imagen pública del GORE Ñuble. Incluye crisis mediáticas, denuncias ciudadanas, críticas en redes sociales, cobertura negativa y otros incidentes que requieren gestión comunicacional y medidas de protección de la reputación institucional."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

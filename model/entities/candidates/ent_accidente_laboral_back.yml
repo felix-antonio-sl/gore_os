@@ -5,7 +5,8 @@ _meta:
   schema: urn:goreos:schema:entity:2.0.0
   origin: candidate_collision_resolved
 id: ENT-ACCIDENTE_LABORAL_BACK
-name: "Accidente Laboral (Back)"
+name: "AccidenteLaboralArchivado"
+description: "Registro histórico archivado de accidentes laborales del GORE para análisis de tendencias y estadísticas de seguridad. Almacena versiones consolidadas de incidentes cerrados utilizados para indicadores, informes a autoridad y estudios de prevención. Es inmutable una vez archivado, solo permite consultas para fines estadísticos e investigación histórica." 
 tags: [BACK]
 category: Master
 attributes:

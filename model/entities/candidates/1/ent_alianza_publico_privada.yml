@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:plan:alianza_publico_privada:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-PLAN-ALIANZA-PUBLICO-PRIVADA"
+id: ENT-ALIANZA-PUBLICO-PRIVADA
+name: "AlianzaPublicoPrivadaRegional"
+description: "Acuerdo de colaboración estratégica entre el GORE Ñuble y entidades privadas para desarrollar proyectos de interés regional. Incluye APPs para infraestructura, servicios públicos, programas de desarrollo y otras iniciativas que combinan recursos y capacidades del sector público y privado según normativa de concesiones y asociaciones."
+tags: [PLAN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

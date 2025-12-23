@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:activo_multimedia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ACTIVO-MULTIMEDIA"
+id: ENT-ACTIVO-MULTIMEDIA
+name: "RecursoMultimedia"
+description: "Contenido digital o archivo físico que combina múltiples formatos (texto, audio, video, imágenes) producido por el GORE. Incluye presentaciones institucionales, material educativo, videos de difusión, infografías y otros recursos multimedia utilizados en comunicación regional, capacitaciones, eventos y campañas públicas."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

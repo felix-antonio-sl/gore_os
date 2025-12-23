@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:busqueda_similaridad:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-BUSQUEDA-SIMILARIDAD"
+id: ENT-BUSQUEDA-SIMILARIDAD
+name: "Búsqueda por Similitud"
+description: "Funcionalidad de búsqueda que identifica documentos o expedientes con características semánticas o estructurales similares."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

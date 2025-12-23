@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:eje:antecedentes_proyecto:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-EJE-ANTECEDENTES-PROYECTO"
+id: ENT-ANTECEDENTES-PROYECTO
+name: "ExpedienteAntecedentesProyecto"
+description: "Conjunto completo de documentos y antecedentes que respaldan un proyecto del GORE Ñuble. Incluye estudios técnicos, evaluaciones de impacto, financiamiento, permisos, consultas ciudadanas y todos los documentos necesarios para su aprobación, ejecución y seguimiento según normativa de inversión pública."
+tags: [EJE]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

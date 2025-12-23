@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:ajuste_inventario:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-AJUSTE-INVENTARIO"
+id: ENT-AJUSTE-INVENTARIO
+name: "AjusteInventarioRegional"
+description: "Registro de correcciones y actualizaciones del inventario de bienes del GORE Ñuble. Incluye ajustes por diferencia física, depreciación, baja de activos, revaluaciones y regularizaciones contables, asegurando conciliación entre registros físicos y sistemas financieros según normativa de la Contraloría General de la República."
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

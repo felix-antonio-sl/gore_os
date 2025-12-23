@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:tde:arquitectura_datos:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-TDE-ARQUITECTURA-DATOS"
+id: ENT-ARQUITECTURA-DATOS
+name: "ArquitecturaDatos"
+description: "Diseño y estructura de datos del ecosistema GORE_OS. Incluye modelo de datos, diccionarios, relaciones entre entidades, estándares de calidad y gobernanza de información, asegurando consistencia e integridad en toda la plataforma."
+tags: [TDE]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

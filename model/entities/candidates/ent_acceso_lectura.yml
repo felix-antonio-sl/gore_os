@@ -6,7 +6,8 @@ _meta:
   origin: candidate
   source_id: "ENT-SYS-ACCESO-LECTURA"
 id: ENT-ACCESO-LECTURA
-name: "uLuAuCuCuEuSuOu uLuEuCuTuUuRuAu"
+name: "AccesoLecturaExpediente"
+description: "Registro de auditoría que documenta cada acceso de solo lectura a expedientes y documentos confidenciales del GORE. Mantiene traza completa del funcionario, fecha/hora, documento consultado y propósito del acceso, cumpliendo con Ley 21.719 de Protección de Datos Personales y normativas de transparencia activa. Es fundamental para investigaciones de seguridad y rendición de cuentas sobre consulta de información sensible."
 tags: [SYS]
 category: Master
 attributes:

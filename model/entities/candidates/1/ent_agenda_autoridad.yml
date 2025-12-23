@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:gob:agenda_autoridad:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-GOB-AGENDA-AUTORIDAD"
+id: ENT-AGENDA-AUTORIDAD
+name: "AgendaAutoridadesGORE"
+description: "Calendario oficial y protocolario de actividades y compromisos de autoridades superiores del GORE Ñuble. Registra audiencias ciudadanas, reuniones protocolares, eventos institucionales, viajes oficiales y actos ceremoniales del Delegado Presidencial Regional, Seremis y otras autoridades, permitiendo planificación estratégica y coordinación de funciones representativas."
+tags: [GOB]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

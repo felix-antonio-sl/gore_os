@@ -6,7 +6,8 @@ _meta:
   origin: candidate
   source_id: "ENT-EJE-BITACORA-OBRA"
 id: ENT-BITACORA-OBRA
-name: "uLuBuIuTuAuCuOuRuAu uOuBuRuAu"
+name: "BitacoraDiariaObra"
+description: "Registro diario de eventos, avances y novedades en obras públicas del GORE. Documenta actividades ejecutadas, recursos utilizados, personal presente, condiciones climáticas, incidentes y fotografías del progreso. Es fundamental para control de gestión, seguimiento de plazos contractuales, base de cálculo de pagos y respaldo legal según normativa de contratos públicos ChileCompra."
 tags: [EJE]
 category: Master
 attributes:

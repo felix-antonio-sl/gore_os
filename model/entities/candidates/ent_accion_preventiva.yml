@@ -6,7 +6,8 @@ _meta:
   origin: candidate
   source_id: "ENT-SOC-ACCION-PREVENTIVA"
 id: ENT-ACCION-PREVENTIVA
-name: "uLuAuCuCuIuOuNu uPuRuEuVuEuNuTuIuVuAu"
+name: "AccionPreventivaSeguridad"
+description: "Medida o actividad implementada proactivamente para prevenir accidentes, incidentes o riesgos laborales en el GORE. Incluye capacitaciones, inspecciones de seguridad, mejoras en infraestructura, señalización y procedimientos diseñados para reducir la probabilidad de ocurrencia de eventos no deseados. Debe ser documentada, evaluada y monitoreada para asegurar su efectividad." 
 tags: [SOC]
 category: Master
 attributes:

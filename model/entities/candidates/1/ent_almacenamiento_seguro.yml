@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:almacenamiento_seguro:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-ALMACENAMIENTO-SEGURO"
+id: ENT-ALMACENAMIENTO-SEGURO
+name: "AlmacenamientoSeguro"
+description: "Infraestructura de almacenamiento protegido para información sensible del GORE Ñuble. Incluye servidores encriptados, copias de seguridad certificadas, control de accesos y medidas de seguridad física y lógica según normativa de protección de datos (Ley 21.719) y estándares de ciberseguridad para el Estado."
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

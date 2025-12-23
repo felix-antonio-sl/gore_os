@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:norm:acta_reunion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-NORM-ACTA-REUNION"
+id: ENT-ACTA-REUNION
+name: "ActaReunionInterna"
+description: "Documento que registra desarrollo, acuerdos y compromisos de reuniones internas del GORE. Incluye participantes, fecha, temas tratados, decisiones tomadas y acciones a seguir con responsables y plazos. Sirve como evidencia formal de deliberaciones y seguimiento de compromisos entre unidades o funcionarios para gestión interna."
+tags: [NORM]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

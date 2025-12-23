@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:tde:archivo_fisico:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-TDE-ARCHIVO-FISICO"
+id: ENT-ARCHIVO-FISICO
+name: "ArchivoFisico"
+description: "Documento físico almacenado en archivo del GORE Ñuble. Incluye expedientes en papel, planos, fotografías y otros soportes físicos con control de ubicación, préstamo y custodia según normativa de archivos públicos y protocolos de preservación documental."
+tags: [TDE]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

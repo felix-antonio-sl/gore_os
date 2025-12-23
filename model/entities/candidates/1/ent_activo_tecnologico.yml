@@ -1,0 +1,15 @@
+---
+_meta:
+  urn: urn:goreos:entity:back:activo_tecnologico:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-BACK-ACTIVO-TECNOLOGICO"
+id: ENT-ACTIVO-TECNOLOGICO
+name: "ActivoTecnologico"
+description: "Equipo informático y tecnológico propiedad del GORE Ñuble que soporta la infraestructura digital regional. Incluye computadores, servidores, equipos de red, impresoras, dispositivos móviles y periféricos necesarios para la operación de sistemas TDE, plataformas digitales y comunicaciones según normativa de Transformación Digital del Estado."
+tags: [BACK]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos
