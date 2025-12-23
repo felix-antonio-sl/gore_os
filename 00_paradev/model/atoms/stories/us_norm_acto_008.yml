@@ -11,7 +11,7 @@ i_want: Devolver trámite con observaciones jurídicas para corrección
 so_that: Corrijo antes de firma
 domain: D-NORM
 priority: P1
-capability_id: CAP-NORM-CONTROL-001
+competence_id: CPT-NORM-CONTROL-001
 acceptance_criteria: []
 
 mentions:

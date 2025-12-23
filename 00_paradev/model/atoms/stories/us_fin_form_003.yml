@@ -11,7 +11,7 @@ i_want: Proyectar gastos de funcionamiento (Subtítulo 21-22)
 so_that: Planifico el presupuesto operacional
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

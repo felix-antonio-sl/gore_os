@@ -11,5 +11,5 @@ i_want: un buscador de productos en Convenio Marco integrado al sistema
 so_that: pueda encontrar rápidamente lo que necesitan las unidades
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

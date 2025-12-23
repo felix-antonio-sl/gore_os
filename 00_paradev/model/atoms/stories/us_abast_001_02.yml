@@ -10,7 +10,7 @@ as_a: Encargado de Calidad
 i_want: generación automática de bases de licitación tipo
 so_that: pueda agilizar la preparación de procesos
 domain: D-FIN
-capability_id: CAP-BACK-ABS-001
+competence_id: CPT-BACK-ABS-001
 priority: P1
 acceptance_criteria: []
 

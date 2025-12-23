@@ -11,5 +11,5 @@ i_want: Recibir notificaciones de cruces entre evaluadores y postulantes
 so_that: Prevengo conflictos de interés
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []

@@ -10,6 +10,6 @@ as_a: Analista Capacitación
 i_want: Gestionar proceso de calificaciones Junta
 so_that: Cumplo con ciclo de evaluación
 domain: D-BACK
-capability_id: CAP-BACK-ABS-001
+competence_id: CPT-BACK-ABS-001
 priority: P0
 acceptance_criteria: []

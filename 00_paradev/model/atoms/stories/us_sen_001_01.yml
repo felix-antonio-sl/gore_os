@@ -11,7 +11,7 @@ i_want: información detallada sobre la ejecución de grandes proyectos
 so_that: pueda ejercer mi rol fiscalizador en el congreso
 domain: D-GOB
 priority: P1
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []
 
 mentions:

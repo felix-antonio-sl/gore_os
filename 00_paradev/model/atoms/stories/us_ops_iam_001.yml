@@ -11,7 +11,7 @@ i_want: gestionar usuarios del sistema con CRUD completo
 so_that: pueda controlar de forma centralizada quién tiene acceso a GORE_OS
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []
 
 mentions:

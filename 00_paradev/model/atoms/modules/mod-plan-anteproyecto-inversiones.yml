@@ -22,5 +22,5 @@ composition:
       urn:goreos:atom:entity:d_plan_programa_regional_de_inversiones:1.0.0,
     ]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: [urn:goreos:atom:module:plan_estrategia_regional:1.0.0]

@@ -11,5 +11,5 @@ i_want: acceso al registro de dirigentes sociales
 so_that: se validen los interlocutores en el territorio
 domain: D-TERR
 priority: P2
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []

@@ -10,7 +10,7 @@ as_a: Abogado Revisor
 i_want: un workflow de revisión de resoluciones con control de versiones
 so_that: pueda asegurar la integridad del acto administrativo
 domain: D-NORM
-capability_id: CAP-NORM-ABOG-001
+competence_id: CPT-NORM-ABOG-001
 priority: P0
 acceptance_criteria: []
 

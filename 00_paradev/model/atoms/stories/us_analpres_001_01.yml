@@ -10,6 +10,6 @@ as_a: Analista Presupuesto
 i_want: un módulo de emisión de CDP con validación automática de saldo
 so_that: no pueda comprometer recursos sin disponibilidad
 domain: D-FIN
-capability_id: CAP-FIN-PPTO-001
+competence_id: CPT-FIN-PPTO-001
 priority: P0
 acceptance_criteria: []

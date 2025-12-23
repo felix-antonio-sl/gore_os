@@ -11,7 +11,7 @@ i_want: un módulo de reserva de vehículos y registro de bitácora
 so_that: pueda documentar los traslados
 domain: D-BACK
 priority: P2
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []
 
 mentions:

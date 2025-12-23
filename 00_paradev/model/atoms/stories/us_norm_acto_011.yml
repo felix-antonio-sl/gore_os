@@ -11,7 +11,7 @@ i_want: Recibir alerta de actos pendientes de firma >5 días
 so_that: Gestiono demoras
 domain: D-NORM
 priority: P2
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []
 
 mentions:

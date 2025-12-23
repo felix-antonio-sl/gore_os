@@ -11,7 +11,7 @@ i_want: una consola de monitoreo con alertas priorizadas
 so_that: pueda detectar incidentes rápidamente
 domain: D-TERR
 priority: P0
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []
 
 mentions:

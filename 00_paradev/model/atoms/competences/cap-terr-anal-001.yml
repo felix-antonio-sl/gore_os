@@ -1,0 +1,18 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_terr_anal_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-TERR-ANAL-001
+name: Análisis Territorial
+domain: D-TERR
+type: CORE
+description: Herramientas de análisis geoespacial.
+stories:
+- us_terr_anal_001
+- us_terr_anal_002
+- us_terr_anal_003
+- us_geo_001_01
+ofrecida_por:
+- urn:goreos:atom:module:terr_analitica_territorial:1.0.0
+- urn:goreos:atom:module:terr_gobernanza_territorial:1.0.0

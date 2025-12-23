@@ -11,5 +11,5 @@ i_want: Ejecutar un "Bypass Administrativo" en un flujo BPMN detenido
 so_that: Fuerzo el avance de una etapa trabada por ausencia o error
 domain: D-FENIX
 priority: P0
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []

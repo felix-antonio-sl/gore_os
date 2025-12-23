@@ -11,7 +11,7 @@ i_want: Visar resoluciones de cometidos funcionarios
 so_that: Autorizo viáticos
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

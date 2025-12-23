@@ -11,5 +11,5 @@ i_want: un catálogo de metadatos geográficos estandarizado
 so_that: se facilite el intercambio de información territorial
 domain: D-TERR
 priority: P1
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []

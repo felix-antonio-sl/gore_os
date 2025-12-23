@@ -12,7 +12,7 @@ i_want: escalar tickets de soporte técnico al dominio D-DEV cuando se identifiq
 so_that: se asegure la resolución de problemas estructurales en el ciclo de desarrollo
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []
 
 mentions:

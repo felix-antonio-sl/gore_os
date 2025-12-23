@@ -11,5 +11,5 @@ i_want: un módulo de carga y procesamiento de series de datos
 so_that: pueda mantener actualizados los indicadores regionales
 domain: D-TERR
 priority: P1
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []

@@ -11,7 +11,7 @@ i_want: Emitir CDP validando saldo en asignación
 so_that: Evito compromisos sin respaldo
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

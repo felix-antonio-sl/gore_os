@@ -11,5 +11,5 @@ i_want: acceso a documentación técnica y APIs
 so_that: pueda integrar sistemas
 domain: D-TDE
 priority: P0
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

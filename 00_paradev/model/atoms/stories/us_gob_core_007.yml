@@ -11,7 +11,7 @@ i_want: Ver cumplimiento de acuerdos (estado/evidencia)
 so_that: Fiscalizo ejecución del ejecutivo
 domain: D-GOB
 priority: P0
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []
 
 mentions:

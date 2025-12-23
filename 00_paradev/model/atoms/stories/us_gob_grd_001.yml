@@ -11,7 +11,7 @@ i_want: Sancionar el Plan Regional de Reducción del Riesgo
 so_that: Formalizo la estrategia de GRD
 domain: D-GOB
 priority: P1
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []
 
 mentions:

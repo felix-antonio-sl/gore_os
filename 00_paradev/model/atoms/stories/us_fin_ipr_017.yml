@@ -11,7 +11,7 @@ i_want: Subir Acta Entrega Terreno / Inicio Obras
 so_that: Registro el hito de inicio formal
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

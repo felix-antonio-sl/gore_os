@@ -10,6 +10,6 @@ as_a: Analista Social
 i_want: Solicitar bonificación (adjuntar boletas)
 so_that: Obtengo reembolso
 domain: D-BACK
-capability_id: CAP-BACK-BIEN-001
+competence_id: CPT-BACK-BIEN-001
 priority: P1
 acceptance_criteria: []

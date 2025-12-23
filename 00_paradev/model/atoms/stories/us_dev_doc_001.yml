@@ -11,5 +11,5 @@ i_want: Asegurar que el Blueprint refleje el estado actual del código
 so_that: Mantengo la integridad arquitectónica (SDA de Segundo Orden)
 domain: D-DEV
 priority: P1
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []

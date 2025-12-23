@@ -13,5 +13,5 @@ composition:
   processes: []
   entities: [urn:goreos:atom:entity:d_gob_sadv_de_actores:1.0.0]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: []

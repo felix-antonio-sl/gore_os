@@ -11,5 +11,5 @@ i_want: Desactivar usuarios manteniendo historial
 so_that: Gestiono bajas sin perder trazabilidad
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

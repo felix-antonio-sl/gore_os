@@ -12,5 +12,5 @@ i_want: Verificar que evaluadores no tengan relación con postulantes (declaraci
 so_that: Evito conflictos de interés
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

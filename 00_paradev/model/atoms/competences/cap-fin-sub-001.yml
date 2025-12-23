@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_fin_sub_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-FIN-SUB-001
+name: Subvenciones Regionales
+domain: D-FIN
+type: CORE
+description: Subvenciones a instituciones.
+stories:
+- us_fin_sub_001
+- us_fin_sub_002
+- us_fin_sub_003
+- us_fin_sub_004
+- us_fin_sub_005
+ofrecida_por: null

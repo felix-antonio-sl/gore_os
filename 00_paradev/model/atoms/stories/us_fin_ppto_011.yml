@@ -11,7 +11,7 @@ i_want: Ver proyección vs programa caja con alertas >5%
 so_that: Anticipo desfases de caja
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

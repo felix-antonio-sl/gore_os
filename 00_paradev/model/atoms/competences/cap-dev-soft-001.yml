@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_dev_soft_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-DEV-SOFT-001
+name: Desarrollo de Software
+domain: D-DEV
+type: CORE
+description: Ciclo de desarrollo de software.
+stories:
+- us_dev_soft_001
+- us_dev_soft_002
+- us_dev_soft_003
+- us_dev_soft_004
+- us_dev_001_01
+ofrecida_por: null

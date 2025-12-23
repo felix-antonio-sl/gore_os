@@ -11,5 +11,5 @@ i_want: Realizar arbitraje de prioridades (RICE)
 so_that: Optimizo recursos
 domain: D-EVOL
 priority: P1
-capability_id: CAP-EVOL-001
+competence_id: CPT-EVOL-001
 acceptance_criteria: []

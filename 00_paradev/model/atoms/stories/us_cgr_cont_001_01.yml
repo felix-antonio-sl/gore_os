@@ -11,5 +11,5 @@ i_want: acceso a reportes contables en formato estándar
 so_that: pueda realizar revisión remota
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

@@ -10,7 +10,7 @@ as_a: Agente KODA
 i_want: Calcular propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
 so_that: Reduzco errores y tiempos de término
 domain: D-BACK
-capability_id: CAP-BACK-AUTO-001
+competence_id: CPT-BACK-AUTO-001
 priority: P1
 acceptance_criteria: []
 

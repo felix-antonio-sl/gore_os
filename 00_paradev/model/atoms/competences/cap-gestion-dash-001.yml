@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_gestion_dash_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-GESTION-DASH-001
+name: Dashboard Ejecutivo
+domain: D-GESTION
+type: CORE
+description: Tableros de control gerencial.
+stories:
+- us_gestion_dash_001
+- us_gestion_dash_002
+- us_gestion_dash_003
+- us_dash_001_01
+- us_dash_001_02
+ofrecida_por: null

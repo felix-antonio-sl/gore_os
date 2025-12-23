@@ -11,7 +11,7 @@ i_want: Verificar compromisos completados (cierra/dev)
 so_that: Valido cumplimiento
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []
 
 mentions:

@@ -11,7 +11,7 @@ i_want: Gestionar comunicación interna institucional
 so_that: Mantengo informados a funcionarios
 domain: D-COM
 priority: P1
-capability_id: CAP-COM-001
+competence_id: CPT-COM-001
 acceptance_criteria: []
 
 mentions:

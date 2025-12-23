@@ -11,5 +11,5 @@ i_want: Recibir notificación de observaciones de admisibilidad (plazo 60d)
 so_that: Puedo subsanar a tiempo
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

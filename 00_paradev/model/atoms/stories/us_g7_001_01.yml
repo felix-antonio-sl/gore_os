@@ -11,7 +11,7 @@ i_want: un módulo de control de programación de caja con cuotas
 so_that: pueda asegurar el cumplimiento del flujo de caja
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

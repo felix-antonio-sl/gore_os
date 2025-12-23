@@ -10,7 +10,7 @@ as_a: Abogado Asuntos Judiciales
 i_want: un calendario procesal con alertas de plazos fatales
 so_that: no se pierdan instancias judiciales
 domain: D-NORM
-capability_id: CAP-NORM-ABOG-001
+competence_id: CPT-NORM-ABOG-001
 priority: P0
 acceptance_criteria: []
 

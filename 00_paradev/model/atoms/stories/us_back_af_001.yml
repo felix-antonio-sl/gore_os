@@ -10,7 +10,7 @@ as_a: Encargado Activo Fijo
 i_want: Registrar alta de activo fijo (código, depreciación)
 so_that: Incorporo bienes al patrimonio
 domain: D-BACK
-capability_id: CAP-BACK-AF-001
+competence_id: CPT-BACK-AF-001
 priority: P0
 acceptance_criteria: []
 

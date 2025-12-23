@@ -11,5 +11,5 @@ i_want: Procesar la versión OCR para extraer entidades clave y pre-clasificar
 so_that: Facilito la revisión humana
 domain: D-GOB
 priority: P1
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []

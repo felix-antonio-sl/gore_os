@@ -10,7 +10,7 @@ as_a: Analista Tesorería
 i_want: Mantener el libro de caja institucional actualizado
 so_that: Tengo control cronológico de movimientos de efectivo
 domain: D-BACK
-capability_id: CAP-BACK-TES-001
+competence_id: CPT-BACK-TES-001
 priority: P1
 acceptance_criteria: []
 

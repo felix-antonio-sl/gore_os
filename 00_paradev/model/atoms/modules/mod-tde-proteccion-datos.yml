@@ -18,9 +18,9 @@ composition:
       urn:goreos:atom:entity:d_tde_derechos_arco:1.0.0,
     ]
 morphisms:
-  implements_capability:
+  implements_competence:
     [
-      urn:goreos:atom:capability:cap_transparencia_001:1.0.0,
-      urn:goreos:atom:capability:cap_tde_transp_001:1.0.0,
+      urn:goreos:atom:competence:cap_transparencia_001:1.0.0,
+      urn:goreos:atom:competence:cap_tde_transp_001:1.0.0,
     ]
   depends_on: []

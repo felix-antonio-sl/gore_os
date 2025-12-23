@@ -11,5 +11,5 @@ i_want: Coordinar reunión de inicio con supervisor
 so_that: Alineo expectativas
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

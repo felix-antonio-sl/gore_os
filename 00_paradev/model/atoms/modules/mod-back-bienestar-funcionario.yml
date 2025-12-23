@@ -17,5 +17,5 @@ composition:
     ]
   entities: [urn:goreos:atom:entity:d_back_pac_capacitacion:1.0.0]
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_rrhh_func_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_rrhh_func_001:1.0.0]
   depends_on: [urn:goreos:atom:module:back_gestion_personas_rrhh:1.0.0]

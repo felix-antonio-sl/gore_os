@@ -11,7 +11,7 @@ i_want: Crear compromiso y asignar (persona, plazo)
 so_that: Delego tareas
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

@@ -11,5 +11,5 @@ i_want: un workflow de solicitud de compra desde las unidades
 so_that: pueda recibir requerimientos formalizados
 domain: D-BACK
 priority: P0
-capability_id: CAP-COMPRAS-001
+competence_id: CPT-COMPRAS-001
 acceptance_criteria: []

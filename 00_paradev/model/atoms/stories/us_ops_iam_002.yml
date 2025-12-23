@@ -11,7 +11,7 @@ i_want: asignar y revocar roles con logs de auditoría automáticos
 so_that: se cumplan las normativas de seguridad y transparencia en los accesos
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []
 
 mentions:

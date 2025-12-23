@@ -11,5 +11,5 @@ i_want: Usar asistente para modificaciones presupuestarias
 so_that: Gestiono cambios correctamente
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

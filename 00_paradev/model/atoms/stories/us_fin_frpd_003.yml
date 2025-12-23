@@ -11,5 +11,5 @@ i_want: Validar porcentaje de co-financiamiento
 so_that: Verifico aporte del beneficiario
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

@@ -11,7 +11,7 @@ i_want: definir permisos granulares por recurso y acción
 so_that: se aplique el principio de mínimo privilegio en toda la plataforma
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []
 
 mentions:

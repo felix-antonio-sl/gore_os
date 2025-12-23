@@ -1,0 +1,22 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_ejec_muni_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-EJEC-MUNI-001
+name: Portal de Postulación Municipal
+domain: D-EJEC
+type: CORE
+description: Postulación de proyectos municipales al FNDR.
+stories:
+- us_ejec_muni_001
+- us_ejec_muni_002
+- us_ejec_muni_003
+- us_ejec_muni_004
+- us_ejec_muni_005
+- us_alc_001_02
+- us_alc_chi_001_01
+- us_alc_chv_001_01
+- us_alc_sc_001_01
+ofrecida_por:
+- urn:goreos:atom:module:ejec_coordinacion_municipal:1.0.0

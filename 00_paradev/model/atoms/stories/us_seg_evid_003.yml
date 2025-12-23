@@ -11,5 +11,5 @@ i_want: Trazar quién accedió, visualizó o descargó evidencia (Logs inalterab
 so_that: Mantengo cadena de custodia
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []

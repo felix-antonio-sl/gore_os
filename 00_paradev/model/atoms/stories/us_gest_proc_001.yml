@@ -11,5 +11,5 @@ i_want: Gestionar expedientes digitales con trazabilidad completa
 so_that: Cumplo con Ley 21.180 de Transformación Digital
 domain: D-GESTION
 priority: P0
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []

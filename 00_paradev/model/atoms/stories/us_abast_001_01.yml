@@ -10,6 +10,6 @@ as_a: Encargado de Calidad
 i_want: un módulo de gestión del Plan de Compras integrado con Mercado Público
 so_that: pueda hacer seguimiento de las adquisiciones programadas
 domain: D-FIN
-capability_id: CAP-BACK-ABS-001
+competence_id: CPT-BACK-ABS-001
 priority: P0
 acceptance_criteria: []

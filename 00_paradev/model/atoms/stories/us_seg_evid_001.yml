@@ -11,5 +11,5 @@ i_want: Generar clip de video con marca de agua y hash de integridad
 so_that: Preservo evidencia
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []

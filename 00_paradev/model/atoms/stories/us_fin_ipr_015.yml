@@ -11,5 +11,5 @@ i_want: Reintegrar saldos no ejecutados
 so_that: Cumplo con devolución de recursos
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

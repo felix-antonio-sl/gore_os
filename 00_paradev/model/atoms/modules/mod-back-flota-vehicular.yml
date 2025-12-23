@@ -13,5 +13,5 @@ composition:
   processes: [urn:goreos:atom:process:d_back_p3:1.0.0]
   entities: []
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_back_tickets_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_back_tickets_001:1.0.0]
   depends_on: [urn:goreos:atom:module:back_activo_fijo:1.0.0]

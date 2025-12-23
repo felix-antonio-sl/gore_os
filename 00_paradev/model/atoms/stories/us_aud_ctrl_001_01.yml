@@ -10,6 +10,6 @@ as_a: Auditor de Control
 i_want: acceder a registros de transacciones y aprobaciones
 so_that: pueda verificar trazabilidad
 domain: D-NORM
-capability_id: CAP-NORM-CTRL-001
+competence_id: CPT-NORM-CTRL-001
 priority: P0
 acceptance_criteria: []

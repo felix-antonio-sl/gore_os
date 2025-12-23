@@ -11,5 +11,5 @@ i_want: validar automáticamente la integridad de los backups mediante checksums
 so_that: se tenga la certeza de que los respaldos son utilizables en caso de emergencia
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

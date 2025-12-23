@@ -11,7 +11,7 @@ i_want: Registrar resultados de ejecución de playbooks
 so_that: Genero base de conocimiento para mejora continua
 domain: D-GESTION
 priority: P1
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []
 
 mentions:

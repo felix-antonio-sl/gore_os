@@ -10,7 +10,7 @@ as_a: Analista Seguimiento
 i_want: recibir alertas automáticas de proyectos con desviación >15%
 so_that: pueda gestionar proactivamente
 domain: D-EJEC
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 priority: P0
 acceptance_criteria: []
 

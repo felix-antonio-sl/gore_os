@@ -10,6 +10,6 @@ as_a: Profesional Bienestar
 i_want: Gestionar convenios con terceros (farmacias, etc)
 so_that: Amplío beneficios
 domain: D-BACK
-capability_id: CAP-BACK-BIEN-001
+competence_id: CPT-BACK-BIEN-001
 priority: P2
 acceptance_criteria: []

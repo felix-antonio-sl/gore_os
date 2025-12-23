@@ -24,5 +24,5 @@ composition:
       urn:goreos:atom:entity:d_plan_evaluacion_ambiental_estrategica:1.0.0,
     ]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: [urn:goreos:atom:module:plan_estrategia_regional:1.0.0]

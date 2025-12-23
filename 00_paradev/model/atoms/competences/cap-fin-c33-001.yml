@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_fin_c33_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-FIN-C33-001
+name: Circular 33 - Transferencias Corrientes
+domain: D-FIN
+type: CORE
+description: Transferencias corrientes bajo Circular 33 DIPRES.
+stories:
+- us_fin_c33_001
+- us_fin_c33_002
+- us_fin_c33_005
+- us_c33_001_01
+- us_ec33_001_01
+ofrecida_por: null

@@ -11,7 +11,7 @@ i_want: Ejecutar corte de compromisos de fin de año con notificación a unidade
 so_that: Cierro ordenadamente el ejercicio
 domain: D-BACK
 priority: P0
-capability_id: CAP-PAGOS-001
+competence_id: CPT-PAGOS-001
 acceptance_criteria: []
 
 mentions:

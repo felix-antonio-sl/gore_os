@@ -11,7 +11,7 @@ i_want: Gestionar Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
 so_that: Cumplo con Ley TDE
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []
 
 mentions:

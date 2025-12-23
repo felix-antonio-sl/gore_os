@@ -17,5 +17,5 @@ composition:
       urn:goreos:atom:entity:d_gestion_h_org:1.0.0,
     ]
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_gestion_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_gestion_001:1.0.0]
   depends_on: []

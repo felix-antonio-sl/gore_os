@@ -10,6 +10,6 @@ as_a: Encargado de Calidad
 i_want: Tramitar solicitudes verificando CDP
 so_that: Proceso requerimientos
 domain: D-BACK
-capability_id: CAP-BACK-ABS-001
+competence_id: CPT-BACK-ABS-001
 priority: P1
 acceptance_criteria: []

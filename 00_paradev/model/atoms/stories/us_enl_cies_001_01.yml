@@ -11,5 +11,5 @@ i_want: un directorio de contactos de emergencia actualizado
 so_that: pueda activar protocolos rápidamente
 domain: D-TERR
 priority: P0
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []

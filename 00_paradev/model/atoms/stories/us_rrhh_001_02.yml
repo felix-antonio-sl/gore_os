@@ -11,7 +11,7 @@ i_want: alertas de términos de contrata próximos a vencer
 so_that: pueda gestionar renovaciones oportunamente
 domain: D-BACK
 priority: P0
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []
 
 mentions:

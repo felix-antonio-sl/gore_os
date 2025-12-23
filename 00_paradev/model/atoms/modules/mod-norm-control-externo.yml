@@ -16,5 +16,5 @@ composition:
   processes: [urn:goreos:atom:process:d_norm_p3:1.0.0]
 
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_norm_control_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_norm_control_001:1.0.0]
   depends_on: []

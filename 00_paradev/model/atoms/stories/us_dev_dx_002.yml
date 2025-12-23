@@ -11,5 +11,5 @@ i_want: Consultar la documentación técnica generada directamente desde el cód
 so_that: Evito consultar wikis desactualizadas
 domain: D-DEV
 priority: P2
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []

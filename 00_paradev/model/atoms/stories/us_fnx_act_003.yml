@@ -11,5 +11,5 @@ i_want: Declarar estado de "Emergencia Administrativa" en el sistema
 so_that: Activo reglas de excepción para agilizar procesos críticos
 domain: D-FENIX
 priority: P0
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: la remisión de expedientes originales digitalizados y certificados
 so_that: se pueda instruir el juicio de cuentas
 domain: D-NORM
 priority: P2
-capability_id: CAP-NORM-CONTROL-001
+competence_id: CPT-NORM-CONTROL-001
 acceptance_criteria: []

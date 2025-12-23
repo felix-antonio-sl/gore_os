@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_dev_acc_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-DEV-ACC-001
+name: Accesibilidad Digital
+domain: D-DEV
+type: CORE
+description: Cumplimiento de estándares de accesibilidad.
+stories:
+- us_acc_001_01
+- us_acc_001_02
+- us_acc_002_01
+ofrecida_por: null

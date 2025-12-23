@@ -11,7 +11,7 @@ i_want: Consultar estado de mi postulación en tiempo real (timeline visual)
 so_that: Tengo visibilidad del avance del trámite
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

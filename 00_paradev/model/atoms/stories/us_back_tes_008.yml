@@ -10,6 +10,6 @@ as_a: Contador Gubernamental
 i_want: Documentar y clasificar partidas pendientes de conciliación
 so_that: Mantengo trazabilidad de diferencias
 domain: D-BACK
-capability_id: CAP-BACK-TES-001
+competence_id: CPT-BACK-TES-001
 priority: P1
 acceptance_criteria: []

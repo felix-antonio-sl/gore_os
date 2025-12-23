@@ -11,7 +11,7 @@ i_want: estadísticas de formalización de empresas por comuna
 so_that: pueda dirigir programas de apoyo
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

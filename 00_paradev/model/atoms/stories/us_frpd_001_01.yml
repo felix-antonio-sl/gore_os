@@ -11,5 +11,5 @@ i_want: acceso a expedientes técnicos de proyectos FRPD
 so_that: pueda calificar iniciativas
 domain: D-EJEC
 priority: P2
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

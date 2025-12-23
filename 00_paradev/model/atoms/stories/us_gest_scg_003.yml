@@ -11,5 +11,5 @@ i_want: Generar reporte mensual de gestión institucional
 so_that: Informo al Gobernador y CORE sobre el estado de la gestión
 domain: D-GESTION
 priority: P1
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []

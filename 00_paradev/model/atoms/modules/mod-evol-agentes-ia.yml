@@ -22,5 +22,5 @@ composition:
       urn:goreos:atom:entity:d_evol_sesgo:1.0.0,
     ]
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_evol_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_evol_001:1.0.0]
   depends_on: [urn:goreos:atom:module:evol_base_conocimiento:1.0.0]

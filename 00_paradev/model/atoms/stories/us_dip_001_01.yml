@@ -11,7 +11,7 @@ i_want: consultar el estado de proyectos comunales específicos
 so_that: pueda responder a mis electores
 domain: D-GOB
 priority: P1
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []
 
 mentions:

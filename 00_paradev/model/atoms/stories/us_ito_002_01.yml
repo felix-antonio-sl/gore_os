@@ -11,5 +11,5 @@ i_want: un workflow de aprobación de EP con validación de cubicaciones
 so_that: pueda certificar avances reales
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

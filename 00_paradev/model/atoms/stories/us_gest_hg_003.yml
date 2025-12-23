@@ -11,7 +11,7 @@ i_want: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
 so_that: Identifico causas raíz de degradación en mi área
 domain: D-GESTION
 priority: P1
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []
 
 mentions:

@@ -11,7 +11,7 @@ i_want: Gestionar adquisición de activos vía Circular 33
 so_that: Ejecuto presupuesto C33
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

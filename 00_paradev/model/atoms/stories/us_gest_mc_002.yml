@@ -11,5 +11,5 @@ i_want: Ejecutar ciclo PDCA para iniciativas de mejora priorizadas
 so_that: Implemento mejoras de manera sistemática y medible
 domain: D-GESTION
 priority: P1
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []

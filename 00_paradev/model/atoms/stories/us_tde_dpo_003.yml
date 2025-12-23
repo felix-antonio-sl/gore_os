@@ -11,5 +11,5 @@ i_want: Notificar brechas de datos a la Agencia
 so_that: Cumplo con notificación obligatoria
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

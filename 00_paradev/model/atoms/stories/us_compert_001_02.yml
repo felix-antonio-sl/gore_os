@@ -11,5 +11,5 @@ i_want: votar electrónicamente durante las sesiones
 so_that: el proceso sea ágil y trazable
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

@@ -11,7 +11,7 @@ i_want: Gestionar firmas Convenio (Gore - Ejecutor)
 so_that: Obtengo firmas de ambas partes
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

@@ -1,0 +1,20 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_gob_core_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-GOB-CORE-001
+name: Sesiones CORE
+domain: D-GOB
+type: CORE
+description: Gestión de sesiones del Consejo Regional.
+stories:
+- us_gob_core_001
+- us_gob_core_002
+- us_gob_core_003
+- us_gob_core_004
+- us_gob_core_005
+- us_core_001_01
+- us_core_001_02
+- us_core_002_01
+ofrecida_por: null

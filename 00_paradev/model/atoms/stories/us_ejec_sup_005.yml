@@ -11,7 +11,7 @@ i_want: Alertar desviaciones >10% (recomendación)
 so_that: Activo gestión de modificaciones
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

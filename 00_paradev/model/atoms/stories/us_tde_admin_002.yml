@@ -11,7 +11,7 @@ i_want: Crear usuarios (email, división, rol)
 so_that: Habilito acceso al sistema
 domain: D-TDE
 priority: P0
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []
 
 mentions:

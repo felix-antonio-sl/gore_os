@@ -11,7 +11,7 @@ i_want: Gestionar proceso de reintegro de fondos
 so_that: Recupero saldos no ejecutados
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

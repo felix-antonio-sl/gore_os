@@ -11,5 +11,5 @@ i_want: Activar protocolo de protección de puntos críticos ante disturbios
 so_that: Priorizo cámaras y recursos en zonas sensibles
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []

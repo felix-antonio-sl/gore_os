@@ -11,7 +11,7 @@ i_want: Iniciar el entorno de desarrollo con un solo comando (DevContainer)
 so_that: Soy productivo desde el día 1 sin "configuración del infierno"
 domain: D-DEV
 priority: P1
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []
 
 mentions:

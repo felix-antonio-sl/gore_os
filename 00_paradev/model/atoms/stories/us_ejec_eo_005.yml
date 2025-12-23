@@ -11,5 +11,5 @@ i_want: Solicitar extensión de plazo con justificación
 so_that: Gestiono imprevistos
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

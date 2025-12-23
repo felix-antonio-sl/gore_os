@@ -11,7 +11,7 @@ i_want: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
 so_that: Habilito ejecución financiera nacional
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

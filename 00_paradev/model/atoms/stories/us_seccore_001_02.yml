@@ -11,7 +11,7 @@ i_want: notificar a consejeros las materias a tratar con antelación
 so_that: puedan prepararse para la sesión
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []
 
 mentions:

@@ -10,6 +10,6 @@ as_a: Contador Gubernamental
 i_want: Conciliar automáticamente movimientos SIGFE con cartola bancaria
 so_that: Identifico diferencias y partidas pendientes
 domain: D-BACK
-capability_id: CAP-BACK-TES-001
+competence_id: CPT-BACK-TES-001
 priority: P0
 acceptance_criteria: []

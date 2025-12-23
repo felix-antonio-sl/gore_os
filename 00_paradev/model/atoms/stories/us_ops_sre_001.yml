@@ -11,5 +11,5 @@ i_want: Escalar horizontalmente los pods según consumo de CPU/Memoria
 so_that: Mantengo el rendimiento ante picos de demanda
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

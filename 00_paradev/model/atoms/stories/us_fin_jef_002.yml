@@ -11,5 +11,5 @@ i_want: Ver distribución de carga por analista con métricas de tiempos
 so_that: Balanceo trabajo del equipo
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

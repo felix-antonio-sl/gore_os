@@ -10,7 +10,7 @@ as_a: Analista Tesorería
 i_want: Gestionar el fondo fijo de caja chica (arqueos y reposición)
 so_that: Atiendo gastos menores con control adecuado
 domain: D-BACK
-capability_id: CAP-BACK-TES-001
+competence_id: CPT-BACK-TES-001
 priority: P2
 acceptance_criteria: []
 

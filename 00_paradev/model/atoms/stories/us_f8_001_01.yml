@@ -11,5 +11,5 @@ i_want: un módulo de gestión de concursos con etapas configurables
 so_that: pueda administrar el proceso completo
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

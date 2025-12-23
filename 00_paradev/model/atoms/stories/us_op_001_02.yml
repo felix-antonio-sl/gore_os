@@ -11,5 +11,5 @@ i_want: generar número de ingreso correlativo automático
 so_that: la trazabilidad esté garantizada
 domain: D-TDE
 priority: P0
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

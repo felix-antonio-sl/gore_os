@@ -12,5 +12,5 @@ i_want: Registrar logs de autenticación con trazabilidad completa (usuario, fec
 so_that: Mantengo auditoría de accesos conforme a DS9
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

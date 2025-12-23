@@ -11,5 +11,5 @@ i_want: configurar reglas de validación personalizadas por tipo de carga masiva
 so_that: se tenga flexibilidad para adaptar las ingestas a diferentes formatos y requisitos
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

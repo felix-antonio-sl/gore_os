@@ -11,7 +11,7 @@ i_want: Definir Plan Operativo Anual (POA) divisional alineado con objetivos ERD
 so_that: Aseguro coherencia entre planificación estratégica y operativa
 domain: D-GESTION
 priority: P0
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []
 
 mentions:

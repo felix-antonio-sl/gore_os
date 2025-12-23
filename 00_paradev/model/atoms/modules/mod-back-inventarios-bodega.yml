@@ -13,5 +13,5 @@ composition:
   processes: []
   entities: [urn:goreos:atom:entity:d_back_fondos_globales:1.0.0]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: [urn:goreos:atom:module:back_contabilidad_operativa:1.0.0]

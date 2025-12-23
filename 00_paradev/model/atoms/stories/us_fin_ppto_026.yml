@@ -11,5 +11,5 @@ i_want: Devengar gastos asociados a facturas recibidas
 so_that: Registro la obligación
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

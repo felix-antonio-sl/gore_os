@@ -11,5 +11,5 @@ i_want: definir y monitorear SLIs y SLOs
 so_that: se mantenga la calidad del servicio acordada
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: un asistente de formulación de proyectos que valide la coherencia con l
 so_that: mis proyectos tengan mayor probabilidad de RS
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []

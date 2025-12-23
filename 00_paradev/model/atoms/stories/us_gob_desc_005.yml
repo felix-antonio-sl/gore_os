@@ -11,5 +11,5 @@ i_want: Elaborar plan de instalación de competencia transferida
 so_that: Aseguro operatividad
 domain: D-GOB
 priority: P1
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []

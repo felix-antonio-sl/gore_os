@@ -11,7 +11,7 @@ i_want: Consultar una base de conocimiento con errores frecuentes y soluciones
 so_that: Resuelva dudas comunes sin contactar a soporte
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

@@ -13,5 +13,5 @@ composition:
   processes: []
   entities: [urn:goreos:atom:entity:d_evol_orquestador:1.0.0]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: [urn:goreos:atom:module:evol_agentes_ia:1.0.0]

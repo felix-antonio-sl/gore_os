@@ -11,7 +11,7 @@ i_want: alertas de vencimiento de boletas de garantía
 so_that: pueda solicitar renovación a tiempo
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-REND-001
+competence_id: CPT-FIN-REND-001
 acceptance_criteria: []
 
 mentions:

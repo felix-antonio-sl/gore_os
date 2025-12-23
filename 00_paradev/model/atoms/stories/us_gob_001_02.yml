@@ -11,7 +11,7 @@ i_want: recibir alertas automáticas de desviaciones críticas en proyectos estr
 so_that: pueda intervenir oportunamente antes de que escalen
 domain: D-EVOL
 priority: P1
-capability_id: CAP-EVOL-001
+competence_id: CPT-EVOL-001
 acceptance_criteria: []
 
 mentions:

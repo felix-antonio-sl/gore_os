@@ -13,5 +13,5 @@ composition:
   processes: [urn:goreos:atom:process:d_ejec_p3:1.0.0]
   entities: [urn:goreos:atom:entity:d_ejec_convenio:1.0.0]
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_ejec_portal_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_ejec_portal_001:1.0.0]
   depends_on: []

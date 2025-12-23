@@ -11,5 +11,5 @@ i_want: promover datos validados de staging a producción
 so_that: los datos legacy estén disponibles para uso operacional
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-LEGACY
+competence_id: CPT-OPS-LEGACY
 acceptance_criteria: []

@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_terr_muni_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-TERR-MUNI-001
+name: Información Municipal
+domain: D-TERR
+type: CORE
+description: Datos territoriales por comuna.
+stories:
+- us_terr_muni_001
+- us_terr_muni_002
+- us_terr_muni_003
+ofrecida_por: null

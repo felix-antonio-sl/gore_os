@@ -11,5 +11,5 @@ i_want: Registrar en un log inmutable cada decisión tomada por un agente autón
 so_that: Garantizo la explicabilidad (XAI) ante auditorías
 domain: D-EVOL
 priority: P0
-capability_id: CAP-EVOL-001
+competence_id: CPT-EVOL-001
 acceptance_criteria: []

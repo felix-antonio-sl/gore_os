@@ -11,7 +11,7 @@ i_want: Asesorar a municipios en la formulación de sus planes comunales de segu
 so_that: Cumplo mandato legal de apoyo técnico
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

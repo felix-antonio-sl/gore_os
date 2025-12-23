@@ -11,5 +11,5 @@ i_want: registro de cargas familiares y seguros complementarios
 so_that: pueda gestionar reembolsos médicos
 domain: D-BACK
 priority: P1
-capability_id: CAP-RRHH-GESTOR-001
+competence_id: CPT-RRHH-GESTOR-001
 acceptance_criteria: []

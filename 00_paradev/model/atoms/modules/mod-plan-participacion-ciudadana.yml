@@ -18,5 +18,5 @@ composition:
       urn:goreos:atom:entity:d_plan_propuestaciudadana:1.0.0,
     ]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: []

@@ -11,7 +11,7 @@ i_want: un inventario de activos TI con ciclo de vida
 so_that: pueda planificar renovaciones y obsolescencia
 domain: D-BACK
 priority: P1
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []
 
 mentions:

@@ -11,7 +11,7 @@ i_want: Recibir alerta automática de vehículos con encargo de búsqueda (SITIA
 so_that: Activo protocolo de búsqueda coordinado con Carabineros y PDI
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

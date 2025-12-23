@@ -11,7 +11,7 @@ i_want: Recibir alertas críticas de seguridad pública (D-SEG)
 so_that: Activo protocolos de crisis nivel I
 domain: D-FENIX
 priority: P1
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []
 
 mentions:

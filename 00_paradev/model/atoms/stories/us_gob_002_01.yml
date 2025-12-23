@@ -11,7 +11,7 @@ i_want: un registro centralizado de convenios vigentes con cada SEREMI y ministe
 so_that: pueda hacer seguimiento de compromisos y vencimientos
 domain: D-PLAN
 priority: P1
-capability_id: CAP-PLAN-001
+competence_id: CPT-PLAN-001
 acceptance_criteria: []
 
 mentions:

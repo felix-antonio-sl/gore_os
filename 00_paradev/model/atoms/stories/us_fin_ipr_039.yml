@@ -11,5 +11,5 @@ i_want: Verificar cumplimiento de Requisitos de Información (ARI)
 so_that: Valido admisibilidad
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: generar reportes de cumplimiento para DIPRES
 so_that: pueda reportar en formato oficial
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: Gestionar un pico de solicitudes de información (>50 simultáneas) coor
 so_that: Evito caer en silencio administrativo masivo
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []

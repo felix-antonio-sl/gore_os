@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_ops_infra_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-OPS-INFRA-001
+name: Infraestructura TI
+domain: D-OPS
+type: CORE
+description: Gestión de infraestructura tecnológica.
+stories:
+- us_ops_infra_001
+- us_ops_infra_002
+- us_ops_infra_003
+- us_ops_infra_004
+ofrecida_por: null

@@ -11,5 +11,5 @@ i_want: un módulo de gestión del PAC con inscripciones y evaluaciones
 so_that: pueda reportar el cumplimiento del plan
 domain: D-BACK
 priority: P1
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: una vista consolidada de proyectos por sector (vial, salud, educación)
 so_that: pueda gestionar prioridades técnicas
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []

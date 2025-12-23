@@ -11,7 +11,7 @@ i_want: Recibir alertas para actualizar mi Declaración de Intereses y Patrimoni
 so_that: Evito sanciones por incumplimiento de plazos (Ley 20.880)
 domain: D-GOB
 priority: P0
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []
 
 mentions:

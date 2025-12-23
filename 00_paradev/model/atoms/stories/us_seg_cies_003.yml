@@ -11,7 +11,7 @@ i_want: Tomar control manual de cámara PTZ ante incidente flagrante
 so_that: Enfoco el evento
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

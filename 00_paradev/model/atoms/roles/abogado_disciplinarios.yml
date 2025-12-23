@@ -12,11 +12,14 @@ type: INTERNAL
 logic_scope: STRATEGIC
 
 categorical:
-  level: L1
+  level: L2 # Especialización funcional sobre el cargo estructural
 
 morphisms:
   actor_of:
     - urn:goreos:atom:story:us_abog_disc_001_01:1.0.0
+
+  competence:
+    - urn:goreos:atom:competence:gestion_procesos_disciplinarios:1.0.0   # (C) Acción atómica ejecutable
 
   governed_by: []
 

@@ -11,5 +11,5 @@ i_want: permiso de acceso limitado a la intranet
 so_that: pueda coordinarme con las unidades del GORE
 domain: D-BACK
 priority: P2
-capability_id: CAP-PAGOS-001
+competence_id: CPT-PAGOS-001
 acceptance_criteria: []

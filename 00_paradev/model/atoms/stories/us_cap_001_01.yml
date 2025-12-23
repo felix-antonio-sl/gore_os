@@ -11,5 +11,5 @@ i_want: un módulo de gestión de capacitación con inscripciones
 so_that: pueda administrar el PAC
 domain: D-BACK
 priority: P1
-capability_id: CAP-RRHH-GESTOR-001
+competence_id: CPT-RRHH-GESTOR-001
 acceptance_criteria: []

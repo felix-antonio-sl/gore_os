@@ -11,5 +11,5 @@ i_want: un checklist digital de cierre contable mensual con validaciones automá
 so_that: el cierre sea oportuno y sin errores
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: crear branches desde stories vinculadas automáticamente
 so_that: se asegure la trazabilidad total entre el código y el requisito
 domain: D-DEV
 priority: P0
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []

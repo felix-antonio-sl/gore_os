@@ -11,5 +11,5 @@ i_want: Ver bandeja de postulaciones ordenada FIFO
 so_that: Proceso en orden de llegada
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

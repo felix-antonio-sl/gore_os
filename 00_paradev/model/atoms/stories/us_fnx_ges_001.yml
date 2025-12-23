@@ -11,5 +11,5 @@ i_want: Crear un expediente digital de intervención (ID, Objetivo, Equipo)
 so_that: Centralizo la gestión y documentación del caso
 domain: D-FENIX
 priority: P0
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []

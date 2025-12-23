@@ -11,7 +11,7 @@ i_want: recibir la tabla de sesión y documentos de respaldo con anticipación
 so_that: pueda estudiar las materias antes de votar
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []
 
 mentions:

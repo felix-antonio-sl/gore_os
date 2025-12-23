@@ -11,7 +11,7 @@ i_want: un expediente digital único por funcionario
 so_that: tenga toda la historia laboral centralizada
 domain: D-BACK
 priority: P0
-capability_id: CAP-RRHH-GESTOR-001
+competence_id: CPT-RRHH-GESTOR-001
 acceptance_criteria: []
 
 mentions:

@@ -11,7 +11,7 @@ i_want: Reportar un incidente o foco delictual de manera anónima desde App/Web
 so_that: Colaboro con la seguridad sin riesgo personal
 domain: D-SEG
 priority: P1
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

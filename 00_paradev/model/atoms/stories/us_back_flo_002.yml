@@ -10,7 +10,7 @@ as_a: Encargado Flota
 i_want: Gestionar solicitudes de vehículos (asignar conductor)
 so_that: Administro uso de flota
 domain: D-BACK
-capability_id: CAP-BACK-FLO-001
+competence_id: CPT-BACK-FLO-001
 priority: P1
 acceptance_criteria: []
 

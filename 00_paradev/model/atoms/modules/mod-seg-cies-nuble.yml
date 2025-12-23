@@ -23,5 +23,5 @@ composition:
       urn:goreos:atom:entity:d_seg_accionrespuesta:1.0.0,
     ]
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_seg_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_seg_001:1.0.0]
   depends_on: []

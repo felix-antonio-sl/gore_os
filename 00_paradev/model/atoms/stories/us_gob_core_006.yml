@@ -11,7 +11,7 @@ i_want: Ver historial de votaciones (resultado y acuerdo)
 so_that: Consulto decisiones pasadas
 domain: D-GOB
 priority: P1
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []
 
 mentions:

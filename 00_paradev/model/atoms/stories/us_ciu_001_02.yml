@@ -11,7 +11,7 @@ i_want: consultar en qué se gasta el presupuesto regional
 so_that: pueda fiscalizar el uso de los recursos públicos
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

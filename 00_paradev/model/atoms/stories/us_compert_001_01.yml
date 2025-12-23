@@ -11,7 +11,7 @@ i_want: acceder a la documentación de iniciativas antes de la sesión
 so_that: pueda evaluarlas con tiempo
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

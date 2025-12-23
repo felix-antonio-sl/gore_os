@@ -11,5 +11,5 @@ i_want: Reportar avance periódico (validación supervisor)
 so_that: Cumplo con reporte
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

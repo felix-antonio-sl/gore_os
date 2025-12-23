@@ -10,6 +10,6 @@ as_a: Abogado Licitaciones
 i_want: plantillas de bases con cláusulas actualizadas
 so_that: pueda agilizar revisiones
 domain: D-NORM
-capability_id: CAP-NORM-ABOG-001
+competence_id: CPT-NORM-ABOG-001
 priority: P1
 acceptance_criteria: []

@@ -10,6 +10,6 @@ as_a: Especialista BI
 i_want: herramientas de auditoría de accesibilidad
 so_that: pueda verificar cumplimiento
 domain: D-TDE
-capability_id: CAP-DEV-ACC-001
+competence_id: CPT-DEV-ACC-001
 priority: P1
 acceptance_criteria: []

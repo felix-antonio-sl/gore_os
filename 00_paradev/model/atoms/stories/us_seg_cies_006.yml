@@ -11,7 +11,7 @@ i_want: Asignar roles y escenarios en Videowall durante emergencia mayor
 so_that: Coordino respuesta masiva
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

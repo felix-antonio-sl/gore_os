@@ -11,5 +11,5 @@ i_want: validación técnica automática de proyectos de infraestructura
 so_that: pueda verificar coherencia con planes sectoriales
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []

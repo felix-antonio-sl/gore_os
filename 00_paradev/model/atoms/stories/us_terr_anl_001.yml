@@ -11,7 +11,7 @@ i_want: Consultar histórico de inversiones por tipología, comuna y año
 so_that: Analizo tendencias
 domain: D-TERR
 priority: P1
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []
 
 mentions:

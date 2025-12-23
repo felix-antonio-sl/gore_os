@@ -11,5 +11,5 @@ i_want: historial de mantenimiento por número de serie de equipo
 so_that: pueda detectar fallas recurrentes
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

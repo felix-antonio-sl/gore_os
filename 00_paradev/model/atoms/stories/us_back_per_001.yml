@@ -10,7 +10,7 @@ as_a: Funcionario
 i_want: Visualizar mi ficha de funcionario (hoja de vida)
 so_that: Consulto mi información laboral
 domain: D-BACK
-capability_id: CAP-BACK-RRHH-001
+competence_id: CPT-BACK-RRHH-001
 priority: P0
 acceptance_criteria: []
 

@@ -16,5 +16,5 @@ composition:
   processes: [urn:goreos:atom:process:d_seg_p3:1.0.0]
   entities: [urn:goreos:atom:entity:d_seg_evidencia:1.0.0]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: [urn:goreos:atom:module:seg_cies_nuble:1.0.0]

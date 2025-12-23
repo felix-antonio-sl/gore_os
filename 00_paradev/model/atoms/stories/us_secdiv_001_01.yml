@@ -11,5 +11,5 @@ i_want: un módulo de gestión de correspondencia entrante y saliente
 so_that: pueda mantener trazabilidad
 domain: D-BACK
 priority: P1
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []

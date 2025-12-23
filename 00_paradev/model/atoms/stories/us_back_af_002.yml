@@ -10,6 +10,6 @@ as_a: Encargado Activo Fijo
 i_want: Registrar traslado de bienes (cambio ubicación)
 so_that: Actualizo ubicación de activos
 domain: D-BACK
-capability_id: CAP-BACK-AF-001
+competence_id: CPT-BACK-AF-001
 priority: P1
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: visualizar la cola de tickets asignados a mi grupo
 so_that: pueda gestionar eficientemente las solicitudes pendientes
 domain: D-BACK
 priority: P1
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []

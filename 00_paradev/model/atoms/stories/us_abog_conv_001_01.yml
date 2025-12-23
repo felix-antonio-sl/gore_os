@@ -10,6 +10,6 @@ as_a: Abogado Convenios
 i_want: plantillas de convenios con cláusulas estándar
 so_that: pueda estandarizar revisiones
 domain: D-NORM
-capability_id: CAP-NORM-ABOG-001
+competence_id: CPT-NORM-ABOG-001
 priority: P1
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: un sistema de gestión de solicitudes con trazabilidad completa
 so_that: pueda asegurar respuesta en plazo legal
 domain: D-TDE
 priority: P0
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

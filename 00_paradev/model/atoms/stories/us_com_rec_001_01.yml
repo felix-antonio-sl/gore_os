@@ -11,7 +11,7 @@ i_want: un acta de recepción electrónica con checklist de verificación
 so_that: el proceso sea documentado
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

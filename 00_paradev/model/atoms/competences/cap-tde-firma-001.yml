@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_tde_firma_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-TDE-FIRMA-001
+name: Firma Electrónica Avanzada
+domain: D-TDE
+type: CORE
+description: Bandeja de firma conforme Ley 19.799 y DS 83.
+stories:
+- us_op_001_02
+- us_op_002_01
+- us_tde_firma_001
+- us_tde_firma_002
+- us_tde_firma_003
+- us_tde_firma_004
+- us_tde_firma_005
+- us_tde_firma_006
+- us_tde_firma_007
+ofrecida_por: null

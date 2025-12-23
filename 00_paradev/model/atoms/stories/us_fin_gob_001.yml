@@ -11,7 +11,7 @@ i_want: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
 so_that: Filtro estratégico antes de evaluación técnica
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

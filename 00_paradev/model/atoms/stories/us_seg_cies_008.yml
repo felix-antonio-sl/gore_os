@@ -11,5 +11,5 @@ i_want: Generar estadística de incidentes/horarios/zonas calientes
 so_that: Analizo patrones
 domain: D-SEG
 priority: P1
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []

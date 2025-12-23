@@ -1,0 +1,18 @@
+_meta:
+  urn: "urn:goreos:atom:competence:gestion_procesos_disciplinarios:1.0.0"
+  type: Competence
+  schema: "urn:goreos:schema:capability:2.0.0"
+  ontology_version: "3.0.0"
+
+id: "CPT-NORM-DISC-001"
+name: "Gestión de Procesos Disciplinarios"
+description: "Capacidad para instruir, gestionar y custodiar sumarios administrativos e investigaciones sumarias conforme al Estatuto Administrativo."
+domain: "NORM"
+layer: "Business"
+
+input: "Denuncia o Instrucción de Sumario"
+output: "Vista Fiscal / Resolución de Término"
+
+related_codes:
+  - system: "TDE"
+    code: "PROC-DISC-001"

@@ -11,7 +11,7 @@ i_want: un módulo de control de activos con ubicación y responsable
 so_that: pueda mantener el inventario actualizado
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

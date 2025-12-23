@@ -11,5 +11,5 @@ i_want: un registro de organizaciones y beneficiarios sociales
 so_that: pueda focalizar intervenciones
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

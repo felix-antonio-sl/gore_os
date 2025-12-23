@@ -11,7 +11,7 @@ i_want: Participar en sesiones del Consejo Regional de Seguridad Pública
 so_that: Participo en planificación regional de seguridad como COSOC
 domain: D-SEG
 priority: P2
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

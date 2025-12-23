@@ -11,7 +11,7 @@ i_want: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Conn
 so_that: Cumplo con DS9 y habilito SSO para ciudadanos y funcionarios
 domain: D-TDE
 priority: P0
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []
 
 mentions:

@@ -11,5 +11,5 @@ i_want: definir y medir el cumplimiento de SLAs y SLOs
 so_that: se evalúe la calidad del servicio entregado y la gobernanza operativa
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

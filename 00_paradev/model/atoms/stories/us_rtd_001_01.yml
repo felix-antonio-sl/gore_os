@@ -11,7 +11,7 @@ i_want: reportar el porcentaje de trámites digitalizados
 so_that: el servicio cumpla la ley de transformación digital
 domain: D-DEV
 priority: P1
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []
 
 mentions:

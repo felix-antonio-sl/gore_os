@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_dev_bp_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-DEV-BP-001
+name: Blueprint Categórico
+domain: D-DEV
+type: ENABLER
+description: Gobernanza KODA y arquitectura categórica.
+stories:
+- us_dev_bp_001
+- us_dev_bp_002
+- us_dev_bp_003
+- us_dev_bp_004
+ofrecida_por: null

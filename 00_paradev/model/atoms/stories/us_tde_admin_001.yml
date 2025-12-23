@@ -11,5 +11,5 @@ i_want: Crear/editar divisiones con jefe asignado
 so_that: Configuro estructura organizacional
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

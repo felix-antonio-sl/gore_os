@@ -11,5 +11,5 @@ i_want: documentación clara de APIs de interoperabilidad
 so_that: pueda conectar el ERP municipal
 domain: D-DEV
 priority: P2
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []

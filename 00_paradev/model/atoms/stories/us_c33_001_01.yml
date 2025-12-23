@@ -11,7 +11,7 @@ i_want: un catálogo de precios referenciales de vehículos y maquinaria
 so_that: pueda evaluar la eficiencia del gasto
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

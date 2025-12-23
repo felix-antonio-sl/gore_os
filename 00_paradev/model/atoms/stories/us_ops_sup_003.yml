@@ -11,5 +11,5 @@ i_want: acceder a una base de conocimiento con soluciones a problemas comunes
 so_that: pueda resolver dudas simples mediante autoservicio sin abrir tickets
 domain: D-OPS
 priority: P2
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

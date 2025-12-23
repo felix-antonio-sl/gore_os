@@ -11,5 +11,5 @@ i_want: Generar copia auténtica digital de actos originales
 so_that: Proveo copias oficiales
 domain: D-NORM
 priority: P1
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []

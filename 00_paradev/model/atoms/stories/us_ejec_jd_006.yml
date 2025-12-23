@@ -11,7 +11,7 @@ i_want: Validar compromisos marcados como completados
 so_that: Certifico cumplimiento
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

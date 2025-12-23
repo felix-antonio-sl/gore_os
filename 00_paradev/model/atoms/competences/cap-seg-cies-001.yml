@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_seg_cies_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-SEG-CIES-001
+name: CIES - Centro de Información
+domain: D-SEG
+type: CORE
+description: Centro Integrado de Emergencias y Seguridad.
+stories:
+- us_seg_cies_001
+- us_seg_cies_002
+- us_seg_cies_003
+- us_cies_001_01
+ofrecida_por:
+- urn:goreos:atom:module:seg_cies_nuble:1.0.0

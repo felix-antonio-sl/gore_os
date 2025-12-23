@@ -11,5 +11,5 @@ i_want: un sistema de carga de evidencias PMG descentralizado
 so_that: cada unidad suba sus medios de verificación
 domain: D-PLAN
 priority: P1
-capability_id: CAP-PLAN-001
+competence_id: CPT-PLAN-001
 acceptance_criteria: []

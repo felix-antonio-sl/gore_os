@@ -11,5 +11,5 @@ i_want: Verificar que no existe fraccionamiento de programas
 so_that: Evito sobrepaso de topes
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

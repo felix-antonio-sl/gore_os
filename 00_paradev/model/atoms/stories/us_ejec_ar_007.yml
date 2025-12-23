@@ -11,7 +11,7 @@ i_want: Reasignar compromisos a otro responsable
 so_that: Gestiono cambios de personal
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []
 
 mentions:

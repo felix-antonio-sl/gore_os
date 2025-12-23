@@ -11,5 +11,5 @@ i_want: Ver monitor de problemas escalados
 so_that: Gestiono obstáculos críticos
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []

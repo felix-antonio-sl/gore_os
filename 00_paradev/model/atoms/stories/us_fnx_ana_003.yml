@@ -12,5 +12,5 @@ i_want: Visualizar zonas de la organización con mayor propensión a fallos (bas
 so_that: Focalizo el plan de auditoría anual
 domain: D-FENIX
 priority: P1
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: correlacionar logs de auditoría con métricas de rendimiento en una mis
 so_that: se facilite el troubleshooting y la identificación de la causa raíz de incidentes
 domain: D-OPS
 priority: P1
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

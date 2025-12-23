@@ -11,5 +11,5 @@ i_want: un formulario de evaluación con criterios ponderados
 so_that: la evaluación sea objetiva y trazable
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

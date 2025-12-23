@@ -11,5 +11,5 @@ i_want: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensible
 so_that: Protejo información
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

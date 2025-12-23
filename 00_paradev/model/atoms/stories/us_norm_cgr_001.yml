@@ -11,7 +11,7 @@ i_want: Recibir actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC
 so_that: Ejerzo control preventivo
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []
 
 mentions:

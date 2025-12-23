@@ -11,7 +11,7 @@ i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
 so_that: Aseguro cumplimiento de funcionarios
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []
 
 mentions:

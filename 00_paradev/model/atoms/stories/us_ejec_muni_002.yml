@@ -11,5 +11,5 @@ i_want: Usar wizard de vía de financiamiento (recomendación fundamentada)
 so_that: Elijo mecanismo correcto
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

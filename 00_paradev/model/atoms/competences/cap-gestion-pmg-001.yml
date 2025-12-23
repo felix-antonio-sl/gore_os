@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_gestion_pmg_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-GESTION-PMG-001
+name: PMG - Programa de Mejoramiento
+domain: D-GESTION
+type: CORE
+description: Gestión del PMG institucional.
+stories:
+- us_gestion_pmg_001
+- us_gestion_pmg_002
+- us_gestion_pmg_003
+- us_pmg_001_01
+ofrecida_por: null

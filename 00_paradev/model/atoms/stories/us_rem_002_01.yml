@@ -11,5 +11,5 @@ i_want: cálculo automático de bonificaciones y descuentos legales
 so_that: se minimicen errores en la liquidación
 domain: D-BACK
 priority: P0
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: Aplicar pauta de evaluación ciega (doble ciego opcional)
 so_that: Aseguro objetividad
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

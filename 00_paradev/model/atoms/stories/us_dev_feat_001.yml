@@ -11,5 +11,5 @@ i_want: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
 so_that: Valido innovaciones antes del despliegue masivo
 domain: D-DEV
 priority: P1
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []

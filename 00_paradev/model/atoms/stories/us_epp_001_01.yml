@@ -11,7 +11,7 @@ i_want: alertas de desviación de cronograma (Gantt)
 so_that: pueda gestionar medidas correctivas
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []
 
 mentions:

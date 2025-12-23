@@ -11,7 +11,7 @@ i_want: métricas de velocidad y calidad del equipo (DORA metrics)
 so_that: pueda optimizar el proceso de desarrollo
 domain: D-DEV
 priority: P1
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []
 
 mentions:

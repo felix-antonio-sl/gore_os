@@ -10,7 +10,7 @@ as_a: Auditor Externo
 i_want: acceso controlado a expedientes y registros financieros
 so_that: pueda realizar mi trabajo de auditoría
 domain: D-NORM
-capability_id: CAP-NORM-AUD-001
+competence_id: CPT-NORM-AUD-001
 priority: P0
 acceptance_criteria: []
 

@@ -12,5 +12,5 @@ i_want: un workflow de revisión con estados (Recibida, En revisión, Aprobada, 
 so_that: el proceso sea trazable y estructurado
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

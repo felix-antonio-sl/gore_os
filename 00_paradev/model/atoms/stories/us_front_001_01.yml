@@ -11,5 +11,5 @@ i_want: una biblioteca de componentes de diseño (Design System)
 so_that: la UI sea consistente en todos los módulos
 domain: D-DEV
 priority: P1
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []

@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_com_inst_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-COM-INST-001
+name: Comunicaciones Institucionales
+domain: D-COM
+type: CORE
+description: Gestión de comunicaciones y prensa.
+stories:
+- us_com_inst_001
+- us_com_inst_002
+- us_com_inst_003
+- us_com_001_01
+ofrecida_por: null

@@ -10,6 +10,6 @@ as_a: Funcionario
 i_want: Completar proceso de inducción digital (checklist)
 so_that: Me integro correctamente a la institución
 domain: D-BACK
-capability_id: CAP-BACK-RRHH-001
+competence_id: CPT-BACK-RRHH-001
 priority: P1
 acceptance_criteria: []

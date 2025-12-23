@@ -11,7 +11,7 @@ i_want: Recibir alertas automáticas cuando el índice H_gore baje de 60
 so_that: Puedo iniciar la evaluación de intervención proactiva
 domain: D-FENIX
 priority: P0
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []
 
 mentions:

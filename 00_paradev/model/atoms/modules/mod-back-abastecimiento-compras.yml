@@ -25,5 +25,5 @@ composition:
       urn:goreos:atom:entity:d_back_compra_gil:1.0.0,
     ]
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_compras_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_compras_001:1.0.0]
   depends_on: []

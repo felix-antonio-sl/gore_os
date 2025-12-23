@@ -11,5 +11,5 @@ i_want: reportes de devengo vs. gasto efectivo en tiempo real
 so_that: pueda proyectar el cierre presupuestario
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

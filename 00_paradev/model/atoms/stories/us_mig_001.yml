@@ -11,5 +11,5 @@ i_want: ejecutar el proceso completo de inyección de data legacy
 so_that: todos los datos históricos estén disponibles en GORE_OS para arranque operacional
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-LEGACY
+competence_id: CPT-OPS-LEGACY
 acceptance_criteria: []

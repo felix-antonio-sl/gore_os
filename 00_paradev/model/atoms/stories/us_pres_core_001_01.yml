@@ -11,7 +11,7 @@ i_want: una herramienta de gestión de sesiones con votación electrónica
 so_that: las sesiones sean ágiles y registradas
 domain: D-NORM
 priority: P0
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []
 
 mentions:

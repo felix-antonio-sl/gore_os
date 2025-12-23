@@ -11,7 +11,7 @@ i_want: un workflow digital de ingreso de funcionarios con checklist de document
 so_that: el proceso de incorporación sea ágil y completo
 domain: D-BACK
 priority: P0
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []
 
 mentions:

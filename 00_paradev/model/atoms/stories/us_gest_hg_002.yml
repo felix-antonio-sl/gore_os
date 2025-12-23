@@ -11,7 +11,7 @@ i_want: Configurar umbrales de alerta para dimensiones de H_gore
 so_that: Recibo notificaciones automáticas ante degradación
 domain: D-GESTION
 priority: P1
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []
 
 mentions:

@@ -11,7 +11,7 @@ i_want: Gestionar proceso de inducción de nuevos funcionarios
 so_that: Aseguro integración efectiva y productiva
 domain: D-GESTION
 priority: P1
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []
 
 mentions:

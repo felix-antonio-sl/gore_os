@@ -11,7 +11,7 @@ i_want: Solicitar asistencia técnica al GORE para actualizar el PRC
 so_that: Mantengo el instrumento vigente según dinámica territorial
 domain: D-TERR
 priority: P1
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []
 
 mentions:

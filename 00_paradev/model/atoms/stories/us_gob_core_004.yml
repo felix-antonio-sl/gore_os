@@ -11,5 +11,5 @@ i_want: Ver mapa de inversiones (geolocalización + filtros)
 so_that: Visualizo distribución territorial
 domain: D-GOB
 priority: P0
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []

@@ -11,7 +11,7 @@ i_want: recibir expedientes electrónicos completos vía interoperabilidad
 so_that: pueda revisar sin solicitar documentos adicionales
 domain: D-TDE
 priority: P0
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []
 
 mentions:

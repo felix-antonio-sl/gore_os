@@ -11,5 +11,5 @@ i_want: Ver logs de actividad (filtro usuario/acción)
 so_that: Audito uso del sistema
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

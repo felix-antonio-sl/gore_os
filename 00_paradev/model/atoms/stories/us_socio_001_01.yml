@@ -11,5 +11,5 @@ i_want: consultar mis saldos de ayudas económicas
 so_that: pueda planificar mis gastos
 domain: D-BACK
 priority: P2
-capability_id: CAP-RRHH-GESTOR-001
+competence_id: CPT-RRHH-GESTOR-001
 acceptance_criteria: []

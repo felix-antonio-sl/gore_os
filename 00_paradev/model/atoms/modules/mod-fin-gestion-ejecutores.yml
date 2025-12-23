@@ -24,5 +24,5 @@ composition:
       urn:goreos:atom:entity:d_fin_ejecutores_relacionejecutor:1.0.0,
     ]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: []

@@ -11,7 +11,7 @@ i_want: gestión de reserva de salas y vehículos
 so_that: se optimice el uso de recursos físicos
 domain: D-BACK
 priority: P2
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []
 
 mentions:

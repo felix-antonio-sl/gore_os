@@ -1,0 +1,15 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_coord_emerg_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-COORD-EMERG-001
+name: Coordinación de Emergencias
+domain: D-COORD
+type: CORE
+description: Coordinación ante emergencias regionales.
+stories:
+- us_coord_emerg_001
+- us_coord_emerg_002
+- us_emerg_001_01
+ofrecida_por: null

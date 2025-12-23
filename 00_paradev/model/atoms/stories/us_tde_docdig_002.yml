@@ -12,5 +12,5 @@ i_want: incluir un link de verificación en lugar del texto íntegro del conveni
 so_that: las resoluciones sean cortas y verificables digitalmente
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

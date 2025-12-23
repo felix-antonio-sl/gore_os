@@ -11,5 +11,5 @@ i_want: un panel de cuadratura contable diaria con validaciones automáticas
 so_that: pueda detectar descuadres antes del cierre mensual
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

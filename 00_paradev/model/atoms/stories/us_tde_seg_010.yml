@@ -11,5 +11,5 @@ i_want: Auditar trazabilidad de accesos DS9
 so_that: Verifico cumplimiento de autenticación
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

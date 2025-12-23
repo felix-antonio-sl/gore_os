@@ -21,5 +21,5 @@ composition:
       urn:goreos:atom:entity:d_fin_rendiciones_transferencia:1.0.0,
     ]
 morphisms:
-  implements_capability: [urn:goreos:atom:capability:cap_fin_rend_001:1.0.0]
+  implements_competence: [urn:goreos:atom:competence:cap_fin_rend_001:1.0.0]
   depends_on: [urn:goreos:atom:module:fin_gestion_ejecutores:1.0.0]

@@ -12,7 +12,7 @@ i_want: visualizar dashboards con métricas de salud y rendimiento del sistema e
 so_that: se tenga una visibilidad completa del estado operativo de la plataforma
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []
 
 mentions:

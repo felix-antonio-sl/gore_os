@@ -16,5 +16,5 @@ composition:
   processes: [urn:goreos:atom:process:d_seg_p4:1.0.0]
   entities: [urn:goreos:atom:entity:d_seg_proyecto_seguridad:1.0.0]
 morphisms:
-  implements_capability: []
+  implements_competence: []
   depends_on: []

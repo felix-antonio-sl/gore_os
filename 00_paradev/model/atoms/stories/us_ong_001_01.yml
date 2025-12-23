@@ -11,5 +11,5 @@ i_want: información de fondos concursables y consultas ciudadanas
 so_that: pueda participar activamente
 domain: D-EJEC
 priority: P2
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

@@ -11,7 +11,7 @@ i_want: reportes de eventos por turno y operador
 so_that: pueda evaluar desempeño
 domain: D-TERR
 priority: P1
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []
 
 mentions:

@@ -11,5 +11,5 @@ i_want: Generar resumen semanal para Gobernador (PDF tendencias)
 so_that: Informo a la autoridad
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []

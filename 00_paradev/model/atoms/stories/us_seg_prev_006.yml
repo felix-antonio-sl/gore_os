@@ -11,7 +11,7 @@ i_want: Monitorear ejecución financiera de convenios con municipios
 so_that: Controlo uso de recursos
 domain: D-SEG
 priority: P1
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

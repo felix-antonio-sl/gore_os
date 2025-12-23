@@ -10,6 +10,6 @@ as_a: Profesional Bienestar
 i_want: Aplicar descuento de cuotas (automático planilla)
 so_that: Recupero préstamos
 domain: D-BACK
-capability_id: CAP-BACK-BIEN-001
+competence_id: CPT-BACK-BIEN-001
 priority: P1
 acceptance_criteria: []

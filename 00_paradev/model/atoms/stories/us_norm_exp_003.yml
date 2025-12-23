@@ -11,5 +11,5 @@ i_want: Registrar trazabilidad de acciones sobre expediente (DS10)
 so_that: Garantizo auditoría
 domain: D-NORM
 priority: P1
-capability_id: CAP-DOCUMENTOS-001
+competence_id: CPT-DOCUMENTOS-001
 acceptance_criteria: []

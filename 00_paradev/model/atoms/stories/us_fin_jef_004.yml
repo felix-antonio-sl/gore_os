@@ -11,5 +11,5 @@ i_want: Ver propuesta de priorización (ranking ERD/urgencia/monto)
 so_that: Optimizo uso de recursos
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

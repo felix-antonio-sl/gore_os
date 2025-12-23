@@ -11,5 +11,5 @@ i_want: Consumir métricas de D-EVOL en tiempo real
 so_that: Detecto condiciones de activación
 domain: D-FENIX
 priority: P1
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []

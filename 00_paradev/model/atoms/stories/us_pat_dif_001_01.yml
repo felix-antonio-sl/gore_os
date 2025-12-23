@@ -11,5 +11,5 @@ i_want: un módulo de patrocinio integrado con BIP
 so_that: pueda verificar alineamiento sectorial
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

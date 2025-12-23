@@ -10,7 +10,7 @@ as_a: Profesional Bienestar
 i_want: Otorgar subsidios por eventos (natalidad/pérdida)
 so_that: Apoyo en momentos especiales
 domain: D-BACK
-capability_id: CAP-BACK-BIEN-001
+competence_id: CPT-BACK-BIEN-001
 priority: P2
 acceptance_criteria: []
 

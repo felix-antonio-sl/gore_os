@@ -10,7 +10,7 @@ as_a: Analista Presupuesto
 i_want: alertas de marcos presupuestarios próximos a agotarse
 so_that: pueda informar oportunamente a la jefatura
 domain: D-FIN
-capability_id: CAP-FIN-PPTO-001
+competence_id: CPT-FIN-PPTO-001
 priority: P0
 acceptance_criteria: []
 

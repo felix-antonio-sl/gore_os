@@ -11,5 +11,5 @@ i_want: herramientas de monitoreo de calidad de datos
 so_that: pueda detectar anomalías
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

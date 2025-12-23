@@ -11,7 +11,7 @@ i_want: Tramitar actos ante CGR (toma de razón)
 so_that: Cumplo con control preventivo
 domain: D-NORM
 priority: P0
-capability_id: CAP-NORM-CONTROL-001
+competence_id: CPT-NORM-CONTROL-001
 acceptance_criteria: []
 
 mentions:

@@ -11,7 +11,7 @@ i_want: Reabrir compromiso devuelto por completado incorrecto
 so_that: Corrijo estado
 domain: D-EJEC
 priority: P1
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []
 
 mentions:

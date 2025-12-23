@@ -11,5 +11,5 @@ i_want: bloquear imputaciones que excedan el saldo disponible
 so_that: no se genere deuda flotante sin respaldo
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

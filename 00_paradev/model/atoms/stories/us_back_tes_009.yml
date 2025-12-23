@@ -11,7 +11,7 @@ i_want: Emitir informe de conciliación bancaria mensual firmado
 so_that: Cumplo con control interno y normativa
 domain: D-BACK
 priority: P1
-capability_id: CAP-PAGOS-001
+competence_id: CPT-PAGOS-001
 acceptance_criteria: []
 
 mentions:

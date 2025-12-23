@@ -19,6 +19,6 @@ composition:
     - urn:goreos:atom:entity:d_fin_presupuesto_modificacionpresupuestaria:1.0.0
   processes: []
 morphisms:
-  implements_capability:
-    - CAP-FIN-PPTO-001
+  implements_competence:
+    - CPT-FIN-PPTO-001
   depends_on: []

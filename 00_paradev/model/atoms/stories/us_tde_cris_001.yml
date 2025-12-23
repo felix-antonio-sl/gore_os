@@ -11,5 +11,5 @@ i_want: Activar protocolo de ingreso manual ante caída de Nodo PISEE
 so_that: Mantengo la operación crítica del servicio
 domain: D-TDE
 priority: P0
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

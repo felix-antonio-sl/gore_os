@@ -11,5 +11,5 @@ i_want: Evaluar admisibilidad de beneficiario (Empresa/Gremio)
 so_that: Verifico elegibilidad
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

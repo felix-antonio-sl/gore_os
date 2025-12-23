@@ -11,5 +11,5 @@ i_want: monitorización de infraestructura como código (IaC)
 so_that: los entornos sean reproducibles y estables
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

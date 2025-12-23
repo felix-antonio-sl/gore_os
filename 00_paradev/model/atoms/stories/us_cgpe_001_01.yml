@@ -11,7 +11,7 @@ i_want: alertas automáticas de licencias médicas prolongadas
 so_that: pueda gestionar reemplazos a tiempo
 domain: D-BACK
 priority: P1
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []
 
 mentions:

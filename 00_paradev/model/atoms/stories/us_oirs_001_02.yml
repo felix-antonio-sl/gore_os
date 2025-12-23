@@ -11,5 +11,5 @@ i_want: generar reportes de satisfacción ciudadana
 so_that: pueda mejorar el servicio
 domain: D-BACK
 priority: P1
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []

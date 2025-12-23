@@ -11,5 +11,5 @@ i_want: Proyectar deuda flotante a fin de año
 so_that: Planifico cierre de ejercicio
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

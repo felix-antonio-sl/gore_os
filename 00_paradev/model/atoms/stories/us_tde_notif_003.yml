@@ -11,5 +11,5 @@ i_want: Enviar notificaciones vía API /notificador/sendMessage vía Nodo PISEE
 so_that: Uso infraestructura estatal
 domain: D-TDE
 priority: P1
-capability_id: CAP-FIRMA-001
+competence_id: CPT-FIRMA-001
 acceptance_criteria: []

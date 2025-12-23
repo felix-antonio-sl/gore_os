@@ -10,7 +10,7 @@ as_a: Alcalde
 i_want: consultar el calendario de llamados y fondos disponibles
 so_that: pueda planificar las postulaciones de mi comuna
 domain: D-EJEC
-capability_id: CAP-EJEC-MUNI-001
+competence_id: CPT-EJEC-MUNI-001
 priority: P0
 acceptance_criteria: []
 

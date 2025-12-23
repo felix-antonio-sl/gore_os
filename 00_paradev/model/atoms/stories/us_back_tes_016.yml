@@ -11,5 +11,5 @@ i_want: Generar estados financieros anuales del GORE
 so_that: Cumplo con normativa y remito a CGR
 domain: D-BACK
 priority: P1
-capability_id: CAP-PAGOS-001
+competence_id: CPT-PAGOS-001
 acceptance_criteria: []

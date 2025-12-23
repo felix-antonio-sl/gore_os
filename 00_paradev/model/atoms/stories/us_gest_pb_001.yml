@@ -11,7 +11,7 @@ i_want: Ejecutar playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
 so_that: Recupero la salud institucional en 7-14 días
 domain: D-GESTION
 priority: P0
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []
 
 mentions:

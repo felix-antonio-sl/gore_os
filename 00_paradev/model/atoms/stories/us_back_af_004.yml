@@ -10,7 +10,7 @@ as_a: Encargado Activo Fijo
 i_want: Realizar inventario anual de activo fijo
 so_that: Cumplo con normativa contable
 domain: D-BACK
-capability_id: CAP-BACK-AF-001
+competence_id: CPT-BACK-AF-001
 priority: P1
 acceptance_criteria: []
 

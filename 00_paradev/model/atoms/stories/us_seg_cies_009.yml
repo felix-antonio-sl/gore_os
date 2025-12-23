@@ -11,7 +11,7 @@ i_want: Confirmar alertas en terreno
 so_that: Valido información visual
 domain: D-SEG
 priority: P1
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

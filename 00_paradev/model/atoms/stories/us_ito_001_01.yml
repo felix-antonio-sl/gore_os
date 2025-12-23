@@ -11,5 +11,5 @@ i_want: una app móvil offline para el libro de obras digital
 so_that: pueda registrar hitos sin conexión a internet
 domain: D-EJEC
 priority: P0
-capability_id: CAP-EJEC-PORTAL-001
+competence_id: CPT-EJEC-PORTAL-001
 acceptance_criteria: []

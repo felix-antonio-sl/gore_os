@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_fin_ppr_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-FIN-PPR-001
+name: Programas Públicos Regionales
+domain: D-FIN
+type: CORE
+description: Gestión de programas con financiamiento regional.
+stories:
+- us_fin_ppr_002
+- us_fin_ppr_003
+- us_fin_ppr_004
+- us_fin_ppr_006
+- us_anal_ppr_001_01
+ofrecida_por: null

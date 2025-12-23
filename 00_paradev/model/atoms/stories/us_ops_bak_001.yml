@@ -11,5 +11,5 @@ i_want: configurar backups automáticos programados para todas las bases de dato
 so_that: se garantice la continuidad del negocio ante desastres
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

@@ -56,13 +56,14 @@ Una historia de usuario no es solo un requisito — es el **átomo primordial** 
 
 ### ¿Qué se extrae de cada Story?
 
-| Pregunta al leer la Story                           | Se deriva      | Ejemplo                                                   |
-| --------------------------------------------------- | -------------- | --------------------------------------------------------- |
-| **"Como [X]..."** → ¿Quién?                         | **Role**       | "Como Analista Presupuesto" → `ROL-ANAL-PPTO`             |
-| **"...quiero [Y]..."** → ¿Qué acción?               | **Process**    | "quiero gestionar firmas" → `PROC-FIRMA-CONVENIO`         |
-| **"...quiero [Y]..."** → ¿Qué datos necesito?       | **Entity**     | "gestionar firmas convenio" → `ENT-CONVENIO`, `ENT-FIRMA` |
-| **"...para que [Z]"** → ¿Qué valor?                 | **Capability** | "para que obtengo firmas" → `CAP-FIN-CONVENIOS`           |
-| **Múltiples stories similares** → ¿Dónde agrupamos? | **Module**     | Stories de convenios → `MOD-FIN-CONVENIOS`                |
+| Pregunta al leer la Story                     | Se deriva      | Ejemplo                                                   |
+| --------------------------------------------- | -------------- | --------------------------------------------------------- |
+| **"Como [X]..."** → ¿Quién?                   | **Role**       | "Como Analista Presupuesto" → `ROL-ANAL-PPTO`             |
+| **"...quiero [Y]..."** → ¿Qué acción?         | **Process**    | "quiero gestionar firmas" → `PROC-FIRMA-CONVENIO`         |
+| **"...quiero [Y]..."** → ¿Qué datos necesito? | **Entity**     | "gestionar firmas convenio" → `ENT-CONVENIO`, `ENT-FIRMA` |
+| **"...para que [Z]"** → ¿Qué acción?          | **Competence** | "para que obtengo firmas" → `CPT-FIN-FIRMA`               |
+| **Varias Competencias** → ¿Qué valor dan?     | **Capability** | Sumarios + Actos → `CAP-GESTION-NORMATIVA`                |
+| **Múltiples historias** → ¿Dónde agrupamos?   | **Module**     | Stories de convenios → `MOD-FIN-CONVENIOS`                |
 
 ### El Flujo de Extracción
 
@@ -224,14 +225,15 @@ $$\forall a \in Atom: \dim(a) \in \{S, V, T\} \text{ (dimensión dominante)}$$
 
 ### 2.0 Tabla de Ortogonalidad
 
-| Átomo          | Dimensión  | Pregunta Primaria             | Valor para GORE_OS             |
-| -------------- | ---------- | ----------------------------- | ------------------------------ |
-| **Story**      | Valor      | ¿Qué necesita el usuario?     | Define requisitos verificables |
-| **Role**       | Estructura | ¿Quién puede actuar?          | Define permisos y contextos    |
-| **Entity**     | Estructura | ¿Qué datos persisten?         | Define el modelo de datos      |
-| **Process**    | Tiempo     | ¿Cómo fluye el trabajo?       | Define la lógica dinámica      |
-| **Capability** | Valor      | ¿Qué puede lograr el sistema? | Agrupa valor entregable        |
-| **Module**     | Estructura | ¿Dónde vive el código?        | Organiza la implementación     |
+| Átomo          | Dimensión  | Pregunta Primaria           | Valor para GORE_OS             |
+| -------------- | ---------- | --------------------------- | ------------------------------ |
+| **Story**      | Valor      | ¿Qué necesita el usuario?   | Define requisitos verificables |
+| **Role**       | Estructura | ¿Quién puede actuar?        | Define permisos y contextos    |
+| **Entity**     | Estructura | ¿Qué datos persisten?       | Define el modelo de datos      |
+| **Process**    | Tiempo     | ¿Cómo fluye el trabajo?     | Define la lógica dinámica      |
+| **Competence** | Valor      | ¿Qué acción puede ejecutar? | Átomo atómico ejecutable       |
+| **Capability** | Valor      | ¿Qué valor aporta al GORE?  | Límite de competencias         |
+| **Module**     | Estructura | ¿Dónde vive el código?      | Organiza la implementación     |
 
 ---
 
@@ -386,22 +388,22 @@ State_A ───▶ Transition ───▶ State_B
 
 ---
 
-### 2.5 Capability — El Valor Agregado (Dimensión: Valor)
+### 2.5 Competence — El Átomo Ejecutable (Dimensión: Valor)
 
 **Definición Categórica:**
 $$Capability = \coprod_{j \in J} Story_j \text{ (Colímite de Stories)}$$
 
-Un coproducto que agrupa stories en una funcionalidad completa.
+Un coproducto que agrupa stories en una funcionalidad atómica.
 
 **Propósito en GORE_OS:**
-- Define QUÉ PUEDE HACER el sistema (visión usuario)
+- Define QUÉ ACCIÓN puede realizar el sistema
 - Agrupa stories relacionadas
-- Es la unidad de entrega de valor
+- Es la unidad de competencia ejecutable
 
 **Firma:**
 ```yaml
-Capability:
-  id: CAP-{DOMAIN}-{NAME}
+Competence:
+  id: CPT-{DOMAIN}-{NAME}
   description: string      # Valor en lenguaje humano
   stories: [Story]         # Historias que agrupa
   modules: [Module]        # Dónde se implementa
@@ -705,14 +707,15 @@ goreos audit:value             # Métricas de valor
 
 ## 8. Resumen: Cada Cosa con Sentido
 
-| Átomo          | Es un...   | Sirve para...        | Genera... | Mide su valor con... |
-| -------------- | ---------- | -------------------- | --------- | -------------------- |
-| **Story**      | Requisito  | Saber QUÉ construir  | Tests     | % Aceptación         |
-| **Role**       | Actor      | Saber QUIÉN usa      | Permisos  | Usuarios activos     |
-| **Entity**     | Dato       | Saber QUÉ guardar    | Schema    | Integridad datos     |
-| **Process**    | Flujo      | Saber CÓMO funciona  | Workflow  | Tiempo ejecución     |
-| **Capability** | Valor      | Saber QUÉ entregamos | Features  | Adopción             |
-| **Module**     | Componente | Saber DÓNDE va       | Código    | Cobertura tests      |
+| Átomo          | Es un...   | Sirve para...         | Genera... | Mide su valor con... |
+| -------------- | ---------- | --------------------- | --------- | -------------------- |
+| **Story**      | Requisito  | Saber QUÉ construir   | Tests     | % Aceptación         |
+| **Role**       | Actor      | Saber QUIÉN usa       | Permisos  | Usuarios activos     |
+| **Entity**     | Dato       | Saber QUÉ guardar     | Schema    | Integridad datos     |
+| **Process**    | Flujo      | Saber CÓMO funciona   | Workflow  | Tiempo ejecución     |
+| **Competence** | Valor      | Saber QUÉ puede hacer | Atómico   | % Aceptación         |
+| **Capability** | Valor      | Saber QUÉ entregamos  | Agregado  | Adopción             |
+| **Module**     | Componente | Saber DÓNDE va        | Código    | Cobertura tests      |
 
 ---
 

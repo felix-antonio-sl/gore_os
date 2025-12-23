@@ -11,7 +11,7 @@ i_want: control de bitácoras y mantenciones de vehículos
 so_that: la flota esté disponible y segura
 domain: D-BACK
 priority: P2
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []
 
 mentions:

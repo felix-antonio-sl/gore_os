@@ -10,7 +10,7 @@ as_a: Encargado Bodega
 i_want: Registrar ingresos (aumenta stock)
 so_that: Actualizo inventario
 domain: D-BACK
-capability_id: CAP-BACK-BOD-001
+competence_id: CPT-BACK-BOD-001
 priority: P0
 acceptance_criteria: []
 

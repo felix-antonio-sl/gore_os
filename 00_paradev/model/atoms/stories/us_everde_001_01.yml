@@ -11,5 +11,5 @@ i_want: registro de consumos de papel y energía
 so_that: pueda reportar al ministerio de medio ambiente
 domain: D-BACK
 priority: P3
-capability_id: CAP-BACK-TICKETS-001
+competence_id: CPT-BACK-TICKETS-001
 acceptance_criteria: []

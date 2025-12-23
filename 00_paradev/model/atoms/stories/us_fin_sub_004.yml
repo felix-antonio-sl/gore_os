@@ -11,5 +11,5 @@ i_want: Generar nómina de adjudicación para CORE
 so_that: Preparo aprobación colegiada
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

@@ -11,5 +11,5 @@ i_want: Bloquear automáticamente nuevos inicios de procesos en un dominio inter
 so_that: Evito que el problema crezca mientras se interviene
 domain: D-FENIX
 priority: P0
-capability_id: CAP-FENIX-001
+competence_id: CPT-FENIX-001
 acceptance_criteria: []

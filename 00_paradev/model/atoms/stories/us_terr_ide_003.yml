@@ -11,5 +11,5 @@ i_want: Modelar datos ISO 19110 (catálogo objetos)
 so_that: Estandarizo estructura de datos
 domain: D-TERR
 priority: P1
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []

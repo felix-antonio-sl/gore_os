@@ -11,7 +11,7 @@ i_want: Controlar tope 5% de gastos administrativos
 so_that: Verifico cumplimiento de límite
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

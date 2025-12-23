@@ -11,5 +11,5 @@ i_want: consultar agente Goreólogo para validación de dominio
 so_that: se obtenga respuesta contextualizada del dominio institucional
 domain: D-DEV
 priority: P1
-capability_id: CAP-DEV-BLUEPRINT
+competence_id: CPT-DEV-BLUEPRINT
 acceptance_criteria: []

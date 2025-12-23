@@ -11,5 +11,5 @@ i_want: Gestionar nombramiento y remoción de directivos regionales
 so_that: Ejerzo atribuciones de autoridad
 domain: D-GOB
 priority: P1
-capability_id: CAP-GOB-001
+competence_id: CPT-GOB-001
 acceptance_criteria: []

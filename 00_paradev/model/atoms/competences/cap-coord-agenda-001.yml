@@ -1,0 +1,16 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_coord_agenda_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-COORD-AGENDA-001
+name: Agenda Ejecutiva
+domain: D-COORD
+type: CORE
+description: Gestión de agenda de autoridades.
+stories:
+- us_coord_agenda_001
+- us_coord_agenda_002
+- us_coord_agenda_003
+- us_agenda_001_01
+ofrecida_por: null

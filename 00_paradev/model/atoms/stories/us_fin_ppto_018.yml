@@ -11,5 +11,5 @@ i_want: Realizar conciliación bancaria mensual
 so_that: Verifico consistencia de cuentas
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-REND-001
+competence_id: CPT-FIN-REND-001
 acceptance_criteria: []

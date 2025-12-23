@@ -11,7 +11,7 @@ i_want: configurar alertas con umbrales personalizados basados en métricas
 so_that: el equipo sea proactivo ante posibles fallos del sistema
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []
 
 mentions:

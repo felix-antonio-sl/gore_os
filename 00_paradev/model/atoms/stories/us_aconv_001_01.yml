@@ -10,6 +10,6 @@ as_a: Analista Contable
 i_want: un workflow de convenios con checklist de requisitos
 so_that: pueda verificar completitud
 domain: D-EJEC
-capability_id: CAP-FIN-CONV-001
+competence_id: CPT-FIN-CONV-001
 priority: P0
 acceptance_criteria: []

@@ -10,6 +10,6 @@ as_a: Profesional Bienestar
 i_want: Coordinar con Mutual (accidente laboral)
 so_that: Gestiono atención de accidentados
 domain: D-BACK
-capability_id: CAP-BACK-BIEN-001
+competence_id: CPT-BACK-BIEN-001
 priority: P0
 acceptance_criteria: []

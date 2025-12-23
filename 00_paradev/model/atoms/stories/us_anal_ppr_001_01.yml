@@ -10,6 +10,6 @@ as_a: Analista PPR
 i_want: un módulo de diseño de programas con marco lógico
 so_that: pueda estructurar objetivos, indicadores y metas
 domain: D-PLAN
-capability_id: CAP-FIN-PPR-001
+competence_id: CPT-FIN-PPR-001
 priority: P1
 acceptance_criteria: []

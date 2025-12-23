@@ -1,0 +1,17 @@
+_meta:
+  urn: urn:goreos:atom:competence:cap_coord_gab_001:1.0.0
+  type: Competence
+  version: 1.0.0
+  generated_at: '2025-12-22'
+id: CPT-COORD-GAB-001
+name: Gabinete Regional
+domain: D-COORD
+type: CORE
+description: Gestión del gabinete y reuniones ejecutivas.
+stories:
+- us_coord_gab_001
+- us_coord_gab_002
+- us_coord_gab_003
+- us_gab_001_01
+- us_gab_001_02
+ofrecida_por: null

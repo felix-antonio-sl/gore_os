@@ -11,7 +11,7 @@ i_want: consultar proyectos similares ejecutados en otras comunas
 so_that: pueda aprender de buenas prácticas y costos referenciales
 domain: D-EJEC
 priority: P2
-capability_id: CAP-EJEC-SEG-001
+competence_id: CPT-EJEC-SEG-001
 acceptance_criteria: []
 
 mentions:

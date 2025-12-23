@@ -11,5 +11,5 @@ i_want: Revisar logs de acceso y acciones críticas
 so_that: Garantizo el cumplimiento de la Ley 21.663 (Ciberseguridad)
 domain: D-OPS
 priority: P0
-capability_id: CAP-OPS-001
+competence_id: CPT-OPS-001
 acceptance_criteria: []

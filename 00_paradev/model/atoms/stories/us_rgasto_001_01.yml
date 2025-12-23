@@ -11,5 +11,5 @@ i_want: validación automática de clasificadores presupuestarios
 so_that: no se imputen gastos a cuentas erróneas
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-REND-001
+competence_id: CPT-FIN-REND-001
 acceptance_criteria: []

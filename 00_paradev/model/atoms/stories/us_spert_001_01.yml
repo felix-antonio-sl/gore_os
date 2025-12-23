@@ -11,7 +11,7 @@ i_want: generar actas automáticas a partir de la tabla de proyectos
 so_that: se agilice la comunicación de resueltos a las unidades
 domain: D-PLAN
 priority: P1
-capability_id: CAP-PLAN-001
+competence_id: CPT-PLAN-001
 acceptance_criteria: []
 
 mentions:

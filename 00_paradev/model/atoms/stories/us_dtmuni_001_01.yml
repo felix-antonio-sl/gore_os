@@ -11,7 +11,7 @@ i_want: reutilizar componentes de la plataforma GORE_OS
 so_that: no tengamos que desarrollar software desde cero
 domain: D-DEV
 priority: P2
-capability_id: CAP-DEV-001
+competence_id: CPT-DEV-001
 acceptance_criteria: []
 
 mentions:

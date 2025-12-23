@@ -11,7 +11,7 @@ i_want: Ejecutar playbook P14_Client_Expectation_Management ante insatisfacción
 so_that: Gestiono brechas de expectativas antes de que escalen
 domain: D-GESTION
 priority: P1
-capability_id: CAP-GESTION-001
+competence_id: CPT-GESTION-001
 acceptance_criteria: []
 
 mentions:

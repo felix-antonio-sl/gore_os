@@ -11,7 +11,7 @@ i_want: un registro de organizaciones de la sociedad civil activas en la región
 so_that: pueda convocar a diálogos y consultas ciudadanas
 domain: D-TERR
 priority: P1
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []
 
 mentions:

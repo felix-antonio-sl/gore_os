@@ -11,7 +11,7 @@ i_want: Registrar alertas de cámaras, sensores o llamados (tipo, georreferencia
 so_that: Inicio respuesta coordinada
 domain: D-SEG
 priority: P0
-capability_id: CAP-SEG-001
+competence_id: CPT-SEG-001
 acceptance_criteria: []
 
 mentions:

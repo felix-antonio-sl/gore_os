@@ -11,5 +11,5 @@ i_want: Evaluar Admisibilidad Estricta (Vigencia PJ, Directorio)
 so_that: Verifico requisitos formales
 domain: D-FIN
 priority: P0
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []

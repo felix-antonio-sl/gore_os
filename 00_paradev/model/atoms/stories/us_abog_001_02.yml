@@ -10,6 +10,6 @@ as_a: Abogado Informante
 i_want: consultar actos similares anteriores
 so_that: pueda mantener consistencia jurídica
 domain: D-NORM
-capability_id: CAP-NORM-ABOG-001
+competence_id: CPT-NORM-ABOG-001
 priority: P1
 acceptance_criteria: []

@@ -10,6 +10,6 @@ as_a: Analista de Inversión
 i_want: consultar el historial de proyectos similares evaluados anteriormente
 so_that: pueda mantener consistencia en mis criterios
 domain: D-EJEC
-capability_id: CAP-EJEC-EVAL-001
+competence_id: CPT-EJEC-EVAL-001
 priority: P2
 acceptance_criteria: []

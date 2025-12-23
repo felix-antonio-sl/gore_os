@@ -11,7 +11,7 @@ i_want: Alertar sobre ventanas de postulación a programas con plazos
 so_that: Gestiono postulaciones a tiempo
 domain: D-TERR
 priority: P2
-capability_id: CAP-TERR-MAP-001
+competence_id: CPT-TERR-MAP-001
 acceptance_criteria: []
 
 mentions:

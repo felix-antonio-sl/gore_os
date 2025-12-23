@@ -11,7 +11,7 @@ i_want: Presentar programas al Comité de Pertinencia
 so_that: Obtengo validación colegiada
 domain: D-FIN
 priority: P1
-capability_id: CAP-FIN-DASH-001
+competence_id: CPT-FIN-DASH-001
 acceptance_criteria: []
 
 mentions:

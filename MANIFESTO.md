@@ -28,17 +28,17 @@ Cuando hablamos de hacer a la organización "más inteligente", nos referimos a 
 | **Agentes en segundo plano**    | Operan autónomamente detectando patrones, anomalías y oportunidades | Alerta de IPR con riesgo de paralización               |
 | **Asistentes conversacionales** | Interactúan directamente con usuarios para consultas y análisis     | "Muéstrame las IPR de San Carlos con pagos pendientes" |
 
-### Capacidades Funcionales Integradas
+### Competencias Funcionales Integradas
 
-GORE_OS integra capacidades funcionales equivalentes a sistemas especializados, **sin utilizar ni exponer explícitamente esos términos**:
+GORE_OS integra competencias funcionales equivalentes a sistemas especializados, **sin utilizar ni exponer explícitamente esos términos**:
 
-| Capacidad Implícita                       | Equivalente Comercial | Alcance en GORE_OS                                    |
+| Competencia Implícita                     | Equivalente Comercial | Alcance en GORE_OS                                    |
 | ----------------------------------------- | --------------------- | ----------------------------------------------------- |
 | **Gestión de Intervenciones Públicas**    | CRM                   | Ciclo de vida 360° de IPR, actores, hitos, alertas    |
 | **Funcionamiento Organizacional**         | ERP                   | Divisiones, funcionarios, activos, control de gestión |
 | **Inversión para el Desarrollo Regional** | Banca de Inversión    | Portafolio de fondos, priorización, ROI territorial   |
 
-> **Principio**: Estas capacidades están incorporadas dentro de la arquitectura de GORE_OS como funcionalidades nativas, no como módulos externos ni como terminología visible al usuario.
+> **Principio**: Estas competencias están incorporadas dentro de la arquitectura de GORE_OS como funcionalidades nativas, no como módulos externos ni como terminología visible al usuario.
 
 ---
 
@@ -57,7 +57,7 @@ Este proyecto surge como respuesta a una **crisis de gestión institucional** qu
 
 ---
 
-## 3. Los Tres Ciudadanos de Primera Clase
+## 3. Ontología Estratificada del GORE_OS
 
 GORE_OS se estructura semánticamente en torno a **tres entidades fundamentales** que articulan todo el sistema:
 
@@ -90,11 +90,11 @@ Mecanismo formal para **capturar y expresar los requerimientos del sistema**: qu
 | `so_that`             | Valor o resultado esperado        |
 | `acceptance_criteria` | Condiciones de validación         |
 
-### 3.3 El Usuario-Rol (Capacidad Activa)
+### 3.3 El Usuario-Rol (Agente Activo)
 
-No existe una distinción ontológica fundamental entre un "Usuario" (Humano) y un "Agente" (Máquina) al nivel más bajo. Siguiendo el primitivo **P1_Capacidad** de ORKO, ambos son manifestaciones del mismo concepto: una **capacidad que efectúa transformaciones**.
+No existe una distinción ontológica fundamental entre un "Usuario" (Humano) y un "Agente" (Máquina) al nivel más bajo. Siguiendo el primitivo **P1_Agente** de ORKO, ambos son manifestaciones del mismo concepto: un **Agente que efectúa transformaciones**.
 
-> Un Usuario-Rol es una **Capacidad (P1)** instanciada en un contexto específico dentro de GORE_OS.
+> Un Usuario-Rol es un **Agente (P1)** instanciado en un contexto específico dentro de GORE_OS.
 
 #### Dimensión 1: Sustrato (¿QUIÉN ejecuta?)
 
@@ -294,7 +294,7 @@ Mínima estructura necesaria para operacionalizar los axiomas:
 
 | Primitivo | Axioma Base | Aplicación en GORE_OS                                  |
 | --------- | ----------- | ------------------------------------------------------ |
-| **P1**    | A2          | Capacidad: Usuario-Rol con Sustrato y Cognición        |
+| **P1**    | A2          | Agente: Usuario-Rol con Sustrato y Cognición           |
 | **P2**    | A1          | Flujo: Procesos como DAGs de transformaciones          |
 | **P3**    | A3          | Información: Datos, señales, estados con lineage       |
 | **P4**    | A4          | Límite: Restricciones normativas, técnicas, económicas |

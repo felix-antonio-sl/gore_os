@@ -10,6 +10,6 @@ as_a: Analista de Inversión
 i_want: un formulario digital de evaluación técnica con campos validados
 so_that: pueda registrar mi análisis de forma estructurada
 domain: D-EJEC
-capability_id: CAP-EJEC-EVAL-001
+competence_id: CPT-EJEC-EVAL-001
 priority: P0
 acceptance_criteria: []
