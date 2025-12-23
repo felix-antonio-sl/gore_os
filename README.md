@@ -1,8 +1,8 @@
 # GORE_OS — Sistema Operativo del Gobierno Regional de Ñuble
 
-**Versión:** 2.1.0  
+**Versión:** 3.0.0 (Radical Refactor)  
 **Estado:** En desarrollo activo  
-**Arquitectura:** Ontología Categórica v4.1.0
+**Filosofía:** Story-First & Minimalismo Radical
 
 ---
 
@@ -10,162 +10,86 @@
 
 GORE_OS es el **sistema operativo institucional** del Gobierno Regional de Ñuble. No es un software tradicional, sino un **modelo integrado de datos, procesos y capacidades** que permite al GORE funcionar de manera coherente, auditable y evolucionar orgánicamente.
 
-> 📘 **Para la visión completa, propósito y génesis del proyecto, ver [MANIFESTO.md](MANIFESTO.md)**
-
-### Propósito Fundamental
-
-> **GORE_OS existe para digitalizar, automatizar y dotar de inteligencia al GORE Ñuble, acelerando el desarrollo de la región.**
-
-### Ciudadano de Primera Clase: La IPR
-
-La **Intervención Pública Regional (IPR)** es la entidad central del modelo. Toda la arquitectura se organiza en torno a ella, cubriendo su ciclo de vida completo: evaluación ex-ante → priorización → ejecución → seguimiento → evaluación ex-post.
-
-Actúa como la "columna vertebral" que conecta:
-
-- 📊 **Datos**: Entidades, relaciones y reglas de negocio
-- ⚙️ **Procesos**: Flujos de trabajo institucionales
-- 👥 **Roles**: Personas y sus responsabilidades
-- 🎯 **Capacidades**: Qué puede hacer el GORE
+> 📘 **Para la visión política y estratégica, ver [MANIFESTO.md](MANIFESTO.md)**
 
 ---
 
-## Arquitectura
+## Principio Rector: Story-First
 
-GORE_OS se construye sobre **Teoría de Categorías** aplicada a sistemas institucionales:
+La arquitectura de GORE_OS se adhiere a una regla de derivación estructural estricta y unidireccional:
 
-```
-                    GORE_OS
-                       ↓
-        ┌──────────────┼──────────────┐
-        │              │              │
-    Modelo         Procesos      Capacidades
-     (Qué)          (Cómo)       (Para qué)
-        │              │              │
-     Stories → Atoms → Compositions → Modules
+```mermaid
+graph LR
+    S[Story] -->|aparece en| E[Entity]
+    S -->|ejecutada por| R[Role]
+    S -->|transcurre en| P[Process]
+    S -->|se agrupa en| A[Artefacto]
+    A -->|emerge en| M[Module]
 ```
 
-### Átomos del Sistema
-
-| Átomo            | Cantidad | Descripción                                           |
-| ---------------- | -------- | ----------------------------------------------------- |
-| **Entities**     | 131      | Objetos de negocio (IPR, Funcionario, Convenio, etc.) |
-| **Roles**        | ~50      | Actores institucionales                               |
-| **Processes**    | ~40      | Flujos BPMN de trabajo                                |
-| **Capabilities** | ~30      | Funcionalidades de negocio                            |
-| **Stories**      | ~100     | Requisitos de usuario                                 |
-| **Modules**      | ~15      | Agrupaciones de dominio                               |
+1. **Story**: El punto de partida absoluto. Si no hay story, no existe el requerimiento.
+2. **Entity**: El modelo de datos necesario para soportar la story.
+3. **Role**: El agente (humano o máquina) que interactúa con la story.
+4. **Process**: La orquestación temporal de la story.
 
 ---
 
-## Estructura del Repositorio
+## Estructura del Monorepo
 
-```
+```text
 gore_os/
-├── model/                    # Modelo de datos (📍 Núcleo)
-│   ├── atoms/                # Átomos categóricos
-│   │   ├── entities/         # 131 entidades YAML
-│   │   ├── roles/
-│   │   ├── processes/
-│   │   ├── capabilities/
-│   │   └── stories/
-│   ├── compositions/         # Relaciones complejas
-│   ├── profunctors/          # Relaciones avanzadas
-│   ├── seeds/                # Datos de configuración
-│   └── docs/                 # Documentación ontológica
+├── model/                    # ❤️ El Corazón Semántico
+│   ├── stories/              # 819 Historias de Usuario (Origen)
+│   ├── entities/             # 139 Entidades (Modelo de Datos)
+│   ├── roles/                # 410 Roles Institucionales
+│   ├── processes/            # 84 Procesos BPMN
+│   ├── GLOSARIO.yml          # Terminología Autorizada
+│   └── README.md             # Reglas del Modelo
 │
-├── etl/                      # Fuentes de datos legacy
-│   ├── sources/
-│   │   ├── convenios/
-│   │   ├── fril/
-│   │   ├── idis/
-│   │   ├── modificaciones/
-│   │   ├── partes/
-│   │   ├── progs/
-│   │   └── funcionarios/
-│   └── README.md
+├── architecture/             # 🏗️ Decisiones Técnicas
+│   ├── c1_context/           # Diagramas de Contexto
+│   ├── c2_containers/        # Docker & Infra
+│   ├── design/               # Design System & UI
+│   └── stack.md              # Bun + Hono + Effect + tRPC
 │
-└── archive/                  # Modelo legacy (274 entidades antiguas)
+├── apps/                     # 🖥️ Aplicaciones Frontend
+├── packages/                 # 📦 Librerías Compartidas
+└── MANIFESTO.md              # 📜 Constitución del Sistema
 ```
 
 ---
 
-## Estado Actual (2025-12-22)
+## Stack Tecnológico (v2.1)
 
-### ✅ Completado
+El stack técnico está diseñado para ser **Cloud First**, **Type Safe** y **High Performance**:
 
-- **Modelo de Datos v2.1.0**
-  - 131 entidades (vs 123 iniciales)
-  - Cobertura completa de 7 mecanismos IPR
-  - Extensiones para ETL de funcionarios
-  - 8 entidades nuevas creadas (Bitácora Obra, Línea ARI, Brecha ERD, IPT, etc.)
-
-- **Auditoría de Legacy**
-  - 274 entidades legacy inventariadas
-  - 160 gaps identificados y remediados
-  - 55 entidades depreciadas (D-DEV, D-OPS, D-EVOL fuera de scope)
-
-- **Cobertura ETL**
-  - Convenios, FRIL, IDIs, Modificaciones, Partes, Programas: ✅ Mapeados
-  - Funcionarios: ✅ 100% cobertura
-
-### 🚧 En Progreso
-
-- Procesos BPMN (remediación de diagramas)
-- Validación de entidades con JSON Schema
-- Pipeline ETL automatizado
-
-### 📋 Próximos Pasos
-
-1. Generación de DDL SQL desde modelo YAML
-2. Implementación de pipeline ETL
-3. Desarrollo de API GraphQL sobre el modelo
-4. Dashboards de visualización (PowerBI/Looker)
+| Capa        | Tecnología               | Justificación                              |
+| ----------- | ------------------------ | ------------------------------------------ |
+| **Runtime** | **Bun**                  | Rendimiento y DX unificada                 |
+| **Backend** | **Hono**                 | API Framework ligero y estándar            |
+| **Logic**   | **Effect-TS**            | Manejo de errores y concurrencia robusta   |
+| **API**     | **tRPC**                 | Tipado end-to-end sin generación de código |
+| **Data**    | **PostgreSQL + PostGIS** | Base de datos relacional y territorial     |
+| **ORM**     | **Drizzle**              | Acceso a datos tipo-seguro y SQL-like      |
+| **Auth**    | **ClaveÚnica/Keycloak**  | Identidad federada oficial                 |
 
 ---
 
-## Dominios del Sistema
+## Estado del Proyecto (3.0.0)
 
-| Código     | Dominio             | Entidades | Descripción                                      |
-| ---------- | ------------------- | --------- | ------------------------------------------------ |
-| **D-FIN**  | Finanzas            | 28        | Presupuesto, IPR, inversión pública, mecanismos  |
-| **D-DIG**  | Digital             | 18        | Interoperabilidad, firma electrónica, ARCO       |
-| **D-ORG**  | Organizacional      | 16        | Funcionarios, divisiones, cargos, remuneraciones |
-| **D-SAL**  | Salud Institucional | 15        | POA, OKR, intervenciones, playbooks              |
-| **D-EJE**  | Ejecución           | 13        | Convenios, estados de pago, garantías, bitácoras |
-| **D-CONV** | Convergencia        | 13        | Participación ciudadana, cabildos, audiencias    |
-| **D-LOC**  | Territorial         | 11        | Comunas, provincias, PROT, IPT, zonas riesgo     |
-| **D-GOV**  | Gobierno            | 10        | CORE, gobernador, consejeros, sesiones           |
-| **D-SYS**  | Sistema             | 6         | Documentos, actores, eventos, períodos           |
-| **D-NORM** | Normativo           | 1         | Audiencias de lobby                              |
-|            | **TOTAL**           | **131**   |                                                  |
+Hemos realizado una **poda estructural radical** para eliminar redundancia y complejidad accidental:
 
----
+- **Conservado**: Stories, Roles, Entities, Processes, Architecture.
+- **Eliminado**: Domains, Modules, Competences, Capabilities, Agents (como átomos aislados).
+- **Objetivo**: Que los módulos y capacidades **emerjan** de la agrupación natural de historias validadas.
 
-## Tecnologías y Herramientas
+### Próximos Pasos
 
-- **Modelado**: YAML + JSON Schema
-- **Versionado**: Git
-- **Documentación**: Markdown + Mermaid
-- **Validación**: Python scripts
-- **Filosofía**: Category Theory + DDD
+1. **Enriquecimiento de Stories**: Procesamiento 1x1 de las 819 historias para asegurar completitud.
+2. **Validación de Entidades**: Asegurar que cada entidad tenga trazabilidad a una historia.
+3. **Saneamiento de Roles**: Consolidar roles redundantes.
+4. **Emergencia de Módulos**: Agrupar historias para definir los módulos de software reales.
 
 ---
 
-## Equipo
-
-- **Arquitecto-GORE**: Agente de arquitectura ontológica (v0.1.0)
-- **Ingeniero-GORE_OS**: Agente de implementación
-- **Goreologo**: Agente de conocimiento institucional
-
----
-
-## Documentación Adicional
-
-- 📘 [Ontología Categórica](model/docs/ontologia_categorica_goreos.md)
-- 📊 [Scope v1.0](model/docs/scope_v1.md)
-- 🗂️ [Modelo de Datos](model/README.md)
-- 🔄 [Fuentes ETL](etl/README.md)
-
----
-
-*Documento generado: 2025-12-22 | GORE_OS v2.1.0 — Arquitecto-GORE*
+*GORE_OS Dev Team — Diciembre 2025*
