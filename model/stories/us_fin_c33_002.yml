@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_c33_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Tipología Activo (Vehículo, Maquinaria, Equipo)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-C33-002
-urn: urn:goreos:atom:story:us_fin_c33_002:1.0.0
-role_id: ROL-OPS-C33
+name: Tipología Activo (Vehículo, Maquinaria, Equipo)
+
+# === STORY CORE ===
 as_a: Analista Operaciones C33
 i_want: Validar tipología Activo (Vehículo, Maquinaria, Equipo)
 so_that: Clasifico correctamente
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-VEHICULO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-C33
+  agent_type: HUMAN
+  description: Analista encargado de validar la naturaleza de los activos adquiridos por terceros con fondos GORE
+
+entities_mentioned:
+  - id: ENT-FIN-ACTIVO-FIJO
+    status: linked
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-MAQUINARIA
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CLASIFICACION-ACTIVOS
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: ABASTECIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - c33
+  - activos
+  - tipologia
+  - validacion
+  - inventario-terceros
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo de categorías predefinidas según clasificador presupuestario
+  - Integración con el módulo de Activo Fijo para precarga de atributos técnicos
+  - Generación de etiqueta/ID de activo GORE para seguimiento patrimonial

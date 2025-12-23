@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_fin_analista_co_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia genérica para Analista Compras
-id: US-GEN-FIN_ANALISTA_CO-001
-urn: urn:goreos:atom:story:us_gen_fin_analista_co_001:1.0.0
-role_id: ROL-FIN-ANALISTA-COM
-as_a: Analista Compras
-i_want: ejecutar mis funciones principales en el contexto institucional del GORE
-so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FIN_ANALISTA_CO-001
+name: Gestión de Adquisiciones y Mercado Público
+
+# === STORY CORE ===
+as_a: Analista Compras
+i_want: Gestionar los procesos de compra y contratación a través de Mercado Público
+so_that: el GORE obtenga bienes y servicios de manera transparente, eficiente y al mejor precio posible
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-COM
+  agent_type: HUMAN
+  description: Analista encargado de los procesos de abastecimiento y compras públicas
+
+entities_mentioned:
+  - id: ENT-FIN-LICITACION
+    status: linked
+  - id: ENT-FIN-ORDEN_COMPRA
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: COMPRAS-PUBLICAS
+  priority: P2
+  scope: OPERATIVO
+
+extra_tags:
+  - compras
+  - licitacion
+  - mercado-publico
+  - abastecimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración con Mercado Público para el seguimiento de órdenes de compra
+  - Validación de disponibilidad presupuestaria (CDP) antes de iniciar licitación
+  - Dashboard de tiempos de ciclo de compra y ahorro alcanzado

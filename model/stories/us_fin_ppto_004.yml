@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Firmas Convenio (Gore - Ejecutor)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-004
-urn: urn:goreos:atom:story:us_fin_ppto_004:1.0.0
-role_id: ROL-GESTION-DAE-PRE
+name: Firmas Convenio (Gore - Ejecutor)
+
+# === STORY CORE ===
 as_a: Analista Preinversión (DAE)
 i_want: Gestionar firmas Convenio (Gore - Ejecutor)
-so_that: Obtengo firmas de ambas partes
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Obtengo firmas de ambas partes para formalizar el compromiso de inversión
 
-mentions:
-- ENT-EJE-EJECUTOR
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DAE-PRE
+  agent_type: HUMAN
+  description: Analista de la División de Administración y Finanzas encargado de preinversión
+
+entities_mentioned:
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-EJE-CONVENIO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P4
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-DE-CONVENIOS
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - convenios
+  - firmas
+  - ejecutor
+  - formalizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Flujo de firma digital habilitado para el Gobernador y el representante legal del Ejecutor
+  - Seguimiento en tiempo real del estado de las firmas
+  - Archivo final con el convenio firmado disponible automáticamente en el expediente digital

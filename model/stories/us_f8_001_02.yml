@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_f8_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de cobertura territorial y temática
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-F8-001-02
-urn: urn:goreos:atom:story:us_f8_001_02:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: generar reportes de cobertura territorial y temática
-so_that: pueda evaluar equidad en la distribución
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Reportes de Cobertura Territorial y Temática (8%)
+
+# === STORY CORE ===
+as_a: Encargado de Calidad / Administrador de Fondos
+i_want: generar reportes automáticos que muestren la cobertura territorial (por comuna) y temática (ej. cultura, deporte, seguridad) de los proyectos aprobados
+so_that: se pueda evaluar la equidad en la distribución regional de los recursos del 8% y ajustar los focos de las futuras convocatorias
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Responsable administrativo de la equidad y eficiencia en la asignación de fondos del 8%
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: MONITOREO-TERRITORIAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - fondos-8
+  - reportes
+  - cobertura
+  - equidad-territorial
+  - analisis-tematico
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa de calor regional que muestra el monto asignado por comuna
+  - Gráfico de torta que segmenta la inversión por eje temático (Cultura, Deporte, Social, etc.)
+  - Reporte exportable con la lista de organizaciones beneficiadas por comuna y monto

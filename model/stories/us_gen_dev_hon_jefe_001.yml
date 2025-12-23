@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_dev_hon_jefe_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Jefatura Control Jerárquico
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-DEV_HON_JEFE-001
-urn: urn:goreos:atom:story:us_gen_dev_hon_jefe_001:1.0.0
-role_id: ROL-DEV-HON-JEFE
+name: Historia genérica para Jefatura Control Jerárquico
+
+# === STORY CORE ===
 as_a: Jefatura Control Jerárquico
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-HON-JEFE
+  agent_type: HUMAN
+  description: Jefatura responsable del control jerárquico y la probidad administrativa en la toma de decisiones
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-NORM-CONTROL-JERARQUICO
+    status: candidate
+  - id: ENT-NORM-PROBIDAD-ADMINISTRATIVA
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONTROL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - control-jerarquico
+  - probidad
+  - gestion-jefatura
+  - normativa
+  - transparencia-interna
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de visación jerárquica obligatoria para actos administrativos críticos
+  - Registro de abstención por conflicto de interés integrado en el flujo de firma
+  - Dashboard de cumplimiento de plazos legales para la unidad a cargo

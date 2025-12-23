@@ -1,0 +1,115 @@
+# ETL Sink: Documentos (Partes) Staging Entity
+# Source: partes/*.csv (10 tipos de documento)
+# Quality: ⚠️ MEDIA (sin FK entre hojas, fechas erróneas)
+---
+_meta:
+  urn: urn:goreos:etl:sink:mleg_documento:1.0.0
+  type: Entity
+  source_quality: MEDIUM
+  records: ~12000
+
+id: ENT-MLEG-DOCUMENTO
+name: documento_staging
+name_singular: Documento (Staging)
+domain: D-STAGING
+module: M10-LEGACY
+description: >
+  Documentos de gestión documental (oficios, memos, decretos, resoluciones, etc.)
+  Unifica 10 tipos diferentes de documentos del sistema de partes.
+
+grain:
+  - tipo_documento
+  - folio
+  - anio
+
+attributes:
+  - name: tipo_documento
+    type: enum
+    values:
+      [
+        OFICIO,
+        MEMO,
+        DECRETO,
+        RESOLUCION,
+        CARTA,
+        ORD,
+        PROVIDENCIA,
+        CIRCULAR,
+        ACTA,
+        OTRO,
+      ]
+    required: true
+    source_column: _source_sheet
+
+  - name: folio
+    type: string
+    required: true
+    description: Número de folio o correlativo
+    source_column: FOLIO
+
+  - name: anio
+    type: integer
+    source_column: AÑO
+
+  - name: fecha_documento
+    type: date
+    source_column: FECHA
+
+  - name: materia
+    type: text
+    source_column: MATERIA
+
+  - name: remitente
+    type: string
+    source_column: REMITENTE
+
+  - name: destinatario
+    type: string
+    source_column: DESTINATARIO
+
+  - name: derivado_a
+    type: string
+    source_column: DERIVADO A
+
+  - name: via_recepcion
+    type: string
+    source_column: VIA RECEPCIÓN
+
+  - name: estado
+    type: string
+    source_column: ESTADO
+
+  - name: url_documento
+    type: string
+    description: Link al repositorio documental
+    source_column: LINK AL DOCUMENTO
+
+  - name: observaciones
+    type: text
+    source_column: OBSERVACIONES
+
+  - name: fuente
+    type: string
+    description: Archivo CSV de origen
+    source_column: _source_file
+
+quality_issues:
+  - issue: NO_FK
+    description: Sin relaciones entre hojas (RECIBIDOS ← OFICIOS)
+    severity: MEDIUM
+    mitigation: Match por materia/fecha cuando sea posible
+
+  - issue: FECHAS_ERRONEAS
+    description: Fechas en años 2044, 2054 (typos)
+    severity: MEDIUM
+    mitigation: Validar rango [2010, 2026], marcar outliers
+
+  - issue: FOLIO_NUMERICO
+    description: Folios pierden ceros a la izquierda
+    severity: LOW
+    mitigation: Almacenar como string, normalizar formato
+
+morphisms:
+  genera:
+    - ENT-SYS-DOCUMENTO (1:1)
+    - ENT-DIG-EXPEDIENTE (N:1 por materia agrupada)

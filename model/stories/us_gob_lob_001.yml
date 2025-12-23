@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_lob_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Audiencias y viajes integrados con Infolobby
-id: US-GOB-LOB-001
-urn: urn:goreos:atom:story:us_gob_lob_001:1.0.0
-role_id: ROL-GESTION-PAS
-as_a: Sujeto Pasivo (Autoridad)
-i_want: Registrar audiencias y viajes integrados con Infolobby
-so_that: Cumplo con la Ley 20.730automáticamente
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-AUDIENCIA
+id: US-GOB-LOB-001
+name: Audiencias y viajes integrados con Infolobby
+
+# === STORY CORE ===
+as_a: Sujeto Pasivo (Autoridad/Gobernador)
+i_want: Registrar audiencias y viajes integrados con Infolobby
+so_that: Cumplo con la Ley 20.730 automáticamente
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PAS
+  agent_type: HUMAN
+  description: Autoridad o directivo regional calificado como "Sujeto Pasivo" bajo la Ley de Lobby
+
+entities_mentioned:
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-NORM-LEY-LOBBY
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - lobby
+  - infolobby
+  - ley-20730
+  - transparencia-activa
+  - integridad-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización bidireccional entre la agenda de Gabinete y la plataforma Infolobby del Consejo para la Transparencia
+  - Módulo de validación de datos obligatorios antes del envío (Lobbista, Gestor de intereses, Objeto de la reunión)
+  - Registro automático de viajes y donativos recibidos en cumplimiento de los formularios legales

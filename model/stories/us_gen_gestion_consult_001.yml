@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_consult_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Consultor Externo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CONSULT-001
-urn: urn:goreos:atom:story:us_gen_gestion_consult_001:1.0.0
-role_id: ROL-GESTION-CONSULTOR-EX
+name: Historia genérica para Consultor Externo
+
+# === STORY CORE ===
 as_a: Consultor Externo
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CONSULTOR-EX
+  agent_type: HUMAN
+  description: Consultor o experto externo contratado para estudios específicos, diseños de proyectos o asesorías estratégicas
+
+entities_mentioned:
+  - id: ENT-PLAN-ESTUDIO-TECNICO
+    status: candidate
+  - id: ENT-EJE-ENTREGABLE-CONSULTORIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-PROYECTOS
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - consultor
+  - asesor-externo
+  - estudios
+  - diseño-proyectos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a repositorio de antecedentes históricos del área de estudio
+  - Módulo de carga progresiva de informes (Avance 1, 2, Final) para revisión técnica
+  - Workflow de aprobación de entregables habilitante para el pago de honorarios

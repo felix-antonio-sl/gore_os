@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_code_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizar la historia de cambios detallada de cualquier archivo del repositorio
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-CODE-003
-urn: urn:goreos:atom:story:us_dev_code_003:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
+name: Visualización de Historia de Cambios Detallada
+
+# === STORY CORE ===
 as_a: Desarrollador
-i_want: visualizar la historia de cambios detallada de cualquier archivo del repositorio
-so_that: pueda entender el contexto y la evolución de una funcionalidad específica
-domain: D-DEV
-priority: P2
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+i_want: visualizar la historia de cambios detallada (Git Blame / Timeline) de cualquier archivo del repositorio directamente en mi entorno de trabajo
+so_that: pueda entender el contexto, las razones detrás de una implementación específica y quién fue el autor original para consultas técnicas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DESARROLLADO
+  agent_type: HUMAN
+  description: Desarrollador que realiza mantenimiento o refactorización de módulos existentes
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: COLABORACION
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - git-blame
+  - historial
+  - contexto
+  - mantenimiento
+  - auditoria-cambios
+
+status: ENRICHED
+acceptance_criteria:
+  - Vista de "Anotación de líneas" que muestra autor y commit ID para cada línea de código
+  - Integración con el sistema de historias de usuario para saltar del commit a la US que motivó el cambio
+  - Comparativa visual (Diff) fluida entre cualquier versión histórica del archivo

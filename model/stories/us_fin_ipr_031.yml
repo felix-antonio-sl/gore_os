@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_031:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Carpeta digital para sesión CORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-031
-urn: urn:goreos:atom:story:us_fin_ipr_031:1.0.0
-role_id: ROL-GESTION-DAE-PRE
+name: Carpeta digital para sesión CORE
+
+# === STORY CORE ===
 as_a: Analista Preinversión (DAE)
 i_want: Generar carpeta digital para sesión CORE
 so_that: Distribuyo antecedentes
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-SESION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DAE-PRE
+  agent_type: HUMAN
+  description: Analista encargado de preparar el sustento técnico de los proyectos que serán sometidos a votación en el Consejo Regional
+
+entities_mentioned:
+  - id: ENT-CONV-SESION-CORE
+    status: linked
+  - id: ENT-SYS-CARPETA-DIGITAL
+    status: candidate
+  - id: ENT-EJE-ANTECEDENTES-PROYECTO
+    status: candidate
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - carpeta-digital
+  - core
+  - sesion-consejo
+  - antecedentes
+  - votacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Empaquetado automático de Ficha IDI, RS, y resumen ejecutivo en un único PDF/ZIP
+  - Acceso seguro mediante clave o firma para Consejeros Regionales
+  - Registro de lectura de cada documento por parte de los consejeros antes de la sesión

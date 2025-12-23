@@ -1,14 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_asis_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integración con sistema biométrico y reportes automáticos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ASIS-001-01
-urn: urn:goreos:atom:story:us_asis_001_01:1.0.0
-role_id: ROL-GESTION-ANALISTA-CASIS
+name: Integración con sistema biométrico y reportes automáticos
+
+# === STORY CORE ===
 as_a: Analista Control Asistencia
 i_want: integración con sistema biométrico y reportes automáticos
 so_that: pueda detectar irregularidades
-domain: D-BACK
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-CASIS
+  agent_type: ALGORITHMIC
+  description: Sistema automatizado de control de asistencia de funcionarios
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-REGISTRO-ASISTENCIA
+    status: candidate
+  - id: ENT-SYS-DISPOSITIVO-BIOMETRICO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-CONTROL-ASISTENCIA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: RRHH
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - asistencia
+  - biometrico
+  - rrhh
+  - control
+  - automatizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización en tiempo real con relojes biométricos
+  - Cálculo automático de horas extra y atrasos
+  - Generador de reportes mensuales de cumplimiento por unidad
+  - Alertas de inasistencias injustificadas

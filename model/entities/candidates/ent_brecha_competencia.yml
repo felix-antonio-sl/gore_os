@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:org:brecha_competencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-ORG-BRECHA-COMPETENCIA"
+id: ENT-BRECHA-COMPETENCIA
+name: "uLuBuRuEuCuHuAu uCuOuMuPuEuTuEuNuCuIuAu"
+tags: [ORG]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

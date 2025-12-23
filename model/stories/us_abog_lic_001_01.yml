@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_lic_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Plantillas de bases con cláusulas actualizadas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-LIC-001-01
-urn: urn:goreos:atom:story:us_abog_lic_001_01:1.0.0
-role_id: ROL-NORM-ABOGADO-LICI
+name: Plantillas de bases con cláusulas actualizadas
+
+# === STORY CORE ===
 as_a: Abogado Licitaciones
 i_want: plantillas de bases con cláusulas actualizadas
 so_that: pueda agilizar revisiones
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOGADO-LICI
+  agent_type: HUMAN
+  description: Abogado especialista en licitaciones públicas
+
+entities_mentioned:
+  - id: ENT-FIN-BASES-LICITACION
+    status: candidate
+  - id: ENT-SYS-PLANTILLA
+    status: candidate
+  - id: ENT-NORM-CLAUSULA
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-ELABORACION-BASES
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: DOCUMENTACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - licitaciones
+  - bases
+  - chilecompra
+  - plantillas
+
+status: ENRICHED
+acceptance_criteria:
+  - Plantillas por tipo de licitación
+  - Cláusulas actualizadas automáticamente
+  - Validación de completitud

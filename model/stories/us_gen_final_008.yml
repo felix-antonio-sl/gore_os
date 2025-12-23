@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para Analista Conectividad
-id: US-GEN-FINAL-008
-urn: urn:goreos:atom:story:us_gen_final_008:1.0.0
-role_id: ROL-GESTION-ANALISTA-CON
-as_a: Analista Conectividad
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-008
+name: Gestión de Redes de Conectividad
+
+# === STORY CORE ===
+as_a: Analista Conectividad
+i_want: Administrar la base de datos de infraestructura de conectividad regional
+so_that: se identifiquen brechas de cobertura y se planifiquen expansiones de red eficientes
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-CON
+  agent_type: HUMAN
+  description: Analista técnico de la división de infraestructura y transportes
+
+entities_mentioned:
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: CONECTIVIDAD
+  priority: P2
+  scope: OPERATIVO
+
+extra_tags:
+  - conectividad
+  - redes
+  - infraestructura
+  - datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización del grafo de conectividad regional (nodos y enlaces)
+  - Identificación de localidades con baja señal o sin acceso a internet
+  - Registro de proyectos de "Última Milla" financiados por el GORE

@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_lobby_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de registro de audiencias con publicación automática
-id: US-LOBBY-001-01
-urn: urn:goreos:atom:story:us_lobby_001_01:1.0.0
-role_id: ROL-NORM-LOBBY
-as_a: Encargado Ley de Lobby
-i_want: un módulo de registro de audiencias con publicación automática
-so_that: pueda cumplir con los plazos legales
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-AUDIENCIA
+id: US-LOBBY-001-01
+name: Transparencia y Cumplimiento de Ley de Lobby
+
+# === STORY CORE ===
+as_a: Encargado de Ley de Lobby
+i_want: Un módulo de registro de audiencias y donativos con publicación automática en el Portal de Transparencia
+so_that: se cumplan estrictamente los plazos legales y se garantice la probidad de las autoridades regionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-LOBBY
+  agent_type: HUMAN
+  description: Funcionario designado para la gestión y seguimiento de la Ley de Lobby
+
+entities_mentioned:
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - lobby
+  - audiencias
+  - probidad
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario digital integrado para la solicitud de audiencias por parte de gestores de intereses
+  - Sincronización automática de agendas de autoridades con el registro público de lobby
+  - Validación de plazos (15 días hábiles para publicación) con alertas preventivas

@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitudes de vehículos (asignar conductor)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-FLO-002
-urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
-role_id: ROL-GESTION-OPS-FLOTA
+name: Solicitudes de vehículos (asignar conductor)
+
+# === STORY CORE ===
 as_a: Encargado Flota
 i_want: Gestionar solicitudes de vehículos (asignar conductor)
 so_that: Administro uso de flota
-domain: D-BACK
-competence_id: CPT-BACK-FLO-001
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-VEHICULO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OPS-FLOTA
+  agent_type: HUMAN
+  description: Encargado de la flota vehicular y logística de transportes del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-CONDUCTOR
+    status: candidate
+  - id: ENT-ORG-SOLICITUD-TRANSPORTE
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-FLOTA-VEHICULAR
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: LOGISTICA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - flota
+  - vehiculos
+  - transporte
+  - conductores
+  - logistica
+
+status: ENRICHED
+acceptance_criteria:
+  - Calendario de disponibilidad de vehículos y conductores
+  - Asignación de vehículo y conductor basada en el tipo de comisión
+  - Generación de bitácora de salida y retorno automatizada
+  - Control de vencimiento de licencias de conducir de los funcionarios conductores

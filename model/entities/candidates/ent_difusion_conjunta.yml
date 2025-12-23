@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:back:difusion_conjunta:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-BACK-DIFUSION-CONJUNTA"
+id: ENT-DIFUSION-CONJUNTA
+name: "uLuDuIuFuUuSuIuOuNu uCuOuNuJuUuNuTuAu"
+tags: [BACK]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

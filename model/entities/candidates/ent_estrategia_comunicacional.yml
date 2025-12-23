@@ -1,0 +1,13 @@
+---
+_meta:
+  urn: urn:goreos:entity:back:estrategia_comunicacional:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate_collision_resolved
+id: ENT-ESTRATEGIA_COMUNICACIONAL
+name: "Estrategia Comunicacional"
+tags: [BACK,PLAN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:precio_referencial:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-PRECIO-REFERENCIAL"
+id: ENT-PRECIO-REFERENCIAL
+name: "uLuPuRuEuCuIuOu uRuEuFuEuRuEuNuCuIuAuLu"
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

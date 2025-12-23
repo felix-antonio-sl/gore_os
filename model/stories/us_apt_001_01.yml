@@ -1,17 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_apt_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a capas GEO de planos reguladores comunales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-APT-001-01
-urn: urn:goreos:atom:story:us_apt_001_01:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
+name: Acceso a capas GEO de planos reguladores comunales
+
+# === STORY CORE ===
 as_a: Analista Prevención
 i_want: acceso a capas GEO de planos reguladores comunales
 so_that: pueda validar la compatibilidad de proyectos
-domain: D-TERR
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-LOC-COMUNA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista de Prevención de Riesgos con necesidades de validación territorial
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-PLAN-PRC
+    status: candidate
+
+process_ref:
+  id: PROC-TERR-VALIDACION-NORMATIVA
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: VALIDACION
+  priority: P1
+  scope: COMUNAL
+
+extra_tags:
+  - gis
+  - plano-regulador
+  - urbanismo
+  - prevencion
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización de capas PRC sobre mapa base
+  - Herramienta de consulta de uso de suelo por punto/polígono
+  - Descarga de certificados de zonificación (borrador)

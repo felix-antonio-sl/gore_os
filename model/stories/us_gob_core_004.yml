@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_core_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver mapa de inversiones (geolocalización + filtros)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-CORE-004
-urn: urn:goreos:atom:story:us_gob_core_004:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: Ver mapa de inversiones (geolocalización + filtros)
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Ver mapa de inversiones (geolocalización + filtros)
 so_that: Visualizo distribución territorial
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Encargado que reporta al Consejo Regional (CORE) sobre la distribución de inversiones en las 21 comunas
+
+entities_mentioned:
+  - id: ENT-TERR-MAPA-INVERSION
+    status: candidate
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: CORE
+  priority: P0
+  scope: TERRITORIAL
+
+extra_tags:
+  - core
+  - mapa-inversion
+  - geolocalizacion
+  - transparencia-territorial
+  - consejo-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Visor cartográfico con capas de inversión por programa (Circular 33, FNDR, FIC)
+  - Filtros avanzados por provincia, comuna, estado de ejecución y año presupuestario
+  - Capacidad de exportar vistas del mapa para presentaciones en sesiones de comisión del CORE

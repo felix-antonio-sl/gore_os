@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_form_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Provisiones presupuestarias para FRIL/FRPD
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-FORM-005
-urn: urn:goreos:atom:story:us_fin_form_005:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
-i_want: Crear provisiones presupuestarias para FRIL/FRPD
-so_that: Reservo fondos por concurso
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Provisiones Presupuestarias para Concursos (FRIL/FRPD)
+
+# === STORY CORE ===
+as_a: Profesional de la División de Administración y Finanzas (DAF)
+i_want: crear provisiones presupuestarias globales para marcos de concursos FRIL o FRPD antes de la asignación individual por proyecto
+so_that: se reserven los fondos necesarios en el presupuesto institucional y se asegure la disponibilidad financiera para los ganadores del concurso
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional financiero encargado de la gestión de compromisos globales del GORE
+
+entities_mentioned:
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-PRESUPUESTARIA
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - provisiones
+  - fril
+  - frpd
+  - presupuesto
+  - gestion-financiera
+
+status: ENRICHED
+acceptance_criteria:
+  - Capacidad de crear un "Monto de Reserva" vinculado a una glosa o programa específico
+  - Descuento automático del saldo disponible institucional tras la aprobación de la provisión
+  - Mecanismo de reasignación desde la provisión global a iniciativas específicas tras el fallo del concurso

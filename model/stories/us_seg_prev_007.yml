@@ -1,20 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_prev_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Programa de asistencia a víctimas (División Prevención)
-id: US-SEG-PREV-007
-urn: urn:goreos:atom:story:us_seg_prev_007:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: Gestionar programa de asistencia a víctimas (División Prevención)
-so_that: Apoyo a afectados por delitos con recursos legales/psicosociales
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ASISTENCIA
-- ENT-ORG-ASISTENCIA
-- ENT-ORG-DIVISION
+id: US-SEG-PREV-007
+name: Programa de asistencia a víctimas de delitos
+
+# === STORY CORE ===
+as_a: Analista de Prevención (GORE)
+i_want: gestionar el programa regional de asistencia a víctimas
+so_that: se brinde apoyo jurídico, social y psicológico oportuno a los afectados por delitos violentos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Profesional del programa de apoyo a víctimas del Gobierno Regional
+
+entities_mentioned:
+  - id: ENT-CONV-ASISTENCIA
+    status: linked
+  - id: ENT-ORG-ASISTENCIA
+    status: linked
+  - id: ENT-SEG-EXPEDIENTE-VICTIMA
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-PROYECTO-SOCIAL
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: ASISTENCIA-SOCIAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - asistencia-victimas
+  - apoyo-juridico
+  - apoyo-psicologico
+  - reparacion
+  - vulnerabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro confidencial de casos con historial de atenciones y derivaciones institucionales
+  - Módulo de gestión de honorarios para la contratación de abogados y psicólogos externos por caso
+  - Generación de estadísticas de impacto y revictimización para la mejora del programa regional

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_secpla_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un asistente de formulación de proyectos que valide la coherencia con la ERD
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SECPLA-001-01
-urn: urn:goreos:atom:story:us_secpla_001_01:1.0.0
-role_id: ROL-GESTION-SECPLA-CHILL
-as_a: SECPLA Chillán
-i_want: un asistente de formulación de proyectos que valide la coherencia con la ERD
-so_that: mis proyectos tengan mayor probabilidad de RS
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+name: Asistente de formulación de proyectos (Alineación ERD)
+
+# === STORY CORE ===
+as_a: Formulador Municipal (SECPLAN)
+i_want: un asistente de formulación que valide la coherencia con la Estrategia Regional de Desarrollo (ERD)
+so_that: los proyectos tengan mayor probabilidad de obtener RS y financiamiento GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SECPLA-MUNI
+  agent_type: HUMAN
+  description: Profesional de la Secretaría Comunal de Planificación encargado de postular iniciativas de inversión al GORE
+
+entities_mentioned:
+  - id: ENT-PLAN-ESTRATEGIA-ERD
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: candidate
+  - id: ENT-ORM-RENTABILIDAD-SOCIAL
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FORMULACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - secplan
+  - formulacion
+  - erd
+  - alineacion-estrategica
+  - rs
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo que sugiere lineamientos y objetivos específicos de la ERD basados en el nombre y descripción del proyecto
+  - Validación de campos obligatorios según el tipo de iniciativa (Circular 33, Infraestructura, FNDR)
+  - Checklist de documentos requeridos por el GORE para el ingreso formal al sistema de evaluación

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_cris_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un pico de solicitudes de información (>50 simultáneas) coordinado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-CRIS-001
-urn: urn:goreos:atom:story:us_norm_cris_001:1.0.0
-role_id: ROL-GESTION-TRANSP
-as_a: Encargado Transparencia Activa/Pasiva
-i_want: Gestionar un pico de solicitudes de información (>50 simultáneas) coordinado
-so_that: Evito caer en silencio administrativo masivo
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Gestión de Crisis por Alta Demanda de Información
+
+# === STORY CORE ===
+as_a: Encargado de Transparencia
+i_want: Activar un protocolo de gestión coordinada ante picos de solicitudes de información simultáneas (>50 semanales)
+so_that: se evite caer en "Silencio Administrativo" masivo y se garantice el derecho de acceso a la información pública
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRANSP
+  agent_type: HUMAN
+  description: Responsable regional de transparencia activa y pasiva ante el Consejo para la Transparencia
+
+entities_mentioned:
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P0
+  scope: CRISIS
+
+extra_tags:
+  - transparencia-pasiva
+  - crisis
+  - solicitudes
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de contingencia con semáforos de plazos legales remanentes
+  - Capacidad de reasignación masiva de solicitudes a unidades de apoyo temporal
+  - Plantillas de respuesta masiva para solicitudes idénticas ("Mismo requerimiento, misma respuesta")

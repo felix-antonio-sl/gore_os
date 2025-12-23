@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_017:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para SEREMI Salud
-id: US-GEN-FINAL-017
-urn: urn:goreos:atom:story:us_gen_final_017:1.0.0
-role_id: ROL-GESTION-SEREMI-SALUD
-as_a: SEREMI Salud
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-017
+name: Coordinación Intersectorial de Salud Regional
+
+# === STORY CORE ===
+as_a: SEREMI Salud
+i_want: Evaluar y visar proyectos de infraestructura sanitaria y programas de salud pública financiados por el GORE
+so_that: las iniciativas regionales cumplan con los protocolos de salud nacionales y aborden las brechas sanitarias de Ñuble
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-SALUD
+  agent_type: HUMAN
+  description: Representante ministerial para el sector salud en la región
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-CONV-COMITE
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: SALUD-PUBLICA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - seremi
+  - salud
+  - visacion
+  - infraestructura-sanitaria
+
+status: ENRICHED
+acceptance_criteria:
+  - Flujo de revisión técnica de convenios de programación GORE-MINSAL
+  - Capacidad de emitir la opinión técnica favorable digitalmente para proyectos del FNDR
+  - Acceso a datos epidemiológicos regionales para la priorización de inversión en salud

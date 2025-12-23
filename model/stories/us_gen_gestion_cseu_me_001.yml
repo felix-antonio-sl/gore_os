@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cseu_me_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Miembro Comité CSEU
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CSEU_ME-001
-urn: urn:goreos:atom:story:us_gen_gestion_cseu_me_001:1.0.0
-role_id: ROL-GESTION-CSEU-MEMB
+name: Historia genérica para Miembro Comité CSEU
+
+# === STORY CORE ===
 as_a: Miembro Comité CSEU
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CSEU-MEMB
+  agent_type: HUMAN
+  description: Miembro del Comité de Seguimiento y Evaluación de la Unión Europea (o similar) para cooperación internacional
+
+entities_mentioned:
+  - id: ENT-CONV-COOPERACION-INTERNACIONAL
+    status: candidate
+  - id: ENT-PLAN-EVALUACION-PROGRAMA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - cseu
+  - cooperacion-internacional
+  - union-europea
+  - evaluacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga de informes de cumplimiento de estándares internacionales de proyectos co-financiados
+  - Acceso a panel de indicadores de impacto específicos de convenios de cooperación
+  - Registro de misiones técnicas y visitas de inspección internacionales

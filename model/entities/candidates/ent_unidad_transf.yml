@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:org:unidad_transf:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-ORG-UNIDAD-TRANSF"
+id: ENT-UNIDAD-TRANSF
+name: "uLuUuNuIuDuAuDu uTuRuAuNuSuFu"
+tags: [ORG]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

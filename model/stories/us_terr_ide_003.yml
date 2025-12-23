@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_ide_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Modelar datos ISO 19110 (catálogo objetos)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TERR-IDE-003
-urn: urn:goreos:atom:story:us_terr_ide_003:1.0.0
-role_id: ROL-GESTION-IDE
+name: Modelado de catálogo de objetos (ISO 19110)
+
+# === STORY CORE ===
 as_a: Coordinador IDE
-i_want: Modelar datos ISO 19110 (catálogo objetos)
-so_that: Estandarizo estructura de datos
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+i_want: modelar la estructura de datos geográficos siguiendo el estándar ISO 19110 (Catálogo de Objetos)
+so_that: se estandarice la definición de capas institucionales y se facilite el consumo semántico por parte de otros sistemas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-IDE
+  agent_type: HUMAN
+  description: Especialista en normalización de datos geoespaciales
+
+entities_mentioned:
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: NORMALIZACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - iso-19110
+  - catalogo-objetos
+  - semantica-gis
+  - interoperabilidad
+  - metadatos
+
+status: ENRICHED
+acceptance_criteria:
+  - Diccionario de datos digital que define Atributos, Dominios y Relaciones para cada capa base
+  - Validación automática de esquemas GML/JSON contra el catálogo de objetos definido
+  - Exportación de la ficha técnica de la capa en formato PDF y XML (ISO)

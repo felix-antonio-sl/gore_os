@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fndr8_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un checklist automático de admisibilidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNDR8-001-01
-urn: urn:goreos:atom:story:us_fndr8_001_01:1.0.0
-role_id: ROL-GESTION-ANAL8
+name: Checklist automático de admisibilidad
+
+# === STORY CORE ===
 as_a: Analista 8% (Técnico)
 i_want: un checklist automático de admisibilidad
-so_that: pueda filtrar postulaciones rápidamente
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+so_that: pueda filtrar postulaciones rápidamente y enfocar el esfuerzo técnico en proyectos viables
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL8
+  agent_type: HUMAN
+  description: Analista técnico de la División de Desarrollo Social (8%)
+
+entities_mentioned:
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+  - id: ENT-DIG-DOCUMENTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FONDOS-CONCURSABLES
+  priority: P0
+  scope: OPERATIVO
+
+extra_tags:
+  - 8-porciento
+  - admisibilidad
+  - checklist
+  - filtro
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación automática de la presencia de todos los documentos obligatorios
+  - Validación de campos críticos (RUT, Monto, Firma) antes de permitir el paso a evaluación técnica
+  - Generación de informe de inadmisibilidad con las causas detectadas para notificar al postulante

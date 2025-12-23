@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:norm:bases_glosa_7:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-NORM-BASES-GLOSA-7"
+id: ENT-BASES-GLOSA-7
+name: "uLuBuAuSuEuSu uGuLuOuSuAu u7u"
+tags: [NORM]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

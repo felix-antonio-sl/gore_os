@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:plan:fin_proposito_componente:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-PLAN-FIN-PROPOSITO-COMPONENTE"
+id: ENT-FIN-PROPOSITO-COMPONENTE
+name: "uLuFuIuNu uPuRuOuPuOuSuIuTuOu uCuOuMuPuOuNuEuNuTuEu"
+tags: [PLAN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

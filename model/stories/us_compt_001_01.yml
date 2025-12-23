@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_compt_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Formularios digitales de evaluación 360
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COMPT-001-01
-urn: urn:goreos:atom:story:us_compt_001_01:1.0.0
-role_id: ROL-FIN-ABS-COMP
+name: Formularios digitales de evaluación 360
+
+# === STORY CORE ===
 as_a: Comprador Público
 i_want: formularios digitales de evaluación 360
 so_that: pueda identificar brechas de competencia
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ABS-COMP
+  agent_type: HUMAN
+  description: Funcionario de abastecimiento sujeto a evaluación periódica de perfil competencial
+
+entities_mentioned:
+  - id: ENT-ORG-EVALUACION-360
+    status: candidate
+  - id: ENT-ORG-BRECHA-COMPETENCIA
+    status: candidate
+  - id: ENT-ORG-PERFIL-COMPETENCIAL
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-EVALUACION-DESEMPENO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CAPACITACION
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - evaluacion-360
+  - competencias
+  - rrhh
+  - brechas
+  - desempeño
+
+status: ENRICHED
+acceptance_criteria:
+  - Autoevaluación, evaluación por pares y evaluación de jefatura directa
+  - Dashboard de brechas comparando perfil real vs perfil ideal del cargo
+  - Plan de capacitación sugerido automáticamente según brechas detectadas

@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para SEREMI Economía
-id: US-GEN-FINAL-006
-urn: urn:goreos:atom:story:us_gen_final_006:1.0.0
-role_id: ROL-GESTION-SEREMI-ECO
-as_a: SEREMI Economía
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-006
+name: Articulación para el Desarrollo Económico Regional
+
+# === STORY CORE ===
+as_a: SEREMI Economía
+i_want: Participar en el diseño de programas de fomento productivo financiados por el FNDR
+so_that: se potencien los sectores económicos estratégicos de Ñuble y se fomente la innovación empresarial
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-ECO
+  agent_type: HUMAN
+  description: Representante ministerial para el sector economía, fomento y turismo
+
+entities_mentioned:
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P3
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: ECONOMIA
+  priority: P2
+  scope: FOMENTO
+
+extra_tags:
+  - economia
+  - fomento
+  - fndr
+  - desarrollo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al panel de diseño de programas concursables de fomento
+  - Capacidad de incluir criterios de evaluación específicos para PYMES regionales
+  - Intercambio de datos sobre beneficiarios de programas de fomento nacionales (CORFO/SERCOTEC)

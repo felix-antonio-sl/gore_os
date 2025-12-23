@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_corp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Transferencias corrientes para gastos operativos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CORP-001-01
-urn: urn:goreos:atom:story:us_corp_001_01:1.0.0
-role_id: ROL-EJEC-DIR
+name: Transferencias corrientes para gastos operativos
+
+# === STORY CORE ===
 as_a: Director Ejecutivo Corporación
 i_want: transferencias corrientes para gastos operativos
 so_that: la corporación funcione administrativamente
-domain: D-FIN
-priority: P2
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-FIN-TRANSFERENCIA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-DIR
+  agent_type: HUMAN
+  description: Director de corporación regional de derecho privado con financiamiento GORE
+
+entities_mentioned:
+  - id: ENT-FIN-TRANSFERENCIA-CORRIENTE
+    status: candidate
+  - id: ENT-FIN-GASTO-OPERATIVO
+    status: candidate
+  - id: ENT-GOB-CORPORACION-REGIONAL
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-TRANSFERENCIA-ENTIDADES
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: TRANSFERENCIAS
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - corporaciones
+  - transferencias
+  - presupuesto
+  - gastos-operativos
+  - convenios
+
+status: ENRICHED
+acceptance_criteria:
+  - Calendario de desembolsos trimestral según convenio de desempeño
+  - Módulo de rendición de gastos operativos automatizado
+  - Validación de vigencia de personalidad jurídica previa a transferencia

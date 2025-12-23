@@ -1,14 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_as_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de fichas sociales con criterios de evaluación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AS-001-01
-urn: urn:goreos:atom:story:us_as_001_01:1.0.0
-role_id: ROL-GESTION-DIRIGENTE-SO
+name: Un módulo de fichas sociales con criterios de evaluación
+
+# === STORY CORE ===
 as_a: Dirigente Social
 i_want: un módulo de fichas sociales con criterios de evaluación
 so_that: la evaluación sea consistente
-domain: D-EJEC
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIRIGENTE-SO
+  agent_type: HUMAN
+  description: Dirigente social que representa a organizaciones ante el GORE
+
+entities_mentioned:
+  - id: ENT-SOC-FICHA-SOCIAL
+    status: candidate
+  - id: ENT-SOC-ORGANIZACION
+    status: candidate
+  - id: ENT-FIN-CONTRATO-SOCIAL
+    status: candidate
+
+process_ref:
+  id: PROC-SOC-CARACTERIZACION-SOCIAL
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: SOCIAL
+  priority: P0
+  scope: COMUNAL
+
+extra_tags:
+  - social
+  - dirigente
+  - ficha-social
+  - evaluacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Ficha digital con validación de datos del Registro Social de Hogares
+  - Criterios de evaluación estandarizados por programa
+  - Posibilidad de adjuntar evidencia fotográfica y documental

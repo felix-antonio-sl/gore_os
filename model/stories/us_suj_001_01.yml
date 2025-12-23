@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_suj_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un formulario de registro de audiencias simplificado
-id: US-SUJ-001-01
-urn: urn:goreos:atom:story:us_suj_001_01:1.0.0
-role_id: ROL-GESTION-PAS
-as_a: Sujeto Pasivo (Autoridad)
-i_want: un formulario de registro de audiencias simplificado
-so_that: pueda cumplir con la Ley del Lobby
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-AUDIENCIA
+id: US-SUJ-001-01
+name: Formulario simplificado de registro de audiencias (Lobby)
+
+# === STORY CORE ===
+as_a: Sujeto Pasivo (Autoridad del GORE)
+i_want: un formulario de registro de audiencias simplificado y accesible desde dispositivos móviles
+so_that: pueda cumplir con la Ley 20.730 (Ley del Lobby) de forma ágil y sin sobrecarga administrativa
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PAS
+  agent_type: HUMAN
+  description: Autoridad o directivo del GORE obligado a reportar sus reuniones con gestores de intereses
+
+entities_mentioned:
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-GOB-GESTOR-INTERESES
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-GESTION-LOBBY
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: LOBBY
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - ley-del-lobby
+  - transparencia
+  - audiencias
+  - sujeto-pasivo
+  - probidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario con autocompletado de invitados basado en el RUT y registros históricos de la plataforma Lobby
+  - Capacidad de dictado por voz para el resumen de la materia tratada y los acuerdos alcanzados
+  - Envío automático del reporte consolidado a la Unidad de Transparencia para su publicación en el portal oficial

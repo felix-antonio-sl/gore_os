@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_pmg_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un sistema de carga de evidencias PMG descentralizado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PMG-001-01
-urn: urn:goreos:atom:story:us_pmg_001_01:1.0.0
-role_id: ROL-GESTION-CTD
-as_a: Coordinador Transformación Digital
+name: Sistema de carga de evidencias PMG descentralizado
+
+# === STORY CORE ===
+as_a: Coordinador Transformación Digital / PMG
 i_want: un sistema de carga de evidencias PMG descentralizado
 so_that: cada unidad suba sus medios de verificación
-domain: D-PLAN
-priority: P1
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CTD
+  agent_type: HUMAN
+  description: Coordinador encargado de centralizar y validar el cumplimiento del Programa de Mejoramiento de Gestión (PMG)
+
+entities_mentioned:
+  - id: ENT-PLAN-EVIDENCIA-PMG
+    status: candidate
+  - id: ENT-PLAN-CALENDARIO-HITO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: CUMPLIMIENTO
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - pmg
+  - transformacion-digital
+  - evidencias
+  - cumplimiento-gestion
+  - DIPRES
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga masiva de archivos con metadatos asociados al indicador PMG correspondiente
+  - Workflow de revisión y aprobación previa por parte del Coordinador PMG antes del envío a red de validadores
+  - Dashboard de avance por centro de responsabilidad (Divisiones/Departamentos) respecto a metas PMG

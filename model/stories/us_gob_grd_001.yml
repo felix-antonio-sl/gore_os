@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_grd_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Sancionar el Plan Regional de Reducción del Riesgo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GRD-001
-urn: urn:goreos:atom:story:us_gob_grd_001:1.0.0
-role_id: ROL-GESTION-UCR-COOR
-as_a: Coordinador UCR
+name: Sancionar el Plan Regional de Reducción del Riesgo
+
+# === STORY CORE ===
+as_a: Gobernador Regional (Consejo Regional GRD)
 i_want: Sancionar el Plan Regional de Reducción del Riesgo
 so_that: Formalizo la estrategia de GRD
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-RIESGO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Gobernador Regional o Coordinador GRD que formaliza el instrumento estratégico de prevención de desastres
+
+entities_mentioned:
+  - id: ENT-SOC-PLAN-REDUCCION-RIESGO
+    status: candidate
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: PREVENCION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - grd
+  - reduccion-riesgo
+  - prevencion
+  - política-resiliencia
+  - senapred
+  - ley-21364
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio digital del Plan Regional GRD con visación técnica de SENAPRED
+  - Módulo de seguimiento de las acciones preventivas comprometidas por cada servicio público regional
+  - Panel de metas de reducción de vulnerabilidad por comuna priorizada

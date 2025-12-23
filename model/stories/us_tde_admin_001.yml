@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_admin_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Crear/editar divisiones con jefe asignado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-ADMIN-001
-urn: urn:goreos:atom:story:us_tde_admin_001:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Crear/editar divisiones con jefe asignado
-so_that: Configuro estructura organizacional
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Gestión de divisiones y jefaturas organizacionales
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma (Geonodo / GORE_OS)
+i_want: crear y editar divisiones institucionales asignando formalmente a sus jefes respectivos
+so_that: se configure correctamente la estructura organizacional y los flujos de aprobación jerárquica
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador técnico de la plataforma encargado de la parametrización de procesos y estructura
+
+entities_mentioned:
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-JEFE-SERVICIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: ADMINISTRACION
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - administracion
+  - estructura-organizacional
+  - divisiones
+  - jerarquia
+  - configuracion
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de ABM (Alta/Baja/Modificación) de unidades organizacionales con herencia de permisos
+  - Asignación de suplencias y subrogancias de jefatura con fecha de inicio y término
+  - Sincronización automática de la estructura con el organigrama visible en el portal de transparencia activa

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_prod_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: ADRs y vincularlas a stories
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-PROD-003
-urn: urn:goreos:atom:story:us_dev_prod_003:1.0.0
-role_id: ROL-GESTION-LEAD
-as_a: Líder Técnico
-i_want: registrar ADRs y vincularlas a stories
-so_that: se mantenga la trazabilidad de las decisiones arquitectónicas
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+name: Registro de ADRs vinculados a Historias de Usuario
+
+# === STORY CORE ===
+as_a: Líder Técnico / Arquitecto
+i_want: registrar las Decisiones Arquitectónicas (ADR) en archivos Markdown y vincularlas explícitamente a las historias de usuario que las originaron
+so_that: se mantenga la trazabilidad histórica de los "por qué" de la arquitectura y se facilite la transferencia de conocimiento
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Responsable de las decisiones técnicas de alto nivel y la longevidad del sistema
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: ARQUITECTURA
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - adr
+  - decisiones-arquitectonicas
+  - trazabilidad
+  - documentacion
+  - gobernanza-ti
+
+status: ENRICHED
+acceptance_criteria:
+  - Carpeta `docs/adr` con plantilla estandarizada (Contexto, Decisión, Consecuencias)
+  - Campo `adr_ref` añadido opcionalmente al schema de las Stories
+  - Reporte de trazabilidad que muestra qué US impactaron qué componentes del sistema

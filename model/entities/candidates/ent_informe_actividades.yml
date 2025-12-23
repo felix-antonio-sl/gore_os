@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:dig:informe_actividades:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-DIG-INFORME-ACTIVIDADES"
+id: ENT-INFORME-ACTIVIDADES
+name: "uLuIuNuFuOuRuMuEu uAuCuTuIuVuIuDuAuDuEuSu"
+tags: [DIG]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

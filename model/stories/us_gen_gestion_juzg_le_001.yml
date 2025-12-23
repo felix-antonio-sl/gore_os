@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_juzg_le_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Juzgado de Letras
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_JUZG_LE-001
-urn: urn:goreos:atom:story:us_gen_gestion_juzg_le_001:1.0.0
-role_id: ROL-GESTION-JUZG-LETRAS
+name: Historia genérica para Juzgado de Letras
+
+# === STORY CORE ===
 as_a: Juzgado de Letras
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JUZG-LETRAS
+  agent_type: HUMAN
+  description: Juez o Secretario de un Juzgado de Letras que requiere información del GORE para procesos judiciales (Civiles/Laborales)
+
+entities_mentioned:
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: linked
+  - id: ENT-NORM-OFICIO-JUDICIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - juzgado-letras
+  - judicial
+  - oficios
+  - legal
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Canal digital seguro para la recepción de oficios y remisión de antecedentes solicitados por el tribunal
+  - Módulo de seguimiento de plazos de respuesta bajo apercibimiento legal
+  - Repositorio de actas de embargo o resoluciones que afecten el patrimonio regional

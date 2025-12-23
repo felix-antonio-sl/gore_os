@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_sup_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Revisar informes UT (aprobar/observar)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-SUP-003
-urn: urn:goreos:atom:story:us_ejec_sup_003:1.0.0
-role_id: ROL-GESTION-SUP
+name: Revisar informes UT (aprobar/observar)
+
+# === STORY CORE ===
 as_a: Supervisor CIES
 i_want: Revisar informes UT (aprobar/observar)
 so_that: Valido reportes de ejecutor
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
 
-mentions:
-- ENT-EJE-EJECUTOR
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUP
+  agent_type: HUMAN
+  description: Supervisor del Centro de Inteligencia y Estrategia (CIES) o Unidad Técnica responsable de visar reportes externos
+
+entities_mentioned:
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-EJE-INFORME-TECNICO
+    status: linked
+  - id: ENT-EJE-OBSERVACION-TECNICA
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: SEGUIMIENTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - informes-ut
+  - supervisor
+  - aprobacion
+  - observaciones
+  - cies
+  - ejecutor
+
+status: ENRICHED
+acceptance_criteria:
+  - Visor de documentos integrado para leer informes sin descargar
+  - Módulo de comentarios por sección del informe para facilitar observaciones parciales
+  - Botón de "Rechazar → Devolver a UT" con campo obligatorio de correcciones solicitadas

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_sec_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Uso correcto de marca regional en terceros
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-SEC-002
-urn: urn:goreos:atom:story:us_com_sec_002:1.0.0
-role_id: ROL-GESTION-ENC
+name: Uso correcto de marca regional en terceros
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Gestionar uso correcto de marca regional en terceros
 so_that: Cuido imagen institucional
-domain: D-COM
-priority: P1
-competence_id: CPT-COM-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Branding o Identidad Visual institucional
+
+entities_mentioned:
+  - id: ENT-BACK-MARCA-REGIONAL
+    status: candidate
+  - id: ENT-BACK-MANUAL-NORMA-GRAFICA
+    status: candidate
+  - id: ENT-SOC-IMAGEN-INSTITUCIONAL
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-CONTROL-CALIDAD-MARCA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - marca-regional
+  - imagen-institucional
+  - branding
+  - manual-grafico
+  - fiscalizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de validación de piezas gráficas externas (enviadas por ejecutores)
+  - Notificaciones de rechazo por incumplimiento de manual de normas gráficas
+  - Sellos de aprobación digital para material publicitario autorizado

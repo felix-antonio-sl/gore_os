@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Contabilizar gastos operativos del GORE (Subt. 21, 22)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-011
-urn: urn:goreos:atom:story:us_back_tes_011:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Contabilizar gastos operativos del GORE (Subt. 21, 22)
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: Contabilizar gastos operativos del GORE (Subt. 21, 22)
 so_that: Registro correctamente el devengo en SIGFE
-domain: D-BACK
-priority: P0
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: HUMAN
+  description: Contador gubernamental encargado del registro de gastos operativos institucionales (Personal y Bienes/Servicios)
+
+entities_mentioned:
+  - id: ENT-FIN-GASTO-OPERATIVO
+    status: candidate
+  - id: ENT-FIN-DEVENGO
+    status: candidate
+  - id: ENT-FIN-CUENTA-CONTABLE
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CONTABILIZACION-GASTOS-OPERATIVOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CONTABILIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - contabilidad
+  - sigfe
+  - devengo
+  - subtitulo-21
+  - subtitulo-22
+  - gastos-operativos
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración o interfaz de carga masiva de devengos hacia SIGFE
+  - Validación de imputación presupuestaria correcta según clasificador presupuestario
+  - Trazabilidad del documento de respaldo (factura/boleta) vinculado al asiento contable

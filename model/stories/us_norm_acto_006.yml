@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_acto_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Clasificar convenio AFECTA/EXENTA según normativa CGR
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-ACTO-006
-urn: urn:goreos:atom:story:us_norm_acto_006:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: Clasificar convenio AFECTA/EXENTA según normativa CGR
-so_that: Determino flujo de aprobación correcto
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Clasificación de Actos Administrativos (Afecta/Exenta)
+
+# === STORY CORE ===
+as_a: Analista de Control Preventivo
+i_want: Clasificar automáticamente los convenios y actos como "Afectos" o "Exentos" de Toma de Razón según los montos y normativas de la CGR
+so_that: se determine el flujo de aprobación correcto y se eviten rechazos por errores de procedimiento
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista técnico encargado de la pre-evaluación normativa de expedientes
+
+entities_mentioned:
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONTROL-LEGALIDAD
+  priority: P1
+  scope: NORMATIVO
+
+extra_tags:
+  - afecta
+  - exenta
+  - clasificacion
+  - cgr
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de reglas que aplique la Resolución N°6 y N°7 de la CGR según monto y materia
+  - Validación de RUTs de contratistas contra bases de datos de inhabilidades
+  - Firma del analista certificando la clasificación propuesta para el trámite

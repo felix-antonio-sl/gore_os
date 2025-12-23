@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_emp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un calendario único de postulaciones a fondos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EMP-001-01
-urn: urn:goreos:atom:story:us_emp_001_01:1.0.0
-role_id: ROL-GESTION-CAMARA
-as_a: Cámara de Comercio
-i_want: un calendario único de postulaciones a fondos
-so_that: no pierda oportunidades de co-financiamiento
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Calendario Unificado de Fondos para el Sector Privado
+
+# === STORY CORE ===
+as_a: Representante de la Cámara de Comercio / Gremio Regional
+i_want: acceder a un calendario único y público con todas las convocatorias de fondos concursables del GORE (8%, FNDR, Fondos de Innovación)
+so_that: las empresas y emprendedores locales no pierdan oportunidades de co-financiamiento para fortalecer la economía regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CAMARA
+  agent_type: HUMAN
+  description: Líder gremial que busca facilitar el acceso a recursos públicos para sus asociados
+
+entities_mentioned:
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-VINCULACION-STAKEHOLDERS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: VINCULACION-CIUDADANA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - gremios
+  - empresas
+  - fondos-concursables
+  - economia-regional
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal público con visualización de calendario anual de fondos
+  - Filtros por sector productivo (Turismo, Agro, TIC, etc.)
+  - Descarga directa de bases y formularios tipo desde el calendario

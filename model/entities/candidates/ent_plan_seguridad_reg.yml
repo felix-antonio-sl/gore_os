@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:seg:plan_seguridad_reg:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SEG-PLAN-SEGURIDAD-REG"
+id: ENT-PLAN-SEGURIDAD-REG
+name: "uLuPuLuAuNu uSuEuGuUuRuIuDuAuDu uRuEuGu"
+tags: [SEG]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

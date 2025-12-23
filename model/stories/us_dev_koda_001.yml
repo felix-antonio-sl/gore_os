@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_koda_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-KODA-001
+name: Implementación de URNs KODA en el Modelo
+
+# === STORY CORE ===
+as_a: Arquitecto KODA
+i_want: Aplicar el esquema de direccionamiento URN institucional a todos los átomos y artefactos del sistema
+so_that: se garantice la identificación única y permanente de cada componente dentro de la arquitectura federada
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Arquitecto experto en el framework KODA
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: ARQUITECTURA-KODA
+  priority: P0
+  scope: ESTANDARIZACION
+
+extra_tags:
+  - koda
+  - urn
+  - naming-convention
+  - federacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Las URNs deben seguir el patrón: urn:goreos:<atom_type>:<category>:<id>:<version>
+  - Validación automática de la unicidad de URNs al guardar nuevos archivos YAML
+  - Documentación del mapa de prefijos oficiales en el manual técnico

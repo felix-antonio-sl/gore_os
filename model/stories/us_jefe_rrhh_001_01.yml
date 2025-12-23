@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jefe_rrhh_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un expediente digital único por funcionario
-id: US-JEFE-RRHH-001-01
-urn: urn:goreos:atom:story:us_jefe_rrhh_001_01:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: un expediente digital único por funcionario
-so_that: tenga toda la historia laboral centralizada
-domain: D-BACK
-priority: P0
-competence_id: CPT-RRHH-GESTOR-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+id: US-JEFE-RRHH-001-01
+name: Expediente Digital Único del Funcionario
+
+# === STORY CORE ===
+as_a: Jefe de RRHH
+i_want: Un expediente digital único para cada funcionario que centralice toda su vida laboral
+so_that: se facilite la gestión administrativa, el control de probidad y la búsqueda de perfiles internos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-RRHH-JEFE
+  agent_type: HUMAN
+  description: Jefe del departamento de gestión y desarrollo de personas
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-BACK-P1
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: RRHH
+  priority: P0
+  scope: ADMINISTRATIVO
+
+extra_tags:
+  - expediente-digital
+  - legajo
+  - funcionario
+  - probidad
+
+status: ENRICHED
+acceptance_criteria:
+  - OCR aplicado a decretos y resoluciones históricas para búsqueda de texto completo
+  - Acceso diferenciado por perfil (Confidencialidad de datos sensibles/salud)
+  - Alerta de vencimiento de documentos obligatorios (Declaración de intereses, títulos, etc.)

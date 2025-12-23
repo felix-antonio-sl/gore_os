@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sag_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información de proyectos agrícolas financiados por GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SAG-001-01
-urn: urn:goreos:atom:story:us_sag_001_01:1.0.0
-role_id: ROL-GESTION-SAG
+name: Proyectos agrícolas financiados por GORE (SAG)
+
+# === STORY CORE ===
 as_a: Director Regional SAG
 i_want: información de proyectos agrícolas financiados por GORE
-so_that: pueda verificar cumplimiento fitosanitario
-domain: D-EJEC
-priority: P2
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+so_that: pueda verificar cumplimiento fitosanitario y coordinar fiscalizaciones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SAG
+  agent_type: HUMAN
+  description: Máxima autoridad regional del Servicio Agrícola y Ganadero (Stakeholder Externo)
+
+entities_mentioned:
+  - id: ENT-EJEC-PROYECTO-AGRICOLA
+    status: candidate
+  - id: ENT-NORM-RESOLUCION-SAG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO-RURAL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - sag
+  - agricultura
+  - fitosanitario
+  - fiscalizacion
+  - coordinacion-intersectorial
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de inversión rural desglosado por rubro y ubicación georreferenciada
+  - Sistema de alertas compartidas ante proyectos que requieran autorizaciones de cambio de uso de suelo (Art. 55)
+  - Repositorio de informes técnicos del GORE para proyectos de riego o suelo degradado accesibles para el SAG

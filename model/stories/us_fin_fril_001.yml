@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_fril_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Marcos Presupuestarios (Cuota por Comuna)
-id: US-FIN-FRIL-001
-urn: urn:goreos:atom:story:us_fin_fril_001:1.0.0
-role_id: ROL-GESTION-ANAL-INV
-as_a: Analista de Inversión
-i_want: Configurar Marcos Presupuestarios (Cuota por Comuna)
-so_that: Controlo asignación comunal
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-LOC-COMUNA
-- ENT-ORG-ROL
+id: US-FIN-FRIL-001
+name: Gestión de Marcos Presupuestarios Comunales (FRIL)
+
+# === STORY CORE ===
+as_a: Analista de Inversión / Finanzas
+i_want: configurar los marcos presupuestarios (cuotas) por comuna para el programa FRIL de acuerdo a lo aprobado por el CORE
+so_that: se controle la asignación de recursos evitando que una comuna exceda su cuota asignada en el proceso de postulación
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL-INV
+  agent_type: HUMAN
+  description: Analista encargado de velar por el cumplimiento de los acuerdos de distribución presupuestaria regional
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTROL-CUOTAS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - fril
+  - cuotas-comunales
+  - marcos-presupuestarios
+  - inversion-local
+  - control-financiero
+
+status: ENRICHED
+acceptance_criteria:
+  - Tabla de cuotas por comuna editable para cada año presupuestario
+  - Bloqueo automático de nuevas admisiones si el monto acumulado del municipio excede su cuota FRIL
+  - Reporte comparativo: Monto Asignado vs Monto en Tramitación vs Monto Ejecutado por Comuna

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_eval_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El historial de la organización postulante
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVAL-001-02
-urn: urn:goreos:atom:story:us_eval_001_02:1.0.0
-role_id: ROL-GESTION-FOND-EVAL
-as_a: Evaluador Social
-i_want: consultar el historial de la organización postulante
-so_that: pueda evaluar su trayectoria
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Consulta de Historial de Organizaciones Postulantes
+
+# === STORY CORE ===
+as_a: Evaluador Social / Técnico
+i_want: consultar el historial de comportamiento y cumplimiento de las organizaciones postulantes en proyectos anteriores financiados por el GORE
+so_that: pueda evaluar su trayectoria, capacidad de ejecución y cumplimiento de rendiciones como factor de riesgo en la nueva postulación
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FOND-EVAL
+  agent_type: HUMAN
+  description: Evaluador que incorpora la experiencia previa de los ejecutores en su análisis de pertinencia
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-CONV-COMPROMISO
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION-RIESGO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - historial
+  - organizaciones
+  - cumplimiento
+  - rendiciones
+  - trayectoria
+
+status: ENRICHED
+acceptance_criteria:
+  - Vista consolidada de proyectos anteriores (Vigentes, Cerrados, Con Observaciones) para un mismo RUT
+  - Alerta de "Deudor de Rendiciones" que bloquea el paso a evaluación técnica
+  - Score de cumplimiento histórico basado en el tiempo de cierre de hitos anteriores

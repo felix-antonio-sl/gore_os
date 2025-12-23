@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_g7_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de control de programación de caja con cuotas
-id: US-G7-001-01
-urn: urn:goreos:atom:story:us_g7_001_01:1.0.0
-role_id: ROL-NORM-REV
-as_a: Abogado Revisor
-i_want: un módulo de control de programación de caja con cuotas
-so_that: pueda asegurar el cumplimiento del flujo de caja
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-G7-001-01
+name: Módulo de control de programación de caja con cuotas
+
+# === STORY CORE ===
+as_a: Abogado Revisor
+i_want: un módulo de control de programación de caja con definición de cuotas por hito
+so_that: pueda asegurar el cumplimiento del flujo de caja pactado en las bases de licitación
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-REV
+  agent_type: HUMAN
+  description: Abogado de la unidad jurídica encargado de la revisión de actos administrativos
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTROL-NORMATIVO
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - caja
+  - cuotas
+  - licitacion
+  - legalidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Tabla de programación de cuotas vinculada a hitos verificables de ejecución
+  - Validación de que la suma de cuotas no exceda el monto total del convenio
+  - Informe de consistencia legal para el visado de resoluciones

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_front_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Desarrollador Frontend
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_FRONT-001
-urn: urn:goreos:atom:story:us_gen_gestion_front_001:1.0.0
-role_id: ROL-GESTION-FRONT
+name: Historia genérica para Desarrollador Frontend
+
+# === STORY CORE ===
 as_a: Desarrollador Frontend
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FRONT
+  agent_type: HUMAN
+  description: Desarrollador frontend encargado de la interfaz de usuario (UI/UX) de los sistemas institucionales del GORE
+
+entities_mentioned:
+  - id: ENT-TDE-UI-KIT
+    status: candidate
+  - id: ENT-TDE-DISENO-EXPERIENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-DESARROLLO-SISTEMAS
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: DESARROLLO
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - frontend
+  - ui-ux
+  - desarrollo-web
+  - interfaces
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al catálogo de componentes (UI Kit) y guías de estilo institucionales
+  - Entorno de integración continua (CI) para despliegue de prototipos funcionales
+  - Herramientas de monitoreo de accesibilidad (AA/AAA) en las interfaces desarrolladas

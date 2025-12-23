@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_022:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de gaps en reconciliación
-id: US-FIN-PPTO-022
-urn: urn:goreos:atom:story:us_fin_ppto_022:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Recibir alertas de gaps en reconciliación
-so_that: Corrijo inconsistencias
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-FIN-PPTO-022
+name: Alertas de gaps en reconciliación
+
+# === STORY CORE ===
+as_a: Jefe Unidad DAF
+i_want: Recibir alertas de gaps en reconciliación
+so_that: Corrijo inconsistencias antes del cierre de periodo y evito observaciones de auditoría
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de unidad en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P7
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTROL-GESTION
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - alertas
+  - gaps
+  - reconciliacion
+  - errores
+
+status: ENRICHED
+acceptance_criteria:
+  - Envío de correo electrónico automático cuando se detecta un gap mayor al umbral configurado
+  - Panel de control con el histórico de gaps detectados y resueltos
+  - Clasificación de gaps por criticidad y impacto presupuestario

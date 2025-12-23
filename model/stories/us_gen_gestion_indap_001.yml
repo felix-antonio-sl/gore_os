@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_indap_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para INDAP
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_INDAP-001
-urn: urn:goreos:atom:story:us_gen_gestion_indap_001:1.0.0
-role_id: ROL-GESTION-INDAP
+name: Historia genérica para INDAP
+
+# === STORY CORE ===
 as_a: INDAP
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-INDAP
+  agent_type: HUMAN
+  description: Representante del Instituto de Desarrollo Agropecuario (INDAP) que gestiona programas rurales con el GORE
+
+entities_mentioned:
+  - id: ENT-TERR-AGRICULTURA-FAMILIAR
+    status: candidate
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: AGRICULTURA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - indap
+  - agricultura
+  - desarrollo-rural
+  - fomento-agro
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al registro de pequeños agricultores beneficiarios de convenios GORE-INDAP
+  - Módulo de rendición de gastos de programas de asesoría técnica (PRODESAL/SAT) co-financiados
+  - Dashboard regional de inversión en riego y equipamiento para la pequeña agricultura

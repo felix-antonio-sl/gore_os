@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:reserva_recurso:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-RESERVA-RECURSO"
+id: ENT-RESERVA-RECURSO
+name: "uLuRuEuSuEuRuVuAu uRuEuCuUuRuSuOu"
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

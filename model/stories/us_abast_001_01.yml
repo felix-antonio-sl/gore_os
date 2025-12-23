@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_abast_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión del Plan de Compras integrado con Mercado Público
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABAST-001-01
-urn: urn:goreos:atom:story:us_abast_001_01:1.0.0
-role_id: ROL-GESTION-ENC
+name: Un módulo de gestión del Plan de Compras integrado con Mercado Público
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: un módulo de gestión del Plan de Compras integrado con Mercado Público
 so_that: pueda hacer seguimiento de las adquisiciones programadas
-domain: D-FIN
-competence_id: CPT-BACK-ABS-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de gestión de calidad y abastecimiento
+
+entities_mentioned:
+  - id: ENT-FIN-PLAN-COMPRAS
+    status: candidate
+  - id: ENT-FIN-ORDEN-COMPRA
+    status: candidate
+  - id: ENT-EXT-MERCADO-PUBLICO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CICLO-COMPRAS
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: ABASTECIMIENTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - mercado-publico
+  - plan-compras
+  - adquisiciones
+  - seguimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización automática con API Mercado Público
+  - Dashboard de estado de órdenes de compra
+  - Alertas de vencimiento de procesos

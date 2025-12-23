@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:eje:observacion_tecnica:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-EJE-OBSERVACION-TECNICA"
+id: ENT-OBSERVACION-TECNICA
+name: "uLuOuBuSuEuRuVuAuCuIuOuNu uTuEuCuNuIuCuAu"
+tags: [EJE]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

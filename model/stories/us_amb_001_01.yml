@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_amb_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integración con el SEIA (Servicio Evaluación Ambiental)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AMB-001-01
-urn: urn:goreos:atom:story:us_amb_001_01:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: integración con el SEIA (Servicio Evaluación Ambiental)
-so_that: pueda verificar resoluciones ambientales (RCA)
-domain: D-TERR
-priority: P1
-acceptance_criteria: []
+name: Integración con el SEIA (Evaluación Ambiental)
+
+# === STORY CORE ===
+as_a: Analista de Prevención / Gestor Territorial
+i_want: integrar el sistema con la plataforma del SEIA (Servicio de Evaluación de Impacto Ambiental)
+so_that: pueda verificar automáticamente las Resoluciones de Calificación Ambiental (RCA) asociadas a proyectos de inversión regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista responsable de la factibilidad ambiental y cumplimiento normativo de proyectos
+
+entities_mentioned:
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TERR-DIAGNOSTICO
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: EVALUACION-AMBIENTAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - seia
+  - rca
+  - ambiental
+  - cumplimiento
+  - sostenibilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - "Consulta vía Webhook o Scraper al portal del SEA para obtener el estado de la RCA"
+  - "Semáforo de riesgo ambiental en la ficha del proyecto (Verde: RCA aprobada, Amarillo: En trámite, Rojo: Rechazada/Pendiente)"
+  - "Vínculo directo al expediente digital del SEA desde el sistema GORE_OS"

@@ -1,14 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_ar_003_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de subrogancias con fechas y resoluciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AR-003-01
-urn: urn:goreos:atom:story:us_ar_003_01:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Un módulo de gestión de subrogancias con fechas y resoluciones
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: un módulo de gestión de subrogancias con fechas y resoluciones
 so_that: la continuidad operativa esté siempre garantizada
-domain: D-BACK
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-JUR
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica encargado de visar subrogancias y continuidades
+
+entities_mentioned:
+  - id: ENT-ORG-SUBROGANTE
+    status: candidate
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-SUBROGANCIAS
+  status: candidate
+
+tags:
+  domain: D-ORG
+  aspect: CONTINUIDAD
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - subrogancias
+  - continuidad-operativa
+  - personal
+  - resoluciones
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de periodos de subrogancia con validación de traslape
+  - Generación automática de borrador de resolución de subrogancia
+  - Notificación a las áreas afectadas por el cambio de mando temporal

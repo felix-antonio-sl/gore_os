@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_soc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un registro de organizaciones y beneficiarios sociales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SOC-001-01
-urn: urn:goreos:atom:story:us_soc_001_01:1.0.0
-role_id: ROL-GESTION-ANALISTA-SOC
+name: Registro de organizaciones y beneficiarios sociales
+
+# === STORY CORE ===
 as_a: Analista Social
 i_want: un registro de organizaciones y beneficiarios sociales
 so_that: pueda focalizar intervenciones
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-SOC
+  agent_type: HUMAN
+  description: Analista de la división social encargado de perfilar grupos vulnerables y organizaciones comunitarias
+
+entities_mentioned:
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+  - id: ENT-SOC-BENEFICIARIO-DIRECTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-POSTULACION-FONDOS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: SOCIAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - registro-social
+  - beneficiarios
+  - focalizacion
+  - organizaciones-comunitarias
+  - impacto-social
+
+status: ENRICHED
+acceptance_criteria:
+  - Base de datos unificada de organizaciones con RUT, vigencia de directiva y geolocalización
+  - Perfilamiento de beneficiarios individuales vinculado al Registro Social de Hogares (RSH)
+  - Historial de beneficios y ayudas técnicas entregadas por el GORE por cada entidad/persona

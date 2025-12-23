@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Mantener registro de actividades de tratamiento de datos personales (RAT)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-DPO-005
-urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
-role_id: ROL-GESTION-DPO
-as_a: DPO
-i_want: Mantener registro de actividades de tratamiento de datos personales (RAT)
-so_that: Demuestro accountability ante la Agencia de Protección de Datos
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Registro de Actividades de Tratamiento (RAT)
+
+# === STORY CORE ===
+as_a: Delegado de Protección de Datos (DPO)
+i_want: mantener un Registro de Actividades de Tratamiento (RAT) actualizado de todos los datos personales procesados por el GORE
+so_that: se demuestre responsabilidad proactiva (Accountability) ante la Agencia de Protección de Datos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPO
+  agent_type: HUMAN
+  description: Custodio del inventario de tratamientos de datos de la institución
+
+entities_mentioned:
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: PRIVACIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - rat
+  - inventario-datos
+  - accountability
+  - cumplimiento
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo de bases de datos con identificación de Finalidad, Base Legal y Tiempo de Conservación
+  - Mapa de flujo de datos entre divisiones internas y proveedores externos
+  - Opción de publicación del RAT en el portal de transparencia activa (versión pública)

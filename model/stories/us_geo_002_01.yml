@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_geo_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas para estandarizar formatos (Shapefile, GeoJSON)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEO-002-01
-urn: urn:goreos:atom:story:us_geo_002_01:1.0.0
-role_id: ROL-OPS-GEONODO
+name: Herramientas para estandarizar formatos (Shapefile, GeoJSON)
+
+# === STORY CORE ===
 as_a: Administrador Geonodo
 i_want: herramientas para estandarizar formatos (Shapefile, GeoJSON)
 so_that: las capas sean interoperables
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador de la plataforma Geonodo encargado de la interoperabilidad de datos espaciales regionales
+
+entities_mentioned:
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: candidate
+  - id: ENT-SYS-CONVERTIDOR-FORMATOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: GESTION
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - geonodo
+  - interoperabilidad
+  - shapefile
+  - geojson
+  - etl-espacial
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de conversión automática de archivos CAD/Shapefile a GeoJSON/KML al momento de la carga
+  - Validación de sistema de referencia de coordenadas (SIRGAS-Chile / UTM 18S-19S) obligatoria
+  - API de exportación de capas en múltiples formatos estándar para servicios externos

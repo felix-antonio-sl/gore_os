@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_arqc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas de modelado semántico integradas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ARQC-001-01
-urn: urn:goreos:atom:story:us_arqc_001_01:1.0.0
-role_id: USR-DEV-ARQCAT
+name: Herramientas de modelado semántico integradas
+
+# === STORY CORE ===
 as_a: Arquitecto Categórico
 i_want: herramientas de modelado semántico integradas
 so_that: las definiciones de negocio sean coherentes en el código
-domain: D-DEV
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: USR-DEV-ARQCAT
+  agent_type: HUMAN
+  description: Arquitecto especializado en modelado categórico y semántico (DSL/KODA)
+
+entities_mentioned:
+  - id: ENT-SYS-ATOMO
+    status: candidate
+  - id: ENT-SYS-ONTOLOGIA
+    status: candidate
+  - id: ENT-SYS-SCHEMA
+    status: candidate
+
+process_ref:
+  id: PROC-DEV-MODELADO-SEMANTICO
+  status: candidate
+
+tags:
+  domain: D-DEV
+  aspect: SEMANTICA
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - semantica
+  - modelado
+  - categorias
+  - dsl
+  - koda
+
+status: ENRICHED
+acceptance_criteria:
+  - Extensión para IDE o interfaz web de modelado
+  - Generación automática de código/tipos desde el modelo
+  - Validación de invariantes semánticas en tiempo real

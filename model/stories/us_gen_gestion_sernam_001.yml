@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_sernam_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Director Regional SernamEG
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SERNAM-001
-urn: urn:goreos:atom:story:us_gen_gestion_sernam_001:1.0.0
-role_id: ROL-GESTION-SERNAM
+name: Historia genérica para Director Regional SernamEG
+
+# === STORY CORE ===
 as_a: Director Regional SernamEG
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SERNAM
+  agent_type: HUMAN
+  description: Director Regional del Servicio Nacional de la Mujer y la Equidad de Género (SernamEG)
+
+entities_mentioned:
+  - id: ENT-SOC-PERFIL-GENERO
+    status: candidate
+  - id: ENT-SOC-PROGRAMA-VIOLENCIA-GENERO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: GENERO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - sernameg
+  - equidad-genero
+  - violencia-mujeres
+  - coordinacion-social
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard regional de femicidios y violencia intrafamiliar para la toma de decisiones presupuestarias
+  - Módulo de carga de informes de seguimiento de los Centros de la Mujer financiados por el GORE
+  - Repositorio de estadísticas de empleabilidad femenina y brechas salariales regionales

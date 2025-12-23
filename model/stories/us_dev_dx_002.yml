@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: La documentación técnica generada directamente desde el código
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-DX-002
-urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
-role_id: ROL-GESTION-BACK
+name: Documentación Técnica Viva (Doc-from-Code)
+
+# === STORY CORE ===
 as_a: Desarrollador Backend
-i_want: Consultar la documentación técnica generada directamente desde el código
-so_that: Evito consultar wikis desactualizadas
-domain: D-DEV
-priority: P2
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+i_want: consultar la documentación técnica de APIs, modelos y procesos generada directamente desde el código fuente
+so_that: se evite la consulta de wikis desactualizadas y se garantice que la información técnica sea veraz y actual
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Desarrollador encargado de la lógica de negocio y la integración de servicios
+
+entities_mentioned:
+  - id: ENT-TDE-SITIO-WEB
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: DOCUMENTACION
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - swagger
+  - jsdoc
+  - typedoc
+  - documentacion-viva
+  - dx
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal de documentación que se actualiza automáticamente con cada merge a la rama principal
+  - Soporte para diagramas (Mermaid) renderizados a partir de definiciones en el código
+  - Búsqueda semántica integrada sobre la documentación técnica

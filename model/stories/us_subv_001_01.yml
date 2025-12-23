@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un registro de organizaciones receptoras con historial
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SUBV-001-01
-urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: un registro de organizaciones receptoras con historial
-so_that: pueda validar elegibilidad
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Registro de organizaciones receptoras de subvenciones con historial
+
+# === STORY CORE ===
+as_a: Analista de Subvenciones / Finanzas
+i_want: un registro unificado de organizaciones receptoras con historial de rendiciones y sanciones
+so_that: pueda validar la elegibilidad de las entidades postulantes y minimizar el riesgo financiero
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-REND
+  agent_type: HUMAN
+  description: Funcionario de la DAF encargado de calificar la idoneidad administrativa de las instituciones privadas
+
+entities_mentioned:
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+  - id: ENT-FIN-RENDICION-CUENTA
+    status: linked
+  - id: ENT-FIN-ESTADO-RENDICION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CONTROL-RENDICIONES
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: SUBVENCIONES
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - subvenciones
+  - organizaciones-sociales
+  - elegibilidad
+  - cumplimiento
+  - registro-receptores
+
+status: ENRICHED
+acceptance_criteria:
+  - Bloqueo automático de postulación si la organización tiene rendiciones pendientes o rechazadas sin reintegrar
+  - Semáforo de riesgo basado en el comportamiento histórico de ejecución de fondos anteriores
+  - Integración con el registro de Directivas del Registro Civil para validar personería jurídica vigente

@@ -1,19 +1,51 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_pb_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-PB-001
-urn: urn:goreos:atom:story:us_gest_pb_001:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Ejecutar playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
 so_that: Recupero la salud institucional en 7-14 días
-domain: D-GESTION
-priority: P0
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-H_GORE
-- ENT-SAL-PLAYBOOK
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica que activa protocolos de emergencia ante crisis de desempeño (H_gore Crítico)
+
+entities_mentioned:
+  - id: ENT-SAL-H_GORE
+    status: linked
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-SYS-PROTOCOLO-RECUPERACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - h-gore
+  - playbook
+  - recuperacion
+  - gestion-crisis-desempeño
+  - critico
+
+status: ENRICHED
+acceptance_criteria:
+  - Activación automática de la lista de chequeo del Playbook P01 (Reasignación de carga, Horas extras, Freelancers legales)
+  - Notificación de alerta máxima a la Administradora Regional y Gabinete
+  - Dashboard de seguimiento diario de la recuperación del indicador H_gore hasta el umbral de seguridad (>80)

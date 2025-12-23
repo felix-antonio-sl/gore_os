@@ -1,15 +1,45 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_gov_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Realizar arbitraje de prioridades (RICE)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-GOV-002
-urn: urn:goreos:atom:story:us_evol_gov_002:1.0.0
-role_id: ROL-GESTION-PRES
-as_a: Presidente Subcomité IA
-i_want: Realizar arbitraje de prioridades (RICE)
-so_that: Optimizo recursos
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+name: Arbitraje de Prioridades mediante RICE
+
+# === STORY CORE ===
+as_a: Presidente del Subcomité de Inteligencia Artificial / Gobernanza
+i_want: realizar un arbitraje de prioridades para el backlog de evolución utilizando la metodología RICE (Reach, Impact, Confidence, Effort)
+so_that: se optimicen los recursos de desarrollo enfocándose en las iniciativas de mayor valor público y factibilidad técnica
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: HUMAN
+  description: Responsable de la priorización estratégica del roadmap de GORE_OS
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: PRIORIZACION
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - rice
+  - priorizacion
+  - backlog
+  - valor-publico
+  - roadmap
+
+status: ENRICHED
+acceptance_criteria:
+  - Calculadora RICE integrada en la vista de gestión de Historias de Usuario
+  - Ranking automático de US basado en el score RICE obtenido
+  - Capacidad de filtrar el backlog por "Eje Estratégico" antes de aplicar el arbitraje

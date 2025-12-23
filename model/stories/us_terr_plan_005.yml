@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_plan_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Política Regional propia (instrumento normativo)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TERR-PLAN-005
-urn: urn:goreos:atom:story:us_terr_plan_005:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Gestionar Política Regional propia (instrumento normativo)
-so_that: Defino políticas sectoriales
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Gestión de Políticas Regionales (Instrumentos Normativos)
+
+# === STORY CORE ===
+as_a: Jefe de Unidad Jurídica
+i_want: gestionar el ciclo de vida de las Políticas Regionales (Energía, Turismo, Residuos, etc.) como instrumentos normativos oficiales
+so_that: se definan políticas sectoriales con base legal y presupuestaria clara para la región
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo encargado del marco legal de las políticas de desarrollo regional
+
+entities_mentioned:
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-MONITOREO-ERD
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: GOBERNANZA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - politicas-regionales
+  - instrumentos-normativos
+  - planeacion-sectorial
+  - gobernanza
+  - marco-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de elaboración que incluye etapas de Consulta Pública, Revisión Jurídica y Aprobación CORE
+  - Repositorio central de políticas vigentes con sus metas e indicadores asociados
+  - Panel de seguimiento para el Gobernador sobre el nivel de implementación de cada política regional

@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_msia_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Evaluaciones de riesgo de proyectos IA
-id: US-MSIA-001-01
-urn: urn:goreos:atom:story:us_msia_001_01:1.0.0
-role_id: ROL-GESTION-VERDE-MEMB
-as_a: Miembro Comité Estado Verde
-i_want: acceder a evaluaciones de riesgo de proyectos IA
-so_that: pueda votar informadamente
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-RIESGO
+id: US-MSIA-001-01
+name: Evaluación Ética de Proyectos de IA
+
+# === STORY CORE ===
+as_a: Miembro del Comité de Ética Digital
+i_want: Acceder a las evaluaciones de riesgo e impacto de los proyectos que utilizan Inteligencia Artificial
+so_that: pueda emitir un voto informado sobre la factibilidad ética y el riesgo de sesgo en los algoritmos propuestos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-VERDE-MEMB
+  agent_type: HUMAN
+  description: Integrante del comité encargado de velar por el uso responsable de tecnologías emergentes
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: ETICA-AI
+  priority: P1
+  scope: NORMATIVO
+
+extra_tags:
+  - ia
+  - etica-digital
+  - algoritmos
+  - gobernanza
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de autoevaluación de riesgos de IA basado en marcos internacionales (OCDE/UNESCO)
+  - Repositorio de decisiones previas del comité para mantener consistencia jurisprudencial
+  - Alerta de "Alto Riesgo" si el algoritmo maneja datos sensibles de ciudadanos sin supervisión humana

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_comp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un buscador de productos en Convenio Marco integrado al sistema
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COMP-001-01
-urn: urn:goreos:atom:story:us_comp_001_01:1.0.0
-role_id: ROL-FIN-ABS-COMP
+name: Un buscador de productos en Convenio Marco integrado al sistema
+
+# === STORY CORE ===
 as_a: Comprador Público
 i_want: un buscador de productos en Convenio Marco integrado al sistema
 so_that: pueda encontrar rápidamente lo que necesitan las unidades
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ABS-COMP
+  agent_type: HUMAN
+  description: Comprador o Analista de Abastecimiento encargado de gestionar adquisiciones vía Mercado Público
+
+entities_mentioned:
+  - id: ENT-FIN-CONVENIO-MARCO
+    status: candidate
+  - id: ENT-FIN-PRODUCTO-CATALOGO
+    status: candidate
+  - id: ENT-ORG-UNIDAD-SOLICITANTE
+    status: linked
+
+process_ref:
+  id: PROC-FIN-ADQUISICION-CONVENIO-MARCO
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: ABASTECIMIENTO
+  priority: P0
+  scope: NACIONAL
+
+extra_tags:
+  - convenio-marco
+  - comprador-publico
+  - mercado-publico
+  - adquisiciones
+  - buscador
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador filtrable por categoría, SKU y proveedor
+  - Comparativa de precios históricos dentro del sistema
+  - Botón de "Solicitud de Compra" directo desde el resultado de búsqueda

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_diplade_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El Anteproyecto Regional de Inversiones (ARI) de forma automatizada
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIPLADE-001-02
-urn: urn:goreos:atom:story:us_diplade_001_02:1.0.0
-role_id: ROL-GESTION-JEFE
+name: El Anteproyecto Regional de Inversiones (ARI) de forma automatizada
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: generar el Anteproyecto Regional de Inversiones (ARI) de forma automatizada
 so_that: pueda presentarlo oportunamente a DIPRES
-domain: D-PLAN
-priority: P0
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
 
-mentions:
-- ENT-FIN-ARI
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: ALGORITHMIC
+  description: Sistema de Planificación que consolida las propuestas de inversión sectorial para el ciclo presupuestario ARI
+
+entities_mentioned:
+  - id: ENT-FIN-ARI-ANTEPROYECTO
+    status: linked
+  - id: ENT-FIN-PROPUESTA-INVERSION
+    status: candidate
+  - id: ENT-GOB-DIPRES-ENTIDAD
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: PRESUPUESTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - ari
+  - anteproyecto-inversion
+  - automatizacion
+  - dipres
+  - diplade
+
+status: ENRICHED
+acceptance_criteria:
+  - Consolidación automática de las fichas de proyectos aprobadas para el año T+1
+  - Generación de archivos XML/Excel según estándar DIPRES
+  - Dashboard de validación de subtítulos presupuestarios antes del envío

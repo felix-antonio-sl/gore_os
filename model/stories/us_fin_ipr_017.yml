@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_017:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Subir Acta Entrega Terreno / Inicio Obras
-id: US-FIN-IPR-017
-urn: urn:goreos:atom:story:us_fin_ipr_017:1.0.0
-role_id: ROL-EJEC-URAI-EJEC
-as_a: Ejecutivo URAI
-i_want: Subir Acta Entrega Terreno / Inicio Obras
-so_that: Registro el hito de inicio formal
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACTA
+id: US-FIN-IPR-017
+name: Registro de Acta de Entrega de Terreno e Inicio de Obras
+
+# === STORY CORE ===
+as_a: Ejecutivo de la Unidad Regional de Asistencia Inmediata (URAI) / ITO
+i_want: subir al sistema el Acta de Entrega de Terreno y registrar la fecha oficial de inicio de obras de un proyecto de inversión
+so_that: se inicie legalmente el cronograma de ejecución, se gatillen las pólizas de seguro y se active el monitoreo de plazos críticos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-URAI-EJEC
+  agent_type: HUMAN
+  description: Profesional encargado de supervisar el cumplimiento de los plazos contractuales de obra
+
+entities_mentioned:
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-REUNION-INICIO
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: HITOS-OBRA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - acta-terreno
+  - inicio-obras
+  - hitos-contractuales
+  - urai
+  - aseguramiento-plazos
+
+status: ENRICHED
+acceptance_criteria:
+  - Campo de fecha de inicio validado contra la resolución de adjudicación
+  - Carga obligatoria del PDF del acta escaneada y firmada por las contrapartes
+  - Notificación automática a la división de finanzas para el devengo del primer estado de pago (si aplica)

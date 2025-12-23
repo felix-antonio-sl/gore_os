@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_func_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Mis liquidaciones de sueldo y certificados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FUNC-001-02
-urn: urn:goreos:atom:story:us_func_001_02:1.0.0
-role_id: ROL-GESTION-PER-FUN
+name: Mis liquidaciones de sueldo y certificados
+
+# === STORY CORE ===
 as_a: Funcionario
 i_want: consultar mis liquidaciones de sueldo y certificados
 so_that: pueda acceder a mi información laboral
-domain: D-BACK
-priority: P0
-competence_id: CPT-RRHH-FUNC-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Cualquier funcionario o planta institucional que requiere autoservicio de información administrativa
+
+entities_mentioned:
+  - id: ENT-BACK-LIQUIDACION-SUELDO
+    status: linked
+  - id: ENT-BACK-CERTIFICADO-ANTIGUEDAD
+    status: candidate
+  - id: ENT-BACK-EXPEDIENTE-PERSONAL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: RRHH
+  priority: P0
+  scope: INTERNO
+
+extra_tags:
+  - liquidaciones
+  - certificados
+  - funcionario
+  - autoservicio
+  - rrhh
+
+status: ENRICHED
+acceptance_criteria:
+  - Descarga de liquidaciones de los últimos 24 meses en formato PDF
+  - Generación automática de certificado de antigüedad con firma digital del Jefe de Personal
+  - Visualización del estado de feriados legales y permisos administrativos pendientes

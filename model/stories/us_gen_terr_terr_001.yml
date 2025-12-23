@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_terr_terr_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Analista Equidad Territorial
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-TERR_TERR-001
-urn: urn:goreos:atom:story:us_gen_terr_terr_001:1.0.0
-role_id: ROL-TERR-TERR
+name: Historia genérica para Analista Equidad Territorial
+
+# === STORY CORE ===
 as_a: Analista Equidad Territorial
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TERR-TERR
+  agent_type: HUMAN
+  description: Analista encargado de medir y promover la equidad en la distribución de la inversión pública regional
+
+entities_mentioned:
+  - id: ENT-PLAN-BRECHA-TERRITORIAL
+    status: candidate
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: GESTION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - equidad-territorial
+  - brechas
+  - inversion-publica
+  - territorio
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de inversión per cápita desglosado por comuna y zona de rezago
+  - Módulo de cálculo automático de índices de prioridad territorial para nuevos proyectos
+  - Registro de impacto de las políticas públicas en la reducción de brechas de infraestructura básica

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_frpd_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Admisibilidad de beneficiario (Empresa/Gremio)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-FRPD-002
-urn: urn:goreos:atom:story:us_fin_frpd_002:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: Evaluar admisibilidad de beneficiario (Empresa/Gremio)
-so_that: Verifico elegibilidad
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Admisibilidad de Beneficiarios FRPD (Empresas/Gremios)
+
+# === STORY CORE ===
+as_a: Analista de Prevención / Jurídico
+i_want: evaluar la admisibilidad jurídica y financiera de los beneficiarios (Empresas, Gremios, Cooperativas) postulantes al FRPD
+so_that: se verifique su elegibilidad legal, ausencia de inhabilidades y solidez para ejecutar proyectos de inversión pública
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista encargado de mitigar riesgos legales y financieros en la selección de beneficiarios externos
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-ELABORACION-CONVENIO
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: ADMISIBILIDAD-LEGAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - frpd
+  - admisibilidad
+  - gremios
+  - empresas
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación automática de RUT y Vigencia de la organización mediante interoperabilidad (SII/Registro Civil)
+  - Validación de "Falta de Deuda" con el Gobierno Regional
+  - Carga obligatoria de estatutos y poderes de representación legal vigentes

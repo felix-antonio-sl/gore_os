@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:norm:oguc:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-NORM-OGUC"
+id: ENT-OGUC
+name: "uLuOuGuUuCu"
+tags: [NORM]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

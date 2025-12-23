@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_coord_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar acciones con Delegado Presidencial Regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-COORD-002
-urn: urn:goreos:atom:story:us_gest_coord_002:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Coordinar acciones con Delegado Presidencial Regional
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Coordinar acciones con Delegado Presidencial Regional
 so_that: Alineo gestión GORE con gobierno interior
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica que actúa como enlace normativo con la Delegación Presidencial
+
+entities_mentioned:
+  - id: ENT-GOB-MESA-ARTICULACION
+    status: candidate
+  - id: ENT-NORM-RESOLUCION-CONJUNTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - dpr
+  - gobierno-interior
+  - coordinacion-politica
+  - legalidad-pública
+
+status: ENRICHED
+acceptance_criteria:
+  - Canal formal de tramitación de decretos que requieran toma de razón o visación de la Delegación
+  - Registro de actas de comités de emergencia (COGRID) coordinados entre GORE y DPR
+  - Repositorio de convenios de colaboración GORE-Interior para seguridad pública y extranjería

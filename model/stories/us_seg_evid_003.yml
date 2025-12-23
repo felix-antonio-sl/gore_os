@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_evid_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Trazar quién accedió, visualizó o descargó evidencia (Logs inalterables)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SEG-EVID-003
-urn: urn:goreos:atom:story:us_seg_evid_003:1.0.0
-role_id: ROL-GESTION-EVID
-as_a: Custodio Evidencia
-i_want: Trazar quién accedió, visualizó o descargó evidencia (Logs inalterables)
-so_that: Mantengo cadena de custodia
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+name: Trazabilidad de acceso y descarga de evidencia
+
+# === STORY CORE ===
+as_a: Custodio de Evidencia (CIES)
+i_want: trazar mediante logs inalterables quién accedió, visualizó o descargó cada pieza de evidencia
+so_that: se mantenga la cadena de custodia y se eviten filtraciones de información sensible
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-EVID
+  agent_type: HUMAN
+  description: Responsable de la auditoría y control de acceso al repositorio de evidencia digital
+
+entities_mentioned:
+  - id: ENT-SEG-EVIDENCIA-VIDEO
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SEG-COORDINACION-POLICIAL
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: AUDITORIA-SEGURIDAD
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - trazabilidad
+  - cadena-custodia
+  - logs
+  - privacidad
+  - auditoria
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro automático de cada evento de visualización indicando Usuario, IP, Marcador de tiempo y duración
+  - Requisito de "Justificación de Descarga" mediante código de ticket o número de parte policial antes de la exportación
+  - Dashboard de auditoría para el Supervisor que muestre accesos anómalos o masivos a la evidencia

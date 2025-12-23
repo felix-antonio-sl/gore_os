@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Conciliar automáticamente movimientos SIGFE con cartola bancaria
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-007
-urn: urn:goreos:atom:story:us_back_tes_007:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Conciliar automáticamente movimientos SIGFE con cartola bancaria
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: Conciliar automáticamente movimientos SIGFE con cartola bancaria
 so_that: Identifico diferencias y partidas pendientes
-domain: D-BACK
-competence_id: CPT-BACK-TES-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: ALGORITHMIC
+  description: Motor de conciliación automática que cruza datos de SIGFE con registros bancarios
+
+entities_mentioned:
+  - id: ENT-FIN-CONCILIACION
+    status: linked
+  - id: ENT-FIN-MOVIMIENTO-SIGFE
+    status: candidate
+  - id: ENT-FIN-MOVIMIENTO-BANCARIO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CONCILIACION-AUTOMATICA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: AUTOMATIZACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - sigfe
+  - conciliacion
+  - automatizacion
+  - contabilidad
+  - tesoreria
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapeo inteligente por monto, fecha y número de documento (cheque/transferencia)
+  - Identificación clara de movimientos con "Match Perfecto"
+  - Panel de resolución manual para discrepancias de céntimos o fechas próximas

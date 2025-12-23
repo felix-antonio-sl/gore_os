@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cgr_cont_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a reportes contables en formato estándar
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CGR-CONT-001-01
-urn: urn:goreos:atom:story:us_cgr_cont_001_01:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Acceso a reportes contables en formato estándar
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: acceso a reportes contables en formato estándar
 so_that: pueda realizar revisión remota
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: HUMAN
+  description: Contador encargado de la fiscalización y consolidación de estados financieros gubernamentales
+
+entities_mentioned:
+  - id: ENT-FIN-REPORTE-CONTABLE
+    status: linked
+  - id: ENT-FIN-ESTADO-FINANCIERO
+    status: linked
+  - id: ENT-FIN-BALANCE-GUBERNAMENTAL
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-REVISION-CONTABLE-EXTERNA
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: CONTABILIDAD
+  priority: P0
+  scope: NACIONAL
+
+extra_tags:
+  - contabilidad
+  - reportes-financieros
+  - auditoria
+  - cgr
+  - estados-financieros
+
+status: ENRICHED
+acceptance_criteria:
+  - Disponibilidad de reportes en formato XBRL o CSV estándar DIPRES/CGR
+  - Portal de acceso seguro para auditores con trazabilidad de visualización
+  - Conciliación masiva de saldos exportable

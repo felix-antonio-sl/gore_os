@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rpmg_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Cargar medios de verificación validados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-RPMG-001-01
-urn: urn:goreos:atom:story:us_rpmg_001_01:1.0.0
-role_id: ROL-GESTION-TRANSP-REF
-as_a: Referente Transparencia (por Ítem)
+name: Cargar medios de verificación PMG validados
+
+# === STORY CORE ===
+as_a: Referente de Transparencia / Enlace PMG
 i_want: cargar medios de verificación validados
-so_that: se apruebe el cumplimiento de la etapa
-domain: D-PLAN
-priority: P1
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+so_that: se apruebe el cumplimiento de la etapa institucional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRANSP-REF
+  agent_type: HUMAN
+  description: Funcionario designado por cada unidad para asegurar la carga de evidencias de gestión
+
+entities_mentioned:
+  - id: ENT-PLAN-EVIDENCIA-PMG
+    status: candidate
+  - id: ENT-PLAN-CALENDARIO-HITO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: CUMPLIMIENTO
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - pmg
+  - transparencia
+  - evidencias
+  - medios-verificacion
+  - incentivos-gestion
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist de calidad de evidencia para asegurar legibilidad y pertinencia del documento subido
+  - Firma de declaración de integridad del enlace PMG al momento de la carga
+  - Trazabilidad de la revisión técnica por parte del coordinador institucional antes del cierre de etapa

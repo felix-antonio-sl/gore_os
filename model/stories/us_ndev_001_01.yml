@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ndev_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Documentación técnica actualizada y guías de contribución
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NDEV-001-01
-urn: urn:goreos:atom:story:us_ndev_001_01:1.0.0
-role_id: ROL-GESTION-NEW
-as_a: Nuevo Desarrollador
-i_want: documentación técnica actualizada y guías de contribución
-so_that: pueda ser productivo en mi primera semana
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+name: Portal de Onboarding para Desarrolladores
+
+# === STORY CORE ===
+as_a: Nuevo Desarrollador (Node/Python)
+i_want: Acceder a una documentación técnica centralizada, guías de arquitectura (KODA) y workflows de contribución
+so_that: pueda configurar mi entorno local y realizar mi primer commit productivo en la primera semana
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-NEW
+  agent_type: HUMAN
+  description: Profesional de TI que se incorpora al equipo de desarrollo del GORE Ñuble
+
+entities_mentioned:
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: DEVELOPER-EXPERIENCE
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - onboarding
+  - dx
+  - documentacion
+  - arquitectura
+
+status: ENRICHED
+acceptance_criteria:
+  - "Quick Start Guide" con scripts de instalación automatizados (Makefile/Docker)
+  - Glosario de términos del Supermodelo (Atmos, Molecules, Domains)
+  - Checklist de seguridad para el manejo de credenciales y secretos (.env)

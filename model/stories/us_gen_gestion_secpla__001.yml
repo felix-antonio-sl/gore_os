@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_secpla__001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para SECPLA San Carlos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SECPLA_-001
-urn: urn:goreos:atom:story:us_gen_gestion_secpla__001:1.0.0
-role_id: ROL-GESTION-SECPLA-SAN-C
+name: Historia genérica para SECPLA San Carlos
+
+# === STORY CORE ===
 as_a: SECPLA San Carlos
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SECPLA-SAN-C
+  agent_type: HUMAN
+  description: Secretario Comunal de Planificación (SECPLA) de la Municipalidad de San Carlos
+
+entities_mentioned:
+  - id: ENT-PLAN-CALENDARIZACION-INVERSION
+    status: linked
+  - id: ENT-TERR-PROYECTO-COMUNAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-PROYECTOS
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P2
+  scope: COMUNAL
+
+extra_tags:
+  - secpla
+  - san-carlos
+  - planificacion-municipal
+  - proyectos-fndr
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a panel de postulación de proyectos municipales al FNDR (Fondo Nacional de Desarrollo Regional)
+  - Módulo de seguimiento de observaciones técnicas del GORE a los perfiles de proyecto enviados
+  - Visualización del devengo financiero de las obras municipales ejecutadas con mandato GORE

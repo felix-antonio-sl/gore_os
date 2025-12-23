@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_sindic_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Central Sindical
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SINDIC-001
-urn: urn:goreos:atom:story:us_gen_gestion_sindic_001:1.0.0
-role_id: ROL-GESTION-SINDIC
+name: Historia genérica para Central Sindical
+
+# === STORY CORE ===
 as_a: Central Sindical
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SINDIC
+  agent_type: HUMAN
+  description: Representante de una central sindical (Ej: CUT) o asociación de funcionarios que vigila los derechos laborales
+
+entities_mentioned:
+  - id: ENT-SOC-RECLAMO-LABORAL
+    status: candidate
+  - id: ENT-BACK-DERECHO-PROCEDIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: PARTICIPACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - sindicato
+  - central-sindical
+  - derechos-laborales
+  - participacion-trabajadores
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de suscripción a licitaciones de servicios intensivos en mano de obra (Seguridad/Limpieza) para vigilancia de derechos
+  - Buzón de denuncias sobre incumplimientos de normas de higiene y seguridad en obras financiadas por el GORE
+  - Acceso a estadísticas de empleo y accidentabilidad regional desglosada por sector

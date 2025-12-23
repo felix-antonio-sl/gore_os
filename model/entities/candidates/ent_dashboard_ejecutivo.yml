@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:dashboard_ejecutivo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SYS-DASHBOARD-EJECUTIVO"
+id: ENT-DASHBOARD-EJECUTIVO
+name: "uLuDuAuSuHuBuOuAuRuDu uEuJuEuCuUuTuIuVuOu"
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

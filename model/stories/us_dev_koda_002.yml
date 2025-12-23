@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Agente Goreólogo para validación de dominio
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-KODA-002
-urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
-role_id: ROL-DEV-TIC-DEV
+name: Agente Goreólogo para Validación Semántica
+
+# === STORY CORE ===
 as_a: Desarrollador DevOps
-i_want: consultar agente Goreólogo para validación de dominio
-so_that: se obtenga respuesta contextualizada del dominio institucional
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-BLUEPRINT
-acceptance_criteria: []
+i_want: consultar al agente "Goreólogo" para validar la coherencia semántica de mis cambios entre el dominio institucional y el modelo GORE_OS
+so_that: se obtengan respuestas contextualizadas que respeten las leyes, glosas y procesos específicos del Gobierno Regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-TIC-DEV
+  agent_type: HUMAN
+  description: Ingeniero de automatización orientado a la integridad del modelo del Estado
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-NORM-DECRETO-SUPREMO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: SEMANTICA
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - koda
+  - goreólogo
+  - validacion-semantica
+  - ai-agent
+  - ontologia
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de chat o CLI que permite preguntar sobre la validez de una nueva entidad o relación
+  - El agente debe citar normativas regionales (Glosas, Leyes) para justificar sus recomendaciones
+  - Integración como paso opcional en el pipeline de diseño (Design-time Validation)

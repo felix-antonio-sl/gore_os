@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alerta vencimiento DIP (30 días antes de marzo)
-id: US-NORM-DIP-001
-urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
-i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
-so_that: Aseguro cumplimiento de funcionarios
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-FUNCIONARIO
-- ENT-SAL-ALERTA
+id: US-NORM-DIP-001
+name: Control de Plazos de Declaración de Intereses (DIP)
+
+# === STORY CORE ===
+as_a: Jefe de Gestión de Personas / Auditor
+i_want: Recibir alertas de vencimiento para la actualización anual de la Declaración de Intereses y Patrimonio (DIP) 30 días antes del plazo fatal
+so_that: se asegure el cumplimiento normativo total de los funcionarios sujetos a esta obligación y se eviten multas institucionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-RRHH-JEFE
+  agent_type: HUMAN
+  description: Responsable de velar por el cumplimiento de las obligaciones legales de los funcionarios
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: PROBIDAD
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - dip
+  - declaraciones
+  - alertas
+  - integridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Lista de chequeo dinámica de funcionarios obligados (sujetos pasivos) según cargo
+  - Verificación automática contra el portal InfoProbidad de la CGR
+  - Notificaciones periódicas automáticas al correo institucional del funcionario moroso

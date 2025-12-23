@@ -1,20 +1,51 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_hg_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Umbrales de alerta para dimensiones de H_gore
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-HG-002
-urn: urn:goreos:atom:story:us_gest_hg_002:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Umbrales de alerta para dimensiones de H_gore
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Configurar umbrales de alerta para dimensiones de H_gore
 so_that: Recibo notificaciones automáticas ante degradación
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-ALERTA
-- ENT-SAL-H_GORE
-- ENT-SAL-UMBRAL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica que monitorea la salud operacional (H_gore) de sus procesos legales
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-H_GORE
+    status: linked
+  - id: ENT-SAL-UMBRAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - h-gore
+  - salud-operacional
+  - alertas
+  - monitoreo-procesos
+  - kpi
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de configuración de límites críticos (Rojo/Amarillo/Verde) para la tasa de visación mensual
+  - Sistema de notificaciones push y email ante superación de umbrales de mora en decretos
+  - Dashboard de visualización de la "Salud Legal" institucional basada en indicadores H_gore

@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_fisc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso total y reservado a servidores y correos bajo orden judicial
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FISC-001-01
-urn: urn:goreos:atom:story:us_fisc_001_01:1.0.0
-role_id: ROL-NORM-FIS
+name: Acceso total y reservado a servidores y correos bajo orden judicial
+
+# === STORY CORE ===
 as_a: Fiscal Sumariante
 i_want: acceso total y reservado a servidores y correos bajo orden judicial
 so_that: pueda recabar evidencia digital
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-FIS
+  agent_type: HUMAN
+  description: Fiscal a cargo de un sumario administrativo con facultades legales para acceder a medios de prueba digitales
+
+entities_mentioned:
+  - id: ENT-NORM-FISCAL-SUMARIANTE
+    status: linked
+  - id: ENT-NORM-ORDEN-JUDICIAL
+    status: candidate
+  - id: ENT-SYS-EVIDENCIA-DIGITAL
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - fiscalia
+  - sumarios
+  - evidencia-digital
+  - orden-judicial
+  - servidores
+  - acceso-reservado
+
+status: ENRICHED
+acceptance_criteria:
+  - Protocolo de cadena de custodia digital para los archivos extraídos del servidor
+  - Acceso auditado y temporal (limitado al periodo de la investigación)
+  - Interfaz de "e-discovery" para búsqueda por palabras clave en correos electrónicos institucionales

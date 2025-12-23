@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_016:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Estados financieros anuales del GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-016
-urn: urn:goreos:atom:story:us_back_tes_016:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Estados financieros anuales del GORE
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: Generar estados financieros anuales del GORE
 so_that: Cumplo con normativa y remito a CGR
-domain: D-BACK
-priority: P1
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: HUMAN
+  description: Contador gubernamental responsable de la consolidación anual del GORE
+
+entities_mentioned:
+  - id: ENT-FIN-BALANCE-ANUAL
+    status: candidate
+  - id: ENT-FIN-ESTADO-SITUACION
+    status: candidate
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-PREPARACION-ESTADOS-FINANCIEROS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CUMPLIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - estados-financieros
+  - balance-anual
+  - cgr
+  - contabilidad
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de Balance General, Estado de Resultados y Notas a los Estados Financieros
+  - Consolidación de información de activo fijo, inventarios y tesorería
+  - Validación de coincidencia entre SIGFE y estados financieros institucionales
+  - Preparación de archivos XML para carga en el Sistema de Auditoría de CGR

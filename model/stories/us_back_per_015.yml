@@ -1,14 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_015:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Concursos públicos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-015
-urn: urn:goreos:atom:story:us_back_per_015:1.0.0
-role_id: ROL-BACK-PER-GEST
+name: Concursos públicos
+
+# === STORY CORE ===
 as_a: Gestor de Personas
 i_want: Gestionar concursos públicos
 so_that: Recluto personal
-domain: D-BACK
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: HUMAN
+  description: Gestor de personas encargado de los procesos de reclutamiento y selección por concurso público
+
+entities_mentioned:
+  - id: ENT-ORG-CARGO-VACANTE
+    status: candidate
+  - id: ENT-ORG-POSTULANTE
+    status: candidate
+  - id: ENT-NORM-BASES-CONCURSO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-RECLUTAMIENTO-SELECCION
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: RECLUTAMIENTO
+  priority: P1
+  scope: NACIONAL
+
+extra_tags:
+  - concursos
+  - reclutamiento
+  - rrhh
+  - seleccion
+  - empleos-publicos
+
+status: ENRICHED
+acceptance_criteria:
+  - Publicación de bases y plazas vacantes en el portal de empleos públicos
+  - Recepción y filtrado curricular de postulantes según requisitos de las bases
+  - Gestión de etapas del concurso (evaluación psicológica, técnica, entrevista)
+  - Generación de acta de selección final

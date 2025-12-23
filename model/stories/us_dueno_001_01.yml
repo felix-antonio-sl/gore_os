@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dueno_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de calidad de datos de mi área (completitud, exactitud)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DUENO-001-01
-urn: urn:goreos:atom:story:us_dueno_001_01:1.0.0
-role_id: ROL-DEV-ARCH-DATOS
-as_a: Arquitecto de Datos
-i_want: reportes de calidad de datos de mi área (completitud, exactitud)
-so_that: pueda tomar acciones correctivas
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Reportes de Calidad y Gobierno de Datos
+
+# === STORY CORE ===
+as_a: Dueño del Dato (Data Owner) / Arquitecto de Datos
+i_want: visualizar reportes automáticos de calidad de los datos bajo mi responsabilidad (completitud, exactitud, duplicidad)
+so_that: pueda tomar acciones correctivas inmediatas y asegurar la integridad de la información institucional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARCH-DATOS
+  agent_type: MIXED
+  description: Responsable de la integridad semántica y técnica del patrimonio de datos del GORE
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CALIDAD-DATOS
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - data-governance
+  - calidad-datos
+  - data-owner
+  - linaje
+  - integridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de Calidad de Datos con porcentajes de completitud por entidad clave
+  - Alertas automáticas para registros con inconsistencias detectadas (reglas de negocio)
+  - Tracking histórico de la evolución de la calidad del dato en el tiempo

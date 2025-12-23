@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para Analista Turismo
-id: US-GEN-FINAL-002
-urn: urn:goreos:atom:story:us_gen_final_002:1.0.0
-role_id: ROL-GESTION-ANALISTA-TUR
-as_a: Analista Turismo
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-002
+name: Gestión de Cartera de Turismo Regional
+
+# === STORY CORE ===
+as_a: Analista Turismo
+i_want: Analizar el impacto de los proyectos turísticos financiados por el GORE
+so_that: pueda optimizar la oferta regional y posicionar a Ñuble como destino turístico sustentable
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-TUR
+  agent_type: HUMAN
+  description: Analista técnico encargado del sector turismo en la división de fomento
+
+entities_mentioned:
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P6
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: TURISMO
+  priority: P2
+  scope: OPERATIVO
+
+extra_tags:
+  - turismo
+  - analista
+  - fomento
+  - indicadores
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa interactivo de destinos y proyectos turísticos financiados
+  - Registro de indicadores de impacto (flujo de turistas, pernoctaciones)
+  - Herramientas para la formulación de planes de marketing regional

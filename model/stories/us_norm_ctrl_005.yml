@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_ctrl_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Expediente disciplinario con reserva y plazos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-CTRL-005
-urn: urn:goreos:atom:story:us_norm_ctrl_005:1.0.0
-role_id: ROL-NORM-FIS
+name: Gestión Reservada de Expedientes Disciplinarios
+
+# === STORY CORE ===
 as_a: Fiscal Sumariante
-i_want: Gestionar expediente disciplinario con reserva y plazos
-so_that: Investigo faltas administrativas
-domain: D-NORM
-priority: P2
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+i_want: Gestionar el expediente disciplinario con estrictas reglas de reserva, secreto sumario y control de plazos automáticos
+so_that: se investiguen las faltas administrativas garantizando la imparcialidad y evitando filtraciones de información sensible
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-FIS
+  agent_type: HUMAN
+  description: Abogado designado para la tramitación de sumarios administrativos
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P2
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: SUMARIOS
+  priority: P2
+  scope: JURIDICO-DISCIPLINARIO
+
+extra_tags:
+  - sumarios
+  - secreto-sumario
+  - reserva
+  - debida-diligencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Cifrado de documentos asociados al expediente sumarial
+  - Trazabilidad de cada acceso (quién, cuándo, desde qué IP) a archivos del sumario
+  - Cronómetro de plazos automático con alertas de vencimiento de la etapa indagatoria

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_directo_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Director Servicio Regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_DIRECTO-001
-urn: urn:goreos:atom:story:us_gen_gestion_directo_001:1.0.0
-role_id: ROL-GESTION-DIRECTOR_SERVICIO_REGIONAL
+name: Historia genérica para Director Servicio Regional
+
+# === STORY CORE ===
 as_a: Director Servicio Regional
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIRECTOR_SERVICIO_REGIONAL
+  agent_type: HUMAN
+  description: Director de un Servicio Público Regional (Ej: SERCOTEC, INDAP, SERNATUR) que recibe transferencias del GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - director-servicio
+  - servicio-publico
+  - transferencias
+  - convenios
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al catálogo regional de iniciativas financiadas con cargo al Programa 02 del GORE
+  - Módulo de firma digital de convenios de transferencia interinstitucionales
+  - Panel de seguimiento de rendiciones de cuentas ante el Consejo Regional

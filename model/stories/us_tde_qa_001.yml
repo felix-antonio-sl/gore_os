@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_qa_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de pruebas con casos de test
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-QA-001
-urn: urn:goreos:atom:story:us_tde_qa_001:1.0.0
-role_id: ROL-GESTION-PER-FUN
-as_a: Funcionario
-i_want: un módulo de gestión de pruebas con casos de test
-so_that: pueda documentar la calidad
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Módulo de Gestión de Pruebas (UAT)
+
+# === STORY CORE ===
+as_a: Funcionario (Tester de Negocio)
+i_want: un módulo para gestionar casos de prueba y reportar hallazgos durante las pruebas de aceptación (UAT)
+so_that: se documente formalmente la calidad del software antes de su paso a producción y se asegure que cumple con los requerimientos operativos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Usuario experto funcional que valida que el sistema satisfaga las necesidades del proceso real
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-TDE-STAGE-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CALIDAD-PROCESOS
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - qa
+  - uat
+  - pruebas-aceptacion
+  - testing
+  - calidad-software
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de casos de prueba con resultados (Pasa/Falla) y evidencia adjunta (Pantallazos/Logs)
+  - Workflow de corrección de hallazgos integrado con el equipo de desarrollo (DevOps)
+  - Reporte de conformidad de pruebas firmado por el líder funcional previo al despliegue

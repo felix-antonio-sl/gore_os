@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_generic_analist_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Analista Base (Arquetipo)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GENERIC_ANALIST-002
-urn: urn:goreos:atom:story:us_gen_generic_analist_002:1.0.0
-role_id: ROL-GENERIC-ANALISTA-BASE
+name: Historia genérica para Analista Base (Arquetipo)
+
+# === STORY CORE ===
 as_a: Analista Base (Arquetipo)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GENERIC-ANALISTA-BASE
+  agent_type: HUMAN
+  description: Analista de gestión institucional encargado de tareas de tramitación, revisión y soporte administrativo
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-BANDEJA-TAREAS
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - analista
+  - arquetipo
+  - gestion-administrativa
+  - tramitacion
+  - soporte
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a bandeja de entrada de tareas unificada (Inbox)
+  - Herramientas de visualización de expedientes digitales con OCR
+  - Registro de tiempos de atención por cada trámite procesado

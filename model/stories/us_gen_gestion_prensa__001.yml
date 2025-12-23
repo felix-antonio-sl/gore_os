@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_prensa__001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Prensa Regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_PRENSA_-001
-urn: urn:goreos:atom:story:us_gen_gestion_prensa__001:1.0.0
-role_id: ROL-GESTION-PRENSA-REGIO
+name: Historia genérica para Prensa Regional
+
+# === STORY CORE ===
 as_a: Prensa Regional
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRENSA-REGIO
+  agent_type: HUMAN
+  description: Corresponsal o periodista regional acreditado ante la unidad de comunicaciones del GORE
+
+entities_mentioned:
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: linked
+  - id: ENT-GOB-CAMPANA-DIFUSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - prensa-regional
+  - medios
+  - difusion
+  - transparencia
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de minutas de prensa y declaraciones oficiales del Gobernador
+  - Módulo de solicitud de entrevistas con directores de división
+  - Calendario de actividades públicas regionales con georreferenciación

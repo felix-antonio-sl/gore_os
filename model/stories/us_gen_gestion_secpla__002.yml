@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_secpla__002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para SECPLA Chillán
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SECPLA_-002
-urn: urn:goreos:atom:story:us_gen_gestion_secpla__002:1.0.0
-role_id: ROL-GESTION-SECPLA-CHILL
+name: Historia genérica para SECPLA Chillán
+
+# === STORY CORE ===
 as_a: SECPLA Chillán
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SECPLA-CHILL
+  agent_type: HUMAN
+  description: Secretario Comunal de Planificación (SECPLA) de la Municipalidad de Chillán (Capital Regional)
+
+entities_mentioned:
+  - id: ENT-PLAN-ESTRATEGIA-URBANA
+    status: candidate
+  - id: ENT-TERR-COMUNA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ALINEACION-ERD
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P2
+  scope: COMUNAL
+
+extra_tags:
+  - secpla
+  - chillan
+  - capital-regional
+  - desarrollo-urbano
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a visor de zonificación y planes reguladores comunales integrados con la ERD
+  - Módulo de coordinación de proyectos de infraestructura de alto impacto urbano (Circular 33)
+  - Gestión de prioridades de inversión para la capital regional en el marco del ARI

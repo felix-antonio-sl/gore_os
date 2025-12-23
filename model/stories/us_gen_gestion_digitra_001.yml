@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_digitra_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Digitrans (Asesor TDE)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_DIGITRA-001
-urn: urn:goreos:atom:story:us_gen_gestion_digitra_001:1.0.0
-role_id: ROL-GESTION-DIGITRANS
+name: Historia genérica para Digitrans (Asesor TDE)
+
+# === STORY CORE ===
 as_a: Digitrans (Asesor TDE)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIGITRANS
+  agent_type: HUMAN
+  description: Asesor externo o equipo técnico de apoyo a la División de Transformación Digital (Digitrans)
+
+entities_mentioned:
+  - id: ENT-TDE-ARQUITECTURA-DATOS
+    status: candidate
+  - id: ENT-TDE-MAPA-PROCESOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: TRANSFORMACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - digitrans
+  - asesor-tde
+  - reingenieria
+  - modernizacion-estado
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al catálogo de servicios digitales y API del GORE para su modelado
+  - Módulo de diseño de workflows (BPMN) integrado en la plataforma de gestión
+  - Herramientas de análisis de brechas tecnológicas por departamento

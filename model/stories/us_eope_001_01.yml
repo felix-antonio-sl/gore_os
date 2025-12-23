@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_eope_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Gestión de reserva de salas y vehículos
-id: US-EOPE-001-01
-urn: urn:goreos:atom:story:us_eope_001_01:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: gestión de reserva de salas y vehículos
-so_that: se optimice el uso de recursos físicos
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-VEHICULO
+id: US-EOPE-001-01
+name: Gestión de Reserva de Salas y Vehículos
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Administrativo
+i_want: gestionar las solicitudes de reserva de salas de reuniones y vehículos institucionales
+so_that: se optimice el uso de los recursos físicos y se eviten conflictos de disponibilidad entre las distintas divisiones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Personal administrativo encargado de la logística y servicios generales
+
+entities_mentioned:
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-SOLICITUD-SERVICIOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: LOGISTICA
+  priority: P2
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - reserva
+  - salas
+  - vehiculos
+  - recursos-fisicos
+  - logistica-interna
+
+status: ENRICHED
+acceptance_criteria:
+  - Calendario visual interactivo con estados (Libre, Reservado, En Mantención)
+  - Notificación de confirmación automática al solicitante tras la aprobación de la reserva
+  - Registro de kilometraje y estado del vehículo al inicio y término de cada reserva

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cont_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de conciliación bancaria automatizada
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CONT-001-01
-urn: urn:goreos:atom:story:us_cont_001_01:1.0.0
-role_id: ROL-FIN-ANALISTA-CON
+name: Un módulo de conciliación bancaria automatizada
+
+# === STORY CORE ===
 as_a: Analista Contable
 i_want: un módulo de conciliación bancaria automatizada
 so_that: pueda detectar diferencias rápidamente
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-CON
+  agent_type: HUMAN
+  description: Analista contable del GORE encargado de asegurar la integridad de los saldos bancarios
+
+entities_mentioned:
+  - id: ENT-FIN-CARTOLA-BANCARIA
+    status: linked
+  - id: ENT-FIN-MOVIMIENTO-CONTABLE
+    status: candidate
+  - id: ENT-FIN-PARTIDA-PENDIENTE
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CONCILIACION-BANCARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTABILIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - contabilidad
+  - conciliacion-bancaria
+  - automatizacion
+  - tesoreria
+  - auditoria
+
+status: ENRICHED
+acceptance_criteria:
+  - Carga masiva de cartolas bancarias en formato MT940 o CSV
+  - Algoritmo de matching por monto, fecha y referencia (90% efectividad)
+  - Reporte de partidas no conciliadas con flujo de regularización

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_sec_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Escaneos automáticos de seguridad (SAST) en el código fuente
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-SEC-001
-urn: urn:goreos:atom:story:us_dev_sec_001:1.0.0
-role_id: ROL-EJEC-CPER-SEC
-as_a: Secretario Ejecutivo Comité de Pertinencia
-i_want: Ejecutar escaneos automáticos de seguridad (SAST) en el código fuente
-so_that: Identifico vulnerabilidades comunes (OWASP Top 10) antes de desplegar
-domain: D-DEV
-priority: P0
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+name: Escaneo de Seguridad Estático (SAST) Automático
+
+# === STORY CORE ===
+as_a: Responsable de Seguridad (CISO) / Desarrollador
+i_want: ejecutar escaneos automáticos de seguridad estática (SAST) sobre el código fuente en cada pipeline de construcción
+so_that: se identifiquen vulnerabilidades comunes y secretos expuestos antes de desplegar cualquier software en la infraestructura del GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-CPER-SEC
+  agent_type: MIXED
+  description: Encargado de la ciberseguridad asistido por herramientas de escaneo automatizado
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: CIBERSEGURIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - sast
+  - seguridad
+  - vulnerabilidades
+  - owasp
+  - devsecops
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración de herramienta SAST (ej. SonarQube, Snyk) en el pipeline de GitHub Actions
+  - Detección automática de secretos (hardcoded credentials) con bloqueo de build
+  - Tablero de vulnerabilidades segmentado por criticidad (Crítica, Alta, Media, Baja)

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_medio_c_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Medio de Comunicación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_MEDIO_C-001
-urn: urn:goreos:atom:story:us_gen_gestion_medio_c_001:1.0.0
-role_id: ROL-GESTION-MEDIO-COMUNI
+name: Historia genérica para Medio de Comunicación (Digital/Social)
+
+# === STORY CORE ===
 as_a: Medio de Comunicación
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MEDIO-COMUNI
+  agent_type: HUMAN
+  description: Gestor de contenidos digitales o medio nativo digital que interactúa con la marca GORE en plataformas sociales
+
+entities_mentioned:
+  - id: ENT-BACK-MATERIAL-GRAFICO
+    status: candidate
+  - id: ENT-GOB-CAMPANA-DIFUSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - digital
+  - redes-sociales
+  - influencers-institucionales
+  - marketing-regional
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a API de contenidos públicos para la redifusión de avisos de utilidad pública
+  - Módulo de descarga de manual de normas gráficas y logos regionales para uso digital
+  - Registro de impacto y alcance de campañas de difusión pagadas en medios digitales

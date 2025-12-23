@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:gob:campana_difusion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-GOB-CAMPANA-DIFUSION"
+id: ENT-CAMPANA-DIFUSION
+name: "uLuCuAuMuPuAuNuAu uDuIuFuUuSuIuOuNu"
+tags: [GOB]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

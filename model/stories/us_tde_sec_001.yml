@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_sec_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un simulacro de exfiltración de datos personales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEC-001
-urn: urn:goreos:atom:story:us_tde_sec_001:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Ejecutar un simulacro de exfiltración de datos personales
-so_that: Mido el tiempo de detección y respuesta del equipo
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Simulacro de exfiltración de datos personales
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: ejecutar simulacros periódicos de exfiltración de datos sensibles y brechas de seguridad
+so_that: se mida el tiempo de detección y respuesta del equipo de incidentes y se evalúe la efectividad de los controles DLP (Data Loss Prevention)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Responsable de la ciberseguridad defensiva y planes de respuesta a incidentes
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIBERSEGURIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - simulacro
+  - exfiltración
+  - dlp
+  - red-team
+  - respuesta-incidentes
+
+status: ENRICHED
+acceptance_criteria:
+  - Plan de simulacro documentado con objetivos de "Time to Detect" (TTD) y "Time to Respond" (TTR)
+  - Reporte técnico post-mortem con lecciones aprendidas y brechas de seguridad identificadas
+  - Actualización del plan de continuidad de negocio (BCP) basada en los resultados del simulacro

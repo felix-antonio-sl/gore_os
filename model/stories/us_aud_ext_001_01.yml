@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_aud_ext_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso controlado a expedientes y registros financieros
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AUD-EXT-001-01
-urn: urn:goreos:atom:story:us_aud_ext_001_01:1.0.0
-role_id: ROL-GESTION-AUDITOR-EXTE
+name: Acceso controlado a expedientes y registros financieros
+
+# === STORY CORE ===
 as_a: Auditor Externo
 i_want: acceso controlado a expedientes y registros financieros
 so_that: pueda realizar mi trabajo de auditoría
-domain: D-NORM
-competence_id: CPT-NORM-AUD-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-AUDITOR-EXTE
+  agent_type: HUMAN
+  description: Auditor de organismo externo (CGR, Auditoría Externa)
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-FIN-EXPEDIENTE-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-FIN-REGISTRO-FINANCIERO
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-AUDITORIA-EXTERNA
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: SEGURIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - auditoria-externa
+  - cgr
+  - expedientes
+  - acceso-controlado
+
+status: ENRICHED
+acceptance_criteria:
+  - Perfil de acceso de solo lectura para auditores externos
+  - Definición de periodo de acceso y expedientes específicos
+  - Registro de todas las acciones de consulta realizadas

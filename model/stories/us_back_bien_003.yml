@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Bonificación médica (tope anual, SIGBIE)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-003
-urn: urn:goreos:atom:story:us_back_bien_003:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Bonificación médica (tope anual, SIGBIE)
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: Gestionar bonificación médica (tope anual, SIGBIE)
 so_that: Proceso reembolsos de salud
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: HUMAN
+  description: Profesional de Bienestar encargado del procesamiento de reembolsos médicos
+
+entities_mentioned:
+  - id: ENT-FIN-REEMBOLSO-MEDICO
+    status: candidate
+  - id: ENT-FIN-TOPE-ANUAL-BIENESTAR
+    status: candidate
+  - id: ENT-SYS-SIGBIE
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-REEMBOLSOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: BIENESTAR
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - bienestar
+  - reembolsos
+  - salud
+  - sigbie
+  - bonificacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Control automático de topes anuales por socio y carga
+  - Integración o interfaz de carga masiva para SIGBIE (Sexto Piso / Bienestar Institucional)
+  - Validación de documentos tributarios autorizados (boletas/bonos) por OCR

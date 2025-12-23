@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rem_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Cálculo automático de bonificaciones y descuentos legales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-REM-002-01
-urn: urn:goreos:atom:story:us_rem_002_01:1.0.0
-role_id: ROL-GESTION-RH-REM
-as_a: Encargado Remuneraciones
+name: Cálculo automático de bonificaciones y descuentos legales
+
+# === STORY CORE ===
+as_a: Encargado de Remuneraciones
 i_want: cálculo automático de bonificaciones y descuentos legales
-so_that: se minimicen errores en la liquidación
-domain: D-BACK
-priority: P0
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+so_that: se minimicen errores en la liquidación de sueldos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-RH-REM
+  agent_type: HUMAN
+  description: Funcionario de RRHH responsable de la integridad técnica de las liquidaciones
+
+entities_mentioned:
+  - id: ENT-BACK-BONIFICACION
+    status: candidate
+  - id: ENT-BACK-DESCUENTO-LEGAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-PAGO-REMUNERACIONES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: FINANZAS-RRHH
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - bonificaciones
+  - descuentos
+  - sueldos
+  - legalidad
+  - rrhh
+
+status: ENRICHED
+acceptance_criteria:
+  - Actualización automática de factores (UF, UTM, topes previsionales) mediante API o carga centralizada
+  - Módulo de gestión de préstamos, convenios con cajas de compensación y descuentos judiciales
+  - Reporte de diferencias mensuales para detección de anomalías antes del cierre del proceso

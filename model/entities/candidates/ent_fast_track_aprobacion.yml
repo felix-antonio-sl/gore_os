@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:fast_track_aprobacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-FAST-TRACK-APROBACION"
+id: ENT-FAST-TRACK-APROBACION
+name: "uLuFuAuSuTu uTuRuAuCuKu uAuPuRuOuBuAuCuIuOuNu"
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

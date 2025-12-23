@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_ide_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportar georreferencias de interés (microbasurales, puntos turísticos)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TERR-IDE-006
-urn: urn:goreos:atom:story:us_terr_ide_006:1.0.0
-role_id: ROL-GESTION-PMG-GEN
-as_a: Referente Equidad de Género
-i_want: Reportar georreferencias de interés (microbasurales, puntos turísticos)
-so_that: Enriquezco el mapa regional con datos comunitarios
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Reporte de hallazgos territoriales comunitarios
+
+# === STORY CORE ===
+as_a: Referente de Equidad de Género / Gestor Territorial
+i_want: reportar y georreferenciar hallazgos de interés comunitario (microbasurales, puntos turísticos, zonas de inseguridad) desde terreno
+so_that: se enriquezca el mapa regional con datos actualizados y se mejore la focalización de las políticas públicas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-GEN
+  agent_type: HUMAN
+  description: Profesional de terreno que levanta información cualitativa georreferenciada
+
+entities_mentioned:
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-LOC-REGION
+    status: linked
+
+process_ref:
+  id: PROC-TERR-DIAGNOSTICO
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: PARTICIPACION
+  priority: P1
+  scope: CIVIL
+
+extra_tags:
+  - georreferenciación
+  - participación
+  - hallazgos-terreno
+  - mapeo-comunitario
+  - equidad
+
+status: ENRICHED
+acceptance_criteria:
+  - App móvil o formulario web que permite capturar coordenadas GPS y adjuntar fotografía del hallazgo
+  - Capa de "Hallazgos de Terreno" visible en el IDE Regional para análisis de los planificadores
+  - Sistema de estados (Pendiente, Verificado, Resuelto) para cada punto reportado

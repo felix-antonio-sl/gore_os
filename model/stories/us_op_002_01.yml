@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_op_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de despacho con registro de destinatario y medio de envío
-id: US-OP-002-01
-urn: urn:goreos:atom:story:us_op_002_01:1.0.0
-role_id: ROL-GESTION-OF
+  schema: urn:goreos:schema:story:2.0.0
+
+id: US-OP-002_01
+name: Módulo de despacho con registro de destinatario y medio de envío
+
+# === STORY CORE ===
 as_a: Oficial de Partes
 i_want: un módulo de despacho con registro de destinatario y medio de envío
 so_that: pueda comprobar la recepción
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OF
+  agent_type: HUMAN
+  description: Funcionario encargado de la salida y distribución de correspondencia oficial del GORE
+
+entities_mentioned:
+  - id: ENT-TDE-REGISTRO-DESPACHO
+    status: candidate
+  - id: ENT-DOC-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: OPERACIONES
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - oficina-de-partes
+  - despacho
+  - correspondencia
+  - trazabilidad-salida
+  - comprobacion-recepcion
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro centralizado de destinatarios (Municipios, Ministerios, Ciudadanos) y medios de envío
+  - Capacidad de adjuntar guías de despacho de Correos de Chile o acuses de recibo firmados
+  - Alertas automáticas de documentos despachados que superen 72 horas sin acuse de recibo reportado

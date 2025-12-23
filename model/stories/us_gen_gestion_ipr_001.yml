@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_ipr_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Formuevaluador (Asesor IPR)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_IPR-001
-urn: urn:goreos:atom:story:us_gen_gestion_ipr_001:1.0.0
-role_id: ROL-GESTION-IPR
+name: Historia genérica para Formuevaluador (Asesor IPR)
+
+# === STORY CORE ===
 as_a: Formuevaluador (Asesor IPR)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-IPR
+  agent_type: HUMAN
+  description: Asesor técnico especializado en el sistema de Inversión Pública Regional (IPR) y formulación de proyectos
+
+entities_mentioned:
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-PLAN-CALIDAD-METODOLOGICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: SEGUIMIENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - ipr
+  - formuevaluador
+  - inversion-publica
+  - seguimiento-tecnico
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de revisión metodológica cruzada para perfiles de proyecto de alta complejidad
+  - Acceso a banco de precios regional actualizado para presupuestos de referencia
+  - Dashboard de avance físico y financiero consolidado para la cartera IPR a su cargo

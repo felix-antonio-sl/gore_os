@@ -1,14 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_ases_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información consolidada de los temas que asesoro
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ASES-001-01
-urn: urn:goreos:atom:story:us_ases_001_01:1.0.0
-role_id: ROL-SEG-ASES
+name: Información consolidada de los temas que asesoro
+
+# === STORY CORE ===
 as_a: Asesor Técnico Seguridad
 i_want: acceder a información consolidada de los temas que asesoro
 so_that: pueda preparar informes y recomendaciones
-domain: D-PLAN
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-SEG-ASES
+  agent_type: HUMAN
+  description: Asesor técnico especializado en seguridad pública
+
+entities_mentioned:
+  - id: ENT-SEG-DATOS-CRIMINALIDAD
+    status: candidate
+  - id: ENT-PLAN-PROYECTO-SEGURIDAD
+    status: candidate
+  - id: ENT-SYS-INFORME-TECNICO
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-PLANIFICACION-SEGURIDAD
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: SEGURIDAD
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - asesoría
+  - seguridad-publica
+  - informes
+  - ñuble-seguro
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard consolidado de proyectos de seguridad por comuna
+  - Acceso a bases de datos de criminalidad (SPA/CEAD) integradas
+  - Herramienta de redacción de informes con datos precargados

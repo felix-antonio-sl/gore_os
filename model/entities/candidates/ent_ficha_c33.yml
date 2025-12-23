@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:ejec:ficha_c33:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-EJEC-FICHA-C33"
+id: ENT-FICHA-C33
+name: "uLuFuIuCuHuAu uCu3u3u"
+tags: [EJEC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

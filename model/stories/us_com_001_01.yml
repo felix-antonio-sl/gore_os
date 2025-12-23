@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un calendario de contenidos con programación de publicaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-001-01
-urn: urn:goreos:atom:story:us_com_001_01:1.0.0
-role_id: ROL-GESTION-ENC
+name: Un calendario de contenidos con programación de publicaciones
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: un calendario de contenidos con programación de publicaciones
 so_that: pueda planificar la comunicación institucional
-domain: D-BACK
-priority: P0
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Comunicaciones o Calidad responsable de la narrativa institucional
+
+entities_mentioned:
+  - id: ENT-BACK-CALENDARIO-EDITORIAL
+    status: candidate
+  - id: ENT-BACK-PUBLICACION-RRSS
+    status: candidate
+  - id: ENT-BACK-HITO-COMUNICACIONAL
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-PLANIFICACION-MEDIOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - comunicaciones
+  - publicaciones
+  - calendario-editorial
+  - rrss
+  - planificacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Vista mensual/semanal de hitos y publicaciones programadas
+  - Clasificación por canal (Web, Twitter, Instagram, Prensa)
+  - Workflow de revisión y aprobación de artes/textos

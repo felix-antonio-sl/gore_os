@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jest_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un repositorio de estudios con buscador temático
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-JEST-001-01
-urn: urn:goreos:atom:story:us_jest_001_01:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: un repositorio de estudios con buscador temático
-so_that: pueda reutilizar conocimiento
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Repositorio Inteligente de Estudios Regionales
+
+# === STORY CORE ===
+as_a: Jefe de Estudios y Planificación
+i_want: Un repositorio digital de estudios, diagnósticos y diseños con búsqueda semántica
+so_that: se evite la duplicidad de consultorías y se reutilice el conocimiento acumulado para la toma de decisiones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la unidad encargada de estudios de pre-inversión y planificación regional
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: PLANIFICACION
+  priority: P1
+  scope: ESTRATEGICO
+
+extra_tags:
+  - estudios
+  - preinversion
+  - conocimiento
+  - eficiencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador temático que incluya filtros por territorio, año, consultora y monto
+  - Capacidad de asociar múltiples archivos (informes, bases de datos, cartografía) a un solo estudio
+  - Módulo de "Lecciones Aprendidas" para cada estudio finalizado

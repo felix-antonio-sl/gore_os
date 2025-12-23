@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_acto_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Supervisar cumplimiento normativo (sumarios)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-ACTO-005
-urn: urn:goreos:atom:story:us_norm_acto_005:1.0.0
-role_id: ROL-NORM-ABOG
-as_a: Abogado Informante
-i_want: Supervisar cumplimiento normativo (sumarios)
-so_that: Mantengo disciplina administrativa
-domain: D-NORM
-priority: P1
-competence_id: CPT-NORM-CONTROL-001
-acceptance_criteria: []
+name: Disciplina Administrativa (Sumarios)
+
+# === STORY CORE ===
+as_a: Abogado Informante / Fiscal Sumariante
+i_want: Supervisar la tramitación de sumarios administrativos e investigaciones sumarias
+so_that: se mantenga la disciplina institucional y se sancionen las faltas administrativas con debido proceso
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado con rol de fiscal en procesos disciplinarios internos
+
+entities_mentioned:
+  - id: ENT-NORM-PROCESO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P2
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: SUMARIOS
+  priority: P1
+  scope: DISCIPLINARIO
+
+extra_tags:
+  - sumarios
+  - disciplina
+  - debido-proceso
+  - fiscal
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de reserva total para el acceso a expedientes disciplinarios vigentes
+  - Alerta de prescripción de la acción disciplinaria para el fiscal asignado
+  - Generación de vista fiscal y propuesta de sobreseimiento o sanción con plantillas normativas

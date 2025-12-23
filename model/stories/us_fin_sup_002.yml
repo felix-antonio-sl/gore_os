@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_sup_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una base de conocimiento con errores frecuentes y soluciones
-id: US-FIN-SUP-002
-urn: urn:goreos:atom:story:us_fin_sup_002:1.0.0
-role_id: ROL-GESTION-ALC
-as_a: Alcalde
-i_want: Consultar una base de conocimiento con errores frecuentes y soluciones
-so_that: Resuelva dudas comunes sin contactar a soporte
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACTA
+id: US-FIN-SUP-002
+name: Base de conocimiento para errores frecuentes
+
+# === STORY CORE ===
+as_a: Alcalde
+i_want: Consultar una base de conocimiento con errores frecuentes y soluciones (FAQs)
+so_that: Resuelva dudas comunes sobre el ciclo de vida de los proyectos sin contactar a soporte técnico
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ALC
+  agent_type: HUMAN
+  description: Alcalde de comuna de Ñuble (Ejecutor municipal)
+
+entities_mentioned:
+  - id: ENT-SAL-APRENDIZAJE
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: SOPORTE-USUARIO
+  priority: P1
+  scope: EXTERNO
+
+extra_tags:
+  - base-conocimiento
+  - faq
+  - soporte
+  - autoayuda
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador semántico integrado en el portal de ayuda
+  - Artículos con capturas de pantalla y videos tutoriales de procesos críticos
+  - Categorización de errores frecuentes por etapa del proyecto (Ingreso, Ejecución, Rendición)

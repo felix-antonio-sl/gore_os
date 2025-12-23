@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El fondo fijo de caja chica (arqueos y reposición)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-005
-urn: urn:goreos:atom:story:us_back_tes_005:1.0.0
-role_id: ROL-FIN-ANALISTA-TES
+name: El fondo fijo de caja chica (arqueos y reposición)
+
+# === STORY CORE ===
 as_a: Analista Tesorería
 i_want: Gestionar el fondo fijo de caja chica (arqueos y reposición)
 so_that: Atiendo gastos menores con control adecuado
-domain: D-BACK
-competence_id: CPT-BACK-TES-001
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-TES
+  agent_type: HUMAN
+  description: Analista de Tesorería responsable de la administración de fondos fijos (caja chica)
+
+entities_mentioned:
+  - id: ENT-FIN-FONDO-FIJO
+    status: candidate
+  - id: ENT-FIN-ARQUEO-CAJA
+    status: candidate
+  - id: ENT-FIN-GASTO-MENOR
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-GESTION-FONDO-FIJO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: TESORERIA
+  priority: P2
+  scope: AREA
+
+extra_tags:
+  - caja-chica
+  - fondo-fijo
+  - arqueo
+  - gastos-menores
+  - tesoreria
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de comprobantes de egreso de caja chica con imputación de ítem
+  - Generación de acta de arqueo de caja de forma aleatoria o programada
+  - Workflow de solicitud de reposición de fondo ante la DAF/Tesorería

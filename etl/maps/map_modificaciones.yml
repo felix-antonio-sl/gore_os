@@ -1,0 +1,85 @@
+# ETL Mapping: Modificaciones Presupuestarias → GORE_OS
+# Prioridad: ALTA (Finanzas Core)
+# Funtor: Δ*(MLEG-MODIF) → Σ*(ENT-FIN-MODIFICACION_PRESUPUESTARIA)
+---
+_meta:
+  urn: urn:goreos:etl:map:modificaciones:1.0.0
+  type: ETL_Mapping
+  created_at: "2025-12-23"
+  author: Arquitecto-GORE
+
+source:
+  type: staging
+  entity: ENT-MLEG-MODIF-LINE
+  urn: urn:goreos:etl:sink:mleg_modificacion_line:1.0.0
+  approx_rows: 517
+  quality_tier: LOW
+
+target:
+  type: canonical
+  entity: ENT-FIN-MODIFICACION_PRESUPUESTARIA
+  domain: D-FIN
+
+key_strategy:
+  source_key: [numero_modificacion, subtitulo, item, asignacion, tipo_operacion]
+  target_key: id_linea_modificacion
+  generation: UUID_V5
+  namespace: gore_os
+  name_template: "modif:{numero_modificacion}:{subtitulo}:{item}:{asignacion}:{tipo_operacion}"
+  dedup_policy: ERROR_ON_DUP
+
+field_mappings:
+  - source: numero_modificacion
+    target: numero_modificacion
+    transform: IDENTITY
+
+  - source: subtitulo
+    target: subtitulo
+    transform: PARSE_INT
+    null_handling: ERROR
+
+  - source: item
+    target: item
+    transform: PARSE_INT
+    null_handling: ZERO
+
+  - source: asignacion
+    target: asignacion
+    transform: PARSE_INT
+    null_handling: ZERO
+
+  - source: ppto_vigente_anterior
+    target: monto_anterior
+    transform: PARSE_DECIMAL_CLP # Ya viene limpio en decimal, pero el transform asegura formato
+    null_handling: ZERO
+
+  - source: monto_modificacion
+    target: diferencia
+    transform: PARSE_DECIMAL_CLP
+    null_handling: ZERO
+
+  - source: ppto_vigente_final
+    target: monto_modificado
+    transform: PARSE_DECIMAL_CLP
+    null_handling: ZERO
+
+  - source: tipo_operacion
+    target: tipo_operacion
+    transform: ENUM_MAP
+    enum_map:
+      INGRESOS: INGRESO
+      GASTOS: GASTO
+    default: GASTO
+
+  - source: sin_efecto
+    target: estado
+    transform: BOOL_TO_ENUM
+    true_value: ANULADA
+    false_value: VIGENTE
+    default: VIGENTE
+
+expected_metrics:
+  source_rows: 54
+  target_rows_min: 52
+  target_rows_max: 54
+  error_rate_max: 0.0

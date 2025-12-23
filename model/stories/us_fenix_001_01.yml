@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fenix_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso privilegiado temporal a sistemas de unidades intervenidas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FENIX-001-01
-urn: urn:goreos:atom:story:us_fenix_001_01:1.0.0
-role_id: ROL-GESTION-FNX-J
-as_a: Jefe FENIX
-i_want: acceso privilegiado temporal a sistemas de unidades intervenidas
-so_that: pueda auditar y reorganizar procesos rápidamente
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+name: Acceso Privilegiado Temporal (Intervención FENIX)
+
+# === STORY CORE ===
+as_a: Jefe de la Unidad FENIX (Intervención/Auditoría)
+i_want: contar con acceso privilegiado temporal a los sistemas y datos de unidades o divisiones intervenidas por auditoría
+so_that: se pueda realizar la extracción de evidencia, auditar transacciones críticas y reorganizar procesos rápidamente ante hallazgos de irregularidades
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FNX-J
+  agent_type: HUMAN
+  description: Auditor jefe encargado de la intervención y saneamiento de procesos críticos
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+process_ref:
+  id: PROC-GOB-INTERVENCION-FENIX
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: AUDITORIA-CONTROL
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - fenix
+  - auditoria
+  - acceso-privilegiado
+  - intervencion
+  - probidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Protocolo de activación de acceso mediante resolución de intervención firmada
+  - Log auditado de todas las acciones realizadas por la cuenta privilegiada durante la intervención
+  - Revocación automática del acceso tras el cumplimiento del plazo de auditoría definido

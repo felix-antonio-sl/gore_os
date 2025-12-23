@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_prev_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Asesorar a municipios en la formulación de sus planes comunales de seguridad
-id: US-SEG-PREV-008
-urn: urn:goreos:atom:story:us_seg_prev_008:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
-i_want: Asesorar a municipios en la formulación de sus planes comunales de seguridad
-so_that: Cumplo mandato legal de apoyo técnico
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-LOC-COMUNA
+id: US-SEG-PREV-008
+name: Asesoría técnica en planes comunales de seguridad
+
+# === STORY CORE ===
+as_a: Profesional de Prevención (GORE)
+i_want: asesorar a los municipios en la formulación de sus planes comunales de seguridad pública
+so_that: se cumpla con el mandato legal de apoyo técnico y los planes sean coherentes con la estrategia regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional especializado en políticas públicas de seguridad que brinda acompañamiento a nivel local
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-SEG-PLAN-COMUNAL-SEG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-SEG
+  aspect: APOYO-TECNICO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - asesoría
+  - municipios
+  - ley-de-municipalidades
+  - planes-comunales
+  - prevencion-delito
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de guías metodológicas y estándares técnicos para la elaboración de planes de seguridad
+  - Foro de colaboración bidireccional entre el profesional GORE y el Departamento de Seguridad Municipal
+  - Checklist de validación de coherencia entre el diagnóstico local y las prioridades regionales de inversión en seguridad

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_estr_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Menciones en medios y gestionar crisis
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-ESTR-004
-urn: urn:goreos:atom:story:us_com_estr_004:1.0.0
-role_id: ROL-GESTION-ENC
+name: Menciones en medios y gestionar crisis
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Monitorear menciones en medios y gestionar crisis
 so_that: Respondo a contingencias comunicacionales
-domain: D-COM
-priority: P1
-competence_id: CPT-COM-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: ALGORITHMIC
+  description: Agente de Inteligencia de Medios o Analista de Riesgos Reputacionales
+
+entities_mentioned:
+  - id: ENT-BACK-CLIPPING-MEDIOS
+    status: candidate
+  - id: ENT-SOC-CRISIS-COMUNICACIONAL
+    status: candidate
+  - id: ENT-GOB-CONTINGENCIA-ESTRATEGICA
+    status: candidate
+
+process_ref:
+  id: PROC-GOB-GESTION-CRISIS
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: ESTRATEGIA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - crisis
+  - monitoreo
+  - clipping
+  - contingencia
+  - reputación
+
+status: ENRICHED
+acceptance_criteria:
+  - Alerta de "trending topic" o volumen inusual de menciones críticas
+  - Workflow de respuesta rápida con plantillas de comunicados oficiales
+  - Matriz de escalamiento para vocerías institucionales

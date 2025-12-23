@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_anid_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a indicadores de capital humano avanzado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ANID-001-01
-urn: urn:goreos:atom:story:us_anid_001_01:1.0.0
-role_id: ROL-GESTION-ANID
+name: Acceso a indicadores de capital humano avanzado
+
+# === STORY CORE ===
 as_a: Representante ANID
 i_want: acceso a indicadores de capital humano avanzado
 so_that: se evite la fuga de cerebros
-domain: D-PLAN
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANID
+  agent_type: HUMAN
+  description: Representante de la Agencia Nacional de Investigación y Desarrollo (ANID)
+
+entities_mentioned:
+  - id: ENT-PLAN-INDICADOR-CTCI
+    status: candidate
+  - id: ENT-ORG-INVESTIGADOR
+    status: candidate
+  - id: ENT-TERR-CAPITAL-HUMANO
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-ESTRATEGIA-CTCI
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: CIENCIA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - anid
+  - ciencia
+  - tecnologia
+  - capital-humano
+  - ñuble
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de becarios y doctores en la región
+  - Mapas de distribución de centros de investigación
+  - Reportes de reinserción local de investigadores

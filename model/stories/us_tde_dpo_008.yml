@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_dpo_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Versión del RAT con control de cambios
-id: US-TDE-DPO-008
-urn: urn:goreos:atom:story:us_tde_dpo_008:1.0.0
-role_id: ROL-GESTION-DPO
-as_a: DPO
-i_want: Registrar versión del RAT con control de cambios
-so_that: Mantengo historial
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-TDE-DPO-008
+name: Control de versiones del Registro de Tratamiento (RAT)
+
+# === STORY CORE ===
+as_a: Delegado de Protección de Datos (DPO)
+i_want: registrar el historial de versiones del RAT con control de cambios detallado
+so_that: se mantenga la trazabilidad de la evolución de las políticas de datos del GORE ante auditorías externas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPO
+  agent_type: HUMAN
+  description: Administrador de la integridad histórica del inventario de datos
+
+entities_mentioned:
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: PRIVACIDAD
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - rat
+  - versiones
+  - trazabilidad
+  - auditoria
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de Quién, Cuándo y Qué cambió en cada fila del RAT
+  - Comparador de versiones para visualizar adiciones o eliminaciones de bases de datos
+  - Firma electrónica del DPO sobre cada versión cerrada del RAT

@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_rend_015:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar medios de verificación de Subvención 8%
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-REND-015
-urn: urn:goreos:atom:story:us_fin_rend_015:1.0.0
-role_id: ROL-GESTION-FIN-REND
+name: Verificar medios de verificación de Subvención 8%
+
+# === STORY CORE ===
 as_a: Encargado Rendiciones
 i_want: Verificar medios de verificación de Subvención 8%
-so_that: Valido cumplimiento de objetivos
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Valido el cumplimiento de objetivos sociales y el buen uso de los fondos públicos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-REND
+  agent_type: HUMAN
+  description: Encargado de rendiciones en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-RENDICION
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: linked
+  - id: ENT-DIG-DOCUMENTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-REND-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: RENDICION-DE-CUENTAS
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - 8-porciento
+  - subvenciones
+  - rendicion
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Galería de medios de verificación (fotos, listas de asistencia, facturas)
+  - Validación de RUTs de beneficiarios contra bases de datos institucionales
+  - Cálculo automático de porcentajes de ejecución por ítem de subvención

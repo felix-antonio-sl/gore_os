@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_subdere_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Analista División Gobiernos (SUBDERE)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SUBDERE-001
-urn: urn:goreos:atom:story:us_gen_gestion_subdere_001:1.0.0
-role_id: ROL-GESTION-SUBDERE
+name: Historia genérica para Analista División Gobiernos (SUBDERE)
+
+# === STORY CORE ===
 as_a: Analista División Gobiernos (SUBDERE)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUBDERE
+  agent_type: HUMAN
+  description: Analista de la Unidad de Gobiernos Regionales (UGR) de SUBDERE que supervisa la transferencia de competencias y fondos nacionales
+
+entities_mentioned:
+  - id: ENT-GOB-TRANSFERENCIA-COMPETENCIAS
+    status: candidate
+  - id: ENT-FIN-PROGRAMA-02-FNDR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - subdere
+  - descentralizacion
+  - transferencia-competencias
+  - fndr
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al sistema de reportabilidad de avance de transferencia de nuevas competencias (Ej: SCAT/PROT)
+  - Módulo de carga automatizada de resoluciones de asignación presupuestaria nacional al GORE
+  - Dashboard de evaluación del estado de descentralización regional basado en indicadores IRD

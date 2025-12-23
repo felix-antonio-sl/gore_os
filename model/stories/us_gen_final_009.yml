@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para Analista Cartera
-id: US-GEN-FINAL-009
-urn: urn:goreos:atom:story:us_gen_final_009:1.0.0
-role_id: ROL-GESTION-ANALISTA-CAR
-as_a: Analista Cartera
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-009
+name: Gestión de Cartera de Inversiones Regional
+
+# === STORY CORE ===
+as_a: Analista Cartera
+i_want: Monitorear el ciclo de vida de todos los proyectos de inversión regional
+so_that: se identifiquen cuellos de botella y se optimice el flujo de aprobación y ejecución
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-CAR
+  agent_type: HUMAN
+  description: Analista de la división de presupuestos e inversión regional encargada de la cartera global
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-ESTADO-RATE
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P6
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: CARTERA-DE-INVERSIONES
+  priority: P2
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - cartera
+  - monitoreo
+  - inversion
+  - flujo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard detallado con el estado de cada proyecto (Admisible, RS, Adjudicado, etc.)
+  - Reporte de tiempos de respuesta por etapa del proceso
+  - Sistema de alertas por permanencia excesiva en un mismo estado

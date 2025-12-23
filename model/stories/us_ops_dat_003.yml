@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_dat_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reglas de validación personalizadas por tipo de carga masiva
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-DAT-003
-urn: urn:goreos:atom:story:us_ops_dat_003:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: configurar reglas de validación personalizadas por tipo de carga masiva
-so_that: se tenga flexibilidad para adaptar las ingestas a diferentes formatos y requisitos
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Personalización de Reglas de Validación Masiva
+
+# === STORY CORE ===
+as_a: Administrador de Datos (Geonodo)
+i_want: Configurar reglas de validación personalizadas para cada tipo de carga masiva de datos territorial o administrativa
+so_that: el sistema se adapte flexiblemente a diferentes formatos de entrada garantizando la calidad semántica del Supermodelo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador de la arquitectura de datos regional
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-TER-SITIO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: CALIDAD-DATOS
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - validacion
+  - carga-masiva
+  - limpieza-datos
+  - geonodo
+
+status: ENRICHED
+acceptance_criteria:
+  - Editor de reglas (no-code) para definir restricciones de campos y formatos
+  - Soporte para expresiones regulares (Regex) en las validaciones de texto y códigos
+  - Pre-validación inmediata al subir el archivo con reporte de inconsistencias en pantalla

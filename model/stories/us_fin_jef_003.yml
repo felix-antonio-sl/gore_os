@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_jef_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver problemas críticos escalados en lista priorizada
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-JEF-003
-urn: urn:goreos:atom:story:us_fin_jef_003:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Ver problemas críticos escalados en lista priorizada
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Ver problemas críticos escalados en lista priorizada
 so_that: Gestiono lo urgente primero
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de División que requiere visibilidad sobre tickets o procesos bloqueados que requieren su intervención
+
+entities_mentioned:
+  - id: ENT-SYS-PROBLEMA-ESCALADO
+    status: candidate
+  - id: ENT-SYS-LISTA-PRIORIZADA
+    status: candidate
+  - id: ENT-SYS-PROTOCOLO-ESCALAMIENTO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-GESTION-CRISIS-FINANCIERA
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: GESTION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - escalamiento
+  - problemas-criticos
+  - urgencias
+  - gestion-jefatura
+  - priorizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Bandeja "Urgente" con semáforos basados en el tiempo de estancamiento del proceso
+  - Capacidad de "Tomar Decisión" directamente desde la notificación (Aprobar, Rechazar, Delegar)
+  - Notificaciones push para problemas de severidad Crítica

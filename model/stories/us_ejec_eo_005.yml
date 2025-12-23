@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_eo_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitar extensión de plazo con justificación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-EO-005
-urn: urn:goreos:atom:story:us_ejec_eo_005:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Solicitar extensión de plazo con justificación
-so_that: Gestiono imprevistos
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Solicitud de Extensión de Plazo
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Responsable de Tarea
+i_want: solicitar formalmente una extensión del plazo fatal para un compromiso, indicando la nueva fecha proyectada y la justificación técnica
+so_that: se gestionen los imprevistos de forma transparente y se mantenga la planificación actualizada sin caer en incumplimientos injustificados
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Usuario responsable de cumplir con los plazos administrativos del convenio
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION-TIEMPO
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - prórroga
+  - plazos
+  - justificacion
+  - imprevistos
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de solicitud de extensión con campo obligatorio de "Justificación Técnica"
+  - Visibilidad de la comparación entre Plazo Original vs Plazo Extendido en los reportes
+  - Requiere aprobación expresa del supervisor para que la nueva fecha sea efectiva en el sistema

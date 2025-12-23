@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cti_pro_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Profesional CTI
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CTI_PRO-001
-urn: urn:goreos:atom:story:us_gen_gestion_cti_pro_001:1.0.0
-role_id: ROL-GESTION-CTI-PROF
+name: Historia genérica para Profesional CTI
+
+# === STORY CORE ===
 as_a: Profesional CTI
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CTI-PROF
+  agent_type: HUMAN
+  description: Profesional encargado de la gestión de Ciencia, Tecnología e Innovación (CTI) y FIC Regional
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-FIC
+    status: candidate
+  - id: ENT-TDE-INDICADOR-CTI
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: CIENCIA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - cti
+  - ciencia
+  - tecnologia
+  - fic
+  - innovacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de seguimiento de la Estrategia Regional de Innovación (ERI)
+  - Gestión del ciclo de vida de los proyectos FIC (Fondo de Innovación para la Competitividad)
+  - Repositorio de patentes y publicaciones científicas derivadas de fondos GORE

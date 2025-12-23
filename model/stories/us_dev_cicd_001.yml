@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_cicd_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-CICD-001
+name: Pipeline de Integración Continua (CI)
+
+# === STORY CORE ===
+as_a: Ingeniero DevOps
+i_want: Configurar un pipeline de CI automatizado que ejecute builds, linters y tests unitarios ante cada push
+so_that: se valide la integridad técnica de los cambios antes de su integración en la rama principal
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-TIC-PLAT
+  agent_type: HUMAN
+  description: Responsable de la automatización del ciclo de vida de desarrollo
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: AUTOMATIZACION
+  priority: P0
+  scope: DESARROLLO
+
+extra_tags:
+  - ci
+  - pipeline
+  - github-actions
+  - build-automation
+
+status: ENRICHED
+acceptance_criteria:
+  - Feedback visual del estado del build en la interfaz del repositorio
+  - Notificación automática a los desarrolladores en caso de fallo del pipeline
+  - Tiempo total de ejecución del pipeline de CI < 10 minutos

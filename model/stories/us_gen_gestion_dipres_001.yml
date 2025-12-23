@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_dipres_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Analista Sectorial DIPRES
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_DIPRES-001
-urn: urn:goreos:atom:story:us_gen_gestion_dipres_001:1.0.0
-role_id: ROL-GESTION-DIPRES
+name: Historia genérica para Analista Sectorial DIPRES
+
+# === STORY CORE ===
 as_a: Analista Sectorial DIPRES
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIPRES
+  agent_type: HUMAN
+  description: Analista de la Dirección de Presupuestos (DIPRES) que supervisa la ejecución y las modificaciones presupuestarias del GORE
+
+entities_mentioned:
+  - id: ENT-FIN-LEY-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-MODIFICACION-PRESUPUESTARIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-PREPARACION-ARI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: PRESUPUESTO
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - dipres
+  - analista-sectorial
+  - presupuesto-nacional
+  - fiscalizacion-financiera
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al sistema de reportabilidad financiera para validación de devengos mensuales
+  - Módulo de carga de resoluciones de aprobación de aumento de marco presupuestario
+  - Dashboard de indicadores de eficiencia de gasto institucional (Lead Time de inversión)

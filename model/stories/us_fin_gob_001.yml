@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
-id: US-FIN-GOB-001
-urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
-so_that: Filtro estratégico antes de evaluación técnica
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-SESION
+id: US-FIN-GOB-001
+name: Sesión de Pertinencia Presupuestaria (Filtro Pre-Admisibilidad)
+
+# === STORY CORE ===
+as_a: Jefe de División / Unidad Jurídica
+i_want: realizar y documentar una "Sesión de Pertinencia" como filtro previo a la admisibilidad técnica de los proyectos de inversión
+so_that: se realice un filtro estratégico inicial de la cartera de proyectos, asegurando que solo los que cumplen con la visión regional pasen a evaluación técnica detallada
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo responsable de la priorización institucional de la cartera de inversiones
+
+entities_mentioned:
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GOBERNANZA-INVERSION
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - pertinencia
+  - filtro-previo
+  - cartera-proyectos
+  - gobernanza
+  - pre-admisibilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Acta digital de la sesión con registro de asistentes y decisiones tomadas
+  - Clasificación binaria (Pertinente / No Pertinente) con campo de observación vinculada
+  - Gatillado automático del flujo de evaluación técnica tras el marcado como "Pertinente"

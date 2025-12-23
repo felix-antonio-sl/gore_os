@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_int_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas críticas de seguridad pública (D-SEG)
-id: US-FNX-INT-002
-urn: urn:goreos:atom:story:us_fnx_int_002:1.0.0
-role_id: ROL-GESTION-KODA
-as_a: Agente KODA
-i_want: Recibir alertas críticas de seguridad pública (D-SEG)
-so_that: Activo protocolos de crisis nivel I
-domain: D-FENIX
-priority: P1
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-FNX-INT-002
+name: Alertas críticas de seguridad pública (D-SEG)
+
+# === STORY CORE ===
+as_a: Agente KODA
+i_want: Recibir alertas críticas de seguridad pública desde el dominio D-SEG
+so_that: Activo protocolos de crisis nivel I que involucren coordinación inter-divisional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: AI
+  description: Agente supervisor del sistema basado en KODA
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SEG-INCIDENTE
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: SEGURIDAD-PUBLICA
+  priority: P1
+  scope: EXTERNO
+
+extra_tags:
+  - seguridad
+  - alertas-criticas
+  - crisis
+  - d-seg
+
+status: ENRICHED
+acceptance_criteria:
+  - Escucha activa de eventos tipo "SEG_CRITICAL" en el bus de eventos
+  - Composición automática de la Fuerza de Tarea sugerida basada en el tipo de incidente
+  - Apertura de canal de comunicación encriptado para el equipo de respuesta

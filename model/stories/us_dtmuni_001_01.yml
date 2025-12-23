@@ -1,19 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dtmuni_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reutilizar componentes de la plataforma GORE_OS
-id: US-DTMUNI-001-01
-urn: urn:goreos:atom:story:us_dtmuni_001_01:1.0.0
-role_id: ROL-GESTION-DIG
-as_a: Encargado Digital Muni
-i_want: reutilizar componentes de la plataforma GORE_OS
-so_that: no tengamos que desarrollar software desde cero
-domain: D-DEV
-priority: P2
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-PLATAFORMA
-- ENT-ORG-ROL
+id: US-DTMUNI-001-01
+name: Reutilización de Componentes Core GORE_OS (Open Source)
+
+# === STORY CORE ===
+as_a: Encargado de Transformación Digital Municipal
+i_want: reutilizar componentes de software, esquemas de datos y librerías UI de la plataforma GORE_OS
+so_that: se acelere la digitalización local sin tener que desarrollar sistemas desde cero, aprovechando la inversión pública regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIG
+  agent_type: HUMAN
+  description: Líder de TI municipal que busca eficiencia mediante el uso de activos digitales regionales
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: EFICIENCIA-TI
+  priority: P2
+  scope: MUNICIPAL
+
+extra_tags:
+  - reutilizacion
+  - software-publico
+  - interoperabilidad
+  - muni
+  - kits-desarrollo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a repositorio de componentes UI (GORE-UI-Kit) compatible con estándares de accesibilidad
+  - Catálogo de microservicios reutilizables para autenticación, notificaciones y firma
+  - Guía de arquitectura para extensiones municipales sobre el core de GORE_OS

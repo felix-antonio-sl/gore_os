@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_contrap_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Contraparte Interna
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CONTRAP-001
-urn: urn:goreos:atom:story:us_gen_gestion_contrap_001:1.0.0
-role_id: ROL-GESTION-CONTRAPARTE-
+name: Historia genérica para Contraparte Interna
+
+# === STORY CORE ===
 as_a: Contraparte Interna
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CONTRAPARTE-
+  agent_type: HUMAN
+  description: Profesional del GORE designado para supervisar administrativamente un convenio o contrato con terceros
+
+entities_mentioned:
+  - id: ENT-CONV-CONVENIO
+    status: linked
+  - id: ENT-EJE-INFORME-AVANCE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SEGUIMIENTO-ADMINISTRATIVO
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - contraparte
+  - seguimiento-convenios
+  - gestion-administrativa
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de estados de vigencia de las garantías del convenio bajo su cargo
+  - Alertador de plazos para la emisión de informes de pertinencia de pago
+  - Registro de observaciones enviadas al ejecutor y sus respuestas (Trazabilidad)

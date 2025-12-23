@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_ar_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar compromisos completados (cierra/dev)
-id: US-EJEC-AR-005
-urn: urn:goreos:atom:story:us_ejec_ar_005:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Verificar compromisos completados (cierra/dev)
-so_that: Valido cumplimiento
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-COMPROMISO
+id: US-EJEC-AR-005
+name: Verificar compromisos completados (cierre/dev)
+
+# === STORY CORE ===
+as_a: Jefe Unidad Jurídica
+i_want: Verificar compromisos completados (cierre/dev)
+so_that: Valido cumplimiento
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad de Archivo o Contraparte Técnica responsable de verificar el cierre administrativo de compromisos
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-EJE-EXPEDIENTE-CIERRE
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-CIERRE-ADMINISTRATIVO
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: SEGUIMIENTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - compromisos
+  - cierre
+  - cumplimiento
+  - archivo
+  - ejecucion
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist de verificación de documentos obligatorios adjuntos al compromiso
+  - Botón de "Aprobar Cierre" que cambie el estado del compromiso de forma irreversible
+  - Generación automática de certificado de cumplimiento tras la validación

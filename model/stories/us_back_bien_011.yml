@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitar préstamo (ver condiciones)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-011
-urn: urn:goreos:atom:story:us_back_bien_011:1.0.0
-role_id: ROL-GESTION-ANALISTA-SOC
-as_a: Analista Social
+name: Solicitar préstamo (ver condiciones)
+
+# === STORY CORE ===
+as_a: Socio Bienestar
 i_want: Solicitar préstamo (ver condiciones)
 so_that: Accedo a financiamiento
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-SOCIO-BIEN
+  agent_type: HUMAN
+  description: Funcionario socio del servicio de bienestar que solicita auxilio financiero
+
+entities_mentioned:
+  - id: ENT-FIN-PRESTAMO-BIENESTAR
+    status: linked
+  - id: ENT-FIN-CUOTA-PRESTAMO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-SOLICITUD-PRESTAMO-BIENESTAR
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: FINANZAS
+  priority: P1
+  scope: PERSONAL
+
+extra_tags:
+  - bienestar
+  - prestamo
+  - auxilio-economico
+  - socio
+  - financiamiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Simulador de cuotas según monto y plazo solicitado
+  - Validación automática de capacidad de descuento (15% legal) antes de permitir solicitud
+  - Workflow de aprobación digital por la directiva de bienestar

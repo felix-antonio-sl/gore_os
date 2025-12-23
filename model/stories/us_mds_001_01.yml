@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mds_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso al banco de proyectos BIP integrado
-id: US-MDS-001-01
-urn: urn:goreos:atom:story:us_mds_001_01:1.0.0
-role_id: ROL-GESTION-MDS
-as_a: Analista Inversiones (MDSyF)
-i_want: acceso al banco de proyectos BIP integrado
-so_that: pueda otorgar el RS (Recomendación Satisfactoria)
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SYS-ACTOR
+id: US-MDS-001-01
+name: Interoperabilidad con Sistema de Inversiones (BIP/MDS)
+
+# === STORY CORE ===
+as_a: Analista de Inversiones (MDSyF)
+i_want: Acceso integrado a los expedientes del GORE que requieren Recomendación Satisfactoria (RS)
+so_that: pueda realizar la evaluación técnica-económica y otorgar el RS en el Banco Integrado de Proyectos (BIP) eficientemente
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MDS
+  agent_type: HUMAN
+  description: Evaluador sectorial del Ministerio de Desarrollo Social y Familia
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: INTEROPERABILIDAD
+  priority: P0
+  scope: TECNICO
+
+extra_tags:
+  - rs
+  - bip
+  - mdsyf
+  - inversiones
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización bidireccional de estados entre GORE_OS y el sistema BIP
+  - Acceso a archivos adjuntos y memorias de cálculo directamente desde la interfaz de evaluación
+  - Registro de observaciones técnicas con trazabilidad de respuestas por parte de los formuladores

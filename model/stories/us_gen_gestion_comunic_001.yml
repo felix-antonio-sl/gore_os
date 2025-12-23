@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_comunic_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Comunicon (Asesor Comunicacional)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_COMUNIC-001
-urn: urn:goreos:atom:story:us_gen_gestion_comunic_001:1.0.0
-role_id: ROL-GESTION-COMUNICON
+name: Historia genérica para Comunicon (Asesor Comunicacional)
+
+# === STORY CORE ===
 as_a: Comunicon (Asesor Comunicacional)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-COMUNICON
+  agent_type: HUMAN
+  description: Asesor comunicacional externo o interno encargado del posicionamiento estratégico de la marca regional
+
+entities_mentioned:
+  - id: ENT-GOB-ESTRATEGIA-MARCA
+    status: candidate
+  - id: ENT-GOB-REPORTE-CLIPPING
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-IMAGEN-REGIONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - asesor-comunicacional
+  - marca-regional
+  - posicionamiento
+  - clipping
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Monitoreo de menciones en medios tradicionales y digitales (Clipping)
+  - Gestión de manual de identidad gráfica y activos de marca para terceros
+  - Análisis de sentimiento institucional basado en la cobertura de prensa

@@ -41,22 +41,30 @@ La derivación es unidireccional:
 ### Los 4 Átomos Fundamentales
 
 #### 3.1 La Historia de Usuario (Story)
+
 El **origen absoluto**. Captura el requerimiento de valor.
+
 - **Componentes**: `As a` (Rol), `I want` (Acción), `So that` (Valor).
 - **Ejemplo**: *"Como Analista de Inversión, quiero recibir alertas de IPR detenidas, para gestionar su reactivación."*
 
 #### 3.2 La Entidad (Entity)
+
 La **estructura de la información**. Representa los datos que fluyen en las historias.
+
 - **Ejemplos**: `IPR` (Intervención Pública Regional), `Convenio`, `Funcionario`.
 - **Condición**: Toda entidad debe aparecer explícitamente en al menos una historia.
 
 #### 3.3 El Rol (Role)
+
 El **agente activo**. Define quién ejecuta la acción o toma la decisión.
+
 - **Tipos**: Humano (Juicio, Ética) o Algorítmico (Velocidad, Escala).
 - **Invariante**: Todo agente de IA debe tener un responsable humano (Human-in-the-Loop).
 
 #### 3.4 El Proceso (Process)
-La **perspectiva dinámica**. Define cómo se orquestan las historias en el tiempo.
+
+La **perspective dinámica**. Define cómo se orquestan las historias en el tiempo.
+
 - Conecta múltiples historias en un flujo de valor coherente.
 
 ---
@@ -76,12 +84,15 @@ Independientemente de la tecnología, el GORE tiene 5 funciones esenciales que G
 ## 5. Principios de Diseño
 
 ### 5.1 Minimalismo Radical
+
 Eliminamos todo "ruido" arquitectónico. No definimos módulos o capacidades a priori; dejamos que **emerjan** de la agrupación natural de historias de usuario validadas.
 
 ### 5.2 Story-First Development
+
 No escribimos código ni diseñamos bases de datos sin antes tener una historia de usuario clara, enriquecida y validada. La historia es la unidad de contrato.
 
 ### 5.3 Inteligencia Institucional
+
 Buscamos que la organización sea "más inteligente": capaz de percibir, decidir y actuar mejor. Usamos agentes en segundo plano y asistentes conversacionales, pero siempre bajo supervisión humana.
 
 ---
@@ -96,5 +107,7 @@ El conocimiento formal del dominio se mantiene centralizado:
 - **Transformación Digital (TDE)**: Ley 21.180 como marco obligatorio.
 
 ---
+
+### Versión
 
 *GORE_OS v3.0.0 — Diciembre 2025*

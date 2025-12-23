@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_geo_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un administrador de capas GIS con metadatos y permisos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEO-001-01
-urn: urn:goreos:atom:story:us_geo_001_01:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
+name: Administrador de capas GIS con metadatos y permisos
+
+# === STORY CORE ===
+as_a: Analista Prevención (Especialista GIS)
 i_want: un administrador de capas GIS con metadatos y permisos
 so_that: pueda mantener la IDE actualizada y organizada
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista técnico encargado de la infraestructura de datos espaciales (IDE) regional
+
+entities_mentioned:
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: candidate
+  - id: ENT-TERR-IDE-REGIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: GESTION
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - gis
+  - ide
+  - mapas
+  - metadatos
+  - infraestructura-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de catálogo de capas GIS con cumplimiento de estándares ISO 19115 (Metadatos)
+  - Módulo de gestión de permisos granulares por capa (Lectura/Escritura/Edición de atributos)
+  - Servicio de publicación automática de Web Map Services (WMS/WFS) integrados con KODA

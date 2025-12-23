@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_ar_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver monitor de problemas escalados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-AR-009
-urn: urn:goreos:atom:story:us_ejec_ar_009:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Ver monitor de problemas escalados
-so_that: Gestiono obstáculos críticos
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+name: Monitor de Obstáculos y Escalamiento Externo
+
+# === STORY CORE ===
+as_a: Jefe de División / Unidad Jurídica
+i_want: visualizar un monitor de problemas y obstáculos "escalados" que detienen la ejecución de proyectos
+so_that: se puedan gestionar soluciones cross-institucionales con ministerios o municipios y destrabar la inversión regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo con poder de decisión para mediar en conflictos inter-institucionales
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-GESTION-OBSTACULOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: MONITOREO-CRITICO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - escalamiento
+  - nudos-criticos
+  - gestion-crisis
+  - inversion
+  - gobernanza
+
+status: ENRICHED
+acceptance_criteria:
+  - Panel "Semáforo Rojo" que muestra iniciativas con más de 30 días paralizadas por terceros
+  - Registro de gestiones realizadas (Oficios enviados, reuniones de mesa técnica)
+  - Indicador de "Impacto en Ejecución Presupuestaria" para el monto retenido por el obstáculo

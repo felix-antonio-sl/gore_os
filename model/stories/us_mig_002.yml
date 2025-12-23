@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mig_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reglas de transformación y mapeo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-MIG-002
-urn: urn:goreos:atom:story:us_mig_002:1.0.0
-role_id: ROL-OPS-MIGRADOR
-as_a: 
-i_want: configurar reglas de transformación y mapeo
-so_that: las reglas estén documentadas y sean reutilizables para futuras cargas
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-LEGACY
-acceptance_criteria: []
+name: Configuración de Reglas de Mapeo Semántico
+
+# === STORY CORE ===
+as_a: Ingeniero de Migración (Rol-Ops)
+i_want: Configurar reglas de transformación y mapeo entre los esquemas antiguos y el Supermodelo v2.0
+so_that: los datos se normalicen semánticamente y sean consistentes con la nueva ontología regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-MIGRADOR
+  agent_type: HUMAN
+  description: Especialista en ELT (Extract, Load, Transform) para el dominio GORE
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-USER
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: MAPEO-SEMANTICO
+  priority: P0
+  scope: DISEÑO-DATOS
+
+extra_tags:
+  - etl
+  - normalizacion
+  - ontologia
+  - reglas-mapeo
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de scripts de mapeo documentados y versionados
+  - Pre-visualización (Dry-run) de la transformación antes de la carga real
+  - Validación de tipos de datos y restricciones de esquema (URNs) durante el mapeo

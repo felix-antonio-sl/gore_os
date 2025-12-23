@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_dga_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Director Regional DGA
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_DGA-001
-urn: urn:goreos:atom:story:us_gen_gestion_dga_001:1.0.0
-role_id: ROL-GESTION-DGA
+name: Historia genérica para Director Regional DGA
+
+# === STORY CORE ===
 as_a: Director Regional DGA
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DGA
+  agent_type: HUMAN
+  description: Director Regional de la Dirección General de Aguas (DGA) que fiscaliza y regula los derechos de agua en la región
+
+entities_mentioned:
+  - id: ENT-TERR-DERECHO-AGUA
+    status: candidate
+  - id: ENT-TERR-RECURSO-HIDRICO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: RECURSOS-HIDRICOS
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - dga
+  - agua
+  - fiscalizacion
+  - derechos-aprovechamiento
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a visor regional de pozos y canales con información de caudales informados por la DGA
+  - Módulo de registro de solicitudes de factibilidad hídrica para proyectos de APR
+  - Notificación de resoluciones de paralización de obras por falta de derechos de agua

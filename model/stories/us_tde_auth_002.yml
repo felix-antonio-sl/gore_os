@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_auth_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Credenciales ClaveÚnica por ambiente (sandbox/QA/producción)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-AUTH-002
-urn: urn:goreos:atom:story:us_tde_auth_002:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Gestionar credenciales ClaveÚnica por ambiente (sandbox/QA/producción)
-so_that: Separo ambientes correctamente
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Gestión de credenciales ClaveÚnica por ambiente
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: gestionar las credenciales de ClaveÚnica (Client ID / Secret) de forma independiente por ambiente (Dev/QA/Prod)
+so_that: se separen correctamente los entornos de prueba de los productivos según estándares de Gobierno Digital
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador encargado de la configuración de integraciones con servicios externos de estado
+
+entities_mentioned:
+  - id: ENT-TDE-STAGE-ENV
+    status: linked
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - claveunica
+  - entornos
+  - credenciales
+  - integracion
+  - sandbox
+
+status: ENRICHED
+acceptance_criteria:
+  - Bóveda de secretos (Vault) que oculte los Client Secrets de la vista de usuarios no administradores
+  - URL de callback dinámicas configurables por cada entorno registrado en el sistema
+  - Validación de conectividad con el Sandbox de Gobierno Digital para pruebas de integración continua

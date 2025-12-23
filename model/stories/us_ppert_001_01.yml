@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ppert_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visar el acta de pertinencia con firma digital
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PPERT-001-01
-urn: urn:goreos:atom:story:us_ppert_001_01:1.0.0
-role_id: ROL-GESTION-PRES
-as_a: Presidente Subcomité IA
+name: Visar el acta de pertinencia con firma digital
+
+# === STORY CORE ===
+as_a: Presidente Subcomité de Pertinencia
 i_want: visar el acta de pertinencia con firma digital
 so_that: los proyectos pasen a etapa de análisis técnico
-domain: D-PLAN
-priority: P0
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-ACTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: HUMAN
+  description: Presidente del subcomité encargado de filtrar las iniciativas de inversión según su pertinencia estratégica regional
+
+entities_mentioned:
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: PERTINENCIA
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - acta-pertinencia
+  - firma-digital
+  - subcomite-ia
+  - flujo-inversion
+  - admision-proyectos
+
+status: ENRICHED
+acceptance_criteria:
+  - Firma electrónica avanzada multicapa para los miembros del comité sobre el acta PDF
+  - Cambio automático de estado de la iniciativa en el sistema de inversiones tras la firma
+  - Generación de certificado de pertinencia para el expediente BIP del proyecto

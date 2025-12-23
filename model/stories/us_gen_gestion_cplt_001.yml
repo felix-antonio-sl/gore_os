@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cplt_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Consejo Transparencia (CPLT)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CPLT-001
-urn: urn:goreos:atom:story:us_gen_gestion_cplt_001:1.0.0
-role_id: ROL-GESTION-CPLT
+name: Historia genérica para Consejo Transparencia (CPLT)
+
+# === STORY CORE ===
 as_a: Consejo Transparencia (CPLT)
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CPLT
+  agent_type: HUMAN
+  description: Representante del Consejo para la Transparencia que fiscaliza el cumplimiento de la Ley 20.285
+
+entities_mentioned:
+  - id: ENT-NORM-TRANSPARENCIA-ACTIVA
+    status: linked
+  - id: ENT-NORM-SOLICITUD-SAI
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - cplt
+  - transparencia
+  - ley-20285
+  - fiscalizacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de fiscalización automática de los banners de Transparencia Activa
+  - Módulo de seguimiento de plazos de respuesta a Solicitudes de Acceso a la Información (SAI)
+  - Registro de sanciones o recomendaciones emitidas por el CPLT al GORE

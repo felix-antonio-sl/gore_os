@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Grupo familiar (cargas)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-002
-urn: urn:goreos:atom:story:us_back_bien_002:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Grupo familiar (cargas)
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: Gestionar grupo familiar (cargas)
 so_that: Registro beneficiarios
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: HUMAN
+  description: Profesional de la unidad de Bienestar encargado de gestionar los beneficios extensivos al grupo familiar
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-CARGA-FAMILIAR
+    status: candidate
+  - id: ENT-ORG-BENEFICIARIO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-BENEFICIARIOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: BIENESTAR
+  priority: P1
+  scope: FAMILIAR
+
+extra_tags:
+  - bienestar
+  - cargas-familiares
+  - beneficiarios
+  - grupo-familiar
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de cargas familiares con validación de parentesco
+  - Sincronización con el sistema de asignación familiar
+  - Repositorio de documentos de respaldo por carga (certificados de nacimiento, escolaridad, etc.)

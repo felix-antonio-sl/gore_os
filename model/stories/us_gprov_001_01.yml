@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gprov_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso remoto a todos los sistemas GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GPROV-001-01
-urn: urn:goreos:atom:story:us_gprov_001_01:1.0.0
-role_id: ROL-BACK-PER-GEST
-as_a: Gestor de Personas
+name: Acceso remoto a todos los sistemas GORE
+
+# === STORY CORE ===
+as_a: Gestor de Personas (en Delegación Provincial)
 i_want: acceso remoto a todos los sistemas GORE
 so_that: pueda atender consultas en delegaciones provinciales
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
 
-mentions:
-- ENT-LOC-PROVINCIA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: HUMAN
+  description: Funcionario de RRHH desplegado en territorio que debe resolver trámites de funcionarios en provincias
+
+entities_mentioned:
+  - id: ENT-LOC-PROVINCIA
+    status: linked
+  - id: ENT-SYS-ACCESO-VPN
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: OPERACIONES
+  priority: P1
+  scope: TERRITORIAL
+
+extra_tags:
+  - acceso-remoto
+  - delegacion-provincial
+  - descentralizacion-administrativa
+  - rrhh
+  - sistemas-gore
+
+status: ENRICHED
+acceptance_criteria:
+  - Implementación de acceso seguro vía VPN o Zero Trust para todos los aplicativos CORE (KODA, TDT, etc)
+  - Interfaz optimizada para conexiones de baja latencia en zonas rurales/provinciales
+  - Módulo de soporte técnico remoto prioritario para las oficinas provinciales

@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:terr:incendio_forestal:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-TERR-INCENDIO-FORESTAL"
+id: ENT-INCENDIO-FORESTAL
+name: "uLuIuNuCuEuNuDuIuOu uFuOuRuEuSuTuAuLu"
+tags: [TERR]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

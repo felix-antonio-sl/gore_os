@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rtd_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportar el porcentaje de trámites digitalizados
-id: US-RTD-001-01
-urn: urn:goreos:atom:story:us_rtd_001_01:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: reportar el porcentaje de trámites digitalizados
-so_that: el servicio cumpla la ley de transformación digital
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TRAMITE
+id: US-RTD-001-01
+name: Reporte de trámites digitalizados
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: reportar el porcentaje de trámites digitalizados
+so_that: el servicio cumpla con la Ley 21.180 (Transformación Digital del Estado)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Coordinador encargado de liderar la digitalización de procesos institucionales
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-TDE-REPORT-GOV
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: DIGITALIZACION
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - ley-21180
+  - transformacion-digital
+  - tramites
+  - gobierno-digital
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de inventario de trámites clasificados por nivel de digitalización (0 a 5)
+  - Cálculo automático del índice de madurez digital basado en el uso de firma y expediente digital
+  - Exportación de reportes semestrales compatibles con los requerimientos de la División de Gobierno Digital

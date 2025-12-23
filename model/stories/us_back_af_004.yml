@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_af_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Realizar inventario anual de activo fijo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-AF-004
-urn: urn:goreos:atom:story:us_back_af_004:1.0.0
-role_id: ROL-GESTION-OPS-AF
+name: Realizar inventario anual de activo fijo
+
+# === STORY CORE ===
 as_a: Encargado Activo Fijo
 i_want: Realizar inventario anual de activo fijo
 so_that: Cumplo con normativa contable
-domain: D-BACK
-competence_id: CPT-BACK-AF-001
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ACTIVO
-- ENT-ORG-INVENTARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OPS-AF
+  agent_type: HUMAN
+  description: Encargado de la gestión de activos fijos institucionales del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-ACTIVO
+    status: linked
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-FIN-CUENTA-CONTABLE
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-INVENTARIO-ANUAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CUMPLIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - inventario
+  - activo-fijo
+  - contabilidad
+  - auditoria
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de hojas de inventario por unidad y ubicación
+  - Registro de tomas de inventario vía dispositivos móviles (con escaneo de QR)
+  - Reporte de diferencias (bienes sobrantes/faltantes)
+  - Conciliación automática con el libro auxiliar de activo fijo

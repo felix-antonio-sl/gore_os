@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { db } from './db';
 import { logs } from './schema';
 import type { AuthPayload } from './auth';
+import { convenioRouter } from './domain/d_fin/router';
 
 // Context type for tRPC
 export interface Context {
@@ -46,6 +47,9 @@ export const appRouter = t.router({
       }).returning();
       return result[0];
     }),
+    
+  // Domain Routers
+  convenio: convenioRouter,
 });
 
 export type AppRouter = typeof appRouter;

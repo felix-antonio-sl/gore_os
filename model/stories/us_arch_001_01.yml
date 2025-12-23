@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_arch_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un sistema de gestión de archivo con ubicación y digitalización
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ARCH-001-01
-urn: urn:goreos:atom:story:us_arch_001_01:1.0.0
-role_id: ROL-GESTION-ARCHIVO
+name: Un sistema de gestión de archivo con ubicación y digitalización
+
+# === STORY CORE ===
 as_a: Encargado de Archivo
 i_want: un sistema de gestión de archivo con ubicación y digitalización
 so_that: pueda localizar documentos históricos
-domain: D-TDE
-competence_id: CPT-TDE-ARCH-001
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-SYS-DOCUMENTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ARCHIVO
+  agent_type: HUMAN
+  description: Encargado de la custodia y digitalización de documentos históricos y administrativos
+
+entities_mentioned:
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-TDE-ARCHIVO-FISICO
+    status: candidate
+  - id: ENT-TDE-UBICACION-ARCHIVO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: ARCHIVO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - archivo
+  - digitalizacion
+  - documentos
+  - localizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de ubicación física (caja, estante, pasillo)
+  - Visor de documentos digitalizados (PDF/A)
+  - Buscador por metadatos de archivo (fecha, materia, remitente)

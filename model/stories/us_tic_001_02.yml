@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tic_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un inventario de activos TI con ciclo de vida
-id: US-TIC-001-02
-urn: urn:goreos:atom:story:us_tic_001_02:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: un inventario de activos TI con ciclo de vida
-so_that: pueda planificar renovaciones y obsolescencia
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-INVENTARIO
+id: US-TIC-001-02
+name: Inventario y Ciclo de Vida de Activos TI
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma (Informática)
+i_want: mantener un inventario detallado de activos TI (Hardware y Software) con seguimiento de su ciclo de vida
+so_that: se planifiquen renovaciones tecnológicas oportunamente y se evite la obsolescencia de los sistemas críticos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador técnico encargado de la infraestructura tecnológica del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-OPS-STORAGE-ENV
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: SOPORTE-TEC
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - activos-ti
+  - inventario
+  - obsolescencia
+  - lifecycle
+  - gestion-recursos
+
+status: ENRICHED
+acceptance_criteria:
+  - Ficha por activo con Número de Serie, Ubicación, Usuario asignado y Fecha de Garantía
+  - Alerta de "Fin de Vida Útil" (EOL) con 12 meses de anticipación para inclusión en el presupuesto anual
+  - Módulo de bajas con borrado seguro de datos certificado para equipos de salida

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_coor_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Coordinador ECIF
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_COOR-001
-urn: urn:goreos:atom:story:us_gen_gestion_coor_001:1.0.0
-role_id: ROL-GESTION-COOR
+name: Historia genérica para Coordinador CIES
+
+# === STORY CORE ===
 as_a: Coordinador CIES
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-COOR
+  agent_type: HUMAN
+  description: Coordinador del Centro de Información y Estudios Sociales (CIES) responsable de la data de vulnerabilidad
+
+entities_mentioned:
+  - id: ENT-SOC-INDICADOR-SOCIAL
+    status: linked
+  - id: ENT-SOC-PERFIL-SOCIOECONOMICO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+  status: candidate
+
+tags:
+  domain: D-SOC
+  aspect: ESTUDIOS
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - cies
+  - estudios-sociales
+  - vulnerabilidad
+  - coordinacion-datos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a base de datos de beneficiarios integrada con modelos de pobreza multidimensional
+  - Generación de reportes de brecas sociales por comuna para priorizar inversión C33
+  - Exportación de cartografía social regional para el Consejo Regional

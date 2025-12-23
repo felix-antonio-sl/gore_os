@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Subsanar observaciones sin trámite presencial
-id: US-FIN-IPR-006
-urn: urn:goreos:atom:story:us_fin_ipr_006:1.0.0
-role_id: ROL-GESTION-G7-FORM
-as_a: Formulador Programas Glosa 7
-i_want: Subsanar observaciones sin trámite presencial
-so_that: Agilizo el proceso de admisibilidad
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TRAMITE
+id: US-FIN-IPR-006
+name: Subsanación Online de Observaciones (Cero Papel)
+
+# === STORY CORE ===
+as_a: Formulador de Programas Glosa 7 / Municipio / Persona Jurídica
+i_want: subsanar las observaciones técnicas o legales de mi postulación de forma 100% digital a través del portal
+so_that: se agilice el proceso de admisibilidad, se eviten traslados físicos innecesarios y se cumpla con la ley de transformación digital
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Usuario externo que interactúa con el GORE para corregir falencias en su postulación
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-NOTIFICACION-ELECTRONICA
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: TRAMITACION-DIGITAL
+  priority: P1
+  scope: CIUDADANO
+
+extra_tags:
+  - subsanacion
+  - cero-papel
+  - postulación
+  - interoperabilidad
+  - agilidad-administrativa
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz que resalta específicamente los campos o documentos observados por el evaluador
+  - Notificación automática tras la carga de la nueva evidencia o corrección
+  - Registro de trazabilidad de versiones de los documentos corregidos

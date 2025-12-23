@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_ext_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia genérica para Usuario Externo (Genérico)
-id: US-GEN-GESTION_EXT-002
-urn: urn:goreos:atom:story:us_gen_gestion_ext_002:1.0.0
-role_id: ROL-GESTION-EXT
-as_a: Usuario Externo (Genérico)
-i_want: ejecutar mis funciones principales en el contexto institucional del GORE
-so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-GESTION_EXT-002
+name: Interacción Digital de Ciudadanos y Entidades Externas
+
+# === STORY CORE ===
+as_a: Usuario Externo (Genérico)
+i_want: Acceder de forma segura a los servicios digitales y trámites del GORE
+so_that: pueda gestionar mis solicitudes, ver el estado de mis trámites y recibir notificaciones oficiales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-EXT
+  agent_type: HUMAN
+  description: Ciudadanos, representantes de ONGs, o prestadores de servicios que interactúan con el GORE
+
+entities_mentioned:
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: CIUDADANIA
+  priority: P2
+  scope: EXTERNO
+
+extra_tags:
+  - externo
+  - tramites
+  - ciudadano
+  - interoperabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Login mediante ClaveÚnica para autenticación segura
+  - Panel de mis trámites con historial de estados y documentos descargables
+  - Centro de notificaciones configurables (Email/SMS) para avisos de avance

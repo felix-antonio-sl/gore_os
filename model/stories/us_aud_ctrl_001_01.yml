@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_aud_ctrl_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Registros de transacciones y aprobaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AUD-CTRL-001-01
-urn: urn:goreos:atom:story:us_aud_ctrl_001_01:1.0.0
-role_id: ROL-GESTION-AUD
+name: Registros de transacciones y aprobaciones
+
+# === STORY CORE ===
 as_a: Auditor de Control
 i_want: acceder a registros de transacciones y aprobaciones
 so_that: pueda verificar trazabilidad
-domain: D-NORM
-competence_id: CPT-NORM-CTRL-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-AUD
+  agent_type: HUMAN
+  description: Auditor interno especializado en control de gestión y probidad
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-TRANSACCION
+    status: candidate
+  - id: ENT-SYS-TRAZABILIDAD
+    status: candidate
+  - id: ENT-GOV-APROBACION
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-AUDITORIA-SISTEMAS
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: TRAZABILIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - control
+  - auditoria
+  - logs
+  - transacciones
+  - probidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Visor de logs de auditoría por usuario y fecha
+  - Trazabilidad completa de cambios de estado en expedientes financieros
+  - Registro inmutable de aprobaciones digitales

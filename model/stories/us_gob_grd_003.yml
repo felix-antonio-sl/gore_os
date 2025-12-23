@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_grd_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Elaborar Plan Regional de Emergencia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GRD-003
-urn: urn:goreos:atom:story:us_gob_grd_003:1.0.0
-role_id: ROL-GESTION-UCR-COOR
-as_a: Coordinador UCR
+name: Elaborar Plan Regional de Emergencia
+
+# === STORY CORE ===
+as_a: Jefe de Unidad GRD / Coordinador de Emergencias
 i_want: Elaborar Plan Regional de Emergencia
 so_that: Preparo respuesta a desastres
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Encargado de la coordinación operativa de emergencias regional (DIPLU/UCR)
+
+entities_mentioned:
+  - id: ENT-SOC-PLAN-EMERGENCIA-REGIONAL
+    status: candidate
+  - id: ENT-SYS-PROTOCOLO-RESPUESTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: candidate
+
+tags:
+  domain: D-SOC
+  aspect: PREVENCION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - grd
+  - plan-emergencia
+  - respuesta
+  - desastres
+  - protocolos
+  - cogrid
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de protocolos de actuación por tipo de amenaza (Incendios forestales, Terremotos)
+  - Directorio actualizado de enlaces críticos de servicios públicos y fuerzas de orden para el COGRID
+  - Módulo de gestión de recursos logísticos disponibles para el despliegue inmediato en zona de catástrofe

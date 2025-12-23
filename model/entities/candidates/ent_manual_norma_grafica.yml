@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:back:manual_norma_grafica:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-BACK-MANUAL-NORMA-GRAFICA"
+id: ENT-MANUAL-NORMA-GRAFICA
+name: "uLuMuAuNuUuAuLu uNuOuRuMuAu uGuRuAuFuIuCuAu"
+tags: [BACK]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

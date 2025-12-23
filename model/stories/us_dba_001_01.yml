@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dba_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un panel de monitoreo de bases de datos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DBA-001-01
-urn: urn:goreos:atom:story:us_dba_001_01:1.0.0
-role_id: ROL-GESTION-DBA
+name: Un panel de monitoreo de bases de datos
+
+# === STORY CORE ===
 as_a: DBA
 i_want: un panel de monitoreo de bases de datos
 so_that: pueda detectar problemas de rendimiento
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DBA
+  agent_type: HUMAN
+  description: Administrador de Bases de Datos (DBA) responsable de la alta disponibilidad y performance
+
+entities_mentioned:
+  - id: ENT-SYS-BASE-DATOS
+    status: candidate
+  - id: ENT-SYS-METRICA-PERFORMANCE
+    status: candidate
+  - id: ENT-SYS-LOGS-QUERIES
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-ADMINISTRACION-BD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: INFRAESTRUCTURA
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - dba
+  - monitoreo
+  - performance
+  - disponibilidad
+  - soporte-tecnico
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard en tiempo real con uso de CPU, RAM e I/O de los servidores BD
+  - Alerta de "Slow Queries" que superen umbrales definidos
+  - Reporte de crecimiento de volumen de datos por esquema/tabla

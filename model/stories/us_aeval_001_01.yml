@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_aeval_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una ficha de evaluación con criterios estándar
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AEVAL-001-01
-urn: urn:goreos:atom:story:us_aeval_001_01:1.0.0
-role_id: ROL-GESTION-ANALISTA-EVA
+name: Una ficha de evaluación con criterios estándar
+
+# === STORY CORE ===
 as_a: Analista Evaluación
 i_want: una ficha de evaluación con criterios estándar
 so_that: la evaluación sea consistente
-domain: D-EJEC
-competence_id: CPT-EJEC-EVAL-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-EVA
+  agent_type: HUMAN
+  description: Analista que evalúa proyectos de inversión
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-FICHA-EVALUACION
+    status: candidate
+  - id: ENT-FIN-CRITERIO-EVALUACION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-EVALUACION-PROYECTOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - evaluacion
+  - ficha
+  - criterios
+  - proyectos
+
+status: ENRICHED
+acceptance_criteria:
+  - Criterios configurables por tipo de proyecto
+  - Puntaje automático basado en respuestas
+  - Comparativa entre evaluadores
+  - Exportación de resultados

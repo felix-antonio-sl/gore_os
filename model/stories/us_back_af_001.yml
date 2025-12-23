@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_af_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alta de activo fijo (código, depreciación)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-AF-001
-urn: urn:goreos:atom:story:us_back_af_001:1.0.0
-role_id: ROL-GESTION-OPS-AF
+name: Alta de activo fijo (código, depreciación)
+
+# === STORY CORE ===
 as_a: Encargado Activo Fijo
 i_want: Registrar alta de activo fijo (código, depreciación)
 so_that: Incorporo bienes al patrimonio
-domain: D-BACK
-competence_id: CPT-BACK-AF-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ACTIVO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OPS-AF
+  agent_type: HUMAN
+  description: Encargado de la gestión de activos fijos institucionales del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-ACTIVO
+    status: linked
+  - id: ENT-FIN-DEPRECIACION
+    status: candidate
+  - id: ENT-SYS-CODIGO-INVENTARIO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-ALTA-ACTIVO-FIJO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: ACTIVO-FIJO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - activo-fijo
+  - inventario
+  - depreciacion
+  - patrimonio
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación única de código correlativo de inventario
+  - Cálculo de tabla de depreciación según vida útil y valor inicial
+  - Posibilidad de imprimir etiquetas de activos fijas con código QR

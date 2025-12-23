@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_koda_003:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-KODA-003
+name: Gobernanza de Esquemas de Conocimiento (Knowledge Schemas)
+
+# === STORY CORE ===
+as_a: Arquitecto KODA
+i_want: Gestionar versiones estrictas de los esquemas YAML (schemas) utilizados para definir historias, entidades y procesos
+so_that: se mantenga la integridad semántica del Supermodelo a pesar de la evolución divergente de sus componentes
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Responsable de la coherencia semántica mediante esquemas formales
+
+entities_mentioned:
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: SEMANTICA
+  priority: P1
+  scope: GOBERNANZA-DATOS
+
+extra_tags:
+  - schemas
+  - yaml-validation
+  - semantica-formal
+  - koda
+
+status: ENRICHED
+acceptance_criteria:
+  - Cada esquema debe tener una URN propia (ej: urn:goreos:schema:story:2.0.0)
+  - Motor de validación que impida la ingesta de archivos que no cumplan con la versión de esquema declarada
+  - Herramientas de migración automática (Upgraders) entre versiones de esquema

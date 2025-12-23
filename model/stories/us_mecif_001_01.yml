@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mecif_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso al registro de dirigentes sociales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-MECIF-001-01
-urn: urn:goreos:atom:story:us_mecif_001_01:1.0.0
-role_id: ROL-GESTION-VERDE-MEMB
-as_a: Miembro Comité Estado Verde
-i_want: acceso al registro de dirigentes sociales
-so_that: se validen los interlocutores en el territorio
-domain: D-TERR
-priority: P2
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Validación de Representatividad en Organizaciones Sociales
+
+# === STORY CORE ===
+as_a: Auditor de Control Interno (MECIF)
+i_want: Consultar de forma unificada el registro regional de dirigentes y organizaciones sociales
+so_that: se validen la vigencia de personalidades jurídicas y la legitimidad de los interlocutores antes de transferir fondos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-AUDITOR
+  agent_type: HUMAN
+  description: Auditor encargado de evaluar el cumplimiento del Marco de Control Interno (MECIF)
+
+entities_mentioned:
+  - id: ENT-FIN-SUBVENCION
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: CONTROL-INTERNO
+  priority: P2
+  scope: PROBIDAD
+
+extra_tags:
+  - mecif
+  - dirigentes
+  - organizaciones-sociales
+  - validacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración con el Registro Civil para verificar vigencia de directivas
+  - Alerta de "Bloqueo de Fondos" si la organización tiene rendiciones pendientes u observaciones de MECIF
+  - Geolocalización de la sede social para validación de impacto territorial real

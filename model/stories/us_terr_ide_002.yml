@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_ide_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Federar catálogos IDE Chile (CSW)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TERR-IDE-002
-urn: urn:goreos:atom:story:us_terr_ide_002:1.0.0
-role_id: ROL-GESTION-IDE
+name: Federación de catálogos IDE Chile (CSW)
+
+# === STORY CORE ===
 as_a: Coordinador IDE
-i_want: Federar catálogos IDE Chile (CSW)
-so_that: Integro datos nacionales
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+i_want: federar los catálogos de metadatos de la IDE Regional con el catálogo nacional de IDE Chile mediante el estándar CSW (Catalog Service for the Web)
+so_that: se integren los datos territoriales regionales en el inventario nacional y se facilite su descubrimiento por parte de terceros
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-IDE
+  agent_type: HUMAN
+  description: Responsable de la interoperabilidad cartográfica y el catálogo de metadatos institucional
+
+entities_mentioned:
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: INFRAESTRUCTURA-DATOS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ide-chile
+  - csw
+  - metadatos
+  - federacion
+  - interoperabilidad-gis
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización exitosa probada mediante el cosechador (Harvester) nacional de IDE Chile
+  - Validación de metadatos bajo el estándar ISO 19115/19139 antes de la federación
+  - Dashboard de disponibilidad de los servicios de catálogo (CSW) en la IDE Regional

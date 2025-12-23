@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_fosis_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para FOSIS
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_FOSIS-001
-urn: urn:goreos:atom:story:us_gen_gestion_fosis_001:1.0.0
-role_id: ROL-GESTION-FOSIS
+name: Historia genérica para FOSIS
+
+# === STORY CORE ===
 as_a: FOSIS
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FOSIS
+  agent_type: HUMAN
+  description: Representante del Fondo de Solidaridad e Inversión Social (FOSIS) que coordina programas de superación de pobreza con el GORE
+
+entities_mentioned:
+  - id: ENT-SOC-BENEFICIARIO-VULNERABLE
+    status: linked
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: SOCIAL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - fosis
+  - superacion-pobreza
+  - inversion-social
+  - convenios
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a base de datos de beneficiarios del GORE para cruce de vulnerabilidad (RSH)
+  - Módulo de carga de informes de seguimiento de programas de micro-emprendimiento
+  - Repositorio compartido de bases de licitación para programas de empleabilidad regional

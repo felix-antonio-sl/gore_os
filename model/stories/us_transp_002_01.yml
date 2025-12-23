@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_transp_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de solicitudes SAI con control de plazos
-id: US-TRANSP-002-01
-urn: urn:goreos:atom:story:us_transp_002_01:1.0.0
-role_id: ROL-GESTION-TRANSP
-as_a: Encargado Transparencia Activa/Pasiva
-i_want: un módulo de gestión de solicitudes SAI con control de plazos
-so_that: pueda responder dentro de los 20 días hábiles legales
-domain: D-TDE
-priority: P0
-competence_id: CPT-TRANSPARENCIA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-TRANSP-002-01
+name: Gestión de Solicitudes SAI (Acceso a Información)
+
+# === STORY CORE ===
+as_a: Encargado de Transparencia
+i_want: un módulo para gestionar solicitudes SAI (Solicitud de Acceso a Información) con control estricto de plazos
+so_that: se responda a la ciudadanía dentro de los 20 días hábiles legales y se cumpla con la Ley 20.285
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRANSP
+  agent_type: HUMAN
+  description: Funcionario encargado de tramitar las solicitudes de información pública
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-NORM-DECRETO-SUPREMO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: TRANSPARENCIA
+  priority: P0
+  scope: CIUDADANO
+
+extra_tags:
+  - sai
+  - ley20285
+  - transparencia-pasiva
+  - plazos-legales
+  - acceso-informacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero de control con cuenta regresiva en días hábiles para cada solicitud SAI activa
+  - Workflow de derivación interna a las divisiones que poseen la información solicitada
+  - Repositorio de respuestas tipo y archivo digital de lo entregado para auditorías de la CGR

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportar avance mensual (% físico/financiero)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-011
-urn: urn:goreos:atom:story:us_fin_ipr_011:1.0.0
-role_id: ROL-EJEC-URAI-EJEC
-as_a: Ejecutivo URAI
-i_want: Reportar avance mensual (% físico/financiero)
-so_that: Cumplo con obligaciones de reporte
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Reporte de Avance Mensual Físico-Financiero
+
+# === STORY CORE ===
+as_a: Ejecutivo de la Unidad Regional de Asistencia Inmediata (URAI) / ITO
+i_want: registrar periódicamente el porcentaje de avance físico y financiero de los proyectos de inversión bajo mi supervisión
+so_that: se mantenga actualizada la ejecución presupuestaria regional y se cumpla con las obligaciones de reporte ante la DIPRES
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-URAI-EJEC
+  agent_type: HUMAN
+  description: Profesional encargado de supervisar la ejecución técnica de las inversiones
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: MONITOREO-INVERSION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - avance-mensual
+  - ejecucion-presupuestaria
+  - urai
+  - dipres
+  - control-gestion
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de entrada con validación de que el % físico >= % financiero (o justificación)
+  - Capacidad de adjuntar fotos de la obra con metadata georreferenciada
+  - Exportación automática del reporte mensual en formato oficial DIPRES

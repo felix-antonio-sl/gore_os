@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_itp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de inspección con checklist por programa
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ITP-001-01
-urn: urn:goreos:atom:story:us_itp_001_01:1.0.0
-role_id: ROL-EJEC-ITO
-as_a: Inspector Obras (Municipal)
-i_want: un módulo de inspección con checklist por programa
-so_that: pueda verificar cumplimiento de bases
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Supervisión Normativa de Programas (ITP)
+
+# === STORY CORE ===
+as_a: Inspector Técnico de Programa (ITP)
+i_want: Un módulo de inspección con checklists específicos según la tipología de programa
+so_that: pueda verificar sistemáticamente el cumplimiento de las bases administrativas y técnicas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ITP
+  agent_type: HUMAN
+  description: Inspector encargado de monitorear programas sociales, culturales o productivos
+
+entities_mentioned:
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-EJE-HITOS
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P6
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: PROGRAMAS-SOCIALES
+  priority: P0
+  scope: TECNICO
+
+extra_tags:
+  - itp
+  - programas
+  - checklist
+  - control-gestion
+
+status: ENRICHED
+acceptance_criteria:
+  - Configuración dinámica de checklists según la categoría del fondo (Cultura, Deporte, etc.)
+  - Registro de evidencias cualitativas (testimonios, encuestas) y cuantitativas
+  - Generación de reportes de avance para el comité técnico regional

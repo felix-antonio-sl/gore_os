@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Controlar tope 5% de gastos administrativos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-REND-016
-urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
-role_id: ROL-GESTION-FIN-REND
+name: Controlar tope 5% de gastos administrativos
+
+# === STORY CORE ===
 as_a: Encargado Rendiciones
 i_want: Controlar tope 5% de gastos administrativos
-so_that: Verifico cumplimiento de límite
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Verifico cumplimiento de límite legal en convenios de transferencia
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-REND
+  agent_type: HUMAN
+  description: Encargado de rendiciones en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-RENDICION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-REND-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: RENDICION-DE-CUENTAS
+  priority: P1
+  scope: LEGAL
+
+extra_tags:
+  - tope-gastos
+  - administracion
+  - convenios
+  - validacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Alerta automática si los gastos administrativos imputados superan el 5% del monto total rendido
+  - Validación en tiempo real durante la carga de facturas de administración
+  - Reporte semafórico de cumplimiento de límites para convenios vigentes

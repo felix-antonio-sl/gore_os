@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_junji_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Director Regional JUNJI
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_JUNJI-001
-urn: urn:goreos:atom:story:us_gen_gestion_junji_001:1.0.0
-role_id: ROL-GESTION-JUNJI
+name: Historia genérica para Director Regional JUNJI
+
+# === STORY CORE ===
 as_a: Director Regional JUNJI
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JUNJI
+  agent_type: HUMAN
+  description: Director Regional de la Junta Nacional de Jardines Infantiles (JUNJI) que gestiona infraestructura parvularia con el GORE
+
+entities_mentioned:
+  - id: ENT-SOC-INFRAESTRUCTURA-EDUCATIVA
+    status: candidate
+  - id: ENT-CONV-CONVENIO-MANDATO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: SOCIAL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - junji
+  - educacion-inicial
+  - jardines-infantiles
+  - infraestructura-social
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a estado de avance de proyectos de reposición o construcción de jardines infantiles (FNDR)
+  - Módulo de carga de requerimientos de equipamiento educativo para zonas rurales
+  - Registro de convenios de transferencia técnica para estándares de calidad parvularia

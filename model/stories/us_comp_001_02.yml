@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_comp_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un workflow de solicitud de compra desde las unidades
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COMP-001-02
-urn: urn:goreos:atom:story:us_comp_001_02:1.0.0
-role_id: ROL-FIN-ABS-COMP
+name: Un workflow de solicitud de compra desde las unidades
+
+# === STORY CORE ===
 as_a: Comprador Público
 i_want: un workflow de solicitud de compra desde las unidades
 so_that: pueda recibir requerimientos formalizados
-domain: D-BACK
-priority: P0
-competence_id: CPT-COMPRAS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ABS-COMP
+  agent_type: HUMAN
+  description: Encargado de Compras que recibe y valida las solicitudes de las unidades requirentes
+
+entities_mentioned:
+  - id: ENT-FIN-SOLICITUD-COMPRA
+    status: candidate
+  - id: ENT-ORG-REQUERIMIENTO-INTERNO
+    status: candidate
+  - id: ENT-ORG-UNIDAD-REQUERENTE
+    status: linked
+
+process_ref:
+  id: PROC-BACK-TRAMITACION-COMPRA
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: ABASTECIMIENTO
+  priority: P0
+  scope: INTERNO
+
+extra_tags:
+  - compras
+  - workflow
+  - adquisiciones
+  - requerimientos
+  - formalizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario estandarizado para solicitud de bienes o servicios
+  - Ruta de aprobación jerárquica (Jefe de Unidad -> DAF)
+  - Validación automática de existencia de item en el presupuesto anual

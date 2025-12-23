@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_intfin_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso total de auditoría al ERP financiero
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-INTFIN-001-01
-urn: urn:goreos:atom:story:us_intfin_001_01:1.0.0
-role_id: ROL-GESTION-FNX-FIN
+name: Acceso total de auditoría al ERP financiero
+
+# === STORY CORE ===
 as_a: Interventor Financiero
 i_want: acceso total de auditoría al ERP financiero
 so_that: pueda identificar descuadres históricos
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FNX-FIN
+  agent_type: HUMAN
+  description: Auditor o interventor especializado en la fiscalización de flujos financieros y ejecución presupuestaria
+
+entities_mentioned:
+  - id: ENT-FIN-ERP-DATA
+    status: candidate
+  - id: ENT-FIN-AUDIT-LOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CONTABILIDAD-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: AUDITORIA
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - erp
+  - auditoria-financiera
+  - sigfe
+  - trazabilidad
+  - cumplimiento-fiscal
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso de solo lectura a tablas maestras de transacciones del ERP (vía Read-Replica o API)
+  - Dashboard de conciliación histórica entre presupuesto devengado y pagado
+  - Generación de alertas automáticas ante discrepancias mayores al 0.5% en centros de costo

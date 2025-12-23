@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_muni_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Habilitar Trámite Express para municipios
-id: US-TDE-MUNI-002
-urn: urn:goreos:atom:story:us_tde_muni_002:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Habilitar Trámite Express para municipios
-so_that: Simplifico interacción
-domain: D-TDE
-priority: P2
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TRAMITE
+id: US-TDE-MUNI-002
+name: Habilitación de Trámite Express para Municipios
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: habilitar el módulo "Trámite Express" para que los municipios realicen rendiciones y solicitudes al GORE de forma simplificada
+so_that: se simplifique la interacción administrativa y se acelere la ejecución de proyectos locales financiados por el GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Facilitador de la adopción tecnológica en la relación GORE-Municipio
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: SIMPLIFICACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - tramite-express
+  - municipios
+  - rendiciones
+  - proyectos-locales
+  - eficiencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario simplificado con pre-llenado de datos institucionales de la municipalidad
+  - Carga masiva de comprobantes de gasto para rendiciones de proyectos FRIL
+  - Notificaciones automáticas al alcalde y al equipo técnico municipal sobre el estado de la solicitud

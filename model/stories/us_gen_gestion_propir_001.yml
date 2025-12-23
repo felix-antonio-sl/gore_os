@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_propir_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Coordinador Mapa PROPIR
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_PROPIR-001
-urn: urn:goreos:atom:story:us_gen_gestion_propir_001:1.0.0
-role_id: ROL-GESTION-PROPIR
+name: Historia genérica para Coordinador Mapa PROPIR
+
+# === STORY CORE ===
 as_a: Coordinador Mapa PROPIR
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROPIR
+  agent_type: HUMAN
+  description: Coordinador del Programa Público de Inversión Regional (PROPIR) responsable de la visibilidad territorial del gasto
+
+entities_mentioned:
+  - id: ENT-EJEC-CARTOLA-PROPIR
+    status: candidate
+  - id: ENT-TERR-MAPA-INVERSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-PROYECTOS-INVERSION-SOCIAL
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: SEGUIMIENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - propir
+  - mapa-inversion
+  - seguimiento-gasto
+  - territorio
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización cartográfica de la inversión sectorial integrada (GORE + Ministerios)
+  - Módulo de actualización mensual de estados de avance para el reporte PROPIR Nacional
+  - Generación de cartolas provinciales de inversión para el Gobernador

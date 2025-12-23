@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_play_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Playbook de remediación
-id: US-EVOL-PLAY-001
-urn: urn:goreos:atom:story:us_evol_play_001:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Ejecutar playbook de remediación
-so_that: Respondo a problemas conocidos
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-PLAYBOOK
+id: US-EVOL-PLAY-001
+name: Ejecución de Playbooks de Remediación
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Soporte TI
+i_want: ejecutar playbooks de remediación automática o semi-automática ante incidentes técnicos reportados
+so_that: se responda de forma estandarizada a problemas conocidos, minimizando el impacto en la operación y el tiempo de resolución
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Usuario de soporte encargado de mantener la continuidad de los servicios
+
+entities_mentioned:
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: SOPORTE
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - playbook
+  - remediacion
+  - incidentes
+  - soporte-tecnico
+  - automatizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo de playbooks categorizados por tipo de error o servicio afectado
+  - Ejecución guiada paso a paso con validación de resultados en cada etapa
+  - Registro de auditoría que vincula el incidente con el playbook ejecutado y el resultado final

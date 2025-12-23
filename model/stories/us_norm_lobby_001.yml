@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_lobby_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar registros de audiencias y donativos
-id: US-NORM-LOBBY-001
-urn: urn:goreos:atom:story:us_norm_lobby_001:1.0.0
-role_id: ROL-GESTION-TRANSP
-as_a: Encargado Transparencia Activa/Pasiva
-i_want: Verificar registros de audiencias y donativos
-so_that: Cumplo con Ley de Lobby
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-AUDIENCIA
+id: US-NORM-LOBBY-001
+name: Control de Registros de Lobby
+
+# === STORY CORE ===
+as_a: Encargado de Transparencia
+i_want: Verificar y validar los registros de audiencias, donativos y viajes realizados por los sujetos pasivos del GORE Ñuble
+so_that: se cumpla estrictamente con la Ley de Lobby y se garantice la probidad pública
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRANSP
+  agent_type: HUMAN
+  description: Responsable de la carga y validación de datos en el portal de la Ley de Lobby
+
+entities_mentioned:
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: LOBBY
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - ley-lobby
+  - audiencias
+  - donativos
+  - integridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización automática de audiencias solicitadas mediante el portal institucional
+  - Validación de plazos legales (3 días hábiles para el registro post-audiencia)
+  - Interfaz de "Visto Bueno" del encargado antes de la publicación definitiva en el portal central

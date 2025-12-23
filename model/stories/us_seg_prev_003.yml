@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_prev_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar sesiones del Consejo Regional de Seguridad Pública
-id: US-SEG-PREV-003
-urn: urn:goreos:atom:story:us_seg_prev_003:1.0.0
-role_id: ROL-GESTION-PREV
-as_a: Encargado Prevención
-i_want: Coordinar sesiones del Consejo Regional de Seguridad Pública
-so_that: Articulo gobernanza de seguridad
-domain: D-SEG
-priority: P1
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-GOV-CORE
+id: US-SEG-PREV-003
+name: Coordinación de sesiones del Consejo Regional de Seguridad Pública
+
+# === STORY CORE ===
+as_a: Encargado de Prevención (GORE)
+i_want: coordinar las sesiones del Consejo Regional de Seguridad Pública
+so_that: se articule la gobernanza de seguridad entre los diversos servicios y municipios de la región
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV
+  agent_type: HUMAN
+  description: Funcionario del GORE encargado de la secretaría técnica y ejecución del plan de prevención del delito
+
+entities_mentioned:
+  - id: ENT-GOV-CORE
+    status: linked
+  - id: ENT-SEG-CONSEJO-SEGURIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-ESTRATEGICA
+  status: linked
+
+tags:
+  domain: D-SEG
+  aspect: GOBERNANZA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - prevencion
+  - gobernanza
+  - consejo-regional
+  - articulacion
+  - seguridad-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Herramienta de gestión de convocatorias y quórum digital para los integrantes del consejo
+  - Módulo de seguimiento de compromisos financieros y operativos adoptados en sesión
+  - Repositorio central de los diagnósticos comunales de seguridad para consolidación regional

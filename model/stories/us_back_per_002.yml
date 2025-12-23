@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Completar proceso de inducción digital (checklist)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-002
-urn: urn:goreos:atom:story:us_back_per_002:1.0.0
-role_id: ROL-GESTION-PER-FUN
+name: Completar proceso de inducción digital (checklist)
+
+# === STORY CORE ===
 as_a: Funcionario
 i_want: Completar proceso de inducción digital (checklist)
 so_that: Me integro correctamente a la institución
-domain: D-BACK
-competence_id: CPT-BACK-RRHH-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Funcionario nuevo recién ingresado al GORE
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-PLAN-INDUCCION
+    status: candidate
+  - id: ENT-SYS-CHECKLIST
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-ONBOARDING-FUNCIONARIO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CAPACITACION
+  priority: P1
+  scope: PERSONAL
+
+extra_tags:
+  - induccion
+  - onboarding
+  - rrhh
+  - funcionario-nuevo
+  - capacitacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist guiado de hitos de inducción (entrega de equipo, charla seguridad, etc.)
+  - Acceso a materiales de bienvenida y cultura institucional (PDF/Video)
+  - Notificación al jefe directo tras completar el 100% de la inducción

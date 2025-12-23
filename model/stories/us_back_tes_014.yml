@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_014:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Corte de compromisos de fin de año con notificación a unidades
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-014
-urn: urn:goreos:atom:story:us_back_tes_014:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Corte de compromisos de fin de año con notificación a unidades
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Ejecutar corte de compromisos de fin de año con notificación a unidades
 so_that: Cierro ordenadamente el ejercicio
-domain: D-BACK
-priority: P0
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMPROMISO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-JUR
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica (o autoridad delegada) que formaliza el cierre del ejercicio presupuestario
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-CORTE-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-SYS-NOTIFICACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CIERRE-ANUAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CIERRE-ANUAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - cierre-ejercicio
+  - compromisos
+  - fin-de-año
+  - notificaciones
+  - juridica
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de cronograma de corte (fechas stop para compras, viáticos, etc.)
+  - Envío masivo de circulares de cierre a todas las unidades del GORE
+  - Bloqueo automático de nuevas solicitudes en el sistema tras la fecha de corte
+  - Reporte de compromisos pendientes de anulación o arrastre

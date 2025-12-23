@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_desc_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Documentar las capacidades requeridas para cada competencia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DESC-001-02
-urn: urn:goreos:atom:story:us_desc_001_02:1.0.0
-role_id: ROL-GESTION-ENCARGADO-DE
+name: Documentar las capacidades requeridas para cada competencia
+
+# === STORY CORE ===
 as_a: Encargado Descentralización
 i_want: documentar las capacidades requeridas para cada competencia
 so_that: pueda planificar el fortalecimiento institucional
-domain: D-PLAN
-priority: P1
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-CAPACIDAD
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENCARGADO-DE
+  agent_type: HUMAN
+  description: Encargado de la Unidad de Descentralización responsable del traspaso de competencias (Ley 21.074)
+
+entities_mentioned:
+  - id: ENT-ORG-COMPETENCIA-TRANSFERIDA
+    status: candidate
+  - id: ENT-ORG-CAPACIDAD-INSTITUCIONAL
+    status: candidate
+  - id: ENT-ORG-PLAN-FORTALECIMIENTO
+    status: candidate
+
+process_ref:
+  id: PROC-GOB-DESCENTRALIZACION-COMPETENCIAS
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: DESCENTRALIZACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - descentralizacion
+  - competencias
+  - fortalecimiento
+  - capacidades
+  - ley-21074
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz de brechas por competencia transferida vs recursos humanos/técnicos actuales
+  - Workflow de solicitud de recursos adicionales basados en brechas detectadas
+  - Semáforo de madurez institucional para la asunción de nuevas funciones

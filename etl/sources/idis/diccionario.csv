@@ -1,0 +1,245 @@
+﻿tabla,campo,rol,tipo_inferido,descripcion,grupo
+DIPIR_Indicadores_2021_25,indicador,Clave de grano,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+DIPIR_Indicadores_2021_25,unidad,Clave de grano,texto/categórico,Unidad del valor DIPIR: 'monto' o 'porcentaje'.,General
+DIPIR_Indicadores_2021_25,valor,Medida,entero,Valor numérico (porcentaje en fracción o monto parseado) según unidad.,General
+DIPIR_Indicadores_2021_25,valor_raw,Medida,entero,Valor original en texto tal como venía en el reporte.,General
+DIPIR_Indicadores_2021_25,anio,Clave de grano,fecha,Año calendario del registro (cuando aplica).,Tiempo
+DIPIR_Indicadores_2021_25,mes,Clave de grano,entero,Mes numérico (1–12).,Tiempo
+DIPIR_Indicadores_2021_25,mes_nombre,Atributo,texto/categórico,Campo temporal (fecha o período).,Tiempo
+DIPIR_Porcentaje_2019_2025,valor,Medida,vacío,Valor numérico (porcentaje en fracción o monto parseado) según unidad.,General
+DIPIR_Porcentaje_2019_2025,valor_raw,Medida,vacío,Valor original en texto tal como venía en el reporte.,General
+DIPIR_Porcentaje_2019_2025,anio,Clave de grano,vacío,Año calendario del registro (cuando aplica).,Tiempo
+DIPIR_Porcentaje_2019_2025,mes,Clave de grano,vacío,Mes numérico (1–12).,Tiempo
+Dim_Iniciativa,bip,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,bip_from_code,Derivado / QC,entero,BIP extraído desde cod_unico cuando sigue patrón <BIP>-<AÑO> (derivado).,General
+Dim_Iniciativa,dv,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,etapa,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,fuente,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,nombre_iniciativa,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,origen,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,tipologia,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,unidad_tecnica,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,vigencia,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Dim_Iniciativa,comuna,Atributo,texto/categórico,Atributo territorial (normalizar nombres si se requiere para análisis geográfico).,Geografía
+Dim_Iniciativa,provincia,Atributo,texto/categórico,Atributo territorial (normalizar nombres si se requiere para análisis geográfico).,Geografía
+Dim_Iniciativa,estado_actual,Atributo,texto/categórico,"Campo de gestión/seguimiento del ciclo de la iniciativa (estado, rate, hitos, documentos).",Gestión / Workflow
+Dim_Iniciativa,rate_actual,Atributo,texto/categórico,"Campo de gestión/seguimiento del ciclo de la iniciativa (estado, rate, hitos, documentos).",Gestión / Workflow
+Dim_Iniciativa,cod_unico,PK,texto/categórico,Identificador de la iniciativa/proyecto (normalizado: trim/uppercase; '-' y '-YYYY' tratados como nulos).,Identificación
+Dim_Iniciativa,anio,Atributo,fecha,Año calendario del registro (cuando aplica).,Tiempo
+Dim_Iniciativa,anio_presp,Atributo,fecha,Año presupuestario asociado a la asignación/registro.,Tiempo
+Dim_Iniciativa,fecha_estado_actual,Atributo,fecha,Campo temporal (fecha o período).,Tiempo
+Dim_Iniciativa,fecha_ultimo_rate,Atributo,fecha,Campo temporal (fecha o período).,Tiempo
+Fact_Ejecucion_Mensual,asig,Atributo,entero,Asignación presupuestaria (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Ejecucion_Mensual,item,Atributo,entero,Ítem presupuestario (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Ejecucion_Mensual,subt,Atributo,entero,Subtítulo presupuestario (código). Normalizado para joins (ceros a la izquierda removidos cuando aplica).,Clasificación presupuestaria
+Fact_Ejecucion_Mensual,monto,Medida,entero,Monto (entero) parseado desde texto/moneda; unidad según tabla (pesos o miles según origen).,Finanzas
+Fact_Ejecucion_Mensual,tipo,Clave de grano,texto/categórico,Tipo de serie mensual: PROYECTADO o REAL.,General
+Fact_Ejecucion_Mensual,cod_unico,FK,texto/categórico,Identificador de la iniciativa/proyecto (normalizado: trim/uppercase; '-' y '-YYYY' tratados como nulos).,Identificación
+Fact_Ejecucion_Mensual,AÑO PRESUPUESTARIO,Atributo,fecha,Año presupuestario asociado a la asignación/registro.,Tiempo
+Fact_Ejecucion_Mensual,anio,Clave de grano,fecha,Año calendario del registro (cuando aplica).,Tiempo
+Fact_Ejecucion_Mensual,mes,Clave de grano,entero,Mes numérico (1–12).,Tiempo
+Fact_Linea,non_null_count,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,Calidad / Técnica
+Fact_Linea,ASIG,Clave de grano,entero,Asignación presupuestaria (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Linea,ITEM,Clave de grano,entero,Ítem presupuestario (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Linea,SUBT,Clave de grano,entero,Subtítulo presupuestario (código). Normalizado para joins (ceros a la izquierda removidos cuando aplica).,Clasificación presupuestaria
+Fact_Linea,asig,Clave de grano,entero,Asignación presupuestaria (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Linea,asig_norm,Atributo,entero,Asignación presupuestaria (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Linea,item,Clave de grano,entero,Ítem presupuestario (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Linea,item_norm,Atributo,entero,Ítem presupuestario (código). Normalizado para joins.,Clasificación presupuestaria
+Fact_Linea,key_linea,Derivado / QC,texto/categórico,Clave técnica propuesta para la línea presupuestaria (cod_unico|año|subt|item|asig) cuando es atómica.,Clasificación presupuestaria
+Fact_Linea,linea_is_atomic,Derivado / QC,booleano/categórico,Flag: SUBT/ITEM/ASIG son códigos atómicos (numéricos simples) y sirven para PK de línea.,Clasificación presupuestaria
+Fact_Linea,subt,Clave de grano,entero,Subtítulo presupuestario (código). Normalizado para joins (ceros a la izquierda removidos cuando aplica).,Clasificación presupuestaria
+Fact_Linea,subt_norm,Atributo,entero,Subtítulo presupuestario (código). Normalizado para joins (ceros a la izquierda removidos cuando aplica).,Clasificación presupuestaria
+Fact_Linea,ARRASTRE 2024,Atributo,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,ARRASTRE 2024_n,Atributo,entero,"Versión numérica (entero) del campo 'ARRASTRE 2024', parseada desde texto/moneda.",Finanzas
+Fact_Linea,ARRASTRE 2025,Atributo,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,ARRASTRE 2025_n,Atributo,entero,"Versión numérica (entero) del campo 'ARRASTRE 2025', parseada desde texto/moneda.",Finanzas
+Fact_Linea,ARRASTRE 2026,Atributo,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,ARRASTRE 2026_n,Atributo,entero,"Versión numérica (entero) del campo 'ARRASTRE 2026', parseada desde texto/moneda.",Finanzas
+Fact_Linea,EJEC. 2019,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,EJEC. 2019_n,Medida,entero,"Versión numérica (entero) del campo 'EJEC. 2019', parseada desde texto/moneda.",Finanzas
+Fact_Linea,EJEC. 2020,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,EJEC. 2020_n,Medida,entero,"Versión numérica (entero) del campo 'EJEC. 2020', parseada desde texto/moneda.",Finanzas
+Fact_Linea,EJEC. 2021,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,EJEC. 2021_n,Medida,entero,"Versión numérica (entero) del campo 'EJEC. 2021', parseada desde texto/moneda.",Finanzas
+Fact_Linea,GASTO A EJECUTAR 2023,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,GASTO A EJECUTAR 2023_n,Medida,entero,"Versión numérica (entero) del campo 'GASTO A EJECUTAR 2023', parseada desde texto/moneda.",Finanzas
+Fact_Linea,GASTO A EJECUTAR 2024,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,GASTO A EJECUTAR 2024_n,Medida,entero,"Versión numérica (entero) del campo 'GASTO A EJECUTAR 2024', parseada desde texto/moneda.",Finanzas
+Fact_Linea,GASTO A EJECUTAR 2025,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,GASTO A EJECUTAR 2025_n,Medida,entero,"Versión numérica (entero) del campo 'GASTO A EJECUTAR 2025', parseada desde texto/moneda.",Finanzas
+Fact_Linea,GASTO EJECUTADO 2022,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,GASTO EJECUTADO 2022_n,Medida,entero,"Versión numérica (entero) del campo 'GASTO EJECUTADO 2022', parseada desde texto/moneda.",Finanzas
+Fact_Linea,GASTO EJECUTADO 2023,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,GASTO EJECUTADO 2023_n,Medida,entero,"Versión numérica (entero) del campo 'GASTO EJECUTADO 2023', parseada desde texto/moneda.",Finanzas
+Fact_Linea,GASTO EJECUTADO 2024,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,GASTO EJECUTADO 2024_n,Medida,entero,"Versión numérica (entero) del campo 'GASTO EJECUTADO 2024', parseada desde texto/moneda.",Finanzas
+Fact_Linea,GASTO EJECUTADO 2025,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,GASTO EJECUTADO 2025_n,Medida,entero,"Versión numérica (entero) del campo 'GASTO EJECUTADO 2025', parseada desde texto/moneda.",Finanzas
+Fact_Linea,MONTO FNDR ADJUDICADO M$,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,MONTO FNDR ADJUDICADO M$_n,Medida,entero,"Versión numérica (entero) del campo 'MONTO FNDR ADJUDICADO M$', parseada desde texto/moneda.",Finanzas
+Fact_Linea,MONTO FNDR POSTULADO M$,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,MONTO FNDR POSTULADO M$_n,Medida,entero,"Versión numérica (entero) del campo 'MONTO FNDR POSTULADO M$', parseada desde texto/moneda.",Finanzas
+Fact_Linea,MONTO SECTORIAL M$,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,MONTO SECTORIAL M$_n,Medida,entero,"Versión numérica (entero) del campo 'MONTO SECTORIAL M$', parseada desde texto/moneda.",Finanzas
+Fact_Linea,MONTO TOTAL PROYECTO,Medida,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,MONTO TOTAL PROYECTO_n,Medida,entero,"Versión numérica (entero) del campo 'MONTO TOTAL PROYECTO', parseada desde texto/moneda.",Finanzas
+Fact_Linea,ppto,Atributo,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,saldo,Atributo,entero,Campo financiero/monto (revisar unidad: $ / M$ según encabezado original).,Finanzas
+Fact_Linea,.3,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,.35,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,.38,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,.5,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,2021+2022+2023,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,2024,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ABR.1,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ACTA ENTREGA TERRENO,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AGO.2,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AUMENTO DE PLAZO (PARALIZACIÓN),Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AUMENTOS $,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,AUMENTOS $_n,Atributo,entero,"Versión numérica (entero) del campo 'AUMENTOS $', parseada desde texto/moneda.",General
+Fact_Linea,AVANCE,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,CODIGO BIP,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,CODIGO ÚNICO,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIC.2,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIVISIÓN VINCULADA,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,DIVISIÓN Y SUBTÍTULO,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,EMPRESA ADJUDICADA,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ENE,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ENERO PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ENERO PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ENERO PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ENERO REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ENERO REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ENERO REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,FEB.1,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ID LICITACIÓN,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUL.2,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN.1,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,JUN.2,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAR.1,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY.1,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,MAY.2,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOMBRE INICIATIVA,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,NOV.2,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OBSERVACIÓN,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,OCT.2,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,ORIGEN,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,PLAZO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,PROF. PRESUP RESPONSABLE,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,PROF. RESPONSABLE,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,RES. CREA ASIGNACIÓN,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,RUT,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP PROYECTADO,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP PROYECTADO 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP PROYECTADO 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP PROYECTADO 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP REAL,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP REAL 23,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP REAL 24,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEP REAL 25,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,SEPT,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,TIPOLOGIA,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,UNIDAD TÉCNICA,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,Unnamed: 0,Atributo,texto/categórico,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,dife,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,suma ene a dic,Atributo,entero,Campo proveniente del consolidado; requiere definición funcional si se usará en reportes oficiales.,General
+Fact_Linea,COMUNA,Atributo,texto/categórico,Atributo territorial (normalizar nombres si se requiere para análisis geográfico).,Geografía
+Fact_Linea,PROVINCIA,Atributo,texto/categórico,Atributo territorial (normalizar nombres si se requiere para análisis geográfico).,Geografía
+Fact_Linea,CERT CORE O RS,Atributo,entero,"Campo de gestión/seguimiento del ciclo de la iniciativa (estado, rate, hitos, documentos).",Gestión / Workflow
+Fact_Linea,ESTADO,Atributo,entero,"Campo de gestión/seguimiento del ciclo de la iniciativa (estado, rate, hitos, documentos).",Gestión / Workflow
+Fact_Linea,N° RES. APRUEBA CONVENIO,Atributo,entero,"Campo de gestión/seguimiento del ciclo de la iniciativa (estado, rate, hitos, documentos).",Gestión / Workflow
+Fact_Linea,cod_unico,FK,texto/categórico,Identificador de la iniciativa/proyecto (normalizado: trim/uppercase; '-' y '-YYYY' tratados como nulos).,Identificación
+Fact_Linea,AÑO PRESUPUESTARIO,Clave de grano,fecha,Año presupuestario asociado a la asignación/registro.,Tiempo
+Fact_Linea,FECHA CERTIFICADO,Atributo,texto/categórico,Campo temporal (fecha o período).,Tiempo
+Fact_Linea,FECHA FIRMA DE CONVENIO,Atributo,texto/categórico,Campo temporal (fecha o período).,Tiempo
+Fact_Linea,FECHA RES- APRUEBA CONVENIO,Atributo,texto/categórico,Campo temporal (fecha o período).,Tiempo

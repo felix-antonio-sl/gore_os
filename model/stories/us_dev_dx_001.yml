@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_dx_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Iniciar el entorno de desarrollo con un solo comando (DevContainer)
-id: US-DEV-DX-001
-urn: urn:goreos:atom:story:us_dev_dx_001:1.0.0
-role_id: ROL-GESTION-NEW
-as_a: Nuevo Desarrollador
-i_want: Iniciar el entorno de desarrollo con un solo comando (DevContainer)
-so_that: Soy productivo desde el día 1 sin "configuración del infierno"
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-DEV-DX-001
+name: Onboarding Técnico Automático (DevContainer)
+
+# === STORY CORE ===
+as_a: Nuevo Desarrollador
+i_want: iniciar mi entorno de desarrollo local con todas las dependencias y servicios necesarios mediante un solo comando (DevContainer)
+so_that: sea productivo desde el primer día sin sufrir la "configuración del infierno" y asegurando paridad entre entornos de desarrollo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-NEW
+  agent_type: HUMAN
+  description: Profesional que se incorpora al equipo técnico y requiere un rápido despliegue de su workspace
+
+entities_mentioned:
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: EXCELENCIA-INGENIERIA
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - devcontainer
+  - docker
+  - dx
+  - developer-experience
+  - onboarding
+
+status: ENRICHED
+acceptance_criteria:
+  - Archivo de configuración `devcontainer.json` que levanta Base de Datos, Runtime y Linters automáticamente
+  - Documentación "Get Started" reducida a 2 pasos: Clonar y Abrir en Contenedor
+  - Scripts de seeding inicial de datos integrados en el levantamiento del contenedor

@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_analpres_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de marcos presupuestarios próximos a agotarse
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ANALPRES-001-02
-urn: urn:goreos:atom:story:us_analpres_001_02:1.0.0
-role_id: ROL-FIN-ANALISTA-PRE
+name: Alertas de marcos presupuestarios próximos a agotarse
+
+# === STORY CORE ===
 as_a: Analista Presupuesto
 i_want: alertas de marcos presupuestarios próximos a agotarse
 so_that: pueda informar oportunamente a la jefatura
-domain: D-FIN
-competence_id: CPT-FIN-PPTO-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-PRE
+  agent_type: ALGORITHMIC
+  description: Sistema de monitoreo de saldos presupuestarios por ítem/asignación
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-MARCO-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-FIN-ASIGNACION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CONTROL-PRESUPUESTARIO
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: CONTROL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - alertas
+  - presupuesto
+  - saldos
+  - monitoreo
+
+status: ENRICHED
+acceptance_criteria:
+  - Configuración de umbrales críticos (ej. 10% restante)
+  - Notificación automática por email y dashboard
+  - Reporte de proyección de gasto según tendencia

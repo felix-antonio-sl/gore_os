@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_018:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Realizar conciliación bancaria mensual
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-018
-urn: urn:goreos:atom:story:us_fin_ppto_018:1.0.0
-role_id: ROL-GESTION-PROF
+name: Realizar conciliación bancaria mensual
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Realizar conciliación bancaria mensual
-so_that: Verifico consistencia de cuentas
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-REND-001
-acceptance_criteria: []
+so_that: Verifico consistencia de cuentas y detecto desviaciones o cargos no reconocidos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-CDP
+    status: linked
+
+process_ref:
+  id: PROC-FIN-REND-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONCILIACION-BANCARIA
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - conciliacion
+  - banco
+  - cuentas
+  - tesoreria
+
+status: ENRICHED
+acceptance_criteria:
+  - Carga automática de cartolas bancarias en formato estándar
+  - Cruce automático de transacciones contra el libro de banco local
+  - Registro de diferencias con justificaciones obligatorias para el cierre mensual

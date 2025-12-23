@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_frpd_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a expedientes técnicos de proyectos FRPD
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FRPD-001-01
-urn: urn:goreos:atom:story:us_frpd_001_01:1.0.0
-role_id: ROL-GESTION-FRPD
-as_a: Comité FRPD
-i_want: acceso a expedientes técnicos de proyectos FRPD
-so_that: pueda calificar iniciativas
-domain: D-EJEC
-priority: P2
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Acceso a expedientes técnicos de proyectos FRPD
+
+# === STORY CORE ===
+as_a: Miembro del Comité FRPD
+i_want: acceso digitalizado a los expedientes técnicos de proyectos de I+D+i
+so_that: pueda calificar las iniciativas con base científica y técnica sólida
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FRPD
+  agent_type: HUMAN
+  description: Evaluador experto del Fondo Regional para la Productividad y el Desarrollo
+
+entities_mentioned:
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: INNOVACION
+  priority: P2
+  scope: ESTRATEGICO
+
+extra_tags:
+  - frpd
+  - expedientes
+  - evaluacion
+  - i+d+i
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualizador integrado de documentos técnicos sin necesidad de descarga individual
+  - Lista de verificación para calificar el "Nivel de Madurez Tecnológica" (TRL)
+  - Sección de comentarios privados entre evaluadores para deliberación colegiada

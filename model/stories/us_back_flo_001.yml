@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_flo_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Órdenes de trabajo de mantención (asignar técnico)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-FLO-001
-urn: urn:goreos:atom:story:us_back_flo_001:1.0.0
-role_id: ROL-GESTION-ENC
+name: Órdenes de trabajo de mantención (asignar técnico)
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Gestionar órdenes de trabajo de mantención (asignar técnico)
 so_that: Mantengo infraestructura
-domain: D-BACK
-competence_id: CPT-BACK-FLO-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de calidad/logística responsable del mantenimiento de las instalaciones
+
+entities_mentioned:
+  - id: ENT-ORG-ORDEN-TRABAJO-MANT
+    status: candidate
+  - id: ENT-ORG-TECNICO-MANTENCION
+    status: candidate
+  - id: ENT-ORG-INFRAESTRUCTURA
+    status: linked
+
+process_ref:
+  id: PROC-ORG-MANTENCION-PREVENTIVA-CORRECTIVA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: INFRAESTRUCTURA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - mantenimiento
+  - infraestructura
+  - orden-trabajo
+  - logistica
+
+status: ENRICHED
+acceptance_criteria:
+  - Creación de órdenes de trabajo (OT) a partir de solicitudes de servicios generales
+  - Asignación de técnicos internos o proveedores externos a cada OT
+  - Registro de insumos utilizados y horas hombre en cada trabajo
+  - Visor de estado de OTs (pendiente, en ejecución, finalizada, visada)

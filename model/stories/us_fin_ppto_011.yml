@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver proyección vs programa caja con alertas >5%
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-011
-urn: urn:goreos:atom:story:us_fin_ppto_011:1.0.0
-role_id: ROL-GESTION-PROF
+name: Ver proyección vs programa caja con alertas >5%
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Ver proyección vs programa caja con alertas >5%
-so_that: Anticipo desfases de caja
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Anticipo desfases de caja y tomo medidas correctivas oportunamente
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P7
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-DE-CAJA
+  priority: P1
+  scope: ESTRATEGICO
+
+extra_tags:
+  - proyeccion
+  - caja
+  - alertas
+  - desfases
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización comparativa de ejecución real vs programada mensual
+  - Activación automática de alertas visuales cuando el desfase supera el 5%
+  - Capacidad de drill-down para identificar las glosas o proyectos causantes del desfase

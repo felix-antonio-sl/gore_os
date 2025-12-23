@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:org:hora_extra:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-ORG-HORA-EXTRA"
+id: ENT-HORA-EXTRA
+name: "uLuHuOuRuAu uEuXuTuRuAu"
+tags: [ORG]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

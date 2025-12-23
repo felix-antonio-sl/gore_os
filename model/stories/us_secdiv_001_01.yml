@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de correspondencia entrante y saliente
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SECDIV-001-01
-urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
-role_id: ROL-GESTION-SECRETARIA-D
-as_a: Secretaria División
+name: Gestión de correspondencia de División
+
+# === STORY CORE ===
+as_a: Secretaria de División
 i_want: un módulo de gestión de correspondencia entrante y saliente
-so_that: pueda mantener trazabilidad
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+so_that: pueda mantener la trazabilidad de los documentos que ingresan y salen de la unidad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SECRETARIA-D
+  agent_type: HUMAN
+  description: Funcionario de apoyo administrativo encargado del flujo documental de una división específica
+
+entities_mentioned:
+  - id: ENT-BACK-CORRESPONDENCIA
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-GESTION-DOCUMENTAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: ADMINISTRATIVO
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - secretaria
+  - correspondencia
+  - documentos
+  - trazabilidad
+  - despacho
+
+status: ENRICHED
+acceptance_criteria:
+  - Libro de partes digital por división con correlativos automáticos sincronizados con la Oficina de Partes Central
+  - Escaneo y adjunto de documentos físicos entrantes para distribución interna digital (Workflow de derivación)
+  - Reporte de documentos pendientes de respuesta o vencidos según plazos legales/administrativos

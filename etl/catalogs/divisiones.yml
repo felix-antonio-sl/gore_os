@@ -1,0 +1,213 @@
+# Catálogo de Divisiones GORE Ñuble
+# Fuente: Organigrama institucional + Ley Orgánica GORE
+# Uso: Lookup para ETL de funcionarios
+---
+_meta:
+  urn: urn:goreos:etl:catalog:divisiones:1.0.0
+  type: Reference_Catalog
+  created_at: "2025-12-23"
+  source: Organigrama GORE Ñuble
+
+divisiones:
+  # --- DIVISIONES SUSTANTIVAS ---
+  - id: DIPIR
+    codigo: DIPIR
+    nombre: División de Presupuesto e Inversión Regional
+    nombre_corto: DIPIR
+    sigla: DIPIR
+    keywords:
+      - DIPIR
+      - Inversión
+      - Presupuesto
+      - Preinversión
+      - Inversiones
+      - Analista Presupuesto
+      - Analista Inversión
+      - Encargado Presupuesto
+    tipo: SUSTANTIVA
+
+  - id: DIFOI
+    codigo: DIFOI
+    nombre: División de Fomento e Industria
+    nombre_corto: Fomento e Industria
+    sigla: DIFOI
+    keywords:
+      - DIFOI
+      - Fomento
+      - Industria
+      - Productivo
+    tipo: SUSTANTIVA
+
+  - id: DIDESO
+    codigo: DIDESO
+    nombre: División de Desarrollo Social y Humano
+    nombre_corto: Desarrollo Social
+    sigla: DIDESO
+    keywords:
+      - DIDESO
+      - Desarrollo Social
+      - Social
+      - Humano
+    tipo: SUSTANTIVA
+
+  - id: DIT
+    codigo: DIT
+    nombre: División de Infraestructura y Transporte
+    nombre_corto: Infraestructura y Transporte
+    sigla: DIT
+    keywords:
+      - DIT
+      - Infraestructura
+      - Transporte
+      - Transportes
+      - Obras
+    tipo: SUSTANTIVA
+
+  - id: DIPLADE
+    codigo: DIPLADE
+    nombre: División de Planificación y Desarrollo Regional
+    nombre_corto: Planificación
+    sigla: DIPLADE
+    keywords:
+      - DIPLADE
+      - Planificación
+      - Desarrollo Regional
+      - Ordenamiento Territorial
+      - Territorial
+    tipo: SUSTANTIVA
+
+  # --- DIVISIONES ADMINISTRATIVAS ---
+  - id: DAF
+    codigo: DAF
+    nombre: División de Administración y Finanzas
+    nombre_corto: Administración y Finanzas
+    sigla: DAF
+    keywords:
+      - DAF
+      - Administración
+      - Finanzas
+      - Tesorería
+      - Adquisiciones
+      - Contabilidad
+      - Presupuesto DAF
+      - Gestión Personas
+      - Remuneraciones
+    tipo: ADMINISTRATIVA
+
+  # --- UNIDADES ESPECIALES ---
+  - id: CORE
+    codigo: CORE
+    nombre: Secretaría del Consejo Regional
+    nombre_corto: CORE
+    sigla: CORE
+    keywords:
+      - CORE
+      - Consejo Regional
+      - Secretaría CORE
+      - Secretaria CORE
+    tipo: ORGANO_COLEGIADO
+
+  - id: GABINETE
+    codigo: GABINETE
+    nombre: Gabinete del Gobernador Regional
+    nombre_corto: Gabinete
+    sigla: GABINETE
+    keywords:
+      - Gabinete
+      - Gobernador
+      - Asesor
+      - Avanzada
+    tipo: GABINETE
+
+  - id: COMUNICACIONES
+    codigo: COMUNICACIONES
+    nombre: Unidad de Comunicaciones
+    nombre_corto: Comunicaciones
+    sigla: COMUNICACIONES
+    keywords:
+      - Comunicaciones
+      - Periodista
+      - Prensa
+      - Medios
+      - Fotógrafo
+    tipo: STAFF
+
+  - id: JURIDICA
+    codigo: JURIDICA
+    nombre: Unidad Jurídica
+    nombre_corto: Jurídica
+    sigla: JURIDICA
+    keywords:
+      - Jurídica
+      - Abogado
+      - Legal
+      - Unidad Jurídica
+    tipo: STAFF
+
+  - id: AUDITORIA
+    codigo: AUDITORIA
+    nombre: Unidad de Auditoría Interna
+    nombre_corto: Auditoría
+    sigla: AUDITORIA
+    keywords:
+      - Auditoría
+      - Auditoria
+      - Control
+      - Unidad Control
+    tipo: STAFF
+
+  - id: CIES
+    codigo: CIES
+    nombre: Centro Integrado de Emergencias y Seguridad
+    nombre_corto: CIES
+    sigla: CIES
+    keywords:
+      - CIES
+      - Emergencias
+      - Seguridad
+      - Emergencia
+    tipo: UNIDAD_ESPECIAL
+
+  # --- UNIDADES TEMPORALES / PROYECTOS ---
+  - id: ÑUBLE_250
+    codigo: ÑUBLE_250
+    nombre: Unidad Agenda Ñuble 250
+    nombre_corto: Ñuble 250
+    sigla: ÑUBLE_250
+    keywords:
+      - Ñuble 250
+      - Encargada Ñuble 250
+      - Profesional Ñuble 250
+    tipo: PROYECTO_ESPECIAL
+
+  - id: UCR
+    codigo: UCR
+    nombre: Unidad de Coordinación Regional
+    nombre_corto: UCR
+    sigla: UCR
+    keywords:
+      - UCR
+      - Coordinación Regional
+    tipo: UNIDAD_ESPECIAL
+
+  # --- SERVICIOS GENERALES ---
+  - id: SERVICIOS_GENERALES
+    codigo: SERVICIOS_GENERALES
+    nombre: Servicios Generales
+    nombre_corto: Servicios Generales
+    sigla: SERVICIOS_GENERALES
+    keywords:
+      - Servicios Generales
+      - Conductor
+      - Apoyo Oficina
+      - Oficina de Partes
+    tipo: APOYO
+
+  # --- FALLBACK ---
+  - id: NO_DETERMINADO
+    codigo: NO_DETERMINADO
+    nombre: División No Determinada
+    nombre_corto: No Determinado
+    sigla: ND
+    keywords: []
+    tipo: FALLBACK

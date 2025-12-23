@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_020:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visar resoluciones de cometidos funcionarios
-id: US-FIN-PPTO-020
-urn: urn:goreos:atom:story:us_fin_ppto_020:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Visar resoluciones de cometidos funcionarios
-so_that: Autorizo viáticos
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+id: US-FIN-PPTO-020
+name: Visar resoluciones de cometidos funcionarios
+
+# === STORY CORE ===
+as_a: Jefe Unidad DAF
+i_want: Visar resoluciones de cometidos funcionarios
+so_that: Autorizo los viáticos correspondientes garantizando la disponibilidad presupuestaria
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de unidad en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-COMETIDO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-DE-PERSONAL
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - visa
+  - cometidos
+  - viaticos
+  - aprobacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Bandeja de entrada para revisión de resoluciones de cometidos
+  - Firma digital integrada para el visado de documentos
+  - Alerta si el cometido no cuenta con respaldo de presupuesto para viáticos

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_lobby_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar nómina de sujetos pasivos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-LOBBY-002
-urn: urn:goreos:atom:story:us_norm_lobby_002:1.0.0
-role_id: ROL-GESTION-TRANSP
-as_a: Encargado Transparencia Activa/Pasiva
-i_want: Coordinar nómina de sujetos pasivos
-so_that: Identifico obligados a registrar
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Gestión de Nómina de Sujetos Pasivos
+
+# === STORY CORE ===
+as_a: Encargado de Transparencia
+i_want: Coordinar y actualizar dinámicamente la nómina de "Sujetos Pasivos" del GORE Ñuble (Gobernador, Consejeros, Jefes de División)
+so_that: se identifiquen correctamente las autoridades y funcionarios obligados a registrar sus actividades de lobby
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRANSP
+  agent_type: HUMAN
+  description: Responsable de la gobernanza de roles sujetos a la Ley N°20.730
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: LOBBY
+  priority: P1
+  scope: ORGANIZACIONAL
+
+extra_tags:
+  - sujetos-pasivos
+  - autoridades
+  - directivos
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Marcaje semántico en el org-chart de quiénes son sujetos pasivos vigentes
+  - Alerta automática de desvinculación o cambio de cargo de un sujeto pasivo para actualizar el registro central
+  - Historial de períodos de vigencia por cada sujeto pasivo para auditorías retroactivas

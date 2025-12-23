@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El historial de proyectos similares evaluados anteriormente
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ANAL-INV-001-02
-urn: urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
-role_id: ROL-GESTION-ANAL-INV
+name: El historial de proyectos similares evaluados anteriormente
+
+# === STORY CORE ===
 as_a: Analista de Inversión
 i_want: consultar el historial de proyectos similares evaluados anteriormente
 so_that: pueda mantener consistencia en mis criterios
-domain: D-EJEC
-competence_id: CPT-EJEC-EVAL-001
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL-INV
+  agent_type: HUMAN
+  description: Analista de la División de Presupuesto e Inversión Regional
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-EVALUACION
+    status: candidate
+  - id: ENT-SYS-BUSQUEDA-SIMILARIDAD
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-EVALUACION-TECNICA
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: CONSISTENCIA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - historial
+  - proyectos
+  - evaluacion
+  - inteligencia-artificial
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de búsqueda por similitud de proyectos
+  - Visualización de evaluaciones anteriores relevantes
+  - Comparativa de criterios aplicados en proyectos análogos

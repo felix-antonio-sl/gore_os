@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar reunión de inicio con supervisor
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-MUNI-003
-urn: urn:goreos:atom:story:us_ejec_muni_003:1.0.0
-role_id: ROL-GESTION-TEC
-as_a: Unidad Técnica Municipal
-i_want: Coordinar reunión de inicio con supervisor
-so_that: Alineo expectativas
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Coordinación de Reunión de Inicio (Kick-off)
+
+# === STORY CORE ===
+as_a: Profesional de la Unidad Técnica Municipal
+i_want: coordinar la reunión de inicio (Kick-off) con el supervisor asignado por el GORE tras la firma del convenio
+so_that: se alineen las expectativas, se definan los canales de comunicación y se valide el cronograma de ejecución del proyecto
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TEC
+  agent_type: HUMAN
+  description: Contraparte técnica del municipio encargada de la ejecución de la obra o programa
+
+entities_mentioned:
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-REUNION-INICIO
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: COORDINACION
+  priority: P1
+  scope: MUNICIPAL
+
+extra_tags:
+  - kick-off
+  - inicio-proyecto
+  - coordinacion
+  - convenios
+  - gobernanza-local
+
+status: ENRICHED
+acceptance_criteria:
+  - Agenda compartida para selección de slots de reunión entre GORE y Municipio
+  - Formato de "Acta de Inicio" digital para registrar los acuerdos de la reunión
+  - Carga obligatoria del Plan de Trabajo definitivo tras la reunión de inicio

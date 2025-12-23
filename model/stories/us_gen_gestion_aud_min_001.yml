@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_aud_min_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Auditor Ministerial
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_AUD_MIN-001
-urn: urn:goreos:atom:story:us_gen_gestion_aud_min_001:1.0.0
-role_id: ROL-GESTION-AUD-MIN
+name: Historia genérica para Auditor Ministerial
+
+# === STORY CORE ===
 as_a: Auditor Ministerial
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-AUD-MIN
+  agent_type: HUMAN
+  description: Auditor externo proveniente de un Ministerio u Órgano de Control que requiere auditar procesos GORE
+
+entities_mentioned:
+  - id: ENT-NORM-REPORTE-AUDITORIA
+    status: linked
+  - id: ENT-SYS-ACCESO-LECTURA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-AUDITORIA-EXTERNA
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: AUDITORIA
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - auditoria
+  - ministerial
+  - fiscalizacion
+  - transparencia
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso en modo lectura a los expedientes financieros y técnicos del periodo auditado
+  - Módulo de descarga masiva de antecedentes digitalizados (Zip/PDF)
+  - Registro de logs de acceso del auditor por motivos de seguridad

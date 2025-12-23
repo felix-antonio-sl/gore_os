@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Presidir sesiones del Comité de Mitigación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GRD-004
-urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
-role_id: ROL-GESTION-UCR-COOR
-as_a: Coordinador UCR
+name: Presidir sesiones del Comité de Mitigación
+
+# === STORY CORE ===
+as_a: Coordinador GRD / UCR
 i_want: Presidir sesiones del Comité de Mitigación
 so_that: Coordino acciones preventivas
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMITE
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Coordinador de la Unidad de Control Regional que lidera las mesas técnicas de mitigación de riesgos
+
+entities_mentioned:
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-SOC-ACCION-PREVENTIVA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: PREVENCION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - grd
+  - mitigacion
+  - prevencion
+  - comite-tecnico
+  - coordinacion-intersectorial
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de quórum y acuerdos técnicos de la Mesa de Mitigación (Ej: Cortafuegos, Limpieza de canales)
+  - Módulo de asignación de tareas preventivas a servicios ejecutores con semáforo de cumplimiento
+  - Dashboard de avance físico de obras de mitigación financiadas por fondos de emergencia

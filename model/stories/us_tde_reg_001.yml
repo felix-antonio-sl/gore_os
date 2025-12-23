@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_reg_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Convocar y liderar la Mesa Regional de Transformación Digital
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-REG-001
-urn: urn:goreos:atom:story:us_tde_reg_001:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Convocar y liderar la Mesa Regional de Transformación Digital
-so_that: Articulo el cumplimiento normativo en todo el territorio
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Liderazgo de la Mesa Regional de Transformación Digital
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: convocar y liderar la Mesa Regional de Transformación Digital con la participación de municipios y servicios públicos locales
+so_that: se articule el cumplimiento normativo de la Ley 21.180 en todo el territorio regional y se compartan buenas prácticas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Líder regional de la estrategia de modernización del Estado
+
+entities_mentioned:
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: GOBERNANZA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - mesa-regional
+  - transformacion-digital
+  - ley21180
+  - gobernanza-territorial
+  - articulacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de gestión de sesiones (Actas, Acuerdos, Asistencia) para la Mesa Regional
+  - Repositorio compartido de planos de cumplimiento y guías técnicas para municipios
+  - Dashboard regional que consolida el índice de madurez digital de todas las instituciones de la mesa

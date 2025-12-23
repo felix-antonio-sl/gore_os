@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_senapred_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integración con CIES para alertas de emergencia
-id: US-SENAPRED-001-01
-urn: urn:goreos:atom:story:us_senapred_001_01:1.0.0
-role_id: ROL-GESTION-SENAPRED
-as_a: SENAPRED (ex-ONEMI)
-i_want: integración con CIES para alertas de emergencia
-so_that: la respuesta sea coordinada
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-SENAPRED-001-01
+name: Integración SENAPRED con CIES para emergencias
+
+# === STORY CORE ===
+as_a: Director Regional de SENAPRED (ex-ONEMI)
+i_want: la integración de las capacidades del sistema CIES para la gestión de alertas de emergencia
+so_that: la respuesta ante catástrofes o incidentes mayores sea coordinada y basada en datos en tiempo real
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SENAPRED
+  agent_type: HUMAN
+  description: Autoridad regional encargada de la gestión del riesgo de desastres (Stakeholder Estratégico)
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-TERR-MAPA-CALOR
+    status: linked
+  - id: ENT-SYS-EMERGENCIA
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-COORDINACION-POLICIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: GESTION-RIESGOS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - senapred
+  - emergencias
+  - cies
+  - catastrofes
+  - mando-y-control
+
+status: ENRICHED
+acceptance_criteria:
+  - Paso de información bidireccional de alertas del SAE (Sistema de Alerta de Emergencias) hacia el Videowall CIES
+  - Acceso espejo a cámaras críticas por parte del Centro de Operaciones de Emergencia (COE) de SENAPRED
+  - Protocolo de activación de flujos de datos prioritarios durante eventos de zona de catástrofe

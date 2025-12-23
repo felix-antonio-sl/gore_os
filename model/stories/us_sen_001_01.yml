@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sen_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información detallada sobre la ejecución de grandes proyectos
-id: US-SEN-001-01
-urn: urn:goreos:atom:story:us_sen_001_01:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
-as_a: Encargado Unidad de Municipalidades y Conservaciones
-i_want: información detallada sobre la ejecución de grandes proyectos
-so_that: pueda ejercer mi rol fiscalizador en el congreso
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-SEN-001-01
+name: Información de ejecución de grandes proyectos para el Congreso
+
+# === STORY CORE ===
+as_a: Parlamentario de la Región (Senador/Diputado)
+i_want: obtener información detallada sobre la ejecución de grandes proyectos de inversión regional
+so_that: pueda ejercer mi rol fiscalizador en el Congreso Nacional y representar los intereses del electorado
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EXT-PARLAMENTARIO
+  agent_type: HUMAN
+  description: Representante legislativo que solicita información sobre el uso de recursos públicos regionales (Stakeholder Externo)
+
+entities_mentioned:
+  - id: ENT-EJEC-PROYECTO-BIP
+    status: linked
+  - id: ENT-PLAN-ESTRATEGIA-ERD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-RESPUESTA-OFICIO
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: FISCALIZACION-EXTERNA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - parlamento
+  - fiscalizacion
+  - transparencia
+  - proyectos-region
+  - representacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a un portal de transparencia legislativa con dashboards de avance físico y financiero por comuna
+  - Módulo de solicitud formal de antecedentes con tracking de plazos de respuesta por parte del GORE
+  - Mapas de inversión regional descargables para la elaboración de informes parlamentarios

@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Pipelines de CI/CD automatizados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-001-01
-urn: urn:goreos:atom:story:us_back_001_01:1.0.0
-role_id: ROL-DEV-TIC-DEV
+name: Pipelines de CI/CD automatizados
+
+# === STORY CORE ===
 as_a: Desarrollador DevOps
 i_want: pipelines de CI/CD automatizados
 so_that: pueda desplegar nuevas features rápidamente sin romper nada
-domain: D-DEV
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-TIC-DEV
+  agent_type: ALGORITHMIC
+  description: Sistema automatizado de despliegue continuo (CI/CD)
+
+entities_mentioned:
+  - id: ENT-SYS-PIPELINE
+    status: candidate
+  - id: ENT-SYS-ENTORNO-DESPLIEGUE
+    status: candidate
+  - id: ENT-SYS-TEST-AUTOMATICO
+    status: candidate
+
+process_ref:
+  id: PROC-DEV-CICLO-VIDA-SOFTWARE
+  status: candidate
+
+tags:
+  domain: D-DEV
+  aspect: AUTOMATIZACION
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - devops
+  - cicd
+  - automatizacion
+  - despliegue
+
+status: ENRICHED
+acceptance_criteria:
+  - Ejecución automática de tests en cada commit
+  - Despliegue automático a entorno de staging tras pasar tests
+  - Aprobación manual requerida para despliegue a producción
+  - Notificación de fallos en el pipeline

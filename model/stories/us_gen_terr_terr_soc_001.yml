@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_terr_terr_soc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Sociólogo Territorial
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-TERR_TERR_SOC-001
-urn: urn:goreos:atom:story:us_gen_terr_terr_soc_001:1.0.0
-role_id: ROL-TERR-TERR-SOC
+name: Historia genérica para Sociólogo Territorial
+
+# === STORY CORE ===
 as_a: Sociólogo Territorial
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TERR-TERR-SOC
+  agent_type: HUMAN
+  description: Sociólogo especializado en el análisis de dinámicas sociales y participación ciudadana en el territorio
+
+entities_mentioned:
+  - id: ENT-SOC-PERFIL-SOCIAL
+    status: candidate
+  - id: ENT-GOB-DIAGNOSTICO-PARTICIPATIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: SOCIAL
+  priority: P2
+  scope: TERRITORIAL
+
+extra_tags:
+  - sociologo-territorial
+  - participacion-ciudadana
+  - analisis-social
+  - territorio
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga y análisis cualitativo de actas de audiencias públicas territoriales
+  - Metodología integrada para la evaluación de impacto social de proyectos de inversión
+  - Repositorio de estudios sociodemográficos regionalizados por micro-zona

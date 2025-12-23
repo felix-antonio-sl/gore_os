@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gab_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar articulación política con actores regionales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GAB-004
-urn: urn:goreos:atom:story:us_gob_gab_004:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Coordinar articulación política con actores regionales
+
+# === STORY CORE ===
+as_a: Jefe de Gabinete
 i_want: Coordinar articulación política con actores regionales
 so_that: Gestiono relaciones estratégicas
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SYS-ACTOR
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de Gabinete que actúa como operador político y técnico ante Alcaldes, Parlamentarios y CORE
+
+entities_mentioned:
+  - id: ENT-SYS-ACTOR
+    status: linked
+  - id: ENT-GOB-MAPA-PODER
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - articulacion-politica
+  - relaciones-institucionales
+  - alcaldes
+  - parlamentarios
+  - gabinete
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz de actores regionales con historial de compromisos, filiación política y temas de interés
+  - Módulo de seguimiento de solicitudes de apoyo de alcaldes y parlamentarios
+  - Panel de control de la "Temperatura Política" por comuna basada en la relación GORE-Municipio

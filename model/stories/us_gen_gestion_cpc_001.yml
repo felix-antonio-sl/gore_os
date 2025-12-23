@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cpc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para CPC Regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CPC-001
-urn: urn:goreos:atom:story:us_gen_gestion_cpc_001:1.0.0
-role_id: ROL-GESTION-CPC
+name: Historia genérica para CPC Regional
+
+# === STORY CORE ===
 as_a: CPC Regional
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CPC
+  agent_type: HUMAN
+  description: Representante de la Confederación de la Producción y del Comercio (CPC) o gremio empresarial similar
+
+entities_mentioned:
+  - id: ENT-EJEC-FOMENTO-PRODUCTIVO
+    status: candidate
+  - id: ENT-PLAN-ALIANZA-PUBLICO-PRIVADA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - cpc
+  - empresarial
+  - fomento-productivo
+  - gremio
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a catálogo de proveedores regionales de alto impacto
+  - Módulo de postulación a convenios de colaboración público-privada para el empleo
+  - Panel de indicadores de actividad económica regional (Estadísticas GORE)

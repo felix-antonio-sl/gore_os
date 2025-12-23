@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_grd_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Protocolos de respuesta digitales activables con un clic
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GRD-001-01
-urn: urn:goreos:atom:story:us_grd_001_01:1.0.0
-role_id: ROL-GESTION-UCR-COOR
-as_a: Coordinador UCR
+name: Protocolos de respuesta digitales activables con un clic
+
+# === STORY CORE ===
+as_a: Coordinador UCR / Emergencias
 i_want: protocolos de respuesta digitales activables con un clic
 so_that: se movilicen recursos de emergencia rápidamente
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Coordinador operativo de emergencias regional encargado de la respuesta inmediata (COGRID)
+
+entities_mentioned:
+  - id: ENT-SOC-PLAN-EMERGENCIA-REGIONAL
+    status: linked
+  - id: ENT-SYS-PROTOCOLO-RESPUESTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: candidate
+
+tags:
+  domain: D-SOC
+  aspect: PREVENCION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - grd
+  - protocolos-emergencia
+  - clic-de-emergencia
+  - movilizacion-recursos
+  - cogrid
+
+status: ENRICHED
+acceptance_criteria:
+  - Botón de pánico/activación en el dashboard de mando que despliega el flujo de tareas pre-definido
+  - Notificación multiplataforma (SMS, WhatsApp, Email) inmediata a todos los integrantes del COGRID
+  - Apertura automática de canal de chat dedicado y registro de bitácora de incidentes por evento

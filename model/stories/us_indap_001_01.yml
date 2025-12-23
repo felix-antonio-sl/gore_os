@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_indap_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información de proyectos agrícolas GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-INDAP-001-01
-urn: urn:goreos:atom:story:us_indap_001_01:1.0.0
-role_id: ROL-GESTION-IND
-as_a: Director Regional IND
+name: Información de proyectos agrícolas GORE
+
+# === STORY CORE ===
+as_a: Director Regional INDAP (Stakeholder Externo)
 i_want: información de proyectos agrícolas GORE
 so_that: pueda complementar con programas INDAP
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-IND
+  agent_type: HUMAN
+  description: Director Regional o profesional de INDAP que coordina la inversión rural con el GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-PROYECTO-AGRICOLA
+    status: candidate
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - indap
+  - agricultura
+  - fomento-rural
+  - coordinacion-intersectorial
+  - apoyo-campesino
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a dashboard compartido de inversión agrícola desglosado por beneficiario y comuna
+  - Módulo de alerta de duplicidad de subsidios entre GORE e INDAP para optimizar recursos
+  - Repositorio de estudios de factibilidad hídrica financiados por el GORE para uso técnico de INDAP

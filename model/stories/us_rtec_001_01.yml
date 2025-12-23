@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rtec_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Hitos técnicos en sistema
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-RTEC-001-01
-urn: urn:goreos:atom:story:us_rtec_001_01:1.0.0
-role_id: ROL-GESTION-TEC
-as_a: Unidad Técnica Municipal
+name: Aprobación de hitos técnicos en sistema
+
+# === STORY CORE ===
+as_a: Unidad Técnica Municipal (DOM/SECPLAN)
 i_want: aprobar hitos técnicos en sistema
-so_that: se autorice el pago administrativo
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+so_that: se autorice el pago administrativo y se mantenga el flujo de caja del proyecto
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TEC
+  agent_type: HUMAN
+  description: Profesional técnico de un municipio encargado de la contraparte técnica de las obras financiadas por el GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-HITO-PROYECTO
+    status: candidate
+  - id: ENT-FIN-SOLICITUD-GIRO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: OBRAS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - unidad-tecnica
+  - municipios
+  - hitos-tecnicos
+  - ejecucion-obras
+  - pagos
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga de informes de avance y estados de pago visados por el ITO Municipal
+  - Firma digital de la contraparte municipal para la validación del hito técnico
+  - Trazabilidad del hito técnico como requisito habilitante para el devengo financiero en el GORE

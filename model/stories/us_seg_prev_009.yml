@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_prev_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Mantener coordinación permanente con la Subsecretaría de Prevención del Delito
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SEG-PREV-009
-urn: urn:goreos:atom:story:us_seg_prev_009:1.0.0
-role_id: ROL-GESTION-UCR-COOR
-as_a: Coordinador UCR
-i_want: Mantener coordinación permanente con la Subsecretaría de Prevención del Delito
-so_that: Aseguro coherencia con política nacional
-domain: D-SEG
-priority: P1
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+name: Coordinación con Subsecretaría de Prevención del Delito (SPD)
+
+# === STORY CORE ===
+as_a: Coordinador de la Unidad de Control Regional (UCR)
+i_want: mantener una coordinación permanente y digital con la Subsecretaría de Prevención del Delito
+so_that: se asegure la coherencia de los proyectos regionales con la política nacional de seguridad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Coordinador del GORE que actúa como enlace técnico con el Ministerio del Interior y la SPD
+
+entities_mentioned:
+  - id: ENT-NORM-POLITICA-NAC-SEG
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-ESTRATEGICA
+  status: linked
+
+tags:
+  domain: D-SEG
+  aspect: COORDINACION-INTERSECTORIAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - spd
+  - politica-nacional
+  - seguridad-publica
+  - ucr
+  - ministerio-interior
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de carga de informes semestrales de avance de proyectos financiados por la SPD en la región
+  - Acceso a la base de datos de indicadores de seguridad nacional para benchmarking regional
+  - Módulo de firma electrónica para la validación de convenios marco entre el GORE y la SPD

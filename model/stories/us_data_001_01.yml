@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_data_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas de limpieza y deduplicación de registros
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DATA-001-01
-urn: urn:goreos:atom:story:us_data_001_01:1.0.0
-role_id: ROL-GESTION-APD
+name: Herramientas de limpieza y deduplicación de registros
+
+# === STORY CORE ===
 as_a: Agencia de Protección de Datos
 i_want: herramientas de limpieza y deduplicación de registros
 so_that: se mantenga una 'Golden Record' de ciudadanos y entidades
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-APD
+  agent_type: ALGORITHMIC
+  description: Especialista o Agente de Calidad de Datos (Data Quality) velando por la integridad semántica
+
+entities_mentioned:
+  - id: ENT-SYS-GOLDEN-RECORD
+    status: candidate
+  - id: ENT-SYS-DEDUPLICACION-DATO
+    status: candidate
+  - id: ENT-SOC-CIUDADANO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-DATOS
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: GUBERNANZA-DATOS
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - limpieza-datos
+  - deduplicacion
+  - golden-record
+  - calidad-datos
+  - semantica
+
+status: ENRICHED
+acceptance_criteria:
+  - Algoritmos de matching probabilístico (Fuzzy match) para nombres y direcciones
+  - Interfaz de resolución manual de conflictos para registros "casi-duplicados"
+  - Trazabilidad de la fuente de origen de cada atributo del registro maestro

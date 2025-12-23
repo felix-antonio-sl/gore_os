@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_op_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: La versión OCR para extraer entidades clave y pre-clasificar
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-OP-005
-urn: urn:goreos:atom:story:us_gob_op_005:1.0.0
-role_id: ROL-GESTION-TIC-SRE
-as_a: Ingeniero SRE
+name: La versión OCR para extraer entidades clave y pre-clasificar
+
+# === STORY CORE ===
+as_a: Ingeniero SRE / Arquitecto de Datos
 i_want: Procesar la versión OCR para extraer entidades clave y pre-clasificar
 so_that: Facilito la revisión humana
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-SRE
+  agent_type: ALGORITHMIC
+  description: Agente de procesamiento inteligente de documentos (Estilo KODA) que extrae metadatos de escaneos
+
+entities_mentioned:
+  - id: ENT-DIG-OCR-ENGINE
+    status: candidate
+  - id: ENT-DIG-METADATO-EXTRACTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: OPERACIONES
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - ocr
+  - inteligencia-artificial
+  - clasificacion-documentos
+  - automatizacion
+  - datos-no-estructurados
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de OCR con tasa de precisión >95% en documentos mecanografiados y legibles
+  - Extracción automática de RUN/RUT, Montos, Plazos y Referencias a leyes o circulares
+  - Integración con el sistema de Gestión Documental para precargar formularios de ingreso

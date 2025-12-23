@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_serv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Gestión de contratos de aseo y vigilancia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SERV-001-01
-urn: urn:goreos:atom:story:us_serv_001_01:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: gestión de contratos de aseo y vigilancia
-so_that: el edificio opere sin interrupciones
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+name: Gestión de contratos de servicios generales (Aseo y Vigilancia)
+
+# === STORY CORE ===
+as_a: Encargado de Servicios Generales
+i_want: gestionar de manera centralizada los contratos de aseo, vigilancia y mantenimiento
+so_that: el edificio institucional opere sin interrupciones y en condiciones óptimas para el público
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC-SERV
+  agent_type: HUMAN
+  description: Funcionario de la DAF encargado del mantenimiento y operación de la planta física del GORE
+
+entities_mentioned:
+  - id: ENT-BACK-CONTRATO-SERVICIO
+    status: candidate
+  - id: ENT-BACK-PLAN-MANTENIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-GESTION-ADQUISICIONES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: OPERACIONES
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - servicios-generales
+  - mantenimiento
+  - aseo
+  - seguridad-privada
+  - contratos
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de vigencia de contratos con alertas de licitación con 6 meses de anticipación
+  - Registro de incidentes de servicio y multas aplicadas según las bases administrativas
+  - Calendario de mantenciones preventivas (Ascensores, Aire Acondicionado, Grupos Electrógenos) con control de cumplimiento

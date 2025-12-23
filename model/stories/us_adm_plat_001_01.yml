@@ -1,17 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_adm_plat_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Gestión centralizada de permisos y roles
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ADM-PLAT-001-01
-urn: urn:goreos:atom:story:us_adm_plat_001_01:1.0.0
-role_id: ROL-OPS-TIC-PLAT
+name: Gestión centralizada de permisos y roles
+
+# === STORY CORE ===
 as_a: Administrador Plataforma
 i_want: gestión centralizada de permisos y roles
 so_that: se cumpla el principio de menor privilegio
-domain: D-OPS
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-TIC-PLAT
+  agent_type: HUMAN
+  description: Administrador de la plataforma GORE_OS
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-PERMISO
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GESTION-ROLES
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - rbac
+  - permisos
+  - privilegios
+  - seguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - RBAC jerárquico implementado
+  - Auditoría de cambios de permisos
+  - Principio de menor privilegio por defecto
+  - Revisión periódica de accesos

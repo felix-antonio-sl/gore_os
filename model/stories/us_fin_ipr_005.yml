@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Notificación de observaciones de admisibilidad (plazo 60d)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-005
-urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
-role_id: ROL-GESTION-G7-FORM
+name: Notificación de observaciones de admisibilidad (plazo 60d)
+
+# === STORY CORE ===
 as_a: Formulador Programas Glosa 7
 i_want: Recibir notificación de observaciones de admisibilidad (plazo 60d)
 so_that: Puedo subsanar a tiempo
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Funcionario que formula proyectos de Glosa 7
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-OBSERVACION
+    status: candidate
+  - id: ENT-SYS-NOTIFICACION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-ADMISIBILIDAD
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: ALERTA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - notificacion
+  - plazo-critico
+  - admisibilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Notificación automática cuando IPR tiene observaciones
+  - Plazo de 60 días visible en la notificación
+  - Link directo al formulario de subsanación

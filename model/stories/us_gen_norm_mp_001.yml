@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_norm_mp_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Ministerio Público (Fiscalía)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-NORM_MP-001
-urn: urn:goreos:atom:story:us_gen_norm_mp_001:1.0.0
-role_id: ROL-NORM-MP
+name: Historia genérica para Ministerio Público (Fiscalía)
+
+# === STORY CORE ===
 as_a: Ministerio Público (Fiscalía)
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-MP
+  agent_type: HUMAN
+  description: Fiscal o Analista del Ministerio Público que requiere antecedentes del GORE para investigaciones penales
+
+entities_mentioned:
+  - id: ENT-NORM-INVESTIGACION-PENAL
+    status: candidate
+  - id: ENT-NORM-ENTREGA-INFORMACION-JUDICIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - ministerio-publico
+  - fiscalía
+  - investigacion-penal
+  - anticorrupcion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Canal de comunicación encriptado para la recepción de requerimientos de información bajo secreto de sumario
+  - Módulo de entrega de evidencia digital certificada (Firma avanzada) sobre transferencias o contratos
+  - Registro de solicitudes de levantamiento de secreto bancario institucional si aplicara

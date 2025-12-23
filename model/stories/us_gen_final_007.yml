@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para SEREMI Sectorial
-id: US-GEN-FINAL-007
-urn: urn:goreos:atom:story:us_gen_final_007:1.0.0
-role_id: ROL-GESTION-SEREMI_SECTORIAL
-as_a: SEREMI Sectorial
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-007
+name: Coordinación Intersectorial de Inversión
+
+# === STORY CORE ===
+as_a: SEREMI Sectorial
+i_want: Evaluar la factibilidad técnica y normativa de los proyectos de mi cartera sectorial
+so_that: se prioricen las iniciativas con mayor impacto social y rentabilidad técnica para Ñuble
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI_SECTORIAL
+  agent_type: HUMAN
+  description: Representante ministerial para cualquier sector técnico regional
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: INTERSECTORIAL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - seremi
+  - factibilidad
+  - priorizacion
+  - sectorial
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de revisión técnica de proyectos asignados por dominio
+  - Capacidad de emitir el certificado de "Pertinencia Sectorial" con firma electrónica
+  - Panel de seguimiento de plazos de evaluación (SLA sectorial)

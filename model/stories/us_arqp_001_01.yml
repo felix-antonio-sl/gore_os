@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_arqp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Checklist de normativa OGUC integrado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ARQP-001-01
-urn: urn:goreos:atom:story:us_arqp_001_01:1.0.0
-role_id: ROL-DEV-ARQ
+name: Checklist de normativa OGUC integrado
+
+# === STORY CORE ===
 as_a: Arquitecto Revisor (Proyectos)
 i_want: checklist de normativa OGUC integrado
 so_that: asegure cumplimiento legal de la edificación
-domain: D-NORM
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Arquitecto que revisa proyectos de inversión e infraestructura
+
+entities_mentioned:
+  - id: ENT-NORM-OGUC
+    status: candidate
+  - id: ENT-SYS-CHECKLIST-NORMATIVO
+    status: candidate
+  - id: ENT-EJEC-PROYECTO-INFRA
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-REVISION-TECNICA
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: CUMPLIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - oguc
+  - normativa
+  - arquitectura
+  - revision
+  - ley-urbanismo
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador de artículos OGUC aplicables al proyecto
+  - Checklist interactivo de requerimientos mínimos por destino
+  - Reporte de brechas normativas detectadas

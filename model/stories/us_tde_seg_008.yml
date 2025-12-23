@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Logs de acceso a datos sensibles
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-008
-urn: urn:goreos:atom:story:us_tde_seg_008:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Auditar logs de acceso a datos sensibles
-so_that: Detecto anomalías
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Auditoría de acceso a datos sensibles
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: auditar periódicamente los logs de acceso a bases de datos y archivos que contienen información sensible
+so_that: se detecten anomalías, accesos fuera de horario o consultas masivas injustificadas por parte de los funcionarios
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Auditor de la privacidad y el uso correcto de la información institucional
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: AUDITORIA-SEGURIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - auditoria
+  - logs
+  - datos-sensibles
+  - privacidad
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Reporte automatizado de "Accesos Inusuales" basado en patrones de comportamiento (IA básica)
+  - Trazabilidad del ID de funcionario que realizó cada consulta de RUT de ciudadanos
+  - Alerta inmediata si un funcionario descarga más de 100 registros sensibles en una sola sesión

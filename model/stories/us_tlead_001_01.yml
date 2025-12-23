@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tlead_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Métricas de velocidad y calidad del equipo (DORA metrics)
-id: US-TLEAD-001-01
-urn: urn:goreos:atom:story:us_tlead_001_01:1.0.0
-role_id: ROL-DEV-ARQ
-as_a: Arquitecto Revisor (Proyectos)
-i_want: métricas de velocidad y calidad del equipo (DORA metrics)
-so_that: pueda optimizar el proceso de desarrollo
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-TLEAD-001-01
+name: Métricas de rendimiento de desarrollo (DORA)
+
+# === STORY CORE ===
+as_a: Arquitecto de Software / Team Lead
+i_want: "visualizar métricas de velocidad y calidad del equipo de desarrollo (DORA Metrics: Deployment Frequency, Lead Time, Change Failure Rate, TTR)"
+so_that: se optimice el proceso de entrega continua y se asegure la estabilidad de la plataforma GORE_OS
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Líder técnico encargado de la excelencia en ingeniería y delivery
+
+entities_mentioned:
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: EFICIENCIA-TI
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - dora-metrics
+  - devops
+  - velocidad
+  - calidad
+  - mejora-continua
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard que extrae automáticamente datos de Git y CI/CD para calcular las 4 métricas DORA
+  - Comparativa de rendimiento entre sprints o trimestres (QoQ)
+  - Identificación de cuellos de botella en el proceso de QA que afectan el Lead Time

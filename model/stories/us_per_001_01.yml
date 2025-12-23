@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_per_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Plantillas de notas de prensa y comunicados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PER-001-01
-urn: urn:goreos:atom:story:us_per_001_01:1.0.0
-role_id: ROL-GESTION-PER
+name: Plantillas de notas de prensa y comunicados
+
+# === STORY CORE ===
 as_a: Periodista
 i_want: plantillas de notas de prensa y comunicados
 so_that: pueda producir contenidos consistentes rápidamente
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER
+  agent_type: HUMAN
+  description: Periodista del equipo de comunicaciones encargado de la difusión de actividades de la autoridad
+
+entities_mentioned:
+  - id: ENT-COM-NOTA-PRENSA
+    status: candidate
+  - id: ENT-COM-TEMPLATE-ESTRAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-COM-GESTION-PRENSA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - prensa
+  - comunicaciones
+  - plantillas
+  - consistencia-marca
+  - difusion
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo de plantillas dinámicas alineadas con el manual de marca institucional
+  - Módulo de edición colaborativa con control de versiones para notas de prensa
+  - Workflow de aprobación digital por parte del Jefe de Prensa antes de la distribución externa

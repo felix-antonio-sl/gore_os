@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seccore_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Notificar a consejeros las materias a tratar con antelación
-id: US-SECCORE-001-02
-urn: urn:goreos:atom:story:us_seccore_001_02:1.0.0
-role_id: ROL-EJEC-CPER-SEC
-as_a: Secretario Ejecutivo Comité de Pertinencia
-i_want: notificar a consejeros las materias a tratar con antelación
-so_that: puedan prepararse para la sesión
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-SESION
+id: US-SECCORE-001-02
+name: Notificar materias a consejeros con antelación
+
+# === STORY CORE ===
+as_a: Secretario Ejecutivo del CORE
+i_want: notificar a los consejeros las materias a tratar con antelación reglamentaria
+so_that: puedan prepararse para la sesión, revisar antecedentes y fundamentar su voto
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-SEC-CORE
+  agent_type: HUMAN
+  description: Responsable de la comunicación oficial y entrega de antecedentes al cuerpo colegiado
+
+entities_mentioned:
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-DOC-ANTECEDENTE-PROYECTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONSEJO-REGIONAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - notificaciones
+  - consejeros
+  - transparencia
+  - tabla-sesion
+  - cumplimiento-normativo
+
+status: ENRICHED
+acceptance_criteria:
+  - Envío automático de citaciones digitales con enlace a la carpeta compartida de antecedentes (minutas, planos, etc.)
+  - Verificación de recepción de documentos por parte de los consejeros (acuse de recibo digital)
+  - Alerta de cumplimiento de plazo de citación (ej: 72 horas hábiles antes de la sesión extraordinaria)

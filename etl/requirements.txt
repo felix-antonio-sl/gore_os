@@ -1,0 +1,2 @@
+# ETL Dependencies
+pyyaml>=6.0

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_cies_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Activar protocolo de protección de puntos críticos ante disturbios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SEG-CIES-010
-urn: urn:goreos:atom:story:us_seg_cies_010:1.0.0
-role_id: ROL-GESTION-SUP
+name: Protocolo de protección de puntos críticos ante disturbios
+
+# === STORY CORE ===
 as_a: Supervisor CIES
-i_want: Activar protocolo de protección de puntos críticos ante disturbios
-so_that: Priorizo cámaras y recursos en zonas sensibles
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+i_want: activar protocolos de protección de puntos críticos ante disturbios o manifestaciones
+so_that: se prioricen automáticamente las cámaras y recursos de vigilancia en zonas sensibles
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUP
+  agent_type: HUMAN
+  description: Supervisor de sala encargado de reaccionar ante contingencias de orden público
+
+entities_mentioned:
+  - id: ENT-SEG-PUNTO-CRITICO
+    status: candidate
+  - id: ENT-SEG-VIDEOWALL-LAYOUT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SEG-MONITOREO-CIUDADANO
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: OPERACIONES
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - puntos-criticos
+  - disturbios
+  - orden-publico
+  - cies
+  - priorizacion-recursos
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de "Activación de Contingencia" que despliega automáticamente las cámaras de los puntos críticos definidos
+  - Bloqueo de uso de cámaras prioritarias por otros operadores no autorizados durante la contingencia
+  - Registro de inicio y fin del protocolo para el informe de gestión de incidencias regional

@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_018:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para SEREMI Medio Ambiente
-id: US-GEN-FINAL-018
-urn: urn:goreos:atom:story:us_gen_final_018:1.0.0
-role_id: ROL-GESTION-SEREMI-MEDIO
-as_a: SEREMI Medio Ambiente
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-018
+name: Fiscalización Ambiental Intersectorial
+
+# === STORY CORE ===
+as_a: SEREMI Medio Ambiente
+i_want: Revisar la pertinencia ambiental de los proyectos de inversión regional de gran escala
+so_that: se asegure el cumplimiento de la normativa ambiental vigente y la protección de los ecosistemas de Ñuble
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-MEDIO
+  agent_type: HUMAN
+  description: Representante ministerial para el medio ambiente y la sustentabilidad
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-CAPA_GEOESPACIAL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: MEDIO-AMBIENTE
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - seremi
+  - ambiental
+  - fiscalizacion
+  - biodiversidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Participación digital en la mesa de evaluación ambiental de proyectos regionales
+  - Capacidad de cargar informes técnicos de cumplimiento normativo (EIA/DIA)
+  - Notificaciones automáticas sobre proyectos en zonas de conservación prioritaria

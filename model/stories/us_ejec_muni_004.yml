@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportar avance periódico (validación supervisor)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-MUNI-004
-urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
-role_id: ROL-GESTION-TEC
-as_a: Unidad Técnica Municipal
-i_want: Reportar avance periódico (validación supervisor)
-so_that: Cumplo con reporte
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Reporte de Avance Periódico Municipal
+
+# === STORY CORE ===
+as_a: Profesional de la Unidad Técnica Municipal
+i_want: reportar el avance físico y financiero periódico de los proyectos municipales conforme a lo estipulado en el convenio
+so_that: el Gobierno Regional pueda realizar el seguimiento en línea, validar los estados de pago y cumplir con las exigencias de transparencia
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TEC
+  agent_type: HUMAN
+  description: Encargado de reportar el cumplimiento de hitos ante la unidad de control del GORE
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: RENDICION-CUENTAS
+  priority: P0
+  scope: MUNICIPAL
+
+extra_tags:
+  - reportes
+  - avance-fisico
+  - estado-de-pago
+  - seguimiento-municipio
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de reporte mensual con desglose de actividades realizadas y gastos incurridos
+  - Validación del supervisor del GORE necesaria para dar por recibido el reporte
+  - Integración de evidencias fotográficas georreferenciadas para validar el avance físico

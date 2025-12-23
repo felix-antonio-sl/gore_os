@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Estado de mi postulación en tiempo real (timeline visual)
-id: US-FIN-IPR-007
-urn: urn:goreos:atom:story:us_fin_ipr_007:1.0.0
-role_id: ROL-GESTION-G7-FORM
-as_a: Formulador Programas Glosa 7
-i_want: Consultar estado de mi postulación en tiempo real (timeline visual)
-so_that: Tengo visibilidad del avance del trámite
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TRAMITE
+id: US-FIN-IPR-007
+name: Timeline Visual del Estado de Postulación
+
+# === STORY CORE ===
+as_a: Formulador de Programas Glosa 7 / Beneficiario
+i_want: consultar el estado actual de mi postulación mediante una línea de tiempo (Timeline) visual e interactiva
+so_that: tenga visibilidad clara de en qué etapa administrativa se encuentra mi trámite, quién es el responsable actual y cuál es el plazo estimado de respuesta
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Usuario que requiere transparencia y certidumbre sobre sus trámites ante el Estado
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-NOTIFICACION-ELECTRONICA
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: TRANSPARENCIA
+  priority: P0
+  scope: CIUDADANO
+
+extra_tags:
+  - timeline-visual
+  - trazabilidad
+  - estado-tramite
+  - transparencia
+  - experiencia-usuario
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización de hitos: Recepción, Admisibilidad, Evaluación, Firma, Pago
+  - Indicador de "Tiempo de Espera" comparado con el promedio histórico del trámite
+  - Enlace directo a las notificaciones o resoluciones emitidas en cada etapa de la línea de tiempo

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tes_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de programación de pagos con priorización
-id: US-TES-001-01
-urn: urn:goreos:atom:story:us_tes_001_01:1.0.0
-role_id: ROL-FIN-ANALISTA-TES
-as_a: Analista Tesorería
-i_want: un módulo de programación de pagos con priorización
-so_that: pueda asegurar la liquidez y cumplir compromisos
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-COMPROMISO
+id: US-TES-001-01
+name: Programación y Priorización de Pagos
+
+# === STORY CORE ===
+as_a: Analista de Tesorería
+i_want: un módulo de programación de pagos que permita priorizar obligaciones según fecha de vencimiento y disponibilidad de caja
+so_that: se asegure la liquidez financiera y se cumplan los compromisos operativos de forma ordenada
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-TES
+  agent_type: HUMAN
+  description: Encargado de la ejecución de flujos de caja y pagos a proveedores y terceros
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-IPR-PAGO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-PAGO-PROVEEDORES
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: TESORERIA
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - pagos
+  - tesoreria
+  - flujo-caja
+  - liquidez
+  - priorización
+
+status: ENRICHED
+acceptance_criteria:
+  - 'Interfaz de "Agenda de Pagos" con semáforo de vencimientos (Rojo: Vencido, Amarillo: Pronto a vencer)'
+  - "Botón de autorización masiva para pagos recurrentes (Remuneraciones, Servicios Básicos)"
+  - "Reporte de provisión de fondos requerido para el cumplimiento de todos los compromisos de la semana"

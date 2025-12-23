@@ -1,16 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rend_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un workflow de revisión con estados (Recibida, En revisión, Aprobada, Observada,
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-REND-002-01
-urn: urn:goreos:atom:story:us_rend_002_01:1.0.0
-role_id: ROL-GESTION-FIN-REND
-as_a: Encargado Rendiciones
-i_want: un workflow de revisión con estados (Recibida, En revisión, Aprobada, Observada,
-  Rechazada)
-so_that: el proceso sea trazable y estructurado
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Workflow de revisión de rendiciones con estados
+
+# === STORY CORE ===
+as_a: Encargado de Rendiciones (DAF)
+i_want: un workflow de revisión con estados (Recibida, En revisión, Aprobada, Observada, Rechazada)
+so_that: el proceso sea trazable, transparente y estructurado
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-REND
+  agent_type: HUMAN
+  description: Funcionario administrativo encargado de autorizar y fiscalizar las rendiciones de cuentas de terceros
+
+entities_mentioned:
+  - id: ENT-FIN-RENDICION-CUENTA
+    status: linked
+  - id: ENT-FIN-ESTADO-RENDICION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CONTROL-RENDICIONES
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: RENDICIONES
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - rendiciones
+  - flujo-trabajo
+  - estados
+  - trazabilidad
+  - control-financiero
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero Kanban para el seguimiento de expedientes de rendición según su estado actual
+  - Notificaciones automáticas al beneficiario (Municipio/ONG) cuando su rendición es "Observada"
+  - Generación de comprobante de aprobación final con firma digital para el cierre del ciclo financiero

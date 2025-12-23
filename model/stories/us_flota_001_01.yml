@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_flota_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Control de bitácoras y mantenciones de vehículos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FLOTA-001-01
-urn: urn:goreos:atom:story:us_flota_001_01:1.0.0
-role_id: ROL-GESTION-OPS-FLOTA
+name: Control de bitácoras y mantenciones de vehículos
+
+# === STORY CORE ===
 as_a: Encargado Flota
 i_want: control de bitácoras y mantenciones de vehículos
 so_that: la flota esté disponible y segura
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
-- ENT-ORG-VEHICULO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OPS-FLOTA
+  agent_type: HUMAN
+  description: Encargado de la Unidad de Servicios Generales responsable del parque automotriz institucional
+
+entities_mentioned:
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-BACK-BITACORA-USO
+    status: candidate
+  - id: ENT-BACK-MANTENCION-PREVENTIVA
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-GESTION-FLOTA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: LOGISTICA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - flota
+  - vehiculos
+  - bitacoras
+  - mantenciones
+  - logistica-interna
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro digital de kilometraje al inicio y fin de cada cometido funcionario
+  - Alertador de mantención preventiva basado en horas de motor o kilometraje
+  - Registro de reparaciones y gastos de combustible por unidad de vehículo

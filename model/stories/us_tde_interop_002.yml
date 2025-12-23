@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_interop_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Registrar/administrar servicios en Catálogo de Servicios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-INTEROP-002
-urn: urn:goreos:atom:story:us_tde_interop_002:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Registrar/administrar servicios en Catálogo de Servicios
-so_that: Publico mis servicios
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Gestión del Catálogo de Servicios Interoperables
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: registrar y administrar la oferta de datos institucionales en el Catálogo de Servicios Interoperables
+so_that: otras instituciones públicas puedan descubrir y consumir servicios expuestos por el GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Administrador de la oferta de datos y servicios digitales del GORE hacia el ecosistema público
+
+entities_mentioned:
+  - id: ENT-TDE-API-CATALOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: INTEROPERABILIDAD
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - catalogo
+  - apis
+  - servicios-web
+  - intercambio-datos
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Listado de endpoints con documentación técnica básica (Swagger/OpenAPI)
+  - Definición de niveles de acceso (Público, Restringido, Privado) por servicio
+  - Proceso de publicación que incluye validación de seguridad previa

@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_inv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de control de activos con ubicación y responsable
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-INV-001-01
-urn: urn:goreos:atom:story:us_inv_001_01:1.0.0
-role_id: ROL-GESTION-ANAL-INV
+name: Módulo de control de activos con ubicación y responsable
+
+# === STORY CORE ===
 as_a: Analista de Inversión
 i_want: un módulo de control de activos con ubicación y responsable
 so_that: pueda mantener el inventario actualizado
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-INVENTARIO
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL-INV
+  agent_type: HUMAN
+  description: Analista encargado del seguimiento físico y contable de los activos adquiridos por el GORE
+
+entities_mentioned:
+  - id: ENT-FIN-ACTIVO-FIJO
+    status: candidate
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-GESTION-BIENES-NACIONALES
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: INVENTARIO
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - activos-fijos
+  - inventario
+  - logística
+  - control-interno
+  - patrimonio
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de activos con geolocalización de oficina y ID de responsable del acta de entrega
+  - Generación de etiquetas con código QR vinculadas a la ficha digital del activo
+  - Historial de movimientos y traspasos de responsabilidad entre departamentos

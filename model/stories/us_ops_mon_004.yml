@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_mon_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Definir y medir el cumplimiento de SLAs y SLOs
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-MON-004
-urn: urn:goreos:atom:story:us_ops_mon_004:1.0.0
-role_id: ROL-GESTION-TIC-SRE
+name: Monitor de Cumplimiento de SLAs y SLOs
+
+# === STORY CORE ===
 as_a: Ingeniero SRE
-i_want: definir y medir el cumplimiento de SLAs y SLOs
-so_that: se evalúe la calidad del servicio entregado y la gobernanza operativa
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+i_want: Definir y medir automáticamente el cumplimiento de los Acuerdos de Nivel de Servicio (SLA) y Objetivos de Nivel de Servicio (SLO)
+so_that: se evalúe objetivamente la calidad del servicio entregado y la eficacia de la gobernanza operativa del GORE Ñuble
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-SRE
+  agent_type: HUMAN
+  description: Responsable del cumplimiento de metas operacionales técnicas
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-SAL-INDICADOR
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: GOBERNANZA-TI
+  priority: P1
+  scope: GESTION-OPERATIVA
+
+extra_tags:
+  - sla
+  - slo
+  - metas
+  - calidad-servicio
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo de disponibilidad mensual (Uptime %) integrado con el wallboard de monitoreo
+  - Reporte de "Error Budget" remanente para el equipo de desarrollo
+  - Dashboard ejecutivo de cumplimiento de SLAs para la jefatura de informática

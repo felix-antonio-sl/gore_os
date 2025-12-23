@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_coord_dit_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una vista consolidada de proyectos por sector (vial, salud, educación)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COORD-DIT-001-01
-urn: urn:goreos:atom:story:us_coord_dit_001_01:1.0.0
-role_id: ROL-GESTION-UCR-COOR
+name: Una vista consolidada de proyectos por sector (vial, salud, educación)
+
+# === STORY CORE ===
 as_a: Coordinador UCR
 i_want: una vista consolidada de proyectos por sector (vial, salud, educación)
 so_that: pueda gestionar prioridades técnicas
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Coordinador técnico que articula la inversión sectorial en el territorio
+
+entities_mentioned:
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-EJE-SECTOR-INVERSION
+    status: candidate
+  - id: ENT-TERR-MAPA-PROYECTOS
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-SEGUIMIENTO-SECTORIAL
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - proyectos
+  - sectores
+  - ucr
+  - consolidado
+  - monitorizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Agrupación dinámica de la cartera por sector presupuestario
+  - Filtros por estado de avance (Licitación, Ejecución, Finalizado)
+  - Mapas de calor de inversión por comuna y sector

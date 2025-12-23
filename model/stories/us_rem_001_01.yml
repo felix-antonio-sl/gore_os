@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rem_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de cálculo de remuneraciones con validaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-REM-001-01
-urn: urn:goreos:atom:story:us_rem_001_01:1.0.0
-role_id: ROL-GESTION-RH-REM
-as_a: Encargado Remuneraciones
+name: Módulo de cálculo de remuneraciones con validaciones
+
+# === STORY CORE ===
+as_a: Encargado de Remuneraciones
 i_want: un módulo de cálculo de remuneraciones con validaciones
 so_that: el pago sea correcto y oportuno
-domain: D-BACK
-priority: P0
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-RH-REM
+  agent_type: HUMAN
+  description: Funcionario de Recursos Humanos encargado del procesamiento de la planilla de sueldos
+
+entities_mentioned:
+  - id: ENT-BACK-REMUNERACION
+    status: candidate
+  - id: ENT-BACK-LIQUIDACION-SUELDO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-PAGO-REMUNERACIONES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: FINANZAS-RRHH
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - remuneraciones
+  - rrhh
+  - pagos
+  - nomina
+  - planillas
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de cálculo parametrizable según escalafón, antigüedad y asignaciones específicas GORE
+  - Validaciones cruzadas contra el reloj control (asistencia) y resoluciones de horas extras
+  - Integración con el sistema de tesorería para la dispersión de fondos automática (Archivos bancarios)

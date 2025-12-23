@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_prof_n250_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceder al detalle de compromisos de mi área
-id: US-PROF-N250-001-01
-urn: urn:goreos:atom:story:us_prof_n250_001_01:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
-i_want: acceder al detalle de compromisos de mi área
-so_that: pueda reportar avances
-domain: D-PLAN
-priority: P0
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-COMPROMISO
+id: US-PROF-N250-001-01
+name: Acceso al detalle de compromisos de área
+
+# === STORY CORE ===
+as_a: Profesional / Analista de División
+i_want: acceder al detalle de compromisos de mi área
+so_that: pueda reportar avances y cumplir metas institucionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional técnico de cualquier división encargado de la ejecución de metas y compromisos anuales
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-PLAN-CALENDARIO-HITO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: GESTION-INTERNA
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - compromisos
+  - metas-gestion
+  - reporte-avance
+  - transparencia-interna
+  - planificación
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard personalizado que muestra los compromisos asignados al usuario o a su departamento
+  - Sistema de check-in de avances con carga de medios de verificación (PDF, Fotos, Enlaces)
+  - Notificaciones de proximidad de hitos críticos definidos en el calendario institucional

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_estr_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Publicar noticias oficiales en portal y RRSS
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-ESTR-002
-urn: urn:goreos:atom:story:us_com_estr_002:1.0.0
-role_id: ROL-GESTION-ENC
+name: Publicar noticias oficiales en portal y RRSS
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Publicar noticias oficiales en portal y RRSS
 so_that: Informo a la ciudadanía
-domain: D-COM
-priority: P1
-competence_id: CPT-COM-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Community Manager o Periodista de la Unidad de Comunicaciones
+
+entities_mentioned:
+  - id: ENT-BACK-NOTICIA-OFICIAL
+    status: candidate
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: candidate
+  - id: ENT-SOC-CIUDADANO
+    status: linked
+
+process_ref:
+  id: PROC-BACK-DIFUSION-NOTICIAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P1
+  scope: CIUDADANO
+
+extra_tags:
+  - noticias
+  - portal-web
+  - rrss
+  - transparencia-informativa
+  - prensa
+
+status: ENRICHED
+acceptance_criteria:
+  - CMS integrado para publicación simultánea en Web y Redes Sociales
+  - Editor de texto con soporte para metadatos SEO y accesibilidad
+  - Histórico de noticias con motor de búsqueda temático

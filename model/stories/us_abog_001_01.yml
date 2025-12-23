@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Plantillas de actos administrativos con campos pre-llenados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-001-01
-urn: urn:goreos:atom:story:us_abog_001_01:1.0.0
-role_id: ROL-NORM-ABOG
+name: Plantillas de actos administrativos con campos pre-llenados
+
+# === STORY CORE ===
 as_a: Abogado Informante
 i_want: plantillas de actos administrativos con campos pre-llenados
 so_that: pueda agilizar la redacción y reducir errores
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado que redacta y revisa actos administrativos
+
+entities_mentioned:
+  - id: ENT-NORM-ACTO-ADMINISTRATIVO
+    status: candidate
+  - id: ENT-SYS-PLANTILLA
+    status: candidate
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-ELABORACION-ACTOS
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: DOCUMENTACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - plantillas
+  - actos-administrativos
+  - automatizacion
+  - legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Biblioteca de plantillas por tipo de acto
+  - Campos pre-llenados desde base de datos
+  - Validación de campos obligatorios
+  - Exportación a formato oficial

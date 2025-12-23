@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Planilla Previred
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-011
-urn: urn:goreos:atom:story:us_back_per_011:1.0.0
-role_id: ROL-BACK-PER-GEST
+name: Planilla Previred
+
+# === STORY CORE ===
 as_a: Gestor de Personas
 i_want: Generar planilla Previred
 so_that: Cumplo con obligaciones previsionales
-domain: D-BACK
-competence_id: CPT-BACK-AUTO-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: ALGORITHMIC
+  description: Sistema automatizado de generación de información previsional para Previred
+
+entities_mentioned:
+  - id: ENT-FIN-COTIZACION-PREVISIONAL
+    status: candidate
+  - id: ENT-ORG-AFP
+    status: candidate
+  - id: ENT-ORG-FONASA-ISAPRE
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-DECLARACION-PREVISIONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: REMUNERACIONES
+  priority: P0
+  scope: NACIONAL
+
+extra_tags:
+  - previred
+  - cotizaciones
+  - rrhh
+  - remuneraciones
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Exportación de archivo plano según especificaciones técnicas de Previred
+  - Validación de RUTs y montos previo a la exportación
+  - Registro de confirmación de pago recibido desde el portal Previred

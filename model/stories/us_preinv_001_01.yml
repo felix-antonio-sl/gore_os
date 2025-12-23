@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_preinv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de evaluación de admisibilidad con checklist BIP
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PREINV-001-01
-urn: urn:goreos:atom:story:us_preinv_001_01:1.0.0
-role_id: ROL-GESTION-DAE-PRE
+name: Evaluación de admisibilidad con checklist BIP
+
+# === STORY CORE ===
 as_a: Analista Preinversión (DAE)
 i_want: un módulo de evaluación de admisibilidad con checklist BIP
 so_that: pueda verificar requisitos de ingreso a evaluación
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DAE-PRE
+  agent_type: HUMAN
+  description: Analista de la División de Administración y Finanzas (DAE) o Planificación encargado de la pre-evaluación técnica
+
+entities_mentioned:
+  - id: ENT-FIN-BIP-ID
+    status: linked
+  - id: ENT-EJEC-CHECKLIST-BIP
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: ADMISIBILIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - preinversion
+  - bip
+  - admisibilidad
+  - checklist
+  - dae
+  - proyectos-capital
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist automatizado que valida la existencia de documentos mínimos (Perfil, Carta de Compromiso, etc.)
+  - Integración con el portal BIP para obtener datos básicos del proyecto por ID
+  - Emisión de informe de "Inadmisibilidad con Observaciones" si faltan documentos críticos

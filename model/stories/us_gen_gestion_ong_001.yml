@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_ong_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para ONG / Fundación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ONG-001
-urn: urn:goreos:atom:story:us_gen_gestion_ong_001:1.0.0
-role_id: ROL-GESTION-ONG
+name: Historia genérica para ONG / Fundación
+
+# === STORY CORE ===
 as_a: ONG / Fundación
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ONG
+  agent_type: HUMAN
+  description: Persona jurídica sin fines de lucro (ONG o Fundación) que ejecuta programas sociales o culturales con fondos GORE
+
+entities_mentioned:
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: PARTICIPACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - ong
+  - fundacion
+  - sociedad-civil
+  - ejecucion-proyectos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al sistema de rendiciones financieras (SISREC style) para la justificación de gastos
+  - Módulo de seguimiento de beneficiarios atendidos por el programa de la fundación
+  - Repositorio de informes técnicos trimestrales y productos finales del convenio

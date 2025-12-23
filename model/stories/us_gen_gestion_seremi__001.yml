@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_seremi__001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para SEREMI Hacienda
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SEREMI_-001
-urn: urn:goreos:atom:story:us_gen_gestion_seremi__001:1.0.0
-role_id: ROL-GESTION-SEREMI-HAC
+name: Historia genérica para SEREMI Hacienda
+
+# === STORY CORE ===
 as_a: SEREMI Hacienda
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-HAC
+  agent_type: HUMAN
+  description: Secretario Regional Ministerial de Hacienda responsable de la coordinación financiera y presupuestaria nacional en la región
+
+entities_mentioned:
+  - id: ENT-FIN-LEY-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-MODIFICACION-PRESUPUESTARIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-PREPARACION-ARI
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - seremi-hacienda
+  - presupuesto
+  - coordinacion-ministerial
+  - g2g
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Pantalla de consulta de la ejecución presupuestaria regional consolidada
+  - Módulo de validación de convenios de transferencia que requieran visación de Hacienda
+  - Registro de mesas de trabajo financieras para la elaboración del ARI/PROPIR

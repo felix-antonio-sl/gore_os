@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_disc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo confidencial de gestión de sumarios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-DISC-001-01
-urn: urn:goreos:atom:story:us_abog_disc_001_01:1.0.0
-role_id: ROL-NORM-DISC
+name: Un módulo confidencial de gestión de sumarios
+
+# === STORY CORE ===
 as_a: Abogado Procesos Disciplinarios
 i_want: un módulo confidencial de gestión de sumarios
 so_that: pueda tramitar procesos con reserva
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-DISC
+  agent_type: HUMAN
+  description: Abogado encargado de procesos disciplinarios internos
+
+entities_mentioned:
+  - id: ENT-ORG-SUMARIO
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-EXPEDIENTE-CONFIDENCIAL
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-SUMARIO-ADMINISTRATIVO
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: CONFIDENCIAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - sumarios
+  - disciplinario
+  - confidencial
+  - reserva
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso restringido por rol
+  - Cifrado de documentos sensibles
+  - Trazabilidad completa de accesos
+  - Workflow de etapas del sumario

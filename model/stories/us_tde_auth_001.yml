@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_auth_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-AUTH-001
-urn: urn:goreos:atom:story:us_tde_auth_001:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
+name: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
+
+# === STORY CORE ===
 as_a: Desarrollador
 i_want: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
 so_that: Cumplo con DS9 y habilito SSO para ciudadanos y funcionarios
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DESARROLLADO
+  agent_type: HUMAN
+  description: Desarrollador de software del equipo TI GORE
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - claveunica
+  - oidc
+  - ds9
+  - sso
+
+status: ENRICHED
+acceptance_criteria:
+  - Flujo OIDC completo implementado
+  - Soporte para ciudadanos y funcionarios
+  - Cumplimiento DS9 verificado
+  - Logs de autenticación auditables

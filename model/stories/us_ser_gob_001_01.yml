@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ser_gob_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un canal de comunicación con el GORE para emergencias
-id: US-SER-GOB-001-01
-urn: urn:goreos:atom:story:us_ser_gob_001_01:1.0.0
-role_id: ROL-GESTION-SEREMI-GOB
-as_a: SEREMI Gobierno Interior
-i_want: un canal de comunicación con el GORE para emergencias
-so_that: pueda coordinar respuestas rápidamente
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-CANAL
+id: US-SER-GOB-001-01
+name: Canal de comunicación GORE-SEREMI para emergencias
+
+# === STORY CORE ===
+as_a: SEREMI de Gobierno
+i_want: un canal de comunicación digital y seguro con el GORE para la gestión de emergencias
+so_that: pueda coordinar respuestas intersectoriales rápidamente y mantener informada a la autoridad central
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-GOB
+  agent_type: HUMAN
+  description: Autoridad política encargada del enlace entre el Gobierno Central y el Gobierno Regional
+
+entities_mentioned:
+  - id: ENT-DIG-CANAL
+    status: linked
+  - id: ENT-SEG-INCIDENCIA-POLITICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-ESTRATEGICA
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: EMERGENCIAS-POLITICAS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - seremi-gobierno
+  - crisis
+  - comunicacion-emergencia
+  - articulacion-politica
+  - gobierno-interior
+
+status: ENRICHED
+acceptance_criteria:
+  - Mensajería cifrada integrada con persistencia de acuerdos y decisiones en situaciones de crisis
+  - Acceso a minutas de situación regional generadas por el gabinete del Gobernador en tiempo real
+  - Sistema de notificaciones críticas (Push) ante eventos catastróficos que requieran presencia de ministros

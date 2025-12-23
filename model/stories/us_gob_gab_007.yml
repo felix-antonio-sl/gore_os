@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acuerdos y misiones con regiones extranjeras
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GAB-007
-urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
+name: Acuerdos y misiones con regiones extranjeras
+
+# === STORY CORE ===
+as_a: Profesional de Relaciones Internacionales
 i_want: Gestionar acuerdos y misiones con regiones extranjeras
 so_that: Fomento la cooperación internacional descentralizada
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-ACUERDO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional encargado de la Unidad de Asuntos Internacionales del GORE (URAI)
+
+entities_mentioned:
+  - id: ENT-CONV-ACUERDO-INTERNACIONAL
+    status: candidate
+  - id: ENT-GOB-MISION-EXTRANJERA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P1
+  scope: INTERNACIONAL
+
+extra_tags:
+  - urai
+  - relaciones-internacionales
+  - cooperacion-descentralizada
+  - paradiplomacia
+  - misiones-extranjeras
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de convenios de hermandad y cooperación técnica con regiones de otros países (Ej: China, Argentina)
+  - Módulo de planificación y rendición de misiones internacionales (Viáticos, Agendas, Informes de Hallazgo)
+  - Dashboard de cooperación recibida (Asistencia técnica) y otorgada por la región al exterior

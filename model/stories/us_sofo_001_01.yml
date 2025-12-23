@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sofo_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas tempranas de emergencias agrícolas (sequía, heladas)
-id: US-SOFO-001-01
-urn: urn:goreos:atom:story:us_sofo_001_01:1.0.0
-role_id: ROL-GESTION-DIRIGENTE-SO
-as_a: Dirigente Social
-i_want: alertas tempranas de emergencias agrícolas (sequía, heladas)
-so_that: se activen fondos de emergencia a tiempo
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-SOFO-001-01
+name: Alertas tempranas de emergencias agrícolas
+
+# === STORY CORE ===
+as_a: Dirigente de Gremio Agrícola / Dirigente Social
+i_want: recibir alertas tempranas de emergencias agrícolas (sequía, heladas, plagas)
+so_that: se activen los fondos de emergencia regional a tiempo y se mitiguen las pérdidas de los pequeños productores
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIRIGENTE-SO
+  agent_type: HUMAN
+  description: Representante de organizaciones de productores agrícolas o regantes (Stakeholder Externo)
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-TERR-ZONA-CATALIZADORA
+    status: candidate
+  - id: ENT-FIN-FONDO-EMERGENCIA
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: EMERGENCIAS-CLIMATICAS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - agricultura
+  - alertas-tempranas
+  - sequia
+  - cambio-climatico
+  - fomento-rural
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración de datos meteorológicos y satelitales (NDVI) para la detección proactiva de estrés hídrico
+  - Módulo de "Declaración de Emergencia" simplificado para que los dirigentes reporten daños en línea
+  - Panel de seguimiento de la entrega de forraje, agua o bonos de emergencia financiados por el GORE

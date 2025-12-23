@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_encarga_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Encargado Estado Verde
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ENCARGA-001
-urn: urn:goreos:atom:story:us_gen_gestion_encarga_001:1.0.0
-role_id: ROL-GESTION-ENCARGADO-ES
+name: Historia genérica para Encargado Estado Verde
+
+# === STORY CORE ===
 as_a: Encargado Estado Verde
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENCARGADO-ES
+  agent_type: HUMAN
+  description: Encargado de la implementación del programa "Estado Verde" (Sostenibilidad y eficiencia energética) en el GORE
+
+entities_mentioned:
+  - id: ENT-TERR-MEDIO-AMBIENTE
+    status: linked
+  - id: ENT-BACK-EFICIENCIA-ENERGETICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: MEDIO-AMBIENTE
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - estado-verde
+  - sostenibilidad
+  - eficiencia-energetica
+  - medio-ambiente
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de indicadores de huella de carbono institucional (Consumo eléctrico, agua, combustible)
+  - Módulo de gestión del plan de reciclaje y eliminación de plásticos de un solo uso
+  - Reporte de cumplimiento de la certificación ambiental institucional (Estado Verde)

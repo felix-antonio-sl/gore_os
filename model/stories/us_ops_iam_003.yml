@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_iam_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Definir permisos granulares por recurso y acción
-id: US-OPS-IAM-003
-urn: urn:goreos:atom:story:us_ops_iam_003:1.0.0
-role_id: ROL-ADMIN-TI
-as_a: Rol no encontrado (ROL-ADMIN-TI)
-i_want: definir permisos granulares por recurso y acción
-so_that: se aplique el principio de mínimo privilegio en toda la plataforma
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-PLATAFORMA
+id: US-OPS-IAM-003
+name: Permisos de Mínimo Privilegio (Principle of Least Privilege)
+
+# === STORY CORE ===
+as_a: Administrador de Seguridad TI
+i_want: Definir permisos granulares por recurso (Entidad) y acción (Lectura, Escritura, Firma, Descarga)
+so_that: se aplique el principio de mínimo privilegio en toda la plataforma, limitando el radio de exposición ante posibles ataques
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Especialista en endurecimiento (hardening) de la seguridad de la plataforma
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: SEGURIDAD-DATOS
+  priority: P1
+  scope: CRITICO
+
+extra_tags:
+  - privilegios
+  - granulidad
+  - seguridad
+  - control-acceso
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz de permisos asignable a nivel de Clase de Entidad (Atoms) y sus atributos sensibles
+  - Denegación explícita por defecto (Deny by default) para nuevos recursos creados
+  - Alerta de "Exceso de Privilegios" si un usuario posee más de 5 roles simultáneos

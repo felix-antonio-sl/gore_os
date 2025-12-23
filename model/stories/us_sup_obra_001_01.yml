@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sup_obra_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de vencimiento de boletas de garantía
-id: US-SUP-OBRA-001-01
-urn: urn:goreos:atom:story:us_sup_obra_001_01:1.0.0
-role_id: ROL-GESTION-SUP
-as_a: Supervisor CIES
-i_want: alertas de vencimiento de boletas de garantía
-so_that: pueda solicitar renovación a tiempo
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-REND-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-SUP-OBRA-001-01
+name: Alertas de vencimiento de boletas de garantía de obras
+
+# === STORY CORE ===
+as_a: Analista de Inversiones / Jefe de División
+i_want: recibir alertas automáticas de vencimiento de las boletas de garantía de las obras en ejecución
+so_that: pueda solicitar oportunamente su renovación y resguardar el patrimonio del Gobierno Regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de División (DIPLADE/DIPIR) responsable de la integridad financiera de la cartera de proyectos
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-BOLETA-GARANTIA
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CONTABILIDAD-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: RESGUARDO-PATRIMONIAL
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - boletas-garantia
+  - alertas
+  - inversion-publica
+  - resguardo-patrimonial
+  - cumplimiento-contrato
+
+status: ENRICHED
+acceptance_criteria:
+  - Notificación vía sistema y correo electrónico con 60, 30 y 15 días de anticipación al vencimiento
+  - Tablero de control de cauciones con estado (Vigente, Próxima a Vencer, Vencida, Devuelta)
+  - Validación de que el monto de la garantía mantenga la proporción requerida ante aumentos de contrato

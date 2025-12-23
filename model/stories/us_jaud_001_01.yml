@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jaud_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de planificación de auditoría basado en riesgos
-id: US-JAUD-001-01
-urn: urn:goreos:atom:story:us_jaud_001_01:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: un módulo de planificación de auditoría basado en riesgos
-so_that: pueda focalizar recursos en áreas críticas
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-RIESGO
+id: US-JAUD-001-01
+name: Planificación Estratégica de Auditoría Interna
+
+# === STORY CORE ===
+as_a: Jefe de Auditoría Interna
+i_want: Un módulo de planificación de auditoría basado en matrices de riesgo institucional
+so_that: pueda focalizar los recursos de fiscalización en los procesos de mayor criticidad y vulnerabilidad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la unidad de auditoría interna, reportando directamente al Gobernador
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: AUDITORIA
+  priority: P0
+  scope: FISCALIZACION
+
+extra_tags:
+  - auditoria
+  - riesgos
+  - control-interno
+  - probidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación del Plan Anual de Auditoría (PAA) vinculado a riesgos detectados por el sistema
+  - Seguimiento en tiempo real de la implementación de medidas correctivas de hallazgos previos
+  - Repositorio seguro de informes de auditoría con niveles de acceso granulares

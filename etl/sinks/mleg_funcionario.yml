@@ -1,0 +1,185 @@
+# ETL Sink: Funcionarios Staging Entity
+# Source: listado_funcionarios_integrado_remediado.csv
+# Quality: ✅ ALTA (pre-remediado, campos normalizados)
+---
+_meta:
+  urn: urn:goreos:etl:sink:mleg_funcionario:1.0.0
+  type: Entity
+  source_file: listado_funcionarios_integrado_remediado.csv
+  source_quality: HIGH
+  records: 111
+
+id: ENT-MLEG-FUNCIONARIO
+name: funcionario_staging
+name_singular: Funcionario (Staging)
+domain: D-STAGING
+module: M10-LEGACY
+description: >
+  Funcionarios del GORE Ñuble extraídos desde transparencia activa.
+  Incluye planta, contrata y honorarios. Datos pre-normalizados con
+  campos _CLP (montos) y _Horas (horas extras).
+
+grain:
+  - periodo
+  - nombre_completo # Clave natural, requiere parsing a apellidos
+
+attributes:
+  # --- Identificación temporal ---
+  - name: periodo
+    type: date
+    required: true
+    description: Primer día del mes del registro (YYYY-MM-01)
+    source_column: Periodo
+
+  - name: año
+    type: integer
+    required: true
+    source_column: Año
+
+  - name: mes
+    type: string
+    required: true
+    source_column: Mes
+
+  - name: mes_num
+    type: integer
+    source_column: Mes_num
+
+  # --- Identificación persona ---
+  - name: nombre_completo
+    type: string
+    required: true
+    description: "Formato: 'Apellido1 Apellido2, Nombres'"
+    source_column: Nombre completo
+
+  - name: cargo
+    type: string
+    required: true
+    source_column: Cargo o función
+
+  - name: calificacion_profesional
+    type: string
+    source_column: Calificación profesional o formación
+
+  # --- Vínculo laboral ---
+  - name: tipo_vinculo
+    type: enum
+    values: [Planta/Contrata, Honorarios]
+    required: true
+    source_column: Tipo vínculo
+
+  - name: estamento
+    type: enum
+    values:
+      [
+        Directivo,
+        Profesional,
+        Técnico,
+        Administrativo,
+        Auxiliar,
+        Honorarios,
+        Autoridad de Gobierno,
+      ]
+    required: true
+    source_column: Estamento
+
+  - name: grado_eus
+    type: string
+    description: Grado EUS o jornada (puede ser número o 'S/G' para honorarios)
+    source_column: Grado EUS o jornada
+
+  # --- Fechas contrato ---
+  - name: fecha_inicio
+    type: date
+    source_column: Fecha_inicio
+
+  - name: fecha_termino
+    type: date
+    nullable: true
+    description: NULL para contratos indefinidos
+    source_column: Fecha_termino
+
+  # --- Remuneraciones (ya normalizadas a CLP) ---
+  - name: remuneracion_bruta
+    type: decimal
+    source_column: "Remuneración bruta del mes (incluye bonos e incentivos, asig. especiales, horas extras)_CLP"
+
+  - name: remuneracion_liquida
+    type: decimal
+    source_column: Remuneración líquida del mes_CLP
+    nullable: true
+
+  - name: asignaciones_especiales
+    type: decimal
+    source_column: Asignaciones especiales del mes (inc. en rem. bruta)_CLP
+
+  - name: bonos_incentivos
+    type: decimal
+    source_column: Remuneración Bonos incentivos del mes (inc. en rem. bruta)_CLP
+
+  - name: rem_adicionales
+    type: decimal
+    source_column: Rem. adicionales del mes (no inc. en rem. bruta)_CLP
+    nullable: true
+
+  - name: viaticos
+    type: decimal
+    source_column: Viáticos del mes (no inc. en rem. bruta)_CLP
+
+  # --- Horas extras (ya normalizadas) ---
+  - name: derecho_horas_extras
+    type: boolean
+    source_column: Derecho_horas_extras
+
+  - name: horas_extras_diurnas_monto
+    type: decimal
+    source_column: Montos y horas extraordinarias diurnas del mes(inc. en rem. bruta)_CLP
+
+  - name: horas_extras_diurnas_horas
+    type: decimal
+    source_column: Montos y horas extraordinarias diurnas del mes(inc. en rem. bruta)_Horas
+
+  - name: horas_extras_nocturnas_monto
+    type: decimal
+    source_column: Montos y horas extraordinarias nocturnas del mes(inc. en rem. bruta)_CLP
+
+  - name: horas_extras_nocturnas_horas
+    type: decimal
+    source_column: Montos y horas extraordinarias nocturnas del mes(inc. en rem. bruta)_Horas
+
+  - name: horas_extras_festivas_monto
+    type: decimal
+    source_column: Montos y horas extraordinarias festivas del mes (inc. en rem. bruta)_CLP
+
+  - name: horas_extras_festivas_horas
+    type: decimal
+    source_column: Montos y horas extraordinarias festivas del mes (inc. en rem. bruta)_Horas
+
+  # --- Metadata ---
+  - name: observaciones
+    type: text
+    source_column: Observaciones
+
+  - name: enlace_funciones
+    type: string
+    description: URL a documento de funciones (solo honorarios)
+    source_column: Enlace funciones desarrolladas
+    nullable: true
+
+  - name: fuente_origen
+    type: string
+    description: Archivo fuente original (funcionarios1, funcionarios2, etc.)
+    source_column: _fuente
+
+transforms_required:
+  - name: parse_nombre_completo
+    description: "Separar 'Apellido1 Apellido2, Nombres' en apellido_paterno, apellido_materno, nombres"
+  - name: normalize_grado
+    description: "Convertir grado a integer o NULL para 'S/G'"
+  - name: derive_calidad_juridica
+    description: "Derivar de tipo_vinculo: PLANTA, CONTRATA, HONORARIOS"
+
+morphisms:
+  genera:
+    - ENT-ORG-FUNCIONARIO (1:N por persona, 1 por mes)
+    - ENT-ORG-REMUNERACION (1:1)

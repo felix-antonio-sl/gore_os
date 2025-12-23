@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-12-23T05:17:06.952763",
+  "source_file": "/Users/felixsanhueza/fx_felixiando/gore_os/etl/sources/funcionarios/listado_funcionarios_integrado_remediado.csv",
+  "total_rows": 110,
+  "quality_score": 91.81818181818181,
+  "distributions": {
+    "estamento": {
+      "Profesional": 79,
+      "Auxiliar": 3,
+      "Administrativo": 6,
+      "Técnico": 4,
+      "Directivo": 7,
+      "Autoridad de Gobierno": 1,
+      "Honorarios": 10
+    },
+    "tipo_vinculo": {
+      "Planta/Contrata": 100,
+      "Honorarios": 10
+    },
+    "division": {
+      "DIFOI": 10,
+      "SERVICIOS_GENERALES": 6,
+      "COMUNICACIONES": 8,
+      "NO_DETERMINADO": 9,
+      "UCR": 1,
+      "DIPIR": 27,
+      "DIDESO": 9,
+      "GABINETE": 4,
+      "CIES": 2,
+      "ÑUBLE_250": 2,
+      "CORE": 4,
+      "DIT": 6,
+      "DIPLADE": 8,
+      "DAF": 8,
+      "JURIDICA": 5,
+      "AUDITORIA": 1
+    }
+  },
+  "parsing_errors": {
+    "division": 9
+  },
+  "horas_extras_count": 6
+}

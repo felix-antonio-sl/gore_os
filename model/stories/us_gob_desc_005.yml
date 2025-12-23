@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_desc_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Elaborar plan de instalación de competencia transferida
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-DESC-005
-urn: urn:goreos:atom:story:us_gob_desc_005:1.0.0
-role_id: ROL-FIN-ABS-COMP
-as_a: Comprador Público
+name: Elaborar plan de instalación de competencia transferida
+
+# === STORY CORE ===
+as_a: Profesional de Area (como Gestor de Instalación)
 i_want: Elaborar plan de instalación de competencia transferida
 so_that: Aseguro operatividad
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ABS-COMP
+  agent_type: HUMAN
+  description: Profesional encargado de la puesta en marcha de nuevas facultades transferidas desde el Ministerio (Onboarding de competencia)
+
+entities_mentioned:
+  - id: ENT-GOB-TRANSFERENCIA-COMPETENCIAS
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: DESCENTRALIZACION
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - plan-instalacion
+  - competencias
+  - operatividad
+  - puesta-en-marcha
+  - gestion-del-cambio
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist de instalación: Recursos Humanos, Espacio Físico, Sistemas TI y Presupuesto Operativo
+  - Módulo de diseño de los nuevos flujos de trabajo (As-Is vs To-Be) para la competencia recibida
+  - Definición de indicadores de éxito para la evaluación del primer año de ejercicio autónomo

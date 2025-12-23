@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_f8_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de concursos con etapas configurables
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-F8-001-01
-urn: urn:goreos:atom:story:us_f8_001_01:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: un módulo de gestión de concursos con etapas configurables
-so_that: pueda administrar el proceso completo
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Módulo de Concursos con Etapas Configurables (8%)
+
+# === STORY CORE ===
+as_a: Encargado de Calidad / Administrador de Fondos
+i_want: un módulo de gestión de concursos que permita configurar etapas personalizadas (Admisibilidad, Evaluación, Selección, Firma)
+so_that: se pueda adaptar el flujo del sistema a las bases específicas de cada convocatoria sin intervención de desarrollo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Responsable administrativo de la correcta ejecución de los fondos concursables del 8%
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: FONDOS-CONCURSABLES
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - fondos-8
+  - concursos
+  - etapas-configurables
+  - admision
+  - flujo-administrativo
+
+status: ENRICHED
+acceptance_criteria:
+  - Wizard de creación de concursos que permite arrastrar y soltar etapas pre-definidas
+  - Configuración de fechas fatales y responsables por cada etapa del concurso
+  - Publicación automática de los resultados de cada etapa en el portal ciudadano

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_prof_rez_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a expedientes de proyectos rezagados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PROF-REZ-001-01
-urn: urn:goreos:atom:story:us_prof_rez_001_01:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
+name: Acceso a expedientes de proyectos rezagados
+
+# === STORY CORE ===
+as_a: Profesional Jefe de Proyecto / Analista de Rezago
 i_want: acceso a expedientes de proyectos rezagados
-so_that: pueda diagnosticar problemas
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+so_that: pueda diagnosticar problemas y destrabar la ejecución
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional especializado en la gestión de zonas rezagadas y proyectos con nudo crítico técnico
+
+entities_mentioned:
+  - id: ENT-TERR-ZONA-REZAGADA
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: REZAGO
+  priority: P0
+  scope: TERRITORIAL
+
+extra_tags:
+  - rezago
+  - nudos-criticos
+  - diagnostico
+  - gestion-proyectos
+  - destrabar-inversion
+
+status: ENRICHED
+acceptance_criteria:
+  - Visor consolidado de expedientes técnicos, financieros y administrativos de proyectos con >12 meses sin avance
+  - Bitácora de incidencias para registrar nudos críticos (Falta RS, Problemas Prediales, Quiebre Contratista)
+  - Herramienta de priorización de intervenciones para proyectos de alto impacto en zonas rezagadas

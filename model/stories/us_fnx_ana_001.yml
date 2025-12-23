@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_ana_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Analizar patrones de intervenciones pasadas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-ANA-001
-urn: urn:goreos:atom:story:us_fnx_ana_001:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
+name: Analizar patrones de intervenciones pasadas
+
+# === STORY CORE ===
 as_a: Analista Prevención
-i_want: Analizar patrones de intervenciones pasadas
-so_that: Identifico debilidades estructurales sistémicas
-domain: D-FENIX
-priority: P2
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+i_want: Analizar patrones de intervenciones pasadas realizadas por FENIX
+so_that: Identifico debilidades estructurales sistémicas y propongo mejoras de largo plazo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista encargado de la prevención de riesgos administrativos
+
+entities_mentioned:
+  - id: ENT-SAL-APRENDIZAJE
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P2
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: ANALISIS-POST-MORTEM
+  priority: P2
+  scope: ESTRATEGICO
+
+extra_tags:
+  - patrones
+  - intervenciones
+  - prevencion
+  - mejora-continua
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de búsqueda de intervenciones basado en tags y dominios afectados
+  - Correlación automática entre el tipo de intervención y el impacto en el índice H_gore posterior
+  - Exportación de hallazgos para el Plan de Prevención Anual

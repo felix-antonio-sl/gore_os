@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_lob_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas para actualizar mi Declaración de Intereses y Patrimonio
-id: US-GOB-LOB-002
-urn: urn:goreos:atom:story:us_gob_lob_002:1.0.0
-role_id: ROL-GESTION-PER-FUN
-as_a: Funcionario
-i_want: Recibir alertas para actualizar mi Declaración de Intereses y Patrimonio
-so_that: Evito sanciones por incumplimiento de plazos (Ley 20.880)
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-GOB-LOB-002
+name: Alertas para actualizar mi Declaración de Intereses y Patrimonio
+
+# === STORY CORE ===
+as_a: Funcionario (Sujeto Obligado)
+i_want: Recibir alertas para actualizar mi Declaración de Intereses y Patrimonio (DIP)
+so_that: Evito sanciones por incumplimiento de plazos (Ley 20.880)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Funcionario o autoridad obligada a presentar declaración anual de intereses y patrimonio (Cargos directivos y otros)
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-NORM-LEY-PROBIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P0
+  scope: INTERNO
+
+extra_tags:
+  - dip
+  - probidad
+  - patrimonio-e-intereses
+  - alertas-cumplimiento
+  - ley-20880
+
+status: ENRICHED
+acceptance_criteria:
+  - Notificación push/email 30 días antes del vencimiento del plazo anual de actualización (Marzo de cada año)
+  - Módulo de precarga de datos históricos para agilizar la declaración ante la Contraloría (DIPRES/CGR)
+  - Bloqueo de trámites internos de viáticos o reembolsos si la declaración se encuentra fuera de plazo (soft-enforcement)

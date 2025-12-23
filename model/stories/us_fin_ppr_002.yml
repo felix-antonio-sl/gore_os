@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppr_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Track B (Ejecución Directa) con Matriz Marco Lógico rigurosa
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPR-002
-urn: urn:goreos:atom:story:us_fin_ppr_002:1.0.0
-role_id: ROL-GESTION-ANALISTA-PPR
-as_a: Analista PPR
-i_want: Evaluar Track B (Ejecución Directa) con Matriz Marco Lógico rigurosa
-so_that: Aseguro calidad programática
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Evaluación Programática Track B (Ejecución Directa - MML)
+
+# === STORY CORE ===
+as_a: Analista de Programas (PPR)
+i_want: evaluar las iniciativas del Track B (Ejecución Directa) aplicando una Matriz de Marco Lógico (MML) rigurosa
+so_that: se asegure la calidad programática, la coherencia entre fines, propósitos y actividades, y la correcta definición de indicadores de resultado
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-PPR
+  agent_type: HUMAN
+  description: Especialista en diseño y evaluación de programas sociales y de fomento
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: linked
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-MONITOREO-ERD
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: CALIDAD-PROGRAMATICA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - marco-logico
+  - track-b
+  - ppr
+  - evaluacion-programas
+  - impacto-social
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de edición deMML con validación de jerarquía de objetivos
+  - Integración de indicadores de Desempeño (Eficiencia, Eficacia, Calidad, Economía)
+  - Cálculo de Score de Calidad Programática previo a la resolución de sanción del Gobernador

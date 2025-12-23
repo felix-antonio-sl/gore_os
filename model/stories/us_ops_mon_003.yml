@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_mon_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Correlacionar logs de auditoría con métricas de rendimiento en una misma vista
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-MON-003
-urn: urn:goreos:atom:story:us_ops_mon_003:1.0.0
-role_id: ROL-GESTION-TIC-SRE
+name: Correlación Unificada de Logs y Métricas
+
+# === STORY CORE ===
 as_a: Ingeniero SRE
-i_want: correlacionar logs de auditoría con métricas de rendimiento en una misma vista
-so_that: se facilite el troubleshooting y la identificación de la causa raíz de incidentes
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+i_want: Correlacionar los logs de auditoría técnica con las métricas de rendimiento en una misma vista unificada (Tracing)
+so_that: se facilite la identificación ultra-rápida de la causa raíz de incidentes complejos (Troubleshooting avanzado)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-SRE
+  agent_type: HUMAN
+  description: Especialista en diagnóstico y resolución de incidentes de infraestructura
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-EVENTO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: OBSERVABILIDAD-AVANZADA
+  priority: P1
+  scope: TECNICO
+
+extra_tags:
+  - tracing
+  - logs
+  - troubleshooting
+  - correlacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Implementación de Trace IDs únicos que viajen a través de todos los componentes del Supermodelo
+  - Capacidad de búsqueda semántica en la base de logs correlacionada con picos de latencia
+  - Exportación de la secuencia de eventos para análisis post-mortem de incidentes mayores

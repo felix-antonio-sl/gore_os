@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a logs centralizados de errores
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-001-01
-urn: urn:goreos:atom:story:us_dev_001_01:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
+name: Acceso a logs centralizados de errores
+
+# === STORY CORE ===
 as_a: Desarrollador
 i_want: acceso a logs centralizados de errores
 so_that: pueda diagnosticar bugs en producción
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DESARROLLADO
+  agent_type: HUMAN
+  description: Ingeniero de software responsable del mantenimiento y corrección de errores en entornos productivos
+
+entities_mentioned:
+  - id: ENT-SYS-LOGS-ERRORES
+    status: candidate
+  - id: ENT-SYS-PLATAFORMA-OBSERVABILIDAD
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-DIAGNOSTICO-ERRORES
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: SOPORTE
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - logs
+  - observabilidad
+  - bugs
+  - produccion
+  - diagnostico
+
+status: ENRICHED
+acceptance_criteria:
+  - Centralización de logs de backend (Hono) y frontend (Vite) en una sola interfaz
+  - Capacidad de filtrado por severidad, timestamp y ID de correlación
+  - Alertas automáticas vía Slack/Teams ante picos de errores 5xx

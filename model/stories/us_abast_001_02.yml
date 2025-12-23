@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_abast_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Generación automática de bases de licitación tipo
-id: US-ABAST-001-02
-urn: urn:goreos:atom:story:us_abast_001_02:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: generación automática de bases de licitación tipo
-so_that: pueda agilizar la preparación de procesos
-domain: D-FIN
-competence_id: CPT-BACK-ABS-001
-priority: P1
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-FIN-LICITACION
+id: US-ABAST-001-02
+name: Alertas de vencimiento de contratos de suministro
+
+# === STORY CORE ===
+as_a: Encargado de Calidad
+i_want: recibir alertas de vencimiento de contratos de suministro
+so_that: pueda renovar o licitar a tiempo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de gestión de calidad y abastecimiento
+
+entities_mentioned:
+  - id: ENT-FIN-CONTRATO-SUMINISTRO
+    status: candidate
+  - id: ENT-SYS-ALERTA
+    status: candidate
+  - id: ENT-FIN-LICITACION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-RENOVACION-CONTRATOS
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: ALERTA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - contratos
+  - vencimiento
+  - renovacion
+  - licitacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Alerta 60 días antes de vencimiento
+  - Listado de contratos próximos a vencer
+  - Link a proceso de renovación/licitación

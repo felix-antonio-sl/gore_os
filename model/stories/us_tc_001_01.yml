@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Expedientes completos sobre controversias legales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TC-001-01
-urn: urn:goreos:atom:story:us_tc_001_01:1.0.0
-role_id: ROL-GESTION-MFE
-as_a: Ministro de Fe
-i_want: expedientes completos sobre controversias legales
-so_that: pueda fallar conforma a derecho
-domain: D-NORM
-priority: P2
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Expedientes completos sobre controversias legales
+
+# === STORY CORE ===
+as_a: Ministro de Fe / Juez de Cuentas
+i_want: acceder a expedientes digitales completos sobre controversias legales y juicios de cuentas
+so_that: pueda fallar conforme a derecho y asegurar la legalidad de los actos administrativos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MFE
+  agent_type: HUMAN
+  description: Funcionario que da fe pública de los actos del GORE y participa en procesos sancionatorios o de cuentas
+
+entities_mentioned:
+  - id: ENT-NORM-EXPEDIENTE-SUMARIO
+    status: linked
+  - id: ENT-JUEZ-SENTENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-AUDITORIA-INTERNA
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: LEGAL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - controversias
+  - juicios-cuentas
+  - fe-publica
+  - expedientes
+  - legalidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Visor de expedientes con foliado electrónico correlativo e inalterable (Blockchain o Timbre de Tiempo)
+  - Módulo de firma avanzada para sentencias y resoluciones exentas emitidas por el Ministro de Fe
+  - Trazabilidad de la recepción de descargos y pruebas por parte de las entidades fiscalizadas

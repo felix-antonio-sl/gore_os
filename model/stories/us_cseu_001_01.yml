@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cseu_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de registro de incidentes de atención
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CSEU-001-01
-urn: urn:goreos:atom:story:us_cseu_001_01:1.0.0
-role_id: ROL-GESTION-ENCARGADO-CS
+name: Un módulo de registro de incidentes de atención
+
+# === STORY CORE ===
 as_a: Encargado CSEU
 i_want: un módulo de registro de incidentes de atención
 so_that: pueda mejorar la calidad de servicio
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENCARGADO-CS
+  agent_type: HUMAN
+  description: Encargado de la Unidad de Atención Ciudadana o Centro de Servicios al Usuario
+
+entities_mentioned:
+  - id: ENT-SOC-INCIDENTE-ATENCION
+    status: candidate
+  - id: ENT-SOC-CALIDAD-SERVICIO
+    status: candidate
+  - id: ENT-SOC-CIUDADANO
+    status: linked
+
+process_ref:
+  id: PROC-SOC-GESTION-RECLAMOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: SOCIAL
+  priority: P2
+  scope: CIUDADANO
+
+extra_tags:
+  - incidentes
+  - atencion-ciudadana
+  - calidad-servicio
+  - cseu
+  - reclamos
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de incidentes tipificado (Trato, Tiempos, Infraestructura)
+  - Botón de pánico/alerta para incidentes de seguridad en counter
+  - Dashboard de satisfacción usuaria post-incidente

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de menciones en medios y redes sociales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-002-01
-urn: urn:goreos:atom:story:us_com_002_01:1.0.0
-role_id: ROL-GESTION-ENC
+name: Reportes de menciones en medios y redes sociales
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: reportes de menciones en medios y redes sociales
 so_that: pueda evaluar el impacto comunicacional
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: ALGORITHMIC
+  description: Sistema de monitoreo de prensa (Clipping) o analista de comunicaciones
+
+entities_mentioned:
+  - id: ENT-BACK-CLIPPING-PRENSA
+    status: candidate
+  - id: ENT-SOC-SENTIMIENTO-REDES
+    status: candidate
+  - id: ENT-BACK-INDICADOR-PRESENCIA-MEDIOS
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-MONITOREO-REPUTACIONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - reporte-medios
+  - clipping
+  - redes-sociales
+  - impacto-comunicacional
+  - reputacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Resumen diario de menciones en prensa escrita, radio y TV
+  - Dashboard de sentimiento (positivo/negativo/neutro) en Redes Sociales
+  - Alertas tempranas ante crisis reputacional detectada por volumen de menciones

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitar bonificación (adjuntar boletas)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-010
-urn: urn:goreos:atom:story:us_back_bien_010:1.0.0
-role_id: ROL-GESTION-ANALISTA-SOC
-as_a: Analista Social
+name: Solicitar bonificación (adjuntar boletas)
+
+# === STORY CORE ===
+as_a: Socio Bienestar
 i_want: Solicitar bonificación (adjuntar boletas)
 so_that: Obtengo reembolso
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-SOCIO-BIEN
+  agent_type: HUMAN
+  description: Funcionario socio del servicio de bienestar que solicita beneficios
+
+entities_mentioned:
+  - id: ENT-FIN-REEMBOLSO-MEDICO
+    status: linked
+  - id: ENT-SYS-DOCUMENTO-TRIBUTARIO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-SOLICITUD-REEMBOLSO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: AUTOSERVICIO
+  priority: P1
+  scope: PERSONAL
+
+extra_tags:
+  - bienestar
+  - socio
+  - reembolso
+  - bonificacion
+  - autoservicio
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de solicitud online con carga de documentos (boletas/bonos)
+  - Visualización en tiempo real del estado de la solicitud (pendiente, aprobada, pagada)
+  - Notificación automática al socio vía email/app al procesar el pago

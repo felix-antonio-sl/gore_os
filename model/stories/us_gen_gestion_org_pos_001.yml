@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_org_pos_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Organización Postulante (8%)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ORG_POS-001
-urn: urn:goreos:atom:story:us_gen_gestion_org_pos_001:1.0.0
-role_id: ROL-GESTION-ORG-POST
+name: Historia genérica para Organización Postulante (8%)
+
+# === STORY CORE ===
 as_a: Organización Postulante (8%)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ORG-POST
+  agent_type: HUMAN
+  description: Organización social que postula a la línea de subvenciones del 8% (Cultura, Deporte, Seguridad, Social, Medio Ambiente)
+
+entities_mentioned:
+  - id: ENT-SOC-PROYECTO-CONCURSABLE
+    status: candidate
+  - id: ENT-GOB-BASES-CONCURSO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: PARTICIPACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - postulante
+  - fondo-8porciento
+  - subvenciones
+  - cultura
+  - deporte
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario interoperable que reduce la carga de documentos físicos (Sence/Registro Civil)
+  - Módulo de seguimiento del puntaje de evaluación técnica en tiempo real
+  - Buzón de notificaciones sobre reparos u observaciones a la postulación

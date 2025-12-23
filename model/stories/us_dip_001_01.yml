@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dip_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El estado de proyectos comunales específicos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIP-001-01
-urn: urn:goreos:atom:story:us_dip_001_01:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: El estado de proyectos comunales específicos
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: consultar el estado de proyectos comunales específicos
 so_that: pueda responder a mis electores
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-LOC-COMUNA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Encargado de coordinar la inversión GORE en las comunas y responder ante la demanda ciudadana provincial
+
+entities_mentioned:
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-EJE-ESTADO-TRAMITACION
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-SEGUIMIENTO-PROVINCIAL
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: GESTION
+  priority: P1
+  scope: PROVINCIAL
+
+extra_tags:
+  - proyectos-comunales
+  - municipios
+  - seguimiento
+  - inversion-publica
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador de proyectos por comuna y nombre de iniciativa
+  - Ficha resumen con etapa actual (RS, Licitación, Ejecución, etc.) y monto asignado
+  - Opción de generar reporte PDF para entrega a organizaciones comunitarias

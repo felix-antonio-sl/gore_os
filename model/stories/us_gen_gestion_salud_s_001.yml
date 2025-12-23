@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_salud_s_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Director Servicio de Salud
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SALUD_S-001
-urn: urn:goreos:atom:story:us_gen_gestion_salud_s_001:1.0.0
-role_id: ROL-GESTION-SALUD-SRV
+name: Historia genérica para Director Servicio de Salud
+
+# === STORY CORE ===
 as_a: Director Servicio de Salud
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SALUD-SRV
+  agent_type: HUMAN
+  description: Director del Servicio de Salud (Ñuble) que coordina la red asistencial y la inversión en infraestructura hospitalaria con el GORE
+
+entities_mentioned:
+  - id: ENT-SOC-INFRAESTRUCTURA-SALUD
+    status: candidate
+  - id: ENT-CONV-CONVENIO-PROGRAMACION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: SALUD
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - salud
+  - hospitales
+  - red-asistencial
+  - convenios-programacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al estado de avance de obras hospitalarias y Centros de Salud Familiar (CESFAM) financiados por el GORE
+  - Módulo de carga de requerimientos de equipamiento médico de alta complejidad (Glosa Salud)
+  - Registro de indicadores de brecha de atención sanitaria regional para priorización de proyectos

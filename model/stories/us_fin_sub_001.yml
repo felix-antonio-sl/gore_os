@@ -1,16 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_sub_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar que evaluadores no tengan relación con postulantes (declaración
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-SUB-001
-urn: urn:goreos:atom:story:us_fin_sub_001:1.0.0
-role_id: ROL-GESTION-ANAL8
+name: Verificar inhabilidades de evaluadores
+
+# === STORY CORE ===
 as_a: Analista 8% (Técnico)
-i_want: Verificar que evaluadores no tengan relación con postulantes (declaración
-  de inhabilidad)
-so_that: Evito conflictos de interés
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+i_want: Verificar que evaluadores no tengan relación con postulantes mediante declaraciones de inhabilidad digitalizadas
+so_that: Evito conflictos de interés y garantizo la transparencia en la adjudicación de fondos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL8
+  agent_type: HUMAN
+  description: Analista técnico de la División de Desarrollo Social (8%)
+
+entities_mentioned:
+  - id: ENT-ORG-DECLARACION_JURADA
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: FONDOS-CONCURSABLES
+  priority: P0
+  scope: PROBIDAD
+
+extra_tags:
+  - 8-porciento
+  - inhabilidades
+  - evaluadores
+  - probidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario digital de declaración de intereses obligatorio para cada evaluador por concurso
+  - Cruce automático de datos entre evaluadores y representantes legales de organizaciones postulantes
+  - Bloqueo de acceso a la pauta de evaluación si existe una relación detectada

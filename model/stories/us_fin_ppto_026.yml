@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_026:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Devengar gastos asociados a facturas recibidas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-026
-urn: urn:goreos:atom:story:us_fin_ppto_026:1.0.0
-role_id: ROL-GESTION-PROF
+name: Devengar gastos asociados a facturas recibidas
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Devengar gastos asociados a facturas recibidas
-so_that: Registro la obligación
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Registro la obligación financiera real y mantengo la contabilidad al día
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-DEVENGO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-ORDEN_COMPRA
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: EJECUCION-PRESUPUESTARIA
+  priority: P0
+  scope: OPERATIVO
+
+extra_tags:
+  - devengo
+  - facturas
+  - obligaciones
+  - contabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración con el sistema de facturación electrónica para recepción automática
+  - Asociación obligatoria de factura a una orden de compra y CDP previo
+  - Actualización automática del saldo "Devengado" en el presupuesto institucional

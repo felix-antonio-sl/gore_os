@@ -1,0 +1,112 @@
+# ETL Sink: IDIS (Iniciativas SNI) Staging Entity
+# Source: idis/cleaned/idis_cleaned.csv (Cleaned & Deduplicated)
+# Quality: ✅ ALTA (99.9%, sin #REF!, sin duplicados)
+---
+_meta:
+  urn: urn:goreos:etl:sink:mleg_ipr_idis:1.0.0
+  type: Entity
+  source_quality: HIGH
+  records: 1721
+
+id: ENT-MLEG-IPR-IDIS
+name: ipr_idis_staging
+name_singular: IPR IDIS (Staging)
+domain: D-STAGING
+module: M10-LEGACY
+description: >
+  Iniciativas de Inversión provenientes del SNI.
+  Datos saneados desde ANÁLISIS.csv (sin #REF!, sin duplicados).
+
+grain:
+  - codigo_bip
+
+attributes:
+  - name: codigo_bip
+    type: string
+    required: true
+    description: Código BIP único (formato XXXX-YY o similar)
+    source_column: BIP
+
+  - name: nombre
+    type: string
+    required: true
+    source_column: NOMBRE INICIATIVA
+
+  - name: estado_iniciativa
+    type: string
+    source_column: ESTADO ACTUAL
+
+  - name: sub_estado
+    type: string
+    source_column: SUB-ESTADO # Si no existe, mapear a nulo o verificar CSV limpiado
+
+  - name: subtitulo
+    type: integer
+    description: Subtítulo presupuestario (21, 24, 29, 31, 33)
+    source_column: SUBT
+
+  - name: item
+    type: string
+    source_column: ITEM
+
+  - name: asignacion
+    type: string
+    source_column: ASIG
+
+  - name: institucion
+    type: string
+    source_column: INSTITUCIÓN # Verificar si nombre col coincide
+
+  - name: comuna
+    type: string
+    source_column: COMUNA
+
+  - name: monto_solicitado
+    type: decimal
+    source_column: MONTO INICIATIVA # en analisis.csv suele ser MONTO INICIATIVA
+
+  - name: monto_aprobado
+    type: decimal
+    source_column: MONTO FINAL APROB.
+
+  - name: gasto_vigente
+    type: decimal
+    source_column: GASTO VIGENTE
+
+  - name: ejecutado_acumulado
+    type: decimal
+    source_column: EJEC. ACUMULADO # Verificar si existe en analisis.csv
+
+  - name: saldo
+    type: decimal
+    source_column: SALDO # Verificar si existe
+
+  - name: anio_rs
+    type: integer
+    description: Año extraído de RATE ACTUAL
+    source_column: RATE ACTUAL
+
+  - name: fecha_rs
+    type: date
+    source_column: FECHA ESTADO ACTUAL
+
+  - name: fuente
+    type: string
+    description: Archivo CSV de origen
+    source_column: _source_file
+
+quality_issues:
+  - issue: DUPLICADOS
+    description: Códigos BIP duplicados fueron removidos.
+    severity: LOW
+    mitigation: REMEDIATION COMPLETED
+
+  - issue: REF_ERRORS
+    description: #REF! errors fueron convertidos a NULL.
+    severity: LOW
+    mitigation: REMEDIATION COMPLETED
+
+morphisms:
+  genera:
+    - ENT-FIN-IPR (1:1 por BIP)
+    - ENT-FIN-SERIE_FINANCIERA (1:N por año)

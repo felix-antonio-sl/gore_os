@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_pdi_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a cámaras del CIES en investigaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PDI-001-01
-urn: urn:goreos:atom:story:us_pdi_001_01:1.0.0
-role_id: ROL-GESTION-PDI
+name: Acceso a cámaras del CIES en investigaciones
+
+# === STORY CORE ===
 as_a: PDI (Policía de Investigaciones)
 i_want: acceso a cámaras del CIES en investigaciones
 so_that: pueda obtener evidencia
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PDI
+  agent_type: HUMAN
+  description: Investigador de la PDI asignado a casos que requieren evidencia visual del sistema de vigilancia regional
+
+entities_mentioned:
+  - id: ENT-SAL-CAMARA-CIES
+    status: linked
+  - id: ENT-NORM-OFICIO-JUDICIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CRITICO
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: SEGURIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - pdi
+  - seguridad-publica
+  - evidencia-visual
+  - cies
+  - vigilancia
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de solicitud de acceso vinculado obligatoriamente a un RUC (Rol Único de Causa) o número de oficio
+  - Auditoría forense de cada acceso, descarga o visualización realizada por el agente externo
+  - Entrega de evidencia con firma digital y hash de integridad para validez en juicio oral

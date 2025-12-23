@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_calidad_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Elaborar Plan de Mejora Continua anual (DS11)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-CALIDAD-002
-urn: urn:goreos:atom:story:us_tde_calidad_002:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Elaborar Plan de Mejora Continua anual (DS11)
-so_that: Planifico evolución
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Elaboración del Plan de Mejora Continua (DS11)
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: elaborar anualmente el Plan de Mejora Continua de servicios digitales según el DS11
+so_that: se planifique sistemáticamente la evolución técnica y la mejora de la experiencia usuaria
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Coordinador responsable de la calidad y mejora constante de los servicios digitales
+
+entities_mentioned:
+  - id: ENT-TDE-CALIDAD-PLAN
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CALIDAD-PROCESOS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ds11
+  - mejora-continua
+  - calidad
+  - servicios-digitales
+  - ux
+
+status: ENRICHED
+acceptance_criteria:
+  - Formato de plan estructurado que incluya Hitos, Responsables e Indicadores de Éxito (KPIs)
+  - Módulo de seguimiento de iniciativas de mejora con estados de avance
+  - Integración de los planes con el presupuesto operativo de la división de informática

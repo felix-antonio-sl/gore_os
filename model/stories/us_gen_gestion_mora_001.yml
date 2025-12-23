@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_mora_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Mora Watcher (Monitor Plazos)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_MORA-001
-urn: urn:goreos:atom:story:us_gen_gestion_mora_001:1.0.0
-role_id: ROL-GESTION-MORA
+name: Historia genérica para Mora Watcher (Monitor Plazos)
+
+# === STORY CORE ===
 as_a: Mora Watcher (Monitor Plazos)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MORA
+  agent_type: ALGORITHMIC
+  description: Agente de monitoreo proactivo (Estilo KODA) que detecta cuellos de botella y vencimientos de plazos legales
+
+entities_mentioned:
+  - id: ENT-SYS-ALERTA-MORA
+    status: candidate
+  - id: ENT-FIN-CUMPLIMIENTO-PAGO-OPC
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: TESORERIA
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - mora-watcher
+  - plazos
+  - pago-oportuno
+  - eficiencia-administrativa
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de reportes diarios de trámites con más del 80% del tiempo legal transcurrido
+  - Notificación push automática a jefaturas sobre expedientes estancados en su bandeja
+  - Dashboard de "Velocidad de Tramitación" por división para la Administradora Regional

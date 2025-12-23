@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_ccasoc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Colegio Profesional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CCASOC-001
-urn: urn:goreos:atom:story:us_gen_gestion_ccasoc_001:1.0.0
-role_id: ROL-GESTION-CCASOC
+name: Historia genérica para Colegio Profesional
+
+# === STORY CORE ===
 as_a: Colegio Profesional
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CCASOC
+  agent_type: HUMAN
+  description: Representante de un Colegio Profesional (Ej: Colegio de Arquitectos, Agrónomos) que colabora con el GORE
+
+entities_mentioned:
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-PLAN-MESA-TECNICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: PARTICIPACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - colegio-profesional
+  - gremio
+  - mesas-tecnicas
+  - vinculacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a consultas públicas sobre planes reguladores o estrategias sectoriales
+  - Módulo de inscripción en el registro de instituciones expertas para comités evaluadores
+  - Buzón de propuestas técnicas y normativas enviadas a la autoridad regional

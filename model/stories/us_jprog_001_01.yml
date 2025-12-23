@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jprog_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de programación plurianual de inversiones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-JPROG-001-01
-urn: urn:goreos:atom:story:us_jprog_001_01:1.0.0
-role_id: ROL-GESTION-JEFE-PROGRAM
-as_a: Jefe Programación
-i_want: un módulo de programación plurianual de inversiones
-so_that: pueda proyectar recursos
-domain: D-PLAN
-priority: P0
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+name: Planificación Plurianual de Inversiones (ARI/PROPIR)
+
+# === STORY CORE ===
+as_a: Jefe de Programación Regional
+i_want: Un módulo de programación plurianual (3-5 años) de la cartera de inversiones regionall
+so_that: pueda proyectar el flujo de caja a largo plazo y cumplir con las directrices de DIPRES para el ARI y PROPIR
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE-PROGRAM
+  agent_type: HUMAN
+  description: Jefe de la unidad encargada de la programación financiera de la inversión pública regional
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P3
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: PROGRAMACION-FINANCIERA
+  priority: P0
+  scope: ESTRATEGICO
+
+extra_tags:
+  - ari
+  - propir
+  - plurianual
+  - proyeccion
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de carga de escenarios de inversión (Base, Optimista, Pesimista)
+  - Desagregación del gasto proyectado por año, fuente de financiamiento y sector
+  - Generación automática de reportes estandarizados para el ARI (Anteproyecto Regional de Inversión)

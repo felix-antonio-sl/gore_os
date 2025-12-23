@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_mc_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ciclo PDCA para iniciativas de mejora priorizadas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-MC-002
-urn: urn:goreos:atom:story:us_gest_mc_002:1.0.0
-role_id: ROL-GESTION-CTRL
+name: Ciclo PDCA para iniciativas de mejora priorizadas
+
+# === STORY CORE ===
 as_a: Encargado Control de Gestión
 i_want: Ejecutar ciclo PDCA para iniciativas de mejora priorizadas
 so_that: Implemento mejoras de manera sistemática y medible
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CTRL
+  agent_type: HUMAN
+  description: Encargado de Control de Gestión responsable de la metodología de mejora continua (Plan-Do-Check-Act)
+
+entities_mentioned:
+  - id: ENT-ORG-MEJORA-CONTINUA
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - pdca
+  - mejora-continua
+  - control-gestion
+  - eficiencia-operacional
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero Kanban de iniciativas de mejora con estados del ciclo PDCA
+  - Módulo de medición de impacto (KPI Antes/Después) para cada mejora implementada
+  - Repositorio de lecciones aprendidas accesible para toda la organización

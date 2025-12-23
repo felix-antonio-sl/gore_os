@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rgasto_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Validación automática de clasificadores presupuestarios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-RGASTO-001-01
-urn: urn:goreos:atom:story:us_rgasto_001_01:1.0.0
-role_id: ROL-GESTION-PMG-GASTO
-as_a: Referente Concentración Gasto
+name: Validación automática de clasificadores presupuestarios
+
+# === STORY CORE ===
+as_a: Referente de Concentración del Gasto
 i_want: validación automática de clasificadores presupuestarios
-so_that: no se imputen gastos a cuentas erróneas
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-REND-001
-acceptance_criteria: []
+so_that: no se imputen gastos a cuentas erróneas y se mantenga la integridad contable
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-GASTO
+  agent_type: HUMAN
+  description: Encargado de controlar la correcta ejecución presupuestaria segun ítems y asignaciones
+
+entities_mentioned:
+  - id: ENT-FIN-CLASIFICADOR-PPTAR
+    status: candidate
+  - id: ENT-FIN-COMPROMISO-GASTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CONTABILIDAD-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: EJECUCION
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - clasificadores
+  - presupuesto
+  - contabilidad
+  - validacion-gasto
+  - sigfe
+
+status: ENRICHED
+acceptance_criteria:
+  - Diccionario de clasificadores actualizado según normativa de la Contraloría (CGR)
+  - Alerta de error si el ítem de gasto no es compatible con el centro de costo o código del proyecto
+  - Bloqueo de imputación si el clasificador seleccionado supera el presupuesto vigente del ítem

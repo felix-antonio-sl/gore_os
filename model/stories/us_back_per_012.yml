@@ -1,17 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_012:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Horas extraordinarias (F2)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-012
-urn: urn:goreos:atom:story:us_back_per_012:1.0.0
-role_id: ROL-BACK-PER-GEST
+name: Horas extraordinarias (F2)
+
+# === STORY CORE ===
 as_a: Gestor de Personas
 i_want: Gestionar horas extraordinarias (F2)
 so_that: Controlo sobretiempo
-domain: D-BACK
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: HUMAN
+  description: Gestor de personas encargado del control y validación de la jornada extraordinaria
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-HORA-EXTRA
+    status: candidate
+  - id: ENT-SYS-FORMULARIO-F2
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-CONTROL-HORAS-EXTRAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: REMUNERACIONES
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - horas-extras
+  - f2
+  - rrhh
+  - sobretiempo
+  - control
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de horas extras autorizadas por resolución previa
+  - Validación de tope máximo de horas extras permitido por ley
+  - Generación de formulario F2 consolidado para pago en planilla de remuneraciones

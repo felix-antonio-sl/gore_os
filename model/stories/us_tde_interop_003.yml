@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_interop_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Trazabilidad central de transacciones interoperables
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-INTEROP-003
-urn: urn:goreos:atom:story:us_tde_interop_003:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Registrar trazabilidad central de transacciones interoperables
-so_that: Audito intercambios
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Trazabilidad centralizada de transacciones interoperables
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: registrar la trazabilidad central de todas las transacciones realizadas vía interoperabilidad
+so_that: se auditen los intercambios de datos y se resuelvan discrepancias técnicas o legales con otros servicios públicos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Auditor de flujos de datos externos e intercambios normativos
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: AUDITORIA-TI
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - trazabilidad
+  - auditoria
+  - transacciones
+  - logs
+  - interoperabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Log que incluye ID de Transacción, Institución de Origen/Destino, Fecha y Resultado (Éxito/Error)
+  - Almacenamiento seguro de logs por al menos 5 años conforme a ley de archivos digitales
+  - Buscador de transacciones por RUT de ciudadano consultado para atención de reclamos

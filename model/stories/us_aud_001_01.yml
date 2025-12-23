@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_aud_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de planificación y ejecución de auditorías
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AUD-001-01
-urn: urn:goreos:atom:story:us_aud_001_01:1.0.0
-role_id: ROL-GESTION-PROF
+name: Un módulo de planificación y ejecución de auditorías
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: un módulo de planificación y ejecución de auditorías
 so_that: pueda documentar hallazgos y recomendaciones
-domain: D-NORM
-competence_id: CPT-NORM-AUD-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de DAF/Control Interno que realiza auditorías
+
+entities_mentioned:
+  - id: ENT-NORM-AUDITORIA
+    status: candidate
+  - id: ENT-NORM-HALLAZGO
+    status: candidate
+  - id: ENT-NORM-RECOMENDACION
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-AUDITORIA-INTERNA
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: CONTROL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - auditoria
+  - control-interno
+  - hallazgos
+  - recomendaciones
+
+status: ENRICHED
+acceptance_criteria:
+  - Plan de auditoría anual configurable
+  - Registro de papeles de trabajo digitalizados
+  - Seguimiento de cumplimiento de recomendaciones
+  - Generación de informe final de auditoría

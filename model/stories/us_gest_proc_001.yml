@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_proc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Expedientes digitales con trazabilidad completa
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-PROC-001
-urn: urn:goreos:atom:story:us_gest_proc_001:1.0.0
-role_id: ROL-GESTION-PER-FUN
+name: Expedientes digitales con trazabilidad completa
+
+# === STORY CORE ===
 as_a: Funcionario
 i_want: Gestionar expedientes digitales con trazabilidad completa
 so_that: Cumplo con Ley 21.180 de Transformación Digital
-domain: D-GESTION
-priority: P0
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Funcionario de cualquier división que debe tramitar expedientes en formato electrónico
+
+entities_mentioned:
+  - id: ENT-DIG-EXPEDIENTE
+    status: candidate
+  - id: ENT-SYS-TRAZABILIDAD-ACTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - expediente-digital
+  - trazabilidad
+  - ley-21180
+  - cero-papel
+  - transformacion-digital
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro cronológico inalterable de cada acción sobre el expediente (Lectura, Firma, Derivación)
+  - Interfaz de visualización de ruta del documento con tiempos de permanencia en cada unidad
+  - Integración con Firma Electrónica Avanzada y sellado de tiempo institucional

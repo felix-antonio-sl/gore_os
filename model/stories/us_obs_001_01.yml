@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_obs_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de carga y procesamiento de series de datos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OBS-001-01
-urn: urn:goreos:atom:story:us_obs_001_01:1.0.0
-role_id: ROL-GESTION-OBS
-as_a: Analista Observatorio
-i_want: un módulo de carga y procesamiento de series de datos
-so_that: pueda mantener actualizados los indicadores regionales
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Ingesta de Series de Datos Regionales
+
+# === STORY CORE ===
+as_a: Analista del Observatorio Regional
+i_want: Un módulo de carga masiva y procesamiento de series de datos (CSV, JSON, Excel) provenientes de fuentes externas (INE, CASEN, etc.)
+so_that: se mantengan actualizados los indicadores estratégicos de la Estrategia Regional de Desarrollo (ERD)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OBS
+  agent_type: HUMAN
+  description: Analista de datos especializado en indicadores territoriales y socioeconómicos
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: ANALITICA-DATOS
+  priority: P1
+  scope: ESTRATEGICO
+
+extra_tags:
+  - observatorio
+  - indicadores
+  - erd
+  - big-data
+
+status: ENRICHED
+acceptance_criteria:
+  - Validación de esquemas de datos al momento de la carga (tipos de datos, columnas requeridas)
+  - Soporte para series temporales con granularidad provincial y comunal
+  - Generación automática de versiones de la serie de datos para permitir comparaciones históricas

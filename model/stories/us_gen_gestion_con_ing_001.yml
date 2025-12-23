@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_con_ing_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Ingeniero Vialidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CON_ING-001
-urn: urn:goreos:atom:story:us_gen_gestion_con_ing_001:1.0.0
-role_id: ROL-GESTION-CON-ING
+name: Historia genérica para Ingeniero Vialidad
+
+# === STORY CORE ===
 as_a: Ingeniero Vialidad
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CON-ING
+  agent_type: HUMAN
+  description: Ingeniero civil o de caminos encargado de la supervisión técnica de proyectos de pavimentación y vialidad
+
+entities_mentioned:
+  - id: ENT-TERR-PROYECTO-VIAL
+    status: candidate
+  - id: ENT-EJE-RECEPCION-OBRA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: INFRAESTRUCTURA
+  priority: P2
+  scope: TERRITORIAL
+
+extra_tags:
+  - vialidad
+  - pavimentacion
+  - ingenieria
+  - obras-viales
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a planos as-built y especificaciones técnicas digitales del proyecto
+  - Módulo de registro de multas o penalizaciones por retraso en hitos viales
+  - Integración con el sistema de trazabilidad de mezclas asfálticas/hormigón

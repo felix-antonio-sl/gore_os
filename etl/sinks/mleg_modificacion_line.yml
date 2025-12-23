@@ -1,0 +1,47 @@
+_meta:
+  urn: urn:goreos:atom:entity:modificacion_presupuestaria:1.0.0
+  type: Entity
+id: ENT-MLEG-MODIF-LINE
+name: line
+name_singular: Línea de Modificación
+domain: D-OPS
+module: M10-LEGACY
+source: modificaciones/cleaned/modificaciones_cleaned.csv
+description: Líneas de modificación presupuestaria estructuradas y saneadas.
+attributes:
+  - name: numero_modificacion
+    type: integer
+    required: true
+    description: Número de la modificación
+  - name: subtitulo
+    type: string
+    required: true
+  - name: item
+    type: string
+  - name: asignacion
+    type: string
+  - name: denominacion
+    type: string
+  - name: distribucion_inicial
+    type: decimal
+  - name: ppto_vigente_anterior
+    type: decimal
+  - name: monto_modificacion
+    type: decimal
+    description: Monto de la modificación (puede ser negativo)
+  - name: ppto_vigente_final
+    type: decimal
+  - name: tipo_operacion
+    type: enum
+    values: [INGRESOS, GASTOS]
+  - name: sin_efecto
+    type: boolean
+    description: True si la modificación fue marcada como SIN EFECTO
+grain:
+  - sheet_id
+  - subtitulo
+  - item
+  - asignacion
+morphisms:
+  relacionado_con:
+    - sheet (N:1)

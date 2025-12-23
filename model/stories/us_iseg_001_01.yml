@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_iseg_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Escaneo automático de vulnerabilidades en el código
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ISEG-001-01
-urn: urn:goreos:atom:story:us_iseg_001_01:1.0.0
-role_id: ROL-EJEC-CPER-SEC
-as_a: Secretario Ejecutivo Comité de Pertinencia
+name: Escaneo automático de vulnerabilidades en el código
+
+# === STORY CORE ===
+as_a: Encargado de Ciberseguridad
 i_want: escaneo automático de vulnerabilidades en el código
 so_that: se detecten fallos de seguridad antes de desplegar
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TDE-CISO
+  agent_type: HUMAN
+  description: Responsable de la seguridad informática del GORE, encargado de auditar la calidad del código
+
+entities_mentioned:
+  - id: ENT-TDE-VULNERABILIDAD-REPORTE
+    status: candidate
+  - id: ENT-TDE-CI-PIPELINE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-DESARROLLO-SEGURO
+  status: candidate
+
+tags:
+  domain: D-OPS
+  aspect: SEGURIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - ciberseguridad
+  - devsecops
+  - sast
+  - vulnerabilidades
+  - calidad-software
+
+status: ENRICHED
+acceptance_criteria:
+  - Escaneo estático (SAST) automático en cada Pull Request mediante herramientas tipo SonarQube o Snyk
+  - Bloqueo de despliegues a producción si se detectan vulnerabilidades críticas (severidad >= 7.0 CVE)
+  - Dashboard centralizado con el estado de salud de seguridad de todos los repositorios del GORE

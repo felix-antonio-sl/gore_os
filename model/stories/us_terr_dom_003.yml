@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_dom_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Si un predio se intersecta con zonas de riesgo definidas en el PROT
-id: US-TERR-DOM-003
-urn: urn:goreos:atom:story:us_terr_dom_003:1.0.0
-role_id: ROL-EJEC-DOM
-as_a: Director de Obras (DOM)
-i_want: Validar si un predio se intersecta con zonas de riesgo definidas en el PROT
-so_that: Prevengo edificaciones en zonas peligrosas
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-RIESGO
+id: US-TERR-DOM-003
+name: Validación de riesgos territoriales (PROT)
+
+# === STORY CORE ===
+as_a: Director de Obras Municipales (DOM)
+i_want: validar si un predio en proceso de permiso se intersecta con zonas de riesgo definidas en el Plan Regional de Ordenamiento Territorial (PROT)
+so_that: se prevenga la edificación en zonas peligrosas y se asegure la resiliencia del territorio regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-DOM
+  agent_type: HUMAN
+  description: Director municipal encargado de la seguridad y factibilidad de obras en la comuna
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: GESTION-RIESGO
+  priority: P0
+  scope: CIVIL
+
+extra_tags:
+  - prot
+  - zonificacion-riesgo
+  - desastres-naturales
+  - planificacion-territorial
+  - seguridad-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Consulta espacial automatizada que retorna si el predio (vía Rol o Coordenadas) afecta zonas de inundación, remoción en masa, etc.
+  - Generación de informe geoespacial de factibilidad basado en las restricciones del PROT
+  - Interfaz de mapa interactivo para que el DOM visualice la trama predial sobre las capas de riesgo regional

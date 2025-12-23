@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_norm_abogado_ge_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Abogado General
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-NORM_ABOGADO_GE-001
-urn: urn:goreos:atom:story:us_gen_norm_abogado_ge_001:1.0.0
-role_id: ROL-NORM-ABOGADO-GENE
+name: Historia genérica para Abogado General
+
+# === STORY CORE ===
 as_a: Abogado General
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOGADO-GENE
+  agent_type: HUMAN
+  description: Abogado de la Unidad Jurídica encargado de la tramitación de juicios, sumarios y normativa general
+
+entities_mentioned:
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: linked
+  - id: ENT-NORM-REGLAMENTO-REGIONAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - abogado-general
+  - judicial
+  - reglamentacion
+  - defensa-institucional
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de gestión de causas judiciales con seguimiento de plazos y notificaciones del Poder Judicial
+  - Repositorio de reglamentos regionales con control de versiones y trazabilidad de cambios
+  - Interfaz de elaboración de minutas legales para el Gobernador y el Administrador Regional

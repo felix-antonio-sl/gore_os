@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mesa_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizar la cola de tickets asignados a mi grupo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-MESA-002-01
-urn: urn:goreos:atom:story:us_mesa_002_01:1.0.0
-role_id: ROL-GESTION-TIC-MESA
-as_a: Mesa de Ayuda
-i_want: visualizar la cola de tickets asignados a mi grupo
-so_that: pueda gestionar eficientemente las solicitudes pendientes
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+name: Gestión Eficiente de Cola de Tickets
+
+# === STORY CORE ===
+as_a: Coordinador de Mesa de Ayuda
+i_want: Visualizar y priorizar dinámicamente la cola de tickets asignados a mi grupo de trabajo
+so_that: se gestionen eficientemente las solicitudes críticas y se cumplan los Acuerdos de Nivel de Servicio (SLA)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-MESA
+  agent_type: HUMAN
+  description: Responsable de la distribución y resolución de tickets de soporte técnico
+
+entities_mentioned:
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-BACK-P2
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: GESTION-TICKETS
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - tickets
+  - sla
+  - priorizacion
+  - soporte-tecnico
+
+status: ENRICHED
+acceptance_criteria:
+  - Panel Kanban con estados personalizables (Nuevo, Asignado, En Espera, Resuelto)
+  - Alerta visual de tickets que están por exceder el tiempo de respuesta definido
+  - Función de reasignación masiva de tickets en caso de contingencia o ausencia de personal

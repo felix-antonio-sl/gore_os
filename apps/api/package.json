@@ -7,6 +7,7 @@
     "db:setup": "bun run src/migrate.ts"
   },
   "dependencies": {
+    "@effect/schema": "^0.75.5",
     "@gore-os/core": "workspace:*",
     "@hono/trpc-server": "^0.4.1",
     "@trpc/server": "^11.8.1",

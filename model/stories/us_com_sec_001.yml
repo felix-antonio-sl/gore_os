@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_sec_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar difusión conjunta con municipios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-SEC-001
-urn: urn:goreos:atom:story:us_com_sec_001:1.0.0
-role_id: ROL-GESTION-ENC
+name: Coordinar difusión conjunta con municipios
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Coordinar difusión conjunta con municipios
 so_that: Potencio alcance local
-domain: D-COM
-priority: P1
-competence_id: CPT-COM-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Comunicaciones del GORE que articula con las Dideco/Comunicaciones municipales
+
+entities_mentioned:
+  - id: ENT-GOB-MUNICIPALIDAD
+    status: linked
+  - id: ENT-BACK-DIFUSION-CONJUNTA
+    status: candidate
+  - id: ENT-SOC-ALCANCE-LOCAL
+    status: candidate
+
+process_ref:
+  id: PROC-GOB-COORDINACION-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P1
+  scope: PROVINCIAL
+
+extra_tags:
+  - municipios
+  - difusion
+  - coordinacion
+  - alcance-local
+  - territorial
+
+status: ENRICHED
+acceptance_criteria:
+  - Agenda compartida de hitos comunicacionales GORE-Municipio
+  - Repositorio de gráficas co-brandeadas descargables para equipos municipales
+  - Canales de comunicación directa (Slack/WhatsApp institucional) para coordinadores provinciales

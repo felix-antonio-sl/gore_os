@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_conv_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Controlar garantías con alertas de vencimiento
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-CONV-005
-urn: urn:goreos:atom:story:us_fin_conv_005:1.0.0
-role_id: ROL-GESTION-PROF
+name: Controlar garantías con alertas de vencimiento
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Controlar garantías con alertas de vencimiento
 so_that: Evito pérdida de garantías
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas (DAF) responsable de la custodia de instrumentos financieros
+
+entities_mentioned:
+  - id: ENT-FIN-GARANTIA-BANCARIA
+    status: candidate
+  - id: ENT-FIN-VALOR-CUSTODIA
+    status: candidate
+  - id: ENT-SYS-ALERTA-CUSTODIA
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CUSTODIA-GARANTIAS
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: CONVENIOS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - garantias
+  - boletas-garantia
+  - alertas
+  - cumplimiento
+  - custodia
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro digital de la boleta de garantía con escaneo y RUT del emisor
+  - Alerta de "Garantía Insuficiente" si el monto del convenio aumenta sin reajuste
+  - Workflow de devolución de garantía tras acta de recepción conforme

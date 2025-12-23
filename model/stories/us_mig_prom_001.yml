@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Promover datos validados de staging a producción
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-MIG-PROM-001
-urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
-role_id: ROL-ADMIN-TI
-as_a: Rol no encontrado (ROL-ADMIN-TI)
-i_want: promover datos validados de staging a producción
-so_that: los datos legacy estén disponibles para uso operacional
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-LEGACY
-acceptance_criteria: []
+name: Promoción de Datos a Producción
+
+# === STORY CORE ===
+as_a: Administrador de Sistemas
+i_want: Promover los datos validados desde el entorno de staging al entorno de producción
+so_that: la organización comience a operar sobre datos reales, limpios y auditados
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Administrador de infraestructura y base de datos institucional
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: DESPLIEGUE
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - promocion
+  - produccion
+  - staging
+  - integridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Backup automático previo a la inyección en producción
+  - Notificación de éxito/fallo a los stakeholders interesados
+  - Bloqueo de escritura en staging durante el proceso de promoción

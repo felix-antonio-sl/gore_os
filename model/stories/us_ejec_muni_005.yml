@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar elegibilidad comunal para FRIL
-id: US-EJEC-MUNI-005
-urn: urn:goreos:atom:story:us_ejec_muni_005:1.0.0
-role_id: ROL-GESTION-G7-FORM
-as_a: Formulador Programas Glosa 7
-i_want: Verificar elegibilidad comunal para FRIL
-so_that: Confirmo criterio
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-LOC-COMUNA
+id: US-EJEC-MUNI-005
+name: Verificación de Elegibilidad Comunal para Fondos (FRIL)
+
+# === STORY CORE ===
+as_a: Formulador de Programas Glosa 7 / Municipio
+i_want: verificar automáticamente si mi comuna cumple con los criterios de elegibilidad para postular a fondos FRIL u otros específicos
+so_that: se asegure que las postulaciones sean viables desde el punto de vista normativo y se eviten rechazos por requisitos de base
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: MACHINE
+  description: Motor de reglas reglamentarias que valida criterios de elegibilidad territorial
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: ELEGIBILIDAD
+  priority: P1
+  scope: MUNICIPAL
+
+extra_tags:
+  - elegibilidad
+  - fril
+  - requisitos
+  - validacion-territorial
+  - inversion-local
+
+status: ENRICHED
+acceptance_criteria:
+  - Cruce automático con la base de datos de comunas prioritarias o bajo indicadores específicos (ej. rezago)
+  - Semáforo de factibilidad inmediata para postulación según el fondo seleccionado
+  - Enlace directo a las bases técnicas que detallan los requisitos de elegibilidad faltantes

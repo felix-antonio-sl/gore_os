@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_goreolo_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Goreólogo (Experto Institucional)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_GOREOLO-001
-urn: urn:goreos:atom:story:us_gen_gestion_goreolo_001:1.0.0
-role_id: ROL-GESTION-GOREOLOGO
+name: Historia genérica para Goreólogo (Experto Institucional)
+
+# === STORY CORE ===
 as_a: Goreólogo (Experto Institucional)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-GOREOLOGO
+  agent_type: HUMAN
+  description: Profesional con alta memoria histórica y conocimiento profundo de la normativa y cultura institucional del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-MEMORIA-HISTORICA
+    status: candidate
+  - id: ENT-NORM-CULTURA-INSTITUCIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - goreologo
+  - experto-institucional
+  - memoria-historica
+  - cultura-organizacional
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a repositorio histórico de resoluciones emblemáticas (10+ años)
+  - Módulo de asesoría interna para la resolución de nudos ciegos administrativos
+  - Panel de seguimiento de la evolución de la estructura organizacional del GORE

@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_act_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas automáticas cuando el índice H_gore baje de 60
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-ACT-001
-urn: urn:goreos:atom:story:us_fnx_act_001:1.0.0
-role_id: ROL-GESTION-FNX-J
+name: Alertas automáticas cuando el índice H_gore baje de 60
+
+# === STORY CORE ===
 as_a: Jefe FENIX
 i_want: Recibir alertas automáticas cuando el índice H_gore baje de 60
-so_that: Puedo iniciar la evaluación de intervención proactiva
-domain: D-FENIX
-priority: P0
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+so_that: Puedo iniciar la evaluación de intervención proactiva antes de que ocurra un fallo sistémico
 
-mentions:
-- ENT-SAL-ALERTA
-- ENT-SAL-H_GORE
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FNX-J
+  agent_type: HUMAN
+  description: Jefe de la unidad de respuesta crítica (FENIX)
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-H_GORE
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: MONITOREO-CRITICO
+  priority: P0
+  scope: ESTRATEGICO
+
+extra_tags:
+  - fenix
+  - alertas
+  - h_gore
+  - intervencion
+
+status: ENRICHED
+acceptance_criteria:
+  - Monitor en tiempo real del índice H_gore por división y proceso
+  - Notificación push y por correo al Jefe FENIX cuando el umbral (60) es traspasado
+  - Activación de log de seguimiento intensivo para el dominio afectado

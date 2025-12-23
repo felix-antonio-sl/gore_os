@@ -1,19 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_017:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Presupuesto de cometidos y viáticos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-017
-urn: urn:goreos:atom:story:us_fin_ppto_017:1.0.0
-role_id: ROL-GESTION-PROF
+name: Presupuesto de cometidos y viáticos
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Gestionar presupuesto de cometidos y viáticos
-so_that: Controlo gastos de personal
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Controlo gastos de personal y aseguro el cumplimiento de la política de viajes institucional
 
-mentions:
-- ENT-FIN-PRESUPUESTO
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-ORG-COMETIDO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-DE-PERSONAL
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - cometidos
+  - viaticos
+  - presupuesto
+  - personal
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo automático de viáticos según destino y duración del cometido
+  - Validación de disponibilidad presupuestaria en el ítem de viáticos antes de la aprobación
+  - Reporte de gastos acumulados por funcionario y división

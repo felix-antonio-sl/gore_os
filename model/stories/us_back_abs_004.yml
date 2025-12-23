@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_abs_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ofertas (criterios técnico-económicos)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-ABS-004
-urn: urn:goreos:atom:story:us_back_abs_004:1.0.0
-role_id: ROL-GESTION-ENC
+name: Ofertas (criterios técnico-económicos)
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Evaluar ofertas (criterios técnico-económicos)
 so_that: Selecciono mejor propuesta
-domain: D-BACK
-competence_id: CPT-BACK-ABS-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de calidad participando en comisiones evaluadoras de compras
+
+entities_mentioned:
+  - id: ENT-FIN-OFERTA
+    status: candidate
+  - id: ENT-FIN-CRITERIO-EVALUACION
+    status: candidate
+  - id: ENT-FIN-LICITACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EVALUACION-OFERTAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMPRAS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - ofertas
+  - evaluacion-tecnica
+  - evaluacion-economica
+  - licitacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz de evaluación configurable según bases
+  - Puntaje calculado automáticamente por criterio
+  - Generación de cuadro comparativo de ofertas

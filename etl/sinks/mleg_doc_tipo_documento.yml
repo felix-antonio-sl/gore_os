@@ -1,0 +1,43 @@
+_meta:
+  urn: urn:goreos:atom:entity:doc_tipo_documento:1.0.0
+  type: Entity
+id: ENT-MLEG-DOC-TIPO
+name: doc_tipo_documento
+name_singular: Tipo de Documento
+domain: D-OPS
+module: M10-LEGACY
+source: Partes
+description: Catálogo normalizado de tipos de documento (RESOLUCION_EXENTA, OFICIO, MEMO, etc.).
+attributes:
+  - name: codigo
+    type: string
+    required: true
+    description: Código canónico del tipo de documento
+  - name: nombre
+    type: string
+    required: true
+    description: Nombre descriptivo del tipo
+  - name: alias
+    type: array
+    items: string
+    description: Variantes encontradas en fuentes legacy (RES EXE, RES. EXENTA, etc.)
+  - name: requiere_numero
+    type: boolean
+    default: true
+    description: Indica si el tipo requiere número correlativo
+  - name: requiere_fecha
+    type: boolean
+    default: true
+    description: Indica si el tipo requiere fecha
+catalog_values:
+  - RESOLUCION_EXENTA
+  - RESOLUCION_AFECTA
+  - OFICIO
+  - MEMORANDUM
+  - DECRETO
+  - CERTIFICADO
+  - CARTA
+  - OTRO
+morphisms:
+  relacionado_con:
+    - doc_documento (1:N)

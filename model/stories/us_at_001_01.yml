@@ -1,14 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_at_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a la IDE regional con capas actualizadas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AT-001-01
-urn: urn:goreos:atom:story:us_at_001_01:1.0.0
-role_id: ROL-TERR-ANALISTA-TER
+name: Acceso a la IDE regional con capas actualizadas
+
+# === STORY CORE ===
 as_a: Analista Territorial
 i_want: acceso a la IDE regional con capas actualizadas
 so_that: pueda realizar análisis espaciales
-domain: D-TERR
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TERR-ANALISTA-TER
+  agent_type: HUMAN
+  description: Especialista territorial que utiliza sistemas de información geográfica
+
+entities_mentioned:
+  - id: ENT-TERR-IDE-REGIONAL
+    status: candidate
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-LOC-REGION
+    status: candidate
+
+process_ref:
+  id: PROC-TERR-ANALISIS-ESPACIAL
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: GIS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - ide
+  - gis
+  - mapas
+  - territorio
+  - analisis-espacial
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso autenticado a visor avanzado de capas (Geonode)
+  - Herramientas de medición, buffer e intersección online
+  - Exportación de capas a múltiples formatos (GeoJSON, SHP)
+  - Capas de proyectos GORE integradas automáticamente

@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_core_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver historial de votaciones (resultado y acuerdo)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-CORE-006
-urn: urn:goreos:atom:story:us_gob_core_006:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: Ver historial de votaciones (resultado y acuerdo)
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Ver historial de votaciones (resultado y acuerdo)
 so_that: Consulto decisiones pasadas
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-ACUERDO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Encargado de seguimiento de los acuerdos del CORE que debe dar cumplimiento a las decisiones tomadas en plenarios
+
+entities_mentioned:
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-GOB-ACTA-SESION-CORE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: CORE
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - core
+  - votaciones
+  - acuerdos
+  - actas-sesion
+  - trazabilidad-politica
+  - consejo-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador de acuerdos del CORE por fecha, consejero mocionante y tema (Ej: Embotellamiento Ñuble)
+  - Registro de votación nominal (A favor, En contra, Abstención) de cada consejero por cada acuerdo
+  - Descarga de certificados de acuerdo firmados por el Secretario Ejecutivo del CORE para trámites administrativos

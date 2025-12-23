@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:fin:estado_rendicion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-FIN-ESTADO-RENDICION"
+id: ENT-ESTADO-RENDICION
+name: "uLuEuSuTuAuDuOu uRuEuNuDuIuCuIuOuNu"
+tags: [FIN]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

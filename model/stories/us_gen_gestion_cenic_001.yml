@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cenic_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Centro de Investigación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CENIC-001
-urn: urn:goreos:atom:story:us_gen_gestion_cenic_001:1.0.0
-role_id: ROL-GESTION-CENIC
+name: Historia genérica para Centro de Investigación
+
+# === STORY CORE ===
 as_a: Centro de Investigación
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CENIC
+  agent_type: HUMAN
+  description: Investigador o consultor de un Centro de Estudios que colabora con el GORE en el análisis de datos regionales
+
+entities_mentioned:
+  - id: ENT-TDE-DATASET-INVESTIGACION
+    status: candidate
+  - id: ENT-PLAN-ESTUDIO-REGIONAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-DIFUSION-DATOS
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: COORDINACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - investigacion
+  - centros-estudio
+  - academia
+  - datos-abiertos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a API de datos abiertos para la extracción de indicadores ERD
+  - Módulo de carga de resultados de estudios/informes finales como insumo para DIPRES/PLAN
+  - Visualizador de impacto de políticas públicas basado en datos proporcionados por el centro

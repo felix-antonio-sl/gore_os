@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Emitir CDP validando saldo en asignación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-006
-urn: urn:goreos:atom:story:us_fin_ppto_006:1.0.0
-role_id: ROL-GESTION-PROF
+name: Emitir CDP validando saldo en asignación
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Emitir CDP validando saldo en asignación
-so_that: Evito compromisos sin respaldo
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Evito compromisos sin respaldo presupuestario y cumplo con la legalidad vigente
 
-mentions:
-- ENT-CONV-COMPROMISO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-ASIGNACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: EJECUCION-PRESUPUESTARIA
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - cdp
+  - saldo
+  - validacion
+  - presupuesto
+
+status: ENRICHED
+acceptance_criteria:
+  - El sistema impide la emisión de un CDP si el monto supera el saldo disponible en la asignación
+  - Registro de auditoría de cada intento de emisión y validación de saldo
+  - El CDP generado incluye un código de verificación único y el desglose de la imputación

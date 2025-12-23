@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_play_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver monitor de progreso de playbooks
-id: US-EVOL-PLAY-002
-urn: urn:goreos:atom:story:us_evol_play_002:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Ver monitor de progreso de playbooks
-so_that: Sigo ejecución de remediaciones
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-PLAYBOOK
+id: US-EVOL-PLAY-002
+name: Monitor de Progreso de Ejecución de Playbooks
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Supervisor TI
+i_want: visualizar un monitor de progreso en tiempo real de los playbooks de remediación en ejecución
+so_that: se pueda seguir de cerca la resolución de fallos críticos y coordinar acciones adicionales si la remediación automática no es suficiente
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: MACHINE
+  description: Motor de seguimiento de flujos de recuperación de desastres
+
+entities_mentioned:
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: MONITOREO-TECNICO
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - monitoreo
+  - playbooks
+  - visibilidad
+  - recovery
+  - uptime
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard con el estado de avance de cada paso del playbook (Pendiente, Corriendo, Exitoso, Fallido)
+  - Alerta de "Timeout" si una acción de remediación excede el tiempo esperado
+  - Gráfico de MTTR (Mean Time To Repair) basado en las ejecuciones históricas de playbooks

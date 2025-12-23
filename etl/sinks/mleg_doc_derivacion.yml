@@ -1,0 +1,36 @@
+_meta:
+  urn: urn:goreos:atom:entity:doc_derivacion:1.0.0
+  type: Entity
+id: ENT-MLEG-DOC-DERIVACION
+name: doc_derivacion
+name_singular: Derivación de Documento
+domain: D-OPS
+module: M10-LEGACY
+source: Partes
+description: Derivaciones de documentos a divisiones/departamentos internos.
+attributes:
+  - name: documento_correlativo
+    type: string
+    required: true
+    description: FK al documento (correlativo)
+  - name: division_id
+    type: string
+    required: true
+    description: FK a org_division
+  - name: texto_original
+    type: string
+    description: Texto original del campo DERIVADO A preservado
+  - name: fecha_derivacion
+    type: date
+    format: ISO
+    description: Fecha de la derivación
+  - name: orden_derivacion
+    type: integer
+    description: Orden de la derivación (para múltiples)
+parse_rules:
+  separators: ["-", "/", "Y", ","]
+  trim_whitespace: true
+morphisms:
+  relacionado_con:
+    - doc_documento (N:1)
+    - org_division (N:1)

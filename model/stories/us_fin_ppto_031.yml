@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_031:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Modificaciones presupuestarias (Rebajas/Suplementos)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-031
-urn: urn:goreos:atom:story:us_fin_ppto_031:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Modificaciones presupuestarias (Rebajas/Suplementos)
+
+# === STORY CORE ===
+as_a: Jefe Unidad DAF
 i_want: Gestionar modificaciones presupuestarias (Rebajas/Suplementos)
-so_that: Autorizo ajustes
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Autorizo ajustes necesarios para la correcta ejecución de los recursos regionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de unidad en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-MODIFICACION_PRESUPUESTARIA
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-PRESUPUESTARIA
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - modificaciones
+  - rebajas
+  - suplementos
+  - autoarizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Flujo de aprobación multinivel para solicitudes de modificación
+  - Control de saldo previo a la aplicación de rebajas
+  - Generación automática de resolución de modificación tras la aprobación final

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportar incidentes de seguridad a CSIRT MININT y ANCI
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-004
-urn: urn:goreos:atom:story:us_tde_seg_004:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Reportar incidentes de seguridad a CSIRT MININT y ANCI
-so_that: Notifico al Estado
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Reporte de incidentes a CSIRT y ANCI
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: establecer un canal formal de reporte de incidentes de seguridad hacia el CSIRT del Ministerio del Interior y la ANCI
+so_that: se cumpla con el marco de defensa nacional y se reciba apoyo técnico ante ataques de alta complejidad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Enlace institucional con los organismos de respuesta ante emergencias cibernéticas
+
+entities_mentioned:
+  - id: ENT-TDE-NOTIF-EVENT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIBERSEGURIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - csirt
+  - anci
+  - reporte-incidentes
+  - defensa-digital
+  - ciberemergencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Protocolo de reporte con tiempos de respuesta menores a 4 horas para incidentes críticos
+  - Registro interno de tickets vinculados al reporte oficial enviado al CSIRT
+  - Auditoría semestral de la efectividad de las recomendaciones recibidas de los entes centrales

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_act_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Declarar estado de "Emergencia Administrativa" en el sistema
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-ACT-003
-urn: urn:goreos:atom:story:us_fnx_act_003:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Declarar estado de "Emergencia Administrativa" en el sistema
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
-i_want: Declarar estado de "Emergencia Administrativa" en el sistema
-so_that: Activo reglas de excepción para agilizar procesos críticos
-domain: D-FENIX
-priority: P0
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+i_want: Declarar estado de "Emergencia Administrativa" en el sistema para un dominio específico
+so_that: Activo reglas de excepción para agilizar procesos críticos bajo supervisión estricta
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la unidad jurídica del GORE
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: RESPUESTA-CRITICA
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - emergencia-administrativa
+  - fenix
+  - excepcion
+  - agilizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Botón de "Pánico" habilitado solo para roles autorizados tras validación de tokens
+  - Redirección automática de flujos de aprobación al Comité de Emergencia
+  - Registro imborrable (blockchain-style) de todas las acciones tomadas bajo este estado

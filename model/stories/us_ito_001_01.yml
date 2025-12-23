@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ito_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una app móvil offline para el libro de obras digital
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ITO-001-01
-urn: urn:goreos:atom:story:us_ito_001_01:1.0.0
-role_id: ROL-EJEC-ITO
-as_a: Inspector Obras (Municipal)
-i_want: una app móvil offline para el libro de obras digital
-so_that: pueda registrar hitos sin conexión a internet
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Bitácora de Obra Digital Offline
+
+# === STORY CORE ===
+as_a: Inspector Técnico de Obra (ITO)
+i_want: Una aplicación móvil con capacidades de registro offline para la bitácora de obra
+so_that: pueda documentar el avance y hallazgos en terreno sin depender de la conectividad a internet
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ITO
+  agent_type: HUMAN
+  description: Profesional encargado de la inspección de obras en terreno, a menudo en zonas rurales
+
+entities_mentioned:
+  - id: ENT-EJE-BITACORA_OBRA
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-EJE-MONITOREO-OBRAS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: MOVILIDAD
+  priority: P0
+  scope: TERRENO
+
+extra_tags:
+  - offline
+  - app-movil
+  - bitacora
+  - terreno
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización automática de datos una vez detectada conexión a internet
+  - Posibilidad de adjuntar fotografías georreferenciadas con marca de tiempo
+  - Soporte para firma digital de anotaciones por parte del ITO y el contratista

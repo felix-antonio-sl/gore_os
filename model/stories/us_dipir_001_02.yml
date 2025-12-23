@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dipir_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: CDPs digitalmente con validación automática de saldo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIPIR-001-02
-urn: urn:goreos:atom:story:us_dipir_001_02:1.0.0
-role_id: ROL-GESTION-JEFE
+name: CDPs digitalmente con validación automática de saldo
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: aprobar CDPs digitalmente con validación automática de saldo
 so_that: no se comprometan recursos sin disponibilidad
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la División de Infraestructura y Transporte (DIPIR) facultado para autorizar compromisos presupuestarios
+
+entities_mentioned:
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-SALDO-PRESUPUESTARIO
+    status: linked
+  - id: ENT-SYS-FIRMA-ELECTRONICA
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EMISION-CDP
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: PRESUPUESTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - cdp
+  - presupuesto
+  - validacion-automatica
+  - dipir
+  - infraestructura
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación en tiempo real del saldo en el subtítulo correspondiente antes de permitir la firma
+  - Generación de documento electrónico con QR de verificación
+  - Registro inmutable de la aprobación con timestamp y usuario

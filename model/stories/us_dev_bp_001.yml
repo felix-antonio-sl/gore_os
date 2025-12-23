@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-BP-001
+name: Adopción de Clean Code y Estándares de Codificación
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Seguir el manual de "Clean Code" y los linters institucionales en cada commit
+so_that: el código sea mantenible, legible y libre de deuda técnica para el equipo de desarrollo de GORE_OS
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador encargado de la lógica de negocio y persistencia
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: CALIDAD-CODIGO
+  priority: P1
+  scope: DESARROLLO
+
+extra_tags:
+  - clean-code
+  - standards
+  - linter
+  - deuda-tecnica
+
+status: ENRICHED
+acceptance_criteria:
+  - Configuración de pre-commit hooks para validación automática de estilo
+  - Documentación de excepciones a la regla en el README del repositorio
+  - Revisión por pares (Peer Review) enfocada en la legibilidad semántica

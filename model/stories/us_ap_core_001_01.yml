@@ -1,14 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_ap_core_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Antecedentes de materias a tratar
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AP-CORE-001-01
-urn: urn:goreos:atom:story:us_ap_core_001_01:1.0.0
-role_id: ROL-GESTION-APOYO
+name: Antecedentes de materias a tratar
+
+# === STORY CORE ===
 as_a: Profesional Apoyo CORE
 i_want: acceder a antecedentes de materias a tratar
 so_that: pueda preparar minutas y resúmenes
-domain: D-NORM
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-APOYO
+  agent_type: HUMAN
+  description: Profesional administrativo/técnico de apoyo al Consejo Regional
+
+entities_mentioned:
+  - id: ENT-CONV-SESION
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-GOV-MINUTA-CORE
+    status: candidate
+
+process_ref:
+  id: PROC-GOV-PREPARACION-SESION
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: SOPORTE
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - apoyo-core
+  - minutas
+  - sesion
+  - antecedentes
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso centralizado a carpetas de sesión
+  - Herramienta de generación de minutas con pre-llenado
+  - Buscador por número de sesión o materia

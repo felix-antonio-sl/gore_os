@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_ates_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de emisión de pagos con validación presupuestaria
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ATES-001-01
-urn: urn:goreos:atom:story:us_ates_001_01:1.0.0
-role_id: ROL-FIN-ANALISTA-TES
+name: Un módulo de emisión de pagos con validación presupuestaria
+
+# === STORY CORE ===
 as_a: Analista Tesorería
 i_want: un módulo de emisión de pagos con validación presupuestaria
 so_that: los pagos sean correctos
-domain: D-FIN
-competence_id: CPT-FIN-TES-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-TES
+  agent_type: HUMAN
+  description: Analista de Tesorería encargado de la ejecución de pagos y conciliación
+
+entities_mentioned:
+  - id: ENT-FIN-PAGO
+    status: candidate
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-VOUCHER
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-PAGOS-TESORERIA
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: TESORERIA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - pagos
+  - tesoreria
+  - presupuesto
+  - validacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Validación automática de disponibilidad de caja y presupuesto antes de emitir pago
+  - Integración con portales bancarios para transferencia (vía archivo o API)
+  - Registro de comprobante de pago vinculado al devengo respectivo

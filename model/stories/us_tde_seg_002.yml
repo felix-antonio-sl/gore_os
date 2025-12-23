@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Designar y mantener Responsable de Seguridad (CISO)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-002
-urn: urn:goreos:atom:story:us_tde_seg_002:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Designar y mantener Responsable de Seguridad (CISO)
-so_that: Tengo accountability
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Designación formal del Responsable de Seguridad (CISO)
+
+# === STORY CORE ===
+as_a: Jefe de Unidad Jurídica
+i_want: formalizar la designación y funciones del Responsable de Seguridad de la Información (CISO) mediante acto administrativo
+so_that: se cumpla con la normativa de Gobierno Digital y se establezca una línea clara de accountability en ciberseguridad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado responsable de la formalidad legal de las designaciones críticas del GORE
+
+entities_mentioned:
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: GOBERNANZA-TI
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - ciso
+  - designacion
+  - responsabilidad
+  - ds7
+  - gobernanza
+
+status: ENRICHED
+acceptance_criteria:
+  - Resolución exenta que define el rol del CISO y sus facultades de supervisión técnica
+  - Inclusión del cargo en el organigrama oficial dependiente de la máxima autoridad o jefatura de gabinete
+  - Registro de la designación ante las autoridades de ciberseguridad nacionales

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_035:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Informes de gestión divisional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-035
-urn: urn:goreos:atom:story:us_fin_ipr_035:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Generar informes de gestión divisional
-so_that: Reporto a autoridades
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Generación de Informes de Gestión Divisional
+
+# === STORY CORE ===
+as_a: Jefe de División / Unidad
+i_want: generar informes automáticos de gestión divisional que consoliden el avance, cumplimiento de metas e indicadores de impacto de mi área
+so_that: pueda reportar de forma fidedigna y ágil a las autoridades regionales (Gobernador, Administrador) y fundamentar la toma de decisiones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo responsable de los resultados estratégicos y operativos de su división
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-PLAN-META
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-MONITOREO-ERD
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: CONTROL-GESTION
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - informes-gestion
+  - kpis
+  - reporte-autoridad
+  - toma-decisiones
+  - divisiones
+
+status: ENRICHED
+acceptance_criteria:
+  - Plantilla de informe configurable con filtros por período, división y tipo de fondo
+  - Gráficos integrados de ejecución presupuestaria vs metas físicas programadas
+  - Exportación en formato PDF con firma digital institucional del Jefe de División

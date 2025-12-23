@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_del_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar gestión del orden público regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-DEL-004
-urn: urn:goreos:atom:story:us_gob_del_004:1.0.0
-role_id: ROL-GESTION-DPR
+name: Coordinar gestión del orden público regional
+
+# === STORY CORE ===
 as_a: Delegado Presidencial Regional
 i_want: Coordinar gestión del orden público regional
 so_that: Mantengo seguridad institucional
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPR
+  agent_type: HUMAN
+  description: Delegado Presidencial Regional responsable del orden público y la seguridad interior en la región
+
+entities_mentioned:
+  - id: ENT-NORM-ORDEN-PUBLICO
+    status: candidate
+  - id: ENT-SOC-SEGURIDAD-CIUDADANA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - dpr
+  - orden-público
+  - seguridad-interior
+  - contingencia-social
+  - carabinero-pdi
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de monitoreo de eventos masivos y protestas con impacto en servicios públicos regionales
+  - Canal de comunicación segura con mandos regionales de Carabineros y PDI para operativos conjuntos
+  - Registro de decretos de prohibición o autorización de marchas y eventos en la vía pública

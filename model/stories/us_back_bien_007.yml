@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Convenios con terceros (farmacias, etc)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-007
-urn: urn:goreos:atom:story:us_back_bien_007:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Convenios con terceros (farmacias, etc)
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: Gestionar convenios con terceros (farmacias, etc)
 so_that: Amplío beneficios
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: HUMAN
+  description: Profesional de Bienestar encargado de alianzas y convenios externos
+
+entities_mentioned:
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-PROVEEDOR-BENEFICIO
+    status: candidate
+  - id: ENT-FIN-TRANSACCION-CONVENIO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-CONVENIOS-BIENESTAR
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: BIENESTAR
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - bienestar
+  - convenios
+  - beneficios
+  - farmacias
+  - alianzas
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de convenios vigentes con condiciones y vigencia
+  - Sistema de registro de compras en convenio para descuento posterior
+  - Panel de consulta de beneficios por parte de los socios

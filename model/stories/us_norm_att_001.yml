@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_att_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas de validación de formatos de archivos
-id: US-NORM-ATT-001
-urn: urn:goreos:atom:story:us_norm_att_001:1.0.0
-role_id: ROL-GESTION-TEC
-as_a: Unidad Técnica Municipal
-i_want: herramientas de validación de formatos de archivos
-so_that: los documentos cumplan estándares
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SYS-DOCUMENTO
+id: US-NORM-ATT-001
+name: Validación Técnica de Formatos Documentales
+
+# === STORY CORE ===
+as_a: Funcionario de Unidad Técnica Municipal
+i_want: Herramientas de validación automática de formatos y pesos de archivos al cargar expedientes
+so_that: los documentos cumplan con los protocolos de archivo del GORE y se eviten rechazos por incompatibilidad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TEC
+  agent_type: HUMAN
+  description: Profesional de un municipio u organismo externo que carga información al sistema
+
+entities_mentioned:
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: INFRAESTRUCTURA-DIGITAL
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - validacion-archivos
+  - formatos
+  - pdf
+  - estandar-gobierno
+
+status: ENRICHED
+acceptance_criteria:
+  - Soporte exclusivo para PDF/A (archivo a largo plazo) con validación de cumplimiento
+  - Restricción de tamaño máximo por archivo y por expediente total
+  - Saneo automático de metadatos sensibles y virus antes de la inyección en el repositorio central

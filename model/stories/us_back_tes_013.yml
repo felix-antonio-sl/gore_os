@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_013:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes contables mensuales (balance, comparativo)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-013
-urn: urn:goreos:atom:story:us_back_tes_013:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Reportes contables mensuales (balance, comparativo)
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: Generar reportes contables mensuales (balance, comparativo)
 so_that: Tengo visibilidad de situación financiera
-domain: D-BACK
-priority: P1
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: HUMAN
+  description: Contador gubernamental responsable del reporting mensual institucional
+
+entities_mentioned:
+  - id: ENT-FIN-BALANCE-MENSUAL
+    status: candidate
+  - id: ENT-FIN-ESTADO-FINANCIERO
+    status: candidate
+  - id: ENT-FIN-COMPARATIVO-PRESUPUESTARIO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-REPORTING-CONTABLE
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: REPORTING
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - reporting
+  - contabilidad
+  - balance
+  - estados-financieros
+  - gestion-contable
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de balance de 8 columnas por periodo
+  - Reporte comparativo de ejecución presupuestaria vs presupuesto vigente
+  - Exportación de reportes a formatos Excel y PDF institucionales

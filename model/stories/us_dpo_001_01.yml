@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dpo_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un registro de bases de datos personales del GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DPO-001-01
-urn: urn:goreos:atom:story:us_dpo_001_01:1.0.0
-role_id: ROL-GESTION-DPO
+name: Un registro de bases de datos personales del GORE
+
+# === STORY CORE ===
 as_a: DPO
 i_want: un registro de bases de datos personales del GORE
 so_that: pueda cumplir con las obligaciones legales de transparencia
-domain: D-TDE
-priority: P0
-competence_id: CPT-TRANSPARENCIA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPO
+  agent_type: HUMAN
+  description: Oficial de Protección de Datos (DPO) encargado de velar por el cumplimiento de la Ley 19.628
+
+entities_mentioned:
+  - id: ENT-SYS-BASE-DATOS-PERSONALES
+    status: candidate
+  - id: ENT-NORM-OBLIGACION-TRANSPARENCIA
+    status: candidate
+  - id: ENT-SYS-REGISTRO-DPO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-PROTECCION-DATOS-PERSONALES
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - dpo
+  - datos-personales
+  - transparencia
+  - ley-19628
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Inventario de sistemas que procesan datos de carácter personal y su finalidad
+  - Registro de transferencias de datos a terceros autorizados
+  - Evaluación de Impacto en la Protección de Datos (DPIA) adjunta por sistema

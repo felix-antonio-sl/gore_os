@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gab_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Agenda GR (reuniones, giras, audiencias)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GAB-001
-urn: urn:goreos:atom:story:us_gob_gab_001:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Agenda GR (reuniones, giras, audiencias)
+
+# === STORY CORE ===
+as_a: Jefe de Gabinete
 i_want: Gestionar agenda GR (reuniones, giras, audiencias)
 so_that: Organizo el tiempo de la autoridad
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-AUDIENCIA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de Gabinete encargado de la planificación táctica de la agenda del Gobernador Regional
+
+entities_mentioned:
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-GOB-AGENDA-AUTORIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - agenda-gr
+  - gabinete
+  - audiencias
+  - giras-terreno
+  - gestion-tiempo
+  - autoridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Calendario dinámico con sincronización en tiempo real para el equipo de avanzada y escolta
+  - Módulo de registro de audiencias bajo Ley de Lobby con generación automática de actas
+  - Panel de priorización de solicitudes de reunión basado en el impacto político y estratégico de los actores

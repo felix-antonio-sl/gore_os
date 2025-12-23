@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver cumplimiento de acuerdos (estado/evidencia)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-CORE-007
-urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: Ver cumplimiento de acuerdos (estado/evidencia)
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Ver cumplimiento de acuerdos (estado/evidencia)
 so_that: Fiscalizo ejecución del ejecutivo
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-ACUERDO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Encargado de seguimiento de compromisos del CORE que actúa como fiscalizador de la ejecución de los acuerdos del consejo
+
+entities_mentioned:
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-EJEC-EVIDENCIA-CUMPLIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: CORE
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - core
+  - acuerdos
+  - cumplimiento
+  - fiscalizacion-core
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero de control de acuerdos con estados: "En Trámite", "Ejecutado", "Observado" o "Incumplido"
+  - Módulo de carga de evidencias (Resoluciones, Convenios, Fotos de obra) asociadas a cada acuerdo del CORE
+  - Generación de reportes de cumplimiento por comisión del CORE para sesiones de fiscalización

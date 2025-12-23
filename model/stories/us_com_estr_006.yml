@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_estr_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Comunicación interna institucional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-ESTR-006
-urn: urn:goreos:atom:story:us_com_estr_006:1.0.0
-role_id: ROL-GESTION-ENC
+name: Comunicación interna institucional
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Gestionar comunicación interna institucional
 so_that: Mantengo informados a funcionarios
-domain: D-COM
-priority: P1
-competence_id: CPT-COM-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Comunicaciones Internas velando por el clima laboral y alineamiento organizacional
+
+entities_mentioned:
+  - id: ENT-ORG-COMUNICADO-INTERNO
+    status: candidate
+  - id: ENT-ORG-INTRANET-CANAL
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+process_ref:
+  id: PROC-BACK-COMUNICACION-ORGANIZACIONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: ORGANIZACION
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - comunicacion-interna
+  - funcionarios
+  - intranet
+  - alineamiento
+  - rrhh
+
+status: ENRICHED
+acceptance_criteria:
+  - Canal de Intranets o Newsletter interno segmentado por divisiones
+  - Registro de lectura de resoluciones o avisos críticos
+  - Espacio de feedback para consultas recurrentes del personal

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_ai_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un reporte automático de sesgo en los modelos predictivos (FENIX/D-SEG)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-AI-001
-urn: urn:goreos:atom:story:us_evol_ai_001:1.0.0
-role_id: ROL-GESTION-PRES
-as_a: Presidente Subcomité IA
-i_want: Recibir un reporte automático de sesgo en los modelos predictivos (FENIX/D-SEG)
-so_that: Evito discriminación automatizada y cumplo Ley de Protección de Datos
-domain: D-EVOL
-priority: P0
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+name: Reporte de Sesgo en Modelos Predictivos (FENIX)
+
+# === STORY CORE ===
+as_a: Presidente del Subcomité de Inteligencia Artificial
+i_want: recibir un reporte automático de detección de sesgos (Algorithmic Bias) en los modelos predictivos institucionales (ej. FENIX para prevención de delitos)
+so_that: se evite la discriminación automatizada, se garantice la equidad en la política pública y se cumpla con la Ley de Protección de Datos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: MACHINE
+  description: Auditor algorítmico encargado de velar por la ética en la IA regional
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: ETICA-AI
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - sesgo-algoritmico
+  - fenix
+  - etica-ia
+  - cumplimiento-normativo
+  - xai
+
+status: ENRICHED
+acceptance_criteria:
+  - Análisis automático de variables protegidas (Género, Comuna, Edad) en los resultados del modelo
+  - Alerta de "Disparate Impact" cuando la tasa de acierto difiere significativamente entre grupos
+  - Certificado de transparencia algorítmica adjunto a cada versión del modelo entrenado

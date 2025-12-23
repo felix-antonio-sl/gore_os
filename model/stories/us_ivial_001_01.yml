@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ivial_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integración con normas de diseño vial MOP
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-IVIAL-001-01
-urn: urn:goreos:atom:story:us_ivial_001_01:1.0.0
-role_id: ROL-GESTION-CON-ING
+name: Estándares Técnicos para Infraestructura Vial
+
+# === STORY CORE ===
 as_a: Ingeniero Vialidad
-i_want: integración con normas de diseño vial MOP
-so_that: los proyectos cumplan estándares sectoriales
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+i_want: La integración de las normas de diseño vial del MOP en los validadores del sistema
+so_that: los proyectos de pavimentación y caminos rurales cumplan estrictamente con los estándares sectoriales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CON-ING
+  agent_type: HUMAN
+  description: Ingeniero especialista en infraestructura vial y conectividad terrestre
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: VIALIDAD
+  priority: P1
+  scope: TECNICO
+
+extra_tags:
+  - vialidad
+  - caminos
+  - estándares-mop
+  - pavimento
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de especificaciones técnicas estándar para obras viales menores
+  - Validador automático de manual de carreteras para diseños cargados
+  - Registro de proveedores certificados en ejecución vial regional

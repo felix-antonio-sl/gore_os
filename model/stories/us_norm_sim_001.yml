@@ -1,16 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_sim_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Simular si una imputación presupuestaria cumple con las reglas de la Glosa
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-SIM-001
-urn: urn:goreos:atom:story:us_norm_sim_001:1.0.0
-role_id: ROL-NORM-REV
+name: Simulador de Cumplimiento de Glosas Presupuestarias
+
+# === STORY CORE ===
 as_a: Abogado Revisor
-i_want: Simular si una imputación presupuestaria cumple con las reglas de la Glosa
-  vigente
-so_that: Detecto rechazos probables antes de enviar a firma
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+i_want: Simular si una imputación presupuestaria propuesta cumple con las reglas de las Glosas Presupuestarias vigentes (Ley de Presupuesto)
+so_that: se detecten rechazos probables de la CGR o DIPRES antes de que el documento sea enviado a firma final
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado de la división jurídica con enfoque en control de gestión financiera
+
+entities_mentioned:
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONTROL-FINANCIERO
+  priority: P1
+  scope: NORMATIVO
+
+extra_tags:
+  - glosas
+  - simulacion
+  - presupuesto
+  - pre-auditoria
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de reglas cargable por año fiscal (Glosas Comunes y Particulares)
+  - 'Reporte de "Semáforo" (Verde: Cumple, Amarillo: Riesgo de Interpretación, Rojo: Incumplimiento)'
+  - Sugerencias de re-imputación basadas en el catálogo de ítems y asignaciones permitido para la glosa

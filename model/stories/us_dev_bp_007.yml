@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_007:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-BP-007
+name: Dockerización y Estandarización de Entornos
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Disponer de archivos Dockerfile y compose estandarizados para cada módulo del Supermodelo
+so_that: el entorno de desarrollo sea idéntico al de producción, eliminando problemas de "en mi máquina funciona"
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador encargado de la portabilidad del sistema
+
+entities_mentioned:
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: CONTENEDORIZACION
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - docker
+  - containers
+  - portability
+  - standards
+
+status: ENRICHED
+acceptance_criteria:
+  - Imágenes base certificadas y libres de vulnerabilidades críticas
+  - Tiempo de "Spin-up" de un nuevo entorno de desarrollo < 5 minutos
+  - Documentación clara de las variables de entorno necesarias para la ejecución

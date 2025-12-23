@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de registro de incidentes laborales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CP-001-01
-urn: urn:goreos:atom:story:us_cp_001_01:1.0.0
-role_id: ROL-GESTION-ENCARGADO-CO
+name: Un módulo de registro de incidentes laborales
+
+# === STORY CORE ===
 as_a: Encargado Comité Paritario
 i_want: un módulo de registro de incidentes laborales
 so_that: pueda hacer seguimiento de seguridad
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENCARGADO-CO
+  agent_type: HUMAN
+  description: Encargado de Seguridad y Salud en el Trabajo (SST) o miembro del Comité Paritario
+
+entities_mentioned:
+  - id: ENT-ORG-INCIDENTE-LABORAL
+    status: candidate
+  - id: ENT-ORG-ACCIDENTE-TRABAJO
+    status: candidate
+  - id: ENT-ORG-COMITE-PARITARIO
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-SEGURIDAD-SALUD-TRABAJO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: SEGURIDAD
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - seguridad-laboral
+  - incidentes
+  - comite-paritario
+  - sst
+  - prevencion-riesgos
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de reporte de incidente con clasificación por gravedad
+  - Workflow de investigación de accidentes (Árbol de causas)
+  - Dashboard de accidentabilidad y cumplimiento de medidas correctivas

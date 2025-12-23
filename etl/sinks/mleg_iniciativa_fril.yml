@@ -1,0 +1,47 @@
+_meta:
+  urn: urn:goreos:atom:entity:iniciativa_fril:1.0.0
+  type: Entity
+id: ENT-MLEG-INICIATIVA-FRIL
+name: IniciativaFRIL
+name_singular: Iniciativa FRIL
+domain: D-OPS
+module: M10-LEGACY
+source: FRIL
+description: Iniciativas del Fondo Regional de Iniciativa Local, programa de inversión comunitaria.
+approximate_rows: 500
+attributes:
+  - name: codigo_fril
+    type: string
+    required: true
+    description: Código único de la iniciativa FRIL
+  - name: nombre_proyecto
+    type: string
+    required: true
+    description: Nombre del proyecto FRIL
+  - name: comuna
+    type: string
+    required: true
+    description: Comuna beneficiaria
+  - name: organizacion_beneficiaria
+    type: string
+    description: Nombre de la organización beneficiaria
+  - name: rut_organizacion
+    type: string
+    description: RUT de la organización
+  - name: monto_solicitado
+    type: decimal
+    description: Monto solicitado
+  - name: monto_aprobado
+    type: decimal
+    description: Monto aprobado por el CORE
+  - name: estado
+    type: enum
+    values: [POSTULACION, EVALUACION, APROBADO, EJECUCION, TERMINADO, RECHAZADO]
+    description: Estado del proyecto
+  - name: anio_convocatoria
+    type: integer
+    description: Año de la convocatoria FRIL
+morphisms:
+  relacionado_con:
+    - org_comuna (N:1)
+    - fin_institucion (N:1)

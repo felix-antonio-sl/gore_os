@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_jud_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un calendario procesal con alertas de plazos fatales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-JUD-001-01
-urn: urn:goreos:atom:story:us_abog_jud_001_01:1.0.0
-role_id: ROL-NORM-JUD
+name: Un calendario procesal con alertas de plazos fatales
+
+# === STORY CORE ===
 as_a: Abogado Asuntos Judiciales
 i_want: un calendario procesal con alertas de plazos fatales
 so_that: no se pierdan instancias judiciales
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-JUD
+  agent_type: HUMAN
+  description: Abogado que gestiona causas judiciales del GORE
+
+entities_mentioned:
+  - id: ENT-NORM-CAUSA-JUDICIAL
+    status: candidate
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-CALENDARIO
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-SEGUIMIENTO-CAUSAS
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: ALERTA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - judicial
+  - plazos
+  - calendario
+  - causas
+
+status: ENRICHED
+acceptance_criteria:
+  - Alertas 48h antes de plazos fatales
+  - Sincronización con oficina judicial virtual
+  - Dashboard de causas activas
+  - Historial de actuaciones

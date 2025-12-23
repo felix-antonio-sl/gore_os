@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gfom_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Estadísticas de formalización de empresas por comuna
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GFOM-001-01
-urn: urn:goreos:atom:story:us_gfom_001_01:1.0.0
-role_id: ROL-BACK-PER-GEST
-as_a: Gestor de Personas
+name: Estadísticas de formalización de empresas por comuna
+
+# === STORY CORE ===
+as_a: Jefe División Fomento e Industria
 i_want: estadísticas de formalización de empresas por comuna
 so_that: pueda dirigir programas de apoyo
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
 
-mentions:
-- ENT-LOC-COMUNA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: HUMAN
+  description: Jefe o Analista de la División de Fomento e Industria (DIFOI) que gestiona programas de emprendimiento
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-EJEC-INDICADOR-FORMALIZACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - fomento-productivo
+  - formalizacion
+  - empresas
+  - emprendimiento
+  - difoi
+  - pymes
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa de calor institucional que muestre la densidad de empresas formalizadas vs informales por comuna
+  - Módulo de cruce de datos con SII para validar impacto de programas de capital semilla/abeja
+  - Reporte trimestral de tasa de natalidad empresarial en la región desglosado por sector económico

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_daf_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un checklist digital de cierre contable mensual con validaciones automáticas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DAF-001-01
-urn: urn:goreos:atom:story:us_daf_001_01:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Un checklist digital de cierre contable mensual con validaciones automáticas
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: un checklist digital de cierre contable mensual con validaciones automáticas
 so_that: el cierre sea oportuno y sin errores
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de División de Administración y Finanzas (DAF) o Unidad de Contabilidad
+
+entities_mentioned:
+  - id: ENT-FIN-CIERRE-CONTABLE
+    status: candidate
+  - id: ENT-SYS-CHECKLIST-CIERRE
+    status: candidate
+  - id: ENT-FIN-VALIDACION-CONTABLE
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CIERRE-MENSUAL
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTABILIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - daf
+  - cierre-contable
+  - checklist
+  - control-financiero
+  - automatizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Conjunto de validaciones automáticas (Saldos bancarios vs auxiliares devengados)
+  - Workflow de bloqueo de periodo contable tras aprobación del checklist
+  - Reporte de descuadraturas con link directo a transacciones erróneas

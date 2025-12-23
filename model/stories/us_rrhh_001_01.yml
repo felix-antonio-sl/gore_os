@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rrhh_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un workflow digital de ingreso de funcionarios con checklist de documentos
-id: US-RRHH-001-01
-urn: urn:goreos:atom:story:us_rrhh_001_01:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: un workflow digital de ingreso de funcionarios con checklist de documentos
-so_that: el proceso de incorporación sea ágil y completo
-domain: D-BACK
-priority: P0
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-FUNCIONARIO
-- ENT-SYS-DOCUMENTO
+id: US-RRHH-001-01
+name: Workflow digital de ingreso de funcionarios con checklist
+
+# === STORY CORE ===
+as_a: Jefe de Recursos Humanos
+i_want: un workflow digital de ingreso de funcionarios con checklist de documentos
+so_that: el proceso de incorporación sea ágil, completo y auditable
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE-RRHH
+  agent_type: HUMAN
+  description: Jefe del Departamento de Gestión de Personas del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-DOC-CHECKLIST-INGRESO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-GESTION-PERSONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: ONBOARDING
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - onboarding
+  - rrhh
+  - workflow-digital
+  - gestion-personas
+  - registro-funcionario
+
+status: ENRICHED
+acceptance_criteria:
+  - Seguimiento del estado del ingreso: Desde la resolución de nombramiento hasta la inducción final
+  - Checklist dinámico de documentos obligatorios (Título, Declaraciones, DIP, etc.)
+  - Integración con el sistema de TI para la creación automática de cuentas de usuario y correo

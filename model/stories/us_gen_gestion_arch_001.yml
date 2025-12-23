@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_arch_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Archivero Digital
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ARCH-001
-urn: urn:goreos:atom:story:us_gen_gestion_arch_001:1.0.0
-role_id: ROL-GESTION-ARCH
+name: Historia genérica para Archivero Digital
+
+# === STORY CORE ===
 as_a: Archivero Digital
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ARCH
+  agent_type: HUMAN
+  description: Encargado de la preservación, indexación y custodia de los activos digitales e históricos del GORE
+
+entities_mentioned:
+  - id: ENT-BACK-ARCHIVO-DIGITAL
+    status: linked
+  - id: ENT-SYS-METADATO-EXPEDIENTE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-ARCHIVO-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: ARCHIVO
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - archivero
+  - gestion-documental
+  - preservacion-digital
+  - metadatos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de administración de taxonomías y tesauros para la clasificación de documentos
+  - Reporte de integridad de archivos y bitácora de transferencias documentales
+  - Gestión de plazos de eliminación o paso a archivo histórico según normativa

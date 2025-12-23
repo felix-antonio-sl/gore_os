@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_notif_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Aplicar regla notificación practicada (3 días hábiles o lectura)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-NOTIF-006
-urn: urn:goreos:atom:story:us_tde_notif_006:1.0.0
-role_id: ROL-GESTION-KODA
+name: Cálculo de plazos de notificación practicada
+
+# === STORY CORE ===
 as_a: Agente KODA
-i_want: Aplicar regla notificación practicada (3 días hábiles o lectura)
-so_that: Calculo plazos correctamente
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: aplicar automáticamente la regla de notificación practicada (transcurso de 3 días hábiles desde el envío o momento de la lectura efectiva)
+so_that: el sistema calcule correctamente los plazos legales para la interposición de recursos o cumplimiento de órdenes
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: MACHINE
+  description: Agente lógico encargado del cronometraje de plazos administrativos
+
+entities_mentioned:
+  - id: ENT-TDE-CALENDAR-BASE
+    status: candidate
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: AUTOMATIZACION-LEGAL
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - plazos-legales
+  - dias-habiles
+  - regla-del-3
+  - automatizacion
+  - koda
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de cálculo de días hábiles que excluye feriados nacionales y fines de semana
+  - Flag de "Notificación Practicada" que se activa ante la primera lectura o cumplimiento del plazo de 3 días
+  - Notificación de alerta al jefe de división cuando se cumple el plazo y no hay acción del ciudadano

@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_univ_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Universidad (Investigador)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_UNIV-001
-urn: urn:goreos:atom:story:us_gen_gestion_univ_001:1.0.0
-role_id: ROL-GESTION-UNIV
+name: Historia genérica para Universidad (Investigador)
+
+# === STORY CORE ===
 as_a: Universidad (Investigador)
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UNIV
+  agent_type: HUMAN
+  description: Investigador o Director de Proyecto universitario que solicita fondos FIC o ejecuta estudios para el GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-FIC
+    status: candidate
+  - id: ENT-PLAN-ESTUDIO-ESTRATEGICO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIENCIA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - investigador
+  - universidad
+  - fic
+  - ciencia-aplicada
+  - academia
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a visor de resultados históricos de proyectos FIC para evitar duplicidad de investigación
+  - Módulo de postulación electrónica al Fondo de Innovación para la Competitividad (FIC-R)
+  - Gestión de informes técnicos y financieros mensuales bajo normativa GORE

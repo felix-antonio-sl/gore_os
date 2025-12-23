@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Liquidaciones mensuales (EUS)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-010
-urn: urn:goreos:atom:story:us_back_per_010:1.0.0
-role_id: ROL-BACK-PER-GEST
+name: Liquidaciones mensuales (EUS)
+
+# === STORY CORE ===
 as_a: Gestor de Personas
 i_want: Calcular liquidaciones mensuales (EUS)
 so_that: Proceso remuneraciones
-domain: D-BACK
-competence_id: CPT-BACK-AUTO-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: ALGORITHMIC
+  description: Sistema automatizado de cálculo de remuneraciones según la Escala Única de Sueldos (EUS)
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-FIN-REMUNERACION
+    status: candidate
+  - id: ENT-FIN-LIQUIDACION-SUELDO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-CALCULO-REMUNERACIONES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: REMUNERACIONES
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - remuneraciones
+  - eus
+  - liquidaciones
+  - rrhh
+  - calculo-automatico
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo de haberes imponibles y no imponibles según grado EUS
+  - Aplicación de leyes especiales de asignación (Zona, etc.)
+  - Generación de PDF de liquidación para el portal del funcionario
+  - Generación de archivos para la Tesorería General de la República (si aplica)

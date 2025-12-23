@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_pres_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Presidente Subcomité IA
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_PRES-001
-urn: urn:goreos:atom:story:us_gen_gestion_pres_001:1.0.0
-role_id: ROL-GESTION-PRES
+name: Historia genérica para Presidente Subcomité IA
+
+# === STORY CORE ===
 as_a: Presidente Subcomité IA
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: HUMAN
+  description: Presidente del subcomité encargado de regular y supervisar el uso ético de la Inteligencia Artificial en el GORE
+
+entities_mentioned:
+  - id: ENT-TDE-GUBERNANZA-IA
+    status: candidate
+  - id: ENT-NORM-REGLAMENTO-ETICO-IA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIENCIA
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - subcomite-ia
+  - etica-ia
+  - gobernanza-digital
+  - innovacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de validación de algoritmos de decisión automatizada contra sesgos
+  - Registro de modelos de IA autorizados para operar sobre datos ciudadanos
+  - Gestión de informes de ética algorítmica presentados al Consejo Regional

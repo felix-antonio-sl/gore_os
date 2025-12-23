@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_notif_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Persistir constancia de notificación (codigo_tx, fechas) y asociar a IUIe
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-NOTIF-005
-urn: urn:goreos:atom:story:us_tde_notif_005:1.0.0
-role_id: ROL-GESTION-KODA
+name: Trazabilidad y Constancia de Notificación
+
+# === STORY CORE ===
 as_a: Agente KODA
-i_want: Persistir constancia de notificación (codigo_tx, fechas) y asociar a IUIe
-so_that: Mantengo trazabilidad
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: persistir la constancia técnica de notificación (Código de TX, Huella digital y Fechas) asociándola al Identificador Único del Expediente (IUIe)
+so_that: se mantenga una trazabilidad inalterable de la validez del acto administrativo ante posibles reclamos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: MACHINE
+  description: Agente responsable de la persistencia y vinculación de pruebas digitales de notificación
+
+entities_mentioned:
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: TRAZABILIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - constancia-digital
+  - iuie
+  - trazabilidad-legal
+  - hash
+  - koda
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de un "Certificado de Notificación Electrónica" en PDF que se anexa al expediente
+  - Almacenamiento del Hash de envío en una tabla de auditoría indexada por IUIe
+  - Vinculación de la firma digital del sistema a la constancia para asegurar no-repudio

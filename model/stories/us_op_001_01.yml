@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_op_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un sistema de carátulas con código de barras y ruta digital
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OP-001-01
-urn: urn:goreos:atom:story:us_op_001_01:1.0.0
-role_id: ROL-GESTION-OF
+name: Sistema de carátulas con código de barras y ruta digital
+
+# === STORY CORE ===
 as_a: Oficial de Partes
 i_want: un sistema de carátulas con código de barras y ruta digital
 so_that: se asegure la trazabilidad de cada ingreso
-domain: D-BACK
-priority: P0
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OF
+  agent_type: HUMAN
+  description: Funcionario encargado de la ventanilla única de entrada de correspondencia y documentos oficiales
+
+entities_mentioned:
+  - id: ENT-TDE-CARATULA-DIGITAL
+    status: candidate
+  - id: ENT-DOC-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: OPERACIONES
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - oficina-de-partes
+  - trazabilidad
+  - codigo-barras
+  - caratulas
+  - gestion-documental
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de carátulas físicas con QR/Código de barras al momento del ingreso presencial
+  - Escaneo de carátulas para registrar saltos de trazabilidad entre departamentos (Ruta Digital)
+  - Visibilidad en tiempo real de la ubicación física o digital de cada expediente ingresado

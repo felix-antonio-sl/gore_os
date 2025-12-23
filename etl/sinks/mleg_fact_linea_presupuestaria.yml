@@ -1,0 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:entity:fact_linea_presupuestaria:1.0.0
+  type: Entity
+id: ENT-MLEG-FACT-LINEA
+name: Fact_LineaPresupuestaria
+name_singular: Línea Presupuestaria
+domain: D-OPS
+module: M10-LEGACY
+source: IDIS
+description: Fact table de líneas presupuestarias extraída desde MAESTRA DIPIR. Grano = CODIGO+SUBT+ITEM+ASIG.
+attributes:
+  - name: codigo
+    type: string
+    required: true
+    description: Código de iniciativa (FK a Dim_Iniciativa)
+  - name: subtitulo
+    type: string
+    required: true
+    description: Subtítulo presupuestario (SUBT)
+  - name: item
+    type: string
+    required: true
+    description: Ítem presupuestario
+  - name: asignacion
+    type: string
+    required: true
+    description: Asignación presupuestaria (ASIG)
+  - name: monto_vigente
+    type: decimal
+    description: Monto vigente en la línea
+  - name: monto_devengado
+    type: decimal
+    description: Monto devengado
+  - name: monto_pagado
+    type: decimal
+    description: Monto pagado
+grain:
+  - codigo
+  - subtitulo
+  - item
+  - asignacion
+morphisms:
+  relacionado_con:
+    - Dim_Iniciativa (N:1)

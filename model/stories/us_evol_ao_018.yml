@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_ao_018:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Inventariar los sistemas y tecnologías usados por municipios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-AO-018
-urn: urn:goreos:atom:story:us_evol_ao_018:1.0.0
-role_id: ROL-GESTION-TIC-CTD
+name: Inventariar los sistemas y tecnologías usados por municipios
+
+# === STORY CORE ===
 as_a: Coordinador Transformación Digital (CTD)
 i_want: Inventariar los sistemas y tecnologías usados por municipios
 so_that: Identifico compatibilidades para la federación
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Coordinador de Transformación Digital encargado de la estrategia de interoperabilidad con gobiernos locales
+
+entities_mentioned:
+  - id: ENT-SYS-SISTEMA-MUNICIPAL
+    status: candidate
+  - id: ENT-TDE-MATRIZ-COMPATIBILIDAD
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-FEDERACION-MUNICIPAL
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: TRANSFORMACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - inventario-tic
+  - municipios
+  - federacion
+  - ctd
+  - interoperabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de autodiagnóstico técnico para municipios (Stack, DB, APIs)
+  - Reporte consolidado de brecha digital por comuna
+  - Mapa de servicios municipales federables al GORE_OS

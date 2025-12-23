@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_caigg_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Auditor General de Gobierno
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CAIGG-001
-urn: urn:goreos:atom:story:us_gen_gestion_caigg_001:1.0.0
-role_id: ROL-GESTION-CAIGG
+name: Historia genérica para Auditor General de Gobierno
+
+# === STORY CORE ===
 as_a: Auditor General de Gobierno
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CAIGG
+  agent_type: HUMAN
+  description: Representante del Consejo de Auditoría Interna General de Gobierno (CAIGG) responsable de supervisar el control interno
+
+entities_mentioned:
+  - id: ENT-NORM-LINEAMIENTO-CAIGG
+    status: candidate
+  - id: ENT-NORM-AUTODIAGNOSTICO-CONTROL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONTROL
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - caigg
+  - auditoria-interna
+  - control-gobierno
+  - probidad
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga del Plan Anual de Auditoría Interna siguiendo estándares CAIGG
+  - Generación automática de reportes de cumplimiento de matrices de riesgo institucionales
+  - Seguimiento de hallazgos y compromisos de mejora derivados de auditorías precedentes

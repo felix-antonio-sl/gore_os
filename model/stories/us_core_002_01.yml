@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_core_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El estado de ejecución de proyectos que he votado favorablemente
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CORE-002-01
-urn: urn:goreos:atom:story:us_core_002_01:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: El estado de ejecución de proyectos que he votado favorablemente
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: consultar el estado de ejecución de proyectos que he votado favorablemente
 so_that: pueda verificar que se están ejecutando correctamente
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Funcionario o Consejero Regional que requiere seguimiento de los compromisos adquiridos en sesión
+
+entities_mentioned:
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-EJE-ESTADO-AVANCE
+    status: linked
+  - id: ENT-GOV-ACUERDO-CORE
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-SEGUIMIENTO-PROYECTOS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: SEGUIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - seguimiento-proyectos
+  - acuerdos-core
+  - ejecucion
+  - transparencia-gestion
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard personalizado con proyectos "Mis Votaciones"
+  - Semáforo de avance físico y financiero mensual
+  - Alertas ante parálisis de obras o retrasos superiores al 10%

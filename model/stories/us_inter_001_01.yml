@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_inter_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un catálogo de APIs y servicios web disponibles
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-INTER-001-01
-urn: urn:goreos:atom:story:us_inter_001_01:1.0.0
-role_id: ROL-OPS-ENCARGADO-IN
+name: Catálogo de APIs y servicios web disponibles
+
+# === STORY CORE ===
 as_a: Encargado Interoperabilidad
 i_want: un catálogo de APIs y servicios web disponibles
 so_that: pueda facilitar integraciones
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-ENCARGADO-IN
+  agent_type: HUMAN
+  description: Encargado técnico de la conectividad y el intercambio de datos entre sistemas del GORE y externos
+
+entities_mentioned:
+  - id: ENT-TDE-INTEROP-API
+    status: candidate
+  - id: ENT-TDE-SERVICES-HUB
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: INTEROP
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - apis
+  - interoperabilidad
+  - catalogo-servicios
+  - integracion
+  - tde
+  - arquitectura-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal tipo Swagger/OpenAPI con documentación técnica de todos los servicios del ecosistema GORE_OS
+  - Módulo de gestión de tokens y permisos de acceso por servicio externo (Municipalidades, Ministerios)
+  - Dashboard de monitoreo de uso (Logs, Latencia, Errores) de las APIs expuestas

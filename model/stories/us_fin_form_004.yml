@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_form_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar clasificador presupuestario vigente
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-FORM-004
-urn: urn:goreos:atom:story:us_fin_form_004:1.0.0
-role_id: ROL-GESTION-PROF
+name: Verificar clasificador presupuestario vigente
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Verificar clasificador presupuestario vigente
 so_that: Uso códigos correctos
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional encargado de asegurar que la imputación del gasto cumpla con la normativa DIPRES vigente
+
+entities_mentioned:
+  - id: ENT-FIN-CLASIFICADOR-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-NORM-DECRETO-HACIENDA
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-VALIDACION-NORMATIVA-GASTO
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: PRESUPUESTO
+  priority: P1
+  scope: NACIONAL
+
+extra_tags:
+  - clasificador
+  - dipres
+  - normativa
+  - codigos-presupuestarios
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Mantenedor centralizado de cuentas presupuestarias actualizado anualmente
+  - Validación automática de la combinación Item-Asignación en formularios de gasto
+  - Glosario embebido con la descripción oficial de cada código para el usuario

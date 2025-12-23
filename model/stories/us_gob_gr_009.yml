@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gr_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Nombramiento y remoción de directivos regionales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GR-009
-urn: urn:goreos:atom:story:us_gob_gr_009:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Nombramiento y remoción de directivos regionales
+
+# === STORY CORE ===
+as_a: Gobernador Regional
 i_want: Gestionar nombramiento y remoción de directivos regionales
 so_that: Ejerzo atribuciones de autoridad
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Gobernador Regional ejerciendo su facultad de designar cargos de confianza (Jefes de División, Administrador Regional)
+
+entities_mentioned:
+  - id: ENT-BACK-CARGO-CONFIANZA
+    status: candidate
+  - id: ENT-NORM-RESOLUCION-NOMBRAMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - gobernador
+  - nombramientos
+  - remociones
+  - confianza-politica
+  - alta-direccion-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de emisión de decretos de nombramiento con validación de cumplimiento de requisitos legales (Ley 19.175)
+  - Sistema de registro de declaraciones de patrimonio e intereses vinculadas al nombramiento
+  - Gestión de actas de asunción de cargo y entrega de mando para cargos directivos

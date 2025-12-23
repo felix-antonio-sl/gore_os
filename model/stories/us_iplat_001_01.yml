@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Catálogo de servicios autogestionado (Base de datos, Cache)
-id: US-IPLAT-001-01
-urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
-role_id: ROL-GESTION-CON-ING
-as_a: Ingeniero Vialidad
-i_want: catálogo de servicios autogestionado (Base de datos, Cache)
-so_that: los desarrolladores no pierdan tiempo configurando infraestructura
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-IPLAT-001-01
+name: Catálogo de servicios autogestionado
+
+# === STORY CORE ===
+as_a: Desarrollador / DevOps Engineer
+i_want: un catálogo de servicios autogestionado (Base de datos, Cache)
+so_that: los desarrolladores no pierdan tiempo configurando infraestructura
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TDE-PLATFORM-ENG
+  agent_type: HUMAN
+  description: Ingeniero de plataforma encargado de automatizar el aprovisionamiento de recursos técnicos
+
+entities_mentioned:
+  - id: ENT-TDE-RECURSO-INFRA
+    status: candidate
+  - id: ENT-TDE-PLATFORM-CATALOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: INFRAESTRUCTURA
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - devops
+  - plataforma
+  - automatizacion
+  - infraestructura-como-codigo
+  - servicios-cloud
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de autoservicio para solicitar instancias de PostgreSQL, Redis o S3 con aprobación automática
+  - Orquestación automática vía Terraform/Ansible integrada con el registro de inventario técnico
+  - Dashboard de costos y cuotas de uso de infraestructura por cada equipo de proyecto

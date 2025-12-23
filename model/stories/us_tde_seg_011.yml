@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Aplicar privacidad por diseño en nuevos sistemas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-011
-urn: urn:goreos:atom:story:us_tde_seg_011:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Aplicar privacidad por diseño en nuevos sistemas
-so_that: Prevengo brechas desde origen
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Privacidad por Diseño en sistemas corporativos
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: aplicar principios de "Privacidad por Diseño" (Privacy by Design) en el ciclo de vida de desarrollo de nuevos módulos
+so_that: se prevengan brechas de privacidad desde el origen y se asegure la protección nativa de los datos ciudadanos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Arquitecto de seguridad encargado de que los sistemas sean seguros desde su concepción
+
+entities_mentioned:
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: PRIVACIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - privacy-by-design
+  - desarrollo-seguro
+  - prevencion
+  - diseño-arquitectura
+  - datos-personales
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist de revisión de privacidad obligatorio para cada nuevo Feature o Módulo
+  - Implementación automática de purga de datos (Data Retention) según plazos legales definidos en el RAT
+  - Auditoría de esquemas de base de datos para asegurar que no existan campos sensibles sin enmascaramiento por defecto

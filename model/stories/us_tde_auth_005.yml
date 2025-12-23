@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_auth_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Habilitar autenticación para empresas vía RUT Empresa en ClaveÚnica
-id: US-TDE-AUTH-005
-urn: urn:goreos:atom:story:us_tde_auth_005:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Habilitar autenticación para empresas vía RUT Empresa en ClaveÚnica
-so_that: Atiendo a empresas que requieren trámites electrónicos
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TRAMITE
+id: US-TDE-AUTH-005
+name: Autenticación de empresas vía ClaveÚnica (RUT Empresa)
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: habilitar la autenticación para personas jurídicas mediante el módulo de RUT Empresa de ClaveÚnica
+so_that: se atienda formalmente a empresas y organizaciones que requieren realizar trámites electrónicos como representantes legales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador técnico que configura las capacidades de identidad para terceros
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-CORPORACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: IDENTIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - claveunica
+  - personas-juridicas
+  - rut-empresa
+  - representante-legal
+  - tramites-empresa
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración con el servicio web de ClaveÚnica que retorna el RUT de la empresa y el RUT del representante
+  - Mapeo de perfiles específicos para empresas proveedoras en el registro de contratistas
+  - Validación de vigencia de la representación legal consultando fuentes externas si es posible

@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:tde:firma_contingencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-TDE-FIRMA-CONTINGENCIA"
+id: ENT-FIRMA-CONTINGENCIA
+name: "uLuFuIuRuMuAu uCuOuNuTuIuNuGuEuNuCuIuAu"
+tags: [TDE]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

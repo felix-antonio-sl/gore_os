@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_int_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-INT-003
-urn: urn:goreos:atom:story:us_fnx_int_003:1.0.0
-role_id: ROL-GESTION-KODA
+name: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
+
+# === STORY CORE ===
 as_a: Agente KODA
-i_want: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
-so_that: Evito que el problema crezca mientras se interviene
-domain: D-FENIX
-priority: P0
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+i_want: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido por FENIX
+so_that: Evito que el problema crezca mientras se interviene y garantizo la integridad de los datos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: AI
+  description: Agente supervisor del sistema basado en KODA
+
+entities_mentioned:
+  - id: ENT-SAL-UMBRAL
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: CONTROL-TRANSACCIONAL
+  priority: P0
+  scope: SISTEMICO
+
+extra_tags:
+  - bloqueo
+  - intervencion
+  - integridad
+  - koda
+
+status: ENRICHED
+acceptance_criteria:
+  - Función de "Read-Only" forzado para el dominio bajo intervención
+  - Mensaje de sistema claro informando sobre la suspensión temporal del servicio
+  - Mecanismo de override (anulación) solo para el interventor designado

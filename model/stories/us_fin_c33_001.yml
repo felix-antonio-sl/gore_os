@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_c33_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-C33-001
-urn: urn:goreos:atom:story:us_fin_c33_001:1.0.0
-role_id: ROL-OPS-C33
+name: Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
+
+# === STORY CORE ===
 as_a: Analista Operaciones C33
 i_want: Ejecutar Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
 so_that: Respondo a urgencias
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-C33
+  agent_type: HUMAN
+  description: Analista encargado de la glosa 5% de emergencias bajo el subtítulo 33
+
+entities_mentioned:
+  - id: ENT-FIN-GLOSA-EMERGENCIA
+    status: candidate
+  - id: ENT-FIN-FAST-TRACK-APROBACION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-ASIGNACION-URGENCIA-5
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: EMERGENCIAS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - c33
+  - glosa-5
+  - emergencias
+  - fast-track
+  - urgencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow abreviado de revisión (eliminando pasos no críticos para la vida humana)
+  - Resolución automática de disponiblidad presupuestaria para el ítem de emergencia
+  - Registro de auditoría "ex-post" exhaustivo para compensar la velocidad ex-ante

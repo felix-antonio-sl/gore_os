@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_core_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Habilitar simulación de quórum antes de la votación real
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-CORE-011
-urn: urn:goreos:atom:story:us_gob_core_011:1.0.0
-role_id: ROL-EJEC-CPER-SEC
-as_a: Secretario Ejecutivo Comité de Pertinencia
+name: Habilitar simulación de quórum antes de la votación real
+
+# === STORY CORE ===
+as_a: Secretario Ejecutivo (del CORE o Comité)
 i_want: Habilitar simulación de quórum antes de la votación real
 so_that: Verifico si tengo los votos necesarios para aprobar (Sunny/Rainy Day)
-domain: D-GOB
-priority: P2
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-GOV-VOTACION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-CPER-SEC
+  agent_type: HUMAN
+  description: Secretario Ejecutivo encargado de la gestión parlamentaria interna del CORE y la viabilidad de las votaciones
+
+entities_mentioned:
+  - id: ENT-GOV-VOTACION
+    status: linked
+  - id: ENT-GOB-SIMULADOR-QUORUM
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: CORE
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - core
+  - quorum
+  - votaciones
+  - simulacion
+  - gestion-politica
+  - secretario-ejecutivo
+
+status: ENRICHED
+acceptance_criteria:
+  - Calculadora de quórum dinamicé (Simple, Absoluto, 2/3) según la materia del acuerdo a votar
+  - Interfaz de "conteo previo" basado en asistencia confirmada para alertar falta de quórum antes de iniciar el plenario
+  - Análisis de escenarios (voto dirimente del Gobernador) en caso de empates técnicos

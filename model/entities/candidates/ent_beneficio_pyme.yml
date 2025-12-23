@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:ejec:beneficio_pyme:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-EJEC-BENEFICIO-PYME"
+id: ENT-BENEFICIO-PYME
+name: "uLuBuEuNuEuFuIuCuIuOu uPuYuMuEu"
+tags: [EJEC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

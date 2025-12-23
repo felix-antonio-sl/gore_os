@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rpsico_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Encuestas de clima laboral anónimas y digitales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-RPSICO-001-01
-urn: urn:goreos:atom:story:us_rpsico_001_01:1.0.0
-role_id: ROL-GESTION-PMG-PSICO
-as_a: Referente Riesgos Psicosociales
+name: Encuestas de clima laboral anónimas y digitales
+
+# === STORY CORE ===
+as_a: Referente de Riesgos Psicosociales
 i_want: encuestas de clima laboral anónimas y digitales
-so_that: se garantice la confidencialidad de los datos
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+so_that: se garantice la confidencialidad de los datos y se cumpla el protocolo ISTAS-21
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-PSICO
+  agent_type: HUMAN
+  description: Funcionario encargado de velar por la salud mental y el clima laboral institucional
+
+entities_mentioned:
+  - id: ENT-BACK-ENCUESTA-CLIMA
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-MEDIDAS-PREVENTIVAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: PSICOSOCIAL
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - clima-laboral
+  - istas-21
+  - anonimato
+  - salud-mental
+  - rrhh
+
+status: ENRICHED
+acceptance_criteria:
+  - Sistema de generación de tokens de un solo uso para asegurar anonimato e impedir duplicidad
+  - Dashboard de resultados agregados por división (solo si hay >5 respuestas por unidad)
+  - Módulo de seguimiento de medidas correctivas derivadas de los resultados de la encuesta

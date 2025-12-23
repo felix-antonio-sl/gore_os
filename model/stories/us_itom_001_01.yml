@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_itom_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso restringido al sistema de inversión regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ITOM-001-01
-urn: urn:goreos:atom:story:us_itom_001_01:1.0.0
-role_id: ROL-EJEC-ITO
-as_a: Inspector Obras (Municipal)
-i_want: acceso restringido al sistema de inversión regional
-so_that: pueda subir estados de pago para visación
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Portal de Carga para Inspectores Municipales
+
+# === STORY CORE ===
+as_a: Inspector Técnico Municipal (ITO externo)
+i_want: Un acceso seguro al sistema de inversión regional filtrado por mis contratos asignados
+so_that: pueda cargar y visar los estados de pago de las obras financiadas por el GORE que superviso
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ITO
+  agent_type: HUMAN
+  description: Funcionario municipal que actúa como contraparte técnica local supervisada por el GORE
+
+entities_mentioned:
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+
+process_ref:
+  id: PROC-EJE-MONITOREO-OBRAS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: INTEROPERABILIDAD
+  priority: P1
+  scope: EXTERNO
+
+extra_tags:
+  - municipal
+  - portal
+  - ito-externo
+  - inversion
+
+status: ENRICHED
+acceptance_criteria:
+  - Autenticación segura y perfilamiento por ROL-EJEC-ITO municipal
+  - Visualización exclusiva de los proyectos de su respectiva comuna
+  - Flujo de carga de documentos XML (factura) y PDF (actas) para visación central

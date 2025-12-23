@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_ges_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un expediente digital de intervención (ID, Objetivo, Equipo)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-GES-001
-urn: urn:goreos:atom:story:us_fnx_ges_001:1.0.0
-role_id: ROL-GESTION-FNX-J
+name: Un expediente digital de intervention (ID, Objetivo, Equipo)
+
+# === STORY CORE ===
 as_a: Jefe FENIX
 i_want: Crear un expediente digital de intervención (ID, Objetivo, Equipo)
 so_that: Centralizo la gestión y documentación del caso
-domain: D-FENIX
-priority: P0
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FNX-J
+  agent_type: HUMAN
+  description: Jefe de la Unidad FENIX (Gestión de Crisis) responsable de coordinar intervenciones territoriales complejas
+
+entities_mentioned:
+  - id: ENT-SOC-EXPEDIENTE-INTERVENCION
+    status: candidate
+  - id: ENT-SOC-CASO-CRISIS
+    status: candidate
+  - id: ENT-ORG-EQUIPO-INTERVENCION
+    status: candidate
+
+process_ref:
+  id: PROC-SOC-GESTION-CASO-FENIX
+  status: candidate
+
+tags:
+  domain: D-SOC
+  aspect: CRISIS
+  priority: P0
+  scope: TERRITORIAL
+
+extra_tags:
+  - fenix
+  - intervenciones
+  - expedientes
+  - crisis-social
+  - gestion-casos
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de ID de intervención único correlativo regional
+  - Módulo de asignación de roles (Líder, Apoyo Social, Legal, Técnico) por expediente
+  - Repositorio de documentos adjuntos (informes, fotos, actas) con versionamiento

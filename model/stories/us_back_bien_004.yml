@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Otorgar subsidios por eventos (natalidad/pérdida)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-004
-urn: urn:goreos:atom:story:us_back_bien_004:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Otorgar subsidios por eventos (natalidad/pérdida)
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: Otorgar subsidios por eventos (natalidad/pérdida)
 so_that: Apoyo en momentos especiales
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-SYS-EVENTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: HUMAN
+  description: Profesional de Bienestar encargado de subsidios especiales
+
+entities_mentioned:
+  - id: ENT-FIN-SUBSIDIO-EVENTO
+    status: candidate
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-ORG-FUNCIOANRIO
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-SUBSIDIOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: BIENESTAR
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - bienestar
+  - subsidios
+  - natalidad
+  - fallecimiento
+  - apoyo-social
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de eventos vitales vinculados a cargas o funcionarios
+  - Cálculo automático del monto de subsidio según reglamento vigente
+  - Generación de comprobante de pago de subsidio

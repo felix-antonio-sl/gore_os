@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_acto_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Asesorar legalmente y revisar bases/convenios
-id: US-NORM-ACTO-002
-urn: urn:goreos:atom:story:us_norm_acto_002:1.0.0
-role_id: ROL-NORM-ABOG
-as_a: Abogado Informante
-i_want: Asesorar legalmente y revisar bases/convenios
-so_that: Prevengo riesgos legales
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-RIESGO
+id: US-NORM-ACTO-002
+name: Revisión y Visación Jurídica de Convenios
+
+# === STORY CORE ===
+as_a: Abogado Informante
+i_want: Revisar y visar jurídicamente las bases de licitación, convenios de transferencia y decretos
+so_that: se garantice que todos los actos administrativos del GORE Ñuble cumplan con la legalidad vigente
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado de la división jurídica encargado del control de legalidad
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICO
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - visacion
+  - legalidad
+  - abogado
+  - convenios
+
+status: ENRICHED
+acceptance_criteria:
+  - Editor de textos integrado con plantillas de documentos jurídicos pre-aprobadas
+  - Flujo de revisión con hilos de comentarios para discusiones técnicas entre abogados
+  - Firma electrónica avanzada obligatoria para el cierre de la revisión jurídica

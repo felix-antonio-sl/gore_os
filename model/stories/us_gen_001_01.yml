@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Indicadores desagregados por sexo en todos los reportes
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-001-01
-urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
-role_id: ROL-GESTION-PMG-GEN
+name: Indicadores desagregados por sexo en todos los reportes
+
+# === STORY CORE ===
 as_a: Referente Equidad de Género
 i_want: indicadores desagregados por sexo en todos los reportes
 so_that: visualice brechas de género
-domain: D-PLAN
-priority: P2
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-GEN
+  agent_type: HUMAN
+  description: Profesional encargado transversalmente de velar por la equidad de género en los programas y proyectos (PMG Género)
+
+entities_mentioned:
+  - id: ENT-PLAN-INDICADOR-GENERO
+    status: candidate
+  - id: ENT-SOC-BRECHA-GENERO
+    status: candidate
+  - id: ENT-EJEC-BENEFICIARIO-DIRECTO
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-EVALUACION-TRANSVERSAL-GENERO
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - genero
+  - pmg
+  - equidad
+  - brechas
+  - indicadores-sociales
+  - desagregacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Obligatoriedad del campo "Sexo" en todos los registros de beneficiarios únicos
+  - Reporte regional consolidado de inversión pública segmentado por género
+  - Alerta de "Sesgo de Género" en programas de fomento con baja participación femenina

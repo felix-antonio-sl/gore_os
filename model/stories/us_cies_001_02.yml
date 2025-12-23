@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cies_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Eventos de emergencia con timeline de acciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CIES-001-02
-urn: urn:goreos:atom:story:us_cies_001_02:1.0.0
-role_id: ROL-GESTION-UCR-COOR
+name: Eventos de emergencia con timeline de acciones
+
+# === STORY CORE ===
 as_a: Coordinador UCR
 i_want: registrar eventos de emergencia con timeline de acciones
 so_that: pueda documentar la gestión para análisis posterior
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SYS-EVENTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Coordinador de la Unidad de Control Regional (UCR/CIES) en situaciones de catástrofe
+
+entities_mentioned:
+  - id: ENT-TERR-EVENTO-EMERGENCIA
+    status: candidate
+  - id: ENT-TERR-TIMELINE-ACCIONES
+    status: candidate
+  - id: ENT-SYS-BITACORA-OPERATIVA
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-GESTION-INCIDENTES
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: EMERGENCIAS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - emergencias
+  - cies
+  - ucr
+  - bitacora
+  - incidentes
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de hitos con marca de tiempo precisa (epoch) y autoría
+  - Agregación de contenido multimedia (fotos, audios de radio) al timeline
+  - Reporte consolidado post-emergencia automático

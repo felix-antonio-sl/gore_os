@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Branches desde stories vinculadas automáticamente
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-CODE-001
-urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
+name: Trazabilidad automática entre Branches y Stories
+
+# === STORY CORE ===
 as_a: Desarrollador
-i_want: crear branches desde stories vinculadas automáticamente
-so_that: se asegure la trazabilidad total entre el código y el requisito
-domain: D-DEV
-priority: P0
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+i_want: que las ramas (branches) de Git se vinculen automáticamente con las historias de usuario mediante el ID de la story
+so_that: se asegure la trazabilidad total entre el código fuente y el requisito original, facilitando auditorías y revisiones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DESARROLLADO
+  agent_type: HUMAN
+  description: Desarrollador del equipo interno encargado de implementar funcionalidades en GORE_OS
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: TRAZABILIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - git
+  - branches
+  - hooks
+  - automatizacion
+  - software-delivery
+
+status: ENRICHED
+acceptance_criteria:
+  - Creación de branch con formato `feature/US-ID` gatilla la actualización del estado de la story a "DOING"
+  - Comentario automático en la story con el link al branch en el repositorio
+  - Validación de que no se permitan Merge Requests sin una US asociada en el nombre o descripción

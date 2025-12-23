@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_ar_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Resumen semanal para Gobernador (PDF tendencias)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-AR-006
-urn: urn:goreos:atom:story:us_ejec_ar_006:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Resumen semanal para Gobernador (PDF tendencias)
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Generar resumen semanal para Gobernador (PDF tendencias)
 so_that: Informo a la autoridad
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: ALGORITHMIC
+  description: Sistema de reporte ejecutivo que consolida el estado de la gestión divisional para la alta autoridad
+
+entities_mentioned:
+  - id: ENT-GOB-REPORTE-EJECUTIVO
+    status: candidate
+  - id: ENT-GOB-INDICADOR-TENDENCIA
+    status: candidate
+  - id: ENT-ORG-GOBERNADOR
+    status: linked
+
+process_ref:
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: ESTRATEGIA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - resumen-semanal
+  - gobernador
+  - pdf
+  - tendencias
+  - reporte-ejecutivo
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación programada (Viernes 17:00) de PDF con gráficos de ejecución presupuestaria
+  - Resumen de hitos alcanzados y alertas de proyectos críticos (atrasados)
+  - Envío automático por correo electrónico a la casilla del Gobernador y Administrador

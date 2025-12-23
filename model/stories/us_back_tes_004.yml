@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Mantener el libro de caja institucional actualizado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-004
-urn: urn:goreos:atom:story:us_back_tes_004:1.0.0
-role_id: ROL-FIN-ANALISTA-TES
+name: Mantener el libro de caja institucional actualizado
+
+# === STORY CORE ===
 as_a: Analista Tesorería
 i_want: Mantener el libro de caja institucional actualizado
 so_that: Tengo control cronológico de movimientos de efectivo
-domain: D-BACK
-competence_id: CPT-BACK-TES-001
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-TES
+  agent_type: HUMAN
+  description: Analista de Tesorería encargado del flujo de caja diario
+
+entities_mentioned:
+  - id: ENT-FIN-LIBRO-CAJA
+    status: candidate
+  - id: ENT-FIN-TRANSACCION-EFECTIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CIERRE-CAJA-DIARIO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: TESORERIA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - libro-caja
+  - tesoreria
+  - flujo-efectivo
+  - control-financiero
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro cronológico de ingresos y egresos de caja
+  - Conciliación diaria del saldo físico vs saldo en sistema
+  - Generación de reporte de arqueo de caja con firma de responsables

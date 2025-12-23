@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_ar_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reabrir compromiso devuelto por completado incorrecto
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-AR-008
-urn: urn:goreos:atom:story:us_ejec_ar_008:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Reabrir compromiso devuelto por completado incorrecto
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Reabrir compromiso devuelto por completado incorrecto
 so_that: Corrijo estado
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMPROMISO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de División que detecta inconsistencias en un proceso "cerrado" y requiere su reapertura técnica
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-SYS-LOGS-CAMBIOS
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-CORRECCION-TRAMITES
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - reabrir
+  - compromisos
+  - correccion
+  - archivo
+  - inconsistencias
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de aprobación para la reapertura si el compromiso ya estaba en estado "Finalizado"
+  - Notificación automática al responsable original del compromiso reabierto
+  - Obligatoriedad de adjuntar justificación técnica para la reapertura

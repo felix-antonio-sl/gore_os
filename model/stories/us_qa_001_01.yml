@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_qa_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un entorno de staging idéntico a producción
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-QA-001-01
-urn: urn:goreos:atom:story:us_qa_001_01:1.0.0
-role_id: ROL-DEV-QA
-as_a: QA Engineer
+name: Entorno de staging idéntico a producción
+
+# === STORY CORE ===
+as_a: QA Engineer / Tester
 i_want: un entorno de staging idéntico a producción
-so_that: las pruebas sean fiables
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+so_that: las pruebas sean fiables y se minimicen errores post-despliegue
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-QA
+  agent_type: HUMAN
+  description: Ingeniero de calidad encargado de validar las funcionalidades antes de su paso a producción
+
+entities_mentioned:
+  - id: ENT-TDE-STAGE-ENV
+    status: candidate
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: CALIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - staging
+  - qa
+  - testing
+  - infraestructura
+  - despliegue
+  - confiabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Infraestructura como Código (IaC) que asegure paridad de versiones de SO, DB y Runtime entre Stage y Prod
+  - Proceso de anonimización automática de datos productivos (Data Masking) para su uso en ambiente QA
+  - Pipeline de CI/CD que permita despliegues atómicos y reversiones rápidas (Rollback) en staging

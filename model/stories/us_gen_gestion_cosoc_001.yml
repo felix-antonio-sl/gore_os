@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cosoc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para COSOC / Consejo de la Sociedad Civil
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_COSOC-001
-urn: urn:goreos:atom:story:us_gen_gestion_cosoc_001:1.0.0
-role_id: ROL-GESTION-COSOC
+name: Historia genérica para COSOC / Consejo de la Sociedad Civil
+
+# === STORY CORE ===
 as_a: COSOC / Consejo de la Sociedad Civil
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-COSOC
+  agent_type: HUMAN
+  description: Representante de la sociedad civil organizada que ejerce el derecho a la participación ciudadana en el GORE
+
+entities_mentioned:
+  - id: ENT-GOB-PARTICIPACION-CIUDADANA
+    status: linked
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: PARTICIPACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - cosoc
+  - participacion-ciudadana
+  - sociedad-civil
+  - gobernanza
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de consulta de actas y asistencia a sesiones del COSOC
+  - Visualización del presupuesto regional desglosado por áreas de interés ciudadano
+  - Herramienta de levantamiento de consultas vinculantes o no vinculantes a la autoridad

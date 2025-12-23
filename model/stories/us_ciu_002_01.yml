@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_ciu_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Plataformas de consulta ciudadana del GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CIU-002-01
-urn: urn:goreos:atom:story:us_ciu_002_01:1.0.0
-role_id: ROL-GESTION-PMG-GEN
+name: Plataformas de consulta ciudadana del GORE
+
+# === STORY CORE ===
 as_a: Referente Equidad de Género
 i_want: acceder a plataformas de consulta ciudadana del GORE
 so_that: pueda expresar mi opinión sobre prioridades de inversión
-domain: D-TERR
-priority: P2
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
 
-mentions:
-- ENT-DIG-PLATAFORMA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-GEN
+  agent_type: HUMAN
+  description: Ciudadano o representante de organizaciones sociales interesado en la priorización participativa de proyectos regional
+
+entities_mentioned:
+  - id: ENT-SOC-CONSULTA-CIUDADANA
+    status: candidate
+  - id: ENT-SOC-PRIORIDAD-INVERSION
+    status: candidate
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-SOC-PARTICIPACION-CIUDADANA
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: PARTICIPACION
+  priority: P2
+  scope: CIUDADANO
+
+extra_tags:
+  - consulta-ciudadana
+  - inversion-regional
+  - participacion
+  - genero
+  - prioridades
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso mediante ClaveÚnica para validación de residencia regional
+  - Formulario dinámico de votación por ejes estratégicos (Salud, Educación, etc.)
+  - Visualización de resultados preliminares en tiempo real
+  - Reporte de impacto de género en la participación

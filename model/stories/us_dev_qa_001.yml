@@ -1,16 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_qa_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Disponer de un pipeline de CI/CD que ejecute tests unitarios y linter en cada
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-QA-001
-urn: urn:goreos:atom:story:us_dev_qa_001:1.0.0
-role_id: ROL-DEV-TIC-DEV
+name: Pipeline CI/CD con Shift-Left Testing
+
+# === STORY CORE ===
 as_a: Desarrollador DevOps
-i_want: Disponer de un pipeline de CI/CD que ejecute tests unitarios y linter en cada
-  commit
-so_that: Detecto regresiones inmediatamente (Shift-Left Testing)
-domain: D-DEV
-priority: P0
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+i_want: disponer de un pipeline de Integración Continua (CI) que ejecute automáticamente tests unitarios, de integración y linternas en cada commit
+so_that: se detecten regresiones y fallos de calidad de forma inmediata (Shift-Left Testing) antes de que lleguen a entornos superiores
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-TIC-DEV
+  agent_type: MACHINE
+  description: Automatismo encargado de la validación técnica del flujo de entrega
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: CALIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - ci-cd
+  - testing
+  - shift-left
+  - automatizacion
+  - devops
+
+status: ENRICHED
+acceptance_criteria:
+  - Ejecución automática de Suite de Tests al realizar Push a cualquier rama
+  - Métrica de Cobertura de Código (Code Coverage) visible en el Pull Request
+  - Bloqueo de Merge si el pipeline falla o la cobertura disminuye bajo el umbral (80%)

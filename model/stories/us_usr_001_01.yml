@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_usr_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ingresar con Clave Única
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-USR-001-01
-urn: urn:goreos:atom:story:us_usr_001_01:1.0.0
-role_id: ROL-GESTION-PMG-GEN
-as_a: Referente Equidad de Género
-i_want: ingresar con Clave Única
-so_that: no tenga que recordar otra contraseña
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+name: Login con ClaveÚnica para Funcionarios
+
+# === STORY CORE ===
+as_a: Referente de Equidad de Género (Funcionario)
+i_want: ingresar al sistema institucional utilizando mis credenciales de ClaveÚnica (SSO)
+so_that: no tenga que recordar múltiples contraseñas y se garantice una autenticación segura y centralizada bajo el estándar DS9
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-GEN
+  agent_type: HUMAN
+  description: Funcionario del GORE que utiliza herramientas digitales para la gestión transversal de género
+
+entities_mentioned:
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: IDENTIDAD
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - login
+  - claveunica
+  - sso
+  - ds9
+  - usabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Botón "Ingresar con ClaveÚnica" en el portal de funcionarios
+  - Mapeo automático de RUT a perfil de usuario del GORE tras login exitoso
+  - Cierre de sesión (Single Logout) que invalida los tokens de ClaveÚnica localmente

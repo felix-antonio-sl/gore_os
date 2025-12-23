@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_sub_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Nómina de adjudicación para CORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-SUB-004
-urn: urn:goreos:atom:story:us_fin_sub_004:1.0.0
-role_id: ROL-GESTION-ANAL8
+name: Nómina de adjudicación para CORE
+
+# === STORY CORE ===
 as_a: Analista 8% (Técnico)
-i_want: Generar nómina de adjudicación para CORE
-so_that: Preparo aprobación colegiada
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+i_want: Generar nómina de adjudicación para CORE basada en el ranking de puntajes
+so_that: Preparo la aprobación colegiada con información precisa y transparente
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL8
+  agent_type: HUMAN
+  description: Analista técnico de la División de Desarrollo Social (8%)
+
+entities_mentioned:
+  - id: ENT-GOV-ACUERDO_CORE
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P4
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: FONDOS-CONCURSABLES
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - nomina
+  - adjudicacion
+  - core
+  - ranking
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación automática de PDF con el listado de proyectos seleccionados y lista de espera
+  - Inclusión de puntajes finales y breve justificación técnica por proyecto
+  - Bloqueo de edición del ranking tras la generación de la nómina oficial

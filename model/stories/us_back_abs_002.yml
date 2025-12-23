@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_abs_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Tramitar solicitudes verificando CDP
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-ABS-002
-urn: urn:goreos:atom:story:us_back_abs_002:1.0.0
-role_id: ROL-GESTION-ENC
+name: Tramitar solicitudes verificando CDP
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Tramitar solicitudes verificando CDP
 so_that: Proceso requerimientos
-domain: D-BACK
-competence_id: CPT-BACK-ABS-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de calidad con funciones de gestión administrativa de abastecimiento
+
+entities_mentioned:
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-REQUERIMIENTO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-TRAMITACION-COMPRAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: ABASTECIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - cdp
+  - compras
+  - tramitacion
+  - abastecimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación obligatoria de CDP antes de avanzar solicitud
+  - Alerta si el monto de la solicitud excede el CDP vinculado
+  - Trazabilidad de la tramitación por pasos

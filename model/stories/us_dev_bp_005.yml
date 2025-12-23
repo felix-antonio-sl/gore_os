@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_bp_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Script verify_ontology.py en CI
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-BP-005
-urn: urn:goreos:atom:story:us_dev_bp_005:1.0.0
-role_id: ROL-DEV-TIC-DEV
+name: Script verify_ontology.py en CI
+
+# === STORY CORE ===
 as_a: Desarrollador DevOps
 i_want: ejecutar script verify_ontology.py en CI
 so_that: se detecten errores de integridad antes de merge
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-BLUEPRINT
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-TIC-DEV
+  agent_type: ALGORITHMIC
+  description: Agente de integración continua (GitHub Actions) encargado de validar la integridad del Supermodelo
+
+entities_mentioned:
+  - id: ENT-SYS-PIPELINE-VALIDACION
+    status: candidate
+  - id: ENT-SYS-REPORTE-INTEGRIDAD
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-VALIDACION-CONTINUA-MODELO
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: GUBERNANZA-DATOS
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - ci-cd
+  - ontologia
+  - validacion-automatica
+  - integridad
+  - koda
+
+status: ENRICHED
+acceptance_criteria:
+  - Bloqueo de Pull Requests si el script detecta violaciones de esquema o ciclos prohibidos
+  - Generación de artefacto con el reporte detallado de errores en cada ejecución
+  - Integración de los resultados en el dashboard de salud del modelo

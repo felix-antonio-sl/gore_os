@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_sec_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Revisar logs de acceso y acciones críticas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-SEC-001
-urn: urn:goreos:atom:story:us_ops_sec_001:1.0.0
-role_id: ROL-GESTION-CISO
+name: Revisar logs de acceso y acciones críticas
+
+# === STORY CORE ===
 as_a: CISO
-i_want: Revisar logs de acceso y acciones críticas
-so_that: Garantizo el cumplimiento de la Ley 21.663 (Ciberseguridad)
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+i_want: revisar logs de acceso y acciones críticas
+so_that: se garantice el cumplimiento de la Ley 21.663 (Ciberseguridad)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Director de Seguridad encargado de la vigilancia y respuesta ante incidentes
+
+entities_mentioned:
+  - id: ENT-TDE-AUDIT-LOG
+    status: candidate
+  - id: ENT-TDE-CONTROL-ACCESO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: MONITOREO
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - logs
+  - audit
+  - ley-21663
+  - ciberseguridad
+  - trazabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Centralización de logs de Keycloak y Postgres en una plataforma de gestión de eventos (SIEM)
+  - Notificaciones automáticas ante patrones de fuerza bruta o acceso desde ubicaciones no habituales
+  - Retención de logs críticos por un mínimo de 2 años según estándares de auditoría gubernamental

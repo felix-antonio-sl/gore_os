@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_notif_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integrar Plataforma de Notificaciones del Estado (DS8)
-id: US-TDE-NOTIF-001
-urn: urn:goreos:atom:story:us_tde_notif_001:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
-as_a: Desarrollador
-i_want: Integrar Plataforma de Notificaciones del Estado (DS8)
-so_that: Notifico electrónicamente
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-PLATAFORMA
+id: US-TDE-NOTIF-001
+name: Integración con la Plataforma de Notificaciones del Estado (DS8)
+
+# === STORY CORE ===
+as_a: Desarrollador GORE
+i_want: integrar el sistema con la Plataforma de Notificaciones del Estado definida en el DS8
+so_that: se realicen notificaciones electrónicas con plena validez legal y certeza jurídica de recepción
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DESARROLLADO
+  agent_type: HUMAN
+  description: Desarrollador encargado de implementar los protocolos de comunicación oficial del Estado
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: COMUNICACION-OFICIAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - ds8
+  - notificaciones-electronicas
+  - validez-legal
+  - integracion-estatal
+  - modernizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Conexión vía API Rest con la plataforma de notificaciones de Gobierno Digital
+  - Captura de estados de entrega (Enviado, Recibido, Leído) para registro en el expediente
+  - Soporte para adjuntos digitales firmados electrónicamente en el envío de la notificación

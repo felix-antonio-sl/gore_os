@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ito_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un checklist digital de verificación de hitos contractuales
-id: US-ITO-001-02
-urn: urn:goreos:atom:story:us_ito_001_02:1.0.0
-role_id: ROL-EJEC-ITO
-as_a: Inspector Obras (Municipal)
-i_want: un checklist digital de verificación de hitos contractuales
-so_that: no omita ningún punto de control
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-ITO-001-02
+name: Verificación Rigurosa de Hitos Contractuales
+
+# === STORY CORE ===
+as_a: Inspector Técnico de Obra (ITO)
+i_want: Un checklist digital de verificación automatizada de hitos contractuales
+so_that: se asegure el cumplimiento total de las bases antes de liberar estados de pago
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ITO
+  agent_type: HUMAN
+  description: Profesional encargado de validar el cumplimiento de las obligaciones del contratista
+
+entities_mentioned:
+  - id: ENT-EJE-HITOS
+    status: linked
+  - id: ENT-FIN-POLIZA
+    status: linked
+
+process_ref:
+  id: PROC-EJE-MONITOREO-OBRAS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: CUMPLIMIENTO
+  priority: P0
+  scope: ADMINISTRATIVO
+
+extra_tags:
+  - checklist
+  - hitos
+  - contrato
+  - control
+
+status: ENRICHED
+acceptance_criteria:
+  - Alerta de hitos vencidos o próximos a vencer según carta gantt
+  - Bloqueo de estados de pago si existen hitos críticos sin documentar
+  - Generación de acta de recepción parcial de hitos con respaldo digital

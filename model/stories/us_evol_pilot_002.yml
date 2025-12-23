@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_pilot_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Escalar configuración a nueva división
-id: US-EVOL-PILOT-002
-urn: urn:goreos:atom:story:us_evol_pilot_002:1.0.0
-role_id: ROL-GESTION-LEAD
-as_a: Líder Técnico
-i_want: Escalar configuración a nueva división
-so_that: Expando funcionalidades
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-DIVISION
+id: US-EVOL-PILOT-002
+name: Escalamiento de Configuraciones a Nuevas Divisiones
+
+# === STORY CORE ===
+as_a: Líder Técnico / Implementador
+i_want: escalar la configuración exitosa de un módulo piloto a una nueva división o departamento del GORE
+so_that: se expandan las funcionalidades de GORE_OS de forma orgánica y controlada, reaprovechando los aprendizajes del piloto inicial
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-LEAD
+  agent_type: HUMAN
+  description: Responsable de la expansión funcional del sistema en la organización
+
+entities_mentioned:
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: ESCALABILIDAD-ORGANIZACIONAL
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - escalamiento
+  - divisiones
+  - pilotos
+  - configuracion
+  - despliegue
+
+status: ENRICHED
+acceptance_criteria:
+  - Template de configuración divisional que permite replicar roles, permisos y flujos en minutos
+  - Capacidad de parametrizar variables específicas de la nueva división (ej. glosas asociadas)
+  - Reporte de adopción que compara el uso del sistema entre divisiones escaladas

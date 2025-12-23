@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_jd_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Compromiso y asignar (persona, plazo)
-id: US-EJEC-JD-002
-urn: urn:goreos:atom:story:us_ejec_jd_002:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Crear compromiso y asignar (persona, plazo)
-so_that: Delego tareas
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-COMPROMISO
+id: US-EJEC-JD-002
+name: Delegación y Asignación de Compromisos
+
+# === STORY CORE ===
+as_a: Jefe de División / Unidad
+i_want: crear nuevos compromisos dentro de un convenio y asignarlos a un profesional específico con un plazo definido
+so_that: se deleguen las tareas de forma clara y se pueda realizar el seguimiento de la carga de trabajo de cada funcionario
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo encargado de la distribución de tareas y la gestión del equipo divisionario
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: DELEGACION
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - delegacion
+  - asignacion
+  - compromisos
+  - carga-trabajo
+  - workflow
+
+status: ENRICHED
+acceptance_criteria:
+  - Selector de funcionarios del GORE filtrado por la división correspondiente
+  - Campo de fecha fatal para el cumplimiento del compromiso delegado
+  - Notificación automática al funcionario asignado informando de la nueva tarea

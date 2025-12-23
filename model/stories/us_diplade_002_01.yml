@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_diplade_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un workflow digital para el Comité de Pertinencia con trazabilidad de decisiones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIPLADE-002-01
-urn: urn:goreos:atom:story:us_diplade_002_01:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Un workflow digital para el Comité de Pertinencia con trazabilidad de decisiones
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: un workflow digital para el Comité de Pertinencia con trazabilidad de decisiones
 so_that: el proceso de RS sea transparente y auditable
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMITE
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de División que lidera el Comité de Pertinencia para la Recomendación Socioeconómica (RS)
+
+entities_mentioned:
+  - id: ENT-EJE-RECOMENDACION-SOCIOECONOMICA
+    status: candidate
+  - id: ENT-CONV-COMITE-PERTINENCIA
+    status: linked
+  - id: ENT-SYS-TRAZABILIDAD-DECISION
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-EVALUACION-PERTINENCIA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - pertinencia
+  - rs
+  - workflow
+  - trazabilidad
+  - comite
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de observaciones técnicas por miembro del comité
+  - Firma electrónica del acta de pertinencia por todos los asistentes
+  - Botón de adjuntar informe técnico favorable/desfavorable

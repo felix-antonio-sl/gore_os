@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_015:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para Analista Salud
-id: US-GEN-FINAL-015
-urn: urn:goreos:atom:story:us_gen_final_015:1.0.0
-role_id: ROL-GESTION-ANALISTA-SAL
-as_a: Analista Salud
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-015
+name: Planificación Sanitaria Regional
+
+# === STORY CORE ===
+as_a: Analista Salud
+i_want: Analizar la distribución de infraestructura de salud primaria y brechas de atención
+so_that: se prioricen proyectos de reposición de postas y consultorios en zonas de alta vulnerabilidad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-SAL
+  agent_type: HUMAN
+  description: Analista técnico especializado en el sector salud público
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: SALUD
+  priority: P2
+  scope: SOCIAL
+
+extra_tags:
+  - salud
+  - infraestructura-hospitalaria
+  - brechas
+  - ñuble
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa de cobertura de salud primaria y tiempos de desplazamiento de la población
+  - Inventario de móviles de salud (ambulancias, clínicas móviles) financiados por el GORE
+  - Seguimiento de indicadores de pertinencia técnica de proyectos de salud

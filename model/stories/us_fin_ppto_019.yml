@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_019:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Proyectar deuda flotante a fin de año
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-019
-urn: urn:goreos:atom:story:us_fin_ppto_019:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Proyectar deuda flotante a fin de año
+
+# === STORY CORE ===
+as_a: Jefe Unidad DAF
 i_want: Proyectar deuda flotante a fin de año
-so_that: Planifico cierre de ejercicio
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Planifico el cierre de ejercicio y aseguro el cumplimiento de los límites de endeudamiento
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de unidad en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-COMPROMISO_PRESUPUESTARIO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P7
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: PLANIFICACION-FINANCIERA
+  priority: P1
+  scope: ESTRATEGICO
+
+extra_tags:
+  - proyeccion
+  - deuda-flotante
+  - cierre-ejercicio
+  - gestion-fiscal
+
+status: ENRICHED
+acceptance_criteria:
+  - Informe de proyección basado en compromisos actuales y tendencias históricas de devengo
+  - Simulación de escenarios de cierre (optimista/pesimista)
+  - Desglose de deuda proyectada por subtítulo y programa

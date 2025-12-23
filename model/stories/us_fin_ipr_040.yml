@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_040:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitar antecedentes adicionales al formulador
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-040
-urn: urn:goreos:atom:story:us_fin_ipr_040:1.0.0
-role_id: ROL-GESTION-DAE-PRE
-as_a: Analista Preinversión (DAE)
-i_want: Solicitar antecedentes adicionales al formulador
-so_that: Completo la evaluación
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Solicitud de Antecedentes Adicionales al Formulador
+
+# === STORY CORE ===
+as_a: Analista de Pre-inversión (División de Análisis y Estrategia - DAE)
+i_want: solicitar formalmente antecedentes o aclaraciones adicionales al formulador del proyecto durante la etapa de evaluación
+so_that: se complete la información deficiente y se pueda emitir una recomendación técnica (RS/FI) fundamentada y oportuna
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DAE-PRE
+  agent_type: HUMAN
+  description: Analista encargado de asegurar la calidad técnica de los expedientes de inversión
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-TDE-NOTIFICACION
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: EVALUACION-TECNICA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - observaciones
+  - formularios
+  - aclaraciones
+  - pre-inversion
+  - flujo-revision
+
+status: ENRICHED
+acceptance_criteria:
+  - Bandeja de "Observaciones Pendientes" para el formulador con notificación automática via email
+  - Plazo fatal para subsanación configurable bajo la ley de procedimientos administrativos
+  - Registro auditable del intercambio de información entre analista y formulador

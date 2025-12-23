@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_avance_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Meta de interoperabilidad DS12
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-AVANCE-002
-urn: urn:goreos:atom:story:us_tde_avance_002:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Monitorear meta de interoperabilidad DS12
-so_that: Cumplo con plazos
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Monitoreo de Meta de Interoperabilidad (DS12)
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: monitorear el avance de la meta de interoperabilidad definida en el DS12
+so_that: se garantice el cumplimiento de los plazos legales de intercambio de datos con otros servicios públicos (PISEE)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Coordinador encargado de la integración del GORE con el ecosistema digital del Estado
+
+entities_mentioned:
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: ESTRATEGIA-TI
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ds12
+  - interoperabilidad
+  - pisee
+  - cumplimiento-plazos
+  - datos-estado
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de visualización del porcentaje de trámites que operan con interoperabilidad activa
+  - Registro de convenios de intercambio de datos firmados con otros servicios del Estado
+  - Alertas preventivas 3 meses antes del vencimiento de los hitos legales de la Ley 21.180

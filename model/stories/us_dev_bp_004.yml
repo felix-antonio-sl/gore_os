@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_004:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-BP-004
+name: Versionamiento Semántico de APIs
+
+# === STORY CORE ===
+as_a: Desarrollador de API
+i_want: Aplicar versionamiento semántico (SemVer) a todos los endpoints y servicios del Supermodelo
+so_that: se permita la evolución de los sistemas sin romper la compatibilidad con los consumidores (interoperabilidad)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-API
+  agent_type: HUMAN
+  description: Especialista en interfaces de comunicación entre sistemas
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: INTEROPERABILIDAD
+  priority: P1
+  scope: ARQUITECTURA
+
+extra_tags:
+  - semver
+  - versionamiento
+  - api-rest
+  - compatibilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Uso de prefijos de versión en la URL (ej: /v2/ipr)
+  - Política de deprecación de versiones antiguas documentada y comunicada
+  - Changelog automático generado a partir de mensajes de commit convencionales

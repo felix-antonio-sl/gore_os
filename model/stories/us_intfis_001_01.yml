@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_intfis_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Expedientes de sumarios administrativos digitalizados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-INTFIS-001-01
-urn: urn:goreos:atom:story:us_intfis_001_01:1.0.0
-role_id: ROL-NORM-FIS
+name: Expedientes de sumarios administrativos digitalizados
+
+# === STORY CORE ===
 as_a: Fiscal Sumariante
 i_want: expedientes de sumarios administrativos digitalizados
 so_that: pueda formular cargos fundados
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-CARGO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-FIS
+  agent_type: HUMAN
+  description: Abogado fiscal encargado de conducir investigaciones y sumarios administrativos internos
+
+entities_mentioned:
+  - id: ENT-NORM-EXPEDIENTE-SUMARIO
+    status: candidate
+  - id: ENT-DOC-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-ORG-CARGO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: LEGAL
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - sumarios
+  - digitalizacion
+  - fiscalia
+  - probidad
+  - gestion-documental
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualizador de expedientes con foliado digital automático y cadena de custodia PDF/A
+  - Buscador OCR integrado para localizar nombres y fechas en piezas del sumario escaneadas
+  - Control de acceso granular por rol y estado del sumario (secreto vs público)

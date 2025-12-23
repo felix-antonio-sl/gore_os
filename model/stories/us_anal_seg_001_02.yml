@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_anal_seg_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas automáticas de proyectos con desviación >15%
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ANAL-SEG-001-02
-urn: urn:goreos:atom:story:us_anal_seg_001_02:1.0.0
-role_id: ROL-GESTION-INV-SEG
+name: Alertas automáticas de proyectos con desviación >15%
+
+# === STORY CORE ===
 as_a: Analista Seguimiento
 i_want: recibir alertas automáticas de proyectos con desviación >15%
 so_that: pueda gestionar proactivamente
-domain: D-EJEC
-competence_id: CPT-EJEC-SEG-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-INV-SEG
+  agent_type: ALGORITHMIC
+  description: Sistema de monitoreo de desviaciones presupuestarias/temporales
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-DESVIACION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-SEGUIMIENTO-EJECUCION
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: CONTROL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - alertas
+  - desviacion
+  - proactividad
+  - seguimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo diario de desviaciones financieras y físicas
+  - Alerta inmediata si desviación supera el 15%
+  - Notificación enviada al analista responsable

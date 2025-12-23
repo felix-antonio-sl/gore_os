@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_anal_inv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un formulario digital de evaluación técnica con campos validados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ANAL-INV-001-01
-urn: urn:goreos:atom:story:us_anal_inv_001_01:1.0.0
-role_id: ROL-GESTION-ANAL-INV
+name: Un formulario digital de evaluación técnica con campos validados
+
+# === STORY CORE ===
 as_a: Analista de Inversión
 i_want: un formulario digital de evaluación técnica con campos validados
 so_that: pueda registrar mi análisis de forma estructurada
-domain: D-EJEC
-competence_id: CPT-EJEC-EVAL-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL-INV
+  agent_type: HUMAN
+  description: Profesional que evalúa técnicamente proyectos de inversión
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-EVALUACION-TECNICA
+    status: candidate
+  - id: ENT-SYS-FORMULARIO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-EVALUACION-TECNICA
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - formulario
+  - evaluacion-tecnica
+  - analisis-ipr
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario con validación de campos obligatorios
+  - Guardado automático de borradores
+  - Historial de versiones del análisis

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jtes_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de programación de pagos con proyección de caja
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-JTES-001-01
-urn: urn:goreos:atom:story:us_jtes_001_01:1.0.0
-role_id: ROL-FIN-JEFE-DEPTO-T
-as_a: Jefe Depto. Tesorería
-i_want: un módulo de programación de pagos con proyección de caja
-so_that: pueda asegurar liquidez
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Gestión de Tesorería y Flujo de Caja (Cash Flow)
+
+# === STORY CORE ===
+as_a: Jefe de Tesorería
+i_want: Un módulo de programación de pagos mensuales con proyección dinámica de saldos bancarios
+so_that: pueda asegurar la liquidez diaria y cumplir puntualmente con los proveedores y transferencias a terceros
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-JEFE-DEPTO-T
+  agent_type: HUMAN
+  description: Jefe del departamento de tesorería regional encargado del manejo de cuentas y pagos
+
+entities_mentioned:
+  - id: ENT-FIN-PAGO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: TESORERIA
+  priority: P0
+  scope: FINANCIERO
+
+extra_tags:
+  - pagos
+  - tesoreria
+  - caja
+  - liquidez
+
+status: ENRICHED
+acceptance_criteria:
+  - Calendario de pagos semanales basado en vencimientos de facturas y convenios
+  - Alerta de saldo insuficiente en cuenta corriente antes de autorizar lotes de pago
+  - Conciliación automática con la cartola bancaria para ingresos y egresos

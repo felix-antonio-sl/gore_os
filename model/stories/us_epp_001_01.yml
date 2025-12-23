@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de desviación de cronograma (Gantt)
-id: US-EPP-001-01
-urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
-role_id: ROL-GESTION-ANAL-INV
-as_a: Analista de Inversión
-i_want: alertas de desviación de cronograma (Gantt)
-so_that: pueda gestionar medidas correctivas
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-EPP-001-01
+name: Alertas de Desviación de Cronograma (Gantt)
+
+# === STORY CORE ===
+as_a: Analista de Inversión
+i_want: recibir alertas automáticas ante desviaciones significativas en el cronograma de ejecución física (Carta Gantt) de los proyectos
+so_that: pueda gestionar oportunamente medidas correctivas o modificaciones presupuestarias para evitar el retraso de la inversión regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL-INV
+  agent_type: HUMAN
+  description: Analista responsable del seguimiento físico y financiero de la cartera de inversiones
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: CONTROL-GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - gantt
+  - cronograma
+  - alertas
+  - desviaciones
+  - inversion-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo automático del "Camino Crítico" y detección de retrasos en hitos fatales
+  - Alerta visual (semáforo) en el dashboard de inversión según el % de desviación
+  - Envío automático de correo al profesional responsable con el detalle del desfase detectado

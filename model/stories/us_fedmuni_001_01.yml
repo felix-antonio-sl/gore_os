@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Denunciar sobrecargas laborales derivadas de convenios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FEDMUNI-001-01
-urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
-role_id: ROL-GESTION-ALC
+name: Denunciar sobrecargas laborales derivadas de convenios
+
+# === STORY CORE ===
 as_a: Alcalde
 i_want: denunciar sobrecargas laborales derivadas de convenios
 so_that: se ajusten los recursos para la ejecución
-domain: D-GOB
-priority: P2
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ALC
+  agent_type: HUMAN
+  description: Máxima autoridad municipal que gestiona el impacto de la inversión regional en su equipo local
+
+entities_mentioned:
+  - id: ENT-EJEC-CONVENIO-MUNICIPAL
+    status: linked
+  - id: ENT-ORG-CARGA-LABORAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-ARTICULACION-MUNICIPAL
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: POLITICA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - alcaldes
+  - convenios
+  - carga-laboral
+  - descentralizacion
+  - gestion-municipal
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de "Feedback de Convenios" para reportar cuellos de botella operativos en SECPLAN/DOM
+  - Capacidad de adjuntar informes técnicos de recursos humanos que justifiquen la necesidad de apoyo GORE
+  - Dashboard de capacidad instalada por municipio para evitar colapsos en la ejecución de proyectos

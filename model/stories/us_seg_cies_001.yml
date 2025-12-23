@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_cies_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de cámaras, sensores o llamados (tipo, georreferencia)
-id: US-SEG-CIES-001
-urn: urn:goreos:atom:story:us_seg_cies_001:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Registrar alertas de cámaras, sensores o llamados (tipo, georreferencia)
-so_that: Inicio respuesta coordinada
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-SEG-CIES-001
+name: Registro de alertas CIES (Cámaras, Sensores, Llamados)
+
+# === STORY CORE ===
+as_a: Operador de Sistema CIES
+i_want: registrar alertas provenientes de cámaras, sensores o llamados telefónicos con georreferencia
+so_that: se inicie una respuesta coordinada ante un incidente de seguridad pública
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Operador de la Central de Inteligencia y Emergencias Regionales encargado del monitoreo en tiempo real
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SEG-SENSOR
+    status: candidate
+  - id: ENT-LOC-PUNTO-GEOGRAFICO
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-MONITOREO-CIUDADANO
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: MONITOREO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - cies
+  - alertas
+  - seguridad-publica
+  - georreferencia
+  - emergencias
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de recepción de alertas multicanal (API Cámaras, Radio, Telefonía IP) con popup inmediato
+  - Ubicación automática del incidente en el mapa central basado en la ID del sensor o geolocalización de la llamada
+  - Clasificación rápida del tipo de alerta (Accidente, Delito, Emergencia Climática) para activar protocolo

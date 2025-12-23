@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_mig_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-OPS-MIG-001
+name: Orquestación del Pipeline de Migración (ETL)
+
+# === STORY CORE ===
+as_a: Migrador de Datos
+i_want: "Un orquestador (ej: Airflow/Prefect) que gestione las fases de Extracción, Transformación y Carga (ETL) de los sistemas legacy"
+so_that: se automaticen las dependencias entre procesos y se facilite el re-intento ante fallos técnicos en la ingesta
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-MIGRADOR
+  agent_type: HUMAN
+  description: Ingeniero encargado de la lógica de flujo de datos migrados
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: MIGRACION-TECNICA
+  priority: P0
+  scope: OPERATIVO
+
+extra_tags:
+  - etl
+  - pipeline
+  - orchestration
+  - airflow
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de monitoreo del progreso de cada fase en tiempo real
+  - Envío automático de alertas a TI en caso de detención del pipeline por error de red o base de datos
+  - Capacidad de ejecutar migraciones parciales por módulo (ej: solo Finanzas)

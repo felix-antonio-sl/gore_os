@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_rend_014:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar cumplimiento de hitos I+D+i (FRPD)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-REND-014
-urn: urn:goreos:atom:story:us_fin_rend_014:1.0.0
-role_id: ROL-GESTION-FIN-REND
+name: Verificar cumplimiento de hitos I+D+i (FRPD)
+
+# === STORY CORE ===
 as_a: Encargado Rendiciones
 i_want: Verificar cumplimiento de hitos I+D+i (FRPD)
-so_that: Valido productos de innovación
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Valido los productos de innovación antes de liberar nuevos recursos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-REND
+  agent_type: HUMAN
+  description: Encargado de rendiciones en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-RENDICION
+    status: linked
+  - id: ENT-EJE-HITO
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-REND-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: RENDICION-DE-CUENTAS
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - frpd
+  - hitos
+  - innovacion
+  - verificacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist de verificación específico para proyectos de innovación (FRPD)
+  - Capacidad de adjuntar informes técnicos de hitos alcanzados
+  - Bloqueo de desembolsos si existen hitos críticos pendientes de verificación

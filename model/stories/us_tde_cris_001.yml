@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_cris_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Activar protocolo de ingreso manual ante caída de Nodo PISEE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-CRIS-001
-urn: urn:goreos:atom:story:us_tde_cris_001:1.0.0
-role_id: ROL-OPS-PISEE
+name: Protocolo de contingencia ante caída de PISEE
+
+# === STORY CORE ===
 as_a: Operador PISEE
-i_want: Activar protocolo de ingreso manual ante caída de Nodo PISEE
-so_that: Mantengo la operación crítica del servicio
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: activar el protocolo de ingreso manual y contingencia técnica ante la caída del Nodo PISEE Central
+so_that: se mantenga la operación de los trámites críticos que dependen de interoperabilidad externa
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-PISEE
+  agent_type: HUMAN
+  description: Especialista técnico en la plataforma de interoperabilidad del Estado
+
+entities_mentioned:
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: CONTINUIDAD-NEGOCIO
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - pisee
+  - contingencia
+  - disponibilidad
+  - interoperabilidad
+  - protocolo-manual
+
+status: ENRICHED
+acceptance_criteria:
+  - Switch de "Modo Contingencia" en la consola de administración para permitir bypass de validaciones externas
+  - Registro auditable de por qué se activó el modo manual (Ticket de soporte vinculado)
+  - Notificación automática a los usuarios finales sobre el posible retraso en las validaciones técnicas

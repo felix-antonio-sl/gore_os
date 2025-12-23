@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_015:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reintegrar saldos no ejecutados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-015
-urn: urn:goreos:atom:story:us_fin_ipr_015:1.0.0
-role_id: ROL-EJEC-URAI-EJEC
-as_a: Ejecutivo URAI
-i_want: Reintegrar saldos no ejecutados
-so_that: Cumplo con devolución de recursos
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Reintegro de Saldos Presupuestarios No Ejecutados
+
+# === STORY CORE ===
+as_a: Ejecutivo de la Unidad Regional de Asistencia Inmediata (URAI) / DAF
+i_want: realizar el reintegro de los saldos no ejecutados al concluir un proyecto o programa de inversión
+so_that: se cumpla con la normativa de devolución de recursos públicos, se liberen los saldos en el presupuesto institucional y se cierre contablemente la iniciativa
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-URAI-EJEC
+  agent_type: HUMAN
+  description: Profesional encargado del cierre administrativo y financiero de las inversiones
+
+entities_mentioned:
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CIERRE-FINANCIERO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - reintegros
+  - saldos-no-ejecutados
+  - cierre-contable
+  - auditoria-financiera
+  - devolución-fondos
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo automático del saldo remanente (Presupuesto Vigente - Gastos Devengados)
+  - Workflow de aprobación para el comprobante de reintegro ante la Tesorería Regional
+  - Actualización automática del estado del proyecto a "Cerrado con Reintegro" tras la confirmación bancaria

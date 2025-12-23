@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ciu_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: En qué se gasta el presupuesto regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CIU-001-02
-urn: urn:goreos:atom:story:us_ciu_001_02:1.0.0
-role_id: ROL-GESTION-PMG-GEN
+name: En qué se gasta el presupuesto regional
+
+# === STORY CORE ===
 as_a: Referente Equidad de Género
 i_want: consultar en qué se gasta el presupuesto regional
 so_that: pueda fiscalizar el uso de los recursos públicos
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-FIN-PRESUPUESTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-GEN
+  agent_type: HUMAN
+  description: Analista o ciudadano interesado en la perspectiva de género y transparencia del gasto público
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO-ASIGNADO
+    status: linked
+  - id: ENT-FIN-GASTO-DEVENGADO
+    status: linked
+  - id: ENT-SOC-INDICADOR-GENERO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-TRANSPARENCIA-ACTIVA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: TRANSPARENCIA
+  priority: P1
+  scope: CIUDADANO
+
+extra_tags:
+  - presupuesto
+  - genero
+  - transparencia
+  - fiscalizacion-ciudadana
+  - datos-abiertos
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualizaciones interactivas de ejecución presupuestaria por programa
+  - Desagregación de beneficiarios por género cuando sea aplicable
+  - Descarga de datos en formatos abiertos para auditoría social

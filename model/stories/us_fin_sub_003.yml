@@ -1,15 +1,44 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Aplicar pauta de evaluación ciega (doble ciego opcional)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-SUB-003
-urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
-role_id: ROL-GESTION-ANAL8
+name: Aplicar pauta de evaluación ciega
+
+# === STORY CORE ===
 as_a: Analista 8% (Técnico)
 i_want: Aplicar pauta de evaluación ciega (doble ciego opcional)
-so_that: Aseguro objetividad
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Aseguro la objetividad técnica eliminando sesgos basados en la identidad del postulante
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL8
+  agent_type: HUMAN
+  description: Analista técnico de la División de Desarrollo Social (8%)
+
+entities_mentioned:
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: FONDOS-CONCURSABLES
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - evaluacion-ciega
+  - objetividad
+  - 8-porciento
+  - meritocracia
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de evaluación que oculta el nombre y RUT de la organización evaluada
+  - Posibilidad de asignar dos evaluadores (doble ciego) y promediar puntajes automáticamente
+  - Capacidad de denunciar inconsistencias en la anonimización de proyectos

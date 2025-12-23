@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Participar en sesiones del Consejo Regional de Seguridad Pública
-id: US-SEG-GOB-002
-urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
-as_a: Encargado Unidad de Municipalidades y Conservaciones
-i_want: Participar en sesiones del Consejo Regional de Seguridad Pública
-so_that: Participo en planificación regional de seguridad como COSOC
-domain: D-SEG
-priority: P2
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-GOV-CORE
+id: US-SEG-GOB-002
+name: Participación en el Consejo Regional de Seguridad Pública
+
+# === STORY CORE ===
+as_a: Representante de Mesa de Seguridad (Stakeholder)
+i_want: participar activamente en las sesiones del Consejo Regional de Seguridad Pública
+so_that: pueda incidir en la planificación regional de seguridad desde la perspectiva ciudadana y municipal
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EXT-CONSEJERO-SEG
+  agent_type: HUMAN
+  description: Integrante del Consejo Regional de Seguridad Pública (Representante de Municipio, Vecinal o Gremial)
+
+entities_mentioned:
+  - id: ENT-GOV-CORE
+    status: linked
+  - id: ENT-SEG-PLAN-SEGURIDAD-REG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-ESTRATEGICA
+  status: linked
+
+tags:
+  domain: D-SEG
+  aspect: GOBERNANZA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - consejo-seguridad
+  - gobernanza-participativa
+  - seguridad-publica
+  - participacion-ciudadana
+  - articulacion-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a plataforma de participación ciudadana para revisión de borradores del Plan Regional de Seguridad
+  - Módulo de carga de inquietudes y propuestas priorizadas por barrio o comuna
+  - Calendario público de sesiones del consejo con actas de acuerdos totalmente transparentes

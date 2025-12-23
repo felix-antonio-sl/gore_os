@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_tic_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de ciberseguridad (CSIRT, Incidentes)
-id: US-TDE-TIC-004
-urn: urn:goreos:atom:story:us_tde_tic_004:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Recibir alertas de ciberseguridad (CSIRT, Incidentes)
-so_that: Respondo a amenazas
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-TDE-TIC-004
+name: Monitoreo de Alertas de Ciberseguridad
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: recibir y gestionar alertas de ciberseguridad provenientes del CSIRT y sistemas internos de detección
+so_that: se responda de forma inmediata ante amenazas activas y se proteja la infraestructura crítica del GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador operativo encargado de la respuesta táctica ante eventos de seguridad
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIBERSEGURIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - alertas
+  - csirt
+  - amenazas
+  - monitoreo-seguridad
+  - respuesta-incidentes
+
+status: ENRICHED
+acceptance_criteria:
+  - Consola unificada que muestra alertas de firewall, antivirus y avisos externos del CSIRT
+  - Definición de procedimientos automáticos de bloqueo de IPs ante ataques de denegación de servicio (DDoS)
+  - Log de acciones tomadas para cada alerta recibida (Triage) con firma del administrador responsable

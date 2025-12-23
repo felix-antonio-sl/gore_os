@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_mod_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Modificaciones que no requieren CORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-MOD-002
-urn: urn:goreos:atom:story:us_fin_mod_002:1.0.0
-role_id: ROL-GESTION-PROF
+name: Modificaciones que no requieren CORE
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Validar modificaciones que no requieren CORE
 so_that: Agilizo trámites menores
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-DIG-TRAMITE
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de Finanzas encargado de tramitar modificaciones presupuestarias internas (intra-item) que no cambian el marco aprobado por el CORE
+
+entities_mentioned:
+  - id: ENT-FIN-MODIFICACION-PRESUPUESTARIA
+    status: linked
+  - id: ENT-GOB-CORE-CONSEJO
+    status: linked
+  - id: ENT-FIN-TRAMITE-AGILIZADO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-MODIFICACION-INTERNA
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: PRESUPUESTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - modificaciones
+  - core
+  - tramites-menores
+  - agilidad-administrativa
+  - presupuesto
+
+status: ENRICHED
+acceptance_criteria:
+  - Motor de reglas que identifique automáticamente si la modificación requiere o no acuerdo del CORE según la Ley
+  - Workflow de aprobación directa por el Administrador Regional para modificaciones internas
+  - Registro de la modificación en el sistema contable sin pasar por la sesión de consejo

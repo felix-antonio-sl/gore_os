@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_ciclo_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Las fases de desarrollo e implementación (W2-W3)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-CICLO-001
-urn: urn:goreos:atom:story:us_dev_ciclo_001:1.0.0
-role_id: ROL-GESTION-LEAD
+name: Las fases de desarrollo e implementación (W2-W3)
+
+# === STORY CORE ===
 as_a: Líder Técnico
 i_want: Gestionar las fases de desarrollo e implementación (W2-W3)
 so_that: Aseguro una evolución controlada del Blueprint al Código
-domain: D-DEV
-priority: P0
-competence_id: CPT-DEV-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-LEAD
+  agent_type: HUMAN
+  description: Líder Técnico o Arquitecto de Software que orquesta el ciclo de vida del desarrollo
+
+entities_mentioned:
+  - id: ENT-SYS-BLUEPRINT-MODELO
+    status: linked
+  - id: ENT-SYS-CODIGO-IMPLEMENTACION
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-CICLO-VIDA-DESARROLLO
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: DESARROLLO
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - ciclo-de-vida
+  - w2-w3
+  - blueprint
+  - implementacion
+  - gobernanza-it
+
+status: ENRICHED
+acceptance_criteria:
+  - Definición formal de estados de transición (Draft, In-Review, Approved, Implemented)
+  - Trazabilidad bidireccional entre User Story y Componente de Código
+  - Checklist de DoD (Definition of Done) automatizado por fase

@@ -1,0 +1,94 @@
+{
+  "timestamp": "2025-12-23T05:41:28.492371",
+  "sources": {
+    "convenios": {
+      "source": "convenios",
+      "files_processed": 3,
+      "total_rows": 537,
+      "quality_score": 88.16666666666667,
+      "issues": [
+        {
+          "type": "DUPLICATES",
+          "count": 17,
+          "message": "17 códigos duplicados detectados"
+        }
+      ],
+      "distributions": {
+        "estados": {
+          "FIRMADO": 458,
+          "SIN CONVENIO ": 51,
+          "ENCOMENDADO DIT": 7,
+          "ENVIADO AL SERVICIO": 6,
+          "NO SE FIRMO": 6,
+          "RS NO VIGENTE": 2,
+          "INGRESARÁ A RE": 2,
+          "-": 1,
+          "EN FIRMA DE MUNICIPIO": 1
+        }
+      },
+      "stats": {},
+      "high_null_rows": 19
+    },
+    "fril": {
+      "source": "fril",
+      "files_processed": 7,
+      "total_rows": 177,
+      "quality_score": 96.6,
+      "issues": [],
+      "distributions": {},
+      "stats": {},
+      "high_null_rows": 6
+    },
+    "idis": {
+      "source": "idis",
+      "files_processed": 1,
+      "total_rows": 1721,
+      "quality_score": 99.9,
+      "issues": [],
+      "distributions": {
+        "estados": {}
+      },
+      "stats": {},
+      "high_null_rows": 1
+    },
+    "modificaciones": {
+      "source": "modificaciones",
+      "files_processed": 1,
+      "total_rows": 54,
+      "quality_score": 100.0,
+      "issues": [],
+      "distributions": {},
+      "stats": {}
+    },
+    "partes": {
+      "source": "partes",
+      "files_processed": 10,
+      "total_rows": 12806,
+      "quality_score": 99.6,
+      "issues": [],
+      "distributions": {},
+      "stats": {},
+      "high_null_rows": 50
+    },
+    "progs": {
+      "source": "progs",
+      "files_processed": 19,
+      "total_rows": 2768,
+      "quality_score": 90.7,
+      "issues": [],
+      "distributions": {},
+      "stats": {},
+      "high_null_rows": 257
+    },
+    "funcionarios": {
+      "source": "funcionarios",
+      "files_processed": 1,
+      "total_rows": 110,
+      "quality_score": 100.0,
+      "issues": [],
+      "distributions": {},
+      "stats": {}
+    }
+  },
+  "overall_quality_score": 96.4
+}

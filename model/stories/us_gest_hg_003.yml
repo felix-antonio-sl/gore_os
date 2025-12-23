@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_hg_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-HG-003
-urn: urn:goreos:atom:story:us_gest_hg_003:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
 so_that: Identifico causas raíz de degradación en mi área
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-H_GORE
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica que realiza análisis de causa raíz sobre nudos críticos en la tramitación
+
+entities_mentioned:
+  - id: ENT-SAL-H_GORE
+    status: linked
+  - id: ENT-SYS-ANALISIS-CAUSA-RAIZ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - h-gore
+  - drill-down
+  - analisis-datos
+  - mejora-continua
+  - gestion-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Capacidad de navegación desde el indicador general H_gore hasta el expediente específico que causa la mora
+  - Visualización de cuellos de botella por abogado o por tipo de acto administrativo (Resoluciones vs Contratos)
+  - Reporte comparativo histórico de desempeño por dimensión (Tiempo, Calidad, Volumen)

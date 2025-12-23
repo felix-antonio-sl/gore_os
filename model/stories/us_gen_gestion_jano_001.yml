@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_jano_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Jano (Asesor Jurídico y Conformidad)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_JANO-001
-urn: urn:goreos:atom:story:us_gen_gestion_jano_001:1.0.0
-role_id: ROL-GESTION-JANO
+name: Historia genérica para Jano (Asesor Jurídico y Conformidad)
+
+# === STORY CORE ===
 as_a: Jano (Asesor Jurídico y Conformidad)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JANO
+  agent_type: ALGORITHMIC
+  description: Asistente legal automatizado (Estilo Jano/KODA) para la validación de conformidad y normativa en actos administrativos
+
+entities_mentioned:
+  - id: ENT-NORM-REGLAMENTO-REGIONAL
+    status: linked
+  - id: ENT-NORM-BASE-LICITACION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - jano
+  - legaltech
+  - conformidad
+  - automatizacion-legal
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Análisis automático de riesgos legales en decretos y resoluciones previo a la firma
+  - Verificación de concordancia con la Ley de Presupuestos y glosas vigentes
+  - Alerta de inconsistencias normativas basadas en jurisprudencia administrativa de la CGR

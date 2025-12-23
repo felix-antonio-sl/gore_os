@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sec_ctd_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de sesiones del CTD
-id: US-SEC-CTD-001-01
-urn: urn:goreos:atom:story:us_sec_ctd_001_01:1.0.0
-role_id: ROL-EJEC-CPER-SEC
-as_a: Secretario Ejecutivo Comité de Pertinencia
-i_want: un módulo de gestión de sesiones del CTD
-so_that: pueda generar actas y hacer seguimiento
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACTA
+id: US-SEC-CTD-001-01
+name: Gestión de sesiones del Comité de Transformación Digital (CTD)
+
+# === STORY CORE ===
+as_a: Secretario Ejecutivo del Comité CTD
+i_want: un módulo de gestión de sesiones del CTD
+so_that: pueda generar actas y hacer seguimiento a la hoja de ruta digital
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-CPER-SEC
+  agent_type: HUMAN
+  description: Profesional encargado del soporte administrativo y técnico al comité táctico de digitalización
+
+entities_mentioned:
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-TDE-ROADMAP-DIGITAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: GOBERNANZA-TI
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - ctd
+  - transformacion-digital
+  - gobernanza
+  - actas-sesion
+  - hoja-de-ruta
+
+status: ENRICHED
+acceptance_criteria:
+  - Sistema de repositorio de presentaciones y documentos técnicos discutidos en el comité
+  - Flujo de revisión y firma digital de actas por los integrantes permanentes del CTD
+  - Módulo de gestión de riesgos y nudos críticos detectados en el proceso de digitalización

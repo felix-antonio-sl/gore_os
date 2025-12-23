@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_cfg_002:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-OPS-CFG-002
+name: Gestión de Feature Flags para Lanzamientos Progresivos
+
+# === STORY CORE ===
+as_a: Product Owner
+i_want: Activar o desactivar funcionalidades específicas del sistema mediante Feature Flags en tiempo real
+so_that: se puedan realizar lanzamientos controlados, pruebas A/B o desactivación rápida ante incidentes críticos sin necesidad de redeplegar el código
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-DIR
+  agent_type: HUMAN
+  description: Responsable de la estrategia de lanzamiento de funcionalidades
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: RELEASE-MANAGEMENT
+  priority: P2
+  scope: ESTRATEGICO
+
+extra_tags:
+  - feature-flags
+  - canary-releases
+  - toggles
+  - agilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de control de banderas (Flags) con permisos restrictivos
+  - Soporte para activación por porcentaje de usuarios o por roles específicos (ej: solo funcionarios del área financiera)
+  - Limpieza automática de historias técnicas para remover flags obsoletas después de un tiempo definido

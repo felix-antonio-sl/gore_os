@@ -1,16 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_vinc_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-VINC-002
-urn: urn:goreos:atom:story:us_tde_vinc_002:1.0.0
-role_id: ROL-DEV-TIC-DEV
+name: Acceso al API Gateway Regional (Interoperabilidad)
+
+# === STORY CORE ===
 as_a: Desarrollador DevOps
-i_want: Acceder al API Gateway Regional para consumir servicios del Estado (PISEE)
-  y del GORE
-so_that: Integro mis sistemas locales (DOM, Tránsito) sin gestionar convenios individuales
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: acceder al API Gateway Regional para consumir servicios del Estado (vía PISEE) y del propio GORE
+so_that: se integren sistemas locales (DOM, Tránsito, Social) sin necesidad de gestionar convenios técnicos individuales para cada servicio
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-TIC-DEV
+  agent_type: HUMAN
+  description: Desarrollador encargado de la integración de sistemas sectoriales con el ecosistema digital del GORE
+
+entities_mentioned:
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: INTEROPERABILIDAD
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - api-gateway
+  - pisee
+  - integracion
+  - devops
+  - eficiencia-ti
+
+status: ENRICHED
+acceptance_criteria:
+  - Credenciales seguras (API Keys / OAuth2) para acceso al gateway regional
+  - Catálogo de servicios disponibles con documentación interactiva (Sandbox) para pruebas rápidas
+  - Módulo de suscripción a eventos territoriales vía webhooks para actualizaciones automáticas en sistemas locales

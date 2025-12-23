@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_jjvv_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Junta de Vecinos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_JJVV-001
-urn: urn:goreos:atom:story:us_gen_gestion_jjvv_001:1.0.0
-role_id: ROL-GESTION-JJVV
+name: Historia genérica para Junta de Vecinos
+
+# === STORY CORE ===
 as_a: Junta de Vecinos
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JJVV
+  agent_type: HUMAN
+  description: Organización comunitaria territorial (JJ.VV.) que interactúa con el GORE para proyectos locales (Circular 33, FFOO)
+
+entities_mentioned:
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-SOC-PROYECTO-COMUNITARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: PARTICIPACION
+  priority: P2
+  scope: COMUNAL
+
+extra_tags:
+  - junta-vecinos
+  - organizaciones-territoriales
+  - barrios
+  - circular-33
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a portal de rendiciones simplificado para proyectos de subvención directa (8%)
+  - Buscador georreferenciado de proyectos financiados en su barrio/sector
+  - Módulo de postulación a capacitaciones de liderazgo y gestión comunitaria

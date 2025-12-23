@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_iam_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Usuarios del sistema con CRUD completo
-id: US-OPS-IAM-001
-urn: urn:goreos:atom:story:us_ops_iam_001:1.0.0
-role_id: ROL-ADMIN-TI
-as_a: Rol no encontrado (ROL-ADMIN-TI)
-i_want: gestionar usuarios del sistema con CRUD completo
-so_that: pueda controlar de forma centralizada quién tiene acceso a GORE_OS
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-OPS-IAM-001
+name: Gestión Centralizada de Usuarios (IAM)
+
+# === STORY CORE ===
+as_a: Administrador de Seguridad TI
+i_want: Gestionar el ciclo de vida completo de los usuarios del sistema (Alta, Baja, Modificación) de forma centralizada
+so_that: se mantenga un control riguroso sobre quiénes acceden a la plataforma GORE_OS y sus datos sensibles
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Administrador de identidades y accesos del sistema institucional
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USER
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: SEGURIDAD-IDENTIDAD
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - iam
+  - gestión-usuarios
+  - control-acceso
+  - seguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz unificada para la gestión de usuarios internos y externos
+  - Sincronización automática con el escalafón de RRHH para desactivación inmediata de bajas
+  - Registro de auditoría por cada cambio realizado en el perfil de un usuario

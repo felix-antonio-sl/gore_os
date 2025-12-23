@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_sect_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información actualizada de proyectos para comunicados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-SECT-001-01
-urn: urn:goreos:atom:story:us_com_sect_001_01:1.0.0
-role_id: ROL-GESTION-PER
+name: Información actualizada de proyectos para comunicados
+
+# === STORY CORE ===
 as_a: Periodista
 i_want: información actualizada de proyectos para comunicados
 so_that: pueda difundir logros
-domain: D-EJEC
-priority: P2
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER
+  agent_type: HUMAN
+  description: Periodista de la Unidad de Comunicaciones que redacta crónicas y hitos de prensa
+
+entities_mentioned:
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: candidate
+  - id: ENT-EJE-ESTADO-AVANCE
+    status: linked
+
+process_ref:
+  id: PROC-BACK-REDACCION-PERIODISTICA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - proyectos
+  - comunicados
+  - prensa
+  - difusion
+  - logros
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de estados de proyectos filtrable por sector y comuna
+  - Ficha técnica de fácil lectura con montos, plazos y beneficiarios
+  - Botón de "Notificar a Comunicaciones" desde el módulo de seguimiento de obras

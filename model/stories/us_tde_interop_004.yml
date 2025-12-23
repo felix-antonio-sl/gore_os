@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_interop_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acuerdos previos antes de consumir servicios
-id: US-TDE-INTEROP-004
-urn: urn:goreos:atom:story:us_tde_interop_004:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Gestionar acuerdos previos antes de consumir servicios
-so_that: Formalizo intercambios
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACUERDO
+id: US-TDE-INTEROP-004
+name: Gestión de acuerdos de intercambio de datos (Convenios)
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: gestionar formalmente los acuerdos previos y convenios antes de consumir o exponer servicios
+so_that: se formalicen legalmente los intercambios de datos y se cumpla con la Ley 19.628
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Responsable de la formalización jurídica de los intercambios de datos
+
+entities_mentioned:
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: LEGAL-TI
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - convenios
+  - acuerdos
+  - formalización
+  - ley19628
+  - intercambio-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio digital de convenios de interoperabilidad con metadatos de vigencia
+  - Workflow de aprobación jurídica del anexo técnico del convenio
+  - Bloqueo técnico de consumo de APIs si el convenio asociado está vencido

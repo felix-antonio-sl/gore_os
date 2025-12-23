@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver bandeja de postulaciones ordenada FIFO
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-027
-urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
-role_id: ROL-GESTION-DAE-PRE
+name: Ver bandeja de postulaciones ordenada FIFO
+
+# === STORY CORE ===
 as_a: Analista Preinversión (DAE)
 i_want: Ver bandeja de postulaciones ordenada FIFO
 so_that: Proceso en orden de llegada
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DAE-PRE
+  agent_type: HUMAN
+  description: Analista de Preinversión encargado de asegurar la equidad en el tiempo de respuesta mediante el criterio FIFO (First In, First Out)
+
+entities_mentioned:
+  - id: ENT-EJE-BANDEJA-ENTRADA
+    status: candidate
+  - id: ENT-EJE-POSTULACION-PROYECTO
+    status: candidate
+  - id: ENT-SYS-ORDEN-FIFO
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-EVALUACION-TECNICA
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: EVALUACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - bandeja-postulaciones
+  - fifo
+  - gestion-cola
+  - transparencia
+  - tiempos-respuesta
+
+status: ENRICHED
+acceptance_criteria:
+  - Lista de proyectos pendientes de revisión con timestamp de ingreso inalterable
+  - Alerta visual para proyectos que excedan el SLA (Service Level Agreement) de respuesta
+  - Indicador de "Posición en Cola" visible para el formulador externo

@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jcal_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a las hojas de vida y precalificaciones
-id: US-JCAL-001-01
-urn: urn:goreos:atom:story:us_jcal_001_01:1.0.0
-role_id: ROL-GESTION-PER-JUN
-as_a: Junta Calificadora
-i_want: acceso a las hojas de vida y precalificaciones
-so_that: pueda asignar puntajes objetivos
-domain: D-BACK
-priority: P0
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-PUNTAJE
+id: US-JCAL-001-01
+name: Evaluación Objetiva del Desempeño (Junta Calificadora)
+
+# === STORY CORE ===
+as_a: Miembro de la Junta Calificadora
+i_want: Acceder de forma consolidada a las hojas de vida, precalificaciones y anotaciones de mérito/demérito del personal
+so_that: pueda asignar puntajes de calificación objetivos y transparentes basados en evidencia
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-JUN
+  agent_type: HUMAN
+  description: Integrante de la comisión encargada del proceso anual de calificaciones del personal
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SAL-PUNTAJE
+    status: linked
+
+process_ref:
+  id: PROC-BACK-P1
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: GESTION-PERSONAS
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - calificaciones
+  - junta-calificadora
+  - desempeño
+  - hoja-de-vida
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de revisión de expedientes con vista de 360 grados del desempeño anual
+  - Registro de actas de la junta con firma electrónica de todos los miembros
+  - Alerta de inconsistencias entre la precalificación del jefe directo y las anotaciones de la hoja de vida

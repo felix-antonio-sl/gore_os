@@ -1,17 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_013:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Cometidos funcionarios (viático)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-013
-urn: urn:goreos:atom:story:us_back_per_013:1.0.0
-role_id: ROL-BACK-PER-GEST
+name: Cometidos funcionarios (viático)
+
+# === STORY CORE ===
 as_a: Gestor de Personas
 i_want: Gestionar cometidos funcionarios (viático)
 so_that: Proceso comisiones de servicio
-domain: D-BACK
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: HUMAN
+  description: Gestor de personas encargado de la tramitación de cometidos y viáticos
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-COMISION-SERVICIO
+    status: candidate
+  - id: ENT-FIN-VIATICO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-VIATICOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: FINANZAS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - viaticos
+  - cometidos
+  - comision-servicio
+  - rrhh
+  - finanzas
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de resolución de cometido con fechas y destino
+  - Cálculo automático de viático según grado y zona
+  - Workflow de rendición de pasajes y gastos menores asociados al cometido

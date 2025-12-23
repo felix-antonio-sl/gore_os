@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Simulaciones de phishing para concientización
-id: US-TDE-SEG-009
-urn: urn:goreos:atom:story:us_tde_seg_009:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Ejecutar simulaciones de phishing para concientización
-so_that: Educo a funcionarios
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+id: US-TDE-SEG-009
+name: Simulaciones de phishing y concientización
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: ejecutar campañas periódicas de simulación de phishing dirigidas a los funcionarios
+so_that: se eduque al personal sobre los riesgos de ingeniería social y se reduzca la probabilidad de robo de credenciales institucionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Responsable de la cultura de ciberseguridad y concientización en el GORE
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIBERSEGURIDAD
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - phishing
+  - concientización
+  - seguridad-humana
+  - simulacion
+  - cultura-digital
+
+status: ENRICHED
+acceptance_criteria:
+  - Plataformas de simulación que permiten enviar correos falsos y medir clics de funcionarios
+  - Módulos de micro-capacitación obligatorios para quienes "caen" en la simulación
+  - Reporte anónimo por división sobre el nivel de criticidad de la cultura de seguridad

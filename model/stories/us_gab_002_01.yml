@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_gab_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un protocolo de comunicación de crisis digitalizado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GAB-002-01
-urn: urn:goreos:atom:story:us_gab_002_01:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Protocolo de comunicación de crisis digitalizado
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
-i_want: un protocolo de comunicación de crisis digitalizado
-so_that: la respuesta sea rápida y coordinada
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+i_want: un protocolo de comunicación de crisis digitalizado con canales de escalamiento claros
+so_that: la respuesta institucional ante incidentes críticos sea rápida, coordinada y legalmente robusta
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la unidad jurídica del GORE
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-CONV-COMITE
+    status: linked
+
+process_ref:
+  id: PROC-BACK-P1
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: GESTION-DE-CRISIS
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - crisis
+  - comunicacion
+  - protocolo
+  - gabinete
+
+status: ENRICHED
+acceptance_criteria:
+  - Árbol de decisiones digital para determinar el nivel de crisis social o administrativa
+  - Plantillas de comunicados oficiales pre-aprobadas por el equipo jurídico
+  - Canal de mensajería seguro para el Comité de Crisis con registro de acuerdos

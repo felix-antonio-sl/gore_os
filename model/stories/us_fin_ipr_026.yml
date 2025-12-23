@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_026:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Devolución de garantías a ejecutores
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-026
-urn: urn:goreos:atom:story:us_fin_ipr_026:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
+name: Devolución de garantías a ejecutores
+
+# === STORY CORE ===
 as_a: Analista Prevención
 i_want: Gestionar devolución de garantías a ejecutores
 so_that: Libero garantías correctamente
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-EJE-EJECUTOR
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista encargado de certificar el cumplimiento de obligaciones para liberar los instrumentos de garantía
+
+entities_mentioned:
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-FIN-GARANTIA-LIBERADA
+    status: candidate
+  - id: ENT-EJE-COMPROBANTE-DEVOLUCION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-DEVOLUCION-GARANTIAS
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: CONVENIOS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - devolucion-garantias
+  - ejecutores
+  - cierre-financiero
+  - boletas-garantia
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación automática de inexistencia de multas pendientes o glosas sin subsanar
+  - Generación del Oficio de Devolución para Tesorería con firma digital
+  - Registro de la fecha de retiro físico o anulación electrónica del documento

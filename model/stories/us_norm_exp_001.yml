@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_exp_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
-id: US-NORM-EXP-001
-urn: urn:goreos:atom:story:us_norm_exp_001:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Gestionar Expediente Electrónico (IUIe/índice/metadatos/trazabilidad)
-so_that: Cumplo con Ley TDE
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-EXPEDIENTE
+id: US-NORM-EXP-001
+name: Gestión Semántica del Expediente Electrónico
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma TDE
+i_want: Gestionar el Expediente Electrónico bajo los estándares de IUIe (Identificador Único), índice dinámico y metadatos obligatorios
+so_that: el GORE Ñuble cumpla plenamente con la Ley de Transformación Digital del Estado (TDE)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador de los sistemas de soporte a la gestión documental electrónica
+
+entities_mentioned:
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: LEY-TDE
+  priority: P0
+  scope: INFRAESTRUCTURA-DIGITAL
+
+extra_tags:
+  - expediente-electronico
+  - iuie
+  - metadatos
+  - tde
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación automática de IUIe inmutable al momento de la apertura del expediente
+  - Foliación electrónica automática integrada en el índice del expediente
+  - Soporte para metadatos de clasificación según el estándar del Archivo Nacional

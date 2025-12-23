@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para Analista Energía
-id: US-GEN-FINAL-010
-urn: urn:goreos:atom:story:us_gen_final_010:1.0.0
-role_id: ROL-GESTION-ANALISTA-ENE
-as_a: Analista Energía
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-010
+name: Apoyo a la Transición Energética Regional
+
+# === STORY CORE ===
+as_a: Analista Energía
+i_want: Evaluar y proponer proyectos de eficiencia energética y energías renovables
+so_that: el GORE Ñuble lidere la transición hacia una matriz energética limpia y económica
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-ENE
+  agent_type: HUMAN
+  description: Analista especializado en temas de energía y sustentabilidad
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: ENERGIA
+  priority: P2
+  scope: SUSTENTABILIDAD
+
+extra_tags:
+  - energia
+  - renovables
+  - eficiencia
+  - futuro
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist técnico de eficiencia energética para nuevos proyectos de infraestructura
+  - Inventario de instalaciones públicas con potencial de generación fotovoltaica
+  - Seguimiento de indicadores de ahorro en kilowatts-hora (kWh) por proyectos financiados

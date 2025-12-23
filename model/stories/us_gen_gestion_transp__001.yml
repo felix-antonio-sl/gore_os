@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_transp__001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Referente Transparencia (por Ítem)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_TRANSP_-001
-urn: urn:goreos:atom:story:us_gen_gestion_transp__001:1.0.0
-role_id: ROL-GESTION-TRANSP-REF
+name: Historia genérica para Referente Transparencia (por Ítem)
+
+# === STORY CORE ===
 as_a: Referente Transparencia (por Ítem)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRANSP-REF
+  agent_type: HUMAN
+  description: Funcionario designado en cada división para la carga y actualización diaria de ítems de Transparencia Activa
+
+entities_mentioned:
+  - id: ENT-NORM-TRANSPARENCIA-ACTIVA
+    status: linked
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - referente-transparencia
+  - transparencia-activa
+  - ley-20285
+  - cumplimiento-normativo
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de completitud de su ítem asignado con semáforo de plazos (Ley 20.285)
+  - Módulo de carga masiva de archivos con metadatos estandarizados para el banner de transparencia
+  - Alerta de vencimiento de ítems estáticos/dinámicos previo a la fiscalización del CPLT

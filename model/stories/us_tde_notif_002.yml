@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_notif_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Resolver DDU del destinatario y aplicar canal correcto (DS8)
-id: US-TDE-NOTIF-002
-urn: urn:goreos:atom:story:us_tde_notif_002:1.0.0
-role_id: ROL-GESTION-KODA
-as_a: Agente KODA
-i_want: Resolver DDU del destinatario y aplicar canal correcto (DS8)
-so_that: Notifico por el canal registrado
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-CANAL
+id: US-TDE-NOTIF-002
+name: Resolución de Domicilio Digital Único (DDU)
+
+# === STORY CORE ===
+as_a: Agente KODA (Asistente Inteligente)
+i_want: resolver el Domicilio Digital Único (DDU) del destinatario y aplicar el canal de notificación preferente del DS8
+so_that: la notificación llegue por el canal oficial registrado por el ciudadano, asegurando su eficacia
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: MACHINE
+  description: Agente autónomo encargado de la orquestación lógica de comunicaciones digitales
+
+entities_mentioned:
+  - id: ENT-DIG-CANAL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: AUTOMATIZACION
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - ddu
+  - domicilio-digital
+  - koda
+  - ds8
+  - orquestacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Consulta automática al registro central de domicilios digitales de la SEGPRES
+  - Fallback a correo informando de la imposibilidad de notificar si no hay DDU vigente
+  - Registro de la preferencia del usuario (Email, APP, SMS) respetando el estándar DS8

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_interop_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Consentimiento para datos sensibles (Gestor Autorizaciones)
-id: US-TDE-INTEROP-005
-urn: urn:goreos:atom:story:us_tde_interop_005:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Gestionar consentimiento para datos sensibles (Gestor Autorizaciones)
-so_that: Respeto privacidad
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-CONSENTIMIENTO
+id: US-TDE-INTEROP-005
+name: Gestión de consentimiento para datos sensibles
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: implementar un gestor de autorizaciones para solicitar y registrar el consentimiento ciudadano para datos sensibles
+so_that: se respete la privacidad y se cumpla con los estándares de Gobierno Digital para datos de categoría especial
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Responsable de la ética y privacidad en el intercambio de datos sensibles
+
+entities_mentioned:
+  - id: ENT-DIG-CONSENTIMIENTO
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: PRIVACIDAD
+  priority: P1
+  scope: CIUDADANO
+
+extra_tags:
+  - consentimiento
+  - datos-sensibles
+  - privacidad
+  - autorizaciones
+  - ética-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Checkbox de consentimiento informado con registro de Timestamp e IP en el login de ClaveÚnica
+  - Panel para que el ciudadano pueda revocar consentimientos otorgados previamente
+  - Auditoría de acceso a datos sensibles vinculada al ID de consentimiento vigente

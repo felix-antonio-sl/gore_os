@@ -1,16 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_bak_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Restaurar un backup a un punto específico en el tiempo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-BAK-002
-urn: urn:goreos:atom:story:us_ops_bak_002:1.0.0
-role_id: ROL-ADMIN-TI
-as_a: Rol no encontrado (ROL-ADMIN-TI)
-i_want: restaurar un backup a un punto específico en el tiempo
-so_that: se pueda recuperar la información ante una pérdida de datos accidental o
-  maliciosa
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Restauración Puntual de Datos (PITR)
+
+# === STORY CORE ===
+as_a: Administrador de TI
+i_want: Restaurar un backup a un punto específico en el tiempo (Point-in-Time Recovery)
+so_that: se pueda recuperar la información exacta previa a una pérdida accidental o ataque cibernético (Ransomware)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Administrador de infraestructura crítica
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-EVENTO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: DISASTER-RECOVERY
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - pitr
+  - recuperacion
+  - resiliencia
+  - seguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz gráfica para seleccionar el Timestamp exacto de restauración
+  - Proceso de validación de consistencia de la base de datos post-restauración
+  - Capacidad de restaurar en un entorno de "Sandbox" para validar datos antes de sobreescribir producción

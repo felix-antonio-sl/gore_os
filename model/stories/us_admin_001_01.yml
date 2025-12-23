@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_admin_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un panel de administración centralizado de usuarios y permisos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ADMIN-001-01
-urn: urn:goreos:atom:story:us_admin_001_01:1.0.0
-role_id: ROL-OPS-GEONODO
+name: Un panel de administración centralizado de usuarios y permisos
+
+# === STORY CORE ===
 as_a: Administrador Geonodo
 i_want: un panel de administración centralizado de usuarios y permisos
 so_that: pueda gestionar el acceso a los sistemas
-domain: D-TDE
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador de infraestructura geoespacial y sistemas
+
+entities_mentioned:
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-SYS-PERMISO
+    status: candidate
+  - id: ENT-SYS-ROL-SISTEMA
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GESTION-ACCESOS
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: ADMINISTRACION
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - usuarios
+  - permisos
+  - rbac
+  - panel-admin
+
+status: ENRICHED
+acceptance_criteria:
+  - CRUD de usuarios con validación
+  - Asignación de roles y permisos granulares
+  - Auditoría de cambios de permisos
+  - Integración con Keycloak/ClaveÚnica

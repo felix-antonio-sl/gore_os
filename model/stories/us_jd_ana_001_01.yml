@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jd_ana_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de devengo vs. gasto efectivo en tiempo real
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-JD-ANA-001-01
-urn: urn:goreos:atom:story:us_jd_ana_001_01:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: reportes de devengo vs. gasto efectivo en tiempo real
-so_that: pueda proyectar el cierre presupuestario
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Análisis de Ejecución Presupuestaria de División
+
+# === STORY CORE ===
+as_a: Jefe de División
+i_want: Reportes analíticos que comparen el devengo vs. el gasto efectivo de mi unidad en tiempo real
+so_that: pueda gestionar eficientemente mi presupuesto y proyectar el cumplimiento de metas financieras de fin de año
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de división o unidad administrativa con responsabilidad presupuestaria
+
+entities_mentioned:
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTROL-GESTION
+  priority: P0
+  scope: DIRECTIVO
+
+extra_tags:
+  - devengo
+  - gasto-efectivo
+  - proyeccion
+  - presupuesto
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard con visualización de saldos por ítem, asignación y sub-asignación
+  - Alerta de subejecución presupuestaria si el gasto es menor al 80% de lo programado al tercer trimestre
+  - Capacidad de realizar simulaciones de redistribución de saldos entre proyectos de la misma cartera

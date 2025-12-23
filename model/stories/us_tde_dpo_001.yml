@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_dpo_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitudes ARCO (Acceso, Rectificación, Cancelación, Oposición)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-DPO-001
-urn: urn:goreos:atom:story:us_tde_dpo_001:1.0.0
-role_id: ROL-GESTION-DPO
-as_a: DPO
-i_want: Gestionar Solicitudes ARCO (Acceso, Rectificación, Cancelación, Oposición)
-so_that: Cumplo con derechos ciudadanos
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Gestión de Solicitudes ARCO
+
+# === STORY CORE ===
+as_a: Delegado de Protección de Datos (DPO)
+i_want: gestionar solicitudes ARCO (Acceso, Rectificación, Cancelación y Oposición) de forma digital
+so_that: se cumpla con los derechos de los titulares de datos personales según la normativa vigente
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPO
+  agent_type: HUMAN
+  description: Responsable de velar por el cumplimiento de la política de protección de datos personales
+
+entities_mentioned:
+  - id: ENT-TDE-DPO-REQ
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: PRIVACIDAD
+  priority: P0
+  scope: CIUDADANO
+
+extra_tags:
+  - arco
+  - privacidad
+  - datos-personales
+  - dpo
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario ciudadano para ingreso de solicitudes con validación de identidad vía ClaveÚnica
+  - Workflow interno de respuesta con plazos legales parametrizables (SLA)
+  - Registro de acciones realizadas sobre los datos (Rectificación, Eliminación, etc.) con comprobante digital

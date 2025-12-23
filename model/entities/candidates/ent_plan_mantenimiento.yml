@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:back:plan_mantenimiento:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-BACK-PLAN-MANTENIMIENTO"
+id: ENT-PLAN-MANTENIMIENTO
+name: "uLuPuLuAuNu uMuAuNuTuEuNuIuMuIuEuNuTuOu"
+tags: [BACK]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

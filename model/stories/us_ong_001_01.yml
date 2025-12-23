@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ong_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información de fondos concursables y consultas ciudadanas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ONG-001-01
-urn: urn:goreos:atom:story:us_ong_001_01:1.0.0
-role_id: ROL-GESTION-UNIDAD-COORD
-as_a: Unidad Coordinación Regional
+name: Información de fondos concursables y consultas ciudadanas (ONG)
+
+# === STORY CORE ===
+as_a: Representante de ONG / Organización Social
 i_want: información de fondos concursables y consultas ciudadanas
-so_that: pueda participar activamente
-domain: D-EJEC
-priority: P2
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+so_that: pueda participar activamente en el desarrollo regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UNIDAD-COORD
+  agent_type: HUMAN
+  description: Dirigente de ONG o representante de la sociedad civil que colabora con el GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-FONDO-CONCURSABLE
+    status: linked
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-POSTULACION-FONDOS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: VINCULACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - ong
+  - fondos-concursables
+  - sociedad-civil
+  - vinculacion-regional
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a un calendario consolidado de cierres de fondos y requisitos de elegibilidad
+  - Sistema de alertas proactivas ante la expiración de documentos de vigencia legal de la entidad
+  - Módulo de seguimiento del impacto social de los proyectos financiados anteriormente

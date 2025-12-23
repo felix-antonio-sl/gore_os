@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_iam_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Resetear mi contraseña de forma autónoma mediante self-service
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-IAM-005
-urn: urn:goreos:atom:story:us_ops_iam_005:1.0.0
-role_id: ROL-GESTION-EXT
-as_a: Usuario Externo (Genérico)
-i_want: resetear mi contraseña de forma autónoma mediante self-service
-so_that: pueda recuperar el acceso sin necesidad de abrir un ticket de soporte
-domain: D-OPS
-priority: P2
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Autogestión de Identidad (Self-Service)
+
+# === STORY CORE ===
+as_a: Usuario de la Plataforma (Funcionario/Externo)
+i_want: Gestionar mi perfil y resetear mi contraseña de forma autónoma mediante mecanismos de self-service seguros
+so_that: pueda recuperar rápidamente mi productividad ante bloqueos sin necesidad de generar carga operativa al equipo de soporte TI
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-EXT
+  agent_type: HUMAN
+  description: Usuario final de los servicios digitales del GORE
+
+entities_mentioned:
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: EXPERIENCIA-USUARIO
+  priority: P2
+  scope: SOPORTE
+
+extra_tags:
+  - self-service
+  - password-reset
+  - autonomia
+  - help-desk
+
+status: ENRICHED
+acceptance_criteria:
+  - Reset de contraseña mediante enlace temporal enviado al correo institucional verificado
+  - Registro de auditoría del evento de cambio de contraseña con geolocalización de IP
+  - Prevención de reutilización de las últimas 5 contraseñas (política de seguridad)

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_sii_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Director Regional SII
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SII-001
-urn: urn:goreos:atom:story:us_gen_gestion_sii_001:1.0.0
-role_id: ROL-GESTION-SII
+name: Historia genérica para Director Regional SII
+
+# === STORY CORE ===
 as_a: Director Regional SII
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SII
+  agent_type: HUMAN
+  description: Director Regional del Servicio de Impuestos Internos (SII) responsable de la fiscalización tributaria
+
+entities_mentioned:
+  - id: ENT-FIN-TRIBUTACION-REGIONAL
+    status: candidate
+  - id: ENT-FIN-IMPUESTO-AD-VALOREM
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-ACTUALIZACION-PARAMETROS
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - sii
+  - tributario
+  - rentas-regionales
+  - fiscalizacion-financiera
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de consulta de patentes e impuestos territoriales recaudados por la región (Ley de Rentas)
+  - Interfaz de validación automática del RUT de proveedores contra la base de contribuyentes SII
+  - Reporte de impacto de la inversión pública regional en la base tributaria local (Crecimiento Pymes)

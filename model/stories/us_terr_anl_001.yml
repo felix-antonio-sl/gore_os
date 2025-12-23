@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_anl_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Histórico de inversiones por tipología, comuna y año
-id: US-TERR-ANL-001
-urn: urn:goreos:atom:story:us_terr_anl_001:1.0.0
-role_id: ROL-TERR-PLAN
-as_a: Analista Planificación
-i_want: Consultar histórico de inversiones por tipología, comuna y año
-so_that: Analizo tendencias
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-LOC-COMUNA
+id: US-TERR-ANL-001
+name: Análisis histórico de inversiones territoriales
+
+# === STORY CORE ===
+as_a: Analista de Planificación Territorial
+i_want: consultar reportes históricos de inversiones territorializadas por tipología, comuna y año
+so_that: pueda analizar tendencias de crecimiento y detectar brechas de equidad territorial en la región
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TERR-PLAN
+  agent_type: HUMAN
+  description: Especialista encargado del monitoreo del desarrollo regional y la alineación con la ERD
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-MONITOREO-ERD
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: ANALITICA-DATOS
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - inversiones
+  - historico
+  - tendencias
+  - equidad-territorial
+  - tipologías
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero de Business Intelligence con filtros dinámicos por Año, Comuna y Sector (Educación, Salud, etc.)
+  - Representación cartográfica (Heatmap) de la inversión acumulada en los últimos 5 años
+  - Exportación de series temporales para uso en informes de seguimiento del Pladeco/ERD

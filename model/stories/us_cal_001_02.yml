@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cal_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de cumplimiento para DIPRES
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CAL-001-02
-urn: urn:goreos:atom:story:us_cal_001_02:1.0.0
-role_id: ROL-GESTION-ENC
+name: Reportes de cumplimiento para DIPRES
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: generar reportes de cumplimiento para DIPRES
 so_that: pueda reportar en formato oficial
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de calidad responsable del cumplimiento de indicadores ante la Dirección de Presupuestos (DIPRES)
+
+entities_mentioned:
+  - id: ENT-FIN-INDICADOR-INDIC
+    status: candidate
+  - id: ENT-NORM-REPORTE-DIPRES
+    status: candidate
+  - id: ENT-FIN-PMG
+    status: linked
+
+process_ref:
+  id: PROC-NORM-REPORTING-EXTERNO
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: CUMPLIMIENTO
+  priority: P0
+  scope: NACIONAL
+
+extra_tags:
+  - dipres
+  - calidad
+  - cumplimiento
+  - indicadores
+  - pmg
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de informe de cumplimiento de Programas de Mejoramiento de la Gestión (PMG)
+  - Validación de evidencia documental para cada indicador reportado
+  - Workflow de aprobación previo a la remisión electrónica a DIPRES

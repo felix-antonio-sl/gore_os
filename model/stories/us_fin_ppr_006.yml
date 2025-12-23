@@ -1,15 +1,44 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppr_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizar estado de mi programa en el ciclo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPR-006
-urn: urn:goreos:atom:story:us_fin_ppr_006:1.0.0
-role_id: ROL-GESTION-ANALISTA-PPR
+name: Visualizar estado de mi programa en el ciclo
+
+# === STORY CORE ===
 as_a: Analista PPR
 i_want: Visualizar estado de mi programa en el ciclo
-so_that: Tengo visibilidad del avance
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Tengo visibilidad del avance y puedo gestionar cuellos de botella
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-PPR
+  agent_type: HUMAN
+  description: Analista encargado de programas de inversión pública regional
+
+entities_mentioned:
+  - id: ENT-FIN-PPR
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P6
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-DE-PROGRAMAS
+  priority: P1
+  scope: PERSONAL
+
+extra_tags:
+  - programas
+  - visibilidad
+  - estado
+  - monitoreo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard muestra el estado actual de todos los programas asignados al analista
+  - Se visualiza el tiempo de permanencia en el estado actual (SLA)
+  - Notificación automática cuando un programa cambia de etapa en el flujo

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cseu_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Matriz de evaluación curricular digital
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CSEU-002-01
-urn: urn:goreos:atom:story:us_cseu_002_01:1.0.0
-role_id: ROL-GESTION-FOND-EVAL
+name: Matriz de evaluación curricular digital
+
+# === STORY CORE ===
 as_a: Evaluador Social
 i_want: matriz de evaluación curricular digital
 so_that: se estandarice el puntaje de los postulantes
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-PUNTAJE
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FOND-EVAL
+  agent_type: HUMAN
+  description: Evaluador encargado de calificar perfiles técnicos o curriculares en procesos de selección o fondos
+
+entities_mentioned:
+  - id: ENT-ORG-MATRIZ-CURRICULAR
+    status: candidate
+  - id: ENT-ORG-PUNTAJE-EVALUACION
+    status: candidate
+  - id: ENT-ORG-POSTULANTE
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-EVALUACION-CURRICULAR
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: SOCIAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - evaluacion-curricular
+  - matriz-puntaje
+  - seleccion
+  - rrhh
+  - estandarizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Definición parametrizada de criterios (Estudios, Experiencia, Capacitaciones)
+  - Cálculo automático de puntaje basado en evidencia adjunta
+  - Reporte comparativo de postulantes (Ranking)

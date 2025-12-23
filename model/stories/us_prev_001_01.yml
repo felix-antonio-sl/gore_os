@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_prev_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de evaluación de riesgos laborales
-id: US-PREV-001-01
-urn: urn:goreos:atom:story:us_prev_001_01:1.0.0
-role_id: ROL-GESTION-PREVENCIONIS
-as_a: Prevencionista Riesgos
-i_want: un módulo de evaluación de riesgos laborales
-so_that: pueda cumplir con normativa
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-RIESGO
+id: US-PREV-001-01
+name: Módulo de evaluación de riesgos laborales
+
+# === STORY CORE ===
+as_a: Prevencionista de Riesgos
+i_want: un módulo de evaluación de riesgos laborales
+so_that: pueda cumplir con la normativa vigente y proteger a los funcionarios
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREVENCIONIS
+  agent_type: HUMAN
+  description: Profesional encargado de la seguridad y salud ocupacional en las dependencias del GORE
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-BACK-ACCIDENTE-LABORAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-MEDIDAS-PREVENTIVAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: SEGURIDAD-LABORAL
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - prevencion-riesgos
+  - salud-ocupacional
+  - ley-16744
+  - seguridad-laboral
+  - rrhh
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz IPER (Identificación de Peligros y Evaluación de Riesgos) digitalizable por puesto de trabajo
+  - Registro y seguimiento de entrega de Elementos de Protección Personal (EPP)
+  - Notificaciones automáticas ante vencimiento de extintores o fechas de simulacros

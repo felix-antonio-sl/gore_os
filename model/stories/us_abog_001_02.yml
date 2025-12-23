@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Actos similares anteriores
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-001-02
-urn: urn:goreos:atom:story:us_abog_001_02:1.0.0
-role_id: ROL-NORM-ABOG
+name: Actos similares anteriores
+
+# === STORY CORE ===
 as_a: Abogado Informante
 i_want: consultar actos similares anteriores
 so_that: pueda mantener consistencia jurídica
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado que redacta y revisa actos administrativos
+
+entities_mentioned:
+  - id: ENT-NORM-ACTO-ADMINISTRATIVO
+    status: candidate
+  - id: ENT-SYS-BUSQUEDA
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-CONSULTA-PRECEDENTES
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: CONSULTA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - jurisprudencia
+  - precedentes
+  - consistencia
+  - busqueda
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador semántico de actos anteriores
+  - Filtros por tipo, fecha, materia
+  - Visualización de actos relacionados

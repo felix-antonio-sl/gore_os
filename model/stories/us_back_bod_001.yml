@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bod_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ingresos (aumenta stock)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BOD-001
-urn: urn:goreos:atom:story:us_back_bod_001:1.0.0
-role_id: ROL-BACK-OPS-BOD
+name: Ingresos (aumenta stock)
+
+# === STORY CORE ===
 as_a: Encargado Bodega
 i_want: Registrar ingresos (aumenta stock)
 so_that: Actualizo inventario
-domain: D-BACK
-competence_id: CPT-BACK-BOD-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-INVENTARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-OPS-BOD
+  agent_type: HUMAN
+  description: Encargado de bodega responsable de la recepción y control de existencias
+
+entities_mentioned:
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-FIN-ORDEN-COMPRA
+    status: linked
+  - id: ENT-ORG-ITEM-BODEGA
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-INGRESO-BODEGA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: LOGISTICA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - bodega
+  - stock
+  - inventario
+  - ingresos
+  - recepcion
+
+status: ENRICHED
+acceptance_criteria:
+  - Recepción vinculada a una Orden de Compra vigente
+  - Validación de cantidades recibidas vs facturadas
+  - Generación automática de comprobante de ingreso a bodega
+  - Actualización instantánea del stock disponible por ítem

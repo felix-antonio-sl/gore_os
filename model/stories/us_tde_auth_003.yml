@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_auth_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Implementar cierre de sesión ClaveÚnica con URIs registradas
-id: US-TDE-AUTH-003
-urn: urn:goreos:atom:story:us_tde_auth_003:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
-as_a: Desarrollador
-i_want: Implementar cierre de sesión ClaveÚnica con URIs registradas
-so_that: Gestiono sesiones correctamente
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-SESION
+id: US-TDE-AUTH-003
+name: Autenticación de Dos Factores (2FA) para roles críticos
+
+# === STORY CORE ===
+as_a: Administrador de Seguridad
+i_want: implementar autenticación de dos factores (2FA) obligatoria para roles críticos (Finanzas, TI, Jefaturas)
+so_that: se refuerce la protección del sistema ante el robo de credenciales en operaciones sensibles
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador encargado de endurecer las políticas de acceso a la plataforma
+
+entities_mentioned:
+  - id: ENT-TDE-AUTH-2FA-TOKEN
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - 2fa
+  - mfa
+  - seguridad-avanzada
+  - roles-criticos
+  - ciberseguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración con aplicaciones de autenticación (Google Authenticator, Microsoft Authenticator) vía TOTP
+  - Capacidad de definir por rol qué usuarios están obligados a usar 2FA para el inicio de sesión
+  - Procedimiento de "Recovery Codes" (Códigos de recuperación) descargables por el usuario al activar el factor

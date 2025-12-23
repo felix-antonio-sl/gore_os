@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_calidad_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Encuesta de satisfacción digital post-trámite
-id: US-TDE-CALIDAD-003
-urn: urn:goreos:atom:story:us_tde_calidad_003:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Ejecutar encuesta de satisfacción digital post-trámite
-so_that: Mejoro continuamente la experiencia de usuario conforme a DS11
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TRAMITE
+id: US-TDE-CALIDAD-003
+name: Encuestas de satisfacción ciudadana post-trámite
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: ejecutar encuestas de satisfacción digital automáticas al finalizar cada trámite
+so_that: se recopile feedback directo de los ciudadanos para mejorar los servicios conforme al DS11
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Responsable de medir la percepción ciudadana sobre la transformación digital
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-TDE-ENCUESTA-SAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: EXPERIENCIA-USUARIO
+  priority: P1
+  scope: CIUDADANO
+
+extra_tags:
+  - encuestas
+  - satisfacción
+  - feedback
+  - ds11
+  - mejora-servicio
+
+status: ENRICHED
+acceptance_criteria:
+  - Disparo automático de correo con link a encuesta corta (Net Promoter Score - NPS) tras la firma del acto administrativo final
+  - Dashboard consolidado de satisfacción por trámite y por comuna de origen
+  - Capacidad de alertas automáticas ante evaluaciones extremadamente bajas (1 estrella)

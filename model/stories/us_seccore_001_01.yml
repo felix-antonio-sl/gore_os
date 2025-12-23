@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seccore_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un sistema de gestión de sesiones con tabla, votaciones y actas
-id: US-SECCORE-001-01
-urn: urn:goreos:atom:story:us_seccore_001_01:1.0.0
-role_id: ROL-EJEC-CPER-SEC
-as_a: Secretario Ejecutivo Comité de Pertinencia
-i_want: un sistema de gestión de sesiones con tabla, votaciones y actas
-so_that: las sesiones sean trazables y documentadas
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACTA
+id: US-SECCORE-001-01
+name: Gestión de sesiones CORE (Tabla, Votaciones y Actas)
+
+# === STORY CORE ===
+as_a: Secretario Ejecutivo del CORE
+i_want: un sistema de gestión de sesiones con tabla de materias, votaciones y generación de actas
+so_that: las sesiones del Consejo Regional sean trazables, formales y documentadas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-SEC-CORE
+  agent_type: HUMAN
+  description: Máxima autoridad administrativa del Consejo Regional encargada de dar fe pública de los acuerdos
+
+entities_mentioned:
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-GOB-SESION-PLENARIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONSEJO-REGIONAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - consejo-regional
+  - sesiones
+  - votaciones
+  - actas
+  - fe-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de conformación de tabla de sesión con asignación de tiempos y materias por expositor
+  - Sistema de votación electrónica en sala (o remota) con registro nominal y automático en el acta
+  - Generación automatizada de acta borrador al finalizar la sesión basada en la tabla y los resultados de votación

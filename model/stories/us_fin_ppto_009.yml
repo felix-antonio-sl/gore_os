@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de glosas infringidas (03/04/06)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-009
-urn: urn:goreos:atom:story:us_fin_ppto_009:1.0.0
-role_id: ROL-GESTION-PROF
+name: Alertas de glosas infringidas (03/04/06)
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Recibir alertas de glosas infringidas (03/04/06)
-so_that: Evito incumplimientos normativos
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Evito incumplimientos normativos y posibles sanciones de organismos de control
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-IPR
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P7
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTROL-NORMATIVO
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - glosas
+  - alertas
+  - cumplimiento
+  - control
+
+status: ENRICHED
+acceptance_criteria:
+  - Configuración de reglas de negocio basadas en las glosas 03, 04 y 06
+  - Alerta en tiempo real al analista cuando una operación tentativa infringe una glosa
+  - Informe consolidado de alertas para la jefatura DAF

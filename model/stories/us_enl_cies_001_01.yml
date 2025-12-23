@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_enl_cies_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un directorio de contactos de emergencia actualizado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ENL-CIES-001-01
-urn: urn:goreos:atom:story:us_enl_cies_001_01:1.0.0
-role_id: ROL-GESTION-ENL
-as_a: Enlace CIES
-i_want: un directorio de contactos de emergencia actualizado
-so_that: pueda activar protocolos rápidamente
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Directorio de Emergencia CIES
+
+# === STORY CORE ===
+as_a: Enlace CIES (Coordinación Interinstitucional de Emergencia)
+i_want: disponer de un directorio centralizado y georreferenciado de contactos de emergencia (Bomberos, Carabineros, SAMU, Chilquinta, etc.)
+so_that: se puedan activar protocolos de respuesta rápida ante desastres naturales o nudos críticos en la infraestructura regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENL
+  agent_type: HUMAN
+  description: Coordinador regional encargado de la enlace durante situaciones de crisis
+
+entities_mentioned:
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TERR-GESTION-RIESGO
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: GESTION-CRISIS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - cies
+  - emergencias
+  - contactos-criticos
+  - resiliencia
+  - proteccion-civil
+
+status: ENRICHED
+acceptance_criteria:
+  - Base de datos de contactos segmentada por Comuna y Tipo de Servicio de Emergencia
+  - Acceso rápido desde dispositivos móviles (Portal Responsive)
+  - Botón de "Llamada Directa" e integración con mapas para rutas de acceso

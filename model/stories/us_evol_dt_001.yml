@@ -1,19 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Deuda técnica (inventario)
-id: US-EVOL-DT-001
-urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
-role_id: ROL-GESTION-LEAD
-as_a: Líder Técnico
-i_want: Gestionar deuda técnica (inventario)
-so_that: Controlo pasivos técnicos
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-INVENTARIO
-- ENT-ORG-ROL
+id: US-EVOL-DT-001
+name: Gestión de Inventario de Deuda Técnica
+
+# === STORY CORE ===
+as_a: Líder Técnico / Arquitecto de Software
+i_want: gestionar un inventario centralizado de la deuda técnica (code smells, librerías obsoletas, procesos ineficientes) acumulada en GORE_OS
+so_that: se puedan planificar "Sprints de Saneamiento" y se evite que los pasivos técnicos impidan la evolución futura del sistema
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-LEAD
+  agent_type: HUMAN
+  description: Responsable técnico de la sostenibilidad a largo plazo del código institucional
+
+entities_mentioned:
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: DEUDA-TECNICA
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - deuda-tecnica
+  - refactorizacion
+  - mantenimiento
+  - excelencia-ingenieria
+  - saneamiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de items de deuda con estimación de "Interés" (esfuerzo extra al no arreglarlo)
+  - Priorización automática basada en la frecuencia de cambio de los archivos involucrados
+  - Visualización del balance entre nuevas funcionalidades vs saneamiento de deuda en los reportes de ingeniería

@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_027:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-027
-urn: urn:goreos:atom:story:us_fin_ppto_027:1.0.0
-role_id: ROL-GESTION-PROF
+name: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
-so_that: Habilito ejecución financiera nacional
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Habilito la ejecución financiera nacional siguiendo el marco legal presupuestario
 
-mentions:
-- ENT-DIG-TOMA_RAZON
-- ENT-FIN-PRESUPUESTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-DIG-TOMA_RAZON
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-PRESUPUESTARIA
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - sigfe
+  - presupuesto
+  - toma-razon
+  - apertura
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de carga masiva de ítems presupuestarios validados
+  - Verificación de consistencia contra el decreto presupuestario tomado de razón
+  - Confirmación de recepción exitosa por parte de SIGFE

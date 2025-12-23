@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_pmg_td_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Referente Transformación Digital PMG
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_PMG_TD-001
-urn: urn:goreos:atom:story:us_gen_gestion_pmg_td_001:1.0.0
-role_id: ROL-GESTION-PMG-TD
+name: Historia genérica para Referente Transformación Digital PMG
+
+# === STORY CORE ===
 as_a: Referente Transformación Digital PMG
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PMG-TD
+  agent_type: HUMAN
+  description: Profesional referente de cada división encargado de reportar indicadores de Transformación Digital para el PMG institucional
+
+entities_mentioned:
+  - id: ENT-TDE-INDICADOR-DIGITALIZACION
+    status: candidate
+  - id: ENT-NORM-REPORTE-PMG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: TRANSFORMACION
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - pmg-td
+  - referente-digital
+  - modernización
+  - indicadores-gestion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga de evidencias mensuales de uso de Firma Electrónica y Cero Papel
+  - Registro de participación en capacitaciones de competencias digitales por unidad
+  - Dashboard de cumplimiento individual de metas de digitalización sectorial

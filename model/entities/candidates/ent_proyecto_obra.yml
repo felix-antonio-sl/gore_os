@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:ejec:proyecto_obra:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-EJEC-PROYECTO-OBRA"
+id: ENT-PROYECTO-OBRA
+name: "uLuPuRuOuYuEuCuTuOu uOuBuRuAu"
+tags: [EJEC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

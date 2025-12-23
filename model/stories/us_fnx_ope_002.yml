@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_ope_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un "Bypass Administrativo" en un flujo BPMN detenido
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-OPE-002
-urn: urn:goreos:atom:story:us_fnx_ope_002:1.0.0
-role_id: ROL-NORM-FIS
+name: Bypass Administrativo en un flujo BPMN detenido
+
+# === STORY CORE ===
 as_a: Fiscal Sumariante
-i_want: Ejecutar un "Bypass Administrativo" en un flujo BPMN detenido
-so_that: Fuerzo el avance de una etapa trabada por ausencia o error
-domain: D-FENIX
-priority: P0
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+i_want: Ejecutar un "Bypass Administrativo" en un flujo BPMN detenido por contingencia
+so_that: Fuerzo el avance de una etapa trabada por ausencia técnica o error sistémico bajo mi responsabilidad legal
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-FIS
+  agent_type: HUMAN
+  description: Funcionario designado como fiscal para investigaciones o intervenciones
+
+entities_mentioned:
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: CONTINUIDAD-OPERATIVA
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - bypass
+  - bpmn
+  - flujo
+  - contingencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de auditoría (logs) inextinguible sobre el uso del bypass
+  - Notificación inmediata a la jefatura del dominio afectado sobre el salto de etapa
+  - Requerimiento de firma digital avanzada del fiscal para activar el bypass

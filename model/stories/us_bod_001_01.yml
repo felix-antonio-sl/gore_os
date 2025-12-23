@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_bod_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ingreso y salida de insumos mediante código de barras
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BOD-001-01
-urn: urn:goreos:atom:story:us_bod_001_01:1.0.0
-role_id: ROL-BACK-OPS-BOD
+name: Ingreso y salida de insumos mediante código de barras
+
+# === STORY CORE ===
 as_a: Encargado Bodega
 i_want: ingreso y salida de insumos mediante código de barras
 so_that: el stock físico cuadre con el sistema
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-OPS-BOD
+  agent_type: HUMAN
+  description: Encargado de bodega responsable de la operación diaria y control de inventario
+
+entities_mentioned:
+  - id: ENT-ORG-ITEM-BODEGA
+    status: candidate
+  - id: ENT-SYS-CODIGO-BARRAS
+    status: candidate
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+
+process_ref:
+  id: PROC-ORG-CONTROL-EXISTENCIAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: LOGISTICA
+  priority: P2
+  scope: AREA
+
+extra_tags:
+  - bodega
+  - codigo-barras
+  - stock
+  - inventario
+  - operacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Escaneo de códigos de barras (EAN-13 / Code 128) para carga de stock
+  - Rebaja automática de stock al escanear salida para despacho interno
+  - Compatibilidad con pistolas lectoras USB y dispositivos móviles

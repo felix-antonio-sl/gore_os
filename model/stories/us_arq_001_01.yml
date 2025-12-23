@@ -1,14 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_arq_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizador de planos en formato BIM/CAD
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ARQ-001-01
-urn: urn:goreos:atom:story:us_arq_001_01:1.0.0
-role_id: ROL-DEV-ARQ
+name: Visualizador de planos en formato BIM/CAD
+
+# === STORY CORE ===
 as_a: Arquitecto Revisor (Proyectos)
 i_want: visualizador de planos en formato BIM/CAD
 so_that: pueda validar detalles constructivos
-domain: D-EJEC
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Arquitecto que revisa proyectos de infraestructura
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-EJEC-PROYECTO-OBRA
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO-TECNICO
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-REVISION-TECNICA
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: REVISION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - bim
+  - cad
+  - planos
+  - arquitectura
+  - revision-tecnica
+
+status: ENRICHED
+acceptance_criteria:
+  - Soporte para formatos IFC, DWG, RVT
+  - Visualización 3D interactiva
+  - Anotaciones y comentarios sobre planos
+  - Comparación de versiones

@@ -1,16 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_auth_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Logs de autenticación con trazabilidad completa (usuario, fecha,
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-AUTH-004
-urn: urn:goreos:atom:story:us_tde_auth_004:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Registrar logs de autenticación con trazabilidad completa (usuario, fecha,
-  IP)
-so_that: Mantengo auditoría de accesos conforme a DS9
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Logs de autenticación con trazabilidad completa
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: registrar logs de autenticación con trazabilidad completa (usuario, fecha, IP y método)
+so_that: se mantenga una auditoría de accesos conforme al DS9 y se detecten intentos de fuerza bruta
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador encargado de la seguridad perimetral y el monitoreo de accesos
+
+entities_mentioned:
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - logs
+  - ds9
+  - auditoria
+  - seguridad-informatica
+  - trazabilidad-login
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro automático en base de datos de auditoría de cada intento de login (exitoso y fallido)
+  - Geolocalización aproximada basada en IP para detectar accesos inusuales desde fuera del país
+  - Exportación de reportes mensuales de accesos para revisión de la jefatura de informática

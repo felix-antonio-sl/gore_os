@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_sec_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Coordinar agenda con gabinetes sectoriales (Seremías)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-SEC-001
-urn: urn:goreos:atom:story:us_gob_sec_001:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Coordinar agenda con gabinetes sectoriales (Seremías)
+
+# === STORY CORE ===
+as_a: Secretario de Gabinete (Gobernador)
 i_want: Coordinar agenda con gabinetes sectoriales (Seremías)
 so_that: Alineo agenda política
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Secretario o Asesor que gestiona la interlocución política con los gabinetes de los SEREMIs regionales
+
+entities_mentioned:
+  - id: ENT-GOB-MESA-GABINETES
+    status: candidate
+  - id: ENT-GOB-AGENDA-CONJUNTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - gabinete-gr
+  - gabinete-seremi
+  - coordinacion-agenda
+  - g2g
+  - protocolo-politico
+
+status: ENRICHED
+acceptance_criteria:
+  - Calendario compartido de hitos comunicacionales regionales (Corte de cinta, Primera piedra) para evitar topes
+  - Módulo de gestión de solicitudes de participación del Gobernador en actos ministeriales
+  - Registro de puntos de contacto estratégicos en cada gabinete sectorial de la región

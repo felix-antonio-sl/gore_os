@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppr_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar que no existe fraccionamiento de programas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPR-003
-urn: urn:goreos:atom:story:us_fin_ppr_003:1.0.0
-role_id: ROL-GESTION-ANALISTA-PPR
-as_a: Analista PPR
-i_want: Verificar que no existe fraccionamiento de programas
-so_that: Evito sobrepaso de topes
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Control de No Fraccionamiento de Programas
+
+# === STORY CORE ===
+as_a: Analista de Programas (PPR) / Auditor
+i_want: verificar que no exista fraccionamiento artificial de programas para evadir topes presupuestarios o niveles de aprobación superiores
+so_that: se cumpla con la normativa presupuestaria vigente, se respete la transparencia y se eviten auditorías negativas por parte de la Contraloría
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-PPR
+  agent_type: MACHINE
+  description: Motor de reglas preventivas encargado de detectar anomalías en la fragmentación de inversión
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: PROBIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - fraccionamiento
+  - probidad
+  - control-presupuestario
+  - ley-presupuestos
+  - cumplimiento-normativo
+
+status: ENRICHED
+acceptance_criteria:
+  - Algoritmo que detecta múltiples proyectos con objetivos y beneficiarios similares para un mismo ejecutor
+  - Alerta de "Proximidad de Tope" si la sumatoria de proyectos similares excede los límites de glosa
+  - Requisito de justificación especial por parte de la jefatura ante alertas de fraccionamiento potenciales

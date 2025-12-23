@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
-id: US-NORM-CGR-001
-urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
-role_id: ROL-GESTION-CGR
-as_a: Analista Toma de Razón (CGR)
-i_want: Recibir actos administrativos y emitir pronunciamiento (SIAPER/SISTRADOC)
-so_that: Ejerzo control preventivo
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-NORM-CGR-001
+name: Interacción con SIAPER/SISTRADOC (Rol CGR)
+
+# === STORY CORE ===
+as_a: Analista de Toma de Razón (CGR)
+i_want: Recibir los actos administrativos digitales del GORE Ñuble en mi bandeja de entrada de SIAPER/SISTRADOC
+so_that: pueda emitir pronunciamientos técnicos de forma coordinada con el sistema regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CGR
+  agent_type: HUMAN
+  description: Funcionario de la Contraloría Regional encargado de la fiscalización preventiva
+
+entities_mentioned:
+  - id: ENT-DIG-TOMA_RAZON
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONTRALORIA
+  priority: P0
+  scope: EXTERNO
+
+extra_tags:
+  - cgr
+  - siaper
+  - sistradoc
+  - interoperabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización del índice del expediente electrónico del GORE sin salir de la plataforma CGR
+  - Notificación de acuse de recibo automática al GORE una vez que el analista abre el archivo
+  - Sincronización de resoluciones de "RS" o "Representación" hacia el historial del trámite en GORE_OS

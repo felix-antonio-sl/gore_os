@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gab_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Crisis comunicacionales y políticas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GAB-003
-urn: urn:goreos:atom:story:us_gob_gab_003:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Crisis comunicacionales y políticas
+
+# === STORY CORE ===
+as_a: Jefe de Gabinete
 i_want: Gestionar crisis comunicacionales y políticas
 so_that: Respondo a contingencias
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de Gabinete responsable de la gestión de riesgos reputacionales y crisis políticas del GORE
+
+entities_mentioned:
+  - id: ENT-GOB-COMUNICACION-CRISIS
+    status: candidate
+  - id: ENT-SYS-ALERTA-REPUTACIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - crisis-politica
+  - comunicacion-estrategica
+  - gabinete
+  - contingencia
+  - reputacion-institucional
+
+status: ENRICHED
+acceptance_criteria:
+  - Sala de situación digital con monitoreo de prensa y redes sociales en tiempo real
+  - Módulo de creación y distribución rápida de comunicados oficiales y "talking points" para la autoridad
+  - Repositorio de protocolos de respuesta ante incidentes críticos (Ej: Malversación, Desastres naturales)

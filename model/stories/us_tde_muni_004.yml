@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_muni_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Habilitar ventanilla única municipal integrada a GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-MUNI-004
-urn: urn:goreos:atom:story:us_tde_muni_004:1.0.0
-role_id: ROL-GESTION-DIG
-as_a: Encargado Digital Muni
-i_want: Habilitar ventanilla única municipal integrada a GORE
-so_that: Centralizo atención
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Ventanilla Única Municipal integrada
+
+# === STORY CORE ===
+as_a: Encargado Digital Municipal
+i_want: habilitar una ventanilla única municipal que esté integrada semánticamente con los servicios del GORE
+so_that: se centralice la atención ciudadana y los vecinos puedan realizar trámites de ambos niveles de gobierno en un solo portal
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIG
+  agent_type: HUMAN
+  description: Contraparte técnica municipal responsable de la oficina virtual local
+
+entities_mentioned:
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: EXPERIENCIA-USUARIO
+  priority: P1
+  scope: CIUDADANO
+
+extra_tags:
+  - ventanilla-unica
+  - integracion
+  - portal-ciudadano
+  - municipios
+  - servicios-digitales
+
+status: ENRICHED
+acceptance_criteria:
+  - Consola de gestión unificada que diferencia visualmente trámites municipales de trámites GORE
+  - Single Sign-On (SSO) vía ClaveÚnica válido para ambos niveles
+  - Sistema de tickets compartido para derivar consultas ciudadanas entre GORE y Municipio de forma transparente

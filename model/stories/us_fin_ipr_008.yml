@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver historial de postulaciones con tasa de éxito
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-008
-urn: urn:goreos:atom:story:us_fin_ipr_008:1.0.0
-role_id: ROL-GESTION-G7-FORM
+name: Ver historial de postulaciones con tasa de éxito
+
+# === STORY CORE ===
 as_a: Formulador Programas Glosa 7
 i_want: Ver historial de postulaciones con tasa de éxito
 so_that: Mejoro mis futuras postulaciones
-domain: D-FIN
-priority: P2
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Funcionario o consultor externo encargado de formular proyectos bajo las glosas concursables (G7, G8)
+
+entities_mentioned:
+  - id: ENT-EJE-HISTORIAL-POSTULACIONES
+    status: candidate
+  - id: ENT-EJE-TASA-EXITO-FORMULADOR
+    status: candidate
+  - id: ENT-PLAN-INDICADOR-EFICIENCIA
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-PROYECTOS
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - historial-postulaciones
+  - tasa-exito
+  - glosa-7
+  - formulador
+  - mejora-continua
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard personal con el listado de proyectos presentados y su estado final (Aprobado, Rechazado, Observado)
+  - Analítica de motivos de rechazo frecuentes para aprendizaje organizacional
+  - Ranking de tipos de proyectos con mayor probabilidad de aprobación según criterios históricos

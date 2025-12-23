@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_com_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Encargado Comunicaciones DIPIR
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_COM-001
-urn: urn:goreos:atom:story:us_gen_gestion_com_001:1.0.0
-role_id: ROL-GESTION-COM
+name: Historia genérica para Encargado Comunicaciones DIPIR
+
+# === STORY CORE ===
 as_a: Encargado Comunicaciones DIPIR
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-COM
+  agent_type: HUMAN
+  description: Comunicador audiovisual o periodista especializado en la difusión de proyectos de infraestructura y transporte
+
+entities_mentioned:
+  - id: ENT-BACK-MATERIAL-GRAFICO
+    status: candidate
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - dipir
+  - comunicaciones
+  - prensa
+  - infraestructura
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de fotos y videos de avance de obras (Hitos) para redes sociales
+  - Workflow de aprobación de notas de prensa por parte del Jefe de División
+  - Calendario de hitos comunicacionales (Primeras piedras, inauguraciones) sincronizado con agenda

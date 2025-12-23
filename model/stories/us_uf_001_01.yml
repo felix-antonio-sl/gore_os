@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_uf_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Obtener el código BIP de mis iniciativas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-UF-001-01
-urn: urn:goreos:atom:story:us_uf_001_01:1.0.0
-role_id: ROL-GESTION-G7-FORM
-as_a: Formulador Programas Glosa 7
-i_want: obtener el código BIP de mis iniciativas
-so_that: pueda solicitar financiamiento FNDR
-domain: D-PLAN
-priority: P0
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+name: Obtención de código BIP para iniciativas GND
+
+# === STORY CORE ===
+as_a: Formulador de Programas Glosa 7 (Subvenciones)
+i_want: obtener el código BIP (Banco Integrado de Proyectos) para mis iniciativas de inversión
+so_that: pueda solicitar formalmente el financiamiento FNDR y cumplir con la normativa de inversión pública
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Formulador de proyectos encargado de la postulación técnica ante el Ministerio de Desarrollo Social
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: FORMULACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - bip
+  - fndr
+  - glosa7
+  - inversion-publica
+  - mideso
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración o consulta manual validada con el sistema BIP del Ministerio de Desarrollo Social
+  - Campo de código BIP obligatorio para el paso a etapa de financiamiento
+  - Validación de formato del código BIP (9 dígitos)

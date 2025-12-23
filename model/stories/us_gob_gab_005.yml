@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gab_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Preparar minutas y briefs para autoridad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GAB-005
-urn: urn:goreos:atom:story:us_gob_gab_005:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Preparar minutas y briefs para autoridad
+
+# === STORY CORE ===
+as_a: Asesor de Gabinete
 i_want: Preparar minutas y briefs para autoridad
 so_that: Apoyo la toma de decisiones
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Asesor estratégico de Gabinete encargado de sintetizar información técnica relevante para el Gobernador
+
+entities_mentioned:
+  - id: ENT-NORM-MINUTA-EJECUTIVA
+    status: candidate
+  - id: ENT-PLAN-ESTRATEGIA-COMUNICACIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - minutas
+  - brief
+  - toma-decisiones
+  - asesoria-autoridad
+  - gabinete
+
+status: ENRICHED
+acceptance_criteria:
+  - Generador de minutas ejecutivas con formato estándar (Contexto, Actores, Nudos Críticos, Recomendación)
+  - Módulo de colaboración en tiempo real entre divisiones para aportar datos técnicos a la minuta de Gabinete
+  - Repositorio searchable de briefs previos para evitar contradicciones en el discurso público de la autoridad

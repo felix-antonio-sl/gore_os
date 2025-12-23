@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_tic_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Identidad digital (ClaveÚnica/SSO)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-TIC-002
-urn: urn:goreos:atom:story:us_tde_tic_002:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Gestionar identidad digital (ClaveÚnica/SSO)
-so_that: Centralizo autenticación
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Gestión de Identidad Digital (SSO)
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: gestionar la identidad digital institucional mediante Single Sign-On (SSO) integrado con ClaveÚnica y Azure AD
+so_that: se centralice la autenticación, se simplifique la gestión de contraseñas y se aumente la seguridad del acceso
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador técnico del directorio de identidades y sistemas de acceso
+
+entities_mentioned:
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: IDENTIDAD
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - sso
+  - claveunica
+  - azure-ad
+  - identidad-centralizada
+  - seguridad-acceso
+
+status: ENRICHED
+acceptance_criteria:
+  - Capacidad de loguearse a todos los módulos internos del GORE con una sola cuenta institucional
+  - Sincronización automática de bajas de personal desde el directorio activo a las aplicaciones
+  - Auditoría centralizada de intentos de acceso sospechosos bloqueados por el SSO

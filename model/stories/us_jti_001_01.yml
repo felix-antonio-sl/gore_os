@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jti_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un inventario automatizado de activos TI
-id: US-JTI-001-01
-urn: urn:goreos:atom:story:us_jti_001_01:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: un inventario automatizado de activos TI
-so_that: pueda planificar renovaciones tecnológicas
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-INVENTARIO
+id: US-JTI-001-01
+name: Gestión Automatizada de Activos TI
+
+# === STORY CORE ===
+as_a: Jefe de Tecnologías de la Información (TI)
+i_want: Un inventario automatizado y georreferenciado de todos los activos tecnológicos (hardware y software)
+so_that: pueda planificar renovaciones, gestionar garantías y asegurar la continuidad operativa institucional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Responsable de la infraestructura tecnológica y sistemas de información
+
+entities_mentioned:
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: INFRAESTRUCTURA-TI
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - activos-ti
+  - inventario
+  - hardware
+  - obsolescencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Escaneo automático de red para detección de nuevos dispositivos
+  - Registro de licencias de software con alertas de vencimiento (SaaS/On-premise)
+  - Historial de mantenimiento y asignación por funcionario

@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_003:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-BP-003
+name: Estrategia de Testing Automatizado (Unit/Integration)
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Implementar pruebas unitarias e integración con una cobertura mínima del 80%
+so_that: se detecten regresiones de forma temprana y se garantice la fiabilidad de los procesos críticos del GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador enfocado en la calidad del software
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: TESTING
+  priority: P0
+  scope: CALIDAD
+
+extra_tags:
+  - tdd
+  - unit-tests
+  - coverage
+  - regresion
+
+status: ENRICHED
+acceptance_criteria:
+  - Ejecución automática de pruebas en cada Pull Request
+  - Bloqueo de PRs si la cobertura de código disminuye respecto al master
+  - Mocks estandarizados para servicios externos (CGR, MDS, etc.)

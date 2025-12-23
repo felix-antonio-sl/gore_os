@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mesa_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una base de conocimientos con soluciones frecuentes
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-MESA-001-01
-urn: urn:goreos:atom:story:us_mesa_001_01:1.0.0
-role_id: ROL-GESTION-TIC-MESA
-as_a: Mesa de Ayuda
-i_want: una base de conocimientos con soluciones frecuentes
-so_that: pueda resolver tickets en la primera llamada
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Base de Conocimiento para Soporte TI
+
+# === STORY CORE ===
+as_a: Especialista de Mesa de Ayuda (Soporte TI)
+i_want: Un repositorio indexado de incidentes frecuentes y "How-To" técnicos
+so_that: pueda resolver tickets de usuario en el primer nivel de contacto y reducir los tiempos de inactividad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-MESA
+  agent_type: HUMAN
+  description: Técnico encargado de la atención de primer nivel y soporte a usuarios internos
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: SOPORTE-USUARIO
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - mesa-de-ayuda
+  - base-conocimiento
+  - tickets
+  - soporte
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador inteligente que sugiera artículos de solución basados en el título del ticket
+  - Módulo de auto-consulta para usuarios finales (Self-service)
+  - Estadísticas de efectividad de las soluciones propuestas (votos de usuario)

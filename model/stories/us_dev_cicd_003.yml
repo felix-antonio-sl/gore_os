@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_cicd_003:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-CICD-003
+name: Promoción Segura a Producción con Puerta de Calidad
+
+# === STORY CORE ===
+as_a: Lead Developer
+i_want: Definir una "Puerta de Calidad" (Quality Gate) manual para autorizar el paso de código de Staging a Producción
+so_that: se minimice el riesgo de errores críticos que afecten la operación real del Gobierno Regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador lider responsable de la estabilidad productiva
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: GOBERNANZA-TI
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - production
+  - quality-gate
+  - release-management
+  - seguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Requerimiento de firma digital o aprobación explícita de al menos dos técnicos autorizados
+  - Verificación automática de que todos los tests de integración pasaron satisfactoriamente
+  - Plan de rollback automático listo para ser ejecutado en caso de fallo en el entorno productivo

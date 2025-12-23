@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_mon_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas con umbrales personalizados basados en métricas
-id: US-OPS-MON-001
-urn: urn:goreos:atom:story:us_ops_mon_001:1.0.0
-role_id: ROL-GESTION-TIC-SRE
-as_a: Ingeniero SRE
-i_want: configurar alertas con umbrales personalizados basados en métricas
-so_that: el equipo sea proactivo ante posibles fallos del sistema
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
-- ENT-SAL-UMBRAL
+id: US-OPS-MON-001
+name: Configuración de Alertas Inteligentes (SRE)
+
+# === STORY CORE ===
+as_a: Ingeniero de Conectividad / SRE
+i_want: Configurar alertas críticas con umbrales personalizados basados en métricas de rendimiento (Latencia, CPU, Error Rate)
+so_that: el equipo de operaciones pueda actuar de forma proactiva ante degradaciones de servicio antes de que impacten al funcionario o ciudadano
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CON-ING
+  agent_type: HUMAN
+  description: Ingeniero especializado en observabilidad y rendimiento de redes
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-UMBRAL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: OBSERVABILIDAD
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - monitoreo
+  - alertas
+  - sre
+  - performance
+
+status: ENRICHED
+acceptance_criteria:
+  - Canales de notificación multicanal (Telegram, Email, Webpush) según severidad
+  - Supresión de alertas redundantes (Alert Fatigue prevention) mediante el motor de correlación
+  - Capacidad de definir alertas mediante código (Prometheus Rules / Terraform)

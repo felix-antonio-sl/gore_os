@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_corfo_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para CORFO
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CORFO-001
-urn: urn:goreos:atom:story:us_gen_gestion_corfo_001:1.0.0
-role_id: ROL-GESTION-CORFO
+name: Historia genérica para CORFO
+
+# === STORY CORE ===
 as_a: CORFO
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CORFO
+  agent_type: HUMAN
+  description: Representante de la Corporación de Fomento de la Producción (CORFO) que gestiona fondos de innovación y emprendimiento con el GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - corfo
+  - fomento-productivo
+  - innovacion
+  - emprendimiento
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a panel de control de transferencias financieras enviadas por el GORE a CORFO
+  - Módulo de carga de informes semestrales de impacto de los fondos de emprendimiento
+  - Repositorio compartido de bases de concursos co-financiados

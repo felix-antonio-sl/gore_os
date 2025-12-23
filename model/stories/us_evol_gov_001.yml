@@ -1,18 +1,45 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_gov_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Cambios críticos (Gobierno)
-id: US-EVOL-GOV-001
-urn: urn:goreos:atom:story:us_evol_gov_001:1.0.0
-role_id: ROL-GESTION-PRES
-as_a: Presidente Subcomité IA
-i_want: Aprobar cambios críticos (Gobierno)
-so_that: Controlo cambios mayores
-domain: D-EVOL
-priority: P0
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-EVOL-GOV-001
+name: Aprobación de Cambios Críticos de Arquitectura
+
+# === STORY CORE ===
+as_a: Presidente del Subcomité de Inteligencia Artificial / Gobernanza
+i_want: revisar y aprobar formalmente los cambios críticos sugeridos en la arquitectura o el modelo de datos
+so_that: se mantenga el control sobre las evoluciones mayores del sistema y se asegure la alineación con la estrategia regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: HUMAN
+  description: Directivo responsable de la gobernanza técnica y ética del sistema
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: GOBERNANZA
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - gobernanza
+  - aprobacion
+  - cambios-criticos
+  - arquitectura
+  - core
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de aprobación digital con registro de firma para cambios que impactan el core del modelo
+  - Panel de "Cambios Pendientes" con análisis de impacto técnico y funcional
+  - Notificación automática a los líderes de división tras la aprobación de una evolución mayor

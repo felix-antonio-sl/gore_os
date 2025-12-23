@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_dom_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitar asistencia técnica al GORE para actualizar el PRC
-id: US-TERR-DOM-002
-urn: urn:goreos:atom:story:us_terr_dom_002:1.0.0
-role_id: ROL-EJEC-DOM
-as_a: Director de Obras (DOM)
-i_want: Solicitar asistencia técnica al GORE para actualizar el PRC
-so_that: Mantengo el instrumento vigente según dinámica territorial
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ASISTENCIA
-- ENT-ORG-ASISTENCIA
+id: US-TERR-DOM-002
+name: Asistencia técnica para actualización de PRC
+
+# === STORY CORE ===
+as_a: Director de Obras Municipales (DOM)
+i_want: solicitar asistencia técnica formal al GORE para la actualización del Plan Regulador Comunal (PRC)
+so_that: se mantenga el instrumento de planificación vigente y alineado con la dinámica territorial y normativa regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-DOM
+  agent_type: HUMAN
+  description: Directiva municipal responsable de la edificación y planificación urbana local
+
+entities_mentioned:
+  - id: ENT-CONV-ASISTENCIA
+    status: linked
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: PLANIFICACION-URBANA
+  priority: P1
+  scope: COMUNAL
+
+extra_tags:
+  - prc
+  - asistencia-tecnia
+  - planos-reguladores
+  - municipios
+  - desarrollo-urbano
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de ingreso de solicitudes de asistencia técnica con carga de términos de referencia (TDR)
+  - Workflow de revisión por parte de la División de Planificación (DIPLAD) del GORE
+  - Repositorio de estudios previos y capas diagnósticas compartidas entre Municipio y GORE

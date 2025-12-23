@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Permiso de acceso limitado a la intranet
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TCORP-001-01
-urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
-role_id: ROL-GESTION-EQ
-as_a: Trabajador Corporación
-i_want: permiso de acceso limitado a la intranet
-so_that: pueda coordinarme con las unidades del GORE
-domain: D-BACK
-priority: P2
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
+name: Acceso limitado a la Intranet para Corporaciones
+
+# === STORY CORE ===
+as_a: Trabajador de Corporación Regional
+i_want: permiso de acceso limitado a la intranet institucional del GORE
+so_that: pueda coordinarme con las unidades del Gobierno Regional y acceder a circulares técnicas relevantes
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-EQ
+  agent_type: HUMAN
+  description: Personal de corporaciones de derecho privado vinculadas al GORE (Fomento, Cultura, etc.)
+
+entities_mentioned:
+  - id: ENT-TDE-INTRANET-RESOURCE
+    status: candidate
+  - id: ENT-ORG-CORPORACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACION-INTERNA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - corporacion
+  - intranet
+  - acceso
+  - coordinacion
+  - vinculacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Perfil de usuario "Invitado Externo" con restricciones de visualización de datos sensibles
+  - Acceso habilitado solo a carpetas de "Normativa Técnica" y "Formatos de Rendición"
+  - Autenticación multifactor requerida debido al acceso desde redes externas al GORE

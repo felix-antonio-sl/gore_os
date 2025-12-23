@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_sec_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Convenios sectoriales (marco)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-SEC-001
-urn: urn:goreos:atom:story:us_ejec_sec_001:1.0.0
-role_id: ROL-GESTION-UCR-COOR
-as_a: Coordinador UCR
-i_want: Gestionar convenios sectoriales (marco)
-so_that: Formalizo relación con ministerios
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Gestión de Convenios Marcos Sectoriales
+
+# === STORY CORE ===
+as_a: Coordinador de la Unidad de Control de Rendiciones (UCR)
+i_want: gestionar y supervisar el cumplimiento de los Convenios Marcos Sectoriales firmados con Ministerios
+so_that: se formalice la relación técnica y financiera con el nivel central y se asegure el correcto traspaso de competencias y recursos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UCR-COOR
+  agent_type: HUMAN
+  description: Responsable de la coordinación administrativa de las transferencias con entes externos
+
+entities_mentioned:
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-ELABORACION-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: CONVENIOS-MARCO
+  priority: P1
+  scope: NACIONAL
+
+extra_tags:
+  - convenios-sectoriales
+  - ministerios
+  - ucr
+  - presupuesto-nacional
+  - rendicion-cuentas
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de Resoluciones de Aprobación de convenios vigentes por Ministerio
+  - Sistema de alertas de vencimiento de la vigencia del convenio marco
+  - Reporte consolidado de recursos ejecutados vía convenio sectorial vs inversión propia GORE

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jcont_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un checklist de cierre mensual automatizado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-JCONT-001-01
-urn: urn:goreos:atom:story:us_jcont_001_01:1.0.0
-role_id: ROL-FIN-JEFE-DEPTO-C
+name: Cierre Contable Mensual Automatizado
+
+# === STORY CORE ===
 as_a: Jefe Depto. Contabilidad
-i_want: un checklist de cierre mensual automatizado
-so_that: pueda verificar completitud del proceso
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+i_want: Un checklist de cierre mensual con validaciones automáticas de integridad de datos
+so_that: pueda asegurar que la información contable sea fidedigna y esté lista para el reporte a Contraloría y SIGFE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-JEFE-DEPTO-C
+  agent_type: HUMAN
+  description: Jefe del departamento de contabilidad regional
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CIERRE-PRESUPUESTARIO
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTABILIDAD
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - cierre-contable
+  - auditoria
+  - sigfe
+  - integridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación automática de cuadratura entre devengado y percibido
+  - Conciliación bancaria digital integrada con el extracto bancario
+  - Bloqueo de transacciones retroactivas una vez firmado el acta de cierre mensual

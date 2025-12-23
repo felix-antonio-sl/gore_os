@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:soc:plan_emergencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SOC-PLAN-EMERGENCIA"
+id: ENT-PLAN-EMERGENCIA
+name: "uLuPuLuAuNu uEuMuEuRuGuEuNuCuIuAu"
+tags: [SOC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

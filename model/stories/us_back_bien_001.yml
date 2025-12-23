@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Afiliaciones (socio con descuento)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-001
-urn: urn:goreos:atom:story:us_back_bien_001:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Afiliaciones (socio con descuento)
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: Registrar afiliaciones (socio con descuento)
 so_that: Gestiono membresía
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: HUMAN
+  description: Profesional de la unidad de Bienestar encargado del registro y atención de socios
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-FIN-SOCIO-BIENESTAR
+    status: candidate
+  - id: ENT-FIN-DESCUENTO-PLANILLA
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-AFILIACION-BIENESTAR
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: BIENESTAR
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - bienestar
+  - afiliaciones
+  - socios
+  - descuentos
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de inscripción digital con autorización de descuento firmada electrónicamente
+  - Validación de calidad de funcionario vigente previo a la afiliación
+  - Integración con el sistema de remuneraciones para el descuento automático de la cuota

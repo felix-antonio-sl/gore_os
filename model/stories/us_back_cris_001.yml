@@ -1,17 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_cris_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Adhesión diaria a paro nacional por funcionario
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-CRIS-001
-urn: urn:goreos:atom:story:us_back_cris_001:1.0.0
-role_id: ROL-BACK-PER-GEST
+name: Adhesión diaria a paro nacional por funcionario
+
+# === STORY CORE ===
 as_a: Gestor de Personas
 i_want: Registrar adhesión diaria a paro nacional por funcionario
 so_that: Calculo descuentos legales y mantengo servicios mínimos
-domain: D-BACK
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: HUMAN
+  description: Gestor de personas encargado de la continuidad operativa y control de asistencia en contingencias
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-CONTINGENCIA-LABORAL
+    status: candidate
+  - id: ENT-FIN-DESCUENTO-LEGAL
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-CONTINGENCIAS-PERSONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CONTINGENCIA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - paro-nacional
+  - contingencia
+  - descuentos
+  - rrhh
+  - servicios-minimos
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de carga rápida diaria para marcar funcionarios en adhesión
+  - Reporte consolidado por unidad para asegurar servicios mínimos críticos
+  - Reporte de horas no trabajadas transferible automáticamente a remuneraciones para descuento

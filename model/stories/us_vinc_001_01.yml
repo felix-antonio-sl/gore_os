@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_vinc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un CRM de stakeholders regionales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-VINC-001-01
-urn: urn:goreos:atom:story:us_vinc_001_01:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: un CRM de stakeholders regionales
-so_that: mantenga actualizada la agenda de contactos
-domain: D-GOB
-priority: P2
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+name: CRM de Stakeholders Regionales
+
+# === STORY CORE ===
+as_a: Encargado de Relaciones Institucionales / Calidad
+i_want: un sistema de gestión de relaciones (CRM) que centralice a los stakeholders regionales (Alcaldes, COSOC, ONGs, Gremio)
+so_that: se mantenga una agenda coordinada y se agilice la comunicación entre el GORE y las fuerzas vivas de la región
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Responsable de la vinculación institucional y la gestión de redes de contacto del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-CORPORACION
+    status: candidate
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-GABINETE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: VINCULACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - crm
+  - stakeholders
+  - participacion
+  - vinculacion-institucional
+  - redes
+
+status: ENRICHED
+acceptance_criteria:
+  - Base de datos de contactos con segmentación por Sector, Comuna y Rol Social
+  - Historial de interacciones (Reuniones, Oficios, Llamados) vinculado a cada actor regional
+  - Módulo de envío de invitaciones masivas para hitos de participación ciudadana o ceremonias GORE

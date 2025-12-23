@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_c33_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un catálogo de precios referenciales de vehículos y maquinaria
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-C33-001-01
-urn: urn:goreos:atom:story:us_c33_001_01:1.0.0
-role_id: ROL-OPS-C33
+name: Un catálogo de precios referenciales de vehículos y maquinaria
+
+# === STORY CORE ===
 as_a: Analista Operaciones C33
 i_want: un catálogo de precios referenciales de vehículos y maquinaria
 so_that: pueda evaluar la eficiencia del gasto
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-VEHICULO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-C33
+  agent_type: HUMAN
+  description: Analista encargado de evaluar proyectos de adquisición de maquinaria y vehículos bajo la Circular 33
+
+entities_mentioned:
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-FIN-PRECIO-REFERENCIAL
+    status: candidate
+  - id: ENT-EJEC-FICHA-C33
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-EVALUACION-TECNICA-C33
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - circular-33
+  - maquinaria
+  - vehiculos
+  - precios-referenciales
+  - eficiencia-gasto
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo actualizado semestralmente con precios de mercado de maquinaria pesada y vehículos institucionales
+  - Comparativa de precios históricos por tipo de equipo
+  - Sugerencia automática de presupuesto estimado basado en el catálogo para nuevas solicitudes de municipios

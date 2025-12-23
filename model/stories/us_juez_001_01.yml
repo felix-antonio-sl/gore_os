@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_juez_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: La remisión de expedientes originales digitalizados y certificados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-JUEZ-001-01
-urn: urn:goreos:atom:story:us_juez_001_01:1.0.0
-role_id: ROL-GESTION-TRIB-CUENTA
+name: La remisión de expedientes originales digitalizados y certificados
+
+# === STORY CORE ===
 as_a: Juez de Cuentas (CGR)
 i_want: la remisión de expedientes originales digitalizados y certificados
 so_that: se pueda instruir el juicio de cuentas
-domain: D-NORM
-priority: P2
-competence_id: CPT-NORM-CONTROL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRIB-CUENTA
+  agent_type: HUMAN
+  description: Magistrado o funcionario del Tribunal de Cuentas de la CGR que juzga la inversión de caudales públicos
+
+entities_mentioned:
+  - id: ENT-NORM-EXPEDIENTE-ORIGINAL
+    status: candidate
+  - id: ENT-FIN-CUENTA-GORE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: FISCALIZACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - contraloria
+  - cgr
+  - juicio-de-cuentas
+  - probidad
+  - remision-digital
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de expedientes originales con firma electrónica avanzada y estampado de tiempo (Time-stamp)
+  - Protocolo de remisión digital interoperable con sistemas de la Contraloría General de la República
+  - Registro de trazabilidad completo (Audit Trail) de cada archivo enviado al Tribunal de Cuentas

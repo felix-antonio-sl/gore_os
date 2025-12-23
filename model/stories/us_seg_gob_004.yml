@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_gob_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportar un incidente o foco delictual de manera anónima desde App/Web
-id: US-SEG-GOB-004
-urn: urn:goreos:atom:story:us_seg_gob_004:1.0.0
-role_id: ROL-GESTION-PMG-GEN
-as_a: Referente Equidad de Género
-i_want: Reportar un incidente o foco delictual de manera anónima desde App/Web
-so_that: Colaboro con la seguridad sin riesgo personal
-domain: D-SEG
-priority: P1
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-RIESGO
+id: US-SEG-GOB-004
+name: Reporte anónimo de incidentes o focos delictuales
+
+# === STORY CORE ===
+as_a: Ciudadano / Usuario de la Región
+i_want: reportar un incidente o foco delictual de manera anónima desde una App o Web
+so_that: pueda colaborar con la seguridad regional sin exponer mi integridad personal
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EXT-CIUDADANO
+  agent_type: HUMAN
+  description: Vecino de la región que desea informar situaciones irregulares de forma protegida
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-SEG-DENUNCIA-ANONIMA
+    status: candidate
+  - id: ENT-LOC-PUNTO-GEOGRAFICO
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-MONITOREO-CIUDADANO
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: PARTICIPACION-CIUDADANA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - denuncia-anonima
+  - reporte-ciudadano
+  - focos-delictuales
+  - app-seguridad
+  - colaboracion
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz simple (formulario o mapa) que no requiere login ni captura de datos personales (GDPR/Privacidad)
+  - Capacidad de adjuntar fotos ocultando automáticamente metadatos de ubicación (EXIF) para proteger al denunciante
+  - Sistema de derivación automática del reporte al analista del CIES para su validación técnica

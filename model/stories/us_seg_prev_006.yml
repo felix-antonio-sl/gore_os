@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_prev_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ejecución financiera de convenios con municipios
-id: US-SEG-PREV-006
-urn: urn:goreos:atom:story:us_seg_prev_006:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: Monitorear ejecución financiera de convenios con municipios
-so_that: Controlo uso de recursos
-domain: D-SEG
-priority: P1
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-SEG-PREV-006
+name: Monitoreo financiero de convenios de seguridad con municipios
+
+# === STORY CORE ===
+as_a: Analista de Prevención (GORE)
+i_want: monitorear la ejecución financiera de los convenios de seguridad con municipios
+so_that: se controle el correcto uso de los recursos transferidos y se asegure el cumplimiento de hitos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista técnico-administrativo encargado de fiscalizar los proyectos de seguridad municipal financiados por el GORE
+
+entities_mentioned:
+  - id: ENT-FIN-CONVENIO-TRANSFERENCIA
+    status: candidate
+  - id: ENT-EJEC-AVANCE-FINANCIERO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-CONTROL-RENDICIONES
+  status: linked
+
+tags:
+  domain: D-SEG
+  aspect: FINANZAS-SEGURIDAD
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - convenios
+  - municipios
+  - monitoreo-financiero
+  - transferencias
+  - ejecucion-presupuestaria
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de transferencias por comuna y mecanismo (FNDR, Circular 33, Fondos Concursables)
+  - Sistema de alertas ante rendiciones pendientes o sub-ejecución presupuestaria por parte del municipio
+  - Flujo de validación de facturas y estados de pago electrónicos integrados con la unidad técnica

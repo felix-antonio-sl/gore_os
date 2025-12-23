@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-005
-urn: urn:goreos:atom:story:us_tde_seg_005:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
-so_that: Protejo información
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Cifrado en tránsito y en reposo para datos sensibles
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: implementar cifrado de grado militar en tránsito (TLS 1.2+) y en reposo (AES-256) para toda la información sensible de los ciudadanos
+so_that: se proteja la privacidad ante posibles brechas de seguridad o accesos no autorizados a la infraestructura física
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Garante técnico del cifrado de la información institucional
+
+entities_mentioned:
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD-DATOS
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - cifrado
+  - tls
+  - encryption-at-rest
+  - aes-256
+  - privacidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación de certificados SSL/TLS con calificación A+ en pruebas de seguridad (ej. Qualys/SSL Labs)
+  - Encriptación de volúmenes de base de datos y buckets de archivos con gestión de llaves centralizada (KMS)
+  - Políticas de acceso que impiden la lectura de datos sensibles a administradores de infraestructura sin privilegios de aplicación

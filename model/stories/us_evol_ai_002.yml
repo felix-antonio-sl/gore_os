@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_ai_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: En un log inmutable cada decisión tomada por un agente autónomo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-AI-002
-urn: urn:goreos:atom:story:us_evol_ai_002:1.0.0
-role_id: ROL-GESTION-KODA
-as_a: Agente KODA
-i_want: Registrar en un log inmutable cada decisión tomada por un agente autónomo
-so_that: Garantizo la explicabilidad (XAI) ante auditorías
-domain: D-EVOL
-priority: P0
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+name: Log Inmutable de Decisiones de Agentes Autónomos
+
+# === STORY CORE ===
+as_a: Agente KODA / Arquitecto de Sistemas
+i_want: registrar en un log inmutable todas las decisiones intermedias y finales tomadas por agentes autónomos dentro del sistema
+so_that: se garantice la explicabilidad total (XAI) ante auditorías ciudadanas o judiciales y se mantenga la trazabilidad de la IA
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: MACHINE
+  description: Identidad digital autónoma bajo el framework KODA
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: EXPLICABILIDAD-AI
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - xai
+  - logs-inmutables
+  - agentes-autonomos
+  - koda
+  - trazabilidad-ia
+
+status: ENRICHED
+acceptance_criteria:
+  - Almacenamiento de logs en estructura Hash-Chain para asegurar la no-manipulación
+  - Captura del "Prompt original", "Contexto recuperado" y "Razonamiento del modelo (Chain-of-Thought)"
+  - Interfaz de auditoría para reconstruir la lógica de cualquier decisión automatizada del sistema

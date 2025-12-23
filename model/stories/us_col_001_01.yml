@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_col_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Registro público de consultores sancionados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COL-001-01
-urn: urn:goreos:atom:story:us_col_001_01:1.0.0
-role_id: ROL-GESTION-REP-AMUCH
+name: Registro público de consultores sancionados
+
+# === STORY CORE ===
 as_a: Representante AMUCH
 i_want: registro público de consultores sancionados
 so_that: se resguarde la fe pública
-domain: D-NORM
-priority: P2
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-REP-AMUCH
+  agent_type: HUMAN
+  description: Representante de la Asociación de Municipalidades de Chile velando por la probidad en la contratación pública
+
+entities_mentioned:
+  - id: ENT-NORM-CONSULTOR-SANCIONADO
+    status: candidate
+  - id: ENT-ORG-PROVEEDOR
+    status: linked
+  - id: ENT-NORM-SANCION-ADMINISTRATIVA
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-CONTROL-PROBIDAD
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - consultores
+  - sanciones
+  - probidad
+  - amuch
+  - contratacion-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador público por RUT o Nombre de consultor
+  - Detalle de la resolución de sanción y periodo de inhabilidad
+  - Sincronización con el registro de proveedores de ChileCompra

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_dpo_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Notificar brechas de datos a la Agencia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-DPO-003
-urn: urn:goreos:atom:story:us_tde_dpo_003:1.0.0
-role_id: ROL-GESTION-DPO
-as_a: DPO
-i_want: Notificar brechas de datos a la Agencia
-so_that: Cumplo con notificación obligatoria
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Notificación de brechas de seguridad de datos
+
+# === STORY CORE ===
+as_a: Delegado de Protección de Datos (DPO)
+i_want: notificar formalmente brechas de seguridad de datos a la Agencia de Protección de Datos y a los afectados
+so_that: se cumpla con la obligación de reporte oportuno y se mitiguen los riesgos para los ciudadanos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPO
+  agent_type: HUMAN
+  description: Responsable de la gestión de incidentes de privacidad y comunicación con la autoridad
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-TDE-DPO-REPORT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: PRIVACIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - brechas
+  - hackeo
+  - seguridad
+  - notificacion-obligatoria
+  - ciberseguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Protocolo de comunicación automatizado con plantillas pre-aprobadas para la autoridad
+  - Registro detallado del alcance de la brecha (N° de registros, tipo de datos)
+  - Dashboard de incidentes de privacidad para el Comité de Seguridad de la Información

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_bien_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Registro de cargas familiares y seguros complementarios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BIEN-001-01
-urn: urn:goreos:atom:story:us_bien_001_01:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Registro de cargas familiares y seguros complementarios
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: registro de cargas familiares y seguros complementarios
 so_that: pueda gestionar reembolsos médicos
-domain: D-BACK
-priority: P1
-competence_id: CPT-RRHH-GESTOR-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: HUMAN
+  description: Profesional de Bienestar encargado de la administración de beneficios
+
+entities_mentioned:
+  - id: ENT-ORG-CARGA-FAMILIAR
+    status: candidate
+  - id: ENT-FIN-SEGURO-COMPLEMENTARIO
+    status: candidate
+  - id: ENT-FIN-REEMBOLSO-MEDICO
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-BENEFICIARIOS
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: BIENESTAR
+  priority: P1
+  scope: FAMILIAR
+
+extra_tags:
+  - bienestar
+  - cargas-familiares
+  - seguros-complementarios
+  - rrhh
+  - salud
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización automática de cargas familiares con el sistema de personal
+  - Registro de pólizas de seguro complementario vigentes por convenio
+  - Validación de parentesco y edad para la aplicabilidad de seguros

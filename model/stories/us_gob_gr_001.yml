@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gr_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Formular políticas de desarrollo regional (ERD/PROT/ZUBC)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GR-001
-urn: urn:goreos:atom:story:us_gob_gr_001:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Formular políticas de desarrollo regional (ERD/PROT/ZUBC)
+
+# === STORY CORE ===
+as_a: Gobernador Regional
 i_want: Formular políticas de desarrollo regional (ERD/PROT/ZUBC)
 so_that: Defino rumbo estratégico
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Gobernador Regional como máxima autoridad ejecutiva encargada del diseño de políticas públicas territoriales
+
+entities_mentioned:
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-TERR-PROT-ORDENAMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ALINEACION-ERD
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - gobernador
+  - erd
+  - prot
+  - políticas-publicas
+  - estrategia-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de seguimiento de hitos de actualización de la ERD y el PROT institucional
+  - Capacidad de simular impacto de políticas sectoriales en las metas de largo plazo de la región
+  - Workflow de aprobación política (CORE) e ingreso a Contraloría de los nuevos reglamentos de política regional

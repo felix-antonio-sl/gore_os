@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_013:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Con SIGFE validando consistencia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-013
-urn: urn:goreos:atom:story:us_fin_ppto_013:1.0.0
-role_id: ROL-GESTION-PROF
+name: Sincronizar con SIGFE validando consistencia
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Sincronizar con SIGFE validando consistencia
-so_that: Mantengo datos alineados
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Mantengo los datos financieros alineados entre el GORE y el sistema central del Estado
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: INTEROPERABILIDAD
+  priority: P1
+  scope: SISTEMICO
+
+extra_tags:
+  - sigfe
+  - sincronizacion
+  - consistencia
+  - interoperabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación de cuadratura entre saldos locales y saldos SIGFE antes de confirmar sincronización
+  - Log de errores de integración detallado por transacción
+  - Reporte de diferencias detectadas con sugerencias de ajuste automático

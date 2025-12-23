@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_dev_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a documentación técnica y APIs
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-DEV-001
-urn: urn:goreos:atom:story:us_tde_dev_001:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
+name: Documentación técnica y Portal de APIs
+
+# === STORY CORE ===
 as_a: Desarrollador
-i_want: acceso a documentación técnica y APIs
-so_that: pueda integrar sistemas
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: acceder a documentación técnica actualizada, especificaciones OpenAPI y sandbox de APIs
+so_that: pueda integrar sistemas externos de forma eficiente y segura con el núcleo de GORE_OS
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DESARROLLADO
+  agent_type: HUMAN
+  description: Desarrollador que requiere consumir servicios del GORE para integraciones sectoriales
+
+entities_mentioned:
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: DESARROLLO
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - apis
+  - openapi
+  - swagger
+  - documentacion
+  - integracion
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal de documentación vivo basado en Swagger/Redoc accesible bajo autenticación
+  - Ejemplos de código en lenguajes comunes (Python, JS, Go) para los endpoints principales
+  - Ambiente Sandbox con datos sintéticos para pruebas de integración sin afectar producción

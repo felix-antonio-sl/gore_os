@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_prod_002:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-PROD-002
+name: Gestión de Capacidades de Infraestructura (Capacity Planning)
+
+# === STORY CORE ===
+as_a: Ingeniero de Plataforma
+i_want: Evaluar y proyectar el consumo de recursos (CPU, RAM, Storage) para el próximo trimestre basado en la carga actual de producción
+so_that: se pueda gestionar el presupuesto de infraestructura y evitar caídas por saturación del sistema
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-TIC-PLAT
+  agent_type: HUMAN
+  description: Responsable del dimensionamiento de la infraestructura central
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: OPERACIONES-INFRA
+  priority: P1
+  scope: PLANIFICACION-IT
+
+extra_tags:
+  - capacity-planning
+  - escalamiento
+  - monitoreo-recursos
+  - presupuesto-cloud
+
+status: ENRICHED
+acceptance_criteria:
+  - Reporte mensual de tendencias de consumo de recursos
+  - Alerta de "Umbral de Saturación Próximo" si la proyección supera el 80% de la capacidad contratada
+  - Recomendaciones de optimización de costos mediante reserva de instancias o cambio de tipos de recursos

@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_eo_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Marcar compromiso 'En progreso' (avance parcial)
-id: US-EJEC-EO-002
-urn: urn:goreos:atom:story:us_ejec_eo_002:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Marcar compromiso 'En progreso' (avance parcial)
-so_that: Reporto avance
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-COMPROMISO
+id: US-EJEC-EO-002
+name: Registro de Avance Parcial de Compromisos
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Gestor Técnico
+i_want: marcar el estado de un compromiso institucional como "En Progreso" y registrar su porcentaje de avance parcial
+so_that: se tenga visibilidad real del trabajo en curso y no solo de hitos cerrados, permitiendo una gestión proactiva de los plazos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Usuario operativo que actualiza el día a día de las metas divisionarias
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: MONITOREO-AVANCE
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - avance-parcial
+  - compromisos
+  - gestion-tiempo
+  - trazabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Selector de estado con opciones: Pendiente, En Progreso, Detenido, Completado
+  - Campo numérico (0-100%) para reflejar el avance físico o administrativo
+  - Bitácora de comentarios vinculada a cada actualización del estado de avance

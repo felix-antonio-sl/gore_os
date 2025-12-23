@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_femp_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Federación de Municipios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_FEMP-001
-urn: urn:goreos:atom:story:us_gen_gestion_femp_001:1.0.0
-role_id: ROL-GESTION-FEMP
+name: Historia genérica para Federación de Municipios
+
+# === STORY CORE ===
 as_a: Federación de Municipios
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FEMP
+  agent_type: HUMAN
+  description: Representante de una federación o asociación regional de municipios que coordina intereses ante el GORE
+
+entities_mentioned:
+  - id: ENT-TERR-COMUNA
+    status: linked
+  - id: ENT-CONV-CONVENIO-COLABORACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - federacion-municipios
+  - alcaldes
+  - asociatividad
+  - territorio
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal de consulta consolidado de inversión GORE por asociación de comunas
+  - Módulo de gestión de requerimientos urgentes escalados por los municipios federados
+  - Repositorio de buenas prácticas de gestión municipal financiadas por el GORE

@@ -1,0 +1,120 @@
+# Para-Titi Database Replication Configuration
+# Source: para_titi PostgreSQL (v4.1)
+# Strategy: Incremental extraction via updated_at watermark
+---
+_meta:
+  urn: urn:goreos:etl:source:para_titi:1.0.0
+  type: Replication_Config
+  created_at: "2025-12-23"
+  source_system: Para-Titi v4.1 (Flask/SQLAlchemy)
+
+connection:
+  type: postgresql
+  env_var: PARA_TITI_DB_URL
+  default_host: localhost
+  default_port: 5432
+  default_database: gore_nuble
+  ssl_mode: prefer
+
+schemas_to_replicate:
+  - schema: gore_actores
+    tables:
+      - name: persona
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_persona
+      - name: entidad
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_entidad
+
+  - schema: gore_autenticacion
+    tables:
+      - name: usuario
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_usuario
+
+  - schema: gore_inversion
+    tables:
+      - name: iniciativa
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_iniciativa
+        priority: CRITICAL
+
+  - schema: gore_financiero
+    tables:
+      - name: convenio
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_convenio
+        priority: CRITICAL
+      - name: cuota
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_cuota
+
+  - schema: gore_ejecucion
+    tables:
+      - name: problema_ipr
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_problema
+      - name: compromiso_operativo
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_compromiso
+      - name: alerta_ipr
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_alerta
+      - name: informe_avance
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_informe
+
+  - schema: gore_instancias
+    tables:
+      - name: instancia_colectiva
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_instancia
+      - name: reunion_crisis
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_reunion
+      - name: punto_tabla
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_punto
+
+  - schema: gore_normativo
+    tables:
+      - name: instrumento
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_instrumento
+
+  - schema: gore_organizacion
+    tables:
+      - name: division
+        pk: id
+        watermark: updated_at
+        target_sink: mleg_pt_division
+
+extraction_strategy:
+  mode: INCREMENTAL
+  batch_size: 1000
+  watermark_column: updated_at
+  fallback_mode: FULL_REFRESH
+
+scheduling:
+  frequency: DAILY
+  preferred_window: "02:00-04:00"
+  timezone: America/Santiago
+
+data_quality:
+  validate_pk_not_null: true
+  validate_fk_exists: false # FKs may point to non-replicated tables
+  log_orphaned_fks: true

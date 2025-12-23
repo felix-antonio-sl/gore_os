@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_del_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Resolver recursos jerárquicos administrativos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-DEL-003
-urn: urn:goreos:atom:story:us_gob_del_003:1.0.0
-role_id: ROL-GESTION-DPR
+name: Resolver recursos jerárquicos administrativos
+
+# === STORY CORE ===
 as_a: Delegado Presidencial Regional
 i_want: Resolver recursos jerárquicos administrativos
 so_that: Ejerzo tutela administrativa
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPR
+  agent_type: HUMAN
+  description: Delegado Presidencial Regional que actúa como instancia superior jerárquica para ciertos actos de los servicios públicos
+
+entities_mentioned:
+  - id: ENT-NORM-RECURSO-JERARQUICO
+    status: candidate
+  - id: ENT-NORM-TUTELA-ADMINISTRATIVA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - dpr
+  - recursos-administrativos
+  - tutela
+  - legalidad
+  - instancia-superior
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de recepción y análisis jurídico de recursos de reposición y jerárquicos en subsidio
+  - Módulo de elaboración de resoluciones confirmatorias o revocatorias de actos de servicios dependientes
+  - Registro de plazos de caducidad y prescripción de la acción administrativa en segunda instancia

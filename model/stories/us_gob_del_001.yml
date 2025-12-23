@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_del_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Convocar a SEREMIS para alineamiento de políticas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-DEL-001
-urn: urn:goreos:atom:story:us_gob_del_001:1.0.0
-role_id: ROL-GESTION-DPR
+name: Convocar a SEREMIS para alineamiento de políticas
+
+# === STORY CORE ===
 as_a: Delegado Presidencial Regional
 i_want: Convocar a SEREMIS para alineamiento de políticas
 so_that: Coordino gobierno interior
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPR
+  agent_type: HUMAN
+  description: Delegado Presidencial Regional que lidera el Gabinete Regional de Secretarios Ministeriales
+
+entities_mentioned:
+  - id: ENT-GOB-GABINETE-REGIONAL
+    status: candidate
+  - id: ENT-PLAN-PROGRAMA-PRESIDENCIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - dpr
+  - seremi
+  - gabinete-regional
+  - coordinacion-politica
+  - gobierno-interior
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de citación electrónica a todos los SEREMIs con carga de agenda de puntos críticos
+  - Registro de minutas de acuerdos del Gabinete Regional con asignación de responsables y plazos
+  - Panel de seguimiento de cumplimiento de compromisos presidenciales en la región

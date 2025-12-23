@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cgr_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Expedientes electrónicos completos vía interoperabilidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CGR-001-01
-urn: urn:goreos:atom:story:us_cgr_001_01:1.0.0
-role_id: ROL-GESTION-CGR
+name: Expedientes electrónicos completos vía interoperabilidad
+
+# === STORY CORE ===
 as_a: Analista Toma de Razón (CGR)
 i_want: recibir expedientes electrónicos completos vía interoperabilidad
 so_that: pueda revisar sin solicitar documentos adicionales
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SYS-DOCUMENTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CGR
+  agent_type: HUMAN
+  description: Analista de la Contraloría General de la República encargado de la Toma de Razón de actos administrativos
+
+entities_mentioned:
+  - id: ENT-SYS-EXPEDIENTE-ELECTRONICO
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-SYS-INTEROPERABILIDAD-SIAPER
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD-CGR
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: INTEROPERABILIDAD
+  priority: P0
+  scope: NACIONAL
+
+extra_tags:
+  - cgr
+  - toma-de-razon
+  - expediente-electronico
+  - siaper
+  - interoperabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Envío automático de decretos y resoluciones afectas vía API
+  - Validación de integridad y firma electrónica avanzada en origen
+  - Acuse de recibo técnico y seguimiento de estado desde el GORE

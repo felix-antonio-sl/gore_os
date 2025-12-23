@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mig_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El proceso completo de inyección de data legacy
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-MIG-001
-urn: urn:goreos:atom:story:us_mig_001:1.0.0
-role_id: ROL-OPS-MIGRADOR
-as_a: 
-i_want: ejecutar el proceso completo de inyección de data legacy
-so_that: todos los datos históricos estén disponibles en GORE_OS para arranque operacional
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-LEGACY
-acceptance_criteria: []
+name: Inyección de Datos Legacy
+
+# === STORY CORE ===
+as_a: Ingeniero de Migración (Rol-Ops)
+i_want: Ejecutar el proceso completo de inyección de datos provenientes de sistemas legacy (SISTRADOC, Excel, etc.)
+so_that: todos los registros históricos críticos estén disponibles en GORE_OS para el arranque operacional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-MIGRADOR
+  agent_type: HUMAN
+  description: Ingeniero de datos encargado de la transición de sistemas antiguos al Supermodelo
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: MIGRACION
+  priority: P0
+  scope: INFRAESTRUCTURA
+
+extra_tags:
+  - legacy
+  - data-injection
+  - historial
+  - migracion
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación de integridad referencial post-migración (no quedan huérfanos)
+  - Reporte de errores de carga con detalle de fila y motivo de rechazo
+  - Validación de que los metadatos de fecha original de creación se mantienen

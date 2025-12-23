@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_jefe_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Jefe ODIA
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_JEFE-001
-urn: urn:goreos:atom:story:us_gen_gestion_jefe_001:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Historia genérica para Jefe Unidad Jurídica
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica (u oficina equivalente) responsable del control de legalidad institucional
+
+entities_mentioned:
+  - id: ENT-NORM-ACTO-ADMINISTRATIVO
+    status: linked
+  - id: ENT-NORM-RESOLUCION-EXENTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - jefe-juridico
+  - legalidad
+  - resoluciones
+  - toma-decisiones
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Bandeja de visación jerárquica para expedientes legales complejos
+  - Reporte de productividad jurídica (N° de contratos/resoluciones visadas vs pendientes)
+  - Gestión de delegación de firmas para abogados de la unidad

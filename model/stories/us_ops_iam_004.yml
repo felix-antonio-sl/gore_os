@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_iam_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integrar el sistema con ClaveÚnica para SSO
-id: US-OPS-IAM-004
-urn: urn:goreos:atom:story:us_ops_iam_004:1.0.0
-role_id: ROL-ADMIN-TI
-as_a: Rol no encontrado (ROL-ADMIN-TI)
-i_want: integrar el sistema con ClaveÚnica para SSO
-so_that: los funcionarios tengan una autenticación centralizada y segura
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+id: US-OPS-IAM-004
+name: Autenticación Federada con ClaveÚnica
+
+# === STORY CORE ===
+as_a: Administrador de TI
+i_want: Integrar el sistema de acceso de GORE_OS con el nodo de federación de ClaveÚnica (SSO) del Estado
+so_that: los funcionarios y ciudadanos tengan una autenticación centralizada, segura y simplificada, cumpliendo con los estándares de gobierno digital
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Integrador de servicios de gobierno electrónico
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-USER
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: INTEROPERABILIDAD
+  priority: P0
+  scope: ESTADO-CHI-DIGITAL
+
+extra_tags:
+  - clave-unica
+  - sso
+  - autenticacion
+  - identidad-digital
+
+status: ENRICHED
+acceptance_criteria:
+  - Implementación del protocolo OpenID Connect (OIDC) con los servidores de SEGPRES
+  - Mapeo automático de RUN nacional al identificador de usuario interno de GORE_OS
+  - Opción de "Múltiple Factor de Autenticación" (MFA) para perfiles con acceso a fondos financieros

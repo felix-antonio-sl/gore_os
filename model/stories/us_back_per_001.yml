@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizar mi ficha de funcionario (hoja de vida)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-001
-urn: urn:goreos:atom:story:us_back_per_001:1.0.0
-role_id: ROL-GESTION-PER-FUN
+name: Visualizar mi ficha de funcionario (hoja de vida)
+
+# === STORY CORE ===
 as_a: Funcionario
 i_want: Visualizar mi ficha de funcionario (hoja de vida)
 so_that: Consulto mi información laboral
-domain: D-BACK
-competence_id: CPT-BACK-RRHH-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Funcionario del GORE accediendo a su propio expediente digital
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-EXPEDIENTE-PERSONAL
+    status: candidate
+  - id: ENT-ORG-HISTORIAL-LABORAL
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-AUTOCONSULTA-FUNCIONARIO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: AUTOSERVICIO
+  priority: P0
+  scope: PERSONAL
+
+extra_tags:
+  - rrhh
+  - funcionario
+  - ficha-personal
+  - hoja-de-vida
+  - autoservicio
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso seguro a datos personales, cargo, grado y antigüedad
+  - Visualización de historial de decretos y resoluciones que afectan su carrera
+  - Descarga de certificados de antigüedad y renta en formato digital firmado

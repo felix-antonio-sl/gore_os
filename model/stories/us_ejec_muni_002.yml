@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Usar wizard de vía de financiamiento (recomendación fundamentada)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-MUNI-002
-urn: urn:goreos:atom:story:us_ejec_muni_002:1.0.0
-role_id: ROL-GESTION-G7-FORM
-as_a: Formulador Programas Glosa 7
-i_want: Usar wizard de vía de financiamiento (recomendación fundamentada)
-so_that: Elijo mecanismo correcto
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Wizard de Selección de Vía de Financiamiento
+
+# === STORY CORE ===
+as_a: Formulador de Programas Glosa 7 / Municipio
+i_want: utilizar un asistente (Wizard) que me recomiende la vía de financiamiento más adecuada para mi iniciativa técnico-económica
+so_that: se elija el mecanismo correcto (FNDR, FRIL, Circular 33, etc.) desde el inicio, evitando devoluciones y re-procesos administrativos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Formulador que busca optimizar la postulación técnica de sus proyectos
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FORMULACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - wizard
+  - financiamiento
+  - recomendacion
+  - eficiencia
+  - inversion-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Cuestionario dinámico de 5-7 preguntas (Monto, Plazo, Tipo de Obra, Beneficiarios)
+  - Sugerencia fundamentada de la vía de financiamiento basada en las Glosas de Presupuesto vigentes
+  - Posibilidad de descargar el "Informe de Pertinencia inicial" generado por el wizard

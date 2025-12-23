@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_alc_chv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Estado de todos los proyectos de mi comuna
-id: US-ALC-CHV-001-01
-urn: urn:goreos:atom:story:us_alc_chv_001_01:1.0.0
-role_id: ROL-GESTION-ALC
-as_a: Alcalde
-i_want: ver el estado de todos los proyectos de mi comuna
-so_that: pueda informar a la comunidad
-domain: D-EJEC
-competence_id: CPT-EJEC-MUNI-001
-priority: P0
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-LOC-COMUNA
+id: US-ALC-CHV-001-01
+name: Seguimiento de proyectos comunales (Alcalde Chillán Viejo)
+
+# === STORY CORE ===
+as_a: Alcalde de Chillán Viejo
+i_want: visualizar el estado de avance físico y financiero de todos los proyectos financiados por el GORE en mi comuna
+so_that: pueda informar con precisión a la comunidad y coordinar planes de entrega locales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ALC
+  agent_type: HUMAN
+  description: Máxima autoridad municipal interesada en la inversión regional en su territorio
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: MONITOREO-TERRITORIAL
+  priority: P0
+  scope: COMUNAL
+
+extra_tags:
+  - chillan-viejo
+  - alcalde
+  - proyectos-municipales
+  - transparencia
+  - rendicion-cuentas
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard filtrado por comuna Chillán Viejo con vista de mapa de proyectos
+  - Detalle de presupuesto asignado vs devengado para cada iniciativa comunal
+  - Glosa de observaciones técnicas relevantes para la gestión municipal

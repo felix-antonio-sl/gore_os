@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_per_014:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Accidente de trabajo (DIAT)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-PER-014
-urn: urn:goreos:atom:story:us_back_per_014:1.0.0
-role_id: ROL-BACK-PER-GEST
+name: Accidente de trabajo (DIAT)
+
+# === STORY CORE ===
 as_a: Gestor de Personas
 i_want: Registrar accidente de trabajo (DIAT)
 so_that: Cumplo con normativa de seguridad
-domain: D-BACK
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-PER-GEST
+  agent_type: HUMAN
+  description: Gestor de personas encargado de reportar incidentes de seguridad laboral
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-ACCIDENTE-LABORAL
+    status: linked
+  - id: ENT-SYS-DIAT
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-ACCIDENTES-LABORALES
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: SEGURIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - diat
+  - accidente-trabajo
+  - rrhh
+  - seguridad-laboral
+  - mutualidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario estandarizado para la Declaración Individual de Accidente del Trabajo (DIAT)
+  - Notificación automática inmediata a la Mutualidad y al Prevencionista de Riesgos
+  - Archivo digital de la DIAT en el expediente del funcionario

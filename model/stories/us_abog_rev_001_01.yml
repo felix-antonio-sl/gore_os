@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_rev_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un workflow de revisión de resoluciones con control de versiones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-REV-001-01
-urn: urn:goreos:atom:story:us_abog_rev_001_01:1.0.0
-role_id: ROL-NORM-REV
+name: Un workflow de revisión de resoluciones con control de versiones
+
+# === STORY CORE ===
 as_a: Abogado Revisor
 i_want: un workflow de revisión de resoluciones con control de versiones
 so_that: pueda asegurar la integridad del acto administrativo
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
-- ENT-SYS-ACTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-REV
+  agent_type: HUMAN
+  description: Abogado que revisa y aprueba actos administrativos
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-ACTO
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-REVISION-ACTOS
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: WORKFLOW
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - revision
+  - resoluciones
+  - versionado
+  - workflow
+
+status: ENRICHED
+acceptance_criteria:
+  - Control de versiones con diff
+  - Estados de revisión claros
+  - Comentarios y observaciones inline
+  - Firma digital integrada

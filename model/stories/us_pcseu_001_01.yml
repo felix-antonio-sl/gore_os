@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_pcseu_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Actas de selección automáticas con puntajes consolidados
-id: US-PCSEU-001-01
-urn: urn:goreos:atom:story:us_pcseu_001_01:1.0.0
-role_id: ROL-GESTION-PRES
-as_a: Presidente Subcomité IA
-i_want: actas de selección automáticas con puntajes consolidados
-so_that: se proponga la terna a la autoridad
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACTA
-- ENT-SAL-PUNTAJE
+id: US-PCSEU-001-01
+name: Actas Automatizadas de Selección de Proyectos
+
+# === STORY CORE ===
+as_a: Presidente de Subcomité de Evaluación
+i_want: Generar actas de selección automáticas con puntajes consolidados, rankings técnicos y justificaciones normativas
+so_that: se proponga formalmente la terna de proyectos a la autoridad superior con total transparencia y rigor técnico
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: HUMAN
+  description: Presidente del subcomité encargado de calificar las propuestas técnicas
+
+entities_mentioned:
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-SAL-PUNTAJE
+    status: linked
+
+process_ref:
+  id: PROC-EJE-P1
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: SELECCION-PROYECTOS
+  priority: P1
+  scope: ADMINISTRATIVO
+
+extra_tags:
+  - actas
+  - seleccion
+  - puntajes
+  - ranking-tecnico
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo automático de puntaje ponderado basado en criterios de las bases (Experiencia, Precio, Calidad)
+  - Firma digital integrada de todos los miembros del comité evaluador en el mismo documento
+  - Exportación directa a la carpeta de "Seleccionados" del proceso concursable una vez aprobada el acta

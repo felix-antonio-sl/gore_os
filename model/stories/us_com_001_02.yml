@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un repositorio de material multimedia institucional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-001-02
-urn: urn:goreos:atom:story:us_com_001_02:1.0.0
-role_id: ROL-GESTION-ENC
+name: Un repositorio de material multimedia institucional
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: un repositorio de material multimedia institucional
 so_that: pueda acceder a fotos, videos y gráficas oficiales
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Comunicaciones que gestiona el activo digital multimedia del GORE
+
+entities_mentioned:
+  - id: ENT-SYS-ACTIVO-MULTIMEDIA
+    status: candidate
+  - id: ENT-SYS-REPOSITORIO-DAM
+    status: candidate
+  - id: ENT-BACK-CAMPANA-GRAFICA
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GESTION-ACTIVOS-DIGITALES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - multimedia
+  - fotos
+  - videos
+  - repositorio
+  - branding
+
+status: ENRICHED
+acceptance_criteria:
+  - Almacenamiento organizado por carpetas temáticas y etiquetas (Tags)
+  - Control de versiones para gráficas y logotipos institucionales
+  - Galería de pre-visualización rápida y descarga en múltiples resoluciones

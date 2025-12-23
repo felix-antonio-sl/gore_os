@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_uoct_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información de proyectos viales GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-UOCT-001-01
-urn: urn:goreos:atom:story:us_uoct_001_01:1.0.0
-role_id: ROL-GESTION-UOCT
-as_a: UOCT Ñuble (en transferencia)
-i_want: información de proyectos viales GORE
-so_that: pueda articular con semáforos y señalética
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Integración de Proyectos Viales con UOCT
+
+# === STORY CORE ===
+as_a: Encargado de la UOCT Regional (Unidad Operativa de Control de Tránsito)
+i_want: acceder a la información de proyectos viales financiados por el GORE en tiempo real
+so_that: pueda articular la sincronización de semáforos y señalética con las obras en ejecución, minimizando el impacto en el tráfico
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UOCT
+  agent_type: HUMAN
+  description: Contraparte técnica regional para la gestión del tránsito y movilidad urbana
+
+entities_mentioned:
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TERR-DIAGNOSTICO
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: INFRAESTRUCTURA-URBANA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - uoct
+  - transito
+  - semaforos
+  - proyectos-viales
+  - movilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Capa WFS/WMS con la ubicación y estado de avance de obras viales disponible para la UOCT
+  - Alerta automática a la UOCT cuando un proyecto vial pasa a estado "Ejecución"
+  - Repositorio de planos de desvíos de tránsito aprobados por el GORE vinculados al proyecto

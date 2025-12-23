@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_jef_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver distribución de carga por analista con métricas de tiempos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-JEF-002
-urn: urn:goreos:atom:story:us_fin_jef_002:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Ver distribución de carga por analista con métricas de tiempos
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Ver distribución de carga por analista con métricas de tiempos
 so_that: Balanceo trabajo del equipo
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de Unidad responsable de optimizar la capacidad operativa del equipo técnico
+
+entities_mentioned:
+  - id: ENT-ORG-CARGA-TRABAJO
+    status: candidate
+  - id: ENT-ORG-METRICA-DESEMPENO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - distribucion-carga
+  - analistas
+  - balanceo
+  - productividad
+  - gestion-equipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa de calor (Heatmap) de proyectos asignados por profesional
+  - Indicador de "Tiempo de Resolución" promedio por analista vs meta de la unidad
+  - Función de reequilibrio de carga sugerida por el sistema basada en disponibilidad

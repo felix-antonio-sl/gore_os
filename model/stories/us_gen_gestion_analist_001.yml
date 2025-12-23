@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_analist_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Analista Agua Potable Rural
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ANALIST-001
-urn: urn:goreos:atom:story:us_gen_gestion_analist_001:1.0.0
-role_id: ROL-GESTION-ANALISTA-AGU
+name: Historia genérica para Analista Agua Potable Rural
+
+# === STORY CORE ===
 as_a: Analista Agua Potable Rural
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-AGU
+  agent_type: HUMAN
+  description: Analista técnico encargado de la revisión y seguimiento de proyectos de Agua Potable Rural (APR)
+
+entities_mentioned:
+  - id: ENT-SOC-PROYECTO-APR
+    status: candidate
+  - id: ENT-TERR-RECURSO-HIDRICO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: SOCIAL
+  priority: P2
+  scope: TERRITORIAL
+
+extra_tags:
+  - apr
+  - agua-potable
+  - ruralidad
+  - analista-tecnico
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a visor GIS con la ubicación de arranques y fuentes de agua del proyecto
+  - Módulo de carga de informes de factibilidad técnica de la DOH/DGA vinculados
+  - Seguimiento de rendiciones de comités de agua potable beneficiarios

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_alc_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El calendario de llamados y fondos disponibles
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ALC-001-02
-urn: urn:goreos:atom:story:us_alc_001_02:1.0.0
-role_id: ROL-GESTION-ALC
+name: El calendario de llamados y fondos disponibles
+
+# === STORY CORE ===
 as_a: Alcalde
 i_want: consultar el calendario de llamados y fondos disponibles
 so_that: pueda planificar las postulaciones de mi comuna
-domain: D-EJEC
-competence_id: CPT-EJEC-MUNI-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-LOC-COMUNA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ALC
+  agent_type: HUMAN
+  description: Alcalde de una comuna de la región de Ñuble
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: candidate
+  - id: ENT-FIN-LLAMADO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CALENDARIO-FONDOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: PLANIFICACION
+  priority: P0
+  scope: COMUNAL
+
+extra_tags:
+  - alcalde
+  - fondos
+  - calendario
+  - postulacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Vista calendario con todos los llamados
+  - Filtro por tipo de fondo y comuna
+  - Alertas de próximos cierres
+  - Histórico de postulaciones de la comuna

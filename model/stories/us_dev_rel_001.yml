@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_rel_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-REL-001
+name: Política de Ramos y Estrategia de Branching (GitFlow)
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Seguir una estrategia de ramas estandarizada (GitFlow o Trunk-based Development)
+so_that: se minimicen los conflictos de merge y se permita una integración fluida de múltiples desarrolladores en paralelo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador que requiere orden en el flujo de trabajo colaborativo
+
+entities_mentioned:
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: WORKFLOW-DEV
+  priority: P1
+  scope: COLABORACION
+
+extra_tags:
+  - gitflow
+  - branching
+  - merge-strategies
+  - dev-experience
+
+status: ENRICHED
+acceptance_criteria:
+  - Definición clara de las ramas `master`, `develop` y las convenciones para `feature/`, `bugfix/` y `hotfix/`
+  - Requerimiento de squash commits para mantener un historial de master limpio y legible
+  - Herramientas automáticas que ayuden a la creación y cierre de ramas siguiendo el estándar

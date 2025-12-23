@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_estr_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Estrategia comunicacional (web, RRSS)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-ESTR-001
-urn: urn:goreos:atom:story:us_com_estr_001:1.0.0
-role_id: ROL-GESTION-ENC
+name: Estrategia comunicacional (web, RRSS)
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Gestionar estrategia comunicacional (web, RRSS)
 so_that: Posiciono al GORE en medios
-domain: D-COM
-priority: P1
-competence_id: CPT-COM-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Comunicaciones Estratégicas responsable del posicionamiento institucional
+
+entities_mentioned:
+  - id: ENT-BACK-ESTRATEGIA-COMUNICACIONAL
+    status: candidate
+  - id: ENT-BACK-CANAL-DIFUSION
+    status: candidate
+  - id: ENT-SOC-POSICIONAMIENTO-REPUTACIONAL
+    status: candidate
+
+process_ref:
+  id: PROC-GOB-DISENO-ESTRATEGIA-COM
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: ESTRATEGIA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - estrategia
+  - posicionamiento
+  - rrss
+  - web
+  - comunicaciones-gubernamentales
+
+status: ENRICHED
+acceptance_criteria:
+  - Plan de medios anual aprobado por el Gobernador
+  - Definición de KPIs de alcance y engagement por plataforma
+  - Lineamientos de marca (Branding) unificados para todas las piezas

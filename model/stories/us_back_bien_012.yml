@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_012:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver cuenta corriente bienestar (saldos)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-012
-urn: urn:goreos:atom:story:us_back_bien_012:1.0.0
-role_id: ROL-GESTION-ANALISTA-SOC
-as_a: Analista Social
+name: Ver cuenta corriente bienestar (saldos)
+
+# === STORY CORE ===
+as_a: Socio Bienestar
 i_want: Ver cuenta corriente bienestar (saldos)
 so_that: Consulto mi estado
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-SOCIO-BIEN
+  agent_type: HUMAN
+  description: Funcionario socio del servicio de bienestar interactuando con su estado financiero interno
+
+entities_mentioned:
+  - id: ENT-FIN-ESTADO-CUENTA
+    status: candidate
+  - id: ENT-FIN-SALDO-BIENESTAR
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-CONSULTA-SALDOS-SOCIO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: TRANSPARENCIA
+  priority: P1
+  scope: PERSONAL
+
+extra_tags:
+  - bienestar
+  - cuenta-corriente
+  - saldos
+  - socio
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización de historial de descuentos de cuota de bienestar
+  - Detalle de préstamos vigentes con saldo insoluto y cuotas restantes
+  - Reporte de bonificaciones recibidas en el año calendario

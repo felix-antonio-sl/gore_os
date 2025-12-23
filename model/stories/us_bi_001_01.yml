@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_bi_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a datos consolidados para análisis
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BI-001-01
-urn: urn:goreos:atom:story:us_bi_001_01:1.0.0
-role_id: ROL-GESTION-ESPECIALISTA
+name: Acceso a datos consolidados para análisis
+
+# === STORY CORE ===
 as_a: Especialista BI
 i_want: acceso a datos consolidados para análisis
 so_that: pueda crear visualizaciones para la gestión
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ESPECIALISTA
+  agent_type: ALGORITHMIC
+  description: Especialista en Business Intelligence y Analítica de Datos
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-WAREHOUSE
+    status: candidate
+  - id: ENT-TDE-KPI-INSTITUCIONAL
+    status: candidate
+  - id: ENT-TDE-DASHBOARD
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-INTELIGENCIA-NEGOCIO
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: ANALITICA
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - bi
+  - analitica
+  - datos
+  - visualizacion
+  - dashboard
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso directo a vistas consolidadas de las bases de datos transaccionales
+  - Herramienta de ETL para limpieza y transformación de datos brutos
+  - Soporte para integración con herramientas de visualización (Grafana, Metabase, PowerBI)

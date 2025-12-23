@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_dpo_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Aplicar técnicas de anonimización/seudonimización a conjuntos de datos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-DPO-007
-urn: urn:goreos:atom:story:us_tde_dpo_007:1.0.0
-role_id: ROL-GESTION-DPO
-as_a: DPO
-i_want: Aplicar técnicas de anonimización/seudonimización a conjuntos de datos
-so_that: Protejo identidad de titulares (principio de minimización)
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Anonimización y Seudonimización de datos
+
+# === STORY CORE ===
+as_a: Delegado de Protección de Datos (DPO)
+i_want: aplicar técnicas de anonimización o seudonimización a conjuntos de datos institucionales
+so_that: se proteja la identidad de los titulares cumpliendo con el principio de minimización de datos en análisis estadísticos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPO
+  agent_type: HUMAN
+  description: Experto en técnicas de preservación de la privacidad en el manejo de big data
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: PRIVACIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - anonimizacion
+  - seudonimizacion
+  - minimizacion
+  - big-data
+  - seguridad-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Algoritmos de enmascaramiento aplicables a campos sensibles (RUT, Nombres, Direcciones)
+  - Capacidad de generar "Vistas Seguras" para el equipo de analítica sin acceso a PII (Personally Identifiable Information)
+  - Validación de que los datos anonimizados no permiten la re-identificación por cruce de tablas

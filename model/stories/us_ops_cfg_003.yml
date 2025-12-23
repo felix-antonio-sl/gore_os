@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_cfg_003:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-OPS-CFG-003
+name: Auditoría de Cambios en la Configuración del Sistema
+
+# === STORY CORE ===
+as_a: Administrador de Seguridad TI
+i_want: Consultar un log de auditoría detallado de cada modificación realizada en los parámetros de configuración institucional
+so_that: se garantice la transparencia y se cumpla con los estándares de control interno del Gobierno Regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Auditor de la integridad y seguridad del sistema
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: AUDITORIA
+  priority: P1
+  scope: NORMATIVO
+
+extra_tags:
+  - audit-log
+  - compliance
+  - seguridad
+  - trazabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Inalterabilidad de los logs de auditoría mediante hashing o envío paralelo a un log server seguro
+  - Captura del valor anterior y el valor nuevo en cada cambio de configuración
+  - Búscador avanzado por rango de fechas, usuario y módulo afectado

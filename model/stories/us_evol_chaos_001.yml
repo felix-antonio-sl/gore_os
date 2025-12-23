@@ -1,19 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_chaos_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Simular la caída controlada de un servicio crítico (ej: Plataforma Ley Lobby)
-id: US-EVOL-CHAOS-001
-urn: urn:goreos:atom:story:us_evol_chaos_001:1.0.0
-role_id: ROL-GESTION-TIC-SRE
-as_a: Ingeniero SRE
-i_want: 'Simular la caída controlada de un servicio crítico (ej: Plataforma Ley Lobby)'
-so_that: Verifico que los protocolos de contingencia manual se activen
-domain: D-EVOL
-priority: P2
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-PLATAFORMA
-- ENT-ORG-ROL
+id: US-EVOL-CHAOS-001
+name: Simulación de Caída de Servicios Críticos (Chaos Engineering)
+
+# === STORY CORE ===
+as_a: Ingeniero SRE / Equipo de Continuidad Operativa
+i_want: simular caídas controladas de servicios críticos (ej. Plataforma de Notificaciones o FirmaGob) en entornos de pre-producción
+so_that: se verifiquen los protocolos de contingencia manual, la resiliencia de la infraestructura y el tiempo de recuperación (MTTR) real
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-SRE
+  agent_type: HUMAN
+  description: Ingeniero de confiabilidad del sitio encargado de la resiliencia del sistema
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+  status: candidate
+
+tags:
+  domain: D-EVOL
+  aspect: RESILIENCIA
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - chaos-engineering
+  - resiliencia
+  - sre
+  - continuidad-negocio
+  - rto-rpo
+
+status: ENRICHED
+acceptance_criteria:
+  - Inyección de fallos controlada (latencia, caída de BD, error de red) durante una ventana de mantenimiento
+  - Medición automática del tiempo hasta que se activa el modo "Offline/Contingencia"
+  - Reporte de vulnerabilidades de resiliencia detectadas durante el experimento de caos

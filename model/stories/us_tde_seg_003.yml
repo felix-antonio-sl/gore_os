@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Clasificar activos de información según CIA
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-003
-urn: urn:goreos:atom:story:us_tde_seg_003:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Clasificar activos de información según CIA
-so_that: Priorizo protección
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Clasificación de activos de información (CIA)
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: clasificar todos los activos de información institucional bajo el modelo CIA (Confidencialidad, Integridad y Disponibilidad)
+so_that: se prioricen los recursos de protección sobre los activos críticos para la operación del GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Director de seguridad responsable del inventario de riesgos de activos críticos
+
+entities_mentioned:
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIBERSEGURIDAD
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - cia
+  - clasificación
+  - activos-información
+  - confidencialidad
+  - integridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Inventario de sistemas y bases de datos con etiquetas de criticidad (Alta, Media, Baja) por cada dimensión CIA
+  - Manual de manejo de información para funcionarios según la clasificación del activo
+  - Integración de etiquetas de clasificación en el gestor documental para control de acceso automático

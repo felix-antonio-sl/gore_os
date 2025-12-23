@@ -1,0 +1,125 @@
+# ETL Migration Readiness Summary
+# Generated: 2025-12-23T05:30:00
+# Status: READY FOR FINAL MODEL
+---
+_meta:
+  urn: urn:goreos:etl:status:migration_readiness:1.0.0
+  generated_at: "2025-12-23"
+  overall_readiness: 85%
+
+summary:
+  total_sources: 7
+  sources_ready: 5
+  sources_need_work: 2
+  total_rows: 25,423
+
+  blocking_issues:
+    - source: idis
+      issue: "Massive #REF! errors (67% of cells)"
+      mitigation: "Use ANALISIS.csv only, exclude MASTER.csv"
+
+    - source: modificaciones
+      issue: "High null rate (48.2% score)"
+      mitigation: "Clean #REF! values, recalculate amounts"
+
+readiness_by_source:
+  funcionarios:
+    status: READY
+    quality_score: 100%
+    rows: 110
+    sink: mleg_funcionario.yml
+    map: map_funcionarios.yml
+    profiler: profile_funcionarios.py
+    notes: "Highest quality source. Pre-normalized."
+
+  partes:
+    status: READY
+    quality_score: 99.6%
+    rows: 12806
+    sink: mleg_documento.yml
+    map: map_documentos.yml
+    profiler: profile_all.py
+    notes: "Large volume, excellent quality."
+
+  fril:
+    status: READY
+    quality_score: 96.6%
+    rows: 177
+    sink: mleg_iniciativa_fril.yml
+    map: map_ipr_fril.yml
+    profiler: profile_all.py
+    notes: "Clean FRIL initiatives."
+
+  progs:
+    status: READY
+    quality_score: 90.7%
+    rows: 2768
+    sink: mleg_programa_regional.yml
+    map: map_ipr_progs.yml
+    profiler: profile_all.py
+    notes: "8% FNDR programs. Minor cleanup needed."
+
+  convenios:
+    status: READY
+    quality_score: 88.2%
+    rows: 537
+    sink: mleg_convenio.yml
+    map: map_convenios.yml
+    profiler: profile_all.py
+    notes: "~10 duplicates to resolve."
+
+  modificaciones:
+    status: NEEDS_WORK
+    quality_score: 48.2%
+    rows: 517
+    sink: mleg_modificacion_line.yml
+    map: map_modificaciones.yml
+    profiler: profile_all.py
+    notes: "Significant #REF! errors. Requires cleanup pipeline."
+
+  idis:
+    status: CRITICAL
+    quality_score: -34%
+    rows: 8508
+    sink: mleg_ipr_idis.yml
+    map: map_ipr_idis.yml
+    profiler: profile_all.py
+    notes: "DO NOT USE directly. Requires source file remediation."
+
+para_titi_integration:
+  status: CONFIG_READY
+  replication_config: sources/para-titi/replication_config.yml
+  schemas_mapped: 6
+  tables_mapped: 15
+  notes: "Waiting for DB connection string."
+
+infrastructure:
+  transform_library:
+    path: lib/transforms.py
+    functions: 15
+    status: PRODUCTION_READY
+
+  catalogs:
+    - path: catalogs/divisiones.yml
+      entries: 15
+      status: COMPLETE
+
+  scripts:
+    - profile_funcionarios.py (specialized)
+    - profile_all.py (master profiler)
+
+  reports:
+    - qa_consolidated_report.json
+    - sources/funcionarios/qa_report_*.json
+
+next_steps:
+  when_model_ready:
+    1: "Connect sink MLEG-* entities to canonical ENT-* entities via map files"
+    2: "Run dry-run validation with profile scripts"
+    3: "Execute migration in order: funcionarios → partes → fril → progs → convenios"
+    4: "Handle low-quality sources (modificaciones, idis) separately"
+
+  optional_improvements:
+    - "Create specialized profilers for each source"
+    - "Implement Airflow DAG for orchestration"
+    - "Add rollback mechanism"

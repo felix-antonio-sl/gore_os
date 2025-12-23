@@ -4,13 +4,10 @@
 
 ```text
 model/
-├── model/
 ├── stories/    # 819 historias de usuario
 ├── roles/      # 410 roles institucionales
 ├── entities/   # 139 entidades del modelo de datos
 ├── processes/  # 84 procesos BPMN
-├── GLOSARIO.yml    # Terminología autorizada
-└── README.md       # Este archivo
 ├── GLOSARIO.yml    # Terminología autorizada
 └── README.md       # Este archivo
 ```

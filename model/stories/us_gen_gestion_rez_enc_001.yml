@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_rez_enc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Encargado Zonas de Rezago
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_REZ_ENC-001
-urn: urn:goreos:atom:story:us_gen_gestion_rez_enc_001:1.0.0
-role_id: ROL-GESTION-REZ-ENC
+name: Historia genérica para Encargado Zonas de Rezago
+
+# === STORY CORE ===
 as_a: Encargado Zonas de Rezago
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-REZ-ENC
+  agent_type: HUMAN
+  description: Encargado del Plan de Zonas Rezagadas (Territorios especiales con brechas de desarrollo)
+
+entities_mentioned:
+  - id: ENT-TERR-ZONA-REZAGO
+    status: candidate
+  - id: ENT-PLAN-BRECHA-TERRITORIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: ZONAS-REZAGADAS
+  priority: P2
+  scope: TERRITORIAL
+
+extra_tags:
+  - zonas-rezago
+  - equidad-territorial
+  - inversion-especial
+  - brechas
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de indicadores específicos para zonas de rezago (Agua, Caminos, Conectividad)
+  - Módulo de priorización de inversión ARI/PROPIR ajustado a criterios de rezago
+  - Seguimiento de convenios de transferencia especiales para territorios rezagados

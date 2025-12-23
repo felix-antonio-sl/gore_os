@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Mantener Política de Seguridad de la Información (DS7) aprobada
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-001
-urn: urn:goreos:atom:story:us_tde_seg_001:1.0.0
-role_id: ROL-GESTION-CISO
+name: Mantener Política de Seguridad de la Información (DS7) aprobada
+
+# === STORY CORE ===
 as_a: CISO
-i_want: Mantener Política de Seguridad de la Información (DS7) aprobada
-so_that: Cumplo con marco normativo
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: mantener la Política de Seguridad de la Información (DS7) aprobada
+so_that: se cumpla con el marco normativo y de probidad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Director de Seguridad de la Información encargado del cumplimiento normativo técnico del GORE
+
+entities_mentioned:
+  - id: ENT-TDE-POLITICA-SEGURIDAD
+    status: candidate
+  - id: ENT-NORM-DECRETO-SUPREMO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CUMPLIMIENTO
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - ds7
+  - iso27001
+  - ciberseguridad
+  - gobernanza
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Documento de política actualizado anualmente y ratificado por resolución del Gobernador
+  - Mapeo de controles de seguridad implementados versus los exigidos por el Decreto Supremo No. 7
+  - Evidencia de capacitación y toma de conocimiento de la política por el 100% de los funcionarios

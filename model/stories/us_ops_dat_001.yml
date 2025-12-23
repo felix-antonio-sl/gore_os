@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_dat_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-OPS-DAT-001
+name: Esquema de Particionamiento de Datos Históricos
+
+# === STORY CORE ===
+as_a: Administrador de Base de Datos (DBA)
+i_want: Implementar una estrategia de particionamiento para tablas de logs y auditoría que superen los 100 millones de registros
+so_that: se mantenga el rendimiento de las consultas y la eficiencia operativa de la base de datos a largo plazo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: DBA encargado del rendimiento y escalabilidad de los datos
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: BASE-DE-DATOS
+  priority: P2
+  scope: RENDIMIENTO
+
+extra_tags:
+  - partitioning
+  - postgresql
+  - big-data
+  - performance
+
+status: ENRICHED
+acceptance_criteria:
+  - Particionamiento automático por rango temporal (ej: mensual) para tablas de trazas y logs
+  - Proceso de archivado (Cold storage) para particiones de más de 3 años de antigüedad
+  - Mejora demostrable en los tiempos de respuesta de consultas sobre el último periodo vigente

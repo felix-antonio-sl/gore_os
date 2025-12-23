@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ong_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Postular en línea a subvenciones del 8%
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ONG-002-01
-urn: urn:goreos:atom:story:us_ong_002_01:1.0.0
-role_id: ROL-EJEC-DIR
-as_a: Director Ejecutivo Corporación
-i_want: postular en línea a subvenciones del 8%
-so_that: pueda ejecutar mis programas sociales
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Postulación Digital a Subvenciones 8% FNDR
+
+# === STORY CORE ===
+as_a: Director Ejecutivo de ONG
+i_want: Realizar la postulación 100% en línea de mis proyectos sociales a los fondos concursables del 8% FNDR
+so_that: se reduzcan los costos de desplazamiento y se agilice la evaluación de mi propuesta técnica y financiera
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-DIR
+  agent_type: HUMAN
+  description: Representante legal de una organización sin fines de lucro postulante a fondos regionales
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA
+    status: linked
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+
+process_ref:
+  id: PROC-EJE-P1
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: PORTAL-POSTULACION
+  priority: P0
+  scope: EXTERNO
+
+extra_tags:
+  - subvenciones
+  - ong
+  - postulación
+  - fndr
+
+status: ENRICHED
+acceptance_criteria:
+  - Autenticación mediante ClaveÚnica del representante legal
+  - Formulario con autoguardado para permitir la carga progresiva de antecedentes
+  - Validación automática de documentos obligatorios (PJ vigente, RUT organización, etc.) antes del envío final

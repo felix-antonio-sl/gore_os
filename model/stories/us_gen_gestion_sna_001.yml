@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_sna_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para SNA / SOFO
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SNA-001
-urn: urn:goreos:atom:story:us_gen_gestion_sna_001:1.0.0
-role_id: ROL-GESTION-SNA
+name: Historia genérica para SNA / SOFO
+
+# === STORY CORE ===
 as_a: SNA / SOFO
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SNA
+  agent_type: HUMAN
+  description: Representante de la Sociedad Nacional de Agricultura (SNA) o sociedades de fomento agrícola regional (SOFO)
+
+entities_mentioned:
+  - id: ENT-TERR-AGRICULTURA-FAMILIAR
+    status: candidate
+  - id: ENT-EJEC-FOMENTO-PRODUCTIVO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: AGRICULTURA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - sna
+  - sofo
+  - agricultura
+  - fomento-agropecuario
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a panel de indicadores de actividad agrícola regional y exportaciones GORE
+  - Módulo de postulación a convenios de tecnificación de riego co-financiados
+  - Registro de participación en la Mesa de Desarrollo Rural del GORE

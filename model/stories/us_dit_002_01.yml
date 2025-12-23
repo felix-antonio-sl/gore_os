@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dit_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de contratos con plazos, garantías y estados de pago
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIT-002-01
-urn: urn:goreos:atom:story:us_dit_002_01:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Un módulo de gestión de contratos con plazos, garantías y estados de pago
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: un módulo de gestión de contratos con plazos, garantías y estados de pago
 so_that: pueda asegurar el cumplimiento contractual
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la División de Informática y Tecnología (o contraparte técnica) velando por contratos de servicios IT
+
+entities_mentioned:
+  - id: ENT-FIN-CONTRATO-SERVICIO
+    status: linked
+  - id: ENT-FIN-GARANTIA-CONTRATO
+    status: candidate
+  - id: ENT-FIN-ESTADO-PAGO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-GESTION-CONTRATOS
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: ABASTECIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - contratos
+  - garantias
+  - estados-pago
+  - cumplimiento-contractual
+  - proveedores
+
+status: ENRICHED
+acceptance_criteria:
+  - Alerta de vencimiento de boletas de garantía (30 días de anticipación)
+  - Semáforo de plazos de entrega vs bitácora de ejecución
+  - Integración con el devengo de estados de pago tras aprobación de hito

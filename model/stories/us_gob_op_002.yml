@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_op_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Derivar antecedentes a DIPIR mediante ruta automática
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-OP-002
-urn: urn:goreos:atom:story:us_gob_op_002:1.0.0
-role_id: ROL-GESTION-OF
+name: Derivar antecedentes a DIPIR mediante ruta automática
+
+# === STORY CORE ===
 as_a: Oficial de Partes
 i_want: Derivar antecedentes a DIPIR mediante ruta automática
 so_that: Distribuyo la carga de trabajo
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OF
+  agent_type: HUMAN
+  description: Funcionario de la Oficina de Partes encargado del ingreso y derivación de documentos externos
+
+entities_mentioned:
+  - id: ENT-DIG-RUTEO-AUTOMATICO
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - oficina-de-partes
+  - derivacion
+  - dipir
+  - interoperabilidad-interna
+  - eficiencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Sistema de clasificación automática por palabras clave que asigne documentos a la DIPIR (Inversión, Infraestructura)
+  - Módulo de confirmación de recepción digital por parte de la secretaría de la división destino
+  - Registro de tiempo de tránsito entre el ingreso oficial y la asignación al analista técnico

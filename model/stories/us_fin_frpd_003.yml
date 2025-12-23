@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_frpd_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Porcentaje de co-financiamiento
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-FRPD-003
-urn: urn:goreos:atom:story:us_fin_frpd_003:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: Validar porcentaje de co-financiamiento
-so_that: Verifico aporte del beneficiario
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Validación de Porcentaje de Co-financiamiento FRPD
+
+# === STORY CORE ===
+as_a: Analista de Prevención / Financiero
+i_want: validar que el porcentaje de co-financiamiento (aporte pecuniario y valorizado) declarado por el beneficiario cumpla con el mínimo exigido en las bases del FRPD
+so_that: se asegure el compromiso financiero del privado y se cumplan las reglas de apalancamiento de recursos públicos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: MACHINE
+  description: Motor de reglas financieras para la validación de presupuestos de postulación
+
+entities_mentioned:
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CO-FINANCIAMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - frpd
+  - co-financiamiento
+  - aportes-propios
+  - presupuestos
+  - apalancamiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Validación automática de la fórmula: (Aporte GORE / Monto Total) <= Umbral Máximo
+  - Desglose obligatorio de aportes valorizados (ej. mano de obra propia) según tabla de aranceles vigente
+  - Registro de la boleta de garantía o seguro de fiel cumplimiento asociado al co-financiamiento

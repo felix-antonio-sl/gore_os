@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_jefe_es_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Jefe Estudios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_JEFE_ES-001
-urn: urn:goreos:atom:story:us_gen_gestion_jefe_es_001:1.0.0
-role_id: ROL-GESTION-JEFE-ESTUDIO
+name: Historia genérica para Jefe Estudios
+
+# === STORY CORE ===
 as_a: Jefe Estudios
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE-ESTUDIO
+  agent_type: HUMAN
+  description: Jefe de la Unidad de Estudios (DIPLADE) encargado de la generación de prospectiva y análisis estratégico regional
+
+entities_mentioned:
+  - id: ENT-PLAN-ESTUDIO-ESTRATEGICO
+    status: candidate
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-SEGUIMIENTO-ERD
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - jefe-estudios
+  - prospectiva
+  - analitica
+  - planificacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de seguimiento de indicadores macro zonales (PIB Regional, Desempleo)
+  - Módulo de licitación y seguimiento de estudios externalizados para la ERD
+  - Herramienta de modelamiento de escenarios para la inversión pública futura

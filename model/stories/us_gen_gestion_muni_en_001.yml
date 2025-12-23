@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_muni_en_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Encargado Unidad de Municipalidades y Conservaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_MUNI_EN-001
-urn: urn:goreos:atom:story:us_gen_gestion_muni_en_001:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: Historia genérica para Encargado Unidad de Municipalidades y Conservaciones
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Encargado de la unidad que coordina el apoyo técnico y financiero a los 21 municipios de la región (DIPLADE)
+
+entities_mentioned:
+  - id: ENT-TERR-COMUNA
+    status: linked
+  - id: ENT-PLAN-CALENDARIZACION-INVERSION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: COMUNAL
+
+extra_tags:
+  - municipalidades
+  - gestion-territorial
+  - conservaciones
+  - apoyo-tecnico
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de seguimiento de la cartera de proyectos por municipio (En formulación/RS/Ejecución)
+  - Módulo de carga de solicitudes de conservación de infraestructura comunal (Veredas, Luminarias)
+  - Registro de visitas técnicas y capacitaciones realizadas a los equipos SECPLA regionales

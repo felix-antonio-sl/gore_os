@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_dev_qa_analista_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia genérica para Analista QA
-id: US-GEN-DEV_QA_ANALISTA-001
-urn: urn:goreos:atom:story:us_gen_dev_qa_analista_001:1.0.0
-role_id: ROL-DEV-QA-ANALISTA
-as_a: Analista QA
-i_want: ejecutar mis funciones principales en el contexto institucional del GORE
-so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-DEV_QA_ANALISTA-001
+name: Aseguramiento de calidad en procesos digitales
+
+# === STORY CORE ===
+as_a: Analista QA
+i_want: ejecutar pruebas de calidad sistemáticas sobre los módulos integrales del sistema
+so_that: aseguro que las funcionalidades cumplan con los requerimientos técnicos y no introduzcan regresiones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-QA-ANALISTA
+  agent_type: HUMAN
+  description: Analista encargado del aseguramiento de calidad técnico
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-DEV-P3
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: CALIDAD-TECNICA
+  priority: P2
+  scope: TECNOLOGICO
+
+extra_tags:
+  - qa
+  - pruebas
+  - calidad
+  - testing
+
+status: ENRICHED
+acceptance_criteria:
+  - Ejecución de planes de prueba automatizados para casos de uso críticos
+  - Reporte de defectos (bugs) con trazabilidad hasta la User Story original
+  - Certificación de paso a producción tras validación del entorno de QA

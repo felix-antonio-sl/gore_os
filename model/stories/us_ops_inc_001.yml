@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_inc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Y resolver incidentes siguiendo el ciclo SDA
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-INC-001
-urn: urn:goreos:atom:story:us_ops_inc_001:1.0.0
-role_id: ROL-GESTION-SUP
-as_a: Supervisor CIES
-i_want: Registrar y resolver incidentes siguiendo el ciclo SDA
-so_that: Mantengo la continuidad operacional
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Gestión de Incidentes Críticos (SDA)
+
+# === STORY CORE ===
+as_a: Supervisor de Operaciones (CIES)
+i_want: Registrar, clasificar y resolver incidentes tecnológicos siguiendo el ciclo de vida SDA (Soporte-Desarrollo-Arquitectura)
+so_that: se mantenga la continuidad operacional del Supermodelo y se ataquen las causas raíz de los fallos recurrentes
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUP
+  agent_type: HUMAN
+  description: Supervisor del Centro de Incidentes y Soporte al Usuario (CIES)
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: GESTION-INCIDENTES
+  priority: P0
+  scope: SOPORTE-TECNICO
+
+extra_tags:
+  - incidentes
+  - sda
+  - continuidada
+  - soporte-nivel-3
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de escalamiento automático si el incidente supera el tiempo de resolución del nivel actual
+  - Base de conocimientos (Knowledge Base) integrada para soluciones conocidas (Known Errors)
+  - Cierre del ticket condicionado a la validación de satisfacción del usuario o check técnico de SRE

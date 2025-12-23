@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_avance_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Meta de expediente electrónico DS10
-id: US-TDE-AVANCE-003
-urn: urn:goreos:atom:story:us_tde_avance_003:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Monitorear meta de expediente electrónico DS10
-so_that: Cumplo con digitalización
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-EXPEDIENTE
+id: US-TDE-AVANCE-003
+name: Monitoreo de Meta de Expediente Electrónico (DS10)
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: monitorear el avance de la meta de implementación del expediente electrónico según el DS10
+so_that: se cumpla con la eliminación progresiva del papel en los flujos administrativos del GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Líder de la estrategia de digitalización y cero papel institucional
+
+entities_mentioned:
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: ESTRATEGIA-TI
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ds10
+  - cero-papel
+  - expediente-electronico
+  - digitalización
+  - modernizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Reporte de volumen de documentos digitales vs. documentos físicos ingresados por oficina de partes
+  - Inventario de procesos administrativos que ya cuentan con expediente nativo digital
+  - Verificación de cumplimiento de estándares de archivo y preservación digital a largo plazo

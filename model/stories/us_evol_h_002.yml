@@ -1,15 +1,45 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_h_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Declarar cambio de Estado de Salud (Gate)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-H-002
-urn: urn:goreos:atom:story:us_evol_h_002:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Declarar cambio de Estado de Salud (Gate)
-so_that: Formalizo transiciones
-domain: D-EVOL
-priority: P0
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+name: Declaración de Estados de Salud (Gates de Evolución)
+
+# === STORY CORE ===
+as_a: Operador de Sistema / QA
+i_want: declarar formalmente el cambio de "Estado de Salud" (Health Gates) de un componente o módulo tras una actualización
+so_that: se formalicen las transiciones de estado y se bloquee el paso a producción si el componente no cumple con los umbrales de calidad definidos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Encargado de validar los hitos de calidad en el ciclo de vida del software
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: ASEGURAMIENTO-CALIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - health-gates
+  - calidad
+  - transiciones
+  - qa
+  - ciclo-vida
+
+status: ENRICHED
+acceptance_criteria:
+  - Checkpoint obligatorio donde se registran los resultados de las pruebas unitarias e integración
+  - Semáforo de "Go/No-Go" basado en el cumplimiento de los criterios de aceptación de la US
+  - Registro auditable de quién autorizó la transición de estado del componente

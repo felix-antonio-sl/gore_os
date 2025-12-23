@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_dt_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Planificar evolución de schema (migraciones)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-DT-002
-urn: urn:goreos:atom:story:us_evol_dt_002:1.0.0
-role_id: ROL-GESTION-LEAD
-as_a: Líder Técnico
-i_want: Planificar evolución de schema (migraciones)
-so_that: Evoluciono el modelo de datos
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+name: Planificación de Evolución de Esquemas (Migraciones)
+
+# === STORY CORE ===
+as_a: Líder Técnico / Administrador de Base de Datos
+i_want: planificar y trazar la evolución de los esquemas de datos (YAML/SQL) mediante un flujo formal de migraciones versionadas
+so_that: se garantice la integridad de los datos durante las actualizaciones del sistema y se eviten tiempos de inactividad por inconsistencias de schema
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-LEAD
+  agent_type: MACHINE
+  description: Motor de migración de datos encargado de la consistencia estructural del ecosistema
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: INTEGRIDAD-DATOS
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - migraciones
+  - schema-evolution
+  - versionamiento
+  - integridad
+  - devops-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Suite de scripts de migración (Up/Down) versionados y vinculados a versiones del código
+  - Mecanismo de pre-validación de datos contra el nuevo schema antes de aplicar el cambio
+  - Registro auditable del historial de versiones de esquemas aplicados a cada base de datos regional

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_iac_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Provisionar y gestionar toda la infraestructura mediante código (Terraform)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-IAC-001
-urn: urn:goreos:atom:story:us_ops_iac_001:1.0.0
-role_id: ROL-GESTION-CON-ING
-as_a: Ingeniero Vialidad
-i_want: Provisionar y gestionar toda la infraestructura mediante código (Terraform)
-so_that: Evito configuration drift y permito recuperación ante desastres
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Infraestructura como Código (IaC) con Terraform
+
+# === STORY CORE ===
+as_a: Ingeniero de Plataforma (DevOps)
+i_want: Provisionar y gestionar toda la infraestructura de servidores, redes y bases de datos mediante código (Terraform/OpenTofu)
+so_that: se elimine el error humano ("configuration drift") y se permita una recuperación rápida y reproducible ante desastres
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-TIC-PLAT
+  agent_type: HUMAN
+  description: Ingeniero encargado de la automatización de la infraestructura
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: AUTOMATIZACION-INFRA
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - iac
+  - terraform
+  - devops
+  - automatizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio centralizado con estados de infraestructura versionados y protegidos
+  - Pipeline de CI/CD para validar y aplicar cambios en la infraestructura de forma segura
+  - Documentación técnica autogenerada a partir del código de infraestructura

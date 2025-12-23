@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_022:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Diseño con Marco Lógico detallado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-022
-urn: urn:goreos:atom:story:us_fin_ipr_022:1.0.0
-role_id: ROL-GESTION-DAE-PRE
+name: Diseño con Marco Lógico detallado
+
+# === STORY CORE ===
 as_a: Analista Preinversión (DAE)
 i_want: Evaluar Diseño con Marco Lógico detallado
 so_that: Verifico calidad del diseño programático
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DAE-PRE
+  agent_type: HUMAN
+  description: Analista de la Dirección de Administración y Evaluación (DAE) responsable de la excelencia metodológica
+
+entities_mentioned:
+  - id: ENT-PLAN-MARCO-LOGICO
+    status: linked
+  - id: ENT-PLAN-CALIDAD-METODOLOGICA
+    status: candidate
+  - id: ENT-PLAN-FIN-PROPOSITO-COMPONENTE
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-EVALUACION-METODOLOGICA
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - marco-logico
+  - diseño-programatico
+  - metodologia
+  - calidad
+  - preinversion
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz de Marco Lógico integrada en el formulario de postulación
+  - Validación de coherencia vertical (Actividades → Componentes → Propósito → Fin)
+  - Inclusión de supuestos y medios de verificación obligatorios por cada nivel

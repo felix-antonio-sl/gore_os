@@ -1,17 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_ar_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Programar reuniones de coordinación con jefes de división desde el sistema
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AR-001-02
-urn: urn:goreos:atom:story:us_ar_001_02:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Programar reuniones de coordinación con jefes de división desde el sistema
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: programar reuniones de coordinación con jefes de división desde el sistema
 so_that: pueda mantener alineamiento estratégico
-domain: D-BACK
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-DIVISION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-JUR
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica (DIPIR/DAF/Gabinete)
+
+entities_mentioned:
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-GOV-REUNION-COORDINACION
+    status: candidate
+  - id: ENT-SYS-AGENDA
+    status: candidate
+
+process_ref:
+  id: PROC-GOV-ALINEAMIENTO-ESTRATEGICO
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: GESTION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - reuniones
+  - coordinacion
+  - jefaturas
+  - alineamiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración con calendarios institucionales
+  - Selección de jefes de división por organigrama
+  - Gestión de acta y compromisos de la reunión vinculados al sistema

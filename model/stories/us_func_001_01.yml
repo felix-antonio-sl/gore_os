@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_func_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitar permisos administrativos y feriados en línea
-id: US-FUNC-001-01
-urn: urn:goreos:atom:story:us_func_001_01:1.0.0
-role_id: ROL-GESTION-PER-FUN
-as_a: Funcionario
-i_want: solicitar permisos administrativos y feriados en línea
-so_that: no tenga que hacer trámites en papel
-domain: D-BACK
-priority: P0
-competence_id: CPT-RRHH-FUNC-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TRAMITE
+id: US-FUNC-001-01
+name: Solicitar permisos administrativos y feriados en línea
+
+# === STORY CORE ===
+as_a: Funcionario
+i_want: solicitar mis permisos administrativos y feriados legales a través del portal funcionario
+so_that: elimino el uso de papel y obtengo respuestas más rápidas de mi jefatura
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Funcionario de cualquier división del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-PERMISO
+    status: linked
+  - id: ENT-DIG-TRAMITE
+    status: linked
+
+process_ref:
+  id: PROC-BACK-P2
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: AUTOGESTION-RRHH
+  priority: P0
+  scope: PERSONAL
+
+extra_tags:
+  - feriados
+  - permisos
+  - autogestion
+  - funcionario
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización del saldo de días disponibles antes de realizar la solicitud
+  - Flujo de aprobación digital que escala automáticamente a la jefatura directa
+  - Notificación de aprobación o rechazo con actualización inmediata en el calendario oficial

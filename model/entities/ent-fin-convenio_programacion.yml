@@ -7,6 +7,11 @@ id: ENT-FIN-CONVENIO_PROGRAMACION
 name: Convenio de Programación
 domain: D-FIN
 category: Master
+extends: ENT-SYS-CONVENIO
+description: |
+  Tipo específico de convenio (Ley 19.175) que detalla un plan financiero y de 
+  ejecución plurianual para proyectos entre el GORE y entidades públicas.
+  Alta obligatoriedad, recursos presupuestados, vinculado a Ley de Presupuestos.
 attributes:
   - { name: id_cp, type: UUID, key: true }
   - { name: nombre, type: String }

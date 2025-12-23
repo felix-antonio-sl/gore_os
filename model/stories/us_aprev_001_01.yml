@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_aprev_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Formulario móvil de inspección de extintores y vías de escape
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-APREV-001-01
-urn: urn:goreos:atom:story:us_aprev_001_01:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
+name: Formulario móvil de inspección de extintores y vías de escape
+
+# === STORY CORE ===
 as_a: Analista Prevención
 i_want: formulario móvil de inspección de extintores y vías de escape
 so_that: pueda reportar anomalías inmediatamente
-domain: D-BACK
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista de Prevención de Riesgos del GORE
+
+entities_mentioned:
+  - id: ENT-SYS-FORMULARIO-MOVIL
+    status: candidate
+  - id: ENT-ORG-INFRAESTRUCTURA
+    status: candidate
+  - id: ENT-SYS-ALERTA-SEGURIDAD
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-INSPECCION-SEGURIDAD
+  status: candidate
+
+tags:
+  domain: D-ORG
+  aspect: SEGURIDAD
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - extintores
+  - prevencion-riesgos
+  - seguridad-laboral
+  - movil
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso desde dispositivos móviles offline/online
+  - Captura de fotos de anomalías
+  - Checklist estándar de normativa de seguridad
+  - Generación automática de reporte técnico post-inspección

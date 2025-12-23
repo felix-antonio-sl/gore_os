@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_sre_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Definir y monitorear SLIs y SLOs
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SRE-001-01
-urn: urn:goreos:atom:story:us_sre_001_01:1.0.0
-role_id: ROL-GESTION-TIC-SRE
-as_a: Ingeniero SRE
-i_want: definir y monitorear SLIs y SLOs
-so_that: se mantenga la calidad del servicio acordada
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Definición y monitoreo de SLIs y SLOs
+
+# === STORY CORE ===
+as_a: Ingeniero SRE (Site Reliability Engineering)
+i_want: definir y monitorear indicadores de nivel de servicio (SLIs) y objetivos de nivel de servicio (SLOs)
+so_that: se mantenga la calidad y disponibilidad acordada de la plataforma GORE_OS
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-SRE
+  agent_type: HUMAN
+  description: Ingeniero encargado de la confiabilidad y el rendimiento de los sistemas productivos
+
+entities_mentioned:
+  - id: ENT-TDE-SLO-DEFINITION
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: PERFORMANCE
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - sre
+  - slo
+  - sli
+  - uptime
+  - monitoreo
+  - confiabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de observabilidad con métricas en tiempo real (Latencia, Tasas de Error, Saturación, Tráfico)
+  - Configuración de alertas de "Error Budget" que notifiquen cuando se pone en riesgo el cumplimiento del SLO mensual
+  - Reporte automatizado de disponibilidad para los directivos de la Unidad de Informática

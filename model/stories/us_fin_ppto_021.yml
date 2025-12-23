@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_021:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reconciliar ejecución con SIGFE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-021
-urn: urn:goreos:atom:story:us_fin_ppto_021:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Reconciliar ejecución con SIGFE
+
+# === STORY CORE ===
+as_a: Jefe Unidad DAF
 i_want: Reconciliar ejecución con SIGFE
-so_that: Valido consistencia
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Valido la consistencia de la información financiera reportada a nivel nacional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de unidad en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: INTEROPERABILIDAD
+  priority: P1
+  scope: SISTEMICO
+
+extra_tags:
+  - reconciliacion
+  - sigfe
+  - auditoria
+  - consistencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Pantalla de comparación de estados financieros (Local vs SIGFE)
+  - Identificación visual de discrepancias por monto o fecha
+  - Opción de emitir certificado de cuadratura mensual

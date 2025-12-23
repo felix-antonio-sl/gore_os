@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_017:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El Saldo Inicial de Caja para el presupuesto del año siguiente
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-017
-urn: urn:goreos:atom:story:us_back_tes_017:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: El Saldo Inicial de Caja para el presupuesto del año siguiente
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: Calcular el Saldo Inicial de Caja para el presupuesto del año siguiente
 so_that: Incorporo recursos de arrastre correctamente
-domain: D-BACK
-priority: P1
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-FIN-PRESUPUESTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: ALGORITHMIC
+  description: Sistema automatizado de cálculo de saldos de cierre y apertura presupuestaria
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-SALDO-CAJA
+    status: candidate
+  - id: ENT-FIN-EJECUCION-PRESUPUESTARIA
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-APERTURA-PRESUPUESTARIA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: PRESUPUESTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - saldo-inicial-caja
+  - arrastre
+  - presupuesto
+  - contabilidad
+  - cierre-ejercicio
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo de saldos bancarios reconciliados al 31 de diciembre
+  - Identificación de ingresos percibidos y no devengados para el arrastre
+  - Generación de informe de Saldo Inicial de Caja (SIC) para decreto de modificación presupuestaria de apertura

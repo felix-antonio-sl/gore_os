@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_foto_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un repositorio de fotos con metadatos de evento
-id: US-FOTO-001-01
-urn: urn:goreos:atom:story:us_foto_001_01:1.0.0
-role_id: ROL-GESTION-FOTO
-as_a: Fotógrafo
-i_want: un repositorio de fotos con metadatos de evento
-so_that: Comunicaciones pueda acceder al material
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SYS-EVENTO
+id: US-FOTO-001-01
+name: Repositorio de fotos con metadatos de evento
+
+# === STORY CORE ===
+as_a: Fotógrafo
+i_want: un repositorio centralizado de fotografías con metadatos de evento asociados
+so_that: la unidad de Comunicaciones pueda acceder al material rápidamente para difusión institucional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FOTO
+  agent_type: HUMAN
+  description: Funcionario encargado del registro audiovisual del GORE
+
+entities_mentioned:
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-DIG-ACTIVO_DATOS
+    status: linked
+
+process_ref:
+  id: PROC-BACK-P1
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACION-INSTITUCIONAL
+  priority: P2
+  scope: APOYO
+
+extra_tags:
+  - fotos
+  - metadatos
+  - comunicaciones
+  - repositorio
+
+status: ENRICHED
+acceptance_criteria:
+  - Carga masiva de imágenes con extracción automática de EXIF (fecha, GPS)
+  - Capacidad de etiquetar fotos por División, Provincia o Proyecto relacionado
+  - Buscador visual por rango de fechas y palabras clave del evento

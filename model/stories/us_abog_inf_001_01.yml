@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_inf_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un repositorio de jurisprudencia administrativa regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-INF-001-01
-urn: urn:goreos:atom:story:us_abog_inf_001_01:1.0.0
-role_id: ROL-NORM-ABOG
+name: Un repositorio de jurisprudencia administrativa regional
+
+# === STORY CORE ===
 as_a: Abogado Informante
 i_want: un repositorio de jurisprudencia administrativa regional
 so_that: pueda mantener consistencia en los criterios
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado que redacta y revisa actos administrativos
+
+entities_mentioned:
+  - id: ENT-NORM-JURISPRUDENCIA
+    status: candidate
+  - id: ENT-NORM-DICTAMEN
+    status: candidate
+  - id: ENT-SYS-REPOSITORIO
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-GESTION-CONOCIMIENTO
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: CONOCIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - jurisprudencia
+  - dictamenes
+  - cgr
+  - precedentes
+
+status: ENRICHED
+acceptance_criteria:
+  - Indexación de dictámenes CGR
+  - Búsqueda por materia y fecha
+  - Vinculación con actos regionales
+  - Alertas de nuevos dictámenes relevantes

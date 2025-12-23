@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_sub_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Postular a Subvención 8% en línea
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-SUB-005
-urn: urn:goreos:atom:story:us_fin_sub_005:1.0.0
-role_id: ROL-EJEC-ANAL
+name: Postular a Subvención 8% en línea
+
+# === STORY CORE ===
 as_a: Analista Ejecutor
-i_want: Postular a Subvención 8% en línea
-so_that: Accedo a fondos concursables
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+i_want: Postular a Subvención 8% en línea mediante el portal institucional
+so_that: Accedo a fondos concursables de manera ágil y con seguimiento en tiempo real
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ANAL
+  agent_type: HUMAN
+  description: Representante de organización social (Ejecutor)
+
+entities_mentioned:
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+  - id: ENT-DIG-TRAMITE
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: FONDOS-CONCURSABLES
+  priority: P1
+  scope: EXTERNO
+
+extra_tags:
+  - postulacion
+  - 8-porciento
+  - portal
+  - ciudadanos
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de postulación con validaciones dinámicas según la línea concursable
+  - Carga masiva de documentos en la nube con confirmación de recepción
+  - Envío de comprobante de postulación (folio) por correo electrónico tras el cierre

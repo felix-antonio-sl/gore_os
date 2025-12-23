@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_apr_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-APR-001
-urn: urn:goreos:atom:story:us_fin_apr_001:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
 so_that: Cumplo con obligación legal
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de División (DAF/DIPLADE) encargado de formalizar la distribución del presupuesto de Agua Potable Rural (APR)
+
+entities_mentioned:
+  - id: ENT-FIN-DISTRIBUCION-APR
+    status: candidate
+  - id: ENT-GOB-CORE-CONSEJO
+    status: linked
+  - id: ENT-NORM-LEY-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ASIGNACION-APR
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: PRESUPUESTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - apr
+  - agua-potable-rural
+  - core
+  - ley-presupuesto
+  - distribucion-inicial
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero de distribución por provincia/comuna basado en el marco presupuestario asignado por Ley
+  - Generación del Oficio Conductor para el CORE con firma digital
+  - Control de cumplimiento de plazo (10 días) con alerta de sobrepaso

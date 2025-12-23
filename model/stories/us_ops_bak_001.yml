@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_bak_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Backups automáticos programados para todas las bases de datos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-BAK-001
-urn: urn:goreos:atom:story:us_ops_bak_001:1.0.0
-role_id: ROL-ADMIN-TI
-as_a: Rol no encontrado (ROL-ADMIN-TI)
-i_want: configurar backups automáticos programados para todas las bases de datos
-so_that: se garantice la continuidad del negocio ante desastres
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Automatización de Backups de Bases de Datos
+
+# === STORY CORE ===
+as_a: Administrador de TI
+i_want: Configurar backups automáticos programados para todas las bases de datos transaccionales del Supermodelo
+so_that: se garantice la continuidad del negocio y la recuperación íntegra de la información ante desastres técnicos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Administrador encargado de la persistencia y seguridad de los datos institucionales
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: CONTINUIDAD-NEGOCIO
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - database-backup
+  - automatización
+  - postgresql
+  - seguridad-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Soporte para backups en caliente (hot backup) sin interrupción del servicio
+  - Almacenamiento encriptado de las copias (AES-256) en la capa de storage
+  - Reporte diario de estado de los backups (Éxito/Fallo) vía correo a TI

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_serco_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para SERCOTEC
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SERCO-001
-urn: urn:goreos:atom:story:us_gen_gestion_serco_001:1.0.0
-role_id: ROL-GESTION-SERCO
+name: Historia genérica para SERCOTEC
+
+# === STORY CORE ===
 as_a: SERCOTEC
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SERCO
+  agent_type: HUMAN
+  description: Representante del Servicio de Cooperación Técnica (SERCOTEC) que gestiona fondos concursables para PYMEs con el GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-PYME
+    status: candidate
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-EJECUCION-PROGRAMA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - sercotec
+  - pymes
+  - microempresa
+  - fomento-productivo
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga masiva de expedientes de beneficiarios de los fondos Capital Abeja/Semilla
+  - Acceso a indicadores regionalizados de supervivencia de microempresas apoyadas
+  - Panel de control de transferencias financieras recibidas desde el GORE para ejecución FNDR

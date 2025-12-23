@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_norm_audit_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Fiscalizador Bot
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-NORM_AUDIT-002
-urn: urn:goreos:atom:story:us_gen_norm_audit_002:1.0.0
-role_id: ROL-NORM-AUDIT
+name: Historia genérica para Fiscalizador Bot
+
+# === STORY CORE ===
 as_a: Fiscalizador Bot
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-AUDIT
+  agent_type: ALGORITHMIC
+  description: Agente de auditoría algorítmica (Estilo KODA) que verifica el cumplimiento de normas de gasto y procedimientos en tiempo real
+
+entities_mentioned:
+  - id: ENT-SYS-ALERTA-CUMPLIMIENTO
+    status: candidate
+  - id: ENT-FIN-DETECCION-FRAUDE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: AUDITORIA
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - fiscalizador-bot
+  - auditoria-automatica
+  - integridad
+  - control-gasto
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Ejecución diaria de reglas de negocio para detectar duplicidad de pagos o proveedores inhabilitados
+  - Generación de reportes de anomalías procedimentales escalados automáticamente a la Unidad de Auditoría
+  - Verificación de consistencia entre decretos de pago y resoluciones de aprobación de bases

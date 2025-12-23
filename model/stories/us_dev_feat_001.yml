@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_feat_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-FEAT-001
-urn: urn:goreos:atom:story:us_dev_feat_001:1.0.0
-role_id: ROL-GESTION-PO
+name: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
+
+# === STORY CORE ===
 as_a: Product Owner
 i_want: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
 so_that: Valido innovaciones antes del despliegue masivo
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PO
+  agent_type: HUMAN
+  description: Product Owner encargado de la estrategia de lanzamiento y validación de features
+
+entities_mentioned:
+  - id: ENT-SYS-FEATURE-FLAG
+    status: candidate
+  - id: ENT-SYS-GRUPO-PILOTO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-LANZAMIENTO-CONTROLADO
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: DESARROLLO
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - feature-flags
+  - pilotos
+  - validacion-usuario
+  - innovacion
+  - despliegue-masivo
+
+status: ENRICHED
+acceptance_criteria:
+  - Panel de administración para activar/desactivar funciones por ID de usuario o unidad
+  - Telemetría específica para el grupo piloto durante la fase de prueba
+  - Workflow de rollback instantáneo ante fallos críticos en el piloto

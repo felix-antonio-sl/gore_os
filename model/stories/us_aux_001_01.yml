@@ -1,14 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_aux_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitudes de apoyo logístico
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AUX-001-01
-urn: urn:goreos:atom:story:us_aux_001_01:1.0.0
-role_id: ROL-BACK-AUXILIAR
+name: Solicitudes de apoyo logístico
+
+# === STORY CORE ===
 as_a: Auxiliar
 i_want: recibir solicitudes de apoyo logístico
 so_that: pueda organizar mi trabajo
-domain: D-BACK
-priority: P3
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-BACK-AUXILIAR
+  agent_type: HUMAN
+  description: Personal auxiliar encargado del apoyo logístico y mantenimiento menor
+
+entities_mentioned:
+  - id: ENT-SYS-SOLICITUD-LOGISTICA
+    status: candidate
+  - id: ENT-ORG-AREA-PEDIDO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-SERVICIOS-AUXILIARES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: OPERATIVO
+  priority: P3
+  scope: EDIFICIO
+
+extra_tags:
+  - logistica
+  - auxiliar
+  - solicitudes
+  - mantenimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Panel de tareas pendientes y en curso
+  - Notificaciones de nuevas solicitudes en tiempo real
+  - Posibilidad de marcar tareas como completadas desde dispositivo móvil

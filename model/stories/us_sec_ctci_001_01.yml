@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sec_ctci_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de sesiones del CTCI
-id: US-SEC-CTCI-001-01
-urn: urn:goreos:atom:story:us_sec_ctci_001_01:1.0.0
-role_id: ROL-EJEC-CPER-SEC
-as_a: Secretario Ejecutivo Comité de Pertinencia
-i_want: un módulo de gestión de sesiones del CTCI
-so_that: pueda registrar acuerdos y hacer seguimiento
-domain: D-PLAN
-priority: P1
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACUERDO
+id: US-SEC-CTCI-001-01
+name: Gestión de sesiones del Comité CTCI
+
+# === STORY CORE ===
+as_a: Secretario Ejecutivo del Comité CTCI
+i_want: un módulo de gestión de sesiones del CTCI
+so_that: pueda registrar acuerdos y hacer seguimiento a la estrategia de innovación
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-CPER-SEC
+  agent_type: HUMAN
+  description: Profesional encargado de la secretaría técnica del Consejo Regional de Ciencia, Tecnología, Conocimiento e Innovación
+
+entities_mentioned:
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-GOB-ACTA-CONSEJO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-ESTRATEGICA
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: INNOVACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ctci
+  - ciencia-y-tecnologia
+  - innovacion
+  - sesiones
+  - acuerdos-estrategicos
+
+status: ENRICHED
+acceptance_criteria:
+  - Gestión de citaciones y tablas de sesión para los consejeros del CTCI vía plataforma
+  - Módulo de votación y firma de acuerdos para la aprobación de la Estrategia Regional de Innovación
+  - Dashboard de seguimiento del cumplimiento de compromisos adquiridos en las sesiones del CTCI

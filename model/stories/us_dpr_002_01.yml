@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dpr_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de inversión en seguridad pública financiada por el GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DPR-002-01
-urn: urn:goreos:atom:story:us_dpr_002_01:1.0.0
-role_id: ROL-GESTION-DPR
-as_a: Delegado Presidencial Regional
-i_want: reportes de inversión en seguridad pública financiada por el GORE
-so_that: pueda articular con Carabineros y PDI
-domain: D-PLAN
-priority: P1
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+name: Reportes de Inversión en Seguridad Pública para DPR
+
+# === STORY CORE ===
+as_a: Delegado Presidencial Regional (DPR)
+i_want: generar reportes consolidados de la inversión regional en materia de seguridad pública financiada por el GORE
+so_that: pueda articular de forma efectiva los planes de prevención con las policías (Carabineros, PDI) y mejorar la seguridad ciudadana
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DPR
+  agent_type: HUMAN
+  description: Representante del Gobierno Interior encargado de la coordinación de la seguridad en la región
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: SEGURIDAD-PUBLICA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - dpr
+  - seguridad-publica
+  - carabineros
+  - pdi
+  - reportes-inversion
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard interactivo que filtra inversiones por eje de seguridad (Infraestructura, Equipamiento, Programas Sociales)
+  - Mapas de calor (Heatmaps) que cruzan la inversión GORE con índices de delincuencia
+  - Exportación de reportes ejecutivos en PDF para consejos regionales de seguridad

@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_jd_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Compromisos marcados como completados
-id: US-EJEC-JD-006
-urn: urn:goreos:atom:story:us_ejec_jd_006:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Validar compromisos marcados como completados
-so_that: Certifico cumplimiento
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-COMPROMISO
+id: US-EJEC-JD-006
+name: Validación y Cierre de Compromisos por Jefatura
+
+# === STORY CORE ===
+as_a: Jefe de División / Unidad
+i_want: validar formalmente los compromisos que los profesionales han marcado como "Completados"
+so_that: se certifique oficialmente el cumplimiento del hito y se proceda a las etapas siguientes del convenio (ej. pago o cierre)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo que avala la veracidad y calidad de lo entregado por su equipo
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: VALIDACION
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - certificacion
+  - cierre-hito
+  - validacion-jefatura
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de revisión de evidencias cargadas por el profesional
+  - Acciones de "Aprobar" (Cierra el compromiso) o "Rechazar" (Vuelve a estado Pendiente con observación)
+  - Registro de la firma digital del jefe en el acto de aprobación del cumplimiento

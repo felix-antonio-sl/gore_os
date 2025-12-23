@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_pres_core_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una herramienta de gestión de sesiones con votación electrónica
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PRES-CORE-001-01
-urn: urn:goreos:atom:story:us_pres_core_001_01:1.0.0
-role_id: ROL-GESTION-PRES
-as_a: Presidente Subcomité IA
+name: Herramientas de gestión de sesiones con votación electrónica
+
+# === STORY CORE ===
+as_a: Presidente del Consejo Regional (CORE)
 i_want: una herramienta de gestión de sesiones con votación electrónica
 so_that: las sesiones sean ágiles y registradas
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-GOV-VOTACION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: HUMAN
+  description: Máxima autoridad del CORE (Gobernador o Consejero electo) que preside el pleno
+
+entities_mentioned:
+  - id: ENT-GOV-VOTACION
+    status: linked
+  - id: ENT-GOB-ACTA-CORE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: GOBERNANZA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - core
+  - votacion-electronica
+  - sesiones
+  - transparencia
+  - consejo-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Sistema de votación en tiempo real con visualización de resultados en pantalla de plenario
+  - Generación automática de acta con el desglose de votos (A favor, En contra, Abstención) por consejero
+  - Módulo de quórum dinámico que alerta si no hay suficientes consejeros presentes para votar

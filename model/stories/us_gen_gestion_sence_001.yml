@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_sence_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Director Regional SENCE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SENCE-001
-urn: urn:goreos:atom:story:us_gen_gestion_sence_001:1.0.0
-role_id: ROL-GESTION-SENCE
+name: Historia genérica para Director Regional SENCE
+
+# === STORY CORE ===
 as_a: Director Regional SENCE
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SENCE
+  agent_type: HUMAN
+  description: Director Regional del Servicio Nacional de Capacitación y Empleo (SENCE) que gestiona programas de empleabilidad con el GORE
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-CAPACITACION
+    status: candidate
+  - id: ENT-EJEC-INDICADOR-EMPLEABILIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - sence
+  - capacitacion
+  - empleo
+  - fomento-productivo
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a base de datos de oferta de capacitación regional financiada por el GORE
+  - Módulo de seguimiento de la inserción laboral de beneficiarios de los cursos SENCE-GORE
+  - Registro de convenios de transferencia para el subsidio al empleo joven y femenino regional

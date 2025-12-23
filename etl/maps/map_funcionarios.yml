@@ -1,0 +1,264 @@
+# ETL Mapping: Funcionarios Legacy → GORE_OS
+# Prioridad: ALTA (Transparencia Activa + D-ORG Core)
+# Funtor: Δ*(MLEG-FUNCIONARIO) → Σ*(ENT-ORG-FUNCIONARIO, ENT-ORG-REMUNERACION)
+---
+_meta:
+  urn: urn:goreos:etl:map:funcionarios:1.0.0
+  type: ETL_Mapping
+  created_at: "2025-12-23"
+  author: Arquitecto-GORE
+
+source:
+  type: staging
+  entity: ENT-MLEG-FUNCIONARIO
+  urn: urn:goreos:etl:sink:mleg_funcionario:1.0.0
+  file: listado_funcionarios_integrado_remediado.csv
+  approx_rows: 111
+  quality_tier: HIGH
+
+# Este mapping genera DOS entidades canónicas (1:2 fan-out)
+targets:
+  - entity: ENT-ORG-FUNCIONARIO
+    domain: D-ORG
+    description: Persona con vínculo laboral activo en el GORE
+  - entity: ENT-ORG-REMUNERACION
+    domain: D-ORG
+    description: Registro mensual de remuneración
+
+# ============================================================================
+# ESTRATEGIA DE CLAVES
+# ============================================================================
+key_strategy:
+  # Funcionario: clave compuesta por nombre (requiere parsing)
+  funcionario:
+    natural_key: [apellido_paterno, apellido_materno, nombres]
+    target_key: id_funcionario
+    generation: UUID_V5
+    namespace: gore_os
+    name_template: "funcionario:{apellido_paterno}:{apellido_materno}:{nombres}"
+    dedup_policy: MERGE_LATEST # Mismo funcionario en múltiples meses
+
+  # Remuneración: clave por funcionario + periodo
+  remuneracion:
+    natural_key: [id_funcionario, periodo]
+    target_key: id_remuneracion
+    generation: UUID_V5
+    namespace: gore_os
+    name_template: "remuneracion:{id_funcionario}:{periodo}"
+
+# ============================================================================
+# MAPEO TARGET 1: ENT-ORG-FUNCIONARIO
+# ============================================================================
+field_mappings_funcionario:
+  # --- Parseo de nombre ---
+  - source: nombre_completo
+    target: [apellido_paterno, apellido_materno, nombres]
+    transform: PARSE_NOMBRE_COMPLETO
+    pattern: "{apellido1} {apellido2}, {nombres}"
+    notes: Algunos registros pueden no tener apellido_materno
+
+  - source: cargo
+    target: cargo_descripcion
+    transform: TRIM_UPPER
+
+  - source: calificacion_profesional
+    target: profesion
+    transform: TRIM
+
+  - source: estamento
+    target: estamento
+    transform: ENUM_MAP
+    enum_map:
+      Directivo: DIRECTIVO
+      Profesional: PROFESIONAL
+      Técnico: TECNICO
+      Administrativo: ADMINISTRATIVO
+      Auxiliar: AUXILIAR
+      Honorarios: HONORARIO
+      Autoridad de Gobierno: AUTORIDAD
+    default: OTRO
+
+  - source: tipo_vinculo
+    target: calidad_juridica
+    transform: DERIVE_CALIDAD_JURIDICA
+    rules:
+      - pattern: "Planta/*"
+        value: PLANTA
+      - pattern: "*/Contrata"
+        value: CONTRATA
+      - pattern: "Honorarios"
+        value: HONORARIO
+
+  - source: grado_eus
+    target: grado
+    transform: PARSE_GRADO
+    on_sg: null # 'S/G' se convierte a NULL
+
+  - source: fecha_inicio
+    target: fecha_ingreso
+    transform: IDENTITY
+
+  - source: fecha_termino
+    target: fecha_termino_contrato
+    transform: IDENTITY
+    null_handling: KEEP_NULL # Indefinido = NULL
+
+  # --- Campos derivados ---
+  - target: activo
+    transform: DERIVE
+    expression: "fecha_termino IS NULL OR fecha_termino >= CURRENT_DATE"
+
+  - target: division_id
+    transform: LOOKUP_DIVISION
+    from: cargo
+    notes: Requiere catálogo de divisiones para matching por palabras clave
+
+# ============================================================================
+# MAPEO TARGET 2: ENT-ORG-REMUNERACION
+# ============================================================================
+field_mappings_remuneracion:
+  - source: periodo
+    target: periodo
+    transform: IDENTITY
+
+  - source: remuneracion_bruta
+    target: monto_bruto
+    transform: IDENTITY
+    null_handling: ZERO
+
+  - source: remuneracion_liquida
+    target: monto_liquido
+    transform: IDENTITY
+    null_handling: ZERO
+
+  - source: asignaciones_especiales
+    target: asignaciones_especiales
+    transform: IDENTITY
+    null_handling: ZERO
+
+  - source: bonos_incentivos
+    target: bonos
+    transform: IDENTITY
+    null_handling: ZERO
+
+  - source: viaticos
+    target: viaticos
+    transform: IDENTITY
+    null_handling: ZERO
+
+  # --- Horas extras como JSONB ---
+  - target: horas_extras
+    transform: JSON_BUILD
+    structure:
+      diurnas:
+        monto: "{horas_extras_diurnas_monto}"
+        horas: "{horas_extras_diurnas_horas}"
+      nocturnas:
+        monto: "{horas_extras_nocturnas_monto}"
+        horas: "{horas_extras_nocturnas_horas}"
+      festivas:
+        monto: "{horas_extras_festivas_monto}"
+        horas: "{horas_extras_festivas_horas}"
+
+  # --- FK a funcionario ---
+  - target: funcionario_id
+    transform: FK_LOOKUP
+    entity: ENT-ORG-FUNCIONARIO
+    match_by: natural_key
+
+# ============================================================================
+# TRANSFORMACIONES ESPECIALES
+# ============================================================================
+custom_transforms:
+  PARSE_NOMBRE_COMPLETO:
+    description: >
+      Parsea formato "Apellido1 Apellido2, Nombres" a componentes.
+      Maneja casos edge: apellidos compuestos (De La, San, etc.)
+    implementation: |
+      def parse_nombre_completo(value):
+          if ',' not in value:
+              return {'apellido_paterno': value, 'apellido_materno': None, 'nombres': None}
+          
+          apellidos, nombres = value.split(',', 1)
+          apellidos = apellidos.strip().split(' ')
+          
+          # Manejar apellidos compuestos
+          if len(apellidos) >= 2:
+              # Detectar prefijos: De, Del, De La, San, etc.
+              prefijos = ['De', 'Del', 'De La', 'San', 'La', 'Las', 'Los']
+              # ... lógica de parsing
+          
+          return {
+              'apellido_paterno': apellidos[0] if apellidos else None,
+              'apellido_materno': apellidos[1] if len(apellidos) > 1 else None,
+              'nombres': nombres.strip()
+          }
+
+  LOOKUP_DIVISION:
+    description: >
+      Deriva la división del funcionario basándose en keywords del cargo.
+      Requiere catálogo: DIFOI, DIPIR, DIDESO, DAF, DIT, DIPLADE, CORE, GABINETE, etc.
+    mappings:
+      - pattern: ["DIFOI", "Fomento", "Industria"]
+        division: DIFOI
+      - pattern: ["DIPIR", "Inversión", "Presupuesto"]
+        division: DIPIR
+      - pattern: ["DIDESO", "Desarrollo Social"]
+        division: DIDESO
+      - pattern: ["DAF", "Finanzas", "Administración"]
+        division: DAF
+      - pattern: ["DIT", "Infraestructura", "Transporte"]
+        division: DIT
+      - pattern: ["DIPLADE", "Planificación"]
+        division: DIPLADE
+      - pattern: ["CORE", "Consejo"]
+        division: CORE
+      - pattern: ["Gabinete", "Gobernador"]
+        division: GABINETE
+      - pattern: ["Jurídica", "Abogado"]
+        division: JURIDICA
+      - pattern: ["Auditoría", "Control"]
+        division: AUDITORIA
+      - pattern: ["Comunicaciones", "Periodista"]
+        division: COMUNICACIONES
+
+# ============================================================================
+# VALIDACIONES
+# ============================================================================
+validation_rules:
+  - rule: NOT_NULL
+    entity: ENT-ORG-FUNCIONARIO
+    fields: [apellido_paterno, nombres, estamento, calidad_juridica]
+
+  - rule: NOT_NULL
+    entity: ENT-ORG-REMUNERACION
+    fields: [periodo, funcionario_id, monto_bruto]
+
+  - rule: RANGE
+    entity: ENT-ORG-REMUNERACION
+    field: monto_bruto
+    min: 0
+    max: 20000000 # Razonable para sector público
+
+  - rule: FK_EXISTS
+    entity: ENT-ORG-REMUNERACION
+    field: funcionario_id
+    target: ENT-ORG-FUNCIONARIO
+
+# ============================================================================
+# MÉTRICAS ESPERADAS
+# ============================================================================
+expected_metrics:
+  source_rows: 111
+
+  target_funcionarios:
+    rows_min: 100 # Después de dedup por mes
+    rows_max: 111
+    unique_personas: ~100 # Estimado considerando repeticiones
+
+  target_remuneraciones:
+    rows: 111 # 1:1 con source (cada fila es un mes)
+
+  null_rates:
+    division_id: 0.10 # ~10% puede no matchear división
+    fecha_termino_contrato: 0.45 # ~45% son indefinidos

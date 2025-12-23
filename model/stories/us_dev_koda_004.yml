@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_koda_004:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-KODA-004
+name: Directorio de Capacidades Federadas
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Consultar el catálogo maestro de capacidades y competencias disponibles en todos los nodos de la federación
+so_that: se evite la duplicidad de implementaciones y se promueva la reutilización de lógica de negocio ya existente
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador que requiere descubrir servicios en la red federada
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: FEDERACION
+  priority: P1
+  scope: REUTILIZACION
+
+extra_tags:
+  - discovery
+  - catalog
+  - networking
+  - koda-hub
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de búsqueda semántica de capacidades por etiquetas y dominios
+  - Registro automático de nuevos módulos tras pasar la validación de infraestructura
+  - Documentación técnica (API Docs) vinculada a cada entrada del catálogo

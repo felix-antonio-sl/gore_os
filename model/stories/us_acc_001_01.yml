@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_acc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas de auditoría de accesibilidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ACC-001-01
-urn: urn:goreos:atom:story:us_acc_001_01:1.0.0
-role_id: ROL-GESTION-ESPECIALISTA
+name: Herramientas de auditoría de accesibilidad
+
+# === STORY CORE ===
 as_a: Especialista BI
 i_want: herramientas de auditoría de accesibilidad
 so_that: pueda verificar cumplimiento
-domain: D-TDE
-competence_id: CPT-DEV-ACC-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ESPECIALISTA
+  agent_type: MIXED
+  description: Especialista en BI con apoyo de herramientas automatizadas
+
+entities_mentioned:
+  - id: ENT-TDE-SITIO-WEB
+    status: candidate
+  - id: ENT-TDE-REPORTE-ACCESIBILIDAD
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-AUDITORIA-ACCESIBILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: CALIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - accesibilidad
+  - wcag
+  - auditoria
+  - inclusion
+
+status: ENRICHED
+acceptance_criteria:
+  - Escaneo automático WCAG 2.1
+  - Reportes de cumplimiento
+  - Sugerencias de corrección
+  - Tracking de mejoras

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_gest_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visar Cierre Técnico (Checklist recepción obras/programas)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-GEST-005
-urn: urn:goreos:atom:story:us_fin_gest_005:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
+name: Visar Cierre Técnico (Checklist recepción obras/programas)
+
+# === STORY CORE ===
 as_a: Analista Prevención
 i_want: Visar Cierre Técnico (Checklist recepción obras/programas)
 so_that: Certifico culminación técnica
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista responsable de la recepción final técnica de iniciativas de inversión antes del cierre administrativo
+
+entities_mentioned:
+  - id: ENT-EJE-CIERRE-TECNICO
+    status: candidate
+  - id: ENT-EJE-ACTA-RECEPCION-FINAL
+    status: linked
+  - id: ENT-EJE-CHECKLIST-CIERRE
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-FINALIZACION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: SEGUIMIENTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - cierre-tecnico
+  - recepción
+  - obras
+  - programas
+  - checklist
+
+status: ENRICHED
+acceptance_criteria:
+  - Validación de entrega de planos as-built (en caso de obras físicas)
+  - Carga obligatoria de informe final de beneficiarios (en caso de programas sociales)
+  - Notificación a DAF para el inicio del proceso de liquidación financiera

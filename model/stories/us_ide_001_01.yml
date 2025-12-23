@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_ide_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un catálogo de metadatos geográficos estandarizado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-IDE-001-01
-urn: urn:goreos:atom:story:us_ide_001_01:1.0.0
-role_id: ROL-GESTION-IDE
+name: Catálogo de metadatos geográficos estandarizado
+
+# === STORY CORE ===
 as_a: Coordinador IDE
 i_want: un catálogo de metadatos geográficos estandarizado
 so_that: se facilite el intercambio de información territorial
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-IDE
+  agent_type: HUMAN
+  description: Coordinador de la Infraestructura de Datos Especiales (IDE) Regional que gestiona el inventario de capas
+
+entities_mentioned:
+  - id: ENT-TERR-METADATO-GIS
+    status: candidate
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: IDE
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ide
+  - metadatos
+  - gis
+  - estandarizacion
+  - interoperabilidad-espacial
+  - catalogo-objetos
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo de objetos geográficos bajo norma ISO 19115 para todas las capas institucionales
+  - Portal de búsqueda de datos espaciales con filtros por temática, fecha y precisión técnica
+  - API OGC (CSW) para la cosecha automática de metadatos por parte de la IDE Nacional

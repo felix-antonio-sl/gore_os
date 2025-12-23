@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integración con sistema de alertas del CIES
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BOMB-001-01
-urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
-role_id: ROL-GESTION-BOMB
+name: Integración con sistema de alertas del CIES
+
+# === STORY CORE ===
 as_a: Bomberos de Chile
 i_want: integración con sistema de alertas del CIES
 so_that: pueda recibir información en tiempo real
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-BOMB
+  agent_type: ALGORITHMIC
+  description: Institución de Bomberos que requiere interoperabilidad con el Centro de Inteligencia en Emergencias y Seguridad (CIES) del GORE
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-PLATAFORMA-CIES
+    status: candidate
+  - id: ENT-TERR-INCIDENTE
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-GESTION-EMERGENCIAS
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: EMERGENCIAS
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - bomberos
+  - cies
+  - alertas
+  - tiempo-real
+  - emergencias
+
+status: ENRICHED
+acceptance_criteria:
+  - Recepción de despachos de emergencia vía API desde el CIES
+  - Visualización de la ubicación del incidente en mapa interoperable
+  - Reporte de estado de la emergencia (en camino, en el lugar, controlada) de vuelta al CIES

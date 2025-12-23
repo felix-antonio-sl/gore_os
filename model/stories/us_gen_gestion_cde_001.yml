@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cde_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Consejo de Defensa del Estado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CDE-001
-urn: urn:goreos:atom:story:us_gen_gestion_cde_001:1.0.0
-role_id: ROL-GESTION-CDE
+name: Historia genérica para Consejo de Defensa del Estado
+
+# === STORY CORE ===
 as_a: Consejo de Defensa del Estado
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CDE
+  agent_type: HUMAN
+  description: Abogado o representante del CDE que interactúa con el GORE por juicios o asesoría legal
+
+entities_mentioned:
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: linked
+  - id: ENT-NORM-SOLICITUD-ANTECEDENTES
+    status: candidate
+  - id: ENT-CONV-CONVENIO-INTERINSTITUCIONAL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - cde
+  - defensa-estado
+  - litigios
+  - legal
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal de intercambio seguro de documentos legales entre GORE y CDE
+  - Notificación de plazos procesales críticos para la defensa de los intereses regionales
+  - Dashboard de juicios vigentes donde el GORE es parte o interesado

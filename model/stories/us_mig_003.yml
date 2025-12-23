@@ -1,1 +1,46 @@
+_meta:
+  urn: urn:goreos:atom:story:us_mig_003:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-MIG-003
+name: Consolidación Semántica de Data Legacy
+
+# === STORY CORE ===
+as_a: Migrador de Datos
+i_want: Aplicar un motor de deduplicación y consolidación de registros (Master Data Management) sobre el dataset migrado
+so_that: se eliminen duplicidades de beneficiarios y proyectos provenientes de múltiples sistemas legacy, garantizando una "Versión Única de la Verdad"
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-MIGRADOR
+  agent_type: HUMAN
+  description: Especialista en limpieza y consolidación de datos migrados
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: MIGRACION
+  priority: P1
+  scope: CALIDAD-DATOS
+
+extra_tags:
+  - mdm
+  - deduplicación
+  - consolidación
+  - limpieza-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Algoritmos de coincidencia difusa (Fuzzy matching) para nombres y RUTs con errores tipográficos
+  - Interfaz de "Curaduría Manual" para casos de duda que requieran intervención humana
+  - Reporte de estadísticas de duplicidad previo y posterior al proceso de consolidación

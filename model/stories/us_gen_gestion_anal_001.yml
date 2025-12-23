@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_anal_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Analista DIT
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ANAL-001
-urn: urn:goreos:atom:story:us_gen_gestion_anal_001:1.0.0
-role_id: ROL-GESTION-ANAL
-as_a: Analista Fomento
+name: Historia genérica para Analista DIT
+
+# === STORY CORE ===
+as_a: Analista Informática (DIT)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL
+  agent_type: HUMAN
+  description: Analista de la División de Informática y Tecnología (DIT) encargado del soporte y mantenimiento de sistemas
+
+entities_mentioned:
+  - id: ENT-SYS-TICKET-SOPORTE
+    status: candidate
+  - id: ENT-SYS-INFRAESTRUCTURA-TI
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-SOPORTE-USUARIO
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: SOPORTE
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - dit
+  - analista-ti
+  - soporte-tecnico
+  - mantenimiento-sistemas
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a panel de monitoreo de disponibilidad de servicios TI
+  - Gestión de ciclo de vida de tickets (Nivel 1 y 2)
+  - Registro de base de conocimientos (Knowledge Base) por incidente resuelto

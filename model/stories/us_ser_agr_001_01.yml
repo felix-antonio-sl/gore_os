@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ser_agr_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de inversión GORE en sector agrícola
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SER-AGR-001-01
-urn: urn:goreos:atom:story:us_ser_agr_001_01:1.0.0
-role_id: ROL-GESTION-SEREMI-AGRI
-as_a: SEREMI Agricultura
-i_want: reportes de inversión GORE en sector agrícola
-so_that: pueda complementar con programas sectoriales
-domain: D-PLAN
-priority: P1
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+name: Reportes de inversión GORE en sector agrícola para SEREMI
+
+# === STORY CORE ===
+as_a: SEREMI de Agricultura
+i_want: obtener reportes detallados de la inversión del GORE en el sector agrícola regional
+so_that: pueda complementar los programas sectoriales con financiamiento del FNDR y evitar duplicidades
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-AGRI
+  agent_type: HUMAN
+  description: Representante ministerial en la región encargado de las políticas de desarrollo rural
+
+entities_mentioned:
+  - id: ENT-FIN-INVERSION-SECTORIAL
+    status: candidate
+  - id: ENT-EJEC-PROYECTO-AGRICOLA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-FORMULACION-ARI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: COORDINACION-SECTORIAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - agricultura
+  - seremi
+  - fndr
+  - desarrollo-rural
+  - inversion-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard consolidado de proyectos agrícolas vigentes: ubicación, beneficiarios y presupuesto ejecutado
+  - Filtro por sub-sectores (Riego, Suelos, Fomento Productivo) para análisis de brechas territoriales
+  - Módulo de consulta de expedientes técnicos para el visado de resoluciones sectoriales aprobatorias

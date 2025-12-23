@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_eo_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Notificaciones de próximo vencimiento
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-EO-007
-urn: urn:goreos:atom:story:us_ejec_eo_007:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Recibir notificaciones de próximo vencimiento
-so_that: Actúo a tiempo
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Alertas de Vencimiento de Compromisos
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Supervisor
+i_want: recibir notificaciones automáticas cuando un compromiso esté cerca de su fecha de vencimiento o se encuentre fuera de plazo
+so_that: se puedan tomar acciones correctivas inmediatas o gestionar extensiones antes de incurrir en faltas administrativas
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: MIXED
+  description: Usuario alertado por el sistema de monitoreo de plazos institucional
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION-TIEMPO
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - alertas
+  - vencimiento
+  - notificaciones
+  - plazos
+  - recordatorios
+
+status: ENRICHED
+acceptance_criteria:
+  - Configuración de umbrales de alerta (ej. 15 días, 7 días y 24 horas antes del vencimiento)
+  - Notificación vía Dashboard (Push) y correo electrónico institucional
+  - Listado de "Compromisos Críticos" destacado en la pantalla principal del usuario

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ctd_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un catálogo de expedientes electrónicos con estado de digitalización
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CTD-001-02
-urn: urn:goreos:atom:story:us_ctd_001_02:1.0.0
-role_id: ROL-GESTION-TIC-CTD
+name: Un catálogo de expedientes electrónicos con estado de digitalización
+
+# === STORY CORE ===
 as_a: Coordinador Transformación Digital (CTD)
 i_want: un catálogo de expedientes electrónicos con estado de digitalización
 so_that: pueda identificar procesos pendientes de migrar
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Coordinador del equipo de Transformación Digital responsable de la Ley 21.180
+
+entities_mentioned:
+  - id: ENT-SYS-EXPEDIENTE-ELECTRONICO
+    status: candidate
+  - id: ENT-SYS-PROCESO-DIGITALIZADO
+    status: candidate
+  - id: ENT-SYS-CATALOGO-SERVICIOS
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-PLAN-DIGITALIZACION
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: TRANSFORMACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - transformacion-digital
+  - ley-21180
+  - expedientes
+  - digitalizacion
+  - procesos
+
+status: ENRICHED
+acceptance_criteria:
+  - Inventario de todos los tipos de expedientes del GORE (Papel vs Digital)
+  - Porcentaje de avance de migración por división
+  - Alerta de procesos críticos con alto flujo documental aún en soporte papel

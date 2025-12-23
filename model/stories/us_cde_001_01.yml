@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cde_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Antecedentes completos de litigios donde el GORE es parte
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CDE-001-01
-urn: urn:goreos:atom:story:us_cde_001_01:1.0.0
-role_id: ROL-NORM-JUD
+name: Antecedentes completos de litigios donde el GORE es parte
+
+# === STORY CORE ===
 as_a: Abogado Asuntos Judiciales
 i_want: antecedentes completos de litigios donde el GORE es parte
 so_that: pueda asumir la defensa fiscal
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-JUD
+  agent_type: HUMAN
+  description: Abogado de la Unidad Jurídica o CDE encargado de la defensa de los intereses institucionales
+
+entities_mentioned:
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: candidate
+  - id: ENT-NORM-DEMANDA
+    status: candidate
+  - id: ENT-SYS-EXPEDIENTE-JUDICIAL
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-DEFENSA-JUDICIAL
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - litigios
+  - defensa-judicial
+  - cde
+  - abogados
+  - juicios
+
+status: ENRICHED
+acceptance_criteria:
+  - Carpeta judicial digital por causa con todos los documentos probatorios
+  - Integración con el portal del Poder Judicial (PJE) para seguimiento de estados
+  - Alertas de plazos procesales críticos (vencimientos de términos probatorios, etc.)

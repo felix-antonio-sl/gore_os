@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_pb_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-PB-002
-urn: urn:goreos:atom:story:us_gest_pb_002:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Ejecutar playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
 so_that: Gestiono brechas de expectativas antes de que escalen
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-PLAYBOOK
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica que aplica estrategias de gestión de expectativas ante CORE o Municipios
+
+entities_mentioned:
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-GOB-STAKEHOLDER-RELATION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - playbook
+  - expectativas
+  - stakeholders
+  - gestion-relaciones
+  - comunicaciones-legales
+
+status: ENRICHED
+acceptance_criteria:
+  - Despliegue de matriz de comunicación estandarizada para informar retrasos o reparos técnicos
+  - Programación automática de mesas de resolución de conflictos técnicos con stakeholders clave
+  - Registro de acuerdos de nivel de servicio (SLA) internos comprometidos para cerrar la brecha de expectativa

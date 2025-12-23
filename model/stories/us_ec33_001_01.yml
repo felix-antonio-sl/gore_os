@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ec33_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reporte de vida útil y depreciación de activos financiados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EC33-001-01
-urn: urn:goreos:atom:story:us_ec33_001_01:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: reporte de vida útil y depreciación de activos financiados
-so_that: pueda planificar reposiciones
-domain: D-FIN
-priority: P2
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Control de Activos Financiados (Circular 33)
+
+# === STORY CORE ===
+as_a: Encargado de Activos / Calidad
+i_want: un reporte detallado de la vida útil, depreciación y estado de los activos financiados mediante la Circular 33
+so_that: el Gobierno Regional pueda planificar oportunamente las reposiciones y asegurar el mantenimiento de la inversión pública
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Funcionario encargado del seguimiento físico y contable de los bienes institucionales
+
+entities_mentioned:
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: ACTIVOS
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - circular33
+  - activos
+  - depreciacion
+  - reposicion
+  - inventario-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Listado de activos C33 con fecha de adquisición, valor inicial y valor libro actual
+  - Calendario de obsolescencia técnica por tipo de activo (Vehículos, Maquinaria, TI)
+  - Alerta de "Fin de vida útil proyectada" para inclusión en el presupuesto de inversión del año siguiente

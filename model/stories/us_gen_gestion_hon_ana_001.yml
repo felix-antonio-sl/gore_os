@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_hon_ana_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Analista GDP (Honorarios)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_HON_ANA-001
-urn: urn:goreos:atom:story:us_gen_gestion_hon_ana_001:1.0.0
-role_id: ROL-GESTION-HON-ANAL
+name: Historia genérica para Analista GDP (Honorarios)
+
+# === STORY CORE ===
 as_a: Analista GDP (Honorarios)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-HON-ANAL
+  agent_type: HUMAN
+  description: Analista de la Unidad de Gestión de Personas (GDP) encargado de la tramitación de contratos y pagos a honorarios
+
+entities_mentioned:
+  - id: ENT-BACK-CONTRATO-HONORARIOS
+    status: candidate
+  - id: ENT-FIN-ESTADO-PAGO-HONORARIOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: RRHH
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - honorarios
+  - gdp
+  - rrhh
+  - contratos-personas
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga masiva de decretos de contratación a honorarios (Suma Alzada/Gobierno Regional)
+  - Gestión de recepción de boletas de honorarios electrónicas (SII) asociadas al convenio
+  - Seguimiento de pago de cotizaciones previsionales de personal a honorarios

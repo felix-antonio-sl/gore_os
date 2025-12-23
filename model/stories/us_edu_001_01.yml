@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_edu_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de becas regionales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EDU-001-01
-urn: urn:goreos:atom:story:us_edu_001_01:1.0.0
-role_id: ROL-GESTION-ANALISTA-EDU
-as_a: Analista Educación
-i_want: un módulo de gestión de becas regionales
-so_that: pueda administrar postulaciones y pagos
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Módulo de Gestión de Becas Regionales
+
+# === STORY CORE ===
+as_a: Analista de Educación / Desarrollo Social
+i_want: un módulo centralizado para gestionar todo el ciclo de las becas regionales (Postulación, Evaluación, Selección y Pago)
+so_that: se garantice la transparencia en la asignación de beneficios y se agilice la entrega de recursos a los estudiantes
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-EDU
+  agent_type: HUMAN
+  description: Funcionario encargado de tramitar los apoyos económicos para estudiantes de la región
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-FIN-IPR-PAGO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: BENEFICIARIOS-SOCIALES
+  priority: P0
+  scope: CIUDADANO
+
+extra_tags:
+  - becas
+  - educacion
+  - postulaciones
+  - subsidios
+  - beneficio-social
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de postulación en línea con validación de requisitos (RSH, Domicilio, Notas)
+  - Sistema de puntaje automático basado en criterios de vulnerabilidad definidos en las bases
+  - Vínculo con el módulo de tesorería para la carga masiva de pagos a los seleccionados

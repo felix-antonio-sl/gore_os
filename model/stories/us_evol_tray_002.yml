@@ -1,20 +1,51 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_tray_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ajustar umbrales de riesgo
-id: US-EVOL-TRAY-002
-urn: urn:goreos:atom:story:us_evol_tray_002:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Ajustar umbrales de riesgo
-so_that: Calibro sensibilidad de alertas
-domain: D-EVOL
-priority: P1
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
-- ENT-SAL-RIESGO
-- ENT-SAL-UMBRAL
+id: US-EVOL-TRAY-002
+name: Ajuste Dinámico de Umbrales de Riesgo
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Analista de Riesgos
+i_want: ajustar dinámicamente los umbrales de riesgo para las alertas de monitoreo físico y financiero
+so_that: se calibre la sensibilidad del sistema evitando el ruido por alertas falsas positivas y asegurando la detección de anomalías reales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Usuario técnico que optimiza el sistema de alertas tempranas
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-SAL-UMBRAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: MONITOREO
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - umbrales
+  - riesgo
+  - alertas
+  - calibracion
+  - monitoreo-dinamico
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz gráfica para modificar valores de umbral por cada tipo de indicador
+  - Historial de cambios de umbrales para entender por qué se silenciaron o activaron ciertas alertas en el pasado
+  - Sugerencia de umbral basada en el promedio histórico de la variable monitoreada

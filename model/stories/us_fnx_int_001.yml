@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Consumir métricas de D-EVOL en tiempo real
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-INT-001
-urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
-role_id: ROL-GESTION-KODA
+name: Consumir métricas de D-EVOL en tiempo real
+
+# === STORY CORE ===
 as_a: Agente KODA
 i_want: Consumir métricas de D-EVOL en tiempo real
-so_that: Detecto condiciones de activación
-domain: D-FENIX
-priority: P1
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+so_that: Detecto condiciones de activación automáticas para el protocolo FENIX
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: AI
+  description: Agente supervisor del sistema basado en KODA
+
+entities_mentioned:
+  - id: ENT-SAL-INDICADOR_POA
+    status: linked
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: AUTOMATIZACION
+  priority: P1
+  scope: SISTEMICO
+
+extra_tags:
+  - koda
+  - metricas
+  - activacion-automatica
+  - evol
+
+status: ENRICHED
+acceptance_criteria:
+  - Conexión vía API al flujo de métricas de evolución organizacional
+  - Algoritmo de detección de anomalías habilitado para disparar pre-alertas
+  - Dashboard de "Salud de Agentes" integrado en la consola FENIX

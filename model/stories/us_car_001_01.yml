@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_car_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a cámaras del CIES en operativos coordinados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CAR-001-01
-urn: urn:goreos:atom:story:us_car_001_01:1.0.0
-role_id: ROL-GESTION-CARAB
+name: Acceso a cámaras del CIES en operativos coordinados
+
+# === STORY CORE ===
 as_a: Carabineros de Chile
 i_want: acceso a cámaras del CIES en operativos coordinados
 so_that: pueda mejorar la respuesta
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CARAB
+  agent_type: ALGORITHMIC
+  description: Institución policial que requiere acceso táctico a la red de videovigilancia regional
+
+entities_mentioned:
+  - id: ENT-TERR-CAMARA-VIGILANCIA
+    status: candidate
+  - id: ENT-TERR-OPERATIVO-POLICIAL
+    status: candidate
+  - id: ENT-SYS-FEED-VIDEO
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-COORDINACION-INTERINSTITUCIONAL
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: SEGURIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - carabineros
+  - cies
+  - seguridad-publica
+  - videovigilancia
+  - operativos
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización en vivo de cámaras GORE en la central de comunicaciones policial
+  - Protocolo de acceso auditable por incidente específico
+  - Interconexión de red de fibra óptica dedicada para baja latencia

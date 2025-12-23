@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_seremi__002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para SEREMI MINVU
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SEREMI_-002
-urn: urn:goreos:atom:story:us_gen_gestion_seremi__002:1.0.0
-role_id: ROL-GESTION-SEREMI-VIV
+name: Historia genérica para SEREMI MINVU
+
+# === STORY CORE ===
 as_a: SEREMI MINVU
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-VIV
+  agent_type: HUMAN
+  description: Secretario Regional Ministerial de Vivienda y Urbanismo responsable de los planes reguladores y campamentos
+
+entities_mentioned:
+  - id: ENT-TERR-CAMPAMENTO
+    status: candidate
+  - id: ENT-TERR-PLAN-REGULADOR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - seremi-minvu
+  - vivienda
+  - urbanismo
+  - planes-reguladores
+  - g2g
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a visor regional de campamentos y zonas de riesgo habitacional (Interoperabilidad MINVU)
+  - Módulo de visación técnica de proyectos de pavimentación participativa financiados por el GORE
+  - Registro de resoluciones de aprobación de modificaciones a los planes reguladores comunales e intercomunales

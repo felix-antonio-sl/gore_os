@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a materias asignadas a cada comisión
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SECCOM-001-01
-urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
-role_id: ROL-EJEC-SEC-COM
-as_a: Comisionado Secretario Ejecutivo CORE
+name: Acceso a materias asignadas a comisiones CORE
+
+# === STORY CORE ===
+as_a: Secretario de Comisión (CORE)
 i_want: acceso a materias asignadas a cada comisión
-so_that: pueda preparar documentación
-domain: D-NORM
-priority: P1
-competence_id: CPT-NORM-CONTROL-001
-acceptance_criteria: []
+so_that: pueda preparar documentación y actas de respaldo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-SEC-COM
+  agent_type: HUMAN
+  description: Funcionario administrativo que apoya el trabajo técnico de las comisiones del Consejo Regional
+
+entities_mentioned:
+  - id: ENT-GOB-COMISION-CORE
+    status: candidate
+  - id: ENT-EJEC-PROYECTO-BIP
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONSEJO-REGIONAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - comisiones-core
+  - apoyo-tecnico
+  - sesiones
+  - actas
+  - consejo-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Panel de gestión de solicitudes de ingreso a tabla por comisión (Hacienda, Infraestructura, Social, etc.)
+  - Repositorio de antecedentes técnicos (Informes RS, Planos, Minutas) por cada materia a tratar
+  - Módulo de redacción colaborativa de actas de comisión con exportación automática a formato ejecutivo

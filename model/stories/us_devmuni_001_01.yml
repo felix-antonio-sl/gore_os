@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_devmuni_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Documentación clara de APIs de interoperabilidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEVMUNI-001-01
-urn: urn:goreos:atom:story:us_devmuni_001_01:1.0.0
-role_id: ROL-GESTION-TEC
-as_a: Unidad Técnica Municipal
-i_want: documentación clara de APIs de interoperabilidad
-so_that: pueda conectar el ERP municipal
-domain: D-DEV
-priority: P2
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+name: Documentación de APIs para Interoperabilidad Municipal
+
+# === STORY CORE ===
+as_a: Desarrollador de una Unidad Técnica Municipal
+i_want: acceder a una documentación técnica clara, estandarizada y siempre actualizada de las APIs de interoperabilidad del GORE
+so_that: pueda conectar los sistemas ERP municipales con los servicios regionales de forma eficiente y sin errores de integración
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TEC
+  agent_type: HUMAN
+  description: Técnico municipal encargado de la integración de sistemas locales con el Nodo PISEE Regional
+
+entities_mentioned:
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: INTEROPERABILIDAD
+  priority: P2
+  scope: MUNICIPAL
+
+extra_tags:
+  - apis
+  - documentacion
+  - municipalidad
+  - integracion
+  - pisee
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal Swagger/OpenAPI dinámico accesible mediante autenticación para desarrolladores autorizados
+  - Ejemplos de código en múltiples lenguajes (C#, Python, JS) para cada endpoint
+  - Sandbox de pruebas para validar integraciones antes de pasar a producción

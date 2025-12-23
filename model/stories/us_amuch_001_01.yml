@@ -1,17 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_amuch_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Canales de comunicación directa con el Gobernador
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AMUCH-001-01
-urn: urn:goreos:atom:story:us_amuch_001_01:1.0.0
-role_id: ROL-GESTION-REP-AMUCH
+name: Canales de comunicación directa con el Gobernador
+
+# === STORY CORE ===
 as_a: Representante AMUCH
 i_want: canales de comunicación directa con el Gobernador
 so_that: se aborden problemáticas municipales transversales
-domain: D-GOB
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-DIG-CANAL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-REP-AMUCH
+  agent_type: HUMAN
+  description: Representante de la Asociación de Municipalidades de Chile (AMUCH)
+
+entities_mentioned:
+  - id: ENT-DIG-CANAL
+    status: linked
+  - id: ENT-GOV-GOBERNADOR
+    status: candidate
+  - id: ENT-COMV-PROBLEMATICA-MUNICIPAL
+    status: candidate
+
+process_ref:
+  id: PROC-GOV-COMUNICACION-EXTERNA
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: COMUNICACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - amuch
+  - gobernador
+  - canal-directo
+  - municipalidades
+
+status: ENRICHED
+acceptance_criteria:
+  - Canal de comunicación formal habilitado (mensajería/tickets)
+  - Notificación directa al gabinete del Gobernador
+  - Trazabilidad de respuestas y compromisos

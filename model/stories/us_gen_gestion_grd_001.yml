@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_grd_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Comité Regional GRD
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_GRD-001
-urn: urn:goreos:atom:story:us_gen_gestion_grd_001:1.0.0
-role_id: ROL-GESTION-GRD
+name: Historia genérica para Comité Regional GRD
+
+# === STORY CORE ===
 as_a: Comité Regional GRD
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-GRD
+  agent_type: HUMAN
+  description: Miembro del Comité Regional para la Gestión del Riesgo de Desastres (GRD) encargado de la prevención y respuesta ante emergencias
+
+entities_mentioned:
+  - id: ENT-TERR-ZONA-RIESGO
+    status: candidate
+  - id: ENT-SOC-PLAN-EMERGENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: EMERGENCIA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - grd
+  - desastres
+  - emergencias
+  - prevencion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a visor regional de amenazas (Incendios, Inundaciones, Sismos) basado en datos SENAPRED
+  - Módulo de declaración de "Zona de Catástrofe" regional para habilitar fondos de emergencia (Glosa 06)
+  - Repositorio de planes comunales de reducción de riesgos de desastres visados por el GORE

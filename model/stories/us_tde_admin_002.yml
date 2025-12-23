@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_admin_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Usuarios (email, división, rol)
-id: US-TDE-ADMIN-002
-urn: urn:goreos:atom:story:us_tde_admin_002:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Crear usuarios (email, división, rol)
-so_that: Habilito acceso al sistema
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-DIVISION
-- ENT-ORG-ROL
+id: US-TDE-ADMIN-002
+name: Gestión de usuarios y perfiles de acceso
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: crear usuarios asignando email, división y rol funcional
+so_that: se habilite el acceso seguro al sistema según las competencias de cada funcionario
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador encargado del ciclo de vida de identidades en la plataforma
+
+entities_mentioned:
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: IDENTIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - usuarios
+  - rbac
+  - identidades
+  - perfiles
+  - seguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Creación de cuenta vinculada a correo institucional (.gob.cl) con validación de formato
+  - Selección de rol basado en el catálogo de competencias (CPT) definido en el modelo
+  - Reporte de usuarios activos por división para auditoría de licencias y accesos

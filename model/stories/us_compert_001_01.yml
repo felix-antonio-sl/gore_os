@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_compert_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: La documentación de iniciativas antes de la sesión
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COMPERT-001-01
-urn: urn:goreos:atom:story:us_compert_001_01:1.0.0
-role_id: ROL-GESTION-MIEMBRO-COMI
+name: La documentación de iniciativas antes de la sesión
+
+# === STORY CORE ===
 as_a: Miembro Comité Pertinencia
 i_want: acceder a la documentación de iniciativas antes de la sesión
 so_that: pueda evaluarlas con tiempo
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-SESION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MIEMBRO-COMI
+  agent_type: HUMAN
+  description: Integrante del Comité de Pertinencia que evalúa la admisibilidad técnica de proyectos
+
+entities_mentioned:
+  - id: ENT-EJE-INICIATIVA-INVERSION
+    status: linked
+  - id: ENT-SYS-EXPEDIENTE-TECNICO
+    status: candidate
+  - id: ENT-CONV-SESION-COMITE
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-EVALUACION-PERTINENCIA
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - comite-pertinencia
+  - evaluacion-proyectos
+  - inversion-regional
+  - documentos-tecnicos
+  - sesion
+
+status: ENRICHED
+acceptance_criteria:
+  - Notificación de "Sesión Citada" con link a pre-lectura (mínimo 24 hrs antes)
+  - Carpeta digital con Ficha IDI, presupuesto y perfil del proyecto
+  - Módulo de observaciones previo para pre-análisis individual

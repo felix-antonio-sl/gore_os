@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_cicd_004:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-CICD-004
+name: Notificaciones de Estado de Pipeline en Slack/Teams
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Recibir notificaciones push en los canales de comunicación del equipo sobre el éxito o fallo de los despliegues
+so_that: el equipo esté coordinado y actúe rápidamente ante cualquier interrupción en el flujo de entrega
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador que requiere visibilidad del estado de la infraestructura
+
+entities_mentioned:
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: COMUNICACION
+  priority: P2
+  scope: OPERATIVO
+
+extra_tags:
+  - slack
+  - notifications
+  - webhooks
+  - devops-culture
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración vía Webhooks con la plataforma de comunicación corporativa
+  - Mensajes claros incluyendo autor del cambio, rama y enlace al log de error
+  - Capacidad de silenciar notificaciones rutinarias y priorizar errores críticos

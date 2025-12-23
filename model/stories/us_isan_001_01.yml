@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_isan_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a factibilidades técnicas de servicios sanitarios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ISAN-001-01
-urn: urn:goreos:atom:story:us_isan_001_01:1.0.0
-role_id: ROL-GESTION-CON-ING
-as_a: Ingeniero Vialidad
-i_want: acceso a factibilidades técnicas de servicios sanitarios
-so_that: pueda aprobar soluciones de APR
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Evaluación Técnica de Proyectos Sanitarios (APR)
+
+# === STORY CORE ===
+as_a: Ingeniero Sanitario
+i_want: Acceder a las factibilidades técnicas y diseños de servicios sanitarios rurales
+so_that: pueda visar técnicamente las soluciones de Agua Potable Rural (APR) y alcantarillado
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-SAL
+  agent_type: HUMAN
+  description: Ingeniero especializado en revisión de proyectos de saneamiento y salud ambiental
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: SANEAMIENTO
+  priority: P0
+  scope: TECNICO
+
+extra_tags:
+  - apr
+  - sanitario
+  - agua-potable
+  - factibilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso digital a los planos y especificaciones técnicas cargados por el formulador
+  - Checklist de validación según normativa DOH (Dirección de Obras Hidráulicas)
+  - Emisión de informe técnico favorable con firma electrónica avanzada

@@ -1,20 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_core_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: La tabla de sesión y documentos de respaldo con anticipación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CORE-001-01
-urn: urn:goreos:atom:story:us_core_001_01:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: La tabla de sesión y documentos de respaldo con anticipación
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: recibir la tabla de sesión y documentos de respaldo con anticipación
 so_that: pueda estudiar las materias antes de votar
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-SESION
-- ENT-GOV-TABLA_SESION
-- ENT-SYS-DOCUMENTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Funcionario encargado de coordinar con municipios
+
+entities_mentioned:
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-GOV-TABLA_SESION
+    status: linked
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+
+process_ref:
+  id: PROC-GOV-SESION-CORE
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: PREPARACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - sesion-core
+  - documentos
+  - tabla-sesion
+
+status: ENRICHED
+acceptance_criteria:
+  - Tabla disponible 48h antes de la sesión
+  - Documentos adjuntos descargables en PDF
+  - Notificación automática al publicar tabla

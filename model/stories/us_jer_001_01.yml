@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jer_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Trazabilidad completa de las asignaciones de tareas
-id: US-JER-001-01
-urn: urn:goreos:atom:story:us_jer_001_01:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: trazabilidad completa de las asignaciones de tareas
-so_that: pueda ejercer el control jerárquico efectivo
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-JER-001-01
+name: Control Jerárquico y Trazabilidad de Tareas
+
+# === STORY CORE ===
+as_a: Directivo / Jefe de Departamento
+i_want: Trazabilidad completa de las asignaciones de tareas y flujos de revisión de mi equipo
+so_that: pueda ejercer el control jerárquico efectivo y asegurar el cumplimiento de los plazos institucionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo con personal a cargo y responsabilidad sobre procesos críticos
+
+entities_mentioned:
+  - id: ENT-NORM-PROCESO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-P1
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: LIDERAZGO
+  priority: P1
+  scope: DIRECTIVO
+
+extra_tags:
+  - tareas
+  - trazabilidad
+  - control-jerarquico
+  - productividad
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de carga de trabajo por funcionario y estado de tareas (Pendientes, En revisión, Aprobadas)
+  - Historial de ediciones y comentarios ("Auditoría de proceso") en cada documento
+  - Alertas de tareas estancadas o próximas a vencer según la criticidad definida

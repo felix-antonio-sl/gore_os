@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_gest_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Solicitud de Modificación (Informe Técnico)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-GEST-002
-urn: urn:goreos:atom:story:us_fin_gest_002:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
+name: Solicitud de Modificación (Informe Técnico)
+
+# === STORY CORE ===
 as_a: Analista Prevención
 i_want: Evaluar Solicitud de Modificación (Informe Técnico)
 so_that: Fundamento la decisión
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista de Preinversión o Gasto Corriente encargado de evaluar cambios técnicos en proyectos en ejecución
+
+entities_mentioned:
+  - id: ENT-EJE-SOLICITUD-MODIFICACION
+    status: candidate
+  - id: ENT-EJE-INFORME-TECNICO-EVALUACION
+    status: candidate
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+
+process_ref:
+  id: PROC-EJE-MODIFICACION-TECNICA
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - modificacion-proyecto
+  - informe-tecnico
+  - prevencion
+  - evaluacion-tecnica
+  - ejecucion
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario estandarizado para la carga de informes técnicos por parte del ejecutor
+  - Módulo de comparación lado a lado (Original vs Propuesto) para ítems de presupuesto
+  - Generación de resolución aprobatoria/rechazo digitalizada

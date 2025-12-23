@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_subtel_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para SUBTEL / MTT
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_SUBTEL-001
-urn: urn:goreos:atom:story:us_gen_gestion_subtel_001:1.0.0
-role_id: ROL-GESTION-SUBTEL
+name: Historia genérica para SUBTEL / MTT
+
+# === STORY CORE ===
 as_a: SUBTEL / MTT
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUBTEL
+  agent_type: HUMAN
+  description: Representante de la Subsecretaría de Telecomunicaciones (SUBTEL) que gestiona la conectividad digital regional (Fibra Óptica, 5G)
+
+entities_mentioned:
+  - id: ENT-TDE-CONECTIVIDAD-REGIONAL
+    status: candidate
+  - id: ENT-TERR-PROYECTO-INFRAESTRUCTURA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CONECTIVIDAD
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - subtel
+  - telecomunicaciones
+  - conectividad-digital
+  - brecha-digital
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al mapa de factibilidad técnica para proyectos de conectividad en zonas rezagadas
+  - Módulo de seguimiento de convenios de transferencia para la "Última Milla" regional
+  - Registro de indicadores de penetración de servicios de telecomunicaciones por comuna

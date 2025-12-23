@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_estr_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Repositorio de material audiovisual
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-ESTR-003
-urn: urn:goreos:atom:story:us_com_estr_003:1.0.0
-role_id: ROL-GESTION-ENC
+name: Repositorio de material audiovisual
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Gestionar repositorio de material audiovisual
 so_that: Centralizo recursos de comunicación
-domain: D-COM
-priority: P1
-competence_id: CPT-COM-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Activos Digitales (DAM) de la División de Comunicaciones
+
+entities_mentioned:
+  - id: ENT-SYS-REPOSITORIO-MULTIMEDIA
+    status: candidate
+  - id: ENT-SYS-ACTIVO-AUDIOVISUAL
+    status: candidate
+  - id: ENT-BACK-RECURSO-BRANDING
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-CENTRALIZACION-RECURSOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - material-audiovisual
+  - repositorio
+  - centralizacion
+  - medios
+  - activos-digitales
+
+status: ENRICHED
+acceptance_criteria:
+  - Organización por campañas y hitos gubernamentales
+  - Permisos de descarga diferenciados para prensa externa
+  - Generación automática de thumbnails y transcodificación de video

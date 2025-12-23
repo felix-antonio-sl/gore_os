@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_noc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Correlación de eventos de seguridad (SIEM)
-id: US-NOC-001-01
-urn: urn:goreos:atom:story:us_noc_001_01:1.0.0
-role_id: ROL-GESTION-INV-SEG
-as_a: Analista Seguimiento
-i_want: correlación de eventos de seguridad (SIEM)
-so_that: pueda identificar ataques complejos
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SYS-EVENTO
+id: US-NOC-001-01
+name: Correlación de Eventos de Ciberseguridad
+
+# === STORY CORE ===
+as_a: Analista de Seguridad (SOC/NOC)
+i_want: Un sistema de correlación de eventos (SIEM) que analice logs de múltiples fuentes en tiempo real
+so_that: pueda identificar patrones de ataques complejos (DDoS, Inyecciones, Brute force) y actuar mitigándolos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-INV-SEG
+  agent_type: HUMAN
+  description: Especialista encargado de la defensa y respuesta ante incidentes de ciberseguridad
+
+entities_mentioned:
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: CIBERSEGURIDAD
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - siem
+  - soc
+  - ataques
+  - mitigacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de amenazas activas con niveles de severidad
+  - Automatización de bloqueos de IP en firewall ante detección de fuerza bruta fallida
+  - Reporte consolidado de incidentes para auditoría según estándar ISO 27001

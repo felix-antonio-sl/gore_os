@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_jef_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver propuesta de priorización (ranking ERD/urgencia/monto)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-JEF-004
-urn: urn:goreos:atom:story:us_fin_jef_004:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Ver propuesta de priorización (ranking ERD/urgencia/monto)
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Ver propuesta de priorización (ranking ERD/urgencia/monto)
 so_that: Optimizo uso de recursos
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: ALGORITHMIC
+  description: Motor de recomendación de prioridades basado en la alineación con la Estrategia Regional (ERD) y restricciones financieras
+
+entities_mentioned:
+  - id: ENT-PLAN-RANKING-PRIORIZACION
+    status: candidate
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-FIN-MONTO-SOLICITADO
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-PRIORIZACION-CARTERA
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: ESTRATEGICO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - priorizacion
+  - erd
+  - ranking
+  - optimizacion-recursos
+  - toma-decisiones
+
+status: ENRICHED
+acceptance_criteria:
+  - Algoritmo de scoring que pondere: Impacto Social (ERD), Urgencia Técnica, y Eficiencia de Costo
+  - Dashboard interactivo que permita simular cambios en la prioridad (What-if analysis)
+  - Exportación de la lista priorizada para la sesión de presupuesto con el Gobernador

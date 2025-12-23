@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_univers_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Universidad Regional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_UNIVERS-001
-urn: urn:goreos:atom:story:us_gen_gestion_univers_001:1.0.0
-role_id: ROL-GESTION-UNIVERSIDAD-
+name: Historia genérica para Universidad Regional
+
+# === STORY CORE ===
 as_a: Universidad Regional
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UNIVERSIDAD-
+  agent_type: HUMAN
+  description: Entidad académica regional (Pública o Privada) con convenio marco de colaboración con el GORE
+
+entities_mentioned:
+  - id: ENT-CONV-CONVENIO-MARCO
+    status: linked
+  - id: ENT-TDE-OBSERVATORIO-DATOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIENCIA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - universidad-regional
+  - academia
+  - vinculacion-con-el-medio
+  - ecosistema-ctci
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal de transferencia de datos brutos anonimizados para análisis estadístico por parte de la academia
+  - Módulo de registro de tesis y prácticas profesionales de alumnos en departamentos del GORE
+  - Panel de seguimiento de convenios de capacitación continua para funcionarios regionales (Diplomados/Magíster)

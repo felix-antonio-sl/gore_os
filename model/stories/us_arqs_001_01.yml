@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_arqs_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un repositorio central de decisiones de arquitectura (ADR)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ARQS-001-01
-urn: urn:goreos:atom:story:us_arqs_001_01:1.0.0
-role_id: ROL-DEV-ARQ
+name: Un repositorio central de decisiones de arquitectura (ADR)
+
+# === STORY CORE ===
 as_a: Arquitecto Revisor (Proyectos)
 i_want: un repositorio central de decisiones de arquitectura (ADR)
 so_that: se mantenga la consistencia técnica del proyecto
-domain: D-DEV
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Arquitecto que toma decisiones estructurales y técnicas sobre el sistema
+
+entities_mentioned:
+  - id: ENT-SYS-ADR
+    status: candidate
+  - id: ENT-SYS-DECISION-TECNICA
+    status: candidate
+  - id: ENT-SYS-ARQUITECTURA-SISTEMA
+    status: candidate
+
+process_ref:
+  id: PROC-DEV-GOBERNANZA-ARQUITECTURA
+  status: candidate
+
+tags:
+  domain: D-DEV
+  aspect: GOBERNANZA
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - adr
+  - arquitectura
+  - decisiones
+  - documentacion
+  - consistencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Estructura estándar para ADRs (contexto, decisión, consecuencias)
+  - Workflow de aprobación de nuevas decisiones
+  - Historial inmutable de cambios arquitectónicos

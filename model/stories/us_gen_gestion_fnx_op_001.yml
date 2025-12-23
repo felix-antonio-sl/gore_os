@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_fnx_op_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Interventor FENIX
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_FNX_OP-001
-urn: urn:goreos:atom:story:us_gen_gestion_fnx_op_001:1.0.0
-role_id: ROL-GESTION-FNX-OP
+name: Historia genérica para Interventor FENIX
+
+# === STORY CORE ===
 as_a: Interventor FENIX
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FNX-OP
+  agent_type: HUMAN
+  description: Interventor operativo de la Unidad FENIX encargado de la acción directa en terreno ante crisis sociales
+
+entities_mentioned:
+  - id: ENT-SOC-PROTOCOLO-INTERVENCION
+    status: candidate
+  - id: ENT-SOC-BITACORA-TERRENO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-GESTION-CASO-FENIX
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: CRISIS
+  priority: P2
+  scope: TERRITORIAL
+
+extra_tags:
+  - fenix
+  - interventor
+  - terreno
+  - crisis-social
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a visor de casos georreferenciados con estado de severidad en tiempo real
+  - Módulo de carga de bitácora diaria con registro de compromisos adquiridos en terreno
+  - Herramienta de solicitud de apoyos logísticos o legales de emergencia vía móvil

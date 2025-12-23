@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_tc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Tribunal Constitucional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_TC-001
-urn: urn:goreos:atom:story:us_gen_gestion_tc_001:1.0.0
-role_id: ROL-GESTION-TC
+name: Historia genérica para Tribunal Constitucional
+
+# === STORY CORE ===
 as_a: Tribunal Constitucional
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TC
+  agent_type: HUMAN
+  description: Representante del Tribunal Constitucional (TC) que requiere antecedentes sobre normas o actos regionales impugnados
+
+entities_mentioned:
+  - id: ENT-NORM-LITIGIO-CONSTITUCIONAL
+    status: candidate
+  - id: ENT-NORM-REGLAMENTO-REGIONAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - tribunal-constitucional
+  - constitucionalidad
+  - normas-regionales
+  - legalidad-superior
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de remisión de expedientes administrativos digitalizados solicitados en requerimientos de inaplicabilidad
+  - Módulo de consulta de la vigencia de resoluciones exentas bajo análisis de constitucionalidad
+  - Registro de fallos del TC que afecten las facultades normativas de los Gobiernos Regionales

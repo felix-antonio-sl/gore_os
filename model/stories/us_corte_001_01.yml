@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_corte_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: La remisión inmediata de informes sobre actos impugnados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CORTE-001-01
-urn: urn:goreos:atom:story:us_corte_001_01:1.0.0
-role_id: ROL-GESTION-TRIB-CUENTA
+name: La remisión inmediata de informes sobre actos impugnados
+
+# === STORY CORE ===
 as_a: Juez de Cuentas (CGR)
 i_want: la remisión inmediata de informes sobre actos impugnados
 so_that: se administre justicia oportunamente
-domain: D-NORM
-priority: P1
-competence_id: CPT-NORM-CONTROL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TRIB-CUENTA
+  agent_type: HUMAN
+  description: Juez del Tribunal de Cuentas de la CGR encargado de juzgar la responsabilidad civil de los funcionarios
+
+entities_mentioned:
+  - id: ENT-NORM-ACTO-IMPUGNADO
+    status: candidate
+  - id: ENT-NORM-INFORME-JURIDICO
+    status: linked
+  - id: ENT-NORM-REQUERIMIENTO-JUDICIAL
+    status: candidate
+
+process_ref:
+  id: PROC-NORM-RESPUESTA-CONTENCIOSO
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: JURIDICA
+  priority: P1
+  scope: NACIONAL
+
+extra_tags:
+  - tribunal-cuentas
+  - actos-impugnados
+  - defensa-legal
+  - informes-tecnicos
+  - cgr
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de carga prioritaria para oficios judiciales y de la CGR
+  - Notificación de vencimiento de plazos legales al equipo jurídico
+  - Repositorio indexado de actos administrativos por número y fecha

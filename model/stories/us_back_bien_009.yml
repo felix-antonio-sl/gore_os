@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Apoyar CPHS (investigación accidentes)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-009
-urn: urn:goreos:atom:story:us_back_bien_009:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Apoyar CPHS (investigación accidentes)
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: Apoyar CPHS (investigación accidentes)
 so_that: Prevengo futuros accidentes
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: HUMAN
+  description: Profesional de Bienestar que actúa como secretario/apoyo técnico del Comité Paritario de Higiene y Seguridad (CPHS)
+
+entities_mentioned:
+  - id: ENT-ORG-CPHS
+    status: candidate
+  - id: ENT-ORG-ACCIDENTE-LABORAL
+    status: linked
+  - id: ENT-NORM-ACTA-REUNION
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-INVESTIGACION-ACCIDENTES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: SEGURIDAD
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - bienestar
+  - cphs
+  - prevencion
+  - accidentes
+  - paritario
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de actas de investigación de accidentes del CPHS
+  - Seguimiento de medidas correctivas propuestas por el comité
+  - Dashboard de estadísticas de accidentabilidad para el comité

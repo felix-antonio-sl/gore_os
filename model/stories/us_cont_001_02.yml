@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cont_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Cargar documentación de estados de pago en línea
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CONT-001-02
-urn: urn:goreos:atom:story:us_cont_001_02:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Cargar documentación de estados de pago en línea
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: cargar documentación de estados de pago en línea
 so_that: el proceso sea más ágil
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: HUMAN
+  description: Contador encargado del devengo y control de pagos a proveedores y contratistas
+
+entities_mentioned:
+  - id: ENT-FIN-ESTADO-PAGO
+    status: linked
+  - id: ENT-SYS-DOCUMENTO-SOPORTE
+    status: candidate
+  - id: ENT-EJE-HITO-CUMPLIDO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-PAGO-PROVEEDORES
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: CONTABILIDAD
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - estado-pago
+  - contabilidad
+  - pagos
+  - agilidad
+  - proveedores
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal para que el ejecutor cargue facturas y actas de conformidad
+  - Validación automática de suficiencia de fondos (CDP) antes de carga
+  - Workflow de revisión por ITO (Inspector Técnico de Obra) integrado

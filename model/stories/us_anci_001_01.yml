@@ -1,14 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_anci_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Compartir buenas prácticas legislativas regionales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ANCI-001-01
-urn: urn:goreos:atom:story:us_anci_001_01:1.0.0
-role_id: ROL-GESTION-ANCORE
+name: Compartir buenas prácticas legislativas regionales
+
+# === STORY CORE ===
 as_a: Representante ANCORE
 i_want: compartir buenas prácticas legislativas regionales
 so_that: se mejore la gestión de los consejos
-domain: D-GOB
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANCORE
+  agent_type: HUMAN
+  description: Representante de la Asociación Nacional de Consejeros Regionales (ANCORE)
+
+entities_mentioned:
+  - id: ENT-GOV-CONSEJO-REGIONAL
+    status: candidate
+  - id: ENT-NORM-BUENA-PRACTICA
+    status: candidate
+  - id: ENT-GOV-ACTA-CONSEJO
+    status: candidate
+
+process_ref:
+  id: PROC-GOV-GESTION-CONOCIMIENTO-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: CONOCIMIENTO
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - ancore
+  - core
+  - legislativo
+  - buenas-practicas
+  - consejos-regionales
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio compartido de reglamentos y acuerdos destacados
+  - Foro de discusión para representantes de consejos
+  - Sistema de etiquetado por temática legislativa

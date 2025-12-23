@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_008:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-BP-008
+name: Análisis Estático de Seguridad (SAST)
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Integrar herramientas de análisis estático de seguridad (SonarQube/Snyk) en el flujo de desarrollo
+so_that: se detecten vulnerabilidades de código de forma automática antes de que lleguen a entornos productivos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador comprometido con la seguridad del software
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: CIBERSEGURIDAD
+  priority: P1
+  scope: CALIDAD-CODIGO
+
+extra_tags:
+  - sast
+  - security-scan
+  - vulnerabilidades
+  - devsecops
+
+status: ENRICHED
+acceptance_criteria:
+  - Reporte de vulnerabilidades adjunto a cada Pull Request
+  - Bloqueo de merging si se detectan vulnerabilidades de severidad "Crítica" o "Alta"
+  - Seguimiento de la deuda técnica de seguridad en el dashboard de desarrollo

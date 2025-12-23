@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_bien_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Aplicar descuento de cuotas (automático planilla)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-BIEN-006
-urn: urn:goreos:atom:story:us_back_bien_006:1.0.0
-role_id: ROL-GESTION-PER-BIEN
+name: Aplicar descuento de cuotas (automático planilla)
+
+# === STORY CORE ===
 as_a: Profesional Bienestar
 i_want: Aplicar descuento de cuotas (automático planilla)
 so_that: Recupero préstamos
-domain: D-BACK
-competence_id: CPT-BACK-BIEN-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-BIEN
+  agent_type: ALGORITHMIC
+  description: Sistema automatizado de descuentos por planilla para servicios de bienestar
+
+entities_mentioned:
+  - id: ENT-FIN-PRESTAMO-BIENESTAR
+    status: candidate
+  - id: ENT-FIN-CUOTA-PRESTAMO
+    status: candidate
+  - id: ENT-FIN-DESCUENTO-PLANILLA
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-PRESTAMOS-BIENESTAR
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: FINANZAS-RRHH
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - bienestar
+  - prestamos
+  - cuotas
+  - descuentos
+  - planilla
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación mensual de archivo de descuentos para remuneraciones
+  - Validación de capacidad de descuento (ley de 15% o similar)
+  - Registro automático de abono al préstamo tras confirmación de planilla pagada

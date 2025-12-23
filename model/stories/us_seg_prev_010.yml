@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
-id: US-SEG-PREV-010
-urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
-as_a: Analista Prevención
-i_want: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
-so_that: Planifico patrullajes preventivos focalizados
-domain: D-SEG
-priority: P2
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-RIESGO
+id: US-SEG-PREV-010
+name: Visualización de zonas de riesgo proyectado (Predictivo)
+
+# === STORY CORE ===
+as_a: Analista de Prevención
+i_want: visualizar zonas de riesgo proyectado basado en el historial delictual y variables estacionales
+so_that: pueda planificar patrullajes preventivos y operativos focalizados de alta efectividad
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista encargado del modelamiento de datos para la prevención del delito
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-TERR-MAPA-CALOR
+    status: candidate
+  - id: ENT-SEG-VARIABLE-ESTACIONAL
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-SEG
+  aspect: INTELIGENCIA-SEGURIDAD
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - predictivo
+  - riesgo-delictual
+  - prevencion
+  - hotspots
+  - estacionalidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Capa cartográfica dinámica que muestra la probabilidad de ocurrencia de delitos por cuadrante (Heatmap Predictivo)
+  - Integración de variables externas como festividades, hitos económicos o condiciones climáticas en el modelo de riesgo
+  - Herramienta de generación de "Planes de Patrullaje Recomendados" basados en la proyección de riesgo

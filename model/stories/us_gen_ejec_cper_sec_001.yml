@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_ejec_cper_sec_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Secretario Ejecutivo Comité de Pertinencia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-EJEC_CPER_SEC-001
-urn: urn:goreos:atom:story:us_gen_ejec_cper_sec_001:1.0.0
-role_id: ROL-EJEC-CPER-SEC
+name: Historia genérica para Secretario Ejecutivo Comité de Pertinencia
+
+# === STORY CORE ===
 as_a: Secretario Ejecutivo Comité de Pertinencia
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-CPER-SEC
+  agent_type: HUMAN
+  description: Secretario Ejecutivo encargado de la coordinación administrativa y actas del Comité de Pertinencia (RS)
+
+entities_mentioned:
+  - id: ENT-CONV-COMITE-PERTINENCIA
+    status: linked
+  - id: ENT-CONV-ACTA-SESION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-EVALUACION-PERTINENCIA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - secretario-ejecutivo
+  - pertinencia
+  - actas
+  - gestion-comite
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga de tabla de la sesión con link a expedientes ARI/PROPUESTA
+  - Generación de acta de acuerdos con firma electrónica de los asistentes
+  - Seguimiento de cumplimiento de acuerdos del comité

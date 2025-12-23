@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_cert_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Robot Cert-Manager
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CERT-002
-urn: urn:goreos:atom:story:us_gen_gestion_cert_002:1.0.0
-role_id: ROL-GESTION-CERT
+name: Historia genérica para Robot Cert-Manager
+
+# === STORY CORE ===
 as_a: Robot Cert-Manager
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CERT
+  agent_type: ALGORITHMIC
+  description: Agente automático para la gestión de certificados SSL/TLS y renovación de firmas electrónicas institucionales
+
+entities_mentioned:
+  - id: ENT-SYS-CERTIFICADO-DIGITAL
+    status: candidate
+  - id: ENT-SYS-LLAVE-PRIVADA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-SEGURIDAD-INFRAESTRUCTURA
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - cert-manager
+  - ssl
+  - firmas-digitales
+  - automatizacion
+  - infra-como-codigo
+
+status: ENRICHED
+acceptance_criteria:
+  - Renovación automática de certificados SSL antes de 15 días del vencimiento
+  - Alerta de falla en el flujo de validación de dominios (DNS-01/HTTP-01)
+  - Registro de auditoria de rotación de secretos en el Vault institucional

@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_eval_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un formulario de evaluación con criterios ponderados
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVAL-001-01
-urn: urn:goreos:atom:story:us_eval_001_01:1.0.0
-role_id: ROL-GESTION-FOND-EVAL
-as_a: Evaluador Social
-i_want: un formulario de evaluación con criterios ponderados
-so_that: la evaluación sea objetiva y trazable
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Formulario de Evaluación con Criterios Ponderados
+
+# === STORY CORE ===
+as_a: Evaluador Social / Técnico
+i_want: utilizar un formulario de evaluación digital con criterios ponderados automáticos para calificar las iniciativas concursables
+so_that: el proceso de selección sea objetivo, trazable y cumpla estrictamente con las bases administrativas aprobadas por el CORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FOND-EVAL
+  agent_type: HUMAN
+  description: Profesional encargado de calificar la pertinencia técnica y social de los proyectos postulados
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: EVALUACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - evaluacion
+  - ponderacion
+  - transparencia
+  - puntaje
+  - fondos-concursables
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz de evaluación configurable según el tipo de fondo y glosa presupuestaria
+  - Cálculo automático del puntaje final basado en los pesos asignados a cada criterio
+  - Espacio obligatorio para fundamentación cualitativa en criterios con bajo puntaje

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_ar_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reasignar compromisos a otro responsable
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-AR-007
-urn: urn:goreos:atom:story:us_ejec_ar_007:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Reasignar compromisos a otro responsable
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Reasignar compromisos a otro responsable
 so_that: Gestiono cambios de personal
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMPROMISO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de Unidad o División con atribuciones para delegar y reasignar tareas dentro de su equipo
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-TRANSFERENCIA-RESPONSABILIDAD
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-REASIGNACION-CARGAS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - reasignacion
+  - compromisos
+  - gestion-personal
+  - responsabilidad
+  - delegacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de arrastrar y soltar (drag & drop) historias entre diferentes analistas del mismo equipo
+  - Cierre automático de tickets previos para el responsable antiguo con link al nuevo
+  - Registro de auditoría con el motivo de la reasignación (Vacaciones, Licencia, Cambio de Unidad)

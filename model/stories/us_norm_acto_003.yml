@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_acto_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Tramitar actos ante CGR (toma de razón)
-id: US-NORM-ACTO-003
-urn: urn:goreos:atom:story:us_norm_acto_003:1.0.0
-role_id: ROL-NORM-ABOG
-as_a: Abogado Informante
-i_want: Tramitar actos ante CGR (toma de razón)
-so_that: Cumplo con control preventivo
-domain: D-NORM
-priority: P0
-competence_id: CPT-NORM-CONTROL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-TOMA_RAZON
-- ENT-ORG-ROL
+id: US-NORM-ACTO-003
+name: Gestión de Toma de Razón ante CGR
+
+# === STORY CORE ===
+as_a: Abogado Informante
+i_want: Tramitar digitalmente los actos administrativos ante la Contraloría General de la República (CGR)
+so_that: se cumpla con el control preventivo de legalidad y se agilice la "Toma de Razón"
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado encargado del vínculo administrativo con el ente contralor
+
+entities_mentioned:
+  - id: ENT-DIG-TOMA_RAZON
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONTRALORIA
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - toma-de-razon
+  - cgr
+  - abogacia
+  - control-preventivo
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración mediante API con SISTRADOC/SIAPER de la CGR
+  - Seguimiento del estado del trámite (Enviado, Representado, Tomado Razón)
+  - Notificación automática al departamento de origen una vez que el acto es plenamente eficaz

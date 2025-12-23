@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fisc_sum_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas para tomar declaraciones y registrar evidencia digital
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FISC-SUM-001-01
-urn: urn:goreos:atom:story:us_fisc_sum_001_01:1.0.0
-role_id: ROL-NORM-FIS
+name: Herramientas para declaraciones y evidencia digital
+
+# === STORY CORE ===
 as_a: Fiscal Sumariante
-i_want: herramientas para tomar declaraciones y registrar evidencia digital
-so_that: el expediente del sumario esté digitalizado y seguro
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+i_want: herramientas digitales para tomar declaraciones y registrar evidencia digital multimedia
+so_that: el expediente del sumario esté digitalizado, sea inviolable y facilite la toma de decisiones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-FIS
+  agent_type: HUMAN
+  description: Funcionario designado como fiscal para investigaciones administrativas
+
+entities_mentioned:
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-ORG-SUMARIO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: SUMARIOS-ADMINISTRATIVOS
+  priority: P1
+  scope: JUDICIAL
+
+extra_tags:
+  - sumario
+  - evidencia-digital
+  - declaraciones
+  - fiscalia
+
+status: ENRICHED
+acceptance_criteria:
+  - Grabación de audio de declaraciones con transcripción automática a texto
+  - Sellado de tiempo (timestamp) en cada archivo de evidencia cargado
+  - Control de acceso estricto al expediente foliado digitalmente

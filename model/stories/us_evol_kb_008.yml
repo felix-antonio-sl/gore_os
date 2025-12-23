@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_kb_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El patrón técnico y administrativo de links de verificación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-KB-008
-urn: urn:goreos:atom:story:us_evol_kb_008:1.0.0
-role_id: ROL-GESTION-SYS
-as_a: Desarrollador Sistema
-i_want: Registrar el patrón técnico y administrativo de links de verificación
-so_that: Estandarizo la reducción de papel en resoluciones
-domain: D-EVOL
-priority: P2
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+name: Estándar de Links de Verificación Documental
+
+# === STORY CORE ===
+as_a: Desarrollador de Sistema / Arquitecto
+i_want: registrar y aplicar el patrón técnico y administrativo para la generación de links de verificación QR/URL en documentos oficiales
+so_that: se estandarice el mecanismo de autenticidad documental, se reduzca el uso de papel y se facilite la verificación por parte del ciudadano
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SYS
+  agent_type: HUMAN
+  description: Desarrollador encargado de las funcionalidades core de interoperabilidad y fe pública
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: ESTANDARIZACION
+  priority: P2
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - qr
+  - verificacion
+  - autenticidad
+  - cero-papel
+  - fe-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Patrón de URL único y persistente para cada documento firmado (resoluciones, oficios)
+  - Generación automática de código QR con metadata embebida para verificación offline/online
+  - Portal público de validación de documentos que no requiere login para la consulta básica

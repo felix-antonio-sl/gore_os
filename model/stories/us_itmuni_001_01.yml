@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_itmuni_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Credenciales de API seguras
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ITMUNI-001-01
-urn: urn:goreos:atom:story:us_itmuni_001_01:1.0.0
-role_id: ROL-GESTION-INF
+name: Credenciales de API seguras
+
+# === STORY CORE ===
 as_a: Encargado Informática Municipal
 i_want: credenciales de API seguras
 so_that: pueda automatizar el envío de información
-domain: D-DEV
-priority: P2
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TDE-PLATFORM-ENG
+  agent_type: HUMAN
+  description: Encargado de TI de una Municipalidad que integra sus sistemas locales con el ecosistema GORE_OS
+
+entities_mentioned:
+  - id: ENT-TDE-API-KEY
+    status: candidate
+  - id: ENT-TDE-CLIENT-CREDENTIALS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - seguridad
+  - apis
+  - token
+  - interoperabilidad-municipal
+  - integracion
+
+status: ENRICHED
+acceptance_criteria:
+  - Panel de gestión de secretos (Vault) para que el municipio genere y rote sus propias API Keys
+  - Restricción de acceso por IP (Whitelisting) y tasa de consumo (Rate Limiting) por convenio municipal
+  - Logs de acceso y consumo de datos disponibles en tiempo real para auditoría municipal

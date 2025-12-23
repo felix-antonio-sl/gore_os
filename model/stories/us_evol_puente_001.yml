@@ -1,15 +1,45 @@
 _meta:
   urn: urn:goreos:atom:story:us_evol_puente_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integrar el cumplimiento TDE como una variable del Health Score
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVOL-PUENTE-001
-urn: urn:goreos:atom:story:us_evol_puente_001:1.0.0
-role_id: ROL-GESTION-MON
-as_a: Monitor de Sistema
-i_want: Integrar el cumplimiento TDE como una variable del Health Score
-so_that: La salud organizacional refleja el cumplimiento legal
-domain: D-EVOL
-priority: P0
-competence_id: CPT-EVOL-001
-acceptance_criteria: []
+name: Integración TDE en el Health Score Organizacional
+
+# === STORY CORE ===
+as_a: Monitor de Sistema / Analista de Cumplimiento
+i_want: integrar el cumplimiento de los estándares de Transformación Digital (TDE) como una variable crítica dentro del "Health Score" institucional
+so_that: la salud del Gobierno Regional refleje de forma holística tanto su ejecución financiera como su madurez y cumplimiento legal tecnológico
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MON
+  agent_type: HUMAN
+  description: Profesional encargado de diseñar y monitorear los indicadores de desempeño global
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-EVOL
+  aspect: CUMPLIMIENTO-NORMATIVO
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - health-score
+  - tde
+  - cumplimiento-legal
+  - indicadores
+  - madurez-digital
+
+status: ENRICHED
+acceptance_criteria:
+  - Algoritmo de score ponderado que incluye: Notificaciones electrónicas (DS8), Firma digital y ClaveÚnica (DS9)
+  - Visualización del Health Score en el portal directivo con desglose por componente TDE
+  - Alerta de riesgo legal si el score TDE cae bajo el cumplimiento mínimo exigido por la Ley 21.180

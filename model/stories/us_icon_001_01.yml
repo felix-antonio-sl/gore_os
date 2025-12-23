@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_icon_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas para curar y versionar prompts y contextos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ICON-001-01
-urn: urn:goreos:atom:story:us_icon_001_01:1.0.0
-role_id: ROL-GESTION-KB
-as_a: Ingeniero de Conocimiento
+name: Herramientas para curar y versionar prompts y contextos
+
+# === STORY CORE ===
+as_a: Ingeniero de Conocimiento (Knowledge Engineer)
 i_want: herramientas para curar y versionar prompts y contextos
 so_that: los agentes respondan con precisión
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KB
+  agent_type: HUMAN
+  description: Ingeniero encargado de la calidad del conocimiento y la orquestación de LLMs en el GORE (Sistema KODA)
+
+entities_mentioned:
+  - id: ENT-TDE-PROMPT-REGISTRY
+    status: candidate
+  - id: ENT-TDE-CONOCIMIENTO-CURADO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIENCIA
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - prompt-engineering
+  - llm
+  - conocimiento
+  - koda
+  - versionamiento-prompts
+  - ia-generativa
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio centralizado de prompts versionados con capacidad de A/B testing para agentes de IA
+  - Módulo de inyección de contexto dinámico basado en las entities del GORE_OS
+  - Herramientas de evaluación automática de precisión y alucinaciones en las respuestas de los agentes

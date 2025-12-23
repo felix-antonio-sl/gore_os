@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_especia_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Especialista Accesibilidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ESPECIA-001
-urn: urn:goreos:atom:story:us_gen_gestion_especia_001:1.0.0
-role_id: ROL-GESTION-ESPECIALISTA
+name: Historia genérica para Especialista BI
+
+# === STORY CORE ===
 as_a: Especialista BI
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ESPECIALISTA
+  agent_type: HUMAN
+  description: Especialista en Business Intelligence (BI) encargado de la creación de tableros y análisis de datos para la toma de decisiones
+
+entities_mentioned:
+  - id: ENT-TDE-DASHBOARD-BI
+    status: candidate
+  - id: ENT-TDE-DATA-WAREHOUSE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-DATOS
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: GUBERNANZA-DATOS
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - bi
+  - analytics
+  - dashboards
+  - ciencia-datos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz de conexión a fuentes de datos federadas (KODA/PostGIS/Excel)
+  - Herramientas de visualización dinámica (Metabase/PowerBI) integradas en el portal institucional
+  - Publicación automatizada de indicadores de gestión y KPIs regionales

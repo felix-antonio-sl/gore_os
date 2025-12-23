@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_sop_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Historial de mantenimiento por número de serie de equipo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SOP-001-01
-urn: urn:goreos:atom:story:us_sop_001_01:1.0.0
-role_id: ROL-GESTION-SUP
-as_a: Supervisor CIES
-i_want: historial de mantenimiento por número de serie de equipo
-so_that: pueda detectar fallas recurrentes
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Historial de mantenimiento de equipos CIES por serie
+
+# === STORY CORE ===
+as_a: Supervisor de Soporte Técnico CIES
+i_want: acceder al historial de mantenimiento por número de serie de cada equipo (Cámaras, Servidores, Radios)
+so_that: pueda detectar fallas recurrentes, gestionar garantías y asegurar la alta disponibilidad del sistema
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUP
+  agent_type: HUMAN
+  description: Encargado de la continuidad operativa de la infraestructura tecnológica del CIES
+
+entities_mentioned:
+  - id: ENT-BACK-ACTIVO-TECNOLOGICO
+    status: candidate
+  - id: ENT-BACK-PLAN-MANTENIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: CONTINUIDAD-OPERATIVA
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - cies
+  - mantenimiento
+  - activos
+  - hardware
+  - soporte-tecnico
+  - alta-disponibilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Ficha técnica por equipo con registro de preventivos, correctivos y piezas reemplazadas
+  - Alerta de "Fin de vida útil" o "Fin de soporte de fabricante" para planificación de recambio tecnológico
+  - Generación de órdenes de trabajo (OT) digitales vinculadas al número de serie para trazabilidad del prestador de servicio

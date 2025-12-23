@@ -1,14 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_ar_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizar métricas de ausentismo, rotación y capacitación del personal
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-AR-002-01
-urn: urn:goreos:atom:story:us_ar_002_01:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Visualizar métricas de ausentismo, rotación y capacitación del personal
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: visualizar métricas de ausentismo, rotación y capacitación del personal
 so_that: pueda tomar decisiones de gestión de talento
-domain: D-BACK
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-JUR
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica con responsabilidades de gestión de equipo
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-METRICA-RRHH
+    status: candidate
+  - id: ENT-ORG-PLAN-CAPACITACION
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-GESTION-TALENTO
+  status: candidate
+
+tags:
+  domain: D-ORG
+  aspect: DASHBOARD
+  priority: P1
+  scope: DIVISIONAL
+
+extra_tags:
+  - metricas
+  - rrhh
+  - ausentismo
+  - talento
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard interactivo con indicadores de dotación
+  - Evolución histórica de capacitación por funcionario
+  - Alertas de alta rotación en unidades específicas

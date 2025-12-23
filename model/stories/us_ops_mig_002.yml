@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_mig_002:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-OPS-MIG-002
+name: Mapeo Semántico Adaptativo para Data Legacy
+
+# === STORY CORE ===
+as_a: Migrador de Datos
+i_want: Un motor de mapeo basado en reglas YAML que traduzca las tablas relacionales legacy al Supermodelo Semántico
+so_that: los datos históricos adquieran automáticamente el contexto y los vínculos categoriales necesarios para operar en GORE_OS
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-MIGRADOR
+  agent_type: HUMAN
+  description: Especialista en la traducción de esquemas técnicos antiguos a la ontología del GORE Ñuble
+
+entities_mentioned:
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: SEMANTICA
+  priority: P1
+  scope: TRANSFORMACION-DIGITAL
+
+extra_tags:
+  - mapping
+  - semantic-transformation
+  - legacy-migration
+  - data-architecture
+
+status: ENRICHED
+acceptance_criteria:
+  - Soporte para reglas de transformación complejas (Concatenación, Cruces, Lookup de IDs)
+  - Validación de tipos de datos post-mapeo para asegurar cumplimiento con el Supermodelo
+  - Registro de "Datos no Mapeados" para su posterior revisión manual

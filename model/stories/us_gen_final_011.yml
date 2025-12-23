@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para SEREMI Trabajo
-id: US-GEN-FINAL-011
-urn: urn:goreos:atom:story:us_gen_final_011:1.0.0
-role_id: ROL-GESTION-SEREMI-TRAB
-as_a: SEREMI Trabajo
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-011
+name: Fomento al Empleo Regional
+
+# === STORY CORE ===
+as_a: SEREMI Trabajo
+i_want: Coordinar con el GORE programas de capacitación y empleo financiables por el FNDR
+so_that: se mejore la empleabilidad de los ciudadanos de Ñuble y se reduzcan las tasas de desempleo locales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SEREMI-TRAB
+  agent_type: HUMAN
+  description: Representante ministerial para el sector trabajo y previsión social
+
+entities_mentioned:
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P3
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: TRABAJO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - seremi
+  - trabajo
+  - empleo
+  - capacitacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a la base de datos de beneficiarios de programas de empleo regional
+  - Capacidad de proponer indicadores de empleabilidad para la evaluación de programas socialees
+  - Registro de convenios con SENCE y OMILs para ejecución territorial

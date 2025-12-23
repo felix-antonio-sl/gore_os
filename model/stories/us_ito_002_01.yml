@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ito_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un workflow de aprobación de EP con validación de cubicaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ITO-002-01
-urn: urn:goreos:atom:story:us_ito_002_01:1.0.0
-role_id: ROL-EJEC-ITO
-as_a: Inspector Obras (Municipal)
-i_want: un workflow de aprobación de EP con validación de cubicaciones
-so_that: pueda certificar avances reales
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Certificación de Avances mediante Cubicaciones
+
+# === STORY CORE ===
+as_a: Inspector Técnico de Obra (ITO)
+i_want: Un flujo de aprobación de estados de pago con validación paramétrica de cubicaciones
+so_that: se certifique que el pago corresponde exactamente al avance físico real de la obra
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ITO
+  agent_type: HUMAN
+  description: Inspector encargado de la validación técnica-económica del avance
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-EJE-HITOS
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FISCALIZACION
+  priority: P0
+  scope: ECONOMICO
+
+extra_tags:
+  - cubicaciones
+  - estados-de-pago
+  - avance-fisico
+  - control-obras
+
+status: ENRICHED
+acceptance_criteria:
+  - Comparativa digital entre lo proyectado (ítem presupuestario) y lo ejecutado (cubicación)
+  - Notificación de rechazo con comentarios específicos si las cubicaciones no coinciden
+  - Integración con el sistema contable para la reserva de fondos post-aprobación del ITO

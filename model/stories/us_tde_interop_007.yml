@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_interop_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Consumir capas de datos territoriales de IDE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-INTEROP-007
-urn: urn:goreos:atom:story:us_tde_interop_007:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Consumir capas de datos territoriales de IDE
-so_that: Enriquezco sistemas de gestión
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Consumo de capas territoriales (IDE)
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: consumir capas de datos territoriales desde la Infraestructura de Datos Espaciales (IDE Chile) vía servicios WMS/WFS
+so_that: se enriquezcan los sistemas de gestión territorial del GORE con información cartográfica oficial y actualizada
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Coordinador técnico encargado de la integración de servicios de información geográfica
+
+entities_mentioned:
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: GEORREFERENCIACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ide
+  - gis
+  - wms
+  - wfs
+  - capas-territoriales
+
+status: ENRICHED
+acceptance_criteria:
+  - Conexión exitosa a los servidores de IDE Chile para visualización de capas base
+  - Herramienta de cruce de datos entre expedientes del GORE y capas territoriales (ej. Predios, Zonas Urbanas)
+  - Caché local de capas frecuentes para mejorar el rendimiento del visor geográfico

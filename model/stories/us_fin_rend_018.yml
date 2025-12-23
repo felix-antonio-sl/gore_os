@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_rend_018:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Proceso de reintegro de fondos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-REND-018
-urn: urn:goreos:atom:story:us_fin_rend_018:1.0.0
-role_id: ROL-GESTION-FIN-REND
+name: Proceso de reintegro de fondos
+
+# === STORY CORE ===
 as_a: Encargado Rendiciones
 i_want: Gestionar proceso de reintegro de fondos
-so_that: Recupero saldos no ejecutados
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Recupero saldos no ejecutados y aseguro el retorno de recursos al erario regional
 
-mentions:
-- ENT-FIN-REINTEGRO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-REND
+  agent_type: HUMAN
+  description: Encargado de rendiciones en la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-REINTEGRO
+    status: linked
+  - id: ENT-FIN-RENDICION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-REND-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: RENDICION-DE-CUENTAS
+  priority: P0
+  scope: OPERATIVO
+
+extra_tags:
+  - reintegro
+  - saldos
+  - ejecutor
+  - retorno-fondos
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de comprobante de reintegro con código de barras para pago bancario
+  - Conciliación automática del depósito de reintegro contra la rendición final
+  - Notificación de "Cierre Financiero" al ejecutor tras confirmar el reintegro total

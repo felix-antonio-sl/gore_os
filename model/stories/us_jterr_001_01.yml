@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_jterr_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Vistas geográficas de la inversión per cápita por comuna
-id: US-JTERR-001-01
-urn: urn:goreos:atom:story:us_jterr_001_01:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: vistas geográficas de la inversión per cápita por comuna
-so_that: pueda corregir inequidades territoriales
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-LOC-COMUNA
+id: US-JTERR-001-01
+name: Análisis de Equidad de Inversión Territorial
+
+# === STORY CORE ===
+as_a: Jefe de División Territorial
+i_want: Vistas geográficas que muestren la inversión pública per cápita y brechas sociales por comuna
+so_that: pueda asesorar al Gobernador en la priorización de fondos para las zonas más postergadas de la región
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la división de infraestructura, transporte y territorio (DITTT)
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: EQUIDAD
+  priority: P1
+  scope: TERRITORIAL
+
+extra_tags:
+  - mapas
+  - per-capita
+  - brechas
+  - equidad-territorial
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa de calor de inversión regional acumulada por comuna y localidad
+  - Correlación visual entre niveles de pobreza (Casen) e inversión del GORE
+  - Capacidad de exportar reportes de inversión territorial para presentaciones al Consejo Regional (CORE)

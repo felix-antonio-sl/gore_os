@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_muni_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Guías por mecanismo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EJEC-MUNI-001
-urn: urn:goreos:atom:story:us_ejec_muni_001:1.0.0
-role_id: ROL-GESTION-G7-FORM
+name: Guías por mecanismo
+
+# === STORY CORE ===
 as_a: Formulador Programas Glosa 7
 i_want: Consultar guías por mecanismo
 so_that: Preparo correctamente postulaciones
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Profesional formulador de proyectos (Municipios/ONGs) que postula a fondos concursables (Glosa 7)
+
+entities_mentioned:
+  - id: ENT-EJEC-GUIA-BASES
+    status: candidate
+  - id: ENT-SOC-FNDR-GLOSA7
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-POSTULACION-FONDOS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P0
+  scope: SOCIAL
+
+extra_tags:
+  - glosa-7
+  - postulaciones
+  - guias-tecnicas
+  - participacion-ciudadana
+  - fondos-concursables
+
+status: ENRICHED
+acceptance_criteria:
+  - Biblioteca centralizada de guías técnicas, administrativas y bases concursables por cada ítem de glosa
+  - Buscador temático integrado con filtros por tipo de organización postulante
+  - Notificación automática a formuladores ante actualizaciones o aclaraciones de las bases vigentes

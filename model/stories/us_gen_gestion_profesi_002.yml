@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_profesi_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Profesional {area}
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_PROFESI-002
-urn: urn:goreos:atom:story:us_gen_gestion_profesi_002:1.0.0
-role_id: ROL-GESTION-PROFESIONAL_BASE
-as_a: Profesional {area}
+name: Historia genérica para Profesional de Área
+
+# === STORY CORE ===
+as_a: Profesional de Área
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROFESIONAL_BASE
+  agent_type: HUMAN
+  description: Profesional técnico o administrativo (Arquetipo base) que ejecuta tareas de análisis y gestión en cualquier división
+
+entities_mentioned:
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-SYS-BANDEJA-TAREAS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - profesional-base
+  - analista
+  - ejecucion-administrativa
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Interfaz unificada de gestión de expedientes con firma electrónica
+  - Visibilidad de metas de desempeño individual conectadas al PMG
+  - Herramienta de colaboración síncrona/asíncrona por cada caso/trámite

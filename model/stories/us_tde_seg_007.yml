@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_007:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Políticas de acceso y roles (IAM)
-id: US-TDE-SEG-007
-urn: urn:goreos:atom:story:us_tde_seg_007:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Configurar políticas de acceso y roles (IAM)
-so_that: Controlo accesos
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-TDE-SEG-007
+name: Gestión de Identidad y Accesos (IAM)
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: diseñar y configurar políticas estrictas de acceso y roles (IAM) basadas en el principio de mínimo privilegio
+so_that: se controlen los accesos a los recursos críticos del GORE y se reduzca la superficie de ataque interna
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Responsable de la arquitectura de accesos y perfiles de seguridad
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-DIVISION
+    status: linked
+
+process_ref:
+  id: PROC-TDE-AUTENTICACION
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: IDENTIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - iam
+  - rbac
+  - minimo-privilegio
+  - perfiles
+  - seguridad-accesos
+
+status: ENRICHED
+acceptance_criteria:
+  - Matriz de permisos vinculada a los roles institucionales del modelo (ROL-*)
+  - Proceso de revisión semestral de cuentas con privilegios elevados (Administradores)
+  - Capacidad de revocación inmediata de todos los accesos de un usuario comprometido

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_desc_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Emitir informe final de proceso de instalación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-DESC-006
-urn: urn:goreos:atom:story:us_gob_desc_006:1.0.0
-role_id: ROL-FIN-ABS-COMP
-as_a: Comprador Público
+name: Emitir informe final de proceso de instalación
+
+# === STORY CORE ===
+as_a: Profesional de Area (como Gestor de Instalación)
 i_want: Emitir informe final de proceso de instalación
 so_that: Cierro el traspaso
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ABS-COMP
+  agent_type: HUMAN
+  description: Profesional responsable del cierre administrativo y técnico del periodo de instalación de una competencia
+
+entities_mentioned:
+  - id: ENT-NORM-REPORTE-GESTION
+    status: linked
+  - id: ENT-GOB-INFORME-AUTONOMIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: DESCENTRALIZACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - informe-final
+  - cierre-instalacion
+  - competencias
+  - rendicion-tecnica
+  - autonomia-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de informe ejecutivo detallando hitos cumplidos vs Plan de Instalación inicial
+  - Módulo de carga de resoluciones de conformación de equipos y decretos de atribuciones
+  - Envío automático del reporte a SUBDERE y al CORE para constancia del inicio de operacion plena

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_front_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una biblioteca de componentes de diseño (Design System)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FRONT-001-01
-urn: urn:goreos:atom:story:us_front_001_01:1.0.0
-role_id: ROL-DEV-TIC-DEV
+name: Biblioteca de componentes de diseño (Design System)
+
+# === STORY CORE ===
 as_a: Desarrollador DevOps
-i_want: una biblioteca de componentes de diseño (Design System)
-so_that: la UI sea consistente en todos los módulos
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+i_want: una biblioteca de componentes de diseño (Design System) estandarizada
+so_that: la interfaz de usuario sea consistente en todos los módulos del Supermodelo y se acelere el desarrollo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-TIC-DEV
+  agent_type: HUMAN
+  description: Desarrollador de la unidad de Tecnologías de Información
+
+entities_mentioned:
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-DEV-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: EXPERIENCIA-USUARIO
+  priority: P1
+  scope: TECNOLOGICO
+
+extra_tags:
+  - design-system
+  - ui
+  - ux
+  - componentes
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo interactivo de componentes (Storybook o similar) disponible para el equipo
+  - Implementación de tokens de diseño (colores, tipografía) alineados a la marca Ñuble
+  - Compatibilidad de los componentes con criterios de accesibilidad (WCAG 2.1)

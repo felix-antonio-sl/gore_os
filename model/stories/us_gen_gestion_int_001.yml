@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_int_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Encargado RR.II
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_INT-001
-urn: urn:goreos:atom:story:us_gen_gestion_int_001:1.0.0
-role_id: ROL-GESTION-INT
+name: Historia genérica para Encargado RR.II
+
+# === STORY CORE ===
 as_a: Encargado RR.II
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-INT
+  agent_type: HUMAN
+  description: Encargado de Relaciones Institucionales (RR.II) responsable de la vinculación con el sector público y privado regional
+
+entities_mentioned:
+  - id: ENT-GOB-MESA-ARTICULACION
+    status: candidate
+  - id: ENT-CONV-PROTOCOLO-ACUERDO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - rr-ii
+  - relaciones-institucionales
+  - vinculacion
+  - articulacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Agenda regional de hitos de vinculación institucional sincronizada con Gabinete
+  - Repositorio de protocolos y convenios de colaboración no financieros
+  - Registro de audiencias y lobbies de representación institucional ante el Gobernador

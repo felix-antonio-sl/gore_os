@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_ope_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Habilitar línea de ejecución directa para corrección de errores
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-OPE-003
-urn: urn:goreos:atom:story:us_fnx_ope_003:1.0.0
-role_id: ROL-GESTION-FNX-FIN
+name: Habilitar línea de ejecución directa para corrección de errores
+
+# === STORY CORE ===
 as_a: Interventor Financiero
-i_want: Habilitar línea de ejecución directa para corrección de errores
-so_that: Soluciono problemas de imputación masiva
-domain: D-FENIX
-priority: P1
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+i_want: Habilitar una línea de ejecución directa para corrección de errores de imputación
+so_that: Soluciono problemas de imputación masiva detectados durante una intervención FENIX sin detener la operación
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FNX-FIN
+  agent_type: HUMAN
+  description: Profesional financiero asignado a la fuerza de tarea FENIX
+
+entities_mentioned:
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P1
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: SANEAMIENTO-CONTABLE
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - ejecucion-directa
+  - correccion
+  - imputacion
+  - saneamiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Herramienta de ajuste masivo de partidas con validación de balance contable
+  - Bloqueo de uso de la línea directa fuera del periodo de intervención declarado
+  - Generación de informe delta (antes vs después) para aprobación DAF

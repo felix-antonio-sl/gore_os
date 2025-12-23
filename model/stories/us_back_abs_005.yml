@@ -1,18 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_abs_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Emitir OC (compromiso de gasto)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-ABS-005
-urn: urn:goreos:atom:story:us_back_abs_005:1.0.0
-role_id: ROL-GESTION-ENC
+name: Emitir OC (compromiso de gasto)
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Emitir OC (compromiso de gasto)
 so_that: Formalizo la adquisición
-domain: D-BACK
-competence_id: CPT-BACK-ABS-001
-priority: P0
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMPROMISO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de calidad responsable de formalizar compras
+
+entities_mentioned:
+  - id: ENT-FIN-ORDEN-COMPRA
+    status: candidate
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-CDP
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EMISION-ORDEN-COMPRA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: ABASTECIMIENTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - orden-compra
+  - compromiso-gasto
+  - adquisiciones
+  - formalizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de OC vinculada a licitante ganador
+  - Registro de compromiso presupuestario automático
+  - Firma digital de la OC para despacho a Mercado Público

@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:amb:estado_verde_lvl:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-AMB-ESTADO-VERDE-LVL"
+id: ENT-ESTADO-VERDE-LVL
+name: "uLuEuSuTuAuDuOu uVuEuRuDuEu uLuVuLu"
+tags: [AMB]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

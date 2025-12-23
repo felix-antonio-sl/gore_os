@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_iam_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Asignar y revocar roles con logs de auditoría automáticos
-id: US-OPS-IAM-002
-urn: urn:goreos:atom:story:us_ops_iam_002:1.0.0
-role_id: ROL-ADMIN-TI
-as_a: Rol no encontrado (ROL-ADMIN-TI)
-i_want: asignar y revocar roles con logs de auditoría automáticos
-so_that: se cumplan las normativas de seguridad y transparencia en los accesos
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-OPS-IAM-002
+name: Gobernanza de Roles y Permisos (RBAC)
+
+# === STORY CORE ===
+as_a: Administrador de Seguridad TI
+i_want: Asignar y revocar roles y permisos con logs de auditoría automáticos e inalterables
+so_that: se cumplan estrictamente las normativas de seguridad, transparencia y segregación de funciones en los accesos al Supermodelo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-ADMIN-TI
+  agent_type: HUMAN
+  description: Auditor de accesos y gestor del modelo RBAC (Role-Based Access Control)
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: GOBERNANZA-ACCESO
+  priority: P0
+  scope: NORMATIVO
+
+extra_tags:
+  - rbac
+  - auditoria-acceso
+  - roles
+  - seguridad-info
+
+status: ENRICHED
+acceptance_criteria:
+  - Definición de roles basada en la estructura orgánica del GORE Ñuble (División -> Departamento)
+  - Workflow de aprobación para la asignación de roles con privilegios elevados (Súper Usuario)
+  - Reporte de "Revisión de Accesos" periódico para la ratificación de permisos por jefaturas

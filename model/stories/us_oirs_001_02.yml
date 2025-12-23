@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_oirs_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de satisfacción ciudadana
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OIRS-001-02
-urn: urn:goreos:atom:story:us_oirs_001_02:1.0.0
-role_id: ROL-GESTION-OIRS
+name: Reportes de satisfacción ciudadana
+
+# === STORY CORE ===
 as_a: Encargado OIRS
 i_want: generar reportes de satisfacción ciudadana
 so_that: pueda mejorar el servicio
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OIRS
+  agent_type: HUMAN
+  description: Encargado de la calidad de atención al público y mejora continua de procesos ciudadanos
+
+entities_mentioned:
+  - id: ENT-TDE-OIRS-TICKET
+    status: candidate
+  - id: ENT-BACK-RECO-ENCUESTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-SOLICITUDES-OIRS
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: CALIDAD
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - satisfaccion-ciudadana
+  - calidad-servicio
+  - mejora-continua
+  - encuestas
+  - feedback
+
+status: ENRICHED
+acceptance_criteria:
+  - Envío automático de mini-encuesta de satisfacción al cerrar un ticket de atención
+  - Dashboard de indicadores NPS (Net Promoter Score) y CSAT (Customer Satisfaction Score)
+  - Reporte mensual de "puntos de dolor" ciudadanos para re-ingeniería de procesos back-office

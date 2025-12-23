@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_emp_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Empresa / Gremio
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_EMP-001
-urn: urn:goreos:atom:story:us_gen_gestion_emp_001:1.0.0
-role_id: ROL-GESTION-EMP
+name: Historia genérica para Empresa / Gremio
+
+# === STORY CORE ===
 as_a: Empresa / Gremio
 i_want: interactuar con el GORE de Ñuble en el marco de mis competencias institucionales
 so_that: pueda coordinar acciones, solicitar información o gestionar convenios según corresponda
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-EMP
+  agent_type: HUMAN
+  description: Entidad privada o gremial que participa en licitaciones o convenios de fomento con el GORE
+
+entities_mentioned:
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-EJE-CERTIFICADO-RECEPTOR-FONDOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - empresa
+  - gremio
+  - licitaciones
+  - fomento
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso al registro de proveedores del GORE con el estado de sus boletas de garantía
+  - Módulo de postulación electrónica a fondos concursables para el sector privado
+  - Visualización del histórico de contratos y estados de pago vigentes

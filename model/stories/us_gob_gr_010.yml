@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gr_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Representar al GORE ante autoridades nacionales e internacionales
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GR-010
-urn: urn:goreos:atom:story:us_gob_gr_010:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Representar al GORE ante autoridades nacionales e internacionales
+
+# === STORY CORE ===
+as_a: Gobernador Regional
 i_want: Representar al GORE ante autoridades nacionales e internacionales
 so_that: Gestiono relaciones institucionales
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Gobernador Regional como representante legal y figura política máxima de la región
+
+entities_mentioned:
+  - id: ENT-GOB-MISION-ESTRATEGICA
+    status: candidate
+  - id: ENT-PLAN-POSICIONAMIENTO-REGIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: GOBERNANZA
+  priority: P1
+  scope: EXTERNO
+
+extra_tags:
+  - gobernador
+  - representacion
+  - relaciones-institucionales
+  - asociacion-gobernadores
+  - paradiplomacia
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de discursos, presentaciones institucionales y posicionamientos oficiales de la autoridad
+  - Agenda de participación en la Asociación de Gobernadores Regionales (AGORECHI) y foros internacionales
+  - Registro de convenios marco de colaboración con entidades nacionales (Estado) o internacionales (Regiones/OS)

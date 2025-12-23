@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_evid_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Clip de video con marca de agua y hash de integridad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SEG-EVID-001
-urn: urn:goreos:atom:story:us_seg_evid_001:1.0.0
-role_id: ROL-GESTION-EVID
-as_a: Custodio Evidencia
-i_want: Generar clip de video con marca de agua y hash de integridad
-so_that: Preservo evidencia
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+name: Exportación de video con marca de agua y hash de integridad
+
+# === STORY CORE ===
+as_a: Custodio de Evidencia (CIES)
+i_want: generar clips de video con marca de agua institucional y hash de integridad (SHA-256)
+so_that: se preserve la cadena de custodia y la validez legal ante el Ministerio Público
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-EVID
+  agent_type: HUMAN
+  description: Funcionario responsable del manejo, almacenamiento y entrega de evidencia digital del sistema CIES
+
+entities_mentioned:
+  - id: ENT-SEG-EVIDENCIA-VIDEO
+    status: candidate
+  - id: ENT-SEG-HASH-INTEGRIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SEG-COORDINACION-POLICIAL
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: EVIDENCIA-DIGITAL
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - evidencia
+  - video-forense
+  - hash
+  - cadena-custodia
+  - ministerio-publico
+
+status: ENRICHED
+acceptance_criteria:
+  - Herramienta de exportación que incrusta metadatos del sistema (Cámara ID, Fecha/Hora, Operador) en el video
+  - Generación de un archivo de manifiesto (.json/.xml) que incluya el hash calculado al momento de la extracción
+  - Proceso de quemado de marca de agua no obstructiva con el logo institucional del GORE/CIES

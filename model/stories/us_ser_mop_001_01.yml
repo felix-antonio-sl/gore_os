@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_ser_mop_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Estado de convenios de mandato MOP-GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SER-MOP-001-01
-urn: urn:goreos:atom:story:us_ser_mop_001_01:1.0.0
-role_id: ROL-EJEC-SEREMI-MOP
-as_a: SEREMI Obras Públicas
-i_want: ver el estado de convenios de mandato MOP-GORE
-so_that: pueda hacer seguimiento de obras compartidas
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Estado de convenios de mandato MOP-GORE
+
+# === STORY CORE ===
+as_a: SEREMI de Obras Públicas
+i_want: ver el estado de avance de los convenios de mandato suscritos entre el MOP y el GORE
+so_that: pueda hacer seguimiento a la ejecución de grandes obras de infraestructura compartida
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-SEREMI-MOP
+  agent_type: HUMAN
+  description: Autoridad regional de infraestructura que actúa como unidad ejecutora de recursos FNDR
+
+entities_mentioned:
+  - id: ENT-FIN-CONVENIO-MANDATO
+    status: candidate
+  - id: ENT-EJEC-AVANCE-OBRAS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-GESTION-ADQUISICIONES
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: INFRAESTRUCTURA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - mop
+  - obras-publicas
+  - mandato
+  - ejecucion-obras
+  - infraestructura-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de avance físico y financiero de obras MOP financiadas total o parcialmente por el GORE
+  - Alerta de vencimiento de plazos contractuales o necesidad de reevaluaciones presupuestarias (Aumentos de Obra)
+  - Repositorio de estados de pago visados digitalmente por los inspectores fiscales del MOP y analistas del GORE

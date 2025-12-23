@@ -1,0 +1,13 @@
+---
+_meta:
+  urn: urn:goreos:entity:sys:checklist_cierre_generico:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate_collision_resolved
+id: ENT-CHECKLIST_CIERRE_GENERICO
+name: "Checklist Cierre Genérico"
+tags: [SYS]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

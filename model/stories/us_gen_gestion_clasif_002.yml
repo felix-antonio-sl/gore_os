@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_clasif_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Agente Clasificador
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CLASIF-002
-urn: urn:goreos:atom:story:us_gen_gestion_clasif_002:1.0.0
-role_id: ROL-GESTION-CLASIF
+name: Historia genérica para Agente Clasificador
+
+# === STORY CORE ===
 as_a: Agente Clasificador
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CLASIF
+  agent_type: ALGORITHMIC
+  description: Motor de inteligencia artificial (KODA style) para la clasificación automática de documentos y detección de intención
+
+entities_mentioned:
+  - id: ENT-SYS-ALGORITMO-CLASIFICACION
+    status: candidate
+  - id: ENT-SYS-TAG-DOCUMENTAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-DATOS
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: GUBERNANZA-DATOS
+  priority: P2
+  scope: SISTEMA
+
+extra_tags:
+  - clasificador
+  - ia
+  - koda
+  - automatizacion-documental
+  - procesamiento-lenguaje
+
+status: ENRICHED
+acceptance_criteria:
+  - Sugerencia automática de "Asunto" y "División Destino" basada en el cuerpo del documento
+  - Extracción automática de RUTs y Montos para pre-poblar formularios de ingreso
+  - Precisión de clasificación del modelo superior al 85% para categorías estándar

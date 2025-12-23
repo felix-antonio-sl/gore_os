@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dir_soc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información de fondos concursables y consultas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIR-SOC-001-01
-urn: urn:goreos:atom:story:us_dir_soc_001_01:1.0.0
-role_id: ROL-GESTION-DIRIGENTE-SO
+name: Información de fondos concursables y consultas
+
+# === STORY CORE ===
 as_a: Dirigente Social
 i_want: información de fondos concursables y consultas
 so_that: pueda representar a mi comunidad
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIRIGENTE-SO
+  agent_type: HUMAN
+  description: Dirigente de organización comunitaria que busca financiamiento a través de fondos concursables (8% FNDR, etc)
+
+entities_mentioned:
+  - id: ENT-EJEC-FONDO-CONCURSABLE
+    status: candidate
+  - id: ENT-SOC-CONSULTA-DIRIGENTE
+    status: candidate
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-POSTULACION-FONDOS
+  status: candidate
+
+tags:
+  domain: D-SOC
+  aspect: PARTICIPACION
+  priority: P1
+  scope: CIUDADANO
+
+extra_tags:
+  - fondos-concursables
+  - dirigentes-sociales
+  - comunidad
+  - participacion
+  - consultas
+
+status: ENRICHED
+acceptance_criteria:
+  - Visualización clara de bases, plazos y requisitos de postulación
+  - Módulo de preguntas frecuentes y canal de consultas técnicas
+  - Dashboard de estado de postulación simplificado

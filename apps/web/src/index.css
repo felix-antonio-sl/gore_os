@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@config "../../packages/ui/tailwind.config.ts";
+@config "../../../packages/ui/tailwind.config.ts";
 @theme {
   --color-gore-brand: #003366;
   --color-gore-secondary: #d4af37;

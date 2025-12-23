@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_ops_cfg_001:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-OPS-CFG-001
+name: Gestión de Configuración de Entornos (Environment Variables)
+
+# === STORY CORE ===
+as_a: Desarrollador Backend
+i_want: Un sistema centralizado de gestión de variables de entorno (Config Maps / Secrets) por ambiente (Dev, Staging, Prod)
+so_that: se elimine el riesgo de configuraciones incorrectas y se facilite el despliegue dinámico de nuevos servicios
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-BACK
+  agent_type: HUMAN
+  description: Desarrollador que requiere consistencia en la configuración del sistema
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: CONFIGURATION-MANAGEMENT
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - config
+  - env-vars
+  - kubernetes
+  - gitops
+
+status: ENRICHED
+acceptance_criteria:
+  - Cifrado en reposo y en tránsito de todas las variables marcadas como sensibles
+  - Trazabilidad de cambios en la configuración (¿quién cambió qué valor y cuándo?)
+  - Validación de esquema de configuración para evitar el despliegue con variables faltantes

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_media_c_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Medio de Comunicación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_MEDIA_C-001
-urn: urn:goreos:atom:story:us_gen_gestion_media_c_001:1.0.0
-role_id: ROL-GESTION-MEDIA-COMUNI
+name: Historia genérica para Medio de Comunicación (Prensa)
+
+# === STORY CORE ===
 as_a: Medio de Comunicación
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MEDIA-COMUNI
+  agent_type: HUMAN
+  description: Periodista o editor de un medio de comunicación regional (Radio, TV, Diario) que requiere información pública
+
+entities_mentioned:
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: linked
+  - id: ENT-NORM-SOLICITUD-SAI
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: COMUNICACIONES
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - prensa
+  - radio
+  - periodismo
+  - acceso-informacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal de descarga de material de prensa (Kit de medios: Fotos, Videos, Audios)
+  - Suscripción automatizada a alertas de noticias y licitaciones públicas de alto impacto
+  - Módulo de acreditación para eventos oficiales y puntos de prensa del Gobernador

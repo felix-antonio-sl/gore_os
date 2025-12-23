@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cust_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un sistema de almacenamiento seguro de grabaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CUST-001-01
-urn: urn:goreos:atom:story:us_cust_001_01:1.0.0
-role_id: ROL-GESTION-EVID
+name: Un sistema de almacenamiento seguro de grabaciones
+
+# === STORY CORE ===
 as_a: Custodio Evidencia
 i_want: un sistema de almacenamiento seguro de grabaciones
 so_that: la evidencia mantenga validez legal
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-EVID
+  agent_type: HUMAN
+  description: Funcionario responsable de la cadena de custodia de registros audiovisuales sensibles (CIES/SEGURIDAD)
+
+entities_mentioned:
+  - id: ENT-SYS-GRABACION-EVIDENCIA
+    status: candidate
+  - id: ENT-SYS-ALMACENAMIENTO-SEGURO
+    status: candidate
+  - id: ENT-NORM-VALIDEZ-LEGAL
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-CUSTODIA-EVIDENCIA-DIGITAL
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - custodia-evidencia
+  - grabaciones
+  - validez-legal
+  - seguridad-informatica
+  - integridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Hash de integridad calculado al momento del almacenamiento
+  - Control de acceso por niveles de confidencialidad
+  - Log de auditoría inmutable de todas las visualizaciones y descargas

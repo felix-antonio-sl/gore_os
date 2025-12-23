@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fnx_cie_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: El desempeño de los miembros de la Fuerza de Tarea
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FNX-CIE-003
-urn: urn:goreos:atom:story:us_fnx_cie_003:1.0.0
-role_id: ROL-GESTION-FNX-J
+name: Evaluar el desempeño de los miembros de la Fuerza de Tarea
+
+# === STORY CORE ===
 as_a: Jefe FENIX
-i_want: Evaluar el desempeño de los miembros de la Fuerza de Tarea
-so_that: Reconozco el mérito y mejoro futuras asignaciones
-domain: D-FENIX
-priority: P2
-competence_id: CPT-FENIX-001
-acceptance_criteria: []
+i_want: Evaluar el desempeño de los miembros de la Fuerza de Tarea tras el cierre de una intervención
+so_that: Reconozco el mérito, identifico necesidades de capacitación y mejoro futuras asignaciones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FNX-J
+  agent_type: HUMAN
+  description: Jefe de la unidad de respuesta crítica (FENIX)
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SAL-APRENDIZAJE
+    status: linked
+
+process_ref:
+  id: PROC-FENIX-P2
+  status: linked
+
+tags:
+  domain: D-FENIX
+  aspect: GESTION-DE-TALENTO
+  priority: P2
+  scope: PERSONAL
+
+extra_tags:
+  - evaluacion
+  - fuerza-de-tarea
+  - talento
+  - merito
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de evaluación 360 resumido para equipos de intervención rápida
+  - Registro de competencias demostradas durante la crisis en el perfil del funcionario
+  - Generación de reportes de "Disponibilidad de Expertos" para futuras contingencias

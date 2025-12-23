@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_pb_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Resultados de ejecución de playbooks
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-PB-003
-urn: urn:goreos:atom:story:us_gest_pb_003:1.0.0
-role_id: ROL-GESTION-CTRL
+name: Registrar resultados de ejecución de playbooks
+
+# === STORY CORE ===
 as_a: Encargado Control de Gestión
 i_want: Registrar resultados de ejecución de playbooks
 so_that: Genero base de conocimiento para mejora continua
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-PLAYBOOK
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CTRL
+  agent_type: HUMAN
+  description: Encargado de Control de Gestión que documenta la efectividad de los protocolos de respuesta (Playbooks)
+
+entities_mentioned:
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-SYS-BASE-CONOCIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - playbooks
+  - base-conocimiento
+  - efectividad
+  - mejora-continua
+  - gestion-conocimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de "Post-Mortem" de ejecución de playbooks con campo para observaciones y ajustes metodológicos
+  - Reporte de efectividad (Tiempo de resolución esperado vs Real) de cada playbook aplicado
+  - Repositorio searchable de soluciones aplicadas en incidentes previos similares

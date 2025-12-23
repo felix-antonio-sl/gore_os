@@ -1,19 +1,51 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_desc_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Representar a la región ante Comité Interministerial
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-DESC-002
-urn: urn:goreos:atom:story:us_gob_desc_002:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Representar a la región ante Comité Interministerial
+
+# === STORY CORE ===
+as_a: Jefe Unidad Jurídica (como Experto en Descentralización)
 i_want: Representar a la región ante Comité Interministerial
 so_that: Obtengo competencias
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMITE
-- ENT-LOC-REGION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la Unidad Jurídica que defiende los intereses de descentralización de la región ante el nivel central (Santiago)
+
+entities_mentioned:
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-GOB-TRANSFERENCIA-COMPETENCIAS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: DESCENTRALIZACION
+  priority: P0
+  scope: NACIONAL
+
+extra_tags:
+  - comite-interministerial
+  - descentralizacion
+  - transferencia-competencias
+  - incidencia-politica
+  - autonomia-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulación técnica del expediente de solicitud de competencias (Ley 21.074) respaldada por el CORE
+  - Módulo de seguimiento de la negociación de recursos humanos y financieros asociados al traspaso
+  - Registro de actas del Comité Interministerial de Descentralización con compromisos para Ñuble

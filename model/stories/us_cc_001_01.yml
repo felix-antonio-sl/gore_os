@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información de programas de apoyo empresarial del GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CC-001-01
-urn: urn:goreos:atom:story:us_cc_001_01:1.0.0
-role_id: ROL-GESTION-CAMARA
+name: Información de programas de apoyo empresarial del GORE
+
+# === STORY CORE ===
 as_a: Cámara de Comercio
 i_want: información de programas de apoyo empresarial del GORE
 so_that: pueda difundir a mis asociados
-domain: D-EJEC
-priority: P2
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CAMARA
+  agent_type: HUMAN
+  description: Representante de gremio empresarial local
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-ECONOMICO
+    status: candidate
+  - id: ENT-EJEC-BENEFICIO-PYME
+    status: candidate
+  - id: ENT-SOC-ORGANIZACION
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-DIFUSION-FOMENTO
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P2
+  scope: PROVINCIAL
+
+extra_tags:
+  - camara-comercio
+  - fomento-productivo
+  - pymes
+  - programas-gore
+  - difusion
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a API o Portal de Datos Abiertos con oferta programática de fomento
+  - Newsletter automático con fechas de postulación a fondos concursables
+  - Kit de materiales descargables para difusión gremial

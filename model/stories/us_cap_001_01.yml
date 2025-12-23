@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_cap_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión de capacitación con inscripciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CAP-001-01
-urn: urn:goreos:atom:story:us_cap_001_01:1.0.0
-role_id: ROL-GESTION-ANALISTA-CAP
+name: Un módulo de gestión de capacitación con inscripciones
+
+# === STORY CORE ===
 as_a: Analista Capacitación
 i_want: un módulo de gestión de capacitación con inscripciones
 so_that: pueda administrar el PAC
-domain: D-BACK
-priority: P1
-competence_id: CPT-RRHH-GESTOR-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-CAP
+  agent_type: HUMAN
+  description: Analista de RRHH encargado de la ejecución del Plan Anual de Capacitación (PAC)
+
+entities_mentioned:
+  - id: ENT-ORG-PAC-CAPACITACION
+    status: candidate
+  - id: ENT-ORG-CURSO-CAPACITACION
+    status: candidate
+  - id: ENT-SYS-INSCRIPCION
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-EJECUCION-PAC
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CAPACITACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - capacitacion
+  - pac
+  - rrhh
+  - inscripciones
+  - formacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Catálogo de cursos disponibles para el periodo vigente
+  - Formulario de inscripción con validación de cupos
+  - Workflow de aprobación por jefatura directa
+  - Registro de asistencia y certificación digital

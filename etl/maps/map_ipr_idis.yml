@@ -1,0 +1,201 @@
+# ETL Mapping: IDIs Legacy (SNI) → GORE_OS IPR
+# Prioridad: CRÍTICA (Inversión SNI)
+# Funtor: Δ*(MLEG-DIM-INICIATIVA) → Σ*(ENT-FIN-IPR)
+# NOTA: Calidad ALTA - Datos saneados
+---
+_meta:
+  urn: urn:goreos:etl:map:ipr_idis:1.1.0
+  type: ETL_Mapping
+  created_at: "2025-12-23"
+  author: Arquitecto-GORE
+
+source:
+  type: staging
+  entity: ENT-MLEG-IPR-IDIS
+  urn: urn:goreos:etl:sink:mleg_ipr_idis:1.0.0
+  approx_rows: 1721
+  quality_tier: HIGH
+  known_issues: []
+
+target:
+  type: canonical
+  entity: ENT-FIN-IPR
+  urn: urn:goreos:entity:fiscus:ipr:1.1.0
+  domain: D-FIN
+
+# Estrategia de claves
+key_strategy:
+  source_key: codigo_bip
+  target_key: id_ipr
+  generation: UUID_V5 # gore_os:ipr:sni:{codigo_bip}
+  dedup_policy: ERROR_ON_DUP # Ya no debería haber duplicados
+
+# Limpieza pre-carga (No requerida tras saneamiento)
+pre_filters: []
+
+# Mapeo de atributos
+field_mappings:
+  - source: codigo_bip
+    target: codigo_bip
+    transform: TRIM_NORMALIZE # Ya saneado pero por seguridad
+
+  - source: nombre
+    target: nombre
+    transform: TRIM_NORMALIZE
+
+  - source: nombre
+    target: descripcion
+    transform: COPY
+
+  - source: null
+    target: tipo
+    transform: DERIVE_FROM_BIP
+    # Los primeros dígitos del BIP indican tipo
+    derive_logic: |
+      CASE SUBSTRING(codigo_bip, 1, 2)
+        WHEN '30' THEN 'PROYECTO'
+        WHEN '31' THEN 'PROGRAMA'
+        WHEN '40' THEN 'ESTUDIO_BASICO'
+        ELSE 'PROYECTO'
+      END
+
+  - source: null
+    target: mecanismo_id
+    transform: LOOKUP_CONSTANT
+    lookup:
+      entity: ENT-FIN-MECANISMO
+      match_field: codigo
+      match_value: FNDR_TRADICIONAL
+      return_field: id_mecanismo
+
+  # Monto ahora viene directo de las columnas (no necesito join si confio en 'monto_solicitado')
+  # Pero mantendré la lógica original si se prefiere
+  - source: monto_solicitado
+    target: monto_total
+    transform: PARSE_DECIMAL_CLP
+    null_handling: ZERO
+
+  # Comuna viene de atributo 'comuna' limpio
+  - source: comuna
+    target: comuna_id
+    transform: LOOKUP_COMUNA
+    note: "Busqueda difusa en catalogo"
+
+  - source: estado_iniciativa
+    target: estado_ciclo
+    transform: ENUM_MAP
+    enum_map:
+      PREFACTIBILIDAD: FORMULACION
+      FACTIBILIDAD: FORMULACION
+      DISEÑO: APROBADO
+      EJECUCION: EJECUCION
+      TERMINADO: TERMINADO
+      VIGENTE: EJECUCION # Nuevo estado común en dataset limpio
+    default: FORMULACION
+
+  - source: estado_iniciativa
+    target: etapa_actual
+    transform: ENUM_MAP
+    enum_map:
+      PREFACTIBILIDAD: PREFACTIBILIDAD
+      FACTIBILIDAD: FACTIBILIDAD
+      DISEÑO: DISEÑO
+      EJECUCION: EN_EJECUCION
+      TERMINADO: CIERRE
+      VIGENTE: EN_EJECUCION
+    default: PERFIL
+
+  - source: fecha_rs
+    target: fecha_rs
+    transform: PARSE_DATE
+    formats: ["YYYY-MM-DD", "DD-MM-YYYY", "DD/MM/YY"]
+    null_handling: USE_EPOCH
+
+  - source: null # vigencia se infiere de estado
+    target: vigencia
+    transform: CONSTANT
+    value: VIGENTE
+
+  # --- metadata_mecanismo ---
+  - source: _build_metadata
+    target: metadata_mecanismo
+    transform: JSON_BUILD
+    structure:
+      fuente_legacy: "IDIS"
+      fuente_archivo: "ANALISIS"
+      cod_unico_original: "{codigo_bip}"
+      fecha_sanitizacion: "{_cleaned_at}"
+      quality_score: "HIGH"
+
+# Campos target con defaults
+unmapped_targets:
+  - field: tipologia
+    default: null
+  - field: origen
+    default: SNI
+  - field: fuente
+    default: "FNDR"
+  - field: sub_estado
+    source: sub_estado
+  - field: rate_actual
+    source: null
+    note: "Requiere enriquecimiento desde RATE API"
+  - field: fecha_rate
+    source: null
+  - field: n_rates_emitidos
+    default: null
+  - field: rate_historico
+    default: null
+  - field: marco_logico
+    default: null
+    note: "Solo aplica para PPR"
+
+# Joins necesarios (data quality enrichment)
+enrichment_joins:
+  - name: series_financieras
+    source_entity: MLEG-FACT-LINEA-PRESUPUESTARIA
+    join_key: cod_unico
+    target_fields:
+      - source_agg: SUM(gasto_vigente)
+        target: monto_total
+      - source_agg: MAX(anio)
+        target: _ultimo_anio_ejecucion
+
+  - name: localizacion
+    source_entity: MLEG-MAESTRA-DIPIR
+    join_key: codigo_bip
+    target_fields:
+      - source: comuna
+        target: comuna_id
+        transform: LOOKUP
+
+# Dependencias
+dependencies:
+  pre_load:
+    - entity: ENT-FIN-MECANISMO
+      ensure_exists: "FNDR_TRADICIONAL"
+  parallel_load:
+    - entity: MLEG-FACT-LINEA-PRESUPUESTARIA
+      note: "Requerido para monto_total"
+
+# Validaciones post-carga
+validation_rules:
+  - rule: NOT_NULL
+    fields: [codigo_bip, nombre]
+  - rule: UNIQUE
+    field: codigo_bip
+    scope: GLOBAL
+  - rule: FK_EXISTS
+    field: mecanismo_id
+    target: ENT-FIN-MECANISMO
+
+# Métricas esperadas (tolerantes por calidad baja)
+expected_metrics:
+  source_rows: 2800
+  reject_max: 300 # ~10% rechazos por placeholders
+  quarantine_max: 200 # ~7% formato no estándar
+  target_rows_min: 2000
+  target_rows_max: 2500
+  null_rate_max:
+    monto_total: 0.30 # Alta tolerancia
+    comuna_id: 0.50 # Muy alta - enriquecimiento posterior

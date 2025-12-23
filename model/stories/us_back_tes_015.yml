@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_015:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Devengos pendientes por subtítulo al cierre del ejercicio
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-015
-urn: urn:goreos:atom:story:us_back_tes_015:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Devengos pendientes por subtítulo al cierre del ejercicio
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: Calcular devengos pendientes por subtítulo al cierre del ejercicio
 so_that: Identifico obligaciones para deuda flotante
-domain: D-BACK
-priority: P0
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: ALGORITHMIC
+  description: Sistema automatizado de cálculo de obligaciones pendientes de pago (Deuda Flotante)
+
+entities_mentioned:
+  - id: ENT-FIN-DEVENGO-PENDIENTE
+    status: candidate
+  - id: ENT-FIN-DEUDA-FLOTANTE
+    status: candidate
+  - id: ENT-FIN-CONTABILIDAD-CIERRE
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-DETERMINACION-DEUDA-FLOTANTE
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CIERRE-ANUAL
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - deuda-flotante
+  - devengo
+  - cierre-ejercicio
+  - contabilidad
+  - obligaciones-pendientes
+
+status: ENRICHED
+acceptance_criteria:
+  - Identificación de facturas recibidas y no devengadas, y devengadas y no pagadas
+  - Clasificación automática por subtítulo e ítem presupuestario
+  - Generación de propuesta de presupuesto para deuda flotante (Subt. 34) del año siguiente

@@ -1,15 +1,51 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_plan_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Visualizar brechas territoriales (brecha vs meta con mapa)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TERR-PLAN-001
-urn: urn:goreos:atom:story:us_terr_plan_001:1.0.0
-role_id: ROL-TERR-PLAN
+name: Visualizar brechas territoriales (brecha vs meta con mapa)
+
+# === STORY CORE ===
 as_a: Analista Planificación
 i_want: Visualizar brechas territoriales (brecha vs meta con mapa)
 so_that: Identifico necesidades territoriales
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TERR-PLAN
+  agent_type: HUMAN
+  description: Profesional de planificación territorial regional
+
+entities_mentioned:
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-PLAN-BRECHA
+    status: candidate
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+
+process_ref:
+  id: PROC-TERR-DIAGNOSTICO
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: DIAGNOSTICO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - mapa
+  - brechas
+  - gis
+  - planificacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa interactivo con capas de brechas
+  - Comparación visual brecha vs meta
+  - Filtros por comuna y tipo de brecha
+  - Exportación a formato geoespacial

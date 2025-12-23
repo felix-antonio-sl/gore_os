@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_sub_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Admisibilidad Estricta (Vigencia PJ, Directorio)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-SUB-002
-urn: urn:goreos:atom:story:us_fin_sub_002:1.0.0
-role_id: ROL-GESTION-ANAL8
+name: Admisibilidad Estricta (Vigencia PJ, Directorio)
+
+# === STORY CORE ===
 as_a: Analista 8% (Técnico)
-i_want: Evaluar Admisibilidad Estricta (Vigencia PJ, Directorio)
-so_that: Verifico requisitos formales
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+i_want: Evaluar Admisibilidad Estricta verificando vigencia de Persona Jurídica y composición de directores
+so_that: Verifico requisitos formales y aseguro que el postulante sea una entidad legalmente habilitada
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANAL8
+  agent_type: HUMAN
+  description: Analista técnico de la División de Desarrollo Social (8%)
+
+entities_mentioned:
+  - id: ENT-DIG-DOCUMENTO
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: FONDOS-CONCURSABLES
+  priority: P0
+  scope: LEGAL
+
+extra_tags:
+  - admisibilidad
+  - pj
+  - vigencia
+  - requisitos
+
+status: ENRICHED
+acceptance_criteria:
+  - Integración con el Registro Civil para verificar vigencia de PJ en línea
+  - Validación automática de la fecha de emisión de los certificados adjuntos
+  - Lista de chequeo (check-list) con criterios de "Pasa/No Pasa" inmodificables tras el cierre

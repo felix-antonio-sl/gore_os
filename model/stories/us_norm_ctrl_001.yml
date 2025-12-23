@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_ctrl_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Notificaciones de cruces entre evaluadores y postulantes
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-CTRL-001
-urn: urn:goreos:atom:story:us_norm_ctrl_001:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
-i_want: Recibir notificaciones de cruces entre evaluadores y postulantes
-so_that: Prevengo conflictos de interés
-domain: D-NORM
-priority: P0
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Notificación de Vínculos de Postulantes
+
+# === STORY CORE ===
+as_a: Profesional DAF (Control Interno)
+i_want: Recibir notificaciones automáticas ante cruces de datos sospechosos entre evaluadores técnicos y representantes legales de instituciones postulantes
+so_that: se prevengan conflictos de interés antes de la adjudicación de fondos concursables (8% FNDR)
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-AUDITOR
+  agent_type: HUMAN
+  description: Profesional de la Dirección de Administración y Finanzas encargado del control interno
+
+entities_mentioned:
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONTROL-INTERNO
+  priority: P0
+  scope: PROBIDAD
+
+extra_tags:
+  - conflictos-interes
+  - auditoria
+  - prevencion
+  - nepotismo
+
+status: ENRICHED
+acceptance_criteria:
+  - Alerta visual en la ficha de evaluación si existe coincidencia de apellidos o RUTs vinculados
+  - Registro de "Inhibición Voluntaria" del evaluador con trazabilidad de fecha y hora
+  - Bloqueo de firma de acta de adjudicación si existen alertas de cruce no resueltas

@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:ejec:informe_avance_fisico:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-EJEC-INFORME-AVANCE-FISICO"
+id: ENT-INFORME-AVANCE-FISICO
+name: "uLuIuNuFuOuRuMuEu uAuVuAuNuCuEu uFuIuSuIuCuOu"
+tags: [EJEC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

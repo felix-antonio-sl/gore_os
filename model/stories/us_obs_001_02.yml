@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_obs_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes temáticos con visualizaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OBS-001-02
-urn: urn:goreos:atom:story:us_obs_001_02:1.0.0
-role_id: ROL-GESTION-OBS
-as_a: Analista Observatorio
-i_want: generar reportes temáticos con visualizaciones
-so_that: pueda comunicar hallazgos a tomadores de decisión
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+name: Generación de Reportes Temáticos Visuales
+
+# === STORY CORE ===
+as_a: Analista del Observatorio Regional
+i_want: Generar reportes temáticos interactivos con visualizaciones avanzadas (mapas de calor, gráficos dinámicos)
+so_that: se puedan comunicar hallazgos complejos a los tomadores de decisión (Gobernador y CORE) de forma clara y efectiva
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OBS
+  agent_type: HUMAN
+  description: Especialista en visualización de datos territoriales
+
+entities_mentioned:
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+  - id: ENT-TER-SITIO
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: VISUALIZACION
+  priority: P1
+  scope: DECISIONAL
+
+extra_tags:
+  - reportes
+  - visualización
+  - bi
+  - toma-de-decisiones
+
+status: ENRICHED
+acceptance_criteria:
+  - Exportación de reportes en formato PDF de alta calidad con carátula institucional
+  - Capacidad de incrustar (Embed) gráficos en el portal público de datos del GORE
+  - Filtros dinámicos por comuna, sector económico y rango temporal en la visualización web

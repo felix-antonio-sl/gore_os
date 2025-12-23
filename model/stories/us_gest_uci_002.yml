@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_uci_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Efectividad de controles internos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-UCI-002
-urn: urn:goreos:atom:story:us_gest_uci_002:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
+name: Efectividad de controles internos
+
+# === STORY CORE ===
+as_a: Profesional DAF (Unidad de Control Interno)
 i_want: Monitorear efectividad de controles internos
 so_that: Aseguro que los controles mitigan los riesgos identificados
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
-- ENT-SAL-RIESGO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la Unidad de Control Interno (UCI) que verifica la mitigación de riesgos operativos
+
+entities_mentioned:
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-MATRIZ-CONTROL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: AUDITORIA
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - uci
+  - control-interno
+  - gestion-riesgos
+  - mitigacion
+  - cumplimiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso a la matriz de riesgos institucionales con vinculación a los controles preventivos y detectivos
+  - Registro de hallazgos de auditoría interna y seguimiento de planes de subsanación
+  - Dashboard de evaluación de efectividad basado en incidentes evitados vs detectados

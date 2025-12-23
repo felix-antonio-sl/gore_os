@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_dev_code_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Feedback del linter en tiempo real sobre el cumplimiento de estándares
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEV-CODE-002
-urn: urn:goreos:atom:story:us_dev_code_002:1.0.0
-role_id: ROL-GESTION-DESARROLLADO
+name: Feedback de Linter en Tiempo Real
+
+# === STORY CORE ===
 as_a: Desarrollador
-i_want: recibir feedback del linter en tiempo real sobre el cumplimiento de estándares
-so_that: pueda corregir errores de estilo y calidad antes de realizar el commit
-domain: D-DEV
-priority: P1
-competence_id: CPT-DEV-001
-acceptance_criteria: []
+i_want: recibir feedback del linter en tiempo real dentro del IDE sobre el cumplimiento de los estándares GORE_OS
+so_that: pueda corregir errores de estilo, calidad y potenciales bugs antes de realizar el commit de código
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DESARROLLADO
+  agent_type: HUMAN
+  description: Desarrollador encargado de mantener la calidad y consistencia del código fuente
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: CALIDAD-CODIGO
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - linter
+  - eslint
+  - prettier
+  - feedback-bucle
+  - calidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Extensión de IDE configurada para resaltar violaciones de reglas de estilo definidas en el proyecto
+  - Bloqueo de commits locales mediante pre-commit hooks si existen errores críticos de linting
+  - Mensajes de error claros que sugieran la corrección automática (fix) cuando sea posible

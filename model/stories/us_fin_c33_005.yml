@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_c33_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Adquisición de activos vía Circular 33
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-C33-005
-urn: urn:goreos:atom:story:us_fin_c33_005:1.0.0
-role_id: ROL-OPS-C33
+name: Adquisición de activos vía Circular 33
+
+# === STORY CORE ===
 as_a: Analista Operaciones C33
 i_want: Gestionar adquisición de activos vía Circular 33
 so_that: Ejecuto presupuesto C33
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-FIN-PRESUPUESTO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-C33
+  agent_type: HUMAN
+  description: Analista encargado de la tramitación de compras de activos (vehículos, maquinaria) bajo la Circular 33
+
+entities_mentioned:
+  - id: ENT-FIN-CIRCULAR-33
+    status: candidate
+  - id: ENT-FIN-PRESUPUESTO-INVERSION
+    status: linked
+  - id: ENT-FIN-ACTIVO-ADQUIRIDO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-ADQUISICION-C33
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: ABASTECIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - c33
+  - activos
+  - adquisiciones
+  - circular-33
+  - inversion
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de compra integrado con Mercado Público mediante ID de Licitación
+  - Acta de recepción técnica digital obligatoria para el cierre del proceso
+  - Registro de seriales/patentes en el inventario regional automáticadamente

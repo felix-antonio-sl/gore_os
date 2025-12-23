@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_prev_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Registro de entrega de EPP (Equipos Protección Personal)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PREV-002-01
-urn: urn:goreos:atom:story:us_prev_002_01:1.0.0
-role_id: ROL-GESTION-PREVENCIONIS
-as_a: Prevencionista Riesgos
-i_want: registro de entrega de EPP (Equipos Protección Personal)
-so_that: cumpla con la normativa legal
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+name: Registro de entrega de EPP (Equipos de Protección Personal)
+
+# === STORY CORE ===
+as_a: Prevencionista de Riesgos
+i_want: un registro de entrega de EPP (Equipos de Protección Personal)
+so_that: se cumpla con la normativa legal y se proteja al funcionario
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREVENCIONIS
+  agent_type: HUMAN
+  description: Profesional encargado de la dotación de equipos de seguridad para el personal institucional
+
+entities_mentioned:
+  - id: ENT-BACK-EPP-REGISTRO
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-MEDIDAS-PREVENTIVAS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: SEGURIDAD-LABORAL
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - epp
+  - seguridad-laboral
+  - ley-16744
+  - rrhh
+  - prevencion
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro digital de cada elemento entregado (Cascos, Zapatos, Chalecos Geólogo) con fecha y folio
+  - Recibo de entrega firmado digitalmente por el funcionario beneficiario (validez ante inspección del trabajo)
+  - Alertas automáticas para la renovación de equipos según su vida útil técnica recomendada

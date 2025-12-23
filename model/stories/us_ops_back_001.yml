@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_back_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Asegurar políticas de backup y restauración
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-BACK-001
-urn: urn:goreos:atom:story:us_ops_back_001:1.0.0
-role_id: ROL-OPS-TIC-PLAT
-as_a: Administrador Plataforma
-i_want: Asegurar políticas de backup y restauración
-so_that: Protejo la integridad de los datos institucionales
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Gestión de Respaldo y Recuperación (DRP)
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma TIC
+i_want: Definir y ejecutar políticas automatizadas de backup y planes de restauración para todos los nodos del Supermodelo
+so_that: se proteja la integridad de los datos institucionales estratégicos ante cualquier fallo crítico de infraestructura
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-TIC-PLAT
+  agent_type: HUMAN
+  description: Especialista en infraestructura y continuidad operacional
+
+entities_mentioned:
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: DISASTER-RECOVERY
+  priority: P1
+  scope: INFRAESTRUCTURA
+
+extra_tags:
+  - backup
+  - restore
+  - drp
+  - resiliencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Frecuencia de backup diferencial cada hora y backup completo diario
+  - Prueba trimestral de restauración exitosa documentada en el sistema
+  - Almacenamiento de copias de seguridad en una región geográfica distinta para cumplir con redundancia

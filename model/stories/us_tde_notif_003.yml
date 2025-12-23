@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_notif_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Notificaciones vía API /notificador/sendMessage vía Nodo PISEE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-NOTIF-003
-urn: urn:goreos:atom:story:us_tde_notif_003:1.0.0
-role_id: ROL-GESTION-KODA
+name: Envío de notificaciones vía API PISEE
+
+# === STORY CORE ===
 as_a: Agente KODA
-i_want: Enviar notificaciones vía API /notificador/sendMessage vía Nodo PISEE
-so_that: Uso infraestructura estatal
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: enviar notificaciones transaccionales a través de la API institucional vía el Nodo PISEE
+so_that: se utilice la infraestructura estatal distribuida para garantizar la entrega masiva y segura de comunicaciones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: MACHINE
+  description: Orquestador de salida de mensajes hacia la red PISEE
+
+entities_mentioned:
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: COMUNICACION-TEC
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - api-notificaciones
+  - pisee
+  - transaccional
+  - infraestructura-estatal
+  - koda
+
+status: ENRICHED
+acceptance_criteria:
+  - Implementación del request /notificador/sendMessage según estándar de Gobierno Digital
+  - Gestión de colas de reintento ante fallos temporales del servicio PISEE central
+  - Tokenización de las URLs de descarga dentro del mensaje para máxima seguridad

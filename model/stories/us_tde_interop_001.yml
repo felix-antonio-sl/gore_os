@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_interop_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
-id: US-TDE-INTEROP-001
-urn: urn:goreos:atom:story:us_tde_interop_001:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
-so_that: Conecto con servicios estatales
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-NODO_INTEROP
+id: US-TDE-INTEROP-001
+name: Habilitación de Nodo de Interoperabilidad PISEE
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: habilitar y configurar el Nodo de Interoperabilidad PISEE institucional
+so_that: el GORE se conecte con los servicios estatales para el intercambio seguro de datos ciudadanos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Responsable de la infraestructura de interoperabilidad del Estado en el GORE
+
+entities_mentioned:
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: INFRAESTRUCTURA-TI
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - pisee
+  - nodo
+  - interoperabilidad
+  - gobierno-digital
+  - infraestructura
+
+status: ENRICHED
+acceptance_criteria:
+  - Nodo configurado y validado por la División de Gobierno Digital (DGD)
+  - Capacidad de conectarse a consumos (Query) y suscripciones (Eventos) de otros servicios
+  - Monitor de estado de conectividad (Uptime) del nodo visible para el equipo de soporte

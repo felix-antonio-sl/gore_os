@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sup_trans_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso equivalente al Encargado en caso de ausencia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SUP-TRANS-001-01
-urn: urn:goreos:atom:story:us_sup_trans_001_01:1.0.0
-role_id: ROL-GESTION-TRANSP-SUPL
-as_a: Suplente Transparencia
-i_want: acceso equivalente al Encargado en caso de ausencia
-so_that: pueda mantener continuidad operativa
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Reportes de transparencia y acceso a la información
+
+# === STORY CORE ===
+as_a: Supervisor de Transparencia
+i_want: generar reportes automáticos del cumplimiento de plazos de solicitudes de acceso a la información (SAI)
+so_that: se eviten sanciones del Consejo para la Transparencia y se mejore la respuesta al ciudadano
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUP
+  agent_type: HUMAN
+  description: Encargado de velar por el cumplimiento de la Ley 20.285 en toda la institución
+
+entities_mentioned:
+  - id: ENT-OIRS-SOLICITUD-SAI
+    status: candidate
+  - id: ENT-PLAN-EVIDENCIA-PMG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-GESTION-LOBBY
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: TRANSPARENCIA
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - transparencia-activa
+  - transparencia-pasiva
+  - sai
+  - cplt
+  - cumplimiento-legal
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de semáforo por unidad derivadora (Días restantes para el vencimiento legal de 20 días)
+  - Cálculo automático del índice de respuesta y calidad de la información entregada
+  - Exportación masiva de datos para la alimentación del Portal de Transparencia Activa institucional

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_admin_008:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver estado de backups con ejecución manual
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-ADMIN-008
-urn: urn:goreos:atom:story:us_tde_admin_008:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Ver estado de backups con ejecución manual
-so_that: Aseguro recuperabilidad
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Gestión y monitoreo de Backups
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: visualizar el estado de los backups y ejecutar respaldos manuales ante cambios críticos
+so_that: se asegure la recuperabilidad del sistema ante desastres y se cumpla la política de respaldo
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador de infraestructura responsable de la continuidad de datos (DRP)
+
+entities_mentioned:
+  - id: ENT-TDE-BACKUP-REG
+    status: candidate
+  - id: ENT-OPS-STORAGE-ENV
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CONTINUIDAD-NEGOCIO
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - backups
+  - drp
+  - continuidad
+  - recuperacion-desastres
+  - integridad-datos
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard que muestra el éxito/fallo de los backups diarios de Base de Datos y Sistema de Archivos
+  - Botón de "Instant Backup" que dispara un snapshot completo antes de despliegues en caliente
+  - Alerta inmediata si el respaldo automatizado falla por más de 2 ciclos consecutivos

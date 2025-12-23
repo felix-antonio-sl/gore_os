@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:back:epp_registro:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-BACK-EPP-REGISTRO"
+id: ENT-EPP-REGISTRO
+name: "uLuEuPuPu uRuEuGuIuSuTuRuOu"
+tags: [BACK]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

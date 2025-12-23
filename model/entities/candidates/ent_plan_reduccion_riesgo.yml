@@ -1,0 +1,14 @@
+---
+_meta:
+  urn: urn:goreos:entity:soc:plan_reduccion_riesgo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate
+  source_id: "ENT-SOC-PLAN-REDUCCION-RIESGO"
+id: ENT-PLAN-REDUCCION-RIESGO
+name: "uLuPuLuAuNu uRuEuDuUuCuCuIuOuNu uRuIuEuSuGuOu"
+tags: [SOC]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

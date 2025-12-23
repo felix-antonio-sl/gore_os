@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_dseg_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un registro de programas de prevención financiados por el GORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DSEG-001-02
-urn: urn:goreos:atom:story:us_dseg_001_02:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: un registro de programas de prevención financiados por el GORE
-so_that: pueda evaluar cobertura e impacto
-domain: D-PLAN
-priority: P1
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
+name: Registro de Programas de Prevención Social
+
+# === STORY CORE ===
+as_a: Jefe de División / Unidad Jurídica
+i_want: mantener un registro centralizado y actualizado de todos los programas de prevención social financiados por el GORE
+so_that: se pueda evaluar periódicamente su cobertura territorial, impacto real y cumplimiento de las metas sociales regionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Directivo responsable de supervisar la ejecución programática de la división
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-MONITOREO-ERD
+  status: candidate
+
+tags:
+  domain: D-PLAN
+  aspect: PREVENCION-SOCIAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - programas-sociales
+  - prevención
+  - impacto
+  - cobertura
+  - monitoreo
+
+status: ENRICHED
+acceptance_criteria:
+  - Ficha por programa que incluye presupuesto asignado, ejecutor (GORE o tercero) y beneficiarios directos
+  - Sistema de indicadores de cumplimiento (KPIs) vinculados a la Estrategia Regional de Desarrollo (ERD)
+  - Repositorio de informes finales de evaluación de impacto para cada programa cerrado

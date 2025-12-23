@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_gr_014:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Impulsar convenios de programación con ministerios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-GR-014
-urn: urn:goreos:atom:story:us_gob_gr_014:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Impulsar convenios de programación con ministerios
+
+# === STORY CORE ===
+as_a: Gobernador Regional
 i_want: Impulsar convenios de programación con ministerios
 so_that: Apalanco recursos sectoriales
-domain: D-GOB
-priority: P0
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Gobernador Regional negociando convenios plurianuales de co-financiamiento con el nivel central
+
+entities_mentioned:
+  - id: ENT-CONV-CONVENIO-PROGRAMACION
+    status: candidate
+  - id: ENT-FIN-APALANCAMIENTO-SECTORIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: COORDINACION
+  priority: P0
+  scope: NACIONAL
+
+extra_tags:
+  - gobernador
+  - convenios-programacion
+  - co-financiamiento
+  - inversion-publica
+  - negociacion-central
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero de control de ejecución financiera de convenios vigentes (MOP-GORE, MINVU-GORE)
+  - Módulo de proyección de flujos de caja plurianuales comprometidos en convenios de programación
+  - Registro de actas de negociación con la DIPRES para la validación de aportes regionales vs nacionales

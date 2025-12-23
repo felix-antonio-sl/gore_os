@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_fin_cog_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Cogirador Autorizado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_FIN_COG-001
-urn: urn:goreos:atom:story:us_gen_gestion_fin_cog_001:1.0.0
-role_id: ROL-GESTION-FIN-COGIR
+name: Historia genérica para Cogirador Autorizado
+
+# === STORY CORE ===
 as_a: Cogirador Autorizado
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-COGIR
+  agent_type: HUMAN
+  description: Funcionario facultado legalmente para estampar la segunda firma (co-giro) en cheques o transferencias bancarias
+
+entities_mentioned:
+  - id: ENT-FIN-CHEQUE-TRANSFERENCIA
+    status: candidate
+  - id: ENT-FIN-CO-FIRMA-MANCOMUNADA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-PAGO-TESORERIA
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: TESORERIA
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - cogirador
+  - firmas-bancarias
+  - control-financiero
+  - tesoreria
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de firma mancomunada digital integrado con el portal bancario
+  - Registro cronológico de cheques y transferencias visadas por el cogirador
+  - Alerta de duplicidad o inconsistencia en montos previo a la estampa de la firma

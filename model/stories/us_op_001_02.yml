@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_op_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Número de ingreso correlativo automático
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OP-001-02
-urn: urn:goreos:atom:story:us_op_001_02:1.0.0
-role_id: ROL-GESTION-OF
+name: Número de ingreso correlativo automático
+
+# === STORY CORE ===
 as_a: Oficial de Partes
 i_want: generar número de ingreso correlativo automático
 so_that: la trazabilidad esté garantizada
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OF
+  agent_type: HUMAN
+  description: Funcionario de la Oficina de Partes responsable de la fe pública en la recepción de documentos
+
+entities_mentioned:
+  - id: ENT-TDE-CORRELATIVO-INGRESO
+    status: candidate
+  - id: ENT-TDE-TRAZABILIDAD-DOCUMENTAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: SEGURIDAD
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - oficina-de-partes
+  - correlativos
+  - trazabilidad
+  - SISDOC
+  - fe-publica
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación de correlativo único e inalterable por cada documento o paquete ingresado
+  - Sello de tiempo (Timestamp) certificado por servidor NTP institucional para cada ingreso
+  - Bloqueo de saltos en la numeración correlativa para asegurar integridad del registro anual

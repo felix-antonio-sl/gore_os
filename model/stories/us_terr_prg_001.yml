@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_terr_prg_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertar sobre ventanas de postulación a programas con plazos
-id: US-TERR-PRG-001
-urn: urn:goreos:atom:story:us_terr_prg_001:1.0.0
-role_id: ROL-TERR-PLAN
-as_a: Analista Planificación
-i_want: Alertar sobre ventanas de postulación a programas con plazos
-so_that: Gestiono postulaciones a tiempo
-domain: D-TERR
-priority: P2
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-TERR-PRG-001
+name: Alertas de postulación a Fondos Concursables
+
+# === STORY CORE ===
+as_a: Analista de Planificación
+i_want: recibir alertas automáticas sobre la apertura y cierre de ventanas de postulación a programas externos y fondos sectoriales (Circular 33, FNDR, etc.)
+so_that: se gestionen las postulaciones institucionales a tiempo y se maximice la captación de recursos externos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TERR-PLAN
+  agent_type: HUMAN
+  description: Profesional encargado de la postulación y seguimiento de financiamiento para proyectos regionales
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: FINANCIAMIENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - postulaciones
+  - alertas
+  - fondos-concursables
+  - circular33
+  - fndr
+
+status: ENRICHED
+acceptance_criteria:
+  - Calendario regional de fondos concursables con hitos de postulación críticos
+  - Sistema de notificaciones vía correo y push con 30, 15 y 5 días de anticipación al cierre del fondo
+  - Módulo de seguimiento de documentos requeridos para asegurar que se cuenta con el expediente completo antes del plazo

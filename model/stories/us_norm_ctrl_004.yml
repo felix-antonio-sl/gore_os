@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Informar hallazgos y recomendaciones al Gobernador y CORE
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-NORM-CTRL-004
-urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
-role_id: ROL-GESTION-PROF
-as_a: Profesional DAF
-i_want: Informar hallazgos y recomendaciones al Gobernador y CORE
-so_that: Escalo temas relevantes
-domain: D-NORM
-priority: P1
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Comunicación de Hallazgos Críticos
+
+# === STORY CORE ===
+as_a: Auditor de Control Interno
+i_want: Generar reportes automatizados de hallazgos y recomendaciones dirigidos al Gobernador Regional y al Consejo Regional (CORE)
+so_that: los temas de alta criticidad administrativa sean escalados al nivel directivo para su resolución inmediata
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-AUDITOR
+  agent_type: HUMAN
+  description: Auditor interno encargado del seguimiento del marco de control institucional
+
+entities_mentioned:
+  - id: ENT-NORM-PROCESO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+process_ref:
+  id: PROC-NORM-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: ACCOUNTABILITY
+  priority: P1
+  scope: DIRECTIVO
+
+extra_tags:
+  - hallazgos
+  - reporte
+  - core
+  - escalamiento
+
+status: ENRICHED
+acceptance_criteria:
+  - Workflow de aprobación para el despacho del informe final de auditoría
+  - Dashboard de seguimiento del plan de acción correctiva (PAC) para cada hallazgo reportado
+  - Notificación automática a los jefes de división afectados por recomendaciones pendientes

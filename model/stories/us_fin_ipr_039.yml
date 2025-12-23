@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ipr_039:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Verificar cumplimiento de Requisitos de Información (ARI)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-IPR-039
-urn: urn:goreos:atom:story:us_fin_ipr_039:1.0.0
-role_id: ROL-GESTION-DAE-PRE
-as_a: Analista Preinversión (DAE)
-i_want: Verificar cumplimiento de Requisitos de Información (ARI)
-so_that: Valido admisibilidad
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Verificación de Requisitos ARI (Anteproyecto Regional de Inversión)
+
+# === STORY CORE ===
+as_a: Analista de Pre-inversión (División de Análisis y Estrategia - DAE)
+i_want: verificar el cumplimiento de los Requisitos de Información (ARI) para todas las iniciativas postuladas por los municipios o instituciones ejecutoras
+so_that: se valide la admisibilidad técnica inicial y se asegure que los proyectos cuentan con la información base para el proceso presupuestario anual
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DAE-PRE
+  agent_type: HUMAN
+  description: Profesional encargado de la evaluación normativa y técnica inicial de la inversión regional
+
+entities_mentioned:
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-GESTION-INVERSION
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: PRE-INVERSION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - ari
+  - anteproyecto-inversion
+  - dae
+  - admisibilidad-tecnica
+  - planificacion-presupuestaria
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist digital de requisitos ARI parametrizable según ley de presupuestos
+  - Sistema de validación de archivos obligatorios (Factibilidad, Presupuesto, Dominio de Terreno)
+  - Cambio de estado a "ARI Validado" necesario para la priorización en el comité de inversiones

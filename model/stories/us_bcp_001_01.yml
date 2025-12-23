@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_bcp_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión del BCP con pruebas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BCP-001-01
-urn: urn:goreos:atom:story:us_bcp_001_01:1.0.0
-role_id: ROL-GESTION-ENCARGADO-CO
+name: Un módulo de gestión del BCP con pruebas
+
+# === STORY CORE ===
 as_a: Encargado Comité Paritario
 i_want: un módulo de gestión del BCP con pruebas
 so_that: pueda asegurar resiliencia
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENCARGADO-CO
+  agent_type: HUMAN
+  description: Encargado de la Continuidad del Negocio (BCP) y Resiliencia Institucional
+
+entities_mentioned:
+  - id: ENT-TDE-BCP-PLAN
+    status: candidate
+  - id: ENT-TDE-SIMULACRO
+    status: candidate
+  - id: ENT-TDE-RECURSO-CRITICO
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-GESTION-CONTINUIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: RESILIENCIA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - bcp
+  - resiliencia
+  - continuidad-negocio
+  - desastres
+  - seguridad
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de planes de contingencia por proceso crítico
+  - Registro de resultados de pruebas de restauración y simulacros
+  - Dashboard de disponibilidad de recursos críticos (Data Center, enlaces, personal)

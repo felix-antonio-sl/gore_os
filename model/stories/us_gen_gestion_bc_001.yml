@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_bc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Banco Central de Chile
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_BC-001
-urn: urn:goreos:atom:story:us_gen_gestion_bc_001:1.0.0
-role_id: ROL-GESTION-BC
+name: Historia genérica para Banco Central de Chile
+
+# === STORY CORE ===
 as_a: Banco Central de Chile
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-BC
+  agent_type: ALGORITHMIC
+  description: Interfaz de interoperabilidad con el Banco Central para la obtención de indicadores macroeconómicos y validación de tipos de cambio
+
+entities_mentioned:
+  - id: ENT-FIN-TASA-INTERES
+    status: candidate
+  - id: ENT-FIN-TIPO-CAMBIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-FIN-ACTUALIZACION-PARAMETROS
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: GESTION
+  priority: P2
+  scope: NACIONAL
+
+extra_tags:
+  - banco-central
+  - macros
+  - indicadores-economicos
+  - interoperabilidad
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Sincronización diaria automática del valor de la UF y el Dólar (Observado)
+  - Módulo de consulta de serie histórica de IPC para cálculos de reajustabilidad
+  - Registro de auditoría de la fuente de datos oficial del Banco Central

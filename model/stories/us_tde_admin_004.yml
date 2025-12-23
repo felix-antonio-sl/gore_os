@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_admin_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Desactivar usuarios manteniendo historial
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-ADMIN-004
-urn: urn:goreos:atom:story:us_tde_admin_004:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Desactivar usuarios manteniendo historial
-so_that: Gestiono bajas sin perder trazabilidad
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Desactivación de usuarios con preservación de historial
+
+# === STORY CORE ===
+as_a: Administrador de Plataforma
+i_want: desactivar usuarios manteniendo su historial de acciones y documentos firmados
+so_that: se gestionen las bajas de personal sin perder la trazabilidad de los actos realizados
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-GEONODO
+  agent_type: HUMAN
+  description: Administrador de sistema responsable de la integridad histórica de los datos
+
+entities_mentioned:
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: IDENTIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - bajas
+  - trazabilidad
+  - auditoria
+  - integridad
+  - rrhh
+
+status: ENRICHED
+acceptance_criteria:
+  - Marcado lógico de usuario como "Inactivo" impidiendo el login pero conservando la relación en llaves foráneas
+  - Bloqueo inmediato de certificados de firma digital vinculados al usuario desactivado
+  - Capacidad de re-activación con un solo clic en caso de reingreso del funcionario

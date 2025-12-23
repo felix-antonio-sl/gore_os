@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_frpd_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alineación con Ejes (Sustentabilidad, Innovación)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-FRPD-001
-urn: urn:goreos:atom:story:us_fin_frpd_001:1.0.0
-role_id: ROL-GESTION-FRPD
-as_a: Comité FRPD
-i_want: Validar alineación con Ejes (Sustentabilidad, Innovación)
-so_that: Aseguro pertinencia estratégica
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+name: Evaluación de Alineación con Ejes Estratégicos (FRPD)
+
+# === STORY CORE ===
+as_a: Miembro del Comité FRPD (Fondo Regional de Productividad y Desarrollo)
+i_want: validar la alineación de las iniciativas postuladas con los ejes estratégicos (Sustentabilidad, Innovación, Desarrollo Local) definido en las bases
+so_that: se asegure la pertinencia estratégica de la inversión y el cumplimiento de los objetivos de desarrollo regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FRPD
+  agent_type: HUMAN
+  description: Evaluador del comité encargado de la selección de iniciativas de fomento productivo
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-MONITOREO-ERD
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: PERTINENCIA-ESTRATEGICA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - frpd
+  - estrategia-regional
+  - sustentabilidad
+  - innovacion
+  - desarrollo-productivo
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist de alineación obligatoria con al menos un eje estratégico del FRPD
+  - Puntuación adicional para proyectos que impacten múltiples ejes simultáneamente
+  - Justificación técnica requerida para la validación de pertinencia ante el CORE

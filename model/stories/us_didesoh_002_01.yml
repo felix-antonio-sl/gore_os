@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un registro de organizaciones de la sociedad civil activas en la región
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIDESOH-002-01
-urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Un registro de organizaciones de la sociedad civil activas en la región
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: un registro de organizaciones de la sociedad civil activas en la región
 so_that: pueda convocar a diálogos y consultas ciudadanas
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
 
-mentions:
-- ENT-LOC-REGION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de la División de Desarrollo Social y Humano (DIDESOH) responsable de la vinculación con el medio
+
+entities_mentioned:
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: candidate
+  - id: ENT-SOC-DIRIGENTE-SOCIAL
+    status: candidate
+  - id: ENT-LOC-REGION
+    status: linked
+
+process_ref:
+  id: PROC-SOC-VINCULACION-ORGANIZACIONES
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: SOCIAL
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - organizaciones-sociales
+  - sociedad-civil
+  - didesoh
+  - vinculacion
+  - consultas-ciudadanas
+
+status: ENRICHED
+acceptance_criteria:
+  - Base de datos georreferenciada de juntas de vecinos, clubes de adultos mayores, etc.
+  - Filtros por temática (Deporte, Salud, Cultura) y comuna
+  - Capacidad de envío masivo de convocatorias por canal oficial

@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_ejec_eo_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Ver historial de cambios del compromiso
-id: US-EJEC-EO-006
-urn: urn:goreos:atom:story:us_ejec_eo_006:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
-i_want: Ver historial de cambios del compromiso
-so_that: Consulto trazabilidad
-domain: D-EJEC
-priority: P2
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-COMPROMISO
+id: US-EJEC-EO-006
+name: Trazabilidad e Historial del Compromiso
+
+# === STORY CORE ===
+as_a: Operador de Sistema / Supervisor
+i_want: visualizar el historial completo de cambios, comentarios y actualizaciones de estado de un compromiso específico
+so_that: se cuente con una pista de auditoría clara sobre la evolución del compromiso y las decisiones tomadas durante su ejecución
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: MACHINE
+  description: Sistema de logs y auditoría que registra los eventos de cada compromiso
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CONVENIO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: AUDITORIA
+  priority: P2
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - logs
+  - historial
+  - trazabilidad
+  - auditoria
+  - eventos
+
+status: ENRICHED
+acceptance_criteria:
+  - Línea de tiempo (Timeline) visual que muestra Quién, Qué y Cuándo cambió algo en el compromiso
+  - Preservación de versiones anteriores de los documentos adjuntos (si aplica)
+  - Capacidad de exportar el historial de eventos para informes de auditoría externa

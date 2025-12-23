@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_secpla_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Proyectos similares ejecutados en otras comunas
-id: US-SECPLA-001-02
-urn: urn:goreos:atom:story:us_secpla_001_02:1.0.0
-role_id: ROL-GESTION-SECPLA-CHILL
-as_a: SECPLA Chillán
-i_want: consultar proyectos similares ejecutados en otras comunas
-so_that: pueda aprender de buenas prácticas y costos referenciales
-domain: D-EJEC
-priority: P2
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-LOC-COMUNA
+id: US-SECPLA-001-02
+name: Proyectos similares ejecutados en otras comunas
+
+# === STORY CORE ===
+as_a: Formulador Municipal (SECPLAN)
+i_want: consultar proyectos similares ejecutados en otras comunas de la región
+so_that: pueda aprender de buenas prácticas, especificaciones técnicas y costos referenciales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SECPLA-MUNI
+  agent_type: HUMAN
+  description: Profesional municipal que busca optimizar la calidad técnica de sus postulaciones de inversión
+
+entities_mentioned:
+  - id: ENT-EJEC-PROYECTO-BIP
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-EJEC-ITEM-COSTO
+    status: candidate
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FORMULACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - secplan
+  - benchmarking
+  - costos-referenciales
+  - buenas-practicas
+  - colaboracion-municipal
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador semántico de proyectos históricos aprobados (RS) por tipología y escala territorial
+  - Acceso a descarga de memorias explicativas y presupuestos aprobados de proyectos similares (anonimizados)
+  - Visualización comparativa de costos por m2 o beneficiario directo en la categoría de inversión seleccionada

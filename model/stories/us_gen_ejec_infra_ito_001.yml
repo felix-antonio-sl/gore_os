@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_ejec_infra_ito_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia genérica para Inspector Técnico de Obra (ITO)
-id: US-GEN-EJEC_INFRA_ITO-001
-urn: urn:goreos:atom:story:us_gen_ejec_infra_ito_001:1.0.0
-role_id: ROL-EJEC-INFRA-ITO
-as_a: Inspector Técnico de Obra (ITO)
-i_want: ejecutar mis funciones principales en el contexto institucional del GORE
-so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-EJEC_INFRA_ITO-001
+name: Supervisión Técnica de Obras
+
+# === STORY CORE ===
+as_a: Inspector Técnico de Obra (ITO)
+i_want: Supervisar el avance físico y financiero de las obras de infraestructura
+so_that: pueda garantizar que la ejecución cumpla con las especificaciones técnicas y los plazos establecidos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-INFRA-ITO
+  agent_type: HUMAN
+  description: Profesional encargado de la inspección técnica de obras de infraestructura pública
+
+entities_mentioned:
+  - id: ENT-EJE-BITACORA_OBRA
+    status: linked
+  - id: ENT-EJE-HITOS
+    status: linked
+
+process_ref:
+  id: PROC-EJE-MONITOREO-OBRAS
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: INFRAESTRUCTURA
+  priority: P2
+  scope: OPERATIVO
+
+extra_tags:
+  - ito
+  - supervision
+  - obras
+  - infraestructura
+
+status: ENRICHED
+acceptance_criteria:
+  - Capacidad de registrar bitácora diaria de obra digitalmente
+  - Validación de cumplimiento de hitos críticos antes de liberar estados de pago
+  - Generación de informes de inspección con respaldo fotográfico desde terreno

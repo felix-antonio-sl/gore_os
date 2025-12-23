@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rrhh_002_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de gestión del PAC con inscripciones y evaluaciones
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-RRHH-002-01
-urn: urn:goreos:atom:story:us_rrhh_002_01:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
+name: Módulo de gestión del PAC (Plan Anual de Capacitación)
+
+# === STORY CORE ===
+as_a: Jefe de Recursos Humanos
 i_want: un módulo de gestión del PAC con inscripciones y evaluaciones
-so_that: pueda reportar el cumplimiento del plan
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+so_that: pueda reportar el cumplimiento del plan y mejorar las competencias institucionales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE-RRHH
+  agent_type: HUMAN
+  description: Jefe de RRHH encargado del desarrollo y capacitación del personal
+
+entities_mentioned:
+  - id: ENT-BACK-PLAN-CAPACITACION
+    status: candidate
+  - id: ENT-BACK-CURSO-REGISTRO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-GESTION-PERSONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CAPACITACION
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - pac
+  - rrhh
+  - capacitacion
+  - competencias
+  - desarrollo-organizacional
+
+status: ENRICHED
+acceptance_criteria:
+  - Portal de inscripción autogestionado para el funcionario según la oferta del PAC vigente
+  - Registro de asistencia y evaluación de impacto de cada actividad de formación
+  - Reporte de cumplimiento de metas PAC para bonos por desempeño institucional (PMG)

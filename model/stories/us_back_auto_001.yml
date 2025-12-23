@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_auto_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-AUTO-001
-urn: urn:goreos:atom:story:us_back_auto_001:1.0.0
-role_id: ROL-GESTION-KODA
+name: Propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
+
+# === STORY CORE ===
 as_a: Agente KODA
 i_want: Calcular propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
 so_that: Reduzco errores y tiempos de término
-domain: D-BACK
-competence_id: CPT-BACK-AUTO-001
-priority: P1
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-CARGO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: ALGORITHMIC
+  description: Agente inteligente especializado en automatización de procesos administrativos y cálculos complejos
+
+entities_mentioned:
+  - id: ENT-ORG-CARGO
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-FIN-FINIQUITO
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-CESE-FUNCIONES
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: AUTOMATIZACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - koda
+  - finiquito
+  - remuneraciones
+  - rrhh
+  - calculo-automatico
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo automático de días de vacaciones pendientes (proporcionales)
+  - Cálculo de indemnizaciones según tipo de contrato y legislación vigente
+  - Generación de informe técnico de respaldo del cálculo para visación humana

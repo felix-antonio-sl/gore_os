@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_tes_009:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Emitir informe de conciliación bancaria mensual firmado
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-TES-009
-urn: urn:goreos:atom:story:us_back_tes_009:1.0.0
-role_id: ROL-GESTION-FIN-CONT
+name: Emitir informe de conciliación bancaria mensual firmado
+
+# === STORY CORE ===
 as_a: Contador Gubernamental
 i_want: Emitir informe de conciliación bancaria mensual firmado
 so_that: Cumplo con control interno y normativa
-domain: D-BACK
-priority: P1
-competence_id: CPT-PAGOS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FIN-CONT
+  agent_type: HUMAN
+  description: Contador gubernamental responsable de la emisión de estados financieros bancarios
+
+entities_mentioned:
+  - id: ENT-FIN-INFORME-CONCILIACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-CIERRE-CONTABLE-MENSUAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CUMPLIMIENTO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - informe-mensual
+  - conciliacion
+  - firma-digital
+  - normativa-cgr
+  - contabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Informe PDF automático con resumen de saldos, movimientos y pendientes
+  - Inclusión de comparativo saldo contable vs saldo cartola
+  - Workflow de firma digital (Contador -> Jefe Finanzas -> DAF)

@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mctd_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Las minutas y acuerdos del CTD
-id: US-MCTD-001-01
-urn: urn:goreos:atom:story:us_mctd_001_01:1.0.0
-role_id: ROL-GESTION-VERDE-MEMB
-as_a: Miembro Comité Estado Verde
-i_want: acceder a las minutas y acuerdos del CTD
-so_that: pueda dar seguimiento en mi división
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-CONV-ACUERDO
-- ENT-ORG-DIVISION
+id: US-MCTD-001-01
+name: Seguimiento de Acuerdos del Comité de Transformación Digital (CTD)
+
+# === STORY CORE ===
+as_a: Miembro del Comité de Transformación Digital
+i_want: Acceder a un repositorio centralizado de minutas, acuerdos y estados de avance de la estrategia digital
+so_that: pueda alinear las iniciativas de mi división con la hoja de ruta de modernización del GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-VERDE-MEMB
+  agent_type: HUMAN
+  description: Representante de división que integra el comité estratégico de transformación digital
+
+entities_mentioned:
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-ORG-DIVISION
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: GOBERNANZA-DIGITAL
+  priority: P1
+  scope: ESTRATEGICO
+
+extra_tags:
+  - ctd
+  - transformacion-digital
+  - acuerdos
+  - minutas
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio de actas firmadas digitalmente y clasificadas por sesión
+  - Tablero de seguimiento de compromisos (Kanban) para acuerdos del comité
+  - Dashboard de indicadores de adopción digital por división

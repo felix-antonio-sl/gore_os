@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_utm_gen_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para UTM Genérica
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_UTM_GEN-001
-urn: urn:goreos:atom:story:us_gen_gestion_utm_gen_001:1.0.0
-role_id: ROL-GESTION-UTM-GENERICA
+name: Historia genérica para UTM Genérica
+
+# === STORY CORE ===
 as_a: UTM Genérica
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-UTM-GENERICA
+  agent_type: HUMAN
+  description: Profesional de la Unidad Técnica Municipal (UTM) o unidad de obras que supervisa la ejecución física de proyectos
+
+entities_mentioned:
+  - id: ENT-EJE-OBRA-CIVIL
+    status: candidate
+  - id: ENT-EJEC-INFORME-AVANCE-FISICO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: GESTION
+  priority: P2
+  scope: TERRITORIAL
+
+extra_tags:
+  - utm
+  - obras-municipales
+  - inspección-técnica
+  - proyectos-locales
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga de Libro de Obras Digital para proyectos financiados por el GORE
+  - Interfaz de solicitud de aumento de plazo o presupuesto con justificación técnica detallada
+  - Registro georreferenciado de hitos de inspección técnica de obra (ITO) en tiempo real

@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_mc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una oportunidad de mejora en procesos o servicios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-MC-001
-urn: urn:goreos:atom:story:us_gest_mc_001:1.0.0
-role_id: ROL-GESTION-PER-FUN
+name: Registro de oportunidad de mejora en procesos o servicios
+
+# === STORY CORE ===
 as_a: Funcionario
 i_want: Registrar una oportunidad de mejora en procesos o servicios
 so_that: Contribuyo a la mejora continua institucional
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PER-FUN
+  agent_type: HUMAN
+  description: Funcionario institucional (Arquetipo base) que detecta fallos o mejoras en su flujo de trabajo diario
+
+entities_mentioned:
+  - id: ENT-ORG-MEJORA-CONTINUA
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - mejora-continua
+  - calidad
+  - intra-emprendimiento
+  - eficiencia
+  - sugerencias
+
+status: ENRICHED
+acceptance_criteria:
+  - Formulario de registro de hallazgo/sugerencia con clasificación por impacto y viabilidad
+  - Workflow de revisión por parte del Referente de Calidad o Modernización de la división
+  - Repositorio público de mejoras implementadas y reconocimiento al funcionario proponente

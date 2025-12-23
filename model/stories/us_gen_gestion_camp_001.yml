@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_camp_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Miembro Equipo Campeón
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_CAMP-001
-urn: urn:goreos:atom:story:us_gen_gestion_camp_001:1.0.0
-role_id: ROL-GESTION-CAMP
+name: Historia genérica para Miembro Equipo Campeón
+
+# === STORY CORE ===
 as_a: Miembro Equipo Campeón
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CAMP
+  agent_type: HUMAN
+  description: Integrante del equipo operativo del programa "Campeones" o iniciativas de alto impacto en Fomento/Social
+
+entities_mentioned:
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-EJEC-ESTADO-PAGO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-EJECUCION-PROGRAMA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - campeones
+  - equipo-operativo
+  - fomento
+  - ejecucion-fondos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga masiva de asistencia a talleres o eventos del programa
+  - Generación de reportes de avance por beneficiario dentro del clúster "Campeón"
+  - Panel de control de gastos operativos de la unidad técnica

@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_rrhh_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas de términos de contrata próximos a vencer
-id: US-RRHH-001-02
-urn: urn:goreos:atom:story:us_rrhh_001_02:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: alertas de términos de contrata próximos a vencer
-so_that: pueda gestionar renovaciones oportunamente
-domain: D-BACK
-priority: P0
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-RRHH-001-02
+name: Alertas de términos de contrata próximos a vencer
+
+# === STORY CORE ===
+as_a: Jefe de Recursos Humanos
+i_want: alertas de términos de contrata próximos a vencer
+so_that: pueda gestionar renovaciones oportunamente y asegurar la continuidad del servicio
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE-RRHH
+  agent_type: HUMAN
+  description: Responsable de la planificación de la dotación y la vigencia de los contratos
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-BACK-CONTRATO-VIGENTE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-GESTION-PERSONAL
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: CONTRATOS
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - alertas
+  - contratas
+  - rrhh
+  - renovacion-contratos
+  - cumplimiento-plazos
+
+status: ENRICHED
+acceptance_criteria:
+  - Sistema de alertas con anticipación parametrable (ej: 60 días antes del 31 de diciembre)
+  - Reporte consolidado de dotación filtrado por tipo de estamento y fecha de vencimiento
+  - Flujo de notificación al Jefe de División respectivo para validar la continuidad del funcionario

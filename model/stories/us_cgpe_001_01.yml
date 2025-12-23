@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cgpe_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertas automáticas de licencias médicas prolongadas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CGPE-001-01
-urn: urn:goreos:atom:story:us_cgpe_001_01:1.0.0
-role_id: ROL-GESTION-CTRL
+name: Alertas automáticas de licencias médicas prolongadas
+
+# === STORY CORE ===
 as_a: Encargado Control de Gestión
 i_want: alertas automáticas de licencias médicas prolongadas
 so_that: pueda gestionar reemplazos a tiempo
-domain: D-BACK
-priority: P1
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CTRL
+  agent_type: HUMAN
+  description: Encargado de Control de Gestión que debe asegurar la continuidad operativa de las divisiones
+
+entities_mentioned:
+  - id: ENT-ORG-LICENCIA-MEDICA
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-ALERTA-UMBRAL
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-GESTION-AUSENTISMO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: GESTION-ESTRATEGICA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - control-gestion
+  - licencias-medicas
+  - continuidad-operativa
+  - rrhh
+  - alertas
+
+status: ENRICHED
+acceptance_criteria:
+  - Notificación automática cuando una licencia supera los 15 días continuos
+  - Reporte de criticidad del cargo afectado (según dotación)
+  - Workflow para solicitud de personal de reemplazo pre-aprobada

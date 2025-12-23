@@ -1,14 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_atra_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a datos de flujo vehicular y estado de rutas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ATRA-001-01
-urn: urn:goreos:atom:story:us_atra_001_01:1.0.0
-role_id: ROL-GESTION-PREV-ANAL
+name: Acceso a datos de flujo vehicular y estado de rutas
+
+# === STORY CORE ===
 as_a: Analista Prevención
 i_want: acceso a datos de flujo vehicular y estado de rutas
 so_that: pueda priorizar conservaciones viales
-domain: D-TERR
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PREV-ANAL
+  agent_type: HUMAN
+  description: Analista encargado de evaluar riesgos territoriales y viales
+
+entities_mentioned:
+  - id: ENT-TERR-RUTA-VIAL
+    status: candidate
+  - id: ENT-TERR-FLUJO-VEHICULAR
+    status: candidate
+  - id: ENT-EJEC-OBRA-VIAL
+    status: candidate
+
+process_ref:
+  id: PROC-TERR-PRIORIZACION-VIAL
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: INFRAESTRUCTURA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - vialidad
+  - transporte
+  - rutas
+  - prevencion
+
+status: ENRICHED
+acceptance_criteria:
+  - Mapa con estado actual de rutas (pavimento, ripio, cortes)
+  - Datos de flujo vehicular (TMDA) integrados por tramo
+  - Herramienta de priorización basada en deterioro y uso

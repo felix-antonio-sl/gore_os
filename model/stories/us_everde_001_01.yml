@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_everde_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Registro de consumos de papel y energía
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-EVERDE-001-01
-urn: urn:goreos:atom:story:us_everde_001_01:1.0.0
-role_id: ROL-GESTION-VERDE-MEMB
-as_a: Miembro Comité Estado Verde
-i_want: registro de consumos de papel y energía
-so_that: pueda reportar al ministerio de medio ambiente
-domain: D-BACK
-priority: P3
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
+name: Registro de Consumos de Papel y Energía (Estado Verde)
+
+# === STORY CORE ===
+as_a: Miembro del Comité "Estado Verde"
+i_want: registrar y monitorear periódicamente los consumos de papel, electricidad, agua y combustibles de la institución
+so_that: pueda generar reportes anuales de sostenibilidad para el Ministerio de Medio Ambiente y gestionar planes de reducción de huella de carbono institucional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-VERDE-MEMB
+  agent_type: HUMAN
+  description: Funcionario designado para liderar la transformación hacia un Gobierno Regional sustentable
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-SOLICITUD-SERVICIOS
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: SOSTENIBILIDAD
+  priority: P3
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - estado-verde
+  - sustentabilidad
+  - consumos
+  - eficiencia-energetica
+  - medio-ambiente
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de carga de consumos mensuales desde facturas de servicios básicos
+  - Dashboard de evolución de consumo per cápita (por funcionario)
+  - Generación automática de archivo CSV compatible con la plataforma RETC del Ministerio

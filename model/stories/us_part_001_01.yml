@@ -1,19 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_part_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una plataforma de votación digital segura
-id: US-PART-001-01
-urn: urn:goreos:atom:story:us_part_001_01:1.0.0
-role_id: ROL-GESTION-ENC
-as_a: Encargado de Calidad
-i_want: una plataforma de votación digital segura
-so_that: la ciudadanía priorice iniciativas de inversión
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-DIG-PLATAFORMA
-- ENT-GOV-VOTACION
+id: US-PART-001-01
+name: Plataforma de Votación Digital Ciudadana
+
+# === STORY CORE ===
+as_a: Encargado de Participación Ciudadana
+i_want: Una plataforma de votación digital segura, auditable y con identidad verificada (ClaveÚnica)
+so_that: la ciudadanía de la Región de Ñuble pueda priorizar democráticamente las iniciativas de inversión en sus territorios
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-DIR
+  agent_type: HUMAN
+  description: Responsable de fomentar la participación activa de los ciudadanos en la gestión regional
+
+entities_mentioned:
+  - id: ENT-GOV-VOTACION
+    status: linked
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: PARTICIPACION-CIUDADANA
+  priority: P1
+  scope: DEMOCRACIA-DIGITAL
+
+extra_tags:
+  - votación
+  - presupuesto-participativo
+  - ñuble-decide
+  - democracia
+
+status: ENRICHED
+acceptance_criteria:
+  - Verificación de residencia regional del votante (Cruce con Registro Civil/Servel)
+  - Anonimización del voto mediante técnicas criptográficas (Secreto del voto digital)
+  - Publicación de resultados en tiempo real con desglose por comuna y grupo etario

@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_ops_perf_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: O_Score de los procesos críticos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OPS-PERF-001
-urn: urn:goreos:atom:story:us_ops_perf_001:1.0.0
-role_id: ROL-GESTION-JEFE
-as_a: Jefe Unidad Jurídica
-i_want: Ver el O_Score de los procesos críticos
-so_that: Identifico cuellos de botella y optimizo la eficiencia
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: DASHBOARD DE EFICIENCIA OPERACIONAL (O-SCORE)
+
+# === STORY CORE ===
+as_a: Jefe de División / Unidad
+i_want: Visualizar el O-Score (Operational Score) de los procesos críticos de mi unidad en tiempo real
+so_that: pueda identificar cuellos de botella semánticos y optimizar la eficiencia del gasto regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de unidad administrativa u operativa del GORE
+
+entities_mentioned:
+  - id: ENT-SAL-INDICADOR
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: PERFORMANCE
+  priority: P1
+  scope: DIRECTIVO
+
+extra_tags:
+  - o-score
+  - eficiencia
+  - kpi
+  - gestion-por-procesos
+
+status: ENRICHED
+acceptance_criteria:
+  - Cálculo del O-Score basado en: Tiempo de ciclo, Calidad de data y Nivel de automatización
+  - Desglose del score por sub-proceso y por funcionario asignado
+  - Alerta de "Proceso Críticamente Lento" cuando el score baja de 60/100

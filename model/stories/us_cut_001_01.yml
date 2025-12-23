@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cut_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a actas del Consejo de la Sociedad Civil
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-CUT-001-01
-urn: urn:goreos:atom:story:us_cut_001_01:1.0.0
-role_id: ROL-GESTION-DIRIGENTE-SO
+name: Acceso a actas del Consejo de la Sociedad Civil
+
+# === STORY CORE ===
 as_a: Dirigente Social
 i_want: acceso a actas del Consejo de la Sociedad Civil
 so_that: pueda monitorear compromisos laborales
-domain: D-GOB
-priority: P2
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-ACTA
-- ENT-CONV-COMPROMISO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-DIRIGENTE-SO
+  agent_type: HUMAN
+  description: Representante de la sociedad civil (COSOC) que participa en instancias de control social
+
+entities_mentioned:
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: candidate
+
+process_ref:
+  id: PROC-SOC-PARTICIPACION-COSOC
+  status: candidate
+
+tags:
+  domain: D-GOB
+  aspect: PARTICIPACION
+  priority: P2
+  scope: CIUDADANO
+
+extra_tags:
+  - cosoc
+  - actas
+  - compromisos
+  - dirigintes-sociales
+  - transparencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio público de actas de sesión del COSOC firmado digitalmente
+  - Sistema de seguimiento de acuerdos con barra de cumplimiento
+  - Notificación de nuevas actas publicadas por correo o SMS

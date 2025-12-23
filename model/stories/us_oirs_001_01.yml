@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_oirs_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un sistema de gestión de solicitudes con trazabilidad completa
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OIRS-001-01
-urn: urn:goreos:atom:story:us_oirs_001_01:1.0.0
-role_id: ROL-GESTION-OIRS
+name: Sistema de gestión de solicitudes con trazabilidad completa (OIRS)
+
+# === STORY CORE ===
 as_a: Encargado OIRS
 i_want: un sistema de gestión de solicitudes con trazabilidad completa
 so_that: pueda asegurar respuesta en plazo legal
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OIRS
+  agent_type: HUMAN
+  description: Funcionario de la Oficina de Informaciones, Reclamos y Sugerencias encargado de atender al ciudadano
+
+entities_mentioned:
+  - id: ENT-TDE-OIRS-TICKET
+    status: candidate
+  - id: ENT-TDE-TRAZABILIDAD-DOCUMENTAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-SOLICITUDES-OIRS
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: CIUDADANO
+  priority: P0
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - oirs
+  - transparencia
+  - trazabilidad
+  - atencion-ciudadana
+  - plazos-legales
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación automática de número de ticket y envío de comprobante al ciudadano (Email/WhatsApp)
+  - Panel de control de plazos (SLA) con alertas de semáforo (Verde, Amarillo, Rojo) según ley
+  - Registro de derivaciones internas con firma de acuse de recibo digital por cada unidad

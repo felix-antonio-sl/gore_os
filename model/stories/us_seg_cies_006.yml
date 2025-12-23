@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seg_cies_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Asignar roles y escenarios en Videowall durante emergencia mayor
-id: US-SEG-CIES-006
-urn: urn:goreos:atom:story:us_seg_cies_006:1.0.0
-role_id: ROL-GESTION-SUP
-as_a: Supervisor CIES
-i_want: Asignar roles y escenarios en Videowall durante emergencia mayor
-so_that: Coordino respuesta masiva
-domain: D-SEG
-priority: P0
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-ORG-ROL
+id: US-SEG-CIES-006
+name: Gestión de escenarios en Videowall durante emergencias
+
+# === STORY CORE ===
+as_a: Supervisor CIES
+i_want: asignar roles y escenarios en el Videowall durante una emergencia mayor
+so_that: pueda coordinar una respuesta masiva y asegurar una visión común para el mando regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUP
+  agent_type: HUMAN
+  description: Jefe de sala CIES responsable de la disponibilidad operativa y coordinación táctica
+
+entities_mentioned:
+  - id: ENT-SEG-VIDEOWALL-LAYOUT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-EMERGENCIA
+    status: candidate
+
+process_ref:
+  id: PROC-SEG-COORDINACION-POLICIAL
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: OPERACIONES
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - cies
+  - videowall
+  - mando-y-control
+  - emergencias
+  - despliegue-operativo
+
+status: ENRICHED
+acceptance_criteria:
+  - Capacidad de predefinir "Escenarios" (ej: Incendio Forestal, Protesta, Terremoto) con cámaras críticas preseleccionadas
+  - Control de arrastrar y soltar (Drag & Drop) para mover flujos de video entre diferentes cuadrantes del videowall
+  - Modo "Espejo" para replicar la vista del videowall en las tablets de los directores de servicios de emergencia

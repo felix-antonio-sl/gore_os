@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_po_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Herramientas para gestionar user stories y criterios de aceptación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PO-001-01
-urn: urn:goreos:atom:story:us_po_001_01:1.0.0
-role_id: ROL-GESTION-PO
+name: Gestión de user stories y criterios de aceptación
+
+# === STORY CORE ===
 as_a: Product Owner
 i_want: herramientas para gestionar user stories y criterios de aceptación
 so_that: el equipo desarrolle lo que el negocio necesita
-domain: D-PLAN
-priority: P0
-competence_id: CPT-PLAN-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PO
+  agent_type: HUMAN
+  description: Dueño del Producto encargado de priorizar el backlog y definir el valor para el negocio GORE
+
+entities_mentioned:
+  - id: ENT-PLAN-STORY
+    status: candidate
+  - id: ENT-PLAN-BACKLOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-PLAN
+  aspect: AGILE
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - product-owner
+  - backlog
+  - stories
+  - agile
+  - requisitos
+  - gestion-proyectos
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio centralizado de historias de usuario con priorización dinámica (MoSCoW)
+  - Herramienta de definición y validación de criterios de aceptación por cada historia
+  - Trazabilidad entre la historia de usuario y la entity/proceso del GORE_OS afectado

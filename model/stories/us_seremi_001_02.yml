@@ -1,16 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_seremi_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Notificaciones de sesiones del CORE donde se traten materias de mi
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SEREMI-001-02
-urn: urn:goreos:atom:story:us_seremi_001_02:1.0.0
-role_id: ROL-EJEC-SEREMI-MOP
-as_a: SEREMI Obras Públicas
-i_want: recibir notificaciones de sesiones del CORE donde se traten materias de mi
-  sector
-so_that: pueda asistir o enviar información técnica
-domain: D-NORM
-priority: P2
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+name: Notificaciones de sesiones del CORE de interés sectorial
+
+# === STORY CORE ===
+as_a: SEREMI (Sectorial)
+i_want: recibir notificaciones de las sesiones del CORE donde se traten materias de mi sector
+so_that: pueda asistir presencialmente o enviar la información técnica requerida para la toma de decisiones
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-SEREMI-MOP
+  agent_type: HUMAN
+  description: Representante ministerial que requiere intervenir técnicamente ante el Consejo Regional
+
+entities_mentioned:
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-GOB-SESION-PLENARIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: CONSEJO-REGIONAL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - consejo-regional
+  - seremi
+  - notificaciones
+  - tabla-sesion
+  - coordinacion-intersectorial
+
+status: ENRICHED
+acceptance_criteria:
+  - Suscripción a alertas basadas en palabras clave o tipología de proyectos (ej: Agua, Caminos, Vivienda)
+  - Recepción de la tabla de sesión con acceso a los antecedentes técnicos correspondientes al sector
+  - Módulo de "Delegación de Asistencia" para asignar a un profesional del servicio en caso de imposibilidad del SEREMI

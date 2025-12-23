@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_pever_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Certificar al GORE en niveles superiores de Estado Verde
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PEVER-001-01
-urn: urn:goreos:atom:story:us_pever_001_01:1.0.0
-role_id: ROL-GESTION-PRES
-as_a: Presidente Subcomité IA
+name: Certificación Estado Verde institucional
+
+# === STORY CORE ===
+as_a: Presidente Subcomité Gestión Ambiental
 i_want: certificar al GORE en niveles superiores de Estado Verde
 so_that: se reconozca el compromiso ambiental institucional
-domain: D-GOB
-priority: P2
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-COMPROMISO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PRES
+  agent_type: HUMAN
+  description: Directivo encargado de liderar el subcomité de gestión ambiental interna (Estado Verde)
+
+entities_mentioned:
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-AMB-ESTADO-VERDE-LVL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-GESTION-ESTRATEGICA
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: AMBIENTAL
+  priority: P2
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - estado-verde
+  - sustentabilidad
+  - certificacion
+  - medio-ambiente
+  - compromiso-institucional
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero de seguimiento de indicadores de consumo (papel, energía, agua) y gestión de residuos
+  - Repositorio de evidencias para la auditoría de certificación del Ministerio del Medio Ambiente
+  - Plan de mejora continua con hitos para alcanzar el nivel "Excelencia" en Estado Verde

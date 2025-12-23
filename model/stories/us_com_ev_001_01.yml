@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_ev_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Acceso a ofertas y matriz de evaluación en plataforma segura
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-EV-001-01
-urn: urn:goreos:atom:story:us_com_ev_001_01:1.0.0
-role_id: ROL-GESTION-FOND-EVAL
+name: Acceso a ofertas y matriz de evaluación en plataforma segura
+
+# === STORY CORE ===
 as_a: Evaluador Social
 i_want: acceso a ofertas y matriz de evaluación en plataforma segura
 so_that: el proceso sea trazable y auditable
-domain: D-FIN
-priority: P0
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
 
-mentions:
-- ENT-DIG-PLATAFORMA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-FOND-EVAL
+  agent_type: HUMAN
+  description: Evaluador de proyectos de inversión social encargado de calificar ofertas técnico-económicas
+
+entities_mentioned:
+  - id: ENT-FIN-OFERTA-LICITACION
+    status: linked
+  - id: ENT-FIN-MATRIZ-EVALUACION
+    status: candidate
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+process_ref:
+  id: PROC-FIN-EVALUACION-PROYECTOS
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: EVALUACION
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - evaluacion
+  - licitacion
+  - matriz-evaluacion
+  - trazabilidad
+  - auditoria
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de evaluación con campos bloqueados tras el cierre del proceso
+  - Registro de puntajes individuales y promedio ponderado automático
+  - Log de acceso y modificaciones por usuario evaluador

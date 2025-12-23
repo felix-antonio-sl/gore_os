@@ -1,19 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_com_rec_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un acta de recepción electrónica con checklist de verificación
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COM-REC-001-01
-urn: urn:goreos:atom:story:us_com_rec_001_01:1.0.0
-role_id: ROL-GESTION-RECP
+name: Un acta de recepción electrónica con checklist de verificación
+
+# === STORY CORE ===
 as_a: Miembro Comisión de Recepción
 i_want: un acta de recepción electrónica con checklist de verificación
 so_that: el proceso sea documentado
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-ACTA
-- ENT-EJE-ACTA_RECEPCION
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-RECP
+  agent_type: HUMAN
+  description: Integrante de la comisión técnica encargada de recibir obras o servicios conformes
+
+entities_mentioned:
+  - id: ENT-EJE-ACTA_RECEPCION
+    status: linked
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-SYS-CHECKLIST-VERIFICACION
+    status: candidate
+
+process_ref:
+  id: PROC-EJE-RECEPCION-CONFORMIDAD
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: LOGISTICA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - acta-recepcion
+  - checklist
+  - recepcion-conforme
+  - fiscalizacion-tecnica
+  - ejecucion
+
+status: ENRICHED
+acceptance_criteria:
+  - Acta digital generada con firma electrónica de todos los comisionados
+  - Checklist paramétrico según bases técnicas del proyecto
+  - Opción de adjuntar registro fotográfico de las observaciones encontradas

@@ -1,15 +1,52 @@
 _meta:
   urn: urn:goreos:atom:story:us_difoi_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DIFOI-001-02
-urn: urn:goreos:atom:story:us_difoi_001_02:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
 so_that: pueda evitar duplicidad de apoyo y focalizar mejor
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: ALGORITHMIC
+  description: Sistema de la División de Fomento e Industria (DIFOI) que requiere interoperabilidad con agencias nacionales
+
+entities_mentioned:
+  - id: ENT-EJEC-BENEFICIARIO-FOMENTO
+    status: candidate
+  - id: ENT-EJEC-APOYO-ECONOMICO
+    status: candidate
+  - id: ENT-SYS-INTEROPERABILIDAD-NACIONAL
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-COORDINACION-INTERAGENCIA
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO
+  priority: P1
+  scope: NACIONAL
+
+extra_tags:
+  - difoi
+  - fomento
+  - beneficiarios
+  - duplicidad
+  - interoperabilidad
+  - corfo
+  - sercotec
+  - indap
+
+status: ENRICHED
+acceptance_criteria:
+  - Consulta en tiempo real de RUT de postulante contra bases de datos externas
+  - Alerta de "Beneficio Vigente" en otra institución para el mismo objeto de gasto
+  - Reporte consolidado de alcance del fomento productivo regional inter-agencia

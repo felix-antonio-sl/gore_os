@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_serc_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Información de beneficiarios GORE para evitar duplicidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-SERC-001-01
-urn: urn:goreos:atom:story:us_serc_001_01:1.0.0
-role_id: ROL-GESTION-SERNATUR
-as_a: Director Regional SERNATUR
-i_want: información de beneficiarios GORE para evitar duplicidad
-so_that: pueda focalizar instrumentos
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+name: Información de beneficiarios GORE para evitar duplicidad (SERNATUR)
+
+# === STORY CORE ===
+as_a: Director Regional de SERNATUR
+i_want: acceder a la información de beneficiarios de fondos concursables del GORE
+so_that: pueda evitar la duplicidad de subsidios y focalizar mis propios instrumentos de fomento turístico
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SERNATUR
+  agent_type: HUMAN
+  description: Autoridad regional de turismo que coordina fondos de fomento productivo con el GORE
+
+entities_mentioned:
+  - id: ENT-SOC-BENEFICIARIO
+    status: linked
+  - id: ENT-SOC-FONDO-CONCURSABLE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-GESTION-ADQUISICIONES
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: FOMENTO-PRODUCTIVO
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - sernatur
+  - turismo
+  - fomento-productivo
+  - duplicidad-subsidios
+  - beneficiarios
+
+status: ENRICHED
+acceptance_criteria:
+  - Buscador de beneficiarios por RUT que detecta subsidios previos del GORE en los últimos 24 meses
+  - Dashboard de inversión turística por destino (ej: Nevados de Chillán, Cobquecura) para alineación estratégica
+  - Servicio de alertas ante postulaciones concurrentes en programas de GORE y SERNATUR

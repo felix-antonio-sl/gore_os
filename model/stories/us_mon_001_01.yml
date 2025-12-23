@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_mon_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un wallboard con semáforos de estado de servicios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-MON-001-01
-urn: urn:goreos:atom:story:us_mon_001_01:1.0.0
-role_id: ROL-GESTION-MON
-as_a: Monitor de Sistema
-i_want: un wallboard con semáforos de estado de servicios
-so_that: detecte caídas antes que los usuarios reporten
-domain: D-OPS
-priority: P1
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+name: Wallboard de Monitoreo de Servicios
+
+# === STORY CORE ===
+as_a: Monitor de Sistemas (SRE)
+i_want: Un wallboard visual con semáforos de estado de todos los servicios críticos (IPR, SIGFE, Firma Digital)
+so_that: pueda detectar caídas o degradaciones de servicio proactivamente antes que los usuarios finales las reporten
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MON
+  agent_type: HUMAN
+  description: Operador encargado del monitoreo 24/7 de la infraestructura digital regional
+
+entities_mentioned:
+  - id: ENT-OPS-ALERTA
+    status: linked
+  - id: ENT-OPS-INDICADOR_TECNICO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-OPS
+  aspect: OBSERVABILIDAD
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - uuptime
+  - wallboard
+  - monitoreo
+  - sre
+
+status: ENRICHED
+acceptance_criteria:
+  - Actualización automática cada 60 segundos sin necesidad de recargar la página
+  - Alerta sonora y visual en caso de cambio de estado a "CRITICO"
+  - Enlace directo al log de errores desde el semáforo afectado

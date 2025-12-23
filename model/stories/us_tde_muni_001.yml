@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_muni_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Conectar sistemas DIDECO municipales vía interoperabilidad
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-MUNI-001
-urn: urn:goreos:atom:story:us_tde_muni_001:1.0.0
-role_id: ROL-GESTION-TIC-CTD
-as_a: Coordinador Transformación Digital (CTD)
-i_want: Conectar sistemas DIDECO municipales vía interoperabilidad
-so_that: Integro datos municipales
-domain: D-TDE
-priority: P2
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Integración con sistemas municipales DIDECO
+
+# === STORY CORE ===
+as_a: Coordinador de Transformación Digital (CTD)
+i_want: conectar los sistemas DIDECO municipales con la plataforma regional vía interoperabilidad
+so_that: se integren los datos de beneficios sociales municipales y se evite la duplicidad de ayudas a nivel regional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-CTD
+  agent_type: HUMAN
+  description: Coordinador encargado de la red de interoperabilidad entre GORE y Municipios
+
+entities_mentioned:
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-SOC-SOLICITUD-AYUDA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-INTEROPERABILIDAD
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: INTEGRACION-SECTORIAL
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - dideco
+  - municipios
+  - proteccion-social
+  - interoperabilidad
+  - ayudas-sociales
+
+status: ENRICHED
+acceptance_criteria:
+  - API de consulta de beneficiarios municipales habilitada en el nodo PISEE regional
+  - Motor de búsqueda que cruza RUTs entre registros del GORE y registros municipales en tiempo real
+  - Reporte consolidado de cobertura social por comuna basado en datos integrados

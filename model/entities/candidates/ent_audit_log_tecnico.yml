@@ -1,0 +1,13 @@
+---
+_meta:
+  urn: urn:goreos:entity:tde:audit_log_tecnico:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+  origin: candidate_collision_resolved
+id: ENT-AUDIT_LOG_TECNICO
+name: "Audit Log Técnico"
+tags: [TDE]
+category: Master
+attributes:
+  - { name: id, type: UUID, key: true }
+  # TODO: Definir atributos específicos

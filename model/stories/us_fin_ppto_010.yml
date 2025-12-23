@@ -1,15 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppto_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Usar asistente para modificaciones presupuestarias
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPTO-010
-urn: urn:goreos:atom:story:us_fin_ppto_010:1.0.0
-role_id: ROL-GESTION-PROF
+name: Usar asistente para modificaciones presupuestarias
+
+# === STORY CORE ===
 as_a: Profesional DAF
 i_want: Usar asistente para modificaciones presupuestarias
-so_that: Gestiono cambios correctamente
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Gestiono cambios presupuestarios correctamente minimizando errores manuales
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PROF
+  agent_type: HUMAN
+  description: Profesional de la División de Administración y Finanzas
+
+entities_mentioned:
+  - id: ENT-FIN-MODIFICACION_PRESUPUESTARIA
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P5
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-PRESUPUESTARIA
+  priority: P1
+  scope: OPERATIVO
+
+extra_tags:
+  - modificaciones
+  - asistente
+  - presupuesto
+  - eficiencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Guía paso a paso para la creación de solicitudes de modificación
+  - Validación automática de la partida de origen y de destino (balance cero)
+  - Generación de minuta técnica justificativa tras completar el asistente

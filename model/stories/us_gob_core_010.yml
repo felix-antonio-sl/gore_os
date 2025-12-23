@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gob_core_010:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Actas de sesiones anteriores
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GOB-CORE-010
-urn: urn:goreos:atom:story:us_gob_core_010:1.0.0
-role_id: ROL-GESTION-MUNI-ENC
+name: Acceder a actas de sesiones anteriores
+
+# === STORY CORE ===
 as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Acceder a actas de sesiones anteriores
 so_that: Consulto decisiones previas
-domain: D-GOB
-priority: P1
-competence_id: CPT-GOB-001
-acceptance_criteria: []
 
-mentions:
-- ENT-CONV-ACTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-MUNI-ENC
+  agent_type: HUMAN
+  description: Encargado administrativo que resguarda la memoria institucional de las sesiones del Consejo Regional
+
+entities_mentioned:
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-GOB-TRANSCRIPCION-SESION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-GOB
+  aspect: CORE
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - core
+  - actas-sesion
+  - memoria-institucional
+  - transparencia
+  - consejo-regional
+
+status: ENRICHED
+acceptance_criteria:
+  - Repositorio digital de actas (Ordinarias y Extraordinarias) con OCR para búsqueda de texto libre
+  - Sistema de indexación por temas tratados, consejeros participantes y votaciones realizadas
+  - Acceso a grabaciones de audio/video vinculadas a cada acta de sesión plenaria

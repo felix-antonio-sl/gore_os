@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_fin_ppr_004:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Presentar programas al Comité de Pertinencia
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-FIN-PPR-004
-urn: urn:goreos:atom:story:us_fin_ppr_004:1.0.0
-role_id: ROL-GESTION-ANALISTA-PPR
+name: Presentar programas al Comité de Pertinencia
+
+# === STORY CORE ===
 as_a: Analista PPR
 i_want: Presentar programas al Comité de Pertinencia
-so_that: Obtengo validación colegiada
-domain: D-FIN
-priority: P1
-competence_id: CPT-FIN-DASH-001
-acceptance_criteria: []
+so_that: Obtengo validación colegiada para avanzar en el ciclo de inversión
 
-mentions:
-- ENT-CONV-COMITE
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-PPR
+  agent_type: HUMAN
+  description: Analista encargado de programas de inversión pública regional
+
+entities_mentioned:
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-FIN-PPR
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-FIN
+  aspect: GESTION-DE-PROGRAMAS
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - programas
+  - comite
+  - pertinencia
+  - inversion
+
+status: ENRICHED
+acceptance_criteria:
+  - El sistema permite cargar la carpeta técnica del programa para revisión del comité
+  - Se genera acta automática con los acuerdos y votaciones de la sesión
+  - El estado del programa se actualiza automáticamente a "PERTINENTE" o "OBSERVADO" tras la sesión

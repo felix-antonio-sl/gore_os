@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_scg_003:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reporte mensual de gestión institucional
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-SCG-003
-urn: urn:goreos:atom:story:us_gest_scg_003:1.0.0
-role_id: ROL-GESTION-JEFE
+name: Reporte mensual de gestión institucional
+
+# === STORY CORE ===
 as_a: Jefe Unidad Jurídica
 i_want: Generar reporte mensual de gestión institucional
 so_that: Informo al Gobernador y CORE sobre el estado de la gestión
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-JEFE
+  agent_type: HUMAN
+  description: Jefe de división o departamento que reporta el avance de su gestión a la alta dirección regional
+
+entities_mentioned:
+  - id: ENT-NORM-REPORTE-GESTION
+    status: candidate
+  - id: ENT-SYS-DASHBOARD-EJECUTIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-GOB-COORDINACION-CORE
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - reporte-mensual
+  - rendicion-cuentas
+  - gobernador
+  - core
+  - transparencia-gestion
+
+status: ENRICHED
+acceptance_criteria:
+  - Generador de reportes en PDF/Excel con consolidado de avance físico y financiero de la cartera divisional
+  - Inclusión automática de gráficos de cumplimiento de metas PMG/POA del periodo
+  - Módulo de comentarios cualitativos para explicar desviaciones o logros destacados por el equipo

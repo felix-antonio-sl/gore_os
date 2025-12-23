@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_if_001_02:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Informes de fiscalización con plantillas estándar
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-IF-001-02
-urn: urn:goreos:atom:story:us_if_001_02:1.0.0
-role_id: ROL-NORM-FIS
-as_a: Fiscal Sumariante
+name: Informes de fiscalización con plantillas estándar
+
+# === STORY CORE ===
+as_a: Fiscal / Auditor Interno
 i_want: generar informes de fiscalización con plantillas estándar
 so_that: la documentación sea consistente
-domain: D-EJEC
-priority: P1
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-FIS
+  agent_type: HUMAN
+  description: Funcionario encargado de realizar sumarios administrativos o auditorías de cumplimiento (Fiscalía)
+
+entities_mentioned:
+  - id: ENT-NORM-REPORTE-FISCALIZACION
+    status: candidate
+  - id: ENT-NORM-EXPEDIENTE-SUMARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-NORM-CONTROL-INTERNO
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: AUDITORIA
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - fiscalizacion
+  - sumarios
+  - plantillas-legales
+  - juridica
+  - estandarizacion-documental
+
+status: ENRICHED
+acceptance_criteria:
+  - Disponibilidad de plantillas dinámicas para: Cargos, Descargos, Recomienda Sanción y Cierre de Sumario
+  - Integración automática de datos del funcionario sumariado desde el sistema de RRHH
+  - Módulo de firma electrónica avanzada para la validez legal del informe de fiscalización

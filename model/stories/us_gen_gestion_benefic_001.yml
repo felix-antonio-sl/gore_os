@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_benefic_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Beneficiario Individual
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_BENEFIC-001
-urn: urn:goreos:atom:story:us_gen_gestion_benefic_001:1.0.0
-role_id: ROL-GESTION-BENEFICIARIO
+name: Historia genérica para Beneficiario Individual
+
+# === STORY CORE ===
 as_a: Beneficiario Individual
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-BENEFICIARIO
+  agent_type: HUMAN
+  description: Ciudadano residente de la región que es receptor directo o potencial de beneficios de programas GORE
+
+entities_mentioned:
+  - id: ENT-SOC-PERFIL-CIUDADANO
+    status: candidate
+  - id: ENT-EJEC-ESTADO-POSTULACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SOC-AUTOSERVICIO-CIUDADANO
+  status: candidate
+
+tags:
+  domain: D-SOC
+  aspect: PARTICIPACION
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - beneficiario
+  - ciudadano
+  - persona-natural
+  - postulacion
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Acceso mediante ClaveÚnica para visualizar el estado de sus beneficios vigentes
+  - Buscador de programas y fondos concursables ajustado a su perfil socioeconómico
+  - Buzón de sugerencias y reclamos (OIRS) integrado en su área personal

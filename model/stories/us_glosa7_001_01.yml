@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_glosa7_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Formatos estandarizados para proyectos de cámaras y luminarias
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GLOSA7-001-01
-urn: urn:goreos:atom:story:us_glosa7_001_01:1.0.0
-role_id: ROL-GESTION-G7-FORM
+name: Formatos estandarizados para proyectos de cámaras y luminarias
+
+# === STORY CORE ===
 as_a: Formulador Programas Glosa 7
 i_want: formatos estandarizados para proyectos de cámaras y luminarias
 so_that: se agilice la admisibilidad
-domain: D-SEG
-priority: P1
-competence_id: CPT-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-G7-FORM
+  agent_type: HUMAN
+  description: Técnico formulador de proyectos bajo la Glosa 7 orientada a seguridad pública e infraestructura social
+
+entities_mentioned:
+  - id: ENT-SOC-SEGURIDAD-CIUDADANA
+    status: candidate
+  - id: ENT-NORM-BASES-GLOSA-7
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-SOC
+  aspect: SEGURIDAD
+  priority: P1
+  scope: COMUNAL
+
+extra_tags:
+  - glosa-7
+  - seguridad
+  - luminarias
+  - camaras-vigilancia
+  - admisibilidad
+  - formulacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Disponibilidad de plantillas tipo con especificaciones técnicas estándar para luminarias LED y cámaras térmicas/PTZ
+  - Módulo de validación de requisitos mínimos (Factibilidad eléctrica, empalmes) previo al envío
+  - Reducción del tiempo de revisión de admisibilidad en un 50% mediante estandarización documental

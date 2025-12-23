@@ -1,15 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_devops_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Monitorización de infraestructura como código (IaC)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-DEVOPS-001-01
-urn: urn:goreos:atom:story:us_devops_001_01:1.0.0
-role_id: ROL-DEV-TIC-DEV
+name: Monitorización de infraestructura como código (IaC)
+
+# === STORY CORE ===
 as_a: Desarrollador DevOps
 i_want: monitorización de infraestructura como código (IaC)
 so_that: los entornos sean reproducibles y estables
-domain: D-OPS
-priority: P0
-competence_id: CPT-OPS-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-TIC-DEV
+  agent_type: HUMAN
+  description: Ingeniero DevOps encargado de la automatización de infraestructura mediante Terraform/Pulumi
+
+entities_mentioned:
+  - id: ENT-SYS-ENTORNO-INFRAESTRUCTURA
+    status: candidate
+  - id: ENT-SYS-IAC-TEMPLATE
+    status: candidate
+
+process_ref:
+  id: PROC-TDE-MONITOREO-INFRAESTRUCTURA
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: INFRAESTRUCTURA
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - devops
+  - iac
+  - monitoreo
+  - estabilidad
+  - automatizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Detección de "drift" de configuración entre el código y el estado real del cloud
+  - Alertas de costos proyectados ante cambios en la arquitectura
+  - Histórico de despliegues con capacidad de Revert (Undo) a nivel de infraestructura

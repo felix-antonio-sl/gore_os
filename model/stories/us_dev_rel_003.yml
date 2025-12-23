@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_rel_003:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-REL-003
+name: Monitoreo Post-Despliegue y Alerta de Retroceso (Rollback)
+
+# === STORY CORE ===
+as_a: Ingeniero SRE
+i_want: Monitorear intensivamente las tasas de error y latencia inmediatamente después de un despliegue productivo
+so_that: se active el mecanismo de Rollback automático si se detecta una degradación del servicio superior al umbral definido
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-TIC-SRE
+  agent_type: HUMAN
+  description: Ingeniero de confiabilidad encargado de la salud post-cambio
+
+entities_mentioned:
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: OPERACIONES
+  priority: P0
+  scope: CRITICO
+
+extra_tags:
+  - rollback
+  - monitoreo
+  - sre
+  - estabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Ventana de monitoreo crítico de 15 minutos post-lanzamiento
+  - Ejecución de Rollback automático sin intervención humana si el Error Rate supera el 5% en la ventana crítica
+  - Notificación de "Alerta de Rollback" con los logs del motivo de la falla adjuntos

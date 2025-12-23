@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gest_per_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Proceso de inducción de nuevos funcionarios
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEST-PER-002
-urn: urn:goreos:atom:story:us_gest_per_002:1.0.0
-role_id: ROL-GESTION-ENC
+name: Proceso de inducción de nuevos funcionarios
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: Gestionar proceso de inducción de nuevos funcionarios
 so_that: Aseguro integración efectiva y productiva
-domain: D-GESTION
-priority: P1
-competence_id: CPT-GESTION-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-FUNCIONARIO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Calidad o RRHH responsable del Onboarding de nuevos talentos al GORE
+
+entities_mentioned:
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-BACK-PLAN-INDUCCION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+  status: linked
+
+tags:
+  domain: D-BACK
+  aspect: RRHH
+  priority: P1
+  scope: INTERNO
+
+extra_tags:
+  - induccion
+  - onboarding
+  - capital-humano
+  - capacitacion-inicial
+  - cultura-organizacional
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist digital de inducción (Entrega de equipos, Accesos sistemas, Charlas normativas)
+  - Módulo de seguimiento del plan de formación inicial durante los primeros 3 meses (Periodo de prueba)
+  - Encuesta de satisfacción del proceso de inducción integrada para mejora continua del área

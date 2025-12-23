@@ -1,18 +1,46 @@
 _meta:
   urn: urn:goreos:atom:story:us_norm_acto_011:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alerta de actos pendientes de firma >5 días
-id: US-NORM-ACTO-011
-urn: urn:goreos:atom:story:us_norm_acto_011:1.0.0
-role_id: ROL-GESTION-OF
-as_a: Oficial de Partes
-i_want: Recibir alerta de actos pendientes de firma >5 días
-so_that: Gestiono demoras
-domain: D-NORM
-priority: P2
-competence_id: CPT-DOCUMENTOS-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SAL-ALERTA
+id: US-NORM-ACTO-011
+name: Alerta de Actos Estancados en Firma
+
+# === STORY CORE ===
+as_a: Oficial de Partes
+i_want: Recibir alertas automáticas de actos administrativos que lleven más de 5 días hábiles pendientes de firma
+so_that: pueda gestionar las demoras con el gabinete y asegurar el flujo documental institucional
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OF
+  agent_type: HUMAN
+  description: Funcionario encargado de la oficina de partes y flujo documental
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-NORM
+  aspect: FLUJO-DOCUMENTAL
+  priority: P2
+  scope: OPERATIVO
+
+extra_tags:
+  - alertas
+  - demora
+  - firma
+  - oficina-de-partes
+
+status: ENRICHED
+acceptance_criteria:
+  - Tablero de control (Bottle-necks) que visualice documentos por usuario firmante
+  - Notificaciones configurables una vez cumplido el umbral de 5 días
+  - Reporte de desempeño de plazos de firma para el Administrador Regional

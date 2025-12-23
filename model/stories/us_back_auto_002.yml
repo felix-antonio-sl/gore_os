@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_auto_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-AUTO-002
-urn: urn:goreos:atom:story:us_back_auto_002:1.0.0
-role_id: ROL-GESTION-KODA
+name: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
+
+# === STORY CORE ===
 as_a: Agente KODA
 i_want: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
 so_that: Detecto posibles fraudes o errores de reloj
-domain: D-BACK
-competence_id: CPT-BACK-AUTO-001
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-KODA
+  agent_type: ALGORITHMIC
+  description: Agente inteligente especializado en detección de anomalías y control de integridad de datos
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-ORG-REGISTRO-ASISTENCIA
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+process_ref:
+  id: PROC-ORG-CONTROL-PROBIDAD
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: INTELIGENCIA
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - koda
+  - asistencia
+  - fraude
+  - anomalias
+  - probidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Identificación de marcajes realizados con diferencia de segundos de forma repetitiva
+  - Detección de marcajes geolocalizados fuera de zonas permitidas (si aplica)
+  - Notificación de sospecha al área de RRHH con el detalle del patrón detectado

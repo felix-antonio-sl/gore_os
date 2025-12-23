@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_back_af_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Traslado de bienes (cambio ubicación)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-BACK-AF-002
-urn: urn:goreos:atom:story:us_back_af_002:1.0.0
-role_id: ROL-GESTION-OPS-AF
+name: Traslado de bienes (cambio ubicación)
+
+# === STORY CORE ===
 as_a: Encargado Activo Fijo
 i_want: Registrar traslado de bienes (cambio ubicación)
 so_that: Actualizo ubicación de activos
-domain: D-BACK
-competence_id: CPT-BACK-AF-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-OPS-AF
+  agent_type: HUMAN
+  description: Encargado de la gestión de activos fijos institucionales del GORE
+
+entities_mentioned:
+  - id: ENT-ORG-ACTIVO
+    status: linked
+  - id: ENT-TDE-UBICACION-ACTIVO
+    status: candidate
+  - id: ENT-ORG-UNIDAD-TRANSF
+    status: candidate
+
+process_ref:
+  id: PROC-ORG-TRASLADO-ACTIVO
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: LOGISTICA
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - traslado
+  - activo-fijo
+  - ubicación
+  - inventario
+
+status: ENRICHED
+acceptance_criteria:
+  - Acta de traslado digital con firma de quien entrega y recibe
+  - Actualización instantánea de la ubicación en el inventario maestro
+  - Histórico de movimientos del activo

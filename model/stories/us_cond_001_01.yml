@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_cond_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de reserva de vehículos y registro de bitácora
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-COND-001-01
-urn: urn:goreos:atom:story:us_cond_001_01:1.0.0
-role_id: ROL-GESTION-CONDUCTOR
+name: Un módulo de reserva de vehículos y registro de bitácora
+
+# === STORY CORE ===
 as_a: Conductor Institucional
 i_want: un módulo de reserva de vehículos y registro de bitácora
 so_that: pueda documentar los traslados
-domain: D-BACK
-priority: P2
-competence_id: CPT-BACK-TICKETS-001
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-VEHICULO
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CONDUCTOR
+  agent_type: HUMAN
+  description: Funcionario del pool de conductores encargado de traslados oficiales y mantenimiento de flota
+
+entities_mentioned:
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-BITACORA-TRASLADO
+    status: candidate
+  - id: ENT-SYS-RESERVA-RECURSO
+    status: candidate
+
+process_ref:
+  id: PROC-BACK-GESTION-FLOTA
+  status: candidate
+
+tags:
+  domain: D-BACK
+  aspect: LOGISTICA
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - conductor
+  - bitacora
+  - vehiculos
+  - traslados
+  - logística
+
+status: ENRICHED
+acceptance_criteria:
+  - Registro de kilometraje inicial/final y carga de combustible digital
+  - Agenda de reservas bloqueada por mantenimiento preventivo
+  - Reporte de consumo y eficiencia por vehículo/conductor

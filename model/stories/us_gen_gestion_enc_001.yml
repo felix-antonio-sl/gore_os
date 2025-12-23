@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_enc_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Encargado Oficina de Partes
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-GESTION_ENC-001
-urn: urn:goreos:atom:story:us_gen_gestion_enc_001:1.0.0
-role_id: ROL-GESTION-ENC
+name: Historia genérica para Encargado de Calidad
+
+# === STORY CORE ===
 as_a: Encargado de Calidad
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ENC
+  agent_type: HUMAN
+  description: Encargado de Calidad responsable de la mejora continua de los procesos y el cumplimiento de normas ISO/PMG
+
+entities_mentioned:
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-NORM-INDICADOR-CALIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: GESTION
+  priority: P2
+  scope: INTERNO
+
+extra_tags:
+  - calidad
+  - mejora-continua
+  - pmg
+  - procesos
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - Módulo de levantamiento de no conformidades y planes de acción preventivos/correctivos
+  - Dashboard de cumplimiento de metas PMG (Programa de Mejoramiento de la Gestión)
+  - Repositorio de procedimientos e instructivos de trabajo con control de versiones

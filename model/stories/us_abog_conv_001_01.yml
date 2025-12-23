@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_abog_conv_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Plantillas de convenios con cláusulas estándar
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ABOG-CONV-001-01
-urn: urn:goreos:atom:story:us_abog_conv_001_01:1.0.0
-role_id: ROL-NORM-ABOGADO-CONV
+name: Plantillas de convenios con cláusulas estándar
+
+# === STORY CORE ===
 as_a: Abogado Convenios
 i_want: plantillas de convenios con cláusulas estándar
 so_that: pueda estandarizar revisiones
-domain: D-NORM
-competence_id: CPT-NORM-ABOG-001
-priority: P1
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOGADO-CONV
+  agent_type: HUMAN
+  description: Abogado especialista en convenios de transferencia
+
+entities_mentioned:
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-SYS-PLANTILLA
+    status: candidate
+  - id: ENT-NORM-CLAUSULA
+    status: candidate
+
+process_ref:
+  id: PROC-EJEC-ELABORACION-CONVENIO
+  status: candidate
+
+tags:
+  domain: D-NORM
+  aspect: DOCUMENTACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - convenios
+  - clausulas
+  - plantillas
+  - estandarizacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Biblioteca de cláusulas reutilizables
+  - Generador de convenios desde plantilla
+  - Validación de cláusulas obligatorias

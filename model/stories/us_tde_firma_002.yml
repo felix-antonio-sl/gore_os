@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_firma_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Activar mecanismo de firma de contingencia ante caídas de FirmaGob
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-FIRMA-002
-urn: urn:goreos:atom:story:us_tde_firma_002:1.0.0
-role_id: ROL-OPS-GEONODO
-as_a: Administrador Geonodo
-i_want: Activar mecanismo de firma de contingencia ante caídas de FirmaGob
-so_that: Aseguro la continuidad operativa del GORE
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Mecanismo de firma de contingencia
+
+# === STORY CORE ===
+as_a: Jefe de Informática / CTO
+i_want: activar un mecanismo de firma de contingencia ante caídas de FirmaGob
+so_that: se asegure la continuidad operativa del GORE
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TDE-JEFE-TI
+  agent_type: HUMAN
+  description: Jefe del Departamento de TI responsable de la resiliencia tecnológica de la institución
+
+entities_mentioned:
+  - id: ENT-TDE-FIRMA-GOB
+    status: linked
+  - id: ENT-TDE-FIRMA-CONTINGENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+  status: candidate
+
+tags:
+  domain: D-TDE
+  aspect: CONTINUIDAD
+  priority: P1
+  scope: SISTEMA
+
+extra_tags:
+  - firmagob
+  - contingencia
+  - disponibilidad
+  - firma-digital
+  - resiliencia
+
+status: ENRICHED
+acceptance_criteria:
+  - Sistema de conmutación (Failover) manual/automático a una CA alternativa en caso de latencia crítica en FirmaGob
+  - Registro auditable de todos los documentos firmados bajo el protocolo de contingencia
+  - Mecanismo de re-firma o sellado de tiempo posterior una vez restablecido el servicio oficial

@@ -1,18 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_ejec_ito_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-  generated: true
-name: Historia genérica para Inspector Técnico de Obras (Campo)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-GEN-EJEC_ITO-001
-urn: urn:goreos:atom:story:us_gen_ejec_ito_001:1.0.0
-role_id: ROL-EJEC-ITO
+name: Historia genérica para Inspector Técnico de Obras (Campo)
+
+# === STORY CORE ===
 as_a: Inspector Obras (Municipal)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ITO
+  agent_type: HUMAN
+  description: Inspector Técnico de Obras (ITO) responsable de la supervisión en terreno de proyectos de infraestructura
+
+entities_mentioned:
+  - id: ENT-EJE-INSPECCION-TERRENO
+    status: candidate
+  - id: ENT-EJE-BITACORA-OBRA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJE-SUPERVISION-TECNICA
+  status: linked
+
+tags:
+  domain: D-EJEC
+  aspect: SEGUIMIENTO
+  priority: P2
+  scope: REGIONAL
+
+extra_tags:
+  - ito
+  - obras
+  - terreno
+  - inspeccion
+  - municipal
+  - arquetipo
+
+status: ENRICHED
+acceptance_criteria:
+  - App móvil para registro de hitos de obra con georreferenciación y fotos
+  - Carga de informes de avance físico vinculados al estado de pago
+  - Alerta de desviaciones respecto a la Carta Gantt original del proyecto

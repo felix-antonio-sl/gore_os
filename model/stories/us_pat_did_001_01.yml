@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_pat_did_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de patrocinio con checklist de requisitos
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PAT-DID-001-01
-urn: urn:goreos:atom:story:us_pat_did_001_01:1.0.0
-role_id: ROL-GESTION-PAT
+name: Módulo de patrocinio con checklist de requisitos
+
+# === STORY CORE ===
 as_a: Analista Patrocinante (DIFOI)
 i_want: un módulo de patrocinio con checklist de requisitos
 so_that: pueda verificar completitud antes de patrocinar
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-PORTAL-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PAT
+  agent_type: HUMAN
+  description: Analista encargado de evaluar y otorgar patrocinios institucionales a proyectos regionales
+
+entities_mentioned:
+  - id: ENT-EJEC-PATROCINIO-GORE
+    status: candidate
+  - id: ENT-EJEC-CHECKLIST-REQUISITO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-GESTOR-PATROCINIOS
+    status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: PATROCINIO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - patrocinio
+  - checklist
+  - formalidad
+  - gestion-proyectos
+  - difoi
+
+status: ENRICHED
+acceptance_criteria:
+  - Checklist digital dinámico según el tipo de proyecto (Deportivo, Cultural, Social)
+  - Módulo de carga de documentos obligatorios con validación de formato
+  - Generación de informe de admisibilidad previo al otorgamiento del sello de patrocinio

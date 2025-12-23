@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_pat_dit_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Validación técnica automática de proyectos de infraestructura
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PAT-DIT-001-01
-urn: urn:goreos:atom:story:us_pat_dit_001_01:1.0.0
-role_id: ROL-GESTION-PAT
+name: Validación técnica automática de proyectos de infraestructura
+
+# === STORY CORE ===
 as_a: Analista Patrocinante (DIFOI)
 i_want: validación técnica automática de proyectos de infraestructura
 so_that: pueda verificar coherencia con planes sectoriales
-domain: D-EJEC
-priority: P0
-competence_id: CPT-EJEC-SEG-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-PAT
+  agent_type: HUMAN
+  description: Analista técnico que evalúa la factibilidad y coherencia de proyectos de infraestructura regional
+
+entities_mentioned:
+  - id: ENT-SOC-INFRAESTRUCTURA-RED
+    status: linked
+  - id: ENT-TERR-MAPA-RED
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-GESTOR-PATROCINIOS
+  status: candidate
+
+tags:
+  domain: D-EJEC
+  aspect: INFRAESTRUCTURA
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - infraestructura
+  - validacion-automatica
+  - dit
+  - urbanismo
+  - coherencia-territorial
+
+status: ENRICHED
+acceptance_criteria:
+  - Cruce de información geospacial entre el proyecto y las capas IDE (Infraestructura de Datos Espaciales)
+  - Verificación automática de no-traslape con otros proyectos de infraestructura vigentes
+  - Alerta de inconsistencia si el proyecto no figura en el plan de transporte o vialidad regional

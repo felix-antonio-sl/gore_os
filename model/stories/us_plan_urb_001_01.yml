@@ -1,15 +1,50 @@
 _meta:
   urn: urn:goreos:atom:story:us_plan_urb_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un visor de instrumentos de planificación territorial vigentes
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-PLAN-URB-001-01
-urn: urn:goreos:atom:story:us_plan_urb_001_01:1.0.0
-role_id: ROL-TERR-URB
+name: Visor de instrumentos de planificación territorial (IPT)
+
+# === STORY CORE ===
 as_a: Planificador Urbano
 i_want: un visor de instrumentos de planificación territorial vigentes
 so_that: pueda verificar coherencia de proyectos con PROT/PRC
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-TERR-URB
+  agent_type: HUMAN
+  description: Profesional encargado de la planificación urbana y territorial del GORE
+
+entities_mentioned:
+  - id: ENT-TERR-IPT
+    status: candidate
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+  status: linked
+
+tags:
+  domain: D-TERR
+  aspect: PLANIFICACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - prot
+  - prc
+  - urbanismo
+  - ipt
+  - coherencia-territorial
+  - gis
+
+status: ENRICHED
+acceptance_criteria:
+  - Visor cartográfico con capas superpuestas de PROT (Regional) y PRC (Comunales) actualizadas
+  - Herramienta de consulta por coordenadas o rol de propiedad para identificar zonificación vigente
+  - Integración con el sistema de inversión para alertar si un proyecto se ubica en zona de riesgo o restricción

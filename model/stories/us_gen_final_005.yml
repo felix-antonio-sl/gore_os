@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_final_005:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia para Analista Medio Ambiente
-id: US-GEN-FINAL-005
-urn: urn:goreos:atom:story:us_gen_final_005:1.0.0
-role_id: ROL-GESTION-ANALISTA-MED
-as_a: Analista Medio Ambiente
-i_want: participar activamente en los procesos del GORE según mi rol institucional
-so_that: pueda contribuir al desarrollo regional de Ñuble
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-FINAL-005
+name: Gestión de Indicadores de Salud Ambiental
+
+# === STORY CORE ===
+as_a: Analista Medio Ambiente
+i_want: Monitorear el cumplimiento de las normas ambientales en los proyectos financiadores por el GORE
+so_that: se proteja el patrimonio natural de Ñuble y se fomente un desarrollo sustentable
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-MED
+  agent_type: HUMAN
+  description: Analista de la división de medio ambiente y biodiversidad
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-CAPA_GEOESPACIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: SUSTENTABILIDAD
+  priority: P2
+  scope: AMBIENTAL
+
+extra_tags:
+  - medio-ambiente
+  - sustentabilidad
+  - monitoreo
+  - ñuble-verde
+
+status: ENRICHED
+acceptance_criteria:
+  - Capa geoespacial con zonas de protección ambiental integradas
+  - Checklist de cumplimiento de la Ley de Bases Generales del Medio Ambiente
+  - Alertas tempranas ante proyectos que intersecten con santuarios de la naturaleza

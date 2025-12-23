@@ -1,15 +1,48 @@
 _meta:
   urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Un módulo de emisión de CDP con validación automática de saldo
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-ANALPRES-001-01
-urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
-role_id: ROL-FIN-ANALISTA-PRE
+name: Un módulo de emisión de CDP con validación automática de saldo
+
+# === STORY CORE ===
 as_a: Analista Presupuesto
 i_want: un módulo de emisión de CDP con validación automática de saldo
 so_that: no pueda comprometer recursos sin disponibilidad
-domain: D-FIN
-competence_id: CPT-FIN-PPTO-001
-priority: P0
-acceptance_criteria: []
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-FIN-ANALISTA-PRE
+  agent_type: HUMAN
+  description: Analista de la Unidad de Presupuesto (DAF)
+
+entities_mentioned:
+  - id: ENT-FIN-CDP
+    status: candidate
+  - id: ENT-FIN-SALDO-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-FIN-COMPROMISO
+    status: candidate
+
+process_ref:
+  id: PROC-FIN-EMISION-CDP
+  status: candidate
+
+tags:
+  domain: D-FIN
+  aspect: PRESUPUESTO
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - cdp
+  - presupuesto
+  - saldos
+  - validacion
+
+status: ENRICHED
+acceptance_criteria:
+  - Chequeo de saldo disponible en tiempo real antes de emitir CDP
+  - Bloqueo de emisión si saldo es insuficiente
+  - Trazabilidad de compromisos asociados al CDP

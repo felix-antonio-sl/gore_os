@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_ejec_anal_001:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia genérica para Analista Ejecutor
-id: US-GEN-EJEC_ANAL-001
-urn: urn:goreos:atom:story:us_gen_ejec_anal_001:1.0.0
-role_id: ROL-EJEC-ANAL
-as_a: Analista Ejecutor
-i_want: ejecutar mis funciones principales en el contexto institucional del GORE
-so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-EJEC_ANAL-001
+name: Gestión de seguimiento de iniciativas externas
+
+# === STORY CORE ===
+as_a: Analista Ejecutor
+i_want: gestionar el ciclo de vida de las iniciativas postuladas desde mi organización
+so_that: cumplo con los plazos institucionales y garantizo la ejecución exitosa de los recursos asignados
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-EJEC-ANAL
+  agent_type: HUMAN
+  description: Representante técnico de una entidad ejecutora (Municipio, ONG, etc.)
+
+entities_mentioned:
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+
+process_ref:
+  id: PROC-FIN-IPR_CORE-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: GESTION-EJECUTOR
+  priority: P2
+  scope: EXTERNO
+
+extra_tags:
+  - ejecutor
+  - seguimiento
+  - iniciativas
+  - proyectos
+
+status: ENRICHED
+acceptance_criteria:
+  - Buzón de notificaciones de estados de trámites del GORE
+  - Capacidad de subir archivos de subsanación de observaciones técnicos-administrativos
+  - Historial de iniciativas aprobadas y rendidas para la organización

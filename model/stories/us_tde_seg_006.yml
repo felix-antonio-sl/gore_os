@@ -1,15 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_seg_006:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Incidentes de seguridad (CSIRT)
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-SEG-006
-urn: urn:goreos:atom:story:us_tde_seg_006:1.0.0
-role_id: ROL-GESTION-CISO
-as_a: CISO
-i_want: Gestionar incidentes de seguridad (CSIRT)
-so_that: Respondo a amenazas
-domain: D-TDE
-priority: P0
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+name: Gestión operativa de incidentes de seguridad
+
+# === STORY CORE ===
+as_a: Director de Seguridad de la Información (CISO)
+i_want: gestionar proactivamente los incidentes de seguridad detectados por las herramientas de monitoreo
+so_that: se neutralicen amenazas en tiempo real y se minimice el impacto en la disponibilidad de los servicios ciudadanos
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-CISO
+  agent_type: HUMAN
+  description: Gestor de la respuesta táctica ante amenazas cibernéticas
+
+entities_mentioned:
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-TDE-NOTIF-EVENT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GUBERNANZA-TI
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: CIBERSEGURIDAD
+  priority: P0
+  scope: SISTEMA
+
+extra_tags:
+  - incidentes
+  - soc
+  - respuesta-amenazas
+  - seguridad-informatica
+  - continuidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de incidentes con categorización por impacto y urgencia
+  - Registro de triaje y resolución con tiempos de cierre documentados
+  - Integración con el sistema de mensajería del equipo TI para alertas instantáneas (Alerting)

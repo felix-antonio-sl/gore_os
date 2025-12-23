@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { useKeycloak } from '@react-keycloak/web';
 import { trpc } from './trpc';
 import { Button } from '@gore-os/ui';
 import { UiShowcase } from './UiShowcase';
+import { ConvenioPage } from './components/ConvenioPage';
 
 function LogViewer() {
   const [message, setMessage] = useState('');
@@ -81,6 +82,15 @@ function LogViewer() {
 
 function AppContent() {
   const { keycloak, initialized } = useKeycloak();
+  // Estado reactivo para el hash
+  const [hash, setHash] = useState(window.location.hash);
+
+  useEffect(() => {
+    const handleHashChange = () => setHash(window.location.hash);
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   const queryClient = new QueryClient();
   
   const trpcClient = trpc.createClient({
@@ -94,9 +104,10 @@ function AppContent() {
     ],
   });
 
-  const isUiShowcase = window.location.hash === "#ui";
+  const isUiShowcase = hash === "#ui";
+  const isConvenios = hash === "#convenios";
 
-  if (!initialized && !isUiShowcase) {
+  if (!initialized && !isUiShowcase && !isConvenios) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gore-brand"></div>
@@ -123,6 +134,16 @@ function AppContent() {
     );
   }
 
+  if (isConvenios) {
+    return (
+      <trpc.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <ConvenioPage />
+        </QueryClientProvider>
+      </trpc.Provider>
+    );
+  }
+
   if (!keycloak.authenticated) {
     return <div className="min-h-screen flex items-center justify-center">Redirigiendo a login...</div>;
   }
@@ -133,8 +154,9 @@ function AppContent() {
         <div className="min-h-screen bg-gray-100">
             <div className="py-12">
                 <LogViewer />
-                <div className="text-center mt-8">
-                    <a href="#ui" className="text-blue-600 underline hover:text-blue-800" onClick={() => window.location.reload()}>Ver UI Showcase (GORE UI Kit 4.0)</a>
+                <div className="text-center mt-8 space-x-4">
+                    <a href="#convenios" className="text-gore-brand underline hover:text-gore-brand/80" onClick={() => setHash('#convenios')}>D-FIN: Convenios</a>
+                    <a href="#ui" className="text-blue-600 underline hover:text-blue-800" onClick={() => setHash('#ui')}>UI Showcase</a>
                 </div>
             </div>
         </div>

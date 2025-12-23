@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_sup_cies_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Reportes de eventos por turno y operador
-id: US-SUP-CIES-001-01
-urn: urn:goreos:atom:story:us_sup_cies_001_01:1.0.0
-role_id: ROL-GESTION-SUP
-as_a: Supervisor CIES
-i_want: reportes de eventos por turno y operador
-so_that: pueda evaluar desempeño
-domain: D-TERR
-priority: P1
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
+  schema: urn:goreos:schema:story:2.0.0
 
-mentions:
-- ENT-SYS-EVENTO
+id: US-SUP-CIES-001-01
+name: Reportes de eventos por turno y operador (CIES)
+
+# === STORY CORE ===
+as_a: Supervisor CIES
+i_want: generar reportes detallados de eventos gestionados por turno y por cada operador
+so_that: pueda evaluar el desempeño operativo, identificar cuellos de botella y optimizar la rotación de personal
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-SUP
+  agent_type: HUMAN
+  description: Supervisor de sala encargado de la gestión del equipo humano y la calidad de la respuesta
+
+entities_mentioned:
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-ORG-TURNO-OPERATIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-SEG-MONITOREO-CIUDADANO
+  status: candidate
+
+tags:
+  domain: D-SEG
+  aspect: OPERACIONES
+  priority: P1
+  scope: INSTITUCIONAL
+
+extra_tags:
+  - cies
+  - reportes-desempeño
+  - turnos
+  - gestion-personal
+  - indicadores-gestion
+
+status: ENRICHED
+acceptance_criteria:
+  - Reporte de "Tiempo de Respuesta" promedio por operador desde la alerta hasta el cierre del evento
+  - Heatmap de carga de trabajo por franja horaria para dimensionar la dotación necesaria en sala
+  - Módulo de calificación de gestión de eventos (Feedback del Supervisor) vinculado al historial del operador

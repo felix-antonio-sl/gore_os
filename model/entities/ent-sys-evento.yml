@@ -10,10 +10,10 @@ category: Abstract
 is_abstract: true
 description: "Coalgebra base: captura transición de estado en el tiempo. Objeto terminal para todos los eventos del sistema."
 attributes:
-  - {name: id_evento, type: UUID, key: true}
-  - {name: tipo_evento, type: String}
-  - {name: fecha_evento, type: DateTime}
-  - {name: actor_id, type: UUID, fk: ENT-SYS-ACTOR, nullable: true}
-  - {name: entidad_tipo, type: String, nullable: true}
-  - {name: entidad_id, type: UUID, nullable: true}
-  - {name: observacion, type: Text, nullable: true}
+  - { name: id_evento, type: UUID, key: true }
+  - { name: tipo_evento, type: String }
+  - { name: fecha_evento, type: DateTime }
+  - { name: actor_id, type: UUID, fk: ENT-SYS-ACTOR, nullable: true }
+  - { name: entidad_tipo, type: String, nullable: true }
+  - { name: entidad_id, type: UUID, nullable: true }
+  - { name: observacion, type: Text, nullable: true }

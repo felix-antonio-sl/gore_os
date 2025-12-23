@@ -1,16 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_tde_docdig_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Incluir un link de verificación en lugar del texto íntegro del convenio en
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-TDE-DOCDIG-002
-urn: urn:goreos:atom:story:us_tde_docdig_002:1.0.0
-role_id: ROL-NORM-ABOG
+name: Link de verificación digital en Resoluciones Exentas
+
+# === STORY CORE ===
 as_a: Abogado Informante
-i_want: incluir un link de verificación en lugar del texto íntegro del convenio en
-  las resoluciones
-so_that: las resoluciones sean cortas y verificables digitalmente
-domain: D-TDE
-priority: P1
-competence_id: CPT-FIRMA-001
-acceptance_criteria: []
+i_want: incluir un link de verificación digital o código QR en las resoluciones en lugar de adjuntar el texto íntegro de convenios extensos
+so_that: los documentos sean más legibles, cortos y fácilmente verificables en su versión original digital
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-NORM-ABOG
+  agent_type: HUMAN
+  description: Abogado de la Unidad Jurídica que redacta actos administrativos complejos
+
+entities_mentioned:
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-TDE-GESTION-DOCUMENTAL
+  status: linked
+
+tags:
+  domain: D-TDE
+  aspect: DIGITALIZACION
+  priority: P1
+  scope: REGIONAL
+
+extra_tags:
+  - qr
+  - verificacion
+  - resoluciones
+  - eficiencia
+  - interoperabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Generación automática de QR de validación al pie de cada documento firmado electrónicamente
+  - Landing page de verificación que permite descargar el PDF original con su Hash de integridad
+  - Opción en el editor de resoluciones para seleccionar "Referencias Digitales" en lugar de anexos

@@ -1,18 +1,47 @@
 _meta:
   urn: urn:goreos:atom:story:us_gen_gestion_analist_002:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
+  schema: urn:goreos:schema:story:2.0.0
   generated: true
-name: Historia genérica para Analista Vivienda
-id: US-GEN-GESTION_ANALIST-002
-urn: urn:goreos:atom:story:us_gen_gestion_analist_002:1.0.0
-role_id: ROL-GESTION-ANALISTA-VIV
-as_a: Analista Vivienda
-i_want: ejecutar mis funciones principales en el contexto institucional del GORE
-so_that: pueda cumplir con los objetivos de mi rol
-domain: D-GESTION
-priority: P2
-acceptance_criteria: []
 
-mentions:
-- ENT-ORG-ROL
+id: US-GEN-GESTION_ANALIST-002
+name: Gestión Técnica del Déficit Habitacional
+
+# === STORY CORE ===
+as_a: Analista Vivienda
+i_want: Evaluar y priorizar proyectos de vivienda social y mejoramiento de barrios
+so_that: se reduzca el déficit habitacional y se mejore la calidad de vida en Ñuble
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-GESTION-ANALISTA-VIV
+  agent_type: HUMAN
+  description: Analista técnico especializado en el sector vivienda y urbanismo
+
+entities_mentioned:
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+process_ref:
+  id: PROC-PLAN-P1
+  status: linked
+
+tags:
+  domain: D-GESTION
+  aspect: VIVIENDA
+  priority: P2
+  scope: SOCIAL
+
+extra_tags:
+  - vivienda
+  - barrios
+  - deficit-habitacional
+  - ñuble
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard de seguimiento de proyectos por comité de vivienda
+  - Integración con base de datos de SERVIU para validación de terrenos y factibilidades
+  - Registro de impacto social (número de familias beneficiadas) por proyecto

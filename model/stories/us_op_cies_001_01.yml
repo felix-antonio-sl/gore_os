@@ -1,18 +1,49 @@
 _meta:
   urn: urn:goreos:atom:story:us_op_cies_001_01:1.0.0
   type: Story
-  schema: urn:goreos:schema:story:1.0.0
-name: Una consola de monitoreo con alertas priorizadas
+  schema: urn:goreos:schema:story:2.0.0
+
 id: US-OP-CIES-001-01
-urn: urn:goreos:atom:story:us_op_cies_001_01:1.0.0
-role_id: ROL-OPS-OP
-as_a: Operador de Sistema
+name: Consola de monitoreo con alertas priorizadas (CIES)
+
+# === STORY CORE ===
+as_a: Operador de Sistema (CIES / Control)
 i_want: una consola de monitoreo con alertas priorizadas
 so_that: pueda detectar incidentes rápidamente
-domain: D-TERR
-priority: P0
-competence_id: CPT-TERR-MAP-001
-acceptance_criteria: []
 
-mentions:
-- ENT-SAL-ALERTA
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-OPS-OP
+  agent_type: HUMAN
+  description: Operador encargado de la vigilancia de la infraestructura crítica y el monitoreo de proyectos territoriales
+
+entities_mentioned:
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-DASHBOARD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+process_ref:
+  id: PROC-EJEC-MONITOREO-CRITICO
+  status: candidate
+
+tags:
+  domain: D-TERR
+  aspect: CIES
+  priority: P0
+  scope: REGIONAL
+
+extra_tags:
+  - monitoreo
+  - cies
+  - alertas
+  - incidentes
+  - infraestructura-critica
+
+status: ENRICHED
+acceptance_criteria:
+  - Dashboard multi-pantalla con visualización de alertas georreferenciadas en tiempo real
+  - Sistema de priorización por colores (Semaforización) según impacto y criticidad técnica
+  - Capacidad de drill-down desde la alerta hacia la ficha técnica detallada del proyecto o sensor

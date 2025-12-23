@@ -1,1 +1,44 @@
+_meta:
+  urn: urn:goreos:atom:story:us_dev_bp_002:1.0.0
+  type: Story
+  schema: urn:goreos:schema:story:2.0.0
 
+id: US-DEV-BP-002
+name: Documentación de ADRs (Architectural Decision Records)
+
+# === STORY CORE ===
+as_a: Arquitecto de Software
+i_want: Registrar cada decisión arquitectónica significativa en un archivo ADR dentro del repositorio
+so_that: se mantenga un registro histórico del "por qué" de las decisiones técnicas para futuros desarrolladores
+
+# === ENRICHMENT v2.0 ===
+user:
+  role_id: ROL-DEV-ARQ
+  agent_type: HUMAN
+  description: Responsable del diseño y coherencia técnica del Supermodelo
+
+entities_mentioned:
+  - id: ENT-SYS-FILE
+    status: linked
+
+process_ref:
+  id: PROC-TDE-P1
+  status: linked
+
+tags:
+  domain: D-DEV
+  aspect: ARQUITECTURA
+  priority: P1
+  scope: GESTION-CONOCIMIENTO
+
+extra_tags:
+  - adr
+  - documentación
+  - decisiones-tecnicas
+  - trazabilidad
+
+status: ENRICHED
+acceptance_criteria:
+  - Uso de la plantilla oficial de ADR (Contexto, Decisión, Consecuencias)
+  - Revisión y aprobación de ADRs por el comité técnico antes de su implementación
+  - Vinculación de ADRs con las historias de usuario que motivaron el cambio
