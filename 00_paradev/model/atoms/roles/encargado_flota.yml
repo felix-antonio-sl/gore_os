@@ -26,3 +26,8 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_047_manual_flotas_koda.yml

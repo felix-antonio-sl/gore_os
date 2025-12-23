@@ -36,3 +36,8 @@ unit_type: Fuerza de Trabajo Digital
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/arquitectura/kb_tde_lineamientos_030_architectura_hub_agentes_tde_koda.yml

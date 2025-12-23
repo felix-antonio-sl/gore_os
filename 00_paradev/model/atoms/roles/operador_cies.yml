@@ -23,3 +23,8 @@ unit_type: Ejecutivo & Operaciones
 domain: D-OPS
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/bpmn/D09_cies_sitia_koda.yml

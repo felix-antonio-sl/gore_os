@@ -23,3 +23,12 @@ unit_type: Ejecutivo
 domain: D-ADM
 archetype: MANAGERIAL
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/intro/kb_gn_000_intro_gores_nuble_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/kb_gn_050_aceleracion_regional_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_045_manual_tesoreria_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_043_manual_presupuesto_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_014_glosario_gore_nuble_koda.yml

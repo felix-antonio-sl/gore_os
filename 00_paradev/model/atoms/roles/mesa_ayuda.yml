@@ -26,3 +26,10 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/guias/kb_tde_lineamientos_037_guia_cpat_completa_koda.yml
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/guias/kb_tde_lineamientos_041_guia_uso_simple_saas_oae_koda.yml
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/normas/kb_tde_lineamientos_014_norma_notificaciones_koda.yml

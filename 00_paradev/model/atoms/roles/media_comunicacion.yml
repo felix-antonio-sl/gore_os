@@ -25,3 +25,9 @@ unit_type: Mixto
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/presupuesto/kb_gn_211_ley_presupuestos_2026_normas_generales_koda.yml
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/leyes/kb_tde_lineamientos_039_ley_21719_proteccion_datos_personales_koda.yml

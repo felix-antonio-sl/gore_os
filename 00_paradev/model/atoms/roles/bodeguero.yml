@@ -23,3 +23,9 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/bpmn/D05_inventarios_activo_fijo_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_040_manual_inventarios_bodegas_koda.yml

@@ -25,3 +25,7 @@ unit_type: Mixto
 domain: D-OPS
 archetype: null
 extends: null
+
+verification:
+  status: no_definition_found
+  note: 'Rol no encontrado en corpus documental (gn, tde, orko)'

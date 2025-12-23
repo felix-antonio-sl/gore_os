@@ -25,3 +25,10 @@ unit_type: Ecosistema Externo
 domain: D-GESTION
 archetype: seremi_sectorial
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_010_ris/kb_gn_010_ris_patrimonio_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/estrategia/kb_gn_056_nuble250_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/legal/kb_gn_200_marco_legal_gores_koda.yml

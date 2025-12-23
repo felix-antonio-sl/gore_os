@@ -23,3 +23,10 @@ unit_type: Ecosistema Externo
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_029_guia_circ33_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_026_guia_fril_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/comunicaciones/kb_gn_030_guia_comunicaciones_koda.yml

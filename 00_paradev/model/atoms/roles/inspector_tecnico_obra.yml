@@ -25,3 +25,8 @@ unit_type: Ejecutivo & Operaciones
 domain: D-EJEC
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_026_guia_fril_koda.yml

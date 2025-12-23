@@ -23,3 +23,8 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: MANAGERIAL
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/tde/kb_gn_710_informe_estado_inicial_gore_pre_td_koda.yml

@@ -32,3 +32,9 @@ unit_type: Mixto
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/leyes/kb_tde_lineamientos_038_analisis_legislacion_ia_chile_koda.yml
+    - /Users/felixsanhueza/Developer/tde/knowledge/core/kb_tde_intro_tde_koda.yml

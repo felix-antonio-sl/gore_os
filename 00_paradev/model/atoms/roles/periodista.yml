@@ -27,3 +27,8 @@ unit_type: Gobernanza Estratégica
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/comunicaciones/kb_gn_030_guia_comunicaciones_koda.yml

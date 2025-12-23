@@ -25,3 +25,12 @@ unit_type: Ecosistema Externo
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/presupuesto/kb_gn_211_ley_presupuestos_2026_normas_generales_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/intro/kb_gn_000_intro_gores_nuble_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/intro/kb_gn_900_gore_ideal_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/comunicaciones/kb_gn_008_comunicaciones_oc_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/comunicaciones/kb_gn_030_guia_comunicaciones_koda.yml

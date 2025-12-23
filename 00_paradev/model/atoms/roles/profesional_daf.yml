@@ -44,3 +44,8 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: profesional_base
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_019_gestion_ipr_koda.yml

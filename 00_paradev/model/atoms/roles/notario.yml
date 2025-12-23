@@ -25,3 +25,9 @@ unit_type: Mixto
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_028_instructivo_subvencion_8_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/legal/kb_gn_200_marco_legal_gores_koda.yml

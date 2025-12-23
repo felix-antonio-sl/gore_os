@@ -26,3 +26,9 @@ unit_type: Ecosistema Externo
 domain: D-EJEC
 archetype: analista_base
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/bpmn/D08_rendiciones_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_020_gestion_rendiciones_koda.yml

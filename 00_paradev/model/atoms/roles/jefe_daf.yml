@@ -23,3 +23,11 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: MANAGERIAL
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/bpmn/D08_rendiciones_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_045_manual_tesoreria_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_020_gestion_rendiciones_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_046_manual_compras_koda.yml

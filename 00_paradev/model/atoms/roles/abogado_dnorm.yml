@@ -23,3 +23,7 @@ unit_type: Mixto
 domain: D-NORM
 archetype: null
 extends: null
+
+verification:
+  status: no_definition_found
+  note: 'Rol no encontrado en corpus documental (gn, tde, orko)'

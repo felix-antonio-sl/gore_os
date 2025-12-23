@@ -25,3 +25,10 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/bpmn/D07_rrhh_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_017_manual_induccion_gore_nuble_2025_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_042_manual_desarrollo_organizacional_koda.yml

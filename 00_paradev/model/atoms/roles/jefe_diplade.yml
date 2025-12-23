@@ -23,3 +23,8 @@ unit_type: Ejecutivo & Operaciones
 domain: D-GESTION
 archetype: MANAGERIAL
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/presupuesto/kb_gn_018_gestion_prpto_koda.yml

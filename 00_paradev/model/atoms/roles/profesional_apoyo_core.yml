@@ -25,3 +25,7 @@ unit_type: Gobernanza Estratégica
 domain: D-GESTION
 archetype: profesional_base
 extends: null
+
+verification:
+  status: no_definition_found
+  note: 'Rol no encontrado en corpus documental (gn, tde, orko)'

@@ -23,3 +23,8 @@ unit_type: Ejecutivo & Operaciones
 domain: D-FIN
 archetype: MANAGERIAL
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_045_manual_tesoreria_koda.yml

@@ -26,3 +26,7 @@ unit_type: Ecosistema Externo
 domain: D-EJEC
 archetype: seremi_sectorial
 extends: null
+
+verification:
+  status: no_definition_found
+  note: 'Rol no encontrado en corpus documental (gn, tde, orko)'

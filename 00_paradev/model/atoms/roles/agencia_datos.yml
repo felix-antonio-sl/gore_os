@@ -25,3 +25,12 @@ unit_type: Ecosistema Externo
 domain: D-GESTION
 archetype: null
 extends: null
+
+verification:
+  status: verified
+  evidence:
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/intro/kb_gn_000_intro_gores_nuble_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_035_estrategia_gestion_koda.yml
+    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_017_manual_induccion_gore_nuble_2025_koda.yml
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/guias/kb_tde_lineamientos_042_guia_anonimizacion_datos_kb080_koda.yml
+    - /Users/felixsanhueza/Developer/tde/knowledge/domains/leyes/kb_tde_lineamientos_038_analisis_legislacion_ia_chile_koda.yml
