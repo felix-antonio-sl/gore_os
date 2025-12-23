@@ -8,14 +8,17 @@ name: Zona de Riesgo
 domain: D-LOC
 category: Reference
 attributes:
-  - {name: id_zona_riesgo, type: UUID, key: true}
-  - {name: tipo_riesgo, type: String}
-  - {name: nivel, type: String}
-  - {name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA}
-  - {name: geometria, type: Geometry}
-# ============================================================================
-# GORE_OS ENTITY MODEL v2.0 - PARTE 2/4
-# FIBRAS: CONVENTUS + IMPERIUM
-# ============================================================================
-
-# --- CONVENTUS: Fibra de Coordinación ---
+  - { name: id_zona_riesgo, type: UUID, key: true }
+  - { name: tipo_riesgo, type: String }
+  - { name: nivel, type: String }
+  - { name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA }
+  - { name: geometria, type: Geometry }
+  # === Extensión data-gore D11_Geoespacial ===
+  - { name: capa_id, type: UUID, fk: ENT-GEO-CAPA, nullable: true }
+  - {
+      name: severidad,
+      type: String,
+      nullable: true,
+      description: "CRITICA|ALTA|MEDIA|BAJA",
+    }
+  - { name: fuente_datos, type: String, nullable: true }

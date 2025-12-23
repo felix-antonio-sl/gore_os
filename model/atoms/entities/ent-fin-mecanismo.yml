@@ -8,9 +8,22 @@ name: Mecanismo de Financiamiento
 domain: D-FIN
 category: Reference
 attributes:
-  - {name: id_mecanismo, type: UUID, key: true}
-  - {name: codigo, type: String}
-  - {name: nombre, type: String}
-  - {name: tipo, type: String}
-  - {name: normativa, type: String}
-  - {name: activo, type: Boolean}
+  - { name: id_mecanismo, type: UUID, key: true }
+  - { name: codigo, type: String }
+  - { name: nombre, type: String }
+  - { name: tipo, type: String }
+  - { name: normativa, type: String }
+  - { name: activo, type: Boolean }
+  # === Extensión Cobertura IPR v2.0 ===
+  - { name: glosa, type: String, nullable: true }
+  - { name: subtitulo, type: Integer, nullable: true }
+  - { name: monto_min, type: Decimal, nullable: true }
+  - { name: monto_max, type: Decimal, nullable: true }
+  - { name: requiere_rate, type: Boolean, nullable: true }
+  - { name: categorias_validas, type: "[String]", nullable: true }
+  - {
+      name: schema_metadata,
+      type: JSON,
+      nullable: true,
+      description: "JSON Schema para validar metadata_mecanismo en IPR",
+    }

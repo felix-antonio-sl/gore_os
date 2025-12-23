@@ -1,0 +1,189 @@
+# ETL Mapping: Programas Regionales (8%) Legacy → GORE_OS IPR
+# Prioridad: CRÍTICA (Subvención 8% FNDR)
+# Funtor: Δ*(MLEG-PROGRAMA-REGIONAL) → Σ*(ENT-FIN-IPR)
+---
+_meta:
+  urn: urn:goreos:etl:map:ipr_progs:1.0.0
+  type: ETL_Mapping
+  created_at: "2025-12-22"
+  author: Arquitecto-GORE
+
+source:
+  type: staging
+  entity: ENT-MLEG-PROGRAMA-REGIONAL
+  urn: urn:goreos:atom:entity:programa_regional:1.0.0
+  approx_rows: 800
+  quality_tier: MEDIUM
+
+target:
+  type: canonical
+  entity: ENT-FIN-IPR
+  urn: urn:goreos:entity:fiscus:ipr:1.1.0
+  domain: D-FIN
+
+# Estrategia de claves
+key_strategy:
+  source_key: codigo_programa
+  target_key: id_ipr
+  generation: UUID_V5 # gore_os:ipr:prog:{codigo_programa}
+  dedup_policy: KEEP_LATEST
+  # Nota: códigos mal formados ('245', '_<') serán rechazados
+
+# Contexto: Progs son PPR (Programas Públicos Regionales)
+context:
+  mecanismo: SUBVENCION_8
+  tipo_default: PROGRAMA
+
+# Filtro de calidad pre-load
+pre_filters:
+  - field: codigo_programa
+    condition: REGEX_MATCH
+    pattern: "^[0-9]{4}[A-Z]{2}[0-9]{4}$" # ej: 2401SC0126
+    on_fail: QUARANTINE
+    quarantine_reason: "Código mal formado"
+
+# Mapeo de atributos
+field_mappings:
+  - source: codigo_programa
+    target: codigo_bip
+    transform: TRIM
+
+  - source: nombre_programa
+    target: nombre
+    transform: TRIM_NORMALIZE
+
+  - source: nombre_programa
+    target: descripcion
+    transform: COPY
+
+  - source: null
+    target: tipo
+    transform: CONSTANT
+    value: PROGRAMA
+
+  - source: sector
+    target: mecanismo_id
+    transform: LOOKUP_BY_SECTOR
+    lookup:
+      entity: ENT-FIN-MECANISMO
+      match_logic: |
+        CASE sector
+          WHEN 'Deporte' THEN 'SUB8_DEPORTE'
+          WHEN 'Cultura' THEN 'SUB8_CULTURA'
+          WHEN 'Seguridad' THEN 'SUB8_SEGURIDAD'
+          WHEN 'Social' THEN 'SUB8_SOCIAL'
+          ELSE 'SUBVENCION_8'
+        END
+      return_field: id_mecanismo
+
+  - source: presupuesto_total
+    target: monto_total
+    transform: PARSE_DECIMAL_CLP
+    null_handling: ZERO
+
+  - source: null
+    target: comuna_id
+    transform: NULL
+    note: "Programas son regionales, no comunales"
+
+  - source: estado
+    target: estado_ciclo
+    transform: ENUM_MAP
+    enum_map:
+      PLANIFICACION: FORMULACION
+      EJECUCION: EJECUCION
+      TERMINADO: TERMINADO
+      CANCELADO: CANCELADO
+    default: FORMULACION
+
+  - source: estado
+    target: etapa_actual
+    transform: ENUM_MAP
+    enum_map:
+      PLANIFICACION: PERFIL
+      EJECUCION: EN_EJECUCION
+      TERMINADO: CIERRE
+      CANCELADO: CANCELADO
+    default: PERFIL
+
+  - source: anio_inicio
+    target: fecha_rs
+    transform: YEAR_TO_DATE
+    pattern: "{year}-01-01"
+
+  # --- metadata_mecanismo (específico Progs) ---
+  - source: _build_metadata
+    target: metadata_mecanismo
+    transform: JSON_BUILD
+    structure:
+      eje_estrategico: "{eje_estrategico}"
+      sector: "{sector}"
+      anio_inicio: "{anio_inicio}"
+      anio_termino: "{anio_termino}"
+      fuente_legacy: "PROGS"
+
+  # --- marco_logico placeholder ---
+  - source: eje_estrategico
+    target: marco_logico
+    transform: JSON_BUILD
+    structure:
+      fin: "Contribuir a {eje_estrategico}"
+      proposito: "{nombre_programa}"
+      componentes: []
+      indicadores: []
+
+# Campos target con defaults
+unmapped_targets:
+  - field: vigencia
+    default: VIGENTE
+  - field: tipologia
+    default: PPR
+  - field: origen
+    default: SUBVENCION_8
+  - field: fuente
+    default: "8% FNDR"
+  - field: sub_estado
+    source: null
+  - field: rate_actual
+    source: null
+  - field: fecha_rate
+    source: null
+  - field: n_rates_emitidos
+    default: 0
+  - field: rate_historico
+    default: "[]"
+
+# Dependencias
+dependencies:
+  pre_load:
+    - entity: ENT-FIN-MECANISMO
+      ensure_exists:
+        [
+          "SUBVENCION_8",
+          "SUB8_DEPORTE",
+          "SUB8_CULTURA",
+          "SUB8_SEGURIDAD",
+          "SUB8_SOCIAL",
+        ]
+    - entity: ENT-FIN-EJE_ESTRATEGICO
+      from: MLEG-PROGRAMA-REGIONAL.eje_estrategico
+      strategy: UPSERT_BY_NAME
+
+# Validaciones post-carga
+validation_rules:
+  - rule: NOT_NULL
+    fields: [codigo_bip, nombre, estado_ciclo]
+  - rule: FK_EXISTS
+    field: mecanismo_id
+    target: ENT-FIN-MECANISMO
+  - rule: POSITIVE_OR_ZERO
+    field: monto_total
+
+# Métricas esperadas
+expected_metrics:
+  source_rows: 800
+  quarantine_max: 50 # ~6% códigos mal formados
+  target_rows_min: 700
+  target_rows_max: 800
+  null_rate_max:
+    monto_total: 0.20 # Calidad media - más tolerante

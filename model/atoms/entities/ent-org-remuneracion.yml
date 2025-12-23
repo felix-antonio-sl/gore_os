@@ -8,11 +8,33 @@ name: Remuneración
 domain: D-ORG
 category: Transaction
 attributes:
-  - {name: id_remuneracion, type: UUID, key: true}
-  - {name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
-  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
-  - {name: sueldo_base, type: Decimal}
-  - {name: asignaciones, type: Decimal}
-  - {name: descuentos, type: Decimal}
-  - {name: liquido, type: Decimal}
-  - {name: fecha_pago, type: Date}
+  - { name: id_remuneracion, type: UUID, key: true }
+  - { name: funcionario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO }
+  - { name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO }
+  - { name: sueldo_base, type: Decimal }
+  - { name: asignaciones, type: Decimal }
+  - { name: descuentos, type: Decimal }
+  - { name: liquido, type: Decimal }
+  - { name: fecha_pago, type: Date }
+  # === Extensión Cobertura ETL Funcionarios ===
+  - {
+      name: bruto,
+      type: Decimal,
+      nullable: true,
+      description: "Remuneración bruta mensual",
+    }
+  - { name: bonos_incentivos, type: Decimal, nullable: true }
+  - { name: viaticos, type: Decimal, nullable: true }
+  - {
+      name: horas_extras,
+      type: JSON,
+      nullable: true,
+      description: "{diurnas: {monto, horas}, nocturnas: {...}, festivas: {...}}",
+    }
+  - {
+      name: codigos_asignacion,
+      type: JSON,
+      nullable: true,
+      description: "Array de códigos [(33), (37), etc.]",
+    }
+  - { name: observaciones, type: Text, nullable: true }

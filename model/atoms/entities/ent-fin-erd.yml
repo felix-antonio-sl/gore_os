@@ -8,9 +8,29 @@ name: Estrategia Regional de Desarrollo
 domain: D-FIN
 category: Master
 attributes:
-  - {name: id_erd, type: UUID, key: true}
-  - {name: region_id, type: UUID, fk: ENT-LOC-REGION}
-  - {name: periodo_inicio, type: Integer}
-  - {name: periodo_termino, type: Integer}
-  - {name: vision, type: Text}
-  - {name: estado, type: String}
+  - { name: id_erd, type: UUID, key: true }
+  - { name: region_id, type: UUID, fk: ENT-LOC-REGION }
+  - { name: periodo_inicio, type: Integer }
+  - { name: periodo_termino, type: Integer }
+  - { name: vision, type: Text }
+  - { name: estado, type: String }
+  # === Extensión Gaps Auditoría v2.1 ===
+  - {
+      name: indicadores,
+      type: JSON,
+      nullable: true,
+      description: "Array de indicadores del ERD [{nombre, linea_base, meta, unidad}]",
+    }
+  # === Extensión data-gore D_ERD ===
+  - {
+      name: ejes,
+      type: JSON,
+      nullable: true,
+      description: "Ejes estratégicos [{id, nombre, lineamientos[]}]",
+    }
+  - {
+      name: planes_regionales,
+      type: JSON,
+      nullable: true,
+      description: "Planes derivados [{tipo, nombre, estado}]",
+    }

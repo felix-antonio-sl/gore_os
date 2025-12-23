@@ -1,0 +1,36 @@
+---
+_meta:
+  urn: urn:goreos:entity:geo:capa:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-GEO-CAPA
+name: Capa Geoespacial
+domain: D-GEO
+category: Master
+description: "Capa de información geográfica publicable (ISO 19115)"
+attributes:
+  - { name: id_capa, type: UUID, key: true }
+  - { name: nombre, type: String }
+  - {
+      name: tipo,
+      type: String,
+      description: "LIMITES|RIESGOS|INFRAESTRUCTURA|TEMATICA",
+    }
+  - { name: sistema_proyeccion, type: String, default: "EPSG:4326" }
+  - { name: formato, type: String, description: "VECTOR|RASTER" }
+  - {
+      name: geometria_tipo,
+      type: String,
+      description: "POINT|LINE|POLYGON|MULTIPOLYGON",
+    }
+  - { name: fuente, type: String, nullable: true }
+  - { name: fecha_actualizacion, type: Date, nullable: true }
+  - { name: escala, type: String, nullable: true }
+  - { name: estado, type: String, description: "BORRADOR|PUBLICADA|DEPRECADA" }
+  - { name: url_servicio, type: String, nullable: true }
+  - {
+      name: metadatos_iso19115,
+      type: JSON,
+      nullable: true,
+      description: "Metadatos estándar ISO 19115",
+    }

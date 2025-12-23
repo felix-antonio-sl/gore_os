@@ -8,10 +8,17 @@ name: Playbook
 domain: D-SAL
 category: Master
 attributes:
-  - {name: id_playbook, type: UUID, key: true}
-  - {name: poa_id, type: UUID, fk: ENT-SAL-POA}
-  - {name: nombre, type: String}
-  - {name: descripcion, type: Text}
-  - {name: trigger, type: String}
-  - {name: pasos, type: "Array[String]"}
-  - {name: activo, type: Boolean}
+  - { name: id_playbook, type: UUID, key: true }
+  - { name: poa_id, type: UUID, fk: ENT-SAL-POA }
+  - { name: nombre, type: String }
+  - { name: descripcion, type: Text }
+  - { name: trigger, type: String }
+  - { name: pasos, type: "Array[String]" }
+  - { name: activo, type: Boolean }
+  # === Extensión Gaps Auditoría v2.1 ===
+  - {
+      name: ejecuciones,
+      type: JSON,
+      nullable: true,
+      description: "Historial de ejecuciones [{fecha, actor_id, resultado, duracion_minutos}]",
+    }

@@ -1,0 +1,41 @@
+---
+_meta:
+  urn: urn:goreos:entity:data:activo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DATA-ACTIVO
+name: Activo de Información
+domain: D-DATA
+category: Master
+description: "Activo de información institucional (Gobernanza de Datos)"
+attributes:
+  - { name: id_activo, type: UUID, key: true }
+  - { name: nombre, type: String }
+  - {
+      name: tipo,
+      type: String,
+      description: "DATO_MAESTRO|DATO_TRANSACCIONAL|DATO_PERSONAL|DOCUMENTO|SISTEMA",
+    }
+  - {
+      name: clasificacion_c,
+      type: String,
+      description: "PUBLICO|INTERNO|RESERVADO|SECRETO",
+    }
+  - {
+      name: clasificacion_i,
+      type: String,
+      description: "BAJO|MEDIO|ALTO|CRITICO",
+    }
+  - { name: clasificacion_a, type: String, description: "NORMAL|ALTA|CRITICA" }
+  - { name: propietario_id, type: UUID, fk: ENT-ORG-DIVISION }
+  - { name: custodio_id, type: UUID, fk: ENT-ORG-FUNCIONARIO, nullable: true }
+  - { name: sistema_origen, type: String, nullable: true }
+  - {
+      name: ley_aplicable,
+      type: String,
+      nullable: true,
+      description: "Ley 21.719, 19.628, etc.",
+    }
+  - { name: retencion_anios, type: Integer, nullable: true }
+  - { name: estado, type: String, description: "ACTIVO|DEPRECADO|ELIMINADO" }
+  - { name: metadatos, type: JSON, nullable: true }

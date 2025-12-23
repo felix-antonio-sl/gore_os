@@ -1,0 +1,230 @@
+# ETL Mapping: IDIs Legacy (SNI) → GORE_OS IPR
+# Prioridad: CRÍTICA (Inversión SNI)
+# Funtor: Δ*(MLEG-DIM-INICIATIVA) → Σ*(ENT-FIN-IPR)
+# NOTA: Calidad BAJA - Requiere limpieza agresiva
+---
+_meta:
+  urn: urn:goreos:etl:map:ipr_idis:1.0.0
+  type: ETL_Mapping
+  created_at: "2025-12-22"
+  author: Arquitecto-GORE
+
+source:
+  type: staging
+  entity: ENT-MLEG-DIM-INICIATIVA
+  urn: urn:goreos:atom:entity:dim_iniciativa:1.0.0
+  approx_rows: 2800
+  quality_tier: LOW
+  known_issues:
+    - Claves duplicadas
+    - Placeholders (#REF!, -, 0)
+    - Columnas desalineadas en origen
+    - Formatos heterogéneos
+
+target:
+  type: canonical
+  entity: ENT-FIN-IPR
+  urn: urn:goreos:entity:fiscus:ipr:1.1.0
+  domain: D-FIN
+
+# Estrategia de claves
+key_strategy:
+  source_key: cod_unico
+  target_key: id_ipr
+  generation: UUID_V5 # gore_os:ipr:sni:{cod_unico}
+  dedup_policy: MERGE_BY_PRIORITY
+  priority_source: ANALISIS # ANALISIS > MAESTRA > CONSOLIDADO
+
+# Limpieza pre-carga (crítica para calidad BAJA)
+pre_filters:
+  # Rechazar placeholders
+  - field: cod_unico
+    condition: NOT_IN
+    values: ["#REF!", "-", "0", "", "null", "N/A", "s/n"]
+    on_fail: REJECT
+    reject_reason: "Código BIP inválido o placeholder"
+
+  # Validar formato BIP
+  - field: cod_unico
+    condition: REGEX_MATCH
+    pattern: "^[0-9]{8}-[0-9]?$" # ej: 30123456-0
+    on_fail: QUARANTINE
+    quarantine_reason: "Formato BIP no estándar"
+
+  # Rechazar sin nombre
+  - field: nombre_iniciativa
+    condition: NOT_BLANK
+    on_fail: REJECT
+    reject_reason: "Iniciativa sin nombre"
+
+# Mapeo de atributos
+field_mappings:
+  - source: cod_unico
+    target: codigo_bip
+    transform: NORMALIZE_BIP
+    # Normaliza variantes: 30123456 → 30123456-0
+
+  - source: nombre_iniciativa
+    target: nombre
+    transform: TRIM_NORMALIZE
+
+  - source: nombre_iniciativa
+    target: descripcion
+    transform: COPY
+
+  - source: null
+    target: tipo
+    transform: DERIVE_FROM_BIP
+    # Los primeros dígitos del BIP indican tipo
+    derive_logic: |
+      CASE SUBSTRING(codigo_bip, 1, 2)
+        WHEN '30' THEN 'PROYECTO'
+        WHEN '31' THEN 'PROGRAMA'
+        WHEN '40' THEN 'ESTUDIO_BASICO'
+        ELSE 'PROYECTO'
+      END
+
+  - source: null
+    target: mecanismo_id
+    transform: LOOKUP_CONSTANT
+    lookup:
+      entity: ENT-FIN-MECANISMO
+      match_field: codigo
+      match_value: FNDR_TRADICIONAL
+      return_field: id_mecanismo
+
+  # Monto viene de FACT (join posterior)
+  - source: null
+    target: monto_total
+    transform: LOOKUP_AGGREGATE
+    lookup:
+      entity: MLEG-FACT-LINEA-PRESUPUESTARIA
+      match_field: cod_unico
+      aggregate: SUM
+      sum_field: gasto_vigente
+    fallback: 0
+
+  # Comuna viene de otro join
+  - source: null
+    target: comuna_id
+    transform: NULL
+    note: "Requiere enriquecimiento desde MAESTRA"
+
+  - source: etapa
+    target: estado_ciclo
+    transform: ENUM_MAP
+    enum_map:
+      PREFACTIBILIDAD: FORMULACION
+      FACTIBILIDAD: FORMULACION
+      DISEÑO: APROBADO
+      EJECUCION: EJECUCION
+      TERMINADO: TERMINADO
+    default: FORMULACION
+
+  - source: etapa
+    target: etapa_actual
+    transform: ENUM_MAP
+    enum_map:
+      PREFACTIBILIDAD: PREFACTIBILIDAD
+      FACTIBILIDAD: FACTIBILIDAD
+      DISEÑO: DISEÑO
+      EJECUCION: EN_EJECUCION
+      TERMINADO: CIERRE
+    default: PERFIL
+
+  - source: fecha_creacion
+    target: fecha_rs
+    transform: PARSE_DATE
+    formats: ["YYYY-MM-DD", "DD-MM-YYYY", "DD/MM/YY"]
+    null_handling: USE_EPOCH # 1970-01-01 para fechas faltantes
+
+  - source: estado_activo
+    target: vigencia
+    transform: BOOLEAN_TO_ENUM
+    true_value: VIGENTE
+    false_value: INACTIVO
+
+  # --- metadata_mecanismo ---
+  - source: _build_metadata
+    target: metadata_mecanismo
+    transform: JSON_BUILD
+    structure:
+      fuente_legacy: "IDIS"
+      fuente_archivo: "ANALISIS"
+      cod_unico_original: "{cod_unico}"
+      fecha_extraccion: "{{NOW}}"
+      quality_score: "{{QUALITY_SCORE}}"
+
+# Campos target con defaults
+unmapped_targets:
+  - field: tipologia
+    default: null
+    note: "Enriquecimiento posterior desde SNI"
+  - field: origen
+    default: SNI
+  - field: fuente
+    default: "FNDR"
+  - field: sub_estado
+    source: null
+  - field: rate_actual
+    source: null
+    note: "Requiere enriquecimiento desde RATE API"
+  - field: fecha_rate
+    source: null
+  - field: n_rates_emitidos
+    default: null
+  - field: rate_historico
+    default: null
+  - field: marco_logico
+    default: null
+    note: "Solo aplica para PPR"
+
+# Joins necesarios (data quality enrichment)
+enrichment_joins:
+  - name: series_financieras
+    source_entity: MLEG-FACT-LINEA-PRESUPUESTARIA
+    join_key: cod_unico
+    target_fields:
+      - source_agg: SUM(gasto_vigente)
+        target: monto_total
+      - source_agg: MAX(anio)
+        target: _ultimo_anio_ejecucion
+
+  - name: localizacion
+    source_entity: MLEG-MAESTRA-DIPIR
+    join_key: codigo_bip
+    target_fields:
+      - source: comuna
+        target: comuna_id
+        transform: LOOKUP
+
+# Dependencias
+dependencies:
+  pre_load:
+    - entity: ENT-FIN-MECANISMO
+      ensure_exists: "FNDR_TRADICIONAL"
+  parallel_load:
+    - entity: MLEG-FACT-LINEA-PRESUPUESTARIA
+      note: "Requerido para monto_total"
+
+# Validaciones post-carga
+validation_rules:
+  - rule: NOT_NULL
+    fields: [codigo_bip, nombre]
+  - rule: UNIQUE
+    field: codigo_bip
+    scope: GLOBAL
+  - rule: FK_EXISTS
+    field: mecanismo_id
+    target: ENT-FIN-MECANISMO
+
+# Métricas esperadas (tolerantes por calidad baja)
+expected_metrics:
+  source_rows: 2800
+  reject_max: 300 # ~10% rechazos por placeholders
+  quarantine_max: 200 # ~7% formato no estándar
+  target_rows_min: 2000
+  target_rows_max: 2500
+  null_rate_max:
+    monto_total: 0.30 # Alta tolerancia
+    comuna_id: 0.50 # Muy alta - enriquecimiento posterior

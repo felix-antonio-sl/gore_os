@@ -1,28 +1,102 @@
 _meta:
-  urn: urn:goreos:composition:domain:d_fin:1.0.0
+  urn: urn:goreos:compositions:domain:d_fin:1.0.0
   type: DomainComposition
-  generated_at: '2025-12-21'
+  generated_at: "2025-12-22"
 id: D-FIN
-name: Dominio D-FIN
+name: Dominio Finanzas
+semantics:
+  purpose: Gestión integral 360° del ciclo de vida de las inversiones públicas regionales, desde la captación de oportunidades hasta la evaluación ex-post.
+  vision: El GORE opera como gestor integral del desarrollo regional; capta oportunidades, administra capital público para generar retorno social, cultiva relaciones con ejecutores y evalúa continuamente el impacto.
+  governance:
+    triangulo_integracion:
+      description: Sincronización estricta entre Financiamiento (D-FIN), Ejecución Física (D-EJEC) y Ejecución Presupuestaria (ahora consolidado en D-FIN).
+      rule: "Todo Estado de Pago validado en D-EJEC debe tener un CDP y Compromiso previo en D-FIN."
+    flujos_pago:
+      patron_A: "Ejecución Directa (IDI, FRIL): Ejecuta → EP → Paga"
+      patron_B: "Transferencias (PPR, 8%): Paga → Ejecuta → Rinde"
+  architecture:
+    layers:
+      tactica: "Núcleo de Negocio (Gestión de Inversión)"
+      operativa: "Soporte Administrativo (Contabilidad, Abastecimiento)"
+    integrations:
+      - system: SYS-SIGFE
+        role: "Registro oficial de ejecución presupuestaria (DS12)"
+      - system: SYS-BIP-SNI
+        role: "Consulta de estado RS de iniciativas (API MDSF)"
+      - system: SYS-SISREC
+        role: "Control de rendiciones (CGR)"
 aggregation:
   modules:
-  - urn:goreos:atom:module:d_fin_alertas_360:1.0.0
-  - urn:goreos:atom:module:d_fin_capital_base:1.0.0
-  - urn:goreos:atom:module:d_fin_captaci_n_de_oportunidades:1.0.0
-  - urn:goreos:atom:module:d_fin_gesti_n_de_ejecutores:1.0.0
-  - urn:goreos:atom:module:d_fin_mesa_de_ayuda:1.0.0
-  - urn:goreos:atom:module:d_fin_portafolio_estrat_gico:1.0.0
-  - urn:goreos:atom:module:d_fin_portafolio_ipr:1.0.0
-  - urn:goreos:atom:module:d_fin_presupuesto_regional:1.0.0
-  - urn:goreos:atom:module:d_fin_rendiciones:1.0.0
-  - urn:goreos:atom:module:d_fin_selector_de_mecanismos:1.0.0
-  processes: []
-  entities: []
+    - urn:goreos:atom:module:d_fin_alertas_360:1.0.0
+    - urn:goreos:atom:module:d_fin_capital_base:1.0.0
+    - urn:goreos:atom:module:d_fin_captaci_n_de_oportunidades:1.0.0
+    - urn:goreos:atom:module:d_fin_gesti_n_de_ejecutores:1.0.0
+    - urn:goreos:atom:module:d_fin_mesa_de_ayuda:1.0.0
+    - urn:goreos:atom:module:d_fin_portafolio_estrat_gico:1.0.0
+    - urn:goreos:atom:module:d_fin_portafolio_ipr:1.0.0
+    - urn:goreos:atom:module:d_fin_presupuesto_regional:1.0.0
+    - urn:goreos:atom:module:d_fin_rendiciones:1.0.0
+    - urn:goreos:atom:module:d_fin_selector_de_mecanismos:1.0.0
+    - urn:goreos:atom:module:d_back_abastecimiento_y_compras:1.0.0
+    - urn:goreos:atom:module:d_back_activo_fijo:1.0.0
+    - urn:goreos:atom:module:d_back_contabilidad_operativa:1.0.0
+    - urn:goreos:atom:module:d_back_flota_vehicular:1.0.0
+    - urn:goreos:atom:module:d_back_inventarios_y_bodega:1.0.0
+  processes:
+    - urn:goreos:atom:process:d_back_d04:1.0.0
+    - urn:goreos:atom:process:d_back_d05:1.0.0
+    - urn:goreos:atom:process:d_back_d06:1.0.0
+    - urn:goreos:atom:process:d_back_d07.b:1.0.0
+    - urn:goreos:atom:process:d_back_d07:1.0.0
+    - urn:goreos:atom:process:d_back_d08:1.0.0
+    - urn:goreos:atom:process:d_fin_ejecutores_p4_bis:1.0.0
+    - urn:goreos:atom:process:d_fin_ejecutores_p8:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p1:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p2:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p3:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p4:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p4_bis:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p5:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p6:1.0.0
+    - urn:goreos:atom:process:d_fin_ipr_core_p7:1.0.0
+  entities:
+    - urn:goreos:atom:entity:d_back_cartola_bancaria:1.0.0
+    - urn:goreos:atom:entity:d_back_compra_gil:1.0.0
+    - urn:goreos:atom:entity:d_back_compromiso:1.0.0
+    - urn:goreos:atom:entity:d_back_conciliaci_n:1.0.0
+    - urn:goreos:atom:entity:d_back_deuda_flotante:1.0.0
+    - urn:goreos:atom:entity:d_back_devengado:1.0.0
+    - urn:goreos:atom:entity:d_back_fondos_globales:1.0.0
+    - urn:goreos:atom:entity:d_back_pac_compras:1.0.0
+    - urn:goreos:atom:entity:d_back_partida_pendiente:1.0.0
+    - urn:goreos:atom:entity:d_back_tem_34_07:1.0.0
+    - urn:goreos:atom:entity:d_fin_ejecutores_calificacionejecutor:1.0.0
+    - urn:goreos:atom:entity:d_fin_ejecutores_interaccionejecutor:1.0.0
+    - urn:goreos:atom:entity:d_fin_ejecutores_relacionejecutor:1.0.0
+    - urn:goreos:atom:entity:d_fin_ipr_core_actoripr:1.0.0
+    - urn:goreos:atom:entity:d_fin_ipr_core_evaluacionipr:1.0.0
+    - urn:goreos:atom:entity:d_fin_ipr_core_proyecto_seguridad:1.0.0
+    - urn:goreos:atom:entity:d_fin_portafolio_alertaciclo:1.0.0
+    - urn:goreos:atom:entity:d_fin_portafolio_faseembudo:1.0.0
+    - urn:goreos:atom:entity:d_fin_portafolio_oportunidad:1.0.0
+    - urn:goreos:atom:entity:d_fin_portafolio_puntajeimpacto:1.0.0
+    - urn:goreos:atom:entity:d_fin_portafolio_saludipr:1.0.0
+    - urn:goreos:atom:entity:d_fin_portafolio_teoriacambio:1.0.0
+    - urn:goreos:atom:entity:d_fin_presupuesto_asignacionpresupuestaria:1.0.0
+    - urn:goreos:atom:entity:d_fin_presupuesto_compromiso:1.0.0
+    - urn:goreos:atom:entity:d_fin_presupuesto_devengo:1.0.0
+    - urn:goreos:atom:entity:d_fin_presupuesto_modificacionpresupuestaria:1.0.0
+    - urn:goreos:atom:entity:d_fin_rendiciones_informerendicion:1.0.0
+    - urn:goreos:atom:entity:d_fin_rendiciones_observacion:1.0.0
+    - urn:goreos:atom:entity:d_fin_rendiciones_rendicion:1.0.0
+    - urn:goreos:atom:entity:d_fin_rendiciones_transferencia:1.0.0
   capabilities:
-  - urn:goreos:atom:capability:cap_fin_dash_001:1.0.0
-  - urn:goreos:atom:capability:cap_fin_rend_001:1.0.0
+    - urn:goreos:atom:capability:cap_fin_dash_001:1.0.0
+    - urn:goreos:atom:capability:cap_fin_rend_001:1.0.0
+    - urn:goreos:atom:capability:cap_compras_001:1.0.0
+    - urn:goreos:atom:capability:cap_pagos_001:1.0.0
 stats:
-  modules_count: 10
-  processes_count: 0
-  entities_count: 0
-  capabilities_count: 2
+  modules_count: 15
+  processes_count: 16
+  entities_count: 30
+  capabilities_count: 4

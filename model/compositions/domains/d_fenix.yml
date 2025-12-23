@@ -1,17 +1,36 @@
 _meta:
-  urn: urn:goreos:composition:domain:d_fenix:1.0.0
+  urn: urn:goreos:compositions:domain:d_fenix:1.0.0
   type: DomainComposition
-  generated_at: '2025-12-21'
+  generated_at: "2025-12-22"
 id: D-FENIX
-name: Dominio D-FENIX
+name: Dominio Fénix
+semantics:
+  purpose: Unidad de intervención rápida para diagnosticar y resolver situaciones críticas o procesos estancados.
+  vision: Capacidad de "sistema inmune" organizacional que actúa cuando los flujos regulares fallan o se degradan.
+  governance:
+    triggers:
+      H_gore_critico: "Salud institucional bajo umbral crítico (<50)."
+      Estancamiento: "Procesos clave sin avance por tiempo prolongado (ej. IPR > 90 días)."
+      Emergencia: "Crisis regionales o fallas catastróficas."
+  architecture:
+    role: "Intervención y Recuperación (Transversal)"
+    levels:
+      I: "Contingencia Crítica (Inmediata)"
+      II: "Procesos Estancados (Programada)"
+      III: "Aceleración Estratégica (A demanda)"
+    process_map:
+      P1: "Activación y Diagnóstico Flash"
+      P2: "Ejecución de Intervención (Fuerza de Tarea)"
 aggregation:
   modules: []
-  processes: []
+  processes:
+    - urn:goreos:atom:process:fenix_p1:1.0.0
+    - urn:goreos:atom:process:fenix_p2:1.0.0
   entities: []
   capabilities:
-  - urn:goreos:atom:capability:cap_fenix_001:1.0.0
+    - urn:goreos:atom:capability:cap_fenix_001:1.0.0
 stats:
   modules_count: 0
-  processes_count: 0
+  processes_count: 2
   entities_count: 0
   capabilities_count: 1

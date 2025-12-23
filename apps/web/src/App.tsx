@@ -4,6 +4,7 @@ import { httpBatchLink } from '@trpc/client';
 import { useKeycloak } from '@react-keycloak/web';
 import { trpc } from './trpc';
 import { Button } from '@gore-os/ui';
+import { UiShowcase } from './UiShowcase';
 
 function LogViewer() {
   const [message, setMessage] = useState('');
@@ -93,8 +94,33 @@ function AppContent() {
     ],
   });
 
-  if (!initialized) {
-    return <div className="min-h-screen flex items-center justify-center">Cargando autenticación...</div>;
+  const isUiShowcase = window.location.hash === "#ui";
+
+  if (!initialized && !isUiShowcase) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center space-y-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gore-brand"></div>
+        <div className="text-gore-text font-medium">Cargando autenticación...</div>
+        <div className="text-xs text-gray-400">Verificando conexión con Keycloak (localhost:8080)</div>
+        <button 
+          onClick={() => {
+            window.location.hash = "#ui";
+            window.location.reload();
+          }} 
+          className="mt-8 text-sm text-blue-600 underline"
+        >
+          Saltar a UI Showcase (Sin Autenticación)
+        </button>
+      </div>
+    );
+  }
+
+  if (isUiShowcase) {
+    return (
+      <div className="min-h-screen bg-gray-100">
+        <UiShowcase />
+      </div>
+    );
   }
 
   if (!keycloak.authenticated) {
@@ -104,8 +130,13 @@ function AppContent() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <div className="min-h-screen bg-gray-100 py-12">
-          <LogViewer />
+        <div className="min-h-screen bg-gray-100">
+            <div className="py-12">
+                <LogViewer />
+                <div className="text-center mt-8">
+                    <a href="#ui" className="text-blue-600 underline hover:text-blue-800" onClick={() => window.location.reload()}>Ver UI Showcase (GORE UI Kit 4.0)</a>
+                </div>
+            </div>
         </div>
       </QueryClientProvider>
     </trpc.Provider>

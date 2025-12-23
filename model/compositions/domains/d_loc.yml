@@ -1,0 +1,63 @@
+_meta:
+  urn: urn:goreos:compositions:domain:d_loc:1.0.0
+  type: DomainComposition
+  generated_at: "2025-12-22"
+id: D-LOC
+name: Dominio Territorial
+semantics:
+  purpose: Gestionar la infraestructura de datos espaciales (IDE) y la inteligencia territorial para seguridad y ordenamiento.
+  vision: Toma de decisiones informada por datos georreferenciados de alta calidad e interoperables.
+  governance:
+    principles:
+      IDE: "Infraestructura de Datos Espaciales: Datos únicos, accesibles y estandarizados (OGC)."
+      Observabilidad: "Monitoreo activo de brechas territoriales y seguridad pública."
+    standards:
+      - "ISO 19115 (Metadatos)"
+      - "OGC WMS/WFS (Interoperabilidad)"
+  architecture:
+    role: "Habilitante Geoespacial"
+    layers:
+      ide: "Servicios de mapas y catálogo de datos"
+      analytics: "Mapas de calor de inversión y seguridad"
+      support: "Asistencia urbanística a DOMs municipales"
+aggregation:
+  modules:
+    - urn:goreos:atom:module:d_terr_anal_tica_territorial:1.0.0
+    - urn:goreos:atom:module:d_terr_asistencia_urban_stica_dom:1.0.0
+    - urn:goreos:atom:module:d_terr_gesti_n_y_gobernanza_territorial:1.0.0
+    - urn:goreos:atom:module:d_terr_ide_regional:1.0.0
+    - urn:goreos:atom:module:d_terr_inteligencia_estrat_gica_visualizaci_n:1.0.0
+    - urn:goreos:atom:module:d_seg_cies_uble:1.0.0
+    - urn:goreos:atom:module:d_seg_evidencias_digitales:1.0.0
+    - urn:goreos:atom:module:d_seg_gobernanza_y_transparencia:1.0.0
+    - urn:goreos:atom:module:d_seg_prevenci_n_y_apoyo_a_v_ctimas:1.0.0
+  processes:
+    - urn:goreos:atom:process:d_terr_p1:1.0.0
+    - urn:goreos:atom:process:d_terr_p2:1.0.0
+    - urn:goreos:atom:process:d_terr_p3:1.0.0
+    - urn:goreos:atom:process:d_terr_p4:1.0.0
+    - urn:goreos:atom:process:d_terr_p5:1.0.0
+    - urn:goreos:atom:process:d_terr_p6:1.0.0
+    - urn:goreos:atom:process:d_seg_p1:1.0.0
+    - urn:goreos:atom:process:d_seg_p2:1.0.0
+    - urn:goreos:atom:process:d_seg_p3:1.0.0
+    - urn:goreos:atom:process:d_seg_p4:1.0.0
+  entities:
+    - urn:goreos:atom:entity:d_terr_brechaerd:1.0.0
+    - urn:goreos:atom:entity:d_terr_capageoespacial:1.0.0
+    - urn:goreos:atom:entity:d_terr_indicadorterritorial:1.0.0
+    - urn:goreos:atom:entity:d_terr_metadato:1.0.0
+    - urn:goreos:atom:entity:d_terr_vistaterritorialipr:1.0.0
+    - urn:goreos:atom:entity:d_terr_zonariesgo:1.0.0
+    - urn:goreos:atom:entity:d_seg_accionrespuesta:1.0.0
+    - urn:goreos:atom:entity:d_seg_evidencia:1.0.0
+    - urn:goreos:atom:entity:d_seg_incidente:1.0.0
+    - urn:goreos:atom:entity:d_seg_proyecto_seguridad:1.0.0
+  capabilities:
+    - urn:goreos:atom:capability:cap_terr_map_001:1.0.0
+    - urn:goreos:atom:capability:cap_seg_001:1.0.0
+stats:
+  modules_count: 9
+  processes_count: 10
+  entities_count: 10
+  capabilities_count: 2

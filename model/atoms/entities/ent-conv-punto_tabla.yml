@@ -1,0 +1,48 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:punto_tabla:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-CONV-PUNTO_TABLA
+name: Punto de Tabla
+domain: D-CONV
+category: Transaction
+description: "Punto de agenda en una sesión, con vinculación polimórfica a objetos tratados"
+attributes:
+  - { name: id_punto, type: UUID, key: true }
+  - { name: sesion_id, type: UUID, fk: ENT-CONV-SESION }
+  - { name: numero, type: Integer }
+  - { name: tipo, type: String, description: "INFORMATIVO|DECISIVO|DISCUSION" }
+  - { name: materia, type: Text }
+  - {
+      name: estado,
+      type: String,
+      description: "PENDIENTE|TRATADO|APLAZADO|RETIRADO",
+    }
+  - {
+      name: presentador_id,
+      type: UUID,
+      fk: ENT-ORG-FUNCIONARIO,
+      nullable: true,
+    }
+  - {
+      name: tiempo_estimado,
+      type: Integer,
+      nullable: true,
+      description: "Minutos",
+    }
+
+  # === Polimorfismo Contextual (Absorbe Para-Titi ContextoPuntoCrisis) ===
+  - {
+      name: objeto_tipo,
+      type: String,
+      nullable: true,
+      description: "ENT-FIN-IPR|ENT-EJE-PROBLEMA|ENT-CONV-COMPROMISO",
+    }
+  - { name: objeto_id, type: UUID, nullable: true }
+  - {
+      name: notas,
+      type: Text,
+      nullable: true,
+      description: "Resumen de la discusión o contexto",
+    }

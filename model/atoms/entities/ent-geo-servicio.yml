@@ -1,0 +1,23 @@
+---
+_meta:
+  urn: urn:goreos:entity:geo:servicio:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-GEO-SERVICIO
+name: Servicio Geoespacial OGC
+domain: D-GEO
+category: Reference
+description: "Servicio OGC publicado (WMS, WFS, WMTS, CSW)"
+attributes:
+  - { name: id_servicio, type: UUID, key: true }
+  - { name: tipo, type: String, description: "WMS|WFS|WCS|WMTS|CSW" }
+  - { name: url_base, type: String }
+  - { name: version, type: String }
+  - { name: titulo, type: String }
+  - {
+      name: capas,
+      type: JSON,
+      description: "Array de ENT-GEO-CAPA.id vinculadas",
+    }
+  - { name: estado, type: String, description: "ACTIVO|INACTIVO" }
+  - { name: autenticacion, type: Boolean, default: false }

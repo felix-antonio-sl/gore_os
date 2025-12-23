@@ -5,13 +5,28 @@ import keycloak from './keycloak';
 import App from './App';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ReactKeycloakProvider 
-      authClient={keycloak}
-      initOptions={{ onLoad: 'login-required', checkLoginIframe: false }}
-    >
-      <App />
-    </ReactKeycloakProvider>
-  </React.StrictMode>
-);
+import { UiShowcase } from './UiShowcase';
+
+const isUiShowcase = window.location.hash === "#ui";
+
+const rootElement = document.getElementById('root')!;
+const root = ReactDOM.createRoot(rootElement);
+
+if (isUiShowcase) {
+  root.render(
+    <React.StrictMode>
+      <UiShowcase />
+    </React.StrictMode>
+  );
+} else {
+  root.render(
+    <React.StrictMode>
+      <ReactKeycloakProvider 
+        authClient={keycloak}
+        initOptions={{ onLoad: 'login-required', checkLoginIframe: false }}
+      >
+        <App />
+      </ReactKeycloakProvider>
+    </React.StrictMode>
+  );
+}

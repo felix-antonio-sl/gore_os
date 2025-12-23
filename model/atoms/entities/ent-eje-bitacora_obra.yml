@@ -1,0 +1,28 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:bitacora-obra:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-BITACORA_OBRA
+name: Bitácora de Obra
+domain: D-EJE
+category: Transaction
+attributes:
+  - { name: id_bitacora, type: UUID, key: true }
+  - { name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO }
+  - { name: fecha_registro, type: DateTime }
+  - {
+      name: tipo_registro,
+      type: String,
+      description: "INSPECCION|AVANCE|OBSERVACION|RECEPCION",
+    }
+  - { name: porcentaje_avance, type: Decimal, nullable: true }
+  - { name: observaciones, type: Text }
+  - { name: inspector_id, type: UUID, fk: ENT-ORG-FUNCIONARIO, nullable: true }
+  - { name: fotos_url, type: String, nullable: true }
+  - {
+      name: georeferencia,
+      type: JSON,
+      nullable: true,
+      description: "lat, lon de inspección",
+    }

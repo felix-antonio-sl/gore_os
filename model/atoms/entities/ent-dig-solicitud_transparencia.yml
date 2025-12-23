@@ -1,0 +1,32 @@
+---
+_meta:
+  urn: urn:goreos:entity:digital:solicitud-transparencia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-DIG-SOLICITUD_TRANSPARENCIA
+name: Solicitud de Acceso a Información
+domain: D-DIG
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+attributes:
+  - { name: id_solicitud, type: UUID, key: true }
+  - { name: numero_folio, type: String }
+  - { name: fecha_ingreso, type: DateTime }
+  - { name: solicitante_nombre, type: String }
+  - { name: solicitante_rut, type: String, nullable: true }
+  - { name: solicitante_email, type: String }
+  - {
+      name: tipo_solicitud,
+      type: String,
+      description: "ACCESO_INFO|DATOS_PERSONALES|OTRO",
+    }
+  - { name: descripcion_solicitud, type: Text }
+  - { name: plazo_legal, type: Date }
+  - { name: fecha_respuesta, type: DateTime, nullable: true }
+  - {
+      name: estado,
+      type: String,
+      description: "INGRESADA|EN_PROCESO|RESPONDIDA|AMPARO",
+    }
+  - { name: resolucion, type: String, nullable: true }
+  - { name: derivacion_id, type: UUID, fk: ENT-ORG-DIVISION, nullable: true }

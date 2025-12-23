@@ -1,0 +1,25 @@
+---
+_meta:
+  urn: urn:goreos:entity:actio:cuota:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-CUOTA
+name: Cuota de Pago
+domain: D-EJE
+category: Transaction
+description: "Programación financiera de pagos asociados a convenios"
+attributes:
+  - { name: id_cuota, type: UUID, key: true }
+  - { name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO }
+  - { name: numero, type: Integer }
+  - { name: monto, type: Decimal }
+  - { name: es_anticipo, type: Boolean, default: false }
+  - { name: fecha_programada, type: Date }
+  - {
+      name: estado,
+      type: String,
+      description: "PENDIENTE|EN_TRAMITE|PAGADA|ATRASADA",
+    }
+  - { name: fecha_pago_real, type: Date, nullable: true }
+  - { name: n_comprobante, type: String, nullable: true }
+  - { name: observaciones, type: Text, nullable: true }

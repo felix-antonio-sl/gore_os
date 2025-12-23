@@ -1,0 +1,41 @@
+---
+_meta:
+  urn: urn:goreos:entity:security:incidente:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SEG-INCIDENTE
+name: Incidente de Seguridad
+domain: D-SEG
+category: Transaction
+description: "Evento de seguridad regional (delito, emergencia, desastre)"
+attributes:
+  - { name: id_incidente, type: UUID, key: true }
+  - {
+      name: tipo,
+      type: String,
+      description: "DELITO|EMERGENCIA_MEDICA|INCENDIO|ACCIDENTE|DESASTRE|OTRO",
+    }
+  - { name: prioridad, type: String, description: "CRITICO|ALTO|MEDIO|BAJO" }
+  - {
+      name: estado,
+      type: String,
+      description: "DETECTADO|EN_CLASIFICACION|ESCALADO|EN_RESPUESTA|CONTROLADO|CERRADO",
+    }
+  - { name: fecha_deteccion, type: DateTime }
+  - { name: fecha_cierre, type: DateTime, nullable: true }
+  - { name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA }
+  - {
+      name: ubicacion_geo,
+      type: String,
+      nullable: true,
+      description: "Coordenadas WKT",
+    }
+  - { name: descripcion, type: Text }
+  - {
+      name: fuente_deteccion,
+      type: String,
+      description: "CAMARA|DENUNCIA|SENSOR|PATRULLA",
+    }
+  - { name: camaras_asociadas, type: JSON, nullable: true }
+  - { name: protocolo_aplicado, type: String, nullable: true }
+  - { name: judicializado, type: Boolean, default: false }

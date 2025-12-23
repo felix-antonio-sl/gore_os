@@ -1,0 +1,214 @@
+---
+# Datos semilla: Configuración de Mecanismos IPR
+# Estos registros definen la configuración y reglas de validación para cada mecanismo
+_meta:
+  type: Seed
+  entity: ENT-FIN-MECANISMO
+  version: 1.0.0
+
+registros:
+  - id_mecanismo: mec-ppr-transfer
+    codigo: PPR_TRANSFER
+    nombre: Transferencia PPR a Entidades Públicas
+    tipo: PROGRAMA
+    normativa: Glosa 06, LDOP, Ley 19.862
+    activo: true
+    glosa: "06"
+    subtitulo: 24
+    monto_min: null
+    monto_max: null
+    requiere_rate: false
+    categorias_validas: null
+    schema_metadata:
+      type: object
+      properties:
+        entidad_ejecutora_rut: { type: string, pattern: "^[0-9]{7,8}-[0-9Kk]$" }
+        itf_fecha: { type: string, format: date }
+        metodologia_mml: { type: boolean }
+        componentes_mml: { type: array, items: { type: string } }
+
+  - id_mecanismo: mec-idi-sni
+    codigo: IDI_SNI
+    nombre: Iniciativa de Inversión SNI
+    tipo: PROYECTO
+    normativa: NIP, Metodologías MDSF, Circular 33
+    activo: true
+    glosa: null
+    subtitulo: 31
+    monto_min: null
+    monto_max: null
+    requiere_rate: true
+    categorias_validas: null
+    schema_metadata:
+      type: object
+      properties:
+        nivel_proporcionalidad: { type: integer, minimum: 0, maximum: 3 }
+        tipo_idi:
+          type: string
+          enum: [ESTUDIO_BASICO, PROYECTO, PROGRAMA_INVERSION]
+        van_social: { type: number }
+        tir_social: { type: number }
+
+  - id_mecanismo: mec-programa-gore
+    codigo: PROGRAMA_GORE
+    nombre: Programa de Ejecución Directa GORE
+    tipo: PROGRAMA
+    normativa: Glosa 06, Normas MML DIPRES
+    activo: true
+    glosa: "06"
+    subtitulo: 24
+    monto_min: null
+    monto_max: null
+    requiere_rate: true
+    categorias_validas: null
+    schema_metadata:
+      type: object
+      properties:
+        fase_evaluacion:
+          type: string
+          enum: [PERFIL, DISENO, RF, OT, FI]
+        calif_dipres: { type: string }
+        componentes_mml: { type: array, items: { type: string } }
+
+  - id_mecanismo: mec-fril
+    codigo: FRIL
+    nombre: Fondo Regional de Iniciativa Local
+    tipo: PROYECTO
+    normativa: Glosa 12, Instructivo FRIL
+    activo: true
+    glosa: "12"
+    subtitulo: 33
+    monto_min: 10000000 # 10 M$
+    monto_max: 306464805 # 5000 UTM
+    requiere_rate: true
+    categorias_validas:
+      - A1_INTEGRACION_TERRITORIAL_RURAL
+      - A2_AGUA_POTABLE_RURAL
+      - A3_VIAL_RURAL
+      - B1_EDIFICACION_PUBLICA
+      - B2_ESPACIO_PUBLICO
+      - B3_VIAL_URBANO
+      - B4_ALUMBRADO
+      - C1_SOCIAL
+      - C2_ECONOMICO
+      - D1_MEDIO_AMBIENTE
+    schema_metadata:
+      type: object
+      properties:
+        categoria_fril: { type: string }
+        subcategoria_fril: { type: string }
+        comuna_postulante: { type: string }
+
+  - id_mecanismo: mec-frpd
+    codigo: FRPD
+    nombre: Fondo Regional Productividad y Desarrollo
+    tipo: MIXTO
+    normativa: Royalty Minero, Glosa 13
+    activo: true
+    glosa: "13"
+    subtitulo: 33
+    monto_min: null
+    monto_max: null
+    requiere_rate: true
+    categorias_validas:
+      - INVESTIGACION
+      - INNOVACION
+      - EMPRENDIMIENTO
+      - TRANSFERENCIA
+    schema_metadata:
+      type: object
+      properties:
+        pilar:
+          type: string
+          enum: [INVESTIGACION, INNOVACION, EMPRENDIMIENTO, TRANSFERENCIA]
+        sector: { type: string }
+        foco: { type: string }
+        caso:
+          type: string
+          enum: [CASO_1_CTCI, CASO_2_FOMENTO]
+
+  - id_mecanismo: mec-subvencion-8
+    codigo: SUBVENCION_8
+    nombre: Concurso Vinculación con la Comunidad 8%
+    tipo: SUBVENCION
+    normativa: Glosa 07, Ley FNDR
+    activo: true
+    glosa: "07"
+    subtitulo: 24
+    monto_min: 500000
+    monto_max: 15000000
+    requiere_rate: false
+    categorias_validas:
+      - CULTURA
+      - SOCIAL_INCLUSION
+      - EQUIDAD_GENERO
+      - DEPORTE
+      - ADULTO_MAYOR
+      - MEDIO_AMBIENTE
+      - SEGURIDAD_CIUDADANA
+    schema_metadata:
+      type: object
+      properties:
+        fondo:
+          type: string
+          enum:
+            [
+              CULTURA,
+              SOCIAL,
+              GENERO,
+              DEPORTE,
+              ADULTO_MAYOR,
+              MEDIOAMBIENTE,
+              SEGURIDAD,
+            ]
+        area: { type: string }
+        tipo_postulante:
+          type: string
+          enum: [ORGANIZACION_BASE, INSTITUCION_PRIVADA, MUNICIPALIDAD]
+
+  - id_mecanismo: mec-circ-33
+    codigo: CIRC_33
+    nombre: Iniciativas Circular 33
+    tipo: MIXTO
+    normativa: Oficio Circular N° 33
+    activo: true
+    glosa: null
+    subtitulo: 31
+    monto_min: null
+    monto_max: null
+    requiere_rate: true
+    categorias_validas:
+      - ESTUDIO_GIRO
+      - ANF_ADQUISICION
+      - ANF_REPOSICION
+      - CONSERVACION_CAMINOS
+      - CONSERVACION_INFRAESTRUCTURA
+      - EMERGENCIA
+    schema_metadata:
+      type: object
+      properties:
+        categoria:
+          type: string
+          enum:
+            [
+              ESTUDIO_GIRO,
+              ANF_ADQUISICION,
+              ANF_REPOSICION,
+              CONSERVACION_CAMINOS,
+              CONSERVACION_INFRA,
+              EMERGENCIA,
+            ]
+        item_anf:
+          type: string
+          enum:
+            [
+              TERRENOS,
+              EDIFICIOS,
+              VEHICULOS,
+              MOBILIARIO,
+              MAQUINAS,
+              EQUIPOS_INFO,
+              SOFTWARE,
+            ]
+        conservacion_30pct: { type: boolean }
+        vida_util_anos: { type: integer }

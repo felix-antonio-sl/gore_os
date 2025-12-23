@@ -1,0 +1,44 @@
+_meta:
+  urn: urn:goreos:compositions:domain:d_sal:1.0.0
+  type: DomainComposition
+  generated_at: "2025-12-22"
+id: D-SAL
+name: Dominio Salud Institucional
+semantics:
+  purpose: Monitorear y asegurar la salud operativa (H_gore) y el control de gestión táctico para garantizar el cumplimiento de objetivos.
+  vision: "Torre de control" que asegura la alineación entre estrategia (ERD) y operación diaria (POA, Presupuesto).
+  governance:
+    indicators:
+      H_gore: "Índice sintético de salud táctica (0-100). Gatilla intervención si < 60."
+      OKRs: "Objetivos y Resultados Clave para alineamiento táctico."
+    control:
+      UCI: "Unidad de Control Interno: Gestión de riesgos y cumplimiento CGR."
+  architecture:
+    role: "Control Táctico y Operaciones"
+    process_map:
+      SCG: "Ciclo de Control de Gestión (POA, Reportes)"
+      Playbooks: "Ejecución de protocolos estandarizados ante incidentes"
+      Mejora: "Ciclo PDCA para optimización operativa"
+aggregation:
+  modules:
+    - urn:goreos:atom:module:d_gestion_h_gore_salud_institucional:1.0.0
+    - urn:goreos:atom:module:d_gestion_mejora_continua_pdca:1.0.0
+    - urn:goreos:atom:module:d_gestion_playbooks_operativos:1.0.0
+    - urn:goreos:atom:module:d_gestion_procesos_operativos_cr_ticos:1.0.0
+    - urn:goreos:atom:module:d_gestion_sistema_de_control_de_gesti_n_scg:1.0.0
+    - urn:goreos:atom:module:d_gestion_unidad_de_control_interno_uci:1.0.0
+  processes:
+    - urn:goreos:atom:process:d_gestion_p1:1.0.0
+    - urn:goreos:atom:process:d_gestion_p2:1.0.0
+    - urn:goreos:atom:process:d_gestion_p3:1.0.0
+  entities:
+    - urn:goreos:atom:entity:d_gestion_h_gore:1.0.0
+    - urn:goreos:atom:entity:d_gestion_okrs:1.0.0
+    - urn:goreos:atom:entity:d_gestion_playbook_operativo:1.0.0
+  capabilities:
+    - urn:goreos:atom:capability:cap_gestion_001:1.0.0
+stats:
+  modules_count: 6
+  processes_count: 3
+  entities_count: 3
+  capabilities_count: 1

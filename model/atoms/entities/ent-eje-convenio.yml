@@ -9,17 +9,29 @@ domain: D-EJE
 category: Transaction
 extends: ENT-SYS-DOCUMENTO
 attributes:
-  - {name: id_convenio, type: UUID, key: true}
-  - {name: numero, type: String}
-  - {name: ipr_id, type: UUID, fk: ENT-FIN-IPR}
-  - {name: ejecutor_id, type: UUID, fk: ENT-EJE-EJECUTOR}
-  - {name: monto_total, type: Decimal}
-  - {name: fecha_firma, type: Date}
-  - {name: fecha_inicio, type: Date}
-  - {name: fecha_termino, type: Date}
-  - {name: plazo_meses, type: Integer}
-  - {name: estado, type: String}
-  - {name: tipo_convenio, type: String, nullable: true}
-  - {name: referente_tecnico_id, type: UUID, fk: ENT-ORG-FUNCIONARIO, nullable: true}
-  - {name: estado_cgr, type: String, nullable: true}
-  - {name: fecha_toma_razon, type: Date, nullable: true}
+  - { name: id_convenio, type: UUID, key: true }
+  - { name: numero, type: String }
+  - { name: ipr_id, type: UUID, fk: ENT-FIN-IPR }
+  - { name: ejecutor_id, type: UUID, fk: ENT-EJE-EJECUTOR }
+  - { name: monto_total, type: Decimal }
+  - { name: fecha_firma, type: Date }
+  - { name: fecha_inicio, type: Date }
+  - { name: fecha_termino, type: Date }
+  - { name: plazo_meses, type: Integer }
+  - { name: estado, type: String }
+  - { name: tipo_convenio, type: String, nullable: true }
+  - {
+      name: referente_tecnico_id,
+      type: UUID,
+      fk: ENT-ORG-FUNCIONARIO,
+      nullable: true,
+    }
+  - { name: estado_cgr, type: String, nullable: true }
+  - { name: fecha_toma_razon, type: Date, nullable: true }
+  # === Extensión Cobertura ETL ===
+  - {
+      name: metadata_legal,
+      type: JSON,
+      nullable: true,
+      description: "Captura Nº resoluciones y oficios legacy (Aprueba, Incorpora, Crea Asignación)",
+    }

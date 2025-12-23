@@ -81,7 +81,42 @@ Registro cronológico de ingeniería, decisiones y evolución del sistema.
 ### ⚠️ Deuda Técnica / Riesgos
 
 - Necesidad de validar manualmente los "mute roles" remanentes.
-- Sincronización final de Capabilities huerfanas (pendiente).
+- Sincronización final de Capabilities huerfanas (finalizado en remediación de dominios).
+
+---
+
+### 2025-12-22: Reintegración Semántica de Dominios Legacy
+*   **Contexto**: Se identificó que valiosa información semántica de los dominios legacy (`archive/legacy_domains`) no estaba presente en los archivos de composición actuales.
+*   **Acción**: Se realizó un proceso de "hidratación semántica" para todos los dominios principales.
+    *   **D-GOV (Gobierno)**: Integrado desde `domain_d-gob.md`. Enfocado en gobernanza política y CRM de actores.
+    *   **D-DIG (Digital)**: Integrado desde `domain_d-tde.md`. Define el "piso normativo" de transformación digital (Ley 21.180).
+    *   **D-ORG (Organizacional)**: Separado de D-GESTION. Enfocado en personas y madurez (H_org).
+    *   **D-SAL (Salud Institucional)**: Heredero de D-GESTION operativo. Define `H_gore` (Salud Táctica) y Control de Gestión.
+    *   **D-FENIX**: Integrado desde `domain_fenix.md`. Capacidad de intervención y "sistema inmune" organizacional.
+    *   **D-SYS & D-CONV**: Definidos semánticamente como Kernel y Convergencia Ciudadana respectivamente.
+*   **Resultado**: Los archivos `d_*.yml` ahora contienen secciones `semantics` ricas que guiarán la implementación y la migración de datos.
+
+### 2025-12-22: Saneamiento de Átomos (Continuación)
+*   **Estado**: Completado.
+*   **Siguiente**: Generación de esquemas de base de datos (Drizzle) basados en los modelos enriquecidos.
+
+### [2025-12-22] - Domain Remediation & Standardization
+
+**Contexto:** Saneamiento estructural del modelo categorial L1 para alinearlo con el `scope_v1.md`.
+
+#### ✅ Logros del Turno (Sesión Nocturna)
+
+- **Remediación de Dominios:** Re-categorización de 21 dominios fragmentados en 12 ejes L1 estandarizados (`D-FIN`, `D-EJE`, `D-GOV`, `D-PLAN`, `D-LOC`, `D-DIG`, `D-NORM`, `D-ORG`, `D-SAL`, `D-SYS`, `D-CONV`, `D-FENIX`).
+- **Consolidación Categorial:** `D-FIN` unificado (Presupuesto + Rendiciones + Portafolio + Administración/Backoffice) eliminando 5 archivos redundantes.
+- **Estandarización de URNs:** Todas las composiciones de dominio ahora siguen el esquema `urn:goreos:compositions:domain:d_<id>:1.0.0`.
+- **Limpieza de Repositorio:** Movimiento de dominios diferidos (`D-DEV`, `D-OPS`, `D-EVOL`) a carpeta `deferred/` y eliminación de átomos obsoletos.
+
+#### 🧠 Decisiones Clave
+
+1. **Taxonomía L1 Estricta:** Se adopta la tabla de `scope_v1.md` como el único mapa de navegación del sistema, forzando la convergencia de átomos dispersos.
+2. **Absorción de Backoffice:** Se integra `D-BACK` dentro de `D-FIN` al ser funcionalmente dependientes bajo la Ley Orgánica GORE.
+3. **Seguridad y Territorio:** Se unifica `D-SEG` con `D-LOC` para potenciar la visión regional de la seguridad pública.
+
 
 ---
 

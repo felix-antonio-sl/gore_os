@@ -1,0 +1,27 @@
+---
+_meta:
+  urn: urn:goreos:entity:planif:brecha-erd:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-PLAN-BRECHA_ERD
+name: Brecha de Desarrollo Regional
+domain: D-FIN
+category: Analytical
+attributes:
+  - { name: id_brecha, type: UUID, key: true }
+  - { name: erd_id, type: UUID, fk: ENT-FIN-ERD }
+  - {
+      name: objetivo_id,
+      type: UUID,
+      fk: ENT-FIN-OBJETIVO_ESTRATEGICO,
+      nullable: true,
+    }
+  - { name: indicador_nombre, type: String }
+  - { name: valor_linea_base, type: Decimal }
+  - { name: valor_meta, type: Decimal }
+  - { name: valor_actual, type: Decimal, nullable: true }
+  - { name: brecha_absoluta, type: Decimal, nullable: true }
+  - { name: brecha_porcentual, type: Decimal, nullable: true }
+  - { name: fecha_medicion, type: Date, nullable: true }
+  - { name: fuente_datos, type: String, nullable: true }
+  - { name: territorio_id, type: UUID, fk: ENT-LOC-COMUNA, nullable: true }

@@ -1,0 +1,39 @@
+---
+_meta:
+  urn: urn:goreos:entity:security:dispositivo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-SEG-DISPOSITIVO
+name: Dispositivo de Monitoreo
+domain: D-SEG
+category: Master
+description: "Dispositivo CIES (cámara, sensor, pórtico) - polimórfico"
+attributes:
+  - { name: id_dispositivo, type: UUID, key: true }
+  - {
+      name: tipo,
+      type: String,
+      description: "CAMARA_PTZ|CAMARA_FIJA|CAMARA_360|SENSOR|PORTICO_LPR",
+    }
+  - { name: codigo, type: String }
+  - { name: ubicacion, type: String }
+  - { name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA }
+  - {
+      name: coordenadas,
+      type: String,
+      nullable: true,
+      description: "WKT POINT",
+    }
+  - {
+      name: estado,
+      type: String,
+      description: "OPERATIVO|MANTENIMIENTO|FUERA_SERVICIO",
+    }
+  - { name: fecha_instalacion, type: Date, nullable: true }
+  - { name: red_id, type: String, nullable: true }
+  - {
+      name: specs,
+      type: JSON,
+      nullable: true,
+      description: "Especificaciones técnicas por tipo",
+    }

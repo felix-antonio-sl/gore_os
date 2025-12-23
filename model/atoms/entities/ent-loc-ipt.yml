@@ -1,0 +1,25 @@
+---
+_meta:
+  urn: urn:goreos:entity:territ:ipt:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-LOC-IPT
+name: Instrumento de Planificación Territorial
+domain: D-LOC
+category: Master
+attributes:
+  - { name: id_ipt, type: UUID, key: true }
+  - { name: tipo, type: String, description: "PROT|PLADECO|PRC|PRI|PRDU|ZUBC" }
+  - { name: nombre, type: String }
+  - { name: territorio_id, type: UUID, fk: ENT-LOC-COMUNA, nullable: true }
+  - { name: region_id, type: UUID, fk: ENT-LOC-REGION, nullable: true }
+  - { name: fecha_aprobacion, type: Date, nullable: true }
+  - { name: fecha_vigencia, type: Date, nullable: true }
+  - {
+      name: estado,
+      type: String,
+      description: "VIGENTE|EN_ELABORACION|DEROGADO",
+    }
+  - { name: acto_aprobatorio, type: String, nullable: true }
+  - { name: url_documento, type: String, nullable: true }
+  - { name: metadata, type: JSON, nullable: true }

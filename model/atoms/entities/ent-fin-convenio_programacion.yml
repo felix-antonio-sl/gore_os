@@ -8,11 +8,18 @@ name: Convenio de Programación
 domain: D-FIN
 category: Master
 attributes:
-  - {name: id_cp, type: UUID, key: true}
-  - {name: nombre, type: String}
-  - {name: ministerio, type: String}
-  - {name: region_id, type: UUID, fk: ENT-LOC-REGION}
-  - {name: monto_total, type: Decimal}
-  - {name: fecha_firma, type: Date}
-  - {name: vigencia_anios, type: Integer}
-  - {name: estado, type: String}
+  - { name: id_cp, type: UUID, key: true }
+  - { name: nombre, type: String }
+  - { name: ministerio, type: String }
+  - { name: region_id, type: UUID, fk: ENT-LOC-REGION }
+  - { name: monto_total, type: Decimal }
+  - { name: fecha_firma, type: Date }
+  - { name: vigencia_anios, type: Integer }
+  - { name: estado, type: String }
+  # === Extensión Gaps Auditoría v2.1 ===
+  - {
+      name: hitos,
+      type: JSON,
+      nullable: true,
+      description: "Array de hitos del CP [{nombre, fecha_compromiso, monto, estado}]",
+    }

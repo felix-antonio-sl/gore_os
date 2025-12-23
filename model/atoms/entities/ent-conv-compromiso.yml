@@ -8,13 +8,29 @@ name: Compromiso
 domain: D-CONV
 category: Transaction
 attributes:
-  - {name: id_compromiso, type: UUID, key: true}
-  - {name: acuerdo_id, type: UUID, fk: ENT-CONV-ACUERDO, nullable: true}
-  - {name: sesion_id, type: UUID, fk: ENT-CONV-SESION}
-  - {name: descripcion, type: Text}
-  - {name: responsable_id, type: UUID, fk: ENT-SYS-ACTOR}
-  - {name: fecha_compromiso, type: Date}
-  - {name: fecha_limite, type: Date}
-  - {name: prioridad, type: String}
-  - {name: estado, type: String}
-  - {name: porcentaje_avance, type: Integer}
+  - { name: id_compromiso, type: UUID, key: true }
+  - { name: acuerdo_id, type: UUID, fk: ENT-CONV-ACUERDO, nullable: true }
+  - { name: sesion_id, type: UUID, fk: ENT-CONV-SESION, nullable: true }
+  - { name: descripcion, type: Text }
+  - { name: responsable_id, type: UUID, fk: ENT-SYS-ACTOR }
+  - { name: fecha_compromiso, type: Date }
+  - { name: fecha_limite, type: Date }
+  - { name: prioridad, type: String }
+  - { name: estado, type: String }
+  - { name: porcentaje_avance, type: Integer }
+  # === Extensión Para-Titi (Compromisos Operativos) ===
+  - { name: problema_id, type: UUID, fk: ENT-EJE-PROBLEMA, nullable: true }
+  - {
+      name: tipo_gestion,
+      type: String,
+      nullable: true,
+      description: "GESTIONAR_CDP|VISITA_TERRENO|SOLICITAR_INFO|OTRO",
+    }
+  - { name: urgente, type: Boolean, default: false }
+  - {
+      name: verificado_por_id,
+      type: UUID,
+      fk: ENT-ORG-FUNCIONARIO,
+      nullable: true,
+    }
+  - { name: verificado_en, type: DateTime, nullable: true }

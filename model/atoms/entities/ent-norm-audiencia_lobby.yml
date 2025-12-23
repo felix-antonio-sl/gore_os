@@ -1,0 +1,36 @@
+---
+_meta:
+  urn: urn:goreos:entity:norm:audiencia-lobby:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-NORM-AUDIENCIA_LOBBY
+name: Audiencia de Lobby
+domain: D-NORM
+category: Transaction
+attributes:
+  - { name: id_audiencia, type: UUID, key: true }
+  - { name: fecha_solicitud, type: DateTime }
+  - { name: fecha_audiencia, type: DateTime, nullable: true }
+  - { name: solicitante_nombre, type: String }
+  - {
+      name: solicitante_tipo,
+      type: String,
+      description: "LOBBYSTA|GESTOR_INTERES",
+    }
+  - { name: solicitante_rut, type: String, nullable: true }
+  - { name: organizacion, type: String, nullable: true }
+  - { name: autoridad_id, type: UUID, fk: ENT-ORG-FUNCIONARIO }
+  - { name: materia, type: Text }
+  - { name: lugar, type: String, nullable: true }
+  - {
+      name: modalidad,
+      type: String,
+      description: "PRESENCIAL|VIRTUAL|TELEFONICA",
+    }
+  - {
+      name: estado,
+      type: String,
+      description: "SOLICITADA|PROGRAMADA|REALIZADA|RECHAZADA",
+    }
+  - { name: observaciones, type: Text, nullable: true }
+  - { name: publicada_portal, type: Boolean, default: false }

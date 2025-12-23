@@ -8,10 +8,19 @@ name: Alerta
 domain: D-SAL
 category: Event
 attributes:
-  - {name: id_alerta, type: UUID, key: true}
-  - {name: tipo, type: String}
-  - {name: severidad, type: String}
-  - {name: origen, type: String}
-  - {name: mensaje, type: Text}
-  - {name: fecha, type: DateTime}
-  - {name: atendida, type: Boolean}
+  - { name: id_alerta, type: UUID, key: true }
+  - { name: tipo, type: String }
+  - { name: severidad, type: String }
+  - { name: origen, type: String }
+  - { name: mensaje, type: Text }
+  - { name: fecha, type: DateTime }
+  - { name: atendida, type: Boolean }
+  # === Extensión Para-Titi (Monitor Inversión) ===
+  - { name: ipr_id, type: UUID, fk: ENT-FIN-IPR, nullable: true }
+  - { name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO, nullable: true }
+  - {
+      name: regla_origen,
+      type: String,
+      nullable: true,
+      description: "Regla que gatilló la alerta",
+    }

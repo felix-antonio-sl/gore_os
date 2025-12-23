@@ -7,9 +7,15 @@
 ## 🔥 NOW
 
 - [ ] generar bases de datos (Drizzle/PostGIS)
+- [ ] conciliar dominios
+- [ ] cascada de efecto. que las historias -> capacidades -> sean especificaciones al fin
+- [ ] rerefactorizar mi modelo de datos
+- [ ] cascada de agregar semántica a dominio
+- [ ] integridad entre átomos
+- [ ] cascada de remediación de dominios
 - [ ] migrar datos legacy (ETL)
 - [ ] slice paratiti (Vertical Slice [D-FIN])
-
+- [ ] documentacion semántica. importancia de dominios
 ---
 
 ## ✅ DONE

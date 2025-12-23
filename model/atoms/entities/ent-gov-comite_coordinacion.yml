@@ -1,0 +1,24 @@
+---
+_meta:
+  urn: urn:goreos:entity:gov:comite-coordinacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-GOV-COMITE_COORDINACION
+name: Comité de Coordinación
+domain: D-GOV
+category: Master
+attributes:
+  - { name: id_comite, type: UUID, key: true }
+  - { name: tipo, type: String, description: "GRD|CDC|CRES|OTRO" }
+  - { name: nombre, type: String }
+  - { name: acto_creacion, type: String, nullable: true }
+  - { name: fecha_creacion, type: Date, nullable: true }
+  - { name: presidente_id, type: UUID, fk: ENT-ORG-FUNCIONARIO, nullable: true }
+  - { name: secretario_id, type: UUID, fk: ENT-ORG-FUNCIONARIO, nullable: true }
+  - { name: periodicidad, type: String, nullable: true }
+  - { name: estado, type: String, description: "ACTIVO|INACTIVO" }
+  - {
+      name: integrantes,
+      type: JSON,
+      description: "Array de integrantes con cargo",
+    }

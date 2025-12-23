@@ -1,0 +1,40 @@
+---
+_meta:
+  urn: urn:goreos:entity:execution:problema:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+id: ENT-EJE-PROBLEMA
+name: Problema de Ejecución
+domain: D-EJE
+category: Transaction
+description: "Nudo crítico que bloquea o pone en riesgo la ejecución de una IPR o Convenio"
+attributes:
+  - { name: id_problema, type: UUID, key: true }
+  - { name: ipr_id, type: UUID, fk: ENT-FIN-IPR }
+  - { name: convenio_id, type: UUID, fk: ENT-EJE-CONVENIO, nullable: true }
+  - {
+      name: tipo,
+      type: String,
+      description: "TECNICO|FINANCIERO|ADMINISTRATIVO|LEGAL|COORDINACION|EXTERNO",
+    }
+  - {
+      name: impacto,
+      type: String,
+      description: "BLOQUEA_PAGO|RETRASA_OBRA|RETRASA_CONVENIO|RIESGO_RENDICION|OTRO",
+    }
+  - { name: descripcion, type: Text }
+  - {
+      name: estado,
+      type: String,
+      description: "ABIERTO|EN_GESTION|RESUELTO|CERRADO_SIN_RESOLVER",
+    }
+  - { name: detectado_por_id, type: UUID, fk: ENT-ORG-FUNCIONARIO }
+  - { name: detectado_en, type: DateTime }
+  - {
+      name: resuelto_por_id,
+      type: UUID,
+      fk: ENT-ORG-FUNCIONARIO,
+      nullable: true,
+    }
+  - { name: resuelto_en, type: DateTime, nullable: true }
+  - { name: observaciones, type: Text, nullable: true }

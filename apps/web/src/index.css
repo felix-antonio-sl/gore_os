@@ -1,1 +1,14 @@
 @import "tailwindcss";
+@config "../../packages/ui/tailwind.config.ts";
+@theme {
+  --color-gore-brand: #003366;
+  --color-gore-secondary: #d4af37;
+  --color-gore-success: #10b981;
+  --color-gore-warning: #f59e0b;
+  --color-gore-error: #ef4444;
+  --color-gore-info: #3b82f6;
+  --color-gore-background: #f3f4f6;
+  --color-gore-surface: #ffffff;
+  --color-gore-text: #1f2937;
+  --color-gore-text-muted: #6b7280;
+}
