@@ -5,7 +5,7 @@ _meta:
 name: Número de ingreso correlativo automático
 id: US-OP-001-02
 urn: urn:goreos:atom:story:us_op_001_02:1.0.0
-role_id: USR-OP-OF
+role_id: ROL-GESTION-OF
 as_a: Oficial de Partes
 i_want: generar número de ingreso correlativo automático
 so_that: la trazabilidad esté garantizada

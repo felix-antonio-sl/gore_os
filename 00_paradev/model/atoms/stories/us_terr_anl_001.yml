@@ -5,7 +5,7 @@ _meta:
 name: Histórico de inversiones por tipología, comuna y año
 id: US-TERR-ANL-001
 urn: urn:goreos:atom:story:us_terr_anl_001:1.0.0
-role_id: USR-DIPL-PLAN
+role_id: ROL-TERR-PLAN
 as_a: Analista Planificación
 i_want: Consultar histórico de inversiones por tipología, comuna y año
 so_that: Analizo tendencias
@@ -13,3 +13,6 @@ domain: D-TERR
 priority: P1
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-LOC-COMUNA

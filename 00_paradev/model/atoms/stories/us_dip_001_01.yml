@@ -5,11 +5,14 @@ _meta:
 name: El estado de proyectos comunales específicos
 id: US-DIP-001-01
 urn: urn:goreos:atom:story:us_dip_001_01:1.0.0
-role_id: USR-CORE-CONS
-as_a: Consejero Regional (Pleno)
+role_id: ROL-GESTION-MUNI-ENC
+as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: consultar el estado de proyectos comunales específicos
 so_that: pueda responder a mis electores
 domain: D-GOB
 priority: P1
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-LOC-COMUNA

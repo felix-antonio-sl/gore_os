@@ -5,11 +5,14 @@ _meta:
 name: Reportar un incidente o foco delictual de manera anónima desde App/Web
 id: US-SEG-GOB-004
 urn: urn:goreos:atom:story:us_seg_gob_004:1.0.0
-role_id: USR-CIU-GEN
-as_a: Ciudadano
+role_id: ROL-GESTION-PMG-GEN
+as_a: Referente Equidad de Género
 i_want: Reportar un incidente o foco delictual de manera anónima desde App/Web
 so_that: Colaboro con la seguridad sin riesgo personal
 domain: D-SEG
 priority: P1
 capability_id: CAP-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-RIESGO

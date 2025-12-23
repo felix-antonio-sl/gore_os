@@ -5,7 +5,7 @@ _meta:
 name: Un LMS con cursos de herramientas del GORE
 id: US-CAPDIG-001-01
 urn: urn:goreos:atom:story:us_capdig_001_01:1.0.0
-role_id: USR-NEW-ENCARGADO-CA
+role_id: ROL-GESTION-ENCARGADO-CA
 as_a: Encargado Capacitación Digital
 i_want: un LMS con cursos de herramientas del GORE
 so_that: pueda formar a los funcionarios
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P1
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO

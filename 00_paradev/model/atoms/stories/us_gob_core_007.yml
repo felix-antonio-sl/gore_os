@@ -5,11 +5,14 @@ _meta:
 name: Ver cumplimiento de acuerdos (estado/evidencia)
 id: US-GOB-CORE-007
 urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
-role_id: USR-CORE-CONS
-as_a: Consejero Regional (Pleno)
+role_id: ROL-GESTION-MUNI-ENC
+as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Ver cumplimiento de acuerdos (estado/evidencia)
 so_that: Fiscalizo ejecución del ejecutivo
 domain: D-GOB
 priority: P0
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACUERDO

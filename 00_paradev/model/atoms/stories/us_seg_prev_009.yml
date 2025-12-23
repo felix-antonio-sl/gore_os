@@ -5,8 +5,8 @@ _meta:
 name: Mantener coordinación permanente con la Subsecretaría de Prevención del Delito
 id: US-SEG-PREV-009
 urn: urn:goreos:atom:story:us_seg_prev_009:1.0.0
-role_id: USR-CIES-COOR
-as_a: Coordinador CIES
+role_id: ROL-GESTION-UCR-COOR
+as_a: Coordinador UCR
 i_want: Mantener coordinación permanente con la Subsecretaría de Prevención del Delito
 so_that: Aseguro coherencia con política nacional
 domain: D-SEG

@@ -5,7 +5,7 @@ _meta:
 name: Reportes de inversión en seguridad pública financiada por el GORE
 id: US-DPR-002-01
 urn: urn:goreos:atom:story:us_dpr_002_01:1.0.0
-role_id: USR-EXT-DPR
+role_id: ROL-GESTION-DPR
 as_a: Delegado Presidencial Regional
 i_want: reportes de inversión en seguridad pública financiada por el GORE
 so_that: pueda articular con Carabineros y PDI

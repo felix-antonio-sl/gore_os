@@ -5,11 +5,14 @@ _meta:
 name: Acceso remoto a todos los sistemas GORE
 id: US-GPROV-001-01
 urn: urn:goreos:atom:story:us_gprov_001_01:1.0.0
-role_id: USR-DIDES-TERR-GEST
-as_a: Gestor Provincial
+role_id: ROL-BACK-PER-GEST
+as_a: Gestor de Personas
 i_want: acceso remoto a todos los sistemas GORE
 so_that: pueda atender consultas en delegaciones provinciales
 domain: D-TERR
 priority: P1
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-LOC-PROVINCIA

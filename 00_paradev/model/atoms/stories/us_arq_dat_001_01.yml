@@ -5,7 +5,7 @@ _meta:
 name: Un catálogo de entidades y modelos de datos del GORE
 id: US-ARQ-DAT-001-01
 urn: urn:goreos:atom:story:us_arq_dat_001_01:1.0.0
-role_id: USR-TDE-ARCH-DATOS
+role_id: ROL-DEV-ARCH-DATOS
 as_a: Arquitecto de Datos
 i_want: un catálogo de entidades y modelos de datos del GORE
 so_that: pueda asegurar consistencia y reutilización

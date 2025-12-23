@@ -5,7 +5,7 @@ _meta:
 name: Información de proyectos viales GORE
 id: US-UOCT-001-01
 urn: urn:goreos:atom:story:us_uoct_001_01:1.0.0
-role_id: USR-EXT-UOCT
+role_id: ROL-GESTION-UOCT
 as_a: UOCT Ñuble (en transferencia)
 i_want: información de proyectos viales GORE
 so_that: pueda articular con semáforos y señalética

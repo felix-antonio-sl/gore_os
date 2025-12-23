@@ -5,7 +5,7 @@ _meta:
 name: Clip de video con marca de agua y hash de integridad
 id: US-SEG-EVID-001
 urn: urn:goreos:atom:story:us_seg_evid_001:1.0.0
-role_id: USR-CIES-EVID
+role_id: ROL-GESTION-EVID
 as_a: Custodio Evidencia
 i_want: Generar clip de video con marca de agua y hash de integridad
 so_that: Preservo evidencia

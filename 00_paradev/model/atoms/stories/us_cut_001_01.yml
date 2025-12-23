@@ -5,7 +5,7 @@ _meta:
 name: Acceso a actas del Consejo de la Sociedad Civil
 id: US-CUT-001-01
 urn: urn:goreos:atom:story:us_cut_001_01:1.0.0
-role_id: USR-NEW-DIRIGENTE-SO
+role_id: ROL-GESTION-DIRIGENTE-SO
 as_a: Dirigente Social
 i_want: acceso a actas del Consejo de la Sociedad Civil
 so_that: pueda monitorear compromisos laborales
@@ -13,3 +13,7 @@ domain: D-GOB
 priority: P2
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACTA
+- ENT-CONV-COMPROMISO

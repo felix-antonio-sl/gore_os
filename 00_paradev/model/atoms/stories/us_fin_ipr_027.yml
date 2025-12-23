@@ -5,7 +5,7 @@ _meta:
 name: Ver bandeja de postulaciones ordenada FIFO
 id: US-FIN-IPR-027
 urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
-role_id: USR-DIPL-DAE-PRE
+role_id: ROL-GESTION-DAE-PRE
 as_a: Analista Preinversión (DAE)
 i_want: Ver bandeja de postulaciones ordenada FIFO
 so_that: Proceso en orden de llegada

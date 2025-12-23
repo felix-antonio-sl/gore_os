@@ -7,9 +7,12 @@ name: Historia genérica para Coordinador ECIF
 id: US-GEN-GESTION_COOR-001
 urn: urn:goreos:atom:story:us_gen_gestion_coor_001:1.0.0
 role_id: ROL-GESTION-COOR
-as_a: Coordinador ECIF
+as_a: Coordinador CIES
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
 domain: D-GESTION
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

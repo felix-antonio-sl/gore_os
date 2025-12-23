@@ -5,7 +5,7 @@ _meta:
 name: Un expediente digital de intervención (ID, Objetivo, Equipo)
 id: US-FNX-GES-001
 urn: urn:goreos:atom:story:us_fnx_ges_001:1.0.0
-role_id: USR-CAL-FNX-J
+role_id: ROL-GESTION-FNX-J
 as_a: Jefe FENIX
 i_want: Crear un expediente digital de intervención (ID, Objetivo, Equipo)
 so_that: Centralizo la gestión y documentación del caso

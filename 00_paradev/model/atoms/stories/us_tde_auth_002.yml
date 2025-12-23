@@ -5,8 +5,8 @@ _meta:
 name: Credenciales ClaveÚnica por ambiente (sandbox/QA/producción)
 id: US-TDE-AUTH-002
 urn: urn:goreos:atom:story:us_tde_auth_002:1.0.0
-role_id: USR-DAF-TIC-ADMIN
-as_a: Administrador TI
+role_id: ROL-OPS-GEONODO
+as_a: Administrador Geonodo
 i_want: Gestionar credenciales ClaveÚnica por ambiente (sandbox/QA/producción)
 so_that: Separo ambientes correctamente
 domain: D-TDE

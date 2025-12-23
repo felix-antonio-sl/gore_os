@@ -5,8 +5,8 @@ _meta:
 name: Preparar minutas y briefs para autoridad
 id: US-GOB-GAB-005
 urn: urn:goreos:atom:story:us_gob_gab_005:1.0.0
-role_id: USR-GAB-JEFE
-as_a: Jefe de Gabinete
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Preparar minutas y briefs para autoridad
 so_that: Apoyo la toma de decisiones
 domain: D-GOB

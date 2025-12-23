@@ -5,8 +5,8 @@ _meta:
 name: Bloquear imputaciones que excedan el saldo disponible
 id: US-JPRE-001-01
 urn: urn:goreos:atom:story:us_jpre_001_01:1.0.0
-role_id: USR-DIPIR-PRES-JEFE
-as_a: Jefe Depto. Presupuesto
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: bloquear imputaciones que excedan el saldo disponible
 so_that: no se genere deuda flotante sin respaldo
 domain: D-FIN

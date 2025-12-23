@@ -5,7 +5,7 @@ _meta:
 name: Transferencias corrientes para gastos operativos
 id: US-CORP-001-01
 urn: urn:goreos:atom:story:us_corp_001_01:1.0.0
-role_id: USR-CORP-DIR
+role_id: ROL-EJEC-DIR
 as_a: Director Ejecutivo Corporación
 i_want: transferencias corrientes para gastos operativos
 so_that: la corporación funcione administrativamente
@@ -13,3 +13,6 @@ domain: D-FIN
 priority: P2
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-TRANSFERENCIA

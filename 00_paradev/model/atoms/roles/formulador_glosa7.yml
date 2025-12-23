@@ -15,7 +15,17 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_ejec_muni_001:1.0.0
+    - urn:goreos:atom:story:us_ejec_muni_002:1.0.0
+    - urn:goreos:atom:story:us_ejec_muni_005:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_005:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_006:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_007:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_008:1.0.0
+    - urn:goreos:atom:story:us_glosa7_001_01:1.0.0
+    - urn:goreos:atom:story:us_uf_001_01:1.0.0
+
   governed_by: []
 
 unit: DIPIR

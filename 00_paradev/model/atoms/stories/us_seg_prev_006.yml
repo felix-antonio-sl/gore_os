@@ -5,11 +5,14 @@ _meta:
 name: Ejecución financiera de convenios con municipios
 id: US-SEG-PREV-006
 urn: urn:goreos:atom:story:us_seg_prev_006:1.0.0
-role_id: USR-SEG-ANAL
-as_a: Analista Proyectos Seguridad
+role_id: ROL-GESTION-PREV-ANAL
+as_a: Analista Prevención
 i_want: Monitorear ejecución financiera de convenios con municipios
 so_that: Controlo uso de recursos
 domain: D-SEG
 priority: P1
 capability_id: CAP-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

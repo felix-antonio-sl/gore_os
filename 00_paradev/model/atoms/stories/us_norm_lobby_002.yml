@@ -5,7 +5,7 @@ _meta:
 name: Coordinar nómina de sujetos pasivos
 id: US-NORM-LOBBY-002
 urn: urn:goreos:atom:story:us_norm_lobby_002:1.0.0
-role_id: USR-NORM-TRANSP
+role_id: ROL-GESTION-TRANSP
 as_a: Encargado Transparencia Activa/Pasiva
 i_want: Coordinar nómina de sujetos pasivos
 so_that: Identifico obligados a registrar

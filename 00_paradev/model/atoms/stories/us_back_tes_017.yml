@@ -5,7 +5,7 @@ _meta:
 name: El Saldo Inicial de Caja para el presupuesto del año siguiente
 id: US-BACK-TES-017
 urn: urn:goreos:atom:story:us_back_tes_017:1.0.0
-role_id: USR-DAF-FIN-CONT
+role_id: ROL-GESTION-FIN-CONT
 as_a: Contador Gubernamental
 i_want: Calcular el Saldo Inicial de Caja para el presupuesto del año siguiente
 so_that: Incorporo recursos de arrastre correctamente
@@ -13,3 +13,6 @@ domain: D-BACK
 priority: P1
 capability_id: CAP-PAGOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-PRESUPUESTO

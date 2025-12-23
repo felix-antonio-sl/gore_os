@@ -1,0 +1,311 @@
+# MANIFESTO GORE_OS
+
+> **Sistema Operativo del Gobierno Regional de Ñuble**
+> *Digitalizar, automatizar y dotar de inteligencia al GORE para acelerar el desarrollo de Ñuble.*
+
+---
+
+## 1. Identidad
+
+**GORE_OS** es el sistema operativo institucional del Gobierno Regional de Ñuble. No es un software tradicional, sino un **modelo integrado de datos, procesos y capacidades** que permite al GORE funcionar de manera coherente, auditable y evolucionar orgánicamente.
+
+### Definición Esencial
+
+El Gobierno Regional es la administración superior de la región, concebida como territorio con características e intereses propios, que acerca decisiones de desarrollo al lugar donde se producen sus efectos.
+
+**GORE_OS materializa esta misión** mediante:
+
+- **Digitalización**: Transformar procesos manuales en flujos digitales trazables
+- **Automatización**: Reducir tiempos de respuesta y eliminar cuellos de botella
+- **Inteligencia**: Habilitar decisiones basadas en datos y alertas tempranas
+
+### Qué Significa "Inteligencia"
+
+Cuando hablamos de hacer a la organización "más inteligente", nos referimos a que **las personas podrán tomar mejores decisiones, apoyadas por sistemas de inteligencia artificial**. Este apoyo se materializa principalmente en:
+
+| Modalidad                       | Descripción                                                         | Ejemplo                                                |
+| ------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------ |
+| **Agentes en segundo plano**    | Operan autónomamente detectando patrones, anomalías y oportunidades | Alerta de IPR con riesgo de paralización               |
+| **Asistentes conversacionales** | Interactúan directamente con usuarios para consultas y análisis     | "Muéstrame las IPR de San Carlos con pagos pendientes" |
+
+### Capacidades Funcionales Integradas
+
+GORE_OS integra capacidades funcionales equivalentes a sistemas especializados, **sin utilizar ni exponer explícitamente esos términos**:
+
+| Capacidad Implícita                       | Equivalente Comercial | Alcance en GORE_OS                                    |
+| ----------------------------------------- | --------------------- | ----------------------------------------------------- |
+| **Gestión de Intervenciones Públicas**    | CRM                   | Ciclo de vida 360° de IPR, actores, hitos, alertas    |
+| **Funcionamiento Organizacional**         | ERP                   | Divisiones, funcionarios, activos, control de gestión |
+| **Inversión para el Desarrollo Regional** | Banca de Inversión    | Portafolio de fondos, priorización, ROI territorial   |
+
+> **Principio**: Estas capacidades están incorporadas dentro de la arquitectura de GORE_OS como funcionalidades nativas, no como módulos externos ni como terminología visible al usuario.
+
+---
+
+## 2. Génesis: El Problema que Resolvemos
+
+Este proyecto surge como respuesta a una **crisis de gestión institucional** que expuso deficiencias estructurales:
+
+| Problema                               | Impacto                                      | Solución GORE_OS                     |
+| -------------------------------------- | -------------------------------------------- | ------------------------------------ |
+| Obras terminadas sin entregar          | Inversión pública inmovilizada               | Seguimiento 360° del ciclo de vida   |
+| Falta de seguimiento de ejecución      | Pérdida de control operativo                 | PMO Regional como "torre de control" |
+| Pagos pendientes no identificados      | Paralizaciones de obras de alto valor social | Alertas tempranas de desviaciones    |
+| Dificultad en priorización de recursos | Ineficiencia presupuestaria                  | Motor de recomendación basado en ERD |
+
+> **La crisis reveló que el GORE carecía de un sistema nervioso digital capaz de detectar problemas antes de que se convirtieran en crisis.**
+
+---
+
+## 3. Los Tres Ciudadanos de Primera Clase
+
+GORE_OS se estructura semánticamente en torno a **tres entidades fundamentales** que articulan todo el sistema:
+
+### 3.1 La Intervención Pública Regional (IPR)
+
+Constituye el **núcleo del funcionamiento del GORE** y el principal medio para generar impacto en el desarrollo de Ñuble.
+
+> Una IPR es cualquier acción de inversión o gasto público decidida y financiada por el Gobierno Regional para materializar su misión de desarrollo territorial.
+
+**Ciclo de Vida 360°:**
+
+| Fase               | Instrumentos           | Actores Clave          |
+| ------------------ | ---------------------- | ---------------------- |
+| Evaluación Ex-Ante | RS/MDSF, Admisibilidad | Analista, MDSF         |
+| Priorización       | ERD, ARI, CORE         | Gobernador, Consejeros |
+| Ejecución          | Convenios, UT/UF       | Ejecutor, Inspector    |
+| Seguimiento        | Bitácora, Alertas, PMO | Coordinador            |
+| Evaluación Ex-Post | KPIs, ROI, Cierre      | Evaluador              |
+
+### 3.2 La Historia de Usuario
+
+Mecanismo formal para **capturar y expresar los requerimientos del sistema**: qué debe hacer y cómo debe hacerlo.
+
+> Toda funcionalidad, capacidad o flujo de GORE_OS debe originarse en una Historia de Usuario formal, trazable y validable.
+
+| Componente            | Propósito                         |
+| --------------------- | --------------------------------- |
+| `as_a`                | Rol que necesita la funcionalidad |
+| `i_want`              | Acción o capacidad requerida      |
+| `so_that`             | Valor o resultado esperado        |
+| `acceptance_criteria` | Condiciones de validación         |
+
+### 3.3 El Usuario-Rol
+
+Actor —**humano o máquina**— que asume un rol determinado para usar, interactuar con o verse afectado por GORE_OS.
+
+| Tipo               | Descripción                   | Ejemplos                             |
+| ------------------ | ----------------------------- | ------------------------------------ |
+| **Humano Interno** | Funcionario GORE              | Analista, Coordinador, Jefe División |
+| **Humano Externo** | Actor fuera del GORE          | Alcalde, Beneficiario, Proveedor     |
+| **Máquina**        | Agente o sistema automatizado | Agente de Alertas, Bot de Monitoreo  |
+
+### Principio Transversal: Cumplimiento Normativo
+
+> **Todo el sistema opera bajo el principio del cumplimiento normativo**, respetando el marco legal y regulatorio que rige la administración pública y, en particular, a los gobiernos regionales.
+
+| Marco                      | Alcance                | Impacto en GORE_OS            |
+| -------------------------- | ---------------------- | ----------------------------- |
+| LOC GORE (19.175)          | Atribuciones y límites | Define funciones motoras      |
+| Ley 21.180 (TDE)           | Transformación Digital | Interoperabilidad obligatoria |
+| Ley 19.886 (Compras)       | Contratación pública   | Integración MercadoPúblico    |
+| Ley 20.285 (Transparencia) | Acceso a información   | Datos abiertos                |
+
+### Mecanismos de Financiamiento
+
+| Mecanismo         | Descripción                                          | Dominio |
+| ----------------- | ---------------------------------------------------- | ------- |
+| **FNDR**          | Fondo Nacional de Desarrollo Regional                | D-FIN   |
+| **FRIL**          | Fondo Regional de Iniciativa Local                   | D-FIN   |
+| **FRPD**          | Fondo Regional para la Productividad y el Desarrollo | D-FIN   |
+| **ISAR**          | Inversiones Sectoriales de Asignación Regional       | D-FIN   |
+| **Subvención 8%** | Transferencias a instituciones sin fines de lucro    | D-FIN   |
+
+---
+
+## 4. Las 5 Funciones Motoras
+
+El GORE opera mediante un ciclo integrado de cinco funciones que GORE_OS debe soportar:
+
+### 4.1 Planificar
+
+> Traducir la misión estratégica en instrumentos técnicos vinculantes.
+
+| Instrumento | Descripción                               | Dominio GORE_OS |
+| ----------- | ----------------------------------------- | --------------- |
+| ERD         | Estrategia Regional de Desarrollo         | D-PLAN          |
+| PROT        | Plan Regional de Ordenamiento Territorial | D-LOC           |
+| ARI         | Anteproyecto Regional de Inversiones      | D-FIN           |
+
+### 4.2 Financiar
+
+> Administrar y asignar recursos según la estrategia regional.
+
+| Capacidad               | Descripción                | Dominio GORE_OS |
+| ----------------------- | -------------------------- | --------------- |
+| Portafolio de inversión | Gestión activa de fondos   | D-FIN           |
+| Priorización            | Motor de recomendación     | D-FIN           |
+| Trazabilidad            | Seguimiento de desembolsos | D-EJE           |
+
+### 4.3 Ejecutar
+
+> Implementar programas y viabilizar proyectos de inversión.
+
+| Capacidad                  | Descripción              | Dominio GORE_OS |
+| -------------------------- | ------------------------ | --------------- |
+| Convenios de transferencia | Marco legal de ejecución | D-EJE           |
+| Estados de pago            | Control de hitos         | D-EJE           |
+| Bitácora de obra           | Registro de inspecciones | D-EJE           |
+
+### 4.4 Coordinar
+
+> Alinear servicios sectoriales, municipios y nivel central.
+
+| Capacidad                 | Descripción                    | Dominio GORE_OS |
+| ------------------------- | ------------------------------ | --------------- |
+| Gabinete regional         | Coordinación de actores        | D-GOV           |
+| Convenios de programación | Co-inversión con nivel central | D-GOV           |
+| Servicios a municipios    | Nivelación de capacidades      | D-ORG           |
+
+### 4.5 Normar
+
+> Dictar normas generales para regular procedimientos regionales.
+
+| Capacidad              | Descripción       | Dominio GORE_OS |
+| ---------------------- | ----------------- | --------------- |
+| Reglamentos regionales | Normas internas   | D-NORM          |
+| Estándares de datos    | Interoperabilidad | D-DIG           |
+
+---
+
+## 5. Límites y Restricciones
+
+### Lo que GORE_OS NO es
+
+- ❌ No reemplaza a ClaveÚnica (Identidad delegada)
+- ❌ No reemplaza a DocDigital (Comunicaciones oficiales)
+- ❌ No administra pagos (Delegado a TGR/BancoEstado)
+- ❌ No ejecuta obras directamente (Rol de Unidad Técnica)
+
+### Controles Externos
+
+| Actor  | Control                          | Impacto en GORE_OS              |
+| ------ | -------------------------------- | ------------------------------- |
+| MDSF   | Recomendación Satisfactoria (RS) | Prerequisito para financiar IPR |
+| DIPRES | Arquitectura presupuestaria      | Estructura de programas         |
+| CGR    | Toma de Razón                    | Validación legal de actos       |
+| CORE   | Aprobación de inversiones        | Workflow de aprobación          |
+
+---
+
+## 6. Visión GORE 4.0
+
+### El GORE como Motor Proactivo de Desarrollo
+
+En condiciones ideales, GORE_OS evoluciona hacia un modelo **GORE 4.0** que fusiona el mandato de desarrollo con tecnologías de la Cuarta Revolución Industrial:
+
+| Función    | Capacidad 4.0                    | Estado      |
+| ---------- | -------------------------------- | ----------- |
+| Planificar | Gemelo Digital del territorio    | 🔜 Futuro    |
+| Financiar  | Smart contracts para desembolsos | 🔜 Futuro    |
+| Ejecutar   | PMO con monitoreo IoT            | 🔜 Futuro    |
+| Coordinar  | APIs de datos abiertos           | ⏳ En diseño |
+| Normar     | Sandboxes regulatorios           | 🔜 Futuro    |
+
+### Principio Rector
+
+> **"El GORE deja de ser una entidad principalmente reactiva y se convierte en motor proactivo de desarrollo, innovación y gobernanza territorial."**
+> — Visión GORE 4.0
+
+---
+
+## 7. Transformación Digital del Estado (TDE)
+
+La **Transformación Digital del Estado** se integra en GORE_OS desde una doble perspectiva:
+
+### 7.1 Obligación Normativa
+
+La Ley 21.180 y sus normas técnicas constituyen un **roadmap obligatorio** para las instituciones públicas:
+
+| Componente TDE     | Descripción                       | Integración GORE_OS           |
+| ------------------ | --------------------------------- | ----------------------------- |
+| **ClaveÚnica**     | Identidad digital ciudadana       | Autenticación federada        |
+| **DocDigital**     | Gestión documental electrónica    | Comunicaciones oficiales      |
+| **PISEE**          | Interoperabilidad del Estado      | Consulta de datos (Once-Only) |
+| **Firma Avanzada** | Validación jurídica de documentos | Actos administrativos         |
+
+### 7.2 Oportunidad de Liderazgo Regional
+
+GORE_OS aprovecha estratégicamente la TDE como **plataforma para impulsar la gobernanza de la transformación digital** en los servicios públicos y municipalidades de Ñuble:
+
+- **Rol de Coordinador**: El GORE habilita a municipios con herramientas y capacitación
+- **Efecto Demostración**: GORE_OS como modelo replicable de modernización
+- **Datos Regionales**: Centro de inteligencia territorial compartida
+
+---
+
+## 8. ORKO: Marco de Operación y Evolución
+
+**ORKO (Organizational Knowledge Ontology)** es el framework principal para la operación, gestión, mejoramiento continuo y evolución de GORE_OS.
+
+> URN: `urn:knowledge:orko:*`
+
+### Principios ORKO Adoptados
+
+| Primitivo ORKO          | Aplicación en GORE_OS                        |
+| ----------------------- | -------------------------------------------- |
+| **P1 - Observabilidad** | Dashboards y métricas de salud institucional |
+| **P2 - Adaptabilidad**  | Configuración dinámica de flujos y reglas    |
+| **P3 - Trazabilidad**   | Auditoría completa de decisiones y cambios   |
+| **P4 - Modularidad**    | Dominios independientes pero integrados      |
+| **P5 - Sostenibilidad** | Evolución orgánica sin rupturas              |
+
+### Funciones ORKO en GORE_OS
+
+| Función Tradicional      | Abordaje ORKO                          | Beneficio                    |
+| ------------------------ | -------------------------------------- | ---------------------------- |
+| Arquitectura Empresarial | Ontología organizacional               | Coherencia sin fragmentación |
+| Gestión de Procesos      | Tejidos tecnológicos                   | Automatización inteligente   |
+| Transformación Digital   | Metodología de diagnóstico y playbooks | Intervención focalizada      |
+
+---
+
+## 9. KODA: Artefactos de Conocimiento e IA
+
+**KODA (Knowledge-Oriented Design Architecture)** es el marco específico para el trabajo con artefactos de conocimiento dentro del ecosistema GORE_OS.
+
+> URN: `urn:knowledge:koda:*`
+
+### Alcance KODA en GORE_OS
+
+| Área                           | Aplicación                                    |
+| ------------------------------ | --------------------------------------------- |
+| **Documentación estructurada** | Todos los artefactos YAML siguen KODA/Spec    |
+| **Agentes LLM**                | Diseño, desarrollo y gestión de asistentes IA |
+| **Federación de conocimiento** | Catálogos URN para trazabilidad cross-repo    |
+| **Validación y testing**       | Pruebas de comportamiento de agentes          |
+
+### Agentes GORE_OS (KODA-compliant)
+
+| Agente                | Rol                             | Estado   |
+| --------------------- | ------------------------------- | -------- |
+| **Arquitecto-GORE**   | Diseño ontológico y semántico   | ✅ Activo |
+| **Ingeniero-GORE_OS** | Implementación y DevOps         | ✅ Activo |
+| **Goreologo**         | Conocimiento institucional GORE | 🔜 Diseño |
+| **PMO-Agent**         | Monitoreo de IPR y alertas      | 🔜 Diseño |
+
+---
+
+## Referencias
+
+- **Documento Fuente**: `gorenuble/knowledge/domains/gn/intro/kb_gn_900_gore_ideal_koda.yml`
+- **Framework ORKO**: `orko/` — Organizational Knowledge Ontology
+- **Framework KODA**: `koda/` — Knowledge-Oriented Design Architecture
+- **Ley Orgánica**: DFL N° 1-19.175 (LOC GORE)
+- **Ley TDE**: Ley 21.180 de Transformación Digital del Estado
+- **Versión**: 1.1.0
+- **Fecha**: 2025-12-23
+
+---
+
+*Arquitecto KODA — Sistema Operativo del Gobierno Regional de Ñuble*

@@ -13,4 +13,5 @@ stories:
 - us_tde_portal_002
 - us_tde_portal_003
 - us_web_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:tde_ciberseguridad:1.0.0

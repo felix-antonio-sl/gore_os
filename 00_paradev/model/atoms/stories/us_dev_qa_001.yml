@@ -5,7 +5,7 @@ _meta:
 name: Disponer de un pipeline de CI/CD que ejecute tests unitarios y linter en cada
 id: US-DEV-QA-001
 urn: urn:goreos:atom:story:us_dev_qa_001:1.0.0
-role_id: USR-DAF-TIC-DEV
+role_id: ROL-DEV-TIC-DEV
 as_a: Desarrollador DevOps
 i_want: Disponer de un pipeline de CI/CD que ejecute tests unitarios y linter en cada
   commit

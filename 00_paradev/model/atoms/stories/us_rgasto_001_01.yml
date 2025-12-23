@@ -5,7 +5,7 @@ _meta:
 name: Validación automática de clasificadores presupuestarios
 id: US-RGASTO-001-01
 urn: urn:goreos:atom:story:us_rgasto_001_01:1.0.0
-role_id: USR-CAL-PMG-GASTO
+role_id: ROL-GESTION-PMG-GASTO
 as_a: Referente Concentración Gasto
 i_want: validación automática de clasificadores presupuestarios
 so_that: no se imputen gastos a cuentas erróneas

@@ -12,8 +12,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "prettier": "latest",
     "turbo": "latest",
-    "prettier": "latest"
+    "vitest": "^4.0.16"
   },
   "packageManager": "bun@1.1.0"
 }

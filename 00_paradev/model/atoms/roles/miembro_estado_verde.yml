@@ -15,7 +15,12 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_everde_001_01:1.0.0
+    - urn:goreos:atom:story:us_mctd_001_01:1.0.0
+    - urn:goreos:atom:story:us_mecif_001_01:1.0.0
+    - urn:goreos:atom:story:us_msia_001_01:1.0.0
+
   governed_by: []
 
 unit: Unidad de Calidad y Gestión Institucional

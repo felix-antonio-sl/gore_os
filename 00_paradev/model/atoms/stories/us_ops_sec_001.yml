@@ -5,7 +5,7 @@ _meta:
 name: Revisar logs de acceso y acciones críticas
 id: US-OPS-SEC-001
 urn: urn:goreos:atom:story:us_ops_sec_001:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Revisar logs de acceso y acciones críticas
 so_that: Garantizo el cumplimiento de la Ley 21.663 (Ciberseguridad)

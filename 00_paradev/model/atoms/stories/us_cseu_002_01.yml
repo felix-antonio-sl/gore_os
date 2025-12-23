@@ -5,11 +5,14 @@ _meta:
 name: Matriz de evaluación curricular digital
 id: US-CSEU-002-01
 urn: urn:goreos:atom:story:us_cseu_002_01:1.0.0
-role_id: USR-COM-EVAL
-as_a: Miembro Comisión Evaluadora
+role_id: ROL-GESTION-FOND-EVAL
+as_a: Evaluador Social
 i_want: matriz de evaluación curricular digital
 so_that: se estandarice el puntaje de los postulantes
 domain: D-BACK
 priority: P1
 capability_id: CAP-BACK-TICKETS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-PUNTAJE

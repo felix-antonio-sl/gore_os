@@ -16,4 +16,9 @@ stories:
 - us_abast_001_02
 - us_back_comp_002
 - us_back_comp_003
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:capability:cap_compras_001:1.0.0]
+ofrecida_por:
+- urn:goreos:atom:module:back_abastecimiento_compras:1.0.0

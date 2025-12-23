@@ -5,11 +5,14 @@ _meta:
 name: En qué se gasta el presupuesto regional
 id: US-CIU-001-02
 urn: urn:goreos:atom:story:us_ciu_001_02:1.0.0
-role_id: USR-CIU-GEN
-as_a: Ciudadano
+role_id: ROL-GESTION-PMG-GEN
+as_a: Referente Equidad de Género
 i_want: consultar en qué se gasta el presupuesto regional
 so_that: pueda fiscalizar el uso de los recursos públicos
 domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-PRESUPUESTO

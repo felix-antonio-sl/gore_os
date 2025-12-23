@@ -18,4 +18,5 @@ stories:
 - us_alc_chi_001_01
 - us_alc_chv_001_01
 - us_alc_sc_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:ejec_coordinacion_municipal:1.0.0

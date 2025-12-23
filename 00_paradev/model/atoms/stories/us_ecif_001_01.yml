@@ -5,11 +5,14 @@ _meta:
 name: Reportes de cumplimiento de controles financieros
 id: US-ECIF-001-01
 urn: urn:goreos:atom:story:us_ecif_001_01:1.0.0
-role_id: USR-NEW-ECIF
-as_a: Equipo ECIF
+role_id: ROL-GESTION-MEMB
+as_a: Miembro Comité TD
 i_want: reportes de cumplimiento de controles financieros
 so_that: pueda identificar debilidades
 domain: D-FIN
 priority: P0
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

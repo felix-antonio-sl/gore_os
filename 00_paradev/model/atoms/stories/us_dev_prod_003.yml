@@ -5,8 +5,8 @@ _meta:
 name: ADRs y vincularlas a stories
 id: US-DEV-PROD-003
 urn: urn:goreos:atom:story:us_dev_prod_003:1.0.0
-role_id: ROL-TECH-LEAD
-as_a: Rol no encontrado (ROL-TECH-LEAD)
+role_id: ROL-GESTION-LEAD
+as_a: Líder Técnico
 i_want: registrar ADRs y vincularlas a stories
 so_that: se mantenga la trazabilidad de las decisiones arquitectónicas
 domain: D-DEV

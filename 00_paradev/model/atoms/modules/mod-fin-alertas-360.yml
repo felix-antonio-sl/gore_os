@@ -10,6 +10,9 @@ name: Alertas 360
 domain: D-FIN
 description: Alertas tempranas para gestión de inversiones.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: []
   entities: [urn:goreos:atom:entity:d_fin_portafolio_alertaciclo:1.0.0]
 morphisms:

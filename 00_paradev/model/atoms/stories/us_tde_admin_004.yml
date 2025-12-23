@@ -5,8 +5,8 @@ _meta:
 name: Desactivar usuarios manteniendo historial
 id: US-TDE-ADMIN-004
 urn: urn:goreos:atom:story:us_tde_admin_004:1.0.0
-role_id: USR-DAF-TIC-ADMIN
-as_a: Administrador TI
+role_id: ROL-OPS-GEONODO
+as_a: Administrador Geonodo
 i_want: Desactivar usuarios manteniendo historial
 so_that: Gestiono bajas sin perder trazabilidad
 domain: D-TDE

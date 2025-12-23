@@ -5,8 +5,8 @@ _meta:
 name: Ingresar con Clave Única
 id: US-USR-001-01
 urn: urn:goreos:atom:story:us_usr_001_01:1.0.0
-role_id: USR-CIU-GEN
-as_a: Ciudadano
+role_id: ROL-GESTION-PMG-GEN
+as_a: Referente Equidad de Género
 i_want: ingresar con Clave Única
 so_that: no tenga que recordar otra contraseña
 domain: D-GOB

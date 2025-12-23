@@ -5,11 +5,14 @@ _meta:
 name: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
 id: US-FIN-GOB-001
 urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Realizar Sesión de Pertinencia (Filtro Pre-Admisibilidad)
 so_that: Filtro estratégico antes de evaluación técnica
 domain: D-FIN
 priority: P0
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-SESION

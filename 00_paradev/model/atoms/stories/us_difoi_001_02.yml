@@ -5,8 +5,8 @@ _meta:
 name: Integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
 id: US-DIFOI-001-02
 urn: urn:goreos:atom:story:us_difoi_001_02:1.0.0
-role_id: USR-DIFOI-JEFE
-as_a: Jefe DIFOI
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
 so_that: pueda evitar duplicidad de apoyo y focalizar mejor
 domain: D-EJEC

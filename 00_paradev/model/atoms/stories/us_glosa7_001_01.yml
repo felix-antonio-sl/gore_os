@@ -5,7 +5,7 @@ _meta:
 name: Formatos estandarizados para proyectos de cámaras y luminarias
 id: US-GLOSA7-001-01
 urn: urn:goreos:atom:story:us_glosa7_001_01:1.0.0
-role_id: USR-DIPIR-G7-FORM
+role_id: ROL-GESTION-G7-FORM
 as_a: Formulador Programas Glosa 7
 i_want: formatos estandarizados para proyectos de cámaras y luminarias
 so_that: se agilice la admisibilidad

@@ -5,11 +5,14 @@ _meta:
 name: Métricas de velocidad y calidad del equipo (DORA metrics)
 id: US-TLEAD-001-01
 urn: urn:goreos:atom:story:us_tlead_001_01:1.0.0
-role_id: USR-DEV-ARQ
-as_a: Arquitecto de Sistemas
+role_id: ROL-DEV-ARQ
+as_a: Arquitecto Revisor (Proyectos)
 i_want: métricas de velocidad y calidad del equipo (DORA metrics)
 so_that: pueda optimizar el proceso de desarrollo
 domain: D-DEV
 priority: P1
 capability_id: CAP-DEV-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

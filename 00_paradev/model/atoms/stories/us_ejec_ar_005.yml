@@ -5,11 +5,14 @@ _meta:
 name: Verificar compromisos completados (cierra/dev)
 id: US-EJEC-AR-005
 urn: urn:goreos:atom:story:us_ejec_ar_005:1.0.0
-role_id: USR-ADM-JEFE
-as_a: Administrador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Verificar compromisos completados (cierra/dev)
 so_that: Valido cumplimiento
 domain: D-EJEC
 priority: P0
 capability_id: CAP-EJEC-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

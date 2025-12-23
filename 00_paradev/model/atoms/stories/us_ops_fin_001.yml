@@ -5,7 +5,7 @@ _meta:
 name: Alertas cuando el consumo proyectado exceda el presupuesto mensual
 id: US-OPS-FIN-001
 urn: urn:goreos:atom:story:us_ops_fin_001:1.0.0
-role_id: USR-OPS-FINOPS
+role_id: ROL-GESTION-FINOPS
 as_a: FinOps Manager
 i_want: Recibir alertas cuando el consumo proyectado exceda el presupuesto mensual
 so_that: Evito sorpresas en la facturación de servicios en la nube
@@ -13,3 +13,7 @@ domain: D-OPS
 priority: P1
 capability_id: CAP-OPS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-PRESUPUESTO
+- ENT-SAL-ALERTA

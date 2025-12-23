@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de despacho con registro de destinatario y medio de envío
 id: US-OP-002-01
 urn: urn:goreos:atom:story:us_op_002_01:1.0.0
-role_id: USR-OP-OF
+role_id: ROL-GESTION-OF
 as_a: Oficial de Partes
 i_want: un módulo de despacho con registro de destinatario y medio de envío
 so_that: pueda comprobar la recepción

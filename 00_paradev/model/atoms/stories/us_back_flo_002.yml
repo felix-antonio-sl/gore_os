@@ -5,10 +5,14 @@ _meta:
 name: Solicitudes de vehículos (asignar conductor)
 id: US-BACK-FLO-002
 urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
-role_id: USR-DAF-OPS-FLOTA
+role_id: ROL-GESTION-OPS-FLOTA
 as_a: Encargado Flota
 i_want: Gestionar solicitudes de vehículos (asignar conductor)
 so_that: Administro uso de flota
 domain: D-BACK
+capability_id: CAP-BACK-FLO-001
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-VEHICULO

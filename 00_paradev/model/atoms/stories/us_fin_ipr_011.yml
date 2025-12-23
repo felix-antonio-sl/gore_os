@@ -5,8 +5,8 @@ _meta:
 name: Reportar avance mensual (% físico/financiero)
 id: US-FIN-IPR-011
 urn: urn:goreos:atom:story:us_fin_ipr_011:1.0.0
-role_id: USR-EXT-EJEC
-as_a: Ejecutor / Entidad Ejecutora
+role_id: ROL-EJEC-URAI-EJEC
+as_a: Ejecutivo URAI
 i_want: Reportar avance mensual (% físico/financiero)
 so_that: Cumplo con obligaciones de reporte
 domain: D-FIN

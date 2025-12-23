@@ -10,8 +10,10 @@ name: Capital Base
 domain: D-FIN
 description: Gestión del capital disponible para inversión.
 composition:
-  processes: []
   entities:
+- urn:goreos:schema:entity:1.0.0
+
+  processes: []
     [urn:goreos:atom:entity:d_fin_presupuesto_asignacionpresupuestaria:1.0.0]
 morphisms:
   implements_capability: []

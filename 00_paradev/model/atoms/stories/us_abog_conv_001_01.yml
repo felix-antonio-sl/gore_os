@@ -5,10 +5,11 @@ _meta:
 name: Plantillas de convenios con cláusulas estándar
 id: US-ABOG-CONV-001-01
 urn: urn:goreos:atom:story:us_abog_conv_001_01:1.0.0
-role_id: USR-NEW-ABOGADO-CONV
+role_id: ROL-NORM-ABOGADO-CONV
 as_a: Abogado Convenios
 i_want: plantillas de convenios con cláusulas estándar
 so_that: pueda estandarizar revisiones
 domain: D-NORM
+capability_id: CAP-NORM-ABOG-001
 priority: P1
 acceptance_criteria: []

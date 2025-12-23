@@ -5,10 +5,11 @@ _meta:
 name: El historial de proyectos similares evaluados anteriormente
 id: US-ANAL-INV-001-02
 urn: urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
-role_id: USR-DIPIR-ANAL-INV
+role_id: ROL-GESTION-ANAL-INV
 as_a: Analista de Inversión
 i_want: consultar el historial de proyectos similares evaluados anteriormente
 so_that: pueda mantener consistencia en mis criterios
 domain: D-EJEC
+capability_id: CAP-EJEC-EVAL-001
 priority: P2
 acceptance_criteria: []

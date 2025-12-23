@@ -15,7 +15,17 @@ categorical:
   level: L1
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_abog_001_01:1.0.0
+    - urn:goreos:atom:story:us_abog_001_02:1.0.0
+    - urn:goreos:atom:story:us_abog_inf_001_01:1.0.0
+    - urn:goreos:atom:story:us_norm_acto_002:1.0.0
+    - urn:goreos:atom:story:us_norm_acto_003:1.0.0
+    - urn:goreos:atom:story:us_norm_acto_004:1.0.0
+    - urn:goreos:atom:story:us_norm_acto_005:1.0.0
+    - urn:goreos:atom:story:us_norm_acto_008:1.0.0
+    - urn:goreos:atom:story:us_tde_docdig_002:1.0.0
+
   governed_by: []
 
 unit: Unidad Jurídica

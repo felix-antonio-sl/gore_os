@@ -5,7 +5,7 @@ _meta:
 name: Devolver trámite con observaciones jurídicas para corrección
 id: US-NORM-ACTO-008
 urn: urn:goreos:atom:story:us_norm_acto_008:1.0.0
-role_id: USR-JUR-ABOG
+role_id: ROL-NORM-ABOG
 as_a: Abogado Informante
 i_want: Devolver trámite con observaciones jurídicas para corrección
 so_that: Corrijo antes de firma
@@ -13,3 +13,6 @@ domain: D-NORM
 priority: P1
 capability_id: CAP-NORM-CONTROL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-TRAMITE

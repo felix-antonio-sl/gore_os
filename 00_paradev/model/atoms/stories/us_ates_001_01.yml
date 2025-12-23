@@ -5,10 +5,11 @@ _meta:
 name: Un módulo de emisión de pagos con validación presupuestaria
 id: US-ATES-001-01
 urn: urn:goreos:atom:story:us_ates_001_01:1.0.0
-role_id: USR-NEW-ANALISTA-TES
+role_id: ROL-FIN-ANALISTA-TES
 as_a: Analista Tesorería
 i_want: un módulo de emisión de pagos con validación presupuestaria
 so_that: los pagos sean correctos
 domain: D-FIN
+capability_id: CAP-FIN-TES-001
 priority: P0
 acceptance_criteria: []

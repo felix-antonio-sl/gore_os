@@ -13,4 +13,9 @@ stories:
 - us_back_flo_002
 - us_flota_001_01
 - us_cond_001_01
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:module:back_activo_fijo:1.0.0]
+ofrecida_por:
+- urn:goreos:atom:module:back_activo_fijo:1.0.0]

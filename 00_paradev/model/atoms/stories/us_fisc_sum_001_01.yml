@@ -5,7 +5,7 @@ _meta:
 name: Herramientas para tomar declaraciones y registrar evidencia digital
 id: US-FISC-SUM-001-01
 urn: urn:goreos:atom:story:us_fisc_sum_001_01:1.0.0
-role_id: USR-JUR-FIS
+role_id: ROL-NORM-FIS
 as_a: Fiscal Sumariante
 i_want: herramientas para tomar declaraciones y registrar evidencia digital
 so_that: el expediente del sumario esté digitalizado y seguro

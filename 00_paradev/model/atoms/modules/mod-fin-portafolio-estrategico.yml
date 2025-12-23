@@ -10,8 +10,10 @@ name: Portafolio Estratégico
 domain: D-FIN
 description: Inversiones alineadas con ERD y teoría de cambio.
 composition:
-  processes: []
   entities:
+- urn:goreos:schema:entity:1.0.0
+
+  processes: []
     [
       urn:goreos:atom:entity:d_fin_portafolio_teoriacambio:1.0.0,
       urn:goreos:atom:entity:d_fin_portafolio_saludipr:1.0.0,

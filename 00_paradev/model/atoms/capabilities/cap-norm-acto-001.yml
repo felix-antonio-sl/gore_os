@@ -17,4 +17,10 @@ stories:
 - us_norm_acto_008
 - us_norm_acto_011
 - us_norm_acto_012
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:capability:cap_documentos_001:1.0.0]
+ofrecida_por:
+- urn:goreos:atom:module:norm_actos_administrativos:1.0.0
+- urn:goreos:atom:module:norm_procedimientos_administrativos:1.0.0

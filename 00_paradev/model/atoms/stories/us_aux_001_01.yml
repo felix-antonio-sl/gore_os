@@ -5,7 +5,7 @@ _meta:
 name: Solicitudes de apoyo logístico
 id: US-AUX-001-01
 urn: urn:goreos:atom:story:us_aux_001_01:1.0.0
-role_id: USR-NEW-AUXILIAR
+role_id: ROL-BACK-AUXILIAR
 as_a: Auxiliar
 i_want: recibir solicitudes de apoyo logístico
 so_that: pueda organizar mi trabajo

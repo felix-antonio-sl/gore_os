@@ -5,7 +5,7 @@ _meta:
 name: En un log inmutable cada decisión tomada por un agente autónomo
 id: US-EVOL-AI-002
 urn: urn:goreos:atom:story:us_evol_ai_002:1.0.0
-role_id: BOT-KODA
+role_id: ROL-GESTION-KODA
 as_a: Agente KODA
 i_want: Registrar en un log inmutable cada decisión tomada por un agente autónomo
 so_that: Garantizo la explicabilidad (XAI) ante auditorías

@@ -15,7 +15,12 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_fenix_001_01:1.0.0
+    - urn:goreos:atom:story:us_fnx_act_001:1.0.0
+    - urn:goreos:atom:story:us_fnx_cie_003:1.0.0
+    - urn:goreos:atom:story:us_fnx_ges_001:1.0.0
+
   governed_by: []
 
 unit: FENIX (Unidad de Intervención Institucional)

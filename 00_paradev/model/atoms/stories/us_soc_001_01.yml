@@ -5,7 +5,7 @@ _meta:
 name: Un registro de organizaciones y beneficiarios sociales
 id: US-SOC-001-01
 urn: urn:goreos:atom:story:us_soc_001_01:1.0.0
-role_id: USR-NEW-ANALISTA-SOC
+role_id: ROL-GESTION-ANALISTA-SOC
 as_a: Analista Social
 i_want: un registro de organizaciones y beneficiarios sociales
 so_that: pueda focalizar intervenciones

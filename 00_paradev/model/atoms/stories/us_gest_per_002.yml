@@ -5,11 +5,14 @@ _meta:
 name: Proceso de inducción de nuevos funcionarios
 id: US-GEST-PER-002
 urn: urn:goreos:atom:story:us_gest_per_002:1.0.0
-role_id: USR-DAF-PER-ENC
-as_a: Encargado RRHH
+role_id: ROL-GESTION-ENC
+as_a: Encargado de Calidad
 i_want: Gestionar proceso de inducción de nuevos funcionarios
 so_that: Aseguro integración efectiva y productiva
 domain: D-GESTION
 priority: P1
 capability_id: CAP-GESTION-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO

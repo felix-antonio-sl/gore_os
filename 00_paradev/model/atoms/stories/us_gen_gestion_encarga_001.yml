@@ -13,3 +13,6 @@ so_that: pueda cumplir con los objetivos de mi rol
 domain: D-GESTION
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

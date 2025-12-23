@@ -5,8 +5,8 @@ _meta:
 name: Emitir informe final de proceso de instalación
 id: US-GOB-DESC-006
 urn: urn:goreos:atom:story:us_gob_desc_006:1.0.0
-role_id: USR-GOB-COMP
-as_a: Encargado Competencias
+role_id: ROL-FIN-ABS-COMP
+as_a: Comprador Público
 i_want: Emitir informe final de proceso de instalación
 so_that: Cierro el traspaso
 domain: D-GOB

@@ -5,11 +5,14 @@ _meta:
 name: Coordinar articulación política con actores regionales
 id: US-GOB-GAB-004
 urn: urn:goreos:atom:story:us_gob_gab_004:1.0.0
-role_id: USR-GAB-JEFE
-as_a: Jefe de Gabinete
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Coordinar articulación política con actores regionales
 so_that: Gestiono relaciones estratégicas
 domain: D-GOB
 priority: P1
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-ACTOR

@@ -5,7 +5,7 @@ _meta:
 name: Políticas de acceso y roles (IAM)
 id: US-TDE-SEG-007
 urn: urn:goreos:atom:story:us_tde_seg_007:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Configurar políticas de acceso y roles (IAM)
 so_that: Controlo accesos
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P0
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

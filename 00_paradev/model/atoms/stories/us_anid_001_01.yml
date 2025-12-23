@@ -5,7 +5,7 @@ _meta:
 name: Acceso a indicadores de capital humano avanzado
 id: US-ANID-001-01
 urn: urn:goreos:atom:story:us_anid_001_01:1.0.0
-role_id: USR-EXT-ANID
+role_id: ROL-GESTION-ANID
 as_a: Representante ANID
 i_want: acceso a indicadores de capital humano avanzado
 so_that: se evite la fuga de cerebros

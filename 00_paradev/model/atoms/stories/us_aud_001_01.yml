@@ -5,10 +5,11 @@ _meta:
 name: Un módulo de planificación y ejecución de auditorías
 id: US-AUD-001-01
 urn: urn:goreos:atom:story:us_aud_001_01:1.0.0
-role_id: USR-AUD-PROF
-as_a: Auditor Interno
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: un módulo de planificación y ejecución de auditorías
 so_that: pueda documentar hallazgos y recomendaciones
 domain: D-NORM
+capability_id: CAP-NORM-AUD-001
 priority: P0
 acceptance_criteria: []

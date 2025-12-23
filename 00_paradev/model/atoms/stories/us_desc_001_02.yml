@@ -5,7 +5,7 @@ _meta:
 name: Documentar las capacidades requeridas para cada competencia
 id: US-DESC-001-02
 urn: urn:goreos:atom:story:us_desc_001_02:1.0.0
-role_id: USR-NEW-ENCARGADO-DE
+role_id: ROL-GESTION-ENCARGADO-DE
 as_a: Encargado Descentralización
 i_want: documentar las capacidades requeridas para cada competencia
 so_that: pueda planificar el fortalecimiento institucional
@@ -13,3 +13,6 @@ domain: D-PLAN
 priority: P1
 capability_id: CAP-PLAN-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-CAPACIDAD

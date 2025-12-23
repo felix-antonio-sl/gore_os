@@ -11,4 +11,5 @@ description: Mapeo y gestión de riesgos naturales.
 stories:
 - us_terr_riesgo_001
 - us_terr_riesgo_002
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:terr_gobernanza_territorial:1.0.0

@@ -5,7 +5,7 @@ _meta:
 name: Fiscalizar DIP detectando incumplimientos
 id: US-NORM-CGR-003
 urn: urn:goreos:atom:story:us_norm_cgr_003:1.0.0
-role_id: USR-EXT-CGR
+role_id: ROL-GESTION-CGR
 as_a: Analista Toma de Razón (CGR)
 i_want: Fiscalizar DIP detectando incumplimientos
 so_that: Aseguro probidad

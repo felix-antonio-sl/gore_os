@@ -5,7 +5,7 @@ _meta:
 name: Un wallboard con semáforos de estado de servicios
 id: US-MON-001-01
 urn: urn:goreos:atom:story:us_mon_001_01:1.0.0
-role_id: USR-EVOL-MON
+role_id: ROL-GESTION-MON
 as_a: Monitor de Sistema
 i_want: un wallboard con semáforos de estado de servicios
 so_that: detecte caídas antes que los usuarios reporten

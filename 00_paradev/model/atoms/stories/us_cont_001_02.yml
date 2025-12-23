@@ -5,8 +5,8 @@ _meta:
 name: Cargar documentación de estados de pago en línea
 id: US-CONT-001-02
 urn: urn:goreos:atom:story:us_cont_001_02:1.0.0
-role_id: USR-EXT-CONT
-as_a: Contratista / Proveedor
+role_id: ROL-GESTION-FIN-CONT
+as_a: Contador Gubernamental
 i_want: cargar documentación de estados de pago en línea
 so_that: el proceso sea más ágil
 domain: D-FIN

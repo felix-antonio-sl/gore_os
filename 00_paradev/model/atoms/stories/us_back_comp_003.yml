@@ -5,10 +5,14 @@ _meta:
 name: Metas de desempeño (CDC/PMG)
 id: US-BACK-COMP-003
 urn: urn:goreos:atom:story:us_back_comp_003:1.0.0
-role_id: USR-DAF-RH-CAP
-as_a: Encargado Capacitación
+role_id: ROL-GESTION-ANALISTA-CAP
+as_a: Analista Capacitación
 i_want: Gestionar metas de desempeño (CDC/PMG)
 so_that: Cumplo con compromisos institucionales
 domain: D-BACK
+capability_id: CAP-BACK-ABS-001
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

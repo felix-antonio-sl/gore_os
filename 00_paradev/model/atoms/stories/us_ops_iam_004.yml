@@ -13,3 +13,6 @@ domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO

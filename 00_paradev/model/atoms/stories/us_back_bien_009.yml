@@ -5,10 +5,11 @@ _meta:
 name: Apoyar CPHS (investigación accidentes)
 id: US-BACK-BIEN-009
 urn: urn:goreos:atom:story:us_back_bien_009:1.0.0
-role_id: USR-DAF-PER-BIEN
+role_id: ROL-GESTION-PER-BIEN
 as_a: Profesional Bienestar
 i_want: Apoyar CPHS (investigación accidentes)
 so_that: Prevengo futuros accidentes
 domain: D-BACK
+capability_id: CAP-BACK-BIEN-001
 priority: P1
 acceptance_criteria: []

@@ -5,11 +5,14 @@ _meta:
 name: Formular políticas de desarrollo regional (ERD/PROT/ZUBC)
 id: US-GOB-GR-001
 urn: urn:goreos:atom:story:us_gob_gr_001:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Formular políticas de desarrollo regional (ERD/PROT/ZUBC)
 so_that: Defino rumbo estratégico
 domain: D-GOB
 priority: P0
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

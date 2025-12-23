@@ -5,7 +5,7 @@ _meta:
 name: La documentación técnica generada directamente desde el código
 id: US-DEV-DX-002
 urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
-role_id: USR-DEV-BACK
+role_id: ROL-GESTION-BACK
 as_a: Desarrollador Backend
 i_want: Consultar la documentación técnica generada directamente desde el código
 so_that: Evito consultar wikis desactualizadas

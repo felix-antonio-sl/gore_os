@@ -5,7 +5,7 @@ _meta:
 name: Inventariar los sistemas y tecnologías usados por municipios
 id: US-EVOL-AO-018
 urn: urn:goreos:atom:story:us_evol_ao_018:1.0.0
-role_id: USR-DAF-TIC-CTD
+role_id: ROL-GESTION-TIC-CTD
 as_a: Coordinador Transformación Digital (CTD)
 i_want: Inventariar los sistemas y tecnologías usados por municipios
 so_that: Identifico compatibilidades para la federación

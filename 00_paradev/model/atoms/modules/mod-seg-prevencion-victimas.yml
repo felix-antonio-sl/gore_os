@@ -10,6 +10,9 @@ name: Prevención y Apoyo a Víctimas
 domain: D-SEG
 description: Programas de prevención y atención a víctimas.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: [urn:goreos:atom:process:d_seg_p4:1.0.0]
   entities: [urn:goreos:atom:entity:d_seg_proyecto_seguridad:1.0.0]
 morphisms:

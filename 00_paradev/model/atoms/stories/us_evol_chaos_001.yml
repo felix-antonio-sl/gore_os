@@ -5,7 +5,7 @@ _meta:
 name: Simular la caída controlada de un servicio crítico (ej: Plataforma Ley Lobby)
 id: US-EVOL-CHAOS-001
 urn: urn:goreos:atom:story:us_evol_chaos_001:1.0.0
-role_id: USR-DAF-TIC-SRE
+role_id: ROL-GESTION-TIC-SRE
 as_a: Ingeniero SRE
 i_want: 'Simular la caída controlada de un servicio crítico (ej: Plataforma Ley Lobby)'
 so_that: Verifico que los protocolos de contingencia manual se activen
@@ -13,3 +13,7 @@ domain: D-EVOL
 priority: P2
 capability_id: CAP-EVOL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-PLATAFORMA
+- ENT-ORG-ROL

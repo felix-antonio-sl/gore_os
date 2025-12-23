@@ -12,4 +12,5 @@ stories:
 - us_tde_interop_001
 - us_tde_interop_002
 - us_tde_interop_003
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:tde_expediente_electronico:1.0.0]

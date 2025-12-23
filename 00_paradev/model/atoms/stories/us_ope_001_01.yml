@@ -5,7 +5,7 @@ _meta:
 name: Planificador de tareas con reporte de éxito/fallo
 id: US-OPE-001-01
 urn: urn:goreos:atom:story:us_ope_001_01:1.0.0
-role_id: USR-EVOL-OP
+role_id: ROL-OPS-OP
 as_a: Operador de Sistema
 i_want: planificador de tareas con reporte de éxito/fallo
 so_that: pueda reintentar procesos fallidos

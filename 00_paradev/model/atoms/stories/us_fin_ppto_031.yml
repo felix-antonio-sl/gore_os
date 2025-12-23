@@ -5,8 +5,8 @@ _meta:
 name: Modificaciones presupuestarias (Rebajas/Suplementos)
 id: US-FIN-PPTO-031
 urn: urn:goreos:atom:story:us_fin_ppto_031:1.0.0
-role_id: USR-DAF-JEFE
-as_a: Jefe DAF
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Gestionar modificaciones presupuestarias (Rebajas/Suplementos)
 so_that: Autorizo ajustes
 domain: D-FIN

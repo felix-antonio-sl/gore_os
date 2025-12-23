@@ -7,9 +7,12 @@ name: Historia genérica para Especialista Accesibilidad
 id: US-GEN-GESTION_ESPECIA-001
 urn: urn:goreos:atom:story:us_gen_gestion_especia_001:1.0.0
 role_id: ROL-GESTION-ESPECIALISTA
-as_a: Especialista Accesibilidad
+as_a: Especialista BI
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
 domain: D-GESTION
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

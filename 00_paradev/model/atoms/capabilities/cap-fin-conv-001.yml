@@ -12,4 +12,5 @@ stories:
 - us_fin_conv_003
 - us_fin_conv_005
 - us_aconv_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:fin_gestion_ejecutores:1.0.0

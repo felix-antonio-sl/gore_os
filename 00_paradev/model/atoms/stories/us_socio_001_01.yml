@@ -5,8 +5,8 @@ _meta:
 name: Mis saldos de ayudas económicas
 id: US-SOCIO-001-01
 urn: urn:goreos:atom:story:us_socio_001_01:1.0.0
-role_id: USR-DAF-PER-SOC
-as_a: Socio Bienestar
+role_id: ROL-GESTION-ANALISTA-SOC
+as_a: Analista Social
 i_want: consultar mis saldos de ayudas económicas
 so_that: pueda planificar mis gastos
 domain: D-BACK

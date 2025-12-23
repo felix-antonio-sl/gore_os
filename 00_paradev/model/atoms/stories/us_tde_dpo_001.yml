@@ -5,7 +5,7 @@ _meta:
 name: Solicitudes ARCO (Acceso, Rectificación, Cancelación, Oposición)
 id: US-TDE-DPO-001
 urn: urn:goreos:atom:story:us_tde_dpo_001:1.0.0
-role_id: USR-TDE-DPO
+role_id: ROL-GESTION-DPO
 as_a: DPO
 i_want: Gestionar Solicitudes ARCO (Acceso, Rectificación, Cancelación, Oposición)
 so_that: Cumplo con derechos ciudadanos

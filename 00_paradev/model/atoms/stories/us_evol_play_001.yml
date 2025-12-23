@@ -5,7 +5,7 @@ _meta:
 name: Playbook de remediación
 id: US-EVOL-PLAY-001
 urn: urn:goreos:atom:story:us_evol_play_001:1.0.0
-role_id: USR-EVOL-OP
+role_id: ROL-OPS-OP
 as_a: Operador de Sistema
 i_want: Ejecutar playbook de remediación
 so_that: Respondo a problemas conocidos
@@ -13,3 +13,6 @@ domain: D-EVOL
 priority: P1
 capability_id: CAP-EVOL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-PLAYBOOK

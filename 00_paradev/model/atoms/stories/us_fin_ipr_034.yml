@@ -5,8 +5,8 @@ _meta:
 name: Ver tiempos promedio por fase del ciclo
 id: US-FIN-IPR-034
 urn: urn:goreos:atom:story:us_fin_ipr_034:1.0.0
-role_id: USR-DIPIR-JEFE
-as_a: Jefe DIPIR
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Ver tiempos promedio por fase del ciclo
 so_that: Identifico cuellos de botella
 domain: D-FIN

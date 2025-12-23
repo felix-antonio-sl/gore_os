@@ -5,8 +5,8 @@ _meta:
 name: Política Regional propia (instrumento normativo)
 id: US-TERR-PLAN-005
 urn: urn:goreos:atom:story:us_terr_plan_005:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Gestionar Política Regional propia (instrumento normativo)
 so_that: Defino políticas sectoriales
 domain: D-TERR

@@ -5,10 +5,11 @@ _meta:
 name: Actos similares anteriores
 id: US-ABOG-001-02
 urn: urn:goreos:atom:story:us_abog_001_02:1.0.0
-role_id: USR-JUR-ABOG
+role_id: ROL-NORM-ABOG
 as_a: Abogado Informante
 i_want: consultar actos similares anteriores
 so_that: pueda mantener consistencia jurídica
 domain: D-NORM
+capability_id: CAP-NORM-ABOG-001
 priority: P1
 acceptance_criteria: []

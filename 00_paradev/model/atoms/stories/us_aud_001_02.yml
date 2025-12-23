@@ -5,10 +5,11 @@ _meta:
 name: Informes de auditoría con plantilla estándar
 id: US-AUD-001-02
 urn: urn:goreos:atom:story:us_aud_001_02:1.0.0
-role_id: USR-AUD-PROF
-as_a: Auditor Interno
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: generar informes de auditoría con plantilla estándar
 so_that: los informes sean consistentes
 domain: D-NORM
+capability_id: CAP-NORM-AUD-001
 priority: P0
 acceptance_criteria: []

@@ -5,7 +5,7 @@ _meta:
 name: Si un predio se intersecta con zonas de riesgo definidas en el PROT
 id: US-TERR-DOM-003
 urn: urn:goreos:atom:story:us_terr_dom_003:1.0.0
-role_id: USR-MUNI-DOM
+role_id: ROL-EJEC-DOM
 as_a: Director de Obras (DOM)
 i_want: Validar si un predio se intersecta con zonas de riesgo definidas en el PROT
 so_that: Prevengo edificaciones en zonas peligrosas
@@ -13,3 +13,6 @@ domain: D-TERR
 priority: P0
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-RIESGO

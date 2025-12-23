@@ -5,8 +5,8 @@ _meta:
 name: Elaborar Plan Regional de Emergencia
 id: US-GOB-GRD-003
 urn: urn:goreos:atom:story:us_gob_grd_003:1.0.0
-role_id: USR-CIES-COOR
-as_a: Coordinador CIES
+role_id: ROL-GESTION-UCR-COOR
+as_a: Coordinador UCR
 i_want: Elaborar Plan Regional de Emergencia
 so_that: Preparo respuesta a desastres
 domain: D-GOB

@@ -5,8 +5,8 @@ _meta:
 name: Un registro de programas de prevención financiados por el GORE
 id: US-DSEG-001-02
 urn: urn:goreos:atom:story:us_dseg_001_02:1.0.0
-role_id: USR-SEG-JEFE
-as_a: Jefe D-SEG
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: un registro de programas de prevención financiados por el GORE
 so_that: pueda evaluar cobertura e impacto
 domain: D-PLAN

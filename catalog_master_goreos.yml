@@ -1,0 +1,101 @@
+_manifest:
+  urn: "urn:knowledge:goreos:catalog:master:1.0.0"
+  role: SOURCE_OF_TRUTH
+  provenance:
+    created_by: FS
+    created_at: "2025-12-23"
+    agent: "agent_koda_architect"
+
+semantic_foundation:
+  - urn: "urn:knowledge:goreos:manifesto:1.0.0"
+    path: "MANIFESTO.md"
+    role: DOCUMENT_RECTOR
+  - urn: "urn:knowledge:goreos:glossary:core:1.0.0"
+    path: "00_paradev/model/GLOSARIO_GOREOS.yml"
+    role: TERMINOLOGY_SOURCE
+
+catalogs:
+  - id: core-architecture
+    name: "Núcleo de Arquitectura GORE_OS"
+    description: "Definiciones maestras de la estructura del sistema y cumplimiento TDE."
+    items:
+      - urn: "urn:knowledge:goreos:architecture:context:c1"
+        path: "00_paradev/architecture/c1_context/"
+      - urn: "urn:knowledge:goreos:architecture:containers:c2"
+        path: "00_paradev/architecture/c2_containers/"
+      - urn: "urn:knowledge:goreos:architecture:components:c3"
+        path: "00_paradev/architecture/c3_components/"
+      - urn: "urn:knowledge:goreos:architecture:decisions"
+        path: "00_paradev/architecture/decisions/"
+      - urn: "urn:knowledge:goreos:architecture:categorical"
+        path: "00_paradev/architecture/categorical-view/"
+      - urn: "urn:knowledge:goreos:architecture:guides"
+        path: "00_paradev/architecture/guides/"
+      - urn: "urn:knowledge:goreos:architecture:stack"
+        path: "00_paradev/architecture/stack.md"
+
+  - id: design-systems
+    name: "Diseño y Experiencia (UX/UI)"
+    description: "Estándares visuales, componentes de interfaz y layouts regionales."
+    items:
+      - urn: "urn:knowledge:goreos:design:core"
+        path: "00_paradev/architecture/design/design_system.md"
+      - urn: "urn:knowledge:goreos:design:governance"
+        path: "00_paradev/architecture/design/design_governance.md"
+      - urn: "urn:knowledge:goreos:design:ui-kit:docs"
+        path: "00_paradev/architecture/design/ui_components.md"
+      - urn: "urn:knowledge:goreos:design:layouts"
+        path: "00_paradev/architecture/design/ui_layouts.md"
+
+  - id: core-schemas
+    name: "Esquemas y Contratos"
+    description: "Definiciones técnicas de datos y validaciones."
+    items:
+      - urn: "urn:knowledge:goreos:architecture:schemas"
+        path: "00_paradev/schemas/"
+
+  - id: supermodel-atoms
+    name: "Átomos del Supermodelo"
+    description: "Entidades mínimas de conocimiento: Roles, Entidades, Procesos, Historias."
+    items:
+      - urn: "urn:knowledge:goreos:model:atoms:roles"
+        path: "00_paradev/model/atoms/roles/"
+      - urn: "urn:knowledge:goreos:model:atoms:entities"
+        path: "00_paradev/model/atoms/entities/"
+      - urn: "urn:knowledge:goreos:model:atoms:processes"
+        path: "00_paradev/model/atoms/processes/"
+      - urn: "urn:knowledge:goreos:model:atoms:stories"
+        path: "00_paradev/model/atoms/stories/"
+      - urn: "urn:knowledge:goreos:model:atoms:capabilities"
+        path: "00_paradev/model/atoms/capabilities/"
+      - urn: "urn:knowledge:goreos:model:atoms:modules"
+        path: "00_paradev/model/atoms/modules/"
+
+  - id: supermodel-logic
+    name: "Lógica y Relaciones"
+    description: "Composiciones categóricas y profuntores que definen la semántica del modelo."
+    items:
+      - urn: "urn:knowledge:goreos:model:profunctors"
+        path: "00_paradev/model/profunctors/"
+      - urn: "urn:knowledge:goreos:model:compositions"
+        path: "00_paradev/model/compositions/"
+
+  - id: engineering-assets
+    name: "Activos de Ingeniería"
+    description: "Herramientas de transformación, ETL y scripts de mantenimiento."
+    items:
+      - urn: "urn:knowledge:goreos:engineering:scripts"
+        path: "00_paradev/scripts/"
+      - urn: "urn:knowledge:goreos:engineering:etl"
+        path: "00_paradev/etl/"
+      - urn: "urn:knowledge:goreos:engineering:tools"
+        path: "00_paradev/tools/"
+
+  - id: system-implementation
+    name: "Implementación del Sistema"
+    description: "Código fuente de aplicaciones y paquetes compartidos."
+    items:
+      - urn: "urn:knowledge:goreos:sys:apps"
+        path: "apps/"
+      - urn: "urn:knowledge:goreos:sys:packages"
+        path: "packages/"

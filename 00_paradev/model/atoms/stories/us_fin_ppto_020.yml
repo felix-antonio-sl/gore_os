@@ -5,11 +5,14 @@ _meta:
 name: Visar resoluciones de cometidos funcionarios
 id: US-FIN-PPTO-020
 urn: urn:goreos:atom:story:us_fin_ppto_020:1.0.0
-role_id: USR-DAF-JEFE
-as_a: Jefe DAF
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Visar resoluciones de cometidos funcionarios
 so_that: Autorizo viáticos
 domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO

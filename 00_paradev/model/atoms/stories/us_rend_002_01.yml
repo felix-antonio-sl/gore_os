@@ -5,7 +5,7 @@ _meta:
 name: Un workflow de revisión con estados (Recibida, En revisión, Aprobada, Observada,
 id: US-REND-002-01
 urn: urn:goreos:atom:story:us_rend_002_01:1.0.0
-role_id: USR-DAF-FIN-REND
+role_id: ROL-GESTION-FIN-REND
 as_a: Encargado Rendiciones
 i_want: un workflow de revisión con estados (Recibida, En revisión, Aprobada, Observada,
   Rechazada)

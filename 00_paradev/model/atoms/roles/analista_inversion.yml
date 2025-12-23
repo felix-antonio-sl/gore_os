@@ -15,7 +15,13 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_anal_inv_001_01:1.0.0
+    - urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
+    - urn:goreos:atom:story:us_epp_001_01:1.0.0
+    - urn:goreos:atom:story:us_fin_fril_001:1.0.0
+    - urn:goreos:atom:story:us_inv_001_01:1.0.0
+
   governed_by: []
 
 unit: DIPIR

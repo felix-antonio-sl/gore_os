@@ -5,7 +5,7 @@ _meta:
 name: La versión OCR para extraer entidades clave y pre-clasificar
 id: US-GOB-OP-005
 urn: urn:goreos:atom:story:us_gob_op_005:1.0.0
-role_id: USR-DAF-TIC-SRE
+role_id: ROL-GESTION-TIC-SRE
 as_a: Ingeniero SRE
 i_want: Procesar la versión OCR para extraer entidades clave y pre-clasificar
 so_that: Facilito la revisión humana

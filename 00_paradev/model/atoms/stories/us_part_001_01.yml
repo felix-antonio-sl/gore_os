@@ -5,11 +5,15 @@ _meta:
 name: Una plataforma de votación digital segura
 id: US-PART-001-01
 urn: urn:goreos:atom:story:us_part_001_01:1.0.0
-role_id: USR-DIDES-PART-ENC
-as_a: Encargado Participación Ciudadana
+role_id: ROL-GESTION-ENC
+as_a: Encargado de Calidad
 i_want: una plataforma de votación digital segura
 so_that: la ciudadanía priorice iniciativas de inversión
 domain: D-GOB
 priority: P1
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-PLATAFORMA
+- ENT-GOV-VOTACION

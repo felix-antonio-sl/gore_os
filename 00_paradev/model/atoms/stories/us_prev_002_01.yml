@@ -5,7 +5,7 @@ _meta:
 name: Registro de entrega de EPP (Equipos Protección Personal)
 id: US-PREV-002-01
 urn: urn:goreos:atom:story:us_prev_002_01:1.0.0
-role_id: USR-NEW-PREVENCIONIS
+role_id: ROL-GESTION-PREVENCIONIS
 as_a: Prevencionista Riesgos
 i_want: registro de entrega de EPP (Equipos Protección Personal)
 so_that: cumpla con la normativa legal

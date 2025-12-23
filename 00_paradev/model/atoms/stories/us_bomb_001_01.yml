@@ -5,7 +5,7 @@ _meta:
 name: Integración con sistema de alertas del CIES
 id: US-BOMB-001-01
 urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
-role_id: USR-EXT-BOMB
+role_id: ROL-GESTION-BOMB
 as_a: Bomberos de Chile
 i_want: integración con sistema de alertas del CIES
 so_that: pueda recibir información en tiempo real
@@ -13,3 +13,6 @@ domain: D-TERR
 priority: P0
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

@@ -10,6 +10,9 @@ name: Portafolio IPR
 domain: D-FIN
 description: Ciclo de vida de iniciativas de inversión pública.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes:
     [
       urn:goreos:atom:process:d_fin_ipr_core_p2:1.0.0,
@@ -20,7 +23,6 @@ composition:
       urn:goreos:atom:process:d_fin_ipr_core_p6:1.0.0,
       urn:goreos:atom:process:d_fin_ipr_core_p7:1.0.0,
     ]
-  entities:
     [
       urn:goreos:atom:entity:d_fin_ipr_core_actoripr:1.0.0,
       urn:goreos:atom:entity:d_fin_ipr_core_evaluacionipr:1.0.0,

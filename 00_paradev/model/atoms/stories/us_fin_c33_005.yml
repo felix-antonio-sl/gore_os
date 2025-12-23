@@ -5,7 +5,7 @@ _meta:
 name: Adquisición de activos vía Circular 33
 id: US-FIN-C33-005
 urn: urn:goreos:atom:story:us_fin_c33_005:1.0.0
-role_id: USR-DIPIR-C33
+role_id: ROL-OPS-C33
 as_a: Analista Operaciones C33
 i_want: Gestionar adquisición de activos vía Circular 33
 so_that: Ejecuto presupuesto C33
@@ -13,3 +13,6 @@ domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-PRESUPUESTO

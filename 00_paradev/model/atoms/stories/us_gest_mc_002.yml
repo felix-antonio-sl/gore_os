@@ -5,7 +5,7 @@ _meta:
 name: Ciclo PDCA para iniciativas de mejora priorizadas
 id: US-GEST-MC-002
 urn: urn:goreos:atom:story:us_gest_mc_002:1.0.0
-role_id: USR-CAL-CTRL
+role_id: ROL-GESTION-CTRL
 as_a: Encargado Control de Gestión
 i_want: Ejecutar ciclo PDCA para iniciativas de mejora priorizadas
 so_that: Implemento mejoras de manera sistemática y medible

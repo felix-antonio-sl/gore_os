@@ -5,7 +5,7 @@ _meta:
 name: Devengos pendientes por subtítulo al cierre del ejercicio
 id: US-BACK-TES-015
 urn: urn:goreos:atom:story:us_back_tes_015:1.0.0
-role_id: USR-DAF-FIN-CONT
+role_id: ROL-GESTION-FIN-CONT
 as_a: Contador Gubernamental
 i_want: Calcular devengos pendientes por subtítulo al cierre del ejercicio
 so_that: Identifico obligaciones para deuda flotante

@@ -5,11 +5,14 @@ _meta:
 name: Presidir Comité Regional de Infraestructura y Ordenamiento
 id: US-GOB-GR-013
 urn: urn:goreos:atom:story:us_gob_gr_013:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Presidir Comité Regional de Infraestructura y Ordenamiento
 so_that: Coordino grandes obras
 domain: D-GOB
 priority: P1
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMITE

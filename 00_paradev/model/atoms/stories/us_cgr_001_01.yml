@@ -5,7 +5,7 @@ _meta:
 name: Expedientes electrónicos completos vía interoperabilidad
 id: US-CGR-001-01
 urn: urn:goreos:atom:story:us_cgr_001_01:1.0.0
-role_id: USR-EXT-CGR
+role_id: ROL-GESTION-CGR
 as_a: Analista Toma de Razón (CGR)
 i_want: recibir expedientes electrónicos completos vía interoperabilidad
 so_that: pueda revisar sin solicitar documentos adicionales
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P0
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-DOCUMENTO

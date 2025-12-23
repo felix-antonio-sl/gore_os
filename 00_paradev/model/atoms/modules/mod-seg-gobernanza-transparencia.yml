@@ -10,8 +10,11 @@ name: Gobernanza y Transparencia
 domain: D-SEG
 description: Transparencia y rendición de cuentas en seguridad.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: []
-  entities: []
+
 morphisms:
   implements_capability: []
   depends_on: []

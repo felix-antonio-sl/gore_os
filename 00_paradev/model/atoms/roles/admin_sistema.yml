@@ -17,7 +17,9 @@ categorical:
   level: L1
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_gen_ops_admin_sys_002:1.0.0
+
   governed_by: []
 
 unit: D-TDE

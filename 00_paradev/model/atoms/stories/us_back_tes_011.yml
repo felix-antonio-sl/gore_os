@@ -5,7 +5,7 @@ _meta:
 name: Contabilizar gastos operativos del GORE (Subt. 21, 22)
 id: US-BACK-TES-011
 urn: urn:goreos:atom:story:us_back_tes_011:1.0.0
-role_id: USR-DAF-FIN-CONT
+role_id: ROL-GESTION-FIN-CONT
 as_a: Contador Gubernamental
 i_want: Contabilizar gastos operativos del GORE (Subt. 21, 22)
 so_that: Registro correctamente el devengo en SIGFE

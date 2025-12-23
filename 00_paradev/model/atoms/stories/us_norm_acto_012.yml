@@ -5,7 +5,7 @@ _meta:
 name: Copia auténtica digital de actos originales
 id: US-NORM-ACTO-012
 urn: urn:goreos:atom:story:us_norm_acto_012:1.0.0
-role_id: USR-JUR-MFE
+role_id: ROL-GESTION-MFE
 as_a: Ministro de Fe
 i_want: Generar copia auténtica digital de actos originales
 so_that: Proveo copias oficiales

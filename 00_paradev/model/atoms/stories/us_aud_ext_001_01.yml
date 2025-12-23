@@ -5,10 +5,14 @@ _meta:
 name: Acceso controlado a expedientes y registros financieros
 id: US-AUD-EXT-001-01
 urn: urn:goreos:atom:story:us_aud_ext_001_01:1.0.0
-role_id: USR-NEW-AUDITOR-EXTE
+role_id: ROL-GESTION-AUDITOR-EXTE
 as_a: Auditor Externo
 i_want: acceso controlado a expedientes y registros financieros
 so_that: pueda realizar mi trabajo de auditoría
 domain: D-NORM
+capability_id: CAP-NORM-AUD-001
 priority: P0
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

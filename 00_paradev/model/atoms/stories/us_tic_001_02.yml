@@ -5,11 +5,14 @@ _meta:
 name: Un inventario de activos TI con ciclo de vida
 id: US-TIC-001-02
 urn: urn:goreos:atom:story:us_tic_001_02:1.0.0
-role_id: USR-DAF-TIC-JEFE
-as_a: Jefe TIC
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: un inventario de activos TI con ciclo de vida
 so_that: pueda planificar renovaciones y obsolescencia
 domain: D-BACK
 priority: P1
 capability_id: CAP-BACK-TICKETS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-INVENTARIO

@@ -5,7 +5,7 @@ _meta:
 name: Audiencias y viajes integrados con Infolobby
 id: US-GOB-LOB-001
 urn: urn:goreos:atom:story:us_gob_lob_001:1.0.0
-role_id: USR-GOB-PAS
+role_id: ROL-GESTION-PAS
 as_a: Sujeto Pasivo (Autoridad)
 i_want: Registrar audiencias y viajes integrados con Infolobby
 so_that: Cumplo con la Ley 20.730automáticamente
@@ -13,3 +13,6 @@ domain: D-GOB
 priority: P0
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-AUDIENCIA

@@ -5,11 +5,14 @@ _meta:
 name: Expedientes de sumarios administrativos digitalizados
 id: US-INTFIS-001-01
 urn: urn:goreos:atom:story:us_intfis_001_01:1.0.0
-role_id: USR-CAL-FNX-FIS
-as_a: Interventor Fiscal
+role_id: ROL-NORM-FIS
+as_a: Fiscal Sumariante
 i_want: expedientes de sumarios administrativos digitalizados
 so_that: pueda formular cargos fundados
 domain: D-NORM
 priority: P1
 capability_id: CAP-DOCUMENTOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-CARGO

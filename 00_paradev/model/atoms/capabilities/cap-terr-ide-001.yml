@@ -13,4 +13,9 @@ stories:
 - us_terr_ide_002
 - us_terr_ide_003
 - us_ide_001_01
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:entity:d_terr_metadato:1.0.0,
+ofrecida_por:
+- urn:goreos:atom:module:terr_ide_regional:1.0.0

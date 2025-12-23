@@ -5,7 +5,7 @@ _meta:
 name: Reportar avance periódico (validación supervisor)
 id: US-EJEC-MUNI-004
 urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
-role_id: USR-MUNI-TEC
+role_id: ROL-GESTION-TEC
 as_a: Unidad Técnica Municipal
 i_want: Reportar avance periódico (validación supervisor)
 so_that: Cumplo con reporte

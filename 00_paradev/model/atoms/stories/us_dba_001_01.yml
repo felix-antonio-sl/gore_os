@@ -5,7 +5,7 @@ _meta:
 name: Un panel de monitoreo de bases de datos
 id: US-DBA-001-01
 urn: urn:goreos:atom:story:us_dba_001_01:1.0.0
-role_id: USR-OPS-DBA
+role_id: ROL-GESTION-DBA
 as_a: DBA
 i_want: un panel de monitoreo de bases de datos
 so_that: pueda detectar problemas de rendimiento

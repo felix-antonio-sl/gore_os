@@ -5,10 +5,13 @@ _meta:
 name: Acceso a capas GEO de planos reguladores comunales
 id: US-APT-001-01
 urn: urn:goreos:atom:story:us_apt_001_01:1.0.0
-role_id: USR-DIPL-PLAN-ANAL
-as_a: Analista Planificación Territorial
+role_id: ROL-GESTION-PREV-ANAL
+as_a: Analista Prevención
 i_want: acceso a capas GEO de planos reguladores comunales
 so_that: pueda validar la compatibilidad de proyectos
 domain: D-TERR
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-LOC-COMUNA

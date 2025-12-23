@@ -13,4 +13,5 @@ stories:
 - us_gestion_hgore_002
 - us_gestion_hgore_003
 - us_hgore_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:gestion_salud_institucional:1.0.0

@@ -5,11 +5,14 @@ _meta:
 name: Evaluaciones de riesgo de proyectos IA
 id: US-MSIA-001-01
 urn: urn:goreos:atom:story:us_msia_001_01:1.0.0
-role_id: USR-SCIA-MEMB
-as_a: Miembro Subcomité IA
+role_id: ROL-GESTION-VERDE-MEMB
+as_a: Miembro Comité Estado Verde
 i_want: acceder a evaluaciones de riesgo de proyectos IA
 so_that: pueda votar informadamente
 domain: D-TDE
 priority: P1
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-RIESGO

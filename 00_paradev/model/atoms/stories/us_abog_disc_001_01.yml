@@ -5,10 +5,11 @@ _meta:
 name: Un módulo confidencial de gestión de sumarios
 id: US-ABOG-DISC-001-01
 urn: urn:goreos:atom:story:us_abog_disc_001_01:1.0.0
-role_id: USR-JUR-DISC
+role_id: ROL-NORM-DISC
 as_a: Abogado Procesos Disciplinarios
 i_want: un módulo confidencial de gestión de sumarios
 so_that: pueda tramitar procesos con reserva
 domain: D-NORM
+capability_id: CAP-NORM-ABOG-001
 priority: P0
 acceptance_criteria: []

@@ -5,7 +5,7 @@ _meta:
 name: Emitir informe de conciliación bancaria mensual firmado
 id: US-BACK-TES-009
 urn: urn:goreos:atom:story:us_back_tes_009:1.0.0
-role_id: USR-DAF-FIN-CONT
+role_id: ROL-GESTION-FIN-CONT
 as_a: Contador Gubernamental
 i_want: Emitir informe de conciliación bancaria mensual firmado
 so_that: Cumplo con control interno y normativa
@@ -13,3 +13,6 @@ domain: D-BACK
 priority: P1
 capability_id: CAP-PAGOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

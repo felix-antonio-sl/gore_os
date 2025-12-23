@@ -7,9 +7,12 @@ name: Historia genérica para Inspector Técnico de Obras (Campo)
 id: US-GEN-EJEC_ITO-001
 urn: urn:goreos:atom:story:us_gen_ejec_ito_001:1.0.0
 role_id: ROL-EJEC-ITO
-as_a: Inspector Técnico de Obras (Campo)
+as_a: Inspector Obras (Municipal)
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
 domain: D-GESTION
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

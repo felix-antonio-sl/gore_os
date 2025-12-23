@@ -5,7 +5,7 @@ _meta:
 name: Declarar cambio de Estado de Salud (Gate)
 id: US-EVOL-H-002
 urn: urn:goreos:atom:story:us_evol_h_002:1.0.0
-role_id: USR-EVOL-OP
+role_id: ROL-OPS-OP
 as_a: Operador de Sistema
 i_want: Declarar cambio de Estado de Salud (Gate)
 so_that: Formalizo transiciones

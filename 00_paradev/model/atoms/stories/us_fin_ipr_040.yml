@@ -5,7 +5,7 @@ _meta:
 name: Solicitar antecedentes adicionales al formulador
 id: US-FIN-IPR-040
 urn: urn:goreos:atom:story:us_fin_ipr_040:1.0.0
-role_id: USR-DIPL-DAE-PRE
+role_id: ROL-GESTION-DAE-PRE
 as_a: Analista Preinversión (DAE)
 i_want: Solicitar antecedentes adicionales al formulador
 so_that: Completo la evaluación

@@ -5,7 +5,7 @@ _meta:
 name: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
 id: US-TDE-SEG-005
 urn: urn:goreos:atom:story:us_tde_seg_005:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Asegurar cifrado en tránsito (TLS 1.2+) y en reposo para datos sensibles
 so_that: Protejo información

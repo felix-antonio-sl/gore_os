@@ -5,8 +5,8 @@ _meta:
 name: Acceso a reportes contables en formato estándar
 id: US-CGR-CONT-001-01
 urn: urn:goreos:atom:story:us_cgr_cont_001_01:1.0.0
-role_id: USR-EXT-CGR-CONT
-as_a: Contraparte Contable CGR
+role_id: ROL-GESTION-FIN-CONT
+as_a: Contador Gubernamental
 i_want: acceso a reportes contables en formato estándar
 so_that: pueda realizar revisión remota
 domain: D-FIN

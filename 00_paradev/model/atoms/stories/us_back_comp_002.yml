@@ -5,10 +5,11 @@ _meta:
 name: Proceso de calificaciones Junta
 id: US-BACK-COMP-002
 urn: urn:goreos:atom:story:us_back_comp_002:1.0.0
-role_id: USR-DAF-RH-CAP
-as_a: Encargado Capacitación
+role_id: ROL-GESTION-ANALISTA-CAP
+as_a: Analista Capacitación
 i_want: Gestionar proceso de calificaciones Junta
 so_that: Cumplo con ciclo de evaluación
 domain: D-BACK
+capability_id: CAP-BACK-ABS-001
 priority: P0
 acceptance_criteria: []

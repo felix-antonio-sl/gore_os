@@ -5,8 +5,8 @@ _meta:
 name: Notificaciones de cruces entre evaluadores y postulantes
 id: US-NORM-CTRL-001
 urn: urn:goreos:atom:story:us_norm_ctrl_001:1.0.0
-role_id: USR-AUD-PROF
-as_a: Auditor Interno
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: Recibir notificaciones de cruces entre evaluadores y postulantes
 so_that: Prevengo conflictos de interés
 domain: D-NORM

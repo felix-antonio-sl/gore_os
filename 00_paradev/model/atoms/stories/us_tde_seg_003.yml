@@ -5,7 +5,7 @@ _meta:
 name: Clasificar activos de información según CIA
 id: US-TDE-SEG-003
 urn: urn:goreos:atom:story:us_tde_seg_003:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Clasificar activos de información según CIA
 so_that: Priorizo protección

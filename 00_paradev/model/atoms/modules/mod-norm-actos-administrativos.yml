@@ -10,12 +10,15 @@ name: Actos Administrativos
 domain: D-NORM
 description: Resoluciones, decretos, oficios y tramitación CGR.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes:
     [
       urn:goreos:atom:process:d_norm_p1:1.0.0,
       urn:goreos:atom:process:d_norm_p2:1.0.0,
     ]
-  entities: []
+
 morphisms:
   implements_capability: [urn:goreos:atom:capability:cap_documentos_001:1.0.0]
   depends_on: []

@@ -5,10 +5,11 @@ _meta:
 name: Un módulo de emisión de CDP con validación automática de saldo
 id: US-ANALPRES-001-01
 urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
-role_id: USR-DIPIR-PRES-ANAL
-as_a: Analista Presupuestario
+role_id: ROL-FIN-ANALISTA-PRE
+as_a: Analista Presupuesto
 i_want: un módulo de emisión de CDP con validación automática de saldo
 so_that: no pueda comprometer recursos sin disponibilidad
 domain: D-FIN
+capability_id: CAP-FIN-PPTO-001
 priority: P0
 acceptance_criteria: []

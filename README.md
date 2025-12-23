@@ -10,9 +10,15 @@
 
 GORE_OS es el **sistema operativo institucional** del Gobierno Regional de Ñuble. No es un software tradicional, sino un **modelo integrado de datos, procesos y capacidades** que permite al GORE funcionar de manera coherente, auditable y evolucionar orgánicamente.
 
+> 📘 **Para la visión completa, propósito y génesis del proyecto, ver [MANIFESTO.md](MANIFESTO.md)**
+
 ### Propósito Fundamental
 
-> **GORE_OS existe para que el Gobierno Regional de Ñuble funcione mejor.**
+> **GORE_OS existe para digitalizar, automatizar y dotar de inteligencia al GORE Ñuble, acelerando el desarrollo de la región.**
+
+### Ciudadano de Primera Clase: La IPR
+
+La **Intervención Pública Regional (IPR)** es la entidad central del modelo. Toda la arquitectura se organiza en torno a ella, cubriendo su ciclo de vida completo: evaluación ex-ante → priorización → ejecución → seguimiento → evaluación ex-post.
 
 Actúa como la "columna vertebral" que conecta:
 

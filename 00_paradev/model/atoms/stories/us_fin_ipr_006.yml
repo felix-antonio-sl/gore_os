@@ -5,11 +5,14 @@ _meta:
 name: Subsanar observaciones sin trámite presencial
 id: US-FIN-IPR-006
 urn: urn:goreos:atom:story:us_fin_ipr_006:1.0.0
-role_id: USR-EXT-FORM
-as_a: Formulador Externo
+role_id: ROL-GESTION-G7-FORM
+as_a: Formulador Programas Glosa 7
 i_want: Subsanar observaciones sin trámite presencial
 so_that: Agilizo el proceso de admisibilidad
 domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-TRAMITE

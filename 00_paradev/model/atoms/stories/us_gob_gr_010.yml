@@ -5,8 +5,8 @@ _meta:
 name: Representar al GORE ante autoridades nacionales e internacionales
 id: US-GOB-GR-010
 urn: urn:goreos:atom:story:us_gob_gr_010:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Representar al GORE ante autoridades nacionales e internacionales
 so_that: Gestiono relaciones institucionales
 domain: D-GOB

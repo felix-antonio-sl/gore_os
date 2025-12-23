@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de evaluación de admisibilidad con checklist BIP
 id: US-PREINV-001-01
 urn: urn:goreos:atom:story:us_preinv_001_01:1.0.0
-role_id: USR-DIPL-DAE-PRE
+role_id: ROL-GESTION-DAE-PRE
 as_a: Analista Preinversión (DAE)
 i_want: un módulo de evaluación de admisibilidad con checklist BIP
 so_that: pueda verificar requisitos de ingreso a evaluación

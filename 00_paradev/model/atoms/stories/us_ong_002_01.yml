@@ -5,7 +5,7 @@ _meta:
 name: Postular en línea a subvenciones del 8%
 id: US-ONG-002-01
 urn: urn:goreos:atom:story:us_ong_002_01:1.0.0
-role_id: USR-CORP-DIR
+role_id: ROL-EJEC-DIR
 as_a: Director Ejecutivo Corporación
 i_want: postular en línea a subvenciones del 8%
 so_that: pueda ejecutar mis programas sociales

@@ -5,10 +5,11 @@ _meta:
 name: Traslado de bienes (cambio ubicación)
 id: US-BACK-AF-002
 urn: urn:goreos:atom:story:us_back_af_002:1.0.0
-role_id: USR-DAF-OPS-AF
+role_id: ROL-GESTION-OPS-AF
 as_a: Encargado Activo Fijo
 i_want: Registrar traslado de bienes (cambio ubicación)
 so_that: Actualizo ubicación de activos
 domain: D-BACK
+capability_id: CAP-BACK-AF-001
 priority: P1
 acceptance_criteria: []

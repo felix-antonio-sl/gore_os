@@ -5,7 +5,7 @@ _meta:
 name: Persistir constancia de notificación (codigo_tx, fechas) y asociar a IUIe
 id: US-TDE-NOTIF-005
 urn: urn:goreos:atom:story:us_tde_notif_005:1.0.0
-role_id: BOT-KODA
+role_id: ROL-GESTION-KODA
 as_a: Agente KODA
 i_want: Persistir constancia de notificación (codigo_tx, fechas) y asociar a IUIe
 so_that: Mantengo trazabilidad

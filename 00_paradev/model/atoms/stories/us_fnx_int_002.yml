@@ -5,7 +5,7 @@ _meta:
 name: Alertas críticas de seguridad pública (D-SEG)
 id: US-FNX-INT-002
 urn: urn:goreos:atom:story:us_fnx_int_002:1.0.0
-role_id: BOT-KODA
+role_id: ROL-GESTION-KODA
 as_a: Agente KODA
 i_want: Recibir alertas críticas de seguridad pública (D-SEG)
 so_that: Activo protocolos de crisis nivel I
@@ -13,3 +13,6 @@ domain: D-FENIX
 priority: P1
 capability_id: CAP-FENIX-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

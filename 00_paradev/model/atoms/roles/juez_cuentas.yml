@@ -15,7 +15,10 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_corte_001_01:1.0.0
+    - urn:goreos:atom:story:us_juez_001_01:1.0.0
+
   governed_by: []
 
 unit: Poder Judicial

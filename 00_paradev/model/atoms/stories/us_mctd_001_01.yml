@@ -5,11 +5,15 @@ _meta:
 name: Las minutas y acuerdos del CTD
 id: US-MCTD-001-01
 urn: urn:goreos:atom:story:us_mctd_001_01:1.0.0
-role_id: USR-CTD-MEMB
-as_a: Miembro Comité TD
+role_id: ROL-GESTION-VERDE-MEMB
+as_a: Miembro Comité Estado Verde
 i_want: acceder a las minutas y acuerdos del CTD
 so_that: pueda dar seguimiento en mi división
 domain: D-TDE
 priority: P1
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACUERDO
+- ENT-ORG-DIVISION

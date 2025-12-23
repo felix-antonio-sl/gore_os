@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de solicitudes de mantención y reserva de salas
 id: US-ASERV-001-01
 urn: urn:goreos:atom:story:us_aserv_001_01:1.0.0
-role_id: USR-NEW-ANALISTA-SER
+role_id: ROL-GESTION-ANALISTA-SER
 as_a: Analista Servicios Generales
 i_want: un módulo de solicitudes de mantención y reserva de salas
 so_that: pueda coordinar servicios

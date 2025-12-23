@@ -10,12 +10,14 @@ name: CIES Ñuble
 domain: D-SEG
 description: Centro Integrado de Emergencias y Seguridad regional.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes:
     [
       urn:goreos:atom:process:d_seg_p1:1.0.0,
       urn:goreos:atom:process:d_seg_p2:1.0.0,
     ]
-  entities:
     [
       urn:goreos:atom:entity:d_seg_incidente:1.0.0,
       urn:goreos:atom:entity:d_seg_accionrespuesta:1.0.0,

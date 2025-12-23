@@ -5,10 +5,14 @@ _meta:
 name: Generación automática de bases de licitación tipo
 id: US-ABAST-001-02
 urn: urn:goreos:atom:story:us_abast_001_02:1.0.0
-role_id: USR-DAF-ABS-ENC
-as_a: Encargado Abastecimiento
+role_id: ROL-GESTION-ENC
+as_a: Encargado de Calidad
 i_want: generación automática de bases de licitación tipo
 so_that: pueda agilizar la preparación de procesos
 domain: D-FIN
+capability_id: CAP-BACK-ABS-001
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-LICITACION

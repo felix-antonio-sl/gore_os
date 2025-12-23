@@ -5,8 +5,8 @@ _meta:
 name: Ver mapa de inversiones (geolocalización + filtros)
 id: US-GOB-CORE-004
 urn: urn:goreos:atom:story:us_gob_core_004:1.0.0
-role_id: USR-CORE-CONS
-as_a: Consejero Regional (Pleno)
+role_id: ROL-GESTION-MUNI-ENC
+as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Ver mapa de inversiones (geolocalización + filtros)
 so_that: Visualizo distribución territorial
 domain: D-GOB

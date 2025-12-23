@@ -5,7 +5,7 @@ _meta:
 name: Cubrir hito comunicacional de inicio/entrega de obra
 id: US-EJEC-PER-001
 urn: urn:goreos:atom:story:us_ejec_per_001:1.0.0
-role_id: USR-COM-PER
+role_id: ROL-GESTION-PER
 as_a: Periodista
 i_want: Cubrir hito comunicacional de inicio/entrega de obra
 so_that: Difundo logros

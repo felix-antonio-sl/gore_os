@@ -5,8 +5,8 @@ _meta:
 name: Acceso a datos de flujo vehicular y estado de rutas
 id: US-ATRA-001-01
 urn: urn:goreos:atom:story:us_atra_001_01:1.0.0
-role_id: USR-DIT-TRANS-ANAL
-as_a: Analista Transporte
+role_id: ROL-GESTION-PREV-ANAL
+as_a: Analista Prevención
 i_want: acceso a datos de flujo vehicular y estado de rutas
 so_that: pueda priorizar conservaciones viales
 domain: D-TERR

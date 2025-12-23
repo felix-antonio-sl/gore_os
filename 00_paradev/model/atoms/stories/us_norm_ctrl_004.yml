@@ -5,8 +5,8 @@ _meta:
 name: Informar hallazgos y recomendaciones al Gobernador y CORE
 id: US-NORM-CTRL-004
 urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
-role_id: USR-AUD-PROF
-as_a: Auditor Interno
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: Informar hallazgos y recomendaciones al Gobernador y CORE
 so_that: Escalo temas relevantes
 domain: D-NORM

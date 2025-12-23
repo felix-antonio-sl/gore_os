@@ -5,7 +5,7 @@ _meta:
 name: Las fases de desarrollo e implementación (W2-W3)
 id: US-DEV-CICLO-001
 urn: urn:goreos:atom:story:us_dev_ciclo_001:1.0.0
-role_id: USR-DEV-LEAD
+role_id: ROL-GESTION-LEAD
 as_a: Líder Técnico
 i_want: Gestionar las fases de desarrollo e implementación (W2-W3)
 so_that: Aseguro una evolución controlada del Blueprint al Código
@@ -13,3 +13,6 @@ domain: D-DEV
 priority: P0
 capability_id: CAP-DEV-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

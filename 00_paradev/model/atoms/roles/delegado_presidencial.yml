@@ -15,7 +15,12 @@ categorical:
   level: L1
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_dpr_002_01:1.0.0
+    - urn:goreos:atom:story:us_gob_del_001:1.0.0
+    - urn:goreos:atom:story:us_gob_del_003:1.0.0
+    - urn:goreos:atom:story:us_gob_del_004:1.0.0
+
   governed_by: []
 
 unit: Gobierno Interior

@@ -5,7 +5,7 @@ _meta:
 name: Un sistema de carátulas con código de barras y ruta digital
 id: US-OP-001-01
 urn: urn:goreos:atom:story:us_op_001_01:1.0.0
-role_id: USR-OP-OF
+role_id: ROL-GESTION-OF
 as_a: Oficial de Partes
 i_want: un sistema de carátulas con código de barras y ruta digital
 so_that: se asegure la trazabilidad de cada ingreso

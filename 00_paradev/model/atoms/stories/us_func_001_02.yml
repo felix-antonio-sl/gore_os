@@ -5,7 +5,7 @@ _meta:
 name: Mis liquidaciones de sueldo y certificados
 id: US-FUNC-001-02
 urn: urn:goreos:atom:story:us_func_001_02:1.0.0
-role_id: USR-DAF-PER-FUN
+role_id: ROL-GESTION-PER-FUN
 as_a: Funcionario
 i_want: consultar mis liquidaciones de sueldo y certificados
 so_that: pueda acceder a mi información laboral

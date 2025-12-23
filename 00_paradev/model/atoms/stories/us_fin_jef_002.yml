@@ -5,8 +5,8 @@ _meta:
 name: Ver distribución de carga por analista con métricas de tiempos
 id: US-FIN-JEF-002
 urn: urn:goreos:atom:story:us_fin_jef_002:1.0.0
-role_id: USR-DIPIR-JEFE
-as_a: Jefe DIPIR
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Ver distribución de carga por analista con métricas de tiempos
 so_that: Balanceo trabajo del equipo
 domain: D-FIN

@@ -5,8 +5,8 @@ _meta:
 name: Visualizar la historia de cambios detallada de cualquier archivo del repositorio
 id: US-DEV-CODE-003
 urn: urn:goreos:atom:story:us_dev_code_003:1.0.0
-role_id: ROL-DEVELOPER
-as_a: Rol no encontrado (ROL-DEVELOPER)
+role_id: ROL-GESTION-DESARROLLADO
+as_a: Desarrollador
 i_want: visualizar la historia de cambios detallada de cualquier archivo del repositorio
 so_that: pueda entender el contexto y la evolución de una funcionalidad específica
 domain: D-DEV

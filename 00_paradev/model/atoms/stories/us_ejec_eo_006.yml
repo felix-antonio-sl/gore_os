@@ -5,11 +5,14 @@ _meta:
 name: Ver historial de cambios del compromiso
 id: US-EJEC-EO-006
 urn: urn:goreos:atom:story:us_ejec_eo_006:1.0.0
-role_id: USR-DIDES-TERR-OP
-as_a: Encargado Operativo Territorial
+role_id: ROL-OPS-OP
+as_a: Operador de Sistema
 i_want: Ver historial de cambios del compromiso
 so_that: Consulto trazabilidad
 domain: D-EJEC
 priority: P2
 capability_id: CAP-EJEC-PORTAL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

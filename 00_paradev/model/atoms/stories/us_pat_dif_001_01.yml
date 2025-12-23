@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de patrocinio integrado con BIP
 id: US-PAT-DIF-001-01
 urn: urn:goreos:atom:story:us_pat_dif_001_01:1.0.0
-role_id: USR-DIFOI-PAT
+role_id: ROL-GESTION-PAT
 as_a: Analista Patrocinante (DIFOI)
 i_want: un módulo de patrocinio integrado con BIP
 so_that: pueda verificar alineamiento sectorial

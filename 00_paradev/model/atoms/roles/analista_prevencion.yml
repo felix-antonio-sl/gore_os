@@ -15,7 +15,26 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_amb_001_01:1.0.0
+    - urn:goreos:atom:story:us_aprev_001_01:1.0.0
+    - urn:goreos:atom:story:us_apt_001_01:1.0.0
+    - urn:goreos:atom:story:us_atra_001_01:1.0.0
+    - urn:goreos:atom:story:us_fin_frpd_002:1.0.0
+    - urn:goreos:atom:story:us_fin_frpd_003:1.0.0
+    - urn:goreos:atom:story:us_fin_gest_002:1.0.0
+    - urn:goreos:atom:story:us_fin_gest_003:1.0.0
+    - urn:goreos:atom:story:us_fin_gest_005:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_026:1.0.0
+    - urn:goreos:atom:story:us_fnx_ana_001:1.0.0
+    - urn:goreos:atom:story:us_geo_001_01:1.0.0
+    - urn:goreos:atom:story:us_jest_001_01:1.0.0
+    - urn:goreos:atom:story:us_norm_acto_006:1.0.0
+    - urn:goreos:atom:story:us_seg_prev_006:1.0.0
+    - urn:goreos:atom:story:us_seg_prev_007:1.0.0
+    - urn:goreos:atom:story:us_seg_prev_010:1.0.0
+    - urn:goreos:atom:story:us_subv_001_01:1.0.0
+
   governed_by: []
 
 unit: D-SEG

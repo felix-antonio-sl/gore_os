@@ -13,4 +13,5 @@ stories:
 - us_seg_cies_002
 - us_seg_cies_003
 - us_cies_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:seg_cies_nuble:1.0.0

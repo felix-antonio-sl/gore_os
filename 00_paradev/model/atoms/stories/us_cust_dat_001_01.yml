@@ -5,8 +5,8 @@ _meta:
 name: Herramientas de monitoreo de calidad de datos
 id: US-CUST-DAT-001-01
 urn: urn:goreos:atom:story:us_cust_dat_001_01:1.0.0
-role_id: USR-TDE-CUSTODIO
-as_a: Custodio Técnico de Datos
+role_id: ROL-GESTION-EVID
+as_a: Custodio Evidencia
 i_want: herramientas de monitoreo de calidad de datos
 so_that: pueda detectar anomalías
 domain: D-TDE

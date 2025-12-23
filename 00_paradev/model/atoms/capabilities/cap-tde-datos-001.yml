@@ -11,4 +11,9 @@ description: Cumplimiento Ley 21.719.
 stories:
 - us_tde_datos_001
 - us_tde_datos_002
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:capability:cap_tde_transp_001:1.0.0,
+ofrecida_por:
+- urn:goreos:atom:module:tde_proteccion_datos:1.0.0

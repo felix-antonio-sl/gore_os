@@ -5,8 +5,8 @@ _meta:
 name: Informes de gestión divisional
 id: US-FIN-IPR-035
 urn: urn:goreos:atom:story:us_fin_ipr_035:1.0.0
-role_id: USR-DIPIR-JEFE
-as_a: Jefe DIPIR
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Generar informes de gestión divisional
 so_that: Reporto a autoridades
 domain: D-FIN

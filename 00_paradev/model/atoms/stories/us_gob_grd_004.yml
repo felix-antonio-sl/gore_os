@@ -5,11 +5,14 @@ _meta:
 name: Presidir sesiones del Comité de Mitigación
 id: US-GOB-GRD-004
 urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
-role_id: USR-CIES-COOR
-as_a: Coordinador CIES
+role_id: ROL-GESTION-UCR-COOR
+as_a: Coordinador UCR
 i_want: Presidir sesiones del Comité de Mitigación
 so_that: Coordino acciones preventivas
 domain: D-GOB
 priority: P1
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMITE

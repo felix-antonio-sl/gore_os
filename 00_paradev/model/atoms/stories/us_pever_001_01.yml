@@ -5,11 +5,14 @@ _meta:
 name: Certificar al GORE en niveles superiores de Estado Verde
 id: US-PEVER-001-01
 urn: urn:goreos:atom:story:us_pever_001_01:1.0.0
-role_id: USR-CAL-VERDE-PRES
-as_a: Presidente Comité Estado Verde
+role_id: ROL-GESTION-PRES
+as_a: Presidente Subcomité IA
 i_want: certificar al GORE en niveles superiores de Estado Verde
 so_that: se reconozca el compromiso ambiental institucional
 domain: D-GOB
 priority: P2
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

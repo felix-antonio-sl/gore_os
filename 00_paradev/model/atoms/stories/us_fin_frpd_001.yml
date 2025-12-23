@@ -5,7 +5,7 @@ _meta:
 name: Alineación con Ejes (Sustentabilidad, Innovación)
 id: US-FIN-FRPD-001
 urn: urn:goreos:atom:story:us_fin_frpd_001:1.0.0
-role_id: USR-DIFOI-FRPD
+role_id: ROL-GESTION-FRPD
 as_a: Comité FRPD
 i_want: Validar alineación con Ejes (Sustentabilidad, Innovación)
 so_that: Aseguro pertinencia estratégica

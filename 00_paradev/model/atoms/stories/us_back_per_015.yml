@@ -5,7 +5,7 @@ _meta:
 name: Concursos públicos
 id: US-BACK-PER-015
 urn: urn:goreos:atom:story:us_back_per_015:1.0.0
-role_id: USR-DAF-PER-GEST
+role_id: ROL-BACK-PER-GEST
 as_a: Gestor de Personas
 i_want: Gestionar concursos públicos
 so_that: Recluto personal

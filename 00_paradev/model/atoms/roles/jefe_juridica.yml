@@ -15,7 +15,28 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_ar_001_02:1.0.0
+    - urn:goreos:atom:story:us_ar_002_01:1.0.0
+    - urn:goreos:atom:story:us_ar_003_01:1.0.0
+    - urn:goreos:atom:story:us_back_tes_014:1.0.0
+    - urn:goreos:atom:story:us_daf_001_01:1.0.0
+    - urn:goreos:atom:story:us_didesoh_002_01:1.0.0
+    - urn:goreos:atom:story:us_difoi_001_02:1.0.0
+    - urn:goreos:atom:story:us_dipir_001_02:1.0.0
+    - urn:goreos:atom:story:us_diplade_001_01:1.0.0
+    - urn:goreos:atom:story:us_diplade_001_02:1.0.0
+    - urn:goreos:atom:story:us_diplade_002_01:1.0.0
+    - urn:goreos:atom:story:us_dit_002_01:1.0.0
+    - urn:goreos:atom:story:us_dseg_001_02:1.0.0
+    - urn:goreos:atom:story:us_ejec_ar_005:1.0.0
+    - urn:goreos:atom:story:us_ejec_ar_006:1.0.0
+    - urn:goreos:atom:story:us_ejec_ar_007:1.0.0
+    - urn:goreos:atom:story:us_ejec_ar_008:1.0.0
+    - urn:goreos:atom:story:us_ejec_ar_009:1.0.0
+    - urn:goreos:atom:story:us_ejec_jd_002:1.0.0
+    - urn:goreos:atom:story:us_ejec_jd_005:1.0.0
+
   governed_by: []
 
 unit: Unidad Jurídica

@@ -5,11 +5,14 @@ _meta:
 name: Reasignar compromisos a otro responsable
 id: US-EJEC-AR-007
 urn: urn:goreos:atom:story:us_ejec_ar_007:1.0.0
-role_id: USR-ADM-JEFE
-as_a: Administrador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Reasignar compromisos a otro responsable
 so_that: Gestiono cambios de personal
 domain: D-EJEC
 priority: P1
 capability_id: CAP-EJEC-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

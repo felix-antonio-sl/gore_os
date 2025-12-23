@@ -5,7 +5,7 @@ _meta:
 name: Tipología Activo (Vehículo, Maquinaria, Equipo)
 id: US-FIN-C33-002
 urn: urn:goreos:atom:story:us_fin_c33_002:1.0.0
-role_id: USR-DIPIR-C33
+role_id: ROL-OPS-C33
 as_a: Analista Operaciones C33
 i_want: Validar tipología Activo (Vehículo, Maquinaria, Equipo)
 so_that: Clasifico correctamente
@@ -13,3 +13,6 @@ domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-VEHICULO

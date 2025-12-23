@@ -5,7 +5,7 @@ _meta:
 name: Simulaciones de phishing para concientización
 id: US-TDE-SEG-009
 urn: urn:goreos:atom:story:us_tde_seg_009:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Ejecutar simulaciones de phishing para concientización
 so_that: Educo a funcionarios
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P1
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO

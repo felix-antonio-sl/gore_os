@@ -5,11 +5,14 @@ _meta:
 name: Catálogo de servicios autogestionado (Base de datos, Cache)
 id: US-IPLAT-001-01
 urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
-role_id: USR-OPS-ING
-as_a: Ingeniero de Plataforma
+role_id: ROL-GESTION-CON-ING
+as_a: Ingeniero Vialidad
 i_want: catálogo de servicios autogestionado (Base de datos, Cache)
 so_that: los desarrolladores no pierdan tiempo configurando infraestructura
 domain: D-OPS
 priority: P1
 capability_id: CAP-OPS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

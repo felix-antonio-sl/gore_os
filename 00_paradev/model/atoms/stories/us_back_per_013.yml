@@ -5,10 +5,13 @@ _meta:
 name: Cometidos funcionarios (viático)
 id: US-BACK-PER-013
 urn: urn:goreos:atom:story:us_back_per_013:1.0.0
-role_id: USR-DAF-PER-GEST
+role_id: ROL-BACK-PER-GEST
 as_a: Gestor de Personas
 i_want: Gestionar cometidos funcionarios (viático)
 so_that: Proceso comisiones de servicio
 domain: D-BACK
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO

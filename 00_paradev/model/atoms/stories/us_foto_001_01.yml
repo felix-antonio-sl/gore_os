@@ -5,7 +5,7 @@ _meta:
 name: Un repositorio de fotos con metadatos de evento
 id: US-FOTO-001-01
 urn: urn:goreos:atom:story:us_foto_001_01:1.0.0
-role_id: USR-COM-FOTO
+role_id: ROL-GESTION-FOTO
 as_a: Fotógrafo
 i_want: un repositorio de fotos con metadatos de evento
 so_that: Comunicaciones pueda acceder al material
@@ -13,3 +13,6 @@ domain: D-BACK
 priority: P2
 capability_id: CAP-BACK-TICKETS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-EVENTO

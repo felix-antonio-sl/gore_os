@@ -5,10 +5,14 @@ _meta:
 name: Un calendario procesal con alertas de plazos fatales
 id: US-ABOG-JUD-001-01
 urn: urn:goreos:atom:story:us_abog_jud_001_01:1.0.0
-role_id: USR-JUR-JUD
+role_id: ROL-NORM-JUD
 as_a: Abogado Asuntos Judiciales
 i_want: un calendario procesal con alertas de plazos fatales
 so_that: no se pierdan instancias judiciales
 domain: D-NORM
+capability_id: CAP-NORM-ABOG-001
 priority: P0
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

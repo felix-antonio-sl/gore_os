@@ -7,9 +7,12 @@ name: Historia genérica para Jefe ODIA
 id: US-GEN-GESTION_JEFE-001
 urn: urn:goreos:atom:story:us_gen_gestion_jefe_001:1.0.0
 role_id: ROL-GESTION-JEFE
-as_a: Jefe ODIA
+as_a: Jefe Unidad Jurídica
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
 domain: D-GESTION
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

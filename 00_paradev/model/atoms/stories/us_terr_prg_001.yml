@@ -5,7 +5,7 @@ _meta:
 name: Alertar sobre ventanas de postulación a programas con plazos
 id: US-TERR-PRG-001
 urn: urn:goreos:atom:story:us_terr_prg_001:1.0.0
-role_id: USR-DIPL-PLAN
+role_id: ROL-TERR-PLAN
 as_a: Analista Planificación
 i_want: Alertar sobre ventanas de postulación a programas con plazos
 so_that: Gestiono postulaciones a tiempo
@@ -13,3 +13,6 @@ domain: D-TERR
 priority: P2
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

@@ -5,7 +5,7 @@ _meta:
 name: Un sistema de almacenamiento seguro de grabaciones
 id: US-CUST-001-01
 urn: urn:goreos:atom:story:us_cust_001_01:1.0.0
-role_id: USR-CIES-EVID
+role_id: ROL-GESTION-EVID
 as_a: Custodio Evidencia
 i_want: un sistema de almacenamiento seguro de grabaciones
 so_that: la evidencia mantenga validez legal

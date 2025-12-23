@@ -5,11 +5,16 @@ _meta:
 name: Umbrales de alerta para dimensiones de H_gore
 id: US-GEST-HG-002
 urn: urn:goreos:atom:story:us_gest_hg_002:1.0.0
-role_id: USR-ADM-JEFE
-as_a: Administrador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Configurar umbrales de alerta para dimensiones de H_gore
 so_that: Recibo notificaciones automáticas ante degradación
 domain: D-GESTION
 priority: P1
 capability_id: CAP-GESTION-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA
+- ENT-SAL-H_GORE
+- ENT-SAL-UMBRAL

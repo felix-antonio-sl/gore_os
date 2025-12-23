@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de carga y procesamiento de series de datos
 id: US-OBS-001-01
 urn: urn:goreos:atom:story:us_obs_001_01:1.0.0
-role_id: USR-PLAN-OBS
+role_id: ROL-GESTION-OBS
 as_a: Analista Observatorio
 i_want: un módulo de carga y procesamiento de series de datos
 so_that: pueda mantener actualizados los indicadores regionales

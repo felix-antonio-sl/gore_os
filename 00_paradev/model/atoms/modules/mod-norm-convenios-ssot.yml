@@ -10,8 +10,11 @@ name: Convenios Institucionales (SSOT)
 domain: D-NORM
 description: Repositorio maestro de convenios institucionales.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: []
-  entities: []
+
 morphisms:
   implements_capability: []
   depends_on: []

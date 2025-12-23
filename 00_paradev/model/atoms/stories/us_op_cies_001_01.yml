@@ -5,11 +5,14 @@ _meta:
 name: Una consola de monitoreo con alertas priorizadas
 id: US-OP-CIES-001-01
 urn: urn:goreos:atom:story:us_op_cies_001_01:1.0.0
-role_id: USR-CIES-OP
-as_a: Operador CIES
+role_id: ROL-OPS-OP
+as_a: Operador de Sistema
 i_want: una consola de monitoreo con alertas priorizadas
 so_that: pueda detectar incidentes rápidamente
 domain: D-TERR
 priority: P0
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

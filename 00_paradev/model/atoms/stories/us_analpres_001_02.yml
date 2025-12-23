@@ -5,10 +5,14 @@ _meta:
 name: Alertas de marcos presupuestarios próximos a agotarse
 id: US-ANALPRES-001-02
 urn: urn:goreos:atom:story:us_analpres_001_02:1.0.0
-role_id: USR-DIPIR-PRES-ANAL
-as_a: Analista Presupuestario
+role_id: ROL-FIN-ANALISTA-PRE
+as_a: Analista Presupuesto
 i_want: alertas de marcos presupuestarios próximos a agotarse
 so_that: pueda informar oportunamente a la jefatura
 domain: D-FIN
+capability_id: CAP-FIN-PPTO-001
 priority: P0
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

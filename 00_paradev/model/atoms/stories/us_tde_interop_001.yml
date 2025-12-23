@@ -5,7 +5,7 @@ _meta:
 name: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
 id: US-TDE-INTEROP-001
 urn: urn:goreos:atom:story:us_tde_interop_001:1.0.0
-role_id: USR-DAF-TIC-CTD
+role_id: ROL-GESTION-TIC-CTD
 as_a: Coordinador Transformación Digital (CTD)
 i_want: Habilitar Nodo de Interoperabilidad PISEE (dev/prod)
 so_that: Conecto con servicios estatales
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P0
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-NODO_INTEROP

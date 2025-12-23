@@ -5,7 +5,7 @@ _meta:
 name: Incidentes de seguridad (CSIRT)
 id: US-TDE-SEG-006
 urn: urn:goreos:atom:story:us_tde_seg_006:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Gestionar incidentes de seguridad (CSIRT)
 so_that: Respondo a amenazas

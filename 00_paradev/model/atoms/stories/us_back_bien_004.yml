@@ -5,10 +5,14 @@ _meta:
 name: Otorgar subsidios por eventos (natalidad/pérdida)
 id: US-BACK-BIEN-004
 urn: urn:goreos:atom:story:us_back_bien_004:1.0.0
-role_id: USR-DAF-PER-BIEN
+role_id: ROL-GESTION-PER-BIEN
 as_a: Profesional Bienestar
 i_want: Otorgar subsidios por eventos (natalidad/pérdida)
 so_that: Apoyo en momentos especiales
 domain: D-BACK
+capability_id: CAP-BACK-BIEN-001
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-EVENTO

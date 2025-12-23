@@ -5,8 +5,8 @@ _meta:
 name: Suficiencia de recursos financieros traspasados
 id: US-GOB-DESC-007
 urn: urn:goreos:atom:story:us_gob_desc_007:1.0.0
-role_id: USR-GOB-COMP
-as_a: Encargado Competencias
+role_id: ROL-FIN-ABS-COMP
+as_a: Comprador Público
 i_want: Evaluar suficiencia de recursos financieros traspasados
 so_that: Reclamo brechas financieras
 domain: D-GOB

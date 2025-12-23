@@ -5,7 +5,7 @@ _meta:
 name: Reportes de eventos por turno y operador
 id: US-SUP-CIES-001-01
 urn: urn:goreos:atom:story:us_sup_cies_001_01:1.0.0
-role_id: USR-CIES-SUP
+role_id: ROL-GESTION-SUP
 as_a: Supervisor CIES
 i_want: reportes de eventos por turno y operador
 so_that: pueda evaluar desempeño
@@ -13,3 +13,6 @@ domain: D-TERR
 priority: P1
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-EVENTO

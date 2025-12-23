@@ -5,11 +5,14 @@ _meta:
 name: Un sistema de gestión de sesiones con tabla, votaciones y actas
 id: US-SECCORE-001-01
 urn: urn:goreos:atom:story:us_seccore_001_01:1.0.0
-role_id: USR-CORE-SEC
-as_a: Secretario Ejecutivo CORE
+role_id: ROL-EJEC-CPER-SEC
+as_a: Secretario Ejecutivo Comité de Pertinencia
 i_want: un sistema de gestión de sesiones con tabla, votaciones y actas
 so_that: las sesiones sean trazables y documentadas
 domain: D-NORM
 priority: P0
 capability_id: CAP-DOCUMENTOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACTA

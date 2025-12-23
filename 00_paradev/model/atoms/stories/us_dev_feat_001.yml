@@ -5,7 +5,7 @@ _meta:
 name: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
 id: US-DEV-FEAT-001
 urn: urn:goreos:atom:story:us_dev_feat_001:1.0.0
-role_id: USR-DEV-PO
+role_id: ROL-GESTION-PO
 as_a: Product Owner
 i_want: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
 so_that: Valido innovaciones antes del despliegue masivo

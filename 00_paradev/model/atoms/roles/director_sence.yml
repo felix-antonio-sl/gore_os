@@ -15,7 +15,9 @@ categorical:
   level: L1
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_gen_gestion_sence_001:1.0.0
+
   governed_by: []
 
 unit: Direcciones Regionales de Servicios

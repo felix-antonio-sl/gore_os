@@ -12,4 +12,9 @@ stories:
 - us_evol_deuda_001
 - us_evol_deuda_002
 - us_deuda_001_01
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:module:evol_trayectoria_sistema:1.0.0]
+ofrecida_por:
+- urn:goreos:atom:module:evol_trayectoria_sistema:1.0.0]

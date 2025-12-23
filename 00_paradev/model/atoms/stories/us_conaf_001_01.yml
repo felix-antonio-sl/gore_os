@@ -5,7 +5,7 @@ _meta:
 name: Integración con CIES para alertas de incendios forestales
 id: US-CONAF-001-01
 urn: urn:goreos:atom:story:us_conaf_001_01:1.0.0
-role_id: USR-EXT-CONAF
+role_id: ROL-GESTION-CONAF
 as_a: Director Regional CONAF
 i_want: integración con CIES para alertas de incendios forestales
 so_that: la respuesta sea coordinada
@@ -13,3 +13,6 @@ domain: D-TERR
 priority: P0
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

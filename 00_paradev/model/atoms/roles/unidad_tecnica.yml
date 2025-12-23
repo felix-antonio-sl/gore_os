@@ -15,7 +15,13 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_devmuni_001_01:1.0.0
+    - urn:goreos:atom:story:us_ejec_muni_003:1.0.0
+    - urn:goreos:atom:story:us_ejec_muni_004:1.0.0
+    - urn:goreos:atom:story:us_norm_att_001:1.0.0
+    - urn:goreos:atom:story:us_rtec_001_01:1.0.0
+
   governed_by: []
 
 unit: Municipios

@@ -5,7 +5,7 @@ _meta:
 name: Mantener Política de Seguridad de la Información (DS7) aprobada
 id: US-TDE-SEG-001
 urn: urn:goreos:atom:story:us_tde_seg_001:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Mantener Política de Seguridad de la Información (DS7) aprobada
 so_that: Cumplo con marco normativo

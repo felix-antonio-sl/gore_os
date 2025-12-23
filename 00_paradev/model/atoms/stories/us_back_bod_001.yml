@@ -5,10 +5,14 @@ _meta:
 name: Ingresos (aumenta stock)
 id: US-BACK-BOD-001
 urn: urn:goreos:atom:story:us_back_bod_001:1.0.0
-role_id: USR-DAF-OPS-BOD
+role_id: ROL-BACK-OPS-BOD
 as_a: Encargado Bodega
 i_want: Registrar ingresos (aumenta stock)
 so_that: Actualizo inventario
 domain: D-BACK
+capability_id: CAP-BACK-BOD-001
 priority: P0
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-INVENTARIO

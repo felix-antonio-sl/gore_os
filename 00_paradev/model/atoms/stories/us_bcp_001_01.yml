@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de gestión del BCP con pruebas
 id: US-BCP-001-01
 urn: urn:goreos:atom:story:us_bcp_001_01:1.0.0
-role_id: USR-NEW-ENCARGADO-CO
+role_id: ROL-GESTION-ENCARGADO-CO
 as_a: Encargado Comité Paritario
 i_want: un módulo de gestión del BCP con pruebas
 so_that: pueda asegurar resiliencia

@@ -5,10 +5,14 @@ _meta:
 name: Un sistema de gestión de archivo con ubicación y digitalización
 id: US-ARCH-001-01
 urn: urn:goreos:atom:story:us_arch_001_01:1.0.0
-role_id: USR-NORM-ARCHIVO
+role_id: ROL-GESTION-ARCHIVO
 as_a: Encargado de Archivo
 i_want: un sistema de gestión de archivo con ubicación y digitalización
 so_that: pueda localizar documentos históricos
 domain: D-TDE
+capability_id: CAP-TDE-ARCH-001
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-DOCUMENTO

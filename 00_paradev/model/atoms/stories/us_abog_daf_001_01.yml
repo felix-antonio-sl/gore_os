@@ -5,10 +5,11 @@ _meta:
 name: Plantillas de bases y contratos con cláusulas actualizadas
 id: US-ABOG-DAF-001-01
 urn: urn:goreos:atom:story:us_abog_daf_001_01:1.0.0
-role_id: USR-DAF-JUR
+role_id: ROL-NORM-JUR
 as_a: Abogado DAF
 i_want: plantillas de bases y contratos con cláusulas actualizadas
 so_that: pueda agilizar la revisión jurídica
 domain: D-FIN
+capability_id: CAP-NORM-ABOG-001
 priority: P1
 acceptance_criteria: []

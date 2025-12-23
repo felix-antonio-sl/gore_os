@@ -5,8 +5,8 @@ _meta:
 name: Reportes de calidad de datos de mi área (completitud, exactitud)
 id: US-DUENO-001-01
 urn: urn:goreos:atom:story:us_dueno_001_01:1.0.0
-role_id: USR-TDE-DUENO-DATOS
-as_a: Dueño de Datos
+role_id: ROL-DEV-ARCH-DATOS
+as_a: Arquitecto de Datos
 i_want: reportes de calidad de datos de mi área (completitud, exactitud)
 so_that: pueda tomar acciones correctivas
 domain: D-TDE

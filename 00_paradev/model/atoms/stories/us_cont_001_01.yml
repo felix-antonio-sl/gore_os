@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de conciliación bancaria automatizada
 id: US-CONT-001-01
 urn: urn:goreos:atom:story:us_cont_001_01:1.0.0
-role_id: USR-NEW-ANALISTA-CON
+role_id: ROL-FIN-ANALISTA-CON
 as_a: Analista Contable
 i_want: un módulo de conciliación bancaria automatizada
 so_that: pueda detectar diferencias rápidamente

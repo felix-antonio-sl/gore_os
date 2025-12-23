@@ -5,8 +5,8 @@ _meta:
 name: Visualizador de planos en formato BIM/CAD
 id: US-ARQ-001-01
 urn: urn:goreos:atom:story:us_arq_001_01:1.0.0
-role_id: USR-DIT-INFRA-ARQ
-as_a: Arquitecto Revisor
+role_id: ROL-DEV-ARQ
+as_a: Arquitecto Revisor (Proyectos)
 i_want: visualizador de planos en formato BIM/CAD
 so_that: pueda validar detalles constructivos
 domain: D-EJEC

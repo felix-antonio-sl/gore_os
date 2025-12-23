@@ -5,11 +5,14 @@ _meta:
 name: Asesorar a municipios en la formulación de sus planes comunales de seguridad
 id: US-SEG-PREV-008
 urn: urn:goreos:atom:story:us_seg_prev_008:1.0.0
-role_id: USR-DIT-PROF
-as_a: Profesional DIT
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: Asesorar a municipios en la formulación de sus planes comunales de seguridad
 so_that: Cumplo mandato legal de apoyo técnico
 domain: D-SEG
 priority: P0
 capability_id: CAP-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-LOC-COMUNA

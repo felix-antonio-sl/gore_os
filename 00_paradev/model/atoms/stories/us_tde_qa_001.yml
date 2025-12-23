@@ -5,8 +5,8 @@ _meta:
 name: Un módulo de gestión de pruebas con casos de test
 id: US-TDE-QA-001
 urn: urn:goreos:atom:story:us_tde_qa_001:1.0.0
-role_id: USR-NEW-ANALISTA-FUN
-as_a: Analista Funcional TI
+role_id: ROL-GESTION-PER-FUN
+as_a: Funcionario
 i_want: un módulo de gestión de pruebas con casos de test
 so_that: pueda documentar la calidad
 domain: D-TDE

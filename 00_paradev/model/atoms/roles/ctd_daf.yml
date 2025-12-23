@@ -15,7 +15,25 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_ctd_001_02:1.0.0
+    - urn:goreos:atom:story:us_evol_ao_018:1.0.0
+    - urn:goreos:atom:story:us_rtd_001_01:1.0.0
+    - urn:goreos:atom:story:us_tde_auth_006:1.0.0
+    - urn:goreos:atom:story:us_tde_avance_002:1.0.0
+    - urn:goreos:atom:story:us_tde_avance_003:1.0.0
+    - urn:goreos:atom:story:us_tde_calidad_002:1.0.0
+    - urn:goreos:atom:story:us_tde_calidad_003:1.0.0
+    - urn:goreos:atom:story:us_tde_interop_001:1.0.0
+    - urn:goreos:atom:story:us_tde_interop_002:1.0.0
+    - urn:goreos:atom:story:us_tde_interop_003:1.0.0
+    - urn:goreos:atom:story:us_tde_interop_004:1.0.0
+    - urn:goreos:atom:story:us_tde_interop_005:1.0.0
+    - urn:goreos:atom:story:us_tde_interop_007:1.0.0
+    - urn:goreos:atom:story:us_tde_muni_001:1.0.0
+    - urn:goreos:atom:story:us_tde_muni_002:1.0.0
+    - urn:goreos:atom:story:us_tde_reg_001:1.0.0
+
   governed_by: []
 
 unit: DAF

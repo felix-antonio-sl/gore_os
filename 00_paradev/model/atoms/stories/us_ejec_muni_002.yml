@@ -5,8 +5,8 @@ _meta:
 name: Usar wizard de vía de financiamiento (recomendación fundamentada)
 id: US-EJEC-MUNI-002
 urn: urn:goreos:atom:story:us_ejec_muni_002:1.0.0
-role_id: USR-MUNI-FORM
-as_a: Unidad Formuladora Municipal
+role_id: ROL-GESTION-G7-FORM
+as_a: Formulador Programas Glosa 7
 i_want: Usar wizard de vía de financiamiento (recomendación fundamentada)
 so_that: Elijo mecanismo correcto
 domain: D-EJEC

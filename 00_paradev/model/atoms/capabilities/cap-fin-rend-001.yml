@@ -15,4 +15,9 @@ stories:
 - us_fin_rend_018
 - us_rend_002_01
 - us_rgasto_001_01
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:module:fin_gestion_ejecutores:1.0.0]
+ofrecida_por:
+- urn:goreos:atom:module:fin_gestion_ejecutores:1.0.0]

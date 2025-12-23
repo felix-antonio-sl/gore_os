@@ -5,7 +5,7 @@ _meta:
 name: Controlar garantías con alertas de vencimiento
 id: US-FIN-CONV-005
 urn: urn:goreos:atom:story:us_fin_conv_005:1.0.0
-role_id: USR-DAF-PROF
+role_id: ROL-GESTION-PROF
 as_a: Profesional DAF
 i_want: Controlar garantías con alertas de vencimiento
 so_that: Evito pérdida de garantías
@@ -13,3 +13,7 @@ domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL
+- ENT-SAL-ALERTA

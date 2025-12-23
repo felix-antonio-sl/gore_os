@@ -5,7 +5,7 @@ _meta:
 name: Registro público de consultores sancionados
 id: US-COL-001-01
 urn: urn:goreos:atom:story:us_col_001_01:1.0.0
-role_id: USR-NEW-REP-AMUCH
+role_id: ROL-GESTION-REP-AMUCH
 as_a: Representante AMUCH
 i_want: registro público de consultores sancionados
 so_that: se resguarde la fe pública

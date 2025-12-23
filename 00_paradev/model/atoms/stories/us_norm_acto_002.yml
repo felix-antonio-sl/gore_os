@@ -5,7 +5,7 @@ _meta:
 name: Asesorar legalmente y revisar bases/convenios
 id: US-NORM-ACTO-002
 urn: urn:goreos:atom:story:us_norm_acto_002:1.0.0
-role_id: USR-JUR-ABOG
+role_id: ROL-NORM-ABOG
 as_a: Abogado Informante
 i_want: Asesorar legalmente y revisar bases/convenios
 so_that: Prevengo riesgos legales
@@ -13,3 +13,6 @@ domain: D-NORM
 priority: P0
 capability_id: CAP-DOCUMENTOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-RIESGO

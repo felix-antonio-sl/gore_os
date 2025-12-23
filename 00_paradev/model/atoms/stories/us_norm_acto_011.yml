@@ -5,7 +5,7 @@ _meta:
 name: Alerta de actos pendientes de firma >5 días
 id: US-NORM-ACTO-011
 urn: urn:goreos:atom:story:us_norm_acto_011:1.0.0
-role_id: USR-OP-OF
+role_id: ROL-GESTION-OF
 as_a: Oficial de Partes
 i_want: Recibir alerta de actos pendientes de firma >5 días
 so_that: Gestiono demoras
@@ -13,3 +13,6 @@ domain: D-NORM
 priority: P2
 capability_id: CAP-DOCUMENTOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

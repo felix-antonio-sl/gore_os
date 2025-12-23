@@ -5,7 +5,7 @@ _meta:
 name: Admisibilidad Estricta (Vigencia PJ, Directorio)
 id: US-FIN-SUB-002
 urn: urn:goreos:atom:story:us_fin_sub_002:1.0.0
-role_id: USR-DIDES-ANAL8
+role_id: ROL-GESTION-ANAL8
 as_a: Analista 8% (Técnico)
 i_want: Evaluar Admisibilidad Estricta (Vigencia PJ, Directorio)
 so_that: Verifico requisitos formales

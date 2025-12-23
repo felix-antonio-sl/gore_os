@@ -5,10 +5,11 @@ _meta:
 name: Un formulario digital de evaluación técnica con campos validados
 id: US-ANAL-INV-001-01
 urn: urn:goreos:atom:story:us_anal_inv_001_01:1.0.0
-role_id: USR-DIPIR-ANAL-INV
+role_id: ROL-GESTION-ANAL-INV
 as_a: Analista de Inversión
 i_want: un formulario digital de evaluación técnica con campos validados
 so_that: pueda registrar mi análisis de forma estructurada
 domain: D-EJEC
+capability_id: CAP-EJEC-EVAL-001
 priority: P0
 acceptance_criteria: []

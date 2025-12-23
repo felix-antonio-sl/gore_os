@@ -15,7 +15,9 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_evol_kb_008:1.0.0
+
   governed_by: []
 
 unit: D-DEV

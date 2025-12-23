@@ -5,7 +5,7 @@ _meta:
 name: Un módulo de gestión de modificaciones con historial
 id: US-AMOD-001-01
 urn: urn:goreos:atom:story:us_amod_001_01:1.0.0
-role_id: USR-NEW-ANALISTA-MOD
+role_id: ROL-GESTION-ANALISTA-MOD
 as_a: Analista Modificaciones Presupuestarias
 i_want: un módulo de gestión de modificaciones con historial
 so_that: pueda trazabilizar cambios

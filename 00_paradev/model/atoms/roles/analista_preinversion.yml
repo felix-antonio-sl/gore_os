@@ -15,7 +15,16 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_apres_001_01:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_022:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_027:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_031:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_039:1.0.0
+    - urn:goreos:atom:story:us_fin_ipr_040:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_004:1.0.0
+    - urn:goreos:atom:story:us_preinv_001_01:1.0.0
+
   governed_by: []
 
 unit: DIPLADE

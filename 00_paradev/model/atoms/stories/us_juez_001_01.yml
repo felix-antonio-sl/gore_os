@@ -5,7 +5,7 @@ _meta:
 name: La remisión de expedientes originales digitalizados y certificados
 id: US-JUEZ-001-01
 urn: urn:goreos:atom:story:us_juez_001_01:1.0.0
-role_id: USR-EXT-TRIB-CUENTA
+role_id: ROL-GESTION-TRIB-CUENTA
 as_a: Juez de Cuentas (CGR)
 i_want: la remisión de expedientes originales digitalizados y certificados
 so_that: se pueda instruir el juicio de cuentas

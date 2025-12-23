@@ -5,7 +5,7 @@ _meta:
 name: Solicitar asistencia técnica al GORE para actualizar el PRC
 id: US-TERR-DOM-002
 urn: urn:goreos:atom:story:us_terr_dom_002:1.0.0
-role_id: USR-MUNI-DOM
+role_id: ROL-EJEC-DOM
 as_a: Director de Obras (DOM)
 i_want: Solicitar asistencia técnica al GORE para actualizar el PRC
 so_that: Mantengo el instrumento vigente según dinámica territorial
@@ -13,3 +13,7 @@ domain: D-TERR
 priority: P1
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ASISTENCIA
+- ENT-ORG-ASISTENCIA

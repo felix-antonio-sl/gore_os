@@ -5,8 +5,8 @@ _meta:
 name: Acceso al registro de dirigentes sociales
 id: US-MECIF-001-01
 urn: urn:goreos:atom:story:us_mecif_001_01:1.0.0
-role_id: USR-ECIF-MEMB
-as_a: Miembro ECIF
+role_id: ROL-GESTION-VERDE-MEMB
+as_a: Miembro Comité Estado Verde
 i_want: acceso al registro de dirigentes sociales
 so_that: se validen los interlocutores en el territorio
 domain: D-TERR

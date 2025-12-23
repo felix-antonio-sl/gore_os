@@ -10,8 +10,11 @@ name: Selector de Mecanismos
 domain: D-FIN
 description: "Decisión de mecanismo óptimo: FNDR, FRIL, FRPD, PPR, IDI."
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: []
-  entities: []
+
 morphisms:
   implements_capability: []
   depends_on: []

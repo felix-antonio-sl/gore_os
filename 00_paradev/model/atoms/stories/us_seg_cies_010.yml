@@ -5,7 +5,7 @@ _meta:
 name: Activar protocolo de protección de puntos críticos ante disturbios
 id: US-SEG-CIES-010
 urn: urn:goreos:atom:story:us_seg_cies_010:1.0.0
-role_id: USR-CIES-SUP
+role_id: ROL-GESTION-SUP
 as_a: Supervisor CIES
 i_want: Activar protocolo de protección de puntos críticos ante disturbios
 so_that: Priorizo cámaras y recursos en zonas sensibles

@@ -5,7 +5,7 @@ _meta:
 name: Un registro de bases de datos personales del GORE
 id: US-DPO-001-01
 urn: urn:goreos:atom:story:us_dpo_001_01:1.0.0
-role_id: USR-TDE-DPO
+role_id: ROL-GESTION-DPO
 as_a: DPO
 i_want: un registro de bases de datos personales del GORE
 so_that: pueda cumplir con las obligaciones legales de transparencia

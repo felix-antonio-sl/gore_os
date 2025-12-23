@@ -5,8 +5,8 @@ _meta:
 name: Reconciliar ejecución con SIGFE
 id: US-FIN-PPTO-021
 urn: urn:goreos:atom:story:us_fin_ppto_021:1.0.0
-role_id: USR-DAF-JEFE
-as_a: Jefe DAF
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Reconciliar ejecución con SIGFE
 so_that: Valido consistencia
 domain: D-FIN

@@ -5,7 +5,7 @@ _meta:
 name: Un checklist digital de verificación de hitos contractuales
 id: US-ITO-001-02
 urn: urn:goreos:atom:story:us_ito_001_02:1.0.0
-role_id: USR-MUNI-ITO
+role_id: ROL-EJEC-ITO
 as_a: Inspector Obras (Municipal)
 i_want: un checklist digital de verificación de hitos contractuales
 so_that: no omita ningún punto de control
@@ -13,3 +13,6 @@ domain: D-EJEC
 priority: P0
 capability_id: CAP-EJEC-PORTAL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

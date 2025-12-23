@@ -5,8 +5,8 @@ _meta:
 name: Visualizar estado de mi programa en el ciclo
 id: US-FIN-PPR-006
 urn: urn:goreos:atom:story:us_fin_ppr_006:1.0.0
-role_id: USR-EXT-EJEC-PPR
-as_a: Ejecutor PPR
+role_id: ROL-GESTION-ANALISTA-PPR
+as_a: Analista PPR
 i_want: Visualizar estado de mi programa en el ciclo
 so_that: Tengo visibilidad del avance
 domain: D-FIN

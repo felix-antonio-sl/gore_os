@@ -5,7 +5,7 @@ _meta:
 name: Asignar roles y escenarios en Videowall durante emergencia mayor
 id: US-SEG-CIES-006
 urn: urn:goreos:atom:story:us_seg_cies_006:1.0.0
-role_id: USR-CIES-SUP
+role_id: ROL-GESTION-SUP
 as_a: Supervisor CIES
 i_want: Asignar roles y escenarios en Videowall durante emergencia mayor
 so_that: Coordino respuesta masiva
@@ -13,3 +13,6 @@ domain: D-SEG
 priority: P0
 capability_id: CAP-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

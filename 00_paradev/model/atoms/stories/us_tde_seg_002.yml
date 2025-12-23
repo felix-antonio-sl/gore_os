@@ -5,8 +5,8 @@ _meta:
 name: Designar y mantener Responsable de Seguridad (CISO)
 id: US-TDE-SEG-002
 urn: urn:goreos:atom:story:us_tde_seg_002:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Designar y mantener Responsable de Seguridad (CISO)
 so_that: Tengo accountability
 domain: D-TDE

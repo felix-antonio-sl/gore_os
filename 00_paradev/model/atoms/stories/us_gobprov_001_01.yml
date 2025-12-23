@@ -5,11 +5,14 @@ _meta:
 name: Reportes de inversión GORE en la provincia
 id: US-GOBPROV-001-01
 urn: urn:goreos:atom:story:us_gobprov_001_01:1.0.0
-role_id: USR-NEW-GOBERNACION-
-as_a: Gobernación Provincial
+role_id: ROL-GESTION-CORPORACION-
+as_a: Corporación Municipal
 i_want: reportes de inversión GORE en la provincia
 so_that: pueda informar al territorio
 domain: D-PLAN
 priority: P1
 capability_id: CAP-PLAN-001
 acceptance_criteria: []
+
+mentions:
+- ENT-LOC-PROVINCIA

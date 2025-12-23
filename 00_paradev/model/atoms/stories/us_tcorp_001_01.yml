@@ -5,7 +5,7 @@ _meta:
 name: Permiso de acceso limitado a la intranet
 id: US-TCORP-001-01
 urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
-role_id: USR-CORP-EQ
+role_id: ROL-GESTION-EQ
 as_a: Trabajador Corporación
 i_want: permiso de acceso limitado a la intranet
 so_that: pueda coordinarme con las unidades del GORE

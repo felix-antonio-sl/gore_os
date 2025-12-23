@@ -5,8 +5,8 @@ _meta:
 name: Un CRM de stakeholders regionales
 id: US-VINC-001-01
 urn: urn:goreos:atom:story:us_vinc_001_01:1.0.0
-role_id: USR-DIPL-VINC-ENC
-as_a: Encargado Vinculación
+role_id: ROL-GESTION-ENC
+as_a: Encargado de Calidad
 i_want: un CRM de stakeholders regionales
 so_that: mantenga actualizada la agenda de contactos
 domain: D-GOB

@@ -15,7 +15,14 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0
+    - urn:goreos:atom:story:us_fin_ppr_002:1.0.0
+    - urn:goreos:atom:story:us_fin_ppr_003:1.0.0
+    - urn:goreos:atom:story:us_fin_ppr_004:1.0.0
+    - urn:goreos:atom:story:us_fin_ppr_006:1.0.0
+    - urn:goreos:atom:story:us_ppr_001_01:1.0.0
+
   governed_by: []
 
 unit: DIDESOH

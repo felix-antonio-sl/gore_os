@@ -7,9 +7,12 @@ name: Historia para Analista Convenios
 id: US-GEN-FINAL-004
 urn: urn:goreos:atom:story:us_gen_final_004:1.0.0
 role_id: ROL-GESTION-ANALISTA-CON
-as_a: Analista Convenios
+as_a: Analista Conectividad
 i_want: participar activamente en los procesos del GORE según mi rol institucional
 so_that: pueda contribuir al desarrollo regional de Ñuble
 domain: D-GESTION
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

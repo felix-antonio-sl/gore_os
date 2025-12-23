@@ -5,11 +5,14 @@ _meta:
 name: Eventos de emergencia con timeline de acciones
 id: US-CIES-001-02
 urn: urn:goreos:atom:story:us_cies_001_02:1.0.0
-role_id: USR-CIES-COOR
-as_a: Coordinador CIES
+role_id: ROL-GESTION-UCR-COOR
+as_a: Coordinador UCR
 i_want: registrar eventos de emergencia con timeline de acciones
 so_that: pueda documentar la gestión para análisis posterior
 domain: D-TERR
 priority: P0
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-EVENTO

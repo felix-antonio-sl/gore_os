@@ -5,7 +5,7 @@ _meta:
 name: Resolver DDU del destinatario y aplicar canal correcto (DS8)
 id: US-TDE-NOTIF-002
 urn: urn:goreos:atom:story:us_tde_notif_002:1.0.0
-role_id: BOT-KODA
+role_id: ROL-GESTION-KODA
 as_a: Agente KODA
 i_want: Resolver DDU del destinatario y aplicar canal correcto (DS8)
 so_that: Notifico por el canal registrado
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P0
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-CANAL

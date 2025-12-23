@@ -15,7 +15,11 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_gen_gestion_secpla__002:1.0.0
+    - urn:goreos:atom:story:us_secpla_001_01:1.0.0
+    - urn:goreos:atom:story:us_secpla_001_02:1.0.0
+
   governed_by: []
 
 unit: Roles Adicionales (Concordancia)

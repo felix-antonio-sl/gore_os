@@ -15,7 +15,9 @@ categorical:
   level: L3
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_gen_ejec_itp_001:1.0.0
+
   governed_by: []
 
 unit: DIPIR

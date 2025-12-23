@@ -5,7 +5,7 @@ _meta:
 name: Acceso al banco de proyectos BIP integrado
 id: US-MDS-001-01
 urn: urn:goreos:atom:story:us_mds_001_01:1.0.0
-role_id: USR-EXT-MDS
+role_id: ROL-GESTION-MDS
 as_a: Analista Inversiones (MDSyF)
 i_want: acceso al banco de proyectos BIP integrado
 so_that: pueda otorgar el RS (Recomendación Satisfactoria)
@@ -13,3 +13,6 @@ domain: D-EJEC
 priority: P0
 capability_id: CAP-EJEC-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SYS-ACTOR

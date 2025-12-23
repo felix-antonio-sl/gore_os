@@ -5,10 +5,14 @@ _meta:
 name: El fondo fijo de caja chica (arqueos y reposición)
 id: US-BACK-TES-005
 urn: urn:goreos:atom:story:us_back_tes_005:1.0.0
-role_id: USR-DAF-FIN-TES
-as_a: Tesorero Regional
+role_id: ROL-FIN-ANALISTA-TES
+as_a: Analista Tesorería
 i_want: Gestionar el fondo fijo de caja chica (arqueos y reposición)
 so_that: Atiendo gastos menores con control adecuado
 domain: D-BACK
+capability_id: CAP-BACK-TES-001
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

@@ -5,10 +5,11 @@ _meta:
 name: Órdenes de trabajo de mantención (asignar técnico)
 id: US-BACK-FLO-001
 urn: urn:goreos:atom:story:us_back_flo_001:1.0.0
-role_id: USR-DAF-SERV-ENC
-as_a: Encargado Servicios Generales
+role_id: ROL-GESTION-ENC
+as_a: Encargado de Calidad
 i_want: Gestionar órdenes de trabajo de mantención (asignar técnico)
 so_that: Mantengo infraestructura
 domain: D-BACK
+capability_id: CAP-BACK-FLO-001
 priority: P1
 acceptance_criteria: []

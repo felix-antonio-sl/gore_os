@@ -5,7 +5,7 @@ _meta:
 name: Un checklist automático de admisibilidad
 id: US-FNDR8-001-01
 urn: urn:goreos:atom:story:us_fndr8_001_01:1.0.0
-role_id: USR-DIDES-ANAL8
+role_id: ROL-GESTION-ANAL8
 as_a: Analista 8% (Técnico)
 i_want: un checklist automático de admisibilidad
 so_that: pueda filtrar postulaciones rápidamente

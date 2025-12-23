@@ -5,10 +5,11 @@ _meta:
 name: Grupo familiar (cargas)
 id: US-BACK-BIEN-002
 urn: urn:goreos:atom:story:us_back_bien_002:1.0.0
-role_id: USR-DAF-PER-BIEN
+role_id: ROL-GESTION-PER-BIEN
 as_a: Profesional Bienestar
 i_want: Gestionar grupo familiar (cargas)
 so_that: Registro beneficiarios
 domain: D-BACK
+capability_id: CAP-BACK-BIEN-001
 priority: P1
 acceptance_criteria: []

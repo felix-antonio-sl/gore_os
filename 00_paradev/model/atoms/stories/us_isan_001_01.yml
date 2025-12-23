@@ -5,8 +5,8 @@ _meta:
 name: Acceso a factibilidades técnicas de servicios sanitarios
 id: US-ISAN-001-01
 urn: urn:goreos:atom:story:us_isan_001_01:1.0.0
-role_id: USR-DIT-SANE-ING
-as_a: Ingeniero Sanitario
+role_id: ROL-GESTION-CON-ING
+as_a: Ingeniero Vialidad
 i_want: acceso a factibilidades técnicas de servicios sanitarios
 so_that: pueda aprobar soluciones de APR
 domain: D-TERR

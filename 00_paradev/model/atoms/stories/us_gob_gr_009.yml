@@ -5,8 +5,8 @@ _meta:
 name: Nombramiento y remoción de directivos regionales
 id: US-GOB-GR-009
 urn: urn:goreos:atom:story:us_gob_gr_009:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Gestionar nombramiento y remoción de directivos regionales
 so_that: Ejerzo atribuciones de autoridad
 domain: D-GOB

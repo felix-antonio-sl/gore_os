@@ -11,4 +11,5 @@ description: Gestión de catastro de bienes regionales.
 stories:
 - us_terr_catastro_001
 - us_terr_catastro_002
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:terr_ide_regional:1.0.0

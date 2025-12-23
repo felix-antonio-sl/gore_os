@@ -5,7 +5,7 @@ _meta:
 name: Acceso total y reservado a servidores y correos bajo orden judicial
 id: US-FISC-001-01
 urn: urn:goreos:atom:story:us_fisc_001_01:1.0.0
-role_id: USR-JUR-FIS
+role_id: ROL-NORM-FIS
 as_a: Fiscal Sumariante
 i_want: acceso total y reservado a servidores y correos bajo orden judicial
 so_that: pueda recabar evidencia digital

@@ -5,8 +5,8 @@ _meta:
 name: Una vista consolidada de proyectos por sector (vial, salud, educación)
 id: US-COORD-DIT-001-01
 urn: urn:goreos:atom:story:us_coord_dit_001_01:1.0.0
-role_id: USR-DIT-COOR
-as_a: Coordinador Sectorial
+role_id: ROL-GESTION-UCR-COOR
+as_a: Coordinador UCR
 i_want: una vista consolidada de proyectos por sector (vial, salud, educación)
 so_that: pueda gestionar prioridades técnicas
 domain: D-EJEC

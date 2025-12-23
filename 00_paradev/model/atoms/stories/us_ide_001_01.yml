@@ -5,7 +5,7 @@ _meta:
 name: Un catálogo de metadatos geográficos estandarizado
 id: US-IDE-001-01
 urn: urn:goreos:atom:story:us_ide_001_01:1.0.0
-role_id: USR-TERR-IDE
+role_id: ROL-GESTION-IDE
 as_a: Coordinador IDE
 i_want: un catálogo de metadatos geográficos estandarizado
 so_that: se facilite el intercambio de información territorial

@@ -5,8 +5,8 @@ _meta:
 name: Subir mi informe de actividades y boleta digitalmente
 id: US-HON-002-01
 urn: urn:goreos:atom:story:us_hon_002_01:1.0.0
-role_id: USR-DAF-HON-PRES
-as_a: Prestador a Honorarios
+role_id: ROL-GESTION-PRES
+as_a: Presidente Subcomité IA
 i_want: subir mi informe de actividades y boleta digitalmente
 so_that: se curse mi pago mensual
 domain: D-BACK

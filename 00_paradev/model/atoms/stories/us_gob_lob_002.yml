@@ -5,7 +5,7 @@ _meta:
 name: Alertas para actualizar mi Declaración de Intereses y Patrimonio
 id: US-GOB-LOB-002
 urn: urn:goreos:atom:story:us_gob_lob_002:1.0.0
-role_id: USR-DAF-PER-FUN
+role_id: ROL-GESTION-PER-FUN
 as_a: Funcionario
 i_want: Recibir alertas para actualizar mi Declaración de Intereses y Patrimonio
 so_that: Evito sanciones por incumplimiento de plazos (Ley 20.880)
@@ -13,3 +13,6 @@ domain: D-GOB
 priority: P0
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

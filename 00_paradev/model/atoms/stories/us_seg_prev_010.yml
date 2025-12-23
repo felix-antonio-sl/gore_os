@@ -5,7 +5,7 @@ _meta:
 name: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
 id: US-SEG-PREV-010
 urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
-role_id: USR-SEG-PREV-ANAL
+role_id: ROL-GESTION-PREV-ANAL
 as_a: Analista Prevención
 i_want: Visualizar zonas de riesgo proyectado basado en historial y variables estacionales
 so_that: Planifico patrullajes preventivos focalizados
@@ -13,3 +13,6 @@ domain: D-SEG
 priority: P2
 capability_id: CAP-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-RIESGO

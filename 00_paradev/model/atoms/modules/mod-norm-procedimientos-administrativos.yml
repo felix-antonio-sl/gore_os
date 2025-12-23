@@ -10,8 +10,11 @@ name: Procedimientos Administrativos
 domain: D-NORM
 description: "Catálogo de procedimientos: plazos, responsables, etapas."
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: []
-  entities: []
+
 morphisms:
   implements_capability: []
   depends_on: []

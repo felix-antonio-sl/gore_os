@@ -13,4 +13,6 @@ stories:
 - us_terr_anal_002
 - us_terr_anal_003
 - us_geo_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:terr_analitica_territorial:1.0.0
+- urn:goreos:atom:module:terr_gobernanza_territorial:1.0.0

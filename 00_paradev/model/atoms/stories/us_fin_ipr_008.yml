@@ -5,8 +5,8 @@ _meta:
 name: Ver historial de postulaciones con tasa de éxito
 id: US-FIN-IPR-008
 urn: urn:goreos:atom:story:us_fin_ipr_008:1.0.0
-role_id: USR-EXT-FORM
-as_a: Formulador Externo
+role_id: ROL-GESTION-G7-FORM
+as_a: Formulador Programas Glosa 7
 i_want: Ver historial de postulaciones con tasa de éxito
 so_that: Mejoro mis futuras postulaciones
 domain: D-FIN

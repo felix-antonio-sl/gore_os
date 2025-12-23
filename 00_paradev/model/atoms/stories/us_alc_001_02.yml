@@ -5,10 +5,14 @@ _meta:
 name: El calendario de llamados y fondos disponibles
 id: US-ALC-001-02
 urn: urn:goreos:atom:story:us_alc_001_02:1.0.0
-role_id: USR-MUNI-ALC
+role_id: ROL-GESTION-ALC
 as_a: Alcalde
 i_want: consultar el calendario de llamados y fondos disponibles
 so_that: pueda planificar las postulaciones de mi comuna
 domain: D-EJEC
+capability_id: CAP-EJEC-MUNI-001
 priority: P0
 acceptance_criteria: []
+
+mentions:
+- ENT-LOC-COMUNA

@@ -15,7 +15,17 @@ categorical:
   level: L1
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_evol_ai_001:1.0.0
+    - urn:goreos:atom:story:us_evol_gov_001:1.0.0
+    - urn:goreos:atom:story:us_evol_gov_002:1.0.0
+    - urn:goreos:atom:story:us_gen_gestion_pres_001:1.0.0
+    - urn:goreos:atom:story:us_hon_002_01:1.0.0
+    - urn:goreos:atom:story:us_pcseu_001_01:1.0.0
+    - urn:goreos:atom:story:us_pever_001_01:1.0.0
+    - urn:goreos:atom:story:us_ppert_001_01:1.0.0
+    - urn:goreos:atom:story:us_pres_core_001_01:1.0.0
+
   governed_by: []
 
 unit: Subcomité de Inteligencia Artificial

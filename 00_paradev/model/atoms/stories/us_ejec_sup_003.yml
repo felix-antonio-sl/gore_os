@@ -5,7 +5,7 @@ _meta:
 name: Revisar informes UT (aprobar/observar)
 id: US-EJEC-SUP-003
 urn: urn:goreos:atom:story:us_ejec_sup_003:1.0.0
-role_id: USR-CIES-SUP
+role_id: ROL-GESTION-SUP
 as_a: Supervisor CIES
 i_want: Revisar informes UT (aprobar/observar)
 so_that: Valido reportes de ejecutor
@@ -13,3 +13,6 @@ domain: D-EJEC
 priority: P0
 capability_id: CAP-EJEC-PORTAL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-EJE-EJECUTOR

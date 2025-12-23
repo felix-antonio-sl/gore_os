@@ -5,8 +5,8 @@ _meta:
 name: Postular a Subvención 8% en línea
 id: US-FIN-SUB-005
 urn: urn:goreos:atom:story:us_fin_sub_005:1.0.0
-role_id: USR-NEW-EJECUTOR
-as_a: Ejecutor
+role_id: ROL-EJEC-ANAL
+as_a: Analista Ejecutor
 i_want: Postular a Subvención 8% en línea
 so_that: Accedo a fondos concursables
 domain: D-FIN

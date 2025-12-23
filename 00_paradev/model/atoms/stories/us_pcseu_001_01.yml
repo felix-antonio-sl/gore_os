@@ -5,11 +5,15 @@ _meta:
 name: Actas de selección automáticas con puntajes consolidados
 id: US-PCSEU-001-01
 urn: urn:goreos:atom:story:us_pcseu_001_01:1.0.0
-role_id: USR-CAL-CSEU-PRES
-as_a: Presidente Comité CSEU
+role_id: ROL-GESTION-PRES
+as_a: Presidente Subcomité IA
 i_want: actas de selección automáticas con puntajes consolidados
 so_that: se proponga la terna a la autoridad
 domain: D-BACK
 priority: P1
 capability_id: CAP-BACK-TICKETS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACTA
+- ENT-SAL-PUNTAJE

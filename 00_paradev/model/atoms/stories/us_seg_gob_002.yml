@@ -5,11 +5,14 @@ _meta:
 name: Participar en sesiones del Consejo Regional de Seguridad Pública
 id: US-SEG-GOB-002
 urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
-role_id: USR-CORE-CONS
-as_a: Consejero Regional (Pleno)
+role_id: ROL-GESTION-MUNI-ENC
+as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Participar en sesiones del Consejo Regional de Seguridad Pública
 so_that: Participo en planificación regional de seguridad como COSOC
 domain: D-SEG
 priority: P2
 capability_id: CAP-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-GOV-CORE

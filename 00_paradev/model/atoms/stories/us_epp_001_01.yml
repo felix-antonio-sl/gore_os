@@ -5,7 +5,7 @@ _meta:
 name: Alertas de desviación de cronograma (Gantt)
 id: US-EPP-001-01
 urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
-role_id: USR-DIPIR-ANAL-INV
+role_id: ROL-GESTION-ANAL-INV
 as_a: Analista de Inversión
 i_want: alertas de desviación de cronograma (Gantt)
 so_that: pueda gestionar medidas correctivas
@@ -13,3 +13,6 @@ domain: D-EJEC
 priority: P1
 capability_id: CAP-EJEC-PORTAL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

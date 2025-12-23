@@ -5,7 +5,7 @@ _meta:
 name: Mantener registro de actividades de tratamiento de datos personales (RAT)
 id: US-TDE-DPO-005
 urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
-role_id: USR-TDE-DPO
+role_id: ROL-GESTION-DPO
 as_a: DPO
 i_want: Mantener registro de actividades de tratamiento de datos personales (RAT)
 so_that: Demuestro accountability ante la Agencia de Protección de Datos

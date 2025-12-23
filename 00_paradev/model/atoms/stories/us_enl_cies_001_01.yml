@@ -5,7 +5,7 @@ _meta:
 name: Un directorio de contactos de emergencia actualizado
 id: US-ENL-CIES-001-01
 urn: urn:goreos:atom:story:us_enl_cies_001_01:1.0.0
-role_id: USR-CIES-ENL
+role_id: ROL-GESTION-ENL
 as_a: Enlace CIES
 i_want: un directorio de contactos de emergencia actualizado
 so_that: pueda activar protocolos rápidamente

@@ -5,7 +5,7 @@ _meta:
 name: Alertas automáticas de licencias médicas prolongadas
 id: US-CGPE-001-01
 urn: urn:goreos:atom:story:us_cgpe_001_01:1.0.0
-role_id: USR-CAL-CTRL
+role_id: ROL-GESTION-CTRL
 as_a: Encargado Control de Gestión
 i_want: alertas automáticas de licencias médicas prolongadas
 so_that: pueda gestionar reemplazos a tiempo
@@ -13,3 +13,7 @@ domain: D-BACK
 priority: P1
 capability_id: CAP-BACK-TICKETS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL
+- ENT-SAL-ALERTA

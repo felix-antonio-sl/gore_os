@@ -5,7 +5,7 @@ _meta:
 name: Acceso privilegiado temporal a sistemas de unidades intervenidas
 id: US-FENIX-001-01
 urn: urn:goreos:atom:story:us_fenix_001_01:1.0.0
-role_id: USR-CAL-FNX-J
+role_id: ROL-GESTION-FNX-J
 as_a: Jefe FENIX
 i_want: acceso privilegiado temporal a sistemas de unidades intervenidas
 so_that: pueda auditar y reorganizar procesos rápidamente

@@ -5,8 +5,8 @@ _meta:
 name: Coordinar agenda con gabinetes sectoriales (Seremías)
 id: US-GOB-SEC-001
 urn: urn:goreos:atom:story:us_gob_sec_001:1.0.0
-role_id: USR-GAB-JEFE
-as_a: Jefe de Gabinete
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Coordinar agenda con gabinetes sectoriales (Seremías)
 so_that: Alineo agenda política
 domain: D-GOB

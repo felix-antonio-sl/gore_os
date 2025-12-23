@@ -5,8 +5,8 @@ _meta:
 name: Ver problemas críticos escalados en lista priorizada
 id: US-FIN-JEF-003
 urn: urn:goreos:atom:story:us_fin_jef_003:1.0.0
-role_id: USR-DIPIR-JEFE
-as_a: Jefe DIPIR
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Ver problemas críticos escalados en lista priorizada
 so_that: Gestiono lo urgente primero
 domain: D-FIN

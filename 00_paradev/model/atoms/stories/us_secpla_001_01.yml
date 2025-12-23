@@ -5,8 +5,8 @@ _meta:
 name: Un asistente de formulación de proyectos que valide la coherencia con la ERD
 id: US-SECPLA-001-01
 urn: urn:goreos:atom:story:us_secpla_001_01:1.0.0
-role_id: USR-MUNI-SECPLA
-as_a: SECPLA
+role_id: ROL-GESTION-SECPLA-CHILL
+as_a: SECPLA Chillán
 i_want: un asistente de formulación de proyectos que valide la coherencia con la ERD
 so_that: mis proyectos tengan mayor probabilidad de RS
 domain: D-EJEC

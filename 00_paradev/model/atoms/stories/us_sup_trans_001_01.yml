@@ -5,7 +5,7 @@ _meta:
 name: Acceso equivalente al Encargado en caso de ausencia
 id: US-SUP-TRANS-001-01
 urn: urn:goreos:atom:story:us_sup_trans_001_01:1.0.0
-role_id: USR-NORM-TRANSP-SUPL
+role_id: ROL-GESTION-TRANSP-SUPL
 as_a: Suplente Transparencia
 i_want: acceso equivalente al Encargado en caso de ausencia
 so_that: pueda mantener continuidad operativa

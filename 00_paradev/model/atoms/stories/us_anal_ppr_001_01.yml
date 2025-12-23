@@ -5,10 +5,11 @@ _meta:
 name: Un módulo de diseño de programas con marco lógico
 id: US-ANAL-PPR-001-01
 urn: urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0
-role_id: USR-DIDES-PPR
-as_a: Analista DAE PPR (Técnico)
+role_id: ROL-GESTION-ANALISTA-PPR
+as_a: Analista PPR
 i_want: un módulo de diseño de programas con marco lógico
 so_that: pueda estructurar objetivos, indicadores y metas
 domain: D-PLAN
+capability_id: CAP-FIN-PPR-001
 priority: P1
 acceptance_criteria: []

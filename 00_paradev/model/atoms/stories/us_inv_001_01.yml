@@ -5,11 +5,15 @@ _meta:
 name: Un módulo de control de activos con ubicación y responsable
 id: US-INV-001-01
 urn: urn:goreos:atom:story:us_inv_001_01:1.0.0
-role_id: USR-NEW-ANALISTA-INV
-as_a: Analista Inventario
+role_id: ROL-GESTION-ANAL-INV
+as_a: Analista de Inversión
 i_want: un módulo de control de activos con ubicación y responsable
 so_that: pueda mantener el inventario actualizado
 domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-INVENTARIO
+- ENT-ORG-ROL

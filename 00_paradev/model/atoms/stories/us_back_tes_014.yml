@@ -5,11 +5,14 @@ _meta:
 name: Corte de compromisos de fin de año con notificación a unidades
 id: US-BACK-TES-014
 urn: urn:goreos:atom:story:us_back_tes_014:1.0.0
-role_id: USR-DAF-JEFE
-as_a: Jefe DAF
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Ejecutar corte de compromisos de fin de año con notificación a unidades
 so_that: Cierro ordenadamente el ejercicio
 domain: D-BACK
 priority: P0
 capability_id: CAP-PAGOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

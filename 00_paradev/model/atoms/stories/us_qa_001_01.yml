@@ -5,7 +5,7 @@ _meta:
 name: Un entorno de staging idéntico a producción
 id: US-QA-001-01
 urn: urn:goreos:atom:story:us_qa_001_01:1.0.0
-role_id: USR-DEV-QA
+role_id: ROL-DEV-QA
 as_a: QA Engineer
 i_want: un entorno de staging idéntico a producción
 so_that: las pruebas sean fiables

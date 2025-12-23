@@ -5,8 +5,8 @@ _meta:
 name: Asegurar que el Blueprint refleje el estado actual del código
 id: US-DEV-DOC-001
 urn: urn:goreos:atom:story:us_dev_doc_001:1.0.0
-role_id: USR-DEV-ARQ
-as_a: Arquitecto de Sistemas
+role_id: ROL-DEV-ARQ
+as_a: Arquitecto Revisor (Proyectos)
 i_want: Asegurar que el Blueprint refleje el estado actual del código
 so_that: Mantengo la integridad arquitectónica (SDA de Segundo Orden)
 domain: D-DEV

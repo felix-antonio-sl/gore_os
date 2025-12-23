@@ -5,7 +5,7 @@ _meta:
 name: Un visor de instrumentos de planificación territorial vigentes
 id: US-PLAN-URB-001-01
 urn: urn:goreos:atom:story:us_plan_urb_001_01:1.0.0
-role_id: USR-DIPL-URB
+role_id: ROL-TERR-URB
 as_a: Planificador Urbano
 i_want: un visor de instrumentos de planificación territorial vigentes
 so_that: pueda verificar coherencia de proyectos con PROT/PRC

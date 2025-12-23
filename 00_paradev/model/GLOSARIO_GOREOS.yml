@@ -1,0 +1,258 @@
+# Glosario GORE_OS
+
+_manifest:
+  urn: "urn:knowledge:goreos:glossary:core:1.0.0"
+  version: "1.0.0"
+  source: "kb_gn_900_gore_ideal_koda.yml"
+  created_at: "2025-12-23"
+
+terminos:
+  # === Entidades Centrales ===
+  - id: IPR
+    nombre: "Intervención Pública Regional"
+    definicion: >-
+      Unidad central del modelo GORE_OS. Representa cualquier acción de inversión 
+      o gasto público decidida y financiada por el Gobierno Regional para materializar 
+      su misión de desarrollo territorial.
+    sinonimos: [Proyecto, Inversión, Iniciativa]
+    dominio: D-FIN
+    ciudadano_primera_clase: true
+
+  - id: INTELIGENCIA
+    nombre: "Inteligencia Institucional"
+    definicion: >-
+      Capacidad de la organización para tomar mejores decisiones, habilitada por 
+      sistemas de inteligencia artificial. Se materializa en agentes LLM que operan 
+      en segundo plano (detección de anomalías, alertas) y asistentes conversacionales 
+      que interactúan directamente con usuarios.
+    dominio: D-SYS
+    vision: GORE_4_0
+
+  - id: CAP-GESTION-IPR
+    nombre: "Gestión de Intervenciones Públicas"
+    definicion: >-
+      Capacidad funcional equivalente a un CRM, orientada al ciclo de vida 360° 
+      de las IPR: actores, hitos, alertas y trazabilidad.
+    equivalente_comercial: CRM
+    exponer_termino: false
+    dominio: D-FIN
+
+  - id: CAP-FUNC-ORG
+    nombre: "Funcionamiento Organizacional"
+    definicion: >-
+      Capacidad funcional equivalente a un ERP, orientada a divisiones, funcionarios, 
+      activos, remuneraciones y control de gestión.
+    equivalente_comercial: ERP
+    exponer_termino: false
+    dominio: D-ORG
+
+  - id: CAP-BANCA-DEV
+    nombre: "Inversión para el Desarrollo Regional"
+    definicion: >-
+      Capacidad funcional equivalente a una banca de inversión, orientada al portafolio 
+      de fondos regionales, priorización estratégica y medición de ROI territorial.
+    equivalente_comercial: Banca de Inversión
+    exponer_termino: false
+    dominio: D-FIN
+
+  # === Ciudadanos de Primera Clase ===
+  - id: HISTORIA-USUARIO
+    nombre: "Historia de Usuario"
+    definicion: >-
+      Mecanismo formal para capturar y expresar los requerimientos del sistema: 
+      qué debe hacer y cómo debe hacerlo. Toda funcionalidad de GORE_OS debe 
+      originarse en una Historia de Usuario formal, trazable y validable.
+    componentes: [as_a, i_want, so_that, acceptance_criteria]
+    ciudadano_primera_clase: true
+    dominio: D-SYS
+
+  - id: USUARIO-ROL
+    nombre: "Usuario-Rol"
+    definicion: >-
+      Actor —humano o máquina— que asume un rol determinado para usar, interactuar 
+      con o verse afectado por GORE_OS.
+    tipos: [Humano Interno, Humano Externo, Máquina]
+    ciudadano_primera_clase: true
+    dominio: D-ORG
+
+  # === Frameworks ===
+  - id: TDE
+    nombre: "Transformación Digital del Estado"
+    definicion: >-
+      Conjunto de leyes, normas técnicas, guías, sistemas, herramientas y plataformas 
+      definidas por la Secretaría de Gobierno Digital. Constituye un roadmap 
+      obligatorio para instituciones públicas y una oportunidad de liderazgo regional.
+    fuente: "Ley 21.180"
+    dominio: D-DIG
+
+  - id: ORKO
+    nombre: "Organizational Knowledge Ontology"
+    definicion: >-
+      Framework principal para la operación, gestión, mejoramiento continuo y evolución 
+      del sistema operativo regional. Aborda funciones de arquitectura empresarial y 
+      transformación digital de forma integrada y coherente.
+    urn: "urn:knowledge:orko:*"
+    dominio: D-SYS
+
+  - id: KODA
+    nombre: "Knowledge-Oriented Design Architecture"
+    definicion: >-
+      Marco específico para el trabajo con artefactos de conocimiento para llms, particularmente 
+      en el uso de LLM y en el diseño, desarrollo, mantenimiento y gestión de 
+      asistentes basados en este tipo de modelos.
+    urn: "urn:knowledge:koda:*"
+    dominio: D-SYS
+
+  - id: GORE
+    nombre: "Gobierno Regional"
+    definicion: >-
+      Institución descentralizada con personalidad jurídica de derecho público y 
+      patrimonio propio, encargada de la administración superior de la región y del 
+      desarrollo social, cultural y económico del territorio.
+    fuente: "Ley N° 19.175, Art. 13"
+    dominio: D-GOV
+
+  - id: GOBERNADOR
+    nombre: "Gobernador Regional"
+    definicion: >-
+      Máxima autoridad ejecutiva del GORE, elegida por sufragio universal directo, 
+      responsable de conducir políticamente el gobierno regional.
+    fuente: "Ley N° 19.175, Art. 23"
+    dominio: D-GOV
+
+  - id: CORE
+    nombre: "Consejo Regional"
+    definicion: >-
+      Órgano colegiado del GORE que representa territorialmente a la comunidad regional 
+      y ejerce funciones normativas, resolutivas y fiscalizadoras.
+    fuente: "Ley N° 19.175, Art. 28"
+    dominio: D-GOV
+
+  # === Instrumentos de Planificación ===
+  - id: ERD
+    nombre: "Estrategia Regional de Desarrollo"
+    definicion: >-
+      Instrumento de planificación de largo plazo que define visión, ejes y objetivos 
+      estratégicos para el desarrollo regional.
+    fuente: "Ley N° 19.175, Art. 16"
+    dominio: D-PLAN
+
+  - id: PROT
+    nombre: "Plan Regional de Ordenamiento Territorial"
+    definicion: >-
+      Instrumento vinculante que orienta el uso del territorio regional y la localización 
+      de inversiones.
+    fuente: "Ley N° 19.175, Art. 17"
+    dominio: D-LOC
+
+  - id: ARI
+    nombre: "Anteproyecto Regional de Inversiones"
+    definicion: >-
+      Instrumento de programación anual que prioriza las inversiones regionales según 
+      la ERD y las directrices del Gobernador.
+    dominio: D-FIN
+
+  # === Fondos de Financiamiento ===
+  - id: FNDR
+    nombre: "Fondo Nacional de Desarrollo Regional"
+    definicion: >-
+      Principal fondo de inversión regional, destinado a financiar proyectos y programas 
+      priorizados por el GORE.
+    fuente: "Ley N° 19.175, Art. 74"
+    dominio: D-FIN
+
+  - id: FRIL
+    nombre: "Fondo Regional de Iniciativa Local"
+    definicion: >-
+      Fondo para proyectos menores de infraestructura comunal propuestos por municipios.
+    dominio: D-FIN
+
+  - id: FRPD
+    nombre: "Fondo Regional para la Productividad y el Desarrollo"
+    definicion: >-
+      Fondo financiado por el Royalty Minero para apoyar iniciativas de innovación, 
+      competitividad y fomento productivo.
+    dominio: D-FIN
+
+  - id: ISAR
+    nombre: "Inversiones Sectoriales de Asignación Regional"
+    definicion: >-
+      Recursos de ministerios sectoriales cuya destinación territorial final es decidida 
+      por el GORE según prioridades regionales.
+    fuente: "Ley N° 19.175, Art. 80"
+    dominio: D-FIN
+
+  # === Actores Externos ===
+  - id: MDSF
+    nombre: "Ministerio de Desarrollo Social y Familia"
+    definicion: >-
+      Órgano que emite la Recomendación Satisfactoria (RS) para proyectos de inversión 
+      pública registrados en el Sistema Nacional de Inversiones.
+    rol: CONTROL_TECNICO
+    dominio: D-FIN
+
+  - id: DIPRES
+    nombre: "Dirección de Presupuestos"
+    definicion: >-
+      Órgano responsable de la arquitectura programática y del control macro presupuestario 
+      del Estado.
+    rol: CONTROL_PRESUPUESTARIO
+    dominio: D-FIN
+
+  - id: CGR
+    nombre: "Contraloría General de la República"
+    definicion: >-
+      Órgano superior de control de legalidad de los actos de la Administración del Estado 
+      y del examen de cuentas.
+    rol: CONTROL_LEGALIDAD
+    dominio: D-NORM
+
+  # === Conceptos de Sistema ===
+  - id: CONVENIO_TRANSFERENCIA
+    nombre: "Convenio de Transferencia"
+    definicion: >-
+      Instrumento jurídico que formaliza la relación entre el GORE (unidad financiera) y 
+      una entidad ejecutora (unidad técnica) para la implementación de una IPR.
+    dominio: D-EJE
+
+  - id: GEMELO_DIGITAL
+    nombre: "Gemelo Digital del Territorio"
+    definicion: >-
+      Modelo virtual dinámico que integra datos territoriales, sociales, económicos y 
+      ambientales de la región para simular escenarios de política pública.
+    vision: GORE_4_0
+    dominio: D-LOC
+
+  - id: GORE_4_0
+    nombre: "GORE 4.0"
+    definicion: >-
+      Modelo ideal de Gobierno Regional que integra tecnologías de la Cuarta Revolución 
+      Industrial (IA, IoT, ciencia de datos) con su mandato de desarrollo territorial y 
+      gobernanza participativa.
+    vision: GORE_4_0
+    dominio: D-SYS
+
+# === Mapeo de Funciones Motoras ===
+funciones_motoras:
+  - id: PLANIFICAR
+    descripcion: "Traducir la misión estratégica en instrumentos técnicos vinculantes."
+    dominios: [D-PLAN, D-LOC]
+    instrumentos: [ERD, PROT, ARI]
+
+  - id: FINANCIAR
+    descripcion: "Administrar y asignar recursos según la estrategia regional."
+    dominios: [D-FIN]
+    instrumentos: [FNDR, FRIL, FRPD, ISAR]
+
+  - id: EJECUTAR
+    descripcion: "Implementar programas y viabilizar proyectos de inversión."
+    dominios: [D-EJE]
+    instrumentos: [CONVENIO_TRANSFERENCIA]
+
+  - id: COORDINAR
+    descripcion: "Alinear servicios sectoriales, municipios y nivel central."
+    dominios: [D-GOV, D-ORG]
+
+  - id: NORMAR
+    descripcion: "Dictar normas generales para regular procedimientos regionales."
+    dominios: [D-NORM, D-DIG]

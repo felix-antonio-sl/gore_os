@@ -5,8 +5,8 @@ _meta:
 name: Ver monitor de problemas escalados
 id: US-EJEC-AR-009
 urn: urn:goreos:atom:story:us_ejec_ar_009:1.0.0
-role_id: USR-ADM-JEFE
-as_a: Administrador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Ver monitor de problemas escalados
 so_that: Gestiono obstáculos críticos
 domain: D-EJEC

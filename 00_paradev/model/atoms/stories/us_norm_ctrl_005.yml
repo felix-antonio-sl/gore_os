@@ -5,7 +5,7 @@ _meta:
 name: Expediente disciplinario con reserva y plazos
 id: US-NORM-CTRL-005
 urn: urn:goreos:atom:story:us_norm_ctrl_005:1.0.0
-role_id: USR-JUR-FIS
+role_id: ROL-NORM-FIS
 as_a: Fiscal Sumariante
 i_want: Gestionar expediente disciplinario con reserva y plazos
 so_that: Investigo faltas administrativas

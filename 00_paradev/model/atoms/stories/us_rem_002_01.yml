@@ -5,7 +5,7 @@ _meta:
 name: Cálculo automático de bonificaciones y descuentos legales
 id: US-REM-002-01
 urn: urn:goreos:atom:story:us_rem_002_01:1.0.0
-role_id: USR-DAF-RH-REM
+role_id: ROL-GESTION-RH-REM
 as_a: Encargado Remuneraciones
 i_want: cálculo automático de bonificaciones y descuentos legales
 so_that: se minimicen errores en la liquidación

@@ -5,11 +5,14 @@ _meta:
 name: Ver historial de votaciones (resultado y acuerdo)
 id: US-GOB-CORE-006
 urn: urn:goreos:atom:story:us_gob_core_006:1.0.0
-role_id: USR-CORE-CONS
-as_a: Consejero Regional (Pleno)
+role_id: ROL-GESTION-MUNI-ENC
+as_a: Encargado Unidad de Municipalidades y Conservaciones
 i_want: Ver historial de votaciones (resultado y acuerdo)
 so_that: Consulto decisiones pasadas
 domain: D-GOB
 priority: P1
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACUERDO

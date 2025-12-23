@@ -5,7 +5,7 @@ _meta:
 name: Un registro de caletas y organizaciones pesqueras beneficiarias
 id: US-PES-001-01
 urn: urn:goreos:atom:story:us_pes_001_01:1.0.0
-role_id: USR-NEW-ANALISTA-PES
+role_id: ROL-GESTION-ANALISTA-PES
 as_a: Analista Pesca
 i_want: un registro de caletas y organizaciones pesqueras beneficiarias
 so_that: pueda focalizar intervenciones

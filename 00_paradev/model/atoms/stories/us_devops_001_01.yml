@@ -5,7 +5,7 @@ _meta:
 name: Monitorización de infraestructura como código (IaC)
 id: US-DEVOPS-001-01
 urn: urn:goreos:atom:story:us_devops_001_01:1.0.0
-role_id: USR-DAF-TIC-DEV
+role_id: ROL-DEV-TIC-DEV
 as_a: Desarrollador DevOps
 i_want: monitorización de infraestructura como código (IaC)
 so_that: los entornos sean reproducibles y estables

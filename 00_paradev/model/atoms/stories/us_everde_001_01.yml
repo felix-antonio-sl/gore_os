@@ -5,7 +5,7 @@ _meta:
 name: Registro de consumos de papel y energía
 id: US-EVERDE-001-01
 urn: urn:goreos:atom:story:us_everde_001_01:1.0.0
-role_id: USR-CAL-VERDE-MEMB
+role_id: ROL-GESTION-VERDE-MEMB
 as_a: Miembro Comité Estado Verde
 i_want: registro de consumos de papel y energía
 so_that: pueda reportar al ministerio de medio ambiente

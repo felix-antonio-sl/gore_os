@@ -5,7 +5,7 @@ _meta:
 name: Visualizar brechas territoriales (brecha vs meta con mapa)
 id: US-TERR-PLAN-001
 urn: urn:goreos:atom:story:us_terr_plan_001:1.0.0
-role_id: USR-DIPL-PLAN
+role_id: ROL-TERR-PLAN
 as_a: Analista Planificación
 i_want: Visualizar brechas territoriales (brecha vs meta con mapa)
 so_that: Identifico necesidades territoriales

@@ -5,7 +5,7 @@ _meta:
 name: Habilitar ventanilla única municipal integrada a GORE
 id: US-TDE-MUNI-004
 urn: urn:goreos:atom:story:us_tde_muni_004:1.0.0
-role_id: USR-MUNI-DIG
+role_id: ROL-GESTION-DIG
 as_a: Encargado Digital Muni
 i_want: Habilitar ventanilla única municipal integrada a GORE
 so_that: Centralizo atención

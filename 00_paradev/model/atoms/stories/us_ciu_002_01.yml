@@ -5,11 +5,14 @@ _meta:
 name: Plataformas de consulta ciudadana del GORE
 id: US-CIU-002-01
 urn: urn:goreos:atom:story:us_ciu_002_01:1.0.0
-role_id: USR-CIU-GEN
-as_a: Ciudadano
+role_id: ROL-GESTION-PMG-GEN
+as_a: Referente Equidad de Género
 i_want: acceder a plataformas de consulta ciudadana del GORE
 so_that: pueda expresar mi opinión sobre prioridades de inversión
 domain: D-TERR
 priority: P2
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-PLATAFORMA

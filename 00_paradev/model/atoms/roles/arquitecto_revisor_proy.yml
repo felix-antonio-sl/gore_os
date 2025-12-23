@@ -15,7 +15,13 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_arq_001_01:1.0.0
+    - urn:goreos:atom:story:us_arqp_001_01:1.0.0
+    - urn:goreos:atom:story:us_arqs_001_01:1.0.0
+    - urn:goreos:atom:story:us_dev_doc_001:1.0.0
+    - urn:goreos:atom:story:us_tlead_001_01:1.0.0
+
   governed_by: []
 
 unit: DIT

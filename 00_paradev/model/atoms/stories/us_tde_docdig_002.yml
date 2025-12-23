@@ -5,7 +5,7 @@ _meta:
 name: Incluir un link de verificación en lugar del texto íntegro del convenio en
 id: US-TDE-DOCDIG-002
 urn: urn:goreos:atom:story:us_tde_docdig_002:1.0.0
-role_id: USR-JUR-ABOG
+role_id: ROL-NORM-ABOG
 as_a: Abogado Informante
 i_want: incluir un link de verificación en lugar del texto íntegro del convenio en
   las resoluciones

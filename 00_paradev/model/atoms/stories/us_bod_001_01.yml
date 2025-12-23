@@ -5,8 +5,8 @@ _meta:
 name: Ingreso y salida de insumos mediante código de barras
 id: US-BOD-001-01
 urn: urn:goreos:atom:story:us_bod_001_01:1.0.0
-role_id: USR-DAF-SERV-BOD
-as_a: Bodeguero
+role_id: ROL-BACK-OPS-BOD
+as_a: Encargado Bodega
 i_want: ingreso y salida de insumos mediante código de barras
 so_that: el stock físico cuadre con el sistema
 domain: D-BACK

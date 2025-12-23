@@ -5,7 +5,7 @@ _meta:
 name: Coordinar reunión de inicio con supervisor
 id: US-EJEC-MUNI-003
 urn: urn:goreos:atom:story:us_ejec_muni_003:1.0.0
-role_id: USR-MUNI-TEC
+role_id: ROL-GESTION-TEC
 as_a: Unidad Técnica Municipal
 i_want: Coordinar reunión de inicio con supervisor
 so_that: Alineo expectativas

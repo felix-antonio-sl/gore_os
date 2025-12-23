@@ -5,11 +5,14 @@ _meta:
 name: Cambios críticos (Gobierno)
 id: US-EVOL-GOV-001
 urn: urn:goreos:atom:story:us_evol_gov_001:1.0.0
-role_id: USR-CTD-PRES
-as_a: Presidente Comité TD
+role_id: ROL-GESTION-PRES
+as_a: Presidente Subcomité IA
 i_want: Aprobar cambios críticos (Gobierno)
 so_that: Controlo cambios mayores
 domain: D-EVOL
 priority: P0
 capability_id: CAP-EVOL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

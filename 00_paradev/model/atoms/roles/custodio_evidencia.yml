@@ -15,7 +15,12 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_cust_001_01:1.0.0
+    - urn:goreos:atom:story:us_cust_dat_001_01:1.0.0
+    - urn:goreos:atom:story:us_seg_evid_001:1.0.0
+    - urn:goreos:atom:story:us_seg_evid_003:1.0.0
+
   governed_by: []
 
 unit: CIES (Centro Integral de Emergencia y Seguridad)

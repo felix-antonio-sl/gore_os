@@ -5,10 +5,14 @@ _meta:
 name: Alertas automáticas de proyectos con desviación >15%
 id: US-ANAL-SEG-001-02
 urn: urn:goreos:atom:story:us_anal_seg_001_02:1.0.0
-role_id: USR-DIPIR-INV-SEG
+role_id: ROL-GESTION-INV-SEG
 as_a: Analista Seguimiento
 i_want: recibir alertas automáticas de proyectos con desviación >15%
 so_that: pueda gestionar proactivamente
 domain: D-EJEC
+capability_id: CAP-EJEC-SEG-001
 priority: P0
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

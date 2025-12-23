@@ -12,4 +12,9 @@ stories:
 - us_back_af_001
 - us_back_af_002
 - us_back_af_004
-ofrecida_por: null
+
+
+
+- urn:goreos:atom:module:back_contabilidad_operativa:1.0.0]
+ofrecida_por:
+- urn:goreos:atom:module:back_contabilidad_operativa:1.0.0]

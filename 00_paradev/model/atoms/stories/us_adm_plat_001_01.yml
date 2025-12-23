@@ -5,10 +5,13 @@ _meta:
 name: Gestión centralizada de permisos y roles
 id: US-ADM-PLAT-001-01
 urn: urn:goreos:atom:story:us_adm_plat_001_01:1.0.0
-role_id: USR-DAF-TIC-PLAT
+role_id: ROL-OPS-TIC-PLAT
 as_a: Administrador Plataforma
 i_want: gestión centralizada de permisos y roles
 so_that: se cumpla el principio de menor privilegio
 domain: D-OPS
 priority: P0
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

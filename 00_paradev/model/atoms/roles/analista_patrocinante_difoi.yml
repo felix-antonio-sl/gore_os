@@ -15,7 +15,11 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_pat_did_001_01:1.0.0
+    - urn:goreos:atom:story:us_pat_dif_001_01:1.0.0
+    - urn:goreos:atom:story:us_pat_dit_001_01:1.0.0
+
   governed_by: []
 
 unit: DIFOI

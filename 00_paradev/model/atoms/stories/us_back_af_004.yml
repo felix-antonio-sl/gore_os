@@ -5,10 +5,15 @@ _meta:
 name: Realizar inventario anual de activo fijo
 id: US-BACK-AF-004
 urn: urn:goreos:atom:story:us_back_af_004:1.0.0
-role_id: USR-DAF-OPS-AF
+role_id: ROL-GESTION-OPS-AF
 as_a: Encargado Activo Fijo
 i_want: Realizar inventario anual de activo fijo
 so_that: Cumplo con normativa contable
 domain: D-BACK
+capability_id: CAP-BACK-AF-001
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ACTIVO
+- ENT-ORG-INVENTARIO

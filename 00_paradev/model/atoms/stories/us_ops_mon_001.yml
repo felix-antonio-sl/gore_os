@@ -5,11 +5,15 @@ _meta:
 name: Alertas con umbrales personalizados basados en métricas
 id: US-OPS-MON-001
 urn: urn:goreos:atom:story:us_ops_mon_001:1.0.0
-role_id: ROL-SRE
-as_a: Rol no encontrado (ROL-SRE)
+role_id: ROL-GESTION-TIC-SRE
+as_a: Ingeniero SRE
 i_want: configurar alertas con umbrales personalizados basados en métricas
 so_that: el equipo sea proactivo ante posibles fallos del sistema
 domain: D-OPS
 priority: P0
 capability_id: CAP-OPS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA
+- ENT-SAL-UMBRAL

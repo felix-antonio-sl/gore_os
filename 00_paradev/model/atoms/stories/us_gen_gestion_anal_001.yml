@@ -7,9 +7,12 @@ name: Historia genérica para Analista DIT
 id: US-GEN-GESTION_ANAL-001
 urn: urn:goreos:atom:story:us_gen_gestion_anal_001:1.0.0
 role_id: ROL-GESTION-ANAL
-as_a: Analista DIT
+as_a: Analista Fomento
 i_want: ejecutar mis funciones principales en el contexto institucional del GORE
 so_that: pueda cumplir con los objetivos de mi rol
 domain: D-GESTION
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

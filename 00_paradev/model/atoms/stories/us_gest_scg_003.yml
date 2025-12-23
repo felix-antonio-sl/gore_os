@@ -5,8 +5,8 @@ _meta:
 name: Reporte mensual de gestión institucional
 id: US-GEST-SCG-003
 urn: urn:goreos:atom:story:us_gest_scg_003:1.0.0
-role_id: USR-ADM-JEFE
-as_a: Administrador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Generar reporte mensual de gestión institucional
 so_that: Informo al Gobernador y CORE sobre el estado de la gestión
 domain: D-GESTION

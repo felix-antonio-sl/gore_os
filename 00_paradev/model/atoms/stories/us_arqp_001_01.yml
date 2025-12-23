@@ -5,7 +5,7 @@ _meta:
 name: Checklist de normativa OGUC integrado
 id: US-ARQP-001-01
 urn: urn:goreos:atom:story:us_arqp_001_01:1.0.0
-role_id: USR-DIT-ARQ
+role_id: ROL-DEV-ARQ
 as_a: Arquitecto Revisor (Proyectos)
 i_want: checklist de normativa OGUC integrado
 so_that: asegure cumplimiento legal de la edificación

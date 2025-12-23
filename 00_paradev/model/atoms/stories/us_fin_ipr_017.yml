@@ -5,11 +5,14 @@ _meta:
 name: Subir Acta Entrega Terreno / Inicio Obras
 id: US-FIN-IPR-017
 urn: urn:goreos:atom:story:us_fin_ipr_017:1.0.0
-role_id: USR-EXT-EJEC
-as_a: Ejecutor / Entidad Ejecutora
+role_id: ROL-EJEC-URAI-EJEC
+as_a: Ejecutivo URAI
 i_want: Subir Acta Entrega Terreno / Inicio Obras
 so_that: Registro el hito de inicio formal
 domain: D-FIN
 priority: P0
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACTA

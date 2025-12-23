@@ -5,10 +5,13 @@ _meta:
 name: Programar reuniones de coordinación con jefes de división desde el sistema
 id: US-AR-001-02
 urn: urn:goreos:atom:story:us_ar_001_02:1.0.0
-role_id: USR-ADM-JEFE
-as_a: Administrador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: programar reuniones de coordinación con jefes de división desde el sistema
 so_that: pueda mantener alineamiento estratégico
 domain: D-BACK
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-DIVISION

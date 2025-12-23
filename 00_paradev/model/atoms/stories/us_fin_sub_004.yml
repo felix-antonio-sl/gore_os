@@ -5,7 +5,7 @@ _meta:
 name: Nómina de adjudicación para CORE
 id: US-FIN-SUB-004
 urn: urn:goreos:atom:story:us_fin_sub_004:1.0.0
-role_id: USR-DIDES-ANAL8
+role_id: ROL-GESTION-ANAL8
 as_a: Analista 8% (Técnico)
 i_want: Generar nómina de adjudicación para CORE
 so_that: Preparo aprobación colegiada

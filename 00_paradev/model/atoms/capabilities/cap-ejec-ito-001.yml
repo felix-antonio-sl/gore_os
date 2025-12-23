@@ -14,4 +14,5 @@ stories:
 - us_ito_002_01
 - us_itom_001_01
 - us_itp_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:ejec_gestion_convenios:1.0.0]

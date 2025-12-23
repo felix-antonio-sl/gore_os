@@ -5,7 +5,7 @@ _meta:
 name: Confirmar alertas en terreno
 id: US-SEG-CIES-009
 urn: urn:goreos:atom:story:us_seg_cies_009:1.0.0
-role_id: USR-CIES-ENL
+role_id: ROL-GESTION-ENL
 as_a: Enlace CIES
 i_want: Confirmar alertas en terreno
 so_that: Valido información visual
@@ -13,3 +13,6 @@ domain: D-SEG
 priority: P1
 capability_id: CAP-SEG-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA

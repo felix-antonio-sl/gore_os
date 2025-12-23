@@ -10,6 +10,9 @@ name: Evidencias Digitales
 domain: D-SEG
 description: Gestión de evidencias digitales para seguridad pública.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: [urn:goreos:atom:process:d_seg_p3:1.0.0]
   entities: [urn:goreos:atom:entity:d_seg_evidencia:1.0.0]
 morphisms:

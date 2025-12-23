@@ -5,7 +5,7 @@ _meta:
 name: Información de beneficiarios GORE para evitar duplicidad
 id: US-SERC-001-01
 urn: urn:goreos:atom:story:us_serc_001_01:1.0.0
-role_id: USR-EXT-SERNATUR
+role_id: ROL-GESTION-SERNATUR
 as_a: Director Regional SERNATUR
 i_want: información de beneficiarios GORE para evitar duplicidad
 so_that: pueda focalizar instrumentos

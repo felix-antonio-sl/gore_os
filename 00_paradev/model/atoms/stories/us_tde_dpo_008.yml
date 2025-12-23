@@ -5,7 +5,7 @@ _meta:
 name: Versión del RAT con control de cambios
 id: US-TDE-DPO-008
 urn: urn:goreos:atom:story:us_tde_dpo_008:1.0.0
-role_id: USR-TDE-DPO
+role_id: ROL-GESTION-DPO
 as_a: DPO
 i_want: Registrar versión del RAT con control de cambios
 so_that: Mantengo historial
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P1
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

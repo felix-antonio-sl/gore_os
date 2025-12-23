@@ -5,7 +5,7 @@ _meta:
 name: Una base de conocimientos con soluciones frecuentes
 id: US-MESA-001-01
 urn: urn:goreos:atom:story:us_mesa_001_01:1.0.0
-role_id: USR-DAF-TIC-MESA
+role_id: ROL-GESTION-TIC-MESA
 as_a: Mesa de Ayuda
 i_want: una base de conocimientos con soluciones frecuentes
 so_that: pueda resolver tickets en la primera llamada

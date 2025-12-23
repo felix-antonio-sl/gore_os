@@ -5,7 +5,7 @@ _meta:
 name: Una base de conocimiento con errores frecuentes y soluciones
 id: US-FIN-SUP-002
 urn: urn:goreos:atom:story:us_fin_sup_002:1.0.0
-role_id: USR-MUNI-ALC
+role_id: ROL-GESTION-ALC
 as_a: Alcalde
 i_want: Consultar una base de conocimiento con errores frecuentes y soluciones
 so_that: Resuelva dudas comunes sin contactar a soporte
@@ -13,3 +13,6 @@ domain: D-FIN
 priority: P1
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACTA

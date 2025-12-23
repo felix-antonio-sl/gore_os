@@ -5,7 +5,7 @@ _meta:
 name: Acceso a documentación técnica y APIs
 id: US-TDE-DEV-001
 urn: urn:goreos:atom:story:us_tde_dev_001:1.0.0
-role_id: USR-NEW-DESARROLLADO
+role_id: ROL-GESTION-DESARROLLADO
 as_a: Desarrollador
 i_want: acceso a documentación técnica y APIs
 so_that: pueda integrar sistemas

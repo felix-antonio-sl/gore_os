@@ -15,7 +15,23 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_ejec_eo_002:1.0.0
+    - urn:goreos:atom:story:us_ejec_eo_003:1.0.0
+    - urn:goreos:atom:story:us_ejec_eo_005:1.0.0
+    - urn:goreos:atom:story:us_ejec_eo_006:1.0.0
+    - urn:goreos:atom:story:us_ejec_eo_007:1.0.0
+    - urn:goreos:atom:story:us_eope_001_01:1.0.0
+    - urn:goreos:atom:story:us_evol_h_002:1.0.0
+    - urn:goreos:atom:story:us_evol_play_001:1.0.0
+    - urn:goreos:atom:story:us_evol_play_002:1.0.0
+    - urn:goreos:atom:story:us_evol_tray_002:1.0.0
+    - urn:goreos:atom:story:us_op_cies_001_01:1.0.0
+    - urn:goreos:atom:story:us_ope_001_01:1.0.0
+    - urn:goreos:atom:story:us_seg_cies_001:1.0.0
+    - urn:goreos:atom:story:us_seg_cies_003:1.0.0
+    - urn:goreos:atom:story:us_seg_cies_004:1.0.0
+
   governed_by: []
 
 unit: Evolución Sistema (D-EVOL)

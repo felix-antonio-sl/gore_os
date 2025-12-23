@@ -1,0 +1,34 @@
+_manifest:
+  urn: "urn:knowledge:goreos:manifest:workspace:1.0.0"
+  type: WORKSPACE_STAMP
+  version: "1.0.0"
+
+workspace:
+  name: "GORE_OS"
+  description: "Sistema Operativo Semántico para Gobiernos Regionales"
+  root: "./"
+
+  governance:
+    framework: KODA
+    catalog: "catalog_master_goreos.yml"
+
+  nodes:
+    - id: para_dev
+      role: SEMANTIC_CORE
+      path: "00_paradev"
+      contains: [model, architecture, etl, scripts]
+
+    - id: monorepo_apps
+      role: EXECUTION_LAYER
+      path: "apps"
+      contains: [web, api]
+
+    - id: monorepo_packages
+      role: SHARED_LOGIC
+      path: "packages"
+      contains: [ui, core]
+
+  invariants:
+    - "Toda entidad en 00_paradev/model debe poseer un URN único correlacionado en el catálogo."
+    - "Los profuntores deben validar contra los átomos de entidades y roles."
+    - "El código en apps/ debe referenciar capacidades definidas en 00_paradev/model/atoms/capabilities."

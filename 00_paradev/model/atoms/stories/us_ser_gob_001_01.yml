@@ -5,7 +5,7 @@ _meta:
 name: Un canal de comunicación con el GORE para emergencias
 id: US-SER-GOB-001-01
 urn: urn:goreos:atom:story:us_ser_gob_001_01:1.0.0
-role_id: USR-EXT-SEREMI-GOB
+role_id: ROL-GESTION-SEREMI-GOB
 as_a: SEREMI Gobierno Interior
 i_want: un canal de comunicación con el GORE para emergencias
 so_that: pueda coordinar respuestas rápidamente
@@ -13,3 +13,6 @@ domain: D-TERR
 priority: P0
 capability_id: CAP-TERR-MAP-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-CANAL

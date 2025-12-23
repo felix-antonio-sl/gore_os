@@ -15,7 +15,28 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_aucr_001_01:1.0.0
+    - urn:goreos:atom:story:us_aud_001_01:1.0.0
+    - urn:goreos:atom:story:us_aud_001_02:1.0.0
+    - urn:goreos:atom:story:us_fin_conv_003:1.0.0
+    - urn:goreos:atom:story:us_fin_conv_005:1.0.0
+    - urn:goreos:atom:story:us_fin_form_003:1.0.0
+    - urn:goreos:atom:story:us_fin_form_004:1.0.0
+    - urn:goreos:atom:story:us_fin_form_005:1.0.0
+    - urn:goreos:atom:story:us_fin_mod_002:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_006:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_009:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_010:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_011:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_012:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_013:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_017:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_018:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_026:1.0.0
+    - urn:goreos:atom:story:us_fin_ppto_027:1.0.0
+    - urn:goreos:atom:story:us_fnx_ana_003:1.0.0
+
   governed_by: []
 
 unit: DAF

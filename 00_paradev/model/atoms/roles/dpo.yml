@@ -15,7 +15,14 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_dpo_001_01:1.0.0
+    - urn:goreos:atom:story:us_tde_dpo_001:1.0.0
+    - urn:goreos:atom:story:us_tde_dpo_003:1.0.0
+    - urn:goreos:atom:story:us_tde_dpo_005:1.0.0
+    - urn:goreos:atom:story:us_tde_dpo_007:1.0.0
+    - urn:goreos:atom:story:us_tde_dpo_008:1.0.0
+
   governed_by: []
 
 unit: D-TDE

@@ -5,8 +5,8 @@ _meta:
 name: Notificaciones de sesiones del CORE donde se traten materias de mi
 id: US-SEREMI-001-02
 urn: urn:goreos:atom:story:us_seremi_001_02:1.0.0
-role_id: USR-EXT-SEREMI
-as_a: SEREMI (Genérico)
+role_id: ROL-EJEC-SEREMI-MOP
+as_a: SEREMI Obras Públicas
 i_want: recibir notificaciones de sesiones del CORE donde se traten materias de mi
   sector
 so_that: pueda asistir o enviar información técnica

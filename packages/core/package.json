@@ -8,6 +8,9 @@
     "build": "echo 'no build needed for pure ts lib in bun monorepo'"
   },
   "dependencies": {
+    "@effect/schema": "^0.75.5",
+    "effect": "^3.19.13",
+    "xstate": "^5.25.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

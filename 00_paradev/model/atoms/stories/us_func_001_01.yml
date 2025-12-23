@@ -5,7 +5,7 @@ _meta:
 name: Solicitar permisos administrativos y feriados en línea
 id: US-FUNC-001-01
 urn: urn:goreos:atom:story:us_func_001_01:1.0.0
-role_id: USR-DAF-PER-FUN
+role_id: ROL-GESTION-PER-FUN
 as_a: Funcionario
 i_want: solicitar permisos administrativos y feriados en línea
 so_that: no tenga que hacer trámites en papel
@@ -13,3 +13,6 @@ domain: D-BACK
 priority: P0
 capability_id: CAP-RRHH-FUNC-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-TRAMITE

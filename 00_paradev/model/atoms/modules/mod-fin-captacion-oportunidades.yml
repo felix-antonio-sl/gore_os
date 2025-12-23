@@ -10,8 +10,10 @@ name: Captación de Oportunidades
 domain: D-FIN
 description: Embudo de proyectos y scoring de impacto.
 composition:
-  processes: [urn:goreos:atom:process:d_fin_ipr_core_p1:1.0.0]
   entities:
+- urn:goreos:schema:entity:1.0.0
+
+  processes: [urn:goreos:atom:process:d_fin_ipr_core_p1:1.0.0]
     [
       urn:goreos:atom:entity:d_fin_portafolio_oportunidad:1.0.0,
       urn:goreos:atom:entity:d_fin_portafolio_faseembudo:1.0.0,

@@ -10,8 +10,10 @@ name: Rendiciones
 domain: D-FIN
 description: Proceso de rendición de cuentas de ejecutores.
 composition:
-  processes: []
   entities:
+- urn:goreos:schema:entity:1.0.0
+
+  processes: []
     [
       urn:goreos:atom:entity:d_fin_rendiciones_rendicion:1.0.0,
       urn:goreos:atom:entity:d_fin_rendiciones_informerendicion:1.0.0,

@@ -5,11 +5,14 @@ _meta:
 name: Acceder al detalle de compromisos de mi área
 id: US-PROF-N250-001-01
 urn: urn:goreos:atom:story:us_prof_n250_001_01:1.0.0
-role_id: USR-GAB-250-PROF
-as_a: Profesional Ñuble 250
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: acceder al detalle de compromisos de mi área
 so_that: pueda reportar avances
 domain: D-PLAN
 priority: P0
 capability_id: CAP-PLAN-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

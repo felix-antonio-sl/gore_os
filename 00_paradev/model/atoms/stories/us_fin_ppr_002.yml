@@ -5,7 +5,7 @@ _meta:
 name: Track B (Ejecución Directa) con Matriz Marco Lógico rigurosa
 id: US-FIN-PPR-002
 urn: urn:goreos:atom:story:us_fin_ppr_002:1.0.0
-role_id: USR-NEW-ANALISTA-PPR
+role_id: ROL-GESTION-ANALISTA-PPR
 as_a: Analista PPR
 i_want: Evaluar Track B (Ejecución Directa) con Matriz Marco Lógico rigurosa
 so_that: Aseguro calidad programática

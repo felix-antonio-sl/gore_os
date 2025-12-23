@@ -5,8 +5,8 @@ _meta:
 name: Protocolos de respuesta digitales activables con un clic
 id: US-GRD-001-01
 urn: urn:goreos:atom:story:us_grd_001_01:1.0.0
-role_id: USR-CIES-COOR
-as_a: Coordinador CIES
+role_id: ROL-GESTION-UCR-COOR
+as_a: Coordinador UCR
 i_want: protocolos de respuesta digitales activables con un clic
 so_that: se movilicen recursos de emergencia rápidamente
 domain: D-SEG

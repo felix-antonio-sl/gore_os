@@ -5,7 +5,7 @@ _meta:
 name: Federar catálogos IDE Chile (CSW)
 id: US-TERR-IDE-002
 urn: urn:goreos:atom:story:us_terr_ide_002:1.0.0
-role_id: USR-TERR-IDE
+role_id: ROL-GESTION-IDE
 as_a: Coordinador IDE
 i_want: Federar catálogos IDE Chile (CSW)
 so_that: Integro datos nacionales

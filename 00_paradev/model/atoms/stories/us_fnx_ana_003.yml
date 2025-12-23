@@ -5,8 +5,8 @@ _meta:
 name: Visualizar zonas de la organización con mayor propensión a fallos (basado
 id: US-FNX-ANA-003
 urn: urn:goreos:atom:story:us_fnx_ana_003:1.0.0
-role_id: USR-AUD-PROF
-as_a: Auditor Interno
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: Visualizar zonas de la organización con mayor propensión a fallos (basado
   en historial FENIX)
 so_that: Focalizo el plan de auditoría anual

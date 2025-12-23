@@ -5,8 +5,8 @@ _meta:
 name: Presidir sesiones CORE (voto dirimente, tabla)
 id: US-GOB-GR-004
 urn: urn:goreos:atom:story:us_gob_gr_004:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Presidir sesiones CORE (voto dirimente, tabla)
 so_that: Dirijo el órgano colegiado
 domain: D-GOB

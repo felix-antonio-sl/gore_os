@@ -5,11 +5,14 @@ _meta:
 name: Acceso a ofertas y matriz de evaluación en plataforma segura
 id: US-COM-EV-001-01
 urn: urn:goreos:atom:story:us_com_ev_001_01:1.0.0
-role_id: USR-COM-EVAL
-as_a: Miembro Comisión Evaluadora
+role_id: ROL-GESTION-FOND-EVAL
+as_a: Evaluador Social
 i_want: acceso a ofertas y matriz de evaluación en plataforma segura
 so_that: el proceso sea trazable y auditable
 domain: D-FIN
 priority: P0
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-PLATAFORMA

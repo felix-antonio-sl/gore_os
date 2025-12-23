@@ -5,7 +5,7 @@ _meta:
 name: Trazabilidad de accesos DS9
 id: US-TDE-SEG-010
 urn: urn:goreos:atom:story:us_tde_seg_010:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Auditar trazabilidad de accesos DS9
 so_that: Verifico cumplimiento de autenticación

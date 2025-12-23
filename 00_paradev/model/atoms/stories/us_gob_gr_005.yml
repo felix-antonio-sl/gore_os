@@ -5,11 +5,15 @@ _meta:
 name: Coordinar respuesta a emergencias (Comité Gestión Riesgos)
 id: US-GOB-GR-005
 urn: urn:goreos:atom:story:us_gob_gr_005:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Coordinar respuesta a emergencias (Comité Gestión Riesgos)
 so_that: Lidero la respuesta regional
 domain: D-GOB
 priority: P0
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMITE
+- ENT-SAL-RIESGO

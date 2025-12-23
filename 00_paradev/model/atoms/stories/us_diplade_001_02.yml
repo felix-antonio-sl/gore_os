@@ -5,11 +5,14 @@ _meta:
 name: El Anteproyecto Regional de Inversiones (ARI) de forma automatizada
 id: US-DIPLADE-001-02
 urn: urn:goreos:atom:story:us_diplade_001_02:1.0.0
-role_id: USR-DIPL-JEFE
-as_a: Jefe DIPLADE
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: generar el Anteproyecto Regional de Inversiones (ARI) de forma automatizada
 so_that: pueda presentarlo oportunamente a DIPRES
 domain: D-PLAN
 priority: P0
 capability_id: CAP-PLAN-001
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-ARI

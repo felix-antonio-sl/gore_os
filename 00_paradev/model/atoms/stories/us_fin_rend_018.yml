@@ -5,7 +5,7 @@ _meta:
 name: Proceso de reintegro de fondos
 id: US-FIN-REND-018
 urn: urn:goreos:atom:story:us_fin_rend_018:1.0.0
-role_id: USR-DAF-FIN-REND
+role_id: ROL-GESTION-FIN-REND
 as_a: Encargado Rendiciones
 i_want: Gestionar proceso de reintegro de fondos
 so_that: Recupero saldos no ejecutados
@@ -13,3 +13,6 @@ domain: D-FIN
 priority: P0
 capability_id: CAP-FIN-DASH-001
 acceptance_criteria: []
+
+mentions:
+- ENT-FIN-REINTEGRO

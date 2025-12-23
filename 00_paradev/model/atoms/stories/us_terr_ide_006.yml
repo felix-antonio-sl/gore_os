@@ -5,8 +5,8 @@ _meta:
 name: Reportar georreferencias de interés (microbasurales, puntos turísticos)
 id: US-TERR-IDE-006
 urn: urn:goreos:atom:story:us_terr_ide_006:1.0.0
-role_id: USR-CIU-GEN
-as_a: Ciudadano
+role_id: ROL-GESTION-PMG-GEN
+as_a: Referente Equidad de Género
 i_want: Reportar georreferencias de interés (microbasurales, puntos turísticos)
 so_that: Enriquezco el mapa regional con datos comunitarios
 domain: D-TERR

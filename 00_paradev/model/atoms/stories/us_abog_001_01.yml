@@ -5,10 +5,11 @@ _meta:
 name: Plantillas de actos administrativos con campos pre-llenados
 id: US-ABOG-001-01
 urn: urn:goreos:atom:story:us_abog_001_01:1.0.0
-role_id: USR-JUR-ABOG
+role_id: ROL-NORM-ABOG
 as_a: Abogado Informante
 i_want: plantillas de actos administrativos con campos pre-llenados
 so_that: pueda agilizar la redacción y reducir errores
 domain: D-NORM
+capability_id: CAP-NORM-ABOG-001
 priority: P0
 acceptance_criteria: []

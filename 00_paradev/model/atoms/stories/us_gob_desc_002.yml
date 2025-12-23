@@ -5,11 +5,15 @@ _meta:
 name: Representar a la región ante Comité Interministerial
 id: US-GOB-DESC-002
 urn: urn:goreos:atom:story:us_gob_desc_002:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Representar a la región ante Comité Interministerial
 so_that: Obtengo competencias
 domain: D-GOB
 priority: P0
 capability_id: CAP-GOB-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMITE
+- ENT-LOC-REGION

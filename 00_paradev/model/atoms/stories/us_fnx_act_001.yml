@@ -5,7 +5,7 @@ _meta:
 name: Alertas automáticas cuando el índice H_gore baje de 60
 id: US-FNX-ACT-001
 urn: urn:goreos:atom:story:us_fnx_act_001:1.0.0
-role_id: USR-CAL-FNX-J
+role_id: ROL-GESTION-FNX-J
 as_a: Jefe FENIX
 i_want: Recibir alertas automáticas cuando el índice H_gore baje de 60
 so_that: Puedo iniciar la evaluación de intervención proactiva
@@ -13,3 +13,7 @@ domain: D-FENIX
 priority: P0
 capability_id: CAP-FENIX-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-ALERTA
+- ENT-SAL-H_GORE

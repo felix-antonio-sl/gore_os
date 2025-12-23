@@ -10,8 +10,11 @@ name: Expediente Electrónico
 domain: D-NORM
 description: Gestión documental electrónica y firma digital.
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes: []
-  entities: []
+
 morphisms:
   implements_capability: []
   depends_on: [urn:goreos:atom:module:norm_actos_administrativos:1.0.0]

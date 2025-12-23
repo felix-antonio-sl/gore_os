@@ -15,7 +15,10 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_ser_mop_001_01:1.0.0
+    - urn:goreos:atom:story:us_seremi_001_02:1.0.0
+
   governed_by: []
 
 unit: Secretarías Regionales Ministeriales (SEREMI)

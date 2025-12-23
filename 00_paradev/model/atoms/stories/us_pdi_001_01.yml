@@ -5,7 +5,7 @@ _meta:
 name: Acceso a cámaras del CIES en investigaciones
 id: US-PDI-001-01
 urn: urn:goreos:atom:story:us_pdi_001_01:1.0.0
-role_id: USR-EXT-PDI
+role_id: ROL-GESTION-PDI
 as_a: PDI (Policía de Investigaciones)
 i_want: acceso a cámaras del CIES en investigaciones
 so_that: pueda obtener evidencia

@@ -5,10 +5,13 @@ _meta:
 name: Horas extraordinarias (F2)
 id: US-BACK-PER-012
 urn: urn:goreos:atom:story:us_back_per_012:1.0.0
-role_id: USR-DAF-PER-GEST
+role_id: ROL-BACK-PER-GEST
 as_a: Gestor de Personas
 i_want: Gestionar horas extraordinarias (F2)
 so_that: Controlo sobretiempo
 domain: D-BACK
 priority: P1
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

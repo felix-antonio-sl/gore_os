@@ -15,7 +15,28 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_abast_001_01:1.0.0
+    - urn:goreos:atom:story:us_abast_001_02:1.0.0
+    - urn:goreos:atom:story:us_back_abs_002:1.0.0
+    - urn:goreos:atom:story:us_back_abs_004:1.0.0
+    - urn:goreos:atom:story:us_back_abs_005:1.0.0
+    - urn:goreos:atom:story:us_back_flo_001:1.0.0
+    - urn:goreos:atom:story:us_cal_001_02:1.0.0
+    - urn:goreos:atom:story:us_com_001_01:1.0.0
+    - urn:goreos:atom:story:us_com_001_02:1.0.0
+    - urn:goreos:atom:story:us_com_002_01:1.0.0
+    - urn:goreos:atom:story:us_com_estr_001:1.0.0
+    - urn:goreos:atom:story:us_com_estr_002:1.0.0
+    - urn:goreos:atom:story:us_com_estr_003:1.0.0
+    - urn:goreos:atom:story:us_com_estr_004:1.0.0
+    - urn:goreos:atom:story:us_com_estr_006:1.0.0
+    - urn:goreos:atom:story:us_com_sec_001:1.0.0
+    - urn:goreos:atom:story:us_com_sec_002:1.0.0
+    - urn:goreos:atom:story:us_ec33_001_01:1.0.0
+    - urn:goreos:atom:story:us_f8_001_01:1.0.0
+    - urn:goreos:atom:story:us_f8_001_02:1.0.0
+
   governed_by: []
 
 unit: Unidad de Calidad y Gestión Institucional

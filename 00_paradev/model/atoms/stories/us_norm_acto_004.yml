@@ -5,7 +5,7 @@ _meta:
 name: Litigios y defensa judicial regional
 id: US-NORM-ACTO-004
 urn: urn:goreos:atom:story:us_norm_acto_004:1.0.0
-role_id: USR-JUR-ABOG
+role_id: ROL-NORM-ABOG
 as_a: Abogado Informante
 i_want: Gestionar litigios y defensa judicial regional
 so_that: Defiendo intereses del GORE

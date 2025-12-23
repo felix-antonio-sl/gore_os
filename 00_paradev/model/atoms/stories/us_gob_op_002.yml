@@ -5,7 +5,7 @@ _meta:
 name: Derivar antecedentes a DIPIR mediante ruta automática
 id: US-GOB-OP-002
 urn: urn:goreos:atom:story:us_gob_op_002:1.0.0
-role_id: USR-OP-OF
+role_id: ROL-GESTION-OF
 as_a: Oficial de Partes
 i_want: Derivar antecedentes a DIPIR mediante ruta automática
 so_that: Distribuyo la carga de trabajo

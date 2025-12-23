@@ -5,10 +5,13 @@ _meta:
 name: Canales de comunicación directa con el Gobernador
 id: US-AMUCH-001-01
 urn: urn:goreos:atom:story:us_amuch_001_01:1.0.0
-role_id: USR-EXT-AMUCH
-as_a: AMUCH
+role_id: ROL-GESTION-REP-AMUCH
+as_a: Representante AMUCH
 i_want: canales de comunicación directa con el Gobernador
 so_that: se aborden problemáticas municipales transversales
 domain: D-GOB
 priority: P2
 acceptance_criteria: []
+
+mentions:
+- ENT-DIG-CANAL

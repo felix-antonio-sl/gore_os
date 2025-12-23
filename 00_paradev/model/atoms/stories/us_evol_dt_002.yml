@@ -5,7 +5,7 @@ _meta:
 name: Planificar evolución de schema (migraciones)
 id: US-EVOL-DT-002
 urn: urn:goreos:atom:story:us_evol_dt_002:1.0.0
-role_id: USR-DEV-LEAD
+role_id: ROL-GESTION-LEAD
 as_a: Líder Técnico
 i_want: Planificar evolución de schema (migraciones)
 so_that: Evoluciono el modelo de datos

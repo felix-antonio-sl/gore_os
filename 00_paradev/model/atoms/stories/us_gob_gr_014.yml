@@ -5,8 +5,8 @@ _meta:
 name: Impulsar convenios de programación con ministerios
 id: US-GOB-GR-014
 urn: urn:goreos:atom:story:us_gob_gr_014:1.0.0
-role_id: USR-GOB-JEFE
-as_a: Gobernador Regional
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Impulsar convenios de programación con ministerios
 so_that: Apalanco recursos sectoriales
 domain: D-GOB

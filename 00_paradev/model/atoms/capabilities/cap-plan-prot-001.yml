@@ -13,4 +13,6 @@ stories:
 - us_plan_prot_002
 - us_plan_prot_003
 - us_prot_001_01
-ofrecida_por: null
+ofrecida_por:
+- urn:goreos:atom:module:plan_estrategia_regional:1.0.0
+- urn:goreos:atom:module:plan_estrategia_regional:1.0.0]

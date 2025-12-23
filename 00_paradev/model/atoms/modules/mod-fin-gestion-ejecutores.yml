@@ -10,12 +10,14 @@ name: Gestión de Ejecutores
 domain: D-FIN
 description: "CRM de ejecutores: calificación e historial."
 composition:
+  entities:
+- urn:goreos:schema:entity:1.0.0
+
   processes:
     [
       urn:goreos:atom:process:d_fin_ejecutores_p4_bis:1.0.0,
       urn:goreos:atom:process:d_fin_ejecutores_p8:1.0.0,
     ]
-  entities:
     [
       urn:goreos:atom:entity:d_fin_ejecutores_calificacionejecutor:1.0.0,
       urn:goreos:atom:entity:d_fin_ejecutores_interaccionejecutor:1.0.0,

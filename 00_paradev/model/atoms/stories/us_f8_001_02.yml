@@ -5,8 +5,8 @@ _meta:
 name: Reportes de cobertura territorial y temática
 id: US-F8-001-02
 urn: urn:goreos:atom:story:us_f8_001_02:1.0.0
-role_id: USR-DIDES-FOND-ENC
-as_a: Encargado Fondos 8%
+role_id: ROL-GESTION-ENC
+as_a: Encargado de Calidad
 i_want: generar reportes de cobertura territorial y temática
 so_that: pueda evaluar equidad en la distribución
 domain: D-EJEC

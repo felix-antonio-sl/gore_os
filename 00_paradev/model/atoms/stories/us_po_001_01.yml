@@ -5,7 +5,7 @@ _meta:
 name: Herramientas para gestionar user stories y criterios de aceptación
 id: US-PO-001-01
 urn: urn:goreos:atom:story:us_po_001_01:1.0.0
-role_id: USR-DEV-PO
+role_id: ROL-GESTION-PO
 as_a: Product Owner
 i_want: herramientas para gestionar user stories y criterios de aceptación
 so_that: el equipo desarrolle lo que el negocio necesita
@@ -13,3 +13,6 @@ domain: D-PLAN
 priority: P0
 capability_id: CAP-PLAN-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-ROL

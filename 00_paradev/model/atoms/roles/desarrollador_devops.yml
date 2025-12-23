@@ -15,7 +15,15 @@ categorical:
   level: L2
 
 morphisms:
-  actor_of: []
+  actor_of:
+    - urn:goreos:atom:story:us_back_001_01:1.0.0
+    - urn:goreos:atom:story:us_dev_bp_005:1.0.0
+    - urn:goreos:atom:story:us_dev_koda_002:1.0.0
+    - urn:goreos:atom:story:us_dev_qa_001:1.0.0
+    - urn:goreos:atom:story:us_devops_001_01:1.0.0
+    - urn:goreos:atom:story:us_front_001_01:1.0.0
+    - urn:goreos:atom:story:us_tde_vinc_002:1.0.0
+
   governed_by: []
 
 unit: DAF

@@ -5,8 +5,8 @@ _meta:
 name: Porcentaje de co-financiamiento
 id: US-FIN-FRPD-003
 urn: urn:goreos:atom:story:us_fin_frpd_003:1.0.0
-role_id: USR-DIFOI-ANAL
-as_a: Analista Fomento
+role_id: ROL-GESTION-PREV-ANAL
+as_a: Analista Prevención
 i_want: Validar porcentaje de co-financiamiento
 so_that: Verifico aporte del beneficiario
 domain: D-FIN

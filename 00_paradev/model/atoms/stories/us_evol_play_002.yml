@@ -5,7 +5,7 @@ _meta:
 name: Ver monitor de progreso de playbooks
 id: US-EVOL-PLAY-002
 urn: urn:goreos:atom:story:us_evol_play_002:1.0.0
-role_id: USR-EVOL-OP
+role_id: ROL-OPS-OP
 as_a: Operador de Sistema
 i_want: Ver monitor de progreso de playbooks
 so_that: Sigo ejecución de remediaciones
@@ -13,3 +13,6 @@ domain: D-EVOL
 priority: P1
 capability_id: CAP-EVOL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-SAL-PLAYBOOK

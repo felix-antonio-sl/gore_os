@@ -5,7 +5,7 @@ _meta:
 name: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
 id: US-TDE-AUTH-001
 urn: urn:goreos:atom:story:us_tde_auth_001:1.0.0
-role_id: USR-NEW-DESARROLLADO
+role_id: ROL-GESTION-DESARROLLADO
 as_a: Desarrollador
 i_want: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
 so_that: Cumplo con DS9 y habilito SSO para ciudadanos y funcionarios
@@ -13,3 +13,6 @@ domain: D-TDE
 priority: P0
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO

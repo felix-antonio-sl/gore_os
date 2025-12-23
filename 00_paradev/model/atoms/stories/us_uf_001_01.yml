@@ -5,8 +5,8 @@ _meta:
 name: Obtener el código BIP de mis iniciativas
 id: US-UF-001-01
 urn: urn:goreos:atom:story:us_uf_001_01:1.0.0
-role_id: USR-MUNI-FORM
-as_a: Unidad Formuladora Municipal
+role_id: ROL-GESTION-G7-FORM
+as_a: Formulador Programas Glosa 7
 i_want: obtener el código BIP de mis iniciativas
 so_that: pueda solicitar financiamiento FNDR
 domain: D-PLAN

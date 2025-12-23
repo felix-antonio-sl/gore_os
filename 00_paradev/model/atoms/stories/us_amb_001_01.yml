@@ -5,8 +5,8 @@ _meta:
 name: Integración con el SEIA (Servicio Evaluación Ambiental)
 id: US-AMB-001-01
 urn: urn:goreos:atom:story:us_amb_001_01:1.0.0
-role_id: USR-DIFOI-RIES-ANAL
-as_a: Analista Ambiental
+role_id: ROL-GESTION-PREV-ANAL
+as_a: Analista Prevención
 i_want: integración con el SEIA (Servicio Evaluación Ambiental)
 so_that: pueda verificar resoluciones ambientales (RCA)
 domain: D-TERR

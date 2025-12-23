@@ -5,8 +5,8 @@ _meta:
 name: Solicitar extensión de plazo con justificación
 id: US-EJEC-EO-005
 urn: urn:goreos:atom:story:us_ejec_eo_005:1.0.0
-role_id: USR-DIDES-TERR-OP
-as_a: Encargado Operativo Territorial
+role_id: ROL-OPS-OP
+as_a: Operador de Sistema
 i_want: Solicitar extensión de plazo con justificación
 so_that: Gestiono imprevistos
 domain: D-EJEC

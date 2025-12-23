@@ -5,7 +5,7 @@ _meta:
 name: Un formulario de registro de audiencias simplificado
 id: US-SUJ-001-01
 urn: urn:goreos:atom:story:us_suj_001_01:1.0.0
-role_id: USR-GOB-PAS
+role_id: ROL-GESTION-PAS
 as_a: Sujeto Pasivo (Autoridad)
 i_want: un formulario de registro de audiencias simplificado
 so_that: pueda cumplir con la Ley del Lobby
@@ -13,3 +13,6 @@ domain: D-NORM
 priority: P0
 capability_id: CAP-DOCUMENTOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-AUDIENCIA

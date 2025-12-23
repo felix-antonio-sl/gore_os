@@ -5,8 +5,8 @@ _meta:
 name: Solicitar Recepción Provisoria/Definitiva de Obras
 id: US-FIN-IPR-018
 urn: urn:goreos:atom:story:us_fin_ipr_018:1.0.0
-role_id: USR-EXT-EJEC
-as_a: Ejecutor / Entidad Ejecutora
+role_id: ROL-EJEC-URAI-EJEC
+as_a: Ejecutivo URAI
 i_want: Solicitar Recepción Provisoria/Definitiva de Obras
 so_that: Cierro formalmente la ejecución
 domain: D-FIN

@@ -5,10 +5,11 @@ _meta:
 name: Planilla Previred
 id: US-BACK-PER-011
 urn: urn:goreos:atom:story:us_back_per_011:1.0.0
-role_id: USR-DAF-PER-GEST
+role_id: ROL-BACK-PER-GEST
 as_a: Gestor de Personas
 i_want: Generar planilla Previred
 so_that: Cumplo con obligaciones previsionales
 domain: D-BACK
+capability_id: CAP-BACK-AUTO-001
 priority: P0
 acceptance_criteria: []

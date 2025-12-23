@@ -5,11 +5,14 @@ _meta:
 name: Un módulo de gestión de sesiones del CTD
 id: US-SEC-CTD-001-01
 urn: urn:goreos:atom:story:us_sec_ctd_001_01:1.0.0
-role_id: USR-CTD-SEC
-as_a: Secretario Ejecutivo CTD
+role_id: ROL-EJEC-CPER-SEC
+as_a: Secretario Ejecutivo Comité de Pertinencia
 i_want: un módulo de gestión de sesiones del CTD
 so_that: pueda generar actas y hacer seguimiento
 domain: D-TDE
 priority: P0
 capability_id: CAP-FIRMA-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-ACTA

@@ -5,7 +5,7 @@ _meta:
 name: Documentación técnica actualizada y guías de contribución
 id: US-NDEV-001-01
 urn: urn:goreos:atom:story:us_ndev_001_01:1.0.0
-role_id: USR-DEV-NEW
+role_id: ROL-GESTION-NEW
 as_a: Nuevo Desarrollador
 i_want: documentación técnica actualizada y guías de contribución
 so_that: pueda ser productivo en mi primera semana

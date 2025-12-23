@@ -5,8 +5,8 @@ _meta:
 name: Un módulo de patrocinio con checklist de requisitos
 id: US-PAT-DID-001-01
 urn: urn:goreos:atom:story:us_pat_did_001_01:1.0.0
-role_id: USR-DIDES-PAT
-as_a: Analista Patrocinante (DIDESOH)
+role_id: ROL-GESTION-PAT
+as_a: Analista Patrocinante (DIFOI)
 i_want: un módulo de patrocinio con checklist de requisitos
 so_that: pueda verificar completitud antes de patrocinar
 domain: D-EJEC

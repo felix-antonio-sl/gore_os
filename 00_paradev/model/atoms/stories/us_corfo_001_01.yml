@@ -5,7 +5,7 @@ _meta:
 name: Información de proyectos productivos GORE
 id: US-CORFO-001-01
 urn: urn:goreos:atom:story:us_corfo_001_01:1.0.0
-role_id: USR-EXT-CONAF
+role_id: ROL-GESTION-CONAF
 as_a: Director Regional CONAF
 i_want: información de proyectos productivos GORE
 so_that: pueda articular instrumentos CORFO

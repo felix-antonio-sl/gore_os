@@ -5,8 +5,8 @@ _meta:
 name: Reglas de transformación y mapeo
 id: US-MIG-002
 urn: urn:goreos:atom:story:us_mig_002:1.0.0
-role_id: ROL-MIGRADOR
-as_a: Rol no encontrado (ROL-MIGRADOR)
+role_id: ROL-OPS-MIGRADOR
+as_a: 
 i_want: configurar reglas de transformación y mapeo
 so_that: las reglas estén documentadas y sean reutilizables para futuras cargas
 domain: D-OPS

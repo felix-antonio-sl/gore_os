@@ -5,7 +5,7 @@ _meta:
 name: Aplicar privacidad por diseño en nuevos sistemas
 id: US-TDE-SEG-011
 urn: urn:goreos:atom:story:us_tde_seg_011:1.0.0
-role_id: USR-TDE-CISO
+role_id: ROL-GESTION-CISO
 as_a: CISO
 i_want: Aplicar privacidad por diseño en nuevos sistemas
 so_that: Prevengo brechas desde origen

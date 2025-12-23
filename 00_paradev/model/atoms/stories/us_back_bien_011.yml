@@ -5,10 +5,11 @@ _meta:
 name: Solicitar préstamo (ver condiciones)
 id: US-BACK-BIEN-011
 urn: urn:goreos:atom:story:us_back_bien_011:1.0.0
-role_id: USR-DAF-PER-SOC
-as_a: Socio Bienestar
+role_id: ROL-GESTION-ANALISTA-SOC
+as_a: Analista Social
 i_want: Solicitar préstamo (ver condiciones)
 so_that: Accedo a financiamiento
 domain: D-BACK
+capability_id: CAP-BACK-BIEN-001
 priority: P1
 acceptance_criteria: []

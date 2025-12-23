@@ -8,15 +8,17 @@ _meta:
 id: MOD-FIN-PRESUPUESTO-REGIONAL
 name: Presupuesto Regional
 domain: D-FIN
-description: Ciclo presupuestario regional completo.
+description: |
+  Ciclo presupuestario regional completo. Gestiona la formulación, ejecución y control 
+  del presupuesto del GORE Ñuble conforme a Ley de Presupuestos y normativa DIPRES.
+  Incluye manejo de CDP, compromisos, devengos y modificaciones presupuestarias.
 composition:
-  processes: []
   entities:
-    [
-      urn:goreos:atom:entity:d_fin_presupuesto_compromiso:1.0.0,
-      urn:goreos:atom:entity:d_fin_presupuesto_devengo:1.0.0,
-      urn:goreos:atom:entity:d_fin_presupuesto_modificacionpresupuestaria:1.0.0,
-    ]
+    - urn:goreos:atom:entity:d_fin_presupuesto_compromiso:1.0.0
+    - urn:goreos:atom:entity:d_fin_presupuesto_devengo:1.0.0
+    - urn:goreos:atom:entity:d_fin_presupuesto_modificacionpresupuestaria:1.0.0
+  processes: []
 morphisms:
-  implements_capability: []
+  implements_capability:
+    - CAP-FIN-PPTO-001
   depends_on: []

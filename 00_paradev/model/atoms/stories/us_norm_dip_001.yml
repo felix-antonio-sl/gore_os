@@ -5,11 +5,15 @@ _meta:
 name: Alerta vencimiento DIP (30 días antes de marzo)
 id: US-NORM-DIP-001
 urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
-role_id: USR-AUD-PROF
-as_a: Auditor Interno
+role_id: ROL-GESTION-PROF
+as_a: Profesional DAF
 i_want: Recibir alerta vencimiento DIP (30 días antes de marzo)
 so_that: Aseguro cumplimiento de funcionarios
 domain: D-NORM
 priority: P0
 capability_id: CAP-DOCUMENTOS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-FUNCIONARIO
+- ENT-SAL-ALERTA

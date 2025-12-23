@@ -5,11 +5,14 @@ _meta:
 name: Gestión de reserva de salas y vehículos
 id: US-EOPE-001-01
 urn: urn:goreos:atom:story:us_eope_001_01:1.0.0
-role_id: USR-DIDES-TERR-OP
-as_a: Encargado Operativo Territorial
+role_id: ROL-OPS-OP
+as_a: Operador de Sistema
 i_want: gestión de reserva de salas y vehículos
 so_that: se optimice el uso de recursos físicos
 domain: D-BACK
 priority: P2
 capability_id: CAP-BACK-TICKETS-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-VEHICULO

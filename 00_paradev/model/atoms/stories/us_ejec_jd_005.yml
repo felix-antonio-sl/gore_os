@@ -5,11 +5,14 @@ _meta:
 name: Filtrar compromisos por estado y vencimiento
 id: US-EJEC-JD-005
 urn: urn:goreos:atom:story:us_ejec_jd_005:1.0.0
-role_id: USR-DAF-JEFE
-as_a: Jefe DAF
+role_id: ROL-GESTION-JEFE
+as_a: Jefe Unidad Jurídica
 i_want: Filtrar compromisos por estado y vencimiento
 so_that: Focalizo gestión
 domain: D-EJEC
 priority: P1
 capability_id: CAP-EJEC-PORTAL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-CONV-COMPROMISO

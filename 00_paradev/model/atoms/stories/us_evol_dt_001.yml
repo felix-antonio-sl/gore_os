@@ -5,7 +5,7 @@ _meta:
 name: Deuda técnica (inventario)
 id: US-EVOL-DT-001
 urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
-role_id: USR-DEV-LEAD
+role_id: ROL-GESTION-LEAD
 as_a: Líder Técnico
 i_want: Gestionar deuda técnica (inventario)
 so_that: Controlo pasivos técnicos
@@ -13,3 +13,7 @@ domain: D-EVOL
 priority: P1
 capability_id: CAP-EVOL-001
 acceptance_criteria: []
+
+mentions:
+- ENT-ORG-INVENTARIO
+- ENT-ORG-ROL
