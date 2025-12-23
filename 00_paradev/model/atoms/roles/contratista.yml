@@ -26,9 +26,6 @@ extends: null
 
 verification:
   status: verified
-  evidence:
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/presupuesto/kb_gn_211_ley_presupuestos_2026_normas_generales_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_019_gestion_ipr_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_026_guia_fril_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_047_manual_flotas_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/legal/kb_gn_200_marco_legal_gores_koda.yml
+  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'TIC' por contexto'
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'TIC'

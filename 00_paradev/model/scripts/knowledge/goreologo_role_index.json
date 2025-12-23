@@ -1,0 +1,38 @@
+{
+  "taxonomy": {
+    "directivos": {
+      "patterns": ["gobernador", "administrador regional", "jefe division", "jefe departamento"],
+      "synonyms": {
+        "gobernador": ["máxima autoridad regional", "ejecutivo regional"],
+        "administrador regional": ["gerente regional", "coordinador de gestion"],
+        "jefe division": ["director de division", "responsable de area"]
+      }
+    },
+    "dominios": {
+      "DAF": ["finanzas", "administracion", "recursos humanos", "personal", "contabilidad", "tesoreria", "abastecimiento", "compras"],
+      "DIPIR": ["presupuesto", "inversion", "proyectos", "seguimiento", "FNDR", "BIP"],
+      "DIPLADE": ["planificacion", "estrategia", "desarrollo regional", "ERD", "PROT"],
+      "NORM": ["juridico", "legal", "normativo", "abogado", "asesor juridico"],
+      "OPS": ["operaciones", "geonodo", "infraestructura", "mantenimiento", "logistica"],
+      "TIC": ["ti", "tecnologias", "servidor", "redes", "plataforma", "sistema", "informacion", "computacion"],
+      "DIDESOH": ["social", "humano", "inclusion", "comunitario"],
+      "DIFOI": ["fomento", "industria", "innovacion", "ciencia", "tecnologia"],
+      "DIT": ["infraestructura", "transportes", "obras"],
+      "COM": ["comunicaciones", "prensa", "difusion", "redes sociales"],
+      "CIES": ["inteligencia territorial", "analisis de datos", "datos"],
+      "GAB": ["gabinete", "protocolo", "agenda"]
+    },
+    "roles_especificos": {
+      "abogado": ["asesor juridico", "fiscal", "juridico"],
+      "analista": ["tecnico", "profesional", "ejecutor"],
+      "administrativo": ["secretaria", "asistente", "auxiliar"],
+      "encargado": ["coordinador", "responsable"]
+    }
+  },
+  "sources": [
+    "urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0",
+    "urn:knowledge:gorenuble:gn:intro-gores-nuble:1.0.0",
+    "urn:knowledge:gorenuble:gn:loc-gore:1.0.0",
+    "urn:knowledge:gorenuble:gn:gestion-prpto:1.0.0"
+  ]
+}

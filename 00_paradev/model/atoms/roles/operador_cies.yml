@@ -26,5 +26,6 @@ extends: null
 
 verification:
   status: verified
-  evidence:
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/bpmn/D09_cies_sitia_koda.yml
+  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'OPS' por contexto'
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'OPS'

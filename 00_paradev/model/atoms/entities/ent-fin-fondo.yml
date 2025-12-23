@@ -1,0 +1,80 @@
+---
+# Entidad: Fondo de Financiamiento Regional
+# Taxonomía categorial: Los FONDOS son fuentes de recursos (origen del dinero)
+# DISTINTO de VIA-EVALUACION (cómo se evalúa/procesa la iniciativa)
+_meta:
+  urn: urn:goreos:entity:fiscus:fondo:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+  source: "Ley N° 19.175, Arts. 74-80"
+
+id: ENT-FIN-FONDO
+name: Fondo de Financiamiento Regional
+domain: D-FIN
+category: Reference
+description: >-
+  Fuente de recursos para financiar IPRs. Los fondos determinan el ORIGEN
+  del dinero, no el mecanismo de evaluación. Una IPR puede tener una fuente
+  de fondo (ej: FNDR) pero evaluarse por distintas vías (SNI, C33, 8%).
+
+attributes:
+  - { name: id_fondo, type: UUID, key: true }
+  - {
+      name: codigo,
+      type: String,
+      unique: true,
+      description: "FNDR, FRIL, FRPD, ISAR",
+    }
+  - { name: nombre, type: String }
+  - { name: descripcion, type: Text }
+  - {
+      name: normativa_base,
+      type: String,
+      description: "Ley o norma que lo crea",
+    }
+  - { name: articulo, type: String, nullable: true }
+  - { name: vigente, type: Boolean, default: true }
+  # === Restricciones del Fondo ===
+  - {
+      name: subtitulo_principal,
+      type: Integer,
+      nullable: true,
+      description: "24, 31, 33",
+    }
+  - { name: requiere_aporte_propio, type: Boolean, default: false }
+  - { name: porcentaje_aporte_min, type: Decimal, nullable: true }
+
+# === Instancias Canónicas ===
+canonical_instances:
+  - codigo: FNDR
+    nombre: "Fondo Nacional de Desarrollo Regional"
+    normativa_base: "Ley N° 19.175, Art. 74"
+    descripcion: "Principal fondo de inversión regional para proyectos y programas priorizados por el GORE"
+    subtitulo_principal: null # Puede ser 24, 31 o 33 según tipo IPR
+    requiere_aporte_propio: false
+
+  - codigo: FRIL
+    nombre: "Fondo Regional de Iniciativa Local"
+    normativa_base: "Ley N° 19.175 + Glosa 12 Presupuesto"
+    descripcion: "Fondo para proyectos menores de infraestructura comunal (< 5.000 UTM)"
+    subtitulo_principal: 33
+    requiere_aporte_propio: false
+
+  - codigo: FRPD
+    nombre: "Fondo Regional para la Productividad y el Desarrollo"
+    normativa_base: "Ley de Royalty Minero"
+    descripcion: "Fondo asociado al Royalty para innovación, CTCI y fomento productivo"
+    subtitulo_principal: null # Puede ser proyecto o programa
+    requiere_aporte_propio: false
+
+  - codigo: ISAR
+    nombre: "Inversiones Sectoriales de Asignación Regional"
+    normativa_base: "Ley N° 19.175, Art. 80"
+    descripcion: "Recursos de ministerios sectoriales cuya destinación territorial decide el GORE"
+    subtitulo_principal: 31
+    requiere_aporte_propio: false
+
+invariants:
+  - id: FONDO-EXCLUSIVO
+    description: "Una IPR se financia con UN fondo principal (pueden haber aportes complementarios)"
+    expression: "∀ ipr: |fondo_principal| = 1"

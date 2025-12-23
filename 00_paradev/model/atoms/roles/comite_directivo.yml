@@ -28,6 +28,6 @@ extends: null
 
 verification:
   status: verified
-  evidence:
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_019_gestion_ipr_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_015_aprobaciones_koda.yml
+  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'TIC' por contexto'
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'TIC'

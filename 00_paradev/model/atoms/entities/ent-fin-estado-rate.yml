@@ -1,0 +1,125 @@
+---
+# Entidad: Estado RATE (Resultado de Análisis Técnico-Económico)
+# Taxonomía categorial: Estados son RESULTADOS de evaluación, no vías ni fondos
+_meta:
+  urn: urn:goreos:entity:fiscus:estado-rate:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+  source: "SNI, Normas de Inversión Pública"
+
+id: ENT-FIN-ESTADO-RATE
+name: Estado RATE
+domain: D-FIN
+category: Enum
+description: >-
+  Resultado de la evaluación técnico-económica de una IPR. Cada estado tiene
+  consecuencias específicas sobre la trazabilidad del ciclo de vida.
+
+attributes:
+  - { name: codigo, type: String, key: true }
+  - { name: nombre, type: String }
+  - { name: descripcion, type: Text }
+  - { name: permite_financiamiento, type: Boolean }
+  - { name: requiere_accion, type: String, nullable: true }
+  - { name: es_terminal, type: Boolean }
+  - {
+      name: aplica_a_via,
+      type: "[String]",
+      description: "Vías donde aplica este estado",
+    }
+
+# === Instancias Canónicas (Enum Values) ===
+canonical_instances:
+  # --- Estados de Evaluación SNI/GORE ---
+  - codigo: RS
+    nombre: "Recomendado Satisfactoriamente"
+    descripcion: "Aprobación técnico-económica que habilita para financiamiento"
+    permite_financiamiento: true
+    requiere_accion: null
+    es_terminal: false
+    aplica_a_via: ["SNI_GENERAL", "FRIL_VIA", "CIRCULAR_33", "FRPD_VIA"]
+
+  - codigo: FI
+    nombre: "Falta de Información"
+    descripcion: "Antecedentes insuficientes para emitir juicio, requiere subsanación"
+    permite_financiamiento: false
+    requiere_accion: "SUBSANAR"
+    es_terminal: false
+    aplica_a_via:
+      ["SNI_GENERAL", "FRIL_VIA", "CIRCULAR_33", "FRPD_VIA", "GLOSA_06_DIRECTA"]
+
+  - codigo: OT
+    nombre: "Objetado Técnicamente"
+    descripcion: "Deficiencias técnicas o normativas insalvables, requiere reformulación"
+    permite_financiamiento: false
+    requiere_accion: "REFORMULAR"
+    es_terminal: false
+    aplica_a_via:
+      ["SNI_GENERAL", "FRIL_VIA", "CIRCULAR_33", "FRPD_VIA", "GLOSA_06_DIRECTA"]
+
+  - codigo: AD
+    nombre: "Antecedentes a DIPRES"
+    descripcion: "Iniciativa elevada a DIPRES para creación presupuestaria"
+    permite_financiamiento: false
+    requiere_accion: "ESPERAR_DIPRES"
+    es_terminal: false
+    aplica_a_via: ["SNI_GENERAL"]
+
+  - codigo: NV
+    nombre: "No Vigente"
+    descripcion: "Proceso cerrado por incumplimiento de plazos, desistimiento u otra causa"
+    permite_financiamiento: false
+    requiere_accion: null
+    es_terminal: true
+    aplica_a_via: ["SNI_GENERAL", "FRIL_VIA", "CIRCULAR_33", "FRPD_VIA"]
+
+  - codigo: IN
+    nombre: "Incumplimiento de Normativa"
+    descripcion: "Modificaciones no autorizadas post-aprobación, falta grave"
+    permite_financiamiento: false
+    requiere_accion: null
+    es_terminal: true
+    aplica_a_via: ["FRIL_VIA"]
+
+  # --- Estados específicos PPR ---
+  - codigo: RF
+    nombre: "Recomendado Favorablemente"
+    descripcion: "Aprobación de diseño de programa por DIPRES/SES (equivalente a RS para PPR)"
+    permite_financiamiento: true
+    requiere_accion: null
+    es_terminal: false
+    aplica_a_via: ["GLOSA_06_DIRECTA"]
+
+  - codigo: ITF
+    nombre: "Informe Técnico Favorable"
+    descripcion: "Validación técnica GORE para PPR transferidos (NO es RATE oficial)"
+    permite_financiamiento: true
+    requiere_accion: null
+    es_terminal: false
+    aplica_a_via: ["TRANSFERENCIA_PUBLICO"]
+
+  # --- Estados específicos 8% ---
+  - codigo: ADJUDICADO
+    nombre: "Adjudicado"
+    descripcion: "Subvención aprobada en concurso 8%"
+    permite_financiamiento: true
+    requiere_accion: null
+    es_terminal: false
+    aplica_a_via: ["SUBVENCION_8"]
+
+  - codigo: NO_ADJUDICADO
+    nombre: "No Adjudicado"
+    descripcion: "Subvención no aprobada en concurso 8%"
+    permite_financiamiento: false
+    requiere_accion: null
+    es_terminal: true
+    aplica_a_via: ["SUBVENCION_8"]
+
+invariants:
+  - id: RATE-COHERENCIA-VIA
+    description: "Un estado RATE solo puede aplicarse a IPRs que siguen vías compatibles"
+    expression: "∀ ipr, rate: ipr.estado_rate = rate → ipr.via_evaluacion ∈ rate.aplica_a_via"
+
+  - id: RATE-FINANCIAMIENTO
+    description: "Solo estados con permite_financiamiento = true habilitan ejecución"
+    expression: "∀ ipr: ipr.etapa = 'EJECUCION' → ipr.estado_rate.permite_financiamiento = true"

@@ -177,10 +177,69 @@ terminos:
   - id: ISAR
     nombre: "Inversiones Sectoriales de Asignación Regional"
     definicion: >-
-      Recursos de ministerios sectoriales cuya destinación territorial final es decidida 
-      por el GORE según prioridades regionales.
+      FONDO de recursos provenientes de ministerios sectoriales cuya destinación 
+      territorial final es decidida por el GORE. ISAR es una FUENTE DE RECURSOS, 
+      no una vía de evaluación. Las IPR financiadas con ISAR se evalúan por SNI o C33.
     fuente: "Ley N° 19.175, Art. 80"
     dominio: D-FIN
+    categoria_ontologica: FONDO
+
+  # === Vías de Evaluación (categoría distinta a Fondos) ===
+  - id: VIA-SNI-GENERAL
+    nombre: "Vía SNI General"
+    definicion: >-
+      Mecanismo procesal para evaluar IDI > 5.000 UTM en el Sistema Nacional de 
+      Inversiones. Evaluador: MDSF. Instrumento: Ficha IDI + Metodología + RIS.
+    dominio: D-FIN
+    categoria_ontologica: VIA_EVALUACION
+
+  - id: VIA-FRIL
+    nombre: "Vía FRIL"
+    definicion: >-
+      Mecanismo procesal simplificado para proyectos municipales < 5.000 UTM. 
+      Evaluador: GORE. No requiere RATE MDSF.
+    dominio: D-FIN
+    categoria_ontologica: VIA_EVALUACION
+
+  - id: VIA-C33
+    nombre: "Vía Circular 33"
+    definicion: >-
+      Procedimiento expedito para estudios del giro, ANF, conservación y emergencias. 
+      Evaluador: GORE. Normativa: Oficio Circular N°33/2009 Ministerio de Hacienda.
+    dominio: D-FIN
+    categoria_ontologica: VIA_EVALUACION
+
+  - id: VIA-GLOSA-06
+    nombre: "Vía Glosa 06 Ejecución Directa"
+    definicion: >-
+      Mecanismo para PPR ejecutados directamente por el GORE. Evaluación bifásica 
+      Perfil→Diseño por DIPRES/SES. Resultado: RF (Recomendado Favorablemente).
+    dominio: D-FIN
+    categoria_ontologica: VIA_EVALUACION
+
+  - id: VIA-TRANSFERENCIA
+    nombre: "Vía Transferencia a Entidad Pública"
+    definicion: >-
+      Mecanismo para PPR ejecutados por municipios u otros servicios. Exento de 
+      evaluación DIPRES/SES. Evaluador: GORE. Resultado: ITF.
+    dominio: D-FIN
+    categoria_ontologica: VIA_EVALUACION
+
+  - id: VIA-8-PORCIENTO
+    nombre: "Vía Subvención 8% FNDR"
+    definicion: >-
+      Concurso competitivo de subvenciones para organizaciones sin fines de lucro. 
+      Fondos temáticos: Cultura, Social, Género, Deporte, Adulto Mayor, etc.
+    dominio: D-FIN
+    categoria_ontologica: VIA_EVALUACION
+
+  - id: VIA-FRPD
+    nombre: "Vía FRPD"
+    definicion: >-
+      Concurso FRPD con bifurcación post-selección: Caso 1 (CTCI) exento de evaluación 
+      central, Caso 2 (Fomento) requiere evaluación ex ante según tipo.
+    dominio: D-FIN
+    categoria_ontologica: VIA_EVALUACION
 
   # === Actores Externos ===
   - id: MDSF
@@ -232,6 +291,168 @@ terminos:
     vision: GORE_4_0
     dominio: D-SYS
 
+  # === ORKO: Axiomas Fundamentales ===
+  - id: ORKO-A1
+    nombre: "Axioma de Transformación"
+    definicion: >-
+      Todo sistema organizacional existe para transformar estados (S₁ → S₂). Sin esta 
+      capacidad de transformación, el sistema es inerte.
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-AX-A1"
+    dominio: D-SYS
+
+  - id: ORKO-A2
+    nombre: "Axioma de Capacidad"
+    definicion: >-
+      Existe capacidad que efectúa la transformación. Las transformaciones no ocurren 
+      espontáneamente; requieren un agente causal (Capacidad).
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-AX-A2"
+    dominio: D-SYS
+
+  - id: ORKO-A3
+    nombre: "Axioma de Información"
+    definicion: >-
+      Existe estructura portadora de significado que coordina transformaciones. Sin 
+      información, no hay coordinación ni memoria del sistema.
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-AX-A3"
+    dominio: D-SYS
+
+  - id: ORKO-A4
+    nombre: "Axioma de Restricción"
+    definicion: >-
+      No todo es posible. Existen restricciones (físicas, regulatorias, técnicas) que 
+      acotan el espacio de posibilidades factibles.
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-AX-A4"
+    dominio: D-SYS
+
+  - id: ORKO-A5
+    nombre: "Axioma de Intencionalidad"
+    definicion: >-
+      Transformación tiene propósito direccional (outcome deseado). Sin propósito, el 
+      movimiento es browniano (ruido), no transformación teleológica.
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-AX-A5"
+    dominio: D-SYS
+
+  # === ORKO: Primitivos Operacionales ===
+  - id: ORKO-P1
+    nombre: "Primitivo Capacidad"
+    definicion: >-
+      Potencial de ejecutar transformación. Unifica Actor (sustrato) y Agente (cognición).
+      Dimensiones: Sustrato (Humano/Algorítmico/Mixto), Cognición (C0-C3), Rol Valor.
+    axioma_base: ORKO-A2
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-PR-P1"
+    dominio: D-ORG
+
+  - id: ORKO-P2
+    nombre: "Primitivo Flujo"
+    definicion: >-
+      Secuencia estructurada de transformaciones representada como DAG (Directed Acyclic 
+      Graph). Contiene Steps, Dependencies y Handoffs entre capacidades.
+    axioma_base: ORKO-A1
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-PR-P2"
+    dominio: D-EJE
+
+  - id: ORKO-P3
+    nombre: "Primitivo Información"
+    definicion: >-
+      Contenido estructurado con propiedades temporales y lineage (trazabilidad de origen).
+      Tipos: Persistente (datos), Transitoria (eventos), Agregada (estados).
+    axioma_base: ORKO-A3
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-PR-P3"
+    dominio: D-SYS
+
+  - id: ORKO-P4
+    nombre: "Primitivo Límite"
+    definicion: >-
+      Constraint que acota el espacio de posibilidades. Tipos: Físico, Regulatorio, 
+      Organizacional, Económico, Técnico. Enforcement: Preventivo/Detectivo/Correctivo.
+    axioma_base: ORKO-A4
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-PR-P4"
+    dominio: D-NORM
+
+  - id: ORKO-P5
+    nombre: "Primitivo Propósito"
+    definicion: >-
+      Outcome deseado con métricas y jerarquía. Estructura OKR: Objective (cualitativo), 
+      Key Results (cuantitativos), Hierarchy, Owner (humano accountable obligatorio).
+    axioma_base: ORKO-A5
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-PR-P5"
+    dominio: D-PLAN
+
+  # === ORKO: Invariantes ===
+  - id: ORKO-HAIC
+    nombre: "Human-AI Collaboration (I5)"
+    definicion: >-
+      Accountability moral siempre es humana. Algoritmos operan bajo modos de delegación 
+      (M1-M6), con mecanismo de override siempre disponible. Explainability obligatoria.
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-INV-I5"
+    dominio: D-ORG
+
+  - id: ORKO-SDA
+    nombre: "Ciclo Sense-Decide-Act"
+    definicion: >-
+      Ciclo canónico de transformación operativa: Sense (capturar estado), Decide 
+      (seleccionar acción), Act (ejecutar). Recursivo y fractal en estructura.
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-CYC-SDA"
+    dominio: D-EJE
+
+  # === KODA: Conceptos Clave ===
+  - id: KODA-URN
+    nombre: "Identificador URN de Conocimiento"
+    definicion: >-
+      Identificador único, estable y resolvible para artefactos de conocimiento.
+      Formato: urn:knowledge:{namespace}:{domain}:{artifact-id}:{version}[#{fragment}]
+    fuente: "urn:knowledge:koda:core:hub:1.0.0#GUIDE-KODA-HUB-URN-01"
+    dominio: D-SYS
+
+  - id: KODA-POLICY-EXCLUSIVE
+    nombre: "Política EXCLUSIVE_USE"
+    definicion: >-
+      Agente usa ÚNICAMENTE artefactos de conocimiento especificados. Requiere catálogo 
+      como fuente de verdad. Máxima fidelidad, mínima alucinación.
+    fuente: "urn:knowledge:koda:core:agent:1.0.0"
+    dominio: D-SYS
+
+  - id: KODA-POLICY-LLM-NATIVE
+    nombre: "Política LLM_NATIVE"
+    definicion: >-
+      Agente usa solo conocimiento pre-entrenado del LLM. Sin artefactos externos, sin 
+      catálogo. Para agentes de razonamiento general o prototipado rápido.
+    fuente: "urn:knowledge:koda:core:agent:1.0.0"
+    dominio: D-SYS
+
+  - id: KODA-CATALOG-SOT
+    nombre: "Catálogo como Fuente de Verdad"
+    definicion: >-
+      El catálogo es la fuente autoritativa para resolución URN-a-archivo. Patrón: 
+      Catalog First, Static Fallback. Toda búsqueda de conocimiento pasa por catálogo.
+    fuente: "urn:knowledge:koda:core:hub:1.0.0#CATALOG-SOURCE-OF-TRUTH-01"
+    dominio: D-SYS
+
+  - id: KODA-KB-GUIDANCE
+    nombre: "Patrón KB Guidance"
+    definicion: >-
+      Modelo cognitivo que mapea explícitamente categorías de consulta a artefactos 
+      específicos de conocimiento. Transforma búsqueda implícita en ruteo explícito.
+    fuente: "urn:knowledge:koda:core:agent-construct:1.0.0#PATTERN-KB-FUNCTOR"
+    dominio: D-SYS
+
+  - id: SUSTRATO
+    nombre: "Sustrato de Capacidad"
+    definicion: >-
+      Dimensión de P1_Capacidad que responde ¿QUIÉN ejecuta? Valores: Humano (juicio, 
+      ética), Algorítmico (escala, velocidad), Mecánico (fuerza), Mixto (HITL).
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-PR-P1"
+    dominio: D-ORG
+
+  - id: COGNICION
+    nombre: "Nivel de Cognición"
+    definicion: >-
+      Dimensión de P1_Capacidad que responde ¿Qué nivel de decisión? Niveles: C0 Ejecutar 
+      (determinístico), C1 Decidir (opciones), C2 Reflexionar (metacognición), C3 
+      Meta-Reflexionar (reflexión sobre reflexión).
+    fuente: "urn:knowledge:orko:core:fundamentos:1.0.0#ORKO-PR-P1"
+    dominio: D-ORG
+
 # === Mapeo de Funciones Motoras ===
 funciones_motoras:
   - id: PLANIFICAR
@@ -242,7 +463,16 @@ funciones_motoras:
   - id: FINANCIAR
     descripcion: "Administrar y asignar recursos según la estrategia regional."
     dominios: [D-FIN]
-    instrumentos: [FNDR, FRIL, FRPD, ISAR]
+    fondos: [FNDR, FRIL, FRPD, ISAR] # Fuentes de recursos
+    vias_evaluacion: [
+        VIA-SNI-GENERAL,
+        VIA-FRIL,
+        VIA-C33,
+        VIA-GLOSA-06,
+        VIA-TRANSFERENCIA,
+        VIA-8-PORCIENTO,
+        VIA-FRPD,
+      ] # Mecanismos procesales
 
   - id: EJECUTAR
     descripcion: "Implementar programas y viabilizar proyectos de inversión."

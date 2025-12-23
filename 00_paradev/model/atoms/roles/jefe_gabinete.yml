@@ -101,6 +101,6 @@ extends: null
 
 verification:
   status: verified
-  evidence:
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/tde/kb_gn_720_estrategia_td_ia_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/tde/kb_gn_710_informe_estado_inicial_gore_pre_td_koda.yml
+  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'GAB' por contexto'
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'GAB'

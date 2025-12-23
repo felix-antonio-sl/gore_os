@@ -28,9 +28,6 @@ extends: null
 
 verification:
   status: verified
-  evidence:
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/presupuesto/kb_gn_018_gestion_prpto_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_028_instructivo_subvencion_8_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_001_transferencia_ppr_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_019_gestion_ipr_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/ipr/kb_gn_029_guia_circ33_koda.yml
+  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'TIC' por contexto'
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'TIC'

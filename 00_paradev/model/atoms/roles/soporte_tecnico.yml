@@ -26,8 +26,6 @@ extends: null
 
 verification:
   status: verified
-  evidence:
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_041_manual_activo_fijo_koda.yml
-    - /Users/felixsanhueza/Developer/tde/knowledge/domains/guias/kb_tde_lineamientos_006_metodologia_gestion_proyectos_koda.yml
-    - /Users/felixsanhueza/Developer/tde/knowledge/domains/guias/kb_tde_lineamientos_041_guia_uso_simple_saas_oae_koda.yml
-    - /Users/felixsanhueza/Developer/tde/knowledge/domains/guias/kb_tde_lineamientos_003_recomendaciones_cloud_publica_koda.yml
+  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'OPS' por contexto'
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'OPS'

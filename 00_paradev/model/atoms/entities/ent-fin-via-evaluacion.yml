@@ -1,0 +1,154 @@
+---
+# Entidad: Vía de Evaluación de IPR
+# Taxonomía categorial: Las VÍAS son mecanismos procesales de evaluación/tramitación
+# DISTINTO de FONDO (origen de recursos)
+_meta:
+  urn: urn:goreos:entity:fiscus:via-evaluacion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:1.0.0
+  source: "SNI, Circular 33, Glosa 06/07 Ley de Presupuestos"
+
+id: ENT-FIN-VIA-EVALUACION
+name: Vía de Evaluación IPR
+domain: D-FIN
+category: Reference
+description: >-
+  Mecanismo procesal para evaluar y tramitar una IPR. Las vías determinan
+  CÓMO se evalúa (evaluador, instrumentos, proceso), no de DÓNDE viene el dinero.
+  Una IPR sigue UNA y SOLO UNA vía de evaluación (mutuamente excluyentes).
+
+attributes:
+  - { name: id_via, type: UUID, key: true }
+  - { name: codigo, type: String, unique: true }
+  - { name: nombre, type: String }
+  - { name: descripcion, type: Text }
+  - { name: normativa, type: String }
+  # === Clasificación ===
+  - { name: aplica_a, type: String, description: "IDI | PPR | AMBOS" }
+  - { name: subtitulo_tipico, type: Integer, nullable: true }
+  # === Evaluador ===
+  - {
+      name: evaluador_principal,
+      type: String,
+      description: "MDSF, GORE, DIPRES/SES",
+    }
+  - { name: requiere_rate_mdsf, type: Boolean, default: false }
+  # === Restricciones ===
+  - { name: umbral_utm_max, type: Decimal, nullable: true }
+  - { name: ejecutores_validos, type: "[String]", nullable: true }
+  - { name: categoria_especial, type: String, nullable: true }
+  # === Instrumentos ===
+  - {
+      name: instrumento_formulacion,
+      type: String,
+      description: "Ficha IDI, Formulario PPR, etc.",
+    }
+  - { name: instrumento_evaluacion, type: String, nullable: true }
+
+# === Instancias Canónicas ===
+canonical_instances:
+  # --- Vías para IDI (Proyectos de Inversión) ---
+  - codigo: SNI_GENERAL
+    nombre: "SNI General"
+    descripcion: "Evaluación completa en Sistema Nacional de Inversiones para proyectos > 5.000 UTM"
+    normativa: "Normas de Inversión Pública (NIP)"
+    aplica_a: IDI
+    subtitulo_tipico: 31
+    evaluador_principal: "MDSF"
+    requiere_rate_mdsf: true
+    umbral_utm_max: null
+    ejecutores_validos: ["GORE", "Municipalidad", "Servicio Público"]
+    instrumento_formulacion: "Ficha IDI + Metodología Sectorial + RIS"
+    instrumento_evaluacion: "RATE (RS, FI, OT, AD)"
+
+  - codigo: FRIL_VIA
+    nombre: "Vía FRIL"
+    descripcion: "Evaluación simplificada para proyectos municipales < 5.000 UTM"
+    normativa: "Glosa 12, Ley de Presupuestos + Guía Operativa SUBDERE"
+    aplica_a: IDI
+    subtitulo_tipico: 33
+    evaluador_principal: "GORE"
+    requiere_rate_mdsf: false
+    umbral_utm_max: 5000
+    ejecutores_validos: ["Municipalidad"]
+    instrumento_formulacion: "Ficha IDI simplificada"
+    instrumento_evaluacion: "RATE GORE (RS interno)"
+
+  - codigo: CIRCULAR_33
+    nombre: "Circular 33"
+    descripcion: "Procedimiento expedito para estudios del giro, ANF, conservación y emergencias"
+    normativa: "Oficio Circular N°33/2009 Ministerio de Hacienda"
+    aplica_a: IDI
+    subtitulo_tipico: null # Depende de categoría C33
+    evaluador_principal: "GORE"
+    requiere_rate_mdsf: false
+    umbral_utm_max: null
+    ejecutores_validos: ["Municipalidad", "Servicio Público", "GORE"]
+    categoria_especial: "ESTUDIOS_GIRO | ANF | CONSERVACION_CAMINOS | CONSERVACION_INFRA | EMERGENCIA"
+    instrumento_formulacion: "Ficha C33 + Anexos específicos"
+    instrumento_evaluacion: "RATE GORE"
+
+  # --- Vías para PPR (Programas) ---
+  - codigo: GLOSA_06_DIRECTA
+    nombre: "Glosa 06 Ejecución Directa GORE"
+    descripcion: "Programas ejecutados directamente por el GORE, evaluación bifásica DIPRES/SES"
+    normativa: "Glosa 06, Ley de Presupuestos"
+    aplica_a: PPR
+    subtitulo_tipico: 24
+    evaluador_principal: "DIPRES/SES"
+    requiere_rate_mdsf: false # Usa RF, no RS
+    umbral_utm_max: null
+    ejecutores_validos: ["GORE"]
+    instrumento_formulacion: "Formulario Perfil + Diseño de Programa GORE"
+    instrumento_evaluacion: "RF (Recomendado Favorablemente)"
+
+  - codigo: TRANSFERENCIA_PUBLICO
+    nombre: "Transferencia a Entidad Pública"
+    descripcion: "PPR ejecutados por municipios u otros servicios públicos (exentos evaluación central)"
+    normativa: "Glosa 06, Ley de Presupuestos + Circular N°22 DIPRES"
+    aplica_a: PPR
+    subtitulo_tipico: 24
+    evaluador_principal: "GORE"
+    requiere_rate_mdsf: false
+    umbral_utm_max: null
+    ejecutores_validos:
+      ["Municipalidad", "Servicio Público", "Universidad Estatal"]
+    instrumento_formulacion: "Formulario PPR Transferencia + MML"
+    instrumento_evaluacion: "ITF (Informe Técnico Favorable)"
+
+  - codigo: SUBVENCION_8
+    nombre: "Subvención 8% FNDR"
+    descripcion: "Concurso de subvenciones para organizaciones privadas sin fines de lucro"
+    normativa: "Glosa 07, Ley de Presupuestos"
+    aplica_a: PPR
+    subtitulo_tipico: 24
+    evaluador_principal: "GORE"
+    requiere_rate_mdsf: false
+    umbral_utm_max: null
+    ejecutores_validos: ["Organización Sin Fines de Lucro", "Municipalidad"]
+    categoria_especial: "CULTURA | SOCIAL | GENERO | DEPORTE | ADULTO_MAYOR | MEDIO_AMBIENTE | SEGURIDAD"
+    instrumento_formulacion: "Formulario Concurso 8%"
+    instrumento_evaluacion: "Puntaje de Corte"
+
+  # --- Vía FRPD (puede ser IDI o PPR) ---
+  - codigo: FRPD_VIA
+    nombre: "Vía FRPD"
+    descripcion: "Concurso FRPD con bifurcación post-selección (CTCI exento, Fomento a evaluación)"
+    normativa: "Ley de Royalty Minero + Glosa 13"
+    aplica_a: AMBOS
+    subtitulo_tipico: null
+    evaluador_principal: "GORE + Comité Regional CTCI"
+    requiere_rate_mdsf: false # Depende del caso post-selección
+    umbral_utm_max: null
+    ejecutores_validos: ["Institución Habilitada SUBCTCI"]
+    instrumento_formulacion: "Formulario FRPD + Anexos"
+    instrumento_evaluacion: "Admisibilidad Técnica + RATE (si Caso 2)"
+
+invariants:
+  - id: VIA-EXCLUSIVA
+    description: "Una IPR sigue UNA y SOLO UNA vía de evaluación"
+    expression: "∀ ipr: |via_evaluacion| = 1"
+
+  - id: VIA-COHERENCIA-TIPO
+    description: "IDI solo puede usar vías IDI, PPR solo puede usar vías PPR"
+    expression: "∀ ipr: ipr.tipo = 'IDI' → via.aplica_a ∈ {IDI, AMBOS}"

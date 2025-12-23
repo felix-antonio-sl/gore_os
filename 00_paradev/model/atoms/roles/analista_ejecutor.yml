@@ -29,6 +29,6 @@ extends: null
 
 verification:
   status: verified
-  evidence:
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/arquitectura/bpmn/D08_rendiciones_koda.yml
-    - /Users/felixsanhueza/Developer/gorenuble/knowledge/domains/gn/gestion/kb_gn_020_gestion_rendiciones_koda.yml
+  evidence: 'Validación Semántica Goreólogo: Rol específico 'analista' identificado; Rol específico 'analista' identificado por sinónimo 'ejecutor''
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'TRANSVERSAL'

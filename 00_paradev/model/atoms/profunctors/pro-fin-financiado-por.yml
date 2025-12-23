@@ -1,0 +1,43 @@
+---
+# Profunctor: Financiado Por
+# Relaciona IPR con su Fondo de origen
+_meta:
+  urn: urn:goreos:profunctor:fiscus:financiado-por:1.0.0
+  type: Profunctor
+  schema: urn:goreos:schema:profunctor:1.0.0
+  source: "Taxonomía Categorial IPR"
+
+id: PRO-FIN-FINANCIADO-POR
+name: financiado_por
+description: >-
+  Morfismo que relaciona una IPR con su Fondo de origen (fuente de recursos).
+  Categoría FONDO es distinta de VIA_EVALUACION.
+
+domain: ENT-FIN-IPR
+codomain: ENT-FIN-FONDO
+
+cardinality: N:1
+nullable: true
+
+semantics:
+  verb: "es financiado por"
+  inverse_verb: "financia a"
+  question: "¿De qué fondo provienen los recursos de esta IPR?"
+
+# === Restricciones de Coherencia ===
+constraints:
+  - id: C1-FRIL-FONDO-VIA
+    description: "Si fondo = FRIL, entonces vía = FRIL_VIA"
+    expression: "fondo.codigo = 'FRIL' → via_evaluacion.codigo = 'FRIL_VIA'"
+
+  - id: C2-FRPD-FONDO-VIA
+    description: "Si fondo = FRPD, entonces vía = FRPD_VIA"
+    expression: "fondo.codigo = 'FRPD' → via_evaluacion.codigo = 'FRPD_VIA'"
+
+  - id: C3-ISAR-PROHIBICIONES
+    description: "ISAR no puede procesarse por 8% ni FRPD"
+    expression: "fondo.codigo = 'ISAR' → via_evaluacion.codigo ∉ {'SUBVENCION_8', 'FRPD_VIA'}"
+
+  - id: C4-FNDR-FLEXIBLE
+    description: "FNDR puede usar múltiples vías según tipo de IPR"
+    expression: "fondo.codigo = 'FNDR' → via_evaluacion.codigo ∈ {SNI_GENERAL, FRIL_VIA, CIRCULAR_33, GLOSA_06_DIRECTA, TRANSFERENCIA_PUBLICO, SUBVENCION_8}"

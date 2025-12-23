@@ -30,5 +30,7 @@ archetype: analista_base
 extends: null
 
 verification:
-  status: no_definition_found
-  note: 'Rol no encontrado en corpus documental (gn, tde, orko)'
+  status: verified
+  evidence: 'Validación Semántica Goreólogo: Rol específico 'analista' identificado; Vinculado al dominio 'OPS' por contexto'
+  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
+  domain_inference: 'OPS'

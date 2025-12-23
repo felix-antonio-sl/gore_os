@@ -74,3 +74,32 @@ attributes:
       nullable: true,
       description: "{problemas_count, compromisos_count, alertas_count}",
     }
+  # === Extensión Taxonomía Categorial IPR v3.0 ===
+  - {
+      name: fondo_id,
+      type: UUID,
+      fk: ENT-FIN-FONDO,
+      nullable: true,
+      description: "Fuente de recursos (FNDR, FRIL, FRPD, ISAR)",
+    }
+  - {
+      name: via_evaluacion_id,
+      type: UUID,
+      fk: ENT-FIN-VIA-EVALUACION,
+      nullable: true,
+      description: "Mecanismo procesal de evaluación (SNI, C33, 8%, Glosa06, etc.)",
+    }
+
+# === Invariantes Categoriales ===
+invariants:
+  - id: IPR-VIA-EXCLUSIVA
+    description: "Una IPR sigue UNA y SOLO UNA vía de evaluación"
+    expression: "∀ ipr: |via_evaluacion_id| ≤ 1"
+
+  - id: IPR-FONDO-VIA-COHERENCIA
+    description: "ISAR nunca se procesa por vías 8% o FRPD; cada fondo tiene vías compatibles"
+    expression: |
+      ∀ ipr: 
+        fondo.codigo = 'ISAR' → via.codigo ∈ {SNI_GENERAL, CIRCULAR_33}
+        fondo.codigo = 'FRIL' → via.codigo = 'FRIL_VIA'
+        fondo.codigo = 'FRPD' → via.codigo = 'FRPD_VIA'

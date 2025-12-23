@@ -90,15 +90,41 @@ Mecanismo formal para **capturar y expresar los requerimientos del sistema**: qu
 | `so_that`             | Valor o resultado esperado        |
 | `acceptance_criteria` | Condiciones de validación         |
 
-### 3.3 El Usuario-Rol
+### 3.3 El Usuario-Rol (Capacidad Activa)
 
-Actor —**humano o máquina**— que asume un rol determinado para usar, interactuar con o verse afectado por GORE_OS.
+No existe una distinción ontológica fundamental entre un "Usuario" (Humano) y un "Agente" (Máquina) al nivel más bajo. Siguiendo el primitivo **P1_Capacidad** de ORKO, ambos son manifestaciones del mismo concepto: una **capacidad que efectúa transformaciones**.
 
-| Tipo               | Descripción                   | Ejemplos                             |
-| ------------------ | ----------------------------- | ------------------------------------ |
-| **Humano Interno** | Funcionario GORE              | Analista, Coordinador, Jefe División |
-| **Humano Externo** | Actor fuera del GORE          | Alcalde, Beneficiario, Proveedor     |
-| **Máquina**        | Agente o sistema automatizado | Agente de Alertas, Bot de Monitoreo  |
+> Un Usuario-Rol es una **Capacidad (P1)** instanciada en un contexto específico dentro de GORE_OS.
+
+#### Dimensión 1: Sustrato (¿QUIÉN ejecuta?)
+
+| Sustrato         | Descripción                            | Ejemplos en GORE_OS                  |
+| ---------------- | -------------------------------------- | ------------------------------------ |
+| **Humano**       | Aporta juicio, ética, responsabilidad  | Analista, Coordinador, Jefe División |
+| **Algorítmico**  | Aporta escala, velocidad, consistencia | Agente de Alertas, Bot de Monitoreo  |
+| **Mixto (HITL)** | Human-in-the-Loop, colaboración        | Validador con apoyo IA               |
+
+#### Dimensión 2: Cognición (¿Qué NIVEL de decisión?)
+
+| Nivel  | Nombre           | Descripción                           | Ejemplos                         |
+| ------ | ---------------- | ------------------------------------- | -------------------------------- |
+| **C0** | Ejecutar         | Determinístico, sin decisión          | RPA, Sensor, Scheduler           |
+| **C1** | Decidir          | Selección entre opciones predefinidas | Motor de reglas, Clasificador ML |
+| **C2** | Reflexionar      | Metacognición sobre el proceso        | Agente LLM con contexto          |
+| **C3** | Meta-Reflexionar | Reflexión sobre la reflexión          | Estratega humano, Arquitecto     |
+
+#### Invariante HAIC (Human-AI Collaboration)
+
+> **Todo agente algorítmico (Sustrato = Algorítmico) DEBE tener un `accountable_id` humano.** La accountability moral es siempre humana e intransferible.
+
+| Modo   | Nombre     | Descripción                                      |
+| ------ | ---------- | ------------------------------------------------ |
+| **M1** | Monitorear | IA observa, humano decide                        |
+| **M2** | Informar   | IA sugiere, humano decide                        |
+| **M3** | Habilitar  | Humano invoca, IA ejecuta supervisada            |
+| **M4** | Controlar  | IA decide (reglas), humano maneja excepciones    |
+| **M5** | Coproducir | Humano + IA colaboran par-a-par                  |
+| **M6** | Ejecutar   | IA autónoma (acotada), humano supervisa/override |
 
 ### Principio Transversal: Cumplimiento Normativo
 
@@ -246,27 +272,46 @@ GORE_OS aprovecha estratégicamente la TDE como **plataforma para impulsar la go
 
 ## 8. ORKO: Marco de Operación y Evolución
 
-**ORKO (Organizational Knowledge Ontology)** es el framework principal para la operación, gestión, mejoramiento continuo y evolución de GORE_OS.
+**ORKO** es el framework principal para la operación, gestión, mejoramiento continuo y evolución de GORE_OS. Proporciona la base axiomática irreducible del sistema.
 
 > URN: `urn:knowledge:orko:*`
 
-### Principios ORKO Adoptados
+### Axiomas Fundamentales (A1-A5)
 
-| Primitivo ORKO          | Aplicación en GORE_OS                        |
-| ----------------------- | -------------------------------------------- |
-| **P1 - Observabilidad** | Dashboards y métricas de salud institucional |
-| **P2 - Adaptabilidad**  | Configuración dinámica de flujos y reglas    |
-| **P3 - Trazabilidad**   | Auditoría completa de decisiones y cambios   |
-| **P4 - Modularidad**    | Dominios independientes pero integrados      |
-| **P5 - Sostenibilidad** | Evolución orgánica sin rupturas              |
+Verdades fundamentales no derivables que constituyen el "genoma ontológico" del sistema:
 
-### Funciones ORKO en GORE_OS
+| Axioma | Nombre          | Enunciado                                                      |
+| ------ | --------------- | -------------------------------------------------------------- |
+| **A1** | Transformación  | Todo sistema existe para transformar estados (S₁ → S₂)         |
+| **A2** | Capacidad       | Existe capacidad que efectúa la transformación (no espontánea) |
+| **A3** | Información     | Existe estructura portadora de significado que coordina        |
+| **A4** | Restricción     | No todo es posible; existen límites que acotan posibilidades   |
+| **A5** | Intencionalidad | Transformación tiene propósito direccional (outcome deseado)   |
 
-| Función Tradicional      | Abordaje ORKO                          | Beneficio                    |
-| ------------------------ | -------------------------------------- | ---------------------------- |
-| Arquitectura Empresarial | Ontología organizacional               | Coherencia sin fragmentación |
-| Gestión de Procesos      | Tejidos tecnológicos                   | Automatización inteligente   |
-| Transformación Digital   | Metodología de diagnóstico y playbooks | Intervención focalizada      |
+### Primitivos Operacionales (P1-P5)
+
+Mínima estructura necesaria para operacionalizar los axiomas:
+
+| Primitivo | Axioma Base | Aplicación en GORE_OS                                  |
+| --------- | ----------- | ------------------------------------------------------ |
+| **P1**    | A2          | Capacidad: Usuario-Rol con Sustrato y Cognición        |
+| **P2**    | A1          | Flujo: Procesos como DAGs de transformaciones          |
+| **P3**    | A3          | Información: Datos, señales, estados con lineage       |
+| **P4**    | A4          | Límite: Restricciones normativas, técnicas, económicas |
+| **P5**    | A5          | Propósito: OKRs, IPR como objetivo de desarrollo       |
+
+### Invariantes del Sistema (I1-I8)
+
+| Invariante | Nombre                 | Aplicación GORE_OS                                |
+| ---------- | ---------------------- | ------------------------------------------------- |
+| **I1**     | Minimalidad            | Sistema usa conjunto mínimo necesario (P1-P5)     |
+| **I2**     | Ortogonalidad          | Primitivos mutuamente independientes              |
+| **I3**     | Trazabilidad           | Todo artefacto tiene Lineage, Owner, Timestamp    |
+| **I4**     | Clasificación          | Todo es Producción o Habilitación (contextual)    |
+| **I5**     | HAIC (Primacía Humana) | Accountability humana obligatoria para IA         |
+| **I6**     | Trajectory             | Capacidad algorítmica evoluciona con historial    |
+| **I7**     | Emergencia             | Prácticas emergen según nivel de complejidad      |
+| **I8**     | Adaptación             | Separación Genoma (rígido) vs Fenotipo (flexible) |
 
 ---
 
