@@ -13,7 +13,7 @@ so_that: pueda detectar incidentes rápidamente
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Operador encargado de la vigilancia de la infraestructura crítica y el monitoreo de proyectos territoriales
 

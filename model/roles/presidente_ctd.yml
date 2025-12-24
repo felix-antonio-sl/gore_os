@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-PRES"
+id: "ROL-PRESIDENTE-CTD"
 role_key: presidente_ctd
 title: Presidente Comité TD
 description: Preside el Comité y aprueba el Plan Maestro y OKRs Anuales (Gobernador

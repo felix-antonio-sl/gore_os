@@ -17,4 +17,7 @@ export const LogSchema = z.object({
 export type Log = z.infer<typeof LogSchema>;
 
 export * from "./domain/d_fin/convenio";
+export * from "./domain/d_fin/ipr";
+export * from "./domain/d_fin/fondos";
+export * from "./domain/d_fin/types";
 

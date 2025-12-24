@@ -13,7 +13,7 @@ so_that: Alineo gestión GORE con gobierno interior
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica que actúa como enlace normativo con la Delegación Presidencial
 

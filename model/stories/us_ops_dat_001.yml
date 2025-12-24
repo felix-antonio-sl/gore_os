@@ -13,7 +13,7 @@ so_that: se mantenga el rendimiento de las consultas y la eficiencia operativa d
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-ADMIN-TI
+  role_id: ROL-GESTION-DBA
   agent_type: HUMAN
   description: DBA encargado del rendimiento y escalabilidad de los datos
 

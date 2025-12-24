@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-MEMB"
+id: "ROL-MIEMBRO-CTD"
 role_key: miembro_ctd
 title: Miembro Comité TD
 description: Jefe de División o encargado con voz y voto en decisiones de inversión

@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-ESPECIALISTA"
+id: "ROL-ESPECIALISTA-BI"
 role_key: especialista_bi
 title: Especialista BI
 description: Rol agregado para concordancia con historias de usuario.

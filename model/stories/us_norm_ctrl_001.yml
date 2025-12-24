@@ -13,7 +13,7 @@ so_that: se prevengan conflictos de interés antes de la adjudicación de fondos
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-FIN-AUDITOR
+  role_id: ROL-PROFESIONAL-DAF
   agent_type: HUMAN
   description: Profesional de la Dirección de Administración y Finanzas encargado del control interno
 

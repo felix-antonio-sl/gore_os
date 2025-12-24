@@ -8,7 +8,13 @@ export default defineConfig({
     tailwindcss()
   ],
   server: {
-    host: true, 
-    port: 5173
+    host: 'localhost', 
+    port: 5173,
+    proxy: {
+      '/trpc': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      }
+    }
   }
 });

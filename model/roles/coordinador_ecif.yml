@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-COOR"
+id: "ROL-COORDINADOR-ECIF"
 role_key: coordinador_ecif
 title: Coordinador ECIF
 description: Lidera el Equipo de Coordinación Específico para Incendios Forestales.

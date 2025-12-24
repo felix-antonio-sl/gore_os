@@ -13,7 +13,7 @@ so_that: Actúo antes del vencimiento
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PROF
+  role_id: ROL-PROFESIONAL-DAF
   agent_type: ALGORITHMIC
   description: Agente de monitoreo de plazos legales encargado de alertar sobre hitos críticos en convenios de transferencia
 

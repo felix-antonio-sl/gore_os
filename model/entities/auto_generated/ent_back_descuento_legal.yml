@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_back_descuento_legal:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-BACK-DESCUENTO-LEGAL
+name: Descuento Legal
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-BACK
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_rem_002_01.yml

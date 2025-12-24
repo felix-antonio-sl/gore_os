@@ -13,7 +13,7 @@ so_that: Gestiono lo urgente primero
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de División que requiere visibilidad sobre tickets o procesos bloqueados que requieren su intervención
 

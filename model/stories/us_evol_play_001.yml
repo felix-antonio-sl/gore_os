@@ -13,7 +13,7 @@ so_that: se responda de forma estandarizada a problemas conocidos, minimizando e
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Usuario de soporte encargado de mantener la continuidad de los servicios
 

@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-ENC"
+id: "ROL-ENCARGADO-PARTES"
 role_key: encargado_partes
 title: Encargado Oficina de Partes
 description: Supervisión del flujo documental y gestión de archivos. Dependencia DAF

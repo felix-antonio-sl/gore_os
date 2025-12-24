@@ -13,7 +13,7 @@ so_that: se validen la vigencia de personalidades jurídicas y la legitimidad de
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-NORM-AUDITOR
+  role_id: ROL-GESTION-AUD
   agent_type: HUMAN
   description: Auditor encargado de evaluar el cumplimiento del Marco de Control Interno (MECIF)
 

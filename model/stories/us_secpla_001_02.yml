@@ -13,7 +13,7 @@ so_that: pueda aprender de buenas prácticas, especificaciones técnicas y costo
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-SECPLA-MUNI
+  role_id: ROL-GESTION-SECPLA
   agent_type: HUMAN
   description: Profesional municipal que busca optimizar la calidad técnica de sus postulaciones de inversión
 

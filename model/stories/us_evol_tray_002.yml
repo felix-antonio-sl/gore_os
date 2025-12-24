@@ -13,7 +13,7 @@ so_that: se calibre la sensibilidad del sistema evitando el ruido por alertas fa
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Usuario técnico que optimiza el sistema de alertas tempranas
 

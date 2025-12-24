@@ -13,7 +13,7 @@ so_that: las definiciones de negocio sean coherentes en el código
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: USR-DEV-ARQCAT
+  role_id: ROL-DEV-ARQ-CAT
   agent_type: HUMAN
   description: Arquitecto especializado en modelado categórico y semántico (DSL/KODA)
 

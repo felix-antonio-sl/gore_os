@@ -13,7 +13,7 @@ so_that: Aseguro integración efectiva y productiva
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de Calidad o RRHH responsable del Onboarding de nuevos talentos al GORE
 

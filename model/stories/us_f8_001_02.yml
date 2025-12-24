@@ -13,7 +13,7 @@ so_that: se pueda evaluar la equidad en la distribución regional de los recurso
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Responsable administrativo de la equidad y eficiencia en la asignación de fondos del 8%
 

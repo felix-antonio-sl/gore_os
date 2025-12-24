@@ -9,7 +9,11 @@ domain: D-CONV
 category: Master
 extends: ENT-CONV-INSTANCIA
 attributes:
-  - {name: id_gabinete, type: UUID, key: true}
-  - {name: gobernador_id, type: UUID, fk: ENT-GOV-GOBERNADOR}
-  - {name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO}
-  - {name: miembros, type: "Array[UUID]"}
+  - { name: id_gabinete, type: UUID, key: true }
+  - { name: gobernador_id, type: UUID, fk: ENT-GOV-GOBERNADOR }
+  - { name: periodo_id, type: UUID, fk: ENT-SYS-PERIODO }
+  - {
+      name: miembros,
+      type: JSON,
+      description: "Lista de IDs de miembros del gabinete (Array[UUID])",
+    }

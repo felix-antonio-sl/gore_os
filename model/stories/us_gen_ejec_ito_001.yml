@@ -13,7 +13,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-EJEC-ITO
+  role_id: ROL-EJEC-ITO-MUN
   agent_type: HUMAN
   description: Inspector Técnico de Obras (ITO) responsable de la supervisión en terreno de proyectos de infraestructura
 

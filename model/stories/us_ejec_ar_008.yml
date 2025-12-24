@@ -13,7 +13,7 @@ so_that: Corrijo estado
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de División que detecta inconsistencias en un proceso "cerrado" y requiere su reapertura técnica
 

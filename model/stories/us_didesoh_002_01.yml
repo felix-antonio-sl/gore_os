@@ -13,7 +13,7 @@ so_that: pueda convocar a diálogos y consultas ciudadanas
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la División de Desarrollo Social y Humano (DIDESOH) responsable de la vinculación con el medio
 

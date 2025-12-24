@@ -13,7 +13,7 @@ so_that: se permita la evolución de los sistemas sin romper la compatibilidad c
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-API
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Especialista en interfaces de comunicación entre sistemas
 

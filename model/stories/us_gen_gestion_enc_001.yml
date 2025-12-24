@@ -13,7 +13,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de Calidad responsable de la mejora continua de los procesos y el cumplimiento de normas ISO/PMG
 

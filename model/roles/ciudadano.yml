@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-GEN"
+id: "ROL-CIUDADANO"
 role_key: ciudadano
 title: Ciudadano
 description: Habitante de la región, usuario final de servicios y obras.

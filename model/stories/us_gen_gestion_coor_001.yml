@@ -13,7 +13,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-COOR
+  role_id: ROL-COORDINADOR-CIES
   agent_type: HUMAN
   description: Coordinador del Centro de Información y Estudios Sociales (CIES) responsable de la data de vulnerabilidad
 

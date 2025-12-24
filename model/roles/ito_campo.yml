@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-EJEC-ITO"
+id: "ROL-EJEC-ITO-CAMPO"
 role_key: ito_campo
 title: Inspector Técnico de Obras (Campo)
 description: Fiscalización física directa de avances y calidad de obra.
@@ -16,7 +16,7 @@ categorical:
 
 morphisms:
   actor_of:
-- urn:goreos:atom:story:us_gen_ejec_ito_001:1.0.0
+    - urn:goreos:atom:story:us_gen_ejec_ito_001:1.0.0
 
   governed_by: []
 
@@ -28,6 +28,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'DIT' por contexto'
+  evidence: "Validación Semántica Goreólogo: Vinculado al dominio DIT por contexto"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'DIT'

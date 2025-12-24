@@ -13,7 +13,7 @@ so_that: Mantengo infraestructura
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de calidad/logística responsable del mantenimiento de las instalaciones
 

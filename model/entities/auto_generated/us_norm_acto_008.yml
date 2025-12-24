@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:us_norm_acto_008:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: US-NORM-ACTO-008
+name: Acto 008
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-NORM
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: _index.yml

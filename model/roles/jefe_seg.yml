@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-JEFE"
+id: "ROL-JEFE-SEG"
 role_key: jefe_seg
 title: Jefe D-SEG
 description: Liderazgo de la gestión de seguridad pública regional.

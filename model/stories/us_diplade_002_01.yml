@@ -13,7 +13,7 @@ so_that: el proceso de RS sea transparente y auditable
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de División que lidera el Comité de Pertinencia para la Recomendación Socioeconómica (RS)
 

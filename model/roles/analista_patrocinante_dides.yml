@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-PAT"
+id: "ROL-ANALISTA-PATROCINANTE-DIDES"
 role_key: analista_patrocinante_dides
 title: Analista Patrocinante (DIDESOH)
 description: 

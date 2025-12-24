@@ -17,6 +17,7 @@ attributes:
   - { name: mecanismo_id, type: UUID, fk: ENT-FIN-MECANISMO }
   - { name: monto_total, type: Decimal }
   - { name: comuna_id, type: UUID, fk: ENT-LOC-COMUNA }
+  - { name: asignacion_id, type: UUID, fk: ENT-FIN-ASIGNACION, nullable: true }
   - { name: estado_ciclo, type: String }
   - { name: etapa_actual, type: String }
   - { name: fecha_rs, type: Date }

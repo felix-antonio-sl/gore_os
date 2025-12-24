@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_gob_comision_core:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-GOB-COMISION-CORE
+name: Comision Core
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-GOB
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_seccom_001_01.yml

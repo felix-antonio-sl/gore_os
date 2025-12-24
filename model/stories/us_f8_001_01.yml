@@ -13,7 +13,7 @@ so_that: se pueda adaptar el flujo del sistema a las bases específicas de cada 
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Responsable administrativo de la correcta ejecución de los fondos concursables del 8%
 

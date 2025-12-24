@@ -13,7 +13,7 @@ so_that: los desarrolladores no pierdan tiempo configurando infraestructura
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-TDE-PLATFORM-ENG
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Ingeniero de plataforma encargado de automatizar el aprovisionamiento de recursos técnicos
 

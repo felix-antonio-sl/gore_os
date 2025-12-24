@@ -13,7 +13,7 @@ so_that: se formalicen las transiciones de estado y se bloquee el paso a producc
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Encargado de validar los hitos de calidad en el ciclo de vida del software
 

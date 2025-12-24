@@ -13,7 +13,7 @@ so_that: Organizo el tiempo de la autoridad
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-GABINETE
   agent_type: HUMAN
   description: Jefe de Gabinete encargado de la planificación táctica de la agenda del Gobernador Regional
 

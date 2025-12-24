@@ -1,15 +1,11 @@
 import * as Schema from "@effect/schema/Schema";
+import { MontoPesos } from "./types";
 
 // Value Objects (Branded Types)
 export const ConvenioId = Schema.UUID.pipe(Schema.brand("ConvenioId"));
 export type ConvenioId = Schema.Schema.Type<typeof ConvenioId>;
 
-export const MontoPesos = Schema.Number.pipe(
-  Schema.int(),
-  Schema.nonNegative(),
-  Schema.brand("MontoPesos")
-);
-export type MontoPesos = Schema.Schema.Type<typeof MontoPesos>;
+// MontoPesos removed (imported)
 
 // Entity Definition
 export const Convenio = Schema.Struct({

@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-JEFE"
+id: "ROL-JEFE-DAF"
 role_key: jefe_daf
 title: Jefe DAF
 description: Jefatura de la División de Administración y Finanzas.

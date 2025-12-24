@@ -13,7 +13,7 @@ so_that: se optimice el uso de los recursos físicos y se eviten conflictos de d
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Personal administrativo encargado de la logística y servicios generales
 

@@ -13,7 +13,7 @@ so_that: pueda intervenir oportunamente antes de que escalen
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica que supervisa el cumplimiento normativo de proyectos de alto impacto regional
 

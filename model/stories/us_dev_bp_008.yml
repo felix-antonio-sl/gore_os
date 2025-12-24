@@ -13,7 +13,7 @@ so_that: se detecten vulnerabilidades de código de forma automática antes de q
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-BACK
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Desarrollador comprometido con la seguridad del software
 

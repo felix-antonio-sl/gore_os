@@ -13,7 +13,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ESPECIALISTA
+  role_id: ROL-ESPECIALISTA-BI
   agent_type: HUMAN
   description: Especialista en Business Intelligence (BI) encargado de la creación de tableros y análisis de datos para la toma de decisiones
 

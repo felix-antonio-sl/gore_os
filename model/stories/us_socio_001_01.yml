@@ -13,7 +13,7 @@ so_that: pueda planificar mis gastos
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-ORG-FUNCIONARIO
+  role_id: ROL-GESTION-PER-FUN
   agent_type: HUMAN
   description: Funcionario del GORE que es socio del servicio de bienestar institucional
 

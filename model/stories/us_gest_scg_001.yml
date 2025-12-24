@@ -13,7 +13,7 @@ so_that: Aseguro coherencia entre planificación estratégica y operativa
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de división encargado de la planificación táctica anual (POA) bajo el marco de la ERD
 

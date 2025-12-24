@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-JEFE"
+id: "ROL-JEFE-GABINETE"
 role_key: jefe_gabinete
 title: Jefe de Gabinete
 description: Coordinación de agenda política, asesores directos y comités.

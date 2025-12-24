@@ -13,7 +13,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-MEDIO-COMUNI
+  role_id: ROL-GESTION-MEDIA-COMUNI
   agent_type: HUMAN
   description: Gestor de contenidos digitales o medio nativo digital que interactúa con la marca GORE en plataformas sociales
 

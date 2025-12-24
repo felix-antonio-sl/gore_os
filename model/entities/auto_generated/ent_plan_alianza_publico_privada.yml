@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_plan_alianza_publico_privada:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-PLAN-ALIANZA-PUBLICO-PRIVADA
+name: Alianza Publico Privada
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-PLAN
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_gen_gestion_cpc_001.yml

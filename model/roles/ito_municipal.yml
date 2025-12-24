@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-EJEC-ITO"
+id: "ROL-EJEC-ITO-MUN"
 role_key: ito_municipal
 title: Inspector Obras (Municipal)
 description: Inspector Técnico de Obras municipal para proyectos financiados por GORE.
@@ -33,6 +33,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'DIT' por contexto'
+  evidence: "Validación Semántica Goreólogo: Vinculado al dominio DIT por contexto"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'DIT'

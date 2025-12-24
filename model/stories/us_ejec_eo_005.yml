@@ -13,7 +13,7 @@ so_that: se gestionen los imprevistos de forma transparente y se mantenga la pla
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Usuario responsable de cumplir con los plazos administrativos del convenio
 

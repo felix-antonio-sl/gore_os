@@ -13,7 +13,7 @@ so_that: Gestiono relaciones estratégicas
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-GABINETE
   agent_type: HUMAN
   description: Jefe de Gabinete que actúa como operador político y técnico ante Alcaldes, Parlamentarios y CORE
 

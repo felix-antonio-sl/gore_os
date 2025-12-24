@@ -13,7 +13,7 @@ so_that: pueda documentar el avance y hallazgos en terreno sin depender de la co
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-EJEC-ITO
+  role_id: ROL-EJEC-INFRA-ITO
   agent_type: HUMAN
   description: Profesional encargado de la inspección de obras en terreno, a menudo en zonas rurales
 

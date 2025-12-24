@@ -13,7 +13,7 @@ so_that: Defino rumbo estratégico
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-GOBERNADOR
   agent_type: HUMAN
   description: Gobernador Regional como máxima autoridad ejecutiva encargada del diseño de políticas públicas territoriales
 

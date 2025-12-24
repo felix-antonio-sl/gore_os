@@ -13,7 +13,7 @@ so_that: pueda acceder a fotos, videos y gráficas oficiales
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de Comunicaciones que gestiona el activo digital multimedia del GORE
 

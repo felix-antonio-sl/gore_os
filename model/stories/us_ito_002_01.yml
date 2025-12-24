@@ -13,7 +13,7 @@ so_that: se certifique que el pago corresponde exactamente al avance físico rea
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-EJEC-ITO
+  role_id: ROL-EJEC-INFRA-ITO
   agent_type: HUMAN
   description: Inspector encargado de la validación técnica-económica del avance
 

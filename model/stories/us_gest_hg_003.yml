@@ -13,7 +13,7 @@ so_that: Identifico causas raíz de degradación en mi área
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica que realiza análisis de causa raíz sobre nudos críticos en la tramitación
 

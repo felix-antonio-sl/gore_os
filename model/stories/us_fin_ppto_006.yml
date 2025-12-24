@@ -13,7 +13,7 @@ so_that: Evito compromisos sin respaldo presupuestario y cumplo con la legalidad
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PROF
+  role_id: ROL-PROFESIONAL-DAF
   agent_type: HUMAN
   description: Profesional de la División de Administración y Finanzas
 

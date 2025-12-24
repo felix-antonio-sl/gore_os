@@ -13,7 +13,7 @@ so_that: se elimine el riesgo de configuraciones incorrectas y se facilite el de
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-BACK
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Desarrollador que requiere consistencia en la configuración del sistema
 

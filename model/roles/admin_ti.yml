@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-OPS-TIC-ADMIN"
+id: "ROL-ADMIN-TI"
 role_key: admin_ti
 title: Administrador TI
 description: Gestión avanzada de usuarios, accesos (IAM) y directorio activo.
@@ -26,6 +26,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'OPS' por contexto'
-  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
-  domain_inference: 'OPS'
+  evidence: "Validación Semántica Goreólogo: Vinculado al dominio 'OPS' por contexto"
+  source_urn: "urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0"
+  domain_inference: "OPS"

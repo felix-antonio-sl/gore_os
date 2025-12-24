@@ -8,8 +8,12 @@ name: Circunscripción Provincial
 domain: D-LOC
 category: Reference
 attributes:
-  - {name: id_circunscripcion, type: UUID, key: true}
-  - {name: nombre, type: String}
-  - {name: region_id, type: UUID, fk: ENT-LOC-REGION}
-  - {name: numero_consejeros, type: Integer}
-  - {name: comunas, type: "Array[UUID]"}
+  - { name: id_circunscripcion, type: UUID, key: true }
+  - { name: nombre, type: String }
+  - { name: region_id, type: UUID, fk: ENT-LOC-REGION }
+  - { name: numero_consejeros, type: Integer }
+  - {
+      name: comunas,
+      type: JSON,
+      description: "Lista de IDs de comunas de la circunscripción (Array[UUID])",
+    }

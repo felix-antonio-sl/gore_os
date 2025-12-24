@@ -13,7 +13,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-GEN
+  role_id: ROL-CIUDADANO
   agent_type: HUMAN
   description: Habitante de la región que interactúa con el GORE para trámites, consultas o participación pública
 

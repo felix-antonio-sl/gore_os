@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_amb_estado_verde_lvl:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-AMB-ESTADO-VERDE-LVL
+name: Estado Verde Lvl
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-AMB
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_pever_001_01.yml

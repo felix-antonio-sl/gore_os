@@ -13,7 +13,7 @@ so_that: pueda documentar hallazgos y recomendaciones
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PROF
+  role_id: ROL-PROFESIONAL-DAF
   agent_type: HUMAN
   description: Profesional de DAF/Control Interno que realiza auditorías
 

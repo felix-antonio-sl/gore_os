@@ -13,7 +13,7 @@ so_that: Lidero la respuesta regional
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-GOBERNADOR
   agent_type: HUMAN
   description: Gobernador Regional como líder civil en el Comité de Gestión de Riesgos de Desastres (COGRID)
 

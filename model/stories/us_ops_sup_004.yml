@@ -13,7 +13,7 @@ so_that: se asegure la resolución definitiva del problema en el ciclo de vida d
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-HELP-DESK
+  role_id: ROL-GESTION-TIC-MESA
   agent_type: HUMAN
   description: Técnico encargado de la comunicación entre soporte y desarrollo
 

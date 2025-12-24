@@ -13,7 +13,7 @@ so_that: pueda planificar la comunicación institucional
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de Comunicaciones o Calidad responsable de la narrativa institucional
 

@@ -13,7 +13,7 @@ so_that: los temas de alta criticidad administrativa sean escalados al nivel dir
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-NORM-AUDITOR
+  role_id: ROL-GESTION-AUD
   agent_type: HUMAN
   description: Auditor interno encargado del seguimiento del marco de control institucional
 

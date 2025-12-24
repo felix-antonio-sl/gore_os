@@ -1,34 +1,14 @@
-import { initTRPC, TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { db } from './db';
 import { logs } from './schema';
-import type { AuthPayload } from './auth';
 import { convenioRouter } from './domain/d_fin/router';
-
-// Context type for tRPC
-export interface Context {
-  user: AuthPayload | null;
-}
-
-const t = initTRPC.context<Context>().create();
-
-// Public procedure (no auth required)
-const publicProcedure = t.procedure;
-
-// Protected procedure (auth required)
-const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
-  if (!ctx.user) {
-    throw new TRPCError({ 
-      code: 'UNAUTHORIZED',
-      message: 'Debes iniciar sesión para realizar esta acción',
-    });
-  }
-  return next({
-    ctx: {
-      user: ctx.user,
-    },
-  });
-});
+import { iprRouter } from './domain/d_fin/ipr/router';
+import { crisisRouter } from './domain/d_eje/crisis/router';
+import { problemaRouter } from './domain/d_eje/problema/router';
+import { compromisoRouter } from './domain/d_conv/compromiso/router';
+import { alertaRouter } from './domain/d_sal/alerta/router';
+import { reunionRouter } from './domain/d_conv/reunion/router';
+import { t, publicProcedure, protectedProcedure } from './trpc-init';
 
 export const appRouter = t.router({
   // Public: Anyone can read logs
@@ -50,6 +30,17 @@ export const appRouter = t.router({
     
   // Domain Routers
   convenio: convenioRouter,
+  ipr: iprRouter,
+  crisis: crisisRouter,
+  
+  // M2 Crisis Management
+  problema: problemaRouter,
+  compromiso: compromisoRouter,
+  alerta: alertaRouter,
+  
+  // M3 Reuniones
+  reunion: reunionRouter,
 });
 
 export type AppRouter = typeof appRouter;
+

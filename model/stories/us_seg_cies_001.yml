@@ -13,7 +13,7 @@ so_that: se inicie una respuesta coordinada ante un incidente de seguridad públ
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Operador de la Central de Inteligencia y Emergencias Regionales encargado del monitoreo en tiempo real
 

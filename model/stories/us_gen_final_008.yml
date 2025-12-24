@@ -14,7 +14,7 @@ so_that: se identifiquen brechas de cobertura y se planifiquen expansiones de re
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ANALISTA-CON
+  role_id: ROL-ANALISTA-CONECTIVIDAD
   agent_type: HUMAN
   description: Analista técnico de la división de infraestructura y transportes
 

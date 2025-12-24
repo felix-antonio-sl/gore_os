@@ -13,7 +13,7 @@ so_that: se evite la duplicidad de implementaciones y se promueva la reutilizaci
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-BACK
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Desarrollador que requiere descubrir servicios en la red federada
 

@@ -13,7 +13,7 @@ so_that: pueda reportar en formato oficial
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de calidad responsable del cumplimiento de indicadores ante la Dirección de Presupuestos (DIPRES)
 

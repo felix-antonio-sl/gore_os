@@ -13,7 +13,7 @@ so_that: no se comprometan recursos sin disponibilidad
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la División de Infraestructura y Transporte (DIPIR) facultado para autorizar compromisos presupuestarios
 

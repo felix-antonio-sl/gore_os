@@ -13,7 +13,7 @@ so_that: se minimicen los conflictos de merge y se permita una integración flui
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-BACK
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Desarrollador que requiere orden en el flujo de trabajo colaborativo
 

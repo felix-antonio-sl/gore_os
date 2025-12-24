@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-JEFE"
+id: "ROL-JEFE-DIDESOH"
 role_key: jefe_didesoh
 title: Jefe DIDESOH
 description: Jefatura de la División de Desarrollo Social y Humano.

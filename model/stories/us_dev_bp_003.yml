@@ -13,7 +13,7 @@ so_that: se detecten regresiones de forma temprana y se garantice la fiabilidad 
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-BACK
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Desarrollador enfocado en la calidad del software
 

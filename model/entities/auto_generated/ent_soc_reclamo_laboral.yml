@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_soc_reclamo_laboral:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-SOC-RECLAMO-LABORAL
+name: Reclamo Laboral
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-SOC
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_gen_gestion_sindic_001.yml

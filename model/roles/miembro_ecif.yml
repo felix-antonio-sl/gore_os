@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-MEMB"
+id: "ROL-MIEMBRO-ECIF"
 role_key: miembro_ecif
 title: Miembro ECIF
 description: Funcionario asignado a la fase de respuesta ante desastres (articulación

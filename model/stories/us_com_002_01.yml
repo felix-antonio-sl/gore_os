@@ -13,7 +13,7 @@ so_that: pueda evaluar el impacto comunicacional
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: ALGORITHMIC
   description: Sistema de monitoreo de prensa (Clipping) o analista de comunicaciones
 

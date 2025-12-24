@@ -13,7 +13,7 @@ so_that: se mejore drásticamente la eficiencia en la asignación al técnico co
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-HELP-DESK
+  role_id: ROL-GESTION-TIC-MESA
   agent_type: HUMAN
   description: Técnico de primer nivel encargado del triaje de solicitudes
 

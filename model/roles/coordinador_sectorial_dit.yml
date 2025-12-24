@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-COOR"
+id: "ROL-COORDINADOR-SECTORIAL-DIT"
 role_key: coordinador_sectorial_dit
 title: Coordinador Sectorial
 description: Gestión de carteras sectoriales específicas (Vialidad, Aguas, etc.).

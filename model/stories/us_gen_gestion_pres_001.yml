@@ -13,7 +13,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PRES
+  role_id: ROL-PRESIDENTE-SUBCOMITE-IA
   agent_type: HUMAN
   description: Presidente del subcomité encargado de regular y supervisar el uso ético de la Inteligencia Artificial en el GORE
 

@@ -13,7 +13,7 @@ so_that: los proyectos tengan mayor probabilidad de obtener RS y financiamiento 
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-SECPLA-MUNI
+  role_id: ROL-GESTION-SECPLA
   agent_type: HUMAN
   description: Profesional de la Secretaría Comunal de Planificación encargado de postular iniciativas de inversión al GORE
 

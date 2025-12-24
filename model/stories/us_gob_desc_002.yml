@@ -13,7 +13,7 @@ so_that: Obtengo competencias
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica que defiende los intereses de descentralización de la región ante el nivel central (Santiago)
 

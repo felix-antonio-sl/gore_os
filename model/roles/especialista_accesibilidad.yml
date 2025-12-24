@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-ESPECIALISTA"
+id: "ROL-ESPECIALISTA-ACCESIBILIDAD"
 role_key: especialista_accesibilidad
 title: Especialista Accesibilidad
 description: Rol agregado para concordancia con historias de usuario.

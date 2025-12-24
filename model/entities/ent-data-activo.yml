@@ -38,4 +38,9 @@ attributes:
     }
   - { name: retencion_anios, type: Integer, nullable: true }
   - { name: estado, type: String, description: "ACTIVO|DEPRECADO|ELIMINADO" }
-  - { name: metadatos, type: JSON, nullable: true }
+  - {
+      name: metadatos,
+      type: JSON,
+      nullable: true,
+      description: "Diccionario de metadatos técnicos y de negocio",
+    }

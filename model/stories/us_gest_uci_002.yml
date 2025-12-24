@@ -13,7 +13,7 @@ so_that: Aseguro que los controles mitigan los riesgos identificados
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PROF
+  role_id: ROL-PROFESIONAL-DAF
   agent_type: HUMAN
   description: Profesional de la Unidad de Control Interno (UCI) que verifica la mitigación de riesgos operativos
 

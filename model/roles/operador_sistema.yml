@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-OPS-OP"
+id: "ROL-OPERADOR-SISTEMA"
 role_key: operador_sistema
 title: Operador de Sistema
 description: Usuario especializado encargado de ejecutar procesos batch o manuales.

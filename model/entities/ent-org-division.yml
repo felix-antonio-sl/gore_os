@@ -8,12 +8,17 @@ name: División
 domain: D-ORG
 category: Master
 attributes:
-  - {name: id_division, type: UUID, key: true}
-  - {name: codigo, type: String}
-  - {name: nombre, type: String}
-  - {name: sigla, type: String}
-  - {name: tipo, type: String}
-  - {name: division_padre_id, type: UUID, fk: ENT-ORG-DIVISION, nullable: true}
-  - {name: jefe_id, type: UUID, fk: ENT-ORG-FUNCIONARIO}
-  - {name: nivel_jerarquico, type: Integer}
-  - {name: activa, type: Boolean, default: true}
+  - { name: id_division, type: UUID, key: true }
+  - { name: codigo, type: String }
+  - { name: nombre, type: String }
+  - { name: sigla, type: String }
+  - { name: tipo, type: String }
+  - {
+      name: division_padre_id,
+      type: UUID,
+      fk: ENT-ORG-DIVISION,
+      nullable: true,
+    }
+  - { name: jefe_id, type: UUID, fk: ENT-ORG-FUNCIONARIO, nullable: true }
+  - { name: nivel_jerarquico, type: Integer }
+  - { name: activa, type: Boolean, default: true }

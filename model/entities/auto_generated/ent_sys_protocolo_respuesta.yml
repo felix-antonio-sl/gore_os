@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_sys_protocolo_respuesta:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-SYS-PROTOCOLO-RESPUESTA
+name: Protocolo Respuesta
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-SYS
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_grd_001_01.yml

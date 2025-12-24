@@ -13,7 +13,7 @@ so_that: Recupero la salud institucional en 7-14 días
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica que activa protocolos de emergencia ante crisis de desempeño (H_gore Crítico)
 

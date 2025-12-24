@@ -13,7 +13,7 @@ so_that: Respondo a contingencias
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-GABINETE
   agent_type: HUMAN
   description: Jefe de Gabinete responsable de la gestión de riesgos reputacionales y crisis políticas del GORE
 

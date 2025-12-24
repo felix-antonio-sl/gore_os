@@ -14,7 +14,7 @@ so_that: se disminuya la brecha digital y se mejore la conectividad física en l
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ANALISTA-CON
+  role_id: ROL-ANALISTA-CONECTIVIDAD
   agent_type: HUMAN
   description: Analista técnico encargado de conectividad física y digital
 

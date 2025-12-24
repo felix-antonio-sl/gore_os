@@ -13,7 +13,7 @@ so_that: pueda activar protocolos de coordinación con Carabineros de Chile y PD
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Operador CIES encargado de la gestión de alertas de inteligencia vial y seguridad
 

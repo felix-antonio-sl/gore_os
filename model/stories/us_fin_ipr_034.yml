@@ -13,7 +13,7 @@ so_that: Identifico cuellos de botella
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: ALGORITHMIC
   description: Sistema de BI que monitorea el flujo de valor (Lead Time) de los proyectos desde postulación hasta cierre
 

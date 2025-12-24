@@ -13,7 +13,7 @@ so_that: pueda verificar completitud antes de patrocinar
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PAT
+  role_id: ROL-ANALISTA-PATROCINANTE-DIFOI
   agent_type: HUMAN
   description: Analista encargado de evaluar y otorgar patrocinios institucionales a proyectos regionales
 

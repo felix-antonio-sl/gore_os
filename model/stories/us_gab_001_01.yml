@@ -13,7 +13,7 @@ so_that: pueda organizar las actividades del Gobernador y hacer seguimiento
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de Gabinete o Administrador Regional responsable de la agenda estratégica de la autoridad regional
 

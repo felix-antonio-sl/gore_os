@@ -13,7 +13,7 @@ so_that: Recibo notificaciones automáticas ante degradación
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica que monitorea la salud operacional (H_gore) de sus procesos legales
 

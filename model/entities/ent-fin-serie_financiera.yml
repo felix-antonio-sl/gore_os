@@ -12,8 +12,8 @@ attributes:
   - { name: id_serie, type: UUID, key: true }
   - {
       name: objeto_tipo,
-      type: Enum,
-      values: [IPR, CONVENIO, ASIGNACION, MODIFICACION],
+      type: String,
+      description: "Enum: IPR|CONVENIO|ASIGNACION|MODIFICACION",
     }
   - {
       name: objeto_id,
@@ -22,18 +22,8 @@ attributes:
     }
   - {
       name: tipo_serie,
-      type: Enum,
-      values:
-        [
-          EJECUTADO_REAL,
-          EJECUTADO_PROYECTADO,
-          ARRASTRE,
-          SALDO,
-          DIPIR_PCT,
-          APORTE_PROPIO,
-          RENDICION,
-          HITO_TRANSFERENCIA,
-        ],
+      type: String,
+      description: "Enum: EJECUTADO_REAL|EJECUTADO_PROYECTADO|ARRASTRE|SALDO|DIPIR_PCT|APORTE_PROPIO|RENDICION|HITO_TRANSFERENCIA",
     }
   - { name: periodo, type: String, description: "YYYY-MM o YYYY" }
   - { name: monto, type: Decimal }
@@ -43,4 +33,4 @@ attributes:
       nullable: true,
       description: "Origen del dato: ETL, MANUAL, SIGFE",
     }
-  - { name: fecha_registro, type: Timestamp }
+  - { name: fecha_registro, type: DateTime }

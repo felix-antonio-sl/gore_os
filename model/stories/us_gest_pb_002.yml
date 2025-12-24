@@ -13,7 +13,7 @@ so_that: Gestiono brechas de expectativas antes de que escalen
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica que aplica estrategias de gestión de expectativas ante CORE o Municipios
 

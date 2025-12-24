@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-JEFE"
+id: "ROL-JEFE-TERR"
 role_key: jefe_terr
 title: Jefe D-TERR
 description: Liderazgo de la unidad de inteligencia territorial.

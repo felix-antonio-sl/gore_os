@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-DEV-ARQ"
+id: "ROL-DEV-ARQ-SYS"
 role_key: arquitecto_sistemas
 title: Arquitecto de Sistemas
 description: Responsable de la definición de arquitectura de componentes y software.
@@ -26,6 +26,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'TIC' por contexto'
-  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
-  domain_inference: 'TIC'
+  evidence: "Validación Semántica Goreólogo: Vinculado al dominio TIC por contexto"
+  source_urn: "urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0"
+  domain_inference: "TIC"

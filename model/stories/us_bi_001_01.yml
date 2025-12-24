@@ -13,7 +13,7 @@ so_that: pueda crear visualizaciones para la gestión
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ESPECIALISTA
+  role_id: ROL-ESPECIALISTA-BI
   agent_type: ALGORITHMIC
   description: Especialista en Business Intelligence y Analítica de Datos
 

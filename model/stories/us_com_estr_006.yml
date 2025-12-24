@@ -13,7 +13,7 @@ so_that: Mantengo informados a funcionarios
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de Comunicaciones Internas velando por el clima laboral y alineamiento organizacional
 

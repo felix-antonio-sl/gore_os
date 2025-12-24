@@ -13,7 +13,7 @@ so_that: se cuente con una pista de auditoría clara sobre la evolución del com
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: MACHINE
   description: Sistema de logs y auditoría que registra los eventos de cada compromiso
 

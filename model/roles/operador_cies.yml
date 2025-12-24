@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-OPS-OP"
+id: "ROL-OPERADOR-CIES"
 role_key: operador_cies
 title: Operador CIES
 description: Monitoreo de cámaras, televigilancia y enlace SINAPRED.

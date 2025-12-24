@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-PRES"
+id: "ROL-PRESIDENTE-SUBCOMITE-IA"
 role_key: presidente_subcomite_ia
 title: Presidente Subcomité IA
 description: Lidera la supervisión ética y responsable del uso de IA en el GORE.

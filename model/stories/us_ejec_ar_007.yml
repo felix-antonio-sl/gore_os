@@ -13,7 +13,7 @@ so_that: Gestiono cambios de personal
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de Unidad o División con atribuciones para delegar y reasignar tareas dentro de su equipo
 

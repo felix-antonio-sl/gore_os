@@ -13,7 +13,7 @@ so_that: Coordino grandes obras
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-GOBERNADOR
   agent_type: HUMAN
   description: Gobernador Regional presidiendo la mesa técnica de infraestructura (PROT/ERD) con SEREMIs sectoriales (MOP, MINVU, Transportes)
 

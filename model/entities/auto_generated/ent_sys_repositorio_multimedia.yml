@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_sys_repositorio_multimedia:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-SYS-REPOSITORIO-MULTIMEDIA
+name: Repositorio Multimedia
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-SYS
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_com_estr_003.yml

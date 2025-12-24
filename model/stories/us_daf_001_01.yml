@@ -13,7 +13,7 @@ so_that: el cierre sea oportuno y sin errores
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de División de Administración y Finanzas (DAF) o Unidad de Contabilidad
 

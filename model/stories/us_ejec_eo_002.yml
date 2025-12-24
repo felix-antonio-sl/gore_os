@@ -13,7 +13,7 @@ so_that: se tenga visibilidad real del trabajo en curso y no solo de hitos cerra
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Usuario operativo que actualiza el día a día de las metas divisionarias
 

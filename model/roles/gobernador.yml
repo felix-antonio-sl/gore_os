@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-JEFE"
+id: "ROL-GOBERNADOR"
 role_key: gobernador
 title: Gobernador Regional
 description: Jefe Superior del Servicio. Autoridad máxima electa del Gobierno Regional.

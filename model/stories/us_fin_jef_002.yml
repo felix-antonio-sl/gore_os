@@ -13,7 +13,7 @@ so_that: Balanceo trabajo del equipo
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de Unidad responsable de optimizar la capacidad operativa del equipo técnico
 

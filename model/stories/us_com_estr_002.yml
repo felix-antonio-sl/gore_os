@@ -13,7 +13,7 @@ so_that: Informo a la ciudadanía
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Community Manager o Periodista de la Unidad de Comunicaciones
 

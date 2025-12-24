@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-PROF"
+id: "ROL-PROFESIONAL-DIT"
 role_key: profesional_dit
 title: Profesional DIT
 description: 

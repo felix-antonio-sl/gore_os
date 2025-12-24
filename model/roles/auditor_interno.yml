@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-PROF"
+id: "ROL-AUDITOR-INTERNO"
 role_key: auditor_interno
 title: Auditor Interno
 description: Profesional encargado de ejecutar planes de auditoría ministerial.

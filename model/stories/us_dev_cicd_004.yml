@@ -13,7 +13,7 @@ so_that: el equipo esté coordinado y actúe rápidamente ante cualquier interru
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-BACK
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Desarrollador que requiere visibilidad del estado de la infraestructura
 

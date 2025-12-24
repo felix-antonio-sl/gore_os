@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_loc_punto_geografico:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-LOC-PUNTO-GEOGRAFICO
+name: Punto Geografico
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-LOC
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_seg_gob_004.yml

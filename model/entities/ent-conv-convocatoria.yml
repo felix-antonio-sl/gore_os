@@ -9,8 +9,16 @@ domain: D-CONV
 category: Transaction
 extends: ENT-SYS-DOCUMENTO
 attributes:
-  - {name: id_convocatoria, type: UUID, key: true}
-  - {name: sesion_id, type: UUID, fk: ENT-CONV-SESION}
-  - {name: fecha_emision, type: DateTime}
-  - {name: tabla, type: "Array[String]"}
-  - {name: documentos_adjuntos, type: "Array[UUID]"}
+  - { name: id_convocatoria, type: UUID, key: true }
+  - { name: sesion_id, type: UUID, fk: ENT-CONV-SESION }
+  - { name: fecha_emision, type: DateTime }
+  - {
+      name: tabla,
+      type: JSON,
+      description: "Array of Strings (Puntos de tabla)",
+    }
+  - {
+      name: documentos_adjuntos,
+      type: JSON,
+      description: "Array of UUIDs (Documentos)",
+    }

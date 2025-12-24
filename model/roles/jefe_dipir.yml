@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-JEFE"
+id: "ROL-JEFE-DIPIR"
 role_key: jefe_dipir
 title: Jefe DIPIR
 description: Jefatura de la División de Presupuesto e Inversión Regional.

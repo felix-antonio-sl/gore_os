@@ -13,7 +13,7 @@ so_that: Cuido imagen institucional
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-ENC
+  role_id: ROL-ENCARGADO-CALIDAD
   agent_type: HUMAN
   description: Encargado de Branding o Identidad Visual institucional
 

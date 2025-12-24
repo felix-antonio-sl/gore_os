@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_soc_expediente_intervencion:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-SOC-EXPEDIENTE-INTERVENCION
+name: Expediente Intervencion
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-SOC
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_fnx_ges_001.yml

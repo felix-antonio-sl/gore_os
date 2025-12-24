@@ -13,7 +13,7 @@ so_that: la organización comience a operar sobre datos reales, limpios y audita
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-ADMIN-TI
+  role_id: ROL-OPS-ADMIN-SYS
   agent_type: HUMAN
   description: Administrador de infraestructura y base de datos institucional
 

@@ -13,7 +13,7 @@ so_that: Anticipo desfases de caja y tomo medidas correctivas oportunamente
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PROF
+  role_id: ROL-PROFESIONAL-DAF
   agent_type: HUMAN
   description: Profesional de la División de Administración y Finanzas
 

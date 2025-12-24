@@ -13,7 +13,7 @@ so_that: Agilizo trámites menores
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-PROF
+  role_id: ROL-PROFESIONAL-DAF
   agent_type: HUMAN
   description: Profesional de Finanzas encargado de tramitar modificaciones presupuestarias internas (intra-item) que no cambian el marco aprobado por el CORE
 

@@ -13,7 +13,7 @@ so_that: Optimizo uso de recursos
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: ALGORITHMIC
   description: Motor de recomendación de prioridades basado en la alineación con la Estrategia Regional (ERD) y restricciones financieras
 

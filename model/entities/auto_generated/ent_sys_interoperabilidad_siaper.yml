@@ -1,0 +1,21 @@
+_meta:
+  urn: urn:goreos:atom:entity:ent_sys_interoperabilidad_siaper:1.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+
+id: ENT-SYS-INTEROPERABILIDAD-SIAPER
+name: Interoperabilidad Siaper
+description: Entidad identificada desde Historias de Usuario (Auto-generada)
+type: DIGITAL # Default
+domain: D-SYS
+
+fields:
+  - name: id
+    type: UUID
+    required: true
+
+relationships: []
+
+verification:
+  status: draft
+  source_story: us_cgr_001_01.yml

@@ -13,7 +13,7 @@ so_that: el código sea mantenible, legible y libre de deuda técnica para el eq
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-DEV-BACK
+  role_id: ROL-GESTION-DESARROLLADO
   agent_type: HUMAN
   description: Desarrollador encargado de la lógica de negocio y persistencia
 

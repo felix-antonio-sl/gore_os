@@ -13,7 +13,7 @@ so_that: pueda colaborar con la seguridad regional sin exponer mi integridad per
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-EXT-CIUDADANO
+  role_id: ROL-CIUDADANO
   agent_type: HUMAN
   description: Vecino de la región que desea informar situaciones irregulares de forma protegida
 

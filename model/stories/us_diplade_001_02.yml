@@ -13,7 +13,7 @@ so_that: pueda presentarlo oportunamente a DIPRES
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: ALGORITHMIC
   description: Sistema de Planificación que consolida las propuestas de inversión sectorial para el ciclo presupuestario ARI
 

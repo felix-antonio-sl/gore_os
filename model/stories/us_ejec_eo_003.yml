@@ -13,7 +13,7 @@ so_that: se gatille el flujo de validación por parte de la jefatura o superviso
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: HUMAN
   description: Usuario operativo que finaliza las tareas técnicas o administrativas asignadas
 

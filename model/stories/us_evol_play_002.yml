@@ -13,7 +13,7 @@ so_that: se pueda seguir de cerca la resolución de fallos críticos y coordinar
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-OPS-OP
+  role_id: ROL-OPERADOR-SISTEMA
   agent_type: MACHINE
   description: Motor de seguimiento de flujos de recuperación de desastres
 

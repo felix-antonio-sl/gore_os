@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-COOR"
+id: "ROL-COORDINADOR-CIES"
 role_key: coordinador_cies
 title: Coordinador CIES
 description: Gestión directiva del Centro Integral de Emergencia y Seguridad.

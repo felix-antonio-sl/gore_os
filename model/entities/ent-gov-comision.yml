@@ -8,11 +8,15 @@ name: Comisión del CORE
 domain: D-GOV
 category: Master
 attributes:
-  - {name: id_comision, type: UUID, key: true}
-  - {name: core_id, type: UUID, fk: ENT-GOV-CORE}
-  - {name: nombre, type: String}
-  - {name: tipo, type: String}
-  - {name: materia, type: String}
-  - {name: presidente_id, type: UUID, fk: ENT-GOV-CONSEJERO}
-  - {name: miembros, type: "Array[UUID]"}
-  - {name: activa, type: Boolean}
+  - { name: id_comision, type: UUID, key: true }
+  - { name: core_id, type: UUID, fk: ENT-GOV-CORE }
+  - { name: nombre, type: String }
+  - { name: tipo, type: String }
+  - { name: materia, type: String }
+  - { name: presidente_id, type: UUID, fk: ENT-GOV-CONSEJERO }
+  - {
+      name: miembros,
+      type: JSON,
+      description: "Lista de IDs de consejeros miembros (Array[UUID])",
+    }
+  - { name: activa, type: Boolean }

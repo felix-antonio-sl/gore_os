@@ -13,7 +13,7 @@ so_that: pueda hacer seguimiento de compromisos y vencimientos
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la Unidad Jurídica responsable del repositorio oficial de acuerdos G2G (Gobierno a Gobierno)
 

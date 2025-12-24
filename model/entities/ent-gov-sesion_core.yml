@@ -9,11 +9,15 @@ domain: D-GOV
 category: Transaction
 extends: ENT-CONV-SESION
 attributes:
-  - {name: id_sesion_core, type: UUID, key: true}
-  - {name: core_id, type: UUID, fk: ENT-GOV-CORE}
-  - {name: numero, type: Integer}
-  - {name: tipo, type: String}
-  - {name: fecha, type: DateTime}
-  - {name: tabla, type: "Array[String]"}
-  - {name: quorum_presente, type: Integer}
-  - {name: estado, type: String}
+  - { name: id_sesion_core, type: UUID, key: true }
+  - { name: core_id, type: UUID, fk: ENT-GOV-CORE }
+  - { name: numero, type: Integer }
+  - { name: tipo, type: String }
+  - { name: fecha, type: DateTime }
+  - {
+      name: tabla,
+      type: JSON,
+      description: "Lista de puntos de tabla (Strings)",
+    }
+  - { name: quorum_presente, type: Integer }
+  - { name: estado, type: String }

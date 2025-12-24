@@ -13,7 +13,7 @@ so_that: Activo reglas de excepción para agilizar procesos críticos bajo super
 
 # === ENRICHMENT v2.0 ===
 user:
-  role_id: ROL-GESTION-JEFE
+  role_id: ROL-JEFE-JURIDICA
   agent_type: HUMAN
   description: Jefe de la unidad jurídica del GORE
 

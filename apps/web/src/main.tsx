@@ -12,21 +12,8 @@ const isUiShowcase = window.location.hash === "#ui";
 const rootElement = document.getElementById('root')!;
 const root = ReactDOM.createRoot(rootElement);
 
-if (isUiShowcase) {
-  root.render(
-    <React.StrictMode>
-      <UiShowcase />
-    </React.StrictMode>
-  );
-} else {
-  root.render(
-    <React.StrictMode>
-      <ReactKeycloakProvider 
-        authClient={keycloak}
-        initOptions={{ onLoad: 'login-required', checkLoginIframe: false }}
-      >
-        <App />
-      </ReactKeycloakProvider>
-    </React.StrictMode>
-  );
-}
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

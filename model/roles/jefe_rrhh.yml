@@ -4,7 +4,7 @@ _meta:
   schema: "urn:goreos:schema:role:2.0.0"
   ontology_version: "3.0.0"
 
-id: "ROL-GESTION-RH-JEFE"
+id: "ROL-BACK-RRHH-JEFE"
 role_key: jefe_rrhh
 title: Jefe Gestión Personas
 description: Liderazgo estratégico del ciclo de vida funcionario.
@@ -26,6 +26,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'TIC' por contexto'
-  source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
-  domain_inference: 'TIC'
+  evidence: "Validación Semántica Goreólogo: Vinculado al dominio 'TIC' por contexto"
+  source_urn: "urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0"
+  domain_inference: "TIC"
