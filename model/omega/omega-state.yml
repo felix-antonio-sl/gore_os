@@ -1,0 +1,64 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:state:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-STATE: Situación Temporal de un Objeto
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a State en OPM. Representa las situaciones posibles de un objeto.
+# Los estados son mutuamente excluyentes (axioma Ω-7).
+
+omega:
+  type: Ω-State
+  essence: Informational
+  wsf_element: Information
+
+id: Ω-STATE
+name: State
+domain: D-SYS
+extends: Ω-THING
+is_abstract: true
+
+description: >-
+  Situación posible de un Ω-Object en un momento dado. Corresponde a State
+  en OPM. Los estados de un objeto son mutuamente excluyentes: un objeto
+  puede estar en exactamente un estado a la vez. Ejemplos: estados de
+  documento (BORRADOR→EMITIDO→FIRMADO), estados de sesión (CONVOCADA→CELEBRADA).
+
+attributes:
+  - name: nombre_estado
+    type: String
+    omega_role: key
+    description: "Nombre del estado"
+
+  - name: objeto_tipo
+    type: String
+    omega_role: data
+    description: "Tipo de Ω-Object al que aplica este estado"
+
+  - name: es_inicial
+    type: Boolean
+    omega_role: data
+    default: false
+    description: "Indica si es el estado inicial del objeto"
+
+  - name: es_final
+    type: Boolean
+    omega_role: data
+    default: false
+    description: "Indica si es un estado final (terminal)"
+
+invariants:
+  - id: STATE-EXCLUSIVE
+    omega_axiom: Ω-7
+    expression: "∀ o, t: |{s ∈ States(o) : o.estado = s.nombre_estado}| = 1"
+    severity: CRITICAL
+    description: "Estados son mutuamente excluyentes"
+
+  - id: STATE-HAS-OBJECT
+    omega_axiom: null
+    expression: "∀ s: ∃ o. s.objeto_tipo = type(o)"
+    severity: HIGH
+    description: "Todo estado pertenece a un tipo de objeto"

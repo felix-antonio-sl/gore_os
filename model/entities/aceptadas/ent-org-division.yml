@@ -1,0 +1,85 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:division:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-ORG-DIVISION
+name: División
+domain: D-ORG
+category: Master
+description: >-
+  Unidad organizacional jerárquica del Gobierno Regional. Representa desde
+  Divisiones principales (DAF, DIPLADER, DIPRO) hasta departamentos y unidades.
+  Forma un árbol con relación padre-hijo reflexiva. Es el contenedor de
+  Funcionarios y el responsable de competencias institucionales.
+attributes:
+  - {
+      name: id_division,
+      type: UUID,
+      key: true,
+      description: "Identificador único",
+    }
+  - { name: codigo, type: String, description: "Código institucional único" }
+  - { name: nombre, type: String, description: "Nombre completo de la unidad" }
+  - {
+      name: sigla,
+      type: String,
+      description: "Sigla o acrónimo (DAF, DIPLADER, etc.)",
+    }
+  - {
+      name: tipo,
+      type: String,
+      description: "DIVISION|DEPARTAMENTO|UNIDAD|SECCION",
+    }
+  - {
+      name: division_padre_id,
+      type: UUID,
+      fk: ENT-ORG-DIVISION,
+      nullable: true,
+      description: "División jerárquicamente superior",
+    }
+  - {
+      name: jefe_id,
+      type: UUID,
+      fk: ENT-ORG-FUNCIONARIO,
+      nullable: true,
+      description: "Funcionario que dirige",
+    }
+  - {
+      name: nivel_jerarquico,
+      type: Integer,
+      description: "Nivel en el árbol (1=raíz)",
+    }
+  - {
+      name: activa,
+      type: Boolean,
+      default: true,
+      description: "Si está operativa",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: DIV-CODIGO-UNICO
+    description: "El código de división debe ser único"
+    expression: "∀ d1,d2: d1.codigo = d2.codigo → d1 = d2"
+    severity: CRITICAL
+
+  - id: DIV-NIVEL-COHERENTE
+    description: "El nivel jerárquico debe ser consistente con el padre"
+    expression: "∀ d: d.division_padre_id IS NULL → d.nivel_jerarquico = 1; d.division_padre_id IS NOT NULL → d.nivel_jerarquico = padre.nivel_jerarquico + 1"
+    severity: HIGH
+
+  - id: DIV-NO-CICLOS
+    description: "No puede haber ciclos en la jerarquía"
+    expression: "∀ d: NOT EXISTS path(d → ... → d) via division_padre_id"
+    severity: CRITICAL
+
+  - id: DIV-TIPO-VALIDO
+    description: "El tipo debe ser válido"
+    expression: "∀ d: d.tipo ∈ {DIVISION, DEPARTAMENTO, UNIDAD, SECCION}"
+    severity: MEDIUM
+
+  - id: DIV-RAIZ-SIN-PADRE
+    description: "Las divisiones de nivel 1 no deben tener padre"
+    expression: "∀ d: d.nivel_jerarquico = 1 → d.division_padre_id IS NULL"
+    severity: HIGH

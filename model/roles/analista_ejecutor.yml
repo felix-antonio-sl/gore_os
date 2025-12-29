@@ -29,6 +29,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Rol específico 'analista' identificado; Rol específico 'analista' identificado por sinónimo 'ejecutor''
+  evidence: "Validación Semántica Goreólogo: Rol específico analista identificado; Rol específico analista identificado por sinónimo ejecutor"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'TRANSVERSAL'

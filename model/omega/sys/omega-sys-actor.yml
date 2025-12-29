@@ -1,0 +1,81 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:actor:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-SYS-ACTOR: Agente que Ejecuta Acciones
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a Object (Human) en OPM y Participants en WSF.
+# Superclase abstracta para Funcionario, Consejero, Ejecutor, Proveedor.
+
+omega:
+  type: Ω-Object
+  essence: Informational # Representación digital de una persona
+  wsf_element: Participants
+
+id: Ω-SYS-ACTOR
+name: Actor
+domain: D-SYS
+extends: Ω-OBJECT
+is_abstract: true
+
+description: >-
+  Agente capaz de ejecutar acciones en el sistema GORE_OS. Corresponde a
+  Object (Human) en OPM con capacidad de Agent Link, y a Participants en WSF.
+  Es source de morfismos Ω-Enable hacia Ω-Process.
+  Subclases: Funcionario, Consejero, Ejecutor, Proveedor, Externo.
+
+attributes:
+  - name: id_actor
+    type: UUID
+    omega_role: key
+    description: "Identificador único universal"
+
+  - name: tipo_actor
+    type: String
+    omega_role: data
+    description: "Discriminador: FUNCIONARIO|CONSEJERO|EJECUTOR|PROVEEDOR|EXTERNO"
+
+  - name: identificador
+    type: String
+    omega_role: data
+    description: "RUT, RUN o identificador externo"
+
+  - name: nombre
+    type: String
+    omega_role: data
+    description: "Nombre o razón social"
+
+  - name: activo
+    type: Boolean
+    omega_role: state
+    default: true
+    description: "Estado de activación en el sistema"
+
+links:
+  - type: Ω-Enable
+    target: Ω-PROCESS
+    cardinality: 1:N
+    semantics: agent
+    description: "Actor habilita procesos (Agent Link OPM)"
+
+invariants:
+  - id: ACTOR-IDENTIFICADOR-UNICO
+    omega_axiom: null
+    expression: "∀ a,b: a.identificador = b.identificador → a = b"
+    severity: CRITICAL
+    description: "El identificador debe ser único dentro del sistema"
+
+  - id: ACTOR-TIPO-VALIDO
+    omega_axiom: null
+    expression: "∀ a: a.tipo_actor ∈ {FUNCIONARIO, CONSEJERO, EJECUTOR, PROVEEDOR, EXTERNO}"
+    severity: HIGH
+    description: "El tipo de actor debe pertenecer al conjunto de subtipos válidos"
+
+  - id: ACTOR-NOMBRE-REQUERIDO
+    omega_axiom: null
+    expression: "∀ a: a.activo = true → a.nombre IS NOT NULL ∧ a.nombre ≠ ''"
+    severity: MEDIUM
+    description: "Todo actor activo debe tener nombre"

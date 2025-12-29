@@ -1,0 +1,50 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:thing:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-THING: Superclase Abstracta Raíz del Radier Categórico
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a Thing en OPM y Element en WSF.
+# Todas las entidades GORE_OS heredan de esta clase.
+
+omega:
+  type: Ω-Thing
+  essence: null # Determinado por subclases
+  wsf_element: null # Determinado por subclases
+
+id: Ω-THING
+name: Thing
+domain: D-SYS
+is_abstract: true
+
+description: >-
+  Superclase abstracta raíz de la categoría Ω. Representa cualquier entidad
+  que existe o puede existir en el sistema GORE_OS. Corresponde a Thing en OPM
+  (Object-Process Methodology) y a Element en WSF (Work System Framework).
+  Todas las entidades del modelo heredan de Ω-Thing.
+
+attributes:
+  - name: id
+    type: UUID
+    omega_role: key
+    description: "Identificador único universal"
+
+  - name: created_at
+    type: DateTime
+    omega_role: data
+    description: "Timestamp de creación"
+
+  - name: updated_at
+    type: DateTime
+    omega_role: data
+    description: "Timestamp de última modificación"
+
+invariants:
+  - id: THING-ID-UNICO
+    omega_axiom: null
+    expression: "∀ t1,t2: t1.id = t2.id → t1 = t2"
+    severity: CRITICAL
+    description: "Todo Thing tiene un identificador único"

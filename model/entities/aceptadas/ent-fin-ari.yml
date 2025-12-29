@@ -1,0 +1,51 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:ari:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-FIN-ARI
+name: Anteproyecto Regional de Inversiones
+domain: D-FIN
+category: Transaction
+description: >-
+  Instrumento de planificación que consolida la cartera de inversiones para
+  un período fiscal. Vincula la Estrategia Regional de Desarrollo (ERD) con
+  el Presupuesto mediante Líneas ARI. Representa el morfismo "planifica"
+  desde el dominio estratégico hacia el financiero.
+attributes:
+  - { name: id_ari, type: UUID, key: true, description: "Identificador único" }
+  - {
+      name: periodo_id,
+      type: UUID,
+      fk: ENT-SYS-PERIODO,
+      description: "Período fiscal del ARI",
+    }
+  - {
+      name: region_id,
+      type: UUID,
+      fk: ENT-LOC-REGION,
+      description: "Región a la que pertenece",
+    }
+  - { name: monto_total, type: Decimal, description: "Monto total del ARI" }
+  - {
+      name: estado,
+      type: String,
+      description: "FORMULACION|PRESENTADO|APROBADO|EJECUTANDO|CERRADO",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: ARI-PERIODO-REGION-UNICO
+    description: "Solo puede existir un ARI por período y región"
+    expression: "∀ a1,a2: a1.periodo_id = a2.periodo_id ∧ a1.region_id = a2.region_id → a1 = a2"
+    severity: CRITICAL
+
+  - id: ARI-MONTO-COHERENTE
+    description: "El monto total debe ser igual a la suma de sus líneas"
+    expression: "∀ a: a.monto_total = SUM(lineas_ari.monto WHERE lineas_ari.ari_id = a.id_ari)"
+    severity: HIGH
+
+  - id: ARI-ESTADO-VALIDO
+    description: "El estado debe ser válido"
+    expression: "∀ a: a.estado ∈ {FORMULACION, PRESENTADO, APROBADO, EJECUTANDO, CERRADO}"
+    severity: MEDIUM

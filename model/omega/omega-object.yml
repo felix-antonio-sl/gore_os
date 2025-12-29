@@ -1,0 +1,54 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:object:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-OBJECT: Entidad que Persiste y Tiene Estados
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a Object en OPM. Mapea a categoría "Master" del modelo actual.
+# Representa entidades referenciales que persisten en el tiempo.
+
+omega:
+  type: Ω-Object
+  essence: Informational # Default, puede ser Physical
+  wsf_element: Information # Default, puede ser Participants, Technologies
+
+id: Ω-OBJECT
+name: Object
+domain: D-SYS
+extends: Ω-THING
+is_abstract: true
+
+description: >-
+  Entidad que persiste en el tiempo y puede tener estados. Corresponde a
+  Object en OPM y a elementos como Information, Participants, Technologies
+  en WSF. Mapea a la categoría "Master" del modelo GORE_OS actual.
+  Subclases: Documento, Actor, IPR, Funcionario, etc.
+
+attributes:
+  - name: estado
+    type: String
+    omega_role: state
+    description: "Estado actual del objeto (Ω-State)"
+    nullable: true
+
+  - name: activo
+    type: Boolean
+    omega_role: data
+    default: true
+    description: "Indica si el objeto está activo en el sistema"
+
+invariants:
+  - id: OBJECT-STATE-EXCLUSIVE
+    omega_axiom: Ω-7
+    expression: "∀ o, t: |{s ∈ States(o) : o@s@t}| ≤ 1"
+    severity: HIGH
+    description: "Un objeto está en a lo más un estado a la vez"
+
+  - id: OBJECT-PERSISTS
+    omega_axiom: null
+    expression: "∀ o: ∃ t1,t2: t1 < t2 ∧ exists(o,t1) ∧ exists(o,t2)"
+    severity: MEDIUM
+    description: "Los objetos persisten a través del tiempo"

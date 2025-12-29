@@ -47,6 +47,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Rol específico 'analista' identificado por sinónimo 'profesional''
+  evidence: "Validación Semántica Goreólogo: Rol específico analista identificado por sinónimo profesional"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'TRANSVERSAL'

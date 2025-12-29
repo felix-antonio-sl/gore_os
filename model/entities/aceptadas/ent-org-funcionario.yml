@@ -1,0 +1,111 @@
+---
+_meta:
+  urn: urn:goreos:entity:corpus:funcionario:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-ORG-FUNCIONARIO
+name: Funcionario
+domain: D-ORG
+category: Master
+extends: ENT-SYS-ACTOR
+description: >-
+  Persona natural que ejerce un cargo público en el Gobierno Regional. Es el
+  actor principal de operaciones internas: firma documentos, gestiona trámites,
+  supervisa convenios. Hereda de Actor y añade atributos específicos de la
+  carrera funcionaria (calidad jurídica, grado, estamento).
+attributes:
+  - {
+      name: id_funcionario,
+      type: UUID,
+      key: true,
+      description: "Identificador único",
+    }
+  - { name: rut, type: String, description: "RUT sin puntos ni guión, con DV" }
+  - { name: nombres, type: String, description: "Nombres de pila" }
+  - { name: apellido_paterno, type: String, description: "Primer apellido" }
+  - { name: apellido_materno, type: String, description: "Segundo apellido" }
+  - {
+      name: email_institucional,
+      type: String,
+      description: "Correo @gorenuble.cl o similar",
+    }
+  - {
+      name: cargo_id,
+      type: UUID,
+      fk: ENT-ORG-CARGO,
+      description: "Cargo que ocupa",
+    }
+  - {
+      name: division_id,
+      type: UUID,
+      fk: ENT-ORG-DIVISION,
+      description: "División a la que pertenece",
+    }
+  - {
+      name: fecha_ingreso,
+      type: Date,
+      description: "Fecha de inicio de funciones",
+    }
+  - {
+      name: calidad_juridica,
+      type: String,
+      description: "PLANTA|CONTRATA|HONORARIO|SUPLENTE",
+    }
+  - { name: grado, type: Integer, description: "Grado EUS (1-25)" }
+  - {
+      name: estado,
+      type: String,
+      description: "ACTIVO|LICENCIA|SUSPENDIDO|DESVINCULADO",
+    }
+  # === Extensión Cobertura ETL Funcionarios ===
+  - {
+      name: estamento,
+      type: String,
+      nullable: true,
+      description: "PROFESIONAL|TECNICO|ADMINISTRATIVO|AUXILIAR|DIRECTIVO|AUTORIDAD_GOBIERNO",
+    }
+  - {
+      name: formacion_profesional,
+      type: String,
+      nullable: true,
+      description: "Título o calificación profesional",
+    }
+  - {
+      name: fecha_termino_contrato,
+      type: Date,
+      nullable: true,
+      description: "Para contratas, fecha de término",
+    }
+  - {
+      name: derecho_horas_extras,
+      type: Boolean,
+      default: false,
+      description: "Si tiene derecho a horas extras",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: FUNC-RUT-UNICO
+    description: "El RUT debe ser único en el sistema"
+    expression: "∀ f1,f2: f1.rut = f2.rut → f1 = f2"
+    severity: CRITICAL
+
+  - id: FUNC-GRADO-RANGO
+    description: "El grado debe estar en rango válido EUS"
+    expression: "∀ f: f.grado ∈ [1, 25]"
+    severity: HIGH
+
+  - id: FUNC-CALIDAD-VALIDA
+    description: "La calidad jurídica debe ser válida"
+    expression: "∀ f: f.calidad_juridica ∈ {PLANTA, CONTRATA, HONORARIO, SUPLENTE}"
+    severity: HIGH
+
+  - id: FUNC-EMAIL-INSTITUCIONAL
+    description: "El email debe ser institucional si está activo"
+    expression: "∀ f: f.estado = 'ACTIVO' → f.email_institucional LIKE '%@gore%.cl'"
+    severity: MEDIUM
+
+  - id: FUNC-CONTRATA-TERMINO
+    description: "Funcionarios a contrata deben tener fecha de término"
+    expression: "∀ f: f.calidad_juridica = 'CONTRATA' → f.fecha_termino_contrato IS NOT NULL"
+    severity: MEDIUM

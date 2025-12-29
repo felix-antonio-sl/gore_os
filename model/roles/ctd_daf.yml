@@ -44,6 +44,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Rol específico 'encargado' identificado por sinónimo 'coordinador'; Vinculado al dominio 'TIC' por contexto'
+  evidence: "Validación Semántica Goreólogo: Rol específico encargado identificado por sinónimo coordinador; Vinculado al dominio TIC por contexto"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'TIC'

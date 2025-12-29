@@ -101,6 +101,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Vinculado al dominio 'GAB' por contexto'
+  evidence: "Validación Semántica Goreólogo: Vinculado al dominio GAB por contexto"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'GAB'

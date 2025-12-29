@@ -1,0 +1,120 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:corpus:funcionario:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-ORG-FUNCIONARIO: Funcionario Público del GORE
+# ═══════════════════════════════════════════════════════════════════════════
+# Extiende Ω-SYS-ACTOR. Representa persona natural con cargo público.
+
+omega:
+  type: Ω-Object
+  essence: Informational
+  wsf_element: Participants
+
+id: Ω-ORG-FUNCIONARIO
+name: Funcionario
+domain: D-ORG
+extends: Ω-SYS-ACTOR
+
+description: >-
+  Persona natural que ejerce un cargo público en el Gobierno Regional.
+  Actor principal de operaciones internas. Hereda de Ω-SYS-ACTOR y añade
+  atributos de carrera funcionaria (calidad jurídica, grado, estamento).
+
+attributes:
+  - name: id_funcionario
+    type: UUID
+    omega_role: key
+    description: "Identificador único"
+
+  - name: rut
+    type: String
+    omega_role: data
+    description: "RUT sin puntos ni guión, con DV"
+
+  - name: nombres
+    type: String
+    omega_role: data
+    description: "Nombres de pila"
+
+  - name: apellido_paterno
+    type: String
+    omega_role: data
+    description: "Primer apellido"
+
+  - name: apellido_materno
+    type: String
+    omega_role: data
+    description: "Segundo apellido"
+
+  - name: email_institucional
+    type: String
+    omega_role: data
+    description: "Correo @gorenuble.cl"
+
+  - name: cargo_id
+    type: UUID
+    omega_role: link
+    fk: Ω-ORG-CARGO
+    description: "Cargo que ocupa"
+
+  - name: division_id
+    type: UUID
+    omega_role: link
+    fk: Ω-ORG-DIVISION
+    description: "División a la que pertenece"
+
+  - name: fecha_ingreso
+    type: Date
+    omega_role: data
+    description: "Fecha de inicio de funciones"
+
+  - name: calidad_juridica
+    type: String
+    omega_role: data
+    description: "PLANTA|CONTRATA|HONORARIO|SUPLENTE"
+
+  - name: grado
+    type: Integer
+    omega_role: data
+    description: "Grado EUS (1-25)"
+
+  - name: estado
+    type: String
+    omega_role: state
+    description: "Ω-State: ACTIVO|LICENCIA|SUSPENDIDO|DESVINCULADO"
+
+links:
+  - type: Ω-Align
+    target: Ω-ORG-DIVISION
+    cardinality: N:1
+    semantics: process-participant
+    description: "Funcionario pertenece a División"
+
+  - type: Ω-Enable
+    target: Ω-PROCESS
+    cardinality: 1:N
+    semantics: agent
+    description: "Funcionario ejecuta procesos (Agent Link)"
+
+invariants:
+  - id: FUNC-RUT-UNICO
+    omega_axiom: null
+    expression: "∀ f1,f2: f1.rut = f2.rut → f1 = f2"
+    severity: CRITICAL
+    description: "El RUT debe ser único en el sistema"
+
+  - id: FUNC-GRADO-RANGO
+    omega_axiom: null
+    expression: "∀ f: f.grado ∈ [1, 25]"
+    severity: HIGH
+    description: "El grado debe estar en rango válido EUS"
+
+  - id: FUNC-STATE-EXCLUSIVE
+    omega_axiom: Ω-7
+    expression: "∀ f: f.estado ∈ {ACTIVO, LICENCIA, SUSPENDIDO, DESVINCULADO}"
+    severity: HIGH
+    description: "Estados de funcionario son mutuamente excluyentes"

@@ -1,0 +1,115 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:conventus:session:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-CONV-SESSION: Sesión de Instancia Participativa
+# ═══════════════════════════════════════════════════════════════════════════
+# Proceso del dominio Conventus. Transforma Acuerdos, produce Actas.
+
+omega:
+  type: Ω-Process
+  essence: Informational
+  wsf_element: Processes
+
+id: Ω-CONV-SESSION
+name: Sesión
+domain: D-CONV
+extends: Ω-PROCESS
+
+description: >-
+  Evento formal de reunión de una instancia participativa (Comité, Gabinete, CORE).
+  Es Ω-Process que transforma objetos: produce Actas (Result Link), genera
+  Acuerdos (Effect Link). Hub central del dominio D-CONV.
+
+attributes:
+  - name: id_sesion
+    type: UUID
+    omega_role: key
+    description: "Identificador único"
+
+  - name: instancia_id
+    type: UUID
+    omega_role: link
+    fk: Ω-CONV-INSTANCIA
+    description: "Instancia que sesiona"
+
+  - name: numero
+    type: Integer
+    omega_role: data
+    description: "Número correlativo de sesión en el año"
+
+  - name: tipo_sesion
+    type: String
+    omega_role: data
+    description: "ORDINARIA|EXTRAORDINARIA|ESPECIAL"
+
+  - name: fecha
+    type: DateTime
+    omega_role: data
+    description: "Fecha y hora de inicio"
+
+  - name: lugar
+    type: String
+    omega_role: data
+    description: "Ubicación física o virtual"
+
+  - name: modalidad
+    type: String
+    omega_role: data
+    description: "PRESENCIAL|HIBRIDA|REMOTA"
+
+  - name: estado
+    type: String
+    omega_role: state
+    description: "Ω-State: CONVOCADA|EN_CURSO|SUSPENDIDA|CELEBRADA|ANULADA"
+
+  - name: quorum_requerido
+    type: Integer
+    omega_role: data
+    description: "Mínimo de asistentes requerido"
+
+  - name: quorum_presente
+    type: Integer
+    omega_role: data
+    description: "Asistentes efectivamente presentes"
+
+links:
+  - type: Ω-Transform
+    target: Ω-CONV-ACTA
+    cardinality: 1:1
+    semantics: result
+    description: "Sesión produce Acta (Result Link)"
+
+  - type: Ω-Transform
+    target: Ω-CONV-ACUERDO
+    cardinality: 1:N
+    semantics: effect
+    description: "Sesión genera Acuerdos (Effect Link)"
+
+  - type: Ω-Align
+    target: Ω-CONV-INSTANCIA
+    cardinality: N:1
+    semantics: process-info
+    description: "Sesión pertenece a Instancia"
+
+invariants:
+  - id: SESSION-PRODUCES-ACTA
+    omega_axiom: Ω-2
+    expression: "∀ s: s.estado = 'CELEBRADA' → ∃ a. Produces(s, a)"
+    severity: HIGH
+    description: "Sesión celebrada produce al menos un Acta"
+
+  - id: SESSION-QUORUM-COHERENTE
+    omega_axiom: null
+    expression: "∀ s: s.estado = 'CELEBRADA' → s.quorum_presente ≥ s.quorum_requerido"
+    severity: HIGH
+    description: "Una sesión celebrada debe haber alcanzado quorum"
+
+  - id: SESSION-STATE-EXCLUSIVE
+    omega_axiom: Ω-7
+    expression: "∀ s: s.estado ∈ {CONVOCADA, EN_CURSO, SUSPENDIDA, CELEBRADA, ANULADA}"
+    severity: HIGH
+    description: "Estados de sesión son mutuamente excluyentes"

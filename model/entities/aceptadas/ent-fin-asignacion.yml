@@ -1,0 +1,89 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:asignacion:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-FIN-ASIGNACION
+name: Asignación Presupuestaria
+domain: D-FIN
+category: Transaction
+description: >-
+  Línea presupuestaria que desagrega el Presupuesto por clasificador funcional.
+  Identificada por la triada Subtítulo-Ítem-Asignación según clasificador DIPRES.
+  Es el nivel donde se emiten CDPs y se vinculan IPRs. Representa el límite
+  de gasto autorizado para un propósito específico.
+attributes:
+  - {
+      name: id_asignacion,
+      type: UUID,
+      key: true,
+      description: "Identificador único",
+    }
+  - {
+      name: presupuesto_id,
+      type: UUID,
+      fk: ENT-FIN-PRESUPUESTO,
+      description: "Presupuesto padre",
+    }
+  - {
+      name: subtitulo,
+      type: String,
+      description: "Subtítulo DIPRES (21, 22, 24, 31, 33...)",
+    }
+  - { name: item, type: String, description: "Ítem presupuestario" }
+  - {
+      name: asignacion,
+      type: String,
+      description: "Código de asignación específica",
+    }
+  - { name: monto_inicial, type: Decimal, description: "Monto inicial de ley" }
+  - {
+      name: monto_vigente,
+      type: Decimal,
+      description: "Monto tras modificaciones",
+    }
+  - {
+      name: monto_ejecutado,
+      type: Decimal,
+      description: "Monto efectivamente devengado",
+    }
+  - {
+      name: denominacion,
+      type: String,
+      nullable: true,
+      description: "Nombre descriptivo de la asignación",
+    }
+  - {
+      name: nombre_linea,
+      type: String,
+      nullable: true,
+      description: "Nombre de línea ARI si aplica",
+    }
+  - {
+      name: marca_cm,
+      type: String,
+      nullable: true,
+      description: "Marca de Compromiso de Ministro",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: ASIG-TRIADA-UNICA
+    description: "La combinación subtítulo-ítem-asignación es única por presupuesto"
+    expression: "∀ a1,a2: a1.presupuesto_id = a2.presupuesto_id ∧ a1.subtitulo = a2.subtitulo ∧ a1.item = a2.item ∧ a1.asignacion = a2.asignacion → a1 = a2"
+    severity: CRITICAL
+
+  - id: ASIG-EJECUTADO-LIMITE
+    description: "El monto ejecutado no puede superar el vigente"
+    expression: "∀ a: a.monto_ejecutado ≤ a.monto_vigente"
+    severity: CRITICAL
+
+  - id: ASIG-SUBTITULO-VALIDO
+    description: "El subtítulo debe ser un código DIPRES válido"
+    expression: "∀ a: a.subtitulo ∈ {21, 22, 24, 29, 31, 32, 33, 34, 35}"
+    severity: HIGH
+
+  - id: ASIG-MONTOS-NO-NEGATIVOS
+    description: "Los montos no pueden ser negativos"
+    expression: "∀ a: a.monto_inicial ≥ 0 ∧ a.monto_vigente ≥ 0 ∧ a.monto_ejecutado ≥ 0"
+    severity: HIGH

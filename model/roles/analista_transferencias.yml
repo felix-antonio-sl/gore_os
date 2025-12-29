@@ -28,6 +28,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Rol específico 'analista' identificado; Vinculado al dominio 'OPS' por contexto'
+  evidence: "Validación Semántica Goreólogo: Rol específico analista identificado; Vinculado al dominio OPS por contexto"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'OPS'

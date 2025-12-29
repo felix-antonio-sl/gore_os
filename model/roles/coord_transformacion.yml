@@ -29,6 +29,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Rol específico 'encargado' identificado por sinónimo 'coordinador''
+  evidence: "Validación Semántica Goreólogo: Rol específico encargado identificado por sinónimo coordinador"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'TRANSVERSAL'

@@ -1,0 +1,77 @@
+---
+_meta:
+  urn: urn:goreos:entity:conventus:sesion:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-CONV-SESION
+name: Sesión
+domain: D-CONV
+category: Transaction
+description: >-
+  Evento formal de reunión de una instancia participativa (Comité, Gabinete, CORE).
+  Es el contenedor temporal de Acuerdos, Asistencia, Actas y Puntos de Tabla.
+  Representa el morfismo "se reúne en" desde Instancia hacia el tiempo.
+  Hub central del dominio D-CONV con 8 entidades dependientes.
+attributes:
+  - {
+      name: id_sesion,
+      type: UUID,
+      key: true,
+      description: "Identificador único",
+    }
+  - {
+      name: instancia_id,
+      type: UUID,
+      fk: ENT-CONV-INSTANCIA,
+      description: "Instancia que sesiona",
+    }
+  - {
+      name: numero,
+      type: Integer,
+      description: "Número correlativo de sesión en el año",
+    }
+  - {
+      name: tipo_sesion,
+      type: String,
+      description: "ORDINARIA|EXTRAORDINARIA|ESPECIAL",
+    }
+  - { name: fecha, type: DateTime, description: "Fecha y hora de inicio" }
+  - { name: lugar, type: String, description: "Ubicación física o virtual" }
+  - { name: modalidad, type: String, description: "PRESENCIAL|HIBRIDA|REMOTA" }
+  - {
+      name: estado,
+      type: String,
+      description: "CONVOCADA|EN_CURSO|SUSPENDIDA|CELEBRADA|ANULADA",
+    }
+  - {
+      name: quorum_requerido,
+      type: Integer,
+      description: "Mínimo de asistentes requerido",
+    }
+  - {
+      name: quorum_presente,
+      type: Integer,
+      description: "Asistentes efectivamente presentes",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: SESION-NUMERO-UNICO-ANIO
+    description: "El número de sesión es único por instancia y año"
+    expression: "∀ s1,s2: s1.instancia_id = s2.instancia_id ∧ YEAR(s1.fecha) = YEAR(s2.fecha) ∧ s1.numero = s2.numero → s1 = s2"
+    severity: HIGH
+
+  - id: SESION-QUORUM-COHERENTE
+    description: "Quorum presente no puede exceder el requerido de forma ilógica"
+    expression: "∀ s: s.quorum_presente ≥ 0"
+    severity: MEDIUM
+
+  - id: SESION-CELEBRADA-TIENE-QUORUM
+    description: "Una sesión celebrada debe haber alcanzado quorum"
+    expression: "∀ s: s.estado = 'CELEBRADA' → s.quorum_presente ≥ s.quorum_requerido"
+    severity: HIGH
+
+  - id: SESION-TIPO-VALIDO
+    description: "El tipo de sesión debe ser válido"
+    expression: "∀ s: s.tipo_sesion ∈ {ORDINARIA, EXTRAORDINARIA, ESPECIAL}"
+    severity: MEDIUM

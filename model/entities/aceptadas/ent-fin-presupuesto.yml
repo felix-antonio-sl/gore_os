@@ -1,0 +1,69 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:presupuesto:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-FIN-PRESUPUESTO
+name: Presupuesto
+domain: D-FIN
+category: Master
+description: >-
+  Raíz del árbol presupuestario anual del Gobierno Regional. Representa la
+  Ley de Presupuestos aprobada para un período fiscal. Es el objeto inicial
+  de la cadena: Presupuesto → Asignación → CDP → Compromiso → Devengo → Pago.
+  Cada región tiene exactamente un presupuesto vigente por período.
+attributes:
+  - {
+      name: id_presupuesto,
+      type: UUID,
+      key: true,
+      description: "Identificador único",
+    }
+  - {
+      name: periodo_id,
+      type: UUID,
+      fk: ENT-SYS-PERIODO,
+      description: "Período fiscal al que corresponde",
+    }
+  - {
+      name: ley_presupuesto,
+      type: String,
+      description: "Número de la Ley de Presupuestos (ej: 21.516)",
+    }
+  - {
+      name: monto_inicial,
+      type: Decimal,
+      description: "Monto inicial aprobado en ley",
+    }
+  - {
+      name: monto_vigente,
+      type: Decimal,
+      description: "Monto vigente tras modificaciones",
+    }
+  - {
+      name: estado,
+      type: String,
+      description: "FORMULACION|APROBADO|EJECUCION|CERRADO",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: PPTO-PERIODO-UNICO
+    description: "Solo puede existir un presupuesto por período"
+    expression: "∀ p1,p2: p1.periodo_id = p2.periodo_id → p1 = p2"
+    severity: CRITICAL
+
+  - id: PPTO-MONTO-COHERENCIA
+    description: "El monto vigente se deriva del inicial más/menos modificaciones"
+    expression: "∀ p: p.monto_vigente = p.monto_inicial + SUM(modificaciones.monto)"
+    severity: HIGH
+
+  - id: PPTO-ESTADO-VALIDO
+    description: "El estado debe ser válido"
+    expression: "∀ p: p.estado ∈ {FORMULACION, APROBADO, EJECUCION, CERRADO}"
+    severity: HIGH
+
+  - id: PPTO-MONTOS-POSITIVOS
+    description: "Los montos deben ser positivos"
+    expression: "∀ p: p.monto_inicial > 0 ∧ p.monto_vigente > 0"
+    severity: MEDIUM

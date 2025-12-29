@@ -1,0 +1,109 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:document:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-SYS-DOCUMENT: Evidencia Documental
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a Object (Informational) en OPM y Information en WSF.
+# Superclase abstracta para Acta, CDP, Contrato, Resolución, etc.
+
+omega:
+  type: Ω-Object
+  essence: Informational
+  wsf_element: Information
+
+id: Ω-SYS-DOCUMENT
+name: Documento
+domain: D-SYS
+extends: Ω-OBJECT
+is_abstract: true
+
+description: >-
+  Evidencia documental del sistema. Corresponde a Object (Informational) en OPM
+  y a Information en WSF. Es target de Ω-Transform (Result Link) desde procesos
+  que lo producen, y source de Ω-Transform hacia procesos que lo consumen.
+  Subclases: Acta, CDP, Contrato, Resolución, Estado de Pago, etc.
+
+attributes:
+  - name: id_documento
+    type: UUID
+    omega_role: key
+    description: "Identificador único universal"
+
+  - name: tipo_documento
+    type: String
+    omega_role: data
+    description: "Discriminador: ACTA|RESOLUCION|OFICIO|CONTRATO|CDP|CERTIFICADO|..."
+
+  - name: numero
+    type: String
+    omega_role: data
+    description: "Número correlativo o folio del documento"
+
+  - name: fecha_emision
+    type: Date
+    omega_role: data
+    description: "Fecha de emisión oficial"
+
+  - name: emisor_id
+    type: UUID
+    omega_role: link
+    fk: Ω-SYS-ACTOR
+    description: "Actor que emite o firma el documento"
+
+  - name: hash_contenido
+    type: String
+    omega_role: data
+    description: "Hash SHA-256 del contenido para integridad"
+
+  - name: estado
+    type: String
+    omega_role: state
+    description: "Ω-State: BORRADOR|EMITIDO|FIRMADO|ANULADO|ARCHIVADO"
+
+  - name: folio
+    type: String
+    omega_role: data
+    nullable: true
+    description: "Folio de archivo documental"
+
+  - name: materia
+    type: Text
+    omega_role: data
+    nullable: true
+    description: "Asunto o materia del documento"
+
+links:
+  - type: Ω-Align
+    target: Ω-SYS-ACTOR
+    cardinality: N:1
+    semantics: process-participant
+    description: "Documento alineado con su emisor"
+
+invariants:
+  - id: DOC-EMISOR-REQUERIDO
+    omega_axiom: Ω-2
+    expression: "∀ d: d.estado = 'EMITIDO' → d.emisor_id IS NOT NULL"
+    severity: CRITICAL
+    description: "Todo documento emitido debe tener un emisor"
+
+  - id: DOC-FECHA-COHERENCIA
+    omega_axiom: null
+    expression: "∀ d: d.fecha_emision ≤ TODAY()"
+    severity: HIGH
+    description: "La fecha de emisión no puede ser futura"
+
+  - id: DOC-HASH-INTEGRIDAD
+    omega_axiom: null
+    expression: "∀ d: d.estado = 'FIRMADO' → d.hash_contenido IS NOT NULL"
+    severity: CRITICAL
+    description: "Documentos firmados deben tener hash de contenido"
+
+  - id: DOC-STATE-EXCLUSIVE
+    omega_axiom: Ω-7
+    expression: "∀ d: d.estado ∈ {BORRADOR, EMITIDO, FIRMADO, ANULADO, ARCHIVADO}"
+    severity: HIGH
+    description: "Estados de documento son mutuamente excluyentes"

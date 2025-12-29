@@ -26,6 +26,6 @@ extends: null
 
 verification:
   status: verified
-  evidence: 'Validación Semántica Goreólogo: Rol específico 'encargado' identificado; Vinculado al dominio 'COM' por contexto'
+  evidence: "Validación Semántica Goreólogo: Rol específico encargado identificado; Vinculado al dominio COM por contexto"
   source_urn: 'urn:knowledge:gorenuble:gn:glosario-gore-nuble:1.0.0'
   domain_inference: 'COM'

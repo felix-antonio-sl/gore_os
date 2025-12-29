@@ -1,0 +1,62 @@
+---
+_meta:
+  urn: urn:goreos:entity:locus:comuna:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-LOC-COMUNA
+name: Comuna
+domain: D-LOC
+category: Reference
+description: >-
+  Unidad territorial mínima de administración. Representa el nivel más
+  granular de localización geográfica para IPRs, incidentes y dispositivos.
+  Es hijo categórico de Provincia y forma la base de la jerarquía
+  Región → Provincia → Comuna → Localidad.
+attributes:
+  - {
+      name: id_comuna,
+      type: UUID,
+      key: true,
+      description: "Identificador único",
+    }
+  - {
+      name: codigo_ine,
+      type: String,
+      description: "Código único territorial INE (5 dígitos)",
+    }
+  - { name: nombre, type: String, description: "Nombre oficial de la comuna" }
+  - {
+      name: provincia_id,
+      type: UUID,
+      fk: ENT-LOC-PROVINCIA,
+      description: "Provincia a la que pertenece",
+    }
+  - { name: superficie_km2, type: Decimal, description: "Superficie en km²" }
+  - {
+      name: poblacion,
+      type: Integer,
+      description: "Población según último censo",
+    }
+  - { name: tipologia, type: String, description: "URBANA|RURAL|MIXTA" }
+
+# Invariantes Categóricos
+invariants:
+  - id: COMUNA-CODIGO-UNICO
+    description: "El código INE debe ser único a nivel nacional"
+    expression: "∀ c1,c2: c1.codigo_ine = c2.codigo_ine → c1 = c2"
+    severity: CRITICAL
+
+  - id: COMUNA-CODIGO-FORMATO
+    description: "El código INE debe tener 5 dígitos"
+    expression: "∀ c: LENGTH(c.codigo_ine) = 5 ∧ c.codigo_ine MATCHES '^[0-9]+$'"
+    severity: HIGH
+
+  - id: COMUNA-PROVINCIA-REQUERIDA
+    description: "Toda comuna debe pertenecer a una provincia"
+    expression: "∀ c: c.provincia_id IS NOT NULL"
+    severity: CRITICAL
+
+  - id: COMUNA-SUPERFICIE-POSITIVA
+    description: "La superficie debe ser positiva"
+    expression: "∀ c: c.superficie_km2 > 0"
+    severity: MEDIUM

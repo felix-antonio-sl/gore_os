@@ -1,0 +1,56 @@
+---
+_meta:
+  urn: urn:goreos:entity:nucleus:actor:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-SYS-ACTOR
+name: Actor
+domain: D-SYS
+category: Master
+is_abstract: true
+description: >-
+  Objeto terminal categórico que representa cualquier agente capaz de ejecutar
+  acciones en el sistema. Funciona como superclase abstracta para funcionarios,
+  consejeros, ejecutores, proveedores y otros actores. Es el source principal
+  de morfismos de tipo "realiza" hacia Documento y Evento.
+attributes:
+  - {
+      name: id_actor,
+      type: UUID,
+      key: true,
+      description: "Identificador único universal",
+    }
+  - {
+      name: tipo_actor,
+      type: String,
+      description: "Discriminador de subtipo: FUNCIONARIO|CONSEJERO|EJECUTOR|PROVEEDOR|EXTERNO",
+    }
+  - {
+      name: identificador,
+      type: String,
+      description: "RUT, RUN o identificador externo",
+    }
+  - { name: nombre, type: String, description: "Nombre o razón social" }
+  - {
+      name: activo,
+      type: Boolean,
+      default: true,
+      description: "Estado de activación en el sistema",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: ACTOR-IDENTIFICADOR-UNICO
+    description: "El identificador debe ser único dentro del sistema"
+    expression: "∀ a,b: a.identificador = b.identificador → a = b"
+    severity: CRITICAL
+
+  - id: ACTOR-TIPO-VALIDO
+    description: "El tipo de actor debe pertenecer al conjunto de subtipos válidos"
+    expression: "∀ a: a.tipo_actor ∈ {FUNCIONARIO, CONSEJERO, EJECUTOR, PROVEEDOR, EXTERNO}"
+    severity: HIGH
+
+  - id: ACTOR-NOMBRE-REQUERIDO
+    description: "Todo actor activo debe tener nombre"
+    expression: "∀ a: a.activo = true → a.nombre IS NOT NULL ∧ a.nombre ≠ ''"
+    severity: MEDIUM

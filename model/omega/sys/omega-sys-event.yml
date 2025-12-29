@@ -1,0 +1,95 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:event:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-SYS-EVENT: Coalgebra Base de Transición de Estado
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a Process en OPM y Processes & Activities en WSF.
+# Representa un evento que transforma objetos (Effect Link).
+
+omega:
+  type: Ω-Process
+  essence: Informational
+  wsf_element: Processes
+
+id: Ω-SYS-EVENT
+name: Evento
+domain: D-SYS
+extends: Ω-PROCESS
+is_abstract: true
+
+description: >-
+  Coalgebra base que captura transición de estado en el tiempo. Corresponde a
+  Process en OPM con Effect Links, y a Processes & Activities en WSF.
+  Es el punto de entrada para todos los eventos del sistema.
+  Subclases: Sesión, Tramite, operaciones de cambio de estado.
+
+attributes:
+  - name: id_evento
+    type: UUID
+    omega_role: key
+    description: "Identificador único"
+
+  - name: tipo_evento
+    type: String
+    omega_role: data
+    description: "Tipo de evento"
+
+  - name: fecha_evento
+    type: DateTime
+    omega_role: data
+    description: "Timestamp del evento"
+
+  - name: actor_id
+    type: UUID
+    omega_role: link
+    fk: Ω-SYS-ACTOR
+    nullable: true
+    description: "Actor que ejecuta el evento (Agent Link)"
+
+  - name: entidad_tipo
+    type: String
+    omega_role: data
+    nullable: true
+    description: "Tipo de Ω-Object afectado"
+
+  - name: entidad_id
+    type: UUID
+    omega_role: link
+    nullable: true
+    description: "Ω-Object afectado (Effect Link target)"
+
+  - name: observacion
+    type: Text
+    omega_role: data
+    nullable: true
+    description: "Observaciones del evento"
+
+links:
+  - type: Ω-Enable
+    target: Ω-SYS-ACTOR
+    cardinality: N:1
+    semantics: agent
+    description: "Actor habilita el evento"
+
+  - type: Ω-Transform
+    target: Ω-OBJECT
+    cardinality: 1:N
+    semantics: effect
+    description: "Evento afecta estado de objetos"
+
+invariants:
+  - id: EVENT-TRANSFORMS-OBJECT
+    omega_axiom: Ω-2
+    expression: "∀ e: e.entidad_id IS NOT NULL → ∃ o. Affects(e, o)"
+    severity: HIGH
+    description: "Evento transforma al menos un objeto"
+
+  - id: EVENT-HAS-TIMESTAMP
+    omega_axiom: null
+    expression: "∀ e: e.fecha_evento IS NOT NULL"
+    severity: CRITICAL
+    description: "Todo evento tiene timestamp"

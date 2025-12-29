@@ -1,0 +1,73 @@
+---
+_meta:
+  urn: urn:goreos:entity:imperium:consejero:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-GOV-CONSEJERO
+name: Consejero Regional
+domain: D-GOV
+category: Master
+extends: ENT-SYS-ACTOR
+description: >-
+  Autoridad electa que integra el Consejo Regional (CORE). Representa a una
+  circunscripción electoral y participa en comisiones temáticas. Hereda de
+  Actor y especializa como autoridad política. Puede presidir el CORE y
+  votar en sesiones.
+attributes:
+  - {
+      name: id_consejero,
+      type: UUID,
+      key: true,
+      description: "Identificador único",
+    }
+  - {
+      name: persona_id,
+      type: UUID,
+      fk: ENT-SYS-ACTOR,
+      description: "Persona natural que ejerce",
+    }
+  - {
+      name: circunscripcion_id,
+      type: UUID,
+      fk: ENT-LOC-CIRCUNSCRIPCION,
+      description: "Circunscripción que representa",
+    }
+  - { name: periodo_inicio, type: Date, description: "Inicio del mandato" }
+  - { name: periodo_termino, type: Date, description: "Término del mandato" }
+  - {
+      name: partido_politico,
+      type: String,
+      description: "Partido o pacto político",
+    }
+  - {
+      name: comisiones,
+      type: JSON,
+      description: "Lista de IDs de comisiones asignadas",
+    }
+  - {
+      name: estado,
+      type: String,
+      description: "ACTIVO|SUSPENDIDO|CESADO|RENUNCIADO",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: CONS-PERIODO-COHERENTE
+    description: "El período de término debe ser posterior al inicio"
+    expression: "∀ c: c.periodo_termino > c.periodo_inicio"
+    severity: CRITICAL
+
+  - id: CONS-PERSONA-UNICA-PERIODO
+    description: "Una persona no puede ser consejero simultáneamente en dos períodos superpuestos"
+    expression: "∀ c1,c2: c1.persona_id = c2.persona_id ∧ c1 ≠ c2 → NOT OVERLAPS(c1.periodo, c2.periodo)"
+    severity: CRITICAL
+
+  - id: CONS-CIRCUNSCRIPCION-REQUERIDA
+    description: "Todo consejero debe representar una circunscripción"
+    expression: "∀ c: c.circunscripcion_id IS NOT NULL"
+    severity: HIGH
+
+  - id: CONS-ESTADO-VALIDO
+    description: "El estado debe ser válido"
+    expression: "∀ c: c.estado ∈ {ACTIVO, SUSPENDIDO, CESADO, RENUNCIADO}"
+    severity: MEDIUM

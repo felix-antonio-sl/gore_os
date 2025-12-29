@@ -1,0 +1,65 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:process:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-PROCESS: Entidad que Transforma Objetos
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a Process en OPM. Mapea a categoría "Transaction" del modelo.
+# Representa actividades que transforman objetos (consume, produce, afecta).
+
+omega:
+  type: Ω-Process
+  essence: Informational
+  wsf_element: Processes
+
+id: Ω-PROCESS
+name: Process
+domain: D-SYS
+extends: Ω-THING
+is_abstract: true
+
+description: >-
+  Entidad que transforma objetos: consume, produce, o cambia su estado.
+  Corresponde a Process en OPM y a Processes & Activities en WSF.
+  Mapea a la categoría "Transaction" del modelo GORE_OS actual.
+  Subclases: Sesión, Evento, Tramite, etc.
+
+attributes:
+  - name: fecha_inicio
+    type: DateTime
+    omega_role: data
+    description: "Timestamp de inicio del proceso"
+
+  - name: fecha_fin
+    type: DateTime
+    omega_role: data
+    nullable: true
+    description: "Timestamp de finalización (null si en curso)"
+
+  - name: estado_proceso
+    type: String
+    omega_role: state
+    description: "Estado del proceso: PENDIENTE|EN_CURSO|COMPLETADO|CANCELADO"
+
+links:
+  - type: Ω-Transform
+    target: Ω-OBJECT
+    cardinality: 1:N
+    semantics: effect
+    description: "Todo proceso transforma al menos un objeto"
+
+invariants:
+  - id: PROCESS-TRANSFORMS
+    omega_axiom: Ω-2
+    expression: "∀ p: ∃ o. Transforms(p, o)"
+    severity: HIGH
+    description: "Todo proceso transforma al menos un objeto"
+
+  - id: PROCESS-DURATION
+    omega_axiom: null
+    expression: "∀ p: p.fecha_fin IS NULL ∨ p.fecha_fin ≥ p.fecha_inicio"
+    severity: MEDIUM
+    description: "La fecha de fin no puede ser anterior al inicio"

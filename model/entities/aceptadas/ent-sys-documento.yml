@@ -1,0 +1,134 @@
+---
+_meta:
+  urn: urn:goreos:entity:nucleus:documento:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-SYS-DOCUMENTO
+name: Documento
+domain: D-SYS
+category: Master
+is_abstract: true
+description: >-
+  Superclase abstracta para toda evidencia documental del sistema. Representa
+  el soporte físico o digital de actos, trámites y transacciones. Es target de
+  morfismos desde Actor (emisor) y source hacia Expediente. Los subtipos incluyen
+  Acta, CDP, Contrato, Resolución, Estado de Pago, etc.
+attributes:
+  - {
+      name: id_documento,
+      type: UUID,
+      key: true,
+      description: "Identificador único universal",
+    }
+  - {
+      name: tipo_documento,
+      type: String,
+      description: "Discriminador: ACTA|RESOLUCION|OFICIO|CONTRATO|CDP|CERTIFICADO|...",
+    }
+  - {
+      name: numero,
+      type: String,
+      description: "Número correlativo o folio del documento",
+    }
+  - { name: fecha_emision, type: Date, description: "Fecha de emisión oficial" }
+  - {
+      name: emisor_id,
+      type: UUID,
+      fk: ENT-SYS-ACTOR,
+      description: "Actor que emite o firma el documento",
+    }
+  - {
+      name: hash_contenido,
+      type: String,
+      description: "Hash SHA-256 del contenido para integridad",
+    }
+  - {
+      name: estado,
+      type: String,
+      description: "BORRADOR|EMITIDO|FIRMADO|ANULADO|ARCHIVADO",
+    }
+  - {
+      name: folio,
+      type: String,
+      nullable: true,
+      description: "Folio de archivo documental",
+    }
+  - {
+      name: correlativo,
+      type: String,
+      nullable: true,
+      description: "Número correlativo anual",
+    }
+  - {
+      name: materia,
+      type: Text,
+      nullable: true,
+      description: "Asunto o materia del documento",
+    }
+  - {
+      name: remitente,
+      type: String,
+      nullable: true,
+      description: "Nombre del remitente (si aplica)",
+    }
+  - {
+      name: destinatario,
+      type: String,
+      nullable: true,
+      description: "Nombre del destinatario (si aplica)",
+    }
+  - {
+      name: canal_recepcion_id,
+      type: UUID,
+      fk: ENT-DIG-CANAL,
+      nullable: true,
+      description: "Canal por el que se recibió",
+    }
+  - {
+      name: canal_despacho_id,
+      type: UUID,
+      fk: ENT-DIG-CANAL,
+      nullable: true,
+      description: "Canal por el que se despachó",
+    }
+  - {
+      name: tiene_adjunto,
+      type: Boolean,
+      default: false,
+      description: "Indica si tiene archivos adjuntos",
+    }
+  # === Extensión Cobertura ETL ===
+  - {
+      name: url_repositorio,
+      type: String,
+      nullable: true,
+      description: "Link a repositorio para documentos legacy",
+    }
+  - {
+      name: metadata_legacy,
+      type: JSON,
+      nullable: true,
+      description: "Atributos legacy no estructurados",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: DOC-EMISOR-REQUERIDO
+    description: "Todo documento emitido debe tener un emisor"
+    expression: "∀ d: d.estado = 'EMITIDO' → d.emisor_id IS NOT NULL"
+    severity: CRITICAL
+
+  - id: DOC-FECHA-COHERENCIA
+    description: "La fecha de emisión no puede ser futura"
+    expression: "∀ d: d.fecha_emision ≤ TODAY()"
+    severity: HIGH
+
+  - id: DOC-HASH-INTEGRIDAD
+    description: "Documentos firmados deben tener hash de contenido"
+    expression: "∀ d: d.estado = 'FIRMADO' → d.hash_contenido IS NOT NULL"
+    severity: CRITICAL
+
+  - id: DOC-NUMERO-UNICO-POR-TIPO-ANIO
+    description: "El número es único dentro del tipo y año"
+    expression: "∀ d1,d2: d1.tipo_documento = d2.tipo_documento ∧ YEAR(d1.fecha_emision) = YEAR(d2.fecha_emision) ∧ d1.numero = d2.numero → d1 = d2"
+    severity: HIGH

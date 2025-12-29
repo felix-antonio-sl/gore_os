@@ -1,0 +1,124 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:fiscus:ipr:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-FIN-IPR: Intervención Pública Regional
+# ═══════════════════════════════════════════════════════════════════════════
+# Objeto central del ciclo de inversión. Products/Services del IS financiero.
+
+omega:
+  type: Ω-Object
+  essence: Informational
+  wsf_element: Products # Es el producto principal del sistema financiero
+
+id: Ω-FIN-IPR
+name: Intervención Pública Regional
+domain: D-FIN
+extends: Ω-OBJECT
+
+description: >-
+  Objeto central del ciclo de inversión regional. Representa una inversión
+  o proyecto financiado con recursos regionales (FNDR, FRIL, etc.).
+  Es Products/Services del Ω-System fiscal y target de múltiples Ω-Process.
+
+attributes:
+  - name: id_ipr
+    type: UUID
+    omega_role: key
+    description: "Identificador único"
+
+  - name: codigo_bip
+    type: String
+    omega_role: data
+    description: "Código BIP del proyecto"
+
+  - name: nombre
+    type: String
+    omega_role: data
+    description: "Nombre del proyecto"
+
+  - name: descripcion
+    type: Text
+    omega_role: data
+    description: "Descripción del proyecto"
+
+  - name: tipo
+    type: String
+    omega_role: data
+    description: "Tipo de intervención"
+
+  - name: mecanismo_id
+    type: UUID
+    omega_role: link
+    fk: Ω-FIN-MECANISMO
+    description: "Mecanismo de financiamiento"
+
+  - name: monto_total
+    type: Decimal
+    omega_role: data
+    description: "Monto total del proyecto"
+
+  - name: comuna_id
+    type: UUID
+    omega_role: link
+    fk: Ω-LOC-COMUNA
+    description: "Comuna de ejecución"
+
+  - name: estado_ciclo
+    type: String
+    omega_role: state
+    description: "Ω-State del ciclo de vida de inversión"
+
+  - name: etapa_actual
+    type: String
+    omega_role: state
+    description: "Etapa actual: PREFACTIBILIDAD|DISEÑO|EJECUCIÓN|OPERACIÓN"
+
+  - name: responsable_id
+    type: UUID
+    omega_role: link
+    fk: Ω-ORG-FUNCIONARIO
+    nullable: true
+    description: "Funcionario responsable"
+
+  - name: fondo_id
+    type: UUID
+    omega_role: link
+    fk: Ω-FIN-FONDO
+    nullable: true
+    description: "Fuente de recursos (FNDR, FRIL, etc.)"
+
+links:
+  - type: Ω-Align
+    target: Ω-LOC-COMUNA
+    cardinality: N:1
+    semantics: process-info
+    description: "IPR localizado en comuna"
+
+  - type: Ω-Align
+    target: Ω-ORG-FUNCIONARIO
+    cardinality: N:1
+    semantics: process-participant
+    description: "IPR tiene responsable"
+
+  - type: Ω-Transform
+    target: Ω-PROCESS
+    cardinality: 1:N
+    semantics: effect
+    description: "IPR es afectado por procesos del ciclo"
+
+invariants:
+  - id: IPR-VIA-EXCLUSIVA
+    omega_axiom: Ω-7
+    expression: "∀ ipr: |via_evaluacion_id| ≤ 1"
+    severity: HIGH
+    description: "Una IPR sigue UNA y SOLO UNA vía de evaluación"
+
+  - id: IPR-ETAPA-VALID
+    omega_axiom: Ω-7
+    expression: "∀ ipr: ipr.etapa_actual ∈ {PREFACTIBILIDAD, DISEÑO, EJECUCIÓN, OPERACIÓN}"
+    severity: HIGH
+    description: "Estados de etapa son mutuamente excluyentes"

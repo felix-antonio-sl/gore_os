@@ -1,0 +1,90 @@
+---
+_meta:
+  urn: urn:goreos:omega:entity:nucleus:system:1.0.0
+  type: Ω-Entity
+  schema: urn:goreos:omega:schema:1.0.0
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Ω-SYSTEM: Work System (9 Elementos WSF)
+# ═══════════════════════════════════════════════════════════════════════════
+# Corresponde a Work System en WST de Alter. Contiene los 9 elementos WSF.
+# Representa un dominio o subsistema completo de GORE_OS.
+
+omega:
+  type: Ω-System
+  essence: Informational
+  wsf_element: null # Es el contenedor de todos los elementos
+
+id: Ω-SYSTEM
+name: System
+domain: D-SYS
+extends: Ω-THING
+is_abstract: true
+
+description: >-
+  Work System según WST de Alter. Es el contenedor de los 9 elementos del
+  Work System Framework: Processes, Participants, Information, Technologies,
+  Products/Services, Customers, Environment, Infrastructure, Strategies.
+  Cada dominio GORE_OS (D-FIN, D-ORG, D-CONV, etc.) es un Ω-System.
+
+attributes:
+  - name: nombre_sistema
+    type: String
+    omega_role: key
+    description: "Nombre del Work System"
+
+  - name: dominio
+    type: String
+    omega_role: data
+    description: "Dominio GORE_OS: D-SYS|D-FIN|D-ORG|D-CONV|..."
+
+  - name: fase_wslc
+    type: String
+    omega_role: state
+    description: "Fase WSLC: OPERATION|INITIATION|DEVELOPMENT|IMPLEMENTATION"
+    default: "OPERATION"
+
+  - name: es_sociotecnico
+    type: Boolean
+    omega_role: data
+    default: true
+    description: "True si tiene participantes humanos"
+
+# Los 9 elementos WSF como links a otros Ω-Things
+links:
+  - type: Ω-Structure
+    target: Ω-PROCESS
+    cardinality: 1:N
+    semantics: aggregation
+    description: "Processes & Activities del sistema"
+
+  - type: Ω-Structure
+    target: Ω-OBJECT
+    cardinality: 1:N
+    semantics: aggregation
+    description: "Information, Technologies del sistema"
+
+  - type: Ω-Serve
+    target: Ω-SYSTEM
+    cardinality: N:M
+    semantics: provides
+    description: "IS sirve a otros WS"
+
+invariants:
+  - id: SYSTEM-HAS-PROCESS
+    omega_axiom: Ω-1
+    expression: "∀ s: ∃ p ∈ Processes(s)"
+    severity: HIGH
+    description: "Todo sistema contiene al menos un proceso"
+
+  - id: SYSTEM-PRODUCES-PS
+    omega_axiom: Ω-3
+    expression: "∀ s: ∃ ps. Produces(s, ps) ∧ ∃ c. Receives(c, ps)"
+    severity: HIGH
+    description: "Todo sistema produce P/S para customers"
+
+  - id: SYSTEM-EVOLVES
+    omega_axiom: Ω-8
+    expression: "∀ s, t1, t2: t1 < t2 → s(t1) may differ from s(t2)"
+    severity: MEDIUM
+    description: "Los sistemas evolucionan via WSLC"

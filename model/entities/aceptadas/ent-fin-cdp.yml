@@ -1,0 +1,58 @@
+---
+_meta:
+  urn: urn:goreos:entity:fiscus:cdp:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-FIN-CDP
+name: Certificado de Disponibilidad Presupuestaria
+domain: D-FIN
+category: Transaction
+extends: ENT-SYS-DOCUMENTO
+description: >-
+  Documento que certifica la existencia de saldo disponible en una Asignación
+  para respaldar un gasto futuro. Es prerrequisito para emitir Compromisos.
+  Representa el morfismo "reserva" desde Asignación hacia el flujo de gasto.
+  Tiene vigencia temporal y puede ser anulado si no se utiliza.
+attributes:
+  - { name: id_cdp, type: UUID, key: true, description: "Identificador único" }
+  - { name: numero, type: String, description: "Número correlativo anual" }
+  - {
+      name: asignacion_id,
+      type: UUID,
+      fk: ENT-FIN-ASIGNACION,
+      description: "Asignación que respalda",
+    }
+  - { name: monto, type: Decimal, description: "Monto certificado" }
+  - { name: fecha_emision, type: Date, description: "Fecha de emisión" }
+  - {
+      name: fecha_vencimiento,
+      type: Date,
+      description: "Fecha hasta la cual es válido",
+    }
+  - {
+      name: estado,
+      type: String,
+      description: "EMITIDO|UTILIZADO|VENCIDO|ANULADO",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: CDP-NUMERO-UNICO-ANIO
+    description: "El número de CDP es único por año"
+    expression: "∀ c1,c2: YEAR(c1.fecha_emision) = YEAR(c2.fecha_emision) ∧ c1.numero = c2.numero → c1 = c2"
+    severity: CRITICAL
+
+  - id: CDP-MONTO-DISPONIBLE
+    description: "El monto certificado no puede exceder el saldo disponible de la asignación"
+    expression: "∀ c: c.monto ≤ (c.asignacion.monto_vigente - c.asignacion.monto_ejecutado)"
+    severity: CRITICAL
+
+  - id: CDP-VENCIMIENTO-POSTERIOR
+    description: "La fecha de vencimiento debe ser posterior a la emisión"
+    expression: "∀ c: c.fecha_vencimiento > c.fecha_emision"
+    severity: HIGH
+
+  - id: CDP-ESTADO-VALIDO
+    description: "El estado debe ser válido"
+    expression: "∀ c: c.estado ∈ {EMITIDO, UTILIZADO, VENCIDO, ANULADO}"
+    severity: MEDIUM

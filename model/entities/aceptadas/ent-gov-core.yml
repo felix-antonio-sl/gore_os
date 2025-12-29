@@ -1,0 +1,72 @@
+---
+_meta:
+  urn: urn:goreos:entity:imperium:core:2.0.0
+  type: Entity
+  schema: urn:goreos:schema:entity:2.0.0
+id: ENT-GOV-CORE
+name: Consejo Regional
+domain: D-GOV
+category: Master
+description: >-
+  Órgano colegiado de representación ciudadana regional. Compuesto por
+  consejeros electos que fiscalizan y aprueban materias del Gobierno Regional.
+  Es el hub del dominio D-GOV: contiene Comisiones, realiza Sesiones y
+  emite Acuerdos. Representa el límite democrático de la gestión ejecutiva.
+attributes:
+  - { name: id_core, type: UUID, key: true, description: "Identificador único" }
+  - {
+      name: region_id,
+      type: UUID,
+      fk: ENT-LOC-REGION,
+      description: "Región a la que pertenece",
+    }
+  - {
+      name: periodo_id,
+      type: UUID,
+      fk: ENT-SYS-PERIODO,
+      description: "Período de ejercicio (4 años)",
+    }
+  - {
+      name: presidente_id,
+      type: UUID,
+      fk: ENT-GOV-CONSEJERO,
+      description: "Consejero que preside",
+    }
+  - {
+      name: vicepresidente_id,
+      type: UUID,
+      fk: ENT-GOV-CONSEJERO,
+      description: "Consejero vicepresidente",
+    }
+  - {
+      name: numero_consejeros,
+      type: Integer,
+      description: "Total de consejeros electos",
+    }
+  - {
+      name: quorum_sesion,
+      type: Integer,
+      description: "Mínimo para sesionar válidamente",
+    }
+
+# Invariantes Categóricos
+invariants:
+  - id: CORE-REGION-PERIODO-UNICO
+    description: "Solo puede existir un CORE por región y período"
+    expression: "∀ c1,c2: c1.region_id = c2.region_id ∧ c1.periodo_id = c2.periodo_id → c1 = c2"
+    severity: CRITICAL
+
+  - id: CORE-PRESIDENTE-ES-CONSEJERO
+    description: "El presidente debe ser un consejero del mismo CORE"
+    expression: "∀ c: EXISTS(consejero WHERE consejero.id = c.presidente_id AND consejero.core_id = c.id_core)"
+    severity: CRITICAL
+
+  - id: CORE-QUORUM-COHERENTE
+    description: "El quorum debe ser al menos la mayoría simple"
+    expression: "∀ c: c.quorum_sesion ≥ CEIL(c.numero_consejeros / 2)"
+    severity: HIGH
+
+  - id: CORE-PRESIDENTE-DISTINTO-VICE
+    description: "Presidente y vicepresidente deben ser distintos"
+    expression: "∀ c: c.presidente_id ≠ c.vicepresidente_id"
+    severity: HIGH

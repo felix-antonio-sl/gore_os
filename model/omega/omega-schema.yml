@@ -1,0 +1,103 @@
+---
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║                         OMEGA SCHEMA v1.0.0                               ║
+# ║          Radier Categórico para GORE_OS (Fusión OPM × WS/IS)              ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
+_meta:
+  urn: urn:goreos:omega:schema:1.0.0
+  type: Schema
+  description: |
+    Schema YAML para entidades Ω-GOREOS.
+    Basado en la categoría Ω = OPM +_Core WS (pushout).
+
+omega_types:
+  - Ω-Thing # Superclase abstracta raíz
+  - Ω-Object # Persiste, tiene estados (Master)
+  - Ω-Process # Transforma, tiene duración (Transaction)
+  - Ω-State # Situación temporal de un Object
+  - Ω-System # Work System (9 elementos WSF)
+
+omega_essence:
+  - Physical # Tiene manifestación física
+  - Informational # Puramente informático
+
+wsf_elements:
+  - Participants # Actores humanos
+  - Information # Entidades informacionales
+  - Technologies # Herramientas y agentes automatizados
+  - Processes # Actividades y procesos
+  - Products # Productos/Servicios
+  - Customers # Receptores de P/S
+  - Environment # Factores externos
+  - Infrastructure # Recursos compartidos
+  - Strategies # Estrategias
+
+omega_link_types:
+  - Ω-Transform:
+      semantics: [consume, result, effect]
+      description: "Procedural link (OPM)"
+  - Ω-Align:
+      semantics: [process-participant, process-info, process-tech]
+      description: "Alignment link (WSF)"
+  - Ω-Enable:
+      semantics: [agent, instrument]
+      description: "Enabling link (OPM)"
+  - Ω-Serve:
+      semantics: [provides, uses]
+      description: "IS→WS service link"
+  - Ω-Structure:
+      semantics: [aggregation, generalization, exhibition]
+      description: "Structural link (OPM)"
+
+omega_axioms:
+  - id: Ω-1
+    statement: "Todo Ω-System contiene al menos un Ω-Process"
+  - id: Ω-2
+    statement: "Todo Ω-Process transforma al menos un Ω-Object"
+  - id: Ω-3
+    statement: "Todo Ω-System produce P/S para Customers"
+  - id: Ω-4
+    statement: "Los Ω-Align del WSF corresponden a Ω-Links OPM"
+  - id: Ω-5
+    statement: "El WSLC es un endofuntor sobre Ω-Systems"
+  - id: Ω-6
+    statement: "El refinamiento preserva invariantes"
+  - id: Ω-7
+    statement: "Los Ω-States son mutuamente excluyentes en t"
+  - id: Ω-8
+    statement: "Design is incomplete; Ω-Systems evolve"
+
+entity_template:
+  _meta:
+    urn: "urn:goreos:omega:entity:{domain}:{name}:{version}"
+    type: Ω-Entity
+    schema: urn:goreos:omega:schema:1.0.0
+
+  omega:
+    type: "Ω-Object | Ω-Process | Ω-State | Ω-System"
+    essence: "Physical | Informational"
+    wsf_element: "WSF element"
+
+  id: "Ω-XXX-YYY"
+  name: "Entity Name"
+  domain: "D-XXX"
+  extends: "Ω-XXX-ZZZ (optional)"
+  description: "Semantic description"
+
+  attributes:
+    - name: "field_name"
+      type: "Type"
+      omega_role: "key | state | link | data"
+      description: "Description"
+
+  links:
+    - type: "Ω-Transform | Ω-Align | Ω-Enable | Ω-Serve"
+      target: "Ω-XXX-YYY"
+      cardinality: "1:1 | 1:N | N:M"
+      semantics: "consume | result | effect | agent | instrument"
+
+  invariants:
+    - id: "INV-XXX"
+      omega_axiom: "Ω-1 | Ω-2 | ..."
+      expression: "∀ x: ..."
+      severity: "CRITICAL | HIGH | MEDIUM"
