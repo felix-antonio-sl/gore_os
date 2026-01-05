@@ -1,8 +1,0 @@
-model/stories/us_ops_perf_001.yml
-model/stories/us_ops_sre_001.yml
-model/stories/us_ops_sup_001.yml
-model/stories/us_ops_sup_002.yml
-model/stories/us_ops_sup_003.yml
-model/stories/us_ops_sup_004.yml
-model/stories/us_part_001_01.yml
-model/stories/us_pcseu_001_01.yml

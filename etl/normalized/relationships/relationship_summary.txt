@@ -1,0 +1,34 @@
+LEGACY ETL - COMPLETE RELATIONSHIP MAP
+============================================================
+
+1. NORMALIZED DATA COUNTS
+----------------------------------------
+  dim/dim_clasificador_presup: 76
+  dim/dim_iniciativa: 510
+  dim/dim_iniciativa_idis: 2,781
+  dim/dim_iniciativa_unificada: 2,005
+  dim/dim_institucion: 150
+  dim/dim_institucion_unificada: 1,692
+  dim/dim_periodo: 3
+  dim/dim_territorio: 44
+  dim/dim_territorio_canonico: 23
+  dim/dim_tipo_evento: 7
+  doc/doc_documento: 10,413
+  fact/fact_convenio: 533
+  fact/fact_ejecucion_mensual: 3,496
+  fact/fact_evento_documental: 2,373
+  fact/fact_fril: 167
+  fact/fact_linea_presupuestaria: 3,622
+  fact/fact_modificacion: 255
+  fact/fact_rendicion_8pct: 1,570
+  rel/cross_domain_matches: 6,618
+
+2. UNIFIED INICIATIVAS
+----------------------------------------
+  Total: 2,005
+  Cross-linked: 437
+
+3. CROSS-DOMAIN MATCHES
+----------------------------------------
+  CONVENIOS <-> IDIS: 1,528
+  IDIS <-> IDIS: 5,090

@@ -1,0 +1,228 @@
+file_a,file_b,domain_a,domain_b,codigo_matches,rut_matches,comuna_matches,nombre_matches,total_matches,strength
+convenios/originales/CONVENIOS 2023 y 2024.csv,idis/originales/MAESTRA DIPIR.csv,CONVENIOS,IDIS,339,0,24,94,457,0.6996
+idis/originales/ANÁLISIS.csv,idis/originales/MAESTRA DIPIR.csv,IDIS,IDIS,0,0,24,336,360,0.022
+idis/originales/MAESTRA DIPIR.csv,partes/originales/RECIBIDOS.csv,IDIS,PARTES,357,0,0,0,357,0.6778
+partes/originales/RENDICIONES 2024.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,PARTES,PROGS,183,0,0,145,328,0.2257
+idis/originales/MAESTRA DIPIR.csv,partes/originales/OFICIOS.csv,IDIS,PARTES,258,0,0,0,258,0.5478
+progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,PROGS,PROGS,75,74,18,75,242,0.6474
+partes/originales/OFICIOS.csv,partes/originales/RECIBIDOS.csv,PARTES,PARTES,197,0,0,0,197,0.7287
+convenios/originales/CONVENIOS 2023 y 2024.csv,partes/originales/RECIBIDOS.csv,CONVENIOS,PARTES,194,0,0,0,194,0.6569
+idis/originales/MAESTRA DIPIR.csv,partes/originales/RESOLUCIONES EXENTAS.csv,IDIS,PARTES,173,0,0,0,173,0.4052
+convenios/originales/CONVENIOS 2023 y 2024.csv,partes/originales/OFICIOS.csv,CONVENIOS,PARTES,158,0,0,0,158,0.6592
+convenios/originales/CONVENIOS 2023 y 2024.csv,partes/originales/RESOLUCIONES EXENTAS.csv,CONVENIOS,PARTES,147,0,0,0,147,0.7513
+250/BROUCHURE.csv,250/CONSOLIDADO.csv,250,250,0,0,0,144,144,0.0
+partes/originales/RENDICIONES 2024.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,PARTES,PROGS,88,0,0,51,139,0.131
+convenios/originales/CONVENIOS 2023 y 2024.csv,idis/originales/ANÁLISIS.csv,CONVENIOS,IDIS,0,0,24,108,132,0.0605
+partes/originales/OFICIOS.csv,partes/originales/RESOLUCIONES EXENTAS.csv,PARTES,PARTES,120,0,0,0,120,0.7031
+partes/originales/RECIBIDOS.csv,partes/originales/RESOLUCIONES EXENTAS.csv,PARTES,PARTES,99,0,0,0,99,0.4374
+fril/originales/Fril Avan. y Adj..csv,idis/originales/MAESTRA DIPIR.csv,FRIL,IDIS,38,0,17,34,89,0.1159
+idis/originales/MAESTRA DIPIR.csv,partes/originales/MEMOS.csv,IDIS,PARTES,86,0,0,0,86,0.2168
+convenios/originales/CONVENIOS 2025.csv,idis/originales/MAESTRA DIPIR.csv,CONVENIOS,IDIS,47,0,20,17,84,0.1353
+partes/originales/MEMOS.csv,partes/originales/RECIBIDOS.csv,PARTES,PARTES,77,0,0,0,77,0.3929
+fril/originales/Fril Lic. y Con..csv,idis/originales/MAESTRA DIPIR.csv,FRIL,IDIS,31,0,14,29,74,0.0949
+convenios/originales/CONVENIOS 2023 y 2024.csv,fril/originales/Fril Avan. y Adj..csv,CONVENIOS,FRIL,30,0,17,12,59,0.2454
+idis/originales/MAESTRA DIPIR.csv,partes/originales/RESOLUCIONES AFECTAS.csv,IDIS,PARTES,59,0,0,0,59,0.1534
+partes/originales/MEMOS.csv,partes/originales/OFICIOS.csv,PARTES,PARTES,55,0,0,0,55,0.3919
+partes/originales/RECIBIDOS.csv,partes/originales/RESOLUCIONES AFECTAS.csv,PARTES,PARTES,54,0,0,0,54,0.2935
+convenios/originales/CONVENIOS 2023 y 2024.csv,partes/originales/RESOLUCIONES AFECTAS.csv,CONVENIOS,PARTES,51,0,0,0,51,0.3326
+partes/originales/OFICIOS.csv,partes/originales/RESOLUCIONES AFECTAS.csv,PARTES,PARTES,50,0,0,0,50,0.3896
+250/CONSOLIDADO.csv,idis/originales/ANÁLISIS.csv,250,IDIS,0,0,21,25,46,0.3684
+convenios/originales/MODIFICACIONES.csv,idis/originales/MAESTRA DIPIR.csv,CONVENIOS,IDIS,22,0,15,4,41,0.0728
+"fril/originales/Fril Para., Reeva. y Ter..csv",idis/originales/MAESTRA DIPIR.csv,FRIL,IDIS,17,0,10,14,41,0.055
+250/CONSOLIDADO.csv,idis/originales/MAESTRA DIPIR.csv,250,IDIS,0,0,21,19,40,0.0192
+convenios/originales/CONVENIOS 2023 y 2024.csv,progs/originales/ASIGNACIONES DIRECTAS 23-24.csv,CONVENIOS,PROGS,25,0,0,15,40,0.1645
+convenios/originales/CONVENIOS 2023 y 2024.csv,fril/originales/Fril Lic. y Con..csv,CONVENIOS,FRIL,18,0,14,5,37,0.157
+fril/originales/31 Avan. y Adj..csv,idis/originales/MAESTRA DIPIR.csv,FRIL,IDIS,21,0,12,4,37,0.0671
+convenios/originales/CONVENIOS 2023 y 2024.csv,partes/originales/MEMOS.csv,CONVENIOS,PARTES,33,0,0,0,33,0.1996
+250/CONSOLIDADO.csv,convenios/originales/CONVENIOS 2023 y 2024.csv,250,CONVENIOS,0,0,21,11,32,0.0529
+convenios/originales/CONVENIOS 2023 y 2024.csv,fril/originales/31 Avan. y Adj..csv,CONVENIOS,FRIL,15,0,12,5,32,0.1348
+progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,progs/originales/PROGRAMAS SOCIALES.csv,PROGS,PROGS,0,15,16,0,31,0.7077
+fril/originales/31 Lic. y Con..csv,idis/originales/MAESTRA DIPIR.csv,FRIL,IDIS,14,0,12,4,30,0.0487
+fril/originales/Fril Avan. y Adj..csv,idis/originales/ANÁLISIS.csv,FRIL,IDIS,0,0,17,10,27,0.3953
+fril/originales/Fril Avan. y Adj..csv,partes/originales/RESOLUCIONES EXENTAS.csv,FRIL,PARTES,27,0,0,0,27,0.3537
+convenios/originales/CONVENIOS 2023 y 2024.csv,convenios/originales/CONVENIOS 2025.csv,CONVENIOS,CONVENIOS,6,0,20,0,26,0.0766
+convenios/originales/CONVENIOS 2025.csv,idis/originales/ANÁLISIS.csv,CONVENIOS,IDIS,0,0,20,6,26,0.202
+convenios/originales/CONVENIOS 2023 y 2024.csv,"fril/originales/Fril Para., Reeva. y Ter..csv",CONVENIOS,FRIL,13,0,10,2,25,0.1178
+convenios/originales/CONVENIOS 2025.csv,fril/originales/Fril Avan. y Adj..csv,CONVENIOS,FRIL,5,0,15,5,25,0.2174
+convenios/originales/CONVENIOS 2025.csv,partes/originales/RECIBIDOS.csv,CONVENIOS,PARTES,25,0,0,0,25,0.1276
+convenios/originales/MODIFICACIONES.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,CONVENIOS,PROGS,0,11,14,0,25,0.6923
+250/BROUCHURE.csv,idis/originales/ANÁLISIS.csv,250,IDIS,0,0,0,23,23,0.0
+convenios/originales/CONVENIOS 2025.csv,partes/originales/OFICIOS.csv,CONVENIOS,PARTES,23,0,0,0,23,0.1639
+idis/originales/MAESTRA DIPIR.csv,progs/originales/PROGRAMAS SOCIALES.csv,IDIS,PROGS,4,0,16,3,23,0.0249
+fril/originales/Fril Lic. y Con..csv,idis/originales/ANÁLISIS.csv,FRIL,IDIS,0,0,14,8,22,0.35
+250/CONSOLIDADO.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,250,PROGS,0,0,21,0,21,0.0398
+250/CONSOLIDADO.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,250,PROGS,0,0,21,0,21,0.4038
+convenios/originales/CONVENIOS 2023 y 2024.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,CONVENIOS,PROGS,0,0,21,0,21,0.0227
+convenios/originales/CONVENIOS 2023 y 2024.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,CONVENIOS,PROGS,0,0,21,0,21,0.0492
+convenios/originales/CONVENIOS 2025.csv,fril/originales/Fril Lic. y Con..csv,CONVENIOS,FRIL,6,0,12,3,21,0.2222
+convenios/originales/MODIFICACIONES.csv,idis/originales/ANÁLISIS.csv,CONVENIOS,IDIS,0,0,15,6,21,0.3488
+convenios/originales/MODIFICACIONES.csv,progs/originales/PROGRAMAS SOCIALES.csv,CONVENIOS,PROGS,0,10,11,0,21,0.5439
+idis/originales/ANÁLISIS.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,IDIS,PROGS,0,0,21,0,21,0.0398
+idis/originales/ANÁLISIS.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,IDIS,PROGS,0,0,21,0,21,0.4468
+idis/originales/MAESTRA DIPIR.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,IDIS,PROGS,0,0,21,0,21,0.013
+idis/originales/MAESTRA DIPIR.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,IDIS,PROGS,0,0,21,0,21,0.0187
+progs/originales/HABILITADAS FUERA DE PLAZO.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,PROGS,PROGS,1,1,18,1,21,0.123
+progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,PROGS,PROGS,0,0,21,0,21,0.0377
+250/CONSOLIDADO.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,250,PROGS,0,0,20,0,20,0.1818
+convenios/originales/CONVENIOS 2023 y 2024.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,CONVENIOS,PROGS,0,0,20,0,20,0.0394
+idis/originales/ANÁLISIS.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,IDIS,PROGS,0,0,20,0,20,0.1818
+idis/originales/MAESTRA DIPIR.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,IDIS,PROGS,0,0,20,0,20,0.0167
+partes/originales/MEMOS.csv,partes/originales/RESOLUCIONES EXENTAS.csv,PARTES,PARTES,20,0,0,0,20,0.2076
+progs/originales/HABILITADAS FUERA DE PLAZO.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,PROGS,PROGS,0,0,20,0,20,0.0314
+progs/originales/HABILITADAS FUERA DE PLAZO.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,PROGS,PROGS,0,0,20,0,20,0.1429
+convenios/originales/CONVENIOS 2023 y 2024.csv,fril/originales/31 Lic. y Con..csv,CONVENIOS,FRIL,7,0,12,0,19,0.0795
+convenios/originales/CONVENIOS 2025.csv,progs/originales/PROGRAMAS SOCIALES.csv,CONVENIOS,PROGS,0,0,14,5,19,0.1045
+fril/originales/31 Avan. y Adj..csv,idis/originales/ANÁLISIS.csv,FRIL,IDIS,0,0,12,7,19,0.3158
+fril/originales/31 Lic. y Con..csv,idis/originales/ANÁLISIS.csv,FRIL,IDIS,0,0,12,7,19,0.3158
+idis/originales/MAESTRA DIPIR.csv,progs/originales/ASIGNACIONES DIRECTAS 23-24.csv,IDIS,PROGS,16,0,0,3,19,0.0417
+progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,PROGS,PROGS,0,1,16,2,19,0.0308
+250/CONSOLIDADO.csv,convenios/originales/CONVENIOS 2025.csv,250,CONVENIOS,0,0,17,1,18,0.1717
+250/CONSOLIDADO.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,250,PROGS,0,0,18,0,18,0.2338
+convenios/originales/CONVENIOS 2023 y 2024.csv,progs/originales/PROGRAMAS SOCIALES.csv,CONVENIOS,PROGS,1,0,16,1,18,0.044
+convenios/originales/CONVENIOS 2023 y 2024.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,CONVENIOS,PROGS,0,0,18,0,18,0.038
+fril/originales/31 Avan. y Adj..csv,partes/originales/OFICIOS.csv,FRIL,PARTES,18,0,0,0,18,0.1552
+fril/originales/Fril Avan. y Adj..csv,partes/originales/OFICIOS.csv,FRIL,PARTES,18,0,0,0,18,0.1496
+idis/originales/ANÁLISIS.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,IDIS,PROGS,0,0,18,0,18,0.2338
+idis/originales/MAESTRA DIPIR.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,IDIS,PROGS,0,0,18,0,18,0.0154
+progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,PROGS,PROGS,0,0,18,0,18,0.1682
+250/BROUCHURE.csv,idis/originales/MAESTRA DIPIR.csv,250,IDIS,0,0,0,17,17,0.0
+250/CONSOLIDADO.csv,fril/originales/31 Lic. y Con..csv,250,FRIL,0,0,12,5,17,0.2791
+250/CONSOLIDADO.csv,fril/originales/Fril Avan. y Adj..csv,250,FRIL,0,0,17,0,17,0.3542
+convenios/originales/CONVENIOS 2023 y 2024.csv,convenios/originales/MODIFICACIONES.csv,CONVENIOS,CONVENIOS,2,0,15,0,17,0.0501
+convenios/originales/CONVENIOS 2025.csv,fril/originales/31 Lic. y Con..csv,CONVENIOS,FRIL,6,0,10,1,17,0.2393
+convenios/originales/CONVENIOS 2025.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,CONVENIOS,PROGS,0,0,17,0,17,0.0272
+convenios/originales/CONVENIOS 2025.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,CONVENIOS,PROGS,0,0,17,0,17,0.1318
+fril/originales/Fril Avan. y Adj..csv,partes/originales/RECIBIDOS.csv,FRIL,PARTES,17,0,0,0,17,0.0966
+fril/originales/Fril Avan. y Adj..csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,FRIL,PROGS,0,0,17,0,17,0.03
+fril/originales/Fril Avan. y Adj..csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,FRIL,PROGS,0,0,17,0,17,0.2464
+partes/originales/RENDICIONES 2024.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,PARTES,PROGS,1,0,0,16,17,0.0015
+progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,PROGS,PROGS,0,1,16,0,17,0.1078
+250/CONSOLIDADO.csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,250,PROGS,0,0,16,0,16,0.2807
+250/CONSOLIDADO.csv,progs/originales/PROGRAMAS SOCIALES.csv,250,PROGS,0,0,16,0,16,0.3333
+convenios/originales/CONVENIOS 2023 y 2024.csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,CONVENIOS,PROGS,0,0,16,0,16,0.0352
+convenios/originales/CONVENIOS 2025.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,CONVENIOS,PROGS,0,0,16,0,16,0.0766
+fril/originales/31 Avan. y Adj..csv,partes/originales/RECIBIDOS.csv,FRIL,PARTES,16,0,0,0,16,0.0932
+fril/originales/Fril Avan. y Adj..csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,FRIL,PROGS,0,0,16,0,16,0.1074
+fril/originales/Fril Avan. y Adj..csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,FRIL,PROGS,0,0,16,0,16,0.1379
+idis/originales/ANÁLISIS.csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,IDIS,PROGS,0,0,16,0,16,0.2807
+idis/originales/ANÁLISIS.csv,progs/originales/PROGRAMAS SOCIALES.csv,IDIS,PROGS,0,0,16,0,16,0.3721
+idis/originales/MAESTRA DIPIR.csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,IDIS,PROGS,0,0,16,0,16,0.0139
+partes/originales/RENDICIONES 2024.csv,progs/originales/ASIGNACIONES DIRECTAS 23-24.csv,PARTES,PROGS,16,0,0,0,16,0.0244
+progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,PROGS,PROGS,0,0,16,0,16,0.1839
+progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,PROGS,PROGS,0,0,15,1,16,0.1119
+progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,progs/originales/PROGRAMAS SOCIALES.csv,PROGS,PROGS,0,0,16,0,16,0.0285
+250/CONSOLIDADO.csv,convenios/originales/MODIFICACIONES.csv,250,CONVENIOS,0,0,14,1,15,0.2917
+250/CONSOLIDADO.csv,fril/originales/31 Avan. y Adj..csv,250,FRIL,0,0,11,4,15,0.2558
+convenios/originales/CONVENIOS 2025.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,CONVENIOS,PROGS,0,0,15,0,15,0.0852
+partes/originales/MEMOS.csv,partes/originales/RESOLUCIONES AFECTAS.csv,PARTES,PARTES,15,0,0,0,15,0.2778
+progs/originales/HABILITADAS FUERA DE PLAZO.csv,progs/originales/PROGRAMAS SOCIALES.csv,PROGS,PROGS,0,0,15,0,15,0.1034
+250/CONSOLIDADO.csv,fril/originales/Fril Lic. y Con..csv,250,FRIL,0,0,14,0,14,0.3111
+convenios/originales/MODIFICACIONES.csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,CONVENIOS,PROGS,0,0,14,0,14,0.1061
+convenios/originales/MODIFICACIONES.csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,CONVENIOS,PROGS,0,0,14,0,14,0.0255
+fril/originales/Fril Avan. y Adj..csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,FRIL,PROGS,0,0,14,0,14,0.1458
+fril/originales/Fril Lic. y Con..csv,partes/originales/RESOLUCIONES EXENTAS.csv,FRIL,PARTES,14,0,0,0,14,0.1858
+fril/originales/Fril Lic. y Con..csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,FRIL,PROGS,0,0,14,0,14,0.0249
+fril/originales/Fril Lic. y Con..csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,FRIL,PROGS,0,0,14,0,14,0.2121
+progs/originales/PROGRAMAS SOCIALES.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,PROGS,PROGS,0,0,14,0,14,0.125
+convenios/originales/MODIFICACIONES.csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,CONVENIOS,PROGS,0,0,13,0,13,0.1313
+fril/originales/Fril Avan. y Adj..csv,progs/originales/PROGRAMAS SOCIALES.csv,FRIL,PROGS,0,0,13,0,13,0.1757
+fril/originales/Fril Lic. y Con..csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,FRIL,PROGS,0,0,13,0,13,0.089
+convenios/originales/CONVENIOS 2025.csv,convenios/originales/MODIFICACIONES.csv,CONVENIOS,CONVENIOS,0,0,12,0,12,0.0992
+convenios/originales/CONVENIOS 2025.csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,CONVENIOS,PROGS,0,0,12,0,12,0.0769
+convenios/originales/MODIFICACIONES.csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,CONVENIOS,PROGS,0,0,12,0,12,0.1519
+fril/originales/31 Lic. y Con..csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,FRIL,PROGS,0,0,12,0,12,0.022
+fril/originales/31 Lic. y Con..csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,FRIL,PROGS,0,0,12,0,12,0.25
+fril/originales/Fril Avan. y Adj..csv,fril/originales/Fril Lic. y Con..csv,FRIL,FRIL,0,0,12,0,12,0.16
+fril/originales/Fril Lic. y Con..csv,partes/originales/OFICIOS.csv,FRIL,PARTES,12,0,0,0,12,0.1006
+fril/originales/Fril Lic. y Con..csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,FRIL,PROGS,0,0,12,0,12,0.1062
+"fril/originales/Fril Para., Reeva. y Ter..csv",idis/originales/ANÁLISIS.csv,FRIL,IDIS,0,0,10,2,12,0.2778
+convenios/originales/MODIFICACIONES.csv,fril/originales/31 Avan. y Adj..csv,CONVENIOS,FRIL,3,0,8,0,11,0.3542
+convenios/originales/MODIFICACIONES.csv,fril/originales/Fril Avan. y Adj..csv,CONVENIOS,FRIL,0,0,11,0,11,0.1803
+convenios/originales/MODIFICACIONES.csv,partes/originales/RECIBIDOS.csv,CONVENIOS,PARTES,11,0,0,0,11,0.0646
+fril/originales/31 Avan. y Adj..csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,FRIL,PROGS,0,0,11,0,11,0.0809
+fril/originales/31 Avan. y Adj..csv,progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,FRIL,PROGS,0,0,11,0,11,0.0199
+fril/originales/31 Avan. y Adj..csv,progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,FRIL,PROGS,0,0,11,0,11,0.1964
+fril/originales/31 Lic. y Con..csv,partes/originales/OFICIOS.csv,FRIL,PARTES,11,0,0,0,11,0.0971
+fril/originales/31 Lic. y Con..csv,partes/originales/RECIBIDOS.csv,FRIL,PARTES,11,0,0,0,11,0.0651
+fril/originales/31 Lic. y Con..csv,progs/originales/HABILITADAS FUERA DE PLAZO.csv,FRIL,PROGS,0,0,11,0,11,0.0859
+fril/originales/Fril Lic. y Con..csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,FRIL,PROGS,0,0,11,0,11,0.1183
+fril/originales/Fril Lic. y Con..csv,progs/originales/PROGRAMAS SOCIALES.csv,FRIL,PROGS,0,0,11,0,11,0.1549
+progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,progs/originales/PROGRAMAS SOCIALES.csv,PROGS,PROGS,0,0,11,0,11,0.1196
+250/BROUCHURE.csv,convenios/originales/CONVENIOS 2023 y 2024.csv,250,CONVENIOS,0,0,0,10,10,0.0
+250/CONSOLIDADO.csv,"fril/originales/Fril Para., Reeva. y Ter..csv",250,FRIL,0,0,10,0,10,0.2439
+convenios/originales/CONVENIOS 2023 y 2024.csv,partes/originales/RENDICIONES 2024.csv,CONVENIOS,PARTES,10,0,0,0,10,0.013
+convenios/originales/CONVENIOS 2025.csv,"fril/originales/Fril Para., Reeva. y Ter..csv",CONVENIOS,FRIL,1,0,9,0,10,0.1017
+convenios/originales/MODIFICACIONES.csv,fril/originales/Fril Lic. y Con..csv,CONVENIOS,FRIL,0,0,10,0,10,0.1724
+convenios/originales/MODIFICACIONES.csv,partes/originales/OFICIOS.csv,CONVENIOS,PARTES,10,0,0,0,10,0.0872
+fril/originales/31 Avan. y Adj..csv,fril/originales/31 Lic. y Con..csv,FRIL,FRIL,3,0,7,0,10,0.3636
+fril/originales/31 Avan. y Adj..csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,FRIL,PROGS,0,0,10,0,10,0.1205
+fril/originales/31 Lic. y Con..csv,progs/originales/PROGRAMAS SOCIALES.csv,FRIL,PROGS,0,0,10,0,10,0.1887
+fril/originales/Fril Lic. y Con..csv,partes/originales/RECIBIDOS.csv,FRIL,PARTES,10,0,0,0,10,0.0571
+"fril/originales/Fril Para., Reeva. y Ter..csv",progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,FRIL,PROGS,0,0,10,0,10,0.0183
+"fril/originales/Fril Para., Reeva. y Ter..csv",progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,FRIL,PROGS,0,0,10,0,10,0.2041
+convenios/originales/CONVENIOS 2025.csv,fril/originales/31 Avan. y Adj..csv,CONVENIOS,FRIL,1,0,8,0,9,0.088
+convenios/originales/MODIFICACIONES.csv,fril/originales/31 Lic. y Con..csv,CONVENIOS,FRIL,1,0,8,0,9,0.275
+fril/originales/31 Avan. y Adj..csv,progs/originales/PROGRAMAS SOCIALES.csv,FRIL,PROGS,0,0,9,0,9,0.1475
+fril/originales/31 Avan. y Adj..csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,FRIL,PROGS,0,0,9,0,9,0.0874
+fril/originales/31 Lic. y Con..csv,fril/originales/Fril Avan. y Adj..csv,FRIL,FRIL,0,0,9,0,9,0.1579
+fril/originales/31 Lic. y Con..csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,FRIL,PROGS,0,0,9,0,9,0.12
+fril/originales/31 Lic. y Con..csv,progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,FRIL,PROGS,0,0,9,0,9,0.0947
+"fril/originales/Fril Para., Reeva. y Ter..csv",partes/originales/RESOLUCIONES EXENTAS.csv,FRIL,PARTES,9,0,0,0,9,0.1292
+"fril/originales/Fril Para., Reeva. y Ter..csv",progs/originales/HABILITADAS FUERA DE PLAZO.csv,FRIL,PROGS,0,0,9,0,9,0.0698
+partes/originales/RENDICIONES 2024.csv,progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,PARTES,PROGS,0,0,0,9,9,0.0
+fril/originales/31 Avan. y Adj..csv,fril/originales/Fril Avan. y Adj..csv,FRIL,FRIL,0,0,8,0,8,0.1231
+fril/originales/31 Avan. y Adj..csv,fril/originales/Fril Lic. y Con..csv,FRIL,FRIL,0,0,8,0,8,0.129
+fril/originales/31 Lic. y Con..csv,fril/originales/Fril Lic. y Con..csv,FRIL,FRIL,0,0,8,0,8,0.1481
+fril/originales/Fril Avan. y Adj..csv,"fril/originales/Fril Para., Reeva. y Ter..csv",FRIL,FRIL,0,0,8,0,8,0.1379
+fril/originales/Fril Lic. y Con..csv,"fril/originales/Fril Para., Reeva. y Ter..csv",FRIL,FRIL,0,0,8,0,8,0.1455
+"fril/originales/Fril Para., Reeva. y Ter..csv",partes/originales/OFICIOS.csv,FRIL,PARTES,8,0,0,0,8,0.0704
+"fril/originales/Fril Para., Reeva. y Ter..csv",progs/originales/PROGRAMAS SOCIALES.csv,FRIL,PROGS,0,0,8,0,8,0.1481
+"fril/originales/Fril Para., Reeva. y Ter..csv",progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,FRIL,PROGS,0,0,7,0,7,0.0921
+"fril/originales/Fril Para., Reeva. y Ter..csv",progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,FRIL,PROGS,0,0,7,0,7,0.0729
+convenios/originales/MODIFICACIONES.csv,partes/originales/RESOLUCIONES EXENTAS.csv,CONVENIOS,PARTES,6,0,0,0,6,0.0849
+fril/originales/31 Avan. y Adj..csv,partes/originales/RESOLUCIONES AFECTAS.csv,FRIL,PARTES,6,0,0,0,6,0.2022
+fril/originales/31 Lic. y Con..csv,"fril/originales/Fril Para., Reeva. y Ter..csv",FRIL,FRIL,0,0,6,0,6,0.1622
+"fril/originales/Fril Para., Reeva. y Ter..csv",partes/originales/RECIBIDOS.csv,FRIL,PARTES,6,0,0,0,6,0.0354
+idis/originales/MAESTRA DIPIR.csv,partes/originales/RENDICIONES 2024.csv,IDIS,PARTES,5,0,0,1,6,0.005
+250/BROUCHURE.csv,fril/originales/31 Lic. y Con..csv,250,FRIL,0,0,0,5,5,0.0
+convenios/originales/MODIFICACIONES.csv,"fril/originales/Fril Para., Reeva. y Ter..csv",CONVENIOS,FRIL,0,0,5,0,5,0.122
+fril/originales/31 Avan. y Adj..csv,"fril/originales/Fril Para., Reeva. y Ter..csv",FRIL,FRIL,0,0,5,0,5,0.1111
+fril/originales/31 Lic. y Con..csv,partes/originales/RESOLUCIONES AFECTAS.csv,FRIL,PARTES,5,0,0,0,5,0.1852
+partes/originales/RESOLUCIONES AFECTAS.csv,partes/originales/RESOLUCIONES EXENTAS.csv,PARTES,PARTES,5,0,0,0,5,0.0593
+fril/originales/31 Avan. y Adj..csv,partes/originales/RESOLUCIONES EXENTAS.csv,FRIL,PARTES,4,0,0,0,4,0.0556
+"fril/originales/31 Para., Reeva. y Ter..csv",idis/originales/MAESTRA DIPIR.csv,FRIL,IDIS,2,0,2,0,4,0.0073
+250/BROUCHURE.csv,fril/originales/31 Avan. y Adj..csv,250,FRIL,0,0,0,3,3,0.0
+convenios/originales/CONVENIOS 2023 y 2024.csv,"fril/originales/31 Para., Reeva. y Ter..csv",CONVENIOS,FRIL,1,0,2,0,3,0.0125
+convenios/originales/CONVENIOS 2025.csv,partes/originales/RESOLUCIONES AFECTAS.csv,CONVENIOS,PARTES,3,0,0,0,3,0.0556
+convenios/originales/CONVENIOS 2025.csv,partes/originales/RESOLUCIONES EXENTAS.csv,CONVENIOS,PARTES,3,0,0,0,3,0.0311
+convenios/originales/MODIFICACIONES.csv,partes/originales/MEMOS.csv,CONVENIOS,PARTES,3,0,0,0,3,0.0744
+partes/originales/RECIBIDOS.csv,progs/originales/PROGRAMAS SOCIALES.csv,PARTES,PROGS,3,0,0,0,3,0.0172
+250/CONSOLIDADO.csv,"fril/originales/31 Para., Reeva. y Ter..csv",250,FRIL,0,0,2,0,2,0.0606
+convenios/originales/CONVENIOS 2025.csv,partes/originales/MEMOS.csv,CONVENIOS,PARTES,2,0,0,0,2,0.0303
+fril/originales/31 Avan. y Adj..csv,"fril/originales/31 Para., Reeva. y Ter..csv",FRIL,FRIL,0,0,2,0,2,0.0714
+fril/originales/31 Avan. y Adj..csv,partes/originales/MEMOS.csv,FRIL,PARTES,2,0,0,0,2,0.048
+fril/originales/31 Lic. y Con..csv,"fril/originales/31 Para., Reeva. y Ter..csv",FRIL,FRIL,0,0,2,0,2,0.1
+"fril/originales/31 Para., Reeva. y Ter..csv",fril/originales/Fril Avan. y Adj..csv,FRIL,FRIL,0,0,2,0,2,0.0488
+"fril/originales/31 Para., Reeva. y Ter..csv",idis/originales/ANÁLISIS.csv,FRIL,IDIS,0,0,2,0,2,0.0714
+"fril/originales/31 Para., Reeva. y Ter..csv",progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,FRIL,PROGS,0,0,2,0,2,0.0339
+"fril/originales/31 Para., Reeva. y Ter..csv",progs/originales/HABILITADAS FUERA DE PLAZO.csv,FRIL,PROGS,0,0,2,0,2,0.0179
+"fril/originales/31 Para., Reeva. y Ter..csv",progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,FRIL,PROGS,0,0,2,0,2,0.0038
+"fril/originales/31 Para., Reeva. y Ter..csv",progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,FRIL,PROGS,0,0,2,0,2,0.0625
+"fril/originales/31 Para., Reeva. y Ter..csv",progs/originales/PROGRAMAS SOCIALES.csv,FRIL,PROGS,0,0,2,0,2,0.0541
+"fril/originales/31 Para., Reeva. y Ter..csv",progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,FRIL,PROGS,0,0,2,0,2,0.0253
+250/BROUCHURE.csv,convenios/originales/CONVENIOS 2025.csv,250,CONVENIOS,0,0,0,1,1,0.0
+250/BROUCHURE.csv,convenios/originales/MODIFICACIONES.csv,250,CONVENIOS,0,0,0,1,1,0.0
+convenios/originales/CONVENIOS 2025.csv,"fril/originales/31 Para., Reeva. y Ter..csv",CONVENIOS,FRIL,0,0,1,0,1,0.0099
+convenios/originales/MODIFICACIONES.csv,"fril/originales/31 Para., Reeva. y Ter..csv",CONVENIOS,FRIL,0,0,1,0,1,0.0417
+fril/originales/31 Lic. y Con..csv,partes/originales/MEMOS.csv,FRIL,PARTES,1,0,0,0,1,0.0256
+fril/originales/31 Lic. y Con..csv,partes/originales/RESOLUCIONES EXENTAS.csv,FRIL,PARTES,1,0,0,0,1,0.0144
+"fril/originales/31 Para., Reeva. y Ter..csv",fril/originales/Fril Lic. y Con..csv,FRIL,FRIL,0,0,1,0,1,0.0263
+"fril/originales/31 Para., Reeva. y Ter..csv",partes/originales/MEMOS.csv,FRIL,PARTES,1,0,0,0,1,0.0297
+"fril/originales/31 Para., Reeva. y Ter..csv",partes/originales/OFICIOS.csv,FRIL,PARTES,1,0,0,0,1,0.0093
+"fril/originales/31 Para., Reeva. y Ter..csv",partes/originales/RECIBIDOS.csv,FRIL,PARTES,1,0,0,0,1,0.0061
+"fril/originales/31 Para., Reeva. y Ter..csv",partes/originales/RESOLUCIONES AFECTAS.csv,FRIL,PARTES,1,0,0,0,1,0.0462
+fril/originales/Fril Lic. y Con..csv,partes/originales/MEMOS.csv,FRIL,PARTES,1,0,0,0,1,0.0222
+fril/originales/Fril Lic. y Con..csv,progs/originales/PARTICIPACIÓN CIUDADANA.csv,FRIL,PROGS,1,0,0,0,1,0.0566
+idis/originales/MAESTRA DIPIR.csv,progs/originales/PARTICIPACIÓN CIUDADANA.csv,IDIS,PROGS,1,0,0,0,1,0.0027
+partes/originales/MEMOS.csv,partes/originales/RENDICIONES 2024.csv,PARTES,PARTES,1,0,0,0,1,0.0015
+partes/originales/RECIBIDOS.csv,partes/originales/RENDICIONES 2024.csv,PARTES,PARTES,1,0,0,0,1,0.0013

@@ -1,0 +1,29 @@
+id,codigo,nombre,fase,orden,aplica_a,descripcion
+EST-001,PRE_ADMISIBLE,Pre-Admisible CDR,ADMISIBILIDAD,1,TODOS,Ingreso inicial a Cartera de Revisión
+EST-002,PARA_REVISION,Para Revisión Técnica,ADMISIBILIDAD,2,TODOS,En cola de revisión técnica DIPIR
+EST-003,ADMISIBLE,Admisible,ADMISIBILIDAD,3,TODOS,Cumple requisitos formales
+EST-004,INADMISIBLE,Inadmisible,ADMISIBILIDAD,4,TODOS,No cumple requisitos - devuelto
+EST-005,ENVIADO_MDSF,Enviado a MDSF,EVALUACION,5,PROYECTO,En evaluación por Ministerio Desarrollo Social
+EST-006,RS,Recomendación Satisfactoria,EVALUACION,6,PROYECTO,Evaluación técnico-económica favorable SNI
+EST-007,FI,Falta Información,EVALUACION,7,PROYECTO,Requiere información adicional
+EST-008,OT,Objetado Técnicamente,EVALUACION,8,PROYECTO,Con observaciones técnicas a subsanar
+EST-009,RF,Recomendación Favorable,EVALUACION,9,PROGRAMA,Evaluación favorable DIPRES/SES
+EST-010,ITF,Informe Técnico Favorable,EVALUACION,10,PROGRAMA,Aprobación interna GORE para transferencias
+EST-011,AD,Admisibilidad Directa,EVALUACION,11,PROYECTO,Vía simplificada Circular 33
+EST-012,CARTERA_CORE,Cartera Enviada a CORE,FINANCIAMIENTO,12,TODOS,En proceso de priorización CORE
+EST-013,CERT_CORE_OK,Certificado CORE OK,FINANCIAMIENTO,13,TODOS,Aprobado por Consejo Regional
+EST-014,CDP_EMITIDO,CDP Emitido,FINANCIAMIENTO,14,TODOS,Certificado de Disponibilidad Presupuestaria
+EST-015,DECRETO_TRAMITADO,Decreto Tramitado,FORMALIZACION,15,TODOS,Decreto de asignación en CGR
+EST-016,CONVENIO_FORMALIZADO,Convenio Formalizado,FORMALIZACION,16,TODOS,Convenio firmado por las partes
+EST-017,TOMADO_RAZON,Tomado de Razón CGR,FORMALIZACION,17,TODOS,Aprobado por Contraloría General
+EST-018,EN_LICITACION,En Licitación,EJECUCION,18,PROYECTO,Proceso de licitación activo
+EST-019,CONTRATO_FIRMADO,Contrato Firmado,EJECUCION,19,PROYECTO,Contrato adjudicado y formalizado
+EST-020,EN_OBRA,En Obra/Ejecución,EJECUCION,20,TODOS,Ejecución física o programática activa
+EST-021,RECEPCION_PROV,Recepción Provisoria,EJECUCION,21,PROYECTO,Término de obras con garantía vigente
+EST-022,RECEPCION_DEF,Recepción Definitiva,CIERRE,22,PROYECTO,Término de garantías
+EST-023,RENDICION_PEND,Rendición Pendiente,CIERRE,23,TODOS,Esperando documentación de cierre
+EST-024,RENDICION_APROB,Rendición Aprobada,CIERRE,24,TODOS,Rendición revisada y aceptada
+EST-025,IPR_CERRADA,IPR Cerrada,CIERRE,25,TODOS,Proyecto/Programa finalizado
+EST-026,PARALIZADO,Paralizado,EJECUCION,26,TODOS,Ejecución detenida temporalmente
+EST-027,TERMINADO_ANTIC,Terminado Anticipadamente,CIERRE,27,TODOS,Finalizado antes de completar alcance
+EST-028,RECHAZADO,Rechazado,ADMISIBILIDAD,28,TODOS,No aprobado en alguna etapa del ciclo

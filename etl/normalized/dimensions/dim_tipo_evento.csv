@@ -1,0 +1,8 @@
+id,familia,tipo_evento,descripcion
+51a42c4b-ae0c-47cb-9b5b-df04c2f96343,RESOLUCION,incorpora_cert_core,Res. Incorpora / Cert. CORE
+4e8a5aca-2be7-4abc-9ec9-4e16d0357942,RESOLUCION,crea_asignacion,Res. Crea Asignación
+8d80c2b8-875d-43a9-bb4e-117ed9aab422,RESOLUCION,aprueba_convenio,Res. Aprueba Convenio
+ef2a95fc-fe72-4284-85e5-15897c60881c,OFICIO,oficio_envio_convenio,Oficio Envío Convenio
+0df1c4b6-ef93-4a00-a85a-acfafe36d421,CGR,toma_razon_cgr,Toma de Razón CGR
+a2f5100f-2a50-4a51-a795-dde18abad7f9,RESOLUCION,res_referente_tecnico,Res. Referente Técnico
+671a8729-afed-428c-b81b-0dc36733afb8,RESOLUCION,resolucion_modificacion,Resolución Modificación

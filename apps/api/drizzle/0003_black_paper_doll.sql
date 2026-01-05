@@ -1,1 +1,0 @@
-ALTER TABLE "fin_ipr" ADD COLUMN "asignacion_id" uuid;

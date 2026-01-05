@@ -1,0 +1,9 @@
+id,codigo,nombre,tipo_ipr,subtitulo,ejecutor_tipo,evaluador,dictamen,descripcion
+MEC-001,SNI,Sistema Nacional de Inversiones,PROYECTO,31/33,GORE/Terceros,MDSF,RS,Evaluación técnico-económica estándar para proyectos >15.000 UTM
+MEC-002,FRIL,Fondo Regional de Iniciativa Local,PROYECTO,33,Municipalidad,GORE (interno),Aprobación Técnica,Proyectos municipales <5.000 UTM exentos de RS
+MEC-003,C33,Circular 33,PROYECTO,31/33,GORE/Terceros,MDSF (simplificado),AD,Conservación/ANF/Estudios Básicos con procedimiento simplificado
+MEC-004,G06,Glosa 06 Directa,PROGRAMA,24,GORE,DIPRES/SES,RF,Programas de ejecución directa GORE - tope 5% admin
+MEC-005,TRANSF,Transferencia Pública,PROGRAMA,24,Entidad Pública,GORE (interno),ITF,Transferencias a otras entidades públicas
+MEC-006,SUB8,Subvención 8% FNDR,PROGRAMA,24,OSC/Privado s/f lucro,GORE (concurso),Puntaje,Fondos concursables para organizaciones sociales
+MEC-007,FRPD_CTCI,FRPD CTCI (Royalty Minero),MIXTO,24/31,Institución Habilitada,ANID/CORFO,Concurso,I+D+i por instituciones habilitadas
+MEC-008,FRPD_FOM,FRPD Fomento (Royalty Minero),MIXTO,24/31,Institución Habilitada,SNI o Glosa 06,RS o RF,Fomento productivo por instituciones habilitadas

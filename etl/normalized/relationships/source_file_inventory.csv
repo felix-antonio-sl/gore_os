@@ -1,0 +1,77 @@
+file_path,domain,file_name,row_count,num_codigos,num_ruts,num_comunas,num_nombres,has_codigo,has_rut,has_comuna,has_nombre
+250/BROUCHURE.csv,250,BROUCHURE.csv,183,0,0,0,175,False,False,False,True
+250/CONSOLIDADO.csv,250,CONSOLIDADO.csv,181,0,0,31,178,False,False,True,True
+convenios/originales/CONVENIOS 2023 y 2024.csv,CONVENIOS,CONVENIOS 2023 y 2024.csv,408,397,0,24,399,True,False,True,True
+convenios/originales/CONVENIOS 2025.csv,CONVENIOS,CONVENIOS 2025.csv,99,99,0,20,99,True,False,True,True
+convenios/originales/MODIFICACIONES.csv,CONVENIOS,MODIFICACIONES.csv,30,22,15,17,30,True,True,True,True
+fril/originales/31 Avan. y Adj..csv,FRIL,31 Avan. y Adj..csv,49,26,0,12,35,True,False,True,True
+fril/originales/31 Lic. y Con..csv,FRIL,31 Lic. y Con..csv,23,18,0,12,22,True,False,True,True
+"fril/originales/31 Para., Reeva. y Ter..csv",FRIL,"31 Para., Reeva. y Ter..csv",3,2,0,2,2,True,False,True,True
+fril/originales/Fril Avan. y Adj..csv,FRIL,Fril Avan. y Adj..csv,40,39,0,17,39,True,False,True,True
+fril/originales/Fril Lic. y Con..csv,FRIL,Fril Lic. y Con..csv,38,36,0,14,36,True,False,True,True
+"fril/originales/Fril Para., Reeva. y Ter..csv",FRIL,"Fril Para., Reeva. y Ter..csv",20,19,0,10,19,True,False,True,True
+fril/originales/Total.csv,FRIL,Total.csv,3,0,0,0,0,False,False,False,False
+funcionarios/listado_funcionarios_integrado_remediado.csv,FUNCIONARIOS,listado_funcionarios_integrado_remediado.csv,110,0,2,0,110,False,True,False,True
+idis/diccionario.csv,IDIS,diccionario.csv,244,0,0,0,0,False,False,False,False
+idis/originales/192021222324.csv,IDIS,192021222324.csv,12,0,0,0,0,False,False,False,False
+idis/originales/2022.csv,IDIS,2022.csv,51,0,0,0,0,False,False,False,False
+idis/originales/2023.csv,IDIS,2023.csv,25,0,0,0,0,False,False,False,False
+idis/originales/2024.csv,IDIS,2024.csv,25,0,0,0,0,False,False,False,False
+idis/originales/2025.csv,IDIS,2025.csv,25,0,0,0,0,False,False,False,False
+idis/originales/ANÁLISIS.csv,IDIS,ANÁLISIS.csv,2794,0,0,26,2089,False,False,True,True
+idis/originales/CONSOLIDADO.csv,IDIS,CONSOLIDADO.csv,2477,6,24,28,4,True,True,True,True
+idis/originales/DIPIR 2021.csv,IDIS,DIPIR 2021.csv,34,0,0,0,0,False,False,False,False
+idis/originales/MAESTRA DIPIR.csv,IDIS,MAESTRA DIPIR.csv,1267,1091,244,27,1143,True,True,True,True
+idis/originales/MASTER.csv,IDIS,MASTER.csv,1545,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°1.csv,MODIFICACIONES,MODIFICACIÓN N°1.csv,8,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°10.csv,MODIFICACIONES,MODIFICACIÓN N°10.csv,20,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°11.csv,MODIFICACIONES,MODIFICACIÓN N°11.csv,37,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°12.csv,MODIFICACIONES,MODIFICACIÓN N°12.csv,10,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°13.csv,MODIFICACIONES,MODIFICACIÓN N°13.csv,8,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°14.csv,MODIFICACIONES,MODIFICACIÓN N°14.csv,8,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°15.csv,MODIFICACIONES,MODIFICACIÓN N°15.csv,17,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°16.csv,MODIFICACIONES,MODIFICACIÓN N°16.csv,6,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°17.csv,MODIFICACIONES,MODIFICACIÓN N°17.csv,22,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°18.csv,MODIFICACIONES,MODIFICACIÓN N°18.csv,17,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°19.csv,MODIFICACIONES,MODIFICACIÓN N°19.csv,5,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°2.csv,MODIFICACIONES,MODIFICACIÓN N°2.csv,34,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°3 SIN EFECTO.csv,MODIFICACIONES,MODIFICACIÓN N°3 SIN EFECTO.csv,14,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°3.csv,MODIFICACIONES,MODIFICACIÓN N°3.csv,24,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°4.csv,MODIFICACIONES,MODIFICACIÓN N°4.csv,33,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°5 SIC.csv,MODIFICACIONES,MODIFICACIÓN N°5 SIC.csv,16,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°6.csv,MODIFICACIONES,MODIFICACIÓN N°6.csv,23,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°7.csv,MODIFICACIONES,MODIFICACIÓN N°7.csv,7,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN N°8.csv,MODIFICACIONES,MODIFICACIÓN N°8.csv,8,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN Nº7.csv,MODIFICACIONES,MODIFICACIÓN Nº7.csv,7,0,0,0,0,False,False,False,False
+modificaciones/originales/MODIFICACIÓN Nº9.csv,MODIFICACIONES,MODIFICACIÓN Nº9.csv,25,0,0,0,0,False,False,False,False
+modificaciones/originales/REBAJA 5%.csv,MODIFICACIONES,REBAJA 5%.csv,8,0,0,0,0,False,False,False,False
+modificaciones/originales/REBAJA FUNC. N°6 sin efecto.csv,MODIFICACIONES,REBAJA FUNC. N°6 sin efecto.csv,7,0,0,0,0,False,False,False,False
+modificaciones/originales/REBAJA FUNC. N°9.csv,MODIFICACIONES,REBAJA FUNC. N°9.csv,11,0,0,0,0,False,False,False,False
+partes/originales/CARTAS.csv,PARTES,CARTAS.csv,6,0,0,0,0,False,False,False,False
+partes/originales/MEMOS INTERNOS.csv,PARTES,MEMOS INTERNOS.csv,9,0,0,0,0,False,False,False,False
+partes/originales/MEMOS.csv,PARTES,MEMOS.csv,1236,99,0,0,0,False,False,False,False
+partes/originales/OFICIOS INTERNOS.csv,PARTES,OFICIOS INTERNOS.csv,2,0,0,0,0,False,False,False,False
+partes/originales/OFICIOS.csv,PARTES,OFICIOS.csv,1900,322,0,0,0,False,False,False,False
+partes/originales/RECIBIDOS.csv,PARTES,RECIBIDOS.csv,5859,489,0,0,0,False,False,False,False
+partes/originales/RENDICIONES 2024.csv,PARTES,RENDICIONES 2024.csv,2334,1905,0,0,1990,True,False,False,True
+partes/originales/RENDICIONES FNDR Y ADNC.csv,PARTES,RENDICIONES FNDR Y ADNC.csv,33,0,0,0,0,False,False,False,False
+partes/originales/RESOLUCIONES AFECTAS.csv,PARTES,RESOLUCIONES AFECTAS.csv,163,63,0,0,0,False,False,False,False
+partes/originales/RESOLUCIONES EXENTAS.csv,PARTES,RESOLUCIONES EXENTAS.csv,1258,190,0,0,0,False,False,False,False
+progs/originales/ASIGNACIONES DIRECTAS 23-24.csv,PROGS,ASIGNACIONES DIRECTAS 23-24.csv,60,59,0,0,58,True,False,False,True
+progs/originales/CARTERA PROGRAMAS 2026.csv,PROGS,CARTERA PROGRAMAS 2026.csv,17,11,0,0,0,True,False,False,False
+progs/originales/ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,PROGS,ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv,57,57,57,16,57,True,True,True,True
+progs/originales/F.ADULTO MAYOR.csv,PROGS,F.ADULTO MAYOR.csv,249,0,0,0,0,False,False,False,False
+progs/originales/F.CULTURA.csv,PROGS,F.CULTURA.csv,168,0,0,0,0,False,False,False,False
+progs/originales/F.DEPORTE.csv,PROGS,F.DEPORTE.csv,335,0,0,0,0,False,False,False,False
+progs/originales/F.EQUIDAD DE GÉNERO.csv,PROGS,F.EQUIDAD DE GÉNERO.csv,122,0,0,0,0,False,False,False,False
+progs/originales/F.MEDIO AMBIENTE.csv,PROGS,F.MEDIO AMBIENTE.csv,116,0,0,0,0,False,False,False,False
+progs/originales/F.SEGURIDAD.csv,PROGS,F.SEGURIDAD.csv,555,0,0,0,0,False,False,False,False
+progs/originales/F.SOCIAL.csv,PROGS,F.SOCIAL.csv,192,0,0,0,0,False,False,False,False
+progs/originales/HABILITADAS FUERA DE PLAZO.csv,PROGS,HABILITADAS FUERA DE PLAZO.csv,111,110,110,20,110,True,True,True,True
+progs/originales/Hoja 18.csv,PROGS,Hoja 18.csv,8,0,0,0,0,False,False,False,False
+progs/originales/INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,PROGS,INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv,527,527,526,21,527,True,True,True,True
+progs/originales/OTRAS INICIATIVAS DE INVERSIÓN.csv,PROGS,OTRAS INICIATIVAS DE INVERSIÓN.csv,31,30,23,21,4,True,True,True,True
+progs/originales/PARTICIPACIÓN CIUDADANA.csv,PROGS,PARTICIPACIÓN CIUDADANA.csv,39,17,0,0,19,True,False,False,True
+progs/originales/PROGRAMAS SOCIALES.csv,PROGS,PROGRAMAS SOCIALES.csv,35,35,23,17,35,True,True,True,True
+progs/originales/RECURSOS ORGANIZACIONES SIN RENDIR.csv,PROGS,RECURSOS ORGANIZACIONES SIN RENDIR.csv,80,77,76,18,77,True,True,True,True
+progs/originales/RESUMEN FNDR 8%2024.csv,PROGS,RESUMEN FNDR 8%2024.csv,12,0,0,0,0,False,False,False,False

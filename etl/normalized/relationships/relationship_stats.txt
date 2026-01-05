@@ -1,0 +1,16 @@
+Cross-Domain Relationship Analysis
+==================================================
+
+Source Counts:
+  CONVENIOS iniciativas: 510
+  IDIS iniciativas: 2861
+  FRIL projects: 0
+  PROGS rendiciones: 1667
+
+Cross-Domain Matches:
+  CONVENIOS <-> IDIS: 1534
+  CONVENIOS <-> FRIL: 0
+  IDIS <-> FRIL: 0
+
+Total matches: 6978
+Unified iniciativas: 2010

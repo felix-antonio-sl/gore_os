@@ -1,0 +1,220 @@
+======================================================================
+LEGACY ETL - SOURCE FILE RELATIONSHIP MATRIX
+======================================================================
+
+FILE INVENTORY BY DOMAIN
+----------------------------------------
+
+250 (2 files, 364 rows):
+  - BROUCHURE.csv: 183 rows
+  - CONSOLIDADO.csv: 181 rows
+
+CONVENIOS (3 files, 537 rows):
+  - CONVENIOS 2023 y 2024.csv: 408 rows
+  - CONVENIOS 2025.csv: 99 rows
+  - MODIFICACIONES.csv: 30 rows
+
+FRIL (7 files, 176 rows):
+  - 31 Avan. y Adj..csv: 49 rows
+  - Fril Avan. y Adj..csv: 40 rows
+  - Fril Lic. y Con..csv: 38 rows
+  - 31 Lic. y Con..csv: 23 rows
+  - Fril Para., Reeva. y Ter..csv: 20 rows
+  - 31 Para., Reeva. y Ter..csv: 3 rows
+  - Total.csv: 3 rows
+
+FUNCIONARIOS (1 files, 110 rows):
+  - listado_funcionarios_integrado_remediado.csv: 110 rows
+
+IDIS (11 files, 8,499 rows):
+  - ANÁLISIS.csv: 2,794 rows
+  - CONSOLIDADO.csv: 2,477 rows
+  - MASTER.csv: 1,545 rows
+  - MAESTRA DIPIR.csv: 1,267 rows
+  - diccionario.csv: 244 rows
+  - 2022.csv: 51 rows
+  - DIPIR 2021.csv: 34 rows
+  - 2023.csv: 25 rows
+  - 2024.csv: 25 rows
+  - 2025.csv: 25 rows
+  - 192021222324.csv: 12 rows
+
+MODIFICACIONES (24 files, 375 rows):
+  - MODIFICACIÓN N°11.csv: 37 rows
+  - MODIFICACIÓN N°2.csv: 34 rows
+  - MODIFICACIÓN N°4.csv: 33 rows
+  - MODIFICACIÓN Nº9.csv: 25 rows
+  - MODIFICACIÓN N°3.csv: 24 rows
+  - MODIFICACIÓN N°6.csv: 23 rows
+  - MODIFICACIÓN N°17.csv: 22 rows
+  - MODIFICACIÓN N°10.csv: 20 rows
+  - MODIFICACIÓN N°15.csv: 17 rows
+  - MODIFICACIÓN N°18.csv: 17 rows
+  - MODIFICACIÓN N°5 SIC.csv: 16 rows
+  - MODIFICACIÓN N°3 SIN EFECTO.csv: 14 rows
+  - REBAJA FUNC. N°9.csv: 11 rows
+  - MODIFICACIÓN N°12.csv: 10 rows
+  - MODIFICACIÓN N°1.csv: 8 rows
+  - MODIFICACIÓN N°13.csv: 8 rows
+  - MODIFICACIÓN N°14.csv: 8 rows
+  - MODIFICACIÓN N°8.csv: 8 rows
+  - REBAJA 5%.csv: 8 rows
+  - MODIFICACIÓN N°7.csv: 7 rows
+  - MODIFICACIÓN Nº7.csv: 7 rows
+  - REBAJA FUNC. N°6 sin efecto.csv: 7 rows
+  - MODIFICACIÓN N°16.csv: 6 rows
+  - MODIFICACIÓN N°19.csv: 5 rows
+
+PARTES (10 files, 12,800 rows):
+  - RECIBIDOS.csv: 5,859 rows
+  - RENDICIONES 2024.csv: 2,334 rows
+  - OFICIOS.csv: 1,900 rows
+  - RESOLUCIONES EXENTAS.csv: 1,258 rows
+  - MEMOS.csv: 1,236 rows
+  - RESOLUCIONES AFECTAS.csv: 163 rows
+  - RENDICIONES FNDR Y ADNC.csv: 33 rows
+  - MEMOS INTERNOS.csv: 9 rows
+  - CARTAS.csv: 6 rows
+  - OFICIOS INTERNOS.csv: 2 rows
+
+PROGS (18 files, 2,714 rows):
+  - F.SEGURIDAD.csv: 555 rows
+  - INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv: 527 rows
+  - F.DEPORTE.csv: 335 rows
+  - F.ADULTO MAYOR.csv: 249 rows
+  - F.SOCIAL.csv: 192 rows
+  - F.CULTURA.csv: 168 rows
+  - F.EQUIDAD DE GÉNERO.csv: 122 rows
+  - F.MEDIO AMBIENTE.csv: 116 rows
+  - HABILITADAS FUERA DE PLAZO.csv: 111 rows
+  - RECURSOS ORGANIZACIONES SIN RENDIR.csv: 80 rows
+  - ASIGNACIONES DIRECTAS 23-24.csv: 60 rows
+  - ELIMINADAS MARCO PRESUPUESTARIO 8% 2024.csv: 57 rows
+  - PARTICIPACIÓN CIUDADANA.csv: 39 rows
+  - PROGRAMAS SOCIALES.csv: 35 rows
+  - OTRAS INICIATIVAS DE INVERSIÓN.csv: 31 rows
+  - CARTERA PROGRAMAS 2026.csv: 17 rows
+  - RESUMEN FNDR 8%2024.csv: 12 rows
+  - Hoja 18.csv: 8 rows
+
+
+TOP 20 STRONGEST RELATIONSHIPS
+----------------------------------------
+
+1. CONVENIOS 2023 y 2024.csv <-> MAESTRA DIPIR.csv
+   Domains: CONVENIOS <-> IDIS
+   Matches: códigos=339, ruts=0, comunas=24, nombres=94
+   Strength: 69.96%
+
+2. ANÁLISIS.csv <-> MAESTRA DIPIR.csv
+   Domains: IDIS <-> IDIS
+   Matches: códigos=0, ruts=0, comunas=24, nombres=336
+   Strength: 2.20%
+
+3. MAESTRA DIPIR.csv <-> RECIBIDOS.csv
+   Domains: IDIS <-> PARTES
+   Matches: códigos=357, ruts=0, comunas=0, nombres=0
+   Strength: 67.78%
+
+4. RENDICIONES 2024.csv <-> INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv
+   Domains: PARTES <-> PROGS
+   Matches: códigos=183, ruts=0, comunas=0, nombres=145
+   Strength: 22.57%
+
+5. MAESTRA DIPIR.csv <-> OFICIOS.csv
+   Domains: IDIS <-> PARTES
+   Matches: códigos=258, ruts=0, comunas=0, nombres=0
+   Strength: 54.78%
+
+6. INHABILITADAS RENDIDAS FUERA PLAZO Y NO RENDIDAS.csv <-> RECURSOS ORGANIZACIONES SIN RENDIR.csv
+   Domains: PROGS <-> PROGS
+   Matches: códigos=75, ruts=74, comunas=18, nombres=75
+   Strength: 64.74%
+
+7. OFICIOS.csv <-> RECIBIDOS.csv
+   Domains: PARTES <-> PARTES
+   Matches: códigos=197, ruts=0, comunas=0, nombres=0
+   Strength: 72.87%
+
+8. CONVENIOS 2023 y 2024.csv <-> RECIBIDOS.csv
+   Domains: CONVENIOS <-> PARTES
+   Matches: códigos=194, ruts=0, comunas=0, nombres=0
+   Strength: 65.69%
+
+9. MAESTRA DIPIR.csv <-> RESOLUCIONES EXENTAS.csv
+   Domains: IDIS <-> PARTES
+   Matches: códigos=173, ruts=0, comunas=0, nombres=0
+   Strength: 40.52%
+
+10. CONVENIOS 2023 y 2024.csv <-> OFICIOS.csv
+   Domains: CONVENIOS <-> PARTES
+   Matches: códigos=158, ruts=0, comunas=0, nombres=0
+   Strength: 65.92%
+
+11. CONVENIOS 2023 y 2024.csv <-> RESOLUCIONES EXENTAS.csv
+   Domains: CONVENIOS <-> PARTES
+   Matches: códigos=147, ruts=0, comunas=0, nombres=0
+   Strength: 75.13%
+
+12. BROUCHURE.csv <-> CONSOLIDADO.csv
+   Domains: 250 <-> 250
+   Matches: códigos=0, ruts=0, comunas=0, nombres=144
+   Strength: 0.00%
+
+13. RENDICIONES 2024.csv <-> HABILITADAS FUERA DE PLAZO.csv
+   Domains: PARTES <-> PROGS
+   Matches: códigos=88, ruts=0, comunas=0, nombres=51
+   Strength: 13.10%
+
+14. CONVENIOS 2023 y 2024.csv <-> ANÁLISIS.csv
+   Domains: CONVENIOS <-> IDIS
+   Matches: códigos=0, ruts=0, comunas=24, nombres=108
+   Strength: 6.05%
+
+15. OFICIOS.csv <-> RESOLUCIONES EXENTAS.csv
+   Domains: PARTES <-> PARTES
+   Matches: códigos=120, ruts=0, comunas=0, nombres=0
+   Strength: 70.31%
+
+16. RECIBIDOS.csv <-> RESOLUCIONES EXENTAS.csv
+   Domains: PARTES <-> PARTES
+   Matches: códigos=99, ruts=0, comunas=0, nombres=0
+   Strength: 43.74%
+
+17. Fril Avan. y Adj..csv <-> MAESTRA DIPIR.csv
+   Domains: FRIL <-> IDIS
+   Matches: códigos=38, ruts=0, comunas=17, nombres=34
+   Strength: 11.59%
+
+18. MAESTRA DIPIR.csv <-> MEMOS.csv
+   Domains: IDIS <-> PARTES
+   Matches: códigos=86, ruts=0, comunas=0, nombres=0
+   Strength: 21.68%
+
+19. CONVENIOS 2025.csv <-> MAESTRA DIPIR.csv
+   Domains: CONVENIOS <-> IDIS
+   Matches: códigos=47, ruts=0, comunas=20, nombres=17
+   Strength: 13.53%
+
+20. MEMOS.csv <-> RECIBIDOS.csv
+   Domains: PARTES <-> PARTES
+   Matches: códigos=77, ruts=0, comunas=0, nombres=0
+   Strength: 39.29%
+
+
+CROSS-DOMAIN CONNECTIONS
+----------------------------------------
+  IDIS <-> PARTES: 939 total matches
+  CONVENIOS <-> IDIS: 761 total matches
+  CONVENIOS <-> PARTES: 679 total matches
+  PARTES <-> PROGS: 512 total matches
+  FRIL <-> IDIS: 376 total matches
+  FRIL <-> PROGS: 356 total matches
+  CONVENIOS <-> PROGS: 349 total matches
+  CONVENIOS <-> FRIL: 305 total matches
+  IDIS <-> PROGS: 251 total matches
+  FRIL <-> PARTES: 201 total matches
+  250 <-> IDIS: 126 total matches
+  250 <-> PROGS: 112 total matches
+  250 <-> FRIL: 83 total matches
+  250 <-> CONVENIOS: 77 total matches
