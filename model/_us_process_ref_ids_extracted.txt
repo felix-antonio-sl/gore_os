@@ -1,0 +1,2454 @@
+## us_abast_001_01.yml
+  id: PROC-FIN-CICLO-COMPRAS
+
+## us_abast_001_02.yml
+  id: PROC-FIN-RENOVACION-CONTRATOS
+
+## us_abog_001_01.yml
+  id: PROC-NORM-ELABORACION-ACTOS
+
+## us_abog_001_02.yml
+  id: PROC-NORM-CONSULTA-PRECEDENTES
+
+## us_abog_conv_001_01.yml
+  id: PROC-EJEC-ELABORACION-CONVENIO
+
+## us_abog_daf_001_01.yml
+  id: PROC-FIN-REVISION-JURIDICA
+
+## us_abog_disc_001_01.yml
+  id: PROC-ORG-SUMARIO-ADMINISTRATIVO
+
+## us_abog_inf_001_01.yml
+  id: PROC-NORM-GESTION-CONOCIMIENTO
+
+## us_abog_jud_001_01.yml
+  id: PROC-NORM-SEGUIMIENTO-CAUSAS
+
+## us_abog_lic_001_01.yml
+  id: PROC-FIN-ELABORACION-BASES
+
+## us_abog_rev_001_01.yml
+  id: PROC-NORM-REVISION-ACTOS
+
+## us_acc_001_01.yml
+  id: PROC-TDE-AUDITORIA-ACCESIBILIDAD
+
+## us_aconv_001_01.yml
+  id: PROC-EJEC-VERIFICACION-CONVENIO
+
+## us_acv_001_01.yml
+  id: PROC-ORG-ONBOARDING
+
+## us_adm_plat_001_01.yml
+  id: PROC-TDE-GESTION-ROLES
+
+## us_admin_001_01.yml
+  id: PROC-TDE-GESTION-ACCESOS
+
+## us_aeval_001_01.yml
+  id: PROC-FIN-EVALUACION-PROYECTOS
+
+## us_alc_001_02.yml
+  id: PROC-FIN-CALENDARIO-FONDOS
+
+## us_alc_chi_001_01.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_alc_chv_001_01.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_alc_sc_001_01.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_amb_001_01.yml
+  id: PROC-TERR-DIAGNOSTICO
+
+## us_amod_001_01.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_amuch_001_01.yml
+  id: PROC-GOV-COMUNICACION-EXTERNA
+
+## us_anal_inv_001_01.yml
+  id: PROC-FIN-EVALUACION-TECNICA
+
+## us_anal_inv_001_02.yml
+  id: PROC-FIN-EVALUACION-TECNICA
+
+## us_anal_ppr_001_01.yml
+  id: PROC-PLAN-DISENO-PROGRAMAS
+
+## us_anal_seg_001_02.yml
+  id: PROC-FIN-SEGUIMIENTO-EJECUCION
+
+## us_analpres_001_01.yml
+  id: PROC-FIN-EMISION-CDP
+
+## us_analpres_001_02.yml
+  id: PROC-FIN-CONTROL-PRESUPUESTARIO
+
+## us_anci_001_01.yml
+  id: PROC-GOV-GESTION-CONOCIMIENTO-CORE
+
+## us_anid_001_01.yml
+  id: PROC-PLAN-ESTRATEGIA-CTCI
+
+## us_ap_core_001_01.yml
+  id: PROC-GOV-PREPARACION-SESION
+
+## us_apres_001_01.yml
+  id: PROC-FIN-MODIFICACION-PRESUPUESTARIA
+
+## us_aprev_001_01.yml
+  id: PROC-ORG-INSPECCION-SEGURIDAD
+
+## us_apt_001_01.yml
+  id: PROC-TERR-VALIDACION-NORMATIVA
+
+## us_ar_001_02.yml
+  id: PROC-GOV-ALINEAMIENTO-ESTRATEGICO
+
+## us_ar_002_01.yml
+  id: PROC-ORG-GESTION-TALENTO
+
+## us_ar_003_01.yml
+  id: PROC-ORG-GESTION-SUBROGANCIAS
+
+## us_arch_001_01.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_arq_001_01.yml
+  id: PROC-EJEC-REVISION-TECNICA
+
+## us_arq_dat_001_01.yml
+  id: PROC-TDE-GOBERNANZA-DATOS
+
+## us_arqc_001_01.yml
+  id: PROC-DEV-MODELADO-SEMANTICO
+
+## us_arqp_001_01.yml
+  id: PROC-EJEC-REVISION-TECNICA
+
+## us_arqs_001_01.yml
+  id: PROC-DEV-GOBERNANZA-ARQUITECTURA
+
+## us_as_001_01.yml
+  id: PROC-SOC-CARACTERIZACION-SOCIAL
+
+## us_aserv_001_01.yml
+  id: PROC-ORG-GESTION-SERVICIOS-GENERALES
+
+## us_ases_001_01.yml
+  id: PROC-SEG-PLANIFICACION-SEGURIDAD
+
+## us_asis_001_01.yml
+  id: PROC-ORG-CONTROL-ASISTENCIA
+
+## us_at_001_01.yml
+  id: PROC-TERR-ANALISIS-ESPACIAL
+
+## us_ates_001_01.yml
+  id: PROC-FIN-PAGOS-TESORERIA
+
+## us_atra_001_01.yml
+  id: PROC-TERR-PRIORIZACION-VIAL
+
+## us_atrans_001_01.yml
+  id: PROC-FIN-SEGUIMIENTO-TRANSFERENCIAS
+
+## us_aucr_001_01.yml
+  id: PROC-TDE-INDEXACION-DOCUMENTAL
+
+## us_aud_001_01.yml
+  id: PROC-NORM-AUDITORIA-INTERNA
+
+## us_aud_001_02.yml
+  id: PROC-NORM-AUDITORIA-INTERNA
+
+## us_aud_ctrl_001_01.yml
+  id: PROC-NORM-AUDITORIA-SISTEMAS
+
+## us_aud_ext_001_01.yml
+  id: PROC-NORM-AUDITORIA-EXTERNA
+
+## us_aux_001_01.yml
+  id: PROC-ORG-SERVICIOS-AUXILIARES
+
+## us_back_001_01.yml
+  id: PROC-DEV-CICLO-VIDA-SOFTWARE
+
+## us_back_abs_002.yml
+  id: PROC-FIN-TRAMITACION-COMPRAS
+
+## us_back_abs_004.yml
+  id: PROC-FIN-EVALUACION-OFERTAS
+
+## us_back_abs_005.yml
+  id: PROC-FIN-EMISION-ORDEN-COMPRA
+
+## us_back_af_001.yml
+  id: PROC-ORG-ALTA-ACTIVO-FIJO
+
+## us_back_af_002.yml
+  id: PROC-ORG-TRASLADO-ACTIVO
+
+## us_back_af_004.yml
+  id: PROC-ORG-INVENTARIO-ANUAL
+
+## us_back_auto_001.yml
+  id: PROC-ORG-CESE-FUNCIONES
+
+## us_back_auto_002.yml
+  id: PROC-ORG-CONTROL-PROBIDAD
+
+## us_back_bien_001.yml
+  id: PROC-ORG-AFILIACION-BIENESTAR
+
+## us_back_bien_002.yml
+  id: PROC-ORG-GESTION-BENEFICIARIOS
+
+## us_back_bien_003.yml
+  id: PROC-ORG-GESTION-REEMBOLSOS
+
+## us_back_bien_004.yml
+  id: PROC-ORG-GESTION-SUBSIDIOS
+
+## us_back_bien_006.yml
+  id: PROC-ORG-GESTION-PRESTAMOS-BIENESTAR
+
+## us_back_bien_007.yml
+  id: PROC-ORG-GESTION-CONVENIOS-BIENESTAR
+
+## us_back_bien_008.yml
+  id: PROC-ORG-GESTION-ACCIDENTES-LABORALES
+
+## us_back_bien_009.yml
+  id: PROC-ORG-INVESTIGACION-ACCIDENTES
+
+## us_back_bien_010.yml
+  id: PROC-ORG-SOLICITUD-REEMBOLSO
+
+## us_back_bien_011.yml
+  id: PROC-ORG-SOLICITUD-PRESTAMO-BIENESTAR
+
+## us_back_bien_012.yml
+  id: PROC-ORG-CONSULTA-SALDOS-SOCIO
+
+## us_back_bod_001.yml
+  id: PROC-ORG-INGRESO-BODEGA
+
+## us_back_bod_003.yml
+  id: PROC-ORG-CONCILIACION-BODEGA
+
+## us_back_comp_002.yml
+  id: PROC-ORG-PROCESO-CALIFICACIONES
+
+## us_back_comp_003.yml
+  id: PROC-ORG-GESTION-INCENTIVOS-DESEMPENO
+
+## us_back_cris_001.yml
+  id: PROC-ORG-GESTION-CONTINGENCIAS-PERSONAL
+
+## us_back_flo_001.yml
+  id: PROC-ORG-MANTENCION-PREVENTIVA-CORRECTIVA
+
+## us_back_flo_002.yml
+  id: PROC-ORG-GESTION-FLOTA-VEHICULAR
+
+## us_back_per_001.yml
+  id: PROC-ORG-AUTOCONSULTA-FUNCIONARIO
+
+## us_back_per_002.yml
+  id: PROC-ORG-ONBOARDING-FUNCIONARIO
+
+## us_back_per_010.yml
+  id: PROC-ORG-CALCULO-REMUNERACIONES
+
+## us_back_per_011.yml
+  id: PROC-ORG-DECLARACION-PREVISIONAL
+
+## us_back_per_012.yml
+  id: PROC-ORG-CONTROL-HORAS-EXTRAS
+
+## us_back_per_013.yml
+  id: PROC-ORG-GESTION-VIATICOS
+
+## us_back_per_014.yml
+  id: PROC-ORG-GESTION-ACCIDENTES-LABORALES
+
+## us_back_per_015.yml
+  id: PROC-ORG-RECLUTAMIENTO-SELECCION
+
+## us_back_tes_004.yml
+  id: PROC-FIN-CIERRE-CAJA-DIARIO
+
+## us_back_tes_005.yml
+  id: PROC-FIN-GESTION-FONDO-FIJO
+
+## us_back_tes_006.yml
+  id: PROC-FIN-CONCILIACION-BANCARIA
+
+## us_back_tes_007.yml
+  id: PROC-FIN-CONCILIACION-AUTOMATICA
+
+## us_back_tes_008.yml
+  id: PROC-FIN-ANALISIS-CUENTAS-BANCARIAS
+
+## us_back_tes_009.yml
+  id: PROC-FIN-CIERRE-CONTABLE-MENSUAL
+
+## us_back_tes_011.yml
+  id: PROC-FIN-CONTABILIZACION-GASTOS-OPERATIVOS
+
+## us_back_tes_013.yml
+  id: PROC-FIN-REPORTING-CONTABLE
+
+## us_back_tes_014.yml
+  id: PROC-FIN-CIERRE-ANUAL
+
+## us_back_tes_015.yml
+  id: PROC-FIN-DETERMINACION-DEUDA-FLOTANTE
+
+## us_back_tes_016.yml
+  id: PROC-FIN-PREPARACION-ESTADOS-FINANCIEROS
+
+## us_back_tes_017.yml
+  id: PROC-FIN-APERTURA-PRESUPUESTARIA
+
+## us_bcp_001_01.yml
+  id: PROC-TDE-GESTION-CONTINUIDAD
+
+## us_bi_001_01.yml
+  id: PROC-TDE-INTELIGENCIA-NEGOCIO
+
+## us_bien_001_01.yml
+  id: PROC-ORG-GESTION-BENEFICIARIOS
+
+## us_bien_002_01.yml
+  id: PROC-ORG-GESTION-PROGRAMAS-SOCIALES-INTERNOS
+
+## us_bod_001_01.yml
+  id: PROC-ORG-CONTROL-EXISTENCIAS
+
+## us_bod_002_01.yml
+  id: PROC-ORG-GESTION-INVENTARIO-BODEGA
+
+## us_bomb_001_01.yml
+  id: PROC-SEG-GESTION-EMERGENCIAS
+
+## us_c33_001_01.yml
+  id: PROC-EJEC-EVALUACION-TECNICA-C33
+
+## us_cal_001_02.yml
+  id: PROC-NORM-REPORTING-EXTERNO
+
+## us_cap_001_01.yml
+  id: PROC-ORG-EJECUCION-PAC
+
+## us_capdig_001_01.yml
+  id: PROC-TDE-CAPACITACION-DIGITAL
+
+## us_car_001_01.yml
+  id: PROC-SEG-COORDINACION-INTERINSTITUCIONAL
+
+## us_cc_001_01.yml
+  id: PROC-EJEC-DIFUSION-FOMENTO
+
+## us_cde_001_01.yml
+  id: PROC-NORM-DEFENSA-JUDICIAL
+
+## us_cgpe_001_01.yml
+  id: PROC-BACK-GESTION-AUSENTISMO
+
+## us_cgr_001_01.yml
+  id: PROC-TDE-INTEROPERABILIDAD-CGR
+
+## us_cgr_cont_001_01.yml
+  id: PROC-FIN-REVISION-CONTABLE-EXTERNA
+
+## us_cies_001_02.yml
+  id: PROC-SEG-GESTION-INCIDENTES
+
+## us_ciu_001_02.yml
+  id: PROC-FIN-TRANSPARENCIA-ACTIVA
+
+## us_ciu_002_01.yml
+  id: PROC-SOC-PARTICIPACION-CIUDADANA
+
+## us_col_001_01.yml
+  id: PROC-NORM-CONTROL-PROBIDAD
+
+## us_com_001_01.yml
+  id: PROC-BACK-PLANIFICACION-MEDIOS
+
+## us_com_001_02.yml
+  id: PROC-TDE-GESTION-ACTIVOS-DIGITALES
+
+## us_com_002_01.yml
+  id: PROC-BACK-MONITOREO-REPUTACIONAL
+
+## us_com_estr_001.yml
+  id: PROC-GOB-DISENO-ESTRATEGIA-COM
+
+## us_com_estr_002.yml
+  id: PROC-BACK-DIFUSION-NOTICIAS
+
+## us_com_estr_003.yml
+  id: PROC-TDE-CENTRALIZACION-RECURSOS
+
+## us_com_estr_004.yml
+  id: PROC-GOB-GESTION-CRISIS
+
+## us_com_estr_006.yml
+  id: PROC-BACK-COMUNICACION-ORGANIZACIONAL
+
+## us_com_ev_001_01.yml
+  id: PROC-FIN-EVALUACION-PROYECTOS
+
+## us_com_rec_001_01.yml
+  id: PROC-EJE-RECEPCION-CONFORMIDAD
+
+## us_com_sec_001.yml
+  id: PROC-GOB-COORDINACION-TERRITORIAL
+
+## us_com_sec_002.yml
+  id: PROC-BACK-CONTROL-CALIDAD-MARCA
+
+## us_com_sect_001_01.yml
+  id: PROC-BACK-REDACCION-PERIODISTICA
+
+## us_comp_001_01.yml
+  id: PROC-FIN-ADQUISICION-CONVENIO-MARCO
+
+## us_comp_001_02.yml
+  id: PROC-BACK-TRAMITACION-COMPRA
+
+## us_compert_001_01.yml
+  id: PROC-EJE-EVALUACION-PERTINENCIA
+
+## us_compert_001_02.yml
+  id: PROC-EJE-VOTACION-SESION
+
+## us_compt_001_01.yml
+  id: PROC-BACK-EVALUACION-DESEMPENO
+
+## us_conaf_001_01.yml
+  id: PROC-SEG-COORDINACION-EMERGENCIAS
+
+## us_cond_001_01.yml
+  id: PROC-BACK-GESTION-FLOTA
+
+## us_cont_001_01.yml
+  id: PROC-FIN-CONCILIACION-BANCARIA
+
+## us_cont_001_02.yml
+  id: PROC-FIN-PAGO-PROVEEDORES
+
+## us_coord_dit_001_01.yml
+  id: PROC-EJE-SEGUIMIENTO-SECTORIAL
+
+## us_core_001_01.yml
+  id: PROC-GOV-SESION-CORE
+
+## us_core_002_01.yml
+  id: PROC-EJE-SEGUIMIENTO-PROYECTOS
+
+## us_corfo_001_01.yml
+  id: PROC-EJEC-ARTICULACION-FOMENTO
+
+## us_corp_001_01.yml
+  id: PROC-FIN-TRANSFERENCIA-ENTIDADES
+
+## us_corte_001_01.yml
+  id: PROC-NORM-RESPUESTA-CONTENCIOSO
+
+## us_cp_001_01.yml
+  id: PROC-BACK-SEGURIDAD-SALUD-TRABAJO
+
+## us_cseu_001_01.yml
+  id: PROC-SOC-GESTION-RECLAMOS
+
+## us_cseu_002_01.yml
+  id: PROC-BACK-EVALUACION-CURRICULAR
+
+## us_ctd_001_02.yml
+  id: PROC-TDE-PLAN-DIGITALIZACION
+
+## us_cust_001_01.yml
+  id: PROC-TDE-CUSTODIA-EVIDENCIA-DIGITAL
+
+## us_cust_dat_001_01.yml
+  id: PROC-TDE-AUDITORIA-CALIDAD-DATOS
+
+## us_cut_001_01.yml
+  id: PROC-SOC-PARTICIPACION-COSOC
+
+## us_daf_001_01.yml
+  id: PROC-FIN-CIERRE-MENSUAL
+
+## us_data_001_01.yml
+  id: PROC-TDE-GUBERNANZA-DATOS
+
+## us_dba_001_01.yml
+  id: PROC-TDE-ADMINISTRACION-BD
+
+## us_desc_001_02.yml
+  id: PROC-GOB-DESCENTRALIZACION-COMPETENCIAS
+
+## us_dev_001_01.yml
+  id: PROC-TDE-DIAGNOSTICO-ERRORES
+
+## us_dev_bp_001.yml
+  id: PROC-TDE-P1
+
+## us_dev_bp_002.yml
+  id: PROC-TDE-P1
+
+## us_dev_bp_003.yml
+  id: PROC-TDE-P1
+
+## us_dev_bp_004.yml
+  id: PROC-TDE-P1
+
+## us_dev_bp_005.yml
+  id: PROC-TDE-VALIDACION-CONTINUA-MODELO
+
+## us_dev_bp_006.yml
+  id: PROC-TDE-P1
+
+## us_dev_bp_007.yml
+  id: PROC-TDE-P1
+
+## us_dev_bp_008.yml
+  id: PROC-TDE-P1
+
+## us_dev_cicd_001.yml
+  id: PROC-TDE-P1
+
+## us_dev_cicd_002.yml
+  id: PROC-TDE-P1
+
+## us_dev_cicd_003.yml
+  id: PROC-TDE-P1
+
+## us_dev_cicd_004.yml
+  id: PROC-TDE-P1
+
+## us_dev_ciclo_001.yml
+  id: PROC-TDE-CICLO-VIDA-DESARROLLO
+
+## us_dev_code_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_code_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_code_003.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_doc_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_dx_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_dx_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_feat_001.yml
+  id: PROC-TDE-LANZAMIENTO-CONTROLADO
+
+## us_dev_koda_001.yml
+  id: PROC-TDE-P1
+
+## us_dev_koda_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_koda_003.yml
+  id: PROC-TDE-P1
+
+## us_dev_koda_004.yml
+  id: PROC-TDE-P1
+
+## us_dev_prod_001.yml
+  id: PROC-TDE-P1
+
+## us_dev_prod_002.yml
+  id: PROC-TDE-P1
+
+## us_dev_prod_003.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_qa_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dev_rel_001.yml
+  id: PROC-TDE-P1
+
+## us_dev_rel_002.yml
+  id: PROC-TDE-P1
+
+## us_dev_rel_003.yml
+  id: PROC-TDE-P1
+
+## us_dev_sec_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_devmuni_001_01.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_devops_001_01.yml
+  id: PROC-TDE-MONITOREO-INFRAESTRUCTURA
+
+## us_didesoh_002_01.yml
+  id: PROC-SOC-VINCULACION-ORGANIZACIONES
+
+## us_difoi_001_02.yml
+  id: PROC-EJEC-COORDINACION-INTERAGENCIA
+
+## us_dip_001_01.yml
+  id: PROC-PLAN-SEGUIMIENTO-PROVINCIAL
+
+## us_dipir_001_02.yml
+  id: PROC-FIN-EMISION-CDP
+
+## us_diplade_001_01.yml
+  id: PROC-PLAN-SEGUIMIENTO-ERD
+
+## us_diplade_001_02.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_diplade_002_01.yml
+  id: PROC-EJE-EVALUACION-PERTINENCIA
+
+## us_dir_soc_001_01.yml
+  id: PROC-SOC-POSTULACION-FONDOS
+
+## us_dit_002_01.yml
+  id: PROC-FIN-GESTION-CONTRATOS
+
+## us_dpo_001_01.yml
+  id: PROC-TDE-PROTECCION-DATOS-PERSONALES
+
+## us_dpr_002_01.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_dseg_001_02.yml
+  id: PROC-PLAN-MONITOREO-ERD
+
+## us_dtmuni_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_dueno_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_ec33_001_01.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_ecif_001_01.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_edu_001_01.yml
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+
+## us_ejec_ar_005.yml
+  id: PROC-EJE-CIERRE-ADMINISTRATIVO
+
+## us_ejec_ar_006.yml
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+
+## us_ejec_ar_007.yml
+  id: PROC-ORG-REASIGNACION-CARGAS
+
+## us_ejec_ar_008.yml
+  id: PROC-EJE-CORRECCION-TRAMITES
+
+## us_ejec_ar_009.yml
+  id: PROC-EJEC-GESTION-OBSTACULOS
+
+## us_ejec_eo_002.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_eo_003.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_eo_005.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_eo_006.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_eo_007.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_jd_002.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_jd_005.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_jd_006.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_muni_001.yml
+  id: PROC-EJEC-POSTULACION-FONDOS
+
+## us_ejec_muni_002.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_ejec_muni_003.yml
+  id: PROC-EJEC-REUNION-INICIO
+
+## us_ejec_muni_004.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_ejec_muni_005.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_ejec_per_001.yml
+  id: PROC-GOB-GESTION-GABINETE
+
+## us_ejec_sec_001.yml
+  id: PROC-EJEC-ELABORACION-CONVENIO
+
+## us_ejec_sup_003.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_ejec_sup_005.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_emp_001_01.yml
+  id: PROC-GOB-VINCULACION-STAKEHOLDERS
+
+## us_enl_cies_001_01.yml
+  id: PROC-TERR-GESTION-RIESGO
+
+## us_eope_001_01.yml
+  id: PROC-BACK-SOLICITUD-SERVICIOS
+
+## us_epp_001_01.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_eval_001_01.yml
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+
+## us_eval_001_02.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_everde_001_01.yml
+  id: PROC-BACK-SOLICITUD-SERVICIOS
+
+## us_evol_ai_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_ai_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_ao_018.yml
+  id: PROC-TDE-FEDERACION-MUNICIPAL
+
+## us_evol_chaos_001.yml
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+
+## us_evol_dt_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_dt_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_gov_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_gov_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_h_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_kb_008.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_evol_pilot_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_play_001.yml
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+
+## us_evol_play_002.yml
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+
+## us_evol_puente_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_evol_tray_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_f8_001_01.yml
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+
+## us_f8_001_02.yml
+  id: PROC-EJEC-PAGO-BENEFICIARIOS
+
+## us_fedmuni_001_01.yml
+  id: PROC-GOB-ARTICULACION-MUNICIPAL
+
+## us_fenix_001_01.yml
+  id: PROC-GOB-INTERVENCION-FENIX
+
+## us_fin_001_01.yml
+  id: PROC-FIN-CONCILIACION-BANCARIA-AUTO
+
+## us_fin_apr_001.yml
+  id: PROC-PLAN-ASIGNACION-APR
+
+## us_fin_c33_001.yml
+  id: PROC-FIN-ASIGNACION-URGENCIA-5
+
+## us_fin_c33_002.yml
+  id: PROC-FIN-CLASIFICACION-ACTIVOS
+
+## us_fin_c33_005.yml
+  id: PROC-FIN-ADQUISICION-C33
+
+## us_fin_conv_003.yml
+  id: PROC-FIN-CONTROL-VIGENCIA-CONVENIO
+
+## us_fin_conv_005.yml
+  id: PROC-FIN-CUSTODIA-GARANTIAS
+
+## us_fin_form_003.yml
+  id: PROC-PLAN-FORMULACION-PRESUPUESTARIA
+
+## us_fin_form_004.yml
+  id: PROC-FIN-VALIDACION-NORMATIVA-GASTO
+
+## us_fin_form_005.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_fin_fril_001.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_fin_frpd_001.yml
+  id: PROC-PLAN-MONITOREO-ERD
+
+## us_fin_frpd_002.yml
+  id: PROC-EJEC-ELABORACION-CONVENIO
+
+## us_fin_frpd_003.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_fin_gest_002.yml
+  id: PROC-EJE-MODIFICACION-TECNICA
+
+## us_fin_gest_003.yml
+  id: PROC-EJE-REEVALUACION-RS
+
+## us_fin_gest_005.yml
+  id: PROC-EJE-FINALIZACION-TECNICA
+
+## us_fin_gob_001.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_fin_ipr_005.yml
+  id: PROC-FIN-ADMISIBILIDAD
+
+## us_fin_ipr_006.yml
+  id: PROC-TDE-NOTIFICACION-ELECTRONICA
+
+## us_fin_ipr_007.yml
+  id: PROC-TDE-NOTIFICACION-ELECTRONICA
+
+## us_fin_ipr_008.yml
+  id: PROC-PLAN-FORMULACION-PROYECTOS
+
+## us_fin_ipr_011.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_fin_ipr_015.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_fin_ipr_017.yml
+  id: PROC-EJEC-REUNION-INICIO
+
+## us_fin_ipr_018.yml
+  id: PROC-EJEC-MONITOREO-CONVENIO
+
+## us_fin_ipr_022.yml
+  id: PROC-PLAN-EVALUACION-METODOLOGICA
+
+## us_fin_ipr_026.yml
+  id: PROC-FIN-DEVOLUCION-GARANTIAS
+
+## us_fin_ipr_027.yml
+  id: PROC-PLAN-EVALUACION-TECNICA
+
+## us_fin_ipr_031.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_fin_ipr_034.yml
+  id: PROC-PLAN-SEGUIMIENTO-ERD
+
+## us_fin_ipr_035.yml
+  id: PROC-PLAN-MONITOREO-ERD
+
+## us_fin_ipr_036.yml
+  id: PROC-PLAN-MONITOREO-ERD
+
+## us_fin_ipr_039.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_fin_ipr_040.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_fin_jef_002.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_fin_jef_003.yml
+  id: PROC-FIN-GESTION-CRISIS-FINANCIERA
+
+## us_fin_jef_004.yml
+  id: PROC-PLAN-PRIORIZACION-CARTERA
+
+## us_fin_mod_002.yml
+  id: PROC-FIN-MODIFICACION-INTERNA
+
+## us_fin_ppr_002.yml
+  id: PROC-PLAN-MONITOREO-ERD
+
+## us_fin_ppr_003.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_fin_ppr_004.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_fin_ppr_006.yml
+  id: PROC-FIN-IPR_CORE-P6
+
+## us_fin_ppto_004.yml
+  id: PROC-FIN-IPR_CORE-P4
+
+## us_fin_ppto_006.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_009.yml
+  id: PROC-FIN-IPR_CORE-P7
+
+## us_fin_ppto_010.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_011.yml
+  id: PROC-FIN-IPR_CORE-P7
+
+## us_fin_ppto_012.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_013.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_017.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_018.yml
+  id: PROC-FIN-REND-P1
+
+## us_fin_ppto_019.yml
+  id: PROC-FIN-IPR_CORE-P7
+
+## us_fin_ppto_020.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_021.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_022.yml
+  id: PROC-FIN-IPR_CORE-P7
+
+## us_fin_ppto_026.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_027.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_ppto_031.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_fin_rend_014.yml
+  id: PROC-FIN-REND-P1
+
+## us_fin_rend_015.yml
+  id: PROC-FIN-REND-P1
+
+## us_fin_rend_016.yml
+  id: PROC-FIN-REND-P1
+
+## us_fin_rend_018.yml
+  id: PROC-FIN-REND-P1
+
+## us_fin_sub_001.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_fin_sub_002.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_fin_sub_003.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_fin_sub_004.yml
+  id: PROC-FIN-IPR_CORE-P4
+
+## us_fin_sub_005.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_fin_sup_002.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_finops_001_01.yml
+  id: PROC-OPS-P1
+
+## us_fisc_001_01.yml
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+
+## us_fisc_sum_001_01.yml
+  id: PROC-NORM-P1
+
+## us_flota_001_01.yml
+  id: PROC-BACK-GESTION-FLOTA
+
+## us_fndr8_001_01.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_fnx_act_001.yml
+  id: PROC-FENIX-P1
+
+## us_fnx_act_003.yml
+  id: PROC-FENIX-P1
+
+## us_fnx_ana_001.yml
+  id: PROC-FENIX-P2
+
+## us_fnx_ana_003.yml
+  id: PROC-FENIX-P2
+
+## us_fnx_cie_002.yml
+  id: PROC-FENIX-P2
+
+## us_fnx_cie_003.yml
+  id: PROC-FENIX-P2
+
+## us_fnx_ges_001.yml
+  id: PROC-SOC-GESTION-CASO-FENIX
+
+## us_fnx_int_001.yml
+  id: PROC-FENIX-P1
+
+## us_fnx_int_002.yml
+  id: PROC-FENIX-P1
+
+## us_fnx_int_003.yml
+  id: PROC-FENIX-P1
+
+## us_fnx_ope_002.yml
+  id: PROC-FENIX-P1
+
+## us_fnx_ope_003.yml
+  id: PROC-FENIX-P1
+
+## us_foto_001_01.yml
+  id: PROC-BACK-P1
+
+## us_front_001_01.yml
+  id: PROC-DEV-P1
+
+## us_frpd_001_01.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_func_001_01.yml
+  id: PROC-BACK-P2
+
+## us_func_001_02.yml
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+
+## us_g7_001_01.yml
+  id: PROC-FIN-IPR_CORE-P5
+
+## us_gab_001_01.yml
+  id: PROC-GOB-GESTION-CABINET
+
+## us_gab_002_01.yml
+  id: PROC-BACK-P1
+
+## us_gen_001_01.yml
+  id: PROC-PLAN-EVALUACION-TRANSVERSAL-GENERO
+
+## us_gen_dev_hon_jefe_001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_dev_qa_analista_001.yml
+  id: PROC-DEV-P3
+
+## us_gen_ejec_anal_001.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_gen_ejec_cper_sec_001.yml
+  id: PROC-EJE-EVALUACION-PERTINENCIA
+
+## us_gen_ejec_infra_ito_001.yml
+  id: PROC-EJE-MONITOREO-OBRAS
+
+## us_gen_ejec_ito_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_ejec_itp_001.yml
+  id: PROC-FIN-IPR_CORE-P6
+
+## us_gen_ejec_urai_ejec_001.yml
+  id: PROC-FIN-IPR_CORE-P4
+
+## us_gen_fin_analista_co_001.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_gen_final_001.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_gen_final_002.yml
+  id: PROC-FIN-IPR_CORE-P6
+
+## us_gen_final_003.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_gen_final_004.yml
+  id: PROC-TDE-P1
+
+## us_gen_final_005.yml
+  id: PROC-PLAN-P1
+
+## us_gen_final_006.yml
+  id: PROC-PLAN-P3
+
+## us_gen_final_007.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_gen_final_008.yml
+  id: PROC-TDE-P1
+
+## us_gen_final_009.yml
+  id: PROC-FIN-IPR_CORE-P6
+
+## us_gen_final_010.yml
+  id: PROC-PLAN-P1
+
+## us_gen_final_011.yml
+  id: PROC-PLAN-P3
+
+## us_gen_final_012.yml
+  id: PROC-BACK-P2
+
+## us_gen_final_013.yml
+  id: PROC-PLAN-P1
+
+## us_gen_final_014.yml
+  id: PROC-PLAN-P7
+
+## us_gen_final_015.yml
+  id: PROC-PLAN-P1
+
+## us_gen_final_016.yml
+  id: PROC-PLAN-P1
+
+## us_gen_final_017.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_gen_final_018.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_gen_final_019.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_gen_generic_analist_002.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gen_gestion_250_enc_001.yml
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+
+## us_gen_gestion_anal_001.yml
+  id: PROC-TDE-SOPORTE-USUARIO
+
+## us_gen_gestion_analist_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_analist_002.yml
+  id: PROC-PLAN-P1
+
+## us_gen_gestion_arch_001.yml
+  id: PROC-BACK-ARCHIVO-DOCUMENTAL
+
+## us_gen_gestion_aud_min_001.yml
+  id: PROC-NORM-AUDITORIA-EXTERNA
+
+## us_gen_gestion_bc_001.yml
+  id: PROC-FIN-ACTUALIZACION-PARAMETROS
+
+## us_gen_gestion_benefic_001.yml
+  id: PROC-SOC-AUTOSERVICIO-CIUDADANO
+
+## us_gen_gestion_caigg_001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_gestion_camp_001.yml
+  id: PROC-EJE-EJECUCION-PROGRAMA
+
+## us_gen_gestion_ccasoc_001.yml
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+
+## us_gen_gestion_cde_001.yml
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+
+## us_gen_gestion_cdr_001.yml
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+
+## us_gen_gestion_cenic_001.yml
+  id: PROC-TDE-DIFUSION-DATOS
+
+## us_gen_gestion_cert_002.yml
+  id: PROC-TDE-SEGURIDAD-INFRAESTRUCTURA
+
+## us_gen_gestion_clasif_002.yml
+  id: PROC-TDE-GUBERNANZA-DATOS
+
+## us_gen_gestion_cnr_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_com_001.yml
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+
+## us_gen_gestion_comunic_001.yml
+  id: PROC-GOB-GESTION-IMAGEN-REGIONAL
+
+## us_gen_gestion_con_ing_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_consult_001.yml
+  id: PROC-PLAN-FORMULACION-PROYECTOS
+
+## us_gen_gestion_contrap_001.yml
+  id: PROC-EJE-SEGUIMIENTO-ADMINISTRATIVO
+
+## us_gen_gestion_coor_001.yml
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+
+## us_gen_gestion_corfo_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_corte_n_001.yml
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+
+## us_gen_gestion_cosoc_001.yml
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+
+## us_gen_gestion_cpc_001.yml
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+
+## us_gen_gestion_cplt_001.yml
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+
+## us_gen_gestion_cseu_me_001.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gen_gestion_ctd_001.yml
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+
+## us_gen_gestion_cti_pro_001.yml
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+
+## us_gen_gestion_dga_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_digitra_001.yml
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+
+## us_gen_gestion_dipres_001.yml
+  id: PROC-PLAN-PREPARACION-ARI
+
+## us_gen_gestion_directo_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_doh_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_dpp_001.yml
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+
+## us_gen_gestion_emp_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_enc_001.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gen_gestion_encarga_001.yml
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+
+## us_gen_gestion_especia_001.yml
+  id: PROC-TDE-GUBERNANZA-DATOS
+
+## us_gen_gestion_ext_002.yml
+  id: PROC-TDE-P1
+
+## us_gen_gestion_femp_001.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gen_gestion_fin_cog_001.yml
+  id: PROC-FIN-PAGO-TESORERIA
+
+## us_gen_gestion_fnx_op_001.yml
+  id: PROC-SOC-GESTION-CASO-FENIX
+
+## us_gen_gestion_fosis_001.yml
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+
+## us_gen_gestion_front_001.yml
+  id: PROC-TDE-DESARROLLO-SISTEMAS
+
+## us_gen_gestion_gen_001.yml
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+
+## us_gen_gestion_goreolo_001.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gen_gestion_grd_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_hon_ana_001.yml
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+
+## us_gen_gestion_indap_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_int_001.yml
+  id: PROC-GOB-REPORTE-GESTION-AUTORIDAD
+
+## us_gen_gestion_ipr_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_jano_001.yml
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+
+## us_gen_gestion_jefe_001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_gestion_jefe_es_001.yml
+  id: PROC-PLAN-SEGUIMIENTO-ERD
+
+## us_gen_gestion_jjvv_001.yml
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+
+## us_gen_gestion_junji_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_juzg_le_001.yml
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+
+## us_gen_gestion_media_c_001.yml
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+
+## us_gen_gestion_medio_c_001.yml
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+
+## us_gen_gestion_mora_001.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gen_gestion_muni_en_001.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gen_gestion_notario_001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_gestion_ong_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_org_ben_001.yml
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+
+## us_gen_gestion_org_pos_001.yml
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+
+## us_gen_gestion_pmg_td_001.yml
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+
+## us_gen_gestion_prensa__001.yml
+  id: PROC-BACK-DIFUSION-COMUNICACIONAL
+
+## us_gen_gestion_pres_001.yml
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+
+## us_gen_gestion_profesi_002.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gen_gestion_propir_001.yml
+  id: PROC-EJE-PROYECTOS-INVERSION-SOCIAL
+
+## us_gen_gestion_rez_enc_001.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_gen_gestion_salud_s_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_secpla__001.yml
+  id: PROC-PLAN-FORMULACION-PROYECTOS
+
+## us_gen_gestion_secpla__002.yml
+  id: PROC-PLAN-ALINEACION-ERD
+
+## us_gen_gestion_sence_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_serco_001.yml
+  id: PROC-EJE-EJECUCION-PROGRAMA
+
+## us_gen_gestion_seremi__001.yml
+  id: PROC-PLAN-PREPARACION-ARI
+
+## us_gen_gestion_seremi__002.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_gen_gestion_sernam_001.yml
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+
+## us_gen_gestion_sii_001.yml
+  id: PROC-FIN-ACTUALIZACION-PARAMETROS
+
+## us_gen_gestion_sindic_001.yml
+  id: PROC-GOB-PARTICIPACION-CIUDADANA
+
+## us_gen_gestion_sna_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_gestion_subdere_001.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gen_gestion_subtel_001.yml
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+
+## us_gen_gestion_tc_001.yml
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+
+## us_gen_gestion_transp__001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_gestion_ucr_coo_001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_gestion_unidad__001.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gen_gestion_univ_001.yml
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+
+## us_gen_gestion_univers_001.yml
+  id: PROC-TDE-CIENCIA-TECNOLOGIA
+
+## us_gen_gestion_utm_gen_001.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gen_jur_ases_div_001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_norm_abogado_ge_001.yml
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+
+## us_gen_norm_audit_002.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gen_norm_mp_001.yml
+  id: PROC-NORM-ASISTENCIA-JUDICIAL
+
+## us_gen_ops_admin_sys_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_gen_ops_encargado_c_001.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gen_seg_ases_001.yml
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+
+## us_gen_terr_terr_001.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_gen_terr_terr_soc_001.yml
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+
+## us_geo_001_01.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_geo_002_01.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_gest_coord_002.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gest_hg_002.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gest_hg_003.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gest_mc_001.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gest_mc_002.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gest_pb_001.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gest_pb_002.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gest_pb_003.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gest_per_002.yml
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+
+## us_gest_proc_001.yml
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+
+## us_gest_scg_001.yml
+  id: PROC-PLAN-ALINEACION-ERD
+
+## us_gest_scg_003.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gest_uci_002.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gfom_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_glosa7_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_gob_001_02.yml
+  id: PROC-PLAN-MONITOREO-PLANES
+
+## us_gob_002_01.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_core_004.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_core_006.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_core_007.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_core_010.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_core_011.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_del_001.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_del_003.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gob_del_004.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_desc_002.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_desc_005.yml
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+
+## us_gob_desc_006.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gob_desc_007.yml
+  id: PROC-FIN-EJECUCION-GASTO
+
+## us_gob_gab_001.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gob_gab_003.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_gab_004.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_gab_005.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gob_gab_007.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_gr_001.yml
+  id: PROC-PLAN-ALINEACION-ERD
+
+## us_gob_gr_004.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_gr_005.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gob_gr_009.yml
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+
+## us_gob_gr_010.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_gr_013.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_gob_gr_014.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gob_grd_001.yml
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+
+## us_gob_grd_002.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_gob_grd_003.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_gob_grd_004.yml
+  id: PROC-SOC-ANALISIS-TERRITORIAL
+
+## us_gob_lob_001.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gob_lob_002.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_gob_op_002.yml
+  id: PROC-TDE-TRANSFORMACION-PROCESOS
+
+## us_gob_op_005.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_gob_sec_001.yml
+  id: PROC-GOB-COORDINACION-CORE
+
+## us_gobprov_001_01.yml
+  id: PROC-PLAN-ALINEACION-ERD
+
+## us_gprov_001_01.yml
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+
+## us_grd_001_01.yml
+  id: PROC-ORG-GESTION-OPERATIVA-EQUIPO
+
+## us_hon_001_01.yml
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+
+## us_hon_002_01.yml
+  id: PROC-BACK-AUTOSERVICIO-RRHH
+
+## us_icon_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_ide_001_01.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_if_001_02.yml
+  id: PROC-NORM-CONTROL-INTERNO
+
+## us_indap_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_inter_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_intfin_001_01.yml
+  id: PROC-FIN-CONTABILIDAD-PRESUPUESTARIA
+
+## us_intfis_001_01.yml
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+
+## us_inv_001_01.yml
+  id: PROC-FIN-GESTION-BIENES-NACIONALES
+
+## us_inv_dep_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_iplat_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_isan_001_01.yml
+  id: PROC-PLAN-P1
+
+## us_iseg_001_01.yml
+  id: PROC-TDE-DESARROLLO-SEGURO
+
+## us_itmuni_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_ito_001_01.yml
+  id: PROC-EJE-MONITOREO-OBRAS
+
+## us_ito_001_02.yml
+  id: PROC-EJE-MONITOREO-OBRAS
+
+## us_ito_002_01.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_itom_001_01.yml
+  id: PROC-EJE-MONITOREO-OBRAS
+
+## us_itp_001_01.yml
+  id: PROC-FIN-IPR_CORE-P6
+
+## us_ivial_001_01.yml
+  id: PROC-PLAN-P1
+
+## us_jaud_001_01.yml
+  id: PROC-NORM-P1
+
+## us_jcal_001_01.yml
+  id: PROC-BACK-P1
+
+## us_jcont_001_01.yml
+  id: PROC-FIN-CIERRE-PRESUPUESTARIO
+
+## us_jd_ana_001_01.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_jefe_rrhh_001_01.yml
+  id: PROC-BACK-P1
+
+## us_jer_001_01.yml
+  id: PROC-GOB-P1
+
+## us_jest_001_01.yml
+  id: PROC-PLAN-P1
+
+## us_jpre_001_01.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_jprog_001_01.yml
+  id: PROC-PLAN-P3
+
+## us_jterr_001_01.yml
+  id: PROC-PLAN-P1
+
+## us_jtes_001_01.yml
+  id: PROC-FIN-EJECUCION-PRESUPUESTARIA
+
+## us_jti_001_01.yml
+  id: PROC-TDE-P1
+
+## us_juez_001_01.yml
+  id: PROC-NORM-SUMARIO-ADMINISTRATIVO
+
+## us_lobby_001_01.yml
+  id: PROC-NORM-P1
+
+## us_mctd_001_01.yml
+  id: PROC-TDE-P1
+
+## us_mds_001_01.yml
+  id: PROC-FIN-IPR_CORE-P1
+
+## us_mecif_001_01.yml
+  id: PROC-NORM-P1
+
+## us_mesa_001_01.yml
+  id: PROC-TDE-P1
+
+## us_mesa_002_01.yml
+  id: PROC-BACK-P2
+
+## us_mig_001.yml
+  id: PROC-TDE-P1
+
+## us_mig_002.yml
+  id: PROC-TDE-P1
+
+## us_mig_003.yml
+  id: PROC-TDE-P1
+
+## us_mig_prom_001.yml
+  id: PROC-TDE-P1
+
+## us_mon_001_01.yml
+  id: PROC-TDE-P1
+
+## us_msia_001_01.yml
+  id: PROC-TDE-P1
+
+## us_ndev_001_01.yml
+  id: PROC-TDE-P1
+
+## us_noc_001_01.yml
+  id: PROC-FENIX-P1
+
+## us_norm_acto_002.yml
+  id: PROC-NORM-P1
+
+## us_norm_acto_003.yml
+  id: PROC-NORM-P1
+
+## us_norm_acto_004.yml
+  id: PROC-NORM-P1
+
+## us_norm_acto_005.yml
+  id: PROC-NORM-P2
+
+## us_norm_acto_006.yml
+  id: PROC-NORM-P1
+
+## us_norm_acto_008.yml
+  id: PROC-NORM-P1
+
+## us_norm_acto_011.yml
+  id: PROC-TDE-P1
+
+## us_norm_acto_012.yml
+  id: PROC-NORM-P1
+
+## us_norm_att_001.yml
+  id: PROC-TDE-P1
+
+## us_norm_cgr_001.yml
+  id: PROC-NORM-P1
+
+## us_norm_cgr_003.yml
+  id: PROC-NORM-P1
+
+## us_norm_cris_001.yml
+  id: PROC-FENIX-P1
+
+## us_norm_ctrl_001.yml
+  id: PROC-NORM-P1
+
+## us_norm_ctrl_004.yml
+  id: PROC-NORM-P1
+
+## us_norm_ctrl_005.yml
+  id: PROC-NORM-P2
+
+## us_norm_dip_001.yml
+  id: PROC-NORM-P1
+
+## us_norm_exp_001.yml
+  id: PROC-TDE-P1
+
+## us_norm_exp_003.yml
+  id: PROC-TDE-P1
+
+## us_norm_lobby_001.yml
+  id: PROC-NORM-P1
+
+## us_norm_lobby_002.yml
+  id: PROC-NORM-P1
+
+## us_norm_sim_001.yml
+  id: PROC-NORM-P1
+
+## us_norm_trans_002.yml
+  id: PROC-TDE-P1
+
+## us_obs_001_01.yml
+  id: PROC-PLAN-P1
+
+## us_obs_001_02.yml
+  id: PROC-PLAN-P1
+
+## us_oirs_001_01.yml
+  id: PROC-TDE-GESTION-SOLICITUDES-OIRS
+
+## us_oirs_001_02.yml
+  id: PROC-TDE-GESTION-SOLICITUDES-OIRS
+
+## us_ong_001_01.yml
+  id: PROC-EJEC-POSTULACION-FONDOS
+
+## us_ong_002_01.yml
+  id: PROC-EJE-P1
+
+## us_op_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_op_001_02.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_op_002_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_op_cies_001_01.yml
+  id: PROC-EJEC-MONITOREO-CRITICO
+
+## us_ope_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_ops_back_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_bak_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_bak_002.yml
+  id: PROC-TDE-P1
+
+## us_ops_bak_003.yml
+  id: PROC-TDE-P1
+
+## us_ops_cfg_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_cfg_002.yml
+  id: PROC-TDE-P1
+
+## us_ops_cfg_003.yml
+  id: PROC-TDE-P1
+
+## us_ops_dat_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_dat_002.yml
+  id: PROC-TDE-P1
+
+## us_ops_dat_003.yml
+  id: PROC-TDE-P1
+
+## us_ops_dat_004.yml
+  id: PROC-TDE-P1
+
+## us_ops_fin_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_iac_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_iam_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_iam_002.yml
+  id: PROC-TDE-P1
+
+## us_ops_iam_003.yml
+  id: PROC-TDE-P1
+
+## us_ops_iam_004.yml
+  id: PROC-TDE-P1
+
+## us_ops_iam_005.yml
+  id: PROC-TDE-P1
+
+## us_ops_inc_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_mig_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_mig_002.yml
+  id: PROC-TDE-P1
+
+## us_ops_mig_003.yml
+  id: PROC-TDE-P1
+
+## us_ops_mon_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_mon_002.yml
+  id: PROC-TDE-P1
+
+## us_ops_mon_003.yml
+  id: PROC-TDE-P1
+
+## us_ops_mon_004.yml
+  id: PROC-TDE-P1
+
+## us_ops_perf_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_sec_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_ops_sre_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_sup_001.yml
+  id: PROC-TDE-P1
+
+## us_ops_sup_002.yml
+  id: PROC-TDE-P1
+
+## us_ops_sup_003.yml
+  id: PROC-TDE-P1
+
+## us_ops_sup_004.yml
+  id: PROC-TDE-P1
+
+## us_part_001_01.yml
+  id: PROC-PLAN-P1
+
+## us_pat_did_001_01.yml
+  id: PROC-EJEC-GESTOR-PATROCINIOS
+
+## us_pat_dif_001_01.yml
+  id: PROC-EJEC-GESTOR-PATROCINIOS
+
+## us_pat_dit_001_01.yml
+  id: PROC-EJEC-GESTOR-PATROCINIOS
+
+## us_pcseu_001_01.yml
+  id: PROC-EJE-P1
+
+## us_pdi_001_01.yml
+  id: PROC-EJEC-MONITOREO-CRITICO
+
+## us_per_001_01.yml
+  id: PROC-COM-GESTION-PRENSA
+
+## us_pes_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_pever_001_01.yml
+  id: PROC-GOB-GESTION-ESTRATEGICA
+
+## us_plan_urb_001_01.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_pmg_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_po_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_ppert_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_ppr_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_preinv_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_pres_core_001_01.yml
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+
+## us_prev_001_01.yml
+  id: PROC-BACK-MEDIDAS-PREVENTIVAS
+
+## us_prev_002_01.yml
+  id: PROC-BACK-MEDIDAS-PREVENTIVAS
+
+## us_prof_n250_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_prof_rez_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_qa_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_rem_001_01.yml
+  id: PROC-BACK-PAGO-REMUNERACIONES
+
+## us_rem_002_01.yml
+  id: PROC-BACK-PAGO-REMUNERACIONES
+
+## us_rend_002_01.yml
+  id: PROC-FIN-CONTROL-RENDICIONES
+
+## us_rez_001_01.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_rgasto_001_01.yml
+  id: PROC-FIN-CONTABILIDAD-PRESUPUESTARIA
+
+## us_rpmg_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_rpsico_001_01.yml
+  id: PROC-BACK-MEDIDAS-PREVENTIVAS
+
+## us_rrhh_001_01.yml
+  id: PROC-BACK-GESTION-PERSONAL
+
+## us_rrhh_001_02.yml
+  id: PROC-BACK-GESTION-PERSONAL
+
+## us_rrhh_002_01.yml
+  id: PROC-BACK-GESTION-PERSONAL
+
+## us_rtd_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_rtec_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_sag_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_sec_ctci_001_01.yml
+  id: PROC-GOB-GESTION-ESTRATEGICA
+
+## us_sec_ctd_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_seccom_001_01.yml
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+
+## us_seccore_001_01.yml
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+
+## us_seccore_001_02.yml
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+
+## us_secdiv_001_01.yml
+  id: PROC-BACK-GESTION-DOCUMENTAL
+
+## us_secpla_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_secpla_001_02.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_seg_cies_001.yml
+  id: PROC-SEG-MONITOREO-CIUDADANO
+
+## us_seg_cies_003.yml
+  id: PROC-SEG-MONITOREO-CIUDADANO
+
+## us_seg_cies_004.yml
+  id: PROC-SEG-COORDINACION-POLICIAL
+
+## us_seg_cies_006.yml
+  id: PROC-SEG-COORDINACION-POLICIAL
+
+## us_seg_cies_008.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_seg_cies_009.yml
+  id: PROC-SEG-MONITOREO-CIUDADANO
+
+## us_seg_cies_010.yml
+  id: PROC-SEG-MONITOREO-CIUDADANO
+
+## us_seg_evid_001.yml
+  id: PROC-SEG-COORDINACION-POLICIAL
+
+## us_seg_evid_003.yml
+  id: PROC-SEG-COORDINACION-POLICIAL
+
+## us_seg_gob_002.yml
+  id: PROC-GOB-GESTION-ESTRATEGICA
+
+## us_seg_gob_004.yml
+  id: PROC-SEG-MONITOREO-CIUDADANO
+
+## us_seg_prev_003.yml
+  id: PROC-GOB-GESTION-ESTRATEGICA
+
+## us_seg_prev_006.yml
+  id: PROC-FIN-CONTROL-RENDICIONES
+
+## us_seg_prev_007.yml
+  id: PROC-EJEC-PROYECTO-SOCIAL
+
+## us_seg_prev_008.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_seg_prev_009.yml
+  id: PROC-GOB-GESTION-ESTRATEGICA
+
+## us_seg_prev_010.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_sen_001_01.yml
+  id: PROC-NORM-RESPUESTA-OFICIO
+
+## us_senapred_001_01.yml
+  id: PROC-SEG-COORDINACION-POLICIAL
+
+## us_ser_agr_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_ser_gob_001_01.yml
+  id: PROC-GOB-GESTION-ESTRATEGICA
+
+## us_ser_mop_001_01.yml
+  id: PROC-EJEC-GESTION-ADQUISICIONES
+
+## us_serc_001_01.yml
+  id: PROC-EJEC-GESTION-ADQUISICIONES
+
+## us_seremi_001_02.yml
+  id: PROC-GOB-PRESIDIR-SESION-CORE
+
+## us_serv_001_01.yml
+  id: PROC-BACK-GESTION-ADQUISICIONES
+
+## us_serviu_001_01.yml
+  id: PROC-EJE-SUPERVISION-TECNICA
+
+## us_soc_001_01.yml
+  id: PROC-EJEC-POSTULACION-FONDOS
+
+## us_socio_001_01.yml
+  id: PROC-BACK-GESTION-BIENESTAR
+
+## us_sofo_001_01.yml
+  id: PROC-PLAN-ANALISIS-TERRITORIAL
+
+## us_sop_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_spert_001_01.yml
+  id: PROC-PLAN-FORMULACION-ARI
+
+## us_sre_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_subv_001_01.yml
+  id: PROC-FIN-CONTROL-RENDICIONES
+
+## us_suj_001_01.yml
+  id: PROC-NORM-GESTION-LOBBY
+
+## us_sup_cies_001_01.yml
+  id: PROC-SEG-MONITOREO-CIUDADANO
+
+## us_sup_obra_001_01.yml
+  id: PROC-FIN-CONTABILIDAD-PRESUPUESTARIA
+
+## us_sup_trans_001_01.yml
+  id: PROC-NORM-GESTION-LOBBY
+
+## us_tc_001_01.yml
+  id: PROC-NORM-AUDITORIA-INTERNA
+
+## us_tcorp_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_admin_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_admin_002.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_admin_004.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_admin_006.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_admin_007.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_admin_008.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_auth_001.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_auth_002.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_auth_003.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_auth_004.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_auth_005.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_auth_006.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_avance_002.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_avance_003.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_calidad_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_calidad_003.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_cris_001.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_dev_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_docdig_002.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_dpo_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_dpo_003.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_dpo_005.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_dpo_007.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_dpo_008.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_firma_002.yml
+  id: PROC-TDE-CONTINUIDAD-OPERATIVA
+
+## us_tde_interop_001.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_interop_002.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_interop_003.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_interop_004.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_interop_005.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_interop_007.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_muni_001.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_muni_002.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_muni_004.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_notif_001.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_notif_002.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_notif_003.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_tde_notif_004.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_notif_005.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_notif_006.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_tde_qa_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_reg_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_sec_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_001.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_002.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_003.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_004.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_005.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_006.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_007.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_seg_008.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_009.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_seg_010.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_seg_011.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_tic_002.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_tde_tic_004.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tde_vinc_002.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_terr_anl_001.yml
+  id: PROC-PLAN-MONITOREO-ERD
+
+## us_terr_dom_002.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_terr_dom_003.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_terr_ide_002.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_terr_ide_003.yml
+  id: PROC-TDE-INTEROPERABILIDAD
+
+## us_terr_ide_006.yml
+  id: PROC-TERR-DIAGNOSTICO
+
+## us_terr_plan_001.yml
+  id: PROC-TERR-DIAGNOSTICO
+
+## us_terr_plan_005.yml
+  id: PROC-PLAN-MONITOREO-ERD
+
+## us_terr_prg_001.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_tes_001_01.yml
+  id: PROC-FIN-PAGO-PROVEEDORES
+
+## us_tic_001_02.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_tlead_001_01.yml
+  id: PROC-TDE-GUBERNANZA-TI
+
+## us_transp_002_01.yml
+  id: PROC-TDE-GESTION-DOCUMENTAL
+
+## us_ucr_001_01.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_uf_001_01.yml
+  id: PROC-PLAN-GESTION-INVERSION
+
+## us_uoct_001_01.yml
+  id: PROC-TERR-DIAGNOSTICO
+
+## us_usr_001_01.yml
+  id: PROC-TDE-AUTENTICACION
+
+## us_vinc_001_01.yml
+  id: PROC-GOB-GESTION-GABINETE
+

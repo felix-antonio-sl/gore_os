@@ -41,6 +41,6 @@ extra_tags:
 
 status: ENRICHED
 acceptance_criteria:
-  - "Quick Start Guide" con scripts de instalación automatizados (Makefile/Docker)
+  - '"Quick Start Guide" con scripts de instalación automatizados (Makefile/Docker)'
   - Glosario de términos del Supermodelo (Atmos, Molecules, Domains)
   - Checklist de seguridad para el manejo de credenciales y secretos (.env)

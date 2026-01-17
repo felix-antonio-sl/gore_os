@@ -1,0 +1,6319 @@
+## us_abast_001_01.yml
+  - mercado-publico
+  - plan-compras
+  - adquisiciones
+  - seguimiento
+
+
+## us_abast_001_02.yml
+  - contratos
+  - vencimiento
+  - renovacion
+  - licitacion
+
+
+## us_abog_001_01.yml
+  - plantillas
+  - actos-administrativos
+  - automatizacion
+  - legal
+
+
+## us_abog_001_02.yml
+  - jurisprudencia
+  - precedentes
+  - consistencia
+  - busqueda
+
+
+## us_abog_conv_001_01.yml
+  - convenios
+  - clausulas
+  - plantillas
+  - estandarizacion
+
+
+## us_abog_daf_001_01.yml
+  - contratos
+  - bases
+  - licitacion
+  - revision-juridica
+
+
+## us_abog_disc_001_01.yml
+  - sumarios
+  - disciplinario
+  - confidencial
+  - reserva
+
+
+## us_abog_inf_001_01.yml
+  - jurisprudencia
+  - dictamenes
+  - cgr
+  - precedentes
+
+
+## us_abog_jud_001_01.yml
+  - judicial
+  - plazos
+  - calendario
+  - causas
+
+
+## us_abog_lic_001_01.yml
+  - licitaciones
+  - bases
+  - chilecompra
+  - plantillas
+
+
+## us_abog_rev_001_01.yml
+  - revision
+  - resoluciones
+  - versionado
+  - workflow
+
+
+## us_acc_001_01.yml
+  - accesibilidad
+  - wcag
+  - auditoria
+  - inclusion
+
+
+## us_aconv_001_01.yml
+  - convenios
+  - checklist
+  - requisitos
+  - verificacion
+
+
+## us_acv_001_01.yml
+  - onboarding
+  - funcionarios
+  - checklist
+  - ingreso
+
+
+## us_adm_plat_001_01.yml
+  - rbac
+  - permisos
+  - privilegios
+  - seguridad
+
+
+## us_admin_001_01.yml
+  - usuarios
+  - permisos
+  - rbac
+  - panel-admin
+
+
+## us_aeval_001_01.yml
+  - evaluacion
+  - ficha
+  - criterios
+  - proyectos
+
+
+## us_alc_001_02.yml
+  - alcalde
+  - fondos
+  - calendario
+  - postulacion
+
+
+## us_alc_chi_001_01.yml
+  - chillan
+  - alcalde
+  - proyectos-municipales
+  - transparencia
+  - rendicion-cuentas
+
+
+## us_alc_chv_001_01.yml
+  - chillan-viejo
+  - alcalde
+  - proyectos-municipales
+  - transparencia
+  - rendicion-cuentas
+
+
+## us_alc_sc_001_01.yml
+  - san-carlos
+  - alcalde
+  - proyectos-municipales
+  - transparencia
+  - rendicion-cuentas
+
+
+## us_amb_001_01.yml
+  - seia
+  - rca
+  - ambiental
+  - cumplimiento
+  - sostenibilidad
+
+
+## us_amod_001_01.yml
+  - modificaciones
+  - presupuesto
+  - trazabilidad
+  - glosas
+  - daf
+
+
+## us_amuch_001_01.yml
+  - amuch
+  - gobernador
+  - canal-directo
+  - municipalidades
+
+
+## us_anal_inv_001_01.yml
+  - formulario
+  - evaluacion-tecnica
+  - analisis-ipr
+
+
+## us_anal_inv_001_02.yml
+  - historial
+  - proyectos
+  - evaluacion
+  - inteligencia-artificial
+
+
+## us_anal_ppr_001_01.yml
+  - ppr
+  - marco-logico
+  - metas
+  - indicadores
+  - planificación
+
+
+## us_anal_seg_001_02.yml
+  - alertas
+  - desviacion
+  - proactividad
+  - seguimiento
+
+
+## us_analpres_001_01.yml
+  - cdp
+  - presupuesto
+  - saldos
+  - validacion
+
+
+## us_analpres_001_02.yml
+  - alertas
+  - presupuesto
+  - saldos
+  - monitoreo
+
+
+## us_anci_001_01.yml
+  - ancore
+  - core
+  - legislativo
+  - buenas-practicas
+  - consejos-regionales
+
+
+## us_anid_001_01.yml
+  - anid
+  - ciencia
+  - tecnologia
+  - capital-humano
+  - ñuble
+
+
+## us_ap_core_001_01.yml
+  - apoyo-core
+  - minutas
+  - sesion
+  - antecedentes
+
+
+## us_apres_001_01.yml
+  - modificaciones
+  - presupuesto
+  - transacciones
+  - gestion-financiera
+
+
+## us_aprev_001_01.yml
+  - extintores
+  - prevencion-riesgos
+  - seguridad-laboral
+  - movil
+
+
+## us_apt_001_01.yml
+  - gis
+  - plano-regulador
+  - urbanismo
+  - prevencion
+
+
+## us_ar_001_02.yml
+  - reuniones
+  - coordinacion
+  - jefaturas
+  - alineamiento
+
+
+## us_ar_002_01.yml
+  - metricas
+  - rrhh
+  - ausentismo
+  - talento
+
+
+## us_ar_003_01.yml
+  - subrogancias
+  - continuidad-operativa
+  - personal
+  - resoluciones
+
+
+## us_arch_001_01.yml
+  - archivo
+  - digitalizacion
+  - documentos
+  - localizacion
+
+
+## us_arq_001_01.yml
+  - bim
+  - cad
+  - planos
+  - arquitectura
+  - revision-tecnica
+
+
+## us_arq_dat_001_01.yml
+  - datos
+  - catalogo
+  - entidades
+  - gobernanza
+
+
+## us_arqc_001_01.yml
+  - semantica
+  - modelado
+  - categorias
+  - dsl
+  - koda
+
+
+## us_arqp_001_01.yml
+  - oguc
+  - normativa
+  - arquitectura
+  - revision
+  - ley-urbanismo
+
+
+## us_arqs_001_01.yml
+  - adr
+  - arquitectura
+  - decisiones
+  - documentacion
+  - consistencia
+
+
+## us_as_001_01.yml
+  - social
+  - dirigente
+  - ficha-social
+  - evaluacion
+
+
+## us_aserv_001_01.yml
+  - servicios-generales
+  - mantencion
+  - salas
+  - reserva
+  - logistica
+
+
+## us_ases_001_01.yml
+  - asesoría
+  - seguridad-publica
+  - informes
+  - ñuble-seguro
+
+
+## us_asis_001_01.yml
+  - asistencia
+  - biometrico
+  - rrhh
+  - control
+  - automatizacion
+
+
+## us_at_001_01.yml
+  - ide
+  - gis
+  - mapas
+  - territorio
+  - analisis-espacial
+
+
+## us_ates_001_01.yml
+  - pagos
+  - tesoreria
+  - presupuesto
+  - validacion
+
+
+## us_atra_001_01.yml
+  - vialidad
+  - transporte
+  - rutas
+  - prevencion
+
+
+## us_atrans_001_01.yml
+  - transferencias
+  - convenios
+  - seguimiento
+  - control-financiero
+
+
+## us_aucr_001_01.yml
+  - ocr
+  - digitalizacion
+  - busqueda
+  - daf
+
+
+## us_aud_001_01.yml
+  - auditoria
+  - control-interno
+  - hallazgos
+  - recomendaciones
+
+
+## us_aud_001_02.yml
+  - auditoria
+  - informes
+  - plantillas
+  - estandarización
+
+
+## us_aud_ctrl_001_01.yml
+  - control
+  - auditoria
+  - logs
+  - transacciones
+  - probidad
+
+
+## us_aud_ext_001_01.yml
+  - auditoria-externa
+  - cgr
+  - expedientes
+  - acceso-controlado
+
+
+## us_aux_001_01.yml
+  - logistica
+  - auxiliar
+  - solicitudes
+  - mantenimiento
+
+
+## us_back_001_01.yml
+  - devops
+  - cicd
+  - automatizacion
+  - despliegue
+
+
+## us_back_abs_002.yml
+  - cdp
+  - compras
+  - tramitacion
+  - abastecimiento
+
+
+## us_back_abs_004.yml
+  - ofertas
+  - evaluacion-tecnica
+  - evaluacion-economica
+  - licitacion
+
+
+## us_back_abs_005.yml
+  - orden-compra
+  - compromiso-gasto
+  - adquisiciones
+  - formalizacion
+
+
+## us_back_af_001.yml
+  - activo-fijo
+  - inventario
+  - depreciacion
+  - patrimonio
+
+
+## us_back_af_002.yml
+  - traslado
+  - activo-fijo
+  - ubicación
+  - inventario
+
+
+## us_back_af_004.yml
+  - inventario
+  - activo-fijo
+  - contabilidad
+  - auditoria
+
+
+## us_back_auto_001.yml
+  - koda
+  - finiquito
+  - remuneraciones
+  - rrhh
+  - calculo-automatico
+
+
+## us_back_auto_002.yml
+  - koda
+  - asistencia
+  - fraude
+  - anomalias
+  - probidad
+
+
+## us_back_bien_001.yml
+  - bienestar
+  - afiliaciones
+  - socios
+  - descuentos
+
+
+## us_back_bien_002.yml
+  - bienestar
+  - cargas-familiares
+  - beneficiarios
+  - grupo-familiar
+
+
+## us_back_bien_003.yml
+  - bienestar
+  - reembolsos
+  - salud
+  - sigbie
+  - bonificacion
+
+
+## us_back_bien_004.yml
+  - bienestar
+  - subsidios
+  - natalidad
+  - fallecimiento
+  - apoyo-social
+
+
+## us_back_bien_006.yml
+  - bienestar
+  - prestamos
+  - cuotas
+  - descuentos
+  - planilla
+
+
+## us_back_bien_007.yml
+  - bienestar
+  - convenios
+  - beneficios
+  - farmacias
+  - alianzas
+
+
+## us_back_bien_008.yml
+  - bienestar
+  - mutual
+  - accidentes-laborales
+  - diat
+  - salud-ocupacional
+
+
+## us_back_bien_009.yml
+  - bienestar
+  - cphs
+  - prevencion
+  - accidentes
+  - paritario
+
+
+## us_back_bien_010.yml
+  - bienestar
+  - socio
+  - reembolso
+  - bonificacion
+  - autoservicio
+
+
+## us_back_bien_011.yml
+  - bienestar
+  - prestamo
+  - auxilio-economico
+  - socio
+  - financiamiento
+
+
+## us_back_bien_012.yml
+  - bienestar
+  - cuenta-corriente
+  - saldos
+  - socio
+  - transparencia
+
+
+## us_back_bod_001.yml
+  - bodega
+  - stock
+  - inventario
+  - ingresos
+  - recepcion
+
+
+## us_back_bod_003.yml
+  - bodega
+  - inventario
+  - conciliacion
+  - stock
+  - ajustes
+
+
+## us_back_comp_002.yml
+  - calificaciones
+  - junta-calificadora
+  - desempeño
+  - rrhh
+  - estatuto-administrativo
+
+
+## us_back_comp_003.yml
+  - pmg
+  - cdc
+  - desempeño
+  - metas
+  - rrhh
+  - incentivos
+
+
+## us_back_cris_001.yml
+  - paro-nacional
+  - contingencia
+  - descuentos
+  - rrhh
+  - servicios-minimos
+
+
+## us_back_flo_001.yml
+  - mantenimiento
+  - infraestructura
+  - orden-trabajo
+  - logistica
+
+
+## us_back_flo_002.yml
+  - flota
+  - vehiculos
+  - transporte
+  - conductores
+  - logistica
+
+
+## us_back_per_001.yml
+  - rrhh
+  - funcionario
+  - ficha-personal
+  - hoja-de-vida
+  - autoservicio
+
+
+## us_back_per_002.yml
+  - induccion
+  - onboarding
+  - rrhh
+  - funcionario-nuevo
+  - capacitacion
+
+
+## us_back_per_010.yml
+  - remuneraciones
+  - eus
+  - liquidaciones
+  - rrhh
+  - calculo-automatico
+
+
+## us_back_per_011.yml
+  - previred
+  - cotizaciones
+  - rrhh
+  - remuneraciones
+  - cumplimiento-legal
+
+
+## us_back_per_012.yml
+  - horas-extras
+  - f2
+  - rrhh
+  - sobretiempo
+  - control
+
+
+## us_back_per_013.yml
+  - viaticos
+  - cometidos
+  - comision-servicio
+  - rrhh
+  - finanzas
+
+
+## us_back_per_014.yml
+  - diat
+  - accidente-trabajo
+  - rrhh
+  - seguridad-laboral
+  - mutualidad
+
+
+## us_back_per_015.yml
+  - concursos
+  - reclutamiento
+  - rrhh
+  - seleccion
+  - empleos-publicos
+
+
+## us_back_tes_004.yml
+  - libro-caja
+  - tesoreria
+  - flujo-efectivo
+  - control-financiero
+
+
+## us_back_tes_005.yml
+  - caja-chica
+  - fondo-fijo
+  - arqueo
+  - gastos-menores
+  - tesoreria
+
+
+## us_back_tes_006.yml
+  - cartola-bancaria
+  - conciliacion
+  - contabilidad
+  - automatizacion
+  - tesoreria
+
+
+## us_back_tes_007.yml
+  - sigfe
+  - conciliacion
+  - automatizacion
+  - contabilidad
+  - tesoreria
+
+
+## us_back_tes_008.yml
+  - conciliacion
+  - partidas-pendientes
+  - trazabilidad
+  - contabilidad
+  - auditoria
+
+
+## us_back_tes_009.yml
+  - informe-mensual
+  - conciliacion
+  - firma-digital
+  - normativa-cgr
+  - contabilidad
+
+
+## us_back_tes_011.yml
+  - contabilidad
+  - sigfe
+  - devengo
+  - subtitulo-21
+  - subtitulo-22
+  - gastos-operativos
+
+
+## us_back_tes_013.yml
+  - reporting
+  - contabilidad
+  - balance
+  - estados-financieros
+  - gestion-contable
+
+
+## us_back_tes_014.yml
+  - cierre-ejercicio
+  - compromisos
+  - fin-de-año
+  - notificaciones
+  - juridica
+
+
+## us_back_tes_015.yml
+  - deuda-flotante
+  - devengo
+  - cierre-ejercicio
+  - contabilidad
+  - obligaciones-pendientes
+
+
+## us_back_tes_016.yml
+  - estados-financieros
+  - balance-anual
+  - cgr
+  - contabilidad
+  - cumplimiento-legal
+
+
+## us_back_tes_017.yml
+  - saldo-inicial-caja
+  - arrastre
+  - presupuesto
+  - contabilidad
+  - cierre-ejercicio
+
+
+## us_bcp_001_01.yml
+  - bcp
+  - resiliencia
+  - continuidad-negocio
+  - desastres
+  - seguridad
+
+
+## us_bi_001_01.yml
+  - bi
+  - analitica
+  - datos
+  - visualizacion
+  - dashboard
+
+
+## us_bien_001_01.yml
+  - bienestar
+  - cargas-familiares
+  - seguros-complementarios
+  - rrhh
+  - salud
+
+
+## us_bien_002_01.yml
+  - bienestar
+  - programas-sociales
+  - beneficios
+  - rrhh
+  - gestion-social
+
+
+## us_bod_001_01.yml
+  - bodega
+  - codigo-barras
+  - stock
+  - inventario
+  - operacion
+
+
+## us_bod_002_01.yml
+  - bodega
+  - stock
+  - inventario
+  - entradas-salidas
+  - gestion-bodega
+
+
+## us_bomb_001_01.yml
+  - bomberos
+  - cies
+  - alertas
+  - tiempo-real
+  - emergencias
+
+
+## us_c33_001_01.yml
+  - circular-33
+  - maquinaria
+  - vehiculos
+  - precios-referenciales
+  - eficiencia-gasto
+
+
+## us_cal_001_02.yml
+  - dipres
+  - calidad
+  - cumplimiento
+  - indicadores
+  - pmg
+
+
+## us_cap_001_01.yml
+  - capacitacion
+  - pac
+  - rrhh
+  - inscripciones
+  - formacion
+
+
+## us_capdig_001_01.yml
+  - lms
+  - capacitacion-digital
+  - e-learning
+  - tde
+  - funcionarios
+
+
+## us_car_001_01.yml
+  - carabineros
+  - cies
+  - seguridad-publica
+  - videovigilancia
+  - operativos
+
+
+## us_cc_001_01.yml
+  - camara-comercio
+  - fomento-productivo
+  - pymes
+  - programas-gore
+  - difusion
+
+
+## us_cde_001_01.yml
+  - litigios
+  - defensa-judicial
+  - cde
+  - abogados
+  - juicios
+
+
+## us_cgpe_001_01.yml
+  - control-gestion
+  - licencias-medicas
+  - continuidad-operativa
+  - rrhh
+  - alertas
+
+
+## us_cgr_001_01.yml
+  - cgr
+  - toma-de-razon
+  - expediente-electronico
+  - siaper
+  - interoperabilidad
+
+
+## us_cgr_cont_001_01.yml
+  - contabilidad
+  - reportes-financieros
+  - auditoria
+  - cgr
+  - estados-financieros
+
+
+## us_cies_001_02.yml
+  - emergencias
+  - cies
+  - ucr
+  - bitacora
+  - incidentes
+
+
+## us_ciu_001_02.yml
+  - presupuesto
+  - genero
+  - transparencia
+  - fiscalizacion-ciudadana
+  - datos-abiertos
+
+
+## us_ciu_002_01.yml
+  - consulta-ciudadana
+  - inversion-regional
+  - participacion
+  - genero
+  - prioridades
+
+
+## us_col_001_01.yml
+  - consultores
+  - sanciones
+  - probidad
+  - amuch
+  - contratacion-publica
+
+
+## us_com_001_01.yml
+  - comunicaciones
+  - publicaciones
+  - calendario-editorial
+  - rrss
+  - planificacion
+
+
+## us_com_001_02.yml
+  - multimedia
+  - fotos
+  - videos
+  - repositorio
+  - branding
+
+
+## us_com_002_01.yml
+  - reporte-medios
+  - clipping
+  - redes-sociales
+  - impacto-comunicacional
+  - reputacion
+
+
+## us_com_estr_001.yml
+  - estrategia
+  - posicionamiento
+  - rrss
+  - web
+  - comunicaciones-gubernamentales
+
+
+## us_com_estr_002.yml
+  - noticias
+  - portal-web
+  - rrss
+  - transparencia-informativa
+  - prensa
+
+
+## us_com_estr_003.yml
+  - material-audiovisual
+  - repositorio
+  - centralizacion
+  - medios
+  - activos-digitales
+
+
+## us_com_estr_004.yml
+  - crisis
+  - monitoreo
+  - clipping
+  - contingencia
+  - reputación
+
+
+## us_com_estr_006.yml
+  - comunicacion-interna
+  - funcionarios
+  - intranet
+  - alineamiento
+  - rrhh
+
+
+## us_com_ev_001_01.yml
+  - evaluacion
+  - licitacion
+  - matriz-evaluacion
+  - trazabilidad
+  - auditoria
+
+
+## us_com_rec_001_01.yml
+  - acta-recepcion
+  - checklist
+  - recepcion-conforme
+  - fiscalizacion-tecnica
+  - ejecucion
+
+
+## us_com_sec_001.yml
+  - municipios
+  - difusion
+  - coordinacion
+  - alcance-local
+  - territorial
+
+
+## us_com_sec_002.yml
+  - marca-regional
+  - imagen-institucional
+  - branding
+  - manual-grafico
+  - fiscalizacion
+
+
+## us_com_sect_001_01.yml
+  - proyectos
+  - comunicados
+  - prensa
+  - difusion
+  - logros
+
+
+## us_comp_001_01.yml
+  - convenio-marco
+  - comprador-publico
+  - mercado-publico
+  - adquisiciones
+  - buscador
+
+
+## us_comp_001_02.yml
+  - compras
+  - workflow
+  - adquisiciones
+  - requerimientos
+  - formalizacion
+
+
+## us_compert_001_01.yml
+  - comite-pertinencia
+  - evaluacion-proyectos
+  - inversion-regional
+  - documentos-tecnicos
+  - sesion
+
+
+## us_compert_001_02.yml
+  - voto-electronico
+  - pertinencia
+  - sesion-comite
+  - trazabilidad
+  - votacion
+
+
+## us_compt_001_01.yml
+  - evaluacion-360
+  - competencias
+  - rrhh
+  - brechas
+  - desempeño
+
+
+## us_conaf_001_01.yml
+  - conaf
+  - incendios-forestales
+  - cies
+  - alertas
+  - coordinacion-emergencias
+
+
+## us_cond_001_01.yml
+  - conductor
+  - bitacora
+  - vehiculos
+  - traslados
+  - logística
+
+
+## us_cont_001_01.yml
+  - contabilidad
+  - conciliacion-bancaria
+  - automatizacion
+  - tesoreria
+  - auditoria
+
+
+## us_cont_001_02.yml
+  - estado-pago
+  - contabilidad
+  - pagos
+  - agilidad
+  - proveedores
+
+
+## us_coord_dit_001_01.yml
+  - proyectos
+  - sectores
+  - ucr
+  - consolidado
+  - monitorizacion
+
+
+## us_core_001_01.yml
+  - sesion-core
+  - documentos
+  - tabla-sesion
+
+
+## us_core_002_01.yml
+  - seguimiento-proyectos
+  - acuerdos-core
+  - ejecucion
+  - transparencia-gestion
+
+
+## us_corfo_001_01.yml
+  - corfo
+  - fomento-productivo
+  - articulacion
+  - proyectos-gore
+  - desarrollo-regional
+
+
+## us_corp_001_01.yml
+  - corporaciones
+  - transferencias
+  - presupuesto
+  - gastos-operativos
+  - convenios
+
+
+## us_corte_001_01.yml
+  - tribunal-cuentas
+  - actos-impugnados
+  - defensa-legal
+  - informes-tecnicos
+  - cgr
+
+
+## us_cp_001_01.yml
+  - seguridad-laboral
+  - incidentes
+  - comite-paritario
+  - sst
+  - prevencion-riesgos
+
+
+## us_cseu_001_01.yml
+  - incidentes
+  - atencion-ciudadana
+  - calidad-servicio
+  - cseu
+  - reclamos
+
+
+## us_cseu_002_01.yml
+  - evaluacion-curricular
+  - matriz-puntaje
+  - seleccion
+  - rrhh
+  - estandarizacion
+
+
+## us_ctd_001_02.yml
+  - transformacion-digital
+  - ley-21180
+  - expedientes
+  - digitalizacion
+  - procesos
+
+
+## us_cust_001_01.yml
+  - custodia-evidencia
+  - grabaciones
+  - validez-legal
+  - seguridad-informatica
+  - integridad
+
+
+## us_cust_dat_001_01.yml
+  - calidad-datos
+  - monitoreo
+  - anomalias
+  - gobernanza
+  - integridad-semantica
+
+
+## us_cut_001_01.yml
+  - cosoc
+  - actas
+  - compromisos
+  - dirigintes-sociales
+  - transparencia
+
+
+## us_daf_001_01.yml
+  - daf
+  - cierre-contable
+  - checklist
+  - control-financiero
+  - automatizacion
+
+
+## us_data_001_01.yml
+  - limpieza-datos
+  - deduplicacion
+  - golden-record
+  - calidad-datos
+  - semantica
+
+
+## us_dba_001_01.yml
+  - dba
+  - monitoreo
+  - performance
+  - disponibilidad
+  - soporte-tecnico
+
+
+## us_desc_001_02.yml
+  - descentralizacion
+  - competencias
+  - fortalecimiento
+  - capacidades
+  - ley-21074
+
+
+## us_dev_001_01.yml
+  - logs
+  - observabilidad
+  - bugs
+  - produccion
+  - diagnostico
+
+
+## us_dev_bp_001.yml
+  - clean-code
+  - standards
+  - linter
+  - deuda-tecnica
+
+
+## us_dev_bp_002.yml
+  - adr
+  - documentación
+  - decisiones-tecnicas
+  - trazabilidad
+
+
+## us_dev_bp_003.yml
+  - tdd
+  - unit-tests
+  - coverage
+  - regresion
+
+
+## us_dev_bp_004.yml
+  - semver
+  - versionamiento
+  - api-rest
+  - compatibilidad
+
+
+## us_dev_bp_005.yml
+  - ci-cd
+  - ontologia
+  - validacion-automatica
+  - integridad
+  - koda
+
+
+## us_dev_bp_006.yml
+  - vault
+  - secrets
+  - security
+  - hardening
+
+
+## us_dev_bp_007.yml
+  - docker
+  - containers
+  - portability
+  - standards
+
+
+## us_dev_bp_008.yml
+  - sast
+  - security-scan
+  - vulnerabilidades
+  - devsecops
+
+
+## us_dev_cicd_001.yml
+  - ci
+  - pipeline
+  - github-actions
+  - build-automation
+
+
+## us_dev_cicd_002.yml
+  - cd
+  - staging
+  - despliegue
+  - continuous-delivery
+
+
+## us_dev_cicd_003.yml
+  - production
+  - quality-gate
+  - release-management
+  - seguridad
+
+
+## us_dev_cicd_004.yml
+  - slack
+  - notifications
+  - webhooks
+  - devops-culture
+
+
+## us_dev_ciclo_001.yml
+  - ciclo-de-vida
+  - w2-w3
+  - blueprint
+  - implementacion
+  - gobernanza-it
+
+
+## us_dev_code_001.yml
+  - git
+  - branches
+  - hooks
+  - automatizacion
+  - software-delivery
+
+
+## us_dev_code_002.yml
+  - linter
+  - eslint
+  - prettier
+  - feedback-bucle
+  - calidad
+
+
+## us_dev_code_003.yml
+  - git-blame
+  - historial
+  - contexto
+  - mantenimiento
+  - auditoria-cambios
+
+
+## us_dev_doc_001.yml
+  - blueprint
+  - sda
+  - documentacion-viva
+  - arquitectura
+  - consistencia
+
+
+## us_dev_dx_001.yml
+  - devcontainer
+  - docker
+  - dx
+  - developer-experience
+  - onboarding
+
+
+## us_dev_dx_002.yml
+  - swagger
+  - jsdoc
+  - typedoc
+  - documentacion-viva
+  - dx
+
+
+## us_dev_feat_001.yml
+  - feature-flags
+  - pilotos
+  - validacion-usuario
+  - innovacion
+  - despliegue-masivo
+
+
+## us_dev_koda_001.yml
+  - koda
+  - urn
+  - naming-convention
+  - federacion
+
+
+## us_dev_koda_002.yml
+  - koda
+  - goreólogo
+  - validacion-semantica
+  - ai-agent
+  - ontologia
+
+
+## us_dev_koda_003.yml
+  - schemas
+  - yaml-validation
+  - semantica-formal
+  - koda
+
+
+## us_dev_koda_004.yml
+  - discovery
+  - catalog
+  - networking
+  - koda-hub
+
+
+## us_dev_prod_001.yml
+  - production-ready
+  - checklist
+  - qa
+  - resiliencia
+
+
+## us_dev_prod_002.yml
+  - capacity-planning
+  - escalamiento
+  - monitoreo-recursos
+  - presupuesto-cloud
+
+
+## us_dev_prod_003.yml
+  - adr
+  - decisiones-arquitectonicas
+  - trazabilidad
+  - documentacion
+  - gobernanza-ti
+
+
+## us_dev_qa_001.yml
+  - ci-cd
+  - testing
+  - shift-left
+  - automatizacion
+  - devops
+
+
+## us_dev_rel_001.yml
+  - gitflow
+  - branching
+  - merge-strategies
+  - dev-experience
+
+
+## us_dev_rel_002.yml
+  - release-notes
+  - changelog
+  - comunicación
+  - automatizacion
+
+
+## us_dev_rel_003.yml
+  - rollback
+  - monitoreo
+  - sre
+  - estabilidad
+
+
+## us_dev_sec_001.yml
+  - sast
+  - seguridad
+  - vulnerabilidades
+  - owasp
+  - devsecops
+
+
+## us_devmuni_001_01.yml
+  - apis
+  - documentacion
+  - municipalidad
+  - integracion
+  - pisee
+
+
+## us_devops_001_01.yml
+  - devops
+  - iac
+  - monitoreo
+  - estabilidad
+  - automatizacion
+
+
+## us_didesoh_002_01.yml
+  - organizaciones-sociales
+  - sociedad-civil
+  - didesoh
+  - vinculacion
+  - consultas-ciudadanas
+
+
+## us_difoi_001_02.yml
+  - difoi
+  - fomento
+  - beneficiarios
+  - duplicidad
+  - interoperabilidad
+  - corfo
+  - sercotec
+  - indap
+
+
+## us_dip_001_01.yml
+  - proyectos-comunales
+  - municipios
+  - seguimiento
+  - inversion-publica
+  - transparencia
+
+
+## us_dipir_001_02.yml
+  - cdp
+  - presupuesto
+  - validacion-automatica
+  - dipir
+  - infraestructura
+
+
+## us_diplade_001_01.yml
+  - erd
+  - estrategia-regional
+  - indicadores
+  - cumplimiento
+  - diplade
+
+
+## us_diplade_001_02.yml
+  - ari
+  - anteproyecto-inversion
+  - automatizacion
+  - dipres
+  - diplade
+
+
+## us_diplade_002_01.yml
+  - pertinencia
+  - rs
+  - workflow
+  - trazabilidad
+  - comite
+
+
+## us_dir_soc_001_01.yml
+  - fondos-concursables
+  - dirigentes-sociales
+  - comunidad
+  - participacion
+  - consultas
+
+
+## us_dit_002_01.yml
+  - contratos
+  - garantias
+  - estados-pago
+  - cumplimiento-contractual
+  - proveedores
+
+
+## us_dpo_001_01.yml
+  - dpo
+  - datos-personales
+  - transparencia
+  - ley-19628
+  - cumplimiento-legal
+
+
+## us_dpr_002_01.yml
+  - dpr
+  - seguridad-publica
+  - carabineros
+  - pdi
+  - reportes-inversion
+
+
+## us_dseg_001_02.yml
+  - programas-sociales
+  - prevención
+  - impacto
+  - cobertura
+  - monitoreo
+
+
+## us_dtmuni_001_01.yml
+  - reutilizacion
+  - software-publico
+  - interoperabilidad
+  - muni
+  - kits-desarrollo
+
+
+## us_dueno_001_01.yml
+  - data-governance
+  - calidad-datos
+  - data-owner
+  - linaje
+  - integridad
+
+
+## us_ec33_001_01.yml
+  - circular33
+  - activos
+  - depreciacion
+  - reposicion
+  - inventario-regional
+
+
+## us_ecif_001_01.yml
+  - ecif
+  - control-interno
+  - probidad
+  - riesgos-financieros
+  - auditoria
+
+
+## us_edu_001_01.yml
+  - becas
+  - educacion
+  - postulaciones
+  - subsidios
+  - beneficio-social
+
+
+## us_ejec_ar_005.yml
+  - compromisos
+  - cierre
+  - cumplimiento
+  - archivo
+  - ejecucion
+
+
+## us_ejec_ar_006.yml
+  - resumen-semanal
+  - gobernador
+  - pdf
+  - tendencias
+  - reporte-ejecutivo
+
+
+## us_ejec_ar_007.yml
+  - reasignacion
+  - compromisos
+  - gestion-personal
+  - responsabilidad
+  - delegacion
+
+
+## us_ejec_ar_008.yml
+  - reabrir
+  - compromisos
+  - correccion
+  - archivo
+  - inconsistencias
+
+
+## us_ejec_ar_009.yml
+  - escalamiento
+  - nudos-criticos
+  - gestion-crisis
+  - inversion
+  - gobernanza
+
+
+## us_ejec_eo_002.yml
+  - avance-parcial
+  - compromisos
+  - gestion-tiempo
+  - trazabilidad
+
+
+## us_ejec_eo_003.yml
+  - completitud
+  - validacion
+  - evidencias
+  - workflow-aprobacion
+
+
+## us_ejec_eo_005.yml
+  - prórroga
+  - plazos
+  - justificacion
+  - imprevistos
+
+
+## us_ejec_eo_006.yml
+  - logs
+  - historial
+  - trazabilidad
+  - auditoria
+  - eventos
+
+
+## us_ejec_eo_007.yml
+  - alertas
+  - vencimiento
+  - notificaciones
+  - plazos
+  - recordatorios
+
+
+## us_ejec_jd_002.yml
+  - delegacion
+  - asignacion
+  - compromisos
+  - carga-trabajo
+  - workflow
+
+
+## us_ejec_jd_005.yml
+  - filtros
+  - dashboard
+  - estados
+  - gestion-por-excepcion
+  - control-gestion
+
+
+## us_ejec_jd_006.yml
+  - certificacion
+  - cierre-hito
+  - validacion-jefatura
+  - cumplimiento
+
+
+## us_ejec_muni_001.yml
+  - glosa-7
+  - postulaciones
+  - guias-tecnicas
+  - participacion-ciudadana
+  - fondos-concursables
+
+
+## us_ejec_muni_002.yml
+  - wizard
+  - financiamiento
+  - recomendacion
+  - eficiencia
+  - inversion-publica
+
+
+## us_ejec_muni_003.yml
+  - kick-off
+  - inicio-proyecto
+  - coordinacion
+  - convenios
+  - gobernanza-local
+
+
+## us_ejec_muni_004.yml
+  - reportes
+  - avance-fisico
+  - estado-de-pago
+  - seguimiento-municipio
+  - transparencia
+
+
+## us_ejec_muni_005.yml
+  - elegibilidad
+  - fril
+  - requisitos
+  - validacion-territorial
+  - inversion-local
+
+
+## us_ejec_per_001.yml
+  - prensa
+  - hitos-comunicacionales
+  - inauguracion
+  - difusion
+  - transparencia
+
+
+## us_ejec_sec_001.yml
+  - convenios-sectoriales
+  - ministerios
+  - ucr
+  - presupuesto-nacional
+  - rendicion-cuentas
+
+
+## us_ejec_sup_003.yml
+  - informes-ut
+  - supervisor
+  - aprobacion
+  - observaciones
+  - cies
+  - ejecutor
+
+
+## us_ejec_sup_005.yml
+  - alertas
+  - desviaciones
+  - monitoreo
+  - inversion
+  - eficiencia-gasto
+
+
+## us_emp_001_01.yml
+  - gremios
+  - empresas
+  - fondos-concursables
+  - economia-regional
+  - transparencia
+
+
+## us_enl_cies_001_01.yml
+  - cies
+  - emergencias
+  - contactos-criticos
+  - resiliencia
+  - proteccion-civil
+
+
+## us_eope_001_01.yml
+  - reserva
+  - salas
+  - vehiculos
+  - recursos-fisicos
+  - logistica-interna
+
+
+## us_epp_001_01.yml
+  - gantt
+  - cronograma
+  - alertas
+  - desviaciones
+  - inversion-publica
+
+
+## us_eval_001_01.yml
+  - evaluacion
+  - ponderacion
+  - transparencia
+  - puntaje
+  - fondos-concursables
+
+
+## us_eval_001_02.yml
+  - historial
+  - organizaciones
+  - cumplimiento
+  - rendiciones
+  - trayectoria
+
+
+## us_everde_001_01.yml
+  - estado-verde
+  - sustentabilidad
+  - consumos
+  - eficiencia-energetica
+  - medio-ambiente
+
+
+## us_evol_ai_001.yml
+  - sesgo-algoritmico
+  - fenix
+  - etica-ia
+  - cumplimiento-normativo
+  - xai
+
+
+## us_evol_ai_002.yml
+  - xai
+  - logs-inmutables
+  - agentes-autonomos
+  - koda
+  - trazabilidad-ia
+
+
+## us_evol_ao_018.yml
+  - inventario-tic
+  - municipios
+  - federacion
+  - ctd
+  - interoperabilidad
+
+
+## us_evol_chaos_001.yml
+  - chaos-engineering
+  - resiliencia
+  - sre
+  - continuidad-negocio
+  - rto-rpo
+
+
+## us_evol_dt_001.yml
+  - deuda-tecnica
+  - refactorizacion
+  - mantenimiento
+  - excelencia-ingenieria
+  - saneamiento
+
+
+## us_evol_dt_002.yml
+  - migraciones
+  - schema-evolution
+  - versionamiento
+  - integridad
+  - devops-datos
+
+
+## us_evol_gov_001.yml
+  - gobernanza
+  - aprobacion
+  - cambios-criticos
+  - arquitectura
+  - core
+
+
+## us_evol_gov_002.yml
+  - rice
+  - priorizacion
+  - backlog
+  - valor-publico
+  - roadmap
+
+
+## us_evol_h_002.yml
+  - health-gates
+  - calidad
+  - transiciones
+  - qa
+  - ciclo-vida
+
+
+## us_evol_kb_008.yml
+  - qr
+  - verificacion
+  - autenticidad
+  - cero-papel
+  - fe-publica
+
+
+## us_evol_pilot_002.yml
+  - escalamiento
+  - divisiones
+  - pilotos
+  - configuracion
+  - despliegue
+
+
+## us_evol_play_001.yml
+  - playbook
+  - remediacion
+  - incidentes
+  - soporte-tecnico
+  - automatizacion
+
+
+## us_evol_play_002.yml
+  - monitoreo
+  - playbooks
+  - visibilidad
+  - recovery
+  - uptime
+
+
+## us_evol_puente_001.yml
+  - health-score
+  - tde
+  - cumplimiento-legal
+  - indicadores
+  - madurez-digital
+
+
+## us_evol_tray_002.yml
+  - umbrales
+  - riesgo
+  - alertas
+  - calibracion
+  - monitoreo-dinamico
+
+
+## us_f8_001_01.yml
+  - fondos-8
+  - concursos
+  - etapas-configurables
+  - admision
+  - flujo-administrativo
+
+
+## us_f8_001_02.yml
+  - fondos-8
+  - reportes
+  - cobertura
+  - equidad-territorial
+  - analisis-tematico
+
+
+## us_fedmuni_001_01.yml
+  - alcaldes
+  - convenios
+  - carga-laboral
+  - descentralizacion
+  - gestion-municipal
+
+
+## us_fenix_001_01.yml
+  - fenix
+  - auditoria
+  - acceso-privilegiado
+  - intervencion
+  - probidad
+
+
+## us_fin_001_01.yml
+  - cuadratura
+  - contabilidad
+  - descuadres
+  - automatizacion
+  - control-financiero
+
+
+## us_fin_apr_001.yml
+  - apr
+  - agua-potable-rural
+  - core
+  - ley-presupuesto
+  - distribucion-inicial
+
+
+## us_fin_c33_001.yml
+  - c33
+  - glosa-5
+  - emergencias
+  - fast-track
+  - urgencia
+
+
+## us_fin_c33_002.yml
+  - c33
+  - activos
+  - tipologia
+  - validacion
+  - inventario-terceros
+
+
+## us_fin_c33_005.yml
+  - c33
+  - activos
+  - adquisiciones
+  - circular-33
+  - inversion
+
+
+## us_fin_conv_003.yml
+  - convenios
+  - alertas
+  - vencimiento
+  - prorrogas
+  - daf
+
+
+## us_fin_conv_005.yml
+  - garantias
+  - boletas-garantia
+  - alertas
+  - cumplimiento
+  - custodia
+
+
+## us_fin_form_003.yml
+  - formulacion
+  - gasto-funcionamiento
+  - subtitulo-21
+  - subtitulo-22
+  - proyeccion-financiera
+
+
+## us_fin_form_004.yml
+  - clasificador
+  - dipres
+  - normativa
+  - codigos-presupuestarios
+  - cumplimiento
+
+
+## us_fin_form_005.yml
+  - provisiones
+  - fril
+  - frpd
+  - presupuesto
+  - gestion-financiera
+
+
+## us_fin_fril_001.yml
+  - fril
+  - cuotas-comunales
+  - marcos-presupuestarios
+  - inversion-local
+  - control-financiero
+
+
+## us_fin_frpd_001.yml
+  - frpd
+  - estrategia-regional
+  - sustentabilidad
+  - innovacion
+  - desarrollo-productivo
+
+
+## us_fin_frpd_002.yml
+  - frpd
+  - admisibilidad
+  - gremios
+  - empresas
+  - cumplimiento-legal
+
+
+## us_fin_frpd_003.yml
+  - frpd
+  - co-financiamiento
+  - aportes-propios
+  - presupuestos
+  - apalancamiento
+
+
+## us_fin_gest_002.yml
+  - modificacion-proyecto
+  - informe-tecnico
+  - prevencion
+  - evaluacion-tecnica
+  - ejecucion
+
+
+## us_fin_gest_003.yml
+  - reevaluacion
+  - variacion-presupuestaria
+  - normativa
+  - rs
+  - control-gestion
+
+
+## us_fin_gest_005.yml
+  - cierre-tecnico
+  - recepción
+  - obras
+  - programas
+  - checklist
+
+
+## us_fin_gob_001.yml
+  - pertinencia
+  - filtro-previo
+  - cartera-proyectos
+  - gobernanza
+  - pre-admisibilidad
+
+
+## us_fin_ipr_005.yml
+  - notificacion
+  - plazo-critico
+  - admisibilidad
+
+
+## us_fin_ipr_006.yml
+  - subsanacion
+  - cero-papel
+  - postulación
+  - interoperabilidad
+  - agilidad-administrativa
+
+
+## us_fin_ipr_007.yml
+  - timeline-visual
+  - trazabilidad
+  - estado-tramite
+  - transparencia
+  - experiencia-usuario
+
+
+## us_fin_ipr_008.yml
+  - historial-postulaciones
+  - tasa-exito
+  - glosa-7
+  - formulador
+  - mejora-continua
+
+
+## us_fin_ipr_011.yml
+  - avance-mensual
+  - ejecucion-presupuestaria
+  - urai
+  - dipres
+  - control-gestion
+
+
+## us_fin_ipr_015.yml
+  - reintegros
+  - saldos-no-ejecutados
+  - cierre-contable
+  - auditoria-financiera
+  - devolución-fondos
+
+
+## us_fin_ipr_017.yml
+  - acta-terreno
+  - inicio-obras
+  - hitos-contractuales
+  - urai
+  - aseguramiento-plazos
+
+
+## us_fin_ipr_018.yml
+  - recepcion-obras
+  - acta-recepcion
+  - termino-proyecto
+  - garantias
+  - urai
+
+
+## us_fin_ipr_022.yml
+  - marco-logico
+  - diseño-programatico
+  - metodologia
+  - calidad
+  - preinversion
+
+
+## us_fin_ipr_026.yml
+  - devolucion-garantias
+  - ejecutores
+  - cierre-financiero
+  - boletas-garantia
+  - cumplimiento
+
+
+## us_fin_ipr_027.yml
+  - bandeja-postulaciones
+  - fifo
+  - gestion-cola
+  - transparencia
+  - tiempos-respuesta
+
+
+## us_fin_ipr_031.yml
+  - carpeta-digital
+  - core
+  - sesion-consejo
+  - antecedentes
+  - votacion
+
+
+## us_fin_ipr_034.yml
+  - tiempos-promedio
+  - ciclo-vida
+  - cuellos-botella
+  - bi
+  - eficiencia-institucional
+
+
+## us_fin_ipr_035.yml
+  - informes-gestion
+  - kpis
+  - reporte-autoridad
+  - toma-decisiones
+  - divisiones
+
+
+## us_fin_ipr_036.yml
+  - erd
+  - cdr
+  - alineacion-estrategica
+  - vision-regional
+  - consejo-regional
+
+
+## us_fin_ipr_039.yml
+  - ari
+  - anteproyecto-inversion
+  - dae
+  - admisibilidad-tecnica
+  - planificacion-presupuestaria
+
+
+## us_fin_ipr_040.yml
+  - observaciones
+  - formularios
+  - aclaraciones
+  - pre-inversion
+  - flujo-revision
+
+
+## us_fin_jef_002.yml
+  - distribucion-carga
+  - analistas
+  - balanceo
+  - productividad
+  - gestion-equipo
+
+
+## us_fin_jef_003.yml
+  - escalamiento
+  - problemas-criticos
+  - urgencias
+  - gestion-jefatura
+  - priorizacion
+
+
+## us_fin_jef_004.yml
+  - priorizacion
+  - erd
+  - ranking
+  - optimizacion-recursos
+  - toma-decisiones
+
+
+## us_fin_mod_002.yml
+  - modificaciones
+  - core
+  - tramites-menores
+  - agilidad-administrativa
+  - presupuesto
+
+
+## us_fin_ppr_002.yml
+  - marco-logico
+  - track-b
+  - ppr
+  - evaluacion-programas
+  - impacto-social
+
+
+## us_fin_ppr_003.yml
+  - fraccionamiento
+  - probidad
+  - control-presupuestario
+  - ley-presupuestos
+  - cumplimiento-normativo
+
+
+## us_fin_ppr_004.yml
+  - programas
+  - comite
+  - pertinencia
+  - inversion
+
+
+## us_fin_ppr_006.yml
+  - programas
+  - visibilidad
+  - estado
+  - monitoreo
+
+
+## us_fin_ppto_004.yml
+  - convenios
+  - firmas
+  - ejecutor
+  - formalizacion
+
+
+## us_fin_ppto_006.yml
+  - cdp
+  - saldo
+  - validacion
+  - presupuesto
+
+
+## us_fin_ppto_009.yml
+  - glosas
+  - alertas
+  - cumplimiento
+  - control
+
+
+## us_fin_ppto_010.yml
+  - modificaciones
+  - asistente
+  - presupuesto
+  - eficiencia
+
+
+## us_fin_ppto_011.yml
+  - proyeccion
+  - caja
+  - alertas
+  - desfases
+
+
+## us_fin_ppto_012.yml
+  - cierre
+  - deuda-flotante
+  - ejercicio-fiscal
+  - contabilidad
+
+
+## us_fin_ppto_013.yml
+  - sigfe
+  - sincronizacion
+  - consistencia
+  - interoperabilidad
+
+
+## us_fin_ppto_017.yml
+  - cometidos
+  - viaticos
+  - presupuesto
+  - personal
+
+
+## us_fin_ppto_018.yml
+  - conciliacion
+  - banco
+  - cuentas
+  - tesoreria
+
+
+## us_fin_ppto_019.yml
+  - proyeccion
+  - deuda-flotante
+  - cierre-ejercicio
+  - gestion-fiscal
+
+
+## us_fin_ppto_020.yml
+  - visa
+  - cometidos
+  - viaticos
+  - aprobacion
+
+
+## us_fin_ppto_021.yml
+  - reconciliacion
+  - sigfe
+  - auditoria
+  - consistencia
+
+
+## us_fin_ppto_022.yml
+  - alertas
+  - gaps
+  - reconciliacion
+  - errores
+
+
+## us_fin_ppto_026.yml
+  - devengo
+  - facturas
+  - obligaciones
+  - contabilidad
+
+
+## us_fin_ppto_027.yml
+  - sigfe
+  - presupuesto
+  - toma-razon
+  - apertura
+
+
+## us_fin_ppto_031.yml
+  - modificaciones
+  - rebajas
+  - suplementos
+  - autoarizacion
+
+
+## us_fin_rend_014.yml
+  - frpd
+  - hitos
+  - innovacion
+  - verificacion
+
+
+## us_fin_rend_015.yml
+  - 8-porciento
+  - subvenciones
+  - rendicion
+  - cumplimiento
+
+
+## us_fin_rend_016.yml
+  - tope-gastos
+  - administracion
+  - convenios
+  - validacion
+
+
+## us_fin_rend_018.yml
+  - reintegro
+  - saldos
+  - ejecutor
+  - retorno-fondos
+
+
+## us_fin_sub_001.yml
+  - 8-porciento
+  - inhabilidades
+  - evaluadores
+  - probidad
+
+
+## us_fin_sub_002.yml
+  - admisibilidad
+  - pj
+  - vigencia
+  - requisitos
+
+
+## us_fin_sub_003.yml
+  - evaluacion-ciega
+  - objetividad
+  - 8-porciento
+  - meritocracia
+
+
+## us_fin_sub_004.yml
+  - nomina
+  - adjudicacion
+  - core
+  - ranking
+
+
+## us_fin_sub_005.yml
+  - postulacion
+  - 8-porciento
+  - portal
+  - ciudadanos
+
+
+## us_fin_sup_002.yml
+  - base-conocimiento
+  - faq
+  - soporte
+  - autoayuda
+
+
+## us_finops_001_01.yml
+  - cloud
+  - finops
+  - consumo
+  - optimizacion
+
+
+## us_fisc_001_01.yml
+  - fiscalia
+  - sumarios
+  - evidencia-digital
+  - orden-judicial
+  - servidores
+  - acceso-reservado
+
+
+## us_fisc_sum_001_01.yml
+  - sumario
+  - evidencia-digital
+  - declaraciones
+  - fiscalia
+
+
+## us_flota_001_01.yml
+  - flota
+  - vehiculos
+  - bitacoras
+  - mantenciones
+  - logistica-interna
+
+
+## us_fndr8_001_01.yml
+  - 8-porciento
+  - admisibilidad
+  - checklist
+  - filtro
+
+
+## us_fnx_act_001.yml
+  - fenix
+  - alertas
+  - h_gore
+  - intervencion
+
+
+## us_fnx_act_003.yml
+  - emergencia-administrativa
+  - fenix
+  - excepcion
+  - agilizacion
+
+
+## us_fnx_ana_001.yml
+  - patrones
+  - intervenciones
+  - prevencion
+  - mejora-continua
+
+
+## us_fnx_ana_003.yml
+  - propension-fallo
+  - auditoria
+  - fenix
+  - focalizacion
+
+
+## us_fnx_cie_002.yml
+  - hallazgos
+  - recomendaciones
+  - ppt
+  - lecciones-aprendidas
+
+
+## us_fnx_cie_003.yml
+  - evaluacion
+  - fuerza-de-tarea
+  - talento
+  - merito
+
+
+## us_fnx_ges_001.yml
+  - fenix
+  - intervenciones
+  - expedientes
+  - crisis-social
+  - gestion-casos
+
+
+## us_fnx_int_001.yml
+  - koda
+  - metricas
+  - activacion-automatica
+  - evol
+
+
+## us_fnx_int_002.yml
+  - seguridad
+  - alertas-criticas
+  - crisis
+  - d-seg
+
+
+## us_fnx_int_003.yml
+  - bloqueo
+  - intervencion
+  - integridad
+  - koda
+
+
+## us_fnx_ope_002.yml
+  - bypass
+  - bpmn
+  - flujo
+  - contingencia
+
+
+## us_fnx_ope_003.yml
+  - ejecucion-directa
+  - correccion
+  - imputacion
+  - saneamiento
+
+
+## us_foto_001_01.yml
+  - fotos
+  - metadatos
+  - comunicaciones
+  - repositorio
+
+
+## us_front_001_01.yml
+  - design-system
+  - ui
+  - ux
+  - componentes
+
+
+## us_frpd_001_01.yml
+  - frpd
+  - expedientes
+  - evaluacion
+  - i+d+i
+
+
+## us_func_001_01.yml
+  - feriados
+  - permisos
+  - autogestion
+  - funcionario
+
+
+## us_func_001_02.yml
+  - liquidaciones
+  - certificados
+  - funcionario
+  - autoservicio
+  - rrhh
+
+
+## us_g7_001_01.yml
+  - caja
+  - cuotas
+  - licitacion
+  - legalidad
+
+
+## us_gab_001_01.yml
+  - agenda
+  - gabinete
+  - gobernador
+  - compromisos
+  - actividades-oficiales
+
+
+## us_gab_002_01.yml
+  - crisis
+  - comunicacion
+  - protocolo
+  - gabinete
+
+
+## us_gen_001_01.yml
+  - genero
+  - pmg
+  - equidad
+  - brechas
+  - indicadores-sociales
+  - desagregacion
+
+
+## us_gen_dev_hon_jefe_001.yml
+  - control-jerarquico
+  - probidad
+  - gestion-jefatura
+  - normativa
+  - transparencia-interna
+
+
+## us_gen_dev_qa_analista_001.yml
+  - qa
+  - pruebas
+  - calidad
+  - testing
+
+
+## us_gen_ejec_anal_001.yml
+  - ejecutor
+  - seguimiento
+  - iniciativas
+  - proyectos
+
+
+## us_gen_ejec_cper_sec_001.yml
+  - secretario-ejecutivo
+  - pertinencia
+  - actas
+  - gestion-comite
+  - arquetipo
+
+
+## us_gen_ejec_infra_ito_001.yml
+  - ito
+  - supervision
+  - obras
+  - infraestructura
+
+
+## us_gen_ejec_ito_001.yml
+  - ito
+  - obras
+  - terreno
+  - inspeccion
+  - municipal
+  - arquetipo
+
+
+## us_gen_ejec_itp_001.yml
+  - itp
+  - supervision
+  - programas
+  - impacto
+
+
+## us_gen_ejec_urai_ejec_001.yml
+  - urai
+  - internacional
+  - convenios
+  - macrozona
+
+
+## us_gen_fin_analista_co_001.yml
+  - compras
+  - licitacion
+  - mercado-publico
+  - abastecimiento
+
+
+## us_gen_final_001.yml
+  - seremi
+  - educacion
+  - proyectos
+  - intersectorial
+
+
+## us_gen_final_002.yml
+  - turismo
+  - analista
+  - fomento
+  - indicadores
+
+
+## us_gen_final_003.yml
+  - seremi
+  - mujer
+  - equidad
+  - genero
+
+
+## us_gen_final_004.yml
+  - conectividad
+  - brecha-digital
+  - infraestructura
+  - ñuble
+
+
+## us_gen_final_005.yml
+  - medio-ambiente
+  - sustentabilidad
+  - monitoreo
+  - ñuble-verde
+
+
+## us_gen_final_006.yml
+  - economia
+  - fomento
+  - fndr
+  - desarrollo
+
+
+## us_gen_final_007.yml
+  - seremi
+  - factibilidad
+  - priorizacion
+  - sectorial
+
+
+## us_gen_final_008.yml
+  - conectividad
+  - redes
+  - infraestructura
+  - datos
+
+
+## us_gen_final_009.yml
+  - cartera
+  - monitoreo
+  - inversion
+  - flujo
+
+
+## us_gen_final_010.yml
+  - energia
+  - renovables
+  - eficiencia
+  - futuro
+
+
+## us_gen_final_011.yml
+  - seremi
+  - trabajo
+  - empleo
+  - capacitacion
+
+
+## us_gen_final_012.yml
+  - viaticos
+  - pasajes
+  - rrhh
+  - pagos
+
+
+## us_gen_final_013.yml
+  - deporte
+  - analista
+  - social
+  - infraestructura-deportiva
+
+
+## us_gen_final_014.yml
+  - municipios
+  - fortalecimiento
+  - asistencia-tecnica
+  - ñuble
+
+
+## us_gen_final_015.yml
+  - salud
+  - infraestructura-hospitalaria
+  - brechas
+  - ñuble
+
+
+## us_gen_final_016.yml
+  - cultura
+  - patrimonio
+  - identidad
+  - ñuble
+
+
+## us_gen_final_017.yml
+  - seremi
+  - salud
+  - visacion
+  - infraestructura-sanitaria
+
+
+## us_gen_final_018.yml
+  - seremi
+  - ambiental
+  - fiscalizacion
+  - biodiversidad
+
+
+## us_gen_final_019.yml
+  - seremi
+  - cultura
+  - patrimonio
+  - identidad
+
+
+## us_gen_generic_analist_002.yml
+  - analista
+  - arquetipo
+  - gestion-administrativa
+  - tramitacion
+  - soporte
+
+
+## us_gen_gestion_250_enc_001.yml
+  - ñuble-250
+  - agenda-estrategica
+  - seguimiento-metas
+  - arquetipo
+
+
+## us_gen_gestion_anal_001.yml
+  - dit
+  - analista-ti
+  - soporte-tecnico
+  - mantenimiento-sistemas
+  - arquetipo
+
+
+## us_gen_gestion_analist_001.yml
+  - apr
+  - agua-potable
+  - ruralidad
+  - analista-tecnico
+  - arquetipo
+
+
+## us_gen_gestion_analist_002.yml
+  - vivienda
+  - barrios
+  - deficit-habitacional
+  - ñuble
+
+
+## us_gen_gestion_arch_001.yml
+  - archivero
+  - gestion-documental
+  - preservacion-digital
+  - metadatos
+  - arquetipo
+
+
+## us_gen_gestion_aud_min_001.yml
+  - auditoria
+  - ministerial
+  - fiscalizacion
+  - transparencia
+  - arquetipo
+
+
+## us_gen_gestion_bc_001.yml
+  - banco-central
+  - macros
+  - indicadores-economicos
+  - interoperabilidad
+  - arquetipo
+
+
+## us_gen_gestion_benefic_001.yml
+  - beneficiario
+  - ciudadano
+  - persona-natural
+  - postulacion
+  - arquetipo
+
+
+## us_gen_gestion_caigg_001.yml
+  - caigg
+  - auditoria-interna
+  - control-gobierno
+  - probidad
+  - arquetipo
+
+
+## us_gen_gestion_camp_001.yml
+  - campeones
+  - equipo-operativo
+  - fomento
+  - ejecucion-fondos
+  - arquetipo
+
+
+## us_gen_gestion_ccasoc_001.yml
+  - colegio-profesional
+  - gremio
+  - mesas-tecnicas
+  - vinculacion
+  - arquetipo
+
+
+## us_gen_gestion_cde_001.yml
+  - cde
+  - defensa-estado
+  - litigios
+  - legal
+  - arquetipo
+
+
+## us_gen_gestion_cdr_001.yml
+  - cdr
+  - comite-directivo
+  - fomento-productivo
+  - gobernanza
+  - arquetipo
+
+
+## us_gen_gestion_cenic_001.yml
+  - investigacion
+  - centros-estudio
+  - academia
+  - datos-abiertos
+  - arquetipo
+
+
+## us_gen_gestion_cert_002.yml
+  - cert-manager
+  - ssl
+  - firmas-digitales
+  - automatizacion
+  - infra-como-codigo
+
+
+## us_gen_gestion_clasif_002.yml
+  - clasificador
+  - ia
+  - koda
+  - automatizacion-documental
+  - procesamiento-lenguaje
+
+
+## us_gen_gestion_cnr_001.yml
+  - cnr
+  - riego
+  - agricultura
+  - recursos-hidricos
+  - arquetipo
+
+
+## us_gen_gestion_com_001.yml
+  - dipir
+  - comunicaciones
+  - prensa
+  - infraestructura
+  - arquetipo
+
+
+## us_gen_gestion_comunic_001.yml
+  - asesor-comunicacional
+  - marca-regional
+  - posicionamiento
+  - clipping
+  - arquetipo
+
+
+## us_gen_gestion_con_ing_001.yml
+  - vialidad
+  - pavimentacion
+  - ingenieria
+  - obras-viales
+  - arquetipo
+
+
+## us_gen_gestion_consult_001.yml
+  - consultor
+  - asesor-externo
+  - estudios
+  - diseño-proyectos
+  - arquetipo
+
+
+## us_gen_gestion_contrap_001.yml
+  - contraparte
+  - seguimiento-convenios
+  - gestion-administrativa
+  - arquetipo
+
+
+## us_gen_gestion_coor_001.yml
+  - cies
+  - estudios-sociales
+  - vulnerabilidad
+  - coordinacion-datos
+  - arquetipo
+
+
+## us_gen_gestion_corfo_001.yml
+  - corfo
+  - fomento-productivo
+  - innovacion
+  - emprendimiento
+  - arquetipo
+
+
+## us_gen_gestion_corte_n_001.yml
+  - corte-apelaciones
+  - judicial
+  - litigios
+  - normativa
+  - arquetipo
+
+
+## us_gen_gestion_cosoc_001.yml
+  - cosoc
+  - participacion-ciudadana
+  - sociedad-civil
+  - gobernanza
+  - arquetipo
+
+
+## us_gen_gestion_cpc_001.yml
+  - cpc
+  - empresarial
+  - fomento-productivo
+  - gremio
+  - arquetipo
+
+
+## us_gen_gestion_cplt_001.yml
+  - cplt
+  - transparencia
+  - ley-20285
+  - fiscalizacion
+  - arquetipo
+
+
+## us_gen_gestion_cseu_me_001.yml
+  - cseu
+  - cooperacion-internacional
+  - union-europea
+  - evaluacion
+  - arquetipo
+
+
+## us_gen_gestion_ctd_001.yml
+  - transformacion-digital
+  - ctd
+  - ley-digitalizacion
+  - modernizacion
+  - arquetipo
+
+
+## us_gen_gestion_cti_pro_001.yml
+  - cti
+  - ciencia
+  - tecnologia
+  - fic
+  - innovacion
+  - arquetipo
+
+
+## us_gen_gestion_dga_001.yml
+  - dga
+  - agua
+  - fiscalizacion
+  - derechos-aprovechamiento
+  - arquetipo
+
+
+## us_gen_gestion_digitra_001.yml
+  - digitrans
+  - asesor-tde
+  - reingenieria
+  - modernizacion-estado
+  - arquetipo
+
+
+## us_gen_gestion_dipres_001.yml
+  - dipres
+  - analista-sectorial
+  - presupuesto-nacional
+  - fiscalizacion-financiera
+  - arquetipo
+
+
+## us_gen_gestion_directo_001.yml
+  - director-servicio
+  - servicio-publico
+  - transferencias
+  - convenios
+  - arquetipo
+
+
+## us_gen_gestion_doh_001.yml
+  - doh
+  - obras-hidraulicas
+  - infraestructura-riego
+  - apr
+  - arquetipo
+
+
+## us_gen_gestion_dpp_001.yml
+  - dpp
+  - delegacion-presidencial
+  - territorio
+  - coordinacion-politica
+  - arquetipo
+
+
+## us_gen_gestion_emp_001.yml
+  - empresa
+  - gremio
+  - licitaciones
+  - fomento
+  - arquetipo
+
+
+## us_gen_gestion_enc_001.yml
+  - calidad
+  - mejora-continua
+  - pmg
+  - procesos
+  - arquetipo
+
+
+## us_gen_gestion_encarga_001.yml
+  - estado-verde
+  - sostenibilidad
+  - eficiencia-energetica
+  - medio-ambiente
+  - arquetipo
+
+
+## us_gen_gestion_especia_001.yml
+  - bi
+  - analytics
+  - dashboards
+  - ciencia-datos
+  - arquetipo
+
+
+## us_gen_gestion_ext_002.yml
+  - externo
+  - tramites
+  - ciudadano
+  - interoperabilidad
+
+
+## us_gen_gestion_femp_001.yml
+  - federacion-municipios
+  - alcaldes
+  - asociatividad
+  - territorio
+  - arquetipo
+
+
+## us_gen_gestion_fin_cog_001.yml
+  - cogirador
+  - firmas-bancarias
+  - control-financiero
+  - tesoreria
+  - arquetipo
+
+
+## us_gen_gestion_fnx_op_001.yml
+  - fenix
+  - interventor
+  - terreno
+  - crisis-social
+  - arquetipo
+
+
+## us_gen_gestion_fosis_001.yml
+  - fosis
+  - superacion-pobreza
+  - inversion-social
+  - convenios
+  - arquetipo
+
+
+## us_gen_gestion_front_001.yml
+  - frontend
+  - ui-ux
+  - desarrollo-web
+  - interfaces
+  - arquetipo
+
+
+## us_gen_gestion_gen_001.yml
+  - ciudadano
+  - tramites
+  - transparencia
+  - participacion
+  - arquetipo
+
+
+## us_gen_gestion_goreolo_001.yml
+  - goreologo
+  - experto-institucional
+  - memoria-historica
+  - cultura-organizacional
+  - arquetipo
+
+
+## us_gen_gestion_grd_001.yml
+  - grd
+  - desastres
+  - emergencias
+  - prevencion
+  - arquetipo
+
+
+## us_gen_gestion_hon_ana_001.yml
+  - honorarios
+  - gdp
+  - rrhh
+  - contratos-personas
+  - arquetipo
+
+
+## us_gen_gestion_indap_001.yml
+  - indap
+  - agricultura
+  - desarrollo-rural
+  - fomento-agro
+  - arquetipo
+
+
+## us_gen_gestion_int_001.yml
+  - rr-ii
+  - relaciones-institucionales
+  - vinculacion
+  - articulacion
+  - arquetipo
+
+
+## us_gen_gestion_ipr_001.yml
+  - ipr
+  - formuevaluador
+  - inversion-publica
+  - seguimiento-tecnico
+  - arquetipo
+
+
+## us_gen_gestion_jano_001.yml
+  - jano
+  - legaltech
+  - conformidad
+  - automatizacion-legal
+  - arquetipo
+
+
+## us_gen_gestion_jefe_001.yml
+  - jefe-juridico
+  - legalidad
+  - resoluciones
+  - toma-decisiones
+  - arquetipo
+
+
+## us_gen_gestion_jefe_es_001.yml
+  - jefe-estudios
+  - prospectiva
+  - analitica
+  - planificacion
+  - arquetipo
+
+
+## us_gen_gestion_jjvv_001.yml
+  - junta-vecinos
+  - organizaciones-territoriales
+  - barrios
+  - circular-33
+  - arquetipo
+
+
+## us_gen_gestion_junji_001.yml
+  - junji
+  - educacion-inicial
+  - jardines-infantiles
+  - infraestructura-social
+  - arquetipo
+
+
+## us_gen_gestion_juzg_le_001.yml
+  - juzgado-letras
+  - judicial
+  - oficios
+  - legal
+  - arquetipo
+
+
+## us_gen_gestion_media_c_001.yml
+  - prensa
+  - radio
+  - periodismo
+  - acceso-informacion
+  - arquetipo
+
+
+## us_gen_gestion_medio_c_001.yml
+  - digital
+  - redes-sociales
+  - influencers-institucionales
+  - marketing-regional
+  - arquetipo
+
+
+## us_gen_gestion_mora_001.yml
+  - mora-watcher
+  - plazos
+  - pago-oportuno
+  - eficiencia-administrativa
+  - arquetipo
+
+
+## us_gen_gestion_muni_en_001.yml
+  - municipalidades
+  - gestion-territorial
+  - conservaciones
+  - apoyo-tecnico
+  - arquetipo
+
+
+## us_gen_gestion_notario_001.yml
+  - notario
+  - formalizacion-legal
+  - escrituras
+  - fe-publica
+  - arquetipo
+
+
+## us_gen_gestion_ong_001.yml
+  - ong
+  - fundacion
+  - sociedad-civil
+  - ejecucion-proyectos
+  - arquetipo
+
+
+## us_gen_gestion_org_ben_001.yml
+  - organizacion-beneficiaria
+  - personalidad-juridica
+  - deporte
+  - cultura
+  - arquetipo
+
+
+## us_gen_gestion_org_pos_001.yml
+  - postulante
+  - fondo-8porciento
+  - subvenciones
+  - cultura
+  - deporte
+  - arquetipo
+
+
+## us_gen_gestion_pmg_td_001.yml
+  - pmg-td
+  - referente-digital
+  - modernización
+  - indicadores-gestion
+  - arquetipo
+
+
+## us_gen_gestion_prensa__001.yml
+  - prensa-regional
+  - medios
+  - difusion
+  - transparencia
+  - arquetipo
+
+
+## us_gen_gestion_pres_001.yml
+  - subcomite-ia
+  - etica-ia
+  - gobernanza-digital
+  - innovacion
+  - arquetipo
+
+
+## us_gen_gestion_profesi_002.yml
+  - profesional-base
+  - analista
+  - ejecucion-administrativa
+  - arquetipo
+
+
+## us_gen_gestion_propir_001.yml
+  - propir
+  - mapa-inversion
+  - seguimiento-gasto
+  - territorio
+  - arquetipo
+
+
+## us_gen_gestion_rez_enc_001.yml
+  - zonas-rezago
+  - equidad-territorial
+  - inversion-especial
+  - brechas
+  - arquetipo
+
+
+## us_gen_gestion_salud_s_001.yml
+  - salud
+  - hospitales
+  - red-asistencial
+  - convenios-programacion
+  - arquetipo
+
+
+## us_gen_gestion_secpla__001.yml
+  - secpla
+  - san-carlos
+  - planificacion-municipal
+  - proyectos-fndr
+  - arquetipo
+
+
+## us_gen_gestion_secpla__002.yml
+  - secpla
+  - chillan
+  - capital-regional
+  - desarrollo-urbano
+  - arquetipo
+
+
+## us_gen_gestion_sence_001.yml
+  - sence
+  - capacitacion
+  - empleo
+  - fomento-productivo
+  - arquetipo
+
+
+## us_gen_gestion_serco_001.yml
+  - sercotec
+  - pymes
+  - microempresa
+  - fomento-productivo
+  - arquetipo
+
+
+## us_gen_gestion_seremi__001.yml
+  - seremi-hacienda
+  - presupuesto
+  - coordinacion-ministerial
+  - g2g
+  - arquetipo
+
+
+## us_gen_gestion_seremi__002.yml
+  - seremi-minvu
+  - vivienda
+  - urbanismo
+  - planes-reguladores
+  - g2g
+  - arquetipo
+
+
+## us_gen_gestion_sernam_001.yml
+  - sernameg
+  - equidad-genero
+  - violencia-mujeres
+  - coordinacion-social
+  - arquetipo
+
+
+## us_gen_gestion_sii_001.yml
+  - sii
+  - tributario
+  - rentas-regionales
+  - fiscalizacion-financiera
+  - arquetipo
+
+
+## us_gen_gestion_sindic_001.yml
+  - sindicato
+  - central-sindical
+  - derechos-laborales
+  - participacion-trabajadores
+  - arquetipo
+
+
+## us_gen_gestion_sna_001.yml
+  - sna
+  - sofo
+  - agricultura
+  - fomento-agropecuario
+  - arquetipo
+
+
+## us_gen_gestion_subdere_001.yml
+  - subdere
+  - descentralizacion
+  - transferencia-competencias
+  - fndr
+  - arquetipo
+
+
+## us_gen_gestion_subtel_001.yml
+  - subtel
+  - telecomunicaciones
+  - conectividad-digital
+  - brecha-digital
+  - arquetipo
+
+
+## us_gen_gestion_tc_001.yml
+  - tribunal-constitucional
+  - constitucionalidad
+  - normas-regionales
+  - legalidad-superior
+  - arquetipo
+
+
+## us_gen_gestion_transp__001.yml
+  - referente-transparencia
+  - transparencia-activa
+  - ley-20285
+  - cumplimiento-normativo
+  - arquetipo
+
+
+## us_gen_gestion_ucr_coo_001.yml
+  - ucr
+  - coordinador-regional
+  - supervisión
+  - control-territorial
+  - arquetipo
+
+
+## us_gen_gestion_unidad__001.yml
+  - unidad-coordinacion
+  - servicios-publicos
+  - articulacion-regional
+  - gestión-institucional
+  - arquetipo
+
+
+## us_gen_gestion_univ_001.yml
+  - investigador
+  - universidad
+  - fic
+  - ciencia-aplicada
+  - academia
+  - arquetipo
+
+
+## us_gen_gestion_univers_001.yml
+  - universidad-regional
+  - academia
+  - vinculacion-con-el-medio
+  - ecosistema-ctci
+  - arquetipo
+
+
+## us_gen_gestion_utm_gen_001.yml
+  - utm
+  - obras-municipales
+  - inspección-técnica
+  - proyectos-locales
+  - arquetipo
+
+
+## us_gen_jur_ases_div_001.yml
+  - abogado-asesor
+  - visacion-sectorial
+  - legalidad
+  - apoyo-division
+  - arquetipo
+
+
+## us_gen_norm_abogado_ge_001.yml
+  - abogado-general
+  - judicial
+  - reglamentacion
+  - defensa-institucional
+  - arquetipo
+
+
+## us_gen_norm_audit_002.yml
+  - fiscalizador-bot
+  - auditoria-automatica
+  - integridad
+  - control-gasto
+  - arquetipo
+
+
+## us_gen_norm_mp_001.yml
+  - ministerio-publico
+  - fiscalía
+  - investigacion-penal
+  - anticorrupcion
+  - arquetipo
+
+
+## us_gen_ops_admin_sys_002.yml
+  - sysadmin
+  - infraestructura
+  - servidores
+  - redes
+  - disponibilidad
+  - arquetipo
+
+
+## us_gen_ops_encargado_c_001.yml
+  - continuidad-operacional
+  - resiliencia
+  - gestion-riesgos
+  - contingencia
+  - arquetipo
+
+
+## us_gen_seg_ases_001.yml
+  - seguridad-ciudadana
+  - prevencion-delito
+  - coordinacion-policial
+  - territorio
+  - arquetipo
+
+
+## us_gen_terr_terr_001.yml
+  - equidad-territorial
+  - brechas
+  - inversion-publica
+  - territorio
+  - arquetipo
+
+
+## us_gen_terr_terr_soc_001.yml
+  - sociologo-territorial
+  - participacion-ciudadana
+  - analisis-social
+  - territorio
+  - arquetipo
+
+
+## us_geo_001_01.yml
+  - gis
+  - ide
+  - mapas
+  - metadatos
+  - infraestructura-datos
+
+
+## us_geo_002_01.yml
+  - geonodo
+  - interoperabilidad
+  - shapefile
+  - geojson
+  - etl-espacial
+
+
+## us_gest_coord_002.yml
+  - dpr
+  - gobierno-interior
+  - coordinacion-politica
+  - legalidad-pública
+
+
+## us_gest_hg_002.yml
+  - h-gore
+  - salud-operacional
+  - alertas
+  - monitoreo-procesos
+  - kpi
+
+
+## us_gest_hg_003.yml
+  - h-gore
+  - drill-down
+  - analisis-datos
+  - mejora-continua
+  - gestion-legal
+
+
+## us_gest_mc_001.yml
+  - mejora-continua
+  - calidad
+  - intra-emprendimiento
+  - eficiencia
+  - sugerencias
+
+
+## us_gest_mc_002.yml
+  - pdca
+  - mejora-continua
+  - control-gestion
+  - eficiencia-operacional
+
+
+## us_gest_pb_001.yml
+  - h-gore
+  - playbook
+  - recuperacion
+  - gestion-crisis-desempeño
+  - critico
+
+
+## us_gest_pb_002.yml
+  - playbook
+  - expectativas
+  - stakeholders
+  - gestion-relaciones
+  - comunicaciones-legales
+
+
+## us_gest_pb_003.yml
+  - playbooks
+  - base-conocimiento
+  - efectividad
+  - mejora-continua
+  - gestion-conocimiento
+
+
+## us_gest_per_002.yml
+  - induccion
+  - onboarding
+  - capital-humano
+  - capacitacion-inicial
+  - cultura-organizacional
+
+
+## us_gest_proc_001.yml
+  - expediente-digital
+  - trazabilidad
+  - ley-21180
+  - cero-papel
+  - transformacion-digital
+
+
+## us_gest_scg_001.yml
+  - poa
+  - erd
+  - alineacion-estrategica
+  - planificación-operativa
+  - gestion-por-objetivos
+
+
+## us_gest_scg_003.yml
+  - reporte-mensual
+  - rendicion-cuentas
+  - gobernador
+  - core
+  - transparencia-gestion
+
+
+## us_gest_uci_002.yml
+  - uci
+  - control-interno
+  - gestion-riesgos
+  - mitigacion
+  - cumplimiento
+
+
+## us_gfom_001_01.yml
+  - fomento-productivo
+  - formalizacion
+  - empresas
+  - emprendimiento
+  - difoi
+  - pymes
+
+
+## us_glosa7_001_01.yml
+  - glosa-7
+  - seguridad
+  - luminarias
+  - camaras-vigilancia
+  - admisibilidad
+  - formulacion
+
+
+## us_gob_001_02.yml
+  - alertas
+  - desviaciones
+  - proyectos-estrategicos
+  - controller
+  - gestion-riesgos
+
+
+## us_gob_002_01.yml
+  - convenios
+  - seremi
+  - ministerios
+  - seguimiento-compromisos
+  - g2g
+  - unidad-juridica
+
+
+## us_gob_core_004.yml
+  - core
+  - mapa-inversion
+  - geolocalizacion
+  - transparencia-territorial
+  - consejo-regional
+
+
+## us_gob_core_006.yml
+  - core
+  - votaciones
+  - acuerdos
+  - actas-sesion
+  - trazabilidad-politica
+  - consejo-regional
+
+
+## us_gob_core_007.yml
+  - core
+  - acuerdos
+  - cumplimiento
+  - fiscalizacion-core
+  - transparencia
+
+
+## us_gob_core_010.yml
+  - core
+  - actas-sesion
+  - memoria-institucional
+  - transparencia
+  - consejo-regional
+
+
+## us_gob_core_011.yml
+  - core
+  - quorum
+  - votaciones
+  - simulacion
+  - gestion-politica
+  - secretario-ejecutivo
+
+
+## us_gob_del_001.yml
+  - dpr
+  - seremi
+  - gabinete-regional
+  - coordinacion-politica
+  - gobierno-interior
+
+
+## us_gob_del_003.yml
+  - dpr
+  - recursos-administrativos
+  - tutela
+  - legalidad
+  - instancia-superior
+
+
+## us_gob_del_004.yml
+  - dpr
+  - orden-público
+  - seguridad-interior
+  - contingencia-social
+  - carabinero-pdi
+
+
+## us_gob_desc_002.yml
+  - comite-interministerial
+  - descentralizacion
+  - transferencia-competencias
+  - incidencia-politica
+  - autonomia-regional
+
+
+## us_gob_desc_005.yml
+  - plan-instalacion
+  - competencias
+  - operatividad
+  - puesta-en-marcha
+  - gestion-del-cambio
+
+
+## us_gob_desc_006.yml
+  - informe-final
+  - cierre-instalacion
+  - competencias
+  - rendicion-tecnica
+  - autonomia-regional
+
+
+## us_gob_desc_007.yml
+  - recursos-financieros
+  - brecha-financiera
+  - suficiencia
+  - descentralizacion-fiscal
+  - auditoria-presupuestaria
+
+
+## us_gob_gab_001.yml
+  - agenda-gr
+  - gabinete
+  - audiencias
+  - giras-terreno
+  - gestion-tiempo
+  - autoridad
+
+
+## us_gob_gab_003.yml
+  - crisis-politica
+  - comunicacion-estrategica
+  - gabinete
+  - contingencia
+  - reputacion-institucional
+
+
+## us_gob_gab_004.yml
+  - articulacion-politica
+  - relaciones-institucionales
+  - alcaldes
+  - parlamentarios
+  - gabinete
+
+
+## us_gob_gab_005.yml
+  - minutas
+  - brief
+  - toma-decisiones
+  - asesoria-autoridad
+  - gabinete
+
+
+## us_gob_gab_007.yml
+  - urai
+  - relaciones-internacionales
+  - cooperacion-descentralizada
+  - paradiplomacia
+  - misiones-extranjeras
+
+
+## us_gob_gr_001.yml
+  - gobernador
+  - erd
+  - prot
+  - políticas-publicas
+  - estrategia-regional
+
+
+## us_gob_gr_004.yml
+  - gobernador
+  - presidente-core
+  - voto-dirimente
+  - tabla-sesion
+  - organo-colegiado
+
+
+## us_gob_gr_005.yml
+  - gobernador
+  - cogrid
+  - emergencias
+  - gestion-riesgos
+  - senapred
+  - liderazgo-civil
+
+
+## us_gob_gr_009.yml
+  - gobernador
+  - nombramientos
+  - remociones
+  - confianza-politica
+  - alta-direccion-regional
+
+
+## us_gob_gr_010.yml
+  - gobernador
+  - representacion
+  - relaciones-institucionales
+  - asociacion-gobernadores
+  - paradiplomacia
+
+
+## us_gob_gr_013.yml
+  - gobernador
+  - infraestructura
+  - ordenamiento-territorial
+  - comite-tecnico
+  - coordinacion-sectorial
+
+
+## us_gob_gr_014.yml
+  - gobernador
+  - convenios-programacion
+  - co-financiamiento
+  - inversion-publica
+  - negociacion-central
+
+
+## us_gob_grd_001.yml
+  - grd
+  - reduccion-riesgo
+  - prevencion
+  - política-resiliencia
+  - senapred
+  - ley-21364
+
+
+## us_gob_grd_002.yml
+  - grd
+  - mapas-riesgo
+  - prot
+  - ordenamiento
+  - resiliencia-territorial
+  - mitigacion
+
+
+## us_gob_grd_003.yml
+  - grd
+  - plan-emergencia
+  - respuesta
+  - desastres
+  - protocolos
+  - cogrid
+
+
+## us_gob_grd_004.yml
+  - grd
+  - mitigacion
+  - prevencion
+  - comite-tecnico
+  - coordinacion-intersectorial
+
+
+## us_gob_lob_001.yml
+  - lobby
+  - infolobby
+  - ley-20730
+  - transparencia-activa
+  - integridad-publica
+
+
+## us_gob_lob_002.yml
+  - dip
+  - probidad
+  - patrimonio-e-intereses
+  - alertas-cumplimiento
+  - ley-20880
+
+
+## us_gob_op_002.yml
+  - oficina-de-partes
+  - derivacion
+  - dipir
+  - interoperabilidad-interna
+  - eficiencia
+
+
+## us_gob_op_005.yml
+  - ocr
+  - inteligencia-artificial
+  - clasificacion-documentos
+  - automatizacion
+  - datos-no-estructurados
+
+
+## us_gob_sec_001.yml
+  - gabinete-gr
+  - gabinete-seremi
+  - coordinacion-agenda
+  - g2g
+  - protocolo-politico
+
+
+## us_gobprov_001_01.yml
+  - provincia
+  - reporte-inversion
+  - delegacion-provincial
+  - transparencia-territorial
+  - descentralizacion-interna
+
+
+## us_gprov_001_01.yml
+  - acceso-remoto
+  - delegacion-provincial
+  - descentralizacion-administrativa
+  - rrhh
+  - sistemas-gore
+
+
+## us_grd_001_01.yml
+  - grd
+  - protocolos-emergencia
+  - clic-de-emergencia
+  - movilizacion-recursos
+  - cogrid
+
+
+## us_hon_001_01.yml
+  - honorarios
+  - cumplimiento-actividades
+  - rrhh
+  - control-pagos
+  - contrato-admin
+
+
+## us_hon_002_01.yml
+  - honorarios
+  - autoservicio
+  - rendicion-actividades
+  - boleta-honorarios
+  - digitalizacion
+
+
+## us_icon_001_01.yml
+  - prompt-engineering
+  - llm
+  - conocimiento
+  - koda
+  - versionamiento-prompts
+  - ia-generativa
+
+
+## us_ide_001_01.yml
+  - ide
+  - metadatos
+  - gis
+  - estandarizacion
+  - interoperabilidad-espacial
+  - catalogo-objetos
+
+
+## us_if_001_02.yml
+  - fiscalizacion
+  - sumarios
+  - plantillas-legales
+  - juridica
+  - estandarizacion-documental
+
+
+## us_indap_001_01.yml
+  - indap
+  - agricultura
+  - fomento-rural
+  - coordinacion-intersectorial
+  - apoyo-campesino
+
+
+## us_inter_001_01.yml
+  - apis
+  - interoperabilidad
+  - catalogo-servicios
+  - integracion
+  - tde
+  - arquitectura-datos
+
+
+## us_intfin_001_01.yml
+  - erp
+  - auditoria-financiera
+  - sigfe
+  - trazabilidad
+  - cumplimiento-fiscal
+
+
+## us_intfis_001_01.yml
+  - sumarios
+  - digitalizacion
+  - fiscalia
+  - probidad
+  - gestion-documental
+
+
+## us_inv_001_01.yml
+  - activos-fijos
+  - inventario
+  - logística
+  - control-interno
+  - patrimonio
+
+
+## us_inv_dep_001_01.yml
+  - ari
+  - dipres
+  - presupuesto-regional
+  - priorizacion
+  - inversion-publica
+
+
+## us_iplat_001_01.yml
+  - devops
+  - plataforma
+  - automatizacion
+  - infraestructura-como-codigo
+  - servicios-cloud
+
+
+## us_isan_001_01.yml
+  - apr
+  - sanitario
+  - agua-potable
+  - factibilidad
+
+
+## us_iseg_001_01.yml
+  - ciberseguridad
+  - devsecops
+  - sast
+  - vulnerabilidades
+  - calidad-software
+
+
+## us_itmuni_001_01.yml
+  - seguridad
+  - apis
+  - token
+  - interoperabilidad-municipal
+  - integracion
+
+
+## us_ito_001_01.yml
+  - offline
+  - app-movil
+  - bitacora
+  - terreno
+
+
+## us_ito_001_02.yml
+  - checklist
+  - hitos
+  - contrato
+  - control
+
+
+## us_ito_002_01.yml
+  - cubicaciones
+  - estados-de-pago
+  - avance-fisico
+  - control-obras
+
+
+## us_itom_001_01.yml
+  - municipal
+  - portal
+  - ito-externo
+  - inversion
+
+
+## us_itp_001_01.yml
+  - itp
+  - programas
+  - checklist
+  - control-gestion
+
+
+## us_ivial_001_01.yml
+  - vialidad
+  - caminos
+  - estándares-mop
+  - pavimento
+
+
+## us_jaud_001_01.yml
+  - auditoria
+  - riesgos
+  - control-interno
+  - probidad
+
+
+## us_jcal_001_01.yml
+  - calificaciones
+  - junta-calificadora
+  - desempeño
+  - hoja-de-vida
+
+
+## us_jcont_001_01.yml
+  - cierre-contable
+  - auditoria
+  - sigfe
+  - integridad
+
+
+## us_jd_ana_001_01.yml
+  - devengo
+  - gasto-efectivo
+  - proyeccion
+  - presupuesto
+
+
+## us_jefe_rrhh_001_01.yml
+  - expediente-digital
+  - legajo
+  - funcionario
+  - probidad
+
+
+## us_jer_001_01.yml
+  - tareas
+  - trazabilidad
+  - control-jerarquico
+  - productividad
+
+
+## us_jest_001_01.yml
+  - estudios
+  - preinversion
+  - conocimiento
+  - eficiencia
+
+
+## us_jpre_001_01.yml
+  - cdp
+  - bloqueo
+  - saldo
+  - disciplina-financiera
+
+
+## us_jprog_001_01.yml
+  - ari
+  - propir
+  - plurianual
+  - proyeccion
+
+
+## us_jterr_001_01.yml
+  - mapas
+  - per-capita
+  - brechas
+  - equidad-territorial
+
+
+## us_jtes_001_01.yml
+  - pagos
+  - tesoreria
+  - caja
+  - liquidez
+
+
+## us_jti_001_01.yml
+  - activos-ti
+  - inventario
+  - hardware
+  - obsolescencia
+
+
+## us_juez_001_01.yml
+  - contraloria
+  - cgr
+  - juicio-de-cuentas
+  - probidad
+  - remision-digital
+
+
+## us_lobby_001_01.yml
+  - lobby
+  - audiencias
+  - probidad
+  - transparencia
+
+
+## us_mctd_001_01.yml
+  - ctd
+  - transformacion-digital
+  - acuerdos
+  - minutas
+
+
+## us_mds_001_01.yml
+  - rs
+  - bip
+  - mdsyf
+  - inversiones
+
+
+## us_mecif_001_01.yml
+  - mecif
+  - dirigentes
+  - organizaciones-sociales
+  - validacion
+
+
+## us_mesa_001_01.yml
+  - mesa-de-ayuda
+  - base-conocimiento
+  - tickets
+  - soporte
+
+
+## us_mesa_002_01.yml
+  - tickets
+  - sla
+  - priorizacion
+  - soporte-tecnico
+
+
+## us_mig_001.yml
+  - legacy
+  - data-injection
+  - historial
+  - migracion
+
+
+## us_mig_002.yml
+  - etl
+  - normalizacion
+  - ontologia
+  - reglas-mapeo
+
+
+## us_mig_003.yml
+  - mdm
+  - deduplicación
+  - consolidación
+  - limpieza-datos
+
+
+## us_mig_prom_001.yml
+  - promocion
+  - produccion
+  - staging
+  - integridad
+
+
+## us_mon_001_01.yml
+  - uuptime
+  - wallboard
+  - monitoreo
+  - sre
+
+
+## us_msia_001_01.yml
+  - ia
+  - etica-digital
+  - algoritmos
+  - gobernanza
+
+
+## us_ndev_001_01.yml
+  - onboarding
+  - dx
+  - documentacion
+  - arquitectura
+
+
+## us_noc_001_01.yml
+  - siem
+  - soc
+  - ataques
+  - mitigacion
+
+
+## us_norm_acto_002.yml
+  - visacion
+  - legalidad
+  - abogado
+  - convenios
+
+
+## us_norm_acto_003.yml
+  - toma-de-razon
+  - cgr
+  - abogacia
+  - control-preventivo
+
+
+## us_norm_acto_004.yml
+  - defensa-judicial
+  - litigios
+  - tribunales
+  - fiscalia
+
+
+## us_norm_acto_005.yml
+  - sumarios
+  - disciplina
+  - debido-proceso
+  - fiscal
+
+
+## us_norm_acto_006.yml
+  - afecta
+  - exenta
+  - clasificacion
+  - cgr
+
+
+## us_norm_acto_008.yml
+  - observaciones
+  - correccion
+  - rechazo-tecnico
+  - juridico
+
+
+## us_norm_acto_011.yml
+  - alertas
+  - demora
+  - firma
+  - oficina-de-partes
+
+
+## us_norm_acto_012.yml
+  - copia-autentica
+  - fe-publica
+  - qr
+  - certificacion
+
+
+## us_norm_att_001.yml
+  - validacion-archivos
+  - formatos
+  - pdf
+  - estandar-gobierno
+
+
+## us_norm_cgr_001.yml
+  - cgr
+  - siaper
+  - sistradoc
+  - interoperabilidad
+
+
+## us_norm_cgr_003.yml
+  - dip
+  - conflictos-interes
+  - fiscalizacion
+  - cgr
+
+
+## us_norm_cris_001.yml
+  - transparencia-pasiva
+  - crisis
+  - solicitudes
+  - cumplimiento-legal
+
+
+## us_norm_ctrl_001.yml
+  - conflictos-interes
+  - auditoria
+  - prevencion
+  - nepotismo
+
+
+## us_norm_ctrl_004.yml
+  - hallazgos
+  - reporte
+  - core
+  - escalamiento
+
+
+## us_norm_ctrl_005.yml
+  - sumarios
+  - secreto-sumario
+  - reserva
+  - debida-diligencia
+
+
+## us_norm_dip_001.yml
+  - dip
+  - declaraciones
+  - alertas
+  - integridad
+
+
+## us_norm_exp_001.yml
+  - expediente-electronico
+  - iuie
+  - metadatos
+  - tde
+
+
+## us_norm_exp_003.yml
+  - ds10
+  - trazabilidad
+  - log
+  - auditoria
+
+
+## us_norm_lobby_001.yml
+  - ley-lobby
+  - audiencias
+  - donativos
+  - integridad
+
+
+## us_norm_lobby_002.yml
+  - sujetos-pasivos
+  - autoridades
+  - directivos
+  - cumplimiento
+
+
+## us_norm_sim_001.yml
+  - glosas
+  - simulacion
+  - presupuesto
+  - pre-auditoria
+
+
+## us_norm_trans_002.yml
+  - oirs
+  - sai
+  - transparencia
+  - respuesta-ciudadana
+
+
+## us_obs_001_01.yml
+  - observatorio
+  - indicadores
+  - erd
+  - big-data
+
+
+## us_obs_001_02.yml
+  - reportes
+  - visualización
+  - bi
+  - toma-de-decisiones
+
+
+## us_oirs_001_01.yml
+  - oirs
+  - transparencia
+  - trazabilidad
+  - atencion-ciudadana
+  - plazos-legales
+
+
+## us_oirs_001_02.yml
+  - satisfaccion-ciudadana
+  - calidad-servicio
+  - mejora-continua
+  - encuestas
+  - feedback
+
+
+## us_ong_001_01.yml
+  - ong
+  - fondos-concursables
+  - sociedad-civil
+  - vinculacion-regional
+  - transparencia
+
+
+## us_ong_002_01.yml
+  - subvenciones
+  - ong
+  - postulación
+  - fndr
+
+
+## us_op_001_01.yml
+  - oficina-de-partes
+  - trazabilidad
+  - codigo-barras
+  - caratulas
+  - gestion-documental
+
+
+## us_op_001_02.yml
+  - oficina-de-partes
+  - correlativos
+  - trazabilidad
+  - SISDOC
+  - fe-publica
+
+
+## us_op_002_01.yml
+  - oficina-de-partes
+  - despacho
+  - correspondencia
+  - trazabilidad-salida
+  - comprobacion-recepcion
+
+
+## us_op_cies_001_01.yml
+  - monitoreo
+  - cies
+  - alertas
+  - incidentes
+  - infraestructura-critica
+
+
+## us_ope_001_01.yml
+  - scheduler
+  - batch-processing
+  - ops
+  - monitoreo-tareas
+  - continuidad
+
+
+## us_ops_back_001.yml
+  - backup
+  - restore
+  - drp
+  - resiliencia
+
+
+## us_ops_bak_001.yml
+  - database-backup
+  - automatización
+  - postgresql
+  - seguridad-datos
+
+
+## us_ops_bak_002.yml
+  - pitr
+  - recuperacion
+  - resiliencia
+  - seguridad
+
+
+## us_ops_bak_003.yml
+  - checksum
+  - integridad
+  - monitoreo-backup
+  - qa-ops
+
+
+## us_ops_cfg_001.yml
+  - config
+  - env-vars
+  - kubernetes
+  - gitops
+
+
+## us_ops_cfg_002.yml
+  - feature-flags
+  - canary-releases
+  - toggles
+  - agilidad
+
+
+## us_ops_cfg_003.yml
+  - audit-log
+  - compliance
+  - seguridad
+  - trazabilidad
+
+
+## us_ops_dat_001.yml
+  - partitioning
+  - postgresql
+  - big-data
+  - performance
+
+
+## us_ops_dat_002.yml
+  - data-masking
+  - privacidad
+  - ley-21096
+  - anonimización
+
+
+## us_ops_dat_003.yml
+  - validacion
+  - carga-masiva
+  - limpieza-datos
+  - geonodo
+
+
+## us_ops_dat_004.yml
+  - trazabilidad
+  - historial
+  - log-ingesta
+  - data-governance
+
+
+## us_ops_fin_001.yml
+  - costos-nube
+  - presupuesto-it
+  - optimizacion
+  - alertas-financieras
+
+
+## us_ops_iac_001.yml
+  - iac
+  - terraform
+  - devops
+  - automatizacion
+
+
+## us_ops_iam_001.yml
+  - iam
+  - gestión-usuarios
+  - control-acceso
+  - seguridad
+
+
+## us_ops_iam_002.yml
+  - rbac
+  - auditoria-acceso
+  - roles
+  - seguridad-info
+
+
+## us_ops_iam_003.yml
+  - privilegios
+  - granulidad
+  - seguridad
+  - control-acceso
+
+
+## us_ops_iam_004.yml
+  - clave-unica
+  - sso
+  - autenticacion
+  - identidad-digital
+
+
+## us_ops_iam_005.yml
+  - self-service
+  - password-reset
+  - autonomia
+  - help-desk
+
+
+## us_ops_inc_001.yml
+  - incidentes
+  - sda
+  - continuidada
+  - soporte-nivel-3
+
+
+## us_ops_mig_001.yml
+  - etl
+  - pipeline
+  - orchestration
+  - airflow
+
+
+## us_ops_mig_002.yml
+  - mapping
+  - semantic-transformation
+  - legacy-migration
+  - data-architecture
+
+
+## us_ops_mig_003.yml
+  - reconciliation
+  - data-integrity
+  - audit
+  - post-migration
+
+
+## us_ops_mon_001.yml
+  - monitoreo
+  - alertas
+  - sre
+  - performance
+
+
+## us_ops_mon_002.yml
+  - dashboards
+  - grafana
+  - visibilidad
+  - salud-sistema
+
+
+## us_ops_mon_003.yml
+  - tracing
+  - logs
+  - troubleshooting
+  - correlacion
+
+
+## us_ops_mon_004.yml
+  - sla
+  - slo
+  - metas
+  - calidad-servicio
+
+
+## us_ops_perf_001.yml
+  - o-score
+  - eficiencia
+  - kpi
+  - gestion-por-procesos
+
+
+## us_ops_sec_001.yml
+  - logs
+  - audit
+  - ley-21663
+  - ciberseguridad
+  - trazabilidad
+
+
+## us_ops_sre_001.yml
+  - hpa
+  - k8s
+  - escalamiento
+  - resiliencia-activa
+
+
+## us_ops_sup_001.yml
+  - cies
+  - incidentes
+  - help-desk
+  - soporte-guiado
+
+
+## us_ops_sup_002.yml
+  - triaje-ia
+  - nlp
+  - clasificación-tickets
+  - automatizacion-soporte
+
+
+## us_ops_sup_003.yml
+  - wiki
+  - faq
+  - autoservicio
+  - knowledge-management
+
+
+## us_ops_sup_004.yml
+  - escalamiento
+  - nivel-3
+  - bugs
+  - devops
+
+
+## us_part_001_01.yml
+  - votación
+  - presupuesto-participativo
+  - ñuble-decide
+  - democracia
+
+
+## us_pat_did_001_01.yml
+  - patrocinio
+  - checklist
+  - formalidad
+  - gestion-proyectos
+  - difoi
+
+
+## us_pat_dif_001_01.yml
+  - bip
+  - inversion-publica
+  - alineamiento-sectorial
+  - difoi
+  - integracion-bip
+
+
+## us_pat_dit_001_01.yml
+  - infraestructura
+  - validacion-automatica
+  - dit
+  - urbanismo
+  - coherencia-territorial
+
+
+## us_pcseu_001_01.yml
+  - actas
+  - seleccion
+  - puntajes
+  - ranking-tecnico
+
+
+## us_pdi_001_01.yml
+  - pdi
+  - seguridad-publica
+  - evidencia-visual
+  - cies
+  - vigilancia
+
+
+## us_per_001_01.yml
+  - prensa
+  - comunicaciones
+  - plantillas
+  - consistencia-marca
+  - difusion
+
+
+## us_pes_001_01.yml
+  - pesca-artesanal
+  - caletas
+  - fomento-productivo
+  - beneficiarios
+  - focalizacion
+
+
+## us_pever_001_01.yml
+  - estado-verde
+  - sustentabilidad
+  - certificacion
+  - medio-ambiente
+  - compromiso-institucional
+
+
+## us_plan_urb_001_01.yml
+  - prot
+  - prc
+  - urbanismo
+  - ipt
+  - coherencia-territorial
+  - gis
+
+
+## us_pmg_001_01.yml
+  - pmg
+  - transformacion-digital
+  - evidencias
+  - cumplimiento-gestion
+  - DIPRES
+
+
+## us_po_001_01.yml
+  - product-owner
+  - backlog
+  - stories
+  - agile
+  - requisitos
+  - gestion-proyectos
+
+
+## us_ppert_001_01.yml
+  - acta-pertinencia
+  - firma-digital
+  - subcomite-ia
+  - flujo-inversion
+  - admision-proyectos
+
+
+## us_ppr_001_01.yml
+  - ppr
+  - evaluacion-tecnica
+  - iniciativas-regionales
+  - calificacion-proyectos
+
+
+## us_preinv_001_01.yml
+  - preinversion
+  - bip
+  - admisibilidad
+  - checklist
+  - dae
+  - proyectos-capital
+
+
+## us_pres_core_001_01.yml
+  - core
+  - votacion-electronica
+  - sesiones
+  - transparencia
+  - consejo-regional
+
+
+## us_prev_001_01.yml
+  - prevencion-riesgos
+  - salud-ocupacional
+  - ley-16744
+  - seguridad-laboral
+  - rrhh
+
+
+## us_prev_002_01.yml
+  - epp
+  - seguridad-laboral
+  - ley-16744
+  - rrhh
+  - prevencion
+
+
+## us_prof_n250_001_01.yml
+  - compromisos
+  - metas-gestion
+  - reporte-avance
+  - transparencia-interna
+  - planificación
+
+
+## us_prof_rez_001_01.yml
+  - rezago
+  - nudos-criticos
+  - diagnostico
+  - gestion-proyectos
+  - destrabar-inversion
+
+
+## us_qa_001_01.yml
+  - staging
+  - qa
+  - testing
+  - infraestructura
+  - despliegue
+  - confiabilidad
+
+
+## us_rem_001_01.yml
+  - remuneraciones
+  - rrhh
+  - pagos
+  - nomina
+  - planillas
+
+
+## us_rem_002_01.yml
+  - bonificaciones
+  - descuentos
+  - sueldos
+  - legalidad
+  - rrhh
+
+
+## us_rend_002_01.yml
+  - rendiciones
+  - flujo-trabajo
+  - estados
+  - trazabilidad
+  - control-financiero
+
+
+## us_rez_001_01.yml
+  - rezago
+  - rs
+  - proyectos-especiales
+  - evaluacion-social
+  - zonas-aisladas
+
+
+## us_rgasto_001_01.yml
+  - clasificadores
+  - presupuesto
+  - contabilidad
+  - validacion-gasto
+  - sigfe
+
+
+## us_rpmg_001_01.yml
+  - pmg
+  - transparencia
+  - evidencias
+  - medios-verificacion
+  - incentivos-gestion
+
+
+## us_rpsico_001_01.yml
+  - clima-laboral
+  - istas-21
+  - anonimato
+  - salud-mental
+  - rrhh
+
+
+## us_rrhh_001_01.yml
+  - onboarding
+  - rrhh
+  - workflow-digital
+  - gestion-personas
+  - registro-funcionario
+
+
+## us_rrhh_001_02.yml
+  - alertas
+  - contratas
+  - rrhh
+  - renovacion-contratos
+  - cumplimiento-plazos
+
+
+## us_rrhh_002_01.yml
+  - pac
+  - rrhh
+  - capacitacion
+  - competencias
+  - desarrollo-organizacional
+
+
+## us_rtd_001_01.yml
+  - ley-21180
+  - transformacion-digital
+  - tramites
+  - gobierno-digital
+  - cumplimiento-legal
+
+
+## us_rtec_001_01.yml
+  - unidad-tecnica
+  - municipios
+  - hitos-tecnicos
+  - ejecucion-obras
+  - pagos
+
+
+## us_sag_001_01.yml
+  - sag
+  - agricultura
+  - fitosanitario
+  - fiscalizacion
+  - coordinacion-intersectorial
+
+
+## us_sec_ctci_001_01.yml
+  - ctci
+  - ciencia-y-tecnologia
+  - innovacion
+  - sesiones
+  - acuerdos-estrategicos
+
+
+## us_sec_ctd_001_01.yml
+  - ctd
+  - transformacion-digital
+  - gobernanza
+  - actas-sesion
+  - hoja-de-ruta
+
+
+## us_seccom_001_01.yml
+  - comisiones-core
+  - apoyo-tecnico
+  - sesiones
+  - actas
+  - consejo-regional
+
+
+## us_seccore_001_01.yml
+  - consejo-regional
+  - sesiones
+  - votaciones
+  - actas
+  - fe-publica
+
+
+## us_seccore_001_02.yml
+  - notificaciones
+  - consejeros
+  - transparencia
+  - tabla-sesion
+  - cumplimiento-normativo
+
+
+## us_secdiv_001_01.yml
+  - secretaria
+  - correspondencia
+  - documentos
+  - trazabilidad
+  - despacho
+
+
+## us_secpla_001_01.yml
+  - secplan
+  - formulacion
+  - erd
+  - alineacion-estrategica
+  - rs
+
+
+## us_secpla_001_02.yml
+  - secplan
+  - benchmarking
+  - costos-referenciales
+  - buenas-practicas
+  - colaboracion-municipal
+
+
+## us_seg_cies_001.yml
+  - cies
+  - alertas
+  - seguridad-publica
+  - georreferencia
+  - emergencias
+
+
+## us_seg_cies_003.yml
+  - cies
+  - ptz
+  - televigilancia
+  - incidente
+  - evidencia-video
+
+
+## us_seg_cies_004.yml
+  - lpr
+  - patentes
+  - encargo-busqueda
+  - coordinacion-policial
+  - cies
+
+
+## us_seg_cies_006.yml
+  - cies
+  - videowall
+  - mando-y-control
+  - emergencias
+  - despliegue-operativo
+
+
+## us_seg_cies_008.yml
+  - cies
+  - hotspots
+  - mapas-calor
+  - estadistica-delictual
+  - decision-preventiva
+
+
+## us_seg_cies_009.yml
+  - cies
+  - terreno
+  - validacion
+  - alertas
+  - patrullaje
+
+
+## us_seg_cies_010.yml
+  - puntos-criticos
+  - disturbios
+  - orden-publico
+  - cies
+  - priorizacion-recursos
+
+
+## us_seg_evid_001.yml
+  - evidencia
+  - video-forense
+  - hash
+  - cadena-custodia
+  - ministerio-publico
+
+
+## us_seg_evid_003.yml
+  - trazabilidad
+  - cadena-custodia
+  - logs
+  - privacidad
+  - auditoria
+
+
+## us_seg_gob_002.yml
+  - consejo-seguridad
+  - gobernanza-participativa
+  - seguridad-publica
+  - participacion-ciudadana
+  - articulacion-regional
+
+
+## us_seg_gob_004.yml
+  - denuncia-anonima
+  - reporte-ciudadano
+  - focos-delictuales
+  - app-seguridad
+  - colaboracion
+
+
+## us_seg_prev_003.yml
+  - prevencion
+  - gobernanza
+  - consejo-regional
+  - articulacion
+  - seguridad-publica
+
+
+## us_seg_prev_006.yml
+  - convenios
+  - municipios
+  - monitoreo-financiero
+  - transferencias
+  - ejecucion-presupuestaria
+
+
+## us_seg_prev_007.yml
+  - asistencia-victimas
+  - apoyo-juridico
+  - apoyo-psicologico
+  - reparacion
+  - vulnerabilidad
+
+
+## us_seg_prev_008.yml
+  - asesoría
+  - municipios
+  - ley-de-municipalidades
+  - planes-comunales
+  - prevencion-delito
+
+
+## us_seg_prev_009.yml
+  - spd
+  - politica-nacional
+  - seguridad-publica
+  - ucr
+  - ministerio-interior
+
+
+## us_seg_prev_010.yml
+  - predictivo
+  - riesgo-delictual
+  - prevencion
+  - hotspots
+  - estacionalidad
+
+
+## us_sen_001_01.yml
+  - parlamento
+  - fiscalizacion
+  - transparencia
+  - proyectos-region
+  - representacion
+
+
+## us_senapred_001_01.yml
+  - senapred
+  - emergencias
+  - cies
+  - catastrofes
+  - mando-y-control
+
+
+## us_ser_agr_001_01.yml
+  - agricultura
+  - seremi
+  - fndr
+  - desarrollo-rural
+  - inversion-publica
+
+
+## us_ser_gob_001_01.yml
+  - seremi-gobierno
+  - crisis
+  - comunicacion-emergencia
+  - articulacion-politica
+  - gobierno-interior
+
+
+## us_ser_mop_001_01.yml
+  - mop
+  - obras-publicas
+  - mandato
+  - ejecucion-obras
+  - infraestructura-regional
+
+
+## us_serc_001_01.yml
+  - sernatur
+  - turismo
+  - fomento-productivo
+  - duplicidad-subsidios
+  - beneficiarios
+
+
+## us_seremi_001_02.yml
+  - consejo-regional
+  - seremi
+  - notificaciones
+  - tabla-sesion
+  - coordinacion-intersectorial
+
+
+## us_serv_001_01.yml
+  - servicios-generales
+  - mantenimiento
+  - aseo
+  - seguridad-privada
+  - contratos
+
+
+## us_serviu_001_01.yml
+  - serviu
+  - vivienda
+  - cofinanciamiento
+  - minvu
+  - desarrollo-urbano
+
+
+## us_soc_001_01.yml
+  - registro-social
+  - beneficiarios
+  - focalizacion
+  - organizaciones-comunitarias
+  - impacto-social
+
+
+## us_socio_001_01.yml
+  - bienestar
+  - ayudas-economicas
+  - funcionarios
+  - rrhh
+  - beneficios-sociales
+
+
+## us_sofo_001_01.yml
+  - agricultura
+  - alertas-tempranas
+  - sequia
+  - cambio-climatico
+  - fomento-rural
+
+
+## us_sop_001_01.yml
+  - cies
+  - mantenimiento
+  - activos
+  - hardware
+  - soporte-tecnico
+  - alta-disponibilidad
+
+
+## us_spert_001_01.yml
+  - comite-pertinencia
+  - actas
+  - automatizacion
+  - admisibilidad
+  - gestion-proyectos
+
+
+## us_sre_001_01.yml
+  - sre
+  - slo
+  - sli
+  - uptime
+  - monitoreo
+  - confiabilidad
+
+
+## us_subv_001_01.yml
+  - subvenciones
+  - organizaciones-sociales
+  - elegibilidad
+  - cumplimiento
+  - registro-receptores
+
+
+## us_suj_001_01.yml
+  - ley-del-lobby
+  - transparencia
+  - audiencias
+  - sujeto-pasivo
+  - probidad
+
+
+## us_sup_cies_001_01.yml
+  - cies
+  - reportes-desempeño
+  - turnos
+  - gestion-personal
+  - indicadores-gestion
+
+
+## us_sup_obra_001_01.yml
+  - boletas-garantia
+  - alertas
+  - inversion-publica
+  - resguardo-patrimonial
+  - cumplimiento-contrato
+
+
+## us_sup_trans_001_01.yml
+  - transparencia-activa
+  - transparencia-pasiva
+  - sai
+  - cplt
+  - cumplimiento-legal
+
+
+## us_tc_001_01.yml
+  - controversias
+  - juicios-cuentas
+  - fe-publica
+  - expedientes
+  - legalidad
+
+
+## us_tcorp_001_01.yml
+  - corporacion
+  - intranet
+  - acceso
+  - coordinacion
+  - vinculacion
+
+
+## us_tde_admin_001.yml
+  - administracion
+  - estructura-organizacional
+  - divisiones
+  - jerarquia
+  - configuracion
+
+
+## us_tde_admin_002.yml
+  - usuarios
+  - rbac
+  - identidades
+  - perfiles
+  - seguridad
+
+
+## us_tde_admin_004.yml
+  - bajas
+  - trazabilidad
+  - auditoria
+  - integridad
+  - rrhh
+
+
+## us_tde_admin_006.yml
+  - alertas
+  - triggers
+  - notificaciones
+  - reglas-negocio
+  - automatizacion
+
+
+## us_tde_admin_007.yml
+  - logs
+  - auditoria
+  - seguridad
+  - trazabilidad
+  - cumplimiento
+
+
+## us_tde_admin_008.yml
+  - backups
+  - drp
+  - continuidad
+  - recuperacion-desastres
+  - integridad-datos
+
+
+## us_tde_auth_001.yml
+  - claveunica
+  - oidc
+  - ds9
+  - sso
+
+
+## us_tde_auth_002.yml
+  - claveunica
+  - entornos
+  - credenciales
+  - integracion
+  - sandbox
+
+
+## us_tde_auth_003.yml
+  - 2fa
+  - mfa
+  - seguridad-avanzada
+  - roles-criticos
+  - ciberseguridad
+
+
+## us_tde_auth_004.yml
+  - logs
+  - ds9
+  - auditoria
+  - seguridad-informatica
+  - trazabilidad-login
+
+
+## us_tde_auth_005.yml
+  - claveunica
+  - personas-juridicas
+  - rut-empresa
+  - representante-legal
+  - tramites-empresa
+
+
+## us_tde_auth_006.yml
+  - ds9
+  - claveunica
+  - cumplimiento-legal
+  - estandarización
+  - ciudadania
+
+
+## us_tde_avance_002.yml
+  - ds12
+  - interoperabilidad
+  - pisee
+  - cumplimiento-plazos
+  - datos-estado
+
+
+## us_tde_avance_003.yml
+  - ds10
+  - cero-papel
+  - expediente-electronico
+  - digitalización
+  - modernizacion
+
+
+## us_tde_calidad_002.yml
+  - ds11
+  - mejora-continua
+  - calidad
+  - servicios-digitales
+  - ux
+
+
+## us_tde_calidad_003.yml
+  - encuestas
+  - satisfacción
+  - feedback
+  - ds11
+  - mejora-servicio
+
+
+## us_tde_cris_001.yml
+  - pisee
+  - contingencia
+  - disponibilidad
+  - interoperabilidad
+  - protocolo-manual
+
+
+## us_tde_dev_001.yml
+  - apis
+  - openapi
+  - swagger
+  - documentacion
+  - integracion
+
+
+## us_tde_docdig_002.yml
+  - qr
+  - verificacion
+  - resoluciones
+  - eficiencia
+  - interoperabilidad
+
+
+## us_tde_dpo_001.yml
+  - arco
+  - privacidad
+  - datos-personales
+  - dpo
+  - cumplimiento
+
+
+## us_tde_dpo_003.yml
+  - brechas
+  - hackeo
+  - seguridad
+  - notificacion-obligatoria
+  - ciberseguridad
+
+
+## us_tde_dpo_005.yml
+  - rat
+  - inventario-datos
+  - accountability
+  - cumplimiento
+  - transparencia
+
+
+## us_tde_dpo_007.yml
+  - anonimizacion
+  - seudonimizacion
+  - minimizacion
+  - big-data
+  - seguridad-datos
+
+
+## us_tde_dpo_008.yml
+  - rat
+  - versiones
+  - trazabilidad
+  - auditoria
+  - cumplimiento
+
+
+## us_tde_firma_002.yml
+  - firmagob
+  - contingencia
+  - disponibilidad
+  - firma-digital
+  - resiliencia
+
+
+## us_tde_interop_001.yml
+  - pisee
+  - nodo
+  - interoperabilidad
+  - gobierno-digital
+  - infraestructura
+
+
+## us_tde_interop_002.yml
+  - catalogo
+  - apis
+  - servicios-web
+  - intercambio-datos
+  - transparencia
+
+
+## us_tde_interop_003.yml
+  - trazabilidad
+  - auditoria
+  - transacciones
+  - logs
+  - interoperabilidad
+
+
+## us_tde_interop_004.yml
+  - convenios
+  - acuerdos
+  - formalización
+  - ley19628
+  - intercambio-datos
+
+
+## us_tde_interop_005.yml
+  - consentimiento
+  - datos-sensibles
+  - privacidad
+  - autorizaciones
+  - ética-datos
+
+
+## us_tde_interop_007.yml
+  - ide
+  - gis
+  - wms
+  - wfs
+  - capas-territoriales
+
+
+## us_tde_muni_001.yml
+  - dideco
+  - municipios
+  - proteccion-social
+  - interoperabilidad
+  - ayudas-sociales
+
+
+## us_tde_muni_002.yml
+  - tramite-express
+  - municipios
+  - rendiciones
+  - proyectos-locales
+  - eficiencia
+
+
+## us_tde_muni_004.yml
+  - ventanilla-unica
+  - integracion
+  - portal-ciudadano
+  - municipios
+  - servicios-digitales
+
+
+## us_tde_notif_001.yml
+  - ds8
+  - notificaciones-electronicas
+  - validez-legal
+  - integracion-estatal
+  - modernizacion
+
+
+## us_tde_notif_002.yml
+  - ddu
+  - domicilio-digital
+  - koda
+  - ds8
+  - orquestacion
+
+
+## us_tde_notif_003.yml
+  - api-notificaciones
+  - pisee
+  - transaccional
+  - infraestructura-estatal
+  - koda
+
+
+## us_tde_notif_004.yml
+  - webhook
+  - monitoreo
+  - recepcion
+  - notificaciones
+  - koda
+
+
+## us_tde_notif_005.yml
+  - constancia-digital
+  - iuie
+  - trazabilidad-legal
+  - hash
+  - koda
+
+
+## us_tde_notif_006.yml
+  - plazos-legales
+  - dias-habiles
+  - regla-del-3
+  - automatizacion
+  - koda
+
+
+## us_tde_qa_001.yml
+  - qa
+  - uat
+  - pruebas-aceptacion
+  - testing
+  - calidad-software
+
+
+## us_tde_reg_001.yml
+  - mesa-regional
+  - transformacion-digital
+  - ley21180
+  - gobernanza-territorial
+  - articulacion
+
+
+## us_tde_sec_001.yml
+  - simulacro
+  - exfiltración
+  - dlp
+  - red-team
+  - respuesta-incidentes
+
+
+## us_tde_seg_001.yml
+  - ds7
+  - iso27001
+  - ciberseguridad
+  - gobernanza
+  - cumplimiento-legal
+
+
+## us_tde_seg_002.yml
+  - ciso
+  - designacion
+  - responsabilidad
+  - ds7
+  - gobernanza
+
+
+## us_tde_seg_003.yml
+  - cia
+  - clasificación
+  - activos-información
+  - confidencialidad
+  - integridad
+
+
+## us_tde_seg_004.yml
+  - csirt
+  - anci
+  - reporte-incidentes
+  - defensa-digital
+  - ciberemergencia
+
+
+## us_tde_seg_005.yml
+  - cifrado
+  - tls
+  - encryption-at-rest
+  - aes-256
+  - privacidad
+
+
+## us_tde_seg_006.yml
+  - incidentes
+  - soc
+  - respuesta-amenazas
+  - seguridad-informatica
+  - continuidad
+
+
+## us_tde_seg_007.yml
+  - iam
+  - rbac
+  - minimo-privilegio
+  - perfiles
+  - seguridad-accesos
+
+
+## us_tde_seg_008.yml
+  - auditoria
+  - logs
+  - datos-sensibles
+  - privacidad
+  - cumplimiento
+
+
+## us_tde_seg_009.yml
+  - phishing
+  - concientización
+  - seguridad-humana
+  - simulacion
+  - cultura-digital
+
+
+## us_tde_seg_010.yml
+  - ds9
+  - trazabilidad
+  - autenticacion-federada
+  - auditoria-acceso
+  - identidad-digital
+
+
+## us_tde_seg_011.yml
+  - privacy-by-design
+  - desarrollo-seguro
+  - prevencion
+  - diseño-arquitectura
+  - datos-personales
+
+
+## us_tde_tic_002.yml
+  - sso
+  - claveunica
+  - azure-ad
+  - identidad-centralizada
+  - seguridad-acceso
+
+
+## us_tde_tic_004.yml
+  - alertas
+  - csirt
+  - amenazas
+  - monitoreo-seguridad
+  - respuesta-incidentes
+
+
+## us_tde_vinc_002.yml
+  - api-gateway
+  - pisee
+  - integracion
+  - devops
+  - eficiencia-ti
+
+
+## us_terr_anl_001.yml
+  - inversiones
+  - historico
+  - tendencias
+  - equidad-territorial
+  - tipologías
+
+
+## us_terr_dom_002.yml
+  - prc
+  - asistencia-tecnia
+  - planos-reguladores
+  - municipios
+  - desarrollo-urbano
+
+
+## us_terr_dom_003.yml
+  - prot
+  - zonificacion-riesgo
+  - desastres-naturales
+  - planificacion-territorial
+  - seguridad-publica
+
+
+## us_terr_ide_002.yml
+  - ide-chile
+  - csw
+  - metadatos
+  - federacion
+  - interoperabilidad-gis
+
+
+## us_terr_ide_003.yml
+  - iso-19110
+  - catalogo-objetos
+  - semantica-gis
+  - interoperabilidad
+  - metadatos
+
+
+## us_terr_ide_006.yml
+  - georreferenciación
+  - participación
+  - hallazgos-terreno
+  - mapeo-comunitario
+  - equidad
+
+
+## us_terr_plan_001.yml
+  - mapa
+  - brechas
+  - gis
+  - planificacion
+
+
+## us_terr_plan_005.yml
+  - politicas-regionales
+  - instrumentos-normativos
+  - planeacion-sectorial
+  - gobernanza
+  - marco-legal
+
+
+## us_terr_prg_001.yml
+  - postulaciones
+  - alertas
+  - fondos-concursables
+  - circular33
+  - fndr
+
+
+## us_tes_001_01.yml
+  - pagos
+  - tesoreria
+  - flujo-caja
+  - liquidez
+  - priorización
+
+
+## us_tic_001_02.yml
+  - activos-ti
+  - inventario
+  - obsolescencia
+  - lifecycle
+  - gestion-recursos
+
+
+## us_tlead_001_01.yml
+  - dora-metrics
+  - devops
+  - velocidad
+  - calidad
+  - mejora-continua
+
+
+## us_transp_002_01.yml
+  - sai
+  - ley20285
+  - transparencia-pasiva
+  - plazos-legales
+  - acceso-informacion
+
+
+## us_ucr_001_01.yml
+  - ucr
+  - reportes-gestion
+  - dipres
+  - ejecucion-presupuestaria
+  - nivel-central
+
+
+## us_uf_001_01.yml
+  - bip
+  - fndr
+  - glosa7
+  - inversion-publica
+  - mideso
+
+
+## us_uoct_001_01.yml
+  - uoct
+  - transito
+  - semaforos
+  - proyectos-viales
+  - movilidad
+
+
+## us_usr_001_01.yml
+  - login
+  - claveunica
+  - sso
+  - ds9
+  - usabilidad
+
+
+## us_vinc_001_01.yml
+  - crm
+  - stakeholders
+  - participacion
+  - vinculacion-institucional
+  - redes
+
+

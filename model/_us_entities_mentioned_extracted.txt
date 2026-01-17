@@ -1,0 +1,6772 @@
+## us_abast_001_01.yml
+  - id: ENT-FIN-PLAN-COMPRAS
+    status: candidate
+  - id: ENT-FIN-ORDEN-COMPRA
+    status: candidate
+  - id: ENT-EXT-MERCADO-PUBLICO
+    status: candidate
+
+
+## us_abast_001_02.yml
+  - id: ENT-FIN-CONTRATO-SUMINISTRO
+    status: candidate
+  - id: ENT-SYS-ALERTA
+    status: candidate
+  - id: ENT-FIN-LICITACION
+    status: candidate
+
+
+## us_abog_001_01.yml
+  - id: ENT-NORM-ACTO-ADMINISTRATIVO
+    status: candidate
+  - id: ENT-SYS-PLANTILLA
+    status: candidate
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+
+## us_abog_001_02.yml
+  - id: ENT-NORM-ACTO-ADMINISTRATIVO
+    status: candidate
+  - id: ENT-SYS-BUSQUEDA
+    status: candidate
+
+
+## us_abog_conv_001_01.yml
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-SYS-PLANTILLA
+    status: candidate
+  - id: ENT-NORM-CLAUSULA
+    status: candidate
+
+
+## us_abog_daf_001_01.yml
+  - id: ENT-FIN-CONTRATO
+    status: candidate
+  - id: ENT-FIN-BASES-LICITACION
+    status: candidate
+  - id: ENT-SYS-PLANTILLA
+    status: candidate
+
+
+## us_abog_disc_001_01.yml
+  - id: ENT-ORG-SUMARIO
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-EXPEDIENTE-CONFIDENCIAL
+    status: candidate
+
+
+## us_abog_inf_001_01.yml
+  - id: ENT-NORM-JURISPRUDENCIA
+    status: candidate
+  - id: ENT-NORM-DICTAMEN
+    status: candidate
+  - id: ENT-SYS-REPOSITORIO
+    status: candidate
+
+
+## us_abog_jud_001_01.yml
+  - id: ENT-NORM-CAUSA-JUDICIAL
+    status: candidate
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-CALENDARIO
+    status: candidate
+
+
+## us_abog_lic_001_01.yml
+  - id: ENT-FIN-BASES-LICITACION
+    status: candidate
+  - id: ENT-SYS-PLANTILLA
+    status: candidate
+  - id: ENT-NORM-CLAUSULA
+    status: candidate
+
+
+## us_abog_rev_001_01.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-ACTO
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+
+## us_acc_001_01.yml
+  - id: ENT-TDE-SITIO-WEB
+    status: candidate
+  - id: ENT-TDE-REPORTE-ACCESIBILIDAD
+    status: candidate
+
+
+## us_aconv_001_01.yml
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-SYS-CHECKLIST
+    status: candidate
+  - id: ENT-FIN-REQUISITO-CONVENIO
+    status: candidate
+
+
+## us_acv_001_01.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-ORG-ONBOARDING
+    status: candidate
+
+
+## us_adm_plat_001_01.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-PERMISO
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+
+## us_admin_001_01.yml
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-SYS-PERMISO
+    status: candidate
+  - id: ENT-SYS-ROL-SISTEMA
+    status: candidate
+
+
+## us_aeval_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-FICHA-EVALUACION
+    status: candidate
+  - id: ENT-FIN-CRITERIO-EVALUACION
+    status: candidate
+
+
+## us_alc_001_02.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: candidate
+  - id: ENT-FIN-LLAMADO
+    status: candidate
+
+
+## us_alc_chi_001_01.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_alc_chv_001_01.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_alc_sc_001_01.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_amb_001_01.yml
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_amod_001_01.yml
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_amuch_001_01.yml
+  - id: ENT-DIG-CANAL
+    status: linked
+  - id: ENT-GOV-GOBERNADOR
+    status: candidate
+  - id: ENT-COMV-PROBLEMATICA-MUNICIPAL
+    status: candidate
+
+
+## us_anal_inv_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-EVALUACION-TECNICA
+    status: candidate
+  - id: ENT-SYS-FORMULARIO
+    status: candidate
+
+
+## us_anal_inv_001_02.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-EVALUACION
+    status: candidate
+  - id: ENT-SYS-BUSQUEDA-SIMILARIDAD
+    status: candidate
+
+
+## us_anal_ppr_001_01.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-PLAN-MARCO-LOGICO
+    status: candidate
+  - id: ENT-PLAN-INDICADOR
+    status: candidate
+
+
+## us_anal_seg_001_02.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-DESVIACION
+    status: candidate
+
+
+## us_analpres_001_01.yml
+  - id: ENT-FIN-CDP
+    status: candidate
+  - id: ENT-FIN-SALDO-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-FIN-COMPROMISO
+    status: candidate
+
+
+## us_analpres_001_02.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-MARCO-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-FIN-ASIGNACION
+    status: candidate
+
+
+## us_anci_001_01.yml
+  - id: ENT-GOV-CONSEJO-REGIONAL
+    status: candidate
+  - id: ENT-NORM-BUENA-PRACTICA
+    status: candidate
+  - id: ENT-GOV-ACTA-CONSEJO
+    status: candidate
+
+
+## us_anid_001_01.yml
+  - id: ENT-PLAN-INDICADOR-CTCI
+    status: candidate
+  - id: ENT-ORG-INVESTIGADOR
+    status: candidate
+  - id: ENT-TERR-CAPITAL-HUMANO
+    status: candidate
+
+
+## us_ap_core_001_01.yml
+  - id: ENT-CONV-SESION
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-GOV-MINUTA-CORE
+    status: candidate
+
+
+## us_apres_001_01.yml
+  - id: ENT-FIN-MODIFICACION-PPTARIA
+    status: candidate
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-SALDO-PRESUPUESTARIO
+    status: candidate
+
+
+## us_aprev_001_01.yml
+  - id: ENT-SYS-FORMULARIO-MOVIL
+    status: candidate
+  - id: ENT-ORG-INFRAESTRUCTURA
+    status: candidate
+  - id: ENT-SYS-ALERTA-SEGURIDAD
+    status: candidate
+
+
+## us_apt_001_01.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-PLAN-PRC
+    status: candidate
+
+
+## us_ar_001_02.yml
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-GOV-REUNION-COORDINACION
+    status: candidate
+  - id: ENT-SYS-AGENDA
+    status: candidate
+
+
+## us_ar_002_01.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-METRICA-RRHH
+    status: candidate
+  - id: ENT-ORG-PLAN-CAPACITACION
+    status: candidate
+
+
+## us_ar_003_01.yml
+  - id: ENT-ORG-SUBROGANTE
+    status: candidate
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_arch_001_01.yml
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-TDE-ARCHIVO-FISICO
+    status: candidate
+  - id: ENT-TDE-UBICACION-ARCHIVO
+    status: candidate
+
+
+## us_arq_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-EJEC-PROYECTO-OBRA
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO-TECNICO
+    status: candidate
+
+
+## us_arq_dat_001_01.yml
+  - id: ENT-SYS-ENTIDAD-DATOS
+    status: candidate
+  - id: ENT-SYS-MODELO-DATOS
+    status: candidate
+  - id: ENT-SYS-DICCIONARIO-DATOS
+    status: candidate
+
+
+## us_arqc_001_01.yml
+  - id: ENT-SYS-ATOMO
+    status: candidate
+  - id: ENT-SYS-ONTOLOGIA
+    status: candidate
+  - id: ENT-SYS-SCHEMA
+    status: candidate
+
+
+## us_arqp_001_01.yml
+  - id: ENT-NORM-OGUC
+    status: candidate
+  - id: ENT-SYS-CHECKLIST-NORMATIVO
+    status: candidate
+  - id: ENT-EJEC-PROYECTO-INFRA
+    status: candidate
+
+
+## us_arqs_001_01.yml
+  - id: ENT-SYS-ADR
+    status: candidate
+  - id: ENT-SYS-DECISION-TECNICA
+    status: candidate
+  - id: ENT-SYS-ARQUITECTURA-SISTEMA
+    status: candidate
+
+
+## us_as_001_01.yml
+  - id: ENT-SOC-FICHA-SOCIAL
+    status: candidate
+  - id: ENT-SOC-ORGANIZACION
+    status: candidate
+  - id: ENT-FIN-CONTRATO-SOCIAL
+    status: candidate
+
+
+## us_aserv_001_01.yml
+  - id: ENT-ORG-SALA-REUNION
+    status: candidate
+  - id: ENT-SYS-PEDIDO-MANTENCION
+    status: candidate
+  - id: ENT-SYS-RESERVA
+    status: candidate
+
+
+## us_ases_001_01.yml
+  - id: ENT-SEG-DATOS-CRIMINALIDAD
+    status: candidate
+  - id: ENT-PLAN-PROYECTO-SEGURIDAD
+    status: candidate
+  - id: ENT-SYS-INFORME-TECNICO
+    status: candidate
+
+
+## us_asis_001_01.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-REGISTRO-ASISTENCIA
+    status: candidate
+  - id: ENT-SYS-DISPOSITIVO-BIOMETRICO
+    status: candidate
+
+
+## us_at_001_01.yml
+  - id: ENT-TERR-IDE-REGIONAL
+    status: candidate
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-LOC-REGION
+    status: candidate
+
+
+## us_ates_001_01.yml
+  - id: ENT-FIN-PAGO
+    status: candidate
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-VOUCHER
+    status: candidate
+
+
+## us_atra_001_01.yml
+  - id: ENT-TERR-RUTA-VIAL
+    status: candidate
+  - id: ENT-TERR-FLUJO-VEHICULAR
+    status: candidate
+  - id: ENT-EJEC-OBRA-VIAL
+    status: candidate
+
+
+## us_atrans_001_01.yml
+  - id: ENT-FIN-TRANSFERENCIA
+    status: linked
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_aucr_001_01.yml
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-TDE-TEXTO-OCR
+    status: candidate
+
+
+## us_aud_001_01.yml
+  - id: ENT-NORM-AUDITORIA
+    status: candidate
+  - id: ENT-NORM-HALLAZGO
+    status: candidate
+  - id: ENT-NORM-RECOMENDACION
+    status: candidate
+
+
+## us_aud_001_02.yml
+  - id: ENT-NORM-INFORME-AUDITORIA
+    status: candidate
+  - id: ENT-SYS-PLANTILLA-REPORTE
+    status: candidate
+
+
+## us_aud_ctrl_001_01.yml
+  - id: ENT-SYS-LOG-TRANSACCION
+    status: candidate
+  - id: ENT-SYS-TRAZABILIDAD
+    status: candidate
+  - id: ENT-GOV-APROBACION
+    status: candidate
+
+
+## us_aud_ext_001_01.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-FIN-EXPEDIENTE-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-FIN-REGISTRO-FINANCIERO
+    status: candidate
+
+
+## us_aux_001_01.yml
+  - id: ENT-SYS-SOLICITUD-LOGISTICA
+    status: candidate
+  - id: ENT-ORG-AREA-PEDIDO
+    status: candidate
+
+
+## us_back_001_01.yml
+  - id: ENT-SYS-PIPELINE
+    status: candidate
+  - id: ENT-SYS-ENTORNO-DESPLIEGUE
+    status: candidate
+  - id: ENT-SYS-TEST-AUTOMATICO
+    status: candidate
+
+
+## us_back_abs_002.yml
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-REQUERIMIENTO
+    status: candidate
+
+
+## us_back_abs_004.yml
+  - id: ENT-FIN-OFERTA
+    status: candidate
+  - id: ENT-FIN-CRITERIO-EVALUACION
+    status: candidate
+  - id: ENT-FIN-LICITACION
+    status: linked
+
+
+## us_back_abs_005.yml
+  - id: ENT-FIN-ORDEN-COMPRA
+    status: candidate
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-CDP
+    status: linked
+
+
+## us_back_af_001.yml
+  - id: ENT-ORG-ACTIVO
+    status: linked
+  - id: ENT-FIN-DEPRECIACION
+    status: candidate
+  - id: ENT-SYS-CODIGO-INVENTARIO
+    status: candidate
+
+
+## us_back_af_002.yml
+  - id: ENT-ORG-ACTIVO
+    status: linked
+  - id: ENT-TDE-UBICACION-ACTIVO
+    status: candidate
+  - id: ENT-ORG-UNIDAD-TRANSF
+    status: candidate
+
+
+## us_back_af_004.yml
+  - id: ENT-ORG-ACTIVO
+    status: linked
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-FIN-CUENTA-CONTABLE
+    status: candidate
+
+
+## us_back_auto_001.yml
+  - id: ENT-ORG-CARGO
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-FIN-FINIQUITO
+    status: candidate
+
+
+## us_back_auto_002.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-ORG-REGISTRO-ASISTENCIA
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_back_bien_001.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-FIN-SOCIO-BIENESTAR
+    status: candidate
+  - id: ENT-FIN-DESCUENTO-PLANILLA
+    status: candidate
+
+
+## us_back_bien_002.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-CARGA-FAMILIAR
+    status: candidate
+  - id: ENT-ORG-BENEFICIARIO
+    status: candidate
+
+
+## us_back_bien_003.yml
+  - id: ENT-FIN-REEMBOLSO-MEDICO
+    status: candidate
+  - id: ENT-FIN-TOPE-ANUAL-BIENESTAR
+    status: candidate
+  - id: ENT-SYS-SIGBIE
+    status: candidate
+
+
+## us_back_bien_004.yml
+  - id: ENT-FIN-SUBSIDIO-EVENTO
+    status: candidate
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-ORG-FUNCIOANRIO
+    status: linked
+
+
+## us_back_bien_006.yml
+  - id: ENT-FIN-PRESTAMO-BIENESTAR
+    status: candidate
+  - id: ENT-FIN-CUOTA-PRESTAMO
+    status: candidate
+  - id: ENT-FIN-DESCUENTO-PLANILLA
+    status: candidate
+
+
+## us_back_bien_007.yml
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-PROVEEDOR-BENEFICIO
+    status: candidate
+  - id: ENT-FIN-TRANSACCION-CONVENIO
+    status: candidate
+
+
+## us_back_bien_008.yml
+  - id: ENT-ORG-ACCIDENTE-LABORAL
+    status: candidate
+  - id: ENT-ORG-MUTUALIDAD
+    status: candidate
+  - id: ENT-SYS-DIAT-DIEP
+    status: candidate
+
+
+## us_back_bien_009.yml
+  - id: ENT-ORG-CPHS
+    status: candidate
+  - id: ENT-ORG-ACCIDENTE-LABORAL
+    status: linked
+  - id: ENT-NORM-ACTA-REUNION
+    status: candidate
+
+
+## us_back_bien_010.yml
+  - id: ENT-FIN-REEMBOLSO-MEDICO
+    status: linked
+  - id: ENT-SYS-DOCUMENTO-TRIBUTARIO
+    status: candidate
+
+
+## us_back_bien_011.yml
+  - id: ENT-FIN-PRESTAMO-BIENESTAR
+    status: linked
+  - id: ENT-FIN-CUOTA-PRESTAMO
+    status: candidate
+
+
+## us_back_bien_012.yml
+  - id: ENT-FIN-ESTADO-CUENTA
+    status: candidate
+  - id: ENT-FIN-SALDO-BIENESTAR
+    status: candidate
+
+
+## us_back_bod_001.yml
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-FIN-ORDEN-COMPRA
+    status: linked
+  - id: ENT-ORG-ITEM-BODEGA
+    status: candidate
+
+
+## us_back_bod_003.yml
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-ORG-ITEM-BODEGA
+    status: candidate
+  - id: ENT-FIN-AJUSTE-INVENTARIO
+    status: candidate
+
+
+## us_back_comp_002.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-CALIFICACION
+    status: candidate
+  - id: ENT-ORG-JUNTA-CALIFICADORA
+    status: candidate
+
+
+## us_back_comp_003.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-PMG-INSTITUCIONAL
+    status: candidate
+  - id: ENT-ORG-CDC-COLECTIVO
+    status: candidate
+
+
+## us_back_cris_001.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-CONTINGENCIA-LABORAL
+    status: candidate
+  - id: ENT-FIN-DESCUENTO-LEGAL
+    status: candidate
+
+
+## us_back_flo_001.yml
+  - id: ENT-ORG-ORDEN-TRABAJO-MANT
+    status: candidate
+  - id: ENT-ORG-TECNICO-MANTENCION
+    status: candidate
+  - id: ENT-ORG-INFRAESTRUCTURA
+    status: linked
+
+
+## us_back_flo_002.yml
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-CONDUCTOR
+    status: candidate
+  - id: ENT-ORG-SOLICITUD-TRANSPORTE
+    status: candidate
+
+
+## us_back_per_001.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-EXPEDIENTE-PERSONAL
+    status: candidate
+  - id: ENT-ORG-HISTORIAL-LABORAL
+    status: candidate
+
+
+## us_back_per_002.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-PLAN-INDUCCION
+    status: candidate
+  - id: ENT-SYS-CHECKLIST
+    status: candidate
+
+
+## us_back_per_010.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-FIN-REMUNERACION
+    status: candidate
+  - id: ENT-FIN-LIQUIDACION-SUELDO
+    status: candidate
+
+
+## us_back_per_011.yml
+  - id: ENT-FIN-COTIZACION-PREVISIONAL
+    status: candidate
+  - id: ENT-ORG-AFP
+    status: candidate
+  - id: ENT-ORG-FONASA-ISAPRE
+    status: candidate
+
+
+## us_back_per_012.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-HORA-EXTRA
+    status: candidate
+  - id: ENT-SYS-FORMULARIO-F2
+    status: candidate
+
+
+## us_back_per_013.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-COMISION-SERVICIO
+    status: candidate
+  - id: ENT-FIN-VIATICO
+    status: candidate
+
+
+## us_back_per_014.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-ACCIDENTE-LABORAL
+    status: linked
+  - id: ENT-SYS-DIAT
+    status: candidate
+
+
+## us_back_per_015.yml
+  - id: ENT-ORG-CARGO-VACANTE
+    status: candidate
+  - id: ENT-ORG-POSTULANTE
+    status: candidate
+  - id: ENT-NORM-BASES-CONCURSO
+    status: candidate
+
+
+## us_back_tes_004.yml
+  - id: ENT-FIN-LIBRO-CAJA
+    status: candidate
+  - id: ENT-FIN-TRANSACCION-EFECTIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_back_tes_005.yml
+  - id: ENT-FIN-FONDO-FIJO
+    status: candidate
+  - id: ENT-FIN-ARQUEO-CAJA
+    status: candidate
+  - id: ENT-FIN-GASTO-MENOR
+    status: candidate
+
+
+## us_back_tes_006.yml
+  - id: ENT-FIN-CARTOLA-BANCARIA
+    status: candidate
+  - id: ENT-FIN-BANCO
+    status: candidate
+  - id: ENT-FIN-CONCILIACION
+    status: linked
+
+
+## us_back_tes_007.yml
+  - id: ENT-FIN-CONCILIACION
+    status: linked
+  - id: ENT-FIN-MOVIMIENTO-SIGFE
+    status: candidate
+  - id: ENT-FIN-MOVIMIENTO-BANCARIO
+    status: candidate
+
+
+## us_back_tes_008.yml
+  - id: ENT-FIN-PARTIDA-PENDIENTE
+    status: candidate
+  - id: ENT-FIN-CONCILIACION
+    status: linked
+  - id: ENT-SYS-TRAZABILIDAD
+    status: candidate
+
+
+## us_back_tes_009.yml
+  - id: ENT-FIN-INFORME-CONCILIACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+
+## us_back_tes_011.yml
+  - id: ENT-FIN-GASTO-OPERATIVO
+    status: candidate
+  - id: ENT-FIN-DEVENGO
+    status: candidate
+  - id: ENT-FIN-CUENTA-CONTABLE
+    status: candidate
+
+
+## us_back_tes_013.yml
+  - id: ENT-FIN-BALANCE-MENSUAL
+    status: candidate
+  - id: ENT-FIN-ESTADO-FINANCIERO
+    status: candidate
+  - id: ENT-FIN-COMPARATIVO-PRESUPUESTARIO
+    status: candidate
+
+
+## us_back_tes_014.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-CORTE-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-SYS-NOTIFICACION
+    status: linked
+
+
+## us_back_tes_015.yml
+  - id: ENT-FIN-DEVENGO-PENDIENTE
+    status: candidate
+  - id: ENT-FIN-DEUDA-FLOTANTE
+    status: candidate
+  - id: ENT-FIN-CONTABILIDAD-CIERRE
+    status: candidate
+
+
+## us_back_tes_016.yml
+  - id: ENT-FIN-BALANCE-ANUAL
+    status: candidate
+  - id: ENT-FIN-ESTADO-SITUACION
+    status: candidate
+  - id: ENT-NORM-RESOLUCION
+    status: candidate
+
+
+## us_back_tes_017.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-SALDO-CAJA
+    status: candidate
+  - id: ENT-FIN-EJECUCION-PRESUPUESTARIA
+    status: candidate
+
+
+## us_bcp_001_01.yml
+  - id: ENT-TDE-BCP-PLAN
+    status: candidate
+  - id: ENT-TDE-SIMULACRO
+    status: candidate
+  - id: ENT-TDE-RECURSO-CRITICO
+    status: candidate
+
+
+## us_bi_001_01.yml
+  - id: ENT-TDE-DATA-WAREHOUSE
+    status: candidate
+  - id: ENT-TDE-KPI-INSTITUCIONAL
+    status: candidate
+  - id: ENT-TDE-DASHBOARD
+    status: candidate
+
+
+## us_bien_001_01.yml
+  - id: ENT-ORG-CARGA-FAMILIAR
+    status: candidate
+  - id: ENT-FIN-SEGURO-COMPLEMENTARIO
+    status: candidate
+  - id: ENT-FIN-REEMBOLSO-MEDICO
+    status: linked
+
+
+## us_bien_002_01.yml
+  - id: ENT-ORG-PROGRAMA-BIENESTAR
+    status: candidate
+  - id: ENT-ORG-BENEFICIO-DIRECTO
+    status: candidate
+  - id: ENT-SYS-SOLICITUD-BENEFICIO
+    status: candidate
+
+
+## us_bod_001_01.yml
+  - id: ENT-ORG-ITEM-BODEGA
+    status: candidate
+  - id: ENT-SYS-CODIGO-BARRAS
+    status: candidate
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+
+
+## us_bod_002_01.yml
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-FIN-CDP
+    status: linked
+
+
+## us_bomb_001_01.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-PLATAFORMA-CIES
+    status: candidate
+  - id: ENT-TERR-INCIDENTE
+    status: candidate
+
+
+## us_c33_001_01.yml
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-FIN-PRECIO-REFERENCIAL
+    status: candidate
+  - id: ENT-EJEC-FICHA-C33
+    status: candidate
+
+
+## us_cal_001_02.yml
+  - id: ENT-FIN-INDICADOR-INDIC
+    status: candidate
+  - id: ENT-NORM-REPORTE-DIPRES
+    status: candidate
+  - id: ENT-FIN-PMG
+    status: linked
+
+
+## us_cap_001_01.yml
+  - id: ENT-ORG-PAC-CAPACITACION
+    status: candidate
+  - id: ENT-ORG-CURSO-CAPACITACION
+    status: candidate
+  - id: ENT-SYS-INSCRIPCION
+    status: candidate
+
+
+## us_capdig_001_01.yml
+  - id: ENT-SYS-LMS-PLATAFORMA
+    status: candidate
+  - id: ENT-SYS-OBJETO-APRENDIZAJE
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_car_001_01.yml
+  - id: ENT-TERR-CAMARA-VIGILANCIA
+    status: candidate
+  - id: ENT-TERR-OPERATIVO-POLICIAL
+    status: candidate
+  - id: ENT-SYS-FEED-VIDEO
+    status: candidate
+
+
+## us_cc_001_01.yml
+  - id: ENT-EJEC-PROGRAMA-ECONOMICO
+    status: candidate
+  - id: ENT-EJEC-BENEFICIO-PYME
+    status: candidate
+  - id: ENT-SOC-ORGANIZACION
+    status: linked
+
+
+## us_cde_001_01.yml
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: candidate
+  - id: ENT-NORM-DEMANDA
+    status: candidate
+  - id: ENT-SYS-EXPEDIENTE-JUDICIAL
+    status: candidate
+
+
+## us_cgpe_001_01.yml
+  - id: ENT-ORG-LICENCIA-MEDICA
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-ALERTA-UMBRAL
+    status: candidate
+
+
+## us_cgr_001_01.yml
+  - id: ENT-SYS-EXPEDIENTE-ELECTRONICO
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-SYS-INTEROPERABILIDAD-SIAPER
+    status: candidate
+
+
+## us_cgr_cont_001_01.yml
+  - id: ENT-FIN-REPORTE-CONTABLE
+    status: linked
+  - id: ENT-FIN-ESTADO-FINANCIERO
+    status: linked
+  - id: ENT-FIN-BALANCE-GUBERNAMENTAL
+    status: candidate
+
+
+## us_cies_001_02.yml
+  - id: ENT-TERR-EVENTO-EMERGENCIA
+    status: candidate
+  - id: ENT-TERR-TIMELINE-ACCIONES
+    status: candidate
+  - id: ENT-SYS-BITACORA-OPERATIVA
+    status: candidate
+
+
+## us_ciu_001_02.yml
+  - id: ENT-FIN-PRESUPUESTO-ASIGNADO
+    status: linked
+  - id: ENT-FIN-GASTO-DEVENGADO
+    status: linked
+  - id: ENT-SOC-INDICADOR-GENERO
+    status: candidate
+
+
+## us_ciu_002_01.yml
+  - id: ENT-SOC-CONSULTA-CIUDADANA
+    status: candidate
+  - id: ENT-SOC-PRIORIDAD-INVERSION
+    status: candidate
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_col_001_01.yml
+  - id: ENT-NORM-CONSULTOR-SANCIONADO
+    status: candidate
+  - id: ENT-ORG-PROVEEDOR
+    status: linked
+  - id: ENT-NORM-SANCION-ADMINISTRATIVA
+    status: candidate
+
+
+## us_com_001_01.yml
+  - id: ENT-BACK-CALENDARIO-EDITORIAL
+    status: candidate
+  - id: ENT-BACK-PUBLICACION-RRSS
+    status: candidate
+  - id: ENT-BACK-HITO-COMUNICACIONAL
+    status: candidate
+
+
+## us_com_001_02.yml
+  - id: ENT-SYS-ACTIVO-MULTIMEDIA
+    status: candidate
+  - id: ENT-SYS-REPOSITORIO-DAM
+    status: candidate
+  - id: ENT-BACK-CAMPANA-GRAFICA
+    status: candidate
+
+
+## us_com_002_01.yml
+  - id: ENT-BACK-CLIPPING-PRENSA
+    status: candidate
+  - id: ENT-SOC-SENTIMIENTO-REDES
+    status: candidate
+  - id: ENT-BACK-INDICADOR-PRESENCIA-MEDIOS
+    status: candidate
+
+
+## us_com_estr_001.yml
+  - id: ENT-BACK-ESTRATEGIA-COMUNICACIONAL
+    status: candidate
+  - id: ENT-BACK-CANAL-DIFUSION
+    status: candidate
+  - id: ENT-SOC-POSICIONAMIENTO-REPUTACIONAL
+    status: candidate
+
+
+## us_com_estr_002.yml
+  - id: ENT-BACK-NOTICIA-OFICIAL
+    status: candidate
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: candidate
+  - id: ENT-SOC-CIUDADANO
+    status: linked
+
+
+## us_com_estr_003.yml
+  - id: ENT-SYS-REPOSITORIO-MULTIMEDIA
+    status: candidate
+  - id: ENT-SYS-ACTIVO-AUDIOVISUAL
+    status: candidate
+  - id: ENT-BACK-RECURSO-BRANDING
+    status: candidate
+
+
+## us_com_estr_004.yml
+  - id: ENT-BACK-CLIPPING-MEDIOS
+    status: candidate
+  - id: ENT-SOC-CRISIS-COMUNICACIONAL
+    status: candidate
+  - id: ENT-GOB-CONTINGENCIA-ESTRATEGICA
+    status: candidate
+
+
+## us_com_estr_006.yml
+  - id: ENT-ORG-COMUNICADO-INTERNO
+    status: candidate
+  - id: ENT-ORG-INTRANET-CANAL
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_com_ev_001_01.yml
+  - id: ENT-FIN-OFERTA-LICITACION
+    status: linked
+  - id: ENT-FIN-MATRIZ-EVALUACION
+    status: candidate
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_com_rec_001_01.yml
+  - id: ENT-EJE-ACTA_RECEPCION
+    status: linked
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-SYS-CHECKLIST-VERIFICACION
+    status: candidate
+
+
+## us_com_sec_001.yml
+  - id: ENT-GOB-MUNICIPALIDAD
+    status: linked
+  - id: ENT-BACK-DIFUSION-CONJUNTA
+    status: candidate
+  - id: ENT-SOC-ALCANCE-LOCAL
+    status: candidate
+
+
+## us_com_sec_002.yml
+  - id: ENT-BACK-MARCA-REGIONAL
+    status: candidate
+  - id: ENT-BACK-MANUAL-NORMA-GRAFICA
+    status: candidate
+  - id: ENT-SOC-IMAGEN-INSTITUCIONAL
+    status: candidate
+
+
+## us_com_sect_001_01.yml
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: candidate
+  - id: ENT-EJE-ESTADO-AVANCE
+    status: linked
+
+
+## us_comp_001_01.yml
+  - id: ENT-FIN-CONVENIO-MARCO
+    status: candidate
+  - id: ENT-FIN-PRODUCTO-CATALOGO
+    status: candidate
+  - id: ENT-ORG-UNIDAD-SOLICITANTE
+    status: linked
+
+
+## us_comp_001_02.yml
+  - id: ENT-FIN-SOLICITUD-COMPRA
+    status: candidate
+  - id: ENT-ORG-REQUERIMIENTO-INTERNO
+    status: candidate
+  - id: ENT-ORG-UNIDAD-REQUERENTE
+    status: linked
+
+
+## us_compert_001_01.yml
+  - id: ENT-EJE-INICIATIVA-INVERSION
+    status: linked
+  - id: ENT-SYS-EXPEDIENTE-TECNICO
+    status: candidate
+  - id: ENT-CONV-SESION-COMITE
+    status: candidate
+
+
+## us_compert_001_02.yml
+  - id: ENT-SYS-VOTO-ELECTRONICO
+    status: candidate
+  - id: ENT-CONV-SESION-COMITE
+    status: candidate
+  - id: ENT-EJE-RESULTADO-PERTINENCIA
+    status: candidate
+
+
+## us_compt_001_01.yml
+  - id: ENT-ORG-EVALUACION-360
+    status: candidate
+  - id: ENT-ORG-BRECHA-COMPETENCIA
+    status: candidate
+  - id: ENT-ORG-PERFIL-COMPETENCIAL
+    status: candidate
+
+
+## us_conaf_001_01.yml
+  - id: ENT-TERR-INCENDIO-FORESTAL
+    status: candidate
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-TERR-RECURSO-CONAF
+    status: candidate
+
+
+## us_cond_001_01.yml
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-BITACORA-TRASLADO
+    status: candidate
+  - id: ENT-SYS-RESERVA-RECURSO
+    status: candidate
+
+
+## us_cont_001_01.yml
+  - id: ENT-FIN-CARTOLA-BANCARIA
+    status: linked
+  - id: ENT-FIN-MOVIMIENTO-CONTABLE
+    status: candidate
+  - id: ENT-FIN-PARTIDA-PENDIENTE
+    status: candidate
+
+
+## us_cont_001_02.yml
+  - id: ENT-FIN-ESTADO-PAGO
+    status: linked
+  - id: ENT-SYS-DOCUMENTO-SOPORTE
+    status: candidate
+  - id: ENT-EJE-HITO-CUMPLIDO
+    status: candidate
+
+
+## us_coord_dit_001_01.yml
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-EJE-SECTOR-INVERSION
+    status: candidate
+  - id: ENT-TERR-MAPA-PROYECTOS
+    status: candidate
+
+
+## us_core_001_01.yml
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-GOV-TABLA_SESION
+    status: linked
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+
+
+## us_core_002_01.yml
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-EJE-ESTADO-AVANCE
+    status: linked
+  - id: ENT-GOV-ACUERDO-CORE
+    status: candidate
+
+
+## us_corfo_001_01.yml
+  - id: ENT-EJE-PROYECTO-PRODUCTIVO
+    status: candidate
+  - id: ENT-EJE-INSTRUMENTO-FOMENTO
+    status: candidate
+  - id: ENT-GOB-ARTICULACION-INTERINSTITUCIONAL
+    status: candidate
+
+
+## us_corp_001_01.yml
+  - id: ENT-FIN-TRANSFERENCIA-CORRIENTE
+    status: candidate
+  - id: ENT-FIN-GASTO-OPERATIVO
+    status: candidate
+  - id: ENT-GOB-CORPORACION-REGIONAL
+    status: candidate
+
+
+## us_corte_001_01.yml
+  - id: ENT-NORM-ACTO-IMPUGNADO
+    status: candidate
+  - id: ENT-NORM-INFORME-JURIDICO
+    status: linked
+  - id: ENT-NORM-REQUERIMIENTO-JUDICIAL
+    status: candidate
+
+
+## us_cp_001_01.yml
+  - id: ENT-ORG-INCIDENTE-LABORAL
+    status: candidate
+  - id: ENT-ORG-ACCIDENTE-TRABAJO
+    status: candidate
+  - id: ENT-ORG-COMITE-PARITARIO
+    status: candidate
+
+
+## us_cseu_001_01.yml
+  - id: ENT-SOC-INCIDENTE-ATENCION
+    status: candidate
+  - id: ENT-SOC-CALIDAD-SERVICIO
+    status: candidate
+  - id: ENT-SOC-CIUDADANO
+    status: linked
+
+
+## us_cseu_002_01.yml
+  - id: ENT-ORG-MATRIZ-CURRICULAR
+    status: candidate
+  - id: ENT-ORG-PUNTAJE-EVALUACION
+    status: candidate
+  - id: ENT-ORG-POSTULANTE
+    status: candidate
+
+
+## us_ctd_001_02.yml
+  - id: ENT-SYS-EXPEDIENTE-ELECTRONICO
+    status: candidate
+  - id: ENT-SYS-PROCESO-DIGITALIZADO
+    status: candidate
+  - id: ENT-SYS-CATALOGO-SERVICIOS
+    status: candidate
+
+
+## us_cust_001_01.yml
+  - id: ENT-SYS-GRABACION-EVIDENCIA
+    status: candidate
+  - id: ENT-SYS-ALMACENAMIENTO-SEGURO
+    status: candidate
+  - id: ENT-NORM-VALIDEZ-LEGAL
+    status: candidate
+
+
+## us_cust_dat_001_01.yml
+  - id: ENT-SYS-CALIDAD-DATOS
+    status: candidate
+  - id: ENT-SYS-ANOMALIA-DATO
+    status: candidate
+  - id: ENT-SYS-GOBERNANZA-DATOS
+    status: candidate
+
+
+## us_cut_001_01.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: candidate
+
+
+## us_daf_001_01.yml
+  - id: ENT-FIN-CIERRE-CONTABLE
+    status: candidate
+  - id: ENT-SYS-CHECKLIST-CIERRE
+    status: candidate
+  - id: ENT-FIN-VALIDACION-CONTABLE
+    status: candidate
+
+
+## us_data_001_01.yml
+  - id: ENT-SYS-GOLDEN-RECORD
+    status: candidate
+  - id: ENT-SYS-DEDUPLICACION-DATO
+    status: candidate
+  - id: ENT-SOC-CIUDADANO
+    status: linked
+
+
+## us_dba_001_01.yml
+  - id: ENT-SYS-BASE-DATOS
+    status: candidate
+  - id: ENT-SYS-METRICA-PERFORMANCE
+    status: candidate
+  - id: ENT-SYS-LOGS-QUERIES
+    status: candidate
+
+
+## us_desc_001_02.yml
+  - id: ENT-ORG-COMPETENCIA-TRANSFERIDA
+    status: candidate
+  - id: ENT-ORG-CAPACIDAD-INSTITUCIONAL
+    status: candidate
+  - id: ENT-ORG-PLAN-FORTALECIMIENTO
+    status: candidate
+
+
+## us_dev_001_01.yml
+  - id: ENT-SYS-LOGS-ERRORES
+    status: candidate
+  - id: ENT-SYS-PLATAFORMA-OBSERVABILIDAD
+    status: candidate
+
+
+## us_dev_bp_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_bp_002.yml
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_dev_bp_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_bp_004.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_dev_bp_005.yml
+  - id: ENT-SYS-PIPELINE-VALIDACION
+    status: candidate
+  - id: ENT-SYS-REPORTE-INTEGRIDAD
+    status: candidate
+
+
+## us_dev_bp_006.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_bp_007.yml
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_dev_bp_008.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_cicd_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_cicd_002.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_cicd_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_cicd_004.yml
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+
+## us_dev_ciclo_001.yml
+  - id: ENT-SYS-BLUEPRINT-MODELO
+    status: linked
+  - id: ENT-SYS-CODIGO-IMPLEMENTACION
+    status: candidate
+
+
+## us_dev_code_001.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dev_code_002.yml
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dev_code_003.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+
+## us_dev_doc_001.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dev_dx_001.yml
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dev_dx_002.yml
+  - id: ENT-TDE-SITIO-WEB
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dev_feat_001.yml
+  - id: ENT-SYS-FEATURE-FLAG
+    status: candidate
+  - id: ENT-SYS-GRUPO-PILOTO
+    status: candidate
+
+
+## us_dev_koda_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_koda_002.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-NORM-DECRETO-SUPREMO
+    status: linked
+
+
+## us_dev_koda_003.yml
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_dev_koda_004.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_dev_prod_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_dev_prod_002.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_dev_prod_003.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+
+
+## us_dev_qa_001.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+
+
+## us_dev_rel_001.yml
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_dev_rel_002.yml
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+
+## us_dev_rel_003.yml
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+
+## us_dev_sec_001.yml
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+
+
+## us_devmuni_001_01.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_devops_001_01.yml
+  - id: ENT-SYS-ENTORNO-INFRAESTRUCTURA
+    status: candidate
+  - id: ENT-SYS-IAC-TEMPLATE
+    status: candidate
+
+
+## us_didesoh_002_01.yml
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: candidate
+  - id: ENT-SOC-DIRIGENTE-SOCIAL
+    status: candidate
+  - id: ENT-LOC-REGION
+    status: linked
+
+
+## us_difoi_001_02.yml
+  - id: ENT-EJEC-BENEFICIARIO-FOMENTO
+    status: candidate
+  - id: ENT-EJEC-APOYO-ECONOMICO
+    status: candidate
+  - id: ENT-SYS-INTEROPERABILIDAD-NACIONAL
+    status: candidate
+
+
+## us_dip_001_01.yml
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-EJE-ESTADO-TRAMITACION
+    status: candidate
+
+
+## us_dipir_001_02.yml
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-SALDO-PRESUPUESTARIO
+    status: linked
+  - id: ENT-SYS-FIRMA-ELECTRONICA
+    status: linked
+
+
+## us_diplade_001_01.yml
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: candidate
+  - id: ENT-PLAN-OBJETIVO-ESTRATEGICO
+    status: candidate
+  - id: ENT-PLAN-INDICADOR-LOGRO
+    status: candidate
+
+
+## us_diplade_001_02.yml
+  - id: ENT-FIN-ARI-ANTEPROYECTO
+    status: linked
+  - id: ENT-FIN-PROPUESTA-INVERSION
+    status: candidate
+  - id: ENT-GOB-DIPRES-ENTIDAD
+    status: linked
+
+
+## us_diplade_002_01.yml
+  - id: ENT-EJE-RECOMENDACION-SOCIOECONOMICA
+    status: candidate
+  - id: ENT-CONV-COMITE-PERTINENCIA
+    status: linked
+  - id: ENT-SYS-TRAZABILIDAD-DECISION
+    status: candidate
+
+
+## us_dir_soc_001_01.yml
+  - id: ENT-EJEC-FONDO-CONCURSABLE
+    status: candidate
+  - id: ENT-SOC-CONSULTA-DIRIGENTE
+    status: candidate
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+
+
+## us_dit_002_01.yml
+  - id: ENT-FIN-CONTRATO-SERVICIO
+    status: linked
+  - id: ENT-FIN-GARANTIA-CONTRATO
+    status: candidate
+  - id: ENT-FIN-ESTADO-PAGO
+    status: linked
+
+
+## us_dpo_001_01.yml
+  - id: ENT-SYS-BASE-DATOS-PERSONALES
+    status: candidate
+  - id: ENT-NORM-OBLIGACION-TRANSPARENCIA
+    status: candidate
+  - id: ENT-SYS-REGISTRO-DPO
+    status: candidate
+
+
+## us_dpr_002_01.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dseg_001_02.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dtmuni_001_01.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_dueno_001_01.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+
+
+## us_ec33_001_01.yml
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ecif_001_01.yml
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_edu_001_01.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-FIN-IPR-PAGO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_ar_005.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-EJE-EXPEDIENTE-CIERRE
+    status: candidate
+
+
+## us_ejec_ar_006.yml
+  - id: ENT-GOB-REPORTE-EJECUTIVO
+    status: candidate
+  - id: ENT-GOB-INDICADOR-TENDENCIA
+    status: candidate
+  - id: ENT-ORG-GOBERNADOR
+    status: linked
+
+
+## us_ejec_ar_007.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-TRANSFERENCIA-RESPONSABILIDAD
+    status: candidate
+
+
+## us_ejec_ar_008.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-SYS-LOGS-CAMBIOS
+    status: candidate
+
+
+## us_ejec_ar_009.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+
+## us_ejec_eo_002.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_eo_003.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_eo_005.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_eo_006.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_eo_007.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_jd_002.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_ejec_jd_005.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_jd_006.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_muni_001.yml
+  - id: ENT-EJEC-GUIA-BASES
+    status: candidate
+  - id: ENT-SOC-FNDR-GLOSA7
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_muni_002.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_muni_003.yml
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_muni_004.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_muni_005.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_per_001.yml
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_sec_001.yml
+  - id: ENT-EJEC-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ejec_sup_003.yml
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-EJE-INFORME-TECNICO
+    status: linked
+  - id: ENT-EJE-OBSERVACION-TECNICA
+    status: candidate
+
+
+## us_ejec_sup_005.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_emp_001_01.yml
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_enl_cies_001_01.yml
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_eope_001_01.yml
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_epp_001_01.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_eval_001_01.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_eval_001_02.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-CONV-COMPROMISO
+    status: candidate
+
+
+## us_everde_001_01.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+
+
+## us_evol_ai_001.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_ai_002.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_ao_018.yml
+  - id: ENT-SYS-SISTEMA-MUNICIPAL
+    status: candidate
+  - id: ENT-TDE-MATRIZ-COMPATIBILIDAD
+    status: candidate
+
+
+## us_evol_chaos_001.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_dt_001.yml
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_dt_002.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_gov_001.yml
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_gov_002.yml
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_h_002.yml
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_kb_008.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_pilot_002.yml
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_play_001.yml
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_play_002.yml
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_puente_001.yml
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_evol_tray_002.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-SAL-UMBRAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_f8_001_01.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_f8_001_02.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fedmuni_001_01.yml
+  - id: ENT-EJEC-CONVENIO-MUNICIPAL
+    status: linked
+  - id: ENT-ORG-CARGA-LABORAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fenix_001_01.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+
+## us_fin_001_01.yml
+  - id: ENT-FIN-CUADRATURA-DIARIA
+    status: candidate
+  - id: ENT-FIN-DESCUADRE-CONTABLE
+    status: candidate
+
+
+## us_fin_apr_001.yml
+  - id: ENT-FIN-DISTRIBUCION-APR
+    status: candidate
+  - id: ENT-GOB-CORE-CONSEJO
+    status: linked
+  - id: ENT-NORM-LEY-PRESUPUESTO
+    status: linked
+
+
+## us_fin_c33_001.yml
+  - id: ENT-FIN-GLOSA-EMERGENCIA
+    status: candidate
+  - id: ENT-FIN-FAST-TRACK-APROBACION
+    status: candidate
+
+
+## us_fin_c33_002.yml
+  - id: ENT-FIN-ACTIVO-FIJO
+    status: linked
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-ORG-MAQUINARIA
+    status: candidate
+
+
+## us_fin_c33_005.yml
+  - id: ENT-FIN-CIRCULAR-33
+    status: candidate
+  - id: ENT-FIN-PRESUPUESTO-INVERSION
+    status: linked
+  - id: ENT-FIN-ACTIVO-ADQUIRIDO
+    status: candidate
+
+
+## us_fin_conv_003.yml
+  - id: ENT-FIN-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-SYS-ALERTA-VENCIMIENTO
+    status: candidate
+  - id: ENT-FIN-PRORROGA-CONVENIO
+    status: candidate
+
+
+## us_fin_conv_005.yml
+  - id: ENT-FIN-GARANTIA-BANCARIA
+    status: candidate
+  - id: ENT-FIN-VALOR-CUSTODIA
+    status: candidate
+  - id: ENT-SYS-ALERTA-CUSTODIA
+    status: candidate
+
+
+## us_fin_form_003.yml
+  - id: ENT-FIN-PRESUPUESTO-GASTO-CORRIENTE
+    status: candidate
+  - id: ENT-FIN-SUBTITULO-21-PERSONAL
+    status: linked
+  - id: ENT-FIN-SUBTITULO-22-BIENES
+    status: linked
+
+
+## us_fin_form_004.yml
+  - id: ENT-FIN-CLASIFICADOR-PRESUPUESTARIO
+    status: candidate
+  - id: ENT-NORM-DECRETO-HACIENDA
+    status: candidate
+
+
+## us_fin_form_005.yml
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_fril_001.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_frpd_001.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+
+
+## us_fin_frpd_002.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+
+## us_fin_frpd_003.yml
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_gest_002.yml
+  - id: ENT-EJE-SOLICITUD-MODIFICACION
+    status: candidate
+  - id: ENT-EJE-INFORME-TECNICO-EVALUACION
+    status: candidate
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+
+
+## us_fin_gest_003.yml
+  - id: ENT-EJE-REEVALUACION-PROYECTO
+    status: candidate
+  - id: ENT-NORM-REGLAMENTO-INVERSION
+    status: candidate
+  - id: ENT-FIN-UMBRAL-VARIACION
+    status: candidate
+
+
+## us_fin_gest_005.yml
+  - id: ENT-EJE-CIERRE-TECNICO
+    status: candidate
+  - id: ENT-EJE-ACTA-RECEPCION-FINAL
+    status: linked
+  - id: ENT-EJE-CHECKLIST-CIERRE
+    status: candidate
+
+
+## us_fin_gob_001.yml
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_005.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-OBSERVACION
+    status: candidate
+  - id: ENT-SYS-NOTIFICACION
+    status: candidate
+
+
+## us_fin_ipr_006.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_007.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_008.yml
+  - id: ENT-EJE-HISTORIAL-POSTULACIONES
+    status: candidate
+  - id: ENT-EJE-TASA-EXITO-FORMULADOR
+    status: candidate
+  - id: ENT-PLAN-INDICADOR-EFICIENCIA
+    status: linked
+
+
+## us_fin_ipr_011.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_015.yml
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_017.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_018.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_022.yml
+  - id: ENT-PLAN-MARCO-LOGICO
+    status: linked
+  - id: ENT-PLAN-CALIDAD-METODOLOGICA
+    status: candidate
+  - id: ENT-PLAN-FIN-PROPOSITO-COMPONENTE
+    status: candidate
+
+
+## us_fin_ipr_026.yml
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-FIN-GARANTIA-LIBERADA
+    status: candidate
+  - id: ENT-EJE-COMPROBANTE-DEVOLUCION
+    status: candidate
+
+
+## us_fin_ipr_027.yml
+  - id: ENT-EJE-BANDEJA-ENTRADA
+    status: candidate
+  - id: ENT-EJE-POSTULACION-PROYECTO
+    status: candidate
+  - id: ENT-SYS-ORDEN-FIFO
+    status: candidate
+
+
+## us_fin_ipr_031.yml
+  - id: ENT-CONV-SESION-CORE
+    status: linked
+  - id: ENT-SYS-CARPETA-DIGITAL
+    status: candidate
+  - id: ENT-EJE-ANTECEDENTES-PROYECTO
+    status: candidate
+
+
+## us_fin_ipr_034.yml
+  - id: ENT-SYS-METRICA-CICLO
+    status: candidate
+  - id: ENT-SYS-CUELLO-BOTELLA
+    status: candidate
+  - id: ENT-EJE-FASE-PROYECTO
+    status: linked
+
+
+## us_fin_ipr_035.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-PLAN-META
+    status: candidate
+
+
+## us_fin_ipr_036.yml
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_039.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ipr_040.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-TDE-NOTIFICACION
+    status: candidate
+
+
+## us_fin_jef_002.yml
+  - id: ENT-ORG-CARGA-TRABAJO
+    status: candidate
+  - id: ENT-ORG-METRICA-DESEMPENO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_jef_003.yml
+  - id: ENT-SYS-PROBLEMA-ESCALADO
+    status: candidate
+  - id: ENT-SYS-LISTA-PRIORIZADA
+    status: candidate
+  - id: ENT-SYS-PROTOCOLO-ESCALAMIENTO
+    status: candidate
+
+
+## us_fin_jef_004.yml
+  - id: ENT-PLAN-RANKING-PRIORIZACION
+    status: candidate
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-FIN-MONTO-SOLICITADO
+    status: candidate
+
+
+## us_fin_mod_002.yml
+  - id: ENT-FIN-MODIFICACION-PRESUPUESTARIA
+    status: linked
+  - id: ENT-GOB-CORE-CONSEJO
+    status: linked
+  - id: ENT-FIN-TRAMITE-AGILIZADO
+    status: candidate
+
+
+## us_fin_ppr_002.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: linked
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ppr_003.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ppr_004.yml
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-FIN-PPR
+    status: linked
+
+
+## us_fin_ppr_006.yml
+  - id: ENT-FIN-PPR
+    status: linked
+
+
+## us_fin_ppto_004.yml
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-EJE-CONVENIO
+    status: linked
+
+
+## us_fin_ppto_006.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-ASIGNACION
+    status: linked
+
+
+## us_fin_ppto_009.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-IPR
+    status: linked
+
+
+## us_fin_ppto_010.yml
+  - id: ENT-FIN-MODIFICACION_PRESUPUESTARIA
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_fin_ppto_011.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_fin_ppto_012.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-COMPROMISO_PRESUPUESTARIO
+    status: linked
+
+
+## us_fin_ppto_013.yml
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_fin_ppto_017.yml
+  - id: ENT-ORG-COMETIDO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_ppto_018.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-CDP
+    status: linked
+
+
+## us_fin_ppto_019.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-COMPROMISO_PRESUPUESTARIO
+    status: linked
+
+
+## us_fin_ppto_020.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-COMETIDO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_fin_ppto_021.yml
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_fin_ppto_022.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+
+
+## us_fin_ppto_026.yml
+  - id: ENT-FIN-DEVENGO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-ORDEN_COMPRA
+    status: linked
+
+
+## us_fin_ppto_027.yml
+  - id: ENT-DIG-TOMA_RAZON
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_fin_ppto_031.yml
+  - id: ENT-FIN-MODIFICACION_PRESUPUESTARIA
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_fin_rend_014.yml
+  - id: ENT-FIN-RENDICION
+    status: linked
+  - id: ENT-EJE-HITO
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: linked
+
+
+## us_fin_rend_015.yml
+  - id: ENT-FIN-RENDICION
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: linked
+  - id: ENT-DIG-DOCUMENTO
+    status: linked
+
+
+## us_fin_rend_016.yml
+  - id: ENT-FIN-RENDICION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_fin_rend_018.yml
+  - id: ENT-FIN-REINTEGRO
+    status: linked
+  - id: ENT-FIN-RENDICION
+    status: linked
+
+
+## us_fin_sub_001.yml
+  - id: ENT-ORG-DECLARACION_JURADA
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+
+## us_fin_sub_002.yml
+  - id: ENT-DIG-DOCUMENTO
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+
+## us_fin_sub_003.yml
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+
+## us_fin_sub_004.yml
+  - id: ENT-GOV-ACUERDO_CORE
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+
+## us_fin_sub_005.yml
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+  - id: ENT-DIG-TRAMITE
+    status: linked
+
+
+## us_fin_sup_002.yml
+  - id: ENT-SAL-APRENDIZAJE
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+
+## us_finops_001_01.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-DIVISION
+    status: linked
+
+
+## us_fisc_001_01.yml
+  - id: ENT-NORM-FISCAL-SUMARIANTE
+    status: linked
+  - id: ENT-NORM-ORDEN-JUDICIAL
+    status: candidate
+  - id: ENT-SYS-EVIDENCIA-DIGITAL
+    status: candidate
+
+
+## us_fisc_sum_001_01.yml
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-ORG-SUMARIO
+    status: linked
+
+
+## us_flota_001_01.yml
+  - id: ENT-ORG-VEHICULO
+    status: linked
+  - id: ENT-BACK-BITACORA-USO
+    status: candidate
+  - id: ENT-BACK-MANTENCION-PREVENTIVA
+    status: candidate
+
+
+## us_fndr8_001_01.yml
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+  - id: ENT-DIG-DOCUMENTO
+    status: linked
+
+
+## us_fnx_act_001.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-H_GORE
+    status: linked
+
+
+## us_fnx_act_003.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+
+
+## us_fnx_ana_001.yml
+  - id: ENT-SAL-APRENDIZAJE
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+
+
+## us_fnx_ana_003.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+
+## us_fnx_cie_002.yml
+  - id: ENT-SAL-APRENDIZAJE
+    status: linked
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+
+
+## us_fnx_cie_003.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SAL-APRENDIZAJE
+    status: linked
+
+
+## us_fnx_ges_001.yml
+  - id: ENT-SOC-EXPEDIENTE-INTERVENCION
+    status: candidate
+  - id: ENT-SOC-CASO-CRISIS
+    status: candidate
+  - id: ENT-ORG-EQUIPO-INTERVENCION
+    status: candidate
+
+
+## us_fnx_int_001.yml
+  - id: ENT-SAL-INDICADOR_POA
+    status: linked
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+
+
+## us_fnx_int_002.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SEG-INCIDENTE
+    status: linked
+
+
+## us_fnx_int_003.yml
+  - id: ENT-SAL-UMBRAL
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+
+
+## us_fnx_ope_002.yml
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+
+## us_fnx_ope_003.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+
+## us_foto_001_01.yml
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-DIG-ACTIVO_DATOS
+    status: linked
+
+
+## us_front_001_01.yml
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_frpd_001_01.yml
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+
+
+## us_func_001_01.yml
+  - id: ENT-ORG-PERMISO
+    status: linked
+  - id: ENT-DIG-TRAMITE
+    status: linked
+
+
+## us_func_001_02.yml
+  - id: ENT-BACK-LIQUIDACION-SUELDO
+    status: linked
+  - id: ENT-BACK-CERTIFICADO-ANTIGUEDAD
+    status: candidate
+  - id: ENT-BACK-EXPEDIENTE-PERSONAL
+    status: linked
+
+
+## us_g7_001_01.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gab_001_01.yml
+  - id: ENT-GOB-AGENDA-AUTORIDAD
+    status: candidate
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-GOBERNADOR
+    status: linked
+
+
+## us_gab_002_01.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-CONV-COMITE
+    status: linked
+
+
+## us_gen_001_01.yml
+  - id: ENT-PLAN-INDICADOR-GENERO
+    status: candidate
+  - id: ENT-SOC-BRECHA-GENERO
+    status: candidate
+  - id: ENT-EJEC-BENEFICIARIO-DIRECTO
+    status: linked
+
+
+## us_gen_dev_hon_jefe_001.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-NORM-CONTROL-JERARQUICO
+    status: candidate
+  - id: ENT-NORM-PROBIDAD-ADMINISTRATIVA
+    status: candidate
+
+
+## us_gen_dev_qa_analista_001.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_gen_ejec_anal_001.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+
+
+## us_gen_ejec_cper_sec_001.yml
+  - id: ENT-CONV-COMITE-PERTINENCIA
+    status: linked
+  - id: ENT-CONV-ACTA-SESION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_ejec_infra_ito_001.yml
+  - id: ENT-EJE-BITACORA_OBRA
+    status: linked
+  - id: ENT-EJE-HITOS
+    status: linked
+
+
+## us_gen_ejec_ito_001.yml
+  - id: ENT-EJE-INSPECCION-TERRENO
+    status: candidate
+  - id: ENT-EJE-BITACORA-OBRA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_ejec_itp_001.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-EJE-HITO
+    status: linked
+
+
+## us_gen_ejec_urai_ejec_001.yml
+  - id: ENT-SYS-CONVENIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_fin_analista_co_001.yml
+  - id: ENT-FIN-LICITACION
+    status: linked
+  - id: ENT-FIN-ORDEN_COMPRA
+    status: linked
+
+
+## us_gen_final_001.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-CONV-COMITE
+    status: linked
+
+
+## us_gen_final_002.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_final_003.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+
+## us_gen_final_004.yml
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_final_005.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-CAPA_GEOESPACIAL
+    status: linked
+
+
+## us_gen_final_006.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: linked
+
+
+## us_gen_final_007.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-VIA-EVALUACION
+    status: linked
+
+
+## us_gen_final_008.yml
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_final_009.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-ESTADO-RATE
+    status: linked
+
+
+## us_gen_final_010.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_final_011.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_final_012.yml
+  - id: ENT-ORG-COMETIDO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_gen_final_013.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_final_014.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-FONDO
+    status: linked
+
+
+## us_gen_final_015.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_final_016.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-SYS-EVENTO
+    status: linked
+
+
+## us_gen_final_017.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-CONV-COMITE
+    status: linked
+
+
+## us_gen_final_018.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-CAPA_GEOESPACIAL
+    status: linked
+
+
+## us_gen_final_019.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-SYS-EVENTO
+    status: linked
+
+
+## us_gen_generic_analist_002.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-BANDEJA-TAREAS
+    status: candidate
+
+
+## us_gen_gestion_250_enc_001.yml
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-GOB-AGENDA-ESTRATEGICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_anal_001.yml
+  - id: ENT-SYS-TICKET-SOPORTE
+    status: candidate
+  - id: ENT-SYS-INFRAESTRUCTURA-TI
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_analist_001.yml
+  - id: ENT-SOC-PROYECTO-APR
+    status: candidate
+  - id: ENT-TERR-RECURSO-HIDRICO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_analist_002.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_gen_gestion_arch_001.yml
+  - id: ENT-BACK-ARCHIVO-DIGITAL
+    status: linked
+  - id: ENT-SYS-METADATO-EXPEDIENTE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_aud_min_001.yml
+  - id: ENT-NORM-REPORTE-AUDITORIA
+    status: linked
+  - id: ENT-SYS-ACCESO-LECTURA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_bc_001.yml
+  - id: ENT-FIN-TASA-INTERES
+    status: candidate
+  - id: ENT-FIN-TIPO-CAMBIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_benefic_001.yml
+  - id: ENT-SOC-PERFIL-CIUDADANO
+    status: candidate
+  - id: ENT-EJEC-ESTADO-POSTULACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_caigg_001.yml
+  - id: ENT-NORM-LINEAMIENTO-CAIGG
+    status: candidate
+  - id: ENT-NORM-AUTODIAGNOSTICO-CONTROL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_camp_001.yml
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-EJEC-ESTADO-PAGO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_ccasoc_001.yml
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-PLAN-MESA-TECNICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cde_001.yml
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: linked
+  - id: ENT-NORM-SOLICITUD-ANTECEDENTES
+    status: candidate
+  - id: ENT-CONV-CONVENIO-INTERINSTITUCIONAL
+    status: linked
+
+
+## us_gen_gestion_cdr_001.yml
+  - id: ENT-CONV-COMITE-DIRECTIVO
+    status: linked
+  - id: ENT-PLAN-CARTERA-PROYECTOS
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cenic_001.yml
+  - id: ENT-TDE-DATASET-INVESTIGACION
+    status: candidate
+  - id: ENT-PLAN-ESTUDIO-REGIONAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cert_002.yml
+  - id: ENT-SYS-CERTIFICADO-DIGITAL
+    status: candidate
+  - id: ENT-SYS-LLAVE-PRIVADA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_clasif_002.yml
+  - id: ENT-SYS-ALGORITMO-CLASIFICACION
+    status: candidate
+  - id: ENT-SYS-TAG-DOCUMENTAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cnr_001.yml
+  - id: ENT-TERR-PROYECTO-HIDRICO
+    status: candidate
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_com_001.yml
+  - id: ENT-BACK-MATERIAL-GRAFICO
+    status: candidate
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_comunic_001.yml
+  - id: ENT-GOB-ESTRATEGIA-MARCA
+    status: candidate
+  - id: ENT-GOB-REPORTE-CLIPPING
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_con_ing_001.yml
+  - id: ENT-TERR-PROYECTO-VIAL
+    status: candidate
+  - id: ENT-EJE-RECEPCION-OBRA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_consult_001.yml
+  - id: ENT-PLAN-ESTUDIO-TECNICO
+    status: candidate
+  - id: ENT-EJE-ENTREGABLE-CONSULTORIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_contrap_001.yml
+  - id: ENT-CONV-CONVENIO
+    status: linked
+  - id: ENT-EJE-INFORME-AVANCE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_coor_001.yml
+  - id: ENT-SOC-INDICADOR-SOCIAL
+    status: linked
+  - id: ENT-SOC-PERFIL-SOCIOECONOMICO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_corfo_001.yml
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_corte_n_001.yml
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: linked
+  - id: ENT-NORM-RESOLUCION-JUDICIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cosoc_001.yml
+  - id: ENT-GOB-PARTICIPACION-CIUDADANA
+    status: linked
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cpc_001.yml
+  - id: ENT-EJEC-FOMENTO-PRODUCTIVO
+    status: candidate
+  - id: ENT-PLAN-ALIANZA-PUBLICO-PRIVADA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cplt_001.yml
+  - id: ENT-NORM-TRANSPARENCIA-ACTIVA
+    status: linked
+  - id: ENT-NORM-SOLICITUD-SAI
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cseu_me_001.yml
+  - id: ENT-CONV-COOPERACION-INTERNACIONAL
+    status: candidate
+  - id: ENT-PLAN-EVALUACION-PROGRAMA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_ctd_001.yml
+  - id: ENT-TDE-PLAN-TRANSFORMACION
+    status: candidate
+  - id: ENT-NORM-LEY-DIGITALIZACION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_cti_pro_001.yml
+  - id: ENT-EJEC-PROGRAMA-FIC
+    status: candidate
+  - id: ENT-TDE-INDICADOR-CTI
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_dga_001.yml
+  - id: ENT-TERR-DERECHO-AGUA
+    status: candidate
+  - id: ENT-TERR-RECURSO-HIDRICO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_digitra_001.yml
+  - id: ENT-TDE-ARQUITECTURA-DATOS
+    status: candidate
+  - id: ENT-TDE-MAPA-PROCESOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_dipres_001.yml
+  - id: ENT-FIN-LEY-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-MODIFICACION-PRESUPUESTARIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_directo_001.yml
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_doh_001.yml
+  - id: ENT-TERR-RECURSO-HIDRICO
+    status: linked
+  - id: ENT-TERR-PROYECTO-HIDRICO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_dpp_001.yml
+  - id: ENT-GOB-COORDINACION-TERRITORIAL
+    status: candidate
+  - id: ENT-TERR-COMUNA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_emp_001.yml
+  - id: ENT-EJE-EJECUTOR
+    status: linked
+  - id: ENT-EJE-CERTIFICADO-RECEPTOR-FONDOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_enc_001.yml
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-NORM-INDICADOR-CALIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_encarga_001.yml
+  - id: ENT-TERR-MEDIO-AMBIENTE
+    status: linked
+  - id: ENT-BACK-EFICIENCIA-ENERGETICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_especia_001.yml
+  - id: ENT-TDE-DASHBOARD-BI
+    status: candidate
+  - id: ENT-TDE-DATA-WAREHOUSE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_ext_002.yml
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+
+## us_gen_gestion_femp_001.yml
+  - id: ENT-TERR-COMUNA
+    status: linked
+  - id: ENT-CONV-CONVENIO-COLABORACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_fin_cog_001.yml
+  - id: ENT-FIN-CHEQUE-TRANSFERENCIA
+    status: candidate
+  - id: ENT-FIN-CO-FIRMA-MANCOMUNADA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_fnx_op_001.yml
+  - id: ENT-SOC-PROTOCOLO-INTERVENCION
+    status: candidate
+  - id: ENT-SOC-BITACORA-TERRENO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_fosis_001.yml
+  - id: ENT-SOC-BENEFICIARIO-VULNERABLE
+    status: linked
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_front_001.yml
+  - id: ENT-TDE-UI-KIT
+    status: candidate
+  - id: ENT-TDE-DISENO-EXPERIENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_gen_001.yml
+  - id: ENT-GOB-TRAMITE-DIGITAL
+    status: linked
+  - id: ENT-SOC-REQUERIMIENTO-CIUDADANO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_goreolo_001.yml
+  - id: ENT-ORG-MEMORIA-HISTORICA
+    status: candidate
+  - id: ENT-NORM-CULTURA-INSTITUCIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_grd_001.yml
+  - id: ENT-TERR-ZONA-RIESGO
+    status: candidate
+  - id: ENT-SOC-PLAN-EMERGENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_hon_ana_001.yml
+  - id: ENT-BACK-CONTRATO-HONORARIOS
+    status: candidate
+  - id: ENT-FIN-ESTADO-PAGO-HONORARIOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_indap_001.yml
+  - id: ENT-TERR-AGRICULTURA-FAMILIAR
+    status: candidate
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_int_001.yml
+  - id: ENT-GOB-MESA-ARTICULACION
+    status: candidate
+  - id: ENT-CONV-PROTOCOLO-ACUERDO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_ipr_001.yml
+  - id: ENT-EJE-PROYECTO-INVERSION
+    status: linked
+  - id: ENT-PLAN-CALIDAD-METODOLOGICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_jano_001.yml
+  - id: ENT-NORM-REGLAMENTO-REGIONAL
+    status: linked
+  - id: ENT-NORM-BASE-LICITACION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_jefe_001.yml
+  - id: ENT-NORM-ACTO-ADMINISTRATIVO
+    status: linked
+  - id: ENT-NORM-RESOLUCION-EXENTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_jefe_es_001.yml
+  - id: ENT-PLAN-ESTUDIO-ESTRATEGICO
+    status: candidate
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_jjvv_001.yml
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-SOC-PROYECTO-COMUNITARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_junji_001.yml
+  - id: ENT-SOC-INFRAESTRUCTURA-EDUCATIVA
+    status: candidate
+  - id: ENT-CONV-CONVENIO-MANDATO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_juzg_le_001.yml
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: linked
+  - id: ENT-NORM-OFICIO-JUDICIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_media_c_001.yml
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: linked
+  - id: ENT-NORM-SOLICITUD-SAI
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_medio_c_001.yml
+  - id: ENT-BACK-MATERIAL-GRAFICO
+    status: candidate
+  - id: ENT-GOB-CAMPANA-DIFUSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_mora_001.yml
+  - id: ENT-SYS-ALERTA-MORA
+    status: candidate
+  - id: ENT-FIN-CUMPLIMIENTO-PAGO-OPC
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_muni_en_001.yml
+  - id: ENT-TERR-COMUNA
+    status: linked
+  - id: ENT-PLAN-CALENDARIZACION-INVERSION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_notario_001.yml
+  - id: ENT-NORM-ESCRITURA-PUBLICA
+    status: candidate
+  - id: ENT-NORM-CERTIFICACION-NOTARIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_ong_001.yml
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_org_ben_001.yml
+  - id: ENT-SOC-ORG-SOCIAL
+    status: linked
+  - id: ENT-EJEC-CERTIFICADO-RECEPTOR-FONDOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_org_pos_001.yml
+  - id: ENT-SOC-PROYECTO-CONCURSABLE
+    status: candidate
+  - id: ENT-GOB-BASES-CONCURSO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_pmg_td_001.yml
+  - id: ENT-TDE-INDICADOR-DIGITALIZACION
+    status: candidate
+  - id: ENT-NORM-REPORTE-PMG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_prensa__001.yml
+  - id: ENT-BACK-COMUNICADO-PRENSA
+    status: linked
+  - id: ENT-GOB-CAMPANA-DIFUSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_pres_001.yml
+  - id: ENT-TDE-GUBERNANZA-IA
+    status: candidate
+  - id: ENT-NORM-REGLAMENTO-ETICO-IA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_profesi_002.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-SYS-BANDEJA-TAREAS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_propir_001.yml
+  - id: ENT-EJEC-CARTOLA-PROPIR
+    status: candidate
+  - id: ENT-TERR-MAPA-INVERSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_rez_enc_001.yml
+  - id: ENT-TERR-ZONA-REZAGO
+    status: candidate
+  - id: ENT-PLAN-BRECHA-TERRITORIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_salud_s_001.yml
+  - id: ENT-SOC-INFRAESTRUCTURA-SALUD
+    status: candidate
+  - id: ENT-CONV-CONVENIO-PROGRAMACION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_secpla__001.yml
+  - id: ENT-PLAN-CALENDARIZACION-INVERSION
+    status: linked
+  - id: ENT-TERR-PROYECTO-COMUNAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_secpla__002.yml
+  - id: ENT-PLAN-ESTRATEGIA-URBANA
+    status: candidate
+  - id: ENT-TERR-COMUNA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_sence_001.yml
+  - id: ENT-EJEC-PROGRAMA-CAPACITACION
+    status: candidate
+  - id: ENT-EJEC-INDICADOR-EMPLEABILIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_serco_001.yml
+  - id: ENT-EJEC-PROGRAMA-PYME
+    status: candidate
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_seremi__001.yml
+  - id: ENT-FIN-LEY-PRESUPUESTO
+    status: linked
+  - id: ENT-FIN-MODIFICACION-PRESUPUESTARIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_seremi__002.yml
+  - id: ENT-TERR-CAMPAMENTO
+    status: candidate
+  - id: ENT-TERR-PLAN-REGULADOR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_sernam_001.yml
+  - id: ENT-SOC-PERFIL-GENERO
+    status: candidate
+  - id: ENT-SOC-PROGRAMA-VIOLENCIA-GENERO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_sii_001.yml
+  - id: ENT-FIN-TRIBUTACION-REGIONAL
+    status: candidate
+  - id: ENT-FIN-IMPUESTO-AD-VALOREM
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_sindic_001.yml
+  - id: ENT-SOC-RECLAMO-LABORAL
+    status: candidate
+  - id: ENT-BACK-DERECHO-PROCEDIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_sna_001.yml
+  - id: ENT-TERR-AGRICULTURA-FAMILIAR
+    status: candidate
+  - id: ENT-EJEC-FOMENTO-PRODUCTIVO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_subdere_001.yml
+  - id: ENT-GOB-TRANSFERENCIA-COMPETENCIAS
+    status: candidate
+  - id: ENT-FIN-PROGRAMA-02-FNDR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_subtel_001.yml
+  - id: ENT-TDE-CONECTIVIDAD-REGIONAL
+    status: candidate
+  - id: ENT-TERR-PROYECTO-INFRAESTRUCTURA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_tc_001.yml
+  - id: ENT-NORM-LITIGIO-CONSTITUCIONAL
+    status: candidate
+  - id: ENT-NORM-REGLAMENTO-REGIONAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_transp__001.yml
+  - id: ENT-NORM-TRANSPARENCIA-ACTIVA
+    status: linked
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_ucr_coo_001.yml
+  - id: ENT-NORM-CONTROL-REGIONAL
+    status: candidate
+  - id: ENT-TERR-PROYECTO-COMUNAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_unidad__001.yml
+  - id: ENT-GOB-MESA-ARTICULACION
+    status: candidate
+  - id: ENT-CONV-PROTOCOLO-ACUERDO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_univ_001.yml
+  - id: ENT-EJEC-PROGRAMA-FIC
+    status: candidate
+  - id: ENT-PLAN-ESTUDIO-ESTRATEGICO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_univers_001.yml
+  - id: ENT-CONV-CONVENIO-MARCO
+    status: linked
+  - id: ENT-TDE-OBSERVATORIO-DATOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_gestion_utm_gen_001.yml
+  - id: ENT-EJE-OBRA-CIVIL
+    status: candidate
+  - id: ENT-EJEC-INFORME-AVANCE-FISICO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_jur_ases_div_001.yml
+  - id: ENT-NORM-RESOLUCION-EXENTA
+    status: candidate
+  - id: ENT-CONV-PROTOCOLO-ACUERDO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_norm_abogado_ge_001.yml
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    status: linked
+  - id: ENT-NORM-REGLAMENTO-REGIONAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_norm_audit_002.yml
+  - id: ENT-SYS-ALERTA-CUMPLIMIENTO
+    status: candidate
+  - id: ENT-FIN-DETECCION-FRAUDE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_norm_mp_001.yml
+  - id: ENT-NORM-INVESTIGACION-PENAL
+    status: candidate
+  - id: ENT-NORM-ENTREGA-INFORMACION-JUDICIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_ops_admin_sys_002.yml
+  - id: ENT-SYS-INFRAESTRUCTURA-TI
+    status: candidate
+  - id: ENT-SYS-LOGS-SISTEMA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_ops_encargado_c_001.yml
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-SYS-PLAN-CONTINGENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_seg_ases_001.yml
+  - id: ENT-SOC-SEGURIDAD-CIUDADANA
+    status: candidate
+  - id: ENT-TERR-MAPA-DELITUAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_terr_terr_001.yml
+  - id: ENT-PLAN-BRECHA-TERRITORIAL
+    status: candidate
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gen_terr_terr_soc_001.yml
+  - id: ENT-SOC-PERFIL-SOCIAL
+    status: candidate
+  - id: ENT-GOB-DIAGNOSTICO-PARTICIPATIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_geo_001_01.yml
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: candidate
+  - id: ENT-TERR-IDE-REGIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_geo_002_01.yml
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: candidate
+  - id: ENT-SYS-CONVERTIDOR-FORMATOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_coord_002.yml
+  - id: ENT-GOB-MESA-ARTICULACION
+    status: candidate
+  - id: ENT-NORM-RESOLUCION-CONJUNTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_hg_002.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-H_GORE
+    status: linked
+  - id: ENT-SAL-UMBRAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_hg_003.yml
+  - id: ENT-SAL-H_GORE
+    status: linked
+  - id: ENT-SYS-ANALISIS-CAUSA-RAIZ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_mc_001.yml
+  - id: ENT-ORG-MEJORA-CONTINUA
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_mc_002.yml
+  - id: ENT-ORG-MEJORA-CONTINUA
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_pb_001.yml
+  - id: ENT-SAL-H_GORE
+    status: linked
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-SYS-PROTOCOLO-RECUPERACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_pb_002.yml
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-GOB-STAKEHOLDER-RELATION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_pb_003.yml
+  - id: ENT-SAL-PLAYBOOK
+    status: linked
+  - id: ENT-SYS-BASE-CONOCIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_per_002.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-BACK-PLAN-INDUCCION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_proc_001.yml
+  - id: ENT-DIG-EXPEDIENTE
+    status: candidate
+  - id: ENT-SYS-TRAZABILIDAD-ACTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_scg_001.yml
+  - id: ENT-SAL-POA
+    status: linked
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_scg_003.yml
+  - id: ENT-NORM-REPORTE-GESTION
+    status: candidate
+  - id: ENT-SYS-DASHBOARD-EJECUTIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gest_uci_002.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-MATRIZ-CONTROL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gfom_001_01.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-EJEC-INDICADOR-FORMALIZACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_glosa7_001_01.yml
+  - id: ENT-SOC-SEGURIDAD-CIUDADANA
+    status: candidate
+  - id: ENT-NORM-BASES-GLOSA-7
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_001_02.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_002_01.yml
+  - id: ENT-CONV-CONVENIO-TRANSFERENCIA
+    status: linked
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_core_004.yml
+  - id: ENT-TERR-MAPA-INVERSION
+    status: candidate
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_core_006.yml
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-GOB-ACTA-SESION-CORE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_core_007.yml
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-EJEC-EVIDENCIA-CUMPLIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_core_010.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-GOB-TRANSCRIPCION-SESION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_core_011.yml
+  - id: ENT-GOV-VOTACION
+    status: linked
+  - id: ENT-GOB-SIMULADOR-QUORUM
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_del_001.yml
+  - id: ENT-GOB-GABINETE-REGIONAL
+    status: candidate
+  - id: ENT-PLAN-PROGRAMA-PRESIDENCIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_del_003.yml
+  - id: ENT-NORM-RECURSO-JERARQUICO
+    status: candidate
+  - id: ENT-NORM-TUTELA-ADMINISTRATIVA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_del_004.yml
+  - id: ENT-NORM-ORDEN-PUBLICO
+    status: candidate
+  - id: ENT-SOC-SEGURIDAD-CIUDADANA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_desc_002.yml
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-GOB-TRANSFERENCIA-COMPETENCIAS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_desc_005.yml
+  - id: ENT-GOB-TRANSFERENCIA-COMPETENCIAS
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_desc_006.yml
+  - id: ENT-NORM-REPORTE-GESTION
+    status: linked
+  - id: ENT-GOB-INFORME-AUTONOMIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_desc_007.yml
+  - id: ENT-FIN-EJECUCION-PRESUPUESTARIA
+    status: linked
+  - id: ENT-FIN-BRECHA-PRESUPUESTARIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gab_001.yml
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-GOB-AGENDA-AUTORIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gab_003.yml
+  - id: ENT-GOB-COMUNICACION-CRISIS
+    status: candidate
+  - id: ENT-SYS-ALERTA-REPUTACIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gab_004.yml
+  - id: ENT-SYS-ACTOR
+    status: linked
+  - id: ENT-GOB-MAPA-PODER
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gab_005.yml
+  - id: ENT-NORM-MINUTA-EJECUTIVA
+    status: candidate
+  - id: ENT-PLAN-ESTRATEGIA-COMUNICACIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gab_007.yml
+  - id: ENT-CONV-ACUERDO-INTERNACIONAL
+    status: candidate
+  - id: ENT-GOB-MISION-EXTRANJERA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gr_001.yml
+  - id: ENT-PLAN-ERD-ESTRATEGIA
+    status: linked
+  - id: ENT-TERR-PROT-ORDENAMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gr_004.yml
+  - id: ENT-GOB-ACTA-SESION-CORE
+    status: candidate
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gr_005.yml
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-SYS-PROTOCOLO-EMERGENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gr_009.yml
+  - id: ENT-BACK-CARGO-CONFIANZA
+    status: candidate
+  - id: ENT-NORM-RESOLUCION-NOMBRAMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gr_010.yml
+  - id: ENT-GOB-MISION-ESTRATEGICA
+    status: candidate
+  - id: ENT-PLAN-POSICIONAMIENTO-REGIONAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gr_013.yml
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-TERR-INFRAESTRUCTURA-ESTRATEGICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_gr_014.yml
+  - id: ENT-CONV-CONVENIO-PROGRAMACION
+    status: candidate
+  - id: ENT-FIN-APALANCAMIENTO-SECTORIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_grd_001.yml
+  - id: ENT-SOC-PLAN-REDUCCION-RIESGO
+    status: candidate
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_grd_002.yml
+  - id: ENT-TERR-MAPA-RIESGO
+    status: candidate
+  - id: ENT-TERR-PROT-ORDENAMIENTO
+    status: candidate
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_grd_003.yml
+  - id: ENT-SOC-PLAN-EMERGENCIA-REGIONAL
+    status: candidate
+  - id: ENT-SYS-PROTOCOLO-RESPUESTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_grd_004.yml
+  - id: ENT-CONV-COMITE
+    status: linked
+  - id: ENT-SOC-ACCION-PREVENTIVA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_lob_001.yml
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-NORM-LEY-LOBBY
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_lob_002.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-NORM-LEY-PROBIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_op_002.yml
+  - id: ENT-DIG-RUTEO-AUTOMATICO
+    status: candidate
+  - id: ENT-ORG-PROCESO-INTERNO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_op_005.yml
+  - id: ENT-DIG-OCR-ENGINE
+    status: candidate
+  - id: ENT-DIG-METADATO-EXTRACTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gob_sec_001.yml
+  - id: ENT-GOB-MESA-GABINETES
+    status: candidate
+  - id: ENT-GOB-AGENDA-CONJUNTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gobprov_001_01.yml
+  - id: ENT-LOC-PROVINCIA
+    status: linked
+  - id: ENT-FIN-ESTADO-INVERSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_gprov_001_01.yml
+  - id: ENT-LOC-PROVINCIA
+    status: linked
+  - id: ENT-SYS-ACCESO-VPN
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_grd_001_01.yml
+  - id: ENT-SOC-PLAN-EMERGENCIA-REGIONAL
+    status: linked
+  - id: ENT-SYS-PROTOCOLO-RESPUESTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_hon_001_01.yml
+  - id: ENT-ORG-PERSONAL-HONORARIOS
+    status: candidate
+  - id: ENT-FIN-INFORME-CUMPLIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_hon_002_01.yml
+  - id: ENT-DIG-INFORME-ACTIVIDADES
+    status: candidate
+  - id: ENT-FIN-BOLETA-HONORARIOS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_icon_001_01.yml
+  - id: ENT-TDE-PROMPT-REGISTRY
+    status: candidate
+  - id: ENT-TDE-CONOCIMIENTO-CURADO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ide_001_01.yml
+  - id: ENT-TERR-METADATO-GIS
+    status: candidate
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_if_001_02.yml
+  - id: ENT-NORM-REPORTE-FISCALIZACION
+    status: candidate
+  - id: ENT-NORM-EXPEDIENTE-SUMARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_indap_001_01.yml
+  - id: ENT-EJEC-PROYECTO-AGRICOLA
+    status: candidate
+  - id: ENT-EJEC-PROGRAMA-FONDO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_inter_001_01.yml
+  - id: ENT-TDE-INTEROP-API
+    status: candidate
+  - id: ENT-TDE-SERVICES-HUB
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_intfin_001_01.yml
+  - id: ENT-FIN-ERP-DATA
+    status: candidate
+  - id: ENT-FIN-AUDIT-LOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_intfis_001_01.yml
+  - id: ENT-NORM-EXPEDIENTE-SUMARIO
+    status: candidate
+  - id: ENT-DOC-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-ORG-CARGO
+    status: linked
+
+
+## us_inv_001_01.yml
+  - id: ENT-FIN-ACTIVO-FIJO
+    status: candidate
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_inv_dep_001_01.yml
+  - id: ENT-FIN-ARI
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-EJEC-PROYECTO-INVERSION
+    status: linked
+
+
+## us_iplat_001_01.yml
+  - id: ENT-TDE-RECURSO-INFRA
+    status: candidate
+  - id: ENT-TDE-PLATFORM-CATALOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_isan_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_iseg_001_01.yml
+  - id: ENT-TDE-VULNERABILIDAD-REPORTE
+    status: candidate
+  - id: ENT-TDE-CI-PIPELINE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_itmuni_001_01.yml
+  - id: ENT-TDE-API-KEY
+    status: candidate
+  - id: ENT-TDE-CLIENT-CREDENTIALS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ito_001_01.yml
+  - id: ENT-EJE-BITACORA_OBRA
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_ito_001_02.yml
+  - id: ENT-EJE-HITOS
+    status: linked
+  - id: ENT-FIN-POLIZA
+    status: linked
+
+
+## us_ito_002_01.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-EJE-HITOS
+    status: linked
+
+
+## us_itom_001_01.yml
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+
+
+## us_itp_001_01.yml
+  - id: ENT-FIN-PPR
+    status: linked
+  - id: ENT-EJE-HITOS
+    status: linked
+
+
+## us_ivial_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_jaud_001_01.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_jcal_001_01.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SAL-PUNTAJE
+    status: linked
+
+
+## us_jcont_001_01.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_jd_ana_001_01.yml
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_jefe_rrhh_001_01.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_jer_001_01.yml
+  - id: ENT-NORM-PROCESO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_jest_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_jpre_001_01.yml
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_jprog_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_jterr_001_01.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_jtes_001_01.yml
+  - id: ENT-FIN-PAGO
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_jti_001_01.yml
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_juez_001_01.yml
+  - id: ENT-NORM-EXPEDIENTE-ORIGINAL
+    status: candidate
+  - id: ENT-FIN-CUENTA-GORE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_lobby_001_01.yml
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_mctd_001_01.yml
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-ORG-DIVISION
+    status: linked
+
+
+## us_mds_001_01.yml
+  - id: ENT-FIN-IPR
+    status: linked
+  - id: ENT-LOC-INDICADOR_TERRITORIAL
+    status: linked
+
+
+## us_mecif_001_01.yml
+  - id: ENT-FIN-SUBVENCION
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+
+
+## us_mesa_001_01.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+
+## us_mesa_002_01.yml
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_mig_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_mig_002.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-USER
+    status: linked
+
+
+## us_mig_003.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_mig_prom_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+
+## us_mon_001_01.yml
+  - id: ENT-OPS-ALERTA
+    status: linked
+  - id: ENT-OPS-INDICADOR_TECNICO
+    status: linked
+
+
+## us_msia_001_01.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_ndev_001_01.yml
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_noc_001_01.yml
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+
+## us_norm_acto_002.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_norm_acto_003.yml
+  - id: ENT-DIG-TOMA_RAZON
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_norm_acto_004.yml
+  - id: ENT-NORM-PROCESO
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_norm_acto_005.yml
+  - id: ENT-NORM-PROCESO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_norm_acto_006.yml
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_norm_acto_008.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_norm_acto_011.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_norm_acto_012.yml
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_norm_att_001.yml
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_norm_cgr_001.yml
+  - id: ENT-DIG-TOMA_RAZON
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_norm_cgr_003.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-FIN-LICITACION
+    status: linked
+
+
+## us_norm_cris_001.yml
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_norm_ctrl_001.yml
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_norm_ctrl_004.yml
+  - id: ENT-NORM-PROCESO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_norm_ctrl_005.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_norm_dip_001.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+
+## us_norm_exp_001.yml
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_norm_exp_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+
+
+## us_norm_lobby_001.yml
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_norm_lobby_002.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_norm_sim_001.yml
+  - id: ENT-FIN-CDP
+    status: linked
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+
+
+## us_norm_trans_002.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+
+## us_obs_001_01.yml
+  - id: ENT-FIN-PROGRAMA
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_obs_001_02.yml
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+  - id: ENT-TER-SITIO
+    status: linked
+
+
+## us_oirs_001_01.yml
+  - id: ENT-TDE-OIRS-TICKET
+    status: candidate
+  - id: ENT-TDE-TRAZABILIDAD-DOCUMENTAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_oirs_001_02.yml
+  - id: ENT-TDE-OIRS-TICKET
+    status: candidate
+  - id: ENT-BACK-RECO-ENCUESTA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ong_001_01.yml
+  - id: ENT-EJEC-FONDO-CONCURSABLE
+    status: linked
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ong_002_01.yml
+  - id: ENT-FIN-PROGRAMA
+    status: linked
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+
+
+## us_op_001_01.yml
+  - id: ENT-TDE-CARATULA-DIGITAL
+    status: candidate
+  - id: ENT-DOC-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_op_001_02.yml
+  - id: ENT-TDE-CORRELATIVO-INGRESO
+    status: candidate
+  - id: ENT-TDE-TRAZABILIDAD-DOCUMENTAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_op_002_01.yml
+  - id: ENT-TDE-REGISTRO-DESPACHO
+    status: candidate
+  - id: ENT-DOC-DOCUMENTO-DIGITAL
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_op_cies_001_01.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-DASHBOARD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ope_001_01.yml
+  - id: ENT-TDE-JOB-SCHEDULER
+    status: candidate
+  - id: ENT-TDE-EXECUTION-LOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ops_back_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_ops_bak_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_ops_bak_002.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-EVENTO
+    status: linked
+
+
+## us_ops_bak_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_ops_cfg_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_ops_cfg_002.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_ops_cfg_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_ops_dat_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_ops_dat_002.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_ops_dat_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-TER-SITIO
+    status: linked
+
+
+## us_ops_dat_004.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+
+
+## us_ops_fin_001.yml
+  - id: ENT-FIN-PRESUPUESTO
+    status: linked
+  - id: ENT-SAL-ALERTA
+    status: linked
+
+
+## us_ops_iac_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_ops_iam_001.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USER
+    status: linked
+
+
+## us_ops_iam_002.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_ops_iam_003.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_ops_iam_004.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-USER
+    status: linked
+
+
+## us_ops_iam_005.yml
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+
+## us_ops_inc_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+
+## us_ops_mig_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_ops_mig_002.yml
+  - id: ENT-SYS-FILE
+    status: linked
+
+
+## us_ops_mig_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_ops_mon_001.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SAL-UMBRAL
+    status: linked
+
+
+## us_ops_mon_002.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-OPS-INDICADOR_TECNICO
+    status: linked
+
+
+## us_ops_mon_003.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-SYS-EVENTO
+    status: linked
+
+
+## us_ops_mon_004.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-SAL-INDICADOR
+    status: linked
+
+
+## us_ops_perf_001.yml
+  - id: ENT-SAL-INDICADOR
+    status: linked
+  - id: ENT-NORM-PROCESO
+    status: linked
+
+
+## us_ops_sec_001.yml
+  - id: ENT-TDE-AUDIT-LOG
+    status: candidate
+  - id: ENT-TDE-CONTROL-ACCESO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ops_sre_001.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+
+## us_ops_sup_001.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+
+## us_ops_sup_002.yml
+  - id: ENT-SYS-LOG
+    status: linked
+  - id: ENT-OPS-ALERTA
+    status: linked
+
+
+## us_ops_sup_003.yml
+  - id: ENT-SYS-USER
+    status: linked
+  - id: ENT-SYS-NOTIFICATION
+    status: linked
+
+
+## us_ops_sup_004.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-LOG
+    status: linked
+
+
+## us_part_001_01.yml
+  - id: ENT-GOV-VOTACION
+    status: linked
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+
+
+## us_pat_did_001_01.yml
+  - id: ENT-EJEC-PATROCINIO-GORE
+    status: candidate
+  - id: ENT-EJEC-CHECKLIST-REQUISITO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_pat_dif_001_01.yml
+  - id: ENT-EJEC-PATROCINIO-GORE
+    status: candidate
+  - id: ENT-FIN-BIP-ID
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_pat_dit_001_01.yml
+  - id: ENT-SOC-INFRAESTRUCTURA-RED
+    status: linked
+  - id: ENT-TERR-MAPA-RED
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_pcseu_001_01.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-SAL-PUNTAJE
+    status: linked
+
+
+## us_pdi_001_01.yml
+  - id: ENT-SAL-CAMARA-CIES
+    status: linked
+  - id: ENT-NORM-OFICIO-JUDICIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_per_001_01.yml
+  - id: ENT-COM-NOTA-PRENSA
+    status: candidate
+  - id: ENT-COM-TEMPLATE-ESTRAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_pes_001_01.yml
+  - id: ENT-SOC-ORGANIZACION-PESQUERA
+    status: candidate
+  - id: ENT-TERR-CALETA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_pever_001_01.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-AMB-ESTADO-VERDE-LVL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_plan_urb_001_01.yml
+  - id: ENT-TERR-IPT
+    status: candidate
+  - id: ENT-TERR-CAPA-GEOGRAFICA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_pmg_001_01.yml
+  - id: ENT-PLAN-EVIDENCIA-PMG
+    status: candidate
+  - id: ENT-PLAN-CALENDARIO-HITO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_po_001_01.yml
+  - id: ENT-PLAN-STORY
+    status: candidate
+  - id: ENT-PLAN-BACKLOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ppert_001_01.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ppr_001_01.yml
+  - id: ENT-EJEC-PPR-INICIATIVA
+    status: candidate
+  - id: ENT-EJEC-MATRIZ-CALIFICACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_preinv_001_01.yml
+  - id: ENT-FIN-BIP-ID
+    status: linked
+  - id: ENT-EJEC-CHECKLIST-BIP
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_pres_core_001_01.yml
+  - id: ENT-GOV-VOTACION
+    status: linked
+  - id: ENT-GOB-ACTA-CORE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_prev_001_01.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-BACK-ACCIDENTE-LABORAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_prev_002_01.yml
+  - id: ENT-BACK-EPP-REGISTRO
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_prof_n250_001_01.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-PLAN-CALENDARIO-HITO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_prof_rez_001_01.yml
+  - id: ENT-TERR-ZONA-REZAGADA
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_qa_001_01.yml
+  - id: ENT-TDE-STAGE-ENV
+    status: candidate
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rem_001_01.yml
+  - id: ENT-BACK-REMUNERACION
+    status: candidate
+  - id: ENT-BACK-LIQUIDACION-SUELDO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rem_002_01.yml
+  - id: ENT-BACK-BONIFICACION
+    status: candidate
+  - id: ENT-BACK-DESCUENTO-LEGAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rend_002_01.yml
+  - id: ENT-FIN-RENDICION-CUENTA
+    status: linked
+  - id: ENT-FIN-ESTADO-RENDICION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rez_001_01.yml
+  - id: ENT-TERR-ZONA-REZAGADA
+    status: candidate
+  - id: ENT-FIN-RENTABILIDAD-SOCIAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rgasto_001_01.yml
+  - id: ENT-FIN-CLASIFICADOR-PPTAR
+    status: candidate
+  - id: ENT-FIN-COMPROMISO-GASTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rpmg_001_01.yml
+  - id: ENT-PLAN-EVIDENCIA-PMG
+    status: candidate
+  - id: ENT-PLAN-CALENDARIO-HITO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rpsico_001_01.yml
+  - id: ENT-BACK-ENCUESTA-CLIMA
+    status: candidate
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rrhh_001_01.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-DOC-CHECKLIST-INGRESO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rrhh_001_02.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-BACK-CONTRATO-VIGENTE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rrhh_002_01.yml
+  - id: ENT-BACK-PLAN-CAPACITACION
+    status: candidate
+  - id: ENT-BACK-CURSO-REGISTRO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rtd_001_01.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-TDE-REPORT-GOV
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_rtec_001_01.yml
+  - id: ENT-EJEC-HITO-PROYECTO
+    status: candidate
+  - id: ENT-FIN-SOLICITUD-GIRO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_sag_001_01.yml
+  - id: ENT-EJEC-PROYECTO-AGRICOLA
+    status: candidate
+  - id: ENT-NORM-RESOLUCION-SAG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_sec_ctci_001_01.yml
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-GOB-ACTA-CONSEJO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_sec_ctd_001_01.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-TDE-ROADMAP-DIGITAL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seccom_001_01.yml
+  - id: ENT-GOB-COMISION-CORE
+    status: candidate
+  - id: ENT-EJEC-PROYECTO-BIP
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seccore_001_01.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-GOB-SESION-PLENARIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seccore_001_02.yml
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-DOC-ANTECEDENTE-PROYECTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_secdiv_001_01.yml
+  - id: ENT-BACK-CORRESPONDENCIA
+    status: candidate
+  - id: ENT-SYS-DOCUMENTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_secpla_001_01.yml
+  - id: ENT-PLAN-ESTRATEGIA-ERD
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: candidate
+  - id: ENT-ORM-RENTABILIDAD-SOCIAL
+    status: candidate
+
+
+## us_secpla_001_02.yml
+  - id: ENT-EJEC-PROYECTO-BIP
+    status: linked
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-EJEC-ITEM-COSTO
+    status: candidate
+
+
+## us_seg_cies_001.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SEG-SENSOR
+    status: candidate
+  - id: ENT-LOC-PUNTO-GEOGRAFICO
+    status: candidate
+
+
+## us_seg_cies_003.yml
+  - id: ENT-SEG-DISPOSITIVO-VIDEO
+    status: candidate
+  - id: ENT-SEG-EVIDENCIA-VIDEO
+    status: candidate
+  - id: ENT-SYS-EVENTO
+    status: linked
+
+
+## us_seg_cies_004.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SEG-PATENTE-LPR
+    status: candidate
+  - id: ENT-SEG-ENCARGO-JUDICIAL
+    status: candidate
+
+
+## us_seg_cies_006.yml
+  - id: ENT-SEG-VIDEOWALL-LAYOUT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-EMERGENCIA
+    status: candidate
+
+
+## us_seg_cies_008.yml
+  - id: ENT-SEG-INCIDENTE-REGISTRO
+    status: candidate
+  - id: ENT-TERR-MAPA-CALOR
+    status: candidate
+  - id: ENT-PLAN-REPORTE-ESTATICO
+    status: candidate
+
+
+## us_seg_cies_009.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SEG-RECURSO-MOVIL
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_cies_010.yml
+  - id: ENT-SEG-PUNTO-CRITICO
+    status: candidate
+  - id: ENT-SEG-VIDEOWALL-LAYOUT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_evid_001.yml
+  - id: ENT-SEG-EVIDENCIA-VIDEO
+    status: candidate
+  - id: ENT-SEG-HASH-INTEGRIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_evid_003.yml
+  - id: ENT-SEG-EVIDENCIA-VIDEO
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_gob_002.yml
+  - id: ENT-GOV-CORE
+    status: linked
+  - id: ENT-SEG-PLAN-SEGURIDAD-REG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_gob_004.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-SEG-DENUNCIA-ANONIMA
+    status: candidate
+  - id: ENT-LOC-PUNTO-GEOGRAFICO
+    status: candidate
+
+
+## us_seg_prev_003.yml
+  - id: ENT-GOV-CORE
+    status: linked
+  - id: ENT-SEG-CONSEJO-SEGURIDAD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_prev_006.yml
+  - id: ENT-FIN-CONVENIO-TRANSFERENCIA
+    status: candidate
+  - id: ENT-EJEC-AVANCE-FINANCIERO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_prev_007.yml
+  - id: ENT-CONV-ASISTENCIA
+    status: linked
+  - id: ENT-ORG-ASISTENCIA
+    status: linked
+  - id: ENT-SEG-EXPEDIENTE-VICTIMA
+    status: candidate
+
+
+## us_seg_prev_008.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-SEG-PLAN-COMUNAL-SEG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_prev_009.yml
+  - id: ENT-NORM-POLITICA-NAC-SEG
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seg_prev_010.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-TERR-MAPA-CALOR
+    status: candidate
+  - id: ENT-SEG-VARIABLE-ESTACIONAL
+    status: candidate
+
+
+## us_sen_001_01.yml
+  - id: ENT-EJEC-PROYECTO-BIP
+    status: linked
+  - id: ENT-PLAN-ESTRATEGIA-ERD
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_senapred_001_01.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-TERR-MAPA-CALOR
+    status: linked
+  - id: ENT-SYS-EMERGENCIA
+    status: candidate
+
+
+## us_ser_agr_001_01.yml
+  - id: ENT-FIN-INVERSION-SECTORIAL
+    status: candidate
+  - id: ENT-EJEC-PROYECTO-AGRICOLA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ser_gob_001_01.yml
+  - id: ENT-DIG-CANAL
+    status: linked
+  - id: ENT-SEG-INCIDENCIA-POLITICA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ser_mop_001_01.yml
+  - id: ENT-FIN-CONVENIO-MANDATO
+    status: candidate
+  - id: ENT-EJEC-AVANCE-OBRAS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_serc_001_01.yml
+  - id: ENT-SOC-BENEFICIARIO
+    status: linked
+  - id: ENT-SOC-FONDO-CONCURSABLE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_seremi_001_02.yml
+  - id: ENT-CONV-SESION
+    status: linked
+  - id: ENT-GOB-SESION-PLENARIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_serv_001_01.yml
+  - id: ENT-BACK-CONTRATO-SERVICIO
+    status: candidate
+  - id: ENT-BACK-PLAN-MANTENIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_serviu_001_01.yml
+  - id: ENT-EJEC-PROYECTO-VIVIENDA
+    status: candidate
+  - id: ENT-FIN-COFINANCIAMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_soc_001_01.yml
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+  - id: ENT-SOC-BENEFICIARIO-DIRECTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_socio_001_01.yml
+  - id: ENT-BACK-AYUDA-BIENESTAR
+    status: candidate
+  - id: ENT-BACK-SALDO-BENEFICIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_sofo_001_01.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-TERR-ZONA-CATALIZADORA
+    status: candidate
+  - id: ENT-FIN-FONDO-EMERGENCIA
+    status: candidate
+
+
+## us_sop_001_01.yml
+  - id: ENT-BACK-ACTIVO-TECNOLOGICO
+    status: candidate
+  - id: ENT-BACK-PLAN-MANTENIMIENTO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_spert_001_01.yml
+  - id: ENT-CONV-ACTA
+    status: linked
+  - id: ENT-EJEC-PROYECTO-BIP
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_sre_001_01.yml
+  - id: ENT-TDE-SLO-DEFINITION
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_subv_001_01.yml
+  - id: ENT-SOC-ORGANIZACION-SOCIAL
+    status: linked
+  - id: ENT-FIN-RENDICION-CUENTA
+    status: linked
+  - id: ENT-FIN-ESTADO-RENDICION
+    status: candidate
+
+
+## us_suj_001_01.yml
+  - id: ENT-CONV-AUDIENCIA
+    status: linked
+  - id: ENT-GOB-GESTOR-INTERESES
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_sup_cies_001_01.yml
+  - id: ENT-SYS-EVENTO
+    status: linked
+  - id: ENT-ORG-TURNO-OPERATIVO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_sup_obra_001_01.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-BOLETA-GARANTIA
+    status: candidate
+  - id: ENT-EJEC-INICIATIVA-INVERSION
+    status: linked
+
+
+## us_sup_trans_001_01.yml
+  - id: ENT-OIRS-SOLICITUD-SAI
+    status: candidate
+  - id: ENT-PLAN-EVIDENCIA-PMG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tc_001_01.yml
+  - id: ENT-NORM-EXPEDIENTE-SUMARIO
+    status: linked
+  - id: ENT-JUEZ-SENTENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tcorp_001_01.yml
+  - id: ENT-TDE-INTRANET-RESOURCE
+    status: candidate
+  - id: ENT-ORG-CORPORACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_admin_001.yml
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-JEFE-SERVICIO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_admin_002.yml
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+
+## us_tde_admin_004.yml
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_admin_006.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-TDE-ALERT-RULE
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_admin_007.yml
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_admin_008.yml
+  - id: ENT-TDE-BACKUP-REG
+    status: candidate
+  - id: ENT-OPS-STORAGE-ENV
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_auth_001.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+
+
+## us_tde_auth_002.yml
+  - id: ENT-TDE-STAGE-ENV
+    status: linked
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_auth_003.yml
+  - id: ENT-TDE-AUTH-2FA-TOKEN
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+
+
+## us_tde_auth_004.yml
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_auth_005.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-CORPORACION
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_auth_006.yml
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_avance_002.yml
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_avance_003.yml
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_calidad_002.yml
+  - id: ENT-TDE-CALIDAD-PLAN
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_calidad_003.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-TDE-ENCUESTA-SAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_cris_001.yml
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_dev_001.yml
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_docdig_002.yml
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_dpo_001.yml
+  - id: ENT-TDE-DPO-REQ
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_dpo_003.yml
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-TDE-DPO-REPORT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_dpo_005.yml
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-DIVISION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_dpo_007.yml
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_dpo_008.yml
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_firma_002.yml
+  - id: ENT-TDE-FIRMA-GOB
+    status: linked
+  - id: ENT-TDE-FIRMA-CONTINGENCIA
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_interop_001.yml
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_interop_002.yml
+  - id: ENT-TDE-API-CATALOG
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_interop_003.yml
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_interop_004.yml
+  - id: ENT-CONV-ACUERDO
+    status: linked
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_interop_005.yml
+  - id: ENT-DIG-CONSENTIMIENTO
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_interop_007.yml
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_muni_001.yml
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-SOC-SOLICITUD-AYUDA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_muni_002.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_muni_004.yml
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_notif_001.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_notif_002.yml
+  - id: ENT-DIG-CANAL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_notif_003.yml
+  - id: ENT-DIG-PLATAFORMA
+    status: linked
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_notif_004.yml
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-TDE-NOTIF-EVENT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_notif_005.yml
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-TDE-DOC-DIG
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_notif_006.yml
+  - id: ENT-TDE-CALENDAR-BASE
+    status: candidate
+  - id: ENT-DIG-EXPEDIENTE
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_qa_001.yml
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-TDE-STAGE-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_reg_001.yml
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_sec_001.yml
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_001.yml
+  - id: ENT-TDE-POLITICA-SEGURIDAD
+    status: candidate
+  - id: ENT-NORM-DECRETO-SUPREMO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_002.yml
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_003.yml
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_004.yml
+  - id: ENT-TDE-NOTIF-EVENT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_005.yml
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_006.yml
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-TDE-NOTIF-EVENT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_007.yml
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-DIVISION
+    status: linked
+
+
+## us_tde_seg_008.yml
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_009.yml
+  - id: ENT-ORG-FUNCIONARIO
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_010.yml
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-SYS-LOG-AUDITORIA
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_seg_011.yml
+  - id: ENT-TDE-DPO-RAT
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_tic_002.yml
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_tic_004.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tde_vinc_002.yml
+  - id: ENT-TDE-PISEE-CONREQ
+    status: candidate
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_terr_anl_001.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_terr_dom_002.yml
+  - id: ENT-CONV-ASISTENCIA
+    status: linked
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_terr_dom_003.yml
+  - id: ENT-SAL-RIESGO
+    status: linked
+  - id: ENT-LOC-REGION
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_terr_ide_002.yml
+  - id: ENT-DIG-NODO_INTEROP
+    status: linked
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_terr_ide_003.yml
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-TDE-DATA-SET
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_terr_ide_006.yml
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+  - id: ENT-LOC-REGION
+    status: linked
+
+
+## us_terr_plan_001.yml
+  - id: ENT-LOC-COMUNA
+    status: linked
+  - id: ENT-PLAN-BRECHA
+    status: candidate
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+
+
+## us_terr_plan_005.yml
+  - id: ENT-NORM-RESOLUCION
+    status: linked
+  - id: ENT-PLAN-META
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_terr_prg_001.yml
+  - id: ENT-SAL-ALERTA
+    status: linked
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tes_001_01.yml
+  - id: ENT-CONV-COMPROMISO
+    status: linked
+  - id: ENT-FIN-IPR-PAGO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tic_001_02.yml
+  - id: ENT-ORG-INVENTARIO
+    status: linked
+  - id: ENT-OPS-STORAGE-ENV
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_tlead_001_01.yml
+  - id: ENT-TDE-PROD-ENV
+    status: linked
+  - id: ENT-SYS-LOG-ERROR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_transp_002_01.yml
+  - id: ENT-DIG-TRAMITE
+    status: linked
+  - id: ENT-NORM-DECRETO-SUPREMO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_ucr_001_01.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-RG-PRESUPUESTO
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_uf_001_01.yml
+  - id: ENT-FIN-PROGRAMA-PPR
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_uoct_001_01.yml
+  - id: ENT-TERR-CAPA-GIS
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_usr_001_01.yml
+  - id: ENT-TDE-SESION-AUTH
+    status: candidate
+  - id: ENT-SYS-USUARIO
+    status: candidate
+  - id: ENT-ORG-ROL
+    status: linked
+
+
+## us_vinc_001_01.yml
+  - id: ENT-ORG-CORPORACION
+    status: candidate
+  - id: ENT-ORG-MUNICIPALIDAD
+    status: linked
+  - id: ENT-ORG-ROL
+    status: linked
+
+

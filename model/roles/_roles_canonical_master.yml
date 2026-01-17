@@ -1,0 +1,847 @@
+_metadata:
+  urn: "urn:goreos:canonical:roles:1.0.0"
+  version: "1.0.0"
+  generated_at: "2026-01-05"
+  description: "Catálogo maestro de roles canónicos del GORE Ñuble"
+
+omega_layers:
+  - GOBIERNO_REGIONAL
+  - NIVEL_CENTRAL
+  - GOB_INTERIOR
+  - SEREMIAS
+  - SERVICIOS
+  - TERRITORIO
+  - AGENTE_ALGORITMICO
+  - EXTERNO_OTROS
+
+subcategories_externos:
+  - CIUDADANIA
+  - SOCIEDAD_CIVIL
+  - ACADEMIA
+  - SECTOR_PRIVADO
+  - PODER_JUDICIAL
+  - SEGURIDAD_PUBLICA
+  - ORGANISMOS_EXTERNOS
+  - PRENSA_MEDIOS
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GOBIERNO REGIONAL
+# ═══════════════════════════════════════════════════════════════════════════════
+
+canonical_roles:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AUTORIDADES Y DIRECTIVOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-GR-001
+    key: gobernador
+    label: "Gobernador Regional"
+    description: "Máxima autoridad ejecutiva del GORE, electo democráticamente. Preside el CORE y representa al Gobierno Regional."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: "LOC GORE Art. 23"
+    aliases: ["Gobernador/a", "Gobernador Regional (Consejo Regional GRD)"]
+
+  - id: ROL-GR-002
+    key: administrador_regional
+    label: "Administrador/a Regional"
+    description: "Funcionario de exclusiva confianza del Gobernador, responsable de la gestión administrativa y financiera del GORE."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: "LOC GORE Art. 68"
+    aliases: []
+
+  - id: ROL-GR-003
+    key: jefe_gabinete
+    label: "Jefe de Gabinete"
+    description: "Coordinador del equipo de asesores directos del Gobernador, gestiona agenda y articulación política."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-004
+    key: jefe_juridica
+    label: "Jefe Unidad Jurídica"
+    description: "Responsable de la asesoría legal del GORE, visación de actos administrativos y control de legalidad."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases:
+      [
+        "Jefe de División / Unidad Jurídica",
+        "Jefe Unidad Jurídica (como Controller Normativo)",
+      ]
+
+  - id: ROL-GR-005
+    key: jefe_daf
+    label: "Jefe DAF"
+    description: "Jefe de la División de Administración y Finanzas, responsable de presupuesto, contabilidad y RRHH."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Jefe Unidad DAF"]
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ABOGADOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-GR-010
+    key: abogado_informante
+    label: "Abogado Informante"
+    description: "Profesional jurídico que elabora informes en derecho y análisis de legalidad de actos administrativos."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Abogado Informante / Fiscal Sumariante"]
+
+  - id: ROL-GR-011
+    key: abogado_convenios
+    label: "Abogado Convenios"
+    description: "Especialista en redacción y revisión de convenios de transferencia y programación."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-012
+    key: abogado_daf
+    label: "Abogado DAF"
+    description: "Asesor jurídico especializado en materias de administración y finanzas públicas."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-013
+    key: abogado_disciplinarios
+    label: "Abogado Procesos Disciplinarios"
+    description: "Profesional a cargo de sumarios administrativos e investigaciones disciplinarias."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-014
+    key: abogado_judiciales
+    label: "Abogado Asuntos Judiciales"
+    description: "Responsable de la representación del GORE en causas judiciales y recursos de protección."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-015
+    key: abogado_licitaciones
+    label: "Abogado Licitaciones"
+    description: "Especialista en bases de licitación, contratos públicos y Ley de Compras."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-016
+    key: abogado_revisor
+    label: "Abogado Revisor"
+    description: "Encargado de la revisión final de actos administrativos antes de firma de autoridad."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-017
+    key: abogado_asesor_division
+    label: "Abogado Asesor de División"
+    description: "Profesional jurídico asignado a una división específica para asesoría legal sectorial."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-018
+    key: abogado_general
+    label: "Abogado General"
+    description: "Coordinador del equipo jurídico del GORE, responsable de la estrategia legal institucional."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ANALISTAS IPR / INVERSIÓN
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-GR-020
+    key: analista_inversion
+    label: "Analista de Inversión"
+    description: "Profesional que evalúa técnicamente proyectos de inversión pública regional, verificando admisibilidad."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Analista de Inversión / Finanzas"]
+
+  - id: ROL-GR-021
+    key: analista_ppr
+    label: "Analista PPR"
+    description: "Especialista en evaluación de Programas de Provisión Regional con metodología de marco lógico."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases:
+      ["Analista de Programas (PPR)", "Analista de Programas (PPR) / Auditor"]
+
+  - id: ROL-GR-022
+    key: analista_seguimiento
+    label: "Analista Seguimiento"
+    description: "Profesional encargado del monitoreo de avance físico-financiero de proyectos en ejecución."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-023
+    key: analista_preinversion
+    label: "Analista Preinversión (DAE)"
+    description: "Evalúa iniciativas en etapa de diseño, verificando requisitos técnicos para ingreso al BIP."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-024
+    key: analista_c33
+    label: "Analista Operaciones C33"
+    description: "Especialista en adquisición de activos bajo Circular 33, gestión de vehículos y maquinaria."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-025
+    key: analista_8_tecnico
+    label: "Analista 8% (Técnico)"
+    description: "Evalúa proyectos de organizaciones sociales postulantes al Fondo del 8% de Subvenciones."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # ANALISTAS PRESUPUESTO Y FINANZAS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-GR-030
+    key: analista_presupuesto
+    label: "Analista Presupuesto"
+    description: "Gestiona la formulación, ejecución y control del presupuesto regional en SIGFE."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-031
+    key: analista_modificaciones
+    label: "Analista Modificaciones Presupuestarias"
+    description: "Procesa rebajas, suplementos y traspasos presupuestarios según normativa DIPRES."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-032
+    key: analista_contable
+    label: "Analista Contable"
+    description: "Profesional responsable de registros contables, devengos y conciliaciones bancarias."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-033
+    key: analista_tesoreria
+    label: "Analista Tesorería"
+    description: "Gestiona pagos, flujo de caja y operaciones bancarias del GORE."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Analista de Tesorería"]
+
+  - id: ROL-GR-034
+    key: analista_transferencias
+    label: "Analista Operativo Transferencias"
+    description: "Procesa transferencias a ejecutores y controla garantías de convenios."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-035
+    key: contador_gubernamental
+    label: "Contador Gubernamental"
+    description: "Profesional contable especializado en normativa CGR y estados financieros públicos."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # TI / DESARROLLO
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-GR-040
+    key: desarrollador
+    label: "Desarrollador"
+    description: "Profesional de software que implementa funcionalidades en sistemas del GORE."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Desarrollador GORE", "Desarrollador / DevOps Engineer"]
+
+  - id: ROL-GR-041
+    key: desarrollador_backend
+    label: "Desarrollador Backend"
+    description: "Especialista en servicios, APIs y lógica de negocio del lado servidor."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-042
+    key: desarrollador_frontend
+    label: "Desarrollador Frontend"
+    description: "Especialista en interfaces de usuario y experiencia de usuario (UX/UI)."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-GR-043
+    key: desarrollador_devops
+    label: "Desarrollador DevOps"
+    description: "Ingeniero de plataforma responsable de CI/CD, infraestructura como código y despliegues."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases:
+      [
+        "Ingeniero DevOps",
+        "Ingeniero de Plataforma",
+        "Ingeniero de Plataforma (DevOps)",
+      ]
+
+  - id: ROL-GR-044
+    key: lider_tecnico
+    label: "Líder Técnico"
+    description: "Desarrollador senior que lidera equipos técnicos y define estándares de desarrollo."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases:
+      ["Líder Técnico / Arquitecto", "Líder Técnico / Arquitecto de Software"]
+
+  - id: ROL-GR-045
+    key: arquitecto_sistemas
+    label: "Arquitecto de Software"
+    description: "Define la arquitectura técnica de sistemas, patrones y decisiones de diseño (ADRs)."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Arquitecto de Software / Team Lead"]
+
+  - id: ROL-GR-046
+    key: arquitecto_datos
+    label: "Arquitecto de Datos"
+    description: "Diseña modelos de datos, esquemas y estrategias de gobernanza de información."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Dueño del Dato (Data Owner) / Arquitecto de Datos"]
+
+  - id: ROL-GR-047
+    key: dba
+    label: "DBA"
+    description: "Administrador de bases de datos, responsable de performance, backups y seguridad de datos."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Administrador de Base de Datos (DBA)"]
+
+  - id: ROL-GR-048
+    key: ingeniero_sre
+    label: "Ingeniero SRE"
+    description: "Ingeniero de confiabilidad de sitio, responsable de disponibilidad y observabilidad."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases:
+      [
+        "Ingeniero SRE (Site Reliability Engineering)",
+        "Ingeniero SRE / Arquitecto de Datos",
+      ]
+
+  - id: ROL-GR-049
+    key: qa_analista
+    label: "Analista QA"
+    description: "Profesional de aseguramiento de calidad, diseña y ejecuta pruebas de software."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["QA Engineer / Tester"]
+
+  - id: ROL-GR-050
+    key: ciso
+    label: "CISO"
+    description: "Director de Seguridad de la Información, responsable de ciberseguridad institucional."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Director de Seguridad de la Información (CISO)"]
+
+  - id: ROL-GR-051
+    key: admin_plataforma
+    label: "Administrador Plataforma"
+    description: "Gestiona plataformas tecnológicas, usuarios y configuraciones de sistemas."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases:
+      [
+        "Administrador de Plataforma TDE",
+        "Administrador de Plataforma TIC",
+        "Administrador de Plataforma (Geonodo / GORE_OS)",
+      ]
+
+  - id: ROL-GR-052
+    key: admin_sistema
+    label: "Administrador de Sistema"
+    description: "SysAdmin responsable de servidores, redes y operaciones de infraestructura."
+    omega_layer: GOBIERNO_REGIONAL
+    legal_basis: null
+    aliases: ["Administrador de Sistemas"]
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # AGENTES ALGORÍTMICOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-AA-001
+    key: agente_koda
+    label: "Agente KODA"
+    description: "Asistente algorítmico basado en bases de conocimiento institucional, automatiza consultas y tareas."
+    omega_layer: AGENTE_ALGORITMICO
+    legal_basis: null
+    aliases:
+      [
+        "Agente KODA / Arquitecto de Sistemas",
+        "Agente KODA (Infraestructura)",
+        "Agente KODA (Asistente Inteligente)",
+      ]
+
+  - id: ROL-AA-002
+    key: monitor_plazos
+    label: "Mora Watcher"
+    description: "Bot de monitoreo que detecta vencimientos de plazos y genera alertas proactivas."
+    omega_layer: AGENTE_ALGORITMICO
+    legal_basis: null
+    aliases: ["Mora Watcher (Monitor Plazos)"]
+
+  - id: ROL-AA-003
+    key: cert_manager
+    label: "Robot Cert-Manager"
+    description: "Agente automatizado para renovación de certificados TLS/SSL de infraestructura."
+    omega_layer: AGENTE_ALGORITMICO
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-AA-004
+    key: clasificador
+    label: "Agente Clasificador"
+    description: "Bot de clasificación automática de documentos mediante procesamiento de lenguaje natural."
+    omega_layer: AGENTE_ALGORITMICO
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-AA-005
+    key: auditor_bot
+    label: "Fiscalizador Bot"
+    description: "Agente de auditoría automatizada que verifica cumplimiento de reglas de negocio."
+    omega_layer: AGENTE_ALGORITMICO
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # NIVEL CENTRAL
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-NC-001
+    key: analista_sectorial_dipres
+    label: "Analista Sectorial DIPRES"
+    description: "Contraparte de DIPRES para seguimiento presupuestario y normativo del GORE."
+    omega_layer: NIVEL_CENTRAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-NC-002
+    key: banco_central
+    label: "Banco Central de Chile"
+    description: "Entidad autónoma que proporciona indicadores macroeconómicos de referencia."
+    omega_layer: NIVEL_CENTRAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-NC-003
+    key: cde
+    label: "Consejo de Defensa del Estado"
+    description: "Organismo que representa al Estado en juicios y asesora en materias jurídicas complejas."
+    omega_layer: NIVEL_CENTRAL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-NC-004
+    key: ministerio_publico
+    label: "Ministerio Público (Fiscalía)"
+    description: "Organismo autónomo a cargo de la investigación penal y persecución criminal."
+    omega_layer: NIVEL_CENTRAL
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # GOBIERNO INTERIOR
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-GI-001
+    key: delegado_presidencial
+    label: "Delegado Presidencial Regional (DPR)"
+    description: "Representante del Presidente en la región, coordina servicios públicos desconcentrados."
+    omega_layer: GOB_INTERIOR
+    legal_basis: "Ley 19.175"
+    aliases: ["Delegado Presidencial Regional"]
+
+  - id: ROL-GI-002
+    key: delegado_provincial
+    label: "Delegado Presidencial Provincial"
+    description: "Autoridad del Gobierno Interior a nivel provincial, coordina servicios en el territorio."
+    omega_layer: GOB_INTERIOR
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SEREMÍAS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-SE-001
+    key: seremi_sectorial
+    label: "SEREMI (Sectorial)"
+    description: "Secretario Regional Ministerial, representante de un ministerio en la región."
+    omega_layer: SEREMIAS
+    legal_basis: null
+    aliases: ["SEREMI Sectorial"]
+
+  - id: ROL-SE-002
+    key: seremi_educacion
+    label: "SEREMI Educación"
+    description: "Autoridad regional del Ministerio de Educación."
+    omega_layer: SEREMIAS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-SE-003
+    key: seremi_salud
+    label: "SEREMI Salud"
+    description: "Autoridad sanitaria regional, fiscaliza establecimientos y políticas de salud pública."
+    omega_layer: SEREMIAS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-SE-004
+    key: seremi_hacienda
+    label: "SEREMI Hacienda"
+    description: "Contraparte regional del Ministerio de Hacienda en materias presupuestarias."
+    omega_layer: SEREMIAS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-SE-005
+    key: seremi_minvu
+    label: "SEREMI MINVU"
+    description: "Autoridad regional de vivienda y urbanismo, aprueba planes reguladores."
+    omega_layer: SEREMIAS
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SERVICIOS PÚBLICOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-SV-001
+    key: director_conaf
+    label: "Director Regional CONAF"
+    description: "Autoridad regional de la Corporación Nacional Forestal, gestión de incendios y áreas protegidas."
+    omega_layer: SERVICIOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-SV-002
+    key: director_dga
+    label: "Director Regional DGA"
+    description: "Director de la Dirección General de Aguas, gestiona derechos de aprovechamiento."
+    omega_layer: SERVICIOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-SV-003
+    key: director_doh
+    label: "Director Regional DOH"
+    description: "Director de Obras Hidráulicas, ejecuta proyectos de riego y APR."
+    omega_layer: SERVICIOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-SV-004
+    key: indap
+    label: "INDAP"
+    description: "Instituto de Desarrollo Agropecuario, apoya a pequeños agricultores."
+    omega_layer: SERVICIOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-SV-005
+    key: director_sii
+    label: "Director Regional SII"
+    description: "Autoridad tributaria regional, fiscalización y recaudación."
+    omega_layer: SERVICIOS
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # TERRITORIO (MUNICIPIOS)
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-TE-001
+    key: alcalde
+    label: "Alcalde"
+    description: "Máxima autoridad comunal, ejecutor de proyectos municipales financiados por el GORE."
+    omega_layer: TERRITORIO
+    legal_basis: "Ley 18.695"
+    aliases:
+      [
+        "Alcalde de Chillán",
+        "Alcalde de Chillán Viejo",
+        "Alcalde de San Carlos",
+      ]
+
+  - id: ROL-TE-002
+    key: ito_municipal
+    label: "Inspector Obras (Municipal)"
+    description: "Inspector Técnico de Obra a nivel municipal, supervisa ejecución de proyectos FRIL."
+    omega_layer: TERRITORIO
+    legal_basis: null
+    aliases: ["Inspector Técnico Municipal (ITO externo)"]
+
+  - id: ROL-TE-003
+    key: unidad_tecnica
+    label: "Unidad Técnica Municipal"
+    description: "Equipo técnico municipal (DOM/SECPLAN) que formula y ejecuta proyectos."
+    omega_layer: TERRITORIO
+    legal_basis: null
+    aliases: ["Unidad Técnica Municipal (DOM/SECPLAN)"]
+
+  - id: ROL-TE-004
+    key: encargado_digital_muni
+    label: "Encargado Digital Municipal"
+    description: "Responsable de transformación digital en el municipio, contraparte de CTD regional."
+    omega_layer: TERRITORIO
+    legal_basis: null
+    aliases: ["Encargado de Transformación Digital Municipal"]
+
+  - id: ROL-TE-005
+    key: director_obras
+    label: "Director de Obras Municipales (DOM)"
+    description: "Autoridad técnica municipal para permisos de edificación y recepción de obras."
+    omega_layer: TERRITORIO
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXTERNOS - CIUDADANÍA
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-EX-001
+    key: ciudadano
+    label: "Ciudadano"
+    description: "Persona natural residente en la región que interactúa con el GORE como beneficiario o participante."
+    omega_layer: EXTERNO_OTROS
+    subcategory: CIUDADANIA
+    legal_basis: null
+    aliases: ["Ciudadano / Usuario de la Región"]
+
+  - id: ROL-EX-002
+    key: beneficiario_individual
+    label: "Beneficiario Individual"
+    description: "Persona natural que recibe directamente beneficios de programas regionales."
+    omega_layer: EXTERNO_OTROS
+    subcategory: CIUDADANIA
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-003
+    key: dirigente_social
+    label: "Dirigente Social"
+    description: "Líder de organizaciones comunitarias que representa intereses territoriales."
+    omega_layer: EXTERNO_OTROS
+    subcategory: CIUDADANIA
+    legal_basis: null
+    aliases: ["Dirigente de Gremio Agrícola / Dirigente Social"]
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXTERNOS - SOCIEDAD CIVIL
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-EX-010
+    key: ong_fundacion
+    label: "ONG / Fundación"
+    description: "Organización sin fines de lucro que ejecuta proyectos sociales con fondos regionales."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SOCIEDAD_CIVIL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-011
+    key: org_beneficiaria
+    label: "Organización Beneficiaria"
+    description: "Entidad adjudicataria de fondos concursables del GORE."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SOCIEDAD_CIVIL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-012
+    key: org_postulante
+    label: "Organización Postulante (8%)"
+    description: "Organización con personalidad jurídica que postula al Fondo del 8% de Subvenciones."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SOCIEDAD_CIVIL
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-013
+    key: cosoc
+    label: "COSOC"
+    description: "Consejo de la Sociedad Civil, órgano consultivo de participación ciudadana."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SOCIEDAD_CIVIL
+    legal_basis: "Ley 20.500"
+    aliases: ["COSOC / Consejo de la Sociedad Civil"]
+
+  - id: ROL-EX-014
+    key: junta_vecinos
+    label: "Junta de Vecinos"
+    description: "Organización territorial de base, postulante a fondos de desarrollo local."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SOCIEDAD_CIVIL
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXTERNOS - ACADEMIA
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-EX-020
+    key: universidad_regional
+    label: "Universidad Regional"
+    description: "Institución de educación superior con presencia en la región, ejecutora de proyectos FRPD."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ACADEMIA
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-021
+    key: investigador_universidad
+    label: "Universidad (Investigador)"
+    description: "Académico que lidera proyectos de I+D+i financiados con fondos regionales."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ACADEMIA
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-022
+    key: centro_investigacion
+    label: "Centro de Investigación"
+    description: "Entidad dedicada a investigación aplicada, postulante a fondos CTI."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ACADEMIA
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXTERNOS - SECTOR PRIVADO
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-EX-030
+    key: empresa_gremio
+    label: "Empresa / Gremio"
+    description: "Entidad privada o asociación empresarial que participa en programas de fomento productivo."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SECTOR_PRIVADO
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-031
+    key: consultor_externo
+    label: "Consultor Externo"
+    description: "Profesional independiente contratado para estudios o asesorías especializadas."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SECTOR_PRIVADO
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-032
+    key: camara_comercio
+    label: "Cámara de Comercio"
+    description: "Asociación gremial que representa al comercio regional en mesas de trabajo."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SECTOR_PRIVADO
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-033
+    key: cpc_regional
+    label: "CPC Regional"
+    description: "Confederación de la Producción y del Comercio a nivel regional."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SECTOR_PRIVADO
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXTERNOS - SEGURIDAD PÚBLICA
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-EX-040
+    key: carabineros
+    label: "Carabineros de Chile"
+    description: "Policía uniformada, participa en mesas de seguridad y coordinación CIES."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SEGURIDAD_PUBLICA
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-041
+    key: pdi
+    label: "PDI (Policía de Investigaciones)"
+    description: "Policía civil, colabora en investigaciones y seguridad regional."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SEGURIDAD_PUBLICA
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-042
+    key: bomberos
+    label: "Bomberos de Chile"
+    description: "Cuerpo de bomberos voluntarios, receptor de equipamiento vía Circular 33."
+    omega_layer: EXTERNO_OTROS
+    subcategory: SEGURIDAD_PUBLICA
+    legal_basis: null
+    aliases: []
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # EXTERNOS - ORGANISMOS EXTERNOS
+  # ─────────────────────────────────────────────────────────────────────────────
+  - id: ROL-EX-050
+    key: corfo
+    label: "CORFO"
+    description: "Corporación de Fomento de la Producción, articula programas de desarrollo productivo."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ORGANISMOS_EXTERNOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-051
+    key: fosis
+    label: "FOSIS"
+    description: "Fondo de Solidaridad e Inversión Social, ejecuta programas de superación de pobreza."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ORGANISMOS_EXTERNOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-052
+    key: sercotec
+    label: "SERCOTEC"
+    description: "Servicio de Cooperación Técnica, apoya a micro y pequeñas empresas."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ORGANISMOS_EXTERNOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-053
+    key: representante_anid
+    label: "Representante ANID"
+    description: "Contraparte de la Agencia Nacional de Investigación y Desarrollo."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ORGANISMOS_EXTERNOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-054
+    key: representante_amuch
+    label: "Representante AMUCH"
+    description: "Representante de la Asociación de Municipalidades de Chile."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ORGANISMOS_EXTERNOS
+    legal_basis: null
+    aliases: []
+
+  - id: ROL-EX-055
+    key: ancore
+    label: "Representante ANCORE"
+    description: "Representante de la Asociación Nacional de Consejeros Regionales."
+    omega_layer: EXTERNO_OTROS
+    subcategory: ORGANISMOS_EXTERNOS
+    legal_basis: null
+    aliases: []

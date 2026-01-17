@@ -1,0 +1,1903 @@
+# Catálogo de Entidades GORE_OS
+# Versión: 1.1.0
+# Fecha: 2026-01-05
+# Clasificación: Sistematización de 909 entidades de User Stories
+# Modelo Referencia: Omega v2.6.0
+
+metadata:
+  version: "1.1.0"
+  total_entities: 909
+  domains_count: 12
+  source_file: "_entidades_extraidas_us.txt"
+
+domains:
+  # ==============================================================================
+  # DOMINIO FIN: Finanzas y Presupuesto
+  # ==============================================================================
+  FIN:
+    name: "Finanzas y Presupuesto"
+    description: "Gestión financiera, ejecución presupuestaria, contabilidad y tesorería"
+    entities:
+      - id: FIN-PRESUPUESTO
+        name: PRESUPUESTO
+        label: "Presupuesto"
+        description: "Marco presupuestario anual aprobado por ley para la región"
+        type: aggregate
+      - id: FIN-ARI
+        name: ARI
+        label: "ARI"
+        description: "Anteproyecto Regional de Inversiones"
+        type: document
+      - id: FIN-PROPUESTA-INVERSION
+        name: PROPUESTA-INVERSION
+        label: "Propuesta Inversión"
+        description: "Propuesta formal de inversión para ARI/PROPIR"
+        type: document
+      - id: FIN-CDP
+        name: CDP
+        label: "CDP"
+        description: "Certificado de Disponibilidad Presupuestaria"
+        type: document
+      - id: FIN-SALDO-PRESUPUESTARIO
+        name: SALDO-PRESUPUESTARIO
+        label: "Saldo Presupuestario"
+        description: "Recursos disponibles tras compromisos y devengos"
+        type: value-object
+      - id: FIN-MARCO-PRESUPUESTARIO
+        name: MARCO-PRESUPUESTARIO
+        label: "Marco Presupuestario"
+        description: "Límites financieros asignados a cuentas o programas"
+        type: value-object
+      - id: FIN-ASIGNACION
+        name: ASIGNACION
+        label: "Asignación"
+        description: "Distribución de recursos a ítems específicos"
+        type: process
+      - id: FIN-MODIFICACION-PRESUPUESTARIA
+        name: MODIFICACION-PRESUPUESTARIA
+        label: "Modificación Presupuestaria"
+        description: "Cambio en la asignación de recursos (reasignación/suplementación)"
+        type: process
+      - id: FIN-MODIFICACION-PPTARIA
+        name: MODIFICACION-PPTARIA
+        label: "Modificación Pptaria"
+        description: "Alias de MODIFICACION-PRESUPUESTARIA"
+        type: process
+      - id: FIN-EJECUCION-PRESUPUESTARIA
+        name: EJECUCION-PRESUPUESTARIA
+        label: "Ejecución Presupuestaria"
+        description: "Proceso de gasto y uso de recursos asignados"
+        type: process
+      - id: FIN-COMPROMISO
+        name: COMPROMISO
+        label: "Compromiso"
+        description: "Obligación financiera contraída con tercero"
+        type: entity
+      - id: FIN-COMPROMISO-GASTO
+        name: COMPROMISO-GASTO
+        label: "Compromiso Gasto"
+        description: "Registro formal del compromiso en sistema"
+        type: entity
+      - id: FIN-COMPROMISO-PRESUPUESTARIO
+        name: COMPROMISO_PRESUPUESTARIO
+        label: "Compromiso Presupuestario"
+        description: "Reserva de fondos para compromiso (SIGFE)"
+        type: entity
+      - id: FIN-DEVENGO
+        name: DEVENGO
+        label: "Devengo"
+        description: "Reconocimiento de obligación de pago por bien/servicio recibido"
+        type: event
+      - id: FIN-DEVENGO-PENDIENTE
+        name: DEVENGO-PENDIENTE
+        label: "Devengo Pendiente"
+        description: "Obligación reconocida pero aún no pagada"
+        type: state
+      - id: FIN-PAGO
+        name: PAGO
+        label: "Pago"
+        description: "Desembolso efectivo de recursos"
+        type: event
+      - id: FIN-VOUCHER
+        name: VOUCHER
+        label: "Voucher"
+        description: "Comprobante de transacción financiera"
+        type: document
+      - id: FIN-TRANSFERENCIA
+        name: TRANSFERENCIA
+        label: "Transferencia"
+        description: "Traspaso de recursos a ejecutores (Municipios, Privados)"
+        type: process
+      - id: FIN-TRANSFERENCIA-CORRIENTE
+        name: TRANSFERENCIA-CORRIENTE
+        label: "Transferencia Corriente"
+        description: "Transferencia para gastos operacionales o programas (Subt 24)"
+        type: process
+      - id: FIN-CHEQUE-TRANSFERENCIA
+        name: CHEQUE-TRANSFERENCIA
+        label: "Cheque Transferencia"
+        description: "Medio de pago físico para transferencias"
+        type: document
+      - id: FIN-RENDICION
+        name: RENDICION
+        label: "Rendición"
+        description: "Informe de gastos ejecutados por receptor de fondos"
+        type: document
+      - id: FIN-RENDICION-CUENTA
+        name: RENDICION-CUENTA
+        label: "Rendición Cuenta"
+        description: "Proceso formal de presentación de gastos (CGR)"
+        type: process
+      - id: FIN-ESTADO-RENDICION
+        name: ESTADO-RENDICION
+        label: "Estado Rendición"
+        description: "Situación actual de una rendición (Aprobada/Observada)"
+        type: value-object
+      - id: FIN-REINTEGRO
+        name: REINTEGRO
+        label: "Reintegro"
+        description: "Devolución de fondos no utilizados observados"
+        type: process
+      - id: FIN-BALANCE-MENSUAL
+        name: BALANCE-MENSUAL
+        label: "Balance Mensual"
+        description: "Informe contable de cierre de mes"
+        type: report
+      - id: FIN-BALANCE-ANUAL
+        name: BALANCE-ANUAL
+        label: "Balance Anual"
+        description: "Estado financiero de cierre de año"
+        type: report
+      - id: FIN-BALANCE-GUBERNAMENTAL
+        name: BALANCE-GUBERNAMENTAL
+        label: "Balance Gubernamental"
+        description: "Balance bajo normas NICSP/CGR"
+        type: report
+      - id: FIN-ESTADO-FINANCIERO
+        name: ESTADO-FINANCIERO
+        label: "Estado Financiero"
+        description: "Reporte de situación financiera (Activos/Pasivos)"
+        type: report
+      - id: FIN-ESTADO-SITUACION
+        name: ESTADO-SITUACION
+        label: "Estado Situación"
+        description: "Fotografía financiera en fecha determinada"
+        type: report
+      - id: FIN-CIERRE-CONTABLE
+        name: CIERRE-CONTABLE
+        label: "Cierre Contable"
+        description: "Proceso de finalización de registros del periodo"
+        type: process
+      - id: FIN-CONTABILIDAD-CIERRE
+        name: CONTABILIDAD-CIERRE
+        label: "Contabilidad Cierre"
+        description: "Ajustes y validaciones de cierre"
+        type: process
+      - id: FIN-CONCILIACION
+        name: CONCILIACION
+        label: "Conciliación"
+        description: "Cuadratura entre registros internos y externos (Banco/SIGFE)"
+        type: process
+      - id: FIN-INFORME-CONCILIACION
+        name: INFORME-CONCILIACION
+        label: "Informe Conciliación"
+        description: "Documento con resultados de la conciliación"
+        type: document
+      - id: FIN-CARTOLA-BANCARIA
+        name: CARTOLA-BANCARIA
+        label: "Cartola Bancaria"
+        description: "Registro de movimientos emitido por el banco"
+        type: document
+      - id: FIN-BANCO
+        name: BANCO
+        label: "Banco"
+        description: "Entidad financiera donde se mantienen cuentas GORE"
+        type: entity
+      - id: FIN-CUENTA-CONTABLE
+        name: CUENTA-CONTABLE
+        label: "Cuenta Contable"
+        description: "Categoría de registro financiero (Plan de Cuentas)"
+        type: value-object
+      - id: FIN-CUENTA-GORE
+        name: CUENTA-GORE
+        label: "Cuenta GORE"
+        description: "Cuenta corriente bancaria del GORE"
+        type: entity
+      - id: FIN-MOVIMIENTO-SIGFE
+        name: MOVIMIENTO-SIGFE
+        label: "Movimiento SIGFE"
+        description: "Transacción registrada en sistema central del Estado"
+        type: event
+      - id: FIN-MOVIMIENTO-BANCARIO
+        name: MOVIMIENTO-BANCARIO
+        label: "Movimiento Bancario"
+        description: "Transacción real en cuenta corriente"
+        type: event
+      - id: FIN-MOVIMIENTO-CONTABLE
+        name: MOVIMIENTO-CONTABLE
+        label: "Movimiento Contable"
+        description: "Asiento contable genérico"
+        type: event
+      - id: FIN-PARTIDA-PENDIENTE
+        name: PARTIDA-PENDIENTE
+        label: "Partida Pendiente"
+        description: "Movimiento no conciliado"
+        type: issue
+      - id: FIN-DEUDA-FLOTANTE
+        name: DEUDA-FLOTANTE
+        label: "Deuda Flotante"
+        description: "Compromisos devengados no pagados al cierre"
+        type: issue
+      - id: FIN-GASTO-OPERATIVO
+        name: GASTO-OPERATIVO
+        label: "Gasto Operativo"
+        description: "Gasto de funcionamiento regular (Subt 22)"
+        type: value-object
+      - id: FIN-GASTO-DEVENGADO
+        name: GASTO-DEVENGADO
+        label: "Gasto Devengado"
+        description: "Monto reconocido como obligación exigible"
+        type: value-object
+      - id: FIN-GASTO-MENOR
+        name: GASTO-MENOR
+        label: "Gasto Menor"
+        description: "Gastos de baja cuantía (Caja Chica)"
+        type: value-object
+      - id: FIN-LIQUIDACION-SUELDO
+        name: LIQUIDACION-SUELDO
+        label: "Liquidación Sueldo"
+        description: "Documento de pago de remuneraciones"
+        type: document
+      - id: FIN-LIBRO-CAJA
+        name: LIBRO-CAJA
+        label: "Libro Caja"
+        description: "Registro de movimientos de efectivo"
+        type: document
+      - id: FIN-ARQUEO-CAJA
+        name: ARQUEO-CAJA
+        label: "Arqueo Caja"
+        description: "Recuento físico de dinero en caja"
+        type: process
+      - id: FIN-FONDO-FIJO
+        name: FONDO-FIJO
+        label: "Fondo Fijo"
+        description: "Recursos disponibles para gastos menores recurrentes"
+        type: entity
+      - id: FIN-TRANSACCION-EFECTIVO
+        name: TRANSACCION-EFECTIVO
+        label: "Transacción Efectivo"
+        description: "Movimiento de dinero físico"
+        type: event
+      - id: FIN-BOLETA-GARANTIA
+        name: BOLETA-GARANTIA
+        label: "Boleta Garantía"
+        description: "Instrumento financiero de caución"
+        type: document
+      - id: FIN-GARANTIA-BANCARIA
+        name: GARANTIA-BANCARIA
+        label: "Garantía Bancaria"
+        description: "Respaldo financiero exigido a ejecutores"
+        type: document
+      - id: FIN-GARANTIA-CONTRATO
+        name: GARANTIA-CONTRATO
+        label: "Garantía Contrato"
+        description: "Garantía específica para cumplimiento de contrato"
+        type: document
+      - id: FIN-GARANTIA-LIBERADA
+        name: GARANTIA-LIBERADA
+        label: "Garantía Liberada"
+        description: "Garantía devuelta tras cumplimiento"
+        type: event
+      - id: FIN-VALOR-CUSTODIA
+        name: VALOR-CUSTODIA
+        label: "Valor Custodia"
+        description: "Valorización de documentos en custodia"
+        type: value-object
+      - id: FIN-CLASIFICADOR-PRESUPUESTARIO
+        name: CLASIFICADOR-PRESUPUESTARIO
+        label: "Clasificador Presupuestario"
+        description: "Código de imputación (Subtítulo/Ítem/Asig)"
+        type: value-object
+      - id: FIN-CLASIFICADOR-PPTAR
+        name: CLASIFICADOR-PPTAR
+        label: "Clasificador Pptar"
+        description: "Alias de CLASIFICADOR-PRESUPUESTARIO"
+        type: value-object
+      - id: FIN-SUBTITULO-21-PERSONAL
+        name: SUBTITULO-21-PERSONAL
+        label: "Subtítulo 21 Personal"
+        description: "Cuenta presupuestaria para gastos en personal"
+        type: value-object
+      - id: FIN-SUBTITULO-22-BIENES
+        name: SUBTITULO-22-BIENES
+        label: "Subtítulo 22 Bienes"
+        description: "Cuenta presupuestaria para bienes y servicios"
+        type: value-object
+      - id: FIN-GLOSA-EMERGENCIA
+        name: GLOSA-EMERGENCIA
+        label: "Glosa Emergencia"
+        description: "Recursos reservados para contingencias (Glosa 14)"
+        type: money
+      - id: FIN-FNDR-GLOSA7
+        name: FNDR-GLOSA7
+        label: "FNDR Glosa 7"
+        description: "Subvención 8% FNDR (Cultura, Deporte, Social, etc)"
+        type: fund
+      - id: FIN-FONDO
+        name: FONDO
+        label: "Fondo"
+        description: "Fuente de financiamiento genérica (FNDR, ISAR, etc)"
+        type: entity
+      - id: FIN-FONDO-CONCURSABLE
+        name: FONDO-CONCURSABLE
+        label: "Fondo Concursable"
+        description: "Recursos asignados vía competencia pública"
+        type: entity
+      - id: FIN-FONDO-EMERGENCIA
+        name: FONDO-EMERGENCIA
+        label: "Fondo Emergencia"
+        description: "Recursos para catástrofes"
+        type: fund
+      - id: FIN-SUBVENCION
+        name: SUBVENCION
+        label: "Subvención"
+        description: "Transferencia sin contraprestación directa"
+        type: process
+      - id: FIN-COFINANCIAMIENTO
+        name: COFINANCIAMIENTO
+        label: "Cofinanciamiento"
+        description: "Aporte compartido entre GORE y beneficiario/municipio"
+        type: money
+      - id: FIN-CUADRATURA-DIARIA
+        name: CUADRATURA-DIARIA
+        label: "Cuadratura Diaria"
+        description: "Verificación diaria de saldos"
+        type: process
+      - id: FIN-DESCUADRE-CONTABLE
+        name: DESCUADRE-CONTABLE
+        label: "Descuadre Contable"
+        description: "Diferencia no explicada en cuentas"
+        type: issue
+      - id: FIN-REPORTE-CONTABLE
+        name: REPORTE-CONTABLE
+        label: "Reporte Contable"
+        description: "Informe genérico de contabilidad"
+        type: report
+      - id: FIN-VALIDACION-CONTABLE
+        name: VALIDACION-CONTABLE
+        label: "Validación Contable"
+        description: "Check de corrección de registros"
+        type: process
+      - id: FIN-DESVIACION
+        name: DESVIACION
+        label: "Desviación"
+        description: "Diferencia entre presupuesto y ejecución"
+        type: metric
+      - id: FIN-BRECHA-PRESUPUESTARIA
+        name: BRECHA-PRESUPUESTARIA
+        label: "Brecha Presupuestaria"
+        description: "Déficit proyectado de recursos"
+        type: money
+      - id: FIN-APALANCAMIENTO-SECTORIAL
+        name: APALANCAMIENTO-SECTORIAL
+        label: "Apalancamiento Sectorial"
+        description: "Recursos atraídos desde ministerios (Sectorial)"
+        type: money
+      - id: FIN-DISTRIBUCION-APR
+        name: DISTRIBUCION-APR
+        label: "Distribución APR"
+        description: "Asignación Presupuestaria Regional inicial"
+        type: process
+      - id: FIN-PRESUPUESTO-ASIGNADO
+        name: PRESUPUESTO-ASIGNADO
+        label: "Presupuesto Asignado"
+        description: "Monto decretado para una unidad o iniciativa"
+        type: money
+      - id: FIN-PRESUPUESTO-INVERSION
+        name: PRESUPUESTO-INVERSION
+        label: "Presupuesto Inversión"
+        description: "Recursos para proyectos de capital (Subt 31)"
+        type: money
+      - id: FIN-PRESUPUESTO-GASTO-CORRIENTE
+        name: PRESUPUESTO-GASTO-CORRIENTE
+        label: "Presupuesto Gasto Corriente"
+        description: "Recursos para operación (Subt 21/22/24)"
+        type: money
+      - id: FIN-TASA-INTERES
+        name: TASA-INTERES
+        label: "Tasa Interés"
+        description: "Porcentaje financiero aplicado"
+        type: value-object
+      - id: FIN-TIPO-CAMBIO
+        name: TIPO-CAMBIO
+        label: "Tipo Cambio"
+        description: "Valor de conversión de moneda extranjera"
+        type: value-object
+      - id: FIN-IMPUESTO-AD-VALOREM
+        name: IMPUESTO-AD-VALOREM
+        label: "Impuesto Ad Valorem"
+        description: "Tributo según valor (Contexto Royalty)"
+        type: money
+      - id: FIN-TRIBUTACION-REGIONAL
+        name: TRIBUTACION-REGIONAL
+        label: "Tributación Regional"
+        description: "Ingresos tributarios locales (Ley Rentas)"
+        type: money
+      - id: FIN-SOLICITUD-GIRO
+        name: SOLICITUD-GIRO
+        label: "Solicitud Giro"
+        description: "Petición formal de pago"
+        type: document
+      - id: FIN-AUDIT-LOG
+        name: AUDIT-LOG
+        label: "Audit Log"
+        description: "Registro de auditoría financiera"
+        type: log
+      - id: FIN-ERP-DATA
+        name: ERP-DATA
+        label: "ERP Data"
+        description: "Datos provenientes del sistema ERP"
+        type: data
+
+  # ==============================================================================
+  # DOMINIO IPR: Inversión Pública Regional
+  # ==============================================================================
+  IPR:
+    name: "Inversión Pública Regional"
+    description: "Ciclo de vida de Proyectos y Programas de Inversión (SNI, FRIL, C33, Subvenciones)"
+    entities:
+      - id: IPR-IPR
+        name: IPR
+        label: "IPR"
+        description: "Intervención Pública Regional (Entidad Abstracta Base)"
+        type: aggregate
+      - id: IPR-PROYECTO
+        name: PROYECTO
+        label: "Proyecto"
+        description: "Iniciativa que genera activo físico (Subt 31/33)"
+        type: entity
+      - id: IPR-PROGRAMA
+        name: PROGRAMA
+        label: "Programa"
+        description: "Iniciativa de generación de capacidades (Subt 24)"
+        type: entity
+      - id: IPR-INICIATIVA-INVERSION
+        name: INICIATIVA-INVERSION
+        label: "Iniciativa Inversión"
+        description: "Sinónimo de IDI/Proyecto en contexto SNI"
+        type: entity
+      - id: IPR-PROYECTO-INVERSION
+        name: PROYECTO-INVERSION
+        label: "Proyecto Inversión"
+        description: "Proyecto de inversión estándar"
+        type: entity
+      - id: IPR-PROYECTO-BIP
+        name: PROYECTO-BIP
+        label: "Proyecto BIP"
+        description: "Proyecto registrado en Banco Integrado de Proyectos"
+        type: entity
+      - id: IPR-PROYECTO-INFRA
+        name: PROYECTO-INFRA
+        label: "Proyecto Infra"
+        description: "Proyecto de infraestructura"
+        type: entity
+      - id: IPR-PROYECTO-OBRA
+        name: PROYECTO-OBRA
+        label: "Proyecto Obra"
+        description: "Proyecto que involucra obra civil"
+        type: entity
+      - id: IPR-ESTUDIO-BASICO
+        name: ESTUDIO-TECNICO
+        label: "Estudio Técnico"
+        description: "Estudio previo a la inversión (Subt 31.01)"
+        type: entity
+      - id: IPR-PROGRAMA-PPR
+        name: PROGRAMA-PPR
+        label: "Programa PPR"
+        description: "Programa Público Regional (Glosa 06)"
+        type: entity
+      - id: IPR-PROGRAMA-FONDO
+        name: PROGRAMA-FONDO
+        label: "Programa Fondo"
+        description: "Programa asociado a un fondo específico"
+        type: entity
+      - id: IPR-CONVENIO
+        name: CONVENIO
+        label: "Convenio"
+        description: "Acuerdo contractual de transferencia"
+        type: contract
+      - id: IPR-CONVENIO-MANDATO
+        name: CONVENIO-MANDATO
+        label: "Convenio Mandato"
+        description: "Convenio donde GORE encarga ejecución a tercero técnico (Ej: MOP)"
+        type: contract
+      - id: IPR-CONVENIO-TRANSFERENCIA
+        name: CONVENIO-TRANSFERENCIA
+        label: "Convenio Transferencia"
+        description: "Convenio para traspaso de recursos a ejecutor"
+        type: contract
+      - id: IPR-CONVENIO-PROGRAMACION
+        name: CONVENIO-PROGRAMACION
+        label: "Convenio Programación"
+        description: "Acuerdo plurianual GORE-Ministerio"
+        type: contract
+      - id: IPR-ADENDA-CONVENIO
+        name: PRORROGA-CONVENIO
+        label: "Prórroga Convenio"
+        description: "Modificación de plazo o monto del convenio"
+        type: document
+      - id: IPR-REQUISITO-CONVENIO
+        name: REQUISITO-CONVENIO
+        label: "Requisito Convenio"
+        description: "Condición habilitante para firma"
+        type: rule
+      - id: IPR-POSTULACION-PROYECTO
+        name: POSTULACION-PROYECTO
+        label: "Postulación Proyecto"
+        description: "Acto de presentar una IPR a financiamiento"
+        type: process
+      - id: IPR-ESTADO-POSTULACION
+        name: ESTADO-POSTULACION
+        label: "Estado Postulación"
+        description: "Situación actual de la postulación (Enviada, Admisible, etc.)"
+        type: state
+      - id: IPR-HISTORIAL-POSTULACIONES
+        name: HISTORIAL-POSTULACIONES
+        label: "Historial Postulaciones"
+        description: "Registro histórico de intentos de postulación"
+        type: log
+      - id: IPR-ADMISIBILIDAD
+        name: ADMISIBILIDAD
+        label: "Admisibilidad"
+        description: "Fase de verificación de requisitos formales"
+        type: phase
+      - id: IPR-EVALUACION
+        name: EVALUACION
+        label: "Evaluación"
+        description: "Análisis técnico-económico de la iniciativa"
+        type: phase
+      - id: IPR-EVALUACION-TECNICA
+        name: EVALUACION-TECNICA
+        label: "Evaluación Técnica"
+        description: "Revisión sustantiva de la IPR"
+        type: process
+      - id: IPR-FICHA-EVALUACION
+        name: FICHA-EVALUACION
+        label: "Ficha Evaluación"
+        description: "Instrumento de evaluación estandarizado"
+        type: document
+      - id: IPR-CRITERIO-EVALUACION
+        name: CRITERIO-EVALUACION
+        label: "Criterio Evaluación"
+        description: "Parámetro específico de calificación"
+        type: rule
+      - id: IPR-MATRIZ-EVALUACION
+        name: MATRIZ-EVALUACION
+        label: "Matriz Evaluación"
+        description: "Conjunto de criterios y ponderadores"
+        type: tool
+      - id: IPR-RATE
+        name: ESTADO-RATE
+        label: "Estado Rate"
+        description: "Resultado Análisis Técnico Económico (RS, FI, OT)"
+        type: value-object
+      - id: IPR-RS
+        name: RENTABILIDAD-SOCIAL
+        label: "Rentabilidad Social"
+        description: "Evaluación socioeconómica favorable (RS)"
+        type: indicator
+      - id: IPR-OBSERVACION-TECNICA
+        name: OBSERVACION-TECNICA
+        label: "Observación Técnica"
+        description: "Reparo emitido durante evaluación"
+        type: issue
+      - id: IPR-PERTINENCIA
+        name: RESULTADO-PERTINENCIA
+        label: "Resultado Pertinencia"
+        description: "Dictamen del Comité Directivo"
+        type: value-object
+      - id: IPR-RECOMENDACION-SOCIOECONOMICA
+        name: RECOMENDACION-SOCIOECONOMICA
+        label: "Recomendación Socioeconómica"
+        description: "Informe de rentabilidad social MDSF"
+        type: document
+      - id: IPR-INFORME-TECNICO-EVALUACION
+        name: INFORME-TECNICO-EVALUACION
+        label: "Informe Técnico Evaluación"
+        description: "Documento final de evaluación GORE"
+        type: document
+      - id: IPR-CIRCULAR-33
+        name: CIRCULAR-33
+        label: "Circular 33"
+        description: "Mecanismo para activos no financieros y conservación"
+        type: mechanism
+      - id: IPR-C-33
+        name: C33
+        label: "C33"
+        description: "Alias de Circular 33"
+        type: mechanism
+      - id: IPR-FICHA-C33
+        name: FICHA-C33
+        label: "Ficha C33"
+        description: "Formulario de presentación C33"
+        type: document
+      - id: IPR-ACTIVO-ADQUIRIDO
+        name: ACTIVO-ADQUIRIDO
+        label: "Activo Adquirido"
+        description: "Bien resultante de un proyecto C33"
+        type: entity
+      - id: IPR-FRIL
+        name: PROGRAMA-02-FNDR
+        label: "Programa 02 FNDR"
+        description: "Fondo Regional de Iniciativa Local (FRIL)"
+        type: mechanism
+      - id: IPR-FRPD
+        name: PROGRAMA-FIC
+        label: "Programa FIC"
+        description: "Fondo Regional de Productividad y Desarrollo (ex FIC referencial)"
+        type: mechanism
+      - id: IPR-SUBVENCION-8
+        name: FNDR-GLOSA7
+        label: "FNDR Glosa 7"
+        description: "Subvenciones del 8% FNDR"
+        type: mechanism
+      - id: IPR-GLOSA-06
+        name: GUIA-BASES
+        label: "Guía Bases"
+        description: "Normativa para Glosa 06 (Programas)"
+        type: rule
+      - id: IPR-BIP-ID
+        name: BIP-ID
+        label: "BIP ID"
+        description: "Código único SNI (Sistema Nacional de Inversiones)"
+        type: identifier
+      - id: IPR-CODIGO-BIP
+        name: B-ID
+        label: "B ID"
+        description: "Alias BIP-ID"
+        type: identifier
+      - id: IPR-CHECKLIST-BIP
+        name: CHECKLIST-BIP
+        label: "Checklist BIP"
+        description: "Lista de requisitos para ingreso a BIP"
+        type: tool
+      - id: IPR-HITO
+        name: HITO
+        label: "Hito"
+        description: "Evento relevante en cronograma"
+        type: event
+      - id: IPR-HITO-PROYECTO
+        name: HITO-PROYECTO
+        label: "Hito Proyecto"
+        description: "Hito contractual de proyecto"
+        type: event
+      - id: IPR-HITO-CUMPLIDO
+        name: HITO-CUMPLIDO
+        label: "Hito Cumplido"
+        description: "Hito ejecutado y verificado"
+        type: state
+      - id: IPR-AVANCE
+        name: ESTADO-AVANCE
+        label: "Estado Avance"
+        description: "Porcentaje de progreso"
+        type: metric
+      - id: IPR-AVANCE-OBRAS
+        name: AVANCE-OBRAS
+        label: "Avance Obras"
+        description: "Progreso físico de obra"
+        type: metric
+      - id: IPR-AVANCE-FINANCIERO
+        name: AVANCE-FINANCIERO
+        label: "Avance Financiero"
+        description: "Progreso del gasto respecto al total"
+        type: metric
+      - id: IPR-INFORME-AVANCE
+        name: INFORME-AVANCE
+        label: "Informe Avance"
+        description: "Reporte periódico de ejecución"
+        type: document
+      - id: IPR-INFORME-AVANCE-FISICO
+        name: INFORME-AVANCE-FISICO
+        label: "Informe Avance Físico"
+        description: "Reporte específico de avance de obras"
+        type: document
+      - id: IPR-ESTADO-PAGO
+        name: ESTADO-PAGO
+        label: "Estado Pago"
+        description: "Documento de cobro por avance"
+        type: document
+      - id: IPR-RECEPCION-OBRA
+        name: RECEPCION-OBRA
+        label: "Recepción Obra"
+        description: "Acto formal de recibo conforme de obras"
+        type: process
+      - id: IPR-ACTA-RECEPCION
+        name: ACTA_RECEPCION
+        label: "Acta Recepción"
+        description: "Documento que certifica la recepción"
+        type: document
+      - id: IPR-ACTA-RECEPCION-FINAL
+        name: ACTA-RECEPCION-FINAL
+        label: "Acta Recepción Final"
+        description: "Cierre definitivo del contrato de obra"
+        type: document
+      - id: IPR-CIERRE-TECNICO
+        name: CIERRE-TECNICO
+        label: "Cierre Técnico"
+        description: "Fase final técnica del proyecto"
+        type: phase
+      - id: IPR-EXPEDIENTE-CIERRE
+        name: EXPEDIENTE-CIERRE
+        label: "Expediente Cierre"
+        description: "Compendio documental final"
+        type: document
+      - id: IPR-CHECKLIST-CIERRE
+        name: CHECKLIST-CIERRE
+        label: "Checklist Cierre"
+        description: "Validación de requisitos de cierre"
+        type: tool
+      - id: IPR-BITACORA-OBRA
+        name: BITACORA-OBRA
+        label: "Bitácora Obra"
+        description: "Registro diario de eventos en obra"
+        type: document
+      - id: IPR-INSPECCION-TERRENO
+        name: INSPECCION-TERRENO
+        label: "Inspección Terreno"
+        description: "Visita de fiscalización (ITO)"
+        type: process
+      - id: IPR-OBSERVACION
+        name: OBSERVACION
+        label: "Observación"
+        description: "Reparo técnico o administrativo"
+        type: issue
+      - id: IPR-SUBSANACION
+        name: CORRECCION-TRAMITES
+        label: "Corrección Trámites"
+        description: "Proceso de respuesta a observaciones"
+        type: process
+      - id: IPR-REEVALUACION
+        name: REEVALUACION-PROYECTO
+        label: "Reevaluación Proyecto"
+        description: "Nuevo análisis por cambio de condiciones (costo/plazo)"
+        type: process
+      - id: IPR-RENTABILIDAD-SOCIAL
+        name: INDICADOR-EFICIENCIA
+        label: "Indicador Eficiencia"
+        description: "Metricas de evaluación social (VAN, TIR)"
+        type: indicator
+      - id: IPR-VIDA-UTIL
+        name: FIN-PROPOSITO-COMPONENTE
+        label: "Fin Propósito Componente"
+        description: "Duración estimada del beneficio del proyecto"
+        type: value-object
+      - id: IPR-MARCO-LOGICO
+        name: MARCO-LOGICO
+        label: "Marco Lógico"
+        description: "Matriz de Fin, Propósito, Componentes y Actividades"
+        type: methodology
+      - id: IPR-INDICADOR-LOGRO
+        name: INDICADOR-LOGRO
+        label: "Indicador Logro"
+        description: "Métrica de éxito del proyecto"
+        type: indicator
+      - id: IPR-MEDIO-VERIFICACION
+        name: EVIDENCIA-CUMPLIMIENTO
+        label: "Evidencia Cumplimiento"
+        description: "Prueba documental del indicador"
+        type: document
+      - id: IPR-CARTA-GANTT
+        name: CALENDARIZACION-INVERSION
+        label: "Calendarización Inversión"
+        description: "Planificación temporal de ejecución"
+        type: tool
+      - id: IPR-ANTECEDENTES-PROYECTO
+        name: ANTECEDENTES-PROYECTO
+        label: "Antecedentes Proyecto"
+        description: "Documentación base (Diagnóstico, planos, TDR)"
+        type: collection
+      - id: IPR-EXPEDIENTE-TECNICO
+        name: EXPEDIENTE-TECNICO
+        label: "Expediente Técnico"
+        description: "Carpeta completa del proyecto"
+        type: collection
+      - id: IPR-CARPETA-DIGITAL
+        name: CARPETA-DIGITAL
+        label: "Carpeta Digital"
+        description: "Repositorio electrónico del proyecto"
+        type: system-object
+
+  # ==============================================================================
+  # DOMINIO ORG: Organización y Personas (RRHH)
+  # ==============================================================================
+  ORG:
+    name: "Organización y Personas"
+    description: "Gestión del capital humano, estructura organizacional y bienestar"
+    entities:
+      - id: ORG-FUNCIONARIO
+        name: FUNCIONARIO
+        label: "Funcionario"
+        description: "Persona natural con vínculo estatutario o contractual con el GORE"
+        type: person
+      - id: ORG-CARGO
+        name: CARGO
+        label: "Cargo"
+        description: "Puesto de trabajo con funciones y responsabilidades definidas"
+        type: concept
+      - id: ORG-PLANTA
+        name: PLANTA-PERSONAL
+        label: "Planta Personal"
+        description: "Conjunto de cargos permanentes"
+        type: collection
+      - id: ORG-CONTRATA
+        name: PERSONAL-CONTRATA
+        label: "Personal Contrata"
+        description: "Personal transitorio anual"
+        type: collection
+      - id: ORG-HONORARIO
+        name: PRESTADOR-SERVICIOS
+        label: "Prestador Servicios"
+        description: "Persona contratada a honorarios (Suma Alzada)"
+        type: person
+      - id: ORG-CODIGO-TRABAJO
+        name: REGIDO-CODIGO-TRABAJO
+        label: "Regido Código Trabajo"
+        description: "Personal regido por normas laborales comunes"
+        type: person
+      - id: ORG-DIVISION
+        name: DIVISION
+        label: "División"
+        description: "Unidad organizacional de primer nivel (Ej: DIPLADE, DAF)"
+        type: organization-unit
+      - id: ORG-DEPARTAMENTO
+        name: DEPARTAMENTO
+        label: "Departamento"
+        description: "Subdivisión de una División"
+        type: organization-unit
+      - id: ORG-UNIDAD
+        name: UNIDAD
+        label: "Unidad"
+        description: "Subdivisión operativa menor"
+        type: organization-unit
+      - id: ORG-HOJA-VIDA
+        name: HOJA-VIDA
+        label: "Hoja Vida"
+        description: "Registro histórico del funcionario"
+        type: document
+      - id: ORG-EXPEDIENTE-PERSONAL
+        name: CARPETA-FUNCIONARIA
+        label: "Carpeta Funcionaria"
+        description: "Repositorio documental del funcionario (Títulos, Nombramiento)"
+        type: collection
+      - id: ORG-CALIFICACION
+        name: CALIFICACION
+        label: "Calificación"
+        description: "Evaluación formal de desempeño anual"
+        type: process
+      - id: ORG-PRECALIFICACION
+        name: INFORME-DESEMPEÑO
+        label: "Informe Desempeño"
+        description: "Evaluación preliminar por jefatura directa"
+        type: document
+      - id: ORG-JUNTA-CALIFICADORA
+        name: JUNTA-CALIFICADORA
+        label: "Junta Calificadora"
+        description: "Comité que valida calificaciones y resuelve apelaciones"
+        type: committee
+      - id: ORG-ANOTACION-MERITO
+        name: ANOTACION-MERITO
+        label: "Anotación Mérito"
+        description: "Registro positivo en hoja de vida"
+        type: event
+      - id: ORG-ANOTACION-DEMERITO
+        name: ANOTACION-DEMERITO
+        label: "Anotación Demérito"
+        description: "Registro negativo en hoja de vida"
+        type: event
+      - id: ORG-FERIADO-LEGAL
+        name: FERIADO-LEGAL
+        label: "Feriado Legal"
+        description: "Vacaciones anuales"
+        type: right
+      - id: ORG-PERMISO-ADMINISTRATIVO
+        name: PERMISO-ADMINISTRATIVO
+        label: "Permiso Administrativo"
+        description: "Días libres por motivos personales (6 días)"
+        type: right
+      - id: ORG-LICENCIA-MEDICA
+        name: LICENCIA-MEDICA
+        label: "Licencia Médica"
+        description: "Reposo por salud validado por COMPIN/Isapre"
+        type: document
+      - id: ORG-COMETIDO-FUNCIONARIO
+        name: COMETIDO-FUNCIONARIO
+        label: "Cometido Funcionario"
+        description: "Misión de servicio dentro del país"
+        type: process
+      - id: ORG-COMISION-SERVICIO
+        name: COMISION-SERVICIO
+        label: "Comisión Servicio"
+        description: "Misión de servicio (puede ser extranjero o estudio)"
+        type: process
+      - id: ORG-VIATICO
+        name: VIATICO
+        label: "Viático"
+        description: "Asignación para gastos en cometidos"
+        type: money
+      - id: ORG-SOLICITUD-VIATICO
+        name: SOLICITUD-VIATICO
+        label: "Solicitud Viático"
+        description: "Formulario de petición de cometido"
+        type: document
+      - id: ORG-REMUNERACION
+        name: REMUNERACION
+        label: "Remuneración"
+        description: "Pago mensual por servicios"
+        type: money
+      - id: ORG-ASIGNACION-ZONA
+        name: ASIGNACION-ZONA
+        label: "Asignación Zona"
+        description: "Plus salarial por ubicación geográfica"
+        type: money
+      - id: ORG-ASIGNACION-PROFESIONAL
+        name: ASIGNACION-PROFESIONAL
+        label: "Asignación Profesional"
+        description: "Plus por título profesional"
+        type: money
+      - id: ORG-HORA-EXTRA
+        name: HORA-EXTRA
+        label: "Hora Extra"
+        description: "Trabajo fuera de jornada ordinaria"
+        type: time
+      - id: ORG-COMPENSACION-TIEMPO
+        name: DESCANSO-COMPENSATORIO
+        label: "Descanso Compensatorio"
+        description: "Devolución de horas extras en tiempo"
+        type: time
+      - id: ORG-CAPACITACION
+        name: ACCION-CAPACITACION
+        label: "Acción Capacitación"
+        description: "Curso o taller formativo"
+        type: activity
+      - id: ORG-PAC
+        name: PLAN-ANUAL-CAPACITACION
+        label: "Plan Anual Capacitación"
+        description: "Planificación anual de formación"
+        type: document
+      - id: ORG-DETECCION-NECESIDADES
+        name: DNC
+        label: "DNC"
+        description: "Levantamiento de brechas de competencia"
+        type: process
+      - id: ORG-BIENESTAR
+        name: SERVICIO-BIENESTAR
+        label: "Servicio Bienestar"
+        description: "Unidad de beneficios sociales"
+        type: organization-unit
+      - id: ORG-SOCIO-BIENESTAR
+        name: AFILIADO-BIENESTAR
+        label: "Afiliado Bienestar"
+        description: "Funcionario inscrito en bienestar"
+        type: role
+      - id: ORG-BENEFICIO-MEDICO
+        name: REEMBOLSO-MEDICO
+        label: "Reembolso Médico"
+        description: "Devolución parcial de gastos salud"
+        type: money
+      - id: ORG-PRESTAMO-BIENESTAR
+        name: PRESTAMO-SOCIAL
+        label: "Préstamo Social"
+        description: "Crédito blando para funcionarios"
+        type: money
+      - id: ORG-CONCURSO-PUBLICO
+        name: CONCURSO-PUBLICO
+        label: "Concurso Público"
+        description: "Proceso abierto de selección de personal"
+        type: process
+      - id: ORG-BASE-CONCURSO
+        name: BASE-CONCURSO
+        label: "Base Concurso"
+        description: "Reglas y requisitos del concurso"
+        type: document
+      - id: ORG-NOMBRAMIENTO
+        name: DECRETO-NOMBRAMIENTO
+        label: "Decreto Nombramiento"
+        description: "Acto administrativo que designa titularidad"
+        type: document
+      - id: ORG-INDUCCION
+        name: PROCESO-INDUCCION
+        label: "Proceso Inducción"
+        description: "Onboarding de nuevos funcionarios"
+        type: process
+      - id: ORG-DESVINCULACION
+        name: PROCESO-RETIRO
+        label: "Proceso Retiro"
+        description: "Término de la relación laboral (Renuncia, Destitución)"
+        type: process
+
+  # ==============================================================================
+  # DOMINIO NORM: Jurídico y Normativo
+  # ==============================================================================
+  NORM:
+    name: "Jurídico y Normativo"
+    description: "Gestión de actos administrativos, legalidad y control"
+    entities:
+      - id: NORM-RESOLUCION
+        name: RESOLUCION
+        label: "Resolución"
+        description: "Acto administrativo con efectos particulares"
+        type: document
+      - id: NORM-RESOLUCION-EXENTA
+        name: RESOLUCION-EXENTA
+        label: "Resolución Exenta"
+        description: "Resolución no sujeta a toma de razón"
+        type: document
+      - id: NORM-DECRETO
+        name: DECRETO-ALCALDICIO
+        label: "Decreto"
+        description: "Ordenanza o mandato superior (poco común en GORE, más en Munis)"
+        type: document
+      - id: NORM-CONTRATO
+        name: CONTRATO-ADMINISTRATIVO
+        label: "Contrato Administrativo"
+        description: "Acuerdo formal entre GORE y terceros"
+        type: contract
+      - id: NORM-BASES
+        name: BASES-ADMINISTRATIVAS
+        label: "Bases Administrativas"
+        description: "Pliego de condiciones para contrataciones"
+        type: document
+      - id: NORM-DICTAMEN
+        name: DICTAMEN-CGR
+        label: "Dictamen CGR"
+        description: "Jurisprudencia administrativa de la Contraloría"
+        type: document
+      - id: NORM-SUMARIO
+        name: SUMARIO-ADMINISTRATIVO
+        label: "Sumario Administrativo"
+        description: "Investigación para determinar responsabilidades administrativas"
+        type: process
+      - id: NORM-FISCAL
+        name: FISCAL-SUMARIO
+        label: "Fiscal Sumario"
+        description: "Funcionario a cargo de la investigación"
+        type: role
+      - id: NORM-EXPEDIENTE-JUDICIAL
+        name: EXPEDIENTE-JUDICIAL
+        label: "Expediente Judicial"
+        description: "Carpeta con antecedentes de un litigio"
+        type: collection
+      - id: NORM-AUDITORIA
+        name: AUDITORIA-INTERNA
+        label: "Auditoría Interna"
+        description: "Examen crítico de actividades y controles"
+        type: process
+      - id: NORM-HALLAZGO
+        name: HALLAZGO-AUDITORIA
+        label: "Hallazgo Auditoría"
+        description: "Deficiencia detectada en auditoría"
+        type: issue
+      - id: NORM-TOMA-RAZON
+        name: TOMA-RAZON
+        label: "Toma Razón"
+        description: "Control de legalidad preventivo de la CGR"
+        type: process
+      - id: NORM-LEY-LOBBY
+        name: REGISTRO-LOBBY
+        label: "Registro Lobby"
+        description: "Registro de audiencias y viajes (Ley 20.730)"
+        type: log
+
+  # ==============================================================================
+  # DOMINIO GOB: Gobernanza Regional
+  # ==============================================================================
+  GOB:
+    name: "Gobernanza Regional"
+    description: "Consejo Regional (CORE), Gobernador y toma de decisiones políticas"
+    entities:
+      - id: GOB-GOBERNADOR
+        name: GOBERNADOR-REGIONAL
+        label: "Gobernador Regional"
+        description: "Máxima autoridad ejecutiva de la región"
+        type: role
+      - id: GOB-CORE
+        name: CONSEJO-REGIONAL
+        label: "Consejo Regional"
+        description: "Cuerpo colegiado normativo, resolutivo y fiscalizador"
+        type: organization-unit
+      - id: GOB-CONSEJERO
+        name: CONSEJERO-REGIONAL
+        label: "Consejero Regional"
+        description: "Miembro electo del CORE"
+        type: person
+      - id: GOB-COMISION
+        name: COMISION-CORE
+        label: "Comisión CORE"
+        description: "Grupo de trabajo temático (Ej: Infraestructura, Social)"
+        type: committee
+      - id: GOB-SESION
+        name: SESION-CORE
+        label: "Sesión CORE"
+        description: "Reunión formal del pleno o comisiones"
+        type: event
+      - id: GOB-TABLA
+        name: TABLA-SESION
+        label: "Tabla Sesión"
+        description: "Lista de temas a tratar en la sesión"
+        type: document
+      - id: GOB-ACUERDO
+        name: ACUERDO-CORE
+        label: "Acuerdo CORE"
+        description: "Resolución adoptada por votación en el consejo"
+        type: document
+      - id: GOB-CERTIFICADO-CORE
+        name: CERTIFICADO-ACUERDO
+        label: "Certificado Acuerdo"
+        description: "Documento que fehacienta el acuerdo tomado"
+        type: document
+      - id: GOB-ACTA
+        name: ACTA-SESION
+        label: "Acta Sesión"
+        description: "Registro escrito de lo deliberado"
+        type: document
+      - id: GOB-VOTACION
+        name: VOTACION
+        label: "Votación"
+        description: "Proceso de emitir preferencias (Aprueba/Rechaza/Abstiene)"
+        type: event
+      - id: GOB-ASIGNACION-DIRECTA
+        name: ASIGNACION-DIRECTA
+        label: "Asignación Directa"
+        description: "Mecanismo excepcional de asignación de recursos (7% Emergencia)"
+        type: mechanism
+      - id: GOB-AUDIENCIA
+        name: AUDIENCIA-PUBLICA
+        label: "Audiencia Pública"
+        description: "Reunión oficial con la autoridad"
+        type: event
+      - id: GOB-ESTRATEGIA
+        name: ERD
+        label: "ERD"
+        description: "Estrategia Regional de Desarrollo (Largo Plazo)"
+        type: policy
+
+  # ==============================================================================
+  # DOMINIO TDE: Tecnología y Transformación Digital
+  # ==============================================================================
+  TDE:
+    name: "Transformación Digital"
+    description: "Tecnologías de información, gobierno digital e infraestructura TI"
+    entities:
+      - id: TDE-EXPEDIENTE-ELECTRONICO
+        name: EXPEDIENTE-ELECTRONICO
+        label: "Expediente Electrónico"
+        description: "Conjunto de documentos electrónicos de un procedimiento"
+        type: system-object
+      - id: TDE-FIRMA-ELECTRONICA
+        name: FIRMA-ELECTRONICA
+        label: "Firma Electrónica"
+        description: "Mecanismo de autenticación y autoría (FEA/FirmaGob)"
+        type: security
+      - id: TDE-CLAVE-UNICA
+        name: CLAVE-UNICA
+        label: "Clave Única"
+        description: "Identidad digital del estado"
+        type: security
+      - id: TDE-INTEROPERABILIDAD
+        name: INTEROPERABILIDAD
+        label: "Interoperabilidad"
+        description: "Capacidad de sistemas para intercambiar datos (PISEE)"
+        type: capability
+      - id: TDE-API
+        name: API-INTEGRACION
+        label: "API Integración"
+        description: "Interfaz de programación para conexión entre sistemas"
+        type: technology
+      - id: TDE-PISEE
+        name: PISEE
+        label: "PISEE"
+        description: "Plataforma de Interoperabilidad del Estado"
+        type: system
+      - id: TDE-DOCUMENTO-DIGITAL
+        name: DOC-DIGITAL
+        label: "Doc Digital"
+        description: "Representación digital de un documento (PDF/XML)"
+        type: document
+      - id: TDE-METADATO
+        name: METADATO
+        label: "Metadato"
+        description: "Datos que describen otros datos (Dublin Core)"
+        type: data
+      - id: TDE-DIGITALIZACION
+        name: DIGITALIZACION
+        label: "Digitalización"
+        description: "Proceso de convertir físico a digital"
+        type: process
+      - id: TDE-CERO-PAPEL
+        name: ESTRATEGIA-CERO-PAPEL
+        label: "Estrategia Cero Papel"
+        description: "Política de eliminación del papel en procesos"
+        type: policy
+      - id: TDE-SGD
+        name: SISTEMA-GESTION-DOCUMENTAL
+        label: "Sistema Gestión Documental"
+        description: "Software de gestión de documentos (DocDigital/Similar)"
+        type: system
+      - id: TDE-TRAMITE-DIGITAL
+        name: TRAMITE-LINEA
+        label: "Trámite Línea"
+        description: "Procedimiento administrativo disponible en web"
+        type: service
+      - id: TDE-PORTAL-WEB
+        name: SITIO-WEB-INSTITUCIONAL
+        label: "Sitio Web Institucional"
+        description: "Canal digital principal de comunicación"
+        type: system
+      - id: TDE-INTRANET
+        name: INTRANET
+        label: "Intranet"
+        description: "Portal interno para funcionarios"
+        type: system
+      - id: TDE-SISTEMA
+        name: SOFTWARE-APLICATIVO
+        label: "Software Aplicativo"
+        description: "Aplicación informática específica"
+        type: system
+      - id: TDE-DASHBOARD
+        name: TABLERO-CONTROL
+        label: "Tablero Control"
+        description: "Visualización de datos para toma de decisiones"
+        type: tool
+      - id: TDE-BI
+        name: INTELIGENCIA-NEGOCIOS
+        label: "Inteligencia Negocios"
+        description: "Análisis de datos avanzado"
+        type: capability
+      - id: TDE-DATA-LAKE
+        name: LAGO-DATOS
+        label: "Lago Datos"
+        description: "Repositorio centralizado de datos crudos"
+        type: database
+      - id: TDE-BASE-DATOS
+        name: BASE-DATOS
+        label: "Base Datos"
+        description: "Almacenamiento estructurado de información"
+        type: database
+      - id: TDE-SERVIDOR
+        name: SERVIDOR
+        label: "Servidor"
+        description: "Infraestructura de cómputo (Físico/Virtual)"
+        type: infrastructure
+      - id: TDE-NUBE
+        name: CLOUD
+        label: "Cloud"
+        description: "Servicios de computación en la nube (AWS/Azure/GCP)"
+        type: infrastructure
+      - id: TDE-CIBERSEGURIDAD
+        name: SEGURIDAD-TI
+        label: "Seguridad TI"
+        description: "Protección de activos de información"
+        type: capability
+      - id: TDE-INCIDENTE-SEGURIDAD
+        name: CIBERATAQUE
+        label: "Ciberataque"
+        description: "Evento que compromete la seguridad TI"
+        type: event
+      - id: TDE-BACKUP
+        name: RESPALDO
+        label: "Respaldo"
+        description: "Copia de seguridad de datos"
+        type: process
+      - id: TDE-SOPORTE
+        name: MESA-AYUDA
+        label: "Mesa Ayuda"
+        description: "Servicio de asistencia a usuarios TI"
+        type: service
+      - id: TDE-TICKET
+        name: TICKET-SOPORTE
+        label: "Ticket Soporte"
+        description: "Registro de solicitud de asistencia"
+        type: document
+      - id: TDE-ACTIVO-TI
+        name: ACTIVO-TECNOLOGICO
+        label: "Activo Tecnológico"
+        description: "Hardware o software propiedad del GORE"
+        type: asset
+      - id: TDE-LICENCIA
+        name: LICENCIA-SOFTWARE
+        label: "Licencia Software"
+        description: "Derecho de uso de software"
+        type: asset
+      - id: TDE-ARQUITECTURA
+        name: ARQUITECTURA-SISTEMAS
+        label: "Arquitectura Sistemas"
+        description: "Diseño estructural de componentes TI"
+        type: design
+      - id: TDE-MODELO-DATOS
+        name: MODELO-ENTIDAD-RELACION
+        label: "Modelo Entidad Relación"
+        description: "Estructura lógica de los datos"
+        type: design
+
+  # ==============================================================================
+  # DOMINIO SEG: Seguridad Pública
+  # ==============================================================================
+  SEG:
+    name: "Seguridad Pública"
+    description: "Prevención del delito, vigilancia y coordinación de emergencias"
+    entities:
+      - id: SEG-CIES
+        name: CIES
+        label: "CIES"
+        description: "Coordinación Integrada de Emergencias y Seguridad (Centro de Control)"
+        type: facility
+      - id: SEG-CAMARA
+        name: CAMARA-VIGILANCIA
+        label: "Cámara Vigilancia"
+        description: "Dispositivo de captura de video"
+        type: device
+      - id: SEG-PTZ
+        name: CAMARA-PTZ
+        label: "Cámara PTZ"
+        description: "Cámara móvil (Pan-Tilt-Zoom)"
+        type: device
+      - id: SEG-LPR
+        name: LECTOR-PATENTES
+        label: "Lector Patentes"
+        description: "Cámara con reconocimiento de matrículas"
+        type: device
+      - id: SEG-DRONE
+        name: VANT
+        label: "Vant"
+        description: "Vehículo aéreo no tripulado para vigilancia"
+        type: device
+      - id: SEG-SALA-CONTROL
+        name: VIDEO-WALL
+        label: "Video Wall"
+        description: "Espacio de monitoreo visual"
+        type: facility
+      - id: SEG-INCIDENTE
+        name: INCIDENTE-SEGURIDAD
+        label: "Incidente Seguridad"
+        description: "Evento disruptivo (delito, falta, emergencia)"
+        type: event
+      - id: SEG-ALERTA
+        name: ALERTA-SEGURIDAD
+        label: "Alerta Seguridad"
+        description: "Aviso temprano de riesgo"
+        type: event
+      - id: SEG-EVIDENCIA
+        name: EVIDENCIA-DIGITAL
+        label: "Evidencia Digital"
+        description: "Grabación o dato probatorio"
+        type: document
+      - id: SEG-CADENA-CUSTODIA
+        name: CADENA-CUSTODIA
+        label: "Cadena Custodia"
+        description: "Trazabilidad de la evidencia"
+        type: process
+      - id: SEG-MAPA-DELICTUAL
+        name: HEATMAP-DELITO
+        label: "Heatmap Delito"
+        description: "Visualización de concentración de delitos"
+        type: analysis
+      - id: SEG-ESTADISTICA-POLICIAL
+        name: STOP-CARABINEROS
+        label: "STOP Carabineros"
+        description: "Datos oficiales de denuncias"
+        type: data
+      - id: SEG-CONSEJO-SEGURIDAD
+        name: CONSEJO-SEGURIDAD
+        label: "Consejo Seguridad"
+        description: "Instancia de coordinación interinstitucional"
+        type: committee
+      - id: SEG-PLAN-SEGURIDAD
+        name: PLAN-REGIONAL-SEGURIDAD
+        label: "Plan Regional Seguridad"
+        description: "Estrategia de prevención"
+        type: policy
+      - id: SEG-EMERGENCIA
+        name: EMERGENCIA-REGIONAL
+        label: "Emergencia Regional"
+        description: "Catástrofe o desastre (Incendio, Inundación)"
+        type: event
+      - id: SEG-SENAPRED
+        name: SENAPRED
+        label: "SENAPRED"
+        description: "Servicio de Prevención y Respuesta ante Desastres"
+        type: entity
+      - id: SEG-BOMBEROS
+        name: BOMBEROS
+        label: "Bomberos"
+        description: "Cuerpo de Bomberos"
+        type: entity
+      - id: SEG-POLICIA
+        name: CARABINEROS-PDI
+        label: "Carabineros PDI"
+        description: "Fuerzas de orden y seguridad"
+        type: entity
+      - id: SEG-VEHICULO-SEGURIDAD
+        name: PATRULLA
+        label: "Patrulla"
+        description: "Vehículo municipal o policial financiado por GORE"
+        type: asset
+      - id: SEG-LUMINARIA
+        name: LUMINARIA-PUBLICA
+        label: "Luminaria Pública"
+        description: "Alumbrado público con fin preventivo"
+        type: asset
+      - id: SEG-ALARMA-COMUNITARIA
+        name: ALARMA-VECINAL
+        label: "Alarma Vecinal"
+        description: "Sistema disuasivo barrial"
+        type: device
+
+  # ==============================================================================
+  # DOMINIO TERR: Territorial
+  # ==============================================================================
+  TERR:
+    name: "Territorial"
+    description: "Ordenamiento territorial, geolocalización e infraestructura de datos espaciales"
+    entities:
+      - id: TERR-TERRITORIO
+        name: TERRITORIO-REGIONAL
+        label: "Territorio Regional"
+        description: "Espacio geográfico de la región de Ñuble"
+        type: location
+      - id: TERR-PROVINCIA
+        name: PROVINCIA
+        label: "Provincia"
+        description: "División administrativa (Diguillín, Punilla, Itata)"
+        type: location
+      - id: TERR-COMUNA
+        name: COMUNA
+        label: "Comuna"
+        description: "División administrativa base (21 comunas)"
+        type: location
+      - id: TERR-LOCALIDAD
+        name: LOCALIDAD
+        label: "Localidad"
+        description: "Asentamiento humano específico"
+        type: location
+      - id: TERR-ZONA-REZAGO
+        name: ZONA-REZAGO
+        label: "Zona Rezago"
+        description: "Territorio con brechas de desarrollo priorizado"
+        type: location
+      - id: TERR-MAPA
+        name: MAPA-TEMATICO
+        label: "Mapa Temático"
+        description: "Representación cartográfica"
+        type: document
+      - id: TERR-GIS
+        name: SIG
+        label: "SIG"
+        description: "Sistema de Información Geográfica"
+        type: system
+      - id: TERR-IDE
+        name: IDE-ÑUBLE
+        label: "IDE Ñuble"
+        description: "Infraestructura de Datos Espaciales Regional"
+        type: infrastructure
+      - id: TERR-CAPA
+        name: CAPA-GEOGRAFICA
+        label: "Capa Geográfica"
+        description: "Layer de información espacial (Shapefile/GeoJSON)"
+        type: data
+      - id: TERR-GEORREFERENCIA
+        name: GEOLOCALIZACION
+        label: "Geolocalización"
+        description: "Ubicación espacial de un objeto (Lat/Long)"
+        type: property
+      - id: TERR-COORDENADA
+        name: COORDENADA
+        label: "Coordenada"
+        description: "Punto específico en el espacio"
+        type: value-object
+      - id: TERR-PLAN-REGULADOR
+        name: PRC
+        label: "PRC"
+        description: "Plan Regulador Comunal"
+        type: policy
+      - id: TERR-PROT
+        name: PROT
+        label: "PROT"
+        description: "Plan Regional de Ordenamiento Territorial"
+        type: policy
+      - id: TERR-ZONIFICACION
+        name: ZONIFICACION-USO-SUELO
+        label: "Zonificación Uso Suelo"
+        description: "Definición de usos permitidos (Residencial, Industrial, etc)"
+        type: rule
+      - id: TERR-LIMITE-URBANO
+        name: RADIO-URBANO
+        label: "Radio Urbano"
+        description: "Demarcación área urbana"
+        type: boundary
+      - id: TERR-RURALIDAD
+        name: ZONA-RURAL
+        label: "Zona Rural"
+        description: "Área no urbana con características propias"
+        type: location
+      - id: TERR-CUENCA
+        name: CUENCA-HIDROGRAFICA
+        label: "Cuenca Hidrográfica"
+        description: "Territorio de drenaje natural (Río Itata/Ñuble)"
+        type: location
+      - id: TERR-INFRAESTRUCTURA
+        name: OBRA-PUBLICA
+        label: "Obra Pública"
+        description: "Infraestructura física en el territorio"
+        type: asset
+      - id: TERR-VIALIDAD
+        name: RED-VIAL
+        label: "Red Vial"
+        description: "Caminos y carreteras"
+        type: asset
+      - id: TERR-AGUA-POTABLE
+        name: APR
+        label: "APR"
+        description: "Agua Potable Rural (SSR)"
+        type: asset
+
+  # ==============================================================================
+  # DOMINIO SOC: Social y Participación
+  # ==============================================================================
+  SOC:
+    name: "Social y Participación"
+    description: "Desarrollo social, sociedad civil y participación ciudadana"
+    entities:
+      - id: SOC-CIUDADANO
+        name: CIUDADANO
+        label: "Ciudadano"
+        description: "Habitante de la región"
+        type: person
+      - id: SOC-ORGANIZACION
+        name: ORGANIZACION-SOCIAL
+        label: "Organización Social"
+        description: "Entidad comunitaria (JJVV, Club Deportivo)"
+        type: organization
+      - id: SOC-DIRIGENTE
+        name: DIRIGENTE-SOCIAL
+        label: "Dirigente Social"
+        description: "Representante legal de organización"
+        type: role
+      - id: SOC-PROYECTO-SOCIAL
+        name: INICIATIVA-SOCIAL
+        label: "Iniciativa Social"
+        description: "Proyecto financiado por 8% Social"
+        type: entity
+      - id: SOC-COSOC
+        name: COSOC
+        label: "COSOC"
+        description: "Consejo de la Sociedad Civil"
+        type: committee
+      - id: SOC-BENEFICIARIO
+        name: BENEFICIARIO-FINAL
+        label: "Beneficiario Final"
+        description: "Persona que recibe el beneficio directo"
+        type: role
+      - id: SOC-RSH
+        name: REGISTRO-SOCIAL-HOGARES
+        label: "Registro Social Hogares"
+        description: "Instrumento de caracterización socioeconómica"
+        type: data
+      - id: SOC-FONDO-SOCIAL
+        name: FONDO-COMUNITARIO
+        label: "Fondo Comunitario"
+        description: "Recursos para organizaciones base"
+        type: fund
+
+  # ==============================================================================
+  # DOMINIO COM: Comunicaciones
+  # ==============================================================================
+  COM:
+    name: "Comunicaciones"
+    description: "Difusión, prensa e imagen institucional"
+    entities:
+      - id: COM-NOTICIA
+        name: NOTICIA
+        label: "Noticia"
+        description: "Contenido informativo oficial"
+        type: content
+      - id: COM-COMUNICADO
+        name: COMUNICADO-PRENSA
+        label: "Comunicado Prensa"
+        description: "Declaración enviada a medios"
+        type: document
+      - id: COM-RED-SOCIAL
+        name: POST-RRSS
+        label: "Post Rrss"
+        description: "Publicación en redes (Facebook, Instagram, X)"
+        type: content
+      - id: COM-MEDIO
+        name: MEDIO-COMUNICACION
+        label: "Medio Comunicación"
+        description: "Entidad externa de prensa (Radio, TV, Diario)"
+        type: organisation
+      - id: COM-CLIPPING
+        name: REPORTE-PRENSA
+        label: "Reporte Prensa"
+        description: "Monitoreo de apariciones en medios"
+        type: document
+      - id: COM-BRANDING
+        name: IMAGEN-CORPORATIVA
+        label: "Imagen Corporativa"
+        description: "Normas gráficas y logotipos"
+        type: creative-work
+      - id: COM-LOGO
+        name: LOGOTIPO
+        label: "Logotipo"
+        description: "Archivo gráfico oficial"
+        type: asset
+      - id: COM-EVENTO
+        name: CEREMONIA
+        label: "Ceremonia"
+        description: "Actividad pública oficial (Inauguración, Cuenta Pública)"
+        type: event
+      - id: COM-INVITACION
+        name: INVITACION-PROTOCOLAR
+        label: "Invitación Protocolar"
+        description: "Convocatoria formal a evento"
+        type: document
+      - id: COM-MAILING
+        name: CAMPAÑA-EMAIL
+        label: "Campaña Email"
+        description: "Envío masivo de información"
+        type: communication
+      - id: COM-DISCURSO
+        name: MINUTA-VOCAL
+        label: "Minuta Vocal"
+        description: "Pauteo y texto para intervención de autoridad"
+        type: document
+      - id: COM-ENTREVISTA
+        name: PUNTO-PRENSA
+        label: "Punto Prensa"
+        description: "Interacción directa con periodistas"
+        type: event
+      - id: COM-FOTOGRAFIA
+        name: ARCHIVO-FOTOGRAFICO
+        label: "Archivo Fotográfico"
+        description: "Registro visual de actividades"
+        type: asset
+      - id: COM-VIDEO
+        name: CAPSULA-VIDEO
+        label: "Cápsula Video"
+        description: "Contenido audiovisual"
+        type: asset
+
+  # ==============================================================================
+  # DOMINIO BACK: Servicios Internos (Backoffice)
+  # ==============================================================================
+  BACK:
+    name: "Servicios Internos"
+    description: "Logística, abastecimiento, servicios generales e infraestructura física"
+    entities:
+      - id: BACK-REQUERIMIENTO
+        name: REQUERIMIENTO-COMPRA
+        label: "Requerimiento Compra"
+        description: "Solicitud interna de adquisición de bien/servicio"
+        type: document
+      - id: BACK-COTIZACION
+        name: COTIZACION
+        label: "Cotización"
+        description: "Oferta económica de proveedor (con 3 cotizaciones)"
+        type: document
+      - id: BACK-ORDEN-COMPRA
+        name: OC
+        label: "OC"
+        description: "Documento formal de compra (Mercado Público)"
+        type: document
+      - id: BACK-PROVEEDOR
+        name: PROVEEDOR-ESTADO
+        label: "Proveedor Estado"
+        description: "Empresa que vende al GORE"
+        type: organization
+      - id: BACK-FACTURA
+        name: DTE
+        label: "DTE"
+        description: "Documento Tributario Electrónico (Factura)"
+        type: document
+      - id: BACK-RECEPCION
+        name: RECEPCION-CONFORME
+        label: "Recepción Conforme"
+        description: "Certificado de recepción de bienes/servicios"
+        type: document
+      - id: BACK-INVENTARIO
+        name: CONTROL-EXISTENCIAS
+        label: "Control Existencias"
+        description: "Registro de bienes institucionales"
+        type: process
+      - id: BACK-ACTIVO-FIJO
+        name: BIEN-INVENTARIABLE
+        label: "Bien Inventariable"
+        description: "Bien mueble durable (Activo No Financiero)"
+        type: asset
+      - id: BACK-ALTAS-BAJAS
+        name: RESOLUCION-BAJA
+        label: "Resolución Baja"
+        description: "Proceso de eliminación de bienes del inventario"
+        type: process
+      - id: BACK-BODEGA
+        name: ALMACEN
+        label: "Almacén"
+        description: "Recinto físico de almacenamiento"
+        type: facility
+      - id: BACK-INGRESO-BODEGA
+        name: ENTRADA-MERCADERIA
+        label: "Entrada Mercadería"
+        description: "Registro de llegada de insumos"
+        type: event
+      - id: BACK-SALIDA-BODEGA
+        name: DESPACHO-MERCADERIA
+        label: "Despacho Mercadería"
+        description: "Entrega de insumos a unidades"
+        type: event
+      - id: BACK-VEHICULO
+        name: VEHICULO-FISCAL
+        label: "Vehículo Fiscal"
+        description: "Automóvil propiedad del GORE"
+        type: asset
+      - id: BACK-BITACORA-VEHICULO
+        name: HOJA-RUTA
+        label: "Hoja Ruta"
+        description: "Registro de viajes y kilometraje"
+        type: document
+      - id: BACK-CONDUCTOR
+        name: CHOFER
+        label: "Chofer"
+        description: "Funcionario habilitado para conducir"
+        type: role
+      - id: BACK-COMBUSTIBLE
+        name: CARGA-COMBUSTIBLE
+        label: "Carga Combustible"
+        description: "Consumo de bencina/diesel (Convenio Copec/Shell)"
+        type: expense
+      - id: BACK-MANTENCION
+        name: MANTENCION-VEHICULO
+        label: "Mantención Vehículo"
+        description: "Servicio mecánico preventivo/correctivo"
+        type: service
+      - id: BACK-EDIFICIO
+        name: INFRAESTRUCTURA-GORE
+        label: "Infraestructura GORE"
+        description: "Oficinas y dependencias físicas"
+        type: facility
+      - id: BACK-CONTROL-ACCESO
+        name: REGISTRO-VISITAS
+        label: "Registro Visitas"
+        description: "Control de ingreso de personas al edificio"
+        type: process
+      - id: BACK-CORRESPONDENCIA
+        name: OFICINA-PARTES
+        label: "Oficina Partes"
+        description: "Gestión de cartas y documentos físicos entrantes/salientes"
+        type: service
+      - id: BACK-ESTAFETA
+        name: VALIJA
+        label: "Valija"
+        description: "Servicio de transporte de documentos"
+        type: service
+
+  # ==============================================================================
+  # DOMINIO SYS: Sistema Transversal (GORE_OS Core)
+  # ==============================================================================
+  SYS:
+    name: "Sistema Transversal"
+    description: "Entidades técnicas fundamentales del sistema GORE_OS"
+    entities:
+      - id: SYS-USUARIO
+        name: USUARIO-SISTEMA
+        label: "Usuario Sistema"
+        description: "Cuenta de acceso al sistema (Identidad)"
+        type: system-actor
+      - id: SYS-ROL
+        name: ROL-ACCESO
+        label: "Rol Acceso"
+        description: "Conjunto de permisos asignados a un usuario (RBAC)"
+        type: security
+      - id: SYS-PERMISO
+        name: PERMISO-ACCION
+        label: "Permiso Acción"
+        description: "Capacidad atómica de ejecutar acción (Create/Read/Update/Delete)"
+        type: security
+      - id: SYS-LOG
+        name: LOG-AUDITORIA
+        label: "Log Auditoría"
+        description: "Registro inmutable de acción (Quién, Cuándo, Qué)"
+        type: logging
+      - id: SYS-NOTIFICACION
+        name: ALERTA-SISTEMA
+        label: "Alerta Sistema"
+        description: "Mensaje automático al usuario (In-App/Push)"
+        type: communication
+      - id: SYS-CORREO
+        name: EMAIL-NOTIFICACION
+        label: "Email Notificación"
+        description: "Mensaje enviado por SMTP"
+        type: communication
+      - id: SYS-ADJUNTO
+        name: ARCHIVO-ADJUNTO
+        label: "Archivo Adjunto"
+        description: "Archivo binario asociado a un registro"
+        type: data
+      - id: SYS-FORMULARIO
+        name: FORM-DINAMICO
+        label: "Form Dinámico"
+        description: "Interfaz de entrada de datos configurable"
+        type: ui
+      - id: SYS-CAMPO
+        name: FIELD
+        label: "Field"
+        description: "Elemento de dato individual en formulario"
+        type: ui
+      - id: SYS-VALIDACION
+        name: REGLA-VALIDACION
+        label: "Regla Validación"
+        description: "Lógica de negocio para datos (Required, MaxLength)"
+        type: rule
+      - id: SYS-ESTADO
+        name: STATUS
+        label: "Status"
+        description: "Situación actual en máquina de estados"
+        type: state
+      - id: SYS-TRANSICION
+        name: TRANSICION-ESTADO
+        label: "Transición Estado"
+        description: "Cambio válido entre dos estados"
+        type: process
+      - id: SYS-WORKFLOW
+        name: FLUJO-PROCESO
+        label: "Flujo Proceso"
+        description: "Definición de pasos secuenciales o paralelos"
+        type: process
+      - id: SYS-TAREA
+        name: TASK
+        label: "Task"
+        description: "Unidad de trabajo asignada a un usuario/rol"
+        type: process
+      - id: SYS-BANDEJA
+        name: INBOX
+        label: "Inbox"
+        description: "Lista de tareas pendientes del usuario"
+        type: ui
+      - id: SYS-HISTORIAL
+        name: TIMELINE
+        label: "Timeline"
+        description: "Vista cronológica de cambios en una entidad"
+        type: ui
+      - id: SYS-VERSION
+        name: VERSION-DOCUMENTO
+        label: "Versión Documento"
+        description: "Snapshot histórico de un documento"
+        type: data
+      - id: SYS-CONFIGURACION
+        name: SETTING
+        label: "Setting"
+        description: "Parámetro de comportamiento del sistema"
+        type: configuration
+      - id: SYS-PARAMETRO
+        name: PARAMETRO-SISTEMA
+        label: "Parámetro Sistema"
+        description: "Valor constante administrable (Ej: UTM, UF)"
+        type: data
+      - id: SYS-API-KEY
+        name: API-KEY
+        label: "API Key"
+        description: "Credencial para acceso programático"
+        type: security
+      - id: SYS-TOKEN
+        name: JWT
+        label: "JWT"
+        description: "Token de sesión temporal"
+        type: security
+      - id: SYS-MENU
+        name: MENU-NAVEGACION
+        label: "Menú Navegación"
+        description: "Estructura jerárquica de acceso a módulos"
+        type: ui
+      - id: SYS-WIDGET
+        name: WIDGET-DASHBOARD
+        label: "Widget Dashboard"
+        description: "Componente visual de datos resumen"
+        type: ui

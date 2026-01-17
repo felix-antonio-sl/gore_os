@@ -45,5 +45,5 @@ extra_tags:
 status: ENRICHED
 acceptance_criteria:
   - Endpoint de callback configurado para procesar respuestas de la Plataforma de Notificaciones
-  - Actualización automática del estado del documento en el expediente (Ej: "Notificado")
+  - 'Actualización automática del estado del documento en el expediente (Ej: "Notificado")'
   - Log técnico del payload recibido del webhook para auditoría de integridad del mensaje

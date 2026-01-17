@@ -38,22 +38,16 @@ graph LR
 
 ```text
 gore_os/
-├── model/                    # ❤️ El Corazón Semántico
-│   ├── stories/              # 819 Historias de Usuario (Origen)
-│   ├── entities/             # 139 Entidades (Modelo de Datos)
-│   ├── roles/                # 410 Roles Institucionales
-│   ├── processes/            # 84 Procesos BPMN
-│   ├── GLOSARIO.yml          # Terminología Autorizada
-│   └── README.md             # Reglas del Modelo
+├── app/                      # 🐍 Aplicación Flask
+│   ├── blueprints/           # Módulos Funcionales (BP)
+│   ├── static/               # Assets (CSS/JS compilados)
+│   ├── templates/            # Plantillas Jinja2
+│   └── __init__.py           # Application Factory
 │
-├── architecture/             # 🏗️ Decisiones Técnicas
-│   ├── c1_context/           # Diagramas de Contexto
-│   ├── c2_containers/        # Docker & Infra
-│   ├── design/               # Design System & UI
-│   └── stack.md              # Bun + Hono + Effect + tRPC
-│
-├── apps/                     # 🖥️ Aplicaciones Frontend
-├── packages/                 # 📦 Librerías Compartidas
+├── architecture/             # 🏗️ Documentación Técnica
+├── model/                    # ❤️ Definiciones Semánticas
+├── docker-compose.yml        # Orquestación
+├── pyproject.toml            # Dependencias Python
 └── MANIFESTO.md              # 📜 Constitución del Sistema
 ```
 
@@ -63,15 +57,15 @@ gore_os/
 
 El stack técnico está diseñado para ser **Cloud First**, **Type Safe** y **High Performance**:
 
-| Capa        | Tecnología               | Justificación                              |
-| ----------- | ------------------------ | ------------------------------------------ |
-| **Runtime** | **Bun**                  | Rendimiento y DX unificada                 |
-| **Backend** | **Hono**                 | API Framework ligero y estándar            |
-| **Logic**   | **Effect-TS**            | Manejo de errores y concurrencia robusta   |
-| **API**     | **tRPC**                 | Tipado end-to-end sin generación de código |
-| **Data**    | **PostgreSQL + PostGIS** | Base de datos relacional y territorial     |
-| **ORM**     | **Drizzle**              | Acceso a datos tipo-seguro y SQL-like      |
-| **Auth**    | **ClaveÚnica/Keycloak**  | Identidad federada oficial                 |
+| Capa         | Tecnología               | Justificación                              |
+| ------------ | ------------------------ | ------------------------------------------ |
+| **Backend**  | **Python + Flask**       | Estándar en gobierno, robustez y librerías |
+| **Frontend** | **Jinja2 + HTMX**        | SSR rápido y simplicidad operativa         |
+| **Styling**  | **Tailwind CSS**         | Diseño moderno y consistente               |
+| **DB**       | **PostgreSQL + PostGIS** | Base de datos relacional y territorial     |
+| **ORM**      | **SQLAlchemy**           | Mapeo robusto y seguro                     |
+| **Deploy**   | **Docker + Gunicorn**    | Contenerización estándar y escalable       |
+| **Auth**     | **Flask-Login**          | Gestión clásica de sesiones y roles        |
 
 ---
 

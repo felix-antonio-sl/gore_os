@@ -1,149 +1,100 @@
 classDiagram
-    ENT-SAL-POA --> ENT-ORG-DIVISION : division_id
-    ENT-SAL-POA --> ENT-SYS-PERIODO : periodo_id
-    ENT-SYS-CONVENIO <|-- ENT-FIN-CONVENIO_PROGRAMACION
-    ENT-SYS-DOCUMENTO <|-- ENT-CONV-CONVOCATORIA
-    ENT-CONV-AUDIENCIA --> ENT-SYS-ACTOR : solicitante_id
-    ENT-CONV-AUDIENCIA --> ENT-SYS-ACTOR : autoridad_id
-    ENT-ORG-DOTACION --> ENT-SYS-PERIODO : periodo_id
-    ENT-EJE-VISITA_TERRENO --> ENT-EJE-CONVENIO : convenio_id
-    ENT-EJE-VISITA_TERRENO --> ENT-ORG-FUNCIONARIO : inspector_id
-    ENT-DIG-ENLACE --> ENT-SYS-DOCUMENTO : documento_id
-    ENT-DIG-TOMA_RAZON --> ENT-SYS-ACTO : acto_id
-    ENT-LOC-PROVINCIA --> ENT-LOC-REGION : region_id
-    ENT-SAL-H_GORE --> ENT-LOC-REGION : region_id
-    ENT-SAL-H_GORE --> ENT-SYS-PERIODO : periodo_id
-    ENT-EJE-HITO --> ENT-EJE-CONVENIO : convenio_id
-    ENT-SYS-DOCUMENTO <|-- ENT-ORG-DECLARACION_JURADA
-    ENT-ORG-DECLARACION_JURADA --> ENT-ORG-FUNCIONARIO : funcionario_id
-    ENT-ORG-DECLARACION_JURADA --> ENT-SYS-PERIODO : periodo_id
-    ENT-ORG-SUMARIO --> ENT-ORG-FUNCIONARIO : funcionario_id
-    ENT-ORG-SUMARIO --> ENT-ORG-FUNCIONARIO : fiscal_id
-    ENT-CONV-ASISTENCIA --> ENT-CONV-SESION : sesion_id
-    ENT-CONV-ASISTENCIA --> ENT-SYS-ACTOR : actor_id
-    ENT-LOC-COMUNA --> ENT-LOC-PROVINCIA : provincia_id
-    ENT-FIN-MODIFICACION_PRESUPUESTARIA --> ENT-FIN-ASIGNACION : asignacion_origen_id
-    ENT-FIN-MODIFICACION_PRESUPUESTARIA --> ENT-FIN-ASIGNACION : asignacion_destino_id
-    ENT-FIN-MODIFICACION_PRESUPUESTARIA --> ENT-SYS-ACTO : acto_id
-    ENT-ORG-COMETIDO --> ENT-ORG-FUNCIONARIO : funcionario_id
-    ENT-SYS-ACTOR <|-- ENT-GOV-GOBERNADOR
-    ENT-GOV-GOBERNADOR --> ENT-SYS-ACTOR : persona_id
-    ENT-GOV-GOBERNADOR --> ENT-LOC-REGION : region_id
-    ENT-SAL-PUNTAJE --> ENT-SAL-H_GORE : hgore_id
-    ENT-SAL-PUNTAJE --> ENT-SAL-DIMENSION : dimension_id
-    ENT-SYS-DOCUMENTO <|-- ENT-FIN-RENDICION
-    ENT-FIN-RENDICION --> ENT-EJE-CONVENIO : convenio_id
-    ENT-SAL-INTERVENCION --> ENT-SAL-ALERTA : alerta_id
-    ENT-SAL-INTERVENCION --> ENT-ORG-FUNCIONARIO : responsable_id
-    ENT-ORG-INVENTARIO --> ENT-ORG-FUNCIONARIO : responsable_id
-    ENT-LOC-PROT --> ENT-LOC-REGION : region_id
-    ENT-CONV-INSTANCIA <|-- ENT-CONV-COMITE
-    ENT-SYS-DOCUMENTO <|-- ENT-EJE-ACTA_RECEPCION
-    ENT-EJE-ACTA_RECEPCION --> ENT-EJE-CONVENIO : convenio_id
-    ENT-FIN-PRESUPUESTO --> ENT-SYS-PERIODO : periodo_id
-    ENT-SYS-DOCUMENTO <|-- ENT-FIN-CDP
-    ENT-FIN-CDP --> ENT-FIN-ASIGNACION : asignacion_id
-    ENT-FIN-REINTEGRO --> ENT-FIN-RENDICION : rendicion_id
-    ENT-CONV-INSTANCIA --> ENT-SYS-ACTOR : convocante_id
-    ENT-SAL-INDICADOR_POA --> ENT-SAL-POA : poa_id
-    ENT-SYS-ACTOR <|-- ENT-GOV-CONSEJERO
-    ENT-FIN-ARI --> ENT-SYS-PERIODO : periodo_id
-    ENT-FIN-ARI --> ENT-LOC-REGION : region_id
-    ENT-FIN-IDI --> ENT-LOC-COMUNA : comuna_id
-    ENT-FIN-IDI --> ENT-ORG-DIVISION : division_responsable_id
-    ENT-SYS-DOCUMENTO <|-- ENT-FIN-ORDEN_COMPRA
-    ENT-FIN-ORDEN_COMPRA --> ENT-FIN-PROVEEDOR : proveedor_id
-    ENT-DIG-INCIDENTE_SEGURIDAD --> ENT-DIG-ACTIVO_DATOS : activo_afectado_id
-    ENT-ORG-ROL --> ENT-DIG-PLATAFORMA : plataforma_id
-    ENT-SYS-ACTO <|-- ENT-CONV-CONSULTA_PUBLICA
-    ENT-CONV-CONSULTA_PUBLICA --> ENT-LOC-COMUNA : comuna_id
-    ENT-SAL-PLAN_ACCION --> ENT-SAL-INTERVENCION : intervencion_id
-    ENT-ORG-CARGO --> ENT-ORG-DIVISION : division_id
-    ENT-SYS-ACTOR <|-- ENT-ORG-FUNCIONARIO
-    ENT-SYS-DOCUMENTO <|-- ENT-EJE-ESTADO_PAGO
-    ENT-EJE-ESTADO_PAGO --> ENT-EJE-CONVENIO : convenio_id
-    ENT-DIG-ACTIVO_DATOS --> ENT-ORG-FUNCIONARIO : custodio_id
-    ENT-SYS-DOCUMENTO <|-- ENT-DIG-AUDITORIA_CGR
-    ENT-FIN-EJE_ESTRATEGICO --> ENT-FIN-ERD : erd_id
-    ENT-ORG-PERMISO --> ENT-ORG-FUNCIONARIO : funcionario_id
-    ENT-SAL-APRENDIZAJE --> ENT-SAL-INTERVENCION : intervencion_id
-    ENT-CONV-SESION <|-- ENT-GOV-SESION_CORE
-    ENT-GOV-CORE --> ENT-LOC-REGION : region_id
-    ENT-GOV-CORE --> ENT-SYS-PERIODO : periodo_id
-    ENT-GOV-CORE --> ENT-GOV-CONSEJERO : presidente_id
-    ENT-GOV-CORE --> ENT-GOV-CONSEJERO : vicepresidente_id
-    ENT-SYS-DOCUMENTO <|-- ENT-EJE-GARANTIA
-    ENT-EJE-GARANTIA --> ENT-EJE-CONVENIO : convenio_id
-    ENT-SYS-DOCUMENTO <|-- ENT-FIN-CONTRATO
-    ENT-FIN-CONTRATO --> ENT-FIN-PROVEEDOR : proveedor_id
-    ENT-SYS-DOCUMENTO <|-- ENT-EJE-LIQUIDACION
-    ENT-EJE-LIQUIDACION --> ENT-EJE-CONVENIO : convenio_id
-    ENT-EJE-EVALUACION_EXPOST --> ENT-FIN-IPR : ipr_id
-    ENT-SAL-OKR --> ENT-SYS-PERIODO : periodo_id
-    ENT-SAL-OKR --> ENT-ORG-FUNCIONARIO : responsable_id
-    ENT-LOC-INDICADOR_TERRITORIAL --> ENT-SYS-PERIODO : periodo_id
-    ENT-DIG-PLATAFORMA --> ENT-ORG-FUNCIONARIO : responsable_id
-    ENT-SYS-ACTO <|-- ENT-GOV-ACUERDO_CORE
-    ENT-GOV-ACUERDO_CORE --> ENT-GOV-SESION_CORE : sesion_core_id
-    ENT-DIG-FIRMA --> ENT-SYS-DOCUMENTO : documento_id
-    ENT-DIG-FIRMA --> ENT-SYS-ACTOR : firmante_id
-    ENT-LOC-LOCALIDAD --> ENT-LOC-COMUNA : comuna_id
-    ENT-CONV-CUENTA_PUBLICA --> ENT-GOV-GOBERNADOR : gobernador_id
-    ENT-CONV-CUENTA_PUBLICA --> ENT-SYS-DOCUMENTO : documento_id
-    ENT-FIN-MEDIDA_TEMPORAL --> ENT-SYS-PERIODO : periodo_id
-    ENT-FIN-MEDIDA_TEMPORAL --> ENT-FIN-ASIGNACION : asignacion_id
-    ENT-GOV-VOTACION --> ENT-GOV-ACUERDO_CORE : acuerdo_core_id
-    ENT-GOV-VOTACION --> ENT-GOV-CONSEJERO : consejero_id
-    ENT-SYS-DOCUMENTO <|-- ENT-SYS-ACTO
-    ENT-SYS-ACTO --> ENT-SYS-ACTOR : autoridad_id
-    ENT-FIN-DEVENGO --> ENT-FIN-COMPROMISO_PRESUPUESTARIO : compromiso_id
-    ENT-CONV-SESION --> ENT-CONV-INSTANCIA : instancia_id
-    ENT-FIN-COMPROMISO_PRESUPUESTARIO --> ENT-FIN-CDP : cdp_id
-    ENT-SYS-DOCUMENTO <|-- ENT-EJE-INFORME_AVANCE
-    ENT-EJE-INFORME_AVANCE --> ENT-EJE-CONVENIO : convenio_id
-    ENT-FIN-OBJETIVO_ESTRATEGICO --> ENT-FIN-EJE_ESTRATEGICO : eje_id
-    ENT-FIN-REMESA --> ENT-FIN-TRANSFERENCIA : transferencia_id
-    ENT-SAL-UMBRAL --> ENT-SAL-DIMENSION : dimension_id
-    ENT-DIG-CONSENTIMIENTO --> ENT-SYS-ACTOR : titular_id
-    ENT-FIN-PPR --> ENT-SYS-PERIODO : periodo_id
-    ENT-ORG-ASISTENCIA --> ENT-ORG-FUNCIONARIO : funcionario_id
-    ENT-SYS-ACTOR <|-- ENT-FIN-PROVEEDOR
-    ENT-DIG-SERVICIO_INTEROP --> ENT-DIG-NODO_INTEROP : nodo_id
-    ENT-ORG-ACTIVO --> ENT-ORG-FUNCIONARIO : responsable_id
-    ENT-SYS-ACTO <|-- ENT-CONV-CABILDO
-    ENT-CONV-CABILDO --> ENT-LOC-COMUNA : territorio_id
-    ENT-DIG-SOLICITUD_ARCO --> ENT-SYS-ACTOR : solicitante_id
-    ENT-SAL-RIESGO --> ENT-ORG-FUNCIONARIO : responsable_id
-    ENT-SYS-DOCUMENTO <|-- ENT-FIN-GARANTIA_FINANCIERA
-    ENT-GOV-TRANSFERENCIA_COMPETENCIA --> ENT-ORG-DIVISION : division_receptora_id
-    ENT-FIN-TRANSFERENCIA --> ENT-EJE-CONVENIO : convenio_id
-    ENT-SYS-ACTOR <|-- ENT-EJE-EJECUTOR
-    ENT-SYS-DOCUMENTO <|-- ENT-DIG-SOLICITUD_TRANSPARENCIA
-    ENT-GOV-TABLA_SESION --> ENT-GOV-SESION_CORE : sesion_core_id
-    ENT-GOV-TABLA_SESION --> ENT-GOV-ACUERDO_CORE : acuerdo_id
-    ENT-SYS-DOCUMENTO <|-- ENT-CONV-ACTA
-    ENT-CONV-ACTA --> ENT-CONV-SESION : sesion_id
-    ENT-CONV-ACTA --> ENT-SYS-ACTOR : secretario_id
-    ENT-DIG-TRAMITE --> ENT-DIG-EXPEDIENTE : expediente_id
-    ENT-DIG-TRAMITE --> ENT-SYS-ACTOR : solicitante_id
-    ENT-SYS-DOCUMENTO <|-- ENT-DIG-FOLIO
-    ENT-DIG-FOLIO --> ENT-DIG-EXPEDIENTE : expediente_id
-    ENT-DIG-NODO_INTEROP --> ENT-ORG-DIVISION : division_propietaria_id
-    ENT-ORG-ACTIVO <|-- ENT-ORG-VEHICULO
-    ENT-SYS-EVENTO <|-- ENT-DIG-EVENTO_DOCUMENTO
-    ENT-DIG-EVENTO_DOCUMENTO --> ENT-SYS-DOCUMENTO : documento_id
-    ENT-DIG-EVENTO_DOCUMENTO --> ENT-ORG-DIVISION : division_destino_id
-    ENT-DIG-EVENTO_DOCUMENTO --> ENT-DIG-CANAL : canal_id
-    ENT-CONV-INSTANCIA <|-- ENT-CONV-GABINETE
-    ENT-LOC-CAPA_GEOESPACIAL --> ENT-LOC-REGION : region_id
-    ENT-DIG-NOTIFICACION --> ENT-SYS-DOCUMENTO : documento_id
-    ENT-DIG-NOTIFICACION --> ENT-SYS-ACTOR : destinatario_id
-    ENT-FIN-ASIGNACION --> ENT-FIN-PRESUPUESTO : presupuesto_id
-    ENT-LOC-ZONA_GEOGRAFICA --> ENT-LOC-REGION : region_id
-    ENT-SYS-ACTO <|-- ENT-FIN-LICITACION
-    ENT-FIN-LICITACION --> ENT-FIN-IDI : idi_asociada_id
-    ENT-CONV-ACUERDO --> ENT-CONV-SESION : sesion_id
-    ENT-SYS-DOCUMENTO <|-- ENT-ORG-CONTRATO_HONORARIO
-    ENT-ORG-CONTRATO_HONORARIO --> ENT-ORG-FUNCIONARIO : funcionario_id
-    ENT-SAL-KEY_RESULT --> ENT-SAL-OKR : okr_id
-    ENT-ORG-CAPACIDAD --> ENT-ORG-DIVISION : division_id
+    note "Modelo Polimórfico de IPR (Omega v2.6.0)"
+    direction BT
+    
+    class IPR {
+        <<Abstract>>
+        +String nombre
+        +String codigo_bip
+        +Monto costo_total
+        +Phase fase_actual
+        +Estado estado_evaluacion
+        +Fondo fondo_financiamiento
+        +Via via_evaluacion
+    }
+
+    class PROYECTO {
+        <<Subtype: Capital>>
+        +Subtitulo [31, 33]
+        +Boolean crea_activo = true
+        +VidaUtil vida_util
+        +MetodoEvaluacion [Costo-Beneficio, Costo-Eficiencia]
+    }
+    
+    class PROGRAMA {
+        <<Subtype: Corriente>>
+        +Subtitulo [24]
+        +Boolean crea_activo = false
+        +String poblacion_objetivo
+        +MetodoEvaluacion [MML, Costo-Efectividad]
+    }
+
+    PROYECTO --|> IPR : es un
+    PROGRAMA --|> IPR : es un
+
+    %% Clases Específicas de Mecanismos (Poly-IPR)
+    class MEC_SNI {
+        <<Instance: Proyecto>>
+        +codigo_bip: String
+        +rate_mdsf: Enum(RS, FI, OT)
+        +etapa_bip: Enum(Perfil, Factibilidad, Ejecucion)
+        +sector: String
+    }
+
+    class MEC_C33 {
+        <<Instance: Proyecto>>
+        +categoria: Enum(ANF, Conservacion, Emergencia)
+        +vida_util_residual: Integer
+        +informe_tecnico_favorable: Bool
+        +cofinanciamiento_anf: Percentage
+    }
+
+    class MEC_FRIL {
+        <<Instance: Proyecto>>
+        +tipo_fril: Enum(Infraestructura, Emergencia)
+        +cumple_norma_5k_utm: Bool
+        +res_subdere: String
+        +plazo_licitacion: Integer
+    }
+
+    class MEC_GLOSA06 {
+        <<Instance: Programa>>
+        +modelo_gestion: Enum(Ejecucion_Directa)
+        +fase_eval_central: Enum(Perfil, Diseno)
+        +rate_ses: Enum(RF, OT, FI)
+        +gasto_admin_max: Percentage
+    }
+
+    class MEC_TRANSFER {
+        <<Instance: Programa>>
+        +modelo_gestion: Enum(Transferencia)
+        +convenio_mandato: Bool
+        +itf_gore: Bool
+        +gasto_honorario_max: Percentage
+    }
+
+    class MEC_FRPD {
+        <<Instance: Mixto>>
+        +eje_fomento: String
+        +nivel_trl: Integer
+        +admisibilidad_tecnica: Bool
+        +innovacion_ctci: Bool
+    }
+
+    class MEC_SUBV8 {
+        <<Instance: Programa>>
+        +fondo_tematico: Enum(Cultura, Deporte, Social...)
+        +puntaje_evaluacion: Float
+        +asignacion_directa: Bool
+        +antiguedad_organizacion: Integer
+    }
+
+    %% Relaciones de Implementación (Realization)
+    MEC_SNI ..|> PROYECTO : implementa
+    MEC_FRIL ..|> PROYECTO : implementa
+    MEC_C33 ..|> PROYECTO : implementa
+    
+    MEC_GLOSA06 ..|> PROGRAMA : implementa
+    MEC_TRANSFER ..|> PROGRAMA : implementa
+    MEC_SUBV8 ..|> PROGRAMA : implementa
+    MEC_FRPD ..|> IPR : implementa (híbrido)

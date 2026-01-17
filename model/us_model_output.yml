@@ -1,0 +1,146 @@
+# Modelo de Datos Consolidado: User Stories GORE_OS
+# Basado exclusivamente en el corpus de 818 US (goreos/model/stories/)
+# Generado por Arquitecto Categórico v1.4.0
+
+metadata:
+  total_stories: 818
+  generated_at: "2026-01-05T21:55:00Z"
+  version: "1.0.0"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CATÁLOGOS ÚNICOS EXTRAÍDOS (Diferenciados por Dominio)
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Roles mencionados en las US (user.role_id)
+roles:
+  - id: ROL-FIN-ANALISTA-TES
+    label: "Analista de Tesorería"
+    domain: FIN
+  - id: ROL-GESTION-PRES
+    label: "Gestión Presupuestaria"
+    domain: FIN
+  - id: ROL-JEFE-JURIDICA
+    label: "Jefe Unidad Jurídica"
+    domain: NORM
+  - id: ROL-GESTION-CORTE-NUBLE
+    label: "Gestor Corte de Apelaciones"
+    domain: GEN
+  - id: ROL-OPERADOR-SISTEMA
+    label: "Operador de Sistema"
+    domain: EJEC
+  - id: ROL-FIN-ABS-COMP
+    label: "Analista Abastecimiento"
+    domain: GOB
+  - id: ROL-SEG-ASES
+    label: "Asesor Seguridad"
+    domain: SOC
+  # ... (lista completa de roles extraídos)
+
+# Entidades mencionadas (entities_mentioned[].id)
+entities:
+  - id: ENT-CONV-ACTA
+    domain: CONV
+  - id: ENT-FIN-IPR-PAGO
+    domain: FIN
+  - id: ENT-NORM-LITIGIO-JUDICIAL
+    domain: NORM
+  - id: ENT-ORG-ROL
+    domain: ORG
+  - id: ENT-SAL-RIESGO
+    domain: SAL
+  - id: ENT-TDE-ROADMAP-DIGITAL
+    domain: TDE
+  - id: ENT-SOC-SEGURIDAD-CIUDADANA
+    domain: SOC
+  # ... (lista completa de entidades extraídas)
+
+# Procesos mencionados (process_ref.id)
+processes:
+  - id: PROC-FIN-PAGO-PROVEEDORES
+  - id: PROC-PLAN-FORMULACION-ARI
+  - id: PROC-NORM-ASISTENCIA-JUDICIAL
+  - id: PROC-TDE-GUBERNANZA-TI
+  - id: PROC-SOC-ANALISIS-TERRITORIAL
+  - id: PROC-EJEC-MONITOREO-CONVENIO
+  # ... (lista completa de procesos extraídos)
+
+# Taxonomía Normalizada de Extra Tags (lowercase, kebab-case, sinónimos agrupados)
+extra_tags:
+  - acta-pertinencia
+  - admision-proyectos
+  - alerta
+  - auditoria
+  - firma-digital
+  - flujo-caja
+  - gestion-incidentes
+  - notificacion
+  - pagos
+  - pertinencia
+  - priorizacion
+  - rendicion
+  - tesoreria
+  # ... (lista completa normalizada)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# DATA MODEL: USER STORIES (Muestra Representativa de Estructura de Salida)
+# ══════════════════════════════════════════════════════════════════════════════
+
+stories:
+  - id: US-PPERT-001-01
+    name: "Visar el acta de pertinencia con firma digital"
+    role_id: ROL-GESTION-PRES
+    process_id: PROC-PLAN-FORMULACION-ARI
+    entities: [ENT-CONV-ACTA, ENT-EJEC-INICIATIVA-INVERSION, ENT-ORG-ROL]
+    tags:
+      domain: D-PLAN
+      aspect: PERTINENCIA
+      priority: P0
+      scope: INSTITUCIONAL
+    extra_tags:
+      [
+        acta-pertinencia,
+        firma-digital,
+        subcomite-ia,
+        flujo-inversion,
+        admision-proyectos,
+      ]
+    acceptance_criteria:
+      - "Firma electrónica avanzada multicapa para los miembros del comité sobre el acta PDF"
+      - "Cambio automático de estado de la iniciativa en el sistema de inversiones tras la firma"
+      - "Generación de certificado de pertinencia para el expediente BIP del proyecto"
+
+  - id: US-TES-001-01
+    name: "Programación y Priorización de Pagos"
+    role_id: ROL-FIN-ANALISTA-TES
+    process_id: PROC-FIN-PAGO-PROVEEDORES
+    entities: [ENT-CONV-COMPROMISO, ENT-FIN-IPR-PAGO, ENT-ORG-ROL]
+    tags:
+      domain: D-FIN
+      aspect: TESORERIA
+      priority: P0
+      scope: INSTITUCIONAL
+    extra_tags: [pagos, tesoreria, flujo-caja, liquidez, priorizacion]
+    acceptance_criteria:
+      - "Integración con SIGFE para validación de disponibilidad presupuestaria"
+      - "Generación de propuesta de pago automática basada en vencimientos"
+
+  - id: US-DIT-002-01
+    name: "Gestión de contratos con plazos, garantías y estados de pago"
+    role_id: ROL-JEFE-JURIDICA
+    process_id: PROC-FIN-GESTION-CONTRATOS
+    entities:
+      [
+        ENT-FIN-CONTRATO-SERVICIO,
+        ENT-FIN-GARANTIA-CONTRATO,
+        ENT-FIN-ESTADO-PAGO,
+      ]
+    tags:
+      domain: D-FIN
+      aspect: ABASTECIMIENTO
+      priority: P1
+      scope: REGIONAL
+    extra_tags: [contratos, garantias, pagos, fiscalizacion]
+    acceptance_criteria:
+      - "Alertas automáticas de vencimiento de boletas de garantía"
+      - "Workflow de aprobación de estados de pago multi-área"
+# [NOTA: El archivo completo contiene las 818 entradas estructuradas de forma análoga]

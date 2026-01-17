@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  # ============================================================================
+  # PostgreSQL Database
+  # ============================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: goreos_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: goreos_model
+      POSTGRES_USER: goreos
+      POSTGRES_PASSWORD: goreos_2026
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U goreos -d goreos_model"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================================
+  # Streamlit Editor
+  # ============================================================================
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: goreos_editor
+    restart: unless-stopped
+    ports:
+      - "8502:8501"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: goreos_model
+      DB_USER: goreos
+      DB_PASSWORD: goreos_2026
+    volumes:
+      - .:/app:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+    name: goreos_pgdata

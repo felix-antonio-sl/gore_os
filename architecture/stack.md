@@ -1,101 +1,46 @@
-# Stack Tecnológico GORE OS
+# 🛠️ Stack Tecnológico
 
-> **Versión:** 2.1
-> **Última actualización:** Diciembre 2025
-> **Paradigma:** Ingeniería Composicional (Functorial Pipeline)
-> **Alineación Estratégica:** [TDE-CORE-PRI-*]
+Este documento detalla la infraestructura técnica y las herramientas utilizadas en el desarrollo del proyecto.
 
 ---
 
-## 1. Alineación Estratégica (TDE & GORE Ideal)
+## 🖥️ 1. Backend (Capa de Servidor y Lógica)
 
-La arquitectura de GORE_OS no es arbitraria; responde directamente a los principios de la **Transformación Digital del Estado (TDE)** y la visión del **GORE Ideal 4.0**.
+El backend está diseñado para ser robusto, modular y fácil de mantener, utilizando el ecosistema de Python.
 
-| Principio TDE                  | Implementación Arquitectónica                                  | ID Referencia      |
-| :----------------------------- | :------------------------------------------------------------- | :----------------- |
-| **Digital por Diseño**         | API First con tRPC. Todo proceso nace digital y estructurado.  | `TDE_CORE_PRI_001` |
-| **Gobierno Integrado**         | Interoperabilidad nativa (PISEE ready) y "Once Only" vía APIs. | `TDE_CORE_PRI_003` |
-| **Seguridad y Confianza**      | Autenticación delegada (ClaveÚnica), Ciberseguridad NIST.      | `TDE_CORE_PRI_005` |
-| **Uso Eficiente**              | Stack ligero (Bun/Hono) y contenedorizable (Cloud First).      | `TDE_CORE_PRI_010` |
-| **Estado impulsado por Datos** | PostGIS + Metadatos DCAT en el núcleo del modelo.              | `TDE_CORE_OBJ_002` |
-
----
-
-## 2. Stack Canónico
-
-| Capa           | Tecnología            | Rol Categórico                 | Justificación TDE/GORE                        |
-| :------------- | :-------------------- | :----------------------------- | :-------------------------------------------- |
-| **Runtime**    | Bun                   | VM JavaScript alto rendimiento | Eficiencia de recursos (Green IT).            |
-| **HTTP**       | Hono                  | Middleware composable          | Estándares abiertos (Web API).                |
-| **Effects**    | Effect-TS             | Monad Stack `Effect<A, E, R>`  | Resiliencia y manejo de errores (NIST F3-F5). |
-| **API**        | tRPC v11              | Functor `S → API`              | Seguridad por diseño (Tipado fuerte).         |
-| **FSM**        | XState v5             | Coalgebra `c: S → F(S)`        | Trazabilidad de procesos administrativos.     |
-| **ORM**        | Drizzle               | Adjunción `ORM⊣Reflect`        | Integridad de datos y auditoría.              |
-| **Validation** | Zod                   | Subobject Classifier Ω         | Calidad de datos en entrada.                  |
-| **Database**   | PostgreSQL + PostGIS  | Persistencia geo-referenciada  | Base para el **Gemelo Digital** Territorial.  |
-| **Auth**       | Keycloak / ClaveÚnica | Identity Provider              | Cumplimiento DS N°9 (Autenticación).          |
-| **Infra**      | Docker + Caddy        | Orquestación Segura            | Cumplimiento Política Cloud First.            |
+- **Lenguaje:** `Python 3.11+`
+- **Framework Web:** `Flask 3.0.3` (Implementado bajo el patrón **Application Factory**).
+- **ORM (Mapeo Objeto-Relacional):** `SQLAlchemy 2.0.30` con la extensión `Flask-SQLAlchemy 3.1.1`.
+- **Gestión de Usuarios:** `Flask-Login 0.6.3` para el manejo integral de sesiones y autenticación.
+- **Formularios y Seguridad:** `Flask-WTF 1.2.1` con protección **CSRF** integrada.
+- **Validaciones:** `email-validator` para la validación robusta y segura de datos de entrada.
+- **Entorno:** `python-dotenv` para la gestión segura de variables de configuración y secretos.
+- **Servidor WSGI:** `Gunicorn 22.0.0` para la ejecución del servidor en entornos de pre-producción y producción.
 
 ---
 
-## 3. Arquitectura de Integración (Patrón Functorial)
+## 🎨 2. Frontend (Capa de Presentación e Interactividad)
 
-El sistema implementa un **Pipeline Functorial** que transforma necesidades ciudadanas en servicios digitales seguros.
+Se utiliza un enfoque **SSR (Server Side Rendering)** mejorado con herramientas de interactividad ligera, priorizando la velocidad y simplicidad sobre los frameworks pesados de SPA.
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                   ARQUITECTURA DE VALOR PÚBLICO (GORE 4.0)                  │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   FRONTERA (Ciudadanía)       PUENTE (Seguro)      NÚCLEO (Estratégico)     │
-│   ┌──────────────┐       ┌──────────────┐       ┌──────────────┐            │
-│   │  React/Web   │       │     tRPC     │       │  Effect-TS   │            │
-│   │ (Experiencia)│──────►│ (Validación) │──────►│  (Dominio)   │            │
-│   └──────────────┘       └──────────────┘       └──────────────┘            │
-│         ▲                       │                       │                   │
-│         │ (ClaveÚnica)          ▼ (Audit)               ▼ (PostGIS)         │
-│   Identidad Digital        Logs Seguridad          Datos Maestros           │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
-**Reglas de Oro:**
-1.  **Validación en Frontera (Zod)**: Protege el núcleo de datos "sucios", garantizando Calidad de Datos (`TDE-DATOS-CALIDAD-SEGURIDAD-01`).
-2.  **Núcleo Puro (Effect)**: La lógica de negocio está aislada de la infraestructura, facilitando pruebas y auditoría.
-3.  **Identidad Federada**: No gestionamos passwords; delegamos en ClaveÚnica/Keycloak.
+- **Motor de Plantillas:** `Jinja2` (Ecosistema nativo de Flask).
+- **Interactividad Reactiva:** `HTMX 2.0.0`. Permite realizar actualizaciones parciales de la página (AJAX) directamente desde atributos HTML, mejorando drásticamente la UX sin la complejidad de JavaScript pesado.
+- **Estilos y Diseño:** `Tailwind CSS 3.4.0`. Utiliza un flujo de compilación vía Node.js para generar archivos CSS optimizados, purgados y minificados.
+- **Componentes de Cliente:** `Alpine.js 3.x`. Utilizado para lógica de UI local que no requiere comunicación con el servidor (modales, sidebars, estados temporales).
+- **Visualización de Datos:** `Chart.js`. Empleado para la generación de gráficos interactivos en los Dashboards de crisis.
 
 ---
 
-## 4. Estructura C4 y Vistas
+## 🗄️ 3. Base de Datos
 
-Para profundizar en la geometría del sistema:
-
-- **[C1 Contexto](c1_context/system_context.md)**: El "Gobierno Integrado" y sus fronteras.
-- **[C2 Contenedores](c2_containers/containers.md)**: Despliegue seguro y Cloud First.
-- **[C3 Componentes](c3_components/components.md)**: Modularidad para la evolución (EVALTIC).
-- **[Vista Categórica](categorical-view/pipeline.md)**: El rigor matemático detrás de la trazabilidad.
+- **Motor:** `PostgreSQL 16` con la extensión espacial `PostGIS`.
+- **Modelo de Datos:** El sistema actúa como una capa de presentación y gestión sobre esquemas ya existentes, conectándose directamente a la base de datos institucional.
 
 ---
 
-## 5. Infraestructura y Operaciones (NIST)
+## ⚙️ 4. Infraestructura y DevOps
 
-La operación sigue el Marco de Ciberseguridad NIST (`TDE-CIBER-MARCO-NIST-01`):
-
-1.  **Identificar**: Inventario de activos en código (IaC).
-2.  **Proteger**: Caddy con TLS automático, Firewalls, Segregación de redes Docker.
-3.  **Detectar**: Logs estructurados (Pino) centralizados.
-4.  **Responder**: Procedimientos de restauración automatizados.
-5.  **Recuperar**: Backups diarios a S3 (inmutable).
-
----
-
-## Apéndice: Mapeo de Tecnologías a Capacidades
-
-| Tecnología    | Capacidad TDE Soportada                           |
-| :------------ | :------------------------------------------------ |
-| **PostGIS**   | Gemelo Digital, Planificación Territorial (PROT). |
-| **tRPC**      | Interoperabilidad semántica interna.              |
-| **Effect-TS** | Resiliencia operativa, Trazabilidad de Errores.   |
-| **Turborepo** | Agilidad en el ciclo de desarrollo (CI/CD).       |
-
-*Documento parte de GORE_OS*
+- **Contenerización:** `Docker`. Implementación de **Multi-stage Builds** en el `Dockerfile` para separar la compilación de assets (Node.js) de la ejecución de la app (Python), resultando en imágenes livianas y seguras.
+- **Orquestación:** `Docker Compose`. Manejo coordinado de servicios (App, BD, Nginx) y redes internas.
+- **Proxy Inverso:** `Nginx`. Configurado para el manejo eficiente de tráfico, terminación SSL y entrega optimizada de archivos estáticos.
+- **Integración:** Diseño modular para coexistir en la misma red Docker que otros proyectos del ecosistema (como `data-gore`).

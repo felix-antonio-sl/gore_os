@@ -44,6 +44,6 @@ extra_tags:
 
 status: ENRICHED
 acceptance_criteria:
-  - Tablero de control de acuerdos con estados: "En Trámite", "Ejecutado", "Observado" o "Incumplido"
+  - 'Tablero de control de acuerdos con estados: "En Trámite", "Ejecutado", "Observado" o "Incumplido"'
   - Módulo de carga de evidencias (Resoluciones, Convenios, Fotos de obra) asociadas a cada acuerdo del CORE
   - Generación de reportes de cumplimiento por comisión del CORE para sesiones de fiscalización

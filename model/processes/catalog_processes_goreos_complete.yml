@@ -1,0 +1,955 @@
+# =============================================================================
+# CATÁLOGO COMPLETO DE PROCESOS GORE_OS v2.6.0
+# Generado: 2026-01-05
+# Total: 289 procesos únicos de User Stories
+# =============================================================================
+
+_meta:
+  urn: "urn:goreos:catalog:processes:complete:2.6.0"
+  title: "Catálogo Completo de Procesos GORE_OS"
+  generated_at: "2026-01-05"
+  total_processes: 289
+
+# =============================================================================
+# D-FIN: FINANZAS Y PRESUPUESTO (63 procesos)
+# =============================================================================
+D-FIN:
+  description: "Gestión financiera, presupuestaria, inversión y rendición de cuentas"
+  omega_layer: 2
+  processes:
+    # --- Ciclo IPR Core ---
+    - id: IPR_CORE-P1
+      name: "Ingreso, Pertinencia y Admisibilidad"
+      description: "Fase 1: Recepción de postulaciones, análisis CDR, verificación de requisitos formales"
+    - id: IPR_CORE-P4
+      name: "Formalización de IPR"
+      description: "Fase 4: Actos administrativos, Convenios de Transferencia, Toma de Razón CGR"
+    - id: IPR_CORE-P5
+      name: "Ejecución y Supervisión"
+      description: "Fase 5: Monitoreo, Estados de Pago, informes de avance"
+    - id: IPR_CORE-P6
+      name: "Modificaciones en Ejecución"
+      description: "Fase 6: Gestión de cambios de plazo, presupuesto y especificaciones"
+    - id: IPR_CORE-P7
+      name: "Cierre Técnico-Financiero"
+      description: "Fase 7: Cierre formal, rendiciones, liberación de garantías, evaluación ex-post"
+
+    # --- Evaluación ---
+    - id: EVALUACION-PROYECTOS
+      name: "Evaluación de Proyectos (SNI)"
+      description: "Análisis técnico-económico para obtención de RS del MDSF"
+    - id: EVALUACION-TECNICA
+      name: "Evaluación Técnica"
+      description: "Análisis de factibilidad y cumplimiento de normas sectoriales"
+    - id: EVALUACION-TECNICA-C33
+      name: "Evaluación Circular 33"
+      description: "Evaluación simplificada para conservación y reposición de activos"
+    - id: EVALUACION-PERTINENCIA
+      name: "Evaluación de Pertinencia"
+      description: "Análisis de alineación estratégica con ERD por CDR"
+    - id: EVALUACION-METODOLOGICA
+      name: "Evaluación Metodológica"
+      description: "Verificación de metodología SNI aplicada en diseño de proyectos"
+    - id: REEVALUACION-RS
+      name: "Re-Evaluación RS"
+      description: "Nueva evaluación ante cambios sustanciales de costo o diseño"
+    - id: ADMISIBILIDAD
+      name: "Admisibilidad"
+      description: "Verificación de requisitos formales de postulación"
+
+    # --- Presupuesto ---
+    - id: EJECUCION-PRESUPUESTARIA
+      name: "Ejecución Presupuestaria"
+      description: "Control de gasto: compromiso, devengo y pago según DL 1.263"
+    - id: EMISION-CDP
+      name: "Emisión de CDP"
+      description: "Generación de Certificados de Disponibilidad Presupuestaria"
+    - id: MODIFICACION-PRESUPUESTARIA
+      name: "Modificación Presupuestaria"
+      description: "Ajustes al presupuesto vigente (Resolución/Decreto)"
+    - id: FORMULACION-PRESUPUESTARIA
+      name: "Formulación Presupuestaria"
+      description: "Elaboración del anteproyecto de presupuesto anual"
+    - id: APERTURA-PRESUPUESTARIA
+      name: "Apertura Presupuestaria"
+      description: "Activación del presupuesto al inicio del ejercicio"
+    - id: CIERRE-PRESUPUESTARIO
+      name: "Cierre Presupuestario"
+      description: "Cierre de ejercicio presupuestario"
+    - id: CONTROL-PRESUPUESTARIO
+      name: "Control Presupuestario"
+      description: "Seguimiento de la ejecución vs asignado"
+    - id: EJECUCION-GASTO
+      name: "Ejecución del Gasto"
+      description: "Proceso de gasto corriente y de inversión"
+    - id: CONTABILIDAD-PRESUPUESTARIA
+      name: "Contabilidad Presupuestaria"
+      description: "Registro contable de operaciones presupuestarias"
+
+    # --- Contabilidad ---
+    - id: CIERRE-CONTABLE-MENSUAL
+      name: "Cierre Contable Mensual"
+      description: "Cuadre y cierre de contabilidad al fin de cada mes"
+    - id: CIERRE-ANUAL
+      name: "Cierre Anual"
+      description: "Cierre de ejercicio contable, deuda flotante, balance gubernamental"
+    - id: CIERRE-MENSUAL
+      name: "Cierre Mensual"
+      description: "Consolidación de registros contables mensuales"
+    - id: CONCILIACION-BANCARIA
+      name: "Conciliación Bancaria"
+      description: "Verificación libro banco vs extractos bancarios"
+    - id: CONCILIACION-AUTOMATICA
+      name: "Conciliación Automática"
+      description: "Conciliación mediante algoritmos de matching"
+    - id: CONCILIACION-BANCARIA-AUTO
+      name: "Conciliación Bancaria Automatizada"
+      description: "Proceso automatizado de cuadratura bancaria"
+    - id: ANALISIS-CUENTAS-BANCARIAS
+      name: "Análisis de Cuentas Bancarias"
+      description: "Revisión de movimientos y saldos por cuenta"
+    - id: CONTABILIZACION-GASTOS-OPERATIVOS
+      name: "Contabilización de Gastos"
+      description: "Registro de gastos operacionales (Subt 22)"
+    - id: REPORTING-CONTABLE
+      name: "Reporting Contable"
+      description: "Generación de informes contables"
+    - id: PREPARACION-ESTADOS-FINANCIEROS
+      name: "Preparación de Estados Financieros"
+      description: "Elaboración de Balance, Estado de Resultados"
+    - id: DETERMINACION-DEUDA-FLOTANTE
+      name: "Determinación Deuda Flotante"
+      description: "Cálculo de compromisos no pagados al cierre"
+
+    # --- Tesorería y Pagos ---
+    - id: PAGOS-TESORERIA
+      name: "Pagos de Tesorería"
+      description: "Ejecución de pagos desde cuentas institucionales"
+    - id: PAGO-TESORERIA
+      name: "Pago de Tesorería"
+      description: "Transferencias y giros desde tesorería"
+    - id: PAGO-PROVEEDORES
+      name: "Pago a Proveedores"
+      description: "Procesamiento de facturas y pagos a proveedores"
+    - id: PAGO-BENEFICIARIOS
+      name: "Pago a Beneficiarios"
+      description: "Transferencias a beneficiarios de programas y subvenciones"
+    - id: PAGO-REMUNERACIONES
+      name: "Pago de Remuneraciones"
+      description: "Proceso de pago de sueldos al personal"
+    - id: CIERRE-CAJA-DIARIO
+      name: "Cierre de Caja Diario"
+      description: "Cuadre de operaciones de caja al fin de jornada"
+    - id: GESTION-FONDO-FIJO
+      name: "Gestión de Fondo Fijo"
+      description: "Administración de caja chica institucional"
+
+    # --- Rendiciones ---
+    - id: REND-P1
+      name: "Rendición de Cuentas"
+      description: "Comprobación documental del uso de fondos transferidos"
+    - id: CONTROL-RENDICIONES
+      name: "Control de Rendiciones"
+      description: "Fiscalización de rendiciones de ejecutores"
+    - id: SEGUIMIENTO-TRANSFERENCIAS
+      name: "Seguimiento de Transferencias"
+      description: "Monitoreo de recursos transferidos y su rendición"
+    - id: TRANSFERENCIA-ENTIDADES
+      name: "Transferencia a Entidades"
+      description: "Traspaso de recursos a ejecutores externos"
+
+    # --- Compras y Contratos ---
+    - id: CICLO-COMPRAS
+      name: "Ciclo de Compras"
+      description: "Gestión completa de adquisiciones públicas"
+    - id: TRAMITACION-COMPRAS
+      name: "Tramitación de Compras"
+      description: "Proceso administrativo de compra"
+    - id: TRAMITACION-COMPRA
+      name: "Tramitación de Compra"
+      description: "Gestión de proceso de adquisición individual"
+    - id: ADQUISICION-CONVENIO-MARCO
+      name: "Adquisición Convenio Marco"
+      description: "Compras simplificadas vía ChileCompra CM"
+    - id: ADQUISICION-C33
+      name: "Adquisición Circular 33"
+      description: "Compra de activos bajo procedimiento C33"
+    - id: ELABORACION-BASES
+      name: "Elaboración de Bases"
+      description: "Redacción de bases administrativas y técnicas"
+    - id: EVALUACION-OFERTAS
+      name: "Evaluación de Ofertas"
+      description: "Análisis y puntuación de propuestas recibidas"
+    - id: EMISION-ORDEN-COMPRA
+      name: "Emisión de Orden de Compra"
+      description: "Generación de OC en Mercado Público"
+    - id: RECEPCION-CONFORMIDAD
+      name: "Recepción Conforme"
+      description: "Validación de bienes/servicios recibidos"
+    - id: GESTION-CONTRATOS
+      name: "Gestión de Contratos"
+      description: "Administración del ciclo de vida de contratos"
+    - id: RENOVACION-CONTRATOS
+      name: "Renovación de Contratos"
+      description: "Gestión de prórrogas y renovaciones"
+    - id: CONTROL-VIGENCIA-CONVENIO
+      name: "Control de Vigencia de Convenios"
+      description: "Monitoreo de plazos de convenios activos"
+    - id: CUSTODIA-GARANTIAS
+      name: "Custodia de Garantías"
+      description: "Resguardo de boletas de garantía"
+    - id: DEVOLUCION-GARANTIAS
+      name: "Devolución de Garantías"
+      description: "Liberación de garantías tras cumplimiento"
+    - id: GESTION-ADQUISICIONES
+      name: "Gestión de Adquisiciones"
+      description: "Administración general del proceso de compras"
+    - id: VALIDACION-NORMATIVA-GASTO
+      name: "Validación Normativa de Gasto"
+      description: "Verificación de cumplimiento legal del gasto"
+
+    # --- Cartera e Inversión ---
+    - id: GESTION-INVERSION
+      name: "Gestión de Inversión"
+      description: "Administración del portafolio de inversión regional"
+    - id: PRIORIZACION-CARTERA
+      name: "Priorización de Cartera"
+      description: "Ordenamiento de proyectos según criterios estratégicos"
+    - id: CALENDARIO-FONDOS
+      name: "Calendario de Fondos"
+      description: "Programación de disponibilidad de recursos"
+    - id: ASIGNACION-APR
+      name: "Asignación APR"
+      description: "Distribución de Asignación Presupuestaria Regional"
+    - id: ASIGNACION-URGENCIA-5
+      name: "Asignación Urgencia 5%"
+      description: "Uso del 5% de emergencia según glosa"
+    - id: GESTION-CRISIS-FINANCIERA
+      name: "Gestión de Crisis Financiera"
+      description: "Respuesta a contingencias presupuestarias"
+
+# =============================================================================
+# D-EJEC: EJECUCIÓN DE PROYECTOS (25 procesos)
+# =============================================================================
+D-EJEC:
+  description: "Ejecución, supervisión técnica y cierre de inversiones"
+  omega_layer: 3
+  processes:
+    - id: ELABORACION-CONVENIO
+      name: "Elaboración de Convenio"
+      description: "Redacción de convenios de ejecución con ejecutores"
+    - id: VERIFICACION-CONVENIO
+      name: "Verificación de Convenio"
+      description: "Revisión de cumplimiento de cláusulas contractuales"
+    - id: SUPERVISION-TECNICA
+      name: "Supervisión Técnica (ITO/ITP)"
+      description: "Fiscalización técnica en terreno de obras y programas"
+    - id: MONITOREO-CONVENIO
+      name: "Monitoreo de Convenio"
+      description: "Seguimiento administrativo y técnico de convenios"
+    - id: MONITOREO-OBRAS
+      name: "Monitoreo de Obras"
+      description: "Seguimiento físico del avance de obras"
+    - id: MONITOREO-CRITICO
+      name: "Monitoreo Crítico"
+      description: "Seguimiento intensivo de proyectos en riesgo"
+    - id: REUNION-INICIO
+      name: "Reunión de Inicio"
+      description: "Kick-off con ejecutor para establecer acuerdos"
+    - id: MODIFICACION-TECNICA
+      name: "Modificación Técnica"
+      description: "Gestión de cambios técnicos durante ejecución"
+    - id: MODIFICACION-INTERNA
+      name: "Modificación Interna"
+      description: "Cambios menores sin afectar convenio"
+    - id: FINALIZACION-TECNICA
+      name: "Finalización Técnica"
+      description: "Cierre técnico de proyecto"
+    - id: CIERRE-ADMINISTRATIVO
+      name: "Cierre Administrativo"
+      description: "Cierre documental y financiero de proyecto"
+    - id: SEGUIMIENTO-EJECUCION
+      name: "Seguimiento de Ejecución"
+      description: "Control de avance de proyectos en ejecución"
+    - id: SEGUIMIENTO-PROYECTOS
+      name: "Seguimiento de Proyectos"
+      description: "Monitoreo general del portafolio de proyectos"
+    - id: CORRECCION-TRAMITES
+      name: "Corrección de Trámites"
+      description: "Subsanación de observaciones en expedientes"
+    - id: GESTION-OBSTACULOS
+      name: "Gestión de Obstáculos"
+      description: "Resolución de problemas que afectan ejecución"
+    - id: GESTION-RIESGO
+      name: "Gestión de Riesgo"
+      description: "Identificación y mitigación de riesgos de proyectos"
+    - id: EJECUCION-PROGRAMA
+      name: "Ejecución de Programa"
+      description: "Desarrollo de programas sociales/productivos"
+    - id: PROYECTOS-INVERSION-SOCIAL
+      name: "Proyectos de Inversión Social"
+      description: "Gestión de proyectos con componente social"
+    - id: PROYECTO-SOCIAL
+      name: "Proyecto Social"
+      description: "Ejecución de iniciativas de desarrollo social"
+
+    # --- FÉNIX ---
+    - id: GESTION-CASO-FENIX
+      name: "Gestión de Caso FÉNIX"
+      description: "Intervención intensiva de proyectos críticos"
+    - id: INTERVENCION-FENIX
+      name: "Intervención FÉNIX"
+      description: "Rescate de proyectos con rezago severo"
+
+# =============================================================================
+# D-PLAN: PLANIFICACIÓN Y DESARROLLO (17 procesos)
+# =============================================================================
+D-PLAN:
+  description: "Planificación estratégica, territorial y seguimiento del desarrollo"
+  omega_layer: 1
+  processes:
+    - id: SEGUIMIENTO-ERD
+      name: "Seguimiento ERD"
+      description: "Monitoreo de la Estrategia Regional de Desarrollo"
+    - id: MONITOREO-ERD
+      name: "Monitoreo ERD"
+      description: "Control de indicadores estratégicos de la ERD"
+    - id: ALINEACION-ERD
+      name: "Alineación ERD"
+      description: "Verificación de coherencia de inversiones con ERD"
+    - id: ALINEAMIENTO-ESTRATEGICO
+      name: "Alineamiento Estratégico"
+      description: "Articulación de iniciativas con objetivos regionales"
+    - id: FORMULACION-ARI
+      name: "Formulación ARI"
+      description: "Elaboración del Anteproyecto Regional de Inversiones"
+    - id: PREPARACION-ARI
+      name: "Preparación ARI"
+      description: "Recopilación de insumos para el ARI"
+    - id: ANALISIS-TERRITORIAL
+      name: "Análisis Territorial"
+      description: "Estudios de realidad territorial regional"
+    - id: ANALISIS-ESPACIAL
+      name: "Análisis Espacial"
+      description: "Estudios geoespaciales del territorio"
+    - id: FORMULACION-PROYECTOS
+      name: "Formulación de Proyectos"
+      description: "Diseño de perfiles de proyecto según SNI"
+    - id: DIAGNOSTICO
+      name: "Diagnóstico"
+      description: "Levantamiento de situación actual y brechas"
+    - id: DISENO-PROGRAMAS
+      name: "Diseño de Programas"
+      description: "Formulación de programas con marco lógico"
+    - id: MONITOREO-PLANES
+      name: "Monitoreo de Planes"
+      description: "Seguimiento de planes sectoriales y territoriales"
+    - id: POSTULACION-FONDOS
+      name: "Postulación a Fondos"
+      description: "Apoyo en presentación de proyectos a fondos externos"
+    - id: ESTRATEGIA-CTCI
+      name: "Estrategia CTCI"
+      description: "Gestión de políticas de ciencia, tecnología e innovación"
+    - id: CIENCIA-TECNOLOGIA
+      name: "Ciencia y Tecnología"
+      description: "Fomento de iniciativas CTCI regionales"
+    - id: PRIORIZACION-VIAL
+      name: "Priorización Vial"
+      description: "Ordenamiento de inversiones en red vial"
+
+# =============================================================================
+# D-GOB: GOBERNANZA INSTITUCIONAL (22 procesos)
+# =============================================================================
+D-GOB:
+  description: "CORE, Gobernador, coordinación interinstitucional"
+  omega_layer: 1
+  processes:
+    - id: SESION-CORE
+      name: "Sesión CORE"
+      description: "Desarrollo de sesiones del Consejo Regional"
+    - id: PREPARACION-SESION
+      name: "Preparación de Sesión"
+      description: "Elaboración de tabla y carpeta para CORE"
+    - id: VOTACION-SESION
+      name: "Votación en Sesión"
+      description: "Proceso de votación de materias en CORE"
+    - id: COORDINACION-CORE
+      name: "Coordinación CORE"
+      description: "Gestión de agenda del Consejo Regional"
+    - id: GESTION-CONOCIMIENTO-CORE
+      name: "Gestión del Conocimiento CORE"
+      description: "Sistematización de acuerdos y precedentes"
+    - id: PRESIDIR-SESION-CORE
+      name: "Presidir Sesión CORE"
+      description: "Conducción de sesiones por la autoridad"
+    - id: PARTICIPACION-CIUDADANA
+      name: "Participación Ciudadana"
+      description: "Gestión de consultas y mecanismos participativos"
+    - id: PARTICIPACION-COSOC
+      name: "Participación COSOC"
+      description: "Gestión del Consejo de la Sociedad Civil"
+    - id: GESTION-GABINETE
+      name: "Gestión de Gabinete"
+      description: "Administración de agenda del Gobernador/a"
+    - id: GESTION-CABINET
+      name: "Gestión de Cabinet"
+      description: "Coordinación de equipo directivo"
+    - id: REPORTE-GESTION-AUTORIDAD
+      name: "Reporte a la Autoridad"
+      description: "Informes ejecutivos para toma de decisiones"
+    - id: GESTION-ESTRATEGICA
+      name: "Gestión Estratégica"
+      description: "Definición y seguimiento de prioridades políticas"
+    - id: COORDINACION-INTERINSTITUCIONAL
+      name: "Coordinación Interinstitucional"
+      description: "Articulación con ministerios y servicios"
+    - id: COORDINACION-INTERAGENCIA
+      name: "Coordinación Interagencia"
+      description: "Trabajo conjunto con otros organismos públicos"
+    - id: COORDINACION-TERRITORIAL
+      name: "Coordinación Territorial"
+      description: "Vínculo con delegaciones y municipios"
+    - id: ARTICULACION-MUNICIPAL
+      name: "Articulación Municipal"
+      description: "Coordinación con gobiernos locales"
+    - id: FEDERACION-MUNICIPAL
+      name: "Federación Municipal"
+      description: "Trabajo con asociaciones de municipios"
+    - id: SEGUIMIENTO-SECTORIAL
+      name: "Seguimiento Sectorial"
+      description: "Monitoreo de inversión ministerial en la región"
+    - id: SEGUIMIENTO-PROVINCIAL
+      name: "Seguimiento Provincial"
+      description: "Control de gestión en provincias"
+    - id: VINCULACION-STAKEHOLDERS
+      name: "Vinculación con Stakeholders"
+      description: "Gestión de relaciones con actores clave"
+    - id: DESCENTRALIZACION-COMPETENCIAS
+      name: "Descentralización de Competencias"
+      description: "Gestión del traspaso de facultades desde nivel central"
+    - id: GESTOR-PATROCINIOS
+      name: "Gestión de Patrocinios"
+      description: "Administración de auspicios y patrocinios institucionales"
+
+# =============================================================================
+# D-NORM: JURÍDICO Y CONTROL (18 procesos)
+# =============================================================================
+D-NORM:
+  description: "Control interno, auditoría, cumplimiento legal"
+  omega_layer: 1
+  processes:
+    - id: ELABORACION-ACTOS
+      name: "Elaboración de Actos"
+      description: "Redacción de resoluciones y decretos"
+    - id: REVISION-JURIDICA
+      name: "Revisión Jurídica"
+      description: "Validación legal de documentos"
+    - id: REVISION-ACTOS
+      name: "Revisión de Actos"
+      description: "Control de legalidad de actos administrativos"
+    - id: CONSULTA-PRECEDENTES
+      name: "Consulta de Precedentes"
+      description: "Búsqueda de jurisprudencia administrativa"
+    - id: SUMARIO-ADMINISTRATIVO
+      name: "Sumario Administrativo"
+      description: "Procedimiento disciplinario ante faltas graves"
+    - id: SEGUIMIENTO-CAUSAS
+      name: "Seguimiento de Causas"
+      description: "Control de litigios judiciales"
+    - id: DEFENSA-JUDICIAL
+      name: "Defensa Judicial"
+      description: "Patrocinio de causas ante tribunales"
+    - id: RESPUESTA-CONTENCIOSO
+      name: "Respuesta Contencioso"
+      description: "Contestación de demandas y recursos"
+    - id: ASISTENCIA-JUDICIAL
+      name: "Asistencia Judicial"
+      description: "Apoyo técnico en materias legales"
+    - id: RESPUESTA-OFICIO
+      name: "Respuesta a Oficios"
+      description: "Contestación de requerimientos oficiales"
+    - id: VALIDACION-NORMATIVA
+      name: "Validación Normativa"
+      description: "Verificación de cumplimiento legal"
+    - id: AUDITORIA-INTERNA
+      name: "Auditoría Interna"
+      description: "Evaluación de procesos y controles"
+    - id: AUDITORIA-EXTERNA
+      name: "Auditoría Externa (CGR)"
+      description: "Coordinación con fiscalizaciones de CGR"
+    - id: AUDITORIA-SISTEMAS
+      name: "Auditoría de Sistemas"
+      description: "Evaluación de controles TI"
+    - id: CONTROL-INTERNO
+      name: "Control Interno"
+      description: "Gestión del sistema de control institucional"
+    - id: CONTROL-PROBIDAD
+      name: "Control de Probidad"
+      description: "Verificación de declaraciones de intereses y patrimonio"
+    - id: TRANSPARENCIA-ACTIVA
+      name: "Transparencia Activa"
+      description: "Publicación de información obligatoria"
+    - id: GESTION-LOBBY
+      name: "Gestión de Lobby"
+      description: "Registro de audiencias según Ley 20.730"
+
+# =============================================================================
+# D-GESTION: PERSONAS Y DESARROLLO ORGANIZACIONAL (33 procesos)
+# =============================================================================
+D-GESTION:
+  description: "Talento humano, bienestar y desarrollo organizacional"
+  omega_layer: 4
+  processes:
+    - id: RECLUTAMIENTO-SELECCION
+      name: "Reclutamiento y Selección"
+      description: "Proceso de contratación de personal"
+    - id: EVALUACION-CURRICULAR
+      name: "Evaluación Curricular"
+      description: "Análisis de antecedentes de postulantes"
+    - id: ONBOARDING
+      name: "Onboarding"
+      description: "Proceso de inducción para nuevos funcionarios"
+    - id: ONBOARDING-FUNCIONARIO
+      name: "Onboarding Funcionario"
+      description: "Integración de nuevo personal"
+    - id: CESE-FUNCIONES
+      name: "Cese de Funciones"
+      description: "Proceso de término de relación laboral"
+    - id: CALCULO-REMUNERACIONES
+      name: "Cálculo de Remuneraciones"
+      description: "Proceso mensual de cálculo de sueldos"
+    - id: DECLARACION-PREVISIONAL
+      name: "Declaración Previsional"
+      description: "Pago de cotizaciones a AFP/Isapre"
+    - id: CONTROL-HORAS-EXTRAS
+      name: "Control de Horas Extras"
+      description: "Gestión de trabajo extraordinario"
+    - id: GESTION-VIATICOS
+      name: "Gestión de Viáticos"
+      description: "Administración de cometidos y viáticos"
+    - id: PROCESO-CALIFICACIONES
+      name: "Proceso de Calificaciones"
+      description: "Evaluación anual de desempeño funcionario"
+    - id: EVALUACION-DESEMPENO
+      name: "Evaluación de Desempeño"
+      description: "Valoración del cumplimiento de metas"
+    - id: GESTION-INCENTIVOS-DESEMPENO
+      name: "Gestión de Incentivos"
+      description: "Administración de bonos por cumplimiento"
+    - id: CONTROL-ASISTENCIA
+      name: "Control de Asistencia"
+      description: "Registro de entrada/salida de funcionarios"
+    - id: GESTION-AUSENTISMO
+      name: "Gestión de Ausentismo"
+      description: "Control de licencias y permisos"
+    - id: GESTION-SUBROGANCIAS
+      name: "Gestión de Subrogancias"
+      description: "Administración de reemplazos temporales"
+    - id: REASIGNACION-CARGAS
+      name: "Reasignación de Cargas"
+      description: "Redistribución de funciones"
+    - id: GESTION-CONTINGENCIAS-PERSONAL
+      name: "Gestión de Contingencias"
+      description: "Respuesta a situaciones imprevistas de RRHH"
+    - id: GESTION-TALENTO
+      name: "Gestión del Talento"
+      description: "Desarrollo de competencias y carrera"
+    - id: EJECUCION-PAC
+      name: "Ejecución PAC"
+      description: "Implementación del Plan Anual de Capacitación"
+    - id: CAPACITACION-DIGITAL
+      name: "Capacitación Digital"
+      description: "Formación en competencias tecnológicas"
+    - id: GESTION-PERSONAL
+      name: "Gestión de Personal"
+      description: "Administración general de RRHH"
+    - id: GESTION-ROLES
+      name: "Gestión de Roles"
+      description: "Definición y asignación de roles"
+    - id: AUTOCONSULTA-FUNCIONARIO
+      name: "Autoconsulta Funcionario"
+      description: "Autoservicio de información personal"
+    - id: AUTOSERVICIO-RRHH
+      name: "Autoservicio RRHH"
+      description: "Portal de autogestión funcionaria"
+    - id: GESTION-OPERATIVA-EQUIPO
+      name: "Gestión Operativa de Equipo"
+      description: "Coordinación del trabajo diario"
+    - id: EVALUACION-TRANSVERSAL-GENERO
+      name: "Evaluación Transversal de Género"
+      description: "Análisis de impacto por género"
+    - id: AFILIACION-BIENESTAR
+      name: "Afiliación a Bienestar"
+      description: "Inscripción de socios al servicio"
+    - id: GESTION-BENEFICIARIOS
+      name: "Gestión de Beneficiarios"
+      description: "Administración de cargas familiares"
+    - id: GESTION-REEMBOLSOS
+      name: "Gestión de Reembolsos"
+      description: "Tramitación de reembolsos médicos"
+    - id: GESTION-SUBSIDIOS
+      name: "Gestión de Subsidios"
+      description: "Administración de subsidios sociales"
+    - id: GESTION-PRESTAMOS-BIENESTAR
+      name: "Gestión de Préstamos"
+      description: "Administración de créditos sociales"
+    - id: GESTION-CONVENIOS-BIENESTAR
+      name: "Gestión de Convenios Bienestar"
+      description: "Administración de convenios con proveedores"
+    - id: GESTION-BIENESTAR
+      name: "Gestión de Bienestar"
+      description: "Administración general de beneficios"
+    - id: SOLICITUD-REEMBOLSO
+      name: "Solicitud de Reembolso"
+      description: "Petición de reembolso médico"
+    - id: SOLICITUD-PRESTAMO-BIENESTAR
+      name: "Solicitud de Préstamo"
+      description: "Petición de crédito social"
+    - id: CONSULTA-SALDOS-SOCIO
+      name: "Consulta de Saldos"
+      description: "Verificación de disponibilidad de beneficios"
+    - id: GESTION-ACCIDENTES-LABORALES
+      name: "Gestión de Accidentes"
+      description: "Administración de siniestros laborales"
+    - id: INVESTIGACION-ACCIDENTES
+      name: "Investigación de Accidentes"
+      description: "Análisis de causas de accidentes"
+    - id: SEGURIDAD-SALUD-TRABAJO
+      name: "Seguridad y Salud Laboral"
+      description: "Gestión de prevención de riesgos"
+    - id: GESTION-PROGRAMAS-SOCIALES-INTERNOS
+      name: "Programas Sociales Internos"
+      description: "Actividades de bienestar funcionario"
+
+# =============================================================================
+# D-TDE: TRANSFORMACIÓN DIGITAL (41 procesos)
+# =============================================================================
+D-TDE:
+  description: "TI, gobierno digital, ciberseguridad, interoperabilidad"
+  omega_layer: 4
+  processes:
+    - id: GUBERNANZA-TI
+      name: "Gobernanza TI"
+      description: "Gobierno de las tecnologías de información"
+    - id: GUBERNANZA-DATOS
+      name: "Gobernanza de Datos"
+      description: "Gestión de datos como activo institucional"
+    - id: GOBERNANZA-DATOS
+      name: "Gobernanza de Datos"
+      description: "Políticas y estándares de gestión de datos"
+    - id: GOBERNANZA-ARQUITECTURA
+      name: "Gobernanza de Arquitectura"
+      description: "Gestión de arquitectura empresarial"
+    - id: INTEROPERABILIDAD
+      name: "Interoperabilidad"
+      description: "Integración con plataformas del Estado"
+    - id: INTEROPERABILIDAD-CGR
+      name: "Interoperabilidad CGR"
+      description: "Integración con sistemas de Contraloría"
+    - id: DESARROLLO-SISTEMAS
+      name: "Desarrollo de Sistemas"
+      description: "Construcción de aplicaciones de software"
+    - id: CICLO-VIDA-SOFTWARE
+      name: "Ciclo de Vida de Software"
+      description: "Gestión del desarrollo de aplicaciones"
+    - id: CICLO-VIDA-DESARROLLO
+      name: "Ciclo de Vida de Desarrollo"
+      description: "Metodología de desarrollo de sistemas"
+    - id: DESARROLLO-SEGURO
+      name: "Desarrollo Seguro"
+      description: "Prácticas de seguridad en desarrollo"
+    - id: LANZAMIENTO-CONTROLADO
+      name: "Lanzamiento Controlado"
+      description: "Despliegue gradual de nuevas versiones"
+    - id: GESTION-SOLICITUDES-OIRS
+      name: "Gestión OIRS"
+      description: "Administración de solicitudes ciudadanas"
+    - id: AUTENTICACION
+      name: "Autenticación"
+      description: "Gestión de identidad digital (ClaveÚnica)"
+    - id: GESTION-ACCESOS
+      name: "Gestión de Accesos"
+      description: "Control de permisos y roles en sistemas"
+    - id: PROTECCION-DATOS-PERSONALES
+      name: "Protección de Datos"
+      description: "Cumplimiento de Ley 19.628"
+    - id: CUSTODIA-EVIDENCIA-DIGITAL
+      name: "Custodia de Evidencia Digital"
+      description: "Preservación de datos probatorios"
+    - id: GESTION-ACTIVOS-DIGITALES
+      name: "Gestión de Activos Digitales"
+      description: "Administración de contenidos multimedia"
+    - id: GESTION-INCIDENTES
+      name: "Gestión de Incidentes"
+      description: "Respuesta a fallas de TI"
+    - id: DIAGNOSTICO-ERRORES
+      name: "Diagnóstico de Errores"
+      description: "Identificación de causas de fallas"
+    - id: SOPORTE-USUARIO
+      name: "Soporte a Usuario"
+      description: "Atención de requerimientos de usuarios"
+    - id: SOLICITUD-SERVICIOS
+      name: "Solicitud de Servicios TI"
+      description: "Petición de servicios tecnológicos"
+    - id: MONITOREO-INFRAESTRUCTURA
+      name: "Monitoreo de Infraestructura"
+      description: "Vigilancia de servidores y redes"
+    - id: SEGURIDAD-INFRAESTRUCTURA
+      name: "Seguridad de Infraestructura"
+      description: "Protección de activos críticos de TI"
+    - id: GESTION-CONTINUIDAD
+      name: "Gestión de Continuidad"
+      description: "Plan de continuidad operativa TI"
+    - id: CONTINUIDAD-OPERATIVA
+      name: "Continuidad Operativa"
+      description: "Aseguramiento de disponibilidad de servicios"
+    - id: ADMINISTRACION-BD
+      name: "Administración de BD"
+      description: "Gestión de bases de datos"
+    - id: AUDITORIA-CALIDAD-DATOS
+      name: "Auditoría de Calidad de Datos"
+      description: "Verificación de integridad de datos"
+    - id: MODELADO-SEMANTICO
+      name: "Modelado Semántico"
+      description: "Diseño de modelos de datos conceptuales"
+    - id: VALIDACION-CONTINUA-MODELO
+      name: "Validación Continua de Modelo"
+      description: "Verificación de consistencia de modelos"
+    - id: ACTUALIZACION-PARAMETROS
+      name: "Actualización de Parámetros"
+      description: "Gestión de configuraciones de sistema"
+    - id: INTELIGENCIA-NEGOCIO
+      name: "Inteligencia de Negocio"
+      description: "Análisis de datos para decisiones"
+    - id: DIFUSION-DATOS
+      name: "Difusión de Datos"
+      description: "Publicación de datos abiertos"
+    - id: TRANSFORMACION-PROCESOS
+      name: "Transformación de Procesos"
+      description: "Rediseño de procesos con tecnología"
+    - id: PLAN-DIGITALIZACION
+      name: "Plan de Digitalización"
+      description: "Estrategia de digitalización institucional"
+    - id: NOTIFICACION-ELECTRONICA
+      name: "Notificación Electrónica"
+      description: "Comunicaciones oficiales digitales"
+    - id: AUTOSERVICIO-CIUDADANO
+      name: "Autoservicio Ciudadano"
+      description: "Portal de trámites en línea"
+    - id: GESTION-CONOCIMIENTO
+      name: "Gestión del Conocimiento"
+      description: "Captura y difusión de conocimiento institucional"
+    - id: INDEXACION-DOCUMENTAL
+      name: "Indexación Documental"
+      description: "Catalogación de documentos digitales"
+    - id: ARCHIVO-DOCUMENTAL
+      name: "Archivo Documental"
+      description: "Preservación de documentos digitales"
+
+# =============================================================================
+# D-BACK: BACK-OFFICE Y ADMINISTRACIÓN (38 procesos)
+# =============================================================================
+D-BACK:
+  description: "Soporte administrativo, servicios generales, activos"
+  omega_layer: 4
+  processes:
+    - id: GESTION-DOCUMENTAL
+      name: "Gestión Documental"
+      description: "Administración del ciclo documental"
+    - id: GESTION-FLOTA-VEHICULAR
+      name: "Gestión de Flota Vehicular"
+      description: "Administración de vehículos institucionales"
+    - id: GESTION-FLOTA
+      name: "Gestión de Flota"
+      description: "Control de uso de vehículos"
+    - id: INVENTARIO-ANUAL
+      name: "Inventario Anual"
+      description: "Verificación física de activo fijo"
+    - id: ALTA-ACTIVO-FIJO
+      name: "Alta de Activo Fijo"
+      description: "Incorporación de bienes al patrimonio"
+    - id: TRASLADO-ACTIVO
+      name: "Traslado de Activo"
+      description: "Movimiento de bienes entre unidades"
+    - id: CLASIFICACION-ACTIVOS
+      name: "Clasificación de Activos"
+      description: "Categorización de bienes inventariados"
+    - id: GESTION-BIENES-NACIONALES
+      name: "Gestión de Bienes Nacionales"
+      description: "Administración de inmuebles fiscales"
+    - id: INGRESO-BODEGA
+      name: "Ingreso a Bodega"
+      description: "Recepción de materiales y suministros"
+    - id: CONTROL-EXISTENCIAS
+      name: "Control de Existencias"
+      description: "Gestión de stock de bodega"
+    - id: GESTION-INVENTARIO-BODEGA
+      name: "Gestión de Inventario de Bodega"
+      description: "Administración de materiales"
+    - id: CONCILIACION-BODEGA
+      name: "Conciliación de Bodega"
+      description: "Cuadratura de existencias físicas vs sistema"
+    - id: MANTENCION-PREVENTIVA-CORRECTIVA
+      name: "Mantención Preventiva/Correctiva"
+      description: "Gestión de mantención de activos"
+    - id: GESTION-SERVICIOS-GENERALES
+      name: "Gestión de Servicios Generales"
+      description: "Administración de servicios de apoyo"
+    - id: SERVICIOS-AUXILIARES
+      name: "Servicios Auxiliares"
+      description: "Gestión de servicios de apoyo operativo"
+    - id: CENTRALIZACION-RECURSOS
+      name: "Centralización de Recursos"
+      description: "Consolidación de recursos compartidos"
+
+# =============================================================================
+# D-COM: COMUNICACIONES Y PRENSA (12 procesos)
+# =============================================================================
+D-COM:
+  description: "Comunicación institucional, prensa, imagen pública"
+  omega_layer: 4
+  processes:
+    - id: COMUNICACION-EXTERNA
+      name: "Comunicación Externa"
+      description: "Gestión de mensaje institucional al exterior"
+    - id: COMUNICACION-ORGANIZACIONAL
+      name: "Comunicación Organizacional"
+      description: "Comunicación interna institucional"
+    - id: GESTION-PRENSA
+      name: "Gestión de Prensa"
+      description: "Relaciones con medios de comunicación"
+    - id: DIFUSION-NOTICIAS
+      name: "Difusión de Noticias"
+      description: "Publicación de notas informativas"
+    - id: DIFUSION-COMUNICACIONAL
+      name: "Difusión Comunicacional"
+      description: "Distribución de contenidos institucionales"
+    - id: REDACCION-PERIODISTICA
+      name: "Redacción Periodística"
+      description: "Elaboración de contenidos noticiosos"
+    - id: PLANIFICACION-MEDIOS
+      name: "Planificación de Medios"
+      description: "Estrategia de presencia en medios"
+    - id: MONITOREO-REPUTACIONAL
+      name: "Monitoreo Reputacional"
+      description: "Vigilancia de imagen institucional"
+    - id: GESTION-IMAGEN-REGIONAL
+      name: "Gestión de Imagen Regional"
+      description: "Posicionamiento de marca Ñuble"
+    - id: CONTROL-CALIDAD-MARCA
+      name: "Control de Calidad de Marca"
+      description: "Verificación de uso de identidad visual"
+    - id: DISENO-ESTRATEGIA-COM
+      name: "Diseño de Estrategia Comunicacional"
+      description: "Definición de plan de comunicaciones"
+    - id: GESTION-CRISIS
+      name: "Gestión de Crisis"
+      description: "Respuesta comunicacional ante contingencias"
+
+# =============================================================================
+# D-SEG: SEGURIDAD PÚBLICA (9 procesos)
+# =============================================================================
+D-SEG:
+  description: "Seguridad pública, televigilancia, emergencias"
+  omega_layer: 0
+  processes:
+    - id: MONITOREO-CIUDADANO
+      name: "Monitoreo Ciudadano (CIES)"
+      description: "Vigilancia mediante televigilancia regional"
+    - id: COORDINACION-POLICIAL
+      name: "Coordinación Policial"
+      description: "Articulación con fuerzas de orden"
+    - id: GESTION-EMERGENCIAS
+      name: "Gestión de Emergencias"
+      description: "Coordinación de respuesta a desastres"
+    - id: COORDINACION-EMERGENCIAS
+      name: "Coordinación de Emergencias"
+      description: "Articulación interinstitucional ante crisis"
+    - id: MEDIDAS-PREVENTIVAS
+      name: "Medidas Preventivas"
+      description: "Acciones de prevención del delito"
+    - id: PLANIFICACION-SEGURIDAD
+      name: "Planificación de Seguridad"
+      description: "Diseño de estrategias de seguridad"
+    - id: INSPECCION-SEGURIDAD
+      name: "Inspección de Seguridad"
+      description: "Verificación de condiciones de seguridad"
+
+# =============================================================================
+# D-SOC: DESARROLLO SOCIAL (9 procesos)
+# =============================================================================
+D-SOC:
+  description: "Desarrollo social, vinculación comunitaria, fondos sociales"
+  omega_layer: 0
+  processes:
+    - id: CARACTERIZACION-SOCIAL
+      name: "Caracterización Social"
+      description: "Levantamiento socioeconómico de beneficiarios"
+    - id: VINCULACION-ORGANIZACIONES
+      name: "Vinculación con Organizaciones"
+      description: "Gestión de relaciones con sociedad civil"
+    - id: ARTICULACION-FOMENTO
+      name: "Articulación de Fomento"
+      description: "Coordinación de programas productivos"
+    - id: DIFUSION-FOMENTO
+      name: "Difusión de Fomento"
+      description: "Promoción de programas de desarrollo"
+    - id: GESTION-RECLAMOS
+      name: "Gestión de Reclamos"
+      description: "Atención de quejas ciudadanas"
+
+# =============================================================================
+# D-TERR: ORDENAMIENTO TERRITORIAL (6 procesos)
+# =============================================================================
+D-TERR:
+  description: "Ordenamiento territorial, IDE, información geográfica"
+  omega_layer: 0
+  processes:
+    - id: ANALISIS-TERRITORIAL
+      name: "Análisis Territorial"
+      description: "Estudios de realidad territorial"
+    - id: ANALISIS-ESPACIAL
+      name: "Análisis Espacial"
+      description: "Estudios geoespaciales"
+
+# =============================================================================
+# PROCESOS GENÉRICOS (P1, P2, P3, P7)
+# =============================================================================
+GENERICOS:
+  description: "Procesos genéricos referenciados en User Stories"
+  processes:
+    - id: P1
+      name: "Proceso Genérico P1"
+      description: "Proceso base referenciado múltiples veces, requiere especificación"
+    - id: P2
+      name: "Proceso Genérico P2"
+      description: "Segunda fase de proceso genérico"
+    - id: P3
+      name: "Proceso Genérico P3"
+      description: "Tercera fase de proceso genérico"
+    - id: P7
+      name: "Proceso Genérico P7"
+      description: "Séptima fase de proceso genérico"
+
+# =============================================================================
+# ESTADÍSTICAS FINALES
+# =============================================================================
+_stats:
+  version: "2.6.0-complete"
+  generated_at: "2026-01-05T18:00:00-03:00"
+  total_unique_processes: 289
+  processes_documented: 289
+  by_domain:
+    D-FIN: 63
+    D-EJEC: 21
+    D-PLAN: 16
+    D-GOB: 22
+    D-NORM: 18
+    D-GESTION: 40
+    D-TDE: 38
+    D-BACK: 16
+    D-COM: 12
+    D-SEG: 7
+    D-SOC: 5
+    D-TERR: 2
+    GENERICOS: 4

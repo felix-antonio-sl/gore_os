@@ -1,5 +1,29 @@
 # Project Journal
 
+## 2026-01-05 - Architectural Pivot to Python/Flask
+
+**Agent:** Antigravity
+**Focus:** Infrastructure Realignment & Domain Model Unification
+
+### Key Insight
+>
+> "El stack tecnológico debe reflejar la realidad operativa del gobierno: estándares robustos, mantenibilidad a largo plazo y pools de talento accesibles. Python y Flask son el estándar de facto."
+
+### Activities
+
+- **Stack Migration**:
+  - Abandoned `Bun/Hono/React` experimental stack.
+  - Adopted `Python/Flask/Jinja2/HTMX` for server-side robustness and simplified interactivity.
+- **Architecture Docs Update**:
+  - Rewrote `c2_containers` to reflect Gunicorn/Celery/Nginx topology.
+  - Rewrote `c3_components` to reflect Flask Blueprint/Factory pattern.
+  - Aligned `stack.md` with the new mandated technology choices.
+- **Domain Model Sync**:
+  - Updated `entity_diagram.mmd` to strictly match the **Omega v2.6.0** domain model (IPR Polymorphism).
+  - Integrated `omega_gore_nuble_mermaid.md` ontology into the architectural definition.
+
+---
+
 ## 2025-12-23 - IPR Semantic Taxonomy Integration
 
 **Agent:** Ingeniero GORE_OS + Antigravity
@@ -55,15 +79,15 @@
 ### Activities (KODA)
 
 - **Federation Upgrade**: Upgraded `gore_os` to KODA Federated Hub status.
-    - Created `catalog/` directory.
-    - Movied `catalog_master_goreos.yml` to `catalog/`.
-    - Created `.knowledge-resolver.yml` linking `gorenuble`, `fxsl`, `tde`, `orko`.
+  - Created `catalog/` directory.
+  - Movied `catalog_master_goreos.yml` to `catalog/`.
+  - Created `.knowledge-resolver.yml` linking `gorenuble`, `fxsl`, `tde`, `orko`.
 - **Catalog Sanitization**: Reviewed and updated 5 master catalogs.
-    - `gore_os`: Updated timestamp and agent signature.
-    - `gorenuble`: Updated `last_modified_at` and statistics.
-    - `fxsl`: Updated `last_modified_at` and statistics.
-    - `tde`: Updated `last_modified_at` and statistics.
-    - `orko`: Updated `last_modified_at` and statistics.
+  - `gore_os`: Updated timestamp and agent signature.
+  - `gorenuble`: Updated `last_modified_at` and statistics.
+  - `fxsl`: Updated `last_modified_at` and statistics.
+  - `tde`: Updated `last_modified_at` and statistics.
+  - `orko`: Updated `last_modified_at` and statistics.
 - **Health Check**: Validated KODA structure across all federated nodes.
 
 ---

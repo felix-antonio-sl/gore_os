@@ -15,7 +15,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 user:
   role_id: ROL-JUR-ASES-DIV
   agent_type: HUMAN
-  description: Abogado destacado en una división operativa (Ej: DIPLADE, DIPIR) para la visación rápida de actos administrativos sectoriales
+  description: "Abogado destacado en una división operativa (Ej: DIPLADE, DIPIR) para la visación rápida de actos administrativos sectoriales"
 
 entities_mentioned:
   - id: ENT-NORM-RESOLUCION-EXENTA

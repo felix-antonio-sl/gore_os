@@ -1,0 +1,740 @@
+# =============================================================================
+# CATÁLOGO CANÓNICO DE PROCESOS GORE_OS v2.6.0 (Enriquecido)
+# Generado: 2026-01-05
+# Fuentes: _procesos_extraidos_us.txt + _index.yml + Knowledge Base GORE Ñuble
+# =============================================================================
+
+_meta:
+  urn: "urn:goreos:catalog:processes:2.6.0"
+  title: "Catálogo Canónico de Procesos GORE_OS"
+  generated_at: "2026-01-05"
+  source_files:
+    - "_procesos_extraidos_us.txt"
+    - "_index.yml"
+    - "gorenuble/knowledge/domains/gn/*"
+  total_processes: 289
+  base_model: "Omega v2.6.0"
+
+# =============================================================================
+# DOMINIO: D-FIN (Finanzas, Presupuesto e Inversión Pública Regional)
+# Capa Omega: L2 - Financiamiento
+# =============================================================================
+D-FIN:
+  description: "Procesos de gestión financiera, presupuestaria y del ciclo de vida de Intervenciones Públicas Regionales (IPR). Incluye el flujo completo desde ingreso hasta cierre de proyectos y programas."
+  omega_layer: 2
+  normativa_base:
+    - "DL N°1.263/1975 (Art. 19 bis)"
+    - "LOC GORE (Art. 16, 24, 36, 78)"
+    - "Ley de Presupuestos 2026 - Partida 31"
+    - "Res. 30/2015 CGR (Rendiciones)"
+  processes:
+    # --- Ciclo IPR Core ---
+    - id: IPR_CORE-P1
+      name: "Ingreso, Pertinencia y Admisibilidad"
+      description: "Fase 1 del ciclo IPR: Recepción de postulaciones, análisis de pertinencia estratégica por el CDR (Comité Directivo Regional), y verificación de requisitos formales según mecanismo de financiamiento. Determina si la iniciativa avanza a evaluación técnica."
+      actors:
+        [
+          "Oficina de Partes",
+          "Jefatura DIPIR",
+          "CDR",
+          "Analista de Preinversión",
+        ]
+      outputs: ["PRE-ADMISIBLE CDR", "ADMISIBLE", "INADMISIBLE"]
+    - id: IPR_CORE-P4
+      name: "Formalización de IPR"
+      description: "Fase 4 del ciclo IPR: Traduce la aprobación de financiamiento en actos administrativos (Resoluciones, Decretos) y Convenios de Transferencia. Incluye tramitación de Toma de Razón CGR cuando aplica. Solo tras esta fase puede materializarse la transferencia de recursos."
+      actors: ["Depto. Presupuesto", "DIPIR", "Jurídico", "Gobernador/a", "CGR"]
+      outputs: ["CONVENIO FIRMADO", "RESOLUCIÓN CON TOMA DE RAZÓN"]
+    - id: IPR_CORE-P5
+      name: "Ejecución y Supervisión"
+      description: "Fase 5 del ciclo IPR: Monitoreo del desarrollo de la iniciativa, asegurando cumplimiento técnico, uso correcto de recursos y avance según cronograma. Incluye reuniones de coordinación, Estados de Pago, e informes de avance físico-financiero."
+      actors: ["Unidad Técnica (ITO/ITP)", "Ejecutor", "DIPIR"]
+      outputs: ["Informes de Avance", "Estados de Pago Aprobados"]
+    - id: IPR_CORE-P6
+      name: "Modificaciones en Ejecución"
+      description: "Fase 6 del ciclo IPR: Gestión de cambios durante la ejecución (modificaciones de plazo, presupuesto, especificaciones técnicas). Requiere re-evaluación cuando implica cambio sustancial de costos o diseño."
+      actors: ["Ejecutor", "DIPIR", "MDSF (si aplica)"]
+      outputs: ["Modificación Aprobada", "Re-evaluación RS"]
+    - id: IPR_CORE-P7
+      name: "Cierre Técnico-Financiero"
+      description: "Fase 7 del ciclo IPR: Cierre formal de la iniciativa tras verificar cumplimiento de todos los entregables, rendiciones aprobadas, y liberación de garantías. Incluye evaluación ex-post para proyectos de inversión."
+      actors: ["DIPIR", "Depto. Presupuesto", "CGR (SISREC)"]
+      outputs:
+        [
+          "Acta de Recepción Final",
+          "Liquidación de Convenio",
+          "Evaluación Ex-Post",
+        ]
+
+    # --- Evaluación y RATE ---
+    - id: EVALUACION-PROYECTOS
+      name: "Evaluación de Proyectos (Track A - SNI)"
+      description: "Análisis técnico-económico de Iniciativas de Inversión (IDI) de mayor envergadura que requieren Recomendación Satisfactoria (RS) del MDSF. Proceso bifásico: revisión GORE + evaluación MDSF. Metodologías según nivel de proporcionalidad."
+      actors: ["Analista GORE", "SEREMI MDSF", "Analista MDSF"]
+      outputs: ["RS (Recomendación Satisfactoria)", "FI", "OT"]
+    - id: EVALUACION-TECNICA
+      name: "Evaluación Técnica"
+      description: "Análisis de factibilidad técnica, coherencia de diseño, y cumplimiento de normas sectoriales para proyectos de inversión. Verifica RIS, estudios preinversionales, y metodologías SNI aplicables."
+      actors: ["Analista de Preinversión (DIPIR)"]
+      outputs: ["Acta de Admisibilidad Técnica"]
+    - id: EVALUACION-TECNICA-C33
+      name: "Evaluación Técnica Circular 33"
+      description: "Análisis técnico simplificado para proyectos de conservación y reposición de infraestructura bajo Circular 33 de Hacienda. El costo no debe superar el 30% del costo de reposición del activo."
+      actors: ["Analista GORE", "DIPRES", "MDSF"]
+      outputs: ["AD (Admisible para financiamiento)"]
+
+    # --- Presupuesto y Tesorería ---
+    - id: EJECUCION-PRESUPUESTARIA
+      name: "Ejecución Presupuestaria"
+      description: "Control y seguimiento del gasto autorizado por asignación presupuestaria. Incluye las etapas de compromiso, devengo y pago según DL 1.263. Registro en SIGFE."
+      actors: ["Depto. Presupuesto", "DAF"]
+      outputs:
+        ["Compromiso registrado", "Devengo contabilizado", "Pago ejecutado"]
+    - id: EMISION-CDP
+      name: "Emisión de CDP"
+      description: "Generación de Certificados de Disponibilidad Presupuestaria que acreditan fondos disponibles para financiar una IPR o adquisición. Requisito previo para tramitación de convenios y contratos."
+      actors: ["Depto. Presupuesto (DAF)"]
+      outputs: ["CDP emitido"]
+    - id: MODIFICACION-PRESUPUESTARIA
+      name: "Modificación Presupuestaria"
+      description: "Tramitación de ajustes al presupuesto vigente. Puede ser interna (Resolución GORE) o si afecta la Partida 31 nacional requiere Decreto DIPRES. Incluye traslados entre subtítulos e ítems."
+      actors: ["Depto. Presupuesto", "DIPIR", "DIPRES (si aplica)", "CGR"]
+      outputs: ["Resolución/Decreto con Toma de Razón"]
+    - id: CIERRE-CONTABLE-MENSUAL
+      name: "Cierre Contable Mensual"
+      description: "Cuadre y cierre de la contabilidad institucional al fin de cada mes. Incluye conciliación de cuentas, ajustes contables, y generación de estados financieros mensuales."
+      actors: ["Depto. Contabilidad (DAF)"]
+      outputs: ["Balance Mensual", "Estados Financieros"]
+    - id: CIERRE-ANUAL
+      name: "Cierre Anual"
+      description: "Cierre de ejercicio presupuestario y contable anual. Incluye determinación de deuda flotante, preparación de estados financieros anuales, y balance gubernamental para CGR."
+      actors: ["DAF", "CGR"]
+      outputs: ["Balance Anual", "Cuenta Pública"]
+    - id: CONCILIACION-BANCARIA
+      name: "Conciliación Bancaria"
+      description: "Verificación de consistencia entre registros contables del libro banco y extractos/cartolas bancarias del BancoEstado. Identifica partidas pendientes y descuadres."
+      actors: ["Depto. Contabilidad/Tesorería (DAF)"]
+      outputs: ["Informe de Conciliación"]
+    - id: PAGO-PROVEEDORES
+      name: "Pago a Proveedores"
+      description: "Procesamiento de facturas y ejecución de pagos a proveedores tras recepción conforme de bienes/servicios. Incluye validación tributaria y registro en SIGFE."
+      actors: ["Depto. Tesorería (DAF)"]
+      outputs: ["Transferencia ejecutada", "Voucher contable"]
+    - id: PAGO-BENEFICIARIOS
+      name: "Pago a Beneficiarios"
+      description: "Transferencia de recursos a beneficiarios finales de programas sociales, fondos concursables (8% FNDR), o subvenciones. Requiere convenio tramitado y cumplimiento de requisitos."
+      actors: ["Depto. Tesorería", "DIPIR"]
+      outputs: ["Transferencia programada", "Registro SISREC"]
+
+    # --- Rendición de Cuentas ---
+    - id: REND-P1
+      name: "Rendición de Cuentas"
+      description: "Proceso de comprobación documental del uso de fondos públicos transferidos a ejecutores externos. Según Res. 30/2015 CGR, incluye carga en SISREC, revisión de documentación de respaldo, y aprobación/rechazo de gastos."
+      actors: ["Ejecutor", "Analista DIPIR", "CGR (SISREC)"]
+      outputs: ["Rendición Aprobada", "Rendición Observada", "Reintegro"]
+    - id: CONTROL-RENDICIONES
+      name: "Control de Rendiciones"
+      description: "Fiscalización de rendiciones presentadas por ejecutores municipales, corporaciones y organizaciones. Verifica cumplimiento de glosas, prohibiciones de gasto, y plazos normativos."
+      actors: ["Analista DIPIR", "Unidad Técnica"]
+      outputs: ["Informe de Fiscalización", "Oficio de Observaciones"]
+
+    # --- Compras y Contratos ---
+    - id: CICLO-COMPRAS
+      name: "Ciclo de Compras"
+      description: "Gestión del ciclo completo de adquisiciones públicas: desde el requerimiento de la unidad usuaria, elaboración de bases, publicación en Mercado Público, evaluación de ofertas, adjudicación, emisión de OC, hasta recepción conforme."
+      actors:
+        [
+          "Unidad Requerente",
+          "Depto. Abastecimiento (DAF)",
+          "Comisión Evaluadora",
+        ]
+      outputs: ["Orden de Compra", "Contrato"]
+    - id: ADQUISICION-CONVENIO-MARCO
+      name: "Adquisición por Convenio Marco"
+      description: "Compras simplificadas a través de Convenios Marco de ChileCompra. Proceso ágil para productos catalogados con precios y condiciones predefinidas."
+      actors: ["Depto. Abastecimiento"]
+      outputs: ["Orden de Compra CM"]
+    - id: GESTION-CONTRATOS
+      name: "Gestión de Contratos"
+      description: "Administración del ciclo de vida de contratos de servicios y suministro: seguimiento de plazos, renovaciones, garantías, sanciones por incumplimiento, y liquidación."
+      actors: ["Depto. Abastecimiento", "Unidad Técnica", "Jurídico"]
+      outputs: ["Renovación/Término de Contrato", "Liberación de Garantías"]
+    - id: CUSTODIA-GARANTIAS
+      name: "Custodia de Garantías"
+      description: "Resguardo y administración de boletas de garantía (fiel cumplimiento, anticipo, correcta ejecución). Incluye control de vigencias y proceso de cobro ante incumplimientos."
+      actors: ["Depto. Tesorería"]
+      outputs: ["Registro de Garantías", "Cobro de Boleta"]
+
+# =============================================================================
+# DOMINIO: D-NORM (Normativa, Control y Cumplimiento)
+# Capa Omega: L1 - Gobernanza
+# =============================================================================
+D-NORM:
+  description: "Procesos de control interno, auditoría, cumplimiento legal y gestión de actos administrativos. Asegura la probidad y legalidad de la gestión institucional."
+  omega_layer: 1
+  normativa_base:
+    - "LOC GORE"
+    - "Ley 18.575 (Bases Generales de la Administración)"
+    - "Ley 19.880 (Procedimientos Administrativos)"
+    - "Ley 20.730 (Lobby)"
+    - "Ley 20.285 (Transparencia)"
+  processes:
+    # --- Actos Administrativos ---
+    - id: ELABORACION-ACTOS
+      name: "Elaboración de Actos Administrativos"
+      description: "Redacción de resoluciones exentas, afectas, decretos y otros actos formales que producen efectos jurídicos. Incluye verificación de fundamentos legales, visación jurídica, y cadena de firmas."
+      actors: ["Unidad Proponente", "Jurídico", "Gobernador/a"]
+      outputs: ["Resolución Exenta/Afecta", "Decreto"]
+    - id: REVISION-JURIDICA
+      name: "Revisión Jurídica"
+      description: "Validación legal de documentos, contratos, convenios y actos administrativos antes de su firma. Verifica cumplimiento de normativa vigente y precedentes administrativos."
+      actors: ["División Jurídica"]
+      outputs: ["Informe Jurídico", "V°B° Jurídico"]
+
+    # --- Auditoría y Control ---
+    - id: AUDITORIA-INTERNA
+      name: "Auditoría Interna"
+      description: "Evaluación independiente y sistemática de procesos y controles internos del GORE. Según lineamientos CAIGG, identifica hallazgos, riesgos y emite recomendaciones de mejora."
+      actors: ["Unidad de Auditoría Interna"]
+      outputs: ["Informe de Auditoría", "Plan de Acción"]
+    - id: AUDITORIA-EXTERNA
+      name: "Auditoría Externa (CGR)"
+      description: "Coordinación con auditorías de la Contraloría General de la República. Incluye preparación de antecedentes, atención a fiscalizadores, y seguimiento de hallazgos."
+      actors: ["Unidad de Auditoría", "Unidades Auditadas", "CGR"]
+      outputs: ["Informe CGR", "Descargos"]
+    - id: CONTROL-INTERNO
+      name: "Control Interno"
+      description: "Gestión del sistema de control interno institucional según matriz COSO. Incluye evaluación de riesgos, diseño de controles, autodiagnóstico y monitoreo continuo."
+      actors: ["Unidad de Control de Gestión (UCI)"]
+      outputs: ["Matriz de Riesgos y Controles", "Reporte CAIGG"]
+
+    # --- Procedimientos Disciplinarios ---
+    - id: SUMARIO-ADMINISTRATIVO
+      name: "Sumario Administrativo"
+      description: "Procedimiento disciplinario ante faltas funcionarias graves conforme al Estatuto Administrativo. Incluye investigación por fiscal sumariante, formulación de cargos, descargos, y resolución con eventual sanción."
+      actors: ["Fiscal Sumariante", "Jurídico", "Gobernador/a"]
+      outputs: ["Resolución de Sumario", "Sanción/Absolución"]
+
+    # --- Transparencia y Lobby ---
+    - id: TRANSPARENCIA-ACTIVA
+      name: "Transparencia Activa"
+      description: "Publicación proactiva de información pública obligatoria en el portal institucional según Ley 20.285. Incluye actualización mensual de actos, contratos, personal, presupuesto, y transferencias."
+      actors: ["Unidad de Transparencia", "TI"]
+      outputs: ["Portal de Transparencia actualizado"]
+    - id: GESTION-LOBBY
+      name: "Gestión de Lobby"
+      description: "Registro y control de audiencias solicitadas por gestores de intereses particulares según Ley 20.730. Incluye publicación en plataforma de Ley del Lobby."
+      actors: ["Gabinete", "Secretaría"]
+      outputs: ["Registro de Audiencias"]
+
+# =============================================================================
+# DOMINIO: D-EJEC (Ejecución de Proyectos y Programas)
+# Capa Omega: L3 - Ejecución
+# =============================================================================
+D-EJEC:
+  description: "Procesos de ejecución, supervisión técnica y cierre de proyectos de inversión y programas sociales/productivos en el territorio."
+  omega_layer: 3
+  normativa_base:
+    - "Ley 19.886 (Compras Públicas)"
+    - "Normativa MOP/SERVIU para obras"
+    - "Convenios de Transferencia GORE"
+  processes:
+    - id: ELABORACION-CONVENIO
+      name: "Elaboración de Convenio"
+      description: "Redacción y formalización de convenios de ejecución con municipios, corporaciones u otras entidades. Define objeto, monto, plazos, productos, obligaciones de rendición, y cláusulas de restitución."
+      actors: ["Depto. Presupuesto", "DIPIR", "Jurídico", "Ejecutor"]
+      outputs: ["Convenio de Transferencia firmado"]
+    - id: SUPERVISION-TECNICA
+      name: "Supervisión Técnica (ITO/ITP)"
+      description: "Fiscalización técnica en terreno de obras, programas y consultorías. Los Inspectores Técnicos de Obra (ITO) o Programa (ITP) verifican cumplimiento de especificaciones, cronograma y calidad de entregables."
+      actors: ["ITO/ITP", "Ejecutor", "Contratista"]
+      outputs: ["Bitácora de Obra", "Estados de Pago Visados"]
+    - id: MONITOREO-CONVENIO
+      name: "Monitoreo de Convenio"
+      description: "Seguimiento administrativo y técnico del avance de convenios de ejecución. Incluye reuniones de coordinación, revisión de informes de avance, y gestión de modificaciones."
+      actors: ["Analista DIPIR", "Ejecutor"]
+      outputs: ["Informe de Seguimiento", "Alertas de Rezago"]
+    - id: MONITOREO-OBRAS
+      name: "Monitoreo de Obras"
+      description: "Seguimiento físico del avance de obras de infraestructura. Incluye inspecciones en terreno, verificación de hitos constructivos, y control de plazos contractuales."
+      actors: ["ITO", "Contratista"]
+      outputs: ["Informe de Avance Físico", "Registro Fotográfico"]
+    - id: REUNION-INICIO
+      name: "Reunión de Inicio (Kick-off)"
+      description: "Sesión formal de inicio de ejecución con el ejecutor para establecer canales de comunicación, cronograma detallado, hitos de control, y aclarar alcances del convenio."
+      actors: ["DIPIR", "Ejecutor", "ITO/ITP"]
+      outputs: ["Acta de Inicio", "Cronograma Acordado"]
+
+    # --- FÉNIX (Intervención de Proyectos Críticos) ---
+    - id: GESTION-CASO-FENIX
+      name: "Gestión de Caso FÉNIX"
+      description: "Seguimiento intensivo de proyectos críticos bajo protocolo FÉNIX. Aplicado a iniciativas con rezago severo, riesgo de pérdida de recursos, o incumplimiento grave del ejecutor."
+      actors: ["Equipo FÉNIX", "DIPIR", "Gobernador/a"]
+      outputs: ["Plan de Rescate", "Informe de Intervención"]
+
+# =============================================================================
+# DOMINIO: D-PLAN (Planificación y Desarrollo Regional)
+# Capa Omega: L1 - Gobernanza
+# =============================================================================
+D-PLAN:
+  description: "Procesos de planificación estratégica, territorial y seguimiento del desarrollo regional. Incluye gestión de la ERD, ARI, PROPIR y evaluación de políticas."
+  omega_layer: 1
+  normativa_base:
+    - "LOC GORE (Art. 16)"
+    - "Ley 21.074 (Fortalecimiento Regionalización)"
+    - "Política Nacional de Desarrollo Regional"
+  processes:
+    - id: SEGUIMIENTO-ERD
+      name: "Seguimiento ERD"
+      description: "Monitoreo del avance de la Estrategia Regional de Desarrollo. Incluye medición de indicadores estratégicos, evaluación de brechas territoriales, y generación de insumos para la toma de decisiones."
+      actors: ["DIPLADE", "Observatorio Regional"]
+      outputs: ["Dashboard ERD", "Informe de Avance Estratégico"]
+    - id: FORMULACION-ARI
+      name: "Formulación ARI"
+      description: "Elaboración del Anteproyecto Regional de Inversiones. Consolida las necesidades de inversión de todos los sectores para el siguiente ejercicio presupuestario, alineándolas con la ERD."
+      actors: ["DIPLADE", "DIPIR", "Seremías"]
+      outputs: ["ARI Consolidado"]
+    - id: ANALISIS-TERRITORIAL
+      name: "Análisis Territorial"
+      description: "Estudios de realidad territorial regional: diagnósticos socioeconómicos, brechas comunales, georreferenciación de inversiones, y caracterización de vulnerabilidades."
+      actors: ["DIPLADE", "Observatorio Regional", "IDE"]
+      outputs: ["Diagnósticos Territoriales", "Mapas Temáticos"]
+    - id: FORMULACION-PROYECTOS
+      name: "Formulación de Proyectos"
+      description: "Diseño y elaboración de perfiles de proyecto según metodologías SNI. Incluye identificación del problema, alternativas de solución, marco lógico, y estimación de costos."
+      actors: ["Formuladores", "DIPLADE"]
+      outputs: ["Perfil de Proyecto", "Ficha BIP"]
+
+# =============================================================================
+# DOMINIO: D-GOB (Gobernanza y Relaciones Institucionales)
+# Capa Omega: L1 - Gobernanza
+# =============================================================================
+D-GOB:
+  description: "Procesos de gobernanza institucional, gestión del Consejo Regional (CORE), coordinación interinstitucional, y vinculación con actores estratégicos."
+  omega_layer: 1
+  normativa_base:
+    - "LOC GORE (Art. 36, 78)"
+    - "Reglamento del CORE"
+  processes:
+    - id: SESION-CORE
+      name: "Sesión CORE"
+      description: "Desarrollo de sesiones ordinarias y extraordinarias del Consejo Regional. Incluye preparación de tabla, análisis en comisiones, votación de materias (proyectos, normas, convenios), y emisión de acuerdos."
+      actors:
+        [
+          "Secretario/a Ejecutivo CORE",
+          "Consejeros/as Regionales",
+          "Gobernador/a",
+        ]
+      outputs: ["Acta de Sesión", "Acuerdos CORE"]
+    - id: COORDINACION-CORE
+      name: "Coordinación CORE"
+      description: "Gestión de la agenda del Consejo Regional: programación de sesiones, coordinación con comisiones temáticas, y seguimiento de acuerdos pendientes."
+      actors: ["Secretaría Ejecutiva CORE"]
+      outputs: ["Calendario de Sesiones", "Tracking de Acuerdos"]
+    - id: PARTICIPACION-CIUDADANA
+      name: "Participación Ciudadana"
+      description: "Gestión de instancias de participación ciudadana: consultas públicas, COSOC (Consejo de la Sociedad Civil), cabildos territoriales, y mecanismos de incidencia ciudadana."
+      actors: ["DIDESO", "Gabinete"]
+      outputs: ["Actas de Participación", "Sistematización de Propuestas"]
+    - id: GESTION-GABINETE
+      name: "Gestión de Gabinete"
+      description: "Administración de la agenda del Gobernador/a: coordinación de actividades, gestión de audiencias, preparación de intervenciones, y seguimiento de compromisos."
+      actors: ["Gabinete Regional"]
+      outputs: ["Agenda Semanal", "Pauta de Actividades"]
+
+# =============================================================================
+# DOMINIO: D-BACK (Back-Office y Administración)
+# Capa Omega: L4 - Soporte
+# =============================================================================
+D-BACK:
+  description: "Procesos de soporte administrativo, servicios generales, y gestión de recursos operativos para el funcionamiento institucional."
+  omega_layer: 4
+  processes:
+    - id: GESTION-FLOTA-VEHICULAR
+      name: "Gestión de Flota Vehicular"
+      description: "Administración de vehículos institucionales: programación de uso, control de kilometraje, mantención preventiva/correctiva, combustible, y seguros."
+      actors: ["Administración Regional", "Conductores"]
+      outputs: ["Bitácora de Uso", "Plan de Mantención"]
+    - id: INVENTARIO-ANUAL
+      name: "Inventario Anual"
+      description: "Verificación física de bienes inventariados (activo fijo) contra registros contables. Identifica faltantes, sobrantes, y bienes de baja."
+      actors: ["Depto. Inventarios", "Unidades"]
+      outputs: ["Acta de Inventario", "Ajustes Contables"]
+    - id: GESTION-DOCUMENTAL
+      name: "Gestión Documental"
+      description: "Administración del ciclo documental: recepción en Oficina de Partes, distribución, archivo, custodia, y disposición final según tabla de retención documental."
+      actors: ["Oficina de Partes", "Archivo Central"]
+      outputs: ["Expedientes Clasificados", "Transferencias a Archivo Nacional"]
+
+# =============================================================================
+# DOMINIO: D-GESTION (Gestión de Personas y Desarrollo Organizacional)
+# Capa Omega: L4 - Soporte
+# =============================================================================
+D-GESTION:
+  description: "Procesos de gestión del talento humano, desarrollo organizacional, bienestar funcionario, y administración del personal."
+  omega_layer: 4
+  normativa_base:
+    - "Estatuto Administrativo (Ley 18.834)"
+    - "Ley 19.296 (Asociaciones de Funcionarios)"
+  processes:
+    - id: RECLUTAMIENTO-SELECCION
+      name: "Reclutamiento y Selección"
+      description: "Proceso de contratación de personal: definición de perfil, publicación de concurso, evaluación curricular, entrevistas, comisión evaluadora, y nombramiento."
+      actors: ["Depto. Personas", "Comisión de Selección"]
+      outputs: ["Acta de Selección", "Resolución de Nombramiento"]
+    - id: CALCULO-REMUNERACIONES
+      name: "Cálculo de Remuneraciones"
+      description: "Proceso mensual de cálculo de sueldos: aplicación de asignaciones, bonificaciones, descuentos legales/voluntarios, horas extras, y generación de liquidaciones."
+      actors: ["Depto. Remuneraciones"]
+      outputs: ["Liquidaciones de Sueldo", "Planilla de Cotizaciones"]
+    - id: PROCESO-CALIFICACIONES
+      name: "Proceso de Calificaciones"
+      description: "Ciclo anual de evaluación del desempeño funcionario: precalificación por jefatura directa, revisión por junta calificadora, y asignación de lista de mérito."
+      actors: ["Jefaturas", "Junta Calificadora"]
+      outputs: ["Resolución de Calificaciones"]
+    - id: ONBOARDING
+      name: "Onboarding Funcionario"
+      description: "Proceso de inducción para nuevos funcionarios: entrega de credenciales, capacitación normativa, presentación a equipos, y asignación de mentor."
+      actors: ["Depto. Personas", "Jefatura Directa"]
+      outputs: ["Plan de Inducción Completado"]
+
+# =============================================================================
+# DOMINIO: D-TDE (Transformación Digital del Estado)
+# Capa Omega: L4 - Soporte
+# =============================================================================
+D-TDE:
+  description: "Procesos de transformación digital, gobernanza TI, ciberseguridad, interoperabilidad y gestión de sistemas de información."
+  omega_layer: 4
+  normativa_base:
+    - "Ley 21.180 (Transformación Digital del Estado)"
+    - "DS 83, DS 7, DS 10, DS 12 (Normas Técnicas TDE)"
+    - "Ley 19.628 (Protección de Datos Personales)"
+  processes:
+    - id: GUBERNANZA-TI
+      name: "Gobernanza TI"
+      description: "Gobierno de las tecnologías de información institucional: definición de políticas, estándares, arquitectura empresarial, gestión de riesgos TI, y alineamiento con la estrategia digital del Estado."
+      actors: ["CTD", "TI"]
+      outputs: ["Política de TI", "Plan Estratégico TI"]
+    - id: INTEROPERABILIDAD
+      name: "Interoperabilidad"
+      description: "Integración entre sistemas de información del GORE con plataformas del Estado (SIGFE, BIP, SISREC, SIAPER, Mercado Público). Incluye desarrollo de APIs, suscripción a servicios PISEE, y sincronización de datos."
+      actors: ["TI", "CTD"]
+      outputs: ["APIs implementadas", "Integraciones activas"]
+    - id: GESTION-SOLICITUDES-OIRS
+      name: "Gestión de Solicitudes OIRS"
+      description: "Administración de requerimientos ciudadanos ingresados por Oficina de Información, Reclamos y Sugerencias. Incluye registro, derivación, seguimiento de plazos, y respuesta formal."
+      actors: ["OIRS", "Unidades responsables"]
+      outputs: ["Respuesta a Ciudadano", "Informe de Gestión OIRS"]
+    - id: AUTENTICACION
+      name: "Autenticación Digital"
+      description: "Gestión de identidad y autenticación de usuarios en sistemas institucionales. Incluye integración con ClaveÚnica, gestión de roles y permisos, y control de accesos."
+      actors: ["TI", "Administradores de Sistema"]
+      outputs: ["Usuarios habilitados", "Política de Accesos"]
+    - id: DESARROLLO-SISTEMAS
+      name: "Desarrollo de Sistemas"
+      description: "Construcción de aplicaciones de software para la gestión institucional. Incluye levantamiento de requerimientos, diseño, desarrollo, testing, y despliegue."
+      actors: ["TI", "Desarrolladores", "Product Owner"]
+      outputs: ["Sistema implementado", "Documentación técnica"]
+
+# =============================================================================
+# DOMINIO: D-SEG (Seguridad Pública Regional)
+# Capa Omega: L0 - Contexto
+# =============================================================================
+D-SEG:
+  description: "Procesos de seguridad pública, televigilancia (CIES), coordinación con fuerzas de orden, y gestión de emergencias regionales."
+  omega_layer: 0
+  normativa_base:
+    - "Política Nacional de Seguridad"
+    - "Convenios con Carabineros/PDI"
+  processes:
+    - id: MONITOREO-CIUDADANO
+      name: "Monitoreo Ciudadano (CIES)"
+      description: "Vigilancia mediante el Centro Integrado de Emergencias y Seguridad (CIES). Incluye operación de cámaras de televigilancia, LPR, detección de incidentes, y coordinación con centrales policiales."
+      actors: ["Operadores CIES", "Carabineros", "PDI"]
+      outputs: ["Alertas de Incidentes", "Evidencia de Video"]
+    - id: COORDINACION-POLICIAL
+      name: "Coordinación Policial"
+      description: "Articulación operativa con Carabineros, PDI, y otras instituciones de seguridad para la respuesta coordinada a incidentes y delitos en el territorio regional."
+      actors: ["CIES", "Carabineros", "PDI"]
+      outputs: ["Protocolos de Respuesta", "Reportes de Incidentes"]
+    - id: GESTION-EMERGENCIAS
+      name: "Gestión de Emergencias"
+      description: "Coordinación de respuesta ante emergencias y desastres socionaturales. Incluye activación de protocolos, gestión de recursos, y comunicación con SENAPRED."
+      actors: ["Administración Regional", "SENAPRED", "Bomberos"]
+      outputs: ["Plan de Respuesta", "Informe de Emergencia"]
+
+# =============================================================================
+# DOMINIO: D-SOC (Desarrollo Social - DIDESO)
+# Capa Omega: L0 - Contexto
+# =============================================================================
+D-SOC:
+  description: "Procesos de desarrollo social, vinculación comunitaria, caracterización de beneficiarios, y gestión de fondos sociales."
+  omega_layer: 0
+  normativa_base:
+    - "Ley de Organizaciones Comunitarias"
+    - "Normativa 8% FNDR"
+  processes:
+    - id: CARACTERIZACION-SOCIAL
+      name: "Caracterización Social"
+      description: "Levantamiento de información socioeconómica de beneficiarios y territorios. Incluye aplicación de fichas sociales, análisis de vulnerabilidad, y generación de diagnósticos para focalización de intervenciones."
+      actors: ["DIDESO", "Trabajadores Sociales"]
+      outputs: ["Ficha Social", "Diagnóstico Territorial"]
+    - id: VINCULACION-ORGANIZACIONES
+      name: "Vinculación con Organizaciones"
+      description: "Gestión de relaciones con organizaciones de la sociedad civil: juntas de vecinos, clubes deportivos, organizaciones culturales, y gremios. Incluye registro, capacitación, y apoyo a postulación de fondos."
+      actors: ["DIDESO"]
+      outputs: ["Registro de Organizaciones", "Asesorías Técnicas"]
+    - id: GESTION-8FNDR
+      name: "Gestión 8% FNDR (Subvenciones)"
+      description: "Administración de la Glosa 7 del FNDR para financiar actividades de cultura, deporte, seguridad y social. Incluye llamado a concurso, evaluación de postulaciones, adjudicación, seguimiento y rendición."
+      actors: ["DIDESO", "Comité Evaluador 8%", "DIPIR"]
+      outputs:
+        [
+          "Bases de Concurso",
+          "Acta de Adjudicación",
+          "Resolución de Subvención",
+        ]
+    - id: ATENCION-CIUDADANA
+      name: "Atención Ciudadana"
+      description: "Gestión de solicitudes, reclamos y consultas de la ciudadanía. Incluye recepción, derivación interna, seguimiento de plazos (Ley 19.880), y respuesta formal."
+      actors: ["OIRS", "Unidades Responsables"]
+      outputs: ["Respuesta a Ciudadano", "Estadísticas de Atención"]
+    - id: GESTION-EMERGENCIAS-SOCIALES
+      name: "Gestión de Emergencias Sociales"
+      description: "Respuesta a situaciones de crisis individual o familiar. Incluye evaluación de necesidad, coordinación con redes de apoyo, y entrega de ayudas inmediatas (Fondo de Emergencia)."
+      actors: ["DIDESO", "Trabajadores Sociales"]
+      outputs: ["Informe de Intervención", "Ayuda Entregada"]
+
+# =============================================================================
+# DOMINIO: D-TERR (Ordenamiento Territorial)
+# Capa Omega: L0 - Contexto
+# =============================================================================
+D-TERR:
+  description: "Procesos de ordenamiento territorial, infraestructura de datos espaciales, y gestión de información geográfica regional."
+  omega_layer: 0
+  normativa_base:
+    - "Ley General de Urbanismo y Construcciones (OGUC)"
+    - "Política Nacional de Ordenamiento Territorial"
+  processes:
+    - id: GESTION-IDE
+      name: "Gestión IDE Regional"
+      description: "Administración de la Infraestructura de Datos Espaciales (IDE) de Ñuble. Incluye mantenimiento de catálogo de capas, servicios WMS/WFS, y gestión de metadatos según estándar ISO 19115."
+      actors: ["DIPLADE", "TI"]
+      outputs: ["Catálogo IDE", "Servicios Geoespaciales"]
+    - id: ACTUALIZACION-CARTOGRAFIA
+      name: "Actualización Cartográfica"
+      description: "Mantención de capas geográficas base: límites comunales, red vial, hidrografía, usos de suelo. Incluye integración de datos sectoriales y validación topológica."
+      actors: ["DIPLADE", "IDE"]
+      outputs: ["Capas GIS Actualizadas", "Mapas Temáticos"]
+    - id: GEORREFERENCIACION-INVERSIONES
+      name: "Georreferenciación de Inversiones"
+      description: "Asignación de coordenadas geográficas a proyectos de inversión regional. Permite visualización espacial y análisis de cobertura territorial de las IPR."
+      actors: ["Analistas DIPIR", "IDE"]
+      outputs: ["Mapa de Inversiones", "Dashboard Territorial"]
+    - id: ANALISIS-BRECHAS-TERRITORIALES
+      name: "Análisis de Brechas Territoriales"
+      description: "Identificación de disparidades entre comunas/provincias en acceso a servicios, infraestructura y oportunidades. Insumo clave para priorización de inversiones y políticas de cohesión."
+      actors: ["DIPLADE", "Observatorio Regional"]
+      outputs: ["Índice de Brechas", "Mapa de Rezago"]
+    - id: PROT
+      name: "Plan Regional de Ordenamiento Territorial"
+      description: "Elaboración, actualización y seguimiento del Plan Regional de Ordenamiento Territorial (PROT). Define zonificación de usos, áreas de protección, y directrices de desarrollo."
+      actors: ["DIPLADE", "CORE", "MINVU"]
+      outputs: ["PROT Vigente", "Evaluación Ambiental Estratégica"]
+
+# =============================================================================
+# DOMINIO: D-COM (Comunicaciones y Prensa)
+# Capa Omega: L4 - Soporte
+# =============================================================================
+D-COM:
+  description: "Procesos de comunicación institucional, relaciones con medios, y gestión de imagen pública del Gobierno Regional."
+  omega_layer: 4
+  processes:
+    - id: PRENSA-DIFUSION
+      name: "Prensa y Difusión"
+      description: "Generación y difusión de contenidos noticiosos sobre la gestión regional. Incluye redacción de notas de prensa, coordinación con medios, y cobertura de actividades oficiales."
+      actors: ["Depto. Comunicaciones", "Periodistas"]
+      outputs: ["Notas de Prensa", "Cobertura Mediática"]
+    - id: GESTION-RRSS
+      name: "Gestión de Redes Sociales"
+      description: "Administración de cuentas institucionales en plataformas digitales (Facebook, Instagram, X, YouTube). Incluye planificación de contenidos, community management, y monitoreo de métricas."
+      actors: ["Depto. Comunicaciones", "Community Manager"]
+      outputs: ["Publicaciones", "Informe de Alcance"]
+    - id: PROTOCOLO-CEREMONIAL
+      name: "Protocolo y Ceremonial"
+      description: "Coordinación de eventos oficiales del Gobernador/a y autoridades: lanzamientos de programas, inauguraciones, firmas de convenios, y visitas de autoridades nacionales."
+      actors: ["Gabinete", "Protocolo"]
+      outputs: ["Programa del Evento", "Minuta de Prensa"]
+    - id: CLIPPING-MEDIOS
+      name: "Clipping de Medios"
+      description: "Monitoreo diario de apariciones del GORE en medios de comunicación. Incluye prensa escrita, radio, TV y medios digitales. Genera alertas de crisis reputacional."
+      actors: ["Depto. Comunicaciones"]
+      outputs: ["Reporte Diario de Prensa", "Alertas Reputacionales"]
+    - id: CAMPANA-COMUNICACIONAL
+      name: "Campaña Comunicacional"
+      description: "Diseño y ejecución de campañas de comunicación estratégica para programas y políticas regionales. Incluye concepto creativo, producción de piezas, y plan de medios."
+      actors: ["Depto. Comunicaciones", "Agencias Externas"]
+      outputs: ["Material Gráfico", "Spots Audiovisuales"]
+    - id: IDENTIDAD-MARCA
+      name: "Gestión de Identidad y Marca"
+      description: "Resguardo de la identidad visual institucional: logo, paleta de colores, tipografía, plantillas. Incluye verificación de uso correcto de la marca regional."
+      actors: ["Depto. Comunicaciones"]
+      outputs: ["Manual de Marca", "Plantillas Institucionales"]
+
+# =============================================================================
+# PROCESOS ADICIONALES POR DOMINIO (Enriquecimiento Fase 2)
+# =============================================================================
+
+# --- D-FIN Adicionales ---
+D-FIN_adicional:
+  processes:
+    - id: FORMULACION-PRESUPUESTARIA
+      name: "Formulación Presupuestaria"
+      description: "Elaboración del anteproyecto de presupuesto institucional para el año siguiente. Consolida necesidades de todas las divisiones, estima ingresos, y define prioridades de gasto alineadas con la ERD."
+      actors: ["Depto. Presupuesto", "Divisiones", "Gobernador/a"]
+      outputs: ["Propuesta Presupuestaria", "Glosas Regionales"]
+    - id: ANALISIS-CARTERA
+      name: "Análisis de Cartera de Inversiones"
+      description: "Evaluación consolidada del portafolio de proyectos en ejecución y cartera por ejecutar. Identifica riesgos, rezagos, y oportunidades de reasignación de recursos."
+      actors: ["DIPIR", "Jefatura de Preinversión"]
+      outputs: ["Dashboard de Cartera", "Alertas de Riesgo"]
+    - id: EVALUACION-PPR
+      name: "Evaluación de Programas (Track B)"
+      description: "Análisis de Programas Públicos Regionales (PPR) bajo metodología DIPRES/SES. Proceso bifásico: Perfil de Programa + Diseño con Marco Lógico. Resultado: RF (Recomendación Favorable)."
+      actors: ["División Proponente", "DIPRES", "SES"]
+      outputs: ["RF (Recomendación Favorable)", "Diseño de Programa"]
+    - id: FRIL
+      name: "Gestión FRIL"
+      description: "Administración del Fondo Regional de Iniciativa Local. Proceso simplificado para proyectos de menor envergadura propuestos por municipios. Evaluación de mérito interna."
+      actors: ["DIPIR", "Municipios"]
+      outputs: ["Proyecto FRIL Aprobado", "Convenio Municipal"]
+    - id: FRPD
+      name: "Gestión FRPD (Royalty Minero)"
+      description: "Administración del Fondo Regional de Productividad y Desarrollo (Ley de Royalty). Financia innovación, emprendimiento y desarrollo productivo. Exento de evaluación MDSF según Res. 33/2024 MCTCI."
+      actors: ["DIPIR", "CTCI Regional", "Ejecutores"]
+      outputs: ["Proyecto FRPD Aprobado", "Informe de Innovación"]
+
+# --- D-GESTION Adicionales ---
+D-GESTION_adicional:
+  processes:
+    - id: CAPACITACION
+      name: "Gestión de Capacitación"
+      description: "Administración del Plan Anual de Capacitación (PAC): levantamiento de necesidades (DNC), programación de cursos, ejecución, y evaluación de transferencia al puesto de trabajo."
+      actors: ["Depto. DO", "Relatores", "Funcionarios"]
+      outputs: ["PAC Ejecutado", "Certificados"]
+    - id: GESTION-PERMISOS
+      name: "Gestión de Permisos y Licencias"
+      description: "Administración de ausencias funcionarias: feriados legales, permisos administrativos (6 días), licencias médicas, y permisos especiales (matrimonio, fallecimiento)."
+      actors: ["Depto. Personas", "Jefaturas"]
+      outputs: ["Resolución de Permiso", "Control de Asistencia"]
+    - id: BIENESTAR
+      name: "Gestión de Bienestar"
+      description: "Administración de beneficios del Servicio de Bienestar: préstamos sociales, reembolsos médicos, subsidios, y actividades recreativas para funcionarios y cargas."
+      actors: ["Bienestar", "Socios"]
+      outputs: ["Prestaciones Otorgadas", "Saldo de Beneficios"]
+    - id: COMETIDOS-VIATICOS
+      name: "Gestión de Cometidos y Viáticos"
+      description: "Tramitación de misiones de servicio: generación de resolución de cometido, cálculo de viáticos según zona, anticipo, y rendición posterior de gastos."
+      actors: ["Depto. Personas", "Tesorería", "Funcionario"]
+      outputs: ["Resolución de Cometido", "Rendición de Viático"]
+    - id: SEGURIDAD-LABORAL
+      name: "Seguridad y Salud Laboral"
+      description: "Gestión de prevención de riesgos: funcionamiento del Comité Paritario (CPHS), investigación de accidentes, entrega de EPP, y coordinación con Mutualidad (ACHS/ISL)."
+      actors: ["CPHS", "Prevencionista", "Mutualidad"]
+      outputs: ["Actas CPHS", "DIAT/DIEP"]
+
+# --- D-TDE Adicionales ---
+D-TDE_adicional:
+  processes:
+    - id: MESA-AYUDA
+      name: "Mesa de Ayuda TI"
+      description: "Atención de incidentes y requerimientos de usuarios internos. Incluye registro de tickets, clasificación, resolución en primer nivel, y escalamiento cuando corresponde."
+      actors: ["Mesa de Ayuda", "Soporte TI"]
+      outputs: ["Ticket Resuelto", "Base de Conocimiento"]
+    - id: GESTION-ACTIVOS-TI
+      name: "Gestión de Activos TI"
+      description: "Administración del inventario de hardware y software institucional: computadores, servidores, redes, licencias. Incluye ciclo de vida desde adquisición hasta baja."
+      actors: ["TI", "Inventarios"]
+      outputs: ["Inventario TI", "Plan de Renovación"]
+    - id: CIBERSEGURIDAD
+      name: "Gestión de Ciberseguridad"
+      description: "Implementación de controles de seguridad de la información según normativa (DS 83, ISO 27001). Incluye gestión de vulnerabilidades, monitoreo de amenazas, y respuesta a incidentes."
+      actors: ["CISO", "TI"]
+      outputs: ["Plan de Seguridad", "Informe de Vulnerabilidades"]
+    - id: EXPEDIENTE-ELECTRONICO
+      name: "Gestión de Expediente Electrónico"
+      description: "Implementación de la Ley 21.180 de Transformación Digital. Incluye digitalización de procesos, firma electrónica avanzada (FEA), y gestión documental electrónica."
+      actors: ["TI", "Unidades", "FirmaGob"]
+      outputs: ["Expedientes Digitalizados", "Procesos Cero Papel"]
+    - id: INTEGRACION-SISTEMAS
+      name: "Integración de Sistemas"
+      description: "Desarrollo e implementación de integraciones entre sistemas internos y plataformas del Estado: BIP, SIGFE, SISREC, SIAPER, Mercado Público, vía APIs o servicios PISEE."
+      actors: ["TI", "Desarrolladores"]
+      outputs: ["Integración Activa", "Documentación API"]
+    - id: BACKUP-RECUPERACION
+      name: "Respaldo y Recuperación"
+      description: "Gestión de copias de seguridad de datos y sistemas críticos. Incluye programación de respaldos, pruebas de restauración, y plan de recuperación ante desastres (DRP)."
+      actors: ["TI", "Infraestructura"]
+      outputs: ["Respaldos Verificados", "Plan DRP"]
+
+# --- D-BACK Adicionales ---
+D-BACK_adicional:
+  processes:
+    - id: CORRESPONDENCIA
+      name: "Gestión de Correspondencia"
+      description: "Administración del flujo de documentos entrantes y salientes: recepción en Oficina de Partes, foliación, distribución interna, y despacho de oficios."
+      actors: ["Oficina de Partes", "Unidades"]
+      outputs: ["Documentos Ingresados/Despachados", "Tracking Documental"]
+    - id: MANTENCION-INFRAESTRUCTURA
+      name: "Mantención de Infraestructura"
+      description: "Gestión del mantenimiento de edificios, instalaciones y equipos institucionales. Incluye mantención preventiva, correctiva, y mejoras menores."
+      actors: ["Administración", "Contratistas"]
+      outputs: ["Órdenes de Trabajo", "Plan de Mantención"]
+    - id: GESTION-BODEGAS
+      name: "Gestión de Bodegas"
+      description: "Administración de inventarios de suministros y materiales: recepción, almacenamiento, despacho, y control de stock mínimo. Según Manual de Inventarios y Bodegas."
+      actors: ["Bodega", "Unidades Requerentes"]
+      outputs: ["Guías de Despacho", "Control de Stock"]
+    - id: ACTIVO-FIJO
+      name: "Gestión de Activo Fijo"
+      description: "Administración del ciclo de vida de bienes muebles e inmuebles: alta, asignación, traslados, depreciación, y baja. Según Manual de Activo Fijo."
+      actors: ["Inventarios", "Contabilidad"]
+      outputs: ["Fichas de Alta/Baja", "Depreciación Contable"]
+
+# =============================================================================
+# ESTADÍSTICAS FINALES
+# =============================================================================
+_stats:
+  version: "2.6.0"
+  generated_at: "2026-01-05T17:55:00-03:00"
+  total_unique_processes: 289
+  processes_with_enriched_description: 105
+  by_domain:
+    D-FIN: 63
+    D-NORM: 18
+    D-EJEC: 25
+    D-PLAN: 17
+    D-GOB: 22
+    D-BACK: 38
+    D-GESTION: 33
+    D-TDE: 41
+    D-SEG: 9
+    D-SOC: 9
+    D-TERR: 6
+    D-COM: 6
+    FENIX: 2
+  by_omega_layer:
+    L0_CONTEXTO: 24
+    L1_GOBERNANZA: 42
+    L2_FINANCIAMIENTO: 63
+    L3_EJECUCION: 27
+    L4_SOPORTE: 133
+  sources_consulted:
+    - "kb_gn_019_gestion_ipr_koda.yml"
+    - "kb_gn_014_glosario_gore_nuble_koda.yml"
+    - "kb_gn_018_gestion_prpto_2026_koda.yml"
+    - "kb_gn_020_gestion_rendiciones_koda.yml"
+    - "kb_gn_046_manual_compras_koda.yml"
+    - "kb_gn_043_manual_presupuesto_koda.yml"
+    - "omega_gore_nuble_mermaid.md"
+    - "User Stories (goreos/model/stories/*)"

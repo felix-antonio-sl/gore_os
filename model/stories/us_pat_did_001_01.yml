@@ -27,7 +27,7 @@ entities_mentioned:
 
 process_ref:
   id: PROC-EJEC-GESTOR-PATROCINIOS
-    status: candidate
+  status: candidate
 
 tags:
   domain: D-EJEC

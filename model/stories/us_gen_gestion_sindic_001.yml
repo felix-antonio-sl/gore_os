@@ -15,7 +15,7 @@ so_that: pueda coordinar acciones, solicitar información o gestionar convenios 
 user:
   role_id: ROL-GESTION-SINDIC
   agent_type: HUMAN
-  description: Representante de una central sindical (Ej: CUT) o asociación de funcionarios que vigila los derechos laborales
+  description: "Representante de una central sindical (Ej: CUT) o asociación de funcionarios que vigila los derechos laborales"
 
 entities_mentioned:
   - id: ENT-SOC-RECLAMO-LABORAL

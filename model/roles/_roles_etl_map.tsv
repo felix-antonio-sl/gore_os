@@ -1,0 +1,468 @@
+raw_role	canonical_role_keys	match_method	omega_layers	notes
+Encargado de Calidad	encargado_calidad	exact	GOBIERNO_REGIONAL	
+Abogado Informante	abogado_informante	exact	GOBIERNO_REGIONAL	
+Abogado Convenios	abogado_convenios	exact	GOBIERNO_REGIONAL	
+Abogado DAF	abogado_daf	exact	GOBIERNO_REGIONAL	
+Abogado Procesos Disciplinarios	abogado_disciplinarios	exact	GOBIERNO_REGIONAL	
+Abogado Asuntos Judiciales	abogado_judiciales	exact	GOBIERNO_REGIONAL	
+Abogado Licitaciones	abogado_licitaciones	exact	GOBIERNO_REGIONAL	
+Abogado Revisor	abogado_revisor	exact	GOBIERNO_REGIONAL	
+Especialista BI	especialista_bi	exact	EXTERNO_OTROS	
+Analista Contable	analista_contable	exact	GOBIERNO_REGIONAL	
+Analista Ciclo de Vida	analista_ciclo_vida	exact	GOBIERNO_REGIONAL	
+Administrador Plataforma	admin_plataforma	exact	GOBIERNO_REGIONAL	
+Administrador Geonodo	admin_geonodo	exact	EXTERNO_OTROS	
+Analista Evaluación	analista_evaluacion	exact	GOBIERNO_REGIONAL	
+Alcalde	alcalde	exact	TERRITORIO	
+Alcalde de Chillán	alcalde	pattern	TERRITORIO	comuna=de Chillán
+Alcalde de Chillán Viejo	alcalde	pattern	TERRITORIO	comuna=de Chillán Viejo
+Alcalde de San Carlos	alcalde	pattern	TERRITORIO	comuna=de San Carlos
+Analista de Prevención / Gestor Territorial	analista_prevencion	partial	GOBIERNO_REGIONAL	unresolved=Gestor Territorial
+Analista de Modificaciones Presupuestarias	analista_modificaciones	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Representante AMUCH	representante_amuch	exact	EXTERNO_OTROS	
+Analista de Inversión	analista_inversion	exact	GOBIERNO_REGIONAL	
+Analista PPR	analista_ppr	exact	GOBIERNO_REGIONAL	
+Analista Seguimiento	analista_seguimiento	exact	GOBIERNO_REGIONAL	
+Analista Presupuesto	analista_presupuesto	exact	GOBIERNO_REGIONAL	
+Representante ANCORE	ancore	exact	EXTERNO_OTROS	
+Representante ANID	representante_anid	exact	EXTERNO_OTROS	
+Profesional Apoyo CORE	profesional_apoyo_core	exact	GOBIERNO_REGIONAL	
+Analista Preinversión (DAE)	analista_preinversion	exact	GOBIERNO_REGIONAL	
+Analista Prevención	analista_prevencion	exact	GOBIERNO_REGIONAL	
+Jefe Unidad Jurídica	jefe_juridica	exact	GOBIERNO_REGIONAL	
+Encargado de Archivo	encargado_archivo	exact	GOBIERNO_REGIONAL	
+Arquitecto Revisor (Proyectos)	arquitecto_revisor_proy	exact	GOBIERNO_REGIONAL	
+Arquitecto de Datos	arquitecto_datos	exact	GOBIERNO_REGIONAL	
+Arquitecto Categórico	arquitecto_categorico	exact	GOBIERNO_REGIONAL	
+Dirigente Social	dirigente_social	exact	EXTERNO_OTROS	
+Analista Servicios Generales	analista_servicios_generales	exact	GOBIERNO_REGIONAL	
+Asesor Técnico Seguridad	asesor_seguridad	exact	GOBIERNO_REGIONAL	
+Analista Control Asistencia	analista_control_asistencia	exact	GOBIERNO_REGIONAL	
+Analista Territorial	analista_territorial	exact	GOBIERNO_REGIONAL	
+Analista Tesorería	analista_tesoreria	exact	GOBIERNO_REGIONAL	
+Analista Operativo Transferencias	analista_transferencias	exact	GOBIERNO_REGIONAL	
+Profesional DAF	profesional_daf	exact	GOBIERNO_REGIONAL	
+Auditor de Control	auditor_control	exact	GOBIERNO_REGIONAL	
+Auditor Externo	auditor_externo	exact	GOBIERNO_REGIONAL	
+Auxiliar	auxiliar	exact	GOBIERNO_REGIONAL	
+Desarrollador DevOps	desarrollador_devops	exact	GOBIERNO_REGIONAL	
+Encargado Activo Fijo	encargado_activo_fijo	exact	GOBIERNO_REGIONAL	
+Agente KODA	agente_koda	exact	GOBIERNO_REGIONAL	
+Profesional Bienestar	profesional_bienestar	exact	GOBIERNO_REGIONAL	
+Socio Bienestar		unmatched		unresolved=Socio Bienestar
+Encargado Bodega	encargado_bodega	exact	GOBIERNO_REGIONAL	
+Analista Capacitación	analista_capacitacion	exact	GOBIERNO_REGIONAL	
+Gestor de Personas	gestor_personas	exact	GOBIERNO_REGIONAL	
+Encargado Flota	encargado_flota	exact	GOBIERNO_REGIONAL	
+Funcionario	funcionario	exact	GOBIERNO_REGIONAL	
+Contador Gubernamental	contador_gubernamental	exact	GOBIERNO_REGIONAL	
+Encargado Comité Paritario	encargado_comite_paritario	exact	GOBIERNO_REGIONAL	
+Analista Bienestar	analista_bienestar	exact	GOBIERNO_REGIONAL	
+Bomberos de Chile	bomberos	exact	EXTERNO_OTROS	
+Analista Operaciones C33	analista_c33	exact	GOBIERNO_REGIONAL	
+Encargado Capacitación Digital	encargado_capacitacion_digital	exact	GOBIERNO_REGIONAL	
+Carabineros de Chile	carabineros	exact	EXTERNO_OTROS	
+Cámara de Comercio	camara_comercio	exact	EXTERNO_OTROS	
+Encargado Control de Gestión	encargado_control_gestion	exact	GOBIERNO_REGIONAL	
+Analista Toma de Razón (CGR)	analista_toma_razon	exact	GOBIERNO_REGIONAL	
+Coordinador UCR	coordinador_ucr	exact	GOBIERNO_REGIONAL	
+Referente Equidad de Género	referente_genero	exact	GOBIERNO_REGIONAL	
+Evaluador Social	evaluador_social	exact	GOBIERNO_REGIONAL	
+Miembro Comisión de Recepción	miembro_comision_recepcion	exact	GOBIERNO_REGIONAL	
+Periodista	periodista	exact	GOBIERNO_REGIONAL	
+Comprador Público	comprador_publico	exact	GOBIERNO_REGIONAL	
+Miembro Comité Pertinencia	miembro_comite_pertinencia	exact	EXTERNO_OTROS	
+Director Regional CONAF	director_conaf	exact	SERVICIOS	
+Conductor Institucional	conductor	exact	EXTERNO_OTROS	
+Encargado Unidad de Municipalidades y Conservaciones	encargado_muni_cons	exact	TERRITORIO	
+Director Ejecutivo Corporación	director_corporacion	exact	GOBIERNO_REGIONAL	
+Juez de Cuentas (CGR)	juez_cuentas	exact	EXTERNO_OTROS	
+Encargado CSEU	encargado_cseu	exact	GOBIERNO_REGIONAL	
+Coordinador Transformación Digital (CTD)	coord_transformacion	exact	GOBIERNO_REGIONAL	
+Custodio Evidencia	custodio_evidencia	exact	GOBIERNO_REGIONAL	
+Agencia de Protección de Datos	agencia_datos	exact	EXTERNO_OTROS	
+DBA	dba	exact	GOBIERNO_REGIONAL	
+Encargado Descentralización	encargado_descentralizacion	exact	GOBIERNO_REGIONAL	
+Desarrollador	desarrollador	exact	GOBIERNO_REGIONAL	
+Desarrollador Backend	desarrollador_backend	exact	GOBIERNO_REGIONAL	
+Arquitecto de Software	arquitecto_sistemas	alias	GOBIERNO_REGIONAL	
+Desarrollador de API		unmatched		unresolved=Desarrollador de API
+Ingeniero DevOps	desarrollador_devops	alias	GOBIERNO_REGIONAL	
+Lead Developer		unmatched		unresolved=Lead Developer
+Líder Técnico	lider_tecnico	exact	GOBIERNO_REGIONAL	
+Arquitecto Revisor	arquitecto_revisor_proy	exact	GOBIERNO_REGIONAL	
+Nuevo Desarrollador	nuevo_desarrollador	exact	GOBIERNO_REGIONAL	
+Product Owner	product_owner	exact	GOBIERNO_REGIONAL	
+Arquitecto KODA		unmatched		unresolved=Arquitecto KODA
+Ingeniero de Plataforma	desarrollador_devops	alias	GOBIERNO_REGIONAL	
+Líder Técnico / Arquitecto	lider_tecnico	partial	GOBIERNO_REGIONAL	unresolved=Arquitecto
+Ingeniero SRE	ingeniero_sre	exact	GOBIERNO_REGIONAL	
+Responsable de Seguridad (CISO) / Desarrollador	desarrollador	partial	GOBIERNO_REGIONAL	unresolved=Responsable de Seguridad (CISO)
+Desarrollador de una Unidad Técnica Municipal		unmatched		unresolved=Desarrollador de una Unidad Técnica Municipal
+DPO	dpo	exact	GOBIERNO_REGIONAL	
+Delegado Presidencial Regional (DPR)	delegado_presidencial	alias	GOB_INTERIOR	
+Jefe de División / Unidad Jurídica	jefe_juridica	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Encargado de Transformación Digital Municipal	encargado_digital_muni	alias	TERRITORIO	
+Dueño del Dato (Data Owner) / Arquitecto de Datos	arquitecto_datos	partial	GOBIERNO_REGIONAL	unresolved=Dueño del Dato (Data Owner)
+Encargado de Activos / Calidad		unmatched		unresolved=Encargado de Activos; Calidad
+Miembro del Comité de Transformación Digital / Auditor	auditor_externo	partial	GOBIERNO_REGIONAL	unresolved=Miembro del Comité de Transformación Digital
+Analista de Educación / Desarrollo Social	analista_educacion	partial	GOBIERNO_REGIONAL	unresolved=Desarrollo Social
+Operador de Sistema / Gestor Técnico	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Gestor Técnico
+Operador de Sistema / Responsable de Tarea	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Responsable de Tarea
+Operador de Sistema / Supervisor	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Supervisor
+Jefe de División / Unidad		unmatched		unresolved=Jefe de División; Unidad
+Formulador Programas Glosa 7	formulador_glosa7	exact	GOBIERNO_REGIONAL	
+Formulador de Programas Glosa 7 / Municipio	formulador_glosa7	fuzzy	GOBIERNO_REGIONAL	score=0.80
+Profesional de la Unidad Técnica Municipal		unmatched		unresolved=Profesional de la Unidad Técnica Municipal
+Periodista del Gobierno Regional	periodista	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Coordinador de la Unidad de Control de Rendiciones (UCR)	coordinador_ucr	alias	GOBIERNO_REGIONAL	
+Supervisor CIES	supervisor_cies	exact	GOBIERNO_REGIONAL	
+Supervisor CIES / Monitor Divisional	supervisor_cies	partial	GOBIERNO_REGIONAL	unresolved=Monitor Divisional
+Representante de la Cámara de Comercio / Gremio Regional		unmatched		unresolved=Representante de la Cámara de Comercio; Gremio Regional
+Enlace CIES (Coordinación Interinstitucional de Emergencia)	enlace_cies	exact	GOBIERNO_REGIONAL	
+Operador de Sistema / Administrativo	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Administrativo
+Evaluador Social / Técnico	evaluador_social	partial	GOBIERNO_REGIONAL	unresolved=Técnico
+"Miembro del Comité ""Estado Verde"""	miembro_estado_verde	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Presidente del Subcomité de Inteligencia Artificial	presidente_subcomite_ia	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Agente KODA / Arquitecto de Sistemas	agente_koda,arquitecto_sistemas	exact	GOBIERNO_REGIONAL	
+Ingeniero SRE / Equipo de Continuidad Operativa	ingeniero_sre	partial	GOBIERNO_REGIONAL	unresolved=Equipo de Continuidad Operativa
+Líder Técnico / Arquitecto de Software	lider_tecnico,arquitecto_sistemas	exact	GOBIERNO_REGIONAL	
+Líder Técnico / Administrador de Base de Datos	lider_tecnico	partial	GOBIERNO_REGIONAL	unresolved=Administrador de Base de Datos
+Presidente del Subcomité de Inteligencia Artificial / Gobernanza	presidente_subcomite_ia	partial	GOBIERNO_REGIONAL	unresolved=Gobernanza
+Operador de Sistema / QA	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=QA
+Desarrollador de Sistema / Arquitecto	desarrollador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Arquitecto
+Líder Técnico / Implementador	lider_tecnico	partial	GOBIERNO_REGIONAL	unresolved=Implementador
+Operador de Sistema / Soporte TI	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Soporte TI
+Operador de Sistema / Supervisor TI	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Supervisor TI
+Monitor de Sistema / Analista de Cumplimiento	monitor_sistema	partial	GOBIERNO_REGIONAL	unresolved=Analista de Cumplimiento
+Operador de Sistema / Analista de Riesgos	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=Analista de Riesgos
+Encargado de Calidad / Administrador de Fondos	encargado_calidad	partial	GOBIERNO_REGIONAL	unresolved=Administrador de Fondos
+Jefe de la Unidad FENIX (Intervención/Auditoría)	jefe_fenix	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Profesional de la División de Administración y Finanzas (DAF)	profesional_daf	alias	GOBIERNO_REGIONAL	
+Analista de Inversión / Finanzas	analista_inversion	partial	GOBIERNO_REGIONAL	unresolved=Finanzas
+Miembro del Comité FRPD (Fondo Regional de Productividad y Desarrollo)		unmatched		unresolved=Miembro del Comité FRPD (Fondo Regional de Productividad y Desarrollo)
+Analista de Prevención / Jurídico	analista_prevencion	partial	GOBIERNO_REGIONAL	unresolved=Jurídico
+Analista de Prevención / Financiero	analista_prevencion	partial	GOBIERNO_REGIONAL	unresolved=Financiero
+Formulador de Programas Glosa 7 / Municipio / Persona Jurídica	formulador_glosa7	partial	GOBIERNO_REGIONAL	unresolved=Municipio; Persona Jurídica
+Formulador de Programas Glosa 7 / Beneficiario	formulador_glosa7	fuzzy	GOBIERNO_REGIONAL	score=0.80
+Ejecutivo de la Unidad Regional de Asistencia Inmediata (URAI) / ITO		unmatched		unresolved=Ejecutivo de la Unidad Regional de Asistencia Inmediata (URAI); ITO
+Ejecutivo de la Unidad Regional de Asistencia Inmediata (URAI) / DAF		unmatched		unresolved=Ejecutivo de la Unidad Regional de Asistencia Inmediata (URAI); DAF
+Jefe de División / Analista Estratégico		unmatched		unresolved=Jefe de División; Analista Estratégico
+Analista de Pre-inversión (División de Análisis y Estrategia - DAE)		unmatched		unresolved=Analista de Pre-inversión (División de Análisis y Estrategia - DAE)
+Analista de Programas (PPR)	analista_ppr	alias	GOBIERNO_REGIONAL	
+Analista de Programas (PPR) / Auditor	analista_ppr,auditor_externo	alias	GOBIERNO_REGIONAL	score=1.00
+Jefe Unidad DAF	jefe_daf	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Encargado Rendiciones	encargado_rendiciones	exact	GOBIERNO_REGIONAL	
+Analista 8% (Técnico)	analista_8_tecnico	exact	GOBIERNO_REGIONAL	
+Analista Ejecutor	analista_ejecutor	exact	GOBIERNO_REGIONAL	
+FinOps Manager	finops_manager	exact	GOBIERNO_REGIONAL	
+Fiscal Sumariante	fiscal_sumariante	exact	GOBIERNO_REGIONAL	
+Jefe FENIX	jefe_fenix	exact	GOBIERNO_REGIONAL	
+Interventor Financiero	interventor_financiero	exact	GOBIERNO_REGIONAL	
+Fotógrafo	fotografo	exact	GOBIERNO_REGIONAL	
+Miembro del Comité FRPD		unmatched		unresolved=Miembro del Comité FRPD
+Jefatura Control Jerárquico	jefe_control_jerarquico	exact	GOBIERNO_REGIONAL	
+Analista QA	qa_analista	exact	GOBIERNO_REGIONAL	
+Secretario Ejecutivo Comité de Pertinencia	secretario_comite_pertinencia	exact	GOBIERNO_REGIONAL	
+Inspector Técnico de Obra (ITO)	inspector_tecnico_obra	exact	GOBIERNO_REGIONAL	
+Inspector Obras (Municipal)	ito_municipal	exact	TERRITORIO	
+Inspector Técnico de Programa (ITP)	itp_programa	exact	GOBIERNO_REGIONAL	
+Ejecutivo URAI	ejecutivo_urai	exact	GOBIERNO_REGIONAL	
+Analista Compras	analista_compras	exact	GOBIERNO_REGIONAL	
+SEREMI Educación	seremi_educacion	exact	SEREMIAS	
+Analista Turismo	analista_turismo	exact	GOBIERNO_REGIONAL	
+SEREMI Mujer y EG	seremi_mujer	exact	SEREMIAS	
+Analista Conectividad	analista_conectividad	exact	GOBIERNO_REGIONAL	
+Analista Medio Ambiente	analista_medio_ambiente	exact	GOBIERNO_REGIONAL	
+SEREMI Economía	seremi_economia	exact	SEREMIAS	
+SEREMI Sectorial	seremi_sectorial	exact	SEREMIAS	
+Analista Cartera	analista_cartera	exact	GOBIERNO_REGIONAL	
+Analista Energía	analista_energia	exact	GOBIERNO_REGIONAL	
+SEREMI Trabajo	seremi_trabajo	exact	SEREMIAS	
+Analista Viáticos	analista_viaticos	exact	GOBIERNO_REGIONAL	
+Analista Deporte	analista_deporte	exact	GOBIERNO_REGIONAL	
+Analista Municipios	analista_municipios	exact	TERRITORIO	
+Analista Salud	analista_salud	exact	GOBIERNO_REGIONAL	
+Analista Cultura	analista_cultura	exact	GOBIERNO_REGIONAL	
+SEREMI Salud	seremi_salud	exact	SEREMIAS	
+SEREMI Medio Ambiente	seremi_medioambiente	exact	SEREMIAS	
+SEREMI Culturas	seremi_culturas	exact	SEREMIAS	
+Analista Base (Arquetipo)	analista_base	exact	GOBIERNO_REGIONAL	
+Encargado Agenda Ñuble 250	encargado_nuble_250	exact	GOBIERNO_REGIONAL	
+Analista Informática (DIT)	analista_dit	alias	GOBIERNO_REGIONAL	
+Analista Agua Potable Rural	analista_agua_potable	exact	GOBIERNO_REGIONAL	
+Analista Vivienda	analista_vivienda	exact	GOBIERNO_REGIONAL	
+Archivero Digital	archivero_digital	exact	EXTERNO_OTROS	
+Auditor Ministerial	auditor_ministerial_interior	exact	GOBIERNO_REGIONAL	
+Banco Central de Chile	banco_central	exact	NIVEL_CENTRAL	
+Beneficiario Individual	beneficiario_individual	exact	EXTERNO_OTROS	
+Auditor General de Gobierno	auditor_general_gobierno	exact	GOBIERNO_REGIONAL	
+Miembro Equipo Campeón	equipo_campeon	exact	GOBIERNO_REGIONAL	
+Colegio Profesional	colegio_profesional	exact	GOBIERNO_REGIONAL	
+Consejo de Defensa del Estado	cde	exact	NIVEL_CENTRAL	
+Comité Directivo Regional (CDR)	comite_directivo	exact	GOBIERNO_REGIONAL	
+Centro de Investigación	centro_investigacion	exact	EXTERNO_OTROS	
+Robot Cert-Manager	cert_manager	exact	GOBIERNO_REGIONAL	
+Agente Clasificador	clasificador	exact	GOBIERNO_REGIONAL	
+Director Regional CNR	director_cnr	exact	EXTERNO_OTROS	
+Encargado Comunicaciones DIPIR	comunicaciones_dipir	exact	GOBIERNO_REGIONAL	
+Comunicon (Asesor Comunicacional)	comunicon	exact	GOBIERNO_REGIONAL	
+Ingeniero Vialidad	ing_vialidad	exact	GOBIERNO_REGIONAL	
+Consultor Externo	consultor_externo	exact	EXTERNO_OTROS	
+Contraparte Interna	contraparte_interna	exact	EXTERNO_OTROS	
+Coordinador CIES	coordinador_cies	exact	GOBIERNO_REGIONAL	
+CORFO	corfo	exact	EXTERNO_OTROS	
+Corte de Apelaciones de Chillán	corte_apelaciones_nuble	exact	EXTERNO_OTROS	
+COSOC / Consejo de la Sociedad Civil	cosoc	exact	EXTERNO_OTROS	
+CPC Regional	cpc_regional	exact	EXTERNO_OTROS	
+Consejo Transparencia (CPLT)	cplt	exact	EXTERNO_OTROS	
+Miembro Comité CSEU	miembro_cseu	exact	GOBIERNO_REGIONAL	
+Coordinador Transformación Digital	coord_transformacion	exact	GOBIERNO_REGIONAL	
+Profesional CTI	profesional_cti	exact	GOBIERNO_REGIONAL	
+Director Regional DGA	director_dga	exact	SERVICIOS	
+Digitrans (Asesor TDE)	asesor_tde	exact	GOBIERNO_REGIONAL	
+Analista Sectorial DIPRES	analista_sectorial_dipres	exact	NIVEL_CENTRAL	
+Director Servicio Regional	director_servicio_regional	exact	EXTERNO_OTROS	
+Director Regional DOH	director_doh	exact	SERVICIOS	
+Delegado Presidencial Provincial	delegado_provincial	exact	GOB_INTERIOR	
+Empresa / Gremio	empresa_gremio	exact	EXTERNO_OTROS	
+Encargado Estado Verde	encargado_estado_verde	exact	GOBIERNO_REGIONAL	
+Usuario Externo (Genérico)	usuario_externo	exact	EXTERNO_OTROS	
+Federación de Municipios	federacion_municipios	exact	TERRITORIO	
+Cogirador Autorizado	cogirador_autorizado	exact	GOBIERNO_REGIONAL	
+Interventor FENIX	interventor_fenix	exact	GOBIERNO_REGIONAL	
+FOSIS	fosis	exact	EXTERNO_OTROS	
+Desarrollador Frontend	desarrollador_frontend	exact	GOBIERNO_REGIONAL	
+Ciudadano	ciudadano	exact	EXTERNO_OTROS	
+Goreólogo (Experto Institucional)	goreologo	exact	GOBIERNO_REGIONAL	
+Comité Regional GRD	comite_grd	exact	GOBIERNO_REGIONAL	
+Analista GDP (Honorarios)	analista_gdp_honorarios	exact	GOBIERNO_REGIONAL	
+INDAP	indap	exact	SERVICIOS	
+Encargado RR.II	encargado_rrii	exact	GOBIERNO_REGIONAL	
+Formuevaluador (Asesor IPR)	formuevaluador	exact	GOBIERNO_REGIONAL	
+Jano (Asesor Jurídico y Conformidad)	jano	exact	GOBIERNO_REGIONAL	
+Jefe Estudios	jefe_estudios	exact	GOBIERNO_REGIONAL	
+Junta de Vecinos	junta_vecinos	exact	EXTERNO_OTROS	
+Director Regional JUNJI	director_junji	exact	SERVICIOS	
+Juzgado de Letras	juzgado_letras	exact	EXTERNO_OTROS	
+Medio de Comunicación	media_comunicacion	exact	EXTERNO_OTROS	
+Mora Watcher (Monitor Plazos)	monitor_plazos	exact	GOBIERNO_REGIONAL	
+Notario	notario	exact	EXTERNO_OTROS	
+ONG / Fundación	ong_fundacion	exact	EXTERNO_OTROS	
+Organización Beneficiaria	org_beneficiaria	exact	EXTERNO_OTROS	
+Organización Postulante (8%)	org_postulante	exact	EXTERNO_OTROS	
+Referente Transformación Digital PMG	referente_td_pmg	exact	GOBIERNO_REGIONAL	
+Prensa Regional	prensa_regional	exact	EXTERNO_OTROS	
+Presidente Subcomité IA	presidente_subcomite_ia	exact	GOBIERNO_REGIONAL	
+Profesional de Área	profesional_base	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Coordinador Mapa PROPIR	coordinador_propir	exact	GOBIERNO_REGIONAL	
+Encargado Zonas de Rezago	encargado_zonas_rezago	exact	GOBIERNO_REGIONAL	
+Director Servicio de Salud	director_servicio_salud	exact	SERVICIOS	
+SECPLA San Carlos	secpla_san_carlos	exact	EXTERNO_OTROS	
+SECPLA Chillán	secpla_chillan	exact	EXTERNO_OTROS	
+Director Regional SENCE	director_sence	exact	SERVICIOS	
+SERCOTEC	sercotec	exact	EXTERNO_OTROS	
+SEREMI Hacienda	seremi_hacienda	exact	SEREMIAS	
+SEREMI MINVU	seremi_minvu	exact	SEREMIAS	
+Director Regional SernamEG	director_sernameg	exact	EXTERNO_OTROS	
+Director Regional SII	director_sii	exact	SERVICIOS	
+Central Sindical	central_sindical	exact	EXTERNO_OTROS	
+SNA / SOFO	sna_sofo	exact	EXTERNO_OTROS	
+Analista División Gobiernos (SUBDERE)	analista_division_gobiernos	exact	GOBIERNO_REGIONAL	
+SUBTEL / MTT	subtel_mtt	exact	EXTERNO_OTROS	
+Tribunal Constitucional	tribunal_constitucional	exact	EXTERNO_OTROS	
+Referente Transparencia (por Ítem)	referente_transparencia	exact	GOBIERNO_REGIONAL	
+Unidad Coordinación Regional	unidad_coordinacion_regional	exact	EXTERNO_OTROS	
+Universidad (Investigador)	investigador_universidad	exact	EXTERNO_OTROS	
+Universidad Regional	universidad_regional	exact	EXTERNO_OTROS	
+UTM Genérica	utm_generica	exact	EXTERNO_OTROS	
+Abogado Asesor de División	abogado_asesor_division	exact	GOBIERNO_REGIONAL	
+Abogado General	abogado_general	exact	GOBIERNO_REGIONAL	
+Fiscalizador Bot	auditor_bot	exact	GOBIERNO_REGIONAL	
+Ministerio Público (Fiscalía)	ministerio_publico	exact	NIVEL_CENTRAL	
+Administrador de Sistema	admin_sistema	exact	GOBIERNO_REGIONAL	
+Encargado Continuidad Operacional	encargado_continuidad	exact	GOBIERNO_REGIONAL	
+Analista Equidad Territorial	analista_equidad_territorial	exact	GOBIERNO_REGIONAL	
+Sociólogo Territorial	sociologo_territorial	exact	GOBIERNO_REGIONAL	
+Analista Prevención (Especialista GIS)	analista_prevencion	exact	GOBIERNO_REGIONAL	
+Profesional DAF (Unidad de Control Interno)	profesional_daf	exact	GOBIERNO_REGIONAL	
+Jefe División Fomento e Industria		unmatched		unresolved=Jefe División Fomento e Industria
+Jefe Unidad Jurídica (como Controller Normativo)	jefe_juridica	exact	GOBIERNO_REGIONAL	
+Secretario Ejecutivo (del CORE o Comité)	secretario_ejecutivo_core	fuzzy	GOBIERNO_REGIONAL	score=0.75
+Delegado Presidencial Regional	delegado_presidencial	alias	GOB_INTERIOR	
+Jefe Unidad Jurídica (como Experto en Descentralización)	jefe_juridica	exact	GOBIERNO_REGIONAL	
+Profesional de Area (como Gestor de Instalación)	profesional_base	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Profesional DAF (como Auditor de Traspaso)	profesional_daf	exact	GOBIERNO_REGIONAL	
+Jefe de Gabinete	jefe_gabinete	exact	GOBIERNO_REGIONAL	
+Asesor de Gabinete		unmatched		unresolved=Asesor de Gabinete
+Profesional de Relaciones Internacionales		unmatched		unresolved=Profesional de Relaciones Internacionales
+Gobernador Regional	gobernador	exact	GOBIERNO_REGIONAL	
+Gobernador Regional (Consejo Regional GRD)	gobernador	exact	GOBIERNO_REGIONAL	
+Especialista GRD / Planificador Territorial		unmatched		unresolved=Especialista GRD; Planificador Territorial
+Jefe de Unidad GRD / Coordinador de Emergencias		unmatched		unresolved=Jefe de Unidad GRD; Coordinador de Emergencias
+Coordinador GRD / UCR		unmatched		unresolved=Coordinador GRD; UCR
+Sujeto Pasivo (Autoridad/Gobernador)	sujeto_pasivo	exact	GOBIERNO_REGIONAL	
+Funcionario (Sujeto Obligado)	funcionario	exact	GOBIERNO_REGIONAL	
+Oficial de Partes	oficial_partes	exact	GOBIERNO_REGIONAL	
+Ingeniero SRE / Arquitecto de Datos	ingeniero_sre,arquitecto_datos	exact	GOBIERNO_REGIONAL	
+Secretario de Gabinete (Gobernador)		unmatched		unresolved=Secretario de Gabinete (Gobernador)
+Corporación Municipal / Delegación Provincial	corporacion_municipal	partial	TERRITORIO	unresolved=Delegación Provincial
+Gestor de Personas (en Delegación Provincial)	gestor_personas	exact	GOBIERNO_REGIONAL	
+Coordinador UCR / Emergencias	coordinador_ucr	partial	GOBIERNO_REGIONAL	unresolved=Emergencias
+Analista Honorarios	analista_honorarios	exact	GOBIERNO_REGIONAL	
+Funcionario a Honorarios		unmatched		unresolved=Funcionario a Honorarios
+Ingeniero de Conocimiento (Knowledge Engineer)	ingeniero_conocimiento	exact	GOBIERNO_REGIONAL	
+Coordinador IDE	coordinador_ide	exact	GOBIERNO_REGIONAL	
+Fiscal / Auditor Interno	auditor_interno	partial	GOBIERNO_REGIONAL	unresolved=Fiscal
+Director Regional INDAP (Stakeholder Externo)		unmatched		unresolved=Director Regional INDAP (Stakeholder Externo)
+Encargado Interoperabilidad	encargado_interoperabilidad	exact	GOBIERNO_REGIONAL	
+Jefe de División (Planificación/Inversión)		unmatched		unresolved=Jefe de División (Planificación/Inversión)
+Desarrollador / DevOps Engineer	desarrollador	partial	GOBIERNO_REGIONAL	unresolved=DevOps Engineer
+Ingeniero Sanitario		unmatched		unresolved=Ingeniero Sanitario
+Encargado de Ciberseguridad		unmatched		unresolved=Encargado de Ciberseguridad
+Encargado Informática Municipal		unmatched		unresolved=Encargado Informática Municipal
+Inspector Técnico Municipal (ITO externo)		unmatched		unresolved=Inspector Técnico Municipal (ITO externo)
+Jefe de Auditoría Interna		unmatched		unresolved=Jefe de Auditoría Interna
+Miembro de la Junta Calificadora		unmatched		unresolved=Miembro de la Junta Calificadora
+Jefe Depto. Contabilidad	jefe_depto_contabilidad	exact	GOBIERNO_REGIONAL	
+Jefe de División		unmatched		unresolved=Jefe de División
+Jefe de RRHH		unmatched		unresolved=Jefe de RRHH
+Directivo / Jefe de Departamento		unmatched		unresolved=Directivo; Jefe de Departamento
+Jefe de Estudios y Planificación		unmatched		unresolved=Jefe de Estudios y Planificación
+Jefe de Presupuesto		unmatched		unresolved=Jefe de Presupuesto
+Jefe de Programación Regional	jefe_programacion	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Jefe de División Territorial		unmatched		unresolved=Jefe de División Territorial
+Jefe de Tesorería		unmatched		unresolved=Jefe de Tesorería
+Jefe de Tecnologías de la Información (TI)		unmatched		unresolved=Jefe de Tecnologías de la Información (TI)
+Encargado de Ley de Lobby	encargado_lobby	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Miembro del Comité de Transformación Digital		unmatched		unresolved=Miembro del Comité de Transformación Digital
+Analista de Inversiones (MDSyF)	analista_inversiones_mds	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Auditor de Control Interno (MECIF)		unmatched		unresolved=Auditor de Control Interno (MECIF)
+Especialista de Mesa de Ayuda (Soporte TI)		unmatched		unresolved=Especialista de Mesa de Ayuda (Soporte TI)
+Coordinador de Mesa de Ayuda		unmatched		unresolved=Coordinador de Mesa de Ayuda
+Ingeniero de Migración (Rol-Ops)		unmatched		unresolved=Ingeniero de Migración (Rol-Ops)
+Migrador de Datos		unmatched		unresolved=Migrador de Datos
+Administrador de Sistemas	admin_sistema	alias	GOBIERNO_REGIONAL	
+Monitor de Sistemas (SRE)		unmatched		unresolved=Monitor de Sistemas (SRE)
+Miembro del Comité de Ética Digital		unmatched		unresolved=Miembro del Comité de Ética Digital
+Nuevo Desarrollador (Node/Python)	nuevo_desarrollador	exact	GOBIERNO_REGIONAL	
+Analista de Seguridad (SOC/NOC)		unmatched		unresolved=Analista de Seguridad (SOC/NOC)
+Abogado de Litigios		unmatched		unresolved=Abogado de Litigios
+Abogado Informante / Fiscal Sumariante	abogado_informante,fiscal_sumariante	exact	GOBIERNO_REGIONAL	
+Analista de Control Preventivo		unmatched		unresolved=Analista de Control Preventivo
+Ministro de Fe (Secretario Ejecutivo / Jefe Jurídica)	ministro_fe	exact	GOBIERNO_REGIONAL	
+Funcionario de Unidad Técnica Municipal		unmatched		unresolved=Funcionario de Unidad Técnica Municipal
+Analista de Toma de Razón (CGR)	analista_toma_razon	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Encargado de Transparencia		unmatched		unresolved=Encargado de Transparencia
+Profesional DAF (Control Interno)	profesional_daf	exact	GOBIERNO_REGIONAL	
+Auditor de Control Interno		unmatched		unresolved=Auditor de Control Interno
+Jefe de Gestión de Personas / Auditor	jefe_rrhh	fuzzy	GOBIERNO_REGIONAL	score=0.75
+Administrador de Plataforma TDE	admin_plataforma	alias	GOBIERNO_REGIONAL	
+Auditor de Cumplimiento TDE		unmatched		unresolved=Auditor de Cumplimiento TDE
+Analista del Observatorio Regional	analista_observatorio	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Encargado OIRS	encargado_oirs	exact	GOBIERNO_REGIONAL	
+Representante de ONG / Organización Social		unmatched		unresolved=Representante de ONG; Organización Social
+Director Ejecutivo de ONG		unmatched		unresolved=Director Ejecutivo de ONG
+Operador de Sistema (CIES / Control)	operador_sistema	exact	GOBIERNO_REGIONAL	
+Operador de Sistema / SysAdmin	operador_sistema	partial	GOBIERNO_REGIONAL	unresolved=SysAdmin
+Administrador de Plataforma TIC	admin_plataforma	alias	GOBIERNO_REGIONAL	
+Administrador de TI	admin_ti	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Administrador de Seguridad TI		unmatched		unresolved=Administrador de Seguridad TI
+Administrador de Base de Datos (DBA)		unmatched		unresolved=Administrador de Base de Datos (DBA)
+Oficial de Ciberseguridad	responsable_seguridad	alias	UNKNOWN	
+Administrador de Datos (Geonodo)	admin_geonodo	alias	EXTERNO_OTROS	
+Ingeniero de Plataforma (DevOps)	desarrollador_devops	alias	GOBIERNO_REGIONAL	
+Usuario de la Plataforma (Funcionario/Externo)		unmatched		unresolved=Usuario de la Plataforma (Funcionario/Externo)
+Supervisor de Operaciones (CIES)		unmatched		unresolved=Supervisor de Operaciones (CIES)
+Ingeniero de Conectividad / SRE		unmatched		unresolved=Ingeniero de Conectividad; SRE
+CISO	ciso	exact	GOBIERNO_REGIONAL	
+Agente KODA (Infraestructura)	agente_koda	exact	GOBIERNO_REGIONAL	
+Usuario del Sistema (Funcionario/Ciudadano)		unmatched		unresolved=Usuario del Sistema (Funcionario/Ciudadano)
+Analista de Mesa de Ayuda		unmatched		unresolved=Analista de Mesa de Ayuda
+Usuario de la Plataforma		unmatched		unresolved=Usuario de la Plataforma
+Encargado de Participación Ciudadana		unmatched		unresolved=Encargado de Participación Ciudadana
+Analista Patrocinante (DIFOI)	analista_patrocinante_difoi	exact	GOBIERNO_REGIONAL	
+Presidente de Subcomité de Evaluación		unmatched		unresolved=Presidente de Subcomité de Evaluación
+PDI (Policía de Investigaciones)	pdi	exact	EXTERNO_OTROS	
+Analista Pesca	analista_pesca	exact	GOBIERNO_REGIONAL	
+Presidente Subcomité Gestión Ambiental		unmatched		unresolved=Presidente Subcomité Gestión Ambiental
+Planificador Urbano	planificador_urbano	exact	GOBIERNO_REGIONAL	
+Coordinador Transformación Digital / PMG	coord_transformacion	partial	GOBIERNO_REGIONAL	unresolved=PMG
+Presidente Subcomité de Pertinencia		unmatched		unresolved=Presidente Subcomité de Pertinencia
+Presidente del Consejo Regional (CORE)		unmatched		unresolved=Presidente del Consejo Regional (CORE)
+Prevencionista de Riesgos	prevencionista_riesgos	fuzzy	EXTERNO_OTROS	score=1.00
+Profesional / Analista de División		unmatched		unresolved=Profesional; Analista de División
+Profesional Jefe de Proyecto / Analista de Rezago		unmatched		unresolved=Profesional Jefe de Proyecto; Analista de Rezago
+QA Engineer / Tester	qa_engineer	partial	GOBIERNO_REGIONAL	unresolved=Tester
+Encargado de Remuneraciones	encargado_remuneraciones	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Encargado de Rendiciones (DAF)	encargado_rendiciones	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Analista de Planificación / Rezago	analista_planificacion	partial	GOBIERNO_REGIONAL	unresolved=Rezago
+Referente de Concentración del Gasto	referente_gasto	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Referente de Transparencia / Enlace PMG		unmatched		unresolved=Referente de Transparencia; Enlace PMG
+Referente de Riesgos Psicosociales	referente_riesgos_psicosociales	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Jefe de Recursos Humanos		unmatched		unresolved=Jefe de Recursos Humanos
+Coordinador de Transformación Digital (CTD)		ambiguous		candidates=ctd_daf('Coordinador Transformación Digital (CTD)'), coord_transformacion('Coordinador Transformación Digital'); score=1.00
+Unidad Técnica Municipal (DOM/SECPLAN)	unidad_tecnica	exact	TERRITORIO	
+Director Regional SAG	director_sag	exact	SERVICIOS	
+Secretario Ejecutivo del Comité CTCI		unmatched		unresolved=Secretario Ejecutivo del Comité CTCI
+Secretario Ejecutivo del Comité CTD	secretario_ctd	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Secretario de Comisión (CORE)		unmatched		unresolved=Secretario de Comisión (CORE)
+Secretario Ejecutivo del CORE	secretario_ejecutivo_core	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Secretaria de División	secretaria_division	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Formulador Municipal (SECPLAN)		unmatched		unresolved=Formulador Municipal (SECPLAN)
+Operador de Sistema CIES		unmatched		unresolved=Operador de Sistema CIES
+Enlace CIES de Terreno		unmatched		unresolved=Enlace CIES de Terreno
+Custodio de Evidencia (CIES)	custodio_evidencia	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Representante de Mesa de Seguridad (Stakeholder)		unmatched		unresolved=Representante de Mesa de Seguridad (Stakeholder)
+Ciudadano / Usuario de la Región	ciudadano	partial	EXTERNO_OTROS	unresolved=Usuario de la Región
+Encargado de Prevención (GORE)	encargado_prevencion	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Analista de Prevención (GORE)	analista_prevencion	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Profesional de Prevención (GORE)		unmatched		unresolved=Profesional de Prevención (GORE)
+Coordinador de la Unidad de Control Regional (UCR)		unmatched		unresolved=Coordinador de la Unidad de Control Regional (UCR)
+Analista de Prevención	analista_prevencion	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Parlamentario de la Región (Senador/Diputado)		unmatched		unresolved=Parlamentario de la Región (Senador/Diputado)
+Director Regional de SENAPRED (ex-ONEMI)	senapred	fuzzy	SERVICIOS	score=0.75
+SEREMI de Agricultura	seremi_agricultura	exact	SEREMIAS	
+SEREMI de Gobierno		unmatched		unresolved=SEREMI de Gobierno
+SEREMI de Obras Públicas	seremi_mop	exact	SEREMIAS	
+Director Regional de SERNATUR	director_sernatur	fuzzy	SERVICIOS	score=1.00
+SEREMI (Sectorial)	seremi_sectorial	fuzzy	SEREMIAS	score=1.00
+Encargado de Servicios Generales		unmatched		unresolved=Encargado de Servicios Generales
+Director Regional de SERVIU	director_serviu	fuzzy	SERVICIOS	score=1.00
+Analista Social	analista_social	exact	GOBIERNO_REGIONAL	
+Funcionario / Socio Bienestar	funcionario	partial	GOBIERNO_REGIONAL	unresolved=Socio Bienestar
+Dirigente de Gremio Agrícola / Dirigente Social	dirigente_social	partial	EXTERNO_OTROS	unresolved=Dirigente de Gremio Agrícola
+Supervisor de Soporte Técnico CIES		unmatched		unresolved=Supervisor de Soporte Técnico CIES
+Secretario Ejecutivo del Comité de Pertinencia	secretario_comite_pertinencia	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Ingeniero SRE (Site Reliability Engineering)	ingeniero_sre	exact	GOBIERNO_REGIONAL	
+Analista de Subvenciones / Finanzas		unmatched		unresolved=Analista de Subvenciones; Finanzas
+Sujeto Pasivo (Autoridad del GORE)	sujeto_pasivo	exact	GOBIERNO_REGIONAL	
+Analista de Inversiones / Jefe de División		unmatched		unresolved=Analista de Inversiones; Jefe de División
+Supervisor de Transparencia		unmatched		unresolved=Supervisor de Transparencia
+Ministro de Fe / Juez de Cuentas	ministro_fe,juez_cuentas	exact	GOBIERNO_REGIONAL,EXTERNO_OTROS	
+Trabajador de Corporación Regional	trabajador_corporacion	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Administrador de Plataforma (Geonodo / GORE_OS)	admin_plataforma	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Administrador de Plataforma	admin_plataforma	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Administrador de Seguridad		unmatched		unresolved=Administrador de Seguridad
+Operador PISEE	operador_pisee	exact	GOBIERNO_REGIONAL	
+Delegado de Protección de Datos (DPO)		unmatched		unresolved=Delegado de Protección de Datos (DPO)
+Jefe de Informática / CTO		unmatched		unresolved=Jefe de Informática; CTO
+Encargado Digital Municipal	encargado_digital_muni	alias	TERRITORIO	
+Desarrollador GORE	desarrollador	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Agente KODA (Asistente Inteligente)	agente_koda	exact	GOBIERNO_REGIONAL	
+Funcionario (Tester de Negocio)	funcionario	exact	GOBIERNO_REGIONAL	
+Director de Seguridad de la Información (CISO)	ciso	alias	GOBIERNO_REGIONAL	
+Jefe de Unidad Jurídica	jefe_juridica	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Analista de Planificación Territorial		unmatched		unresolved=Analista de Planificación Territorial
+Director de Obras Municipales (DOM)	director_obras	fuzzy	TERRITORIO	score=0.75
+Referente de Equidad de Género / Gestor Territorial	referente_genero	partial	GOBIERNO_REGIONAL	unresolved=Gestor Territorial
+Analista Planificación	analista_planificacion	exact	GOBIERNO_REGIONAL	
+Analista de Planificación	analista_planificacion	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Analista de Tesorería	analista_tesoreria	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Administrador de Plataforma (Informática)	admin_plataforma	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Arquitecto de Software / Team Lead	arquitecto_sistemas	partial	GOBIERNO_REGIONAL	unresolved=Team Lead
+Analista de la Unidad de Control de Rendiciones (UCR)	unidad_control_rendiciones	fuzzy	GOBIERNO_REGIONAL	score=0.75
+Formulador de Programas Glosa 7 (Subvenciones)	formulador_glosa7	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Encargado de la UOCT Regional (Unidad Operativa de Control de Tránsito)		unmatched		unresolved=Encargado de la UOCT Regional (Unidad Operativa de Control de Tránsito)
+Referente de Equidad de Género (Funcionario)	referente_genero	fuzzy	GOBIERNO_REGIONAL	score=1.00
+Encargado de Relaciones Institucionales / Calidad		unmatched		unresolved=Encargado de Relaciones Institucionales; Calidad

@@ -1,0 +1,4090 @@
+## us_abast_001_01.yml
+  urn: urn:goreos:atom:story:us_abast_001_01:1.0.0
+id: US-ABAST-001-01
+name: Un módulo de gestión del Plan de Compras integrado con Mercado Público
+
+## us_abast_001_02.yml
+  urn: urn:goreos:atom:story:us_abast_001_02:1.0.0
+id: US-ABAST-001-02
+name: Alertas de vencimiento de contratos de suministro
+
+## us_abog_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_001_01:1.0.0
+id: US-ABOG-001-01
+name: Plantillas de actos administrativos con campos pre-llenados
+
+## us_abog_001_02.yml
+  urn: urn:goreos:atom:story:us_abog_001_02:1.0.0
+id: US-ABOG-001-02
+name: Actos similares anteriores
+
+## us_abog_conv_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_conv_001_01:1.0.0
+id: US-ABOG-CONV-001-01
+name: Plantillas de convenios con cláusulas estándar
+
+## us_abog_daf_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_daf_001_01:1.0.0
+id: US-ABOG-DAF-001-01
+name: Plantillas de bases y contratos con cláusulas actualizadas
+
+## us_abog_disc_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_disc_001_01:1.0.0
+id: US-ABOG-DISC-001-01
+name: Un módulo confidencial de gestión de sumarios
+
+## us_abog_inf_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_inf_001_01:1.0.0
+id: US-ABOG-INF-001-01
+name: Un repositorio de jurisprudencia administrativa regional
+
+## us_abog_jud_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_jud_001_01:1.0.0
+id: US-ABOG-JUD-001-01
+name: Un calendario procesal con alertas de plazos fatales
+
+## us_abog_lic_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_lic_001_01:1.0.0
+id: US-ABOG-LIC-001-01
+name: Plantillas de bases con cláusulas actualizadas
+
+## us_abog_rev_001_01.yml
+  urn: urn:goreos:atom:story:us_abog_rev_001_01:1.0.0
+id: US-ABOG-REV-001-01
+name: Un workflow de revisión de resoluciones con control de versiones
+
+## us_acc_001_01.yml
+  urn: urn:goreos:atom:story:us_acc_001_01:1.0.0
+id: US-ACC-001-01
+name: Herramientas de auditoría de accesibilidad
+
+## us_aconv_001_01.yml
+  urn: urn:goreos:atom:story:us_aconv_001_01:1.0.0
+id: US-ACONV-001-01
+name: Un workflow de convenios con checklist de requisitos
+
+## us_acv_001_01.yml
+  urn: urn:goreos:atom:story:us_acv_001_01:1.0.0
+id: US-ACV-001-01
+name: Un workflow de onboarding con checklist de documentos
+
+## us_adm_plat_001_01.yml
+  urn: urn:goreos:atom:story:us_adm_plat_001_01:1.0.0
+id: US-ADM-PLAT-001-01
+name: Gestión centralizada de permisos y roles
+
+## us_admin_001_01.yml
+  urn: urn:goreos:atom:story:us_admin_001_01:1.0.0
+id: US-ADMIN-001-01
+name: Un panel de administración centralizado de usuarios y permisos
+
+## us_aeval_001_01.yml
+  urn: urn:goreos:atom:story:us_aeval_001_01:1.0.0
+id: US-AEVAL-001-01
+name: Una ficha de evaluación con criterios estándar
+
+## us_alc_001_02.yml
+  urn: urn:goreos:atom:story:us_alc_001_02:1.0.0
+id: US-ALC-001-02
+name: El calendario de llamados y fondos disponibles
+
+## us_alc_chi_001_01.yml
+  urn: urn:goreos:atom:story:us_alc_chi_001_01:1.0.0
+id: US-ALC-CHI-001-01
+name: Seguimiento de proyectos comunales (Alcalde Chillán)
+
+## us_alc_chv_001_01.yml
+  urn: urn:goreos:atom:story:us_alc_chv_001_01:1.0.0
+id: US-ALC-CHV-001-01
+name: Seguimiento de proyectos comunales (Alcalde Chillán Viejo)
+
+## us_alc_sc_001_01.yml
+  urn: urn:goreos:atom:story:us_alc_sc_001_01:1.0.0
+id: US-ALC-SC-001-01
+name: Seguimiento de proyectos comunales (Alcalde San Carlos)
+
+## us_amb_001_01.yml
+  urn: urn:goreos:atom:story:us_amb_001_01:1.0.0
+id: US-AMB-001-01
+name: Integración con el SEIA (Evaluación Ambiental)
+
+## us_amod_001_01.yml
+  urn: urn:goreos:atom:story:us_amod_001_01:1.0.0
+id: US-AMOD-001-01
+name: Módulo de Gestión de Modificaciones Presupuestarias
+
+## us_amuch_001_01.yml
+  urn: urn:goreos:atom:story:us_amuch_001_01:1.0.0
+id: US-AMUCH-001-01
+name: Canales de comunicación directa con el Gobernador
+
+## us_anal_inv_001_01.yml
+  urn: urn:goreos:atom:story:us_anal_inv_001_01:1.0.0
+id: US-ANAL-INV-001-01
+name: Un formulario digital de evaluación técnica con campos validados
+
+## us_anal_inv_001_02.yml
+  urn: urn:goreos:atom:story:us_anal_inv_001_02:1.0.0
+id: US-ANAL-INV-001-02
+name: El historial de proyectos similares evaluados anteriormente
+
+## us_anal_ppr_001_01.yml
+  urn: urn:goreos:atom:story:us_anal_ppr_001_01:1.0.0
+id: US-ANAL-PPR-001-01
+name: Un módulo de diseño de programas con marco lógico
+
+## us_anal_seg_001_02.yml
+  urn: urn:goreos:atom:story:us_anal_seg_001_02:1.0.0
+id: US-ANAL-SEG-001-02
+name: Alertas automáticas de proyectos con desviación >15%
+
+## us_analpres_001_01.yml
+  urn: urn:goreos:atom:story:us_analpres_001_01:1.0.0
+id: US-ANALPRES-001-01
+name: Un módulo de emisión de CDP con validación automática de saldo
+
+## us_analpres_001_02.yml
+  urn: urn:goreos:atom:story:us_analpres_001_02:1.0.0
+id: US-ANALPRES-001-02
+name: Alertas de marcos presupuestarios próximos a agotarse
+
+## us_anci_001_01.yml
+  urn: urn:goreos:atom:story:us_anci_001_01:1.0.0
+id: US-ANCI-001-01
+name: Compartir buenas prácticas legislativas regionales
+
+## us_anid_001_01.yml
+  urn: urn:goreos:atom:story:us_anid_001_01:1.0.0
+id: US-ANID-001-01
+name: Acceso a indicadores de capital humano avanzado
+
+## us_ap_core_001_01.yml
+  urn: urn:goreos:atom:story:us_ap_core_001_01:1.0.0
+id: US-AP-CORE-001-01
+name: Antecedentes de materias a tratar
+
+## us_apres_001_01.yml
+  urn: urn:goreos:atom:story:us_apres_001_01:1.0.0
+id: US-APRES-001-01
+name: Un módulo de modificaciones presupuestarias
+
+## us_aprev_001_01.yml
+  urn: urn:goreos:atom:story:us_aprev_001_01:1.0.0
+id: US-APREV-001-01
+name: Formulario móvil de inspección de extintores y vías de escape
+
+## us_apt_001_01.yml
+  urn: urn:goreos:atom:story:us_apt_001_01:1.0.0
+id: US-APT-001-01
+name: Acceso a capas GEO de planos reguladores comunales
+
+## us_ar_001_02.yml
+  urn: urn:goreos:atom:story:us_ar_001_02:1.0.0
+id: US-AR-001-02
+name: Programar reuniones de coordinación con jefes de división desde el sistema
+
+## us_ar_002_01.yml
+  urn: urn:goreos:atom:story:us_ar_002_01:1.0.0
+id: US-AR-002-01
+name: Visualizar métricas de ausentismo, rotación y capacitación del personal
+
+## us_ar_003_01.yml
+  urn: urn:goreos:atom:story:us_ar_003_01:1.0.0
+id: US-AR-003-01
+name: Un módulo de gestión de subrogancias con fechas y resoluciones
+
+## us_arch_001_01.yml
+  urn: urn:goreos:atom:story:us_arch_001_01:1.0.0
+id: US-ARCH-001-01
+name: Un sistema de gestión de archivo con ubicación y digitalización
+
+## us_arq_001_01.yml
+  urn: urn:goreos:atom:story:us_arq_001_01:1.0.0
+id: US-ARQ-001-01
+name: Visualizador de planos en formato BIM/CAD
+
+## us_arq_dat_001_01.yml
+  urn: urn:goreos:atom:story:us_arq_dat_001_01:1.0.0
+id: US-ARQ-DAT-001-01
+name: Un catálogo de entidades y modelos de datos del GORE
+
+## us_arqc_001_01.yml
+  urn: urn:goreos:atom:story:us_arqc_001_01:1.0.0
+id: US-ARQC-001-01
+name: Herramientas de modelado semántico integradas
+
+## us_arqp_001_01.yml
+  urn: urn:goreos:atom:story:us_arqp_001_01:1.0.0
+id: US-ARQP-001-01
+name: Checklist de normativa OGUC integrado
+
+## us_arqs_001_01.yml
+  urn: urn:goreos:atom:story:us_arqs_001_01:1.0.0
+id: US-ARQS-001-01
+name: Un repositorio central de decisiones de arquitectura (ADR)
+
+## us_as_001_01.yml
+  urn: urn:goreos:atom:story:us_as_001_01:1.0.0
+id: US-AS-001-01
+name: Un módulo de fichas sociales con criterios de evaluación
+
+## us_aserv_001_01.yml
+  urn: urn:goreos:atom:story:us_aserv_001_01:1.0.0
+id: US-ASERV-001-01
+name: Un módulo de solicitudes de mantención y reserva de salas
+
+## us_ases_001_01.yml
+  urn: urn:goreos:atom:story:us_ases_001_01:1.0.0
+id: US-ASES-001-01
+name: Información consolidada de los temas que asesoro
+
+## us_asis_001_01.yml
+  urn: urn:goreos:atom:story:us_asis_001_01:1.0.0
+id: US-ASIS-001-01
+name: Integración con sistema biométrico y reportes automáticos
+
+## us_at_001_01.yml
+  urn: urn:goreos:atom:story:us_at_001_01:1.0.0
+id: US-AT-001-01
+name: Acceso a la IDE regional con capas actualizadas
+
+## us_ates_001_01.yml
+  urn: urn:goreos:atom:story:us_ates_001_01:1.0.0
+id: US-ATES-001-01
+name: Un módulo de emisión de pagos con validación presupuestaria
+
+## us_atra_001_01.yml
+  urn: urn:goreos:atom:story:us_atra_001_01:1.0.0
+id: US-ATRA-001-01
+name: Acceso a datos de flujo vehicular y estado de rutas
+
+## us_atrans_001_01.yml
+  urn: urn:goreos:atom:story:us_atrans_001_01:1.0.0
+id: US-ATRANS-001-01
+name: Un módulo de control de convenios de transferencia
+
+## us_aucr_001_01.yml
+  urn: urn:goreos:atom:story:us_aucr_001_01:1.0.0
+id: US-AUCR-001-01
+name: Visores de documentos digitalizados con OCR
+
+## us_aud_001_01.yml
+  urn: urn:goreos:atom:story:us_aud_001_01:1.0.0
+id: US-AUD-001-01
+name: Un módulo de planificación y ejecución de auditorías
+
+## us_aud_001_02.yml
+  urn: urn:goreos:atom:story:us_aud_001_02:1.0.0
+id: US-AUD-001-02
+name: Informes de auditoría con plantilla estándar
+
+## us_aud_ctrl_001_01.yml
+  urn: urn:goreos:atom:story:us_aud_ctrl_001_01:1.0.0
+id: US-AUD-CTRL-001-01
+name: Registros de transacciones y aprobaciones
+
+## us_aud_ext_001_01.yml
+  urn: urn:goreos:atom:story:us_aud_ext_001_01:1.0.0
+id: US-AUD-EXT-001-01
+name: Acceso controlado a expedientes y registros financieros
+
+## us_aux_001_01.yml
+  urn: urn:goreos:atom:story:us_aux_001_01:1.0.0
+id: US-AUX-001-01
+name: Solicitudes de apoyo logístico
+
+## us_back_001_01.yml
+  urn: urn:goreos:atom:story:us_back_001_01:1.0.0
+id: US-BACK-001-01
+name: Pipelines de CI/CD automatizados
+
+## us_back_abs_002.yml
+  urn: urn:goreos:atom:story:us_back_abs_002:1.0.0
+id: US-BACK-ABS-002
+name: Tramitar solicitudes verificando CDP
+
+## us_back_abs_004.yml
+  urn: urn:goreos:atom:story:us_back_abs_004:1.0.0
+id: US-BACK-ABS-004
+name: Ofertas (criterios técnico-económicos)
+
+## us_back_abs_005.yml
+  urn: urn:goreos:atom:story:us_back_abs_005:1.0.0
+id: US-BACK-ABS-005
+name: Emitir OC (compromiso de gasto)
+
+## us_back_af_001.yml
+  urn: urn:goreos:atom:story:us_back_af_001:1.0.0
+id: US-BACK-AF-001
+name: Alta de activo fijo (código, depreciación)
+
+## us_back_af_002.yml
+  urn: urn:goreos:atom:story:us_back_af_002:1.0.0
+id: US-BACK-AF-002
+name: Traslado de bienes (cambio ubicación)
+
+## us_back_af_004.yml
+  urn: urn:goreos:atom:story:us_back_af_004:1.0.0
+id: US-BACK-AF-004
+name: Realizar inventario anual de activo fijo
+
+## us_back_auto_001.yml
+  urn: urn:goreos:atom:story:us_back_auto_001:1.0.0
+id: US-BACK-AUTO-001
+name: Propuesta de finiquito (vacaciones, indemnización) al cesar un cargo
+
+## us_back_auto_002.yml
+  urn: urn:goreos:atom:story:us_back_auto_002:1.0.0
+id: US-BACK-AUTO-002
+name: Alertar patrones de marcaje sospechosos (ej. 1 minuto de diferencia sistemática)
+
+## us_back_bien_001.yml
+  urn: urn:goreos:atom:story:us_back_bien_001:1.0.0
+id: US-BACK-BIEN-001
+name: Afiliaciones (socio con descuento)
+
+## us_back_bien_002.yml
+  urn: urn:goreos:atom:story:us_back_bien_002:1.0.0
+id: US-BACK-BIEN-002
+name: Grupo familiar (cargas)
+
+## us_back_bien_003.yml
+  urn: urn:goreos:atom:story:us_back_bien_003:1.0.0
+id: US-BACK-BIEN-003
+name: Bonificación médica (tope anual, SIGBIE)
+
+## us_back_bien_004.yml
+  urn: urn:goreos:atom:story:us_back_bien_004:1.0.0
+id: US-BACK-BIEN-004
+name: Otorgar subsidios por eventos (natalidad/pérdida)
+
+## us_back_bien_006.yml
+  urn: urn:goreos:atom:story:us_back_bien_006:1.0.0
+id: US-BACK-BIEN-006
+name: Aplicar descuento de cuotas (automático planilla)
+
+## us_back_bien_007.yml
+  urn: urn:goreos:atom:story:us_back_bien_007:1.0.0
+id: US-BACK-BIEN-007
+name: Convenios con terceros (farmacias, etc)
+
+## us_back_bien_008.yml
+  urn: urn:goreos:atom:story:us_back_bien_008:1.0.0
+id: US-BACK-BIEN-008
+name: Coordinar con Mutual (accidente laboral)
+
+## us_back_bien_009.yml
+  urn: urn:goreos:atom:story:us_back_bien_009:1.0.0
+id: US-BACK-BIEN-009
+name: Apoyar CPHS (investigación accidentes)
+
+## us_back_bien_010.yml
+  urn: urn:goreos:atom:story:us_back_bien_010:1.0.0
+id: US-BACK-BIEN-010
+name: Solicitar bonificación (adjuntar boletas)
+
+## us_back_bien_011.yml
+  urn: urn:goreos:atom:story:us_back_bien_011:1.0.0
+id: US-BACK-BIEN-011
+name: Solicitar préstamo (ver condiciones)
+
+## us_back_bien_012.yml
+  urn: urn:goreos:atom:story:us_back_bien_012:1.0.0
+id: US-BACK-BIEN-012
+name: Ver cuenta corriente bienestar (saldos)
+
+## us_back_bod_001.yml
+  urn: urn:goreos:atom:story:us_back_bod_001:1.0.0
+id: US-BACK-BOD-001
+name: Ingresos (aumenta stock)
+
+## us_back_bod_003.yml
+  urn: urn:goreos:atom:story:us_back_bod_003:1.0.0
+id: US-BACK-BOD-003
+name: Realizar inventario físico (ajustes diferencia)
+
+## us_back_comp_002.yml
+  urn: urn:goreos:atom:story:us_back_comp_002:1.0.0
+id: US-BACK-COMP-002
+name: Proceso de calificaciones Junta
+
+## us_back_comp_003.yml
+  urn: urn:goreos:atom:story:us_back_comp_003:1.0.0
+id: US-BACK-COMP-003
+name: Metas de desempeño (CDC/PMG)
+
+## us_back_cris_001.yml
+  urn: urn:goreos:atom:story:us_back_cris_001:1.0.0
+id: US-BACK-CRIS-001
+name: Adhesión diaria a paro nacional por funcionario
+
+## us_back_flo_001.yml
+  urn: urn:goreos:atom:story:us_back_flo_001:1.0.0
+id: US-BACK-FLO-001
+name: Órdenes de trabajo de mantención (asignar técnico)
+
+## us_back_flo_002.yml
+  urn: urn:goreos:atom:story:us_back_flo_002:1.0.0
+id: US-BACK-FLO-002
+name: Solicitudes de vehículos (asignar conductor)
+
+## us_back_per_001.yml
+  urn: urn:goreos:atom:story:us_back_per_001:1.0.0
+id: US-BACK-PER-001
+name: Visualizar mi ficha de funcionario (hoja de vida)
+
+## us_back_per_002.yml
+  urn: urn:goreos:atom:story:us_back_per_002:1.0.0
+id: US-BACK-PER-002
+name: Completar proceso de inducción digital (checklist)
+
+## us_back_per_010.yml
+  urn: urn:goreos:atom:story:us_back_per_010:1.0.0
+id: US-BACK-PER-010
+name: Liquidaciones mensuales (EUS)
+
+## us_back_per_011.yml
+  urn: urn:goreos:atom:story:us_back_per_011:1.0.0
+id: US-BACK-PER-011
+name: Planilla Previred
+
+## us_back_per_012.yml
+  urn: urn:goreos:atom:story:us_back_per_012:1.0.0
+id: US-BACK-PER-012
+name: Horas extraordinarias (F2)
+
+## us_back_per_013.yml
+  urn: urn:goreos:atom:story:us_back_per_013:1.0.0
+id: US-BACK-PER-013
+name: Cometidos funcionarios (viático)
+
+## us_back_per_014.yml
+  urn: urn:goreos:atom:story:us_back_per_014:1.0.0
+id: US-BACK-PER-014
+name: Accidente de trabajo (DIAT)
+
+## us_back_per_015.yml
+  urn: urn:goreos:atom:story:us_back_per_015:1.0.0
+id: US-BACK-PER-015
+name: Concursos públicos
+
+## us_back_tes_004.yml
+  urn: urn:goreos:atom:story:us_back_tes_004:1.0.0
+id: US-BACK-TES-004
+name: Mantener el libro de caja institucional actualizado
+
+## us_back_tes_005.yml
+  urn: urn:goreos:atom:story:us_back_tes_005:1.0.0
+id: US-BACK-TES-005
+name: El fondo fijo de caja chica (arqueos y reposición)
+
+## us_back_tes_006.yml
+  urn: urn:goreos:atom:story:us_back_tes_006:1.0.0
+id: US-BACK-TES-006
+name: Cartolas bancarias de múltiples bancos en formato electrónico
+
+## us_back_tes_007.yml
+  urn: urn:goreos:atom:story:us_back_tes_007:1.0.0
+id: US-BACK-TES-007
+name: Conciliar automáticamente movimientos SIGFE con cartola bancaria
+
+## us_back_tes_008.yml
+  urn: urn:goreos:atom:story:us_back_tes_008:1.0.0
+id: US-BACK-TES-008
+name: Documentar y clasificar partidas pendientes de conciliación
+
+## us_back_tes_009.yml
+  urn: urn:goreos:atom:story:us_back_tes_009:1.0.0
+id: US-BACK-TES-009
+name: Emitir informe de conciliación bancaria mensual firmado
+
+## us_back_tes_011.yml
+  urn: urn:goreos:atom:story:us_back_tes_011:1.0.0
+id: US-BACK-TES-011
+name: Contabilizar gastos operativos del GORE (Subt. 21, 22)
+
+## us_back_tes_013.yml
+  urn: urn:goreos:atom:story:us_back_tes_013:1.0.0
+id: US-BACK-TES-013
+name: Reportes contables mensuales (balance, comparativo)
+
+## us_back_tes_014.yml
+  urn: urn:goreos:atom:story:us_back_tes_014:1.0.0
+id: US-BACK-TES-014
+name: Corte de compromisos de fin de año con notificación a unidades
+
+## us_back_tes_015.yml
+  urn: urn:goreos:atom:story:us_back_tes_015:1.0.0
+id: US-BACK-TES-015
+name: Devengos pendientes por subtítulo al cierre del ejercicio
+
+## us_back_tes_016.yml
+  urn: urn:goreos:atom:story:us_back_tes_016:1.0.0
+id: US-BACK-TES-016
+name: Estados financieros anuales del GORE
+
+## us_back_tes_017.yml
+  urn: urn:goreos:atom:story:us_back_tes_017:1.0.0
+id: US-BACK-TES-017
+name: El Saldo Inicial de Caja para el presupuesto del año siguiente
+
+## us_bcp_001_01.yml
+  urn: urn:goreos:atom:story:us_bcp_001_01:1.0.0
+id: US-BCP-001-01
+name: Un módulo de gestión del BCP con pruebas
+
+## us_bi_001_01.yml
+  urn: urn:goreos:atom:story:us_bi_001_01:1.0.0
+id: US-BI-001-01
+name: Acceso a datos consolidados para análisis
+
+## us_bien_001_01.yml
+  urn: urn:goreos:atom:story:us_bien_001_01:1.0.0
+id: US-BIEN-001-01
+name: Registro de cargas familiares y seguros complementarios
+
+## us_bien_002_01.yml
+  urn: urn:goreos:atom:story:us_bien_002_01:1.0.0
+id: US-BIEN-002-01
+name: Un módulo de beneficios y programas de bienestar
+
+## us_bod_001_01.yml
+  urn: urn:goreos:atom:story:us_bod_001_01:1.0.0
+id: US-BOD-001-01
+name: Ingreso y salida de insumos mediante código de barras
+
+## us_bod_002_01.yml
+  urn: urn:goreos:atom:story:us_bod_002_01:1.0.0
+id: US-BOD-002-01
+name: Un módulo de control de stock con entradas y salidas
+
+## us_bomb_001_01.yml
+  urn: urn:goreos:atom:story:us_bomb_001_01:1.0.0
+id: US-BOMB-001-01
+name: Integración con sistema de alertas del CIES
+
+## us_c33_001_01.yml
+  urn: urn:goreos:atom:story:us_c33_001_01:1.0.0
+id: US-C33-001-01
+name: Un catálogo de precios referenciales de vehículos y maquinaria
+
+## us_cal_001_02.yml
+  urn: urn:goreos:atom:story:us_cal_001_02:1.0.0
+id: US-CAL-001-02
+name: Reportes de cumplimiento para DIPRES
+
+## us_cap_001_01.yml
+  urn: urn:goreos:atom:story:us_cap_001_01:1.0.0
+id: US-CAP-001-01
+name: Un módulo de gestión de capacitación con inscripciones
+
+## us_capdig_001_01.yml
+  urn: urn:goreos:atom:story:us_capdig_001_01:1.0.0
+id: US-CAPDIG-001-01
+name: Un LMS con cursos de herramientas del GORE
+
+## us_car_001_01.yml
+  urn: urn:goreos:atom:story:us_car_001_01:1.0.0
+id: US-CAR-001-01
+name: Acceso a cámaras del CIES en operativos coordinados
+
+## us_cc_001_01.yml
+  urn: urn:goreos:atom:story:us_cc_001_01:1.0.0
+id: US-CC-001-01
+name: Información de programas de apoyo empresarial del GORE
+
+## us_cde_001_01.yml
+  urn: urn:goreos:atom:story:us_cde_001_01:1.0.0
+id: US-CDE-001-01
+name: Antecedentes completos de litigios donde el GORE es parte
+
+## us_cgpe_001_01.yml
+  urn: urn:goreos:atom:story:us_cgpe_001_01:1.0.0
+id: US-CGPE-001-01
+name: Alertas automáticas de licencias médicas prolongadas
+
+## us_cgr_001_01.yml
+  urn: urn:goreos:atom:story:us_cgr_001_01:1.0.0
+id: US-CGR-001-01
+name: Expedientes electrónicos completos vía interoperabilidad
+
+## us_cgr_cont_001_01.yml
+  urn: urn:goreos:atom:story:us_cgr_cont_001_01:1.0.0
+id: US-CGR-CONT-001-01
+name: Acceso a reportes contables en formato estándar
+
+## us_cies_001_02.yml
+  urn: urn:goreos:atom:story:us_cies_001_02:1.0.0
+id: US-CIES-001-02
+name: Eventos de emergencia con timeline de acciones
+
+## us_ciu_001_02.yml
+  urn: urn:goreos:atom:story:us_ciu_001_02:1.0.0
+id: US-CIU-001-02
+name: En qué se gasta el presupuesto regional
+
+## us_ciu_002_01.yml
+  urn: urn:goreos:atom:story:us_ciu_002_01:1.0.0
+id: US-CIU-002-01
+name: Plataformas de consulta ciudadana del GORE
+
+## us_col_001_01.yml
+  urn: urn:goreos:atom:story:us_col_001_01:1.0.0
+id: US-COL-001-01
+name: Registro público de consultores sancionados
+
+## us_com_001_01.yml
+  urn: urn:goreos:atom:story:us_com_001_01:1.0.0
+id: US-COM-001-01
+name: Un calendario de contenidos con programación de publicaciones
+
+## us_com_001_02.yml
+  urn: urn:goreos:atom:story:us_com_001_02:1.0.0
+id: US-COM-001-02
+name: Un repositorio de material multimedia institucional
+
+## us_com_002_01.yml
+  urn: urn:goreos:atom:story:us_com_002_01:1.0.0
+id: US-COM-002-01
+name: Reportes de menciones en medios y redes sociales
+
+## us_com_estr_001.yml
+  urn: urn:goreos:atom:story:us_com_estr_001:1.0.0
+id: US-COM-ESTR-001
+name: Estrategia comunicacional (web, RRSS)
+
+## us_com_estr_002.yml
+  urn: urn:goreos:atom:story:us_com_estr_002:1.0.0
+id: US-COM-ESTR-002
+name: Publicar noticias oficiales en portal y RRSS
+
+## us_com_estr_003.yml
+  urn: urn:goreos:atom:story:us_com_estr_003:1.0.0
+id: US-COM-ESTR-003
+name: Repositorio de material audiovisual
+
+## us_com_estr_004.yml
+  urn: urn:goreos:atom:story:us_com_estr_004:1.0.0
+id: US-COM-ESTR-004
+name: Menciones en medios y gestionar crisis
+
+## us_com_estr_006.yml
+  urn: urn:goreos:atom:story:us_com_estr_006:1.0.0
+id: US-COM-ESTR-006
+name: Comunicación interna institucional
+
+## us_com_ev_001_01.yml
+  urn: urn:goreos:atom:story:us_com_ev_001_01:1.0.0
+id: US-COM-EV-001-01
+name: Acceso a ofertas y matriz de evaluación en plataforma segura
+
+## us_com_rec_001_01.yml
+  urn: urn:goreos:atom:story:us_com_rec_001_01:1.0.0
+id: US-COM-REC-001-01
+name: Un acta de recepción electrónica con checklist de verificación
+
+## us_com_sec_001.yml
+  urn: urn:goreos:atom:story:us_com_sec_001:1.0.0
+id: US-COM-SEC-001
+name: Coordinar difusión conjunta con municipios
+
+## us_com_sec_002.yml
+  urn: urn:goreos:atom:story:us_com_sec_002:1.0.0
+id: US-COM-SEC-002
+name: Uso correcto de marca regional en terceros
+
+## us_com_sect_001_01.yml
+  urn: urn:goreos:atom:story:us_com_sect_001_01:1.0.0
+id: US-COM-SECT-001-01
+name: Información actualizada de proyectos para comunicados
+
+## us_comp_001_01.yml
+  urn: urn:goreos:atom:story:us_comp_001_01:1.0.0
+id: US-COMP-001-01
+name: Un buscador de productos en Convenio Marco integrado al sistema
+
+## us_comp_001_02.yml
+  urn: urn:goreos:atom:story:us_comp_001_02:1.0.0
+id: US-COMP-001-02
+name: Un workflow de solicitud de compra desde las unidades
+
+## us_compert_001_01.yml
+  urn: urn:goreos:atom:story:us_compert_001_01:1.0.0
+id: US-COMPERT-001-01
+name: La documentación de iniciativas antes de la sesión
+
+## us_compert_001_02.yml
+  urn: urn:goreos:atom:story:us_compert_001_02:1.0.0
+id: US-COMPERT-001-02
+name: Votar electrónicamente durante las sesiones
+
+## us_compt_001_01.yml
+  urn: urn:goreos:atom:story:us_compt_001_01:1.0.0
+id: US-COMPT-001-01
+name: Formularios digitales de evaluación 360
+
+## us_conaf_001_01.yml
+  urn: urn:goreos:atom:story:us_conaf_001_01:1.0.0
+id: US-CONAF-001-01
+name: Integración con CIES para alertas de incendios forestales
+
+## us_cond_001_01.yml
+  urn: urn:goreos:atom:story:us_cond_001_01:1.0.0
+id: US-COND-001-01
+name: Un módulo de reserva de vehículos y registro de bitácora
+
+## us_cont_001_01.yml
+  urn: urn:goreos:atom:story:us_cont_001_01:1.0.0
+id: US-CONT-001-01
+name: Un módulo de conciliación bancaria automatizada
+
+## us_cont_001_02.yml
+  urn: urn:goreos:atom:story:us_cont_001_02:1.0.0
+id: US-CONT-001-02
+name: Cargar documentación de estados de pago en línea
+
+## us_coord_dit_001_01.yml
+  urn: urn:goreos:atom:story:us_coord_dit_001_01:1.0.0
+id: US-COORD-DIT-001-01
+name: Una vista consolidada de proyectos por sector (vial, salud, educación)
+
+## us_core_001_01.yml
+  urn: urn:goreos:atom:story:us_core_001_01:1.0.0
+id: US-CORE-001-01
+name: La tabla de sesión y documentos de respaldo con anticipación
+
+## us_core_002_01.yml
+  urn: urn:goreos:atom:story:us_core_002_01:1.0.0
+id: US-CORE-002-01
+name: El estado de ejecución de proyectos que he votado favorablemente
+
+## us_corfo_001_01.yml
+  urn: urn:goreos:atom:story:us_corfo_001_01:1.0.0
+id: US-CORFO-001-01
+name: Información de proyectos productivos GORE
+
+## us_corp_001_01.yml
+  urn: urn:goreos:atom:story:us_corp_001_01:1.0.0
+id: US-CORP-001-01
+name: Transferencias corrientes para gastos operativos
+
+## us_corte_001_01.yml
+  urn: urn:goreos:atom:story:us_corte_001_01:1.0.0
+id: US-CORTE-001-01
+name: La remisión inmediata de informes sobre actos impugnados
+
+## us_cp_001_01.yml
+  urn: urn:goreos:atom:story:us_cp_001_01:1.0.0
+id: US-CP-001-01
+name: Un módulo de registro de incidentes laborales
+
+## us_cseu_001_01.yml
+  urn: urn:goreos:atom:story:us_cseu_001_01:1.0.0
+id: US-CSEU-001-01
+name: Un módulo de registro de incidentes de atención
+
+## us_cseu_002_01.yml
+  urn: urn:goreos:atom:story:us_cseu_002_01:1.0.0
+id: US-CSEU-002-01
+name: Matriz de evaluación curricular digital
+
+## us_ctd_001_02.yml
+  urn: urn:goreos:atom:story:us_ctd_001_02:1.0.0
+id: US-CTD-001-02
+name: Un catálogo de expedientes electrónicos con estado de digitalización
+
+## us_cust_001_01.yml
+  urn: urn:goreos:atom:story:us_cust_001_01:1.0.0
+id: US-CUST-001-01
+name: Un sistema de almacenamiento seguro de grabaciones
+
+## us_cust_dat_001_01.yml
+  urn: urn:goreos:atom:story:us_cust_dat_001_01:1.0.0
+id: US-CUST-DAT-001-01
+name: Herramientas de monitoreo de calidad de datos
+
+## us_cut_001_01.yml
+  urn: urn:goreos:atom:story:us_cut_001_01:1.0.0
+id: US-CUT-001-01
+name: Acceso a actas del Consejo de la Sociedad Civil
+
+## us_daf_001_01.yml
+  urn: urn:goreos:atom:story:us_daf_001_01:1.0.0
+id: US-DAF-001-01
+name: Un checklist digital de cierre contable mensual con validaciones automáticas
+
+## us_data_001_01.yml
+  urn: urn:goreos:atom:story:us_data_001_01:1.0.0
+id: US-DATA-001-01
+name: Herramientas de limpieza y deduplicación de registros
+
+## us_dba_001_01.yml
+  urn: urn:goreos:atom:story:us_dba_001_01:1.0.0
+id: US-DBA-001-01
+name: Un panel de monitoreo de bases de datos
+
+## us_desc_001_02.yml
+  urn: urn:goreos:atom:story:us_desc_001_02:1.0.0
+id: US-DESC-001-02
+name: Documentar las capacidades requeridas para cada competencia
+
+## us_dev_001_01.yml
+  urn: urn:goreos:atom:story:us_dev_001_01:1.0.0
+id: US-DEV-001-01
+name: Acceso a logs centralizados de errores
+
+## us_dev_bp_001.yml
+  urn: urn:goreos:atom:story:us_dev_bp_001:1.0.0
+id: US-DEV-BP-001
+name: Adopción de Clean Code y Estándares de Codificación
+
+## us_dev_bp_002.yml
+  urn: urn:goreos:atom:story:us_dev_bp_002:1.0.0
+id: US-DEV-BP-002
+name: Documentación de ADRs (Architectural Decision Records)
+
+## us_dev_bp_003.yml
+  urn: urn:goreos:atom:story:us_dev_bp_003:1.0.0
+id: US-DEV-BP-003
+name: Estrategia de Testing Automatizado (Unit/Integration)
+
+## us_dev_bp_004.yml
+  urn: urn:goreos:atom:story:us_dev_bp_004:1.0.0
+id: US-DEV-BP-004
+name: Versionamiento Semántico de APIs
+
+## us_dev_bp_005.yml
+  urn: urn:goreos:atom:story:us_dev_bp_005:1.0.0
+id: US-DEV-BP-005
+name: Script verify_ontology.py en CI
+
+## us_dev_bp_006.yml
+  urn: urn:goreos:atom:story:us_dev_bp_006:1.0.0
+id: US-DEV-BP-006
+name: Gestión Segura de Secretos y Credenciales
+
+## us_dev_bp_007.yml
+  urn: urn:goreos:atom:story:us_dev_bp_007:1.0.0
+id: US-DEV-BP-007
+name: Dockerización y Estandarización de Entornos
+
+## us_dev_bp_008.yml
+  urn: urn:goreos:atom:story:us_dev_bp_008:1.0.0
+id: US-DEV-BP-008
+name: Análisis Estático de Seguridad (SAST)
+
+## us_dev_cicd_001.yml
+  urn: urn:goreos:atom:story:us_dev_cicd_001:1.0.0
+id: US-DEV-CICD-001
+name: Pipeline de Integración Continua (CI)
+
+## us_dev_cicd_002.yml
+  urn: urn:goreos:atom:story:us_dev_cicd_002:1.0.0
+id: US-DEV-CICD-002
+name: Despliegue Continuo (CD) a Staging
+
+## us_dev_cicd_003.yml
+  urn: urn:goreos:atom:story:us_dev_cicd_003:1.0.0
+id: US-DEV-CICD-003
+name: Promoción Segura a Producción con Puerta de Calidad
+
+## us_dev_cicd_004.yml
+  urn: urn:goreos:atom:story:us_dev_cicd_004:1.0.0
+id: US-DEV-CICD-004
+name: Notificaciones de Estado de Pipeline en Slack/Teams
+
+## us_dev_ciclo_001.yml
+  urn: urn:goreos:atom:story:us_dev_ciclo_001:1.0.0
+id: US-DEV-CICLO-001
+name: Las fases de desarrollo e implementación (W2-W3)
+
+## us_dev_code_001.yml
+  urn: urn:goreos:atom:story:us_dev_code_001:1.0.0
+id: US-DEV-CODE-001
+name: Trazabilidad automática entre Branches y Stories
+
+## us_dev_code_002.yml
+  urn: urn:goreos:atom:story:us_dev_code_002:1.0.0
+id: US-DEV-CODE-002
+name: Feedback de Linter en Tiempo Real
+
+## us_dev_code_003.yml
+  urn: urn:goreos:atom:story:us_dev_code_003:1.0.0
+id: US-DEV-CODE-003
+name: Visualización de Historia de Cambios Detallada
+
+## us_dev_doc_001.yml
+  urn: urn:goreos:atom:story:us_dev_doc_001:1.0.0
+id: US-DEV-DOC-001
+name: Sincronización Blueprint-Código (SDA 2° Orden)
+
+## us_dev_dx_001.yml
+  urn: urn:goreos:atom:story:us_dev_dx_001:1.0.0
+id: US-DEV-DX-001
+name: Onboarding Técnico Automático (DevContainer)
+
+## us_dev_dx_002.yml
+  urn: urn:goreos:atom:story:us_dev_dx_002:1.0.0
+id: US-DEV-DX-002
+name: Documentación Técnica Viva (Doc-from-Code)
+
+## us_dev_feat_001.yml
+  urn: urn:goreos:atom:story:us_dev_feat_001:1.0.0
+id: US-DEV-FEAT-001
+name: Habilitar funcionalidades específicas para grupos de prueba (Pilotos)
+
+## us_dev_koda_001.yml
+  urn: urn:goreos:atom:story:us_dev_koda_001:1.0.0
+id: US-DEV-KODA-001
+name: Implementación de URNs KODA en el Modelo
+
+## us_dev_koda_002.yml
+  urn: urn:goreos:atom:story:us_dev_koda_002:1.0.0
+id: US-DEV-KODA-002
+name: Agente Goreólogo para Validación Semántica
+
+## us_dev_koda_003.yml
+  urn: urn:goreos:atom:story:us_dev_koda_003:1.0.0
+id: US-DEV-KODA-003
+name: Gobernanza de Esquemas de Conocimiento (Knowledge Schemas)
+
+## us_dev_koda_004.yml
+  urn: urn:goreos:atom:story:us_dev_koda_004:1.0.0
+id: US-DEV-KODA-004
+name: Directorio de Capacidades Federadas
+
+## us_dev_prod_001.yml
+  urn: urn:goreos:atom:story:us_dev_prod_001:1.0.0
+id: US-DEV-PROD-001
+name: Lista de Verificación de Salida a Producción (Production Readiness)
+
+## us_dev_prod_002.yml
+  urn: urn:goreos:atom:story:us_dev_prod_002:1.0.0
+id: US-DEV-PROD-002
+name: Gestión de Capacidades de Infraestructura (Capacity Planning)
+
+## us_dev_prod_003.yml
+  urn: urn:goreos:atom:story:us_dev_prod_003:1.0.0
+id: US-DEV-PROD-003
+name: Registro de ADRs vinculados a Historias de Usuario
+
+## us_dev_qa_001.yml
+  urn: urn:goreos:atom:story:us_dev_qa_001:1.0.0
+id: US-DEV-QA-001
+name: Pipeline CI/CD con Shift-Left Testing
+
+## us_dev_rel_001.yml
+  urn: urn:goreos:atom:story:us_dev_rel_001:1.0.0
+id: US-DEV-REL-001
+name: Política de Ramos y Estrategia de Branching (GitFlow)
+
+## us_dev_rel_002.yml
+  urn: urn:goreos:atom:story:us_dev_rel_002:1.0.0
+id: US-DEV-REL-002
+name: Generación Automática de Notas de Lanzamiento (Release Notes)
+
+## us_dev_rel_003.yml
+  urn: urn:goreos:atom:story:us_dev_rel_003:1.0.0
+id: US-DEV-REL-003
+name: Monitoreo Post-Despliegue y Alerta de Retroceso (Rollback)
+
+## us_dev_sec_001.yml
+  urn: urn:goreos:atom:story:us_dev_sec_001:1.0.0
+id: US-DEV-SEC-001
+name: Escaneo de Seguridad Estático (SAST) Automático
+
+## us_devmuni_001_01.yml
+  urn: urn:goreos:atom:story:us_devmuni_001_01:1.0.0
+id: US-DEVMUNI-001-01
+name: Documentación de APIs para Interoperabilidad Municipal
+
+## us_devops_001_01.yml
+  urn: urn:goreos:atom:story:us_devops_001_01:1.0.0
+id: US-DEVOPS-001-01
+name: Monitorización de infraestructura como código (IaC)
+
+## us_didesoh_002_01.yml
+  urn: urn:goreos:atom:story:us_didesoh_002_01:1.0.0
+id: US-DIDESOH-002-01
+name: Un registro de organizaciones de la sociedad civil activas en la región
+
+## us_difoi_001_02.yml
+  urn: urn:goreos:atom:story:us_difoi_001_02:1.0.0
+id: US-DIFOI-001-02
+name: Integración con SERCOTEC, CORFO e INDAP para datos de beneficiarios
+
+## us_dip_001_01.yml
+  urn: urn:goreos:atom:story:us_dip_001_01:1.0.0
+id: US-DIP-001-01
+name: El estado de proyectos comunales específicos
+
+## us_dipir_001_02.yml
+  urn: urn:goreos:atom:story:us_dipir_001_02:1.0.0
+id: US-DIPIR-001-02
+name: CDPs digitalmente con validación automática de saldo
+
+## us_diplade_001_01.yml
+  urn: urn:goreos:atom:story:us_diplade_001_01:1.0.0
+id: US-DIPLADE-001-01
+name: Un módulo de gestión de la Estrategia Regional de Desarrollo (ERD)
+
+## us_diplade_001_02.yml
+  urn: urn:goreos:atom:story:us_diplade_001_02:1.0.0
+id: US-DIPLADE-001-02
+name: El Anteproyecto Regional de Inversiones (ARI) de forma automatizada
+
+## us_diplade_002_01.yml
+  urn: urn:goreos:atom:story:us_diplade_002_01:1.0.0
+id: US-DIPLADE-002-01
+name: Un workflow digital para el Comité de Pertinencia con trazabilidad de decisiones
+
+## us_dir_soc_001_01.yml
+  urn: urn:goreos:atom:story:us_dir_soc_001_01:1.0.0
+id: US-DIR-SOC-001-01
+name: Información de fondos concursables y consultas
+
+## us_dit_002_01.yml
+  urn: urn:goreos:atom:story:us_dit_002_01:1.0.0
+id: US-DIT-002-01
+name: Un módulo de gestión de contratos con plazos, garantías y estados de pago
+
+## us_dpo_001_01.yml
+  urn: urn:goreos:atom:story:us_dpo_001_01:1.0.0
+id: US-DPO-001-01
+name: Un registro de bases de datos personales del GORE
+
+## us_dpr_002_01.yml
+  urn: urn:goreos:atom:story:us_dpr_002_01:1.0.0
+id: US-DPR-002-01
+name: Reportes de Inversión en Seguridad Pública para DPR
+
+## us_dseg_001_02.yml
+  urn: urn:goreos:atom:story:us_dseg_001_02:1.0.0
+id: US-DSEG-001-02
+name: Registro de Programas de Prevención Social
+
+## us_dtmuni_001_01.yml
+  urn: urn:goreos:atom:story:us_dtmuni_001_01:1.0.0
+id: US-DTMUNI-001-01
+name: Reutilización de Componentes Core GORE_OS (Open Source)
+
+## us_dueno_001_01.yml
+  urn: urn:goreos:atom:story:us_dueno_001_01:1.0.0
+id: US-DUENO-001-01
+name: Reportes de Calidad y Gobierno de Datos
+
+## us_ec33_001_01.yml
+  urn: urn:goreos:atom:story:us_ec33_001_01:1.0.0
+id: US-EC33-001-01
+name: Control de Activos Financiados (Circular 33)
+
+## us_ecif_001_01.yml
+  urn: urn:goreos:atom:story:us_ecif_001_01:1.0.0
+id: US-ECIF-001-01
+name: Monitoreo de Controles Internos Financieros
+
+## us_edu_001_01.yml
+  urn: urn:goreos:atom:story:us_edu_001_01:1.0.0
+id: US-EDU-001-01
+name: Módulo de Gestión de Becas Regionales
+
+## us_ejec_ar_005.yml
+  urn: urn:goreos:atom:story:us_ejec_ar_005:1.0.0
+id: US-EJEC-AR-005
+name: Verificar compromisos completados (cierre/dev)
+
+## us_ejec_ar_006.yml
+  urn: urn:goreos:atom:story:us_ejec_ar_006:1.0.0
+id: US-EJEC-AR-006
+name: Resumen semanal para Gobernador (PDF tendencias)
+
+## us_ejec_ar_007.yml
+  urn: urn:goreos:atom:story:us_ejec_ar_007:1.0.0
+id: US-EJEC-AR-007
+name: Reasignar compromisos a otro responsable
+
+## us_ejec_ar_008.yml
+  urn: urn:goreos:atom:story:us_ejec_ar_008:1.0.0
+id: US-EJEC-AR-008
+name: Reabrir compromiso devuelto por completado incorrecto
+
+## us_ejec_ar_009.yml
+  urn: urn:goreos:atom:story:us_ejec_ar_009:1.0.0
+id: US-EJEC-AR-009
+name: Monitor de Obstáculos y Escalamiento Externo
+
+## us_ejec_eo_002.yml
+  urn: urn:goreos:atom:story:us_ejec_eo_002:1.0.0
+id: US-EJEC-EO-002
+name: Registro de Avance Parcial de Compromisos
+
+## us_ejec_eo_003.yml
+  urn: urn:goreos:atom:story:us_ejec_eo_003:1.0.0
+id: US-EJEC-EO-003
+name: Solicitud de Validación de Compromiso Completado
+
+## us_ejec_eo_005.yml
+  urn: urn:goreos:atom:story:us_ejec_eo_005:1.0.0
+id: US-EJEC-EO-005
+name: Solicitud de Extensión de Plazo
+
+## us_ejec_eo_006.yml
+  urn: urn:goreos:atom:story:us_ejec_eo_006:1.0.0
+id: US-EJEC-EO-006
+name: Trazabilidad e Historial del Compromiso
+
+## us_ejec_eo_007.yml
+  urn: urn:goreos:atom:story:us_ejec_eo_007:1.0.0
+id: US-EJEC-EO-007
+name: Alertas de Vencimiento de Compromisos
+
+## us_ejec_jd_002.yml
+  urn: urn:goreos:atom:story:us_ejec_jd_002:1.0.0
+id: US-EJEC-JD-002
+name: Delegación y Asignación de Compromisos
+
+## us_ejec_jd_005.yml
+  urn: urn:goreos:atom:story:us_ejec_jd_005:1.0.0
+id: US-EJEC-JD-005
+name: Filtrado y Monitoreo de Compromisos Divisionarios
+
+## us_ejec_jd_006.yml
+  urn: urn:goreos:atom:story:us_ejec_jd_006:1.0.0
+id: US-EJEC-JD-006
+name: Validación y Cierre de Compromisos por Jefatura
+
+## us_ejec_muni_001.yml
+  urn: urn:goreos:atom:story:us_ejec_muni_001:1.0.0
+id: US-EJEC-MUNI-001
+name: Guías por mecanismo
+
+## us_ejec_muni_002.yml
+  urn: urn:goreos:atom:story:us_ejec_muni_002:1.0.0
+id: US-EJEC-MUNI-002
+name: Wizard de Selección de Vía de Financiamiento
+
+## us_ejec_muni_003.yml
+  urn: urn:goreos:atom:story:us_ejec_muni_003:1.0.0
+id: US-EJEC-MUNI-003
+name: Coordinación de Reunión de Inicio (Kick-off)
+
+## us_ejec_muni_004.yml
+  urn: urn:goreos:atom:story:us_ejec_muni_004:1.0.0
+id: US-EJEC-MUNI-004
+name: Reporte de Avance Periódico Municipal
+
+## us_ejec_muni_005.yml
+  urn: urn:goreos:atom:story:us_ejec_muni_005:1.0.0
+id: US-EJEC-MUNI-005
+name: Verificación de Elegibilidad Comunal para Fondos (FRIL)
+
+## us_ejec_per_001.yml
+  urn: urn:goreos:atom:story:us_ejec_per_001:1.0.0
+id: US-EJEC-PER-001
+name: Cobertura de Hitos Comunicacionales de Obra
+
+## us_ejec_sec_001.yml
+  urn: urn:goreos:atom:story:us_ejec_sec_001:1.0.0
+id: US-EJEC-SEC-001
+name: Gestión de Convenios Marcos Sectoriales
+
+## us_ejec_sup_003.yml
+  urn: urn:goreos:atom:story:us_ejec_sup_003:1.0.0
+id: US-EJEC-SUP-003
+name: Revisar informes UT (aprobar/observar)
+
+## us_ejec_sup_005.yml
+  urn: urn:goreos:atom:story:us_ejec_sup_005:1.0.0
+id: US-EJEC-SUP-005
+name: Alerta de Desviaciones Críticas en Ejecución
+
+## us_emp_001_01.yml
+  urn: urn:goreos:atom:story:us_emp_001_01:1.0.0
+id: US-EMP-001-01
+name: Calendario Unificado de Fondos para el Sector Privado
+
+## us_enl_cies_001_01.yml
+  urn: urn:goreos:atom:story:us_enl_cies_001_01:1.0.0
+id: US-ENL-CIES-001-01
+name: Directorio de Emergencia CIES
+
+## us_eope_001_01.yml
+  urn: urn:goreos:atom:story:us_eope_001_01:1.0.0
+id: US-EOPE-001-01
+name: Gestión de Reserva de Salas y Vehículos
+
+## us_epp_001_01.yml
+  urn: urn:goreos:atom:story:us_epp_001_01:1.0.0
+id: US-EPP-001-01
+name: Alertas de Desviación de Cronograma (Gantt)
+
+## us_eval_001_01.yml
+  urn: urn:goreos:atom:story:us_eval_001_01:1.0.0
+id: US-EVAL-001-01
+name: Formulario de Evaluación con Criterios Ponderados
+
+## us_eval_001_02.yml
+  urn: urn:goreos:atom:story:us_eval_001_02:1.0.0
+id: US-EVAL-001-02
+name: Consulta de Historial de Organizaciones Postulantes
+
+## us_everde_001_01.yml
+  urn: urn:goreos:atom:story:us_everde_001_01:1.0.0
+id: US-EVERDE-001-01
+name: Registro de Consumos de Papel y Energía (Estado Verde)
+
+## us_evol_ai_001.yml
+  urn: urn:goreos:atom:story:us_evol_ai_001:1.0.0
+id: US-EVOL-AI-001
+name: Reporte de Sesgo en Modelos Predictivos (FENIX)
+
+## us_evol_ai_002.yml
+  urn: urn:goreos:atom:story:us_evol_ai_002:1.0.0
+id: US-EVOL-AI-002
+name: Log Inmutable de Decisiones de Agentes Autónomos
+
+## us_evol_ao_018.yml
+  urn: urn:goreos:atom:story:us_evol_ao_018:1.0.0
+id: US-EVOL-AO-018
+name: Inventariar los sistemas y tecnologías usados por municipios
+
+## us_evol_chaos_001.yml
+  urn: urn:goreos:atom:story:us_evol_chaos_001:1.0.0
+id: US-EVOL-CHAOS-001
+name: Simulación de Caída de Servicios Críticos (Chaos Engineering)
+
+## us_evol_dt_001.yml
+  urn: urn:goreos:atom:story:us_evol_dt_001:1.0.0
+id: US-EVOL-DT-001
+name: Gestión de Inventario de Deuda Técnica
+
+## us_evol_dt_002.yml
+  urn: urn:goreos:atom:story:us_evol_dt_002:1.0.0
+id: US-EVOL-DT-002
+name: Planificación de Evolución de Esquemas (Migraciones)
+
+## us_evol_gov_001.yml
+  urn: urn:goreos:atom:story:us_evol_gov_001:1.0.0
+id: US-EVOL-GOV-001
+name: Aprobación de Cambios Críticos de Arquitectura
+
+## us_evol_gov_002.yml
+  urn: urn:goreos:atom:story:us_evol_gov_002:1.0.0
+id: US-EVOL-GOV-002
+name: Arbitraje de Prioridades mediante RICE
+
+## us_evol_h_002.yml
+  urn: urn:goreos:atom:story:us_evol_h_002:1.0.0
+id: US-EVOL-H-002
+name: Declaración de Estados de Salud (Gates de Evolución)
+
+## us_evol_kb_008.yml
+  urn: urn:goreos:atom:story:us_evol_kb_008:1.0.0
+id: US-EVOL-KB-008
+name: Estándar de Links de Verificación Documental
+
+## us_evol_pilot_002.yml
+  urn: urn:goreos:atom:story:us_evol_pilot_002:1.0.0
+id: US-EVOL-PILOT-002
+name: Escalamiento de Configuraciones a Nuevas Divisiones
+
+## us_evol_play_001.yml
+  urn: urn:goreos:atom:story:us_evol_play_001:1.0.0
+id: US-EVOL-PLAY-001
+name: Ejecución de Playbooks de Remediación
+
+## us_evol_play_002.yml
+  urn: urn:goreos:atom:story:us_evol_play_002:1.0.0
+id: US-EVOL-PLAY-002
+name: Monitor de Progreso de Ejecución de Playbooks
+
+## us_evol_puente_001.yml
+  urn: urn:goreos:atom:story:us_evol_puente_001:1.0.0
+id: US-EVOL-PUENTE-001
+name: Integración TDE en el Health Score Organizacional
+
+## us_evol_tray_002.yml
+  urn: urn:goreos:atom:story:us_evol_tray_002:1.0.0
+id: US-EVOL-TRAY-002
+name: Ajuste Dinámico de Umbrales de Riesgo
+
+## us_f8_001_01.yml
+  urn: urn:goreos:atom:story:us_f8_001_01:1.0.0
+id: US-F8-001-01
+name: Módulo de Concursos con Etapas Configurables (8%)
+
+## us_f8_001_02.yml
+  urn: urn:goreos:atom:story:us_f8_001_02:1.0.0
+id: US-F8-001-02
+name: Reportes de Cobertura Territorial y Temática (8%)
+
+## us_fedmuni_001_01.yml
+  urn: urn:goreos:atom:story:us_fedmuni_001_01:1.0.0
+id: US-FEDMUNI-001-01
+name: Denunciar sobrecargas laborales derivadas de convenios
+
+## us_fenix_001_01.yml
+  urn: urn:goreos:atom:story:us_fenix_001_01:1.0.0
+id: US-FENIX-001-01
+name: Acceso Privilegiado Temporal (Intervención FENIX)
+
+## us_fin_001_01.yml
+  urn: urn:goreos:atom:story:us_fin_001_01:1.0.0
+id: US-FIN-001-01
+name: Un panel de cuadratura contable diaria con validaciones automáticas
+
+## us_fin_apr_001.yml
+  urn: urn:goreos:atom:story:us_fin_apr_001:1.0.0
+id: US-FIN-APR-001
+name: Presentar distribución inicial al CORE (plazo 10 días desde Ley)
+
+## us_fin_c33_001.yml
+  urn: urn:goreos:atom:story:us_fin_c33_001:1.0.0
+id: US-FIN-C33-001
+name: Track Emergencia (5%) con aprobación Fast-Track (24-48hrs)
+
+## us_fin_c33_002.yml
+  urn: urn:goreos:atom:story:us_fin_c33_002:1.0.0
+id: US-FIN-C33-002
+name: Tipología Activo (Vehículo, Maquinaria, Equipo)
+
+## us_fin_c33_005.yml
+  urn: urn:goreos:atom:story:us_fin_c33_005:1.0.0
+id: US-FIN-C33-005
+name: Adquisición de activos vía Circular 33
+
+## us_fin_conv_003.yml
+  urn: urn:goreos:atom:story:us_fin_conv_003:1.0.0
+id: US-FIN-CONV-003
+name: Alertas de convenios por vencer (prórroga/cierre)
+
+## us_fin_conv_005.yml
+  urn: urn:goreos:atom:story:us_fin_conv_005:1.0.0
+id: US-FIN-CONV-005
+name: Controlar garantías con alertas de vencimiento
+
+## us_fin_form_003.yml
+  urn: urn:goreos:atom:story:us_fin_form_003:1.0.0
+id: US-FIN-FORM-003
+name: Proyectar gastos de funcionamiento (Subtítulo 21-22)
+
+## us_fin_form_004.yml
+  urn: urn:goreos:atom:story:us_fin_form_004:1.0.0
+id: US-FIN-FORM-004
+name: Verificar clasificador presupuestario vigente
+
+## us_fin_form_005.yml
+  urn: urn:goreos:atom:story:us_fin_form_005:1.0.0
+id: US-FIN-FORM-005
+name: Provisiones Presupuestarias para Concursos (FRIL/FRPD)
+
+## us_fin_fril_001.yml
+  urn: urn:goreos:atom:story:us_fin_fril_001:1.0.0
+id: US-FIN-FRIL-001
+name: Gestión de Marcos Presupuestarios Comunales (FRIL)
+
+## us_fin_frpd_001.yml
+  urn: urn:goreos:atom:story:us_fin_frpd_001:1.0.0
+id: US-FIN-FRPD-001
+name: Evaluación de Alineación con Ejes Estratégicos (FRPD)
+
+## us_fin_frpd_002.yml
+  urn: urn:goreos:atom:story:us_fin_frpd_002:1.0.0
+id: US-FIN-FRPD-002
+name: Admisibilidad de Beneficiarios FRPD (Empresas/Gremios)
+
+## us_fin_frpd_003.yml
+  urn: urn:goreos:atom:story:us_fin_frpd_003:1.0.0
+id: US-FIN-FRPD-003
+name: Validación de Porcentaje de Co-financiamiento FRPD
+
+## us_fin_gest_002.yml
+  urn: urn:goreos:atom:story:us_fin_gest_002:1.0.0
+id: US-FIN-GEST-002
+name: Solicitud de Modificación (Informe Técnico)
+
+## us_fin_gest_003.yml
+  urn: urn:goreos:atom:story:us_fin_gest_003:1.0.0
+id: US-FIN-GEST-003
+name: Reevaluación (si supera 10% / cambio sustancial)
+
+## us_fin_gest_005.yml
+  urn: urn:goreos:atom:story:us_fin_gest_005:1.0.0
+id: US-FIN-GEST-005
+name: Visar Cierre Técnico (Checklist recepción obras/programas)
+
+## us_fin_gob_001.yml
+  urn: urn:goreos:atom:story:us_fin_gob_001:1.0.0
+id: US-FIN-GOB-001
+name: Sesión de Pertinencia Presupuestaria (Filtro Pre-Admisibilidad)
+
+## us_fin_ipr_005.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_005:1.0.0
+id: US-FIN-IPR-005
+name: Notificación de observaciones de admisibilidad (plazo 60d)
+
+## us_fin_ipr_006.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_006:1.0.0
+id: US-FIN-IPR-006
+name: Subsanación Online de Observaciones (Cero Papel)
+
+## us_fin_ipr_007.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_007:1.0.0
+id: US-FIN-IPR-007
+name: Timeline Visual del Estado de Postulación
+
+## us_fin_ipr_008.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_008:1.0.0
+id: US-FIN-IPR-008
+name: Ver historial de postulaciones con tasa de éxito
+
+## us_fin_ipr_011.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_011:1.0.0
+id: US-FIN-IPR-011
+name: Reporte de Avance Mensual Físico-Financiero
+
+## us_fin_ipr_015.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_015:1.0.0
+id: US-FIN-IPR-015
+name: Reintegro de Saldos Presupuestarios No Ejecutados
+
+## us_fin_ipr_017.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_017:1.0.0
+id: US-FIN-IPR-017
+name: Registro de Acta de Entrega de Terreno e Inicio de Obras
+
+## us_fin_ipr_018.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_018:1.0.0
+id: US-FIN-IPR-018
+name: Solicitud de Recepción Provisoria y Definitiva de Obras
+
+## us_fin_ipr_022.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_022:1.0.0
+id: US-FIN-IPR-022
+name: Diseño con Marco Lógico detallado
+
+## us_fin_ipr_026.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_026:1.0.0
+id: US-FIN-IPR-026
+name: Devolución de garantías a ejecutores
+
+## us_fin_ipr_027.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_027:1.0.0
+id: US-FIN-IPR-027
+name: Ver bandeja de postulaciones ordenada FIFO
+
+## us_fin_ipr_031.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_031:1.0.0
+id: US-FIN-IPR-031
+name: Carpeta digital para sesión CORE
+
+## us_fin_ipr_034.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_034:1.0.0
+id: US-FIN-IPR-034
+name: Ver tiempos promedio por fase del ciclo
+
+## us_fin_ipr_035.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_035:1.0.0
+id: US-FIN-IPR-035
+name: Generación de Informes de Gestión Divisional
+
+## us_fin_ipr_036.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_036:1.0.0
+id: US-FIN-IPR-036
+name: Alineación de Cartera con ERD (Preparación CDR)
+
+## us_fin_ipr_039.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_039:1.0.0
+id: US-FIN-IPR-039
+name: Verificación de Requisitos ARI (Anteproyecto Regional de Inversión)
+
+## us_fin_ipr_040.yml
+  urn: urn:goreos:atom:story:us_fin_ipr_040:1.0.0
+id: US-FIN-IPR-040
+name: Solicitud de Antecedentes Adicionales al Formulador
+
+## us_fin_jef_002.yml
+  urn: urn:goreos:atom:story:us_fin_jef_002:1.0.0
+id: US-FIN-JEF-002
+name: Ver distribución de carga por analista con métricas de tiempos
+
+## us_fin_jef_003.yml
+  urn: urn:goreos:atom:story:us_fin_jef_003:1.0.0
+id: US-FIN-JEF-003
+name: Ver problemas críticos escalados en lista priorizada
+
+## us_fin_jef_004.yml
+  urn: urn:goreos:atom:story:us_fin_jef_004:1.0.0
+id: US-FIN-JEF-004
+name: Ver propuesta de priorización (ranking ERD/urgencia/monto)
+
+## us_fin_mod_002.yml
+  urn: urn:goreos:atom:story:us_fin_mod_002:1.0.0
+id: US-FIN-MOD-002
+name: Modificaciones que no requieren CORE
+
+## us_fin_ppr_002.yml
+  urn: urn:goreos:atom:story:us_fin_ppr_002:1.0.0
+id: US-FIN-PPR-002
+name: Evaluación Programática Track B (Ejecución Directa - MML)
+
+## us_fin_ppr_003.yml
+  urn: urn:goreos:atom:story:us_fin_ppr_003:1.0.0
+id: US-FIN-PPR-003
+name: Control de No Fraccionamiento de Programas
+
+## us_fin_ppr_004.yml
+  urn: urn:goreos:atom:story:us_fin_ppr_004:1.0.0
+id: US-FIN-PPR-004
+name: Presentar programas al Comité de Pertinencia
+
+## us_fin_ppr_006.yml
+  urn: urn:goreos:atom:story:us_fin_ppr_006:1.0.0
+id: US-FIN-PPR-006
+name: Visualizar estado de mi programa en el ciclo
+
+## us_fin_ppto_004.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_004:1.0.0
+id: US-FIN-PPTO-004
+name: Firmas Convenio (Gore - Ejecutor)
+
+## us_fin_ppto_006.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_006:1.0.0
+id: US-FIN-PPTO-006
+name: Emitir CDP validando saldo en asignación
+
+## us_fin_ppto_009.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_009:1.0.0
+id: US-FIN-PPTO-009
+name: Alertas de glosas infringidas (03/04/06)
+
+## us_fin_ppto_010.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_010:1.0.0
+id: US-FIN-PPTO-010
+name: Usar asistente para modificaciones presupuestarias
+
+## us_fin_ppto_011.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_011:1.0.0
+id: US-FIN-PPTO-011
+name: Ver proyección vs programa caja con alertas >5%
+
+## us_fin_ppto_012.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_012:1.0.0
+id: US-FIN-PPTO-012
+name: Cierre deuda flotante por programa/subtítulo
+
+## us_fin_ppto_013.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_013:1.0.0
+id: US-FIN-PPTO-013
+name: Sincronizar con SIGFE validando consistencia
+
+## us_fin_ppto_017.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_017:1.0.0
+id: US-FIN-PPTO-017
+name: Presupuesto de cometidos y viáticos
+
+## us_fin_ppto_018.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_018:1.0.0
+id: US-FIN-PPTO-018
+name: Realizar conciliación bancaria mensual
+
+## us_fin_ppto_019.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_019:1.0.0
+id: US-FIN-PPTO-019
+name: Proyectar deuda flotante a fin de año
+
+## us_fin_ppto_020.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_020:1.0.0
+id: US-FIN-PPTO-020
+name: Visar resoluciones de cometidos funcionarios
+
+## us_fin_ppto_021.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_021:1.0.0
+id: US-FIN-PPTO-021
+name: Reconciliar ejecución con SIGFE
+
+## us_fin_ppto_022.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_022:1.0.0
+id: US-FIN-PPTO-022
+name: Alertas de gaps en reconciliación
+
+## us_fin_ppto_026.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_026:1.0.0
+id: US-FIN-PPTO-026
+name: Devengar gastos asociados a facturas recibidas
+
+## us_fin_ppto_027.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_027:1.0.0
+id: US-FIN-PPTO-027
+name: Cargar presupuesto aprobado en SIGFE tras Toma de Razón
+
+## us_fin_ppto_031.yml
+  urn: urn:goreos:atom:story:us_fin_ppto_031:1.0.0
+id: US-FIN-PPTO-031
+name: Modificaciones presupuestarias (Rebajas/Suplementos)
+
+## us_fin_rend_014.yml
+  urn: urn:goreos:atom:story:us_fin_rend_014:1.0.0
+id: US-FIN-REND-014
+name: Verificar cumplimiento de hitos I+D+i (FRPD)
+
+## us_fin_rend_015.yml
+  urn: urn:goreos:atom:story:us_fin_rend_015:1.0.0
+id: US-FIN-REND-015
+name: Verificar medios de verificación de Subvención 8%
+
+## us_fin_rend_016.yml
+  urn: urn:goreos:atom:story:us_fin_rend_016:1.0.0
+id: US-FIN-REND-016
+name: Controlar tope 5% de gastos administrativos
+
+## us_fin_rend_018.yml
+  urn: urn:goreos:atom:story:us_fin_rend_018:1.0.0
+id: US-FIN-REND-018
+name: Proceso de reintegro de fondos
+
+## us_fin_sub_001.yml
+  urn: urn:goreos:atom:story:us_fin_sub_001:1.0.0
+id: US-FIN-SUB-001
+name: Verificar inhabilidades de evaluadores
+
+## us_fin_sub_002.yml
+  urn: urn:goreos:atom:story:us_fin_sub_002:1.0.0
+id: US-FIN-SUB-002
+name: Admisibilidad Estricta (Vigencia PJ, Directorio)
+
+## us_fin_sub_003.yml
+  urn: urn:goreos:atom:story:us_fin_sub_003:1.0.0
+id: US-FIN-SUB-003
+name: Aplicar pauta de evaluación ciega
+
+## us_fin_sub_004.yml
+  urn: urn:goreos:atom:story:us_fin_sub_004:1.0.0
+id: US-FIN-SUB-004
+name: Nómina de adjudicación para CORE
+
+## us_fin_sub_005.yml
+  urn: urn:goreos:atom:story:us_fin_sub_005:1.0.0
+id: US-FIN-SUB-005
+name: Postular a Subvención 8% en línea
+
+## us_fin_sup_002.yml
+  urn: urn:goreos:atom:story:us_fin_sup_002:1.0.0
+id: US-FIN-SUP-002
+name: Base de conocimiento para errores frecuentes
+
+## us_finops_001_01.yml
+  urn: urn:goreos:atom:story:us_finops_001_01:1.0.0
+id: US-FINOPS-001-01
+name: Reportes de consumo de créditos cloud por proyecto
+
+## us_fisc_001_01.yml
+  urn: urn:goreos:atom:story:us_fisc_001_01:1.0.0
+id: US-FISC-001-01
+name: Acceso total y reservado a servidores y correos bajo orden judicial
+
+## us_fisc_sum_001_01.yml
+  urn: urn:goreos:atom:story:us_fisc_sum_001_01:1.0.0
+id: US-FISC-SUM-001-01
+name: Herramientas para declaraciones y evidencia digital
+
+## us_flota_001_01.yml
+  urn: urn:goreos:atom:story:us_flota_001_01:1.0.0
+id: US-FLOTA-001-01
+name: Control de bitácoras y mantenciones de vehículos
+
+## us_fndr8_001_01.yml
+  urn: urn:goreos:atom:story:us_fndr8_001_01:1.0.0
+id: US-FNDR8-001-01
+name: Checklist automático de admisibilidad
+
+## us_fnx_act_001.yml
+  urn: urn:goreos:atom:story:us_fnx_act_001:1.0.0
+id: US-FNX-ACT-001
+name: Alertas automáticas cuando el índice H_gore baje de 60
+
+## us_fnx_act_003.yml
+  urn: urn:goreos:atom:story:us_fnx_act_003:1.0.0
+id: US-FNX-ACT-003
+name: Declarar estado de "Emergencia Administrativa" en el sistema
+
+## us_fnx_ana_001.yml
+  urn: urn:goreos:atom:story:us_fnx_ana_001:1.0.0
+id: US-FNX-ANA-001
+name: Analizar patrones de intervenciones pasadas
+
+## us_fnx_ana_003.yml
+  urn: urn:goreos:atom:story:us_fnx_ana_003:1.0.0
+id: US-FNX-ANA-003
+name: Visualizar zonas de la organización con mayor propensión a fallos
+
+## us_fnx_cie_002.yml
+  urn: urn:goreos:atom:story:us_fnx_cie_002:1.0.0
+id: US-FNX-CIE-002
+name: Hallazgos y recomendaciones estructuradas (People, Process, Tech)
+
+## us_fnx_cie_003.yml
+  urn: urn:goreos:atom:story:us_fnx_cie_003:1.0.0
+id: US-FNX-CIE-003
+name: Evaluar el desempeño de los miembros de la Fuerza de Tarea
+
+## us_fnx_ges_001.yml
+  urn: urn:goreos:atom:story:us_fnx_ges_001:1.0.0
+id: US-FNX-GES-001
+name: Un expediente digital de intervention (ID, Objetivo, Equipo)
+
+## us_fnx_int_001.yml
+  urn: urn:goreos:atom:story:us_fnx_int_001:1.0.0
+id: US-FNX-INT-001
+name: Consumir métricas de D-EVOL en tiempo real
+
+## us_fnx_int_002.yml
+  urn: urn:goreos:atom:story:us_fnx_int_002:1.0.0
+id: US-FNX-INT-002
+name: Alertas críticas de seguridad pública (D-SEG)
+
+## us_fnx_int_003.yml
+  urn: urn:goreos:atom:story:us_fnx_int_003:1.0.0
+id: US-FNX-INT-003
+name: Bloquear automáticamente nuevos inicios de procesos en un dominio intervenido
+
+## us_fnx_ope_002.yml
+  urn: urn:goreos:atom:story:us_fnx_ope_002:1.0.0
+id: US-FNX-OPE-002
+name: Bypass Administrativo en un flujo BPMN detenido
+
+## us_fnx_ope_003.yml
+  urn: urn:goreos:atom:story:us_fnx_ope_003:1.0.0
+id: US-FNX-OPE-003
+name: Habilitar línea de ejecución directa para corrección de errores
+
+## us_foto_001_01.yml
+  urn: urn:goreos:atom:story:us_foto_001_01:1.0.0
+id: US-FOTO-001-01
+name: Repositorio de fotos con metadatos de evento
+
+## us_front_001_01.yml
+  urn: urn:goreos:atom:story:us_front_001_01:1.0.0
+id: US-FRONT-001-01
+name: Biblioteca de componentes de diseño (Design System)
+
+## us_frpd_001_01.yml
+  urn: urn:goreos:atom:story:us_frpd_001_01:1.0.0
+id: US-FRPD-001-01
+name: Acceso a expedientes técnicos de proyectos FRPD
+
+## us_func_001_01.yml
+  urn: urn:goreos:atom:story:us_func_001_01:1.0.0
+id: US-FUNC-001-01
+name: Solicitar permisos administrativos y feriados en línea
+
+## us_func_001_02.yml
+  urn: urn:goreos:atom:story:us_func_001_02:1.0.0
+id: US-FUNC-001-02
+name: Mis liquidaciones de sueldo y certificados
+
+## us_g7_001_01.yml
+  urn: urn:goreos:atom:story:us_g7_001_01:1.0.0
+id: US-G7-001-01
+name: Módulo de control de programación de caja con cuotas
+
+## us_gab_001_01.yml
+  urn: urn:goreos:atom:story:us_gab_001_01:1.0.0
+id: US-GAB-001-01
+name: Un sistema de gestión de agenda integrado con compromisos
+
+## us_gab_002_01.yml
+  urn: urn:goreos:atom:story:us_gab_002_01:1.0.0
+id: US-GAB-002-01
+name: Protocolo de comunicación de crisis digitalizado
+
+## us_gen_001_01.yml
+  urn: urn:goreos:atom:story:us_gen_001_01:1.0.0
+id: US-GEN-001-01
+name: Indicadores desagregados por sexo en todos los reportes
+
+## us_gen_dev_hon_jefe_001.yml
+  urn: urn:goreos:atom:story:us_gen_dev_hon_jefe_001:1.0.0
+id: US-GEN-DEV_HON_JEFE-001
+name: Historia genérica para Jefatura Control Jerárquico
+
+## us_gen_dev_qa_analista_001.yml
+  urn: urn:goreos:atom:story:us_gen_dev_qa_analista_001:1.0.0
+id: US-GEN-DEV_QA_ANALISTA-001
+name: Aseguramiento de calidad en procesos digitales
+
+## us_gen_ejec_anal_001.yml
+  urn: urn:goreos:atom:story:us_gen_ejec_anal_001:1.0.0
+id: US-GEN-EJEC_ANAL-001
+name: Gestión de seguimiento de iniciativas externas
+
+## us_gen_ejec_cper_sec_001.yml
+  urn: urn:goreos:atom:story:us_gen_ejec_cper_sec_001:1.0.0
+id: US-GEN-EJEC_CPER_SEC-001
+name: Historia genérica para Secretario Ejecutivo Comité de Pertinencia
+
+## us_gen_ejec_infra_ito_001.yml
+  urn: urn:goreos:atom:story:us_gen_ejec_infra_ito_001:1.0.0
+id: US-GEN-EJEC_INFRA_ITO-001
+name: Supervisión Técnica de Obras
+
+## us_gen_ejec_ito_001.yml
+  urn: urn:goreos:atom:story:us_gen_ejec_ito_001:1.0.0
+id: US-GEN-EJEC_ITO-001
+name: Historia genérica para Inspector Técnico de Obras (Campo)
+
+## us_gen_ejec_itp_001.yml
+  urn: urn:goreos:atom:story:us_gen_ejec_itp_001:1.0.0
+id: US-GEN-EJEC_ITP-001
+name: Supervisión Técnica de Programas
+
+## us_gen_ejec_urai_ejec_001.yml
+  urn: urn:goreos:atom:story:us_gen_ejec_urai_ejec_001:1.0.0
+id: US-GEN-EJEC_URAI_EJEC-001
+name: Gestión de Asuntos Internacionales y Macrozone
+
+## us_gen_fin_analista_co_001.yml
+  urn: urn:goreos:atom:story:us_gen_fin_analista_co_001:1.0.0
+id: US-GEN-FIN_ANALISTA_CO-001
+name: Gestión de Adquisiciones y Mercado Público
+
+## us_gen_final_001.yml
+  urn: urn:goreos:atom:story:us_gen_final_001:1.0.0
+id: US-GEN-FINAL-001
+name: Articulación Intersectorial en Educación
+
+## us_gen_final_002.yml
+  urn: urn:goreos:atom:story:us_gen_final_002:1.0.0
+id: US-GEN-FINAL-002
+name: Gestión de Cartera de Turismo Regional
+
+## us_gen_final_003.yml
+  urn: urn:goreos:atom:story:us_gen_final_003:1.0.0
+id: US-GEN-FINAL-003
+name: Enfoque de Género en la Inversión Regional
+
+## us_gen_final_004.yml
+  urn: urn:goreos:atom:story:us_gen_final_004:1.0.0
+id: US-GEN-FINAL-004
+name: Coordinación de Conectividad Regional
+
+## us_gen_final_005.yml
+  urn: urn:goreos:atom:story:us_gen_final_005:1.0.0
+id: US-GEN-FINAL-005
+name: Gestión de Indicadores de Salud Ambiental
+
+## us_gen_final_006.yml
+  urn: urn:goreos:atom:story:us_gen_final_006:1.0.0
+id: US-GEN-FINAL-006
+name: Articulación para el Desarrollo Económico Regional
+
+## us_gen_final_007.yml
+  urn: urn:goreos:atom:story:us_gen_final_007:1.0.0
+id: US-GEN-FINAL-007
+name: Coordinación Intersectorial de Inversión
+
+## us_gen_final_008.yml
+  urn: urn:goreos:atom:story:us_gen_final_008:1.0.0
+id: US-GEN-FINAL-008
+name: Gestión de Redes de Conectividad
+
+## us_gen_final_009.yml
+  urn: urn:goreos:atom:story:us_gen_final_009:1.0.0
+id: US-GEN-FINAL-009
+name: Gestión de Cartera de Inversiones Regional
+
+## us_gen_final_010.yml
+  urn: urn:goreos:atom:story:us_gen_final_010:1.0.0
+id: US-GEN-FINAL-010
+name: Apoyo a la Transición Energética Regional
+
+## us_gen_final_011.yml
+  urn: urn:goreos:atom:story:us_gen_final_011:1.0.0
+id: US-GEN-FINAL-011
+name: Fomento al Empleo Regional
+
+## us_gen_final_012.yml
+  urn: urn:goreos:atom:story:us_gen_final_012:1.0.0
+id: US-GEN-FINAL-012
+name: Control y Gestión de Viáticos del Personal
+
+## us_gen_final_013.yml
+  urn: urn:goreos:atom:story:us_gen_final_013:1.0.0
+id: US-GEN-FINAL-013
+name: Fomento a la Actividad Deportiva Regional
+
+## us_gen_final_014.yml
+  urn: urn:goreos:atom:story:us_gen_final_014:1.0.0
+id: US-GEN-FINAL-014
+name: Fortalecimiento de la Gestión Municipal
+
+## us_gen_final_015.yml
+  urn: urn:goreos:atom:story:us_gen_final_015:1.0.0
+id: US-GEN-FINAL-015
+name: Planificación Sanitaria Regional
+
+## us_gen_final_016.yml
+  urn: urn:goreos:atom:story:us_gen_final_016:1.0.0
+id: US-GEN-FINAL-016
+name: Gestión de Programas Culturales Regionales
+
+## us_gen_final_017.yml
+  urn: urn:goreos:atom:story:us_gen_final_017:1.0.0
+id: US-GEN-FINAL-017
+name: Coordinación Intersectorial de Salud Regional
+
+## us_gen_final_018.yml
+  urn: urn:goreos:atom:story:us_gen_final_018:1.0.0
+id: US-GEN-FINAL-018
+name: Fiscalización Ambiental Intersectorial
+
+## us_gen_final_019.yml
+  urn: urn:goreos:atom:story:us_gen_final_019:1.0.0
+id: US-GEN-FINAL-019
+name: Promoción de la Identidad Cultural y Patrimonio
+
+## us_gen_generic_analist_002.yml
+  urn: urn:goreos:atom:story:us_gen_generic_analist_002:1.0.0
+id: US-GEN-GENERIC_ANALIST-002
+name: Historia genérica para Analista Base (Arquetipo)
+
+## us_gen_gestion_250_enc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_250_enc_001:1.0.0
+id: US-GEN-GESTION_250_ENC-001
+name: Historia genérica para Encargado Agenda Ñuble 250
+
+## us_gen_gestion_anal_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_anal_001:1.0.0
+id: US-GEN-GESTION_ANAL-001
+name: Historia genérica para Analista DIT
+
+## us_gen_gestion_analist_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_analist_001:1.0.0
+id: US-GEN-GESTION_ANALIST-001
+name: Historia genérica para Analista Agua Potable Rural
+
+## us_gen_gestion_analist_002.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_analist_002:1.0.0
+id: US-GEN-GESTION_ANALIST-002
+name: Gestión Técnica del Déficit Habitacional
+
+## us_gen_gestion_arch_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_arch_001:1.0.0
+id: US-GEN-GESTION_ARCH-001
+name: Historia genérica para Archivero Digital
+
+## us_gen_gestion_aud_min_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_aud_min_001:1.0.0
+id: US-GEN-GESTION_AUD_MIN-001
+name: Historia genérica para Auditor Ministerial
+
+## us_gen_gestion_bc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_bc_001:1.0.0
+id: US-GEN-GESTION_BC-001
+name: Historia genérica para Banco Central de Chile
+
+## us_gen_gestion_benefic_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_benefic_001:1.0.0
+id: US-GEN-GESTION_BENEFIC-001
+name: Historia genérica para Beneficiario Individual
+
+## us_gen_gestion_caigg_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_caigg_001:1.0.0
+id: US-GEN-GESTION_CAIGG-001
+name: Historia genérica para Auditor General de Gobierno
+
+## us_gen_gestion_camp_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_camp_001:1.0.0
+id: US-GEN-GESTION_CAMP-001
+name: Historia genérica para Miembro Equipo Campeón
+
+## us_gen_gestion_ccasoc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_ccasoc_001:1.0.0
+id: US-GEN-GESTION_CCASOC-001
+name: Historia genérica para Colegio Profesional
+
+## us_gen_gestion_cde_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cde_001:1.0.0
+id: US-GEN-GESTION_CDE-001
+name: Historia genérica para Consejo de Defensa del Estado
+
+## us_gen_gestion_cdr_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cdr_001:1.0.0
+id: US-GEN-GESTION_CDR-001
+name: Historia genérica para Comité Directivo Regional (CDR)
+
+## us_gen_gestion_cenic_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cenic_001:1.0.0
+id: US-GEN-GESTION_CENIC-001
+name: Historia genérica para Centro de Investigación
+
+## us_gen_gestion_cert_002.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cert_002:1.0.0
+id: US-GEN-GESTION_CERT-002
+name: Historia genérica para Robot Cert-Manager
+
+## us_gen_gestion_clasif_002.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_clasif_002:1.0.0
+id: US-GEN-GESTION_CLASIF-002
+name: Historia genérica para Agente Clasificador
+
+## us_gen_gestion_cnr_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cnr_001:1.0.0
+id: US-GEN-GESTION_CNR-001
+name: Historia genérica para Director Regional CNR
+
+## us_gen_gestion_com_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_com_001:1.0.0
+id: US-GEN-GESTION_COM-001
+name: Historia genérica para Encargado Comunicaciones DIPIR
+
+## us_gen_gestion_comunic_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_comunic_001:1.0.0
+id: US-GEN-GESTION_COMUNIC-001
+name: Historia genérica para Comunicon (Asesor Comunicacional)
+
+## us_gen_gestion_con_ing_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_con_ing_001:1.0.0
+id: US-GEN-GESTION_CON_ING-001
+name: Historia genérica para Ingeniero Vialidad
+
+## us_gen_gestion_consult_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_consult_001:1.0.0
+id: US-GEN-GESTION_CONSULT-001
+name: Historia genérica para Consultor Externo
+
+## us_gen_gestion_contrap_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_contrap_001:1.0.0
+id: US-GEN-GESTION_CONTRAP-001
+name: Historia genérica para Contraparte Interna
+
+## us_gen_gestion_coor_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_coor_001:1.0.0
+id: US-GEN-GESTION_COOR-001
+name: Historia genérica para Coordinador CIES
+
+## us_gen_gestion_corfo_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_corfo_001:1.0.0
+id: US-GEN-GESTION_CORFO-001
+name: Historia genérica para CORFO
+
+## us_gen_gestion_corte_n_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_corte_n_001:1.0.0
+id: US-GEN-GESTION_CORTE_N-001
+name: Historia genérica para Corte de Apelaciones de Chillán
+
+## us_gen_gestion_cosoc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cosoc_001:1.0.0
+id: US-GEN-GESTION_COSOC-001
+name: Historia genérica para COSOC / Consejo de la Sociedad Civil
+
+## us_gen_gestion_cpc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cpc_001:1.0.0
+id: US-GEN-GESTION_CPC-001
+name: Historia genérica para CPC Regional
+
+## us_gen_gestion_cplt_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cplt_001:1.0.0
+id: US-GEN-GESTION_CPLT-001
+name: Historia genérica para Consejo Transparencia (CPLT)
+
+## us_gen_gestion_cseu_me_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cseu_me_001:1.0.0
+id: US-GEN-GESTION_CSEU_ME-001
+name: Historia genérica para Miembro Comité CSEU
+
+## us_gen_gestion_ctd_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_ctd_001:1.0.0
+id: US-GEN-GESTION_CTD-001
+name: Historia genérica para Coordinador Transformación Digital
+
+## us_gen_gestion_cti_pro_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_cti_pro_001:1.0.0
+id: US-GEN-GESTION_CTI_PRO-001
+name: Historia genérica para Profesional CTI
+
+## us_gen_gestion_dga_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_dga_001:1.0.0
+id: US-GEN-GESTION_DGA-001
+name: Historia genérica para Director Regional DGA
+
+## us_gen_gestion_digitra_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_digitra_001:1.0.0
+id: US-GEN-GESTION_DIGITRA-001
+name: Historia genérica para Digitrans (Asesor TDE)
+
+## us_gen_gestion_dipres_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_dipres_001:1.0.0
+id: US-GEN-GESTION_DIPRES-001
+name: Historia genérica para Analista Sectorial DIPRES
+
+## us_gen_gestion_directo_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_directo_001:1.0.0
+id: US-GEN-GESTION_DIRECTO-001
+name: Historia genérica para Director Servicio Regional
+
+## us_gen_gestion_doh_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_doh_001:1.0.0
+id: US-GEN-GESTION_DOH-001
+name: Historia genérica para Director Regional DOH
+
+## us_gen_gestion_dpp_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_dpp_001:1.0.0
+id: US-GEN-GESTION_DPP-001
+name: Historia genérica para Delegado Presidencial Provincial
+
+## us_gen_gestion_emp_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_emp_001:1.0.0
+id: US-GEN-GESTION_EMP-001
+name: Historia genérica para Empresa / Gremio
+
+## us_gen_gestion_enc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_enc_001:1.0.0
+id: US-GEN-GESTION_ENC-001
+name: Historia genérica para Encargado de Calidad
+
+## us_gen_gestion_encarga_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_encarga_001:1.0.0
+id: US-GEN-GESTION_ENCARGA-001
+name: Historia genérica para Encargado Estado Verde
+
+## us_gen_gestion_especia_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_especia_001:1.0.0
+id: US-GEN-GESTION_ESPECIA-001
+name: Historia genérica para Especialista BI
+
+## us_gen_gestion_ext_002.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_ext_002:1.0.0
+id: US-GEN-GESTION_EXT-002
+name: Interacción Digital de Ciudadanos y Entidades Externas
+
+## us_gen_gestion_femp_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_femp_001:1.0.0
+id: US-GEN-GESTION_FEMP-001
+name: Historia genérica para Federación de Municipios
+
+## us_gen_gestion_fin_cog_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_fin_cog_001:1.0.0
+id: US-GEN-GESTION_FIN_COG-001
+name: Historia genérica para Cogirador Autorizado
+
+## us_gen_gestion_fnx_op_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_fnx_op_001:1.0.0
+id: US-GEN-GESTION_FNX_OP-001
+name: Historia genérica para Interventor FENIX
+
+## us_gen_gestion_fosis_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_fosis_001:1.0.0
+id: US-GEN-GESTION_FOSIS-001
+name: Historia genérica para FOSIS
+
+## us_gen_gestion_front_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_front_001:1.0.0
+id: US-GEN-GESTION_FRONT-001
+name: Historia genérica para Desarrollador Frontend
+
+## us_gen_gestion_gen_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_gen_001:1.0.0
+id: US-GEN-GESTION_GEN-001
+name: Historia genérica para Ciudadano
+
+## us_gen_gestion_goreolo_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_goreolo_001:1.0.0
+id: US-GEN-GESTION_GOREOLO-001
+name: Historia genérica para Goreólogo (Experto Institucional)
+
+## us_gen_gestion_grd_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_grd_001:1.0.0
+id: US-GEN-GESTION_GRD-001
+name: Historia genérica para Comité Regional GRD
+
+## us_gen_gestion_hon_ana_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_hon_ana_001:1.0.0
+id: US-GEN-GESTION_HON_ANA-001
+name: Historia genérica para Analista GDP (Honorarios)
+
+## us_gen_gestion_indap_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_indap_001:1.0.0
+id: US-GEN-GESTION_INDAP-001
+name: Historia genérica para INDAP
+
+## us_gen_gestion_int_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_int_001:1.0.0
+id: US-GEN-GESTION_INT-001
+name: Historia genérica para Encargado RR.II
+
+## us_gen_gestion_ipr_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_ipr_001:1.0.0
+id: US-GEN-GESTION_IPR-001
+name: Historia genérica para Formuevaluador (Asesor IPR)
+
+## us_gen_gestion_jano_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_jano_001:1.0.0
+id: US-GEN-GESTION_JANO-001
+name: Historia genérica para Jano (Asesor Jurídico y Conformidad)
+
+## us_gen_gestion_jefe_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_jefe_001:1.0.0
+id: US-GEN-GESTION_JEFE-001
+name: Historia genérica para Jefe Unidad Jurídica
+
+## us_gen_gestion_jefe_es_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_jefe_es_001:1.0.0
+id: US-GEN-GESTION_JEFE_ES-001
+name: Historia genérica para Jefe Estudios
+
+## us_gen_gestion_jjvv_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_jjvv_001:1.0.0
+id: US-GEN-GESTION_JJVV-001
+name: Historia genérica para Junta de Vecinos
+
+## us_gen_gestion_junji_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_junji_001:1.0.0
+id: US-GEN-GESTION_JUNJI-001
+name: Historia genérica para Director Regional JUNJI
+
+## us_gen_gestion_juzg_le_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_juzg_le_001:1.0.0
+id: US-GEN-GESTION_JUZG_LE-001
+name: Historia genérica para Juzgado de Letras
+
+## us_gen_gestion_media_c_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_media_c_001:1.0.0
+id: US-GEN-GESTION_MEDIA_C-001
+name: Historia genérica para Medio de Comunicación (Prensa)
+
+## us_gen_gestion_medio_c_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_medio_c_001:1.0.0
+id: US-GEN-GESTION_MEDIO_C-001
+name: Historia genérica para Medio de Comunicación (Digital/Social)
+
+## us_gen_gestion_mora_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_mora_001:1.0.0
+id: US-GEN-GESTION_MORA-001
+name: Historia genérica para Mora Watcher (Monitor Plazos)
+
+## us_gen_gestion_muni_en_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_muni_en_001:1.0.0
+id: US-GEN-GESTION_MUNI_EN-001
+name: Historia genérica para Encargado Unidad de Municipalidades y Conservaciones
+
+## us_gen_gestion_notario_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_notario_001:1.0.0
+id: US-GEN-GESTION_NOTARIO-001
+name: Historia genérica para Notario
+
+## us_gen_gestion_ong_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_ong_001:1.0.0
+id: US-GEN-GESTION_ONG-001
+name: Historia genérica para ONG / Fundación
+
+## us_gen_gestion_org_ben_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_org_ben_001:1.0.0
+id: US-GEN-GESTION_ORG_BEN-001
+name: Historia genérica para Organización Beneficiaria
+
+## us_gen_gestion_org_pos_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_org_pos_001:1.0.0
+id: US-GEN-GESTION_ORG_POS-001
+name: Historia genérica para Organización Postulante (8%)
+
+## us_gen_gestion_pmg_td_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_pmg_td_001:1.0.0
+id: US-GEN-GESTION_PMG_TD-001
+name: Historia genérica para Referente Transformación Digital PMG
+
+## us_gen_gestion_prensa__001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_prensa__001:1.0.0
+id: US-GEN-GESTION_PRENSA_-001
+name: Historia genérica para Prensa Regional
+
+## us_gen_gestion_pres_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_pres_001:1.0.0
+id: US-GEN-GESTION_PRES-001
+name: Historia genérica para Presidente Subcomité IA
+
+## us_gen_gestion_profesi_002.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_profesi_002:1.0.0
+id: US-GEN-GESTION_PROFESI-002
+name: Historia genérica para Profesional de Área
+
+## us_gen_gestion_propir_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_propir_001:1.0.0
+id: US-GEN-GESTION_PROPIR-001
+name: Historia genérica para Coordinador Mapa PROPIR
+
+## us_gen_gestion_rez_enc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_rez_enc_001:1.0.0
+id: US-GEN-GESTION_REZ_ENC-001
+name: Historia genérica para Encargado Zonas de Rezago
+
+## us_gen_gestion_salud_s_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_salud_s_001:1.0.0
+id: US-GEN-GESTION_SALUD_S-001
+name: Historia genérica para Director Servicio de Salud
+
+## us_gen_gestion_secpla__001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_secpla__001:1.0.0
+id: US-GEN-GESTION_SECPLA_-001
+name: Historia genérica para SECPLA San Carlos
+
+## us_gen_gestion_secpla__002.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_secpla__002:1.0.0
+id: US-GEN-GESTION_SECPLA_-002
+name: Historia genérica para SECPLA Chillán
+
+## us_gen_gestion_sence_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_sence_001:1.0.0
+id: US-GEN-GESTION_SENCE-001
+name: Historia genérica para Director Regional SENCE
+
+## us_gen_gestion_serco_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_serco_001:1.0.0
+id: US-GEN-GESTION_SERCO-001
+name: Historia genérica para SERCOTEC
+
+## us_gen_gestion_seremi__001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_seremi__001:1.0.0
+id: US-GEN-GESTION_SEREMI_-001
+name: Historia genérica para SEREMI Hacienda
+
+## us_gen_gestion_seremi__002.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_seremi__002:1.0.0
+id: US-GEN-GESTION_SEREMI_-002
+name: Historia genérica para SEREMI MINVU
+
+## us_gen_gestion_sernam_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_sernam_001:1.0.0
+id: US-GEN-GESTION_SERNAM-001
+name: Historia genérica para Director Regional SernamEG
+
+## us_gen_gestion_sii_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_sii_001:1.0.0
+id: US-GEN-GESTION_SII-001
+name: Historia genérica para Director Regional SII
+
+## us_gen_gestion_sindic_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_sindic_001:1.0.0
+id: US-GEN-GESTION_SINDIC-001
+name: Historia genérica para Central Sindical
+
+## us_gen_gestion_sna_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_sna_001:1.0.0
+id: US-GEN-GESTION_SNA-001
+name: Historia genérica para SNA / SOFO
+
+## us_gen_gestion_subdere_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_subdere_001:1.0.0
+id: US-GEN-GESTION_SUBDERE-001
+name: Historia genérica para Analista División Gobiernos (SUBDERE)
+
+## us_gen_gestion_subtel_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_subtel_001:1.0.0
+id: US-GEN-GESTION_SUBTEL-001
+name: Historia genérica para SUBTEL / MTT
+
+## us_gen_gestion_tc_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_tc_001:1.0.0
+id: US-GEN-GESTION_TC-001
+name: Historia genérica para Tribunal Constitucional
+
+## us_gen_gestion_transp__001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_transp__001:1.0.0
+id: US-GEN-GESTION_TRANSP_-001
+name: Historia genérica para Referente Transparencia (por Ítem)
+
+## us_gen_gestion_ucr_coo_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_ucr_coo_001:1.0.0
+id: US-GEN-GESTION_UCR_COO-001
+name: Historia genérica para Coordinador UCR
+
+## us_gen_gestion_unidad__001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_unidad__001:1.0.0
+id: US-GEN-GESTION_UNIDAD_-001
+name: Historia genérica para Unidad Coordinación Regional
+
+## us_gen_gestion_univ_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_univ_001:1.0.0
+id: US-GEN-GESTION_UNIV-001
+name: Historia genérica para Universidad (Investigador)
+
+## us_gen_gestion_univers_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_univers_001:1.0.0
+id: US-GEN-GESTION_UNIVERS-001
+name: Historia genérica para Universidad Regional
+
+## us_gen_gestion_utm_gen_001.yml
+  urn: urn:goreos:atom:story:us_gen_gestion_utm_gen_001:1.0.0
+id: US-GEN-GESTION_UTM_GEN-001
+name: Historia genérica para UTM Genérica
+
+## us_gen_jur_ases_div_001.yml
+  urn: urn:goreos:atom:story:us_gen_jur_ases_div_001:1.0.0
+id: US-GEN-JUR_ASES_DIV-001
+name: Historia genérica para Abogado Asesor de División
+
+## us_gen_norm_abogado_ge_001.yml
+  urn: urn:goreos:atom:story:us_gen_norm_abogado_ge_001:1.0.0
+id: US-GEN-NORM_ABOGADO_GE-001
+name: Historia genérica para Abogado General
+
+## us_gen_norm_audit_002.yml
+  urn: urn:goreos:atom:story:us_gen_norm_audit_002:1.0.0
+id: US-GEN-NORM_AUDIT-002
+name: Historia genérica para Fiscalizador Bot
+
+## us_gen_norm_mp_001.yml
+  urn: urn:goreos:atom:story:us_gen_norm_mp_001:1.0.0
+id: US-GEN-NORM_MP-001
+name: Historia genérica para Ministerio Público (Fiscalía)
+
+## us_gen_ops_admin_sys_002.yml
+  urn: urn:goreos:atom:story:us_gen_ops_admin_sys_002:1.0.0
+id: US-GEN-OPS_ADMIN_SYS-002
+name: Historia genérica para Administrador de Sistema
+
+## us_gen_ops_encargado_c_001.yml
+  urn: urn:goreos:atom:story:us_gen_ops_encargado_c_001:1.0.0
+id: US-GEN-OPS_ENCARGADO_C-001
+name: Historia genérica para Encargado Continuidad Operacional
+
+## us_gen_seg_ases_001.yml
+  urn: urn:goreos:atom:story:us_gen_seg_ases_001:1.0.0
+id: US-GEN-SEG_ASES-001
+name: Historia genérica para Asesor Técnico Seguridad
+
+## us_gen_terr_terr_001.yml
+  urn: urn:goreos:atom:story:us_gen_terr_terr_001:1.0.0
+id: US-GEN-TERR_TERR-001
+name: Historia genérica para Analista Equidad Territorial
+
+## us_gen_terr_terr_soc_001.yml
+  urn: urn:goreos:atom:story:us_gen_terr_terr_soc_001:1.0.0
+id: US-GEN-TERR_TERR_SOC-001
+name: Historia genérica para Sociólogo Territorial
+
+## us_geo_001_01.yml
+  urn: urn:goreos:atom:story:us_geo_001_01:1.0.0
+id: US-GEO-001-01
+name: Administrador de capas GIS con metadatos y permisos
+
+## us_geo_002_01.yml
+  urn: urn:goreos:atom:story:us_geo_002_01:1.0.0
+id: US-GEO-002-01
+name: Herramientas para estandarizar formatos (Shapefile, GeoJSON)
+
+## us_gest_coord_002.yml
+  urn: urn:goreos:atom:story:us_gest_coord_002:1.0.0
+id: US-GEST-COORD-002
+name: Coordinar acciones con Delegado Presidencial Regional
+
+## us_gest_hg_002.yml
+  urn: urn:goreos:atom:story:us_gest_hg_002:1.0.0
+id: US-GEST-HG-002
+name: Umbrales de alerta para dimensiones de H_gore
+
+## us_gest_hg_003.yml
+  urn: urn:goreos:atom:story:us_gest_hg_003:1.0.0
+id: US-GEST-HG-003
+name: Hacer drill-down en dimensiones de H_gore de mi responsabilidad
+
+## us_gest_mc_001.yml
+  urn: urn:goreos:atom:story:us_gest_mc_001:1.0.0
+id: US-GEST-MC-001
+name: Registro de oportunidad de mejora en procesos o servicios
+
+## us_gest_mc_002.yml
+  urn: urn:goreos:atom:story:us_gest_mc_002:1.0.0
+id: US-GEST-MC-002
+name: Ciclo PDCA para iniciativas de mejora priorizadas
+
+## us_gest_pb_001.yml
+  urn: urn:goreos:atom:story:us_gest_pb_001:1.0.0
+id: US-GEST-PB-001
+name: Playbook P01_Low_H_gore_Recovery cuando H_gore cae < 60
+
+## us_gest_pb_002.yml
+  urn: urn:goreos:atom:story:us_gest_pb_002:1.0.0
+id: US-GEST-PB-002
+name: Playbook P14_Client_Expectation_Management ante insatisfacción stakeholders
+
+## us_gest_pb_003.yml
+  urn: urn:goreos:atom:story:us_gest_pb_003:1.0.0
+id: US-GEST-PB-003
+name: Registrar resultados de ejecución de playbooks
+
+## us_gest_per_002.yml
+  urn: urn:goreos:atom:story:us_gest_per_002:1.0.0
+id: US-GEST-PER-002
+name: Proceso de inducción de nuevos funcionarios
+
+## us_gest_proc_001.yml
+  urn: urn:goreos:atom:story:us_gest_proc_001:1.0.0
+id: US-GEST-PROC-001
+name: Expedientes digitales con trazabilidad completa
+
+## us_gest_scg_001.yml
+  urn: urn:goreos:atom:story:us_gest_scg_001:1.0.0
+id: US-GEST-SCG-001
+name: Definir Plan Operativo Anual (POA) divisional alineado con objetivos ERD
+
+## us_gest_scg_003.yml
+  urn: urn:goreos:atom:story:us_gest_scg_003:1.0.0
+id: US-GEST-SCG-003
+name: Reporte mensual de gestión institucional
+
+## us_gest_uci_002.yml
+  urn: urn:goreos:atom:story:us_gest_uci_002:1.0.0
+id: US-GEST-UCI-002
+name: Efectividad de controles internos
+
+## us_gfom_001_01.yml
+  urn: urn:goreos:atom:story:us_gfom_001_01:1.0.0
+id: US-GFOM-001-01
+name: Estadísticas de formalización de empresas por comuna
+
+## us_glosa7_001_01.yml
+  urn: urn:goreos:atom:story:us_glosa7_001_01:1.0.0
+id: US-GLOSA7-001-01
+name: Formatos estandarizados para proyectos de cámaras y luminarias
+
+## us_gob_001_02.yml
+  urn: urn:goreos:atom:story:us_gob_001_02:1.0.0
+id: US-GOB-001-02
+name: Alertas automáticas de desviaciones críticas en proyectos estratégicos
+
+## us_gob_002_01.yml
+  urn: urn:goreos:atom:story:us_gob_002_01:1.0.0
+id: US-GOB-002-01
+name: Registro centralizado de convenios con SEREMIs y ministerios
+
+## us_gob_core_004.yml
+  urn: urn:goreos:atom:story:us_gob_core_004:1.0.0
+id: US-GOB-CORE-004
+name: Ver mapa de inversiones (geolocalización + filtros)
+
+## us_gob_core_006.yml
+  urn: urn:goreos:atom:story:us_gob_core_006:1.0.0
+id: US-GOB-CORE-006
+name: Ver historial de votaciones (resultado y acuerdo)
+
+## us_gob_core_007.yml
+  urn: urn:goreos:atom:story:us_gob_core_007:1.0.0
+id: US-GOB-CORE-007
+name: Ver cumplimiento de acuerdos (estado/evidencia)
+
+## us_gob_core_010.yml
+  urn: urn:goreos:atom:story:us_gob_core_010:1.0.0
+id: US-GOB-CORE-010
+name: Acceder a actas de sesiones anteriores
+
+## us_gob_core_011.yml
+  urn: urn:goreos:atom:story:us_gob_core_011:1.0.0
+id: US-GOB-CORE-011
+name: Habilitar simulación de quórum antes de la votación real
+
+## us_gob_del_001.yml
+  urn: urn:goreos:atom:story:us_gob_del_001:1.0.0
+id: US-GOB-DEL-001
+name: Convocar a SEREMIS para alineamiento de políticas
+
+## us_gob_del_003.yml
+  urn: urn:goreos:atom:story:us_gob_del_003:1.0.0
+id: US-GOB-DEL-003
+name: Resolver recursos jerárquicos administrativos
+
+## us_gob_del_004.yml
+  urn: urn:goreos:atom:story:us_gob_del_004:1.0.0
+id: US-GOB-DEL-004
+name: Coordinar gestión del orden público regional
+
+## us_gob_desc_002.yml
+  urn: urn:goreos:atom:story:us_gob_desc_002:1.0.0
+id: US-GOB-DESC-002
+name: Representar a la región ante Comité Interministerial
+
+## us_gob_desc_005.yml
+  urn: urn:goreos:atom:story:us_gob_desc_005:1.0.0
+id: US-GOB-DESC-005
+name: Elaborar plan de instalación de competencia transferida
+
+## us_gob_desc_006.yml
+  urn: urn:goreos:atom:story:us_gob_desc_006:1.0.0
+id: US-GOB-DESC-006
+name: Emitir informe final de proceso de instalación
+
+## us_gob_desc_007.yml
+  urn: urn:goreos:atom:story:us_gob_desc_007:1.0.0
+id: US-GOB-DESC-007
+name: Suficiencia de recursos financieros traspasados
+
+## us_gob_gab_001.yml
+  urn: urn:goreos:atom:story:us_gob_gab_001:1.0.0
+id: US-GOB-GAB-001
+name: Agenda GR (reuniones, giras, audiencias)
+
+## us_gob_gab_003.yml
+  urn: urn:goreos:atom:story:us_gob_gab_003:1.0.0
+id: US-GOB-GAB-003
+name: Crisis comunicacionales y políticas
+
+## us_gob_gab_004.yml
+  urn: urn:goreos:atom:story:us_gob_gab_004:1.0.0
+id: US-GOB-GAB-004
+name: Coordinar articulación política con actores regionales
+
+## us_gob_gab_005.yml
+  urn: urn:goreos:atom:story:us_gob_gab_005:1.0.0
+id: US-GOB-GAB-005
+name: Preparar minutas y briefs para autoridad
+
+## us_gob_gab_007.yml
+  urn: urn:goreos:atom:story:us_gob_gab_007:1.0.0
+id: US-GOB-GAB-007
+name: Acuerdos y misiones con regiones extranjeras
+
+## us_gob_gr_001.yml
+  urn: urn:goreos:atom:story:us_gob_gr_001:1.0.0
+id: US-GOB-GR-001
+name: Formular políticas de desarrollo regional (ERD/PROT/ZUBC)
+
+## us_gob_gr_004.yml
+  urn: urn:goreos:atom:story:us_gob_gr_004:1.0.0
+id: US-GOB-GR-004
+name: Presidir sesiones CORE (voto dirimente, tabla)
+
+## us_gob_gr_005.yml
+  urn: urn:goreos:atom:story:us_gob_gr_005:1.0.0
+id: US-GOB-GR-005
+name: Coordinar respuesta a emergencias (Comité Gestión Riesgos)
+
+## us_gob_gr_009.yml
+  urn: urn:goreos:atom:story:us_gob_gr_009:1.0.0
+id: US-GOB-GR-009
+name: Nombramiento y remoción de directivos regionales
+
+## us_gob_gr_010.yml
+  urn: urn:goreos:atom:story:us_gob_gr_010:1.0.0
+id: US-GOB-GR-010
+name: Representar al GORE ante autoridades nacionales e internacionales
+
+## us_gob_gr_013.yml
+  urn: urn:goreos:atom:story:us_gob_gr_013:1.0.0
+id: US-GOB-GR-013
+name: Presidir Comité Regional de Infraestructura y Ordenamiento
+
+## us_gob_gr_014.yml
+  urn: urn:goreos:atom:story:us_gob_gr_014:1.0.0
+id: US-GOB-GR-014
+name: Impulsar convenios de programación con ministerios
+
+## us_gob_grd_001.yml
+  urn: urn:goreos:atom:story:us_gob_grd_001:1.0.0
+id: US-GOB-GRD-001
+name: Sancionar el Plan Regional de Reducción del Riesgo
+
+## us_gob_grd_002.yml
+  urn: urn:goreos:atom:story:us_gob_grd_002:1.0.0
+id: US-GOB-GRD-002
+name: Asegurar coherencia entre mapas de riesgo y ordenamiento territorial
+
+## us_gob_grd_003.yml
+  urn: urn:goreos:atom:story:us_gob_grd_003:1.0.0
+id: US-GOB-GRD-003
+name: Elaborar Plan Regional de Emergencia
+
+## us_gob_grd_004.yml
+  urn: urn:goreos:atom:story:us_gob_grd_004:1.0.0
+id: US-GOB-GRD-004
+name: Presidir sesiones del Comité de Mitigación
+
+## us_gob_lob_001.yml
+  urn: urn:goreos:atom:story:us_gob_lob_001:1.0.0
+id: US-GOB-LOB-001
+name: Audiencias y viajes integrados con Infolobby
+
+## us_gob_lob_002.yml
+  urn: urn:goreos:atom:story:us_gob_lob_002:1.0.0
+id: US-GOB-LOB-002
+name: Alertas para actualizar mi Declaración de Intereses y Patrimonio
+
+## us_gob_op_002.yml
+  urn: urn:goreos:atom:story:us_gob_op_002:1.0.0
+id: US-GOB-OP-002
+name: Derivar antecedentes a DIPIR mediante ruta automática
+
+## us_gob_op_005.yml
+  urn: urn:goreos:atom:story:us_gob_op_005:1.0.0
+id: US-GOB-OP-005
+name: La versión OCR para extraer entidades clave y pre-clasificar
+
+## us_gob_sec_001.yml
+  urn: urn:goreos:atom:story:us_gob_sec_001:1.0.0
+id: US-GOB-SEC-001
+name: Coordinar agenda con gabinetes sectoriales (Seremías)
+
+## us_gobprov_001_01.yml
+  urn: urn:goreos:atom:story:us_gobprov_001_01:1.0.0
+id: US-GOBPROV-001-01
+name: Reportes de inversión GORE en la provincia
+
+## us_gprov_001_01.yml
+  urn: urn:goreos:atom:story:us_gprov_001_01:1.0.0
+id: US-GPROV-001-01
+name: Acceso remoto a todos los sistemas GORE
+
+## us_grd_001_01.yml
+  urn: urn:goreos:atom:story:us_grd_001_01:1.0.0
+id: US-GRD-001-01
+name: Protocolos de respuesta digitales activables con un clic
+
+## us_hon_001_01.yml
+  urn: urn:goreos:atom:story:us_hon_001_01:1.0.0
+id: US-HON-001-01
+name: Módulo de gestión de honorarios con informes de cumplimiento
+
+## us_hon_002_01.yml
+  urn: urn:goreos:atom:story:us_hon_002_01:1.0.0
+id: US-HON-002-01
+name: Subir mi informe de actividades y boleta digitalmente
+
+## us_icon_001_01.yml
+  urn: urn:goreos:atom:story:us_icon_001_01:1.0.0
+id: US-ICON-001-01
+name: Herramientas para curar y versionar prompts y contextos
+
+## us_ide_001_01.yml
+  urn: urn:goreos:atom:story:us_ide_001_01:1.0.0
+id: US-IDE-001-01
+name: Catálogo de metadatos geográficos estandarizado
+
+## us_if_001_02.yml
+  urn: urn:goreos:atom:story:us_if_001_02:1.0.0
+id: US-IF-001-02
+name: Informes de fiscalización con plantillas estándar
+
+## us_indap_001_01.yml
+  urn: urn:goreos:atom:story:us_indap_001_01:1.0.0
+id: US-INDAP-001-01
+name: Información de proyectos agrícolas GORE
+
+## us_inter_001_01.yml
+  urn: urn:goreos:atom:story:us_inter_001_01:1.0.0
+id: US-INTER-001-01
+name: Catálogo de APIs y servicios web disponibles
+
+## us_intfin_001_01.yml
+  urn: urn:goreos:atom:story:us_intfin_001_01:1.0.0
+id: US-INTFIN-001-01
+name: Acceso total de auditoría al ERP financiero
+
+## us_intfis_001_01.yml
+  urn: urn:goreos:atom:story:us_intfis_001_01:1.0.0
+id: US-INTFIS-001-01
+name: Expedientes de sumarios administrativos digitalizados
+
+## us_inv_001_01.yml
+  urn: urn:goreos:atom:story:us_inv_001_01:1.0.0
+id: US-INV-001-01
+name: Módulo de control de activos con ubicación y responsable
+
+## us_inv_dep_001_01.yml
+  urn: urn:goreos:atom:story:us_inv_dep_001_01:1.0.0
+id: US-INV-DEP-001-01
+name: Priorizar proyectos en el anteproyecto regional de inversiones (ARI)
+
+## us_iplat_001_01.yml
+  urn: urn:goreos:atom:story:us_iplat_001_01:1.0.0
+id: US-IPLAT-001-01
+name: Catálogo de servicios autogestionado
+
+## us_isan_001_01.yml
+  urn: urn:goreos:atom:story:us_isan_001_01:1.0.0
+id: US-ISAN-001-01
+name: Evaluación Técnica de Proyectos Sanitarios (APR)
+
+## us_iseg_001_01.yml
+  urn: urn:goreos:atom:story:us_iseg_001_01:1.0.0
+id: US-ISEG-001-01
+name: Escaneo automático de vulnerabilidades en el código
+
+## us_itmuni_001_01.yml
+  urn: urn:goreos:atom:story:us_itmuni_001_01:1.0.0
+id: US-ITMUNI-001-01
+name: Credenciales de API seguras
+
+## us_ito_001_01.yml
+  urn: urn:goreos:atom:story:us_ito_001_01:1.0.0
+id: US-ITO-001-01
+name: Bitácora de Obra Digital Offline
+
+## us_ito_001_02.yml
+  urn: urn:goreos:atom:story:us_ito_001_02:1.0.0
+id: US-ITO-001-02
+name: Verificación Rigurosa de Hitos Contractuales
+
+## us_ito_002_01.yml
+  urn: urn:goreos:atom:story:us_ito_002_01:1.0.0
+id: US-ITO-002-01
+name: Certificación de Avances mediante Cubicaciones
+
+## us_itom_001_01.yml
+  urn: urn:goreos:atom:story:us_itom_001_01:1.0.0
+id: US-ITOM-001-01
+name: Portal de Carga para Inspectores Municipales
+
+## us_itp_001_01.yml
+  urn: urn:goreos:atom:story:us_itp_001_01:1.0.0
+id: US-ITP-001-01
+name: Supervisión Normativa de Programas (ITP)
+
+## us_ivial_001_01.yml
+  urn: urn:goreos:atom:story:us_ivial_001_01:1.0.0
+id: US-IVIAL-001-01
+name: Estándares Técnicos para Infraestructura Vial
+
+## us_jaud_001_01.yml
+  urn: urn:goreos:atom:story:us_jaud_001_01:1.0.0
+id: US-JAUD-001-01
+name: Planificación Estratégica de Auditoría Interna
+
+## us_jcal_001_01.yml
+  urn: urn:goreos:atom:story:us_jcal_001_01:1.0.0
+id: US-JCAL-001-01
+name: Evaluación Objetiva del Desempeño (Junta Calificadora)
+
+## us_jcont_001_01.yml
+  urn: urn:goreos:atom:story:us_jcont_001_01:1.0.0
+id: US-JCONT-001-01
+name: Cierre Contable Mensual Automatizado
+
+## us_jd_ana_001_01.yml
+  urn: urn:goreos:atom:story:us_jd_ana_001_01:1.0.0
+id: US-JD-ANA-001-01
+name: Análisis de Ejecución Presupuestaria de División
+
+## us_jefe_rrhh_001_01.yml
+  urn: urn:goreos:atom:story:us_jefe_rrhh_001_01:1.0.0
+id: US-JEFE-RRHH-001-01
+name: Expediente Digital Único del Funcionario
+
+## us_jer_001_01.yml
+  urn: urn:goreos:atom:story:us_jer_001_01:1.0.0
+id: US-JER-001-01
+name: Control Jerárquico y Trazabilidad de Tareas
+
+## us_jest_001_01.yml
+  urn: urn:goreos:atom:story:us_jest_001_01:1.0.0
+id: US-JEST-001-01
+name: Repositorio Inteligente de Estudios Regionales
+
+## us_jpre_001_01.yml
+  urn: urn:goreos:atom:story:us_jpre_001_01:1.0.0
+id: US-JPRE-001-01
+name: Control de Disponibilidad Presupuestaria (CDP)
+
+## us_jprog_001_01.yml
+  urn: urn:goreos:atom:story:us_jprog_001_01:1.0.0
+id: US-JPROG-001-01
+name: Planificación Plurianual de Inversiones (ARI/PROPIR)
+
+## us_jterr_001_01.yml
+  urn: urn:goreos:atom:story:us_jterr_001_01:1.0.0
+id: US-JTERR-001-01
+name: Análisis de Equidad de Inversión Territorial
+
+## us_jtes_001_01.yml
+  urn: urn:goreos:atom:story:us_jtes_001_01:1.0.0
+id: US-JTES-001-01
+name: Gestión de Tesorería y Flujo de Caja (Cash Flow)
+
+## us_jti_001_01.yml
+  urn: urn:goreos:atom:story:us_jti_001_01:1.0.0
+id: US-JTI-001-01
+name: Gestión Automatizada de Activos TI
+
+## us_juez_001_01.yml
+  urn: urn:goreos:atom:story:us_juez_001_01:1.0.0
+id: US-JUEZ-001-01
+name: La remisión de expedientes originales digitalizados y certificados
+
+## us_lobby_001_01.yml
+  urn: urn:goreos:atom:story:us_lobby_001_01:1.0.0
+id: US-LOBBY-001-01
+name: Transparencia y Cumplimiento de Ley de Lobby
+
+## us_mctd_001_01.yml
+  urn: urn:goreos:atom:story:us_mctd_001_01:1.0.0
+id: US-MCTD-001-01
+name: Seguimiento de Acuerdos del Comité de Transformación Digital (CTD)
+
+## us_mds_001_01.yml
+  urn: urn:goreos:atom:story:us_mds_001_01:1.0.0
+id: US-MDS-001-01
+name: Interoperabilidad con Sistema de Inversiones (BIP/MDS)
+
+## us_mecif_001_01.yml
+  urn: urn:goreos:atom:story:us_mecif_001_01:1.0.0
+id: US-MECIF-001-01
+name: Validación de Representatividad en Organizaciones Sociales
+
+## us_mesa_001_01.yml
+  urn: urn:goreos:atom:story:us_mesa_001_01:1.0.0
+id: US-MESA-001-01
+name: Base de Conocimiento para Soporte TI
+
+## us_mesa_002_01.yml
+  urn: urn:goreos:atom:story:us_mesa_002_01:1.0.0
+id: US-MESA-002-01
+name: Gestión Eficiente de Cola de Tickets
+
+## us_mig_001.yml
+  urn: urn:goreos:atom:story:us_mig_001:1.0.0
+id: US-MIG-001
+name: Inyección de Datos Legacy
+
+## us_mig_002.yml
+  urn: urn:goreos:atom:story:us_mig_002:1.0.0
+id: US-MIG-002
+name: Configuración de Reglas de Mapeo Semántico
+
+## us_mig_003.yml
+  urn: urn:goreos:atom:story:us_mig_003:1.0.0
+id: US-MIG-003
+name: Consolidación Semántica de Data Legacy
+
+## us_mig_prom_001.yml
+  urn: urn:goreos:atom:story:us_mig_prom_001:1.0.0
+id: US-MIG-PROM-001
+name: Promoción de Datos a Producción
+
+## us_mon_001_01.yml
+  urn: urn:goreos:atom:story:us_mon_001_01:1.0.0
+id: US-MON-001-01
+name: Wallboard de Monitoreo de Servicios
+
+## us_msia_001_01.yml
+  urn: urn:goreos:atom:story:us_msia_001_01:1.0.0
+id: US-MSIA-001-01
+name: Evaluación Ética de Proyectos de IA
+
+## us_ndev_001_01.yml
+  urn: urn:goreos:atom:story:us_ndev_001_01:1.0.0
+id: US-NDEV-001-01
+name: Portal de Onboarding para Desarrolladores
+
+## us_noc_001_01.yml
+  urn: urn:goreos:atom:story:us_noc_001_01:1.0.0
+id: US-NOC-001-01
+name: Correlación de Eventos de Ciberseguridad
+
+## us_norm_acto_002.yml
+  urn: urn:goreos:atom:story:us_norm_acto_002:1.0.0
+id: US-NORM-ACTO-002
+name: Revisión y Visación Jurídica de Convenios
+
+## us_norm_acto_003.yml
+  urn: urn:goreos:atom:story:us_norm_acto_003:1.0.0
+id: US-NORM-ACTO-003
+name: Gestión de Toma de Razón ante CGR
+
+## us_norm_acto_004.yml
+  urn: urn:goreos:atom:story:us_norm_acto_004:1.0.0
+id: US-NORM-ACTO-004
+name: Defensa Judicial Regional
+
+## us_norm_acto_005.yml
+  urn: urn:goreos:atom:story:us_norm_acto_005:1.0.0
+id: US-NORM-ACTO-005
+name: Disciplina Administrativa (Sumarios)
+
+## us_norm_acto_006.yml
+  urn: urn:goreos:atom:story:us_norm_acto_006:1.0.0
+id: US-NORM-ACTO-006
+name: Clasificación de Actos Administrativos (Afecta/Exenta)
+
+## us_norm_acto_008.yml
+  urn: urn:goreos:atom:story:us_norm_acto_008:1.0.0
+id: US-NORM-ACTO-008
+name: Observaciones Jurídicas de Trámites
+
+## us_norm_acto_011.yml
+  urn: urn:goreos:atom:story:us_norm_acto_011:1.0.0
+id: US-NORM-ACTO-011
+name: Alerta de Actos Estancados en Firma
+
+## us_norm_acto_012.yml
+  urn: urn:goreos:atom:story:us_norm_acto_012:1.0.0
+id: US-NORM-ACTO-012
+name: Certificación de Copias Auténticas Digitales
+
+## us_norm_att_001.yml
+  urn: urn:goreos:atom:story:us_norm_att_001:1.0.0
+id: US-NORM-ATT-001
+name: Validación Técnica de Formatos Documentales
+
+## us_norm_cgr_001.yml
+  urn: urn:goreos:atom:story:us_norm_cgr_001:1.0.0
+id: US-NORM-CGR-001
+name: Interacción con SIAPER/SISTRADOC (Rol CGR)
+
+## us_norm_cgr_003.yml
+  urn: urn:goreos:atom:story:us_norm_cgr_003:1.0.0
+id: US-NORM-CGR-003
+name: Fiscalización de Conflictos de Interés (DIP)
+
+## us_norm_cris_001.yml
+  urn: urn:goreos:atom:story:us_norm_cris_001:1.0.0
+id: US-NORM-CRIS-001
+name: Gestión de Crisis por Alta Demanda de Información
+
+## us_norm_ctrl_001.yml
+  urn: urn:goreos:atom:story:us_norm_ctrl_001:1.0.0
+id: US-NORM-CTRL-001
+name: Notificación de Vínculos de Postulantes
+
+## us_norm_ctrl_004.yml
+  urn: urn:goreos:atom:story:us_norm_ctrl_004:1.0.0
+id: US-NORM-CTRL-004
+name: Comunicación de Hallazgos Críticos
+
+## us_norm_ctrl_005.yml
+  urn: urn:goreos:atom:story:us_norm_ctrl_005:1.0.0
+id: US-NORM-CTRL-005
+name: Gestión Reservada de Expedientes Disciplinarios
+
+## us_norm_dip_001.yml
+  urn: urn:goreos:atom:story:us_norm_dip_001:1.0.0
+id: US-NORM-DIP-001
+name: Control de Plazos de Declaración de Intereses (DIP)
+
+## us_norm_exp_001.yml
+  urn: urn:goreos:atom:story:us_norm_exp_001:1.0.0
+id: US-NORM-EXP-001
+name: Gestión Semántica del Expediente Electrónico
+
+## us_norm_exp_003.yml
+  urn: urn:goreos:atom:story:us_norm_exp_003:1.0.0
+id: US-NORM-EXP-003
+name: Auditoría de Acciones sobre el Expediente (DS10)
+
+## us_norm_lobby_001.yml
+  urn: urn:goreos:atom:story:us_norm_lobby_001:1.0.0
+id: US-NORM-LOBBY-001
+name: Control de Registros de Lobby
+
+## us_norm_lobby_002.yml
+  urn: urn:goreos:atom:story:us_norm_lobby_002:1.0.0
+id: US-NORM-LOBBY-002
+name: Gestión de Nómina de Sujetos Pasivos
+
+## us_norm_sim_001.yml
+  urn: urn:goreos:atom:story:us_norm_sim_001:1.0.0
+id: US-NORM-SIM-001
+name: Simulador de Cumplimiento de Glosas Presupuestarias
+
+## us_norm_trans_002.yml
+  urn: urn:goreos:atom:story:us_norm_trans_002:1.0.0
+id: US-NORM-TRANS-002
+name: Gestión Integrada OIRS/SAI
+
+## us_obs_001_01.yml
+  urn: urn:goreos:atom:story:us_obs_001_01:1.0.0
+id: US-OBS-001-01
+name: Ingesta de Series de Datos Regionales
+
+## us_obs_001_02.yml
+  urn: urn:goreos:atom:story:us_obs_001_02:1.0.0
+id: US-OBS-001-02
+name: Generación de Reportes Temáticos Visuales
+
+## us_oirs_001_01.yml
+  urn: urn:goreos:atom:story:us_oirs_001_01:1.0.0
+id: US-OIRS-001-01
+name: Sistema de gestión de solicitudes con trazabilidad completa (OIRS)
+
+## us_oirs_001_02.yml
+  urn: urn:goreos:atom:story:us_oirs_001_02:1.0.0
+id: US-OIRS-001-02
+name: Reportes de satisfacción ciudadana
+
+## us_ong_001_01.yml
+  urn: urn:goreos:atom:story:us_ong_001_01:1.0.0
+id: US-ONG-001-01
+name: Información de fondos concursables y consultas ciudadanas (ONG)
+
+## us_ong_002_01.yml
+  urn: urn:goreos:atom:story:us_ong_002_01:1.0.0
+id: US-ONG-002-01
+name: Postulación Digital a Subvenciones 8% FNDR
+
+## us_op_001_01.yml
+  urn: urn:goreos:atom:story:us_op_001_01:1.0.0
+id: US-OP-001-01
+name: Sistema de carátulas con código de barras y ruta digital
+
+## us_op_001_02.yml
+  urn: urn:goreos:atom:story:us_op_001_02:1.0.0
+id: US-OP-001-02
+name: Número de ingreso correlativo automático
+
+## us_op_002_01.yml
+  urn: urn:goreos:atom:story:us_op_002_01:1.0.0
+id: US-OP-002_01
+name: Módulo de despacho con registro de destinatario y medio de envío
+
+## us_op_cies_001_01.yml
+  urn: urn:goreos:atom:story:us_op_cies_001_01:1.0.0
+id: US-OP-CIES-001-01
+name: Consola de monitoreo con alertas priorizadas (CIES)
+
+## us_ope_001_01.yml
+  urn: urn:goreos:atom:story:us_ope_001_01:1.0.0
+id: US-OPE-001-01
+name: Planificador de tareas con reporte de éxito/fallo
+
+## us_ops_back_001.yml
+  urn: urn:goreos:atom:story:us_ops_back_001:1.0.0
+id: US-OPS-BACK-001
+name: Gestión de Respaldo y Recuperación (DRP)
+
+## us_ops_bak_001.yml
+  urn: urn:goreos:atom:story:us_ops_bak_001:1.0.0
+id: US-OPS-BAK-001
+name: Automatización de Backups de Bases de Datos
+
+## us_ops_bak_002.yml
+  urn: urn:goreos:atom:story:us_ops_bak_002:1.0.0
+id: US-OPS-BAK-002
+name: Restauración Puntual de Datos (PITR)
+
+## us_ops_bak_003.yml
+  urn: urn:goreos:atom:story:us_ops_bak_003:1.0.0
+id: US-OPS-BAK-003
+name: Validación de Integridad de Respaldos (Checksum)
+
+## us_ops_cfg_001.yml
+  urn: urn:goreos:atom:story:us_ops_cfg_001:1.0.0
+id: US-OPS-CFG-001
+name: Gestión de Configuración de Entornos (Environment Variables)
+
+## us_ops_cfg_002.yml
+  urn: urn:goreos:atom:story:us_ops_cfg_002:1.0.0
+id: US-OPS-CFG-002
+name: Gestión de Feature Flags para Lanzamientos Progresivos
+
+## us_ops_cfg_003.yml
+  urn: urn:goreos:atom:story:us_ops_cfg_003:1.0.0
+id: US-OPS-CFG-003
+name: Auditoría de Cambios en la Configuración del Sistema
+
+## us_ops_dat_001.yml
+  urn: urn:goreos:atom:story:us_ops_dat_001:1.0.0
+id: US-OPS-DAT-001
+name: Esquema de Particionamiento de Datos Históricos
+
+## us_ops_dat_002.yml
+  urn: urn:goreos:atom:story:us_ops_dat_002:1.0.0
+id: US-OPS-DAT-002
+name: Enmascaramiento de Datos Sensibles en Ambientes No-Producción (Data Masking)
+
+## us_ops_dat_003.yml
+  urn: urn:goreos:atom:story:us_ops_dat_003:1.0.0
+id: US-OPS-DAT-003
+name: Personalización de Reglas de Validación Masiva
+
+## us_ops_dat_004.yml
+  urn: urn:goreos:atom:story:us_ops_dat_004:1.0.0
+id: US-OPS-DAT-004
+name: Historial y Trazabilidad de Ingestas Masivas
+
+## us_ops_fin_001.yml
+  urn: urn:goreos:atom:story:us_ops_fin_001:1.0.0
+id: US-OPS-FIN-001
+name: Control Proyectado de Costos Cloud (FinOps)
+
+## us_ops_iac_001.yml
+  urn: urn:goreos:atom:story:us_ops_iac_001:1.0.0
+id: US-OPS-IAC-001
+name: Infraestructura como Código (IaC) con Terraform
+
+## us_ops_iam_001.yml
+  urn: urn:goreos:atom:story:us_ops_iam_001:1.0.0
+id: US-OPS-IAM-001
+name: Gestión Centralizada de Usuarios (IAM)
+
+## us_ops_iam_002.yml
+  urn: urn:goreos:atom:story:us_ops_iam_002:1.0.0
+id: US-OPS-IAM-002
+name: Gobernanza de Roles y Permisos (RBAC)
+
+## us_ops_iam_003.yml
+  urn: urn:goreos:atom:story:us_ops_iam_003:1.0.0
+id: US-OPS-IAM-003
+name: Permisos de Mínimo Privilegio (Principle of Least Privilege)
+
+## us_ops_iam_004.yml
+  urn: urn:goreos:atom:story:us_ops_iam_004:1.0.0
+id: US-OPS-IAM-004
+name: Autenticación Federada con ClaveÚnica
+
+## us_ops_iam_005.yml
+  urn: urn:goreos:atom:story:us_ops_iam_005:1.0.0
+id: US-OPS-IAM-005
+name: Autogestión de Identidad (Self-Service)
+
+## us_ops_inc_001.yml
+  urn: urn:goreos:atom:story:us_ops_inc_001:1.0.0
+id: US-OPS-INC-001
+name: Gestión de Incidentes Críticos (SDA)
+
+## us_ops_mig_001.yml
+  urn: urn:goreos:atom:story:us_ops_mig_001:1.0.0
+id: US-OPS-MIG-001
+name: Orquestación del Pipeline de Migración (ETL)
+
+## us_ops_mig_002.yml
+  urn: urn:goreos:atom:story:us_ops_mig_002:1.0.0
+id: US-OPS-MIG-002
+name: Mapeo Semántico Adaptativo para Data Legacy
+
+## us_ops_mig_003.yml
+  urn: urn:goreos:atom:story:us_ops_mig_003:1.0.0
+id: US-OPS-MIG-003
+name: Auditoría de Integridad Post-Migración (Reconciliation)
+
+## us_ops_mon_001.yml
+  urn: urn:goreos:atom:story:us_ops_mon_001:1.0.0
+id: US-OPS-MON-001
+name: Configuración de Alertas Inteligentes (SRE)
+
+## us_ops_mon_002.yml
+  urn: urn:goreos:atom:story:us_ops_mon_002:1.0.0
+id: US-OPS-MON-002
+name: Dashboards de Salud del Supermodelo
+
+## us_ops_mon_003.yml
+  urn: urn:goreos:atom:story:us_ops_mon_003:1.0.0
+id: US-OPS-MON-003
+name: Correlación Unificada de Logs y Métricas
+
+## us_ops_mon_004.yml
+  urn: urn:goreos:atom:story:us_ops_mon_004:1.0.0
+id: US-OPS-MON-004
+name: Monitor de Cumplimiento de SLAs y SLOs
+
+## us_ops_perf_001.yml
+  urn: urn:goreos:atom:story:us_ops_perf_001:1.0.0
+id: US-OPS-PERF-001
+name: DASHBOARD DE EFICIENCIA OPERACIONAL (O-SCORE)
+
+## us_ops_sec_001.yml
+  urn: urn:goreos:atom:story:us_ops_sec_001:1.0.0
+id: US-OPS-SEC-001
+name: Revisar logs de acceso y acciones críticas
+
+## us_ops_sre_001.yml
+  urn: urn:goreos:atom:story:us_ops_sre_001:1.0.0
+id: US-OPS-SRE-001
+name: Auto-escalamiento de Infraestructura KODA
+
+## us_ops_sup_001.yml
+  urn: urn:goreos:atom:story:us_ops_sup_001:1.0.0
+id: US-OPS-SUP-001
+name: Formulario Guiado de Incidentes CIES
+
+## us_ops_sup_002.yml
+  urn: urn:goreos:atom:story:us_ops_sup_002:1.0.0
+id: US-OPS-SUP-002
+name: Clasificación Inteligente de Tickets de Soporte
+
+## us_ops_sup_003.yml
+  urn: urn:goreos:atom:story:us_ops_sup_003:1.0.0
+id: US-OPS-SUP-003
+name: Base de Conocimiento de Autoservicio
+
+## us_ops_sup_004.yml
+  urn: urn:goreos:atom:story:us_ops_sup_004:1.0.0
+id: US-OPS-SUP-004
+name: Escalamiento Técnico Nivel 3 (SDA)
+
+## us_part_001_01.yml
+  urn: urn:goreos:atom:story:us_part_001_01:1.0.0
+id: US-PART-001-01
+name: Plataforma de Votación Digital Ciudadana
+
+## us_pat_did_001_01.yml
+  urn: urn:goreos:atom:story:us_pat_did_001_01:1.0.0
+id: US-PAT-DID-001-01
+name: Módulo de patrocinio con checklist de requisitos
+
+## us_pat_dif_001_01.yml
+  urn: urn:goreos:atom:story:us_pat_dif_001_01:1.0.0
+id: US-PAT-DIF-001-01
+name: Módulo de patrocinio integrado con BIP
+
+## us_pat_dit_001_01.yml
+  urn: urn:goreos:atom:story:us_pat_dit_001_01:1.0.0
+id: US-PAT-DIT-001-01
+name: Validación técnica automática de proyectos de infraestructura
+
+## us_pcseu_001_01.yml
+  urn: urn:goreos:atom:story:us_pcseu_001_01:1.0.0
+id: US-PCSEU-001-01
+name: Actas Automatizadas de Selección de Proyectos
+
+## us_pdi_001_01.yml
+  urn: urn:goreos:atom:story:us_pdi_001_01:1.0.0
+id: US-PDI-001-01
+name: Acceso a cámaras del CIES en investigaciones
+
+## us_per_001_01.yml
+  urn: urn:goreos:atom:story:us_per_001_01:1.0.0
+id: US-PER-001-01
+name: Plantillas de notas de prensa y comunicados
+
+## us_pes_001_01.yml
+  urn: urn:goreos:atom:story:us_pes_001_01:1.0.0
+id: US-PES-001-01
+name: Registro de caletas y organizaciones pesqueras beneficiarias
+
+## us_pever_001_01.yml
+  urn: urn:goreos:atom:story:us_pever_001_01:1.0.0
+id: US-PEVER-001-01
+name: Certificación Estado Verde institucional
+
+## us_plan_urb_001_01.yml
+  urn: urn:goreos:atom:story:us_plan_urb_001_01:1.0.0
+id: US-PLAN-URB-001-01
+name: Visor de instrumentos de planificación territorial (IPT)
+
+## us_pmg_001_01.yml
+  urn: urn:goreos:atom:story:us_pmg_001_01:1.0.0
+id: US-PMG-001-01
+name: Sistema de carga de evidencias PMG descentralizado
+
+## us_po_001_01.yml
+  urn: urn:goreos:atom:story:us_po_001_01:1.0.0
+id: US-PO-001-01
+name: Gestión de user stories y criterios de aceptación
+
+## us_ppert_001_01.yml
+  urn: urn:goreos:atom:story:us_ppert_001_01:1.0.0
+id: US-PPERT-001-01
+name: Visar el acta de pertinencia con firma digital
+
+## us_ppr_001_01.yml
+  urn: urn:goreos:atom:story:us_ppr_001_01:1.0.0
+id: US-PPR-001-01
+name: Módulo de evaluación técnica específico para PPR
+
+## us_preinv_001_01.yml
+  urn: urn:goreos:atom:story:us_preinv_001_01:1.0.0
+id: US-PREINV-001-01
+name: Evaluación de admisibilidad con checklist BIP
+
+## us_pres_core_001_01.yml
+  urn: urn:goreos:atom:story:us_pres_core_001_01:1.0.0
+id: US-PRES-CORE-001-01
+name: Herramientas de gestión de sesiones con votación electrónica
+
+## us_prev_001_01.yml
+  urn: urn:goreos:atom:story:us_prev_001_01:1.0.0
+id: US-PREV-001-01
+name: Módulo de evaluación de riesgos laborales
+
+## us_prev_002_01.yml
+  urn: urn:goreos:atom:story:us_prev_002_01:1.0.0
+id: US-PREV-002-01
+name: Registro de entrega de EPP (Equipos de Protección Personal)
+
+## us_prof_n250_001_01.yml
+  urn: urn:goreos:atom:story:us_prof_n250_001_01:1.0.0
+id: US-PROF-N250-001-01
+name: Acceso al detalle de compromisos de área
+
+## us_prof_rez_001_01.yml
+  urn: urn:goreos:atom:story:us_prof_rez_001_01:1.0.0
+id: US-PROF-REZ-001-01
+name: Acceso a expedientes de proyectos rezagados
+
+## us_qa_001_01.yml
+  urn: urn:goreos:atom:story:us_qa_001_01:1.0.0
+id: US-QA-001-01
+name: Entorno de staging idéntico a producción
+
+## us_rem_001_01.yml
+  urn: urn:goreos:atom:story:us_rem_001_01:1.0.0
+id: US-REM-001-01
+name: Módulo de cálculo de remuneraciones con validaciones
+
+## us_rem_002_01.yml
+  urn: urn:goreos:atom:story:us_rem_002_01:1.0.0
+id: US-REM-002-01
+name: Cálculo automático de bonificaciones y descuentos legales
+
+## us_rend_002_01.yml
+  urn: urn:goreos:atom:story:us_rend_002_01:1.0.0
+id: US-REND-002-01
+name: Workflow de revisión de rendiciones con estados
+
+## us_rez_001_01.yml
+  urn: urn:goreos:atom:story:us_rez_001_01:1.0.0
+id: US-REZ-001-01
+name: Flexibilidad en los criterios de evaluación social (RS) para zonas rezagadas
+
+## us_rgasto_001_01.yml
+  urn: urn:goreos:atom:story:us_rgasto_001_01:1.0.0
+id: US-RGASTO-001-01
+name: Validación automática de clasificadores presupuestarios
+
+## us_rpmg_001_01.yml
+  urn: urn:goreos:atom:story:us_rpmg_001_01:1.0.0
+id: US-RPMG-001-01
+name: Cargar medios de verificación PMG validados
+
+## us_rpsico_001_01.yml
+  urn: urn:goreos:atom:story:us_rpsico_001_01:1.0.0
+id: US-RPSICO-001-01
+name: Encuestas de clima laboral anónimas y digitales
+
+## us_rrhh_001_01.yml
+  urn: urn:goreos:atom:story:us_rrhh_001_01:1.0.0
+id: US-RRHH-001-01
+name: Workflow digital de ingreso de funcionarios con checklist
+
+## us_rrhh_001_02.yml
+  urn: urn:goreos:atom:story:us_rrhh_001_02:1.0.0
+id: US-RRHH-001-02
+name: Alertas de términos de contrata próximos a vencer
+
+## us_rrhh_002_01.yml
+  urn: urn:goreos:atom:story:us_rrhh_002_01:1.0.0
+id: US-RRHH-002-01
+name: Módulo de gestión del PAC (Plan Anual de Capacitación)
+
+## us_rtd_001_01.yml
+  urn: urn:goreos:atom:story:us_rtd_001_01:1.0.0
+id: US-RTD-001-01
+name: Reporte de trámites digitalizados
+
+## us_rtec_001_01.yml
+  urn: urn:goreos:atom:story:us_rtec_001_01:1.0.0
+id: US-RTEC-001-01
+name: Aprobación de hitos técnicos en sistema
+
+## us_sag_001_01.yml
+  urn: urn:goreos:atom:story:us_sag_001_01:1.0.0
+id: US-SAG-001-01
+name: Proyectos agrícolas financiados por GORE (SAG)
+
+## us_sec_ctci_001_01.yml
+  urn: urn:goreos:atom:story:us_sec_ctci_001_01:1.0.0
+id: US-SEC-CTCI-001-01
+name: Gestión de sesiones del Comité CTCI
+
+## us_sec_ctd_001_01.yml
+  urn: urn:goreos:atom:story:us_sec_ctd_001_01:1.0.0
+id: US-SEC-CTD-001-01
+name: Gestión de sesiones del Comité de Transformación Digital (CTD)
+
+## us_seccom_001_01.yml
+  urn: urn:goreos:atom:story:us_seccom_001_01:1.0.0
+id: US-SECCOM-001-01
+name: Acceso a materias asignadas a comisiones CORE
+
+## us_seccore_001_01.yml
+  urn: urn:goreos:atom:story:us_seccore_001_01:1.0.0
+id: US-SECCORE-001-01
+name: Gestión de sesiones CORE (Tabla, Votaciones y Actas)
+
+## us_seccore_001_02.yml
+  urn: urn:goreos:atom:story:us_seccore_001_02:1.0.0
+id: US-SECCORE-001-02
+name: Notificar materias a consejeros con antelación
+
+## us_secdiv_001_01.yml
+  urn: urn:goreos:atom:story:us_secdiv_001_01:1.0.0
+id: US-SECDIV-001-01
+name: Gestión de correspondencia de División
+
+## us_secpla_001_01.yml
+  urn: urn:goreos:atom:story:us_secpla_001_01:1.0.0
+id: US-SECPLA-001-01
+name: Asistente de formulación de proyectos (Alineación ERD)
+
+## us_secpla_001_02.yml
+  urn: urn:goreos:atom:story:us_secpla_001_02:1.0.0
+id: US-SECPLA-001-02
+name: Proyectos similares ejecutados en otras comunas
+
+## us_seg_cies_001.yml
+  urn: urn:goreos:atom:story:us_seg_cies_001:1.0.0
+id: US-SEG-CIES-001
+name: Registro de alertas CIES (Cámaras, Sensores, Llamados)
+
+## us_seg_cies_003.yml
+  urn: urn:goreos:atom:story:us_seg_cies_003:1.0.0
+id: US-SEG-CIES-003
+name: Control manual de cámara PTZ ante incidente
+
+## us_seg_cies_004.yml
+  urn: urn:goreos:atom:story:us_seg_cies_004:1.0.0
+id: US-SEG-CIES-004
+name: Alerta automática LPR de vehículos con encargo
+
+## us_seg_cies_006.yml
+  urn: urn:goreos:atom:story:us_seg_cies_006:1.0.0
+id: US-SEG-CIES-006
+name: Gestión de escenarios en Videowall durante emergencias
+
+## us_seg_cies_008.yml
+  urn: urn:goreos:atom:story:us_seg_cies_008:1.0.0
+id: US-SEG-CIES-008
+name: Estadísticas y Mapas de Calor (Hotspots) de incidentes
+
+## us_seg_cies_009.yml
+  urn: urn:goreos:atom:story:us_seg_cies_009:1.0.0
+id: US-SEG-CIES-009
+name: Confirmación de alertas en terreno (CIES)
+
+## us_seg_cies_010.yml
+  urn: urn:goreos:atom:story:us_seg_cies_010:1.0.0
+id: US-SEG-CIES-010
+name: Protocolo de protección de puntos críticos ante disturbios
+
+## us_seg_evid_001.yml
+  urn: urn:goreos:atom:story:us_seg_evid_001:1.0.0
+id: US-SEG-EVID-001
+name: Exportación de video con marca de agua y hash de integridad
+
+## us_seg_evid_003.yml
+  urn: urn:goreos:atom:story:us_seg_evid_003:1.0.0
+id: US-SEG-EVID-003
+name: Trazabilidad de acceso y descarga de evidencia
+
+## us_seg_gob_002.yml
+  urn: urn:goreos:atom:story:us_seg_gob_002:1.0.0
+id: US-SEG-GOB-002
+name: Participación en el Consejo Regional de Seguridad Pública
+
+## us_seg_gob_004.yml
+  urn: urn:goreos:atom:story:us_seg_gob_004:1.0.0
+id: US-SEG-GOB-004
+name: Reporte anónimo de incidentes o focos delictuales
+
+## us_seg_prev_003.yml
+  urn: urn:goreos:atom:story:us_seg_prev_003:1.0.0
+id: US-SEG-PREV-003
+name: Coordinación de sesiones del Consejo Regional de Seguridad Pública
+
+## us_seg_prev_006.yml
+  urn: urn:goreos:atom:story:us_seg_prev_006:1.0.0
+id: US-SEG-PREV-006
+name: Monitoreo financiero de convenios de seguridad con municipios
+
+## us_seg_prev_007.yml
+  urn: urn:goreos:atom:story:us_seg_prev_007:1.0.0
+id: US-SEG-PREV-007
+name: Programa de asistencia a víctimas de delitos
+
+## us_seg_prev_008.yml
+  urn: urn:goreos:atom:story:us_seg_prev_008:1.0.0
+id: US-SEG-PREV-008
+name: Asesoría técnica en planes comunales de seguridad
+
+## us_seg_prev_009.yml
+  urn: urn:goreos:atom:story:us_seg_prev_009:1.0.0
+id: US-SEG-PREV-009
+name: Coordinación con Subsecretaría de Prevención del Delito (SPD)
+
+## us_seg_prev_010.yml
+  urn: urn:goreos:atom:story:us_seg_prev_010:1.0.0
+id: US-SEG-PREV-010
+name: Visualización de zonas de riesgo proyectado (Predictivo)
+
+## us_sen_001_01.yml
+  urn: urn:goreos:atom:story:us_sen_001_01:1.0.0
+id: US-SEN-001-01
+name: Información de ejecución de grandes proyectos para el Congreso
+
+## us_senapred_001_01.yml
+  urn: urn:goreos:atom:story:us_senapred_001_01:1.0.0
+id: US-SENAPRED-001-01
+name: Integración SENAPRED con CIES para emergencias
+
+## us_ser_agr_001_01.yml
+  urn: urn:goreos:atom:story:us_ser_agr_001_01:1.0.0
+id: US-SER-AGR-001-01
+name: Reportes de inversión GORE en sector agrícola para SEREMI
+
+## us_ser_gob_001_01.yml
+  urn: urn:goreos:atom:story:us_ser_gob_001_01:1.0.0
+id: US-SER-GOB-001-01
+name: Canal de comunicación GORE-SEREMI para emergencias
+
+## us_ser_mop_001_01.yml
+  urn: urn:goreos:atom:story:us_ser_mop_001_01:1.0.0
+id: US-SER-MOP-001-01
+name: Estado de convenios de mandato MOP-GORE
+
+## us_serc_001_01.yml
+  urn: urn:goreos:atom:story:us_serc_001_01:1.0.0
+id: US-SERC-001-01
+name: Información de beneficiarios GORE para evitar duplicidad (SERNATUR)
+
+## us_seremi_001_02.yml
+  urn: urn:goreos:atom:story:us_seremi_001_02:1.0.0
+id: US-SEREMI-001-02
+name: Notificaciones de sesiones del CORE de interés sectorial
+
+## us_serv_001_01.yml
+  urn: urn:goreos:atom:story:us_serv_001_01:1.0.0
+id: US-SERV-001-01
+name: Gestión de contratos de servicios generales (Aseo y Vigilancia)
+
+## us_serviu_001_01.yml
+  urn: urn:goreos:atom:story:us_serviu_001_01:1.0.0
+id: US-SERVIU-001-01
+name: Proyectos de vivienda con cofinanciamiento GORE (SERVIU)
+
+## us_soc_001_01.yml
+  urn: urn:goreos:atom:story:us_soc_001_01:1.0.0
+id: US-SOC-001-01
+name: Registro de organizaciones y beneficiarios sociales
+
+## us_socio_001_01.yml
+  urn: urn:goreos:atom:story:us_socio_001_01:1.0.0
+id: US-SOCIO-001-01
+name: Saldos de ayudas económicas (Welfare)
+
+## us_sofo_001_01.yml
+  urn: urn:goreos:atom:story:us_sofo_001_01:1.0.0
+id: US-SOFO-001-01
+name: Alertas tempranas de emergencias agrícolas
+
+## us_sop_001_01.yml
+  urn: urn:goreos:atom:story:us_sop_001_01:1.0.0
+id: US-SOP-001-01
+name: Historial de mantenimiento de equipos CIES por serie
+
+## us_spert_001_01.yml
+  urn: urn:goreos:atom:story:us_spert_001_01:1.0.0
+id: US-SPERT-001-01
+name: Actas automáticas de Comité de Pertinencia
+
+## us_sre_001_01.yml
+  urn: urn:goreos:atom:story:us_sre_001_01:1.0.0
+id: US-SRE-001-01
+name: Definición y monitoreo de SLIs y SLOs
+
+## us_subv_001_01.yml
+  urn: urn:goreos:atom:story:us_subv_001_01:1.0.0
+id: US-SUBV-001-01
+name: Registro de organizaciones receptoras de subvenciones con historial
+
+## us_suj_001_01.yml
+  urn: urn:goreos:atom:story:us_suj_001_01:1.0.0
+id: US-SUJ-001-01
+name: Formulario simplificado de registro de audiencias (Lobby)
+
+## us_sup_cies_001_01.yml
+  urn: urn:goreos:atom:story:us_sup_cies_001_01:1.0.0
+id: US-SUP-CIES-001-01
+name: Reportes de eventos por turno y operador (CIES)
+
+## us_sup_obra_001_01.yml
+  urn: urn:goreos:atom:story:us_sup_obra_001_01:1.0.0
+id: US-SUP-OBRA-001-01
+name: Alertas de vencimiento de boletas de garantía de obras
+
+## us_sup_trans_001_01.yml
+  urn: urn:goreos:atom:story:us_sup_trans_001_01:1.0.0
+id: US-SUP-TRANS-001-01
+name: Reportes de transparencia y acceso a la información
+
+## us_tc_001_01.yml
+  urn: urn:goreos:atom:story:us_tc_001_01:1.0.0
+id: US-TC-001-01
+name: Expedientes completos sobre controversias legales
+
+## us_tcorp_001_01.yml
+  urn: urn:goreos:atom:story:us_tcorp_001_01:1.0.0
+id: US-TCORP-001-01
+name: Acceso limitado a la Intranet para Corporaciones
+
+## us_tde_admin_001.yml
+  urn: urn:goreos:atom:story:us_tde_admin_001:1.0.0
+id: US-TDE-ADMIN-001
+name: Gestión de divisiones y jefaturas organizacionales
+
+## us_tde_admin_002.yml
+  urn: urn:goreos:atom:story:us_tde_admin_002:1.0.0
+id: US-TDE-ADMIN-002
+name: Gestión de usuarios y perfiles de acceso
+
+## us_tde_admin_004.yml
+  urn: urn:goreos:atom:story:us_tde_admin_004:1.0.0
+id: US-TDE-ADMIN-004
+name: Desactivación de usuarios con preservación de historial
+
+## us_tde_admin_006.yml
+  urn: urn:goreos:atom:story:us_tde_admin_006:1.0.0
+id: US-TDE-ADMIN-006
+name: Configuración de reglas de alertas y disparadores
+
+## us_tde_admin_007.yml
+  urn: urn:goreos:atom:story:us_tde_admin_007:1.0.0
+id: US-TDE-ADMIN-007
+name: Auditoría de logs de actividad
+
+## us_tde_admin_008.yml
+  urn: urn:goreos:atom:story:us_tde_admin_008:1.0.0
+id: US-TDE-ADMIN-008
+name: Gestión y monitoreo de Backups
+
+## us_tde_auth_001.yml
+  urn: urn:goreos:atom:story:us_tde_auth_001:1.0.0
+id: US-TDE-AUTH-001
+name: Integrar autenticación con ClaveÚnica vía protocolo OIDC (OpenID Connect)
+
+## us_tde_auth_002.yml
+  urn: urn:goreos:atom:story:us_tde_auth_002:1.0.0
+id: US-TDE-AUTH-002
+name: Gestión de credenciales ClaveÚnica por ambiente
+
+## us_tde_auth_003.yml
+  urn: urn:goreos:atom:story:us_tde_auth_003:1.0.0
+id: US-TDE-AUTH-003
+name: Autenticación de Dos Factores (2FA) para roles críticos
+
+## us_tde_auth_004.yml
+  urn: urn:goreos:atom:story:us_tde_auth_004:1.0.0
+id: US-TDE-AUTH-004
+name: Logs de autenticación con trazabilidad completa
+
+## us_tde_auth_005.yml
+  urn: urn:goreos:atom:story:us_tde_auth_005:1.0.0
+id: US-TDE-AUTH-005
+name: Autenticación de empresas vía ClaveÚnica (RUT Empresa)
+
+## us_tde_auth_006.yml
+  urn: urn:goreos:atom:story:us_tde_auth_006:1.0.0
+id: US-TDE-AUTH-006
+name: Estandarización de autenticación ciudadana (DS9)
+
+## us_tde_avance_002.yml
+  urn: urn:goreos:atom:story:us_tde_avance_002:1.0.0
+id: US-TDE-AVANCE-002
+name: Monitoreo de Meta de Interoperabilidad (DS12)
+
+## us_tde_avance_003.yml
+  urn: urn:goreos:atom:story:us_tde_avance_003:1.0.0
+id: US-TDE-AVANCE-003
+name: Monitoreo de Meta de Expediente Electrónico (DS10)
+
+## us_tde_calidad_002.yml
+  urn: urn:goreos:atom:story:us_tde_calidad_002:1.0.0
+id: US-TDE-CALIDAD-002
+name: Elaboración del Plan de Mejora Continua (DS11)
+
+## us_tde_calidad_003.yml
+  urn: urn:goreos:atom:story:us_tde_calidad_003:1.0.0
+id: US-TDE-CALIDAD-003
+name: Encuestas de satisfacción ciudadana post-trámite
+
+## us_tde_cris_001.yml
+  urn: urn:goreos:atom:story:us_tde_cris_001:1.0.0
+id: US-TDE-CRIS-001
+name: Protocolo de contingencia ante caída de PISEE
+
+## us_tde_dev_001.yml
+  urn: urn:goreos:atom:story:us_tde_dev_001:1.0.0
+id: US-TDE-DEV-001
+name: Documentación técnica y Portal de APIs
+
+## us_tde_docdig_002.yml
+  urn: urn:goreos:atom:story:us_tde_docdig_002:1.0.0
+id: US-TDE-DOCDIG-002
+name: Link de verificación digital en Resoluciones Exentas
+
+## us_tde_dpo_001.yml
+  urn: urn:goreos:atom:story:us_tde_dpo_001:1.0.0
+id: US-TDE-DPO-001
+name: Gestión de Solicitudes ARCO
+
+## us_tde_dpo_003.yml
+  urn: urn:goreos:atom:story:us_tde_dpo_003:1.0.0
+id: US-TDE-DPO-003
+name: Notificación de brechas de seguridad de datos
+
+## us_tde_dpo_005.yml
+  urn: urn:goreos:atom:story:us_tde_dpo_005:1.0.0
+id: US-TDE-DPO-005
+name: Registro de Actividades de Tratamiento (RAT)
+
+## us_tde_dpo_007.yml
+  urn: urn:goreos:atom:story:us_tde_dpo_007:1.0.0
+id: US-TDE-DPO-007
+name: Anonimización y Seudonimización de datos
+
+## us_tde_dpo_008.yml
+  urn: urn:goreos:atom:story:us_tde_dpo_008:1.0.0
+id: US-TDE-DPO-008
+name: Control de versiones del Registro de Tratamiento (RAT)
+
+## us_tde_firma_002.yml
+  urn: urn:goreos:atom:story:us_tde_firma_002:1.0.0
+id: US-TDE-FIRMA-002
+name: Mecanismo de firma de contingencia
+
+## us_tde_interop_001.yml
+  urn: urn:goreos:atom:story:us_tde_interop_001:1.0.0
+id: US-TDE-INTEROP-001
+name: Habilitación de Nodo de Interoperabilidad PISEE
+
+## us_tde_interop_002.yml
+  urn: urn:goreos:atom:story:us_tde_interop_002:1.0.0
+id: US-TDE-INTEROP-002
+name: Gestión del Catálogo de Servicios Interoperables
+
+## us_tde_interop_003.yml
+  urn: urn:goreos:atom:story:us_tde_interop_003:1.0.0
+id: US-TDE-INTEROP-003
+name: Trazabilidad centralizada de transacciones interoperables
+
+## us_tde_interop_004.yml
+  urn: urn:goreos:atom:story:us_tde_interop_004:1.0.0
+id: US-TDE-INTEROP-004
+name: Gestión de acuerdos de intercambio de datos (Convenios)
+
+## us_tde_interop_005.yml
+  urn: urn:goreos:atom:story:us_tde_interop_005:1.0.0
+id: US-TDE-INTEROP-005
+name: Gestión de consentimiento para datos sensibles
+
+## us_tde_interop_007.yml
+  urn: urn:goreos:atom:story:us_tde_interop_007:1.0.0
+id: US-TDE-INTEROP-007
+name: Consumo de capas territoriales (IDE)
+
+## us_tde_muni_001.yml
+  urn: urn:goreos:atom:story:us_tde_muni_001:1.0.0
+id: US-TDE-MUNI-001
+name: Integración con sistemas municipales DIDECO
+
+## us_tde_muni_002.yml
+  urn: urn:goreos:atom:story:us_tde_muni_002:1.0.0
+id: US-TDE-MUNI-002
+name: Habilitación de Trámite Express para Municipios
+
+## us_tde_muni_004.yml
+  urn: urn:goreos:atom:story:us_tde_muni_004:1.0.0
+id: US-TDE-MUNI-004
+name: Ventanilla Única Municipal integrada
+
+## us_tde_notif_001.yml
+  urn: urn:goreos:atom:story:us_tde_notif_001:1.0.0
+id: US-TDE-NOTIF-001
+name: Integración con la Plataforma de Notificaciones del Estado (DS8)
+
+## us_tde_notif_002.yml
+  urn: urn:goreos:atom:story:us_tde_notif_002:1.0.0
+id: US-TDE-NOTIF-002
+name: Resolución de Domicilio Digital Único (DDU)
+
+## us_tde_notif_003.yml
+  urn: urn:goreos:atom:story:us_tde_notif_003:1.0.0
+id: US-TDE-NOTIF-003
+name: Envío de notificaciones vía API PISEE
+
+## us_tde_notif_004.yml
+  urn: urn:goreos:atom:story:us_tde_notif_004:1.0.0
+id: US-TDE-NOTIF-004
+name: Monitoreo de estado de notificación vía Webhook
+
+## us_tde_notif_005.yml
+  urn: urn:goreos:atom:story:us_tde_notif_005:1.0.0
+id: US-TDE-NOTIF-005
+name: Trazabilidad y Constancia de Notificación
+
+## us_tde_notif_006.yml
+  urn: urn:goreos:atom:story:us_tde_notif_006:1.0.0
+id: US-TDE-NOTIF-006
+name: Cálculo de plazos de notificación practicada
+
+## us_tde_qa_001.yml
+  urn: urn:goreos:atom:story:us_tde_qa_001:1.0.0
+id: US-TDE-QA-001
+name: Módulo de Gestión de Pruebas (UAT)
+
+## us_tde_reg_001.yml
+  urn: urn:goreos:atom:story:us_tde_reg_001:1.0.0
+id: US-TDE-REG-001
+name: Liderazgo de la Mesa Regional de Transformación Digital
+
+## us_tde_sec_001.yml
+  urn: urn:goreos:atom:story:us_tde_sec_001:1.0.0
+id: US-TDE-SEC-001
+name: Simulacro de exfiltración de datos personales
+
+## us_tde_seg_001.yml
+  urn: urn:goreos:atom:story:us_tde_seg_001:1.0.0
+id: US-TDE-SEG-001
+name: Mantener Política de Seguridad de la Información (DS7) aprobada
+
+## us_tde_seg_002.yml
+  urn: urn:goreos:atom:story:us_tde_seg_002:1.0.0
+id: US-TDE-SEG-002
+name: Designación formal del Responsable de Seguridad (CISO)
+
+## us_tde_seg_003.yml
+  urn: urn:goreos:atom:story:us_tde_seg_003:1.0.0
+id: US-TDE-SEG-003
+name: Clasificación de activos de información (CIA)
+
+## us_tde_seg_004.yml
+  urn: urn:goreos:atom:story:us_tde_seg_004:1.0.0
+id: US-TDE-SEG-004
+name: Reporte de incidentes a CSIRT y ANCI
+
+## us_tde_seg_005.yml
+  urn: urn:goreos:atom:story:us_tde_seg_005:1.0.0
+id: US-TDE-SEG-005
+name: Cifrado en tránsito y en reposo para datos sensibles
+
+## us_tde_seg_006.yml
+  urn: urn:goreos:atom:story:us_tde_seg_006:1.0.0
+id: US-TDE-SEG-006
+name: Gestión operativa de incidentes de seguridad
+
+## us_tde_seg_007.yml
+  urn: urn:goreos:atom:story:us_tde_seg_007:1.0.0
+id: US-TDE-SEG-007
+name: Gestión de Identidad y Accesos (IAM)
+
+## us_tde_seg_008.yml
+  urn: urn:goreos:atom:story:us_tde_seg_008:1.0.0
+id: US-TDE-SEG-008
+name: Auditoría de acceso a datos sensibles
+
+## us_tde_seg_009.yml
+  urn: urn:goreos:atom:story:us_tde_seg_009:1.0.0
+id: US-TDE-SEG-009
+name: Simulaciones de phishing y concientización
+
+## us_tde_seg_010.yml
+  urn: urn:goreos:atom:story:us_tde_seg_010:1.0.0
+id: US-TDE-SEG-010
+name: Trazabilidad de acceso según estándar DS9
+
+## us_tde_seg_011.yml
+  urn: urn:goreos:atom:story:us_tde_seg_011:1.0.0
+id: US-TDE-SEG-011
+name: Privacidad por Diseño en sistemas corporativos
+
+## us_tde_tic_002.yml
+  urn: urn:goreos:atom:story:us_tde_tic_002:1.0.0
+id: US-TDE-TIC-002
+name: Gestión de Identidad Digital (SSO)
+
+## us_tde_tic_004.yml
+  urn: urn:goreos:atom:story:us_tde_tic_004:1.0.0
+id: US-TDE-TIC-004
+name: Monitoreo de Alertas de Ciberseguridad
+
+## us_tde_vinc_002.yml
+  urn: urn:goreos:atom:story:us_tde_vinc_002:1.0.0
+id: US-TDE-VINC-002
+name: Acceso al API Gateway Regional (Interoperabilidad)
+
+## us_terr_anl_001.yml
+  urn: urn:goreos:atom:story:us_terr_anl_001:1.0.0
+id: US-TERR-ANL-001
+name: Análisis histórico de inversiones territoriales
+
+## us_terr_dom_002.yml
+  urn: urn:goreos:atom:story:us_terr_dom_002:1.0.0
+id: US-TERR-DOM-002
+name: Asistencia técnica para actualización de PRC
+
+## us_terr_dom_003.yml
+  urn: urn:goreos:atom:story:us_terr_dom_003:1.0.0
+id: US-TERR-DOM-003
+name: Validación de riesgos territoriales (PROT)
+
+## us_terr_ide_002.yml
+  urn: urn:goreos:atom:story:us_terr_ide_002:1.0.0
+id: US-TERR-IDE-002
+name: Federación de catálogos IDE Chile (CSW)
+
+## us_terr_ide_003.yml
+  urn: urn:goreos:atom:story:us_terr_ide_003:1.0.0
+id: US-TERR-IDE-003
+name: Modelado de catálogo de objetos (ISO 19110)
+
+## us_terr_ide_006.yml
+  urn: urn:goreos:atom:story:us_terr_ide_006:1.0.0
+id: US-TERR-IDE-006
+name: Reporte de hallazgos territoriales comunitarios
+
+## us_terr_plan_001.yml
+  urn: urn:goreos:atom:story:us_terr_plan_001:1.0.0
+id: US-TERR-PLAN-001
+name: Visualizar brechas territoriales (brecha vs meta con mapa)
+
+## us_terr_plan_005.yml
+  urn: urn:goreos:atom:story:us_terr_plan_005:1.0.0
+id: US-TERR-PLAN-005
+name: Gestión de Políticas Regionales (Instrumentos Normativos)
+
+## us_terr_prg_001.yml
+  urn: urn:goreos:atom:story:us_terr_prg_001:1.0.0
+id: US-TERR-PRG-001
+name: Alertas de postulación a Fondos Concursables
+
+## us_tes_001_01.yml
+  urn: urn:goreos:atom:story:us_tes_001_01:1.0.0
+id: US-TES-001-01
+name: Programación y Priorización de Pagos
+
+## us_tic_001_02.yml
+  urn: urn:goreos:atom:story:us_tic_001_02:1.0.0
+id: US-TIC-001-02
+name: Inventario y Ciclo de Vida de Activos TI
+
+## us_tlead_001_01.yml
+  urn: urn:goreos:atom:story:us_tlead_001_01:1.0.0
+id: US-TLEAD-001-01
+name: Métricas de rendimiento de desarrollo (DORA)
+
+## us_transp_002_01.yml
+  urn: urn:goreos:atom:story:us_transp_002_01:1.0.0
+id: US-TRANSP-002-01
+name: Gestión de Solicitudes SAI (Acceso a Información)
+
+## us_ucr_001_01.yml
+  urn: urn:goreos:atom:story:us_ucr_001_01:1.0.0
+id: US-UCR-001-01
+name: Reportes de Gestión para Nivel Central (UCR)
+
+## us_uf_001_01.yml
+  urn: urn:goreos:atom:story:us_uf_001_01:1.0.0
+id: US-UF-001-01
+name: Obtención de código BIP para iniciativas GND
+
+## us_uoct_001_01.yml
+  urn: urn:goreos:atom:story:us_uoct_001_01:1.0.0
+id: US-UOCT-001-01
+name: Integración de Proyectos Viales con UOCT
+
+## us_usr_001_01.yml
+  urn: urn:goreos:atom:story:us_usr_001_01:1.0.0
+id: US-USR-001-01
+name: Login con ClaveÚnica para Funcionarios
+
+## us_vinc_001_01.yml
+  urn: urn:goreos:atom:story:us_vinc_001_01:1.0.0
+id: US-VINC-001-01
+name: CRM de Stakeholders Regionales
+

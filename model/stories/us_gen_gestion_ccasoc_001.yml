@@ -15,7 +15,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 user:
   role_id: ROL-GESTION-CCASOC
   agent_type: HUMAN
-  description: Representante de un Colegio Profesional (Ej: Colegio de Arquitectos, Agrónomos) que colabora con el GORE
+  description: "Representante de un Colegio Profesional (Ej: Colegio de Arquitectos, Agrónomos) que colabora con el GORE"
 
 entities_mentioned:
   - id: ENT-SOC-ORG-SOCIAL

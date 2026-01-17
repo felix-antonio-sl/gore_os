@@ -15,7 +15,7 @@ so_that: pueda cumplir con los objetivos de mi rol
 user:
   role_id: ROL-GESTION-DIRECTOR_SERVICIO_REGIONAL
   agent_type: HUMAN
-  description: Director de un Servicio Público Regional (Ej: SERCOTEC, INDAP, SERNATUR) que recibe transferencias del GORE
+  description: "Director de un Servicio Público Regional (Ej: SERCOTEC, INDAP, SERNATUR) que recibe transferencias del GORE"
 
 entities_mentioned:
   - id: ENT-EJEC-PROGRAMA-FONDO
