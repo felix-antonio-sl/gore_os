@@ -1,5 +1,4 @@
-  ---
-  MODELO DE DATOS COMPLETO
+# MODELO DE DATOS COMPLETO
 
   1. ENTIDADES FORMALES (ya existen en para_titi, se mantienen)
 

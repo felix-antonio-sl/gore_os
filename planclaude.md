@@ -1,9 +1,10 @@
-KODA-CARTOGRAPHER: Plan Maestro para Modelo de Datos GORE_OS
+# KODA-CARTOGRAPHER: Plan Maestro para Modelo de Datos GORE_OS
+
 Fase Actual: ESCUCHAR→MAPEAR (Transición)
 Metodología: Del Caos al Modelo (4 fases)
 Documento de Autoridad: MANIFESTO.md (Story-First)
 
-0. SENTIDO SEMÁNTICO PROFUNDO: El Sistema Nervioso Digital
+1. SENTIDO SEMÁNTICO PROFUNDO: El Sistema Nervioso Digital
 0.1 Visión Fundacional
 "La crisis reveló que el GORE carecía de un sistema nervioso digital capaz de detectar problemas antes de que se convirtieran en crisis."
 — MANIFESTO.md
@@ -15,22 +16,21 @@ Este modelo de datos no es un schema técnico arbitrario. Es la columna vertebra
 0.2 Los 5 Axiomas ORKO como Fundamento Ontológico
 El GLOSARIO.yml define 5 axiomas que deben informar cada decisión de modelado:
 
-Axioma	Principio	Implicación para el Modelo
-A1: Transformación	Todo sistema existe para transformar estados (S₁ → S₂)	Cada IPR es una transformación territorial. Capturar estado inicial→final
-A2: Capacidad	Existe capacidad que efectúa la transformación	Los Roles son capacidades. Distinguir sustrato (Humano/Algorítmico) y cognición
-A3: Información	Estructura portadora de significado que coordina	Las Entidades son información. Cada campo debe tener propósito de coordinación
-A4: Restricción	No todo es posible. Existen límites	Las reglas presupuestarias son restricciones. Modelar como constraints
-A5: Intencionalidad	Transformación tiene propósito direccional	Cada Story captura el propósito. Sin historia, no existe el requerimiento
+Axioma Principio Implicación para el Modelo
+A1: Transformación Todo sistema existe para transformar estados (S₁ → S₂) Cada IPR es una transformación territorial. Capturar estado inicial→final
+A2: Capacidad Existe capacidad que efectúa la transformación Los Roles son capacidades. Distinguir sustrato (Humano/Algorítmico) y cognición
+A3: Información Estructura portadora de significado que coordina Las Entidades son información. Cada campo debe tener propósito de coordinación
+A4: Restricción No todo es posible. Existen límites Las reglas presupuestarias son restricciones. Modelar como constraints
+A5: Intencionalidad Transformación tiene propósito direccional Cada Story captura el propósito. Sin historia, no existe el requerimiento
 0.3 Los 5 Primitivos ORKO → Estructura del Modelo
-Primitivo ORKO	Definición	Materialización en el Schema
-P1: Capacidad	Potencial de ejecutar transformación	meta.role (con sustrato + cognición + human_accountable)
-P2: Flujo	Secuencia estructurada como DAG	meta.process + txn.event (transiciones de estado)
-P3: Información	Contenido con temporalidad y lineage	core.* (entidades con valid_from/to, created_at)
-P4: Límite	Constraint que acota posibilidades	ref.category (reglas) + DB constraints + SHACL shapes
-P5: Propósito	Outcome deseado con métricas	meta.story + txn.magnitude (KPIs medibles)
+Primitivo ORKO Definición Materialización en el Schema
+P1: Capacidad Potencial de ejecutar transformación meta.role (con sustrato + cognición + human_accountable)
+P2: Flujo Secuencia estructurada como DAG meta.process + txn.event (transiciones de estado)
+P3: Información Contenido con temporalidad y lineage core.* (entidades con valid_from/to, created_at)
+P4: Límite Constraint que acota posibilidades ref.category (reglas) + DB constraints + SHACL shapes
+P5: Propósito Outcome deseado con métricas meta.story + txn.magnitude (KPIs medibles)
 0.4 Las 5 Funciones Motoras → Cobertura del Modelo
 El GORE tiene 5 funciones esenciales que el modelo debe soportar completamente:
-
 
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                        5 FUNCIONES MOTORAS                              │
@@ -58,7 +58,6 @@ El GORE tiene 5 funciones esenciales que el modelo debe soportar completamente:
 
 El modelo soporta el patrón Human-in-the-Loop mediante:
 
-
 -- Extensión a meta.role para HAIC
 ALTER TABLE meta.role ADD COLUMN human_accountable_id VARCHAR(32) REFERENCES meta.role(id);
 ALTER TABLE meta.role ADD COLUMN delegation_mode VARCHAR(4);  -- M1-M6 según ORKO
@@ -70,15 +69,14 @@ ALTER TABLE meta.role ADD CONSTRAINT chk_human_accountable
 0.6 Jerarquía de Ciclos Operativos
 El sistema GORE opera en tres niveles de ciclos:
 
-Nivel	Ciclo	Naturaleza	Horizonte	Materialización
-MACRO	5 Funciones Motoras	Estratégico	Anual/Plurianual	PLANIFICAR, FINANCIAR, EJECUTAR, COORDINAR, NORMAR
-MESO	5 Fases MCD (F0-F4)	Táctico	Meses	Ciclo de vida de una IPR dentro de FINANCIAR/EJECUTAR
-MICRO	Sense-Decide-Act	Operacional	Tiempo real	Eventos, alertas, decisiones puntuales
+Nivel Ciclo Naturaleza Horizonte Materialización
+MACRO 5 Funciones Motoras Estratégico Anual/Plurianual PLANIFICAR, FINANCIAR, EJECUTAR, COORDINAR, NORMAR
+MESO 5 Fases MCD (F0-F4) Táctico Meses Ciclo de vida de una IPR dentro de FINANCIAR/EJECUTAR
+MICRO Sense-Decide-Act Operacional Tiempo real Eventos, alertas, decisiones puntuales
 Nota: El ciclo SDA es recursivo y opera DENTRO de cualquier fase o función.
 
 0.7 Ciclo Sense-Decide-Act (SDA)
 El sistema nervioso digital opera en un ciclo canónico:
-
 
          ┌──────────────────────────────────────┐
          │                                      │
@@ -100,30 +98,28 @@ El modelo omega_gore_nuble_mermaid.md establece claramente que los MECANISMOS cu
 MECANISMO = Canal de Postulación + Track de Evaluación
 SNI, C33, FRIL, Glosa06, 8% y FRPD definen CÓMO se postula Y CÓMO se evalúa una IPR.
 
-Concepto	Naturaleza	Ejemplos	Modelado
-Fondo	Fuente de recursos (de dónde viene el dinero)	FNDR, ISAR, FRIL, FRPD	ref.category(scheme='funding_source')
-Mecanismo	Canal dual: Postulación + Evaluación	SNI, C33, FRIL, Glosa06, 8%, FRPD	ref.category(scheme='mechanism')
+Concepto Naturaleza Ejemplos Modelado
+Fondo Fuente de recursos (de dónde viene el dinero) FNDR, ISAR, FRIL, FRPD ref.category(scheme='funding_source')
+Mecanismo Canal dual: Postulación + Evaluación SNI, C33, FRIL, Glosa06, 8%, FRPD ref.category(scheme='mechanism')
 Matriz de Mecanismos (omega_gore_nuble_mermaid.md)
-Track	Mecanismo	Evaluador	Producto (Dictamen)	Aplica a
-A	SNI General	MDSF	RS (Rec. Satisfactoria)	PROYECTO >15k UTM
-B	Circular 33	MDSF/GORE	AD (Admisibilidad)	PROYECTO Conserv./ANF
-C	FRIL	GORE (DIPIR)	AT (Aprob. Técnica)	PROYECTO <4.545 UTM
-D1	Glosa 06	DIPRES/SES	RF (Rec. Favorable)	PROGRAMA Ej. Directa
-D2	Transferencias	GORE (Comité/DAE)	ITF (Inf. Téc. Fav.)	PROGRAMA Transfer.
-E1	Subvención 8%	GORE (Comisión)	Puntaje/Ranking	PROGRAMA Concursable
-E2	FRPD	ANID/CORFO/GORE	Elegibilidad + RS/RF	MIXTO (I+D+i)
+Track Mecanismo Evaluador Producto (Dictamen) Aplica a
+A SNI General MDSF RS (Rec. Satisfactoria) PROYECTO >15k UTM
+B Circular 33 MDSF/GORE AD (Admisibilidad) PROYECTO Conserv./ANF
+C FRIL GORE (DIPIR) AT (Aprob. Técnica) PROYECTO <4.545 UTM
+D1 Glosa 06 DIPRES/SES RF (Rec. Favorable) PROGRAMA Ej. Directa
+D2 Transferencias GORE (Comité/DAE) ITF (Inf. Téc. Fav.) PROGRAMA Transfer.
+E1 Subvención 8% GORE (Comisión) Puntaje/Ranking PROGRAMA Concursable
+E2 FRPD ANID/CORFO/GORE Elegibilidad + RS/RF MIXTO (I+D+i)
 Una IPR tiene:
 
 1 Fondo (fuente de financiamiento): FNDR, ISAR, etc.
 1 Mecanismo (canal dual postulación+evaluación): SNI, C33, FRIL, etc.
 Esto se modela como dos FKs distintas en core.ipr:
 
-
 funding_source_id  → ref.category(scheme='funding_source')  -- De dónde viene el $
 mechanism_id       → ref.category(scheme='mechanism')       -- Cómo postula Y cómo se evalúa
 0.9 Modelo Polimórfico IPR (omega_gore_nuble_mermaid.md)
 La IPR es una entidad polimórfica. El schema debe reflejar esta estructura:
-
 
                          ┌─────────────────┐
                          │      IPR        │
@@ -147,12 +143,12 @@ La IPR es una entidad polimórfica. El schema debe reflejar esta estructura:
 0.10 Modelo Canónico de Estados (MCD) - 5 Fases (F0-F4)
 Todas las IPR transitan por un ciclo de vida unificado de 5 fases (omega_gore_nuble_mermaid.md):
 
-Fase	Nombre	Descripción	Responsable
-F0	Formulación & Ingreso	Identificación → Formulación → Postulación oficial (BIP/Plataforma)	Formulador
-F1	Admisibilidad	Verificación de requisitos (The Gatekeeper)	DIPLADE/DIPIR
-F2	Evaluación Técnica	Poly-Switch a 7 Tracks según mecanismo	MDSF/GORE/DIPRES/ANID
-F3	Priorización & Asignación	Cartera → Propuesta Gobernador → Votación CORE → Identificación PPT	CORE
-F4	Formalización, Ejecución & Cierre	Convenio → Ejecución → Recepción → Rendición → Cierre	DIPIR/Ejecutor/CGR
+Fase Nombre Descripción Responsable
+F0 Formulación & Ingreso Identificación → Formulación → Postulación oficial (BIP/Plataforma) Formulador
+F1 Admisibilidad Verificación de requisitos (The Gatekeeper) DIPLADE/DIPIR
+F2 Evaluación Técnica Poly-Switch a 7 Tracks según mecanismo MDSF/GORE/DIPRES/ANID
+F3 Priorización & Asignación Cartera → Propuesta Gobernador → Votación CORE → Identificación PPT CORE
+F4 Formalización, Ejecución & Cierre Convenio → Ejecución → Recepción → Rendición → Cierre DIPIR/Ejecutor/CGR
 Nota: Las 5 Fases son etapas MACRO del ciclo de vida. Los 7 Tracks (A-E2) son variantes de evaluación DENTRO de la Fase F2.
 
 Poly-Switch de F2 (Árbol de Decisión)
@@ -196,12 +192,12 @@ Fuente: dipir_ssot_koda.yaml (ubicado en proyecto gorenuble: /Users/felixsanhuez
 
 El proceso DIPIR clasifica iniciativas según:
 
-Condición	Subtítulo	Tipo Resolución	Requiere CGR	Requiere DIPRES
-Subvenciones	24	EXENTA	No	No
-ANF <7000 UTM	29	AFECTA	Sí	No
-FRIL <7000 UTM	33	EXENTA	No	No
-Programas >7000 UTM	33/24	CONDICIONAL	Si >5000 UTM	No
-Inversión	31	AFECTA	Sí	Sí
+Condición Subtítulo Tipo Resolución Requiere CGR Requiere DIPRES
+Subvenciones 24 EXENTA No No
+ANF <7000 UTM 29 AFECTA Sí No
+FRIL <7000 UTM 33 EXENTA No No
+Programas >7000 UTM 33/24 CONDICIONAL Si >5000 UTM No
+Inversión 31 AFECTA Sí Sí
 Modelado en:
 
 ref.category(scheme='budget_subtitle'): 24, 29, 31, 33
@@ -209,39 +205,39 @@ ref.category(scheme='resolution_type'): EXENTA, AFECTA, CONDICIONAL
 0.12 Matriz de Umbrales Financieros (omega_gore_nuble_mermaid.md)
 Reglas críticas de negocio que deben implementarse como constraints o validaciones:
 
-Concepto	Umbral/Regla	Detalle	Constraint en DB
-Exención RS (FRIL)	< 4.545 UTM	Tope específico Ñuble (otras regiones 5.000 UTM)	CHECK en core.ipr_mechanism
-Licitación Pública	> 1.000 UTM	Obligatoria para Obras	Trigger de validación
-Toma de Razón CGR	> 2.500 UTM	Control legalidad previo	requires_cgr = TRUE
-Aprobación CORE	> 7.000 UTM	Requiere votación explícita	Trigger de workflow
-Evaluación SNI	> 15.000 UTM	MDSF obligatorio (salvo C33/FRIL)	Trigger de validación
-Plazo Licitación FRIL	90 días	Desde convenio, si no se pierde AT	plazo_licitacion_dias
-Gastos Admin Glosa06	≤ 5%	Del presupuesto total	gasto_admin_max
-Vigencia RATE RS	3 años	Presupuestarios consecutivos	Lógica de negocio
+Concepto Umbral/Regla Detalle Constraint en DB
+Exención RS (FRIL) < 4.545 UTM Tope específico Ñuble (otras regiones 5.000 UTM) CHECK en core.ipr_mechanism
+Licitación Pública > 1.000 UTM Obligatoria para Obras Trigger de validación
+Toma de Razón CGR > 2.500 UTM Control legalidad previo requires_cgr = TRUE
+Aprobación CORE > 7.000 UTM Requiere votación explícita Trigger de workflow
+Evaluación SNI > 15.000 UTM MDSF obligatorio (salvo C33/FRIL) Trigger de validación
+Plazo Licitación FRIL 90 días Desde convenio, si no se pierde AT plazo_licitacion_dias
+Gastos Admin Glosa06 ≤ 5% Del presupuesto total gasto_admin_max
+Vigencia RATE RS 3 años Presupuestarios consecutivos Lógica de negocio
 0.13 Restricciones Operativas por Mecanismo (Reglas de Oro)
-Mecanismo	Restricción	Consecuencia Incumplimiento
-FRIL	Prohibición fraccionamiento	Rechazo admisibilidad
-FRIL	Plazo licitación 90 días	Pérdida Aprobación Técnica
-Glosa 06	Gastos Admin ≤5%	Rechazo DIPRES
-Transfer	Honorarios ≤5%	Observación rendición
-Subv 8%	Sin rendiciones pendientes	Bloqueo total nuevos fondos
-C33	Cofinanciamiento ANF 20%	Inadmisible sin certificar
+Mecanismo Restricción Consecuencia Incumplimiento
+FRIL Prohibición fraccionamiento Rechazo admisibilidad
+FRIL Plazo licitación 90 días Pérdida Aprobación Técnica
+Glosa 06 Gastos Admin ≤5% Rechazo DIPRES
+Transfer Honorarios ≤5% Observación rendición
+Subv 8% Sin rendiciones pendientes Bloqueo total nuevos fondos
+C33 Cofinanciamiento ANF 20% Inadmisible sin certificar
+
 1. INVENTARIO COMPLETO DE FUENTES (Fase ESCUCHAR)
 1.1 Fuentes Analizadas
-Fuente	Tipo	Tokens	Relevancia
-MANIFESTO.md	Autoridad	114	CORE - Define 4 átomos
-goreos/model/stories/*.yml	Datos	819 archivos	CORE - 819 historias enriquecidas
-goreNubleOntology.ttl	TBox	30K+	Ontología GNUB completa
-goreNubleDipirOntology.ttl	TBox	179	Workflows DIPIR
-alignmentGnubTde.ttl	Puentes	130	Alineamiento GNUB↔TDE
-goreNubleShapes.ttl	SHACL	247	Validación de datos
-goreNubleCQs_Master.yml	CQs	1345	472 Competency Questions
-tdeCore.ttl	TBox	241	Ontología TDE Core
-tdeBundle.ttl	Bundle	66	Importaciones TDE
-implementation_plan.md (Gemini)	Plan	82	Estrategia 3 sub-planes
+Fuente Tipo Tokens Relevancia
+MANIFESTO.md Autoridad 114 CORE - Define 4 átomos
+goreos/model/stories/*.yml Datos 819 archivos CORE - 819 historias enriquecidas
+goreNubleOntology.ttl TBox 30K+ Ontología GNUB completa
+goreNubleDipirOntology.ttl TBox 179 Workflows DIPIR
+alignmentGnubTde.ttl Puentes 130 Alineamiento GNUB↔TDE
+goreNubleShapes.ttl SHACL 247 Validación de datos
+goreNubleCQs_Master.yml CQs 1345 472 Competency Questions
+tdeCore.ttl TBox 241 Ontología TDE Core
+tdeBundle.ttl Bundle 66 Importaciones TDE
+implementation_plan.md (Gemini) Plan 82 Estrategia 3 sub-planes
 1.2 Patrones Emergentes Identificados
 Regla de Derivación Estructural (Cadena de Valor Semántica):
-
 
 Stories → Entities → Artefactos → Módulos
 Significado:
@@ -264,71 +260,71 @@ Alineamiento TDE: gnub → tde → gist (jerarquía de generalización)
 1.3 Análisis Exhaustivo de Entidades (141 Formalmente Definidas)
 Se realizó un análisis completo de las 141 entidades aceptadas contra las 819 historias:
 
-Métrica	Valor
-Total entidades formalmente definidas	141
-Entidades cubiertas por modelo inicial	13 (9.2%)
-Brecha de cobertura	128 (90.8%)
-Menciones totales en historias	1,847
-Menciones cubiertas por modelo inicial	~14%
+Métrica Valor
+Total entidades formalmente definidas 141
+Entidades cubiertas por modelo inicial 13 (9.2%)
+Brecha de cobertura 128 (90.8%)
+Menciones totales en historias 1,847
+Menciones cubiertas por modelo inicial ~14%
 Análisis de Cobertura por Dominio:
 
-Dominio	Entidades	Menciones	Estado
-D-FIN (Finanzas)	31	Alto	Parcial → EXPANDIR
-D-ORG (Organización)	16	Muy Alto	Parcial → EXPANDIR
-D-CONV (Convenios)	14	Alto	Mínimo → EXPANDIR
-D-EJE (Ejecución)	13	Medio	0% → AGREGAR
-D-DIG (Digital)	18	Alto	Mínimo → EXPANDIR
-D-LOC (Localización)	11	Alto	Mínimo → EXPANDIR
-D-SAL (Salud/Alertas)	15	Alto	Parcial
-D-GOV (Gobernanza)	10	Medio	0% → AGREGAR
+Dominio Entidades Menciones Estado
+D-FIN (Finanzas) 31 Alto Parcial → EXPANDIR
+D-ORG (Organización) 16 Muy Alto Parcial → EXPANDIR
+D-CONV (Convenios) 14 Alto Mínimo → EXPANDIR
+D-EJE (Ejecución) 13 Medio 0% → AGREGAR
+D-DIG (Digital) 18 Alto Mínimo → EXPANDIR
+D-LOC (Localización) 11 Alto Mínimo → EXPANDIR
+D-SAL (Salud/Alertas) 15 Alto Parcial
+D-GOV (Gobernanza) 10 Medio 0% → AGREGAR
 Entidades con Mayor Frecuencia de Mención:
 
-Entidad	Menciones	Estado en Modelo
-ENT-ORG-ROL	426	✓ meta.role
-ENT-SAL-ALERTA	39	AGREGAR
-ENT-ORG-FUNCIONARIO	39	AGREGAR → core.person
-ENT-FIN-PRESUPUESTO	29	✓ core.budget_program
-ENT-FIN-IPR	25	✓ core.ipr
-ENT-CONV-COMPROMISO	22	✓ core.agreement
-ENT-LOC-COMUNA	19	AGREGAR
-ENT-DIG-PLATAFORMA	17	AGREGAR
-ENT-DIG-TRAMITE	17	AGREGAR
-ENT-SAL-RIESGO	16	AGREGAR
-ENT-SYS-DOCUMENTO	14	AGREGAR
-ENT-FIN-CDP	13	AGREGAR
-ENT-LOC-INDICADOR_TERRITORIAL	12	AGREGAR
-ENT-CONV-ACTA	11	AGREGAR
-ENT-CONV-COMITE	11	AGREGAR
+Entidad Menciones Estado en Modelo
+ENT-ORG-ROL 426 ✓ meta.role
+ENT-SAL-ALERTA 39 AGREGAR
+ENT-ORG-FUNCIONARIO 39 AGREGAR → core.person
+ENT-FIN-PRESUPUESTO 29 ✓ core.budget_program
+ENT-FIN-IPR 25 ✓ core.ipr
+ENT-CONV-COMPROMISO 22 ✓ core.agreement
+ENT-LOC-COMUNA 19 AGREGAR
+ENT-DIG-PLATAFORMA 17 AGREGAR
+ENT-DIG-TRAMITE 17 AGREGAR
+ENT-SAL-RIESGO 16 AGREGAR
+ENT-SYS-DOCUMENTO 14 AGREGAR
+ENT-FIN-CDP 13 AGREGAR
+ENT-LOC-INDICADOR_TERRITORIAL 12 AGREGAR
+ENT-CONV-ACTA 11 AGREGAR
+ENT-CONV-COMITE 11 AGREGAR
 Hoja de Ruta de Implementación:
 
-Fase	Tablas	Cobertura Menciones	Esfuerzo
-Fase 1	28 tablas	99%	3-4 semanas
-Fase 2	+20 tablas	100%	+2 semanas
-Fase 3	+66 tablas	Completo	Iterativo
+Fase Tablas Cobertura Menciones Esfuerzo
+Fase 1 28 tablas 99% 3-4 semanas
+Fase 2 +20 tablas 100% +2 semanas
+Fase 3 +66 tablas Completo Iterativo
 Decisión: Implementar Fase 1 (28 tablas) para modelo robusto con 99% de cobertura de menciones.
 
-2. CLASIFICACIÓN ONTOLÓGICA (Fase MAPEAR)
+1. CLASIFICACIÓN ONTOLÓGICA (Fase MAPEAR)
 2.1 Clasificación por Naturaleza
-Tipo	Concepto	Fuente	Alineamiento Gist
-ENTIDAD	IPR	gnub:IPR	gist:Project
-ENTIDAD	Convenio	gnub:GOREAgreement	gist:Agreement
-ENTIDAD	Funcionario	gist:Person	gist:Person
-ENTIDAD	División	gnub:Division	gist:Organization
-ENTIDAD	Acto Administrativo	gnub:AdministrativeAct	gist:FormattedContent
-ENTIDAD	Resolución	gnub:Resolution	gist:FormattedContent
-ENTIDAD	Procedimiento Admin.	gnub:AdministrativeProcedure	gist:Event
-ENTIDAD	Programa PPR	gnub:BudgetProgram	gist:FinancialInstrument
-ENTIDAD	Programa Fondo	gnub:FundProgram	gist:FinancialInstrument
-EVENTO	Visación	dipir:VisacionEvent	gist:Event
-EVENTO	Aprobación	dipir:AprobacionEvent	gist:Event
-EVENTO	Pago	gnub:PaymentEvent	gist:Event
-CLASIFICADOR	FundingSource	gnub:FundingSource	gist:Category
-CLASIFICADOR	IPRPhase	gnub:IPRPhase	gist:Category
-CLASIFICADOR	AgreementState	gnub:AgreementState	gist:Category
-CLASIFICADOR	ActType	gnub:ActType	gist:Category
-CLASIFICADOR	ResolutionType	gnub:ResolutionType	gist:Category
-MEDICIÓN	MontoEjecutado	gnub:AccruedAmountAspect	gist:Magnitude
-MEDICIÓN	PorcentajeAvance	gist:Magnitude	gist:Magnitude
+Tipo Concepto Fuente Alineamiento Gist
+ENTIDAD IPR gnub:IPR gist:Project
+ENTIDAD Convenio gnub:GOREAgreement gist:Agreement
+ENTIDAD Funcionario gist:Person gist:Person
+ENTIDAD División gnub:Division gist:Organization
+ENTIDAD Acto Administrativo gnub:AdministrativeAct gist:FormattedContent
+ENTIDAD Resolución gnub:Resolution gist:FormattedContent
+ENTIDAD Procedimiento Admin. gnub:AdministrativeProcedure gist:Event
+ENTIDAD Programa PPR gnub:BudgetProgram gist:FinancialInstrument
+ENTIDAD Programa Fondo gnub:FundProgram gist:FinancialInstrument
+EVENTO Visación dipir:VisacionEvent gist:Event
+EVENTO Aprobación dipir:AprobacionEvent gist:Event
+EVENTO Pago gnub:PaymentEvent gist:Event
+CLASIFICADOR FundingSource gnub:FundingSource gist:Category
+CLASIFICADOR IPRPhase gnub:IPRPhase gist:Category
+CLASIFICADOR AgreementState gnub:AgreementState gist:Category
+CLASIFICADOR ActType gnub:ActType gist:Category
+CLASIFICADOR ResolutionType gnub:ResolutionType gist:Category
+MEDICIÓN MontoEjecutado gnub:AccruedAmountAspect gist:Magnitude
+MEDICIÓN PorcentajeAvance gist:Magnitude gist:Magnitude
 2.2 Grafo de Dependencias (Nodos Centrales)
 
                            gist:Organization
@@ -361,12 +357,12 @@ Resolution → Agreement: Resolución que formaliza un Convenio
 FundProgram → BudgetProgram: Programa de fondo vinculado a línea presupuestaria
 AdministrativeProcedure → Resolution: Procedimiento resuelto por Resolución
 2.3 Tabla de Equivalencias (Sinónimos Normalizados)
-Fuente YAML	Clase GNUB	Clase Gist
-ENT-FIN-IPR	gnub:IPR	gist:Project
-ENT-FIN-CONVENIO	gnub:GOREAgreement	gist:Agreement
-ENT-ORG-DIVISION	gnub:Division	gist:Organization
-ENT-FIN-BALANCE	gnub:FinancialStatement	gist:FormattedContent
-PROC-FIN-ADMISIBILIDAD	dipir:VisacionEvent	gist:Event
+Fuente YAML Clase GNUB Clase Gist
+ENT-FIN-IPR gnub:IPR gist:Project
+ENT-FIN-CONVENIO gnub:GOREAgreement gist:Agreement
+ENT-ORG-DIVISION gnub:Division gist:Organization
+ENT-FIN-BALANCE gnub:FinancialStatement gist:FormattedContent
+PROC-FIN-ADMISIBILIDAD dipir:VisacionEvent gist:Event
 3. ARQUITECTURA DE CAPAS (Fase ELEVAR)
 3.1 Upper Ontology Seleccionada: Gist 14.0
 Justificación:
@@ -375,11 +371,11 @@ Ya adoptada en goreNubleOntology.ttl y tdeCore.ttl
 Patrones probados: Category, Magnitude, Event
 Máximo alineamiento con estándar gubernamental chileno (TDE)
 3.2 Patrones Gist Aplicados
-Patrón	Señal en Fuentes	Abstracción Propuesta
-Category	15+ tablas con código/nombre/parent	core.category(scheme, code, label, parent_id)
-Magnitude	Campos numéricos (monto, %, plazo)	core.magnitude(subject_type, subject_id, aspect, value, unit)
-Event	Transacciones, auditoría	core.event(event_type, subject_type, subject_id, occurred_at, data)
-Agreement	Convenios con partes	core.agreement(agreement_type, party_a, party_b, status)
+Patrón Señal en Fuentes Abstracción Propuesta
+Category 15+ tablas con código/nombre/parent core.category(scheme, code, label, parent_id)
+Magnitude Campos numéricos (monto, %, plazo) core.magnitude(subject_type, subject_id, aspect, value, unit)
+Event Transacciones, auditoría core.event(event_type, subject_type, subject_id, occurred_at, data)
+Agreement Convenios con partes core.agreement(agreement_type, party_a, party_b, status)
 3.3 Arquitectura de 4 Capas
 
 ┌─────────────────────────────────────────────────────────────┐
@@ -1363,10 +1359,10 @@ ALTER TABLE meta.story ADD COLUMN scope_id INTEGER REFERENCES ref.category(id); 
 ALTER TABLE meta.story ADD COLUMN extra_tags TEXT[];
 ALTER TABLE meta.story ADD COLUMN acceptance_criteria TEXT[];
 Campos Descartados (sin sustento):
-Campo	Razón de Descarte
-_meta.urn	Derivable del id
-_meta.type	Siempre 'Story'
-_meta.schema	Metadata de versionado, no dato
+Campo Razón de Descarte
+_meta.urn Derivable del id
+_meta.type Siempre 'Story'
+_meta.schema Metadata de versionado, no dato
 Campo JSONB para Futuras Extensiones:
 
 ALTER TABLE core.ipr ADD COLUMN metadata JSONB;
@@ -1394,20 +1390,20 @@ Relaciones que deberían ser FKs
 Lógica de negocio embebida
 Gobernanza: Todo campo en metadata debe documentarse en el glosario antes de su uso.
 
-5. VALIDACIÓN CONTRA HISTORIAS (Competency Questions)
+1. VALIDACIÓN CONTRA HISTORIAS (Competency Questions)
 5.1 Queries de Prueba
-CQ	Pregunta	Query SQL
-CQ-054	¿Cuántas IPR están en cartera?	SELECT COUNT(*) FROM core.ipr;
-CQ-055	¿Cuántas IPR en ejecución?	SELECT COUNT(*) FROM core.ipr WHERE mcd_phase_id = (SELECT id FROM ref.category WHERE scheme='mcd_phase' AND code='F4');
-CQ-154	¿Cuántos convenios vigentes?	SELECT COUNT(*) FROM core.agreement WHERE state_id = (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='VIGENTE');
-CQ-195	¿Cuántas rendiciones pendientes?	SELECT COUNT(*) FROM core.rendition WHERE state_id = (SELECT id FROM ref.category WHERE scheme='rendition_state' AND code='PENDIENTE');
-6. DECISIONES DE DISEÑO DOCUMENTADAS
+CQ Pregunta Query SQL
+CQ-054 ¿Cuántas IPR están en cartera? SELECT COUNT(*) FROM core.ipr;
+CQ-055 ¿Cuántas IPR en ejecución? SELECT COUNT(*) FROM core.ipr WHERE mcd_phase_id = (SELECT id FROM ref.category WHERE scheme='mcd_phase' AND code='F4');
+CQ-154 ¿Cuántos convenios vigentes? SELECT COUNT(*) FROM core.agreement WHERE state_id = (SELECT id FROM ref.category WHERE scheme='agreement_state' AND code='VIGENTE');
+CQ-195 ¿Cuántas rendiciones pendientes? SELECT COUNT(*) FROM core.rendition WHERE state_id = (SELECT id FROM ref.category WHERE scheme='rendition_state' AND code='PENDIENTE');
+2. DECISIONES DE DISEÑO DOCUMENTADAS
 6.1 Tensiones Resueltas
-Tensión	Decisión	Criterio
-Normalización vs Simplicidad	Normalizar estados/fases como ref.category	Estados tienen historia de vida propia (transiciones)
-Especificidad vs Generalidad	ref.category con scheme en vez de 15 tablas	Estructura idéntica, solo cambia contenido
-Polimorfismo vs Tipado	txn.event polimórfico con subject_type	Estructura igual, solo cambia sujeto
-Completitud vs Minimalismo	Campo metadata JSONB para datos no estándar	Evita pérdida sin contaminar schema
+Tensión Decisión Criterio
+Normalización vs Simplicidad Normalizar estados/fases como ref.category Estados tienen historia de vida propia (transiciones)
+Especificidad vs Generalidad ref.category con scheme en vez de 15 tablas Estructura idéntica, solo cambia contenido
+Polimorfismo vs Tipado txn.event polimórfico con subject_type Estructura igual, solo cambia sujeto
+Completitud vs Minimalismo Campo metadata JSONB para datos no estándar Evita pérdida sin contaminar schema
 6.2 Alineamiento Ontológico
 Cada tabla documenta:
 
@@ -1416,37 +1412,37 @@ ALINEAMIENTO: Clase ontológica correspondiente (gnub:, gist:)
 NO TIENE: Omisiones intencionales
 7. VERIFICACIÓN DEL MODELO
 7.1 Checklist de Cobertura Semántica
-Axioma ORKO	Verificación	Estado
-A1: Transformación	¿core.ipr captura S₁→S₂?	intended_outcome + txn.magnitude
-A2: Capacidad	¿meta.role distingue sustrato/cognición?	agent_type, cognition_level
-A3: Información	¿Entidades tienen temporalidad?	valid_from/to, created_at
-A4: Restricción	¿Constraints modelados?	FKs, CHECKs, SHACL shapes
-A5: Intencionalidad	¿Todo traza a Story?	meta.story + story_entity
+Axioma ORKO Verificación Estado
+A1: Transformación ¿core.ipr captura S₁→S₂? intended_outcome + txn.magnitude
+A2: Capacidad ¿meta.role distingue sustrato/cognición? agent_type, cognition_level
+A3: Información ¿Entidades tienen temporalidad? valid_from/to, created_at
+A4: Restricción ¿Constraints modelados? FKs, CHECKs, SHACL shapes
+A5: Intencionalidad ¿Todo traza a Story? meta.story + story_entity
 7.2 Checklist de Cobertura Funcional
-Función Motora	Tablas Soporte	CQs Cubiertas
-PLANIFICAR	core.planning_instrument	CQ-001 a CQ-028
-FINANCIAR	core.ipr, core.budget_program, core.fund_program, ref.category(funding_source/mechanism)	CQ-029 a CQ-100
-EJECUTAR	core.agreement, core.rendition, txn.event	CQ-101 a CQ-180
-COORDINAR	core.organization	CQ-181 a CQ-220
-NORMAR	core.administrative_act, core.resolution, core.administrative_procedure, core.legal_document, core.legal_mandate	CQ-221 a CQ-280
+Función Motora Tablas Soporte CQs Cubiertas
+PLANIFICAR core.planning_instrument CQ-001 a CQ-028
+FINANCIAR core.ipr, core.budget_program, core.fund_program, ref.category(funding_source/mechanism) CQ-029 a CQ-100
+EJECUTAR core.agreement, core.rendition, txn.event CQ-101 a CQ-180
+COORDINAR core.organization CQ-181 a CQ-220
+NORMAR core.administrative_act, core.resolution, core.administrative_procedure, core.legal_document, core.legal_mandate CQ-221 a CQ-280
 7.3 Cobertura por Dominio (Modelo Expandido - 37 Tablas)
-Dominio	Entidades Def.	Tablas DDL	Menciones Cubiertas	Cobertura
-D-FIN	31	7	94	~95%
-D-ORG	16	5	65	~90%
-D-CONV	14	7	48	~95%
-D-DIG	18	4	52	~85%
-D-LOC	11	2	40	~90%
-D-NORM	71	3	25	~35%
-D-SAL	15	2	55	~85%
-D-GOV	10	(via committee)	20	~70%
+Dominio Entidades Def. Tablas DDL Menciones Cubiertas Cobertura
+D-FIN 31 7 94 ~95%
+D-ORG 16 5 65 ~90%
+D-CONV 14 7 48 ~95%
+D-DIG 18 4 52 ~85%
+D-LOC 11 2 40 ~90%
+D-NORM 71 3 25 ~35%
+D-SAL 15 2 55 ~85%
+D-GOV 10 (via committee) 20 ~70%
 Resumen del Modelo Expandido:
 
-Capa	Tablas	Descripción
-META	5	story, entity, role, process, story_entity
-REFERENCE	3	category (60+ schemes), actor, operational_commitment_type
-CORE	35	Entidades de negocio (ver detalle abajo)
-TRANSACTIONAL	2	event, magnitude
-TOTAL	45	~99% cobertura + modelo para_titi
+Capa Tablas Descripción
+META 5 story, entity, role, process, story_entity
+REFERENCE 3 category (60+ schemes), actor, operational_commitment_type
+CORE 35 Entidades de negocio (ver detalle abajo)
+TRANSACTIONAL 2 event, magnitude
+TOTAL 45 ~99% cobertura + modelo para_titi
 Detalle CORE (35 tablas):
 
 Núcleo IPR: ipr, ipr_mechanism, agreement, rendition
@@ -1465,37 +1461,36 @@ Resultado: El modelo expandido de 44 tablas cubre ~99% de las menciones en las 8
 
 Subsunción del Modelo para_titi:
 
-Entidad para_titi	Tabla goreos	Estado
-Iniciativa	core.ipr	✓ Cubierta
-Convenio	core.agreement	✓ Cubierta
-Cuota	(via budget_commitment)	✓ Cubierta
-Division	core.organization	✓ Cubierta
-Usuario	core.person + meta.role	✓ Cubierta
-ProblemaIPR	core.ipr_problem	✓ AGREGADA
-CompromisoOperativo	core.operational_commitment	✓ AGREGADA
-HistorialCompromiso	core.commitment_history	✓ AGREGADA
-AlertaIPR	core.alert	✓ Cubierta
-InformeAvance	core.progress_report	✓ AGREGADA
-Reunion/InstanciaColectiva	core.session + core.crisis_meeting	✓ AGREGADA
-TemaReunion/PuntoTabla	core.session_agreement	✓ Cubierta
-ContextoPuntoCrisis	core.agenda_item_context	✓ AGREGADA
+Entidad para_titi Tabla goreos Estado
+Iniciativa core.ipr ✓ Cubierta
+Convenio core.agreement ✓ Cubierta
+Cuota (via budget_commitment) ✓ Cubierta
+Division core.organization ✓ Cubierta
+Usuario core.person + meta.role ✓ Cubierta
+ProblemaIPR core.ipr_problem ✓ AGREGADA
+CompromisoOperativo core.operational_commitment ✓ AGREGADA
+HistorialCompromiso core.commitment_history ✓ AGREGADA
+AlertaIPR core.alert ✓ Cubierta
+InformeAvance core.progress_report ✓ AGREGADA
+Reunion/InstanciaColectiva core.session + core.crisis_meeting ✓ AGREGADA
+TemaReunion/PuntoTabla core.session_agreement ✓ Cubierta
+ContextoPuntoCrisis core.agenda_item_context ✓ AGREGADA
 7.4 Cobertura para Departamento de Gestión Institucional
 Misión DGI: "Articular la planificación estratégica con la operación diaria, optimizando procesos y fortaleciendo el control de gestión para asegurar una gestión institucional eficiente, transparente y orientada al desarrollo."
 
-Función DGI	Entidades de Soporte	Estado
-Articular planificación-operación	core.planning_instrument → core.ipr → core.operational_commitment	✓
-Control de gestión IPR	core.ipr_problem, core.progress_report, core.alert	✓
-Seguimiento de compromisos	core.operational_commitment, core.commitment_history	✓
-Reuniones de coordinación	core.session, core.crisis_meeting, core.minute	✓
-Dashboard ejecutivo	txn.magnitude (métricas) + core.alert (alertas)	✓
-Gestión de crisis/nudos	core.ipr_problem, core.agenda_item_context	✓
-Verificación por jefatura	core.operational_commitment.verified_by_id	✓
-Trazabilidad completa	core.commitment_history (event sourcing)	✓
+Función DGI Entidades de Soporte Estado
+Articular planificación-operación core.planning_instrument → core.ipr → core.operational_commitment ✓
+Control de gestión IPR core.ipr_problem, core.progress_report, core.alert ✓
+Seguimiento de compromisos core.operational_commitment, core.commitment_history ✓
+Reuniones de coordinación core.session, core.crisis_meeting, core.minute ✓
+Dashboard ejecutivo txn.magnitude (métricas) + core.alert (alertas) ✓
+Gestión de crisis/nudos core.ipr_problem, core.agenda_item_context ✓
+Verificación por jefatura core.operational_commitment.verified_by_id ✓
+Trazabilidad completa core.commitment_history (event sourcing) ✓
 Resultado: El modelo cubre 100% de las funciones del Departamento de Gestión Institucional.
 
 7.5 Validación con Historias Críticas
 Ejecutar las siguientes queries contra el schema para validar cobertura:
-
 
 -- US-FIN-IPR-039: Verificar requisitos ARI
 SELECT i.codigo_bip, i.name, c.label as phase, m.label as mechanism
@@ -1510,7 +1505,7 @@ JOIN ref.category c ON e.event_type_id = c.id
 WHERE c.code = 'FINANCIAL_STATEMENT_SUBMITTED';
 
 -- US-GOB-GAB-001: Gestión de agenda
-SELECT * FROM txn.event e
+SELECT *FROM txn.event e
 WHERE e.subject_type = 'meeting'
 ORDER BY e.occurred_at DESC;
 8. PRÓXIMOS PASOS DE IMPLEMENTACIÓN
@@ -1532,14 +1527,13 @@ Ejecutar 472 Competency Questions contra el schema
 Validar invariante HAIC (todo agente algorítmico tiene humano)
 Validar cobertura de 5 funciones motoras
 9. ARCHIVOS A CREAR/MODIFICAR
-Archivo	Acción	Descripción
-model/model_goreos/goreos_ddl.sql	CREAR	DDL completo (45 tablas, 4 schemas)
-model/model_goreos/goreos_seed.sql	CREAR	Datos iniciales ref.category (50+ schemes)
-model/model_goreos/goreos_seed_territory.sql	CREAR	Datos territoriales (Región Ñuble, 21 comunas)
-model/model_goreos/goreos_shapes.ttl	CREAR	SHACL shapes para validación
-model/model_goreos/goreos_indexes.sql	CREAR	Índices optimizados para CQs frecuentes
+Archivo Acción Descripción
+model/model_goreos/goreos_ddl.sql CREAR DDL completo (45 tablas, 4 schemas)
+model/model_goreos/goreos_seed.sql CREAR Datos iniciales ref.category (50+ schemes)
+model/model_goreos/goreos_seed_territory.sql CREAR Datos territoriales (Región Ñuble, 21 comunas)
+model/model_goreos/goreos_shapes.ttl CREAR SHACL shapes para validación
+model/model_goreos/goreos_indexes.sql CREAR Índices optimizados para CQs frecuentes
 Estructura del DDL:
-
 
 goreos_ddl.sql
 ├── CREATE SCHEMA meta;    -- 5 tablas (4 átomos + relación N:M)
