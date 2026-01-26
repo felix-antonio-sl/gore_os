@@ -179,29 +179,30 @@ BEGIN
     SELECT id INTO v_region_id FROM core.territory WHERE code = '16';
 
     -- Indicadores demográficos región
-    INSERT INTO core.territorial_indicator (territory_id, indicator_type_id, name, value, unit, year, source)
+    -- NOTA: DDL usa code (NOT NULL), numeric_value, fiscal_year (no value/unit/year)
+    INSERT INTO core.territorial_indicator (code, territory_id, indicator_type_id, name, numeric_value, fiscal_year, source)
     VALUES
-        (v_region_id, v_demo_type_id, 'Población Total', 511551, 'habitantes', 2017, 'INE Censo 2017'),
-        (v_region_id, v_demo_type_id, 'Densidad Poblacional', 38.8, 'hab/km²', 2017, 'INE Censo 2017'),
-        (v_region_id, v_demo_type_id, 'Índice de Masculinidad', 98.2, '%', 2017, 'INE Censo 2017'),
-        (v_region_id, v_demo_type_id, 'Población Urbana', 71.5, '%', 2017, 'INE Censo 2017'),
-        (v_region_id, v_demo_type_id, 'Población Rural', 28.5, '%', 2017, 'INE Censo 2017');
+        ('IND-16-DEMO-001', v_region_id, v_demo_type_id, 'Población Total', 511551, 2017, 'INE Censo 2017'),
+        ('IND-16-DEMO-002', v_region_id, v_demo_type_id, 'Densidad Poblacional', 38.8, 2017, 'INE Censo 2017'),
+        ('IND-16-DEMO-003', v_region_id, v_demo_type_id, 'Índice de Masculinidad', 98.2, 2017, 'INE Censo 2017'),
+        ('IND-16-DEMO-004', v_region_id, v_demo_type_id, 'Población Urbana', 71.5, 2017, 'INE Censo 2017'),
+        ('IND-16-DEMO-005', v_region_id, v_demo_type_id, 'Población Rural', 28.5, 2017, 'INE Censo 2017');
 
     -- Indicadores económicos región
-    INSERT INTO core.territorial_indicator (territory_id, indicator_type_id, name, value, unit, year, source)
+    INSERT INTO core.territorial_indicator (code, territory_id, indicator_type_id, name, numeric_value, fiscal_year, source)
     VALUES
-        (v_region_id, v_eco_type_id, 'PIB Regional', 2850000, 'MM CLP', 2022, 'Banco Central'),
-        (v_region_id, v_eco_type_id, 'Participación PIB Nacional', 1.2, '%', 2022, 'Banco Central'),
-        (v_region_id, v_eco_type_id, 'Tasa de Desempleo', 7.8, '%', 2023, 'INE'),
-        (v_region_id, v_eco_type_id, 'Ingreso Promedio Hogar', 850000, 'CLP', 2022, 'CASEN');
+        ('IND-16-ECO-001', v_region_id, v_eco_type_id, 'PIB Regional', 2850000, 2022, 'Banco Central'),
+        ('IND-16-ECO-002', v_region_id, v_eco_type_id, 'Participación PIB Nacional', 1.2, 2022, 'Banco Central'),
+        ('IND-16-ECO-003', v_region_id, v_eco_type_id, 'Tasa de Desempleo', 7.8, 2023, 'INE'),
+        ('IND-16-ECO-004', v_region_id, v_eco_type_id, 'Ingreso Promedio Hogar', 850000, 2022, 'CASEN');
 
     -- Indicadores sociales región
-    INSERT INTO core.territorial_indicator (territory_id, indicator_type_id, name, value, unit, year, source)
+    INSERT INTO core.territorial_indicator (code, territory_id, indicator_type_id, name, numeric_value, fiscal_year, source)
     VALUES
-        (v_region_id, v_social_type_id, 'Tasa de Pobreza', 12.3, '%', 2022, 'CASEN'),
-        (v_region_id, v_social_type_id, 'Índice de Desarrollo Humano', 0.78, 'índice', 2021, 'PNUD'),
-        (v_region_id, v_social_type_id, 'Cobertura Agua Potable', 98.5, '%', 2022, 'SISS'),
-        (v_region_id, v_social_type_id, 'Cobertura Alcantarillado', 92.1, '%', 2022, 'SISS');
+        ('IND-16-SOC-001', v_region_id, v_social_type_id, 'Tasa de Pobreza', 12.3, 2022, 'CASEN'),
+        ('IND-16-SOC-002', v_region_id, v_social_type_id, 'Índice de Desarrollo Humano', 0.78, 2021, 'PNUD'),
+        ('IND-16-SOC-003', v_region_id, v_social_type_id, 'Cobertura Agua Potable', 98.5, 2022, 'SISS'),
+        ('IND-16-SOC-004', v_region_id, v_social_type_id, 'Cobertura Alcantarillado', 92.1, 2022, 'SISS');
 
     RAISE NOTICE 'Indicadores territoriales base insertados';
 
@@ -216,30 +217,27 @@ DECLARE
     v_gore_type_id INTEGER;
     v_division_type_id INTEGER;
     v_gore_id INTEGER;
-    v_region_id INTEGER;
 BEGIN
     -- Obtener tipos de organización
     SELECT id INTO v_gore_type_id FROM ref.category WHERE scheme = 'org_type' AND code = 'GORE';
     SELECT id INTO v_division_type_id FROM ref.category WHERE scheme = 'org_type' AND code = 'DIVISION';
 
-    -- Obtener territorio región
-    SELECT id INTO v_region_id FROM core.territory WHERE code = '16';
-
     -- GORE Ñuble
-    INSERT INTO core.organization (code, name, org_type_id, parent_id, territory_id, is_active)
-    VALUES ('GORE-NUBLE', 'Gobierno Regional de Ñuble', v_gore_type_id, NULL, v_region_id, TRUE)
+    -- NOTA: DDL de core.organization no tiene territory_id ni is_active
+    INSERT INTO core.organization (code, name, org_type_id, parent_id)
+    VALUES ('GORE-NUBLE', 'Gobierno Regional de Ñuble', v_gore_type_id, NULL)
     RETURNING id INTO v_gore_id;
 
     -- Divisiones del GORE
-    INSERT INTO core.organization (code, name, org_type_id, parent_id, territory_id, is_active) VALUES
-        ('DIPIR', 'División de Planificación e Inversión Regional', v_division_type_id, v_gore_id, v_region_id, TRUE),
-        ('DAF', 'División de Administración y Finanzas', v_division_type_id, v_gore_id, v_region_id, TRUE),
-        ('DIFOT', 'División de Fomento e Industria', v_division_type_id, v_gore_id, v_region_id, TRUE),
-        ('DIDERSO', 'División de Desarrollo Social y Humano', v_division_type_id, v_gore_id, v_region_id, TRUE),
-        ('DIIAP', 'División de Infraestructura y Arquitectura Pública', v_division_type_id, v_gore_id, v_region_id, TRUE),
-        ('DIJ', 'División Jurídica', v_division_type_id, v_gore_id, v_region_id, TRUE),
-        ('DIDECO', 'División de Control de Gestión', v_division_type_id, v_gore_id, v_region_id, TRUE),
-        ('GABINETE', 'Gabinete del Gobernador', v_division_type_id, v_gore_id, v_region_id, TRUE);
+    INSERT INTO core.organization (code, name, org_type_id, parent_id) VALUES
+        ('DIPIR', 'División de Planificación e Inversión Regional', v_division_type_id, v_gore_id),
+        ('DAF', 'División de Administración y Finanzas', v_division_type_id, v_gore_id),
+        ('DIFOT', 'División de Fomento e Industria', v_division_type_id, v_gore_id),
+        ('DIDERSO', 'División de Desarrollo Social y Humano', v_division_type_id, v_gore_id),
+        ('DIIAP', 'División de Infraestructura y Arquitectura Pública', v_division_type_id, v_gore_id),
+        ('DIJ', 'División Jurídica', v_division_type_id, v_gore_id),
+        ('DIDECO', 'División de Control de Gestión', v_division_type_id, v_gore_id),
+        ('GABINETE', 'Gabinete del Gobernador', v_division_type_id, v_gore_id);
 
     RAISE NOTICE 'Organizaciones GORE Ñuble insertadas: 1 GORE, 8 divisiones';
 

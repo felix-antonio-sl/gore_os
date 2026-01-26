@@ -3,7 +3,7 @@
 -- =============================================================================
 -- GENERADO POR: Arquitecto-GORE (KODA-CARTOGRAPHER + Ontologista Gist)
 -- FECHA: 2026-01-26
--- TOTAL TABLAS: 49
+-- TOTAL TABLAS: 50
 -- ARQUITECTURA: 4 schemas (meta, ref, core, txn)
 -- ALINEAMIENTO: Gist 14.0, gnub:*, tde:*
 -- =============================================================================
@@ -134,12 +134,20 @@ CREATE TABLE ref.category (
     label_en TEXT,
     description TEXT,
     parent_id INTEGER REFERENCES ref.category(id),
+    parent_code VARCHAR(32),
+    -- HIGH-001: Vinculacion Fase->Estado (para estados IPR que pertenecen a una fase MCD)
+    phase_id INTEGER REFERENCES ref.category(id),
+    -- MED-004: Transiciones de estado validas (para schemes de estado)
+    valid_transitions JSONB,
     sort_order INTEGER,
     metadata JSONB DEFAULT '{}'::jsonb,
     UNIQUE(scheme, code)
 );
 CREATE INDEX idx_category_scheme ON ref.category(scheme);
+CREATE INDEX idx_category_phase ON ref.category(phase_id) WHERE phase_id IS NOT NULL;
 COMMENT ON TABLE ref.category IS 'Patron Category (Gist 14.0) - 75+ schemes de taxonomias flexibles';
+COMMENT ON COLUMN ref.category.phase_id IS 'Para scheme=ipr_state: FK a mcd_phase al que pertenece este estado';
+COMMENT ON COLUMN ref.category.valid_transitions IS 'Array JSON de codigos de estado validos como destino. Ej: ["EN_REVISION", "RECHAZADO"]';
 
 -- TABLA: ref.actor
 -- EXISTE PORQUE: dipir_ssot_koda.yaml - 23 actores unicos
@@ -152,6 +160,7 @@ CREATE TABLE ref.actor (
     emoji VARCHAR(8),
     style VARCHAR(32),
     is_internal BOOLEAN DEFAULT TRUE,
+    sort_order INTEGER,
     notes TEXT,
     metadata JSONB DEFAULT '{}'::jsonb
 );
@@ -167,13 +176,14 @@ CREATE TABLE ref.operational_commitment_type (
     description TEXT,
     requires_ipr_link BOOLEAN DEFAULT TRUE,
     default_days INTEGER DEFAULT 7,
+    sort_order INTEGER,
     is_active BOOLEAN DEFAULT TRUE,
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE ref.operational_commitment_type IS 'Tipos de compromiso operativo para gestion';
 
 -- =============================================================================
--- CAPA 2: CORE (39 tablas)
+-- CAPA 2: CORE (40 tablas)
 -- Entidades de negocio del GORE
 -- =============================================================================
 
@@ -403,6 +413,10 @@ COMMENT ON COLUMN core.ipr.mechanism_id IS 'scheme=mechanism: SNI|C33|FRIL|GLOSA
 -- TABLA: core.ipr_mechanism
 -- EXISTE PORQUE: omega_gore_nuble_mermaid.md - Mecanismos especificos
 -- ALINEAMIENTO: Poly-IPR patterns (Polimorfismo por mecanismo)
+-- HIGH-010: NOTA DE DISEÑO - Esta tabla contiene atributos polimorficos por mecanismo.
+--           core.ipr.mechanism_id indica el mecanismo general (scheme=mechanism).
+--           core.ipr_mechanism.mechanism_type_id es redundante pero se mantiene para
+--           consistencia con el patron Poly-IPR. La fuente autoritativa es core.ipr.mechanism_id.
 CREATE TABLE core.ipr_mechanism (
     id SERIAL PRIMARY KEY,
     ipr_id INTEGER REFERENCES core.ipr(id) NOT NULL UNIQUE,
@@ -843,17 +857,20 @@ COMMENT ON TABLE core.operational_commitment IS 'Tarea asignada a un responsable
 -- TABLA: core.commitment_history
 -- EXISTE PORQUE: Event sourcing - trazabilidad de compromisos
 -- ALINEAMIENTO: gore_ejecucion.historial_compromiso (para_titi)
+-- HIGH-008: Estados con FK a ref.category en lugar de VARCHAR libre
 CREATE TABLE core.commitment_history (
     id SERIAL PRIMARY KEY,
     commitment_id INTEGER REFERENCES core.operational_commitment(id) ON DELETE CASCADE NOT NULL,
-    previous_state VARCHAR(20),
-    new_state VARCHAR(20) NOT NULL,
+    previous_state_id INTEGER REFERENCES ref.category(id),
+    new_state_id INTEGER REFERENCES ref.category(id) NOT NULL,
     changed_by_id INTEGER REFERENCES core.person(id) NOT NULL,
     comment TEXT,
     changed_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE INDEX idx_commitment_history ON core.commitment_history(commitment_id);
 COMMENT ON TABLE core.commitment_history IS 'Historial de cambios de estado de compromisos';
+COMMENT ON COLUMN core.commitment_history.previous_state_id IS 'scheme=commitment_state - estado anterior';
+COMMENT ON COLUMN core.commitment_history.new_state_id IS 'scheme=commitment_state - nuevo estado';
 
 -- TABLA: core.progress_report
 -- EXISTE PORQUE: casos_uso.md - "Registrar Informe de Avance"
@@ -927,6 +944,8 @@ CREATE TABLE core.work_item (
     priority_id INTEGER REFERENCES ref.category(id),
     origin_id INTEGER REFERENCES ref.category(id),
     due_date DATE,
+    -- HIGH-005: Funtor Story->WorkItem (trazabilidad requisito->implementacion)
+    story_id VARCHAR(32) REFERENCES meta.story(id),
     -- Vinculaciones a entidades formales
     ipr_id INTEGER REFERENCES core.ipr(id),
     agreement_id INTEGER REFERENCES core.agreement(id),
@@ -956,6 +975,7 @@ CREATE INDEX idx_work_item_ipr ON core.work_item(ipr_id);
 COMMENT ON TABLE core.work_item IS 'Item de trabajo unificado - atomo de gestion operativa';
 COMMENT ON COLUMN core.work_item.code IS 'Codigo unico: IT-YYYY-NNNNN';
 COMMENT ON COLUMN core.work_item.status_id IS 'scheme=work_item_status: PENDIENTE|EN_PROGRESO|BLOQUEADO|COMPLETADO|VERIFICADO|CANCELADO';
+COMMENT ON COLUMN core.work_item.story_id IS 'FK a meta.story - trazabilidad: este trabajo existe PORQUE esta historia lo requiere';
 
 -- TABLA: core.work_item_history
 -- EXISTE PORQUE: RF-030 (Historial de Item)
@@ -1038,11 +1058,12 @@ COMMENT ON TABLE core.risk IS 'Riesgo identificado en un proceso o IPR';
 -- TABLA: txn.event
 -- EXISTE PORQUE: dipir:VisacionEvent, gnub:BudgetaryTransaction
 -- ALINEAMIENTO: gist:Event
+-- HIGH-007: subject_id es TEXT para soportar tanto INTEGER como UUID
 CREATE TABLE txn.event (
     id BIGSERIAL PRIMARY KEY,
     event_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
     subject_type VARCHAR(32) NOT NULL,
-    subject_id INTEGER NOT NULL,
+    subject_id TEXT NOT NULL,
     actor_id INTEGER,
     occurred_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     data JSONB DEFAULT '{}'::jsonb
@@ -1052,14 +1073,16 @@ CREATE INDEX idx_event_type ON txn.event(event_type_id);
 CREATE INDEX idx_event_occurred ON txn.event(occurred_at);
 COMMENT ON TABLE txn.event IS 'Evento del sistema - Event Sourcing';
 COMMENT ON COLUMN txn.event.event_type_id IS 'scheme=event_type: CDP|COMPROMISO|DEVENGO|PAGO|VISACION|STATE_TRANSITION|etc.';
+COMMENT ON COLUMN txn.event.subject_id IS 'ID del sujeto (TEXT para soportar INTEGER y UUID)';
 
 -- TABLA: txn.magnitude
 -- EXISTE PORQUE: Magnitude Pattern (Gist 14.0)
 -- ALINEAMIENTO: gist:Magnitude
+-- HIGH-007: subject_id es TEXT para soportar tanto INTEGER como UUID
 CREATE TABLE txn.magnitude (
     id BIGSERIAL PRIMARY KEY,
     subject_type VARCHAR(32) NOT NULL,
-    subject_id INTEGER NOT NULL,
+    subject_id TEXT NOT NULL,
     aspect_id INTEGER REFERENCES ref.category(id) NOT NULL,
     numeric_value NUMERIC(18,2),
     unit_id INTEGER REFERENCES ref.category(id),
@@ -1069,6 +1092,7 @@ CREATE TABLE txn.magnitude (
 CREATE INDEX idx_magnitude_subject ON txn.magnitude(subject_type, subject_id);
 COMMENT ON TABLE txn.magnitude IS 'Magnitude Pattern (Gist 14.0) - mediciones con unidad y aspecto';
 COMMENT ON COLUMN txn.magnitude.aspect_id IS 'scheme=aspect: BUDGETED_AMOUNT|CURRENT_BUDGET|PRE_COMMITTED|COMMITTED|ACCRUED|PAID|AVAILABLE_BALANCE|etc.';
+COMMENT ON COLUMN txn.magnitude.subject_id IS 'ID del sujeto (TEXT para soportar INTEGER y UUID)';
 
 -- =============================================================================
 -- FOREIGN KEYS DIFERIDAS (referencias circulares)
@@ -1108,23 +1132,106 @@ ALTER TABLE core.alert ADD CONSTRAINT fk_alert_attended_by
 -- VISTA PARA MAPPING ONTOLOGICO (gist:Assignment)
 -- =============================================================================
 
+-- HIGH-009: Corregido person_id -> user_id (new_assignee_id es UUID de user, no de person)
 CREATE VIEW core.v_work_item_assignment AS
 SELECT
     h.id AS assignment_id,
     h.work_item_id AS task_id,
-    h.new_assignee_id AS person_id,
+    h.new_assignee_id AS user_id,
+    u.person_id AS person_id,
     h.occurred_at AS start_datetime,
     LEAD(h.occurred_at) OVER (PARTITION BY h.work_item_id ORDER BY h.occurred_at) AS end_datetime
 FROM core.work_item_history h
+LEFT JOIN core.user u ON h.new_assignee_id = u.id
 WHERE h.event_type_id IN (
     SELECT id FROM ref.category
     WHERE scheme = 'work_item_event' AND code IN ('CREATED', 'REASSIGNED')
 );
 COMMENT ON VIEW core.v_work_item_assignment IS 'Vista para exportar asignaciones como gist:Assignment';
+COMMENT ON COLUMN core.v_work_item_assignment.user_id IS 'UUID del usuario asignado';
+COMMENT ON COLUMN core.v_work_item_assignment.person_id IS 'INTEGER de la persona asociada al usuario';
+
+-- =============================================================================
+-- MED-009: FUNCION Y TRIGGERS PARA UPDATED_AT AUTOMATICO
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION fn_update_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION fn_update_timestamp() IS 'Actualiza automaticamente updated_at en UPDATE';
+
+-- Triggers para tablas con updated_at
+CREATE TRIGGER trg_user_updated_at
+    BEFORE UPDATE ON core.user
+    FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
+
+CREATE TRIGGER trg_work_item_updated_at
+    BEFORE UPDATE ON core.work_item
+    FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
+
+CREATE TRIGGER trg_agreement_installment_updated_at
+    BEFORE UPDATE ON core.agreement_installment
+    FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
+
+-- =============================================================================
+-- MED-007: FUNCION DE VALIDACION DE SCHEME (OPCIONAL)
+-- =============================================================================
+-- Esta funcion puede usarse en triggers para validar que un category_id
+-- pertenece al scheme correcto. Ejemplo de uso en aplicacion o trigger.
+
+CREATE OR REPLACE FUNCTION fn_validate_category_scheme(
+    p_category_id INTEGER,
+    p_expected_scheme VARCHAR(32)
+) RETURNS BOOLEAN AS $$
+DECLARE
+    v_actual_scheme VARCHAR(32);
+BEGIN
+    SELECT scheme INTO v_actual_scheme
+    FROM ref.category
+    WHERE id = p_category_id;
+
+    IF v_actual_scheme IS NULL THEN
+        RETURN FALSE;
+    END IF;
+
+    RETURN v_actual_scheme = p_expected_scheme;
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION fn_validate_category_scheme(INTEGER, VARCHAR) IS
+'Valida que un category_id pertenece al scheme esperado. Usar en triggers o aplicacion.';
+
+-- =============================================================================
+-- EJEMPLO: Trigger de validacion para core.ipr.status_id
+-- =============================================================================
+-- Descomentado si se desea validacion estricta a nivel de BD
+
+/*
+CREATE OR REPLACE FUNCTION fn_validate_ipr_status()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.status_id IS NOT NULL AND NOT fn_validate_category_scheme(NEW.status_id, 'ipr_state') THEN
+        RAISE EXCEPTION 'status_id (%) debe pertenecer al scheme ipr_state', NEW.status_id;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_ipr_validate_status
+    BEFORE INSERT OR UPDATE ON core.ipr
+    FOR EACH ROW EXECUTE FUNCTION fn_validate_ipr_status();
+*/
 
 -- =============================================================================
 -- FIN DDL
 -- =============================================================================
--- Total: 49 tablas
--- Meta: 5 | Ref: 3 | Core: 39 | Txn: 2
+-- Total: 50 tablas
+-- Meta: 5 | Ref: 3 | Core: 40 | Txn: 2
+-- Funciones: fn_update_timestamp, fn_validate_category_scheme
+-- Triggers: trg_user_updated_at, trg_work_item_updated_at, trg_agreement_installment_updated_at
 -- =============================================================================

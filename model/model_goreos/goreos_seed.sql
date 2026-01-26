@@ -7,6 +7,9 @@
 -- Fuentes: planclaude.md, especificaciones.md, goreNubleOntology.ttl,
 --          goreNubleReferenceData.ttl, tdeCore.ttl, omega_gore_nuble_mermaid.md
 -- ============================================================================
+-- IDEMPOTENCIA: Este script usa ON CONFLICT para ser ejecutable múltiples veces
+-- sin generar errores por duplicados. Cada INSERT actualizará registros existentes.
+-- ============================================================================
 
 -- ============================================================================
 -- MAPPING ONTOLÓGICO (comentarios de trazabilidad)
@@ -30,7 +33,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('ipr_nature', 'PROGRAMA', 'Programa Operativo', 'gnub:OperationalProgram - Corriente (Subt 24)', 2),
 ('ipr_nature', 'PROGRAMA_INVERSION', 'Programa de Inversión', 'gnub:InvestmentProgram', 3),
 ('ipr_nature', 'ESTUDIO_BASICO', 'Estudio Básico', 'gnub:BasicStudy', 4),
-('ipr_nature', 'ANF', 'Adquisición ANF', 'gnub:ANFAcquisition - C33 Activos No Financieros', 5);
+('ipr_nature', 'ANF', 'Adquisición ANF', 'gnub:ANFAcquisition - C33 Activos No Financieros', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPO IPR (clasificación funcional)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -40,7 +47,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('ipr_type', 'TRANSFERENCIA', 'Transferencia', 'Transferencias a entidades ejecutoras', 4),
 ('ipr_type', 'SUBSIDIO', 'Subsidio', 'Subsidios y aportes', 5),
 ('ipr_type', 'ESTUDIO', 'Estudio', 'Estudios y diseños', 6),
-('ipr_type', 'PROGRAMA_SOCIAL', 'Programa Social', 'Programas sociales operativos', 7);
+('ipr_type', 'PROGRAMA_SOCIAL', 'Programa Social', 'Programas sociales operativos', 7)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- FASES MCD - 6 FASES (CORRECCIÓN ONTOLÓGICA: F0-F5, NO F0-F4)
 -- Fuente: goreNubleReferenceData.ttl:145-185, omega:727-835
@@ -50,7 +61,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('mcd_phase', 'F2', 'Evaluación Técnica', 'Poly-Switch - 7 Tracks de evaluación', 3),
 ('mcd_phase', 'F3', 'Priorización & Asignación', 'CORE - asignación presupuestaria', 4),
 ('mcd_phase', 'F4', 'Formalización & Ejecución', 'Convenios, contratos, ejecución física/financiera', 5),
-('mcd_phase', 'F5', 'Cierre', 'Rendición final y cierre administrativo', 6);
+('mcd_phase', 'F5', 'Cierre', 'Rendición final y cierre administrativo', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ESTADOS IPR OPERATIVOS (28 estados - gnub:IPRState subclasses)
 -- Fuente: goreNubleOntology.ttl:768-805
@@ -83,7 +98,12 @@ INSERT INTO ref.category (scheme, code, label, description, parent_code, sort_or
 -- Estados Programa (gnub:ProgramIPRState)
 ('ipr_state', 'RF', 'RF', 'Recomendación Favorable', 'PROGRAMA', 30),
 ('ipr_state', 'ITF', 'ITF', 'Informe Técnico Favorable', 'PROGRAMA', 31),
-('ipr_state', 'AT', 'AT', 'Aprobación Técnica', 'PROGRAMA', 32);
+('ipr_state', 'AT', 'AT', 'Aprobación Técnica', 'PROGRAMA', 32)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    parent_code = EXCLUDED.parent_code,
+    sort_order = EXCLUDED.sort_order;
 
 -- SUBTÍTULOS PRESUPUESTARIOS
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -94,7 +114,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('budget_subtitle', '31', 'Subtítulo 31', 'Iniciativas de Inversión', 5),
 ('budget_subtitle', '33', 'Subtítulo 33', 'Transferencias de Capital', 6),
 ('budget_subtitle', '34', 'Subtítulo 34', 'Servicio de la Deuda', 7),
-('budget_subtitle', '35', 'Subtítulo 35', 'Saldo Final de Caja', 8);
+('budget_subtitle', '35', 'Subtítulo 35', 'Saldo Final de Caja', 8)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- FUENTES DE FINANCIAMIENTO
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -103,7 +127,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('funding_source', 'PROPIOS', 'Propios', 'Recursos propios del GORE', 3),
 ('funding_source', 'ROYALTY', 'Royalty', 'Royalty Minero / FRPD', 4),
 ('funding_source', 'CREDITO', 'Crédito', 'Crédito o endeudamiento', 5),
-('funding_source', 'DONACION', 'Donación', 'Donaciones y aportes externos', 6);
+('funding_source', 'DONACION', 'Donación', 'Donaciones y aportes externos', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- MECANISMOS DE FINANCIAMIENTO - 7 TRACKS (omega:659-724)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -113,7 +141,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('mechanism_type', 'MEC_GLOSA06', 'Track D1: Glosa 06', 'Ejecución Directa, DIPRES/SES, producto RF', 4),
 ('mechanism_type', 'MEC_TRANSFER', 'Track D2: Transferencias', 'Transferencias, Comité GORE, producto ITF', 5),
 ('mechanism_type', 'MEC_SUBV8', 'Track E1: Subvención 8%', '8% concursable, Comisión, producto Puntaje', 6),
-('mechanism_type', 'MEC_FRPD', 'Track E2: FRPD Royalty', 'Royalty I+D+i, ANID/CORFO, producto Elegibilidad', 7);
+('mechanism_type', 'MEC_FRPD', 'Track E2: FRPD Royalty', 'Royalty I+D+i, ANID/CORFO, producto Elegibilidad', 7)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ASPECTOS PRESUPUESTARIOS - 7 ASPECTS (goreNubleOntology.ttl:376-433)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -123,7 +155,36 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('aspect', 'COMMITTED', 'Comprometido', 'gnub:CommittedAmountAspect - OC/Contratos', 4),
 ('aspect', 'ACCRUED', 'Devengado', 'gnub:AccruedAmountAspect - Devengado', 5),
 ('aspect', 'PAID', 'Pagado', 'gnub:PaidAmountAspect - Pagos efectuados', 6),
-('aspect', 'AVAILABLE_BALANCE', 'Saldo Disponible', 'gnub:AvailableBalanceAspect - Disponible', 7);
+('aspect', 'AVAILABLE_BALANCE', 'Saldo Disponible', 'gnub:AvailableBalanceAspect - Disponible', 7),
+-- MED-002: Aspects no-financieros adicionales para métricas de gestión
+('aspect', 'PHYSICAL_PROGRESS', 'Avance Físico', 'Porcentaje de avance físico de obra/proyecto', 10),
+('aspect', 'FINANCIAL_PROGRESS', 'Avance Financiero', 'Porcentaje de ejecución financiera', 11),
+('aspect', 'BENEFICIARIES', 'Beneficiarios', 'Cantidad de beneficiarios directos', 12),
+('aspect', 'JOBS_CREATED', 'Empleos Creados', 'Empleos generados por el proyecto', 13),
+('aspect', 'EXECUTION_DAYS', 'Días de Ejecución', 'Días transcurridos desde inicio de ejecución', 14)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- MED-001: UNIDADES DE MEDIDA para Magnitude Pattern (gist:UnitOfMeasure)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('unit', 'CLP', 'Peso Chileno', 'Moneda nacional - peso chileno', 1),
+('unit', 'UTM', 'UTM', 'Unidad Tributaria Mensual', 2),
+('unit', 'UF', 'UF', 'Unidad de Fomento', 3),
+('unit', 'USD', 'Dólar US', 'Dólar estadounidense', 4),
+('unit', 'PERCENT', 'Porcentaje', 'Valor porcentual (0-100)', 5),
+('unit', 'COUNT', 'Conteo', 'Unidades enteras/cantidad', 6),
+('unit', 'DAYS', 'Días', 'Días calendario', 7),
+('unit', 'MONTHS', 'Meses', 'Meses calendario', 8),
+('unit', 'KM2', 'Kilómetros²', 'Superficie en kilómetros cuadrados', 9),
+('unit', 'M2', 'Metros²', 'Superficie en metros cuadrados', 10),
+('unit', 'ML', 'Metros lineales', 'Metros lineales de obra', 11),
+('unit', 'HABITANTES', 'Habitantes', 'Cantidad de habitantes', 12)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE EVENTO (gnub:BudgetaryTransaction subclasses + operativos)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -138,7 +199,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('event_type', 'ASIGNACION', 'Asignación', 'Asignación de responsable', 9),
 ('event_type', 'APROBACION', 'Aprobación', 'Evento de aprobación', 10),
 ('event_type', 'RECHAZO', 'Rechazo', 'Evento de rechazo', 11),
-('event_type', 'CIERRE', 'Cierre', 'Evento de cierre', 12);
+('event_type', 'CIERRE', 'Cierre', 'Evento de cierre', 12)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES ACTOS ADMINISTRATIVOS
@@ -150,7 +215,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('act_type', 'DECRETO', 'Decreto', 'gnub:Decree - Acto decreto', 2),
 ('act_type', 'OFICIO', 'Oficio', 'Comunicación oficial', 3),
 ('act_type', 'CERTIFICADO', 'Certificado', 'Certificación oficial', 4),
-('act_type', 'INFORME', 'Informe', 'Informe técnico o administrativo', 5);
+('act_type', 'INFORME', 'Informe', 'Informe técnico o administrativo', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ESTADOS DE ACTO ADMINISTRATIVO
 INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
@@ -161,7 +230,10 @@ INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
 ('act_state', 'TRAMITADO', 'Tramitado', 5),
 ('act_state', 'TOMADO_RAZON', 'Toma de Razón', 6),
 ('act_state', 'RECHAZADO_CGR', 'Rechazado CGR', 7),
-('act_state', 'ANULADO', 'Anulado', 8);
+('act_state', 'ANULADO', 'Anulado', 8)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE RESOLUCIÓN
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -170,7 +242,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('resolution_type', 'DEROGATORIA', 'Derogatoria', 'Deroga resolución anterior', 3),
 ('resolution_type', 'SANCIONATORIA', 'Sancionatoria', 'Aplica sanción', 4),
 ('resolution_type', 'DESIGNACION', 'Designación', 'Designa funcionario/comisión', 5),
-('resolution_type', 'DELEGACION', 'Delegación', 'Delega facultades', 6);
+('resolution_type', 'DELEGACION', 'Delegación', 'Delega facultades', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- RESULTADO CGR
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -178,7 +254,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('cgr_outcome', 'CURSA_OBS', 'Cursa con Observaciones', 'CGR aprueba con observaciones', 2),
 ('cgr_outcome', 'REPRESENTA', 'Representa', 'CGR rechaza', 3),
 ('cgr_outcome', 'RETIRO', 'Retiro', 'GORE retira para corrección', 4),
-('cgr_outcome', 'EXENTO', 'Exento', 'No requiere toma de razón', 5);
+('cgr_outcome', 'EXENTO', 'Exento', 'No requiere toma de razón', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES ORGANIZACIÓN
@@ -195,14 +275,22 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('org_type', 'MINISTERIO', 'Ministerio', 'Ministerio sectorial', 7),
 ('org_type', 'UNIVERSIDAD', 'Universidad', 'Institución educación superior', 8),
 ('org_type', 'ONG', 'ONG', 'Organización sin fines de lucro', 9),
-('org_type', 'EMPRESA', 'Empresa', 'Entidad privada', 10);
+('org_type', 'EMPRESA', 'Empresa', 'Entidad privada', 10)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE PERSONA
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('person_type', 'FUNCIONARIO', 'Funcionario', 'Funcionario GORE', 1),
 ('person_type', 'CONTRATA', 'Contrata', 'Personal a contrata', 2),
 ('person_type', 'HONORARIO', 'Honorarios', 'Profesional a honorarios', 3),
-('person_type', 'EXTERNO', 'Externo', 'Persona externa', 4);
+('person_type', 'EXTERNO', 'Externo', 'Persona externa', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE INVENTARIO
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -210,7 +298,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('inventory_type', 'MOBILIARIO', 'Mobiliario', 'Mobiliario de oficina', 2),
 ('inventory_type', 'EQUIPO_TI', 'Equipo TI', 'Equipamiento tecnológico', 3),
 ('inventory_type', 'MAQUINARIA', 'Maquinaria', 'Maquinaria y equipos', 4),
-('inventory_type', 'INMUEBLE', 'Inmueble', 'Bien raíz', 5);
+('inventory_type', 'INMUEBLE', 'Inmueble', 'Bien raíz', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES TERRITORIO
@@ -222,7 +314,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('territory_type', 'PROVINCIA', 'Provincia', 'Provincia', 2),
 ('territory_type', 'COMUNA', 'Comuna', 'Comuna o municipio', 3),
 ('territory_type', 'LOCALIDAD', 'Localidad', 'Localidad o sector', 4),
-('territory_type', 'ZONA', 'Zona', 'Zona de planificación', 5);
+('territory_type', 'ZONA', 'Zona', 'Zona de planificación', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE INDICADOR TERRITORIAL
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -230,7 +326,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('indicator_type', 'ECONOMICO', 'Económico', 'Indicadores económicos', 2),
 ('indicator_type', 'SOCIAL', 'Social', 'Indicadores sociales', 3),
 ('indicator_type', 'AMBIENTAL', 'Ambiental', 'Indicadores ambientales', 4),
-('indicator_type', 'INFRAESTRUCTURA', 'Infraestructura', 'Indicadores de infraestructura', 5);
+('indicator_type', 'INFRAESTRUCTURA', 'Infraestructura', 'Indicadores de infraestructura', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES CONVENIOS
@@ -243,7 +343,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('agreement_type', 'COLABORACION', 'Colaboración', 'Convenio de colaboración', 3),
 ('agreement_type', 'PROGRAMACION', 'Programación', 'Convenio de programación', 4),
 ('agreement_type', 'MARCO', 'Marco', 'Convenio marco', 5),
-('agreement_type', 'EJECUCION', 'Ejecución', 'Convenio de ejecución directa', 6);
+('agreement_type', 'EJECUCION', 'Ejecución', 'Convenio de ejecución directa', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ESTADOS DE CONVENIO
 INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
@@ -256,14 +360,21 @@ INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
 ('agreement_state', 'EN_MODIFICACION', 'En Modificación', 7),
 ('agreement_state', 'VENCIDO', 'Vencido', 8),
 ('agreement_state', 'TERMINADO', 'Terminado', 9),
-('agreement_state', 'RESCILIADO', 'Resciliado', 10);
+('agreement_state', 'RESCILIADO', 'Resciliado', 10)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE COMITÉ
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('committee_type', 'CORE', 'CORE', 'Consejo Regional', 1),
 ('committee_type', 'COMISION', 'Comisión', 'Comisión permanente o ad-hoc', 2),
 ('committee_type', 'COMITE_TECNICO', 'Comité Técnico', 'Comité técnico de evaluación', 3),
-('committee_type', 'MESA_TRABAJO', 'Mesa de Trabajo', 'Mesa de trabajo intersectorial', 4);
+('committee_type', 'MESA_TRABAJO', 'Mesa de Trabajo', 'Mesa de trabajo intersectorial', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES DIGITAL
@@ -275,7 +386,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('platform_type', 'INTEGRACION', 'Integración', 'Plataforma de interoperabilidad', 2),
 ('platform_type', 'DATOS', 'Datos', 'Plataforma de datos', 3),
 ('platform_type', 'IDENTIDAD', 'Identidad', 'Plataforma de identidad digital', 4),
-('platform_type', 'DOCUMENTAL', 'Documental', 'Gestión documental', 5);
+('platform_type', 'DOCUMENTAL', 'Documental', 'Gestión documental', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE TRÁMITE (tde:TipoServicioDigital)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -283,7 +398,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('procedure_type', 'CERTIFICADO', 'Certificado', 'Emisión de certificado', 2),
 ('procedure_type', 'PERMISO', 'Permiso', 'Autorización o permiso', 3),
 ('procedure_type', 'INSCRIPCION', 'Inscripción', 'Inscripción en registro', 4),
-('procedure_type', 'RECLAMO', 'Reclamo', 'Reclamo o apelación', 5);
+('procedure_type', 'RECLAMO', 'Reclamo', 'Reclamo o apelación', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ESTADOS DE EXPEDIENTE (tde:EstadoTramite)
 INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
@@ -292,7 +411,10 @@ INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
 ('file_status', 'PENDIENTE_INFO', 'Pendiente Información', 3),
 ('file_status', 'EN_FIRMA', 'En Firma', 4),
 ('file_status', 'RESUELTO', 'Resuelto', 5),
-('file_status', 'ARCHIVADO', 'Archivado', 6);
+('file_status', 'ARCHIVADO', 'Archivado', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES ALERTAS Y RIESGOS
@@ -311,14 +433,22 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('alert_type', 'OBRA_SIN_PAGO', 'Obra Sin Pago', 'Avance >= 95%, pago pendiente', 9),
 ('alert_type', 'PLAZO_LEGAL', 'Plazo Legal', 'Vencimiento de plazo legal', 10),
 ('alert_type', 'CDP_POR_VENCER', 'CDP por Vencer', 'CDP próximo a vencer', 11),
-('alert_type', 'PRESUPUESTO_BAJO', 'Presupuesto Bajo', 'Saldo presupuestario bajo umbral', 12);
+('alert_type', 'PRESUPUESTO_BAJO', 'Presupuesto Bajo', 'Saldo presupuestario bajo umbral', 12)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- NIVELES DE ALERTA (severidad)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('alert_level', 'INFO', 'Informativo', 'Alerta informativa', 1),
 ('alert_level', 'ATENCION', 'Atención', 'Requiere atención', 2),
 ('alert_level', 'ALTO', 'Alto', 'Alta prioridad', 3),
-('alert_level', 'CRITICO', 'Crítico', 'Acción inmediata requerida', 4);
+('alert_level', 'CRITICO', 'Crítico', 'Acción inmediata requerida', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE RIESGO
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -326,7 +456,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('risk_type', 'OPERACIONAL', 'Operacional', 'Riesgo de ejecución', 2),
 ('risk_type', 'LEGAL', 'Legal', 'Riesgo legal o normativo', 3),
 ('risk_type', 'REPUTACIONAL', 'Reputacional', 'Riesgo de imagen', 4),
-('risk_type', 'TECNICO', 'Técnico', 'Riesgo técnico', 5);
+('risk_type', 'TECNICO', 'Técnico', 'Riesgo técnico', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES ESPECIFICACIONES.MD (NUEVOS)
@@ -337,7 +471,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('system_role', 'ADMIN_SISTEMA', 'Administrador del Sistema', 'Configura sistema, usuarios, importa datos', 1),
 ('system_role', 'ADMIN_REGIONAL', 'Administrador Regional', 'Visión 360°, coordina divisiones, gestiona crisis', 2),
 ('system_role', 'JEFE_DIVISION', 'Jefe de División', 'Supervisa división, verifica trabajo, asigna', 3),
-('system_role', 'ENCARGADO', 'Encargado', 'Ejecuta trabajo, actualiza avances, reporta problemas', 4);
+('system_role', 'ENCARGADO', 'Encargado', 'Ejecuta trabajo, actualiza avances, reporta problemas', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ESTADOS DE WORK_ITEM (RF-022)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -346,14 +484,21 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('work_item_status', 'BLOQUEADO', 'Bloqueado', 'Trabajo detenido por dependencia o problema', 3),
 ('work_item_status', 'COMPLETADO', 'Completado', 'Trabajo terminado, pendiente verificación', 4),
 ('work_item_status', 'VERIFICADO', 'Verificado', 'Trabajo verificado por jefe/admin', 5),
-('work_item_status', 'CANCELADO', 'Cancelado', 'Trabajo cancelado', 6);
+('work_item_status', 'CANCELADO', 'Cancelado', 'Trabajo cancelado', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- PRIORIDAD DE WORK_ITEM
 INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
 ('work_item_priority', 'URGENTE', 'Urgente', 1),
 ('work_item_priority', 'ALTA', 'Alta', 2),
 ('work_item_priority', 'NORMAL', 'Normal', 3),
-('work_item_priority', 'BAJA', 'Baja', 4);
+('work_item_priority', 'BAJA', 'Baja', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    sort_order = EXCLUDED.sort_order;
 
 -- ORIGEN DE WORK_ITEM
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -362,7 +507,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('work_item_origin', 'PROBLEMA', 'Derivado de Problema', 'Creado para resolver problema', 3),
 ('work_item_origin', 'ALERTA', 'Derivado de Alerta', 'Creado por alerta del sistema', 4),
 ('work_item_origin', 'SISTEMA', 'Generado por Sistema', 'Creado automáticamente', 5),
-('work_item_origin', 'IMPORTACION', 'Importación', 'Importado desde fuente externa', 6);
+('work_item_origin', 'IMPORTACION', 'Importación', 'Importado desde fuente externa', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- EVENTOS DE WORK_ITEM (para historial)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -374,7 +523,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('work_item_event', 'VERIFIED', 'Verificado', 'Completado y verificado', 6),
 ('work_item_event', 'COMMENT', 'Comentario', 'Comentario agregado', 7),
 ('work_item_event', 'DUE_DATE_CHANGE', 'Cambio Fecha', 'Fecha límite modificada', 8),
-('work_item_event', 'PRIORITY_CHANGE', 'Cambio Prioridad', 'Prioridad modificada', 9);
+('work_item_event', 'PRIORITY_CHANGE', 'Cambio Prioridad', 'Prioridad modificada', 9)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE PROBLEMA (RF-040)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -383,7 +536,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('problem_type', 'ADMINISTRATIVO', 'Administrativo', 'Problema administrativo o documental', 3),
 ('problem_type', 'LEGAL', 'Legal', 'Problema legal o contractual', 4),
 ('problem_type', 'COORDINACION', 'Coordinación', 'Problema de coordinación inter-institucional', 5),
-('problem_type', 'EXTERNO', 'Externo', 'Problema causado por factores externos', 6);
+('problem_type', 'EXTERNO', 'Externo', 'Problema causado por factores externos', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- IMPACTO DE PROBLEMA (RF-040)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -392,7 +549,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('problem_impact', 'RETRASA_CONVENIO', 'Retrasa Convenio', 'Retrasa formalización', 3),
 ('problem_impact', 'RIESGO_RENDICION', 'Riesgo Rendición', 'Puede afectar rendición', 4),
 ('problem_impact', 'INCUMPLIMIENTO_PLAZO', 'Incumplimiento Plazo', 'Riesgo de plazo legal', 5),
-('problem_impact', 'OTRO', 'Otro', 'Otro tipo de impacto', 6);
+('problem_impact', 'OTRO', 'Otro', 'Otro tipo de impacto', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ESTADO DE PAGO (para agreement_installment)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -400,7 +561,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('payment_status', 'EN_PROCESO', 'En Proceso', 'Pago en trámite', 2),
 ('payment_status', 'PAGADO', 'Pagado', 'Pago realizado', 3),
 ('payment_status', 'DIFERIDO', 'Diferido', 'Pago diferido', 4),
-('payment_status', 'RECHAZADO', 'Rechazado', 'Pago rechazado', 5);
+('payment_status', 'RECHAZADO', 'Rechazado', 'Pago rechazado', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES META
@@ -414,19 +579,31 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('story_domain', 'TERRITORIAL', 'Territorial', 'Planificación territorial', 4),
 ('story_domain', 'DIGITAL', 'Digital', 'Transformación digital', 5),
 ('story_domain', 'CONTROL', 'Control', 'Control de gestión', 6),
-('story_domain', 'ORGANIZACIONAL', 'Organizacional', 'Gestión organizacional', 7);
+('story_domain', 'ORGANIZACIONAL', 'Organizacional', 'Gestión organizacional', 7)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE ROL META (HAIC)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('role_type', 'HUMAN', 'Human', 'Rol ejercido por humano', 1),
 ('role_type', 'AI', 'AI', 'Rol ejercido por agente IA', 2),
-('role_type', 'HYBRID', 'Hybrid', 'Rol colaborativo Human-AI', 3);
+('role_type', 'HYBRID', 'Hybrid', 'Rol colaborativo Human-AI', 3)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- TIPOS DE PROCESO
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('process_type', 'CORE', 'Core', 'Proceso misional', 1),
 ('process_type', 'SOPORTE', 'Soporte', 'Proceso de soporte', 2),
-('process_type', 'ESTRATEGICO', 'Estratégico', 'Proceso estratégico', 3);
+('process_type', 'ESTRATEGICO', 'Estratégico', 'Proceso estratégico', 3)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.category - SCHEMES TDE (tdeCore.ttl)
@@ -440,20 +617,31 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('norm_type', 'DS', 'DS', 'Decreto Supremo', 4),
 ('norm_type', 'REGLAMENTO', 'Reglamento', 'Reglamento', 5),
 ('norm_type', 'INSTRUCTIVO', 'Instructivo', 'Instructivo o circular', 6),
-('norm_type', 'NORMA_TECNICA', 'Norma Técnica', 'Norma técnica sectorial', 7);
+('norm_type', 'NORMA_TECNICA', 'Norma Técnica', 'Norma técnica sectorial', 7)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ESTADO DE VIGENCIA (tde:EstadoVigencia)
 INSERT INTO ref.category (scheme, code, label, sort_order) VALUES
 ('validity_status', 'VIGENTE', 'Vigente', 1),
 ('validity_status', 'DEROGADO', 'Derogado', 2),
 ('validity_status', 'MODIFICADO', 'Modificado', 3),
-('validity_status', 'EN_TRAMITE', 'En Trámite', 4);
+('validity_status', 'EN_TRAMITE', 'En Trámite', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    sort_order = EXCLUDED.sort_order;
 
 -- NIVEL DE GOBIERNO (tde:NivelGobierno)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('gov_level', 'CENTRAL', 'Central', 'Gobierno central', 1),
 ('gov_level', 'REGIONAL', 'Regional', 'Gobierno regional', 2),
-('gov_level', 'MUNICIPAL', 'Municipal', 'Gobierno municipal', 3);
+('gov_level', 'MUNICIPAL', 'Municipal', 'Gobierno municipal', 3)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- NIVEL MADUREZ MGDE (tde:NivelMadurezMGDE)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
@@ -461,14 +649,22 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('mgde_level', 'GESTIONADO', 'Gestionado', 'Nivel 2 - Gestionado', 2),
 ('mgde_level', 'DEFINIDO', 'Definido', 'Nivel 3 - Definido', 3),
 ('mgde_level', 'MEDIDO', 'Medido', 'Nivel 4 - Medido', 4),
-('mgde_level', 'OPTIMIZADO', 'Optimizado', 'Nivel 5 - Optimizado', 5);
+('mgde_level', 'OPTIMIZADO', 'Optimizado', 'Nivel 5 - Optimizado', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ROL TDE (tde:RolTDE)
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('tde_role', 'COORDINADOR_TD', 'Coordinador TD', 'Coordinador Transformación Digital', 1),
 ('tde_role', 'OFICIAL_DATOS', 'Oficial de Datos', 'Oficial de Datos Institucional', 2),
 ('tde_role', 'ENCARGADO_INTEROP', 'Encargado Interoperabilidad', 'Encargado de Interoperabilidad', 3),
-('tde_role', 'GESTOR_TRAMITES', 'Gestor de Trámites', 'Gestor de Trámites Digitales', 4);
+('tde_role', 'GESTOR_TRAMITES', 'Gestor de Trámites', 'Gestor de Trámites Digitales', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.actor - ACTORES DIPIR (23 actores)
@@ -501,7 +697,14 @@ INSERT INTO ref.actor (code, name, full_name, emoji, style, is_internal, sort_or
 ('PROVEEDOR', 'Proveedor', 'Proveedor o Contratista', '🏭', 'fill:#CFD8DC,stroke:#455A64', FALSE, 27),
 ('ENTIDAD_EJECUTORA', 'Ejecutora', 'Entidad Ejecutora', '🏗️', 'fill:#D7CCC8,stroke:#5D4037', FALSE, 28),
 ('MUNICIPIO', 'Municipio', 'Municipalidad', '🏘️', 'fill:#F8BBD9,stroke:#C2185B', FALSE, 29),
-('BENEFICIARIO', 'Beneficiario', 'Beneficiario Final', '👥', 'fill:#E0E0E0,stroke:#616161', FALSE, 30);
+('BENEFICIARIO', 'Beneficiario', 'Beneficiario Final', '👥', 'fill:#E0E0E0,stroke:#616161', FALSE, 30)
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    full_name = EXCLUDED.full_name,
+    emoji = EXCLUDED.emoji,
+    style = EXCLUDED.style,
+    is_internal = EXCLUDED.is_internal,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    SCHEMA: ref.operational_commitment_type - TIPOS COMPROMISO OPERATIVO
@@ -517,7 +720,12 @@ INSERT INTO ref.operational_commitment_type (code, name, description, default_da
 ('PLAZO_CGR', 'Plazo CGR', 'Plazo de respuesta a CGR', 15, 7),
 ('PLAZO_CONVENIO', 'Plazo Convenio', 'Plazo establecido en convenio', 30, 8),
 ('PAGO', 'Pago', 'Compromiso de pago', 30, 9),
-('OTRO', 'Otro', 'Otro tipo de compromiso', 15, 10);
+('OTRO', 'Otro', 'Otro tipo de compromiso', 15, 10)
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    description = EXCLUDED.description,
+    default_days = EXCLUDED.default_days,
+    sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
 --    FIN SEED DATA

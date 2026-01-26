@@ -30,10 +30,10 @@ CREATE INDEX IF NOT EXISTS idx_actor_internal ON ref.actor(is_internal);
 -- ============================================================================
 
 -- CQ: "¿Cuáles son las IPR en fase F4 del mecanismo FRIL?"
-CREATE INDEX IF NOT EXISTS idx_ipr_phase_mechanism ON core.ipr(phase_id, mechanism_type_id);
+CREATE INDEX IF NOT EXISTS idx_ipr_phase_mechanism ON core.ipr(mcd_phase_id, mechanism_id);
 
--- CQ: "¿Qué IPR tienen estado 'EN_EJECUCION' y pertenecen a la comuna X?"
-CREATE INDEX IF NOT EXISTS idx_ipr_status_territory ON core.ipr(status_id, territory_id);
+-- CQ: "¿Qué IPR tienen estado 'EN_EJECUCION'?"
+CREATE INDEX IF NOT EXISTS idx_ipr_status ON core.ipr(status_id);
 
 -- CQ: "¿Cuál es el avance financiero de IPRs por año?"
 CREATE INDEX IF NOT EXISTS idx_ipr_year ON core.ipr(EXTRACT(YEAR FROM created_at));
@@ -48,44 +48,40 @@ CREATE INDEX IF NOT EXISTS idx_ipr_problems ON core.ipr(has_open_problems) WHERE
 CREATE INDEX IF NOT EXISTS idx_ipr_alert ON core.ipr(alert_level_id) WHERE alert_level_id IS NOT NULL;
 
 -- Índice para búsqueda por código BIP
-CREATE UNIQUE INDEX IF NOT EXISTS idx_ipr_bip ON core.ipr(bip_code) WHERE bip_code IS NOT NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_ipr_bip ON core.ipr(codigo_bip) WHERE codigo_bip IS NOT NULL;
 
 -- Índice para búsqueda por naturaleza (proyecto, programa, etc.)
 CREATE INDEX IF NOT EXISTS idx_ipr_nature ON core.ipr(ipr_nature_id);
 
 -- Índice compuesto para dashboard de inversiones
-CREATE INDEX IF NOT EXISTS idx_ipr_dashboard ON core.ipr(status_id, phase_id, ipr_nature_id, funding_source_id);
+CREATE INDEX IF NOT EXISTS idx_ipr_dashboard ON core.ipr(status_id, mcd_phase_id, ipr_nature_id, funding_source_id);
 
 -- ============================================================================
 --    SCHEMA: core - ÍNDICES CONVENIOS Y ACTOS
 -- ============================================================================
 
 -- CQ: "¿Qué convenios vencen en los próximos 30 días?"
-CREATE INDEX IF NOT EXISTS idx_agreement_end_date ON core.agreement(end_date) WHERE status_id IN (
-    SELECT id FROM ref.category WHERE scheme = 'agreement_state' AND code = 'VIGENTE'
-);
+-- NOTA: Índices parciales no pueden usar subqueries, usar expresión simple
+CREATE INDEX IF NOT EXISTS idx_agreement_valid_to ON core.agreement(valid_to) WHERE valid_to IS NOT NULL;
 
--- CQ: "¿Qué convenios tiene la entidad ejecutora X?"
-CREATE INDEX IF NOT EXISTS idx_agreement_counterpart ON core.agreement(counterpart_id);
+-- CQ: "¿Qué convenios tiene la entidad dadora/receptora X?"
+CREATE INDEX IF NOT EXISTS idx_agreement_giver ON core.agreement(giver_id);
+CREATE INDEX IF NOT EXISTS idx_agreement_receiver ON core.agreement(receiver_id);
 
 -- CQ: "¿Qué convenios están vinculados a la IPR X?"
 CREATE INDEX IF NOT EXISTS idx_agreement_ipr ON core.agreement(ipr_id) WHERE ipr_id IS NOT NULL;
 
 -- Índice para convenios por estado
-CREATE INDEX IF NOT EXISTS idx_agreement_status ON core.agreement(status_id);
+CREATE INDEX IF NOT EXISTS idx_agreement_state ON core.agreement(state_id);
 
 -- CQ: "¿Qué cuotas de convenio están vencidas?"
 CREATE INDEX IF NOT EXISTS idx_installment_due ON core.agreement_installment(due_date, payment_status_id);
 
--- CQ: "¿Qué resoluciones están pendientes de toma de razón?"
-CREATE INDEX IF NOT EXISTS idx_resolution_cgr ON core.resolution(sent_to_cgr, cgr_outcome_id)
-    WHERE sent_to_cgr = TRUE AND cgr_outcome_id IS NULL;
-
 -- Índice para resoluciones por IPR
 CREATE INDEX IF NOT EXISTS idx_resolution_ipr ON core.resolution(ipr_id) WHERE ipr_id IS NOT NULL;
 
--- Índice para búsqueda de resoluciones por número
-CREATE INDEX IF NOT EXISTS idx_resolution_number ON core.resolution(resolution_number);
+-- Índice para resoluciones por tipo
+CREATE INDEX IF NOT EXISTS idx_resolution_type ON core.resolution(resolution_type_id);
 
 -- ============================================================================
 --    SCHEMA: core - ÍNDICES WORK ITEMS (GESTIÓN OPERATIVA)
@@ -95,8 +91,8 @@ CREATE INDEX IF NOT EXISTS idx_resolution_number ON core.resolution(resolution_n
 CREATE INDEX IF NOT EXISTS idx_workitem_assignee ON core.work_item(assignee_id, status_id);
 
 -- CQ: "¿Qué ítems de trabajo están vencidos?"
-CREATE INDEX IF NOT EXISTS idx_workitem_due ON core.work_item(due_date)
-    WHERE status_id NOT IN (SELECT id FROM ref.category WHERE scheme = 'work_item_status' AND code IN ('VERIFICADO', 'CANCELADO'));
+-- NOTA: Índices parciales no pueden usar subqueries
+CREATE INDEX IF NOT EXISTS idx_workitem_due ON core.work_item(due_date) WHERE due_date IS NOT NULL;
 
 -- CQ: "¿Qué ítems están bloqueados por más de 7 días?"
 CREATE INDEX IF NOT EXISTS idx_workitem_blocked ON core.work_item(updated_at)
@@ -119,15 +115,18 @@ CREATE INDEX IF NOT EXISTS idx_workitem_problem ON core.work_item(problem_id) WH
 -- Índice GIN para tags
 CREATE INDEX IF NOT EXISTS idx_workitem_tags ON core.work_item USING GIN(tags);
 
+-- HIGH-005: Índice para trazabilidad Story->WorkItem
+CREATE INDEX IF NOT EXISTS idx_workitem_story ON core.work_item(story_id) WHERE story_id IS NOT NULL;
+
 -- ============================================================================
 --    SCHEMA: core - ÍNDICES PROBLEMAS Y ALERTAS
 -- ============================================================================
 
 -- CQ: "¿Qué problemas abiertos hay por IPR?"
-CREATE INDEX IF NOT EXISTS idx_problem_ipr ON core.ipr_problem(ipr_id, status_id);
+CREATE INDEX IF NOT EXISTS idx_problem_ipr ON core.ipr_problem(ipr_id, state_id);
 
 -- CQ: "¿Qué problemas no tienen trabajo asociado?"
-CREATE INDEX IF NOT EXISTS idx_problem_unmanaged ON core.ipr_problem(created_at)
+CREATE INDEX IF NOT EXISTS idx_problem_unmanaged ON core.ipr_problem(detected_at)
     WHERE resolved_at IS NULL;
 
 -- CQ: "¿Qué alertas están sin atender por tipo?"
@@ -143,15 +142,13 @@ CREATE INDEX IF NOT EXISTS idx_alert_target ON core.alert(target_type, target_id
 -- ============================================================================
 
 -- CQ: "¿Cuál es el saldo disponible por programa presupuestario?"
-CREATE INDEX IF NOT EXISTS idx_budget_program_active ON core.budget_program(year, is_active)
-    WHERE is_active = TRUE;
+CREATE INDEX IF NOT EXISTS idx_budget_program_year ON core.budget_program(fiscal_year);
 
 -- CQ: "¿Qué compromisos presupuestarios tiene la IPR X?"
 CREATE INDEX IF NOT EXISTS idx_budget_commitment_ipr ON core.budget_commitment(ipr_id);
 
--- CQ: "¿Qué CDP están vigentes?"
-CREATE INDEX IF NOT EXISTS idx_budget_commitment_cdp ON core.budget_commitment(cdp_number)
-    WHERE cdp_number IS NOT NULL;
+-- CQ: "¿Qué compromisos presupuestarios están vigentes?"
+CREATE INDEX IF NOT EXISTS idx_budget_commitment_number ON core.budget_commitment(commitment_number);
 
 -- ============================================================================
 --    SCHEMA: core - ÍNDICES ORGANIZACIÓN Y PERSONAS
@@ -167,8 +164,8 @@ CREATE INDEX IF NOT EXISTS idx_user_active ON core.user(is_active, system_role_i
 -- Índice para búsqueda por email
 CREATE UNIQUE INDEX IF NOT EXISTS idx_user_email ON core.user(email);
 
--- CQ: "¿Qué organizaciones hay por tipo en territorio X?"
-CREATE INDEX IF NOT EXISTS idx_org_type_territory ON core.organization(org_type_id, territory_id);
+-- CQ: "¿Qué organizaciones hay por tipo?"
+CREATE INDEX IF NOT EXISTS idx_org_type ON core.organization(org_type_id);
 
 -- ============================================================================
 --    SCHEMA: core - ÍNDICES TERRITORIO
@@ -185,7 +182,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_territory_code ON core.territory(code);
 -- ============================================================================
 
 -- CQ: "¿Qué sesiones hay programadas para el comité X?"
-CREATE INDEX IF NOT EXISTS idx_session_committee ON core.session(committee_id, session_date);
+CREATE INDEX IF NOT EXISTS idx_session_committee ON core.session(committee_id, scheduled_at);
 
 -- CQ: "¿Qué acuerdos de sesión están pendientes de cumplimiento?"
 CREATE INDEX IF NOT EXISTS idx_session_agreement_pending ON core.session_agreement(status_id, due_date);
@@ -195,7 +192,7 @@ CREATE INDEX IF NOT EXISTS idx_session_agreement_pending ON core.session_agreeme
 -- ============================================================================
 
 -- CQ: "¿Qué eventos ocurrieron en la entidad X?"
-CREATE INDEX IF NOT EXISTS idx_event_entity ON txn.event(entity_type, entity_id);
+CREATE INDEX IF NOT EXISTS idx_event_subject ON txn.event(subject_type, subject_id);
 
 -- CQ: "¿Qué eventos de tipo X ocurrieron en el período Y?"
 CREATE INDEX IF NOT EXISTS idx_event_type_time ON txn.event(event_type_id, occurred_at);
@@ -203,40 +200,40 @@ CREATE INDEX IF NOT EXISTS idx_event_type_time ON txn.event(event_type_id, occur
 -- Índice BRIN para alta cardinalidad temporal (eficiente para rangos)
 CREATE INDEX IF NOT EXISTS idx_event_occurred_brin ON txn.event USING BRIN(occurred_at);
 
--- Índice GIN para búsqueda en payload JSONB
-CREATE INDEX IF NOT EXISTS idx_event_payload ON txn.event USING GIN(payload jsonb_path_ops);
+-- Índice GIN para búsqueda en data JSONB
+CREATE INDEX IF NOT EXISTS idx_event_data ON txn.event USING GIN(data jsonb_path_ops);
 
 -- ============================================================================
 --    SCHEMA: txn - ÍNDICES MAGNITUDES
 -- ============================================================================
 
 -- CQ: "¿Cuál es la magnitud X de la entidad Y en el período Z?"
-CREATE INDEX IF NOT EXISTS idx_magnitude_entity_aspect ON txn.magnitude(entity_type, entity_id, aspect_id);
+CREATE INDEX IF NOT EXISTS idx_magnitude_subject_aspect ON txn.magnitude(subject_type, subject_id, aspect_id);
 
 -- Índice para búsqueda por fecha de medición
-CREATE INDEX IF NOT EXISTS idx_magnitude_measured ON txn.magnitude(measured_at);
+CREATE INDEX IF NOT EXISTS idx_magnitude_as_of ON txn.magnitude(as_of_date);
 
 -- ============================================================================
 --    SCHEMA: meta - ÍNDICES HISTORIAS Y PROCESOS
 -- ============================================================================
 
 -- CQ: "¿Qué historias de usuario corresponden al dominio X?"
-CREATE INDEX IF NOT EXISTS idx_story_domain ON meta.story(domain_id);
+CREATE INDEX IF NOT EXISTS idx_story_domain ON meta.story(domain);
 
 -- CQ: "¿Qué entidades participan en la historia X?"
 CREATE INDEX IF NOT EXISTS idx_story_entity_story ON meta.story_entity(story_id);
 CREATE INDEX IF NOT EXISTS idx_story_entity_entity ON meta.story_entity(entity_id);
 
 -- CQ: "¿Qué roles son HAIC (Human-AI Collaboration)?"
-CREATE INDEX IF NOT EXISTS idx_role_haic ON meta.role(role_type_id);
+CREATE INDEX IF NOT EXISTS idx_role_agent_type ON meta.role(agent_type);
 
 -- ============================================================================
 --    ÍNDICES FULL-TEXT SEARCH (opcional, para búsquedas de texto)
 -- ============================================================================
 
--- Búsqueda full-text en IPR
+-- Búsqueda full-text en IPR (solo name, no tiene description)
 CREATE INDEX IF NOT EXISTS idx_ipr_fts ON core.ipr USING GIN(
-    to_tsvector('spanish', COALESCE(name, '') || ' ' || COALESCE(description, ''))
+    to_tsvector('spanish', COALESCE(name, ''))
 );
 
 -- Búsqueda full-text en work_item
@@ -246,7 +243,7 @@ CREATE INDEX IF NOT EXISTS idx_workitem_fts ON core.work_item USING GIN(
 
 -- Búsqueda full-text en problemas
 CREATE INDEX IF NOT EXISTS idx_problem_fts ON core.ipr_problem USING GIN(
-    to_tsvector('spanish', COALESCE(description, '') || ' ' || COALESCE(resolution, ''))
+    to_tsvector('spanish', COALESCE(description, '') || ' ' || COALESCE(solution_applied, ''))
 );
 
 -- ============================================================================
@@ -257,7 +254,7 @@ CREATE INDEX IF NOT EXISTS idx_problem_fts ON core.ipr_problem USING GIN(
 CREATE INDEX IF NOT EXISTS idx_ipr_metadata ON core.ipr USING GIN(metadata jsonb_path_ops);
 CREATE INDEX IF NOT EXISTS idx_agreement_metadata ON core.agreement USING GIN(metadata jsonb_path_ops);
 CREATE INDEX IF NOT EXISTS idx_workitem_metadata ON core.work_item USING GIN(metadata jsonb_path_ops);
-CREATE INDEX IF NOT EXISTS idx_event_metadata ON txn.event USING GIN(metadata jsonb_path_ops);
+-- NOTA: txn.event no tiene columna metadata, solo data (ya indexada arriba)
 
 -- ============================================================================
 --    ESTADÍSTICAS Y MANTENIMIENTO
