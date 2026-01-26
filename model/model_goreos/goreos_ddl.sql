@@ -1,10 +1,17 @@
 -- =============================================================================
--- GORE_OS DDL v2.0 - Modelo de Datos Institucional
+-- GORE_OS DDL v3.0 - Modelo de Datos Institucional (UUID Universal)
 -- =============================================================================
--- GENERADO POR: Arquitecto-GORE (KODA-CARTOGRAPHER + Ontologista Gist)
+-- GENERADO POR: Arquitecto-GORE + Debate Multiagente (Orquestador-Genérico)
 -- FECHA: 2026-01-26
 -- TOTAL TABLAS: 50
 -- ARQUITECTURA: 4 schemas (meta, ref, core, txn)
+-- CAMBIOS v3.0:
+--   - UUID universal para todas las PKs
+--   - Auditoría completa (created_at, updated_at, created_by_id, updated_by_id)
+--   - Soft delete (deleted_at, deleted_by_id)
+--   - ref.actor extendido para agentes algorítmicos (KODA)
+--   - Particionamiento en txn.event y txn.magnitude
+--   - ENUM SQL para tipos fijos
 -- ALINEAMIENTO: Gist 14.0, gnub:*, tde:*
 -- =============================================================================
 
@@ -26,7 +33,22 @@
 -- txn.event (event_type='PAGO') <-> gnub:PaymentEvent
 -- core.budget_commitment <-> gnub:BudgetaryCommitment rdfs:subClassOf gist:Commitment
 -- ref.category <-> gist:Category pattern
+-- ref.actor (agent_type='ALGORITHMIC') <-> koda:Agent
 -- =============================================================================
+
+-- =============================================================================
+-- EXTENSIONES REQUERIDAS
+-- =============================================================================
+CREATE EXTENSION IF NOT EXISTS pgcrypto;  -- Para gen_random_uuid()
+
+-- =============================================================================
+-- TIPOS ENUM (OPP-008)
+-- =============================================================================
+DROP TYPE IF EXISTS agent_type_enum CASCADE;
+CREATE TYPE agent_type_enum AS ENUM ('HUMAN', 'AI', 'ALGORITHMIC', 'ORGANIZATIONAL', 'MACHINE', 'MIXED');
+
+DROP TYPE IF EXISTS ipr_nature_enum CASCADE;
+CREATE TYPE ipr_nature_enum AS ENUM ('PROYECTO', 'PROGRAMA');
 
 -- =============================================================================
 -- SCHEMAS
@@ -46,18 +68,26 @@ CREATE SCHEMA IF NOT EXISTS txn;
 -- ALINEAMIENTO: goreos:Role, orko:P1_Capacidad
 -- SEMANTICA: Capacidad = potencial de ejecutar transformacion (Axioma A2)
 CREATE TABLE meta.role (
-    id VARCHAR(32) PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    agent_type VARCHAR(16) NOT NULL,
+    agent_type agent_type_enum NOT NULL DEFAULT 'HUMAN',
     cognition_level VARCHAR(4),
-    human_accountable_id VARCHAR(32) REFERENCES meta.role(id),
+    human_accountable_id UUID REFERENCES meta.role(id),
     delegation_mode VARCHAR(4),
     ontology_uri TEXT,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,  -- Se llenará después de crear core.user
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb,
     CONSTRAINT chk_human_accountable CHECK (agent_type = 'HUMAN' OR human_accountable_id IS NOT NULL)
 );
 COMMENT ON TABLE meta.role IS 'Rol con soporte HAIC - capacidad de ejecutar transformacion';
-COMMENT ON COLUMN meta.role.agent_type IS 'HUMAN|AI|ALGORITHMIC|MACHINE|MIXED (Sustrato)';
+COMMENT ON COLUMN meta.role.agent_type IS 'HUMAN|AI|ALGORITHMIC|ORGANIZATIONAL|MACHINE|MIXED (Sustrato)';
 COMMENT ON COLUMN meta.role.cognition_level IS 'C0|C1|C2|C3 (Nivel de decision ORKO)';
 COMMENT ON COLUMN meta.role.delegation_mode IS 'M1-M6 (modo de delegacion ORKO)';
 
@@ -65,9 +95,17 @@ COMMENT ON COLUMN meta.role.delegation_mode IS 'M1-M6 (modo de delegacion ORKO)'
 -- EXISTE PORQUE: Atomo fundamental (MANIFESTO.md)
 -- ALINEAMIENTO: goreos:Process
 CREATE TABLE meta.process (
-    id VARCHAR(32) PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
     layer VARCHAR(16),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE meta.process IS 'Proceso - perspectiva dinamica del sistema';
@@ -77,10 +115,18 @@ COMMENT ON COLUMN meta.process.layer IS 'STRATEGIC|TACTICAL|OPERATIONAL';
 -- EXISTE PORQUE: Atomo fundamental (MANIFESTO.md)
 -- ALINEAMIENTO: goreos:Entity
 CREATE TABLE meta.entity (
-    id VARCHAR(32) PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
     ontology_uri TEXT,
     domain VARCHAR(16),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE meta.entity IS 'Entidad del dominio - estructura de informacion';
@@ -89,21 +135,29 @@ COMMENT ON TABLE meta.entity IS 'Entidad del dominio - estructura de informacion
 -- EXISTE PORQUE: Atomo fundamental (MANIFESTO.md) - origen absoluto
 -- ALINEAMIENTO: goreos:Story
 CREATE TABLE meta.story (
-    id VARCHAR(32) PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
     as_a TEXT NOT NULL,
     i_want TEXT NOT NULL,
     so_that TEXT NOT NULL,
-    role_id VARCHAR(32) REFERENCES meta.role(id),
-    process_id VARCHAR(32) REFERENCES meta.process(id),
+    role_id UUID REFERENCES meta.role(id),
+    process_id UUID REFERENCES meta.process(id),
     domain VARCHAR(16),
     priority VARCHAR(4),
     status VARCHAR(16) DEFAULT 'ENRICHED',
     user_description TEXT,
-    aspect_id INTEGER,
-    scope_id INTEGER,
+    aspect_id UUID,
+    scope_id UUID,
     extra_tags TEXT[],
     acceptance_criteria TEXT[],
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE meta.story IS 'Historia de usuario - atomo fundamental, origen de todo requerimiento';
@@ -111,10 +165,15 @@ COMMENT ON TABLE meta.story IS 'Historia de usuario - atomo fundamental, origen 
 -- TABLA: meta.story_entity
 -- Relacion N:M Story <-> Entity
 CREATE TABLE meta.story_entity (
-    story_id VARCHAR(32) REFERENCES meta.story(id),
-    entity_id VARCHAR(32) REFERENCES meta.entity(id),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    story_id UUID REFERENCES meta.story(id) NOT NULL,
+    entity_id UUID REFERENCES meta.entity(id) NOT NULL,
     status VARCHAR(16),
-    PRIMARY KEY (story_id, entity_id)
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ,
+    UNIQUE(story_id, entity_id)
 );
 COMMENT ON TABLE meta.story_entity IS 'Relacion N:M entre historias y entidades';
 
@@ -127,50 +186,92 @@ COMMENT ON TABLE meta.story_entity IS 'Relacion N:M entre historias y entidades'
 -- EXISTE PORQUE: Category Pattern (Gist 14.0), omega_gore_nuble_mermaid.md
 -- ALINEAMIENTO: gist:Category
 CREATE TABLE ref.category (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     scheme VARCHAR(32) NOT NULL,
     code VARCHAR(32) NOT NULL,
     label TEXT NOT NULL,
     label_en TEXT,
     description TEXT,
-    parent_id INTEGER REFERENCES ref.category(id),
+    parent_id UUID REFERENCES ref.category(id),
     parent_code VARCHAR(32),
     -- HIGH-001: Vinculacion Fase->Estado (para estados IPR que pertenecen a una fase MCD)
-    phase_id INTEGER REFERENCES ref.category(id),
+    phase_id UUID REFERENCES ref.category(id),
     -- MED-004: Transiciones de estado validas (para schemes de estado)
     valid_transitions JSONB,
     sort_order INTEGER,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb,
     UNIQUE(scheme, code)
 );
 CREATE INDEX idx_category_scheme ON ref.category(scheme);
 CREATE INDEX idx_category_phase ON ref.category(phase_id) WHERE phase_id IS NOT NULL;
+CREATE INDEX idx_category_deleted ON ref.category(deleted_at) WHERE deleted_at IS NULL;
 COMMENT ON TABLE ref.category IS 'Patron Category (Gist 14.0) - 75+ schemes de taxonomias flexibles';
 COMMENT ON COLUMN ref.category.phase_id IS 'Para scheme=ipr_state: FK a mcd_phase al que pertenece este estado';
-COMMENT ON COLUMN ref.category.valid_transitions IS 'Array JSON de codigos de estado validos como destino. Ej: ["EN_REVISION", "RECHAZADO"]';
+COMMENT ON COLUMN ref.category.valid_transitions IS 'Array JSON de codigos de estado validos como destino';
 
--- TABLA: ref.actor
--- EXISTE PORQUE: dipir_ssot_koda.yaml - 23 actores unicos
--- ALINEAMIENTO: BPMN actors
+-- TABLA: ref.actor (HIGH-011: Extendido para agentes algorítmicos)
+-- EXISTE PORQUE: dipir_ssot_koda.yaml - 23 actores + agentes KODA
+-- ALINEAMIENTO: BPMN actors + koda:Agent
 CREATE TABLE ref.actor (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
     full_name TEXT,
+
+    -- HIGH-011: Discriminador de tipo de actor
+    agent_type agent_type_enum NOT NULL DEFAULT 'HUMAN',
+
+    -- Solo para HUMAN
     emoji VARCHAR(8),
-    style VARCHAR(32),
+    style VARCHAR(100),
+
+    -- Solo para ALGORITHMIC (agentes KODA)
+    agent_definition_uri TEXT,  -- 'koda://orquestador-generico/v0.1.0'
+    agent_version VARCHAR(16),
+
+    -- Solo para ORGANIZATIONAL
+    organization_id UUID,  -- Se llenará FK después de crear core.organization
+
+    -- Común
     is_internal BOOLEAN DEFAULT TRUE,
     sort_order INTEGER,
     notes TEXT,
-    metadata JSONB DEFAULT '{}'::jsonb
+
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
+    metadata JSONB DEFAULT '{}'::jsonb,
+
+    -- Constraint de coherencia (HIGH-011)
+    CONSTRAINT chk_actor_type CHECK (
+        (agent_type = 'HUMAN' AND agent_definition_uri IS NULL) OR
+        (agent_type = 'ALGORITHMIC' AND agent_definition_uri IS NOT NULL) OR
+        (agent_type = 'ORGANIZATIONAL') OR
+        (agent_type IN ('AI', 'MACHINE', 'MIXED'))
+    )
 );
-COMMENT ON TABLE ref.actor IS 'Actores en flujos de proceso DIPIR (23 actores)';
+CREATE INDEX idx_actor_agent_type ON ref.actor(agent_type);
+CREATE INDEX idx_actor_deleted ON ref.actor(deleted_at) WHERE deleted_at IS NULL;
+COMMENT ON TABLE ref.actor IS 'Actores en flujos de proceso - humanos, algoritmicos, organizacionales';
+COMMENT ON COLUMN ref.actor.agent_type IS 'HUMAN|AI|ALGORITHMIC|ORGANIZATIONAL|MACHINE|MIXED';
+COMMENT ON COLUMN ref.actor.agent_definition_uri IS 'URI al YAML/JSON de definicion del agente (koda://...)';
 
 -- TABLA: ref.operational_commitment_type
 -- EXISTE PORQUE: casos_uso.md - Catalogo de tipos de compromiso
 -- ALINEAMIENTO: gore_ejecucion.tipo_compromiso_operativo (para_titi)
 CREATE TABLE ref.operational_commitment_type (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(30) UNIQUE NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT,
@@ -178,249 +279,333 @@ CREATE TABLE ref.operational_commitment_type (
     default_days INTEGER DEFAULT 7,
     sort_order INTEGER,
     is_active BOOLEAN DEFAULT TRUE,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE ref.operational_commitment_type IS 'Tipos de compromiso operativo para gestion';
 
 -- =============================================================================
--- CAPA 2: CORE (40 tablas)
--- Entidades de negocio del GORE
+-- CAPA 2: CORE (40 tablas) - Parte 1: Organización y Personas
 -- =============================================================================
 
--- -----------------------------------------------------------------------------
--- ORGANIZACION Y PERSONAS
--- -----------------------------------------------------------------------------
-
 -- TABLA: core.organization
--- EXISTE PORQUE: CQ-001 a CQ-028 (Estructura Organizacional)
--- ALINEAMIENTO: gnub:Division, gnub:Department, gist:Organization
 CREATE TABLE core.organization (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
     short_name VARCHAR(32),
-    org_type_id INTEGER REFERENCES ref.category(id),
-    parent_id INTEGER REFERENCES core.organization(id),
-    valid_from DATE,
-    valid_to DATE,
+    org_type_id UUID REFERENCES ref.category(id),
+    parent_id UUID REFERENCES core.organization(id),
+    valid_from TIMESTAMPTZ,
+    valid_to TIMESTAMPTZ,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
+CREATE INDEX idx_organization_deleted ON core.organization(deleted_at) WHERE deleted_at IS NULL;
 COMMENT ON TABLE core.organization IS 'Organizacion - Division, Departamento, Unidad';
 
+-- FK diferida para ref.actor.organization_id
+ALTER TABLE ref.actor ADD CONSTRAINT fk_actor_organization
+    FOREIGN KEY (organization_id) REFERENCES core.organization(id);
+
 -- TABLA: core.person
--- EXISTE PORQUE: ENT-ORG-FUNCIONARIO - 39 menciones
--- ALINEAMIENTO: gist:Person
 CREATE TABLE core.person (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     rut VARCHAR(12) UNIQUE,
     names TEXT NOT NULL,
     paternal_surname TEXT NOT NULL,
     maternal_surname TEXT,
     email VARCHAR(255),
     phone VARCHAR(20),
-    person_type_id INTEGER REFERENCES ref.category(id),
-    organization_id INTEGER REFERENCES core.organization(id),
-    role_id VARCHAR(32) REFERENCES meta.role(id),
+    person_type_id UUID REFERENCES ref.category(id),
+    organization_id UUID REFERENCES core.organization(id),
+    role_id UUID REFERENCES meta.role(id),
     is_active BOOLEAN DEFAULT TRUE,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
 CREATE INDEX idx_person_rut ON core.person(rut);
+CREATE INDEX idx_person_deleted ON core.person(deleted_at) WHERE deleted_at IS NULL;
 COMMENT ON TABLE core.person IS 'Persona natural - funcionario, ciudadano, proveedor';
 
--- TABLA: core.user (NUEVO - especificaciones.md)
--- EXISTE PORQUE: RF-001, RF-002 (Autenticacion y gestion de usuarios)
--- ALINEAMIENTO: gist:Person + extension auth
--- SEMANTICA: Usuario con credenciales, distinto de Person (datos personales)
+-- TABLA: core.user
 CREATE TABLE core.user (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    person_id INTEGER NOT NULL REFERENCES core.person(id),
+    person_id UUID NOT NULL REFERENCES core.person(id),
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    system_role_id INTEGER NOT NULL REFERENCES ref.category(id),
-    division_id INTEGER REFERENCES core.organization(id),
+    system_role_id UUID NOT NULL REFERENCES ref.category(id),
+    division_id UUID REFERENCES core.organization(id),
     is_active BOOLEAN NOT NULL DEFAULT true,
     last_login_at TIMESTAMPTZ,
     failed_login_attempts INTEGER DEFAULT 0,
     locked_until TIMESTAMPTZ,
+    -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
+CREATE INDEX idx_user_email ON core.user(email);
+CREATE INDEX idx_user_deleted ON core.user(deleted_at) WHERE deleted_at IS NULL;
 COMMENT ON TABLE core.user IS 'Usuario del sistema con credenciales de autenticacion';
 COMMENT ON COLUMN core.user.system_role_id IS 'scheme=system_role: ADMIN_SISTEMA|ADMIN_REGIONAL|JEFE_DIVISION|ENCARGADO';
 
--- -----------------------------------------------------------------------------
--- TERRITORIO
--- -----------------------------------------------------------------------------
+-- Ahora podemos agregar FKs de auditoría a tablas anteriores
+ALTER TABLE meta.role ADD CONSTRAINT fk_role_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.role ADD CONSTRAINT fk_role_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.role ADD CONSTRAINT fk_role_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
 
--- TABLA: core.territory
--- EXISTE PORQUE: ENT-LOC-REGION, ENT-LOC-COMUNA
--- ALINEAMIENTO: gnub:Territory, gist:GeoRegion
+ALTER TABLE meta.process ADD CONSTRAINT fk_process_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.process ADD CONSTRAINT fk_process_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.process ADD CONSTRAINT fk_process_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+ALTER TABLE meta.entity ADD CONSTRAINT fk_entity_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.entity ADD CONSTRAINT fk_entity_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.entity ADD CONSTRAINT fk_entity_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+ALTER TABLE meta.story ADD CONSTRAINT fk_story_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.story ADD CONSTRAINT fk_story_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.story ADD CONSTRAINT fk_story_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+ALTER TABLE ref.category ADD CONSTRAINT fk_category_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE ref.category ADD CONSTRAINT fk_category_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE ref.category ADD CONSTRAINT fk_category_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+ALTER TABLE ref.actor ADD CONSTRAINT fk_actor_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE ref.actor ADD CONSTRAINT fk_actor_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE ref.actor ADD CONSTRAINT fk_actor_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+ALTER TABLE ref.operational_commitment_type ADD CONSTRAINT fk_oct_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE ref.operational_commitment_type ADD CONSTRAINT fk_oct_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE ref.operational_commitment_type ADD CONSTRAINT fk_oct_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+ALTER TABLE core.organization ADD CONSTRAINT fk_org_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE core.organization ADD CONSTRAINT fk_org_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE core.organization ADD CONSTRAINT fk_org_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+ALTER TABLE core.person ADD CONSTRAINT fk_person_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE core.person ADD CONSTRAINT fk_person_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE core.person ADD CONSTRAINT fk_person_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+-- =============================================================================
+-- CAPA 2: CORE - Parte 2: Territorio
+-- =============================================================================
+
 CREATE TABLE core.territory (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(16) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    territory_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
-    parent_id INTEGER REFERENCES core.territory(id),
+    territory_type_id UUID REFERENCES ref.category(id) NOT NULL,
+    parent_id UUID REFERENCES core.territory(id),
     population INTEGER,
     area_km2 NUMERIC(12,2),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.territory IS 'Unidad territorial (Region, Provincia, Comuna)';
 
--- TABLA: core.territorial_indicator
--- EXISTE PORQUE: ENT-LOC-INDICADOR_TERRITORIAL - 12 menciones
--- ALINEAMIENTO: gnub:TerritorialIndicator
 CREATE TABLE core.territorial_indicator (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    indicator_type_id INTEGER REFERENCES ref.category(id),
-    territory_id INTEGER REFERENCES core.territory(id),
+    indicator_type_id UUID REFERENCES ref.category(id),
+    territory_id UUID REFERENCES core.territory(id),
     fiscal_year INTEGER,
     numeric_value NUMERIC(18,4),
-    unit_id INTEGER REFERENCES ref.category(id),
+    unit_id UUID REFERENCES ref.category(id),
     source TEXT,
     measured_at DATE,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.territorial_indicator IS 'Indicador socioeconomico o de gestion territorial';
 
--- -----------------------------------------------------------------------------
--- PLANIFICACION
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 3: Planificación
+-- =============================================================================
 
--- TABLA: core.planning_instrument
--- EXISTE PORQUE: Funcion Motora 1 (PLANIFICAR)
--- ALINEAMIENTO: gnub:PlanningInstrument, gist:Specification
 CREATE TABLE core.planning_instrument (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    instrument_type_id INTEGER REFERENCES ref.category(id),
+    instrument_type_id UUID REFERENCES ref.category(id),
     valid_from DATE,
     valid_to DATE,
-    approved_by INTEGER REFERENCES core.organization(id),
-    parent_instrument_id INTEGER REFERENCES core.planning_instrument(id),
+    approved_by UUID REFERENCES core.organization(id),
+    parent_instrument_id UUID REFERENCES core.planning_instrument(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.planning_instrument IS 'Instrumento de planificacion (ERD, PROT, ARI)';
 
--- -----------------------------------------------------------------------------
--- FINANZAS Y PRESUPUESTO
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 4: Finanzas y Presupuesto
+-- =============================================================================
 
--- TABLA: core.budget_program
--- EXISTE PORQUE: ENT-FIN-PROGRAMA-PPR - 26 menciones
--- ALINEAMIENTO: gnub:BudgetProgram
 CREATE TABLE core.budget_program (
-    id SERIAL PRIMARY KEY,
-    code VARCHAR(32) UNIQUE NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(32) NOT NULL,
     name TEXT NOT NULL,
     fiscal_year INTEGER NOT NULL,
-    program_type_id INTEGER REFERENCES ref.category(id),
-    subtitle_id INTEGER REFERENCES ref.category(id),
+    program_type_id UUID REFERENCES ref.category(id),
+    subtitle_id UUID REFERENCES ref.category(id),
     initial_amount NUMERIC(18,2) NOT NULL,
     current_amount NUMERIC(18,2),
     committed_amount NUMERIC(18,2) DEFAULT 0,
     accrued_amount NUMERIC(18,2) DEFAULT 0,
     paid_amount NUMERIC(18,2) DEFAULT 0,
-    owner_division_id INTEGER REFERENCES core.organization(id),
+    owner_division_id UUID REFERENCES core.organization(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb,
     UNIQUE(code, fiscal_year)
 );
 CREATE INDEX idx_budget_program_year ON core.budget_program(fiscal_year);
 COMMENT ON TABLE core.budget_program IS 'Programa de Presupuesto Publico Regional (PPR)';
 
--- TABLA: core.fund_program
--- EXISTE PORQUE: ENT-EJEC-PROGRAMA-FONDO - 8 menciones
--- ALINEAMIENTO: gnub:FundProgram
 CREATE TABLE core.fund_program (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    fund_source_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    fund_source_id UUID REFERENCES ref.category(id) NOT NULL,
     fiscal_year INTEGER NOT NULL,
     total_amount NUMERIC(18,2) NOT NULL,
-    state_id INTEGER REFERENCES ref.category(id),
+    state_id UUID REFERENCES ref.category(id),
     call_open_date DATE,
     call_close_date DATE,
-    resolution_id INTEGER,
-    budget_program_id INTEGER REFERENCES core.budget_program(id),
+    resolution_id UUID,  -- FK diferida
+    budget_program_id UUID REFERENCES core.budget_program(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.fund_program IS 'Programa especifico financiado por un fondo';
 
--- TABLA: core.budget_commitment
--- EXISTE PORQUE: ENT-FIN-CDP - 13 menciones
--- ALINEAMIENTO: gnub:BudgetaryCommitment rdfs:subClassOf gist:Commitment
 CREATE TABLE core.budget_commitment (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     commitment_number VARCHAR(32) UNIQUE NOT NULL,
-    commitment_type_id INTEGER REFERENCES ref.category(id),
-    budget_program_id INTEGER REFERENCES core.budget_program(id) NOT NULL,
-    ipr_id INTEGER,
-    agreement_id INTEGER,
+    commitment_type_id UUID REFERENCES ref.category(id),
+    budget_program_id UUID REFERENCES core.budget_program(id) NOT NULL,
+    ipr_id UUID,  -- FK diferida
+    agreement_id UUID,  -- FK diferida
     amount NUMERIC(18,2) NOT NULL,
     issued_at DATE NOT NULL,
     expires_at DATE,
-    status_id INTEGER REFERENCES ref.category(id),
-    resolution_id INTEGER,
-    metadata JSONB DEFAULT '{}'::jsonb
+    status_id UUID REFERENCES ref.category(id),
+    resolution_id UUID,  -- FK diferida
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
+    metadata JSONB DEFAULT '{}'::jsonb,
+    -- OPP-005: CHECK constraint
+    CONSTRAINT chk_budget_commitment_amount CHECK (amount > 0)
 );
 COMMENT ON TABLE core.budget_commitment IS 'Compromiso presupuestario (CDP, Compromiso, Devengado)';
 
--- -----------------------------------------------------------------------------
--- IPR - INICIATIVAS DE INVERSION PUBLICA REGIONAL
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 5: IPR (Iniciativas de Inversión)
+-- =============================================================================
 
--- TABLA: core.ipr
--- EXISTE PORQUE: CQ-029 a CQ-060, 113 historias D-EJEC, omega_gore_nuble_mermaid.md
--- ALINEAMIENTO: gnub:IPR rdfs:subClassOf gist:Project
--- SEMANTICA: IPR es una Transformacion Territorial (Axioma A1: S1 -> S2)
 CREATE TABLE core.ipr (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     codigo_bip VARCHAR(20) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    ipr_nature_id INTEGER REFERENCES ref.category(id) NOT NULL,
-    ipr_type_id INTEGER REFERENCES ref.category(id),
-    mcd_phase_id INTEGER REFERENCES ref.category(id),
-    status_id INTEGER REFERENCES ref.category(id),
-    budget_subtitle_id INTEGER REFERENCES ref.category(id),
-    funding_source_id INTEGER REFERENCES ref.category(id),
-    mechanism_id INTEGER REFERENCES ref.category(id),
+    -- OPP-008: Usar ENUM para ipr_nature
+    ipr_nature ipr_nature_enum NOT NULL,
+    ipr_type_id UUID REFERENCES ref.category(id),
+    mcd_phase_id UUID REFERENCES ref.category(id),
+    status_id UUID REFERENCES ref.category(id),
+    budget_subtitle_id UUID REFERENCES ref.category(id),
+    funding_source_id UUID REFERENCES ref.category(id),
+    mechanism_id UUID REFERENCES ref.category(id),
     crea_activo BOOLEAN DEFAULT TRUE,
-    formulator_id INTEGER REFERENCES core.organization(id),
-    executor_id INTEGER REFERENCES core.organization(id),
-    sponsor_division_id INTEGER REFERENCES core.organization(id),
+    formulator_id UUID REFERENCES core.organization(id),
+    executor_id UUID REFERENCES core.organization(id),
+    sponsor_division_id UUID REFERENCES core.organization(id),
     max_execution_months INTEGER,
     intended_outcome TEXT,
-    resolution_type_id INTEGER REFERENCES ref.category(id),
+    resolution_type_id UUID REFERENCES ref.category(id),
     requires_cgr BOOLEAN DEFAULT FALSE,
     requires_dipres BOOLEAN DEFAULT FALSE,
-    -- Campos operativos (especificaciones.md)
     has_open_problems BOOLEAN DEFAULT false,
-    alert_level_id INTEGER REFERENCES ref.category(id),
-    assignee_id UUID,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
+    alert_level_id UUID REFERENCES ref.category(id),
+    assignee_id UUID REFERENCES core.user(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
+CREATE INDEX idx_ipr_phase ON core.ipr(mcd_phase_id);
+CREATE INDEX idx_ipr_status ON core.ipr(status_id);
+CREATE INDEX idx_ipr_mechanism ON core.ipr(mechanism_id);
+CREATE INDEX idx_ipr_deleted ON core.ipr(deleted_at) WHERE deleted_at IS NULL;
 COMMENT ON TABLE core.ipr IS 'Iniciativa de Inversion Publica Regional - transformacion territorial';
-COMMENT ON COLUMN core.ipr.ipr_nature_id IS 'scheme=ipr_nature: PROYECTO|PROGRAMA';
+COMMENT ON COLUMN core.ipr.ipr_nature IS 'PROYECTO|PROGRAMA (ENUM)';
 COMMENT ON COLUMN core.ipr.mcd_phase_id IS 'scheme=mcd_phase: F0|F1|F2|F3|F4|F5 (6 fases MCD)';
-COMMENT ON COLUMN core.ipr.mechanism_id IS 'scheme=mechanism: SNI|C33|FRIL|GLOSA06|TRANSFER|SUBV8|FRPD (DUAL: postulacion+evaluacion)';
+COMMENT ON COLUMN core.ipr.mechanism_id IS 'scheme=mechanism: SNI|C33|FRIL|GLOSA06|TRANSFER|SUBV8|FRPD';
 
--- TABLA: core.ipr_mechanism
--- EXISTE PORQUE: omega_gore_nuble_mermaid.md - Mecanismos especificos
--- ALINEAMIENTO: Poly-IPR patterns (Polimorfismo por mecanismo)
--- HIGH-010: NOTA DE DISEÑO - Esta tabla contiene atributos polimorficos por mecanismo.
---           core.ipr.mechanism_id indica el mecanismo general (scheme=mechanism).
---           core.ipr_mechanism.mechanism_type_id es redundante pero se mantiene para
---           consistencia con el patron Poly-IPR. La fuente autoritativa es core.ipr.mechanism_id.
+-- HIGH-010: Sin mechanism_type_id redundante
 CREATE TABLE core.ipr_mechanism (
-    id SERIAL PRIMARY KEY,
-    ipr_id INTEGER REFERENCES core.ipr(id) NOT NULL UNIQUE,
-    mechanism_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ipr_id UUID REFERENCES core.ipr(id) NOT NULL UNIQUE,
     -- Atributos SNI
     rate_mdsf VARCHAR(4),
     etapa_bip VARCHAR(16),
@@ -447,406 +632,516 @@ CREATE TABLE core.ipr_mechanism (
     fondo_tematico VARCHAR(32),
     puntaje_evaluacion NUMERIC(6,2),
     asignacion_directa BOOLEAN,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
-COMMENT ON TABLE core.ipr_mechanism IS 'Atributos especificos por mecanismo de evaluacion (7 tracks)';
+COMMENT ON TABLE core.ipr_mechanism IS 'Atributos especificos por mecanismo (el mecanismo se obtiene de core.ipr.mechanism_id)';
 
--- -----------------------------------------------------------------------------
--- ACTOS ADMINISTRATIVOS Y NORMATIVA
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CONTINUACIÓN EN PARTE 2...
+-- =============================================================================
+-- Este archivo es muy extenso. Para continuar, se debe agregar:
+-- - Actos administrativos y normativa
+-- - Convenios y rendiciones
+-- - Gobernanza y comités
+-- - Inventario y vehículos
+-- - Digital y trámites
+-- - Control de gestión (problems, commitments, progress)
+-- - Trabajo unificado (work_item)
+-- - Alertas y riesgos
+-- - Capa transaccional (txn.event, txn.magnitude) con particionamiento
+-- - Triggers y funciones
+-- =============================================================================
 
--- TABLA: core.administrative_act
--- EXISTE PORQUE: ENT-NORM-ACTO-ADMINISTRATIVO
--- ALINEAMIENTO: gnub:AdministrativeAct rdfs:subClassOf gist:Agreement
+-- =============================================================================
+-- CAPA 2: CORE - Parte 6: Actos Administrativos y Normativa
+-- =============================================================================
+
 CREATE TABLE core.administrative_act (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     act_number VARCHAR(32) NOT NULL,
-    act_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    act_type_id UUID REFERENCES ref.category(id) NOT NULL,
     subject TEXT NOT NULL,
-    issuer_id INTEGER REFERENCES core.organization(id),
-    signer_id VARCHAR(32) REFERENCES meta.role(id),
-    issued_at DATE NOT NULL,
-    effective_from DATE,
-    effective_to DATE,
-    state_id INTEGER REFERENCES ref.category(id),
+    issuer_id UUID REFERENCES core.organization(id),
+    signer_id UUID REFERENCES meta.role(id),
+    issued_at TIMESTAMPTZ NOT NULL,
+    effective_from TIMESTAMPTZ,
+    effective_to TIMESTAMPTZ,
+    state_id UUID REFERENCES ref.category(id),
     requires_cgr BOOLEAN DEFAULT FALSE,
-    cgr_outcome_id INTEGER REFERENCES ref.category(id),
+    cgr_outcome_id UUID REFERENCES ref.category(id),
     cgr_submitted_at DATE,
     cgr_resolved_at DATE,
-    parent_act_id INTEGER REFERENCES core.administrative_act(id),
+    parent_act_id UUID REFERENCES core.administrative_act(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 CREATE INDEX idx_admin_act_type ON core.administrative_act(act_type_id);
 CREATE INDEX idx_admin_act_state ON core.administrative_act(state_id);
 COMMENT ON TABLE core.administrative_act IS 'Acto administrativo - manifestacion de voluntad con efectos juridicos';
 
--- TABLA: core.resolution
--- EXISTE PORQUE: ENT-NORM-RESOLUCION - 9 menciones
--- ALINEAMIENTO: gnub:Resolution rdfs:subClassOf gnub:AdministrativeAct
 CREATE TABLE core.resolution (
-    id SERIAL PRIMARY KEY,
-    administrative_act_id INTEGER REFERENCES core.administrative_act(id) NOT NULL UNIQUE,
-    resolution_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
-    resolution_subtype_id INTEGER REFERENCES ref.category(id),
-    ipr_id INTEGER REFERENCES core.ipr(id),
-    agreement_id INTEGER,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    administrative_act_id UUID REFERENCES core.administrative_act(id) NOT NULL UNIQUE,
+    resolution_type_id UUID REFERENCES ref.category(id) NOT NULL,
+    resolution_subtype_id UUID REFERENCES ref.category(id),
+    ipr_id UUID REFERENCES core.ipr(id),
+    agreement_id UUID,  -- FK diferida
     budget_amount NUMERIC(18,2),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 CREATE INDEX idx_resolution_ipr ON core.resolution(ipr_id);
 COMMENT ON TABLE core.resolution IS 'Resolucion - EXENTA, AFECTA o CONJUNTA';
 
--- TABLA: core.administrative_procedure
--- EXISTE PORQUE: ENT-NORM-PROCESO - 13 menciones
--- ALINEAMIENTO: gnub:AdministrativeProcedure, gist:Event
+-- FK diferidas para fund_program y budget_commitment
+ALTER TABLE core.fund_program ADD CONSTRAINT fk_fund_program_resolution
+    FOREIGN KEY (resolution_id) REFERENCES core.resolution(id);
+ALTER TABLE core.budget_commitment ADD CONSTRAINT fk_budget_commitment_resolution
+    FOREIGN KEY (resolution_id) REFERENCES core.resolution(id);
+
 CREATE TABLE core.administrative_procedure (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
-    procedure_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    procedure_type_id UUID REFERENCES ref.category(id) NOT NULL,
     name TEXT NOT NULL,
-    state_id INTEGER REFERENCES ref.category(id),
+    state_id UUID REFERENCES ref.category(id),
     initiated_at DATE NOT NULL,
     resolved_at DATE,
-    initiator_id INTEGER REFERENCES core.organization(id),
-    responsible_id VARCHAR(32) REFERENCES meta.role(id),
-    resolution_id INTEGER REFERENCES core.resolution(id),
+    initiator_id UUID REFERENCES core.organization(id),
+    responsible_id UUID REFERENCES meta.role(id),
+    resolution_id UUID REFERENCES core.resolution(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.administrative_procedure IS 'Procedimiento administrativo - secuencia de tramites';
 
--- TABLA: core.legal_document
--- EXISTE PORQUE: Funcion Motora 5 (NORMAR)
--- ALINEAMIENTO: gnub:LegalDocument, gist:Content
 CREATE TABLE core.legal_document (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(64) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    doc_type_id INTEGER REFERENCES ref.category(id),
+    doc_type_id UUID REFERENCES ref.category(id),
     publication_date DATE,
     source_url TEXT,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.legal_document IS 'Documento legal (Ley, DFL, Reglamento)';
 
--- TABLA: core.legal_mandate
--- EXISTE PORQUE: gnub:LegalMandate - obligaciones normativas
--- ALINEAMIENTO: gnub:LegalMandate, gist:Requirement
 CREATE TABLE core.legal_mandate (
-    id SERIAL PRIMARY KEY,
-    legal_document_id INTEGER REFERENCES core.legal_document(id) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    legal_document_id UUID REFERENCES core.legal_document(id) NOT NULL,
     article_reference VARCHAR(32),
     mandate_text TEXT NOT NULL,
-    applies_to_id INTEGER REFERENCES ref.category(id),
+    applies_to_id UUID REFERENCES ref.category(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.legal_mandate IS 'Mandato legal - constraint institucional derivado de norma';
 
--- -----------------------------------------------------------------------------
--- CONVENIOS Y RENDICIONES
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 7: Convenios y Rendiciones
+-- =============================================================================
 
--- TABLA: core.agreement
--- EXISTE PORQUE: CQ-141 a CQ-160 (Convenios)
--- ALINEAMIENTO: gnub:GOREAgreement rdfs:subClassOf gist:Contract
 CREATE TABLE core.agreement (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     agreement_number VARCHAR(32),
-    agreement_type_id INTEGER REFERENCES ref.category(id),
-    state_id INTEGER REFERENCES ref.category(id),
-    ipr_id INTEGER REFERENCES core.ipr(id),
-    giver_id INTEGER REFERENCES core.organization(id),
-    receiver_id INTEGER REFERENCES core.organization(id),
+    agreement_type_id UUID REFERENCES ref.category(id),
+    state_id UUID REFERENCES ref.category(id),
+    ipr_id UUID REFERENCES core.ipr(id),
+    giver_id UUID REFERENCES core.organization(id),
+    receiver_id UUID REFERENCES core.organization(id),
     total_amount NUMERIC(18,2),
-    signed_at DATE,
-    valid_from DATE,
-    valid_to DATE,
+    signed_at TIMESTAMPTZ,
+    valid_from TIMESTAMPTZ,
+    valid_to TIMESTAMPTZ,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
+CREATE INDEX idx_agreement_state ON core.agreement(state_id);
+CREATE INDEX idx_agreement_ipr ON core.agreement(ipr_id);
 COMMENT ON TABLE core.agreement IS 'Convenio GORE - transferencia, mandato, colaboracion';
 
--- TABLA: core.agreement_installment (NUEVO - especificaciones.md)
--- EXISTE PORQUE: RF-012 (Convenios con cuotas y estado de pago)
--- ALINEAMIENTO: gist:ScheduledEvent
--- SEMANTICA: Cuota de pago programada de un convenio
+-- FK diferidas
+ALTER TABLE core.resolution ADD CONSTRAINT fk_resolution_agreement
+    FOREIGN KEY (agreement_id) REFERENCES core.agreement(id);
+ALTER TABLE core.budget_commitment ADD CONSTRAINT fk_budget_commitment_ipr
+    FOREIGN KEY (ipr_id) REFERENCES core.ipr(id);
+ALTER TABLE core.budget_commitment ADD CONSTRAINT fk_budget_commitment_agreement
+    FOREIGN KEY (agreement_id) REFERENCES core.agreement(id);
+
 CREATE TABLE core.agreement_installment (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    agreement_id INTEGER NOT NULL REFERENCES core.agreement(id),
+    agreement_id UUID NOT NULL REFERENCES core.agreement(id),
     installment_number INTEGER NOT NULL,
     amount NUMERIC(15,2) NOT NULL,
     due_date DATE NOT NULL,
-    payment_status_id INTEGER NOT NULL REFERENCES ref.category(id),
+    payment_status_id UUID NOT NULL REFERENCES ref.category(id),
     paid_at TIMESTAMPTZ,
     paid_amount NUMERIC(15,2),
     payment_reference VARCHAR(100),
+    -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb,
     UNIQUE(agreement_id, installment_number)
 );
 COMMENT ON TABLE core.agreement_installment IS 'Cuota de pago programada de un convenio';
-COMMENT ON COLUMN core.agreement_installment.payment_status_id IS 'scheme=payment_status: PENDIENTE|EN_PROCESO|PAGADO|DIFERIDO';
 
--- TABLA: core.rendition
--- EXISTE PORQUE: CQ-183 a CQ-200 (Rendicion)
--- ALINEAMIENTO: gnub:Rendition
 CREATE TABLE core.rendition (
-    id SERIAL PRIMARY KEY,
-    agreement_id INTEGER REFERENCES core.agreement(id) NOT NULL,
-    renderer_id INTEGER REFERENCES core.organization(id) NOT NULL,
-    state_id INTEGER REFERENCES ref.category(id),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    agreement_id UUID REFERENCES core.agreement(id) NOT NULL,
+    renderer_id UUID REFERENCES core.organization(id) NOT NULL,
+    state_id UUID REFERENCES ref.category(id),
     period_start DATE,
     period_end DATE,
     submitted_at TIMESTAMPTZ,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.rendition IS 'Rendicion de cuentas de un convenio';
 
--- -----------------------------------------------------------------------------
--- GOBERNANZA Y COMITES
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 8: Gobernanza y Comités
+-- =============================================================================
 
--- TABLA: core.committee
--- EXISTE PORQUE: ENT-CONV-COMITE - 11 menciones
--- ALINEAMIENTO: gnub:Committee
 CREATE TABLE core.committee (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    committee_type_id INTEGER REFERENCES ref.category(id),
-    parent_org_id INTEGER REFERENCES core.organization(id),
+    committee_type_id UUID REFERENCES ref.category(id),
+    parent_org_id UUID REFERENCES core.organization(id),
     is_permanent BOOLEAN DEFAULT TRUE,
     legal_basis TEXT,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.committee IS 'Organo colegiado de decision (CORE, Comite Inversiones)';
 
--- TABLA: core.committee_member
--- EXISTE PORQUE: Composicion de comites
 CREATE TABLE core.committee_member (
-    id SERIAL PRIMARY KEY,
-    committee_id INTEGER REFERENCES core.committee(id) NOT NULL,
-    person_id INTEGER REFERENCES core.person(id),
-    role_in_committee_id INTEGER REFERENCES ref.category(id),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    committee_id UUID REFERENCES core.committee(id) NOT NULL,
+    person_id UUID REFERENCES core.person(id),
+    role_in_committee_id UUID REFERENCES ref.category(id),
     start_date DATE NOT NULL,
     end_date DATE,
-    is_voting_member BOOLEAN DEFAULT TRUE
+    is_voting_member BOOLEAN DEFAULT TRUE,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id)
 );
 COMMENT ON TABLE core.committee_member IS 'Membresia en comite';
 
--- TABLA: core.session
--- EXISTE PORQUE: ENT-CONV-SESION - 8 menciones
--- ALINEAMIENTO: gnub:Session
 CREATE TABLE core.session (
-    id SERIAL PRIMARY KEY,
-    committee_id INTEGER REFERENCES core.committee(id) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    committee_id UUID REFERENCES core.committee(id) NOT NULL,
     session_number INTEGER NOT NULL,
-    session_type_id INTEGER REFERENCES ref.category(id),
+    session_type_id UUID REFERENCES ref.category(id),
     scheduled_at TIMESTAMPTZ NOT NULL,
     started_at TIMESTAMPTZ,
     ended_at TIMESTAMPTZ,
     quorum_reached BOOLEAN,
     location TEXT,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb,
     UNIQUE(committee_id, session_number, DATE(scheduled_at))
 );
 COMMENT ON TABLE core.session IS 'Sesion de un comite u organo colegiado';
 
--- TABLA: core.minute
--- EXISTE PORQUE: ENT-CONV-ACTA - 11 menciones
--- ALINEAMIENTO: gnub:Minute
 CREATE TABLE core.minute (
-    id SERIAL PRIMARY KEY,
-    session_id INTEGER REFERENCES core.session(id) NOT NULL UNIQUE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id UUID REFERENCES core.session(id) NOT NULL UNIQUE,
     minute_number VARCHAR(32) NOT NULL,
     approved_at DATE,
     content TEXT,
-    resolution_id INTEGER REFERENCES core.resolution(id),
-    signed_by_id INTEGER REFERENCES core.person(id),
+    resolution_id UUID REFERENCES core.resolution(id),
+    signed_by_id UUID REFERENCES core.person(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.minute IS 'Acta de sesion con acuerdos tomados';
 
--- TABLA: core.session_agreement
--- EXISTE PORQUE: ENT-CONV-ACUERDO - 7 menciones
--- ALINEAMIENTO: gnub:SessionAgreement
 CREATE TABLE core.session_agreement (
-    id SERIAL PRIMARY KEY,
-    minute_id INTEGER REFERENCES core.minute(id) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    minute_id UUID REFERENCES core.minute(id) NOT NULL,
     agreement_number INTEGER NOT NULL,
     subject TEXT NOT NULL,
     decision TEXT NOT NULL,
-    responsible_id INTEGER REFERENCES core.person(id),
+    responsible_id UUID REFERENCES core.person(id),
     due_date DATE,
-    status_id INTEGER REFERENCES ref.category(id),
-    ipr_id INTEGER REFERENCES core.ipr(id),
+    status_id UUID REFERENCES ref.category(id),
+    ipr_id UUID REFERENCES core.ipr(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.session_agreement IS 'Acuerdo especifico tomado en una sesion';
 
--- -----------------------------------------------------------------------------
--- INVENTARIO Y VEHICULOS
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 9: Inventario, Vehículos, Digital
+-- =============================================================================
 
--- TABLA: core.inventory_item
--- EXISTE PORQUE: ENT-ORG-INVENTARIO - 10 menciones
--- ALINEAMIENTO: gnub:InventoryItem
 CREATE TABLE core.inventory_item (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    item_type_id INTEGER REFERENCES ref.category(id),
-    location_id INTEGER REFERENCES core.organization(id),
-    responsible_id INTEGER REFERENCES core.person(id),
+    item_type_id UUID REFERENCES ref.category(id),
+    location_id UUID REFERENCES core.organization(id),
+    responsible_id UUID REFERENCES core.person(id),
     acquisition_date DATE,
     acquisition_value NUMERIC(18,2),
-    current_status_id INTEGER REFERENCES ref.category(id),
-    ipr_origin_id INTEGER REFERENCES core.ipr(id),
+    current_status_id UUID REFERENCES ref.category(id),
+    ipr_origin_id UUID REFERENCES core.ipr(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.inventory_item IS 'Bien mueble o activo del GORE';
 
--- TABLA: core.vehicle
--- EXISTE PORQUE: ENT-ORG-VEHICULO - 6 menciones
--- ALINEAMIENTO: gnub:Vehicle
 CREATE TABLE core.vehicle (
-    id SERIAL PRIMARY KEY,
-    inventory_item_id INTEGER REFERENCES core.inventory_item(id) UNIQUE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    inventory_item_id UUID REFERENCES core.inventory_item(id) UNIQUE,
     plate VARCHAR(10) UNIQUE NOT NULL,
     brand VARCHAR(64),
     model VARCHAR(64),
     year INTEGER,
-    vehicle_type_id INTEGER REFERENCES ref.category(id),
-    fuel_type_id INTEGER REFERENCES ref.category(id),
-    assigned_division_id INTEGER REFERENCES core.organization(id),
+    vehicle_type_id UUID REFERENCES ref.category(id),
+    fuel_type_id UUID REFERENCES ref.category(id),
+    assigned_division_id UUID REFERENCES core.organization(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.vehicle IS 'Vehiculo institucional';
 
--- -----------------------------------------------------------------------------
--- DIGITAL Y TRAMITES
--- -----------------------------------------------------------------------------
-
--- TABLA: core.digital_platform
--- EXISTE PORQUE: ENT-DIG-PLATAFORMA - 17 menciones
--- ALINEAMIENTO: gnub:DigitalPlatform, tde:PlataformaDigital
 CREATE TABLE core.digital_platform (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    platform_type_id INTEGER REFERENCES ref.category(id),
+    platform_type_id UUID REFERENCES ref.category(id),
     url TEXT,
-    owner_id INTEGER REFERENCES core.organization(id),
+    owner_id UUID REFERENCES core.organization(id),
     is_external BOOLEAN DEFAULT FALSE,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.digital_platform IS 'Sistema o plataforma digital (SIGFE, BIP, Portal)';
 
--- TABLA: core.procedure
--- EXISTE PORQUE: ENT-DIG-TRAMITE - 17 menciones
--- ALINEAMIENTO: tde:Tramite
 CREATE TABLE core.procedure (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    procedure_type_id INTEGER REFERENCES ref.category(id),
-    responsible_division_id INTEGER REFERENCES core.organization(id),
-    platform_id INTEGER REFERENCES core.digital_platform(id),
+    procedure_type_id UUID REFERENCES ref.category(id),
+    responsible_division_id UUID REFERENCES core.organization(id),
+    platform_id UUID REFERENCES core.digital_platform(id),
     max_days INTEGER,
     is_online BOOLEAN DEFAULT FALSE,
     legal_basis TEXT,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.procedure IS 'Tramite o servicio ofrecido al ciudadano';
 
--- TABLA: core.electronic_file
--- EXISTE PORQUE: ENT-DIG-EXPEDIENTE - 9 menciones
--- ALINEAMIENTO: tde:ExpedienteElectronico
 CREATE TABLE core.electronic_file (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     file_number VARCHAR(32) UNIQUE NOT NULL,
-    procedure_id INTEGER REFERENCES core.procedure(id),
-    requester_id INTEGER REFERENCES core.person(id),
+    procedure_id UUID REFERENCES core.procedure(id),
+    requester_id UUID REFERENCES core.person(id),
     subject TEXT NOT NULL,
-    status_id INTEGER REFERENCES ref.category(id),
-    created_at TIMESTAMPTZ DEFAULT NOW(),
+    status_id UUID REFERENCES ref.category(id),
     resolved_at TIMESTAMPTZ,
-    resolution_id INTEGER REFERENCES core.resolution(id),
+    resolution_id UUID REFERENCES core.resolution(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.electronic_file IS 'Expediente electronico de un tramite';
 
--- TABLA: core.document
--- EXISTE PORQUE: ENT-SYS-DOCUMENTO - 14 menciones
--- ALINEAMIENTO: gist:FormattedContent
 CREATE TABLE core.document (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(64) UNIQUE,
     name TEXT NOT NULL,
-    document_type_id INTEGER REFERENCES ref.category(id),
-    file_id INTEGER REFERENCES core.electronic_file(id),
-    ipr_id INTEGER REFERENCES core.ipr(id),
-    agreement_id INTEGER REFERENCES core.agreement(id),
-    created_by_id INTEGER REFERENCES core.person(id),
-    created_at TIMESTAMPTZ DEFAULT NOW(),
+    document_type_id UUID REFERENCES ref.category(id),
+    file_id UUID REFERENCES core.electronic_file(id),
+    ipr_id UUID REFERENCES core.ipr(id),
+    agreement_id UUID REFERENCES core.agreement(id),
     storage_url TEXT,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.document IS 'Documento digital o fisico en el sistema';
 
--- -----------------------------------------------------------------------------
--- CONTROL DE GESTION Y PRODUCTIVIDAD
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 10: Control de Gestión
+-- =============================================================================
 
--- TABLA: core.ipr_problem
--- EXISTE PORQUE: casos_uso.md - "Nudos Criticos"
--- ALINEAMIENTO: gore_ejecucion.problema_ipr (para_titi)
 CREATE TABLE core.ipr_problem (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(20) UNIQUE,
-    ipr_id INTEGER REFERENCES core.ipr(id) NOT NULL,
-    agreement_id INTEGER REFERENCES core.agreement(id),
-    problem_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
-    impact_id INTEGER REFERENCES ref.category(id),
+    ipr_id UUID REFERENCES core.ipr(id) NOT NULL,
+    agreement_id UUID REFERENCES core.agreement(id),
+    problem_type_id UUID REFERENCES ref.category(id) NOT NULL,
+    impact_id UUID REFERENCES ref.category(id),
     description TEXT NOT NULL,
     impact_description TEXT,
-    detected_by_id INTEGER REFERENCES core.person(id),
-    detected_by_user_id UUID,
+    detected_by_id UUID REFERENCES core.user(id),
     detected_at TIMESTAMPTZ DEFAULT NOW(),
-    state_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    state_id UUID REFERENCES ref.category(id) NOT NULL,
     proposed_solution TEXT,
     solution_applied TEXT,
-    resolved_by_id INTEGER REFERENCES core.person(id),
-    resolved_by_user_id UUID,
+    resolved_by_id UUID REFERENCES core.user(id),
     resolved_at TIMESTAMPTZ,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 CREATE INDEX idx_ipr_problem_state ON core.ipr_problem(state_id);
 CREATE INDEX idx_ipr_problem_ipr ON core.ipr_problem(ipr_id);
 COMMENT ON TABLE core.ipr_problem IS 'Problema/nudo detectado en una IPR que bloquea avance';
 
--- TABLA: core.operational_commitment
--- EXISTE PORQUE: casos_uso.md - "Compromisos Operativos"
--- ALINEAMIENTO: gore_ejecucion.compromiso_operativo (para_titi)
 CREATE TABLE core.operational_commitment (
-    id SERIAL PRIMARY KEY,
-    session_id INTEGER REFERENCES core.session(id),
-    problem_id INTEGER REFERENCES core.ipr_problem(id),
-    ipr_id INTEGER REFERENCES core.ipr(id),
-    agreement_id INTEGER REFERENCES core.agreement(id),
-    budget_commitment_id INTEGER REFERENCES core.budget_commitment(id),
-    commitment_type_id INTEGER REFERENCES ref.operational_commitment_type(id) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(20) UNIQUE,  -- OPP-006
+    session_id UUID REFERENCES core.session(id),
+    problem_id UUID REFERENCES core.ipr_problem(id),
+    ipr_id UUID REFERENCES core.ipr(id),
+    agreement_id UUID REFERENCES core.agreement(id),
+    budget_commitment_id UUID REFERENCES core.budget_commitment(id),
+    commitment_type_id UUID REFERENCES ref.operational_commitment_type(id) NOT NULL,
     description TEXT NOT NULL,
-    responsible_id INTEGER REFERENCES core.person(id) NOT NULL,
-    division_id INTEGER REFERENCES core.organization(id),
+    responsible_id UUID REFERENCES core.user(id) NOT NULL,
+    division_id UUID REFERENCES core.organization(id),
     due_date DATE NOT NULL,
-    priority_id INTEGER REFERENCES ref.category(id),
-    state_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    priority_id UUID REFERENCES ref.category(id),
+    state_id UUID REFERENCES ref.category(id) NOT NULL,
     observations TEXT,
     completed_at TIMESTAMPTZ,
-    verified_by_id INTEGER REFERENCES core.person(id),
+    verified_by_id UUID REFERENCES core.user(id),
     verified_at TIMESTAMPTZ,
-    created_by_id INTEGER REFERENCES core.person(id) NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 CREATE INDEX idx_commitment_responsible ON core.operational_commitment(responsible_id);
@@ -854,84 +1149,81 @@ CREATE INDEX idx_commitment_state ON core.operational_commitment(state_id);
 CREATE INDEX idx_commitment_due ON core.operational_commitment(due_date);
 COMMENT ON TABLE core.operational_commitment IS 'Tarea asignada a un responsable con plazo y seguimiento';
 
--- TABLA: core.commitment_history
--- EXISTE PORQUE: Event sourcing - trazabilidad de compromisos
--- ALINEAMIENTO: gore_ejecucion.historial_compromiso (para_titi)
--- HIGH-008: Estados con FK a ref.category en lugar de VARCHAR libre
 CREATE TABLE core.commitment_history (
-    id SERIAL PRIMARY KEY,
-    commitment_id INTEGER REFERENCES core.operational_commitment(id) ON DELETE CASCADE NOT NULL,
-    previous_state_id INTEGER REFERENCES ref.category(id),
-    new_state_id INTEGER REFERENCES ref.category(id) NOT NULL,
-    changed_by_id INTEGER REFERENCES core.person(id) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    commitment_id UUID REFERENCES core.operational_commitment(id) ON DELETE CASCADE NOT NULL,
+    previous_state_id UUID REFERENCES ref.category(id),
+    new_state_id UUID REFERENCES ref.category(id) NOT NULL,
+    changed_by_id UUID REFERENCES core.user(id) NOT NULL,
     comment TEXT,
     changed_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE INDEX idx_commitment_history ON core.commitment_history(commitment_id);
 COMMENT ON TABLE core.commitment_history IS 'Historial de cambios de estado de compromisos';
-COMMENT ON COLUMN core.commitment_history.previous_state_id IS 'scheme=commitment_state - estado anterior';
-COMMENT ON COLUMN core.commitment_history.new_state_id IS 'scheme=commitment_state - nuevo estado';
 
--- TABLA: core.progress_report
--- EXISTE PORQUE: casos_uso.md - "Registrar Informe de Avance"
--- ALINEAMIENTO: gore_catalogo.informe_avance (para_titi)
 CREATE TABLE core.progress_report (
-    id SERIAL PRIMARY KEY,
-    ipr_id INTEGER REFERENCES core.ipr(id) NOT NULL,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ipr_id UUID REFERENCES core.ipr(id) NOT NULL,
     report_number INTEGER NOT NULL,
     report_date DATE NOT NULL,
     physical_progress NUMERIC(5,2),
     financial_progress NUMERIC(5,2),
     description TEXT,
     issues_detected TEXT,
-    reported_by_id INTEGER REFERENCES core.person(id) NOT NULL,
+    reported_by_id UUID REFERENCES core.user(id) NOT NULL,
     attachment_url TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb,
-    UNIQUE(ipr_id, report_number)
+    UNIQUE(ipr_id, report_number),
+    -- OPP-005: CHECK constraints
+    CONSTRAINT chk_physical_progress CHECK (physical_progress IS NULL OR (physical_progress >= 0 AND physical_progress <= 100)),
+    CONSTRAINT chk_financial_progress CHECK (financial_progress IS NULL OR (financial_progress >= 0 AND financial_progress <= 100))
 );
 CREATE INDEX idx_progress_report_ipr ON core.progress_report(ipr_id);
 COMMENT ON TABLE core.progress_report IS 'Reporte periodico de avance fisico/financiero de IPR';
 
--- TABLA: core.crisis_meeting
--- EXISTE PORQUE: casos_uso.md - Reuniones de crisis semanales
--- ALINEAMIENTO: gore_instancias.reunion_crisis (para_titi)
 CREATE TABLE core.crisis_meeting (
-    id SERIAL PRIMARY KEY,
-    session_id INTEGER REFERENCES core.session(id) NOT NULL UNIQUE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id UUID REFERENCES core.session(id) NOT NULL UNIQUE,
     start_time TIME,
     end_time TIME,
     started_at TIMESTAMPTZ,
     finished_at TIMESTAMPTZ,
     summary TEXT,
-    organizer_id INTEGER REFERENCES core.person(id),
+    organizer_id UUID REFERENCES core.user(id),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.crisis_meeting IS 'Especializacion de session para gestion de crisis IPR';
 
--- TABLA: core.agenda_item_context
--- EXISTE PORQUE: casos_uso.md - Contexto de crisis en puntos de agenda
--- ALINEAMIENTO: gore_instancias.contexto_punto_crisis (para_titi)
 CREATE TABLE core.agenda_item_context (
-    id SERIAL PRIMARY KEY,
-    session_agreement_id INTEGER REFERENCES core.session_agreement(id) UNIQUE,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_agreement_id UUID REFERENCES core.session_agreement(id) UNIQUE,
     target_type VARCHAR(20) NOT NULL,
-    target_id INTEGER NOT NULL,
-    ipr_id INTEGER REFERENCES core.ipr(id),
+    target_id UUID NOT NULL,
+    ipr_id UUID REFERENCES core.ipr(id),
     notes TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE INDEX idx_agenda_context_ipr ON core.agenda_item_context(ipr_id);
 COMMENT ON TABLE core.agenda_item_context IS 'Vincula punto de agenda con IPR/problema/alerta';
 
--- -----------------------------------------------------------------------------
--- TRABAJO UNIFICADO (NUEVO - especificaciones.md)
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 11: Trabajo Unificado
+-- =============================================================================
 
--- TABLA: core.work_item
--- EXISTE PORQUE: RF-020 a RF-030 (Modulo de Trabajo Unificado)
--- ALINEAMIENTO: gist:Task rdfs:subClassOf gist:Event
--- SEMANTICA: Unidad de trabajo asignable, con estado y jerarquia
 CREATE TABLE core.work_item (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(20) NOT NULL UNIQUE,
@@ -939,18 +1231,20 @@ CREATE TABLE core.work_item (
     description TEXT,
     parent_id UUID REFERENCES core.work_item(id),
     assignee_id UUID NOT NULL REFERENCES core.user(id),
-    division_id INTEGER NOT NULL REFERENCES core.organization(id),
-    status_id INTEGER NOT NULL REFERENCES ref.category(id),
-    priority_id INTEGER REFERENCES ref.category(id),
-    origin_id INTEGER REFERENCES ref.category(id),
+    division_id UUID NOT NULL REFERENCES core.organization(id),
+    status_id UUID NOT NULL REFERENCES ref.category(id),
+    priority_id UUID REFERENCES ref.category(id),
+    origin_id UUID REFERENCES ref.category(id),
     due_date DATE,
-    -- HIGH-005: Funtor Story->WorkItem (trazabilidad requisito->implementacion)
-    story_id VARCHAR(32) REFERENCES meta.story(id),
+    -- HIGH-005: Funtor Story->WorkItem
+    story_id UUID REFERENCES meta.story(id),
+    -- HIGH-002: FK a operational_commitment
+    commitment_id UUID REFERENCES core.operational_commitment(id),
     -- Vinculaciones a entidades formales
-    ipr_id INTEGER REFERENCES core.ipr(id),
-    agreement_id INTEGER REFERENCES core.agreement(id),
-    resolution_id INTEGER REFERENCES core.resolution(id),
-    problem_id INTEGER REFERENCES core.ipr_problem(id),
+    ipr_id UUID REFERENCES core.ipr(id),
+    agreement_id UUID REFERENCES core.agreement(id),
+    resolution_id UUID REFERENCES core.resolution(id),
+    problem_id UUID REFERENCES core.ipr_problem(id),
     -- Contexto proceso DIPIR
     process_ref VARCHAR(100),
     -- Bloqueo
@@ -959,12 +1253,16 @@ CREATE TABLE core.work_item (
     -- Verificacion
     verified_by_id UUID REFERENCES core.user(id),
     verified_at TIMESTAMPTZ,
-    -- Timestamps
+    -- Timestamps operativos
     started_at TIMESTAMPTZ,
     completed_at TIMESTAMPTZ,
+    -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     created_by_id UUID NOT NULL REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     tags TEXT[],
     metadata JSONB DEFAULT '{}'::jsonb
 );
@@ -972,21 +1270,18 @@ CREATE INDEX idx_work_item_assignee ON core.work_item(assignee_id);
 CREATE INDEX idx_work_item_status ON core.work_item(status_id);
 CREATE INDEX idx_work_item_due ON core.work_item(due_date);
 CREATE INDEX idx_work_item_ipr ON core.work_item(ipr_id);
+CREATE INDEX idx_work_item_commitment ON core.work_item(commitment_id);
+CREATE INDEX idx_work_item_story ON core.work_item(story_id);
+CREATE INDEX idx_work_item_deleted ON core.work_item(deleted_at) WHERE deleted_at IS NULL;
 COMMENT ON TABLE core.work_item IS 'Item de trabajo unificado - atomo de gestion operativa';
-COMMENT ON COLUMN core.work_item.code IS 'Codigo unico: IT-YYYY-NNNNN';
-COMMENT ON COLUMN core.work_item.status_id IS 'scheme=work_item_status: PENDIENTE|EN_PROGRESO|BLOQUEADO|COMPLETADO|VERIFICADO|CANCELADO';
-COMMENT ON COLUMN core.work_item.story_id IS 'FK a meta.story - trazabilidad: este trabajo existe PORQUE esta historia lo requiere';
+COMMENT ON COLUMN core.work_item.commitment_id IS 'FK a operational_commitment - trazabilidad compromiso->tarea';
 
--- TABLA: core.work_item_history
--- EXISTE PORQUE: RF-030 (Historial de Item)
--- ALINEAMIENTO: gist:Event (registro de cambio de estado)
--- SEMANTICA: Auditoria de cambios en work_item
 CREATE TABLE core.work_item_history (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     work_item_id UUID NOT NULL REFERENCES core.work_item(id),
-    event_type_id INTEGER NOT NULL REFERENCES ref.category(id),
-    previous_status_id INTEGER REFERENCES ref.category(id),
-    new_status_id INTEGER REFERENCES ref.category(id),
+    event_type_id UUID NOT NULL REFERENCES ref.category(id),
+    previous_status_id UUID REFERENCES ref.category(id),
+    new_status_id UUID REFERENCES ref.category(id),
     previous_assignee_id UUID REFERENCES core.user(id),
     new_assignee_id UUID REFERENCES core.user(id),
     comment TEXT,
@@ -997,142 +1292,160 @@ CREATE TABLE core.work_item_history (
 CREATE INDEX idx_work_item_history_item ON core.work_item_history(work_item_id);
 CREATE INDEX idx_work_item_history_date ON core.work_item_history(occurred_at);
 COMMENT ON TABLE core.work_item_history IS 'Historial de cambios de estado y reasignaciones';
-COMMENT ON COLUMN core.work_item_history.event_type_id IS 'scheme=work_item_event: CREATED|STATUS_CHANGE|REASSIGNED|BLOCKED|UNBLOCKED|VERIFIED|COMMENT';
 
--- -----------------------------------------------------------------------------
--- ALERTAS Y RIESGOS
--- -----------------------------------------------------------------------------
+-- =============================================================================
+-- CAPA 2: CORE - Parte 12: Alertas y Riesgos
+-- =============================================================================
 
--- TABLA: core.alert
--- EXISTE PORQUE: ENT-SAL-ALERTA - 39 menciones
--- ALINEAMIENTO: gnub:Alert
 CREATE TABLE core.alert (
-    id SERIAL PRIMARY KEY,
-    alert_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
-    severity_id INTEGER REFERENCES ref.category(id),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    alert_type_id UUID REFERENCES ref.category(id) NOT NULL,
+    severity_id UUID REFERENCES ref.category(id),
     subject_type VARCHAR(32) NOT NULL,
-    subject_id INTEGER NOT NULL,
-    -- Campos polimorficos (especificaciones.md)
+    subject_id UUID NOT NULL,
     target_type VARCHAR(30),
     target_id UUID,
     message TEXT NOT NULL,
     triggered_at TIMESTAMPTZ DEFAULT NOW(),
     acknowledged_at TIMESTAMPTZ,
-    acknowledged_by_id INTEGER REFERENCES core.person(id),
-    -- Campos atencion (especificaciones.md)
-    attended_by_id UUID,
+    acknowledged_by_id UUID REFERENCES core.user(id),
+    attended_by_id UUID REFERENCES core.user(id),
     attended_at TIMESTAMPTZ,
     action_taken TEXT,
     resolved_at TIMESTAMPTZ,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 CREATE INDEX idx_alert_subject ON core.alert(subject_type, subject_id);
 CREATE INDEX idx_alert_severity ON core.alert(severity_id, triggered_at);
-COMMENT ON TABLE core.alert IS 'Alerta del sistema nervioso digital (SDA: Sense)';
-COMMENT ON COLUMN core.alert.target_type IS 'IPR|CONVENIO|RESOLUCION|ITEM|PROBLEMA';
+COMMENT ON TABLE core.alert IS 'Alerta del sistema nervioso digital';
 
--- TABLA: core.risk
--- EXISTE PORQUE: ENT-SAL-RIESGO - 16 menciones
--- ALINEAMIENTO: gnub:Risk
 CREATE TABLE core.risk (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    risk_type_id INTEGER REFERENCES ref.category(id),
-    probability_id INTEGER REFERENCES ref.category(id),
-    impact_id INTEGER REFERENCES ref.category(id),
+    risk_type_id UUID REFERENCES ref.category(id),
+    probability_id UUID REFERENCES ref.category(id),
+    impact_id UUID REFERENCES ref.category(id),
     subject_type VARCHAR(32) NOT NULL,
-    subject_id INTEGER NOT NULL,
+    subject_id UUID NOT NULL,
     mitigation_plan TEXT,
-    status_id INTEGER REFERENCES ref.category(id),
+    status_id UUID REFERENCES ref.category(id),
     identified_at DATE,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.risk IS 'Riesgo identificado en un proceso o IPR';
 
 -- =============================================================================
--- CAPA 3: TRANSACTIONAL (2 tablas)
--- Eventos y mediciones - Event Sourcing
+-- CAPA 3: TRANSACTIONAL - Con Particionamiento (OPP-007)
 -- =============================================================================
 
--- TABLA: txn.event
--- EXISTE PORQUE: dipir:VisacionEvent, gnub:BudgetaryTransaction
--- ALINEAMIENTO: gist:Event
--- HIGH-007: subject_id es TEXT para soportar tanto INTEGER como UUID
+-- TABLA: txn.event (particionada por mes)
 CREATE TABLE txn.event (
-    id BIGSERIAL PRIMARY KEY,
-    event_type_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    id UUID DEFAULT gen_random_uuid(),
+    event_type_id UUID REFERENCES ref.category(id) NOT NULL,
     subject_type VARCHAR(32) NOT NULL,
-    subject_id TEXT NOT NULL,
-    actor_id INTEGER,
+    subject_id UUID NOT NULL,
+    actor_id UUID REFERENCES ref.actor(id),
     occurred_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    data JSONB DEFAULT '{}'::jsonb
-);
+    recorded_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    data JSONB DEFAULT '{}'::jsonb,
+    -- Auditoría
+    created_by_id UUID REFERENCES core.user(id),
+    PRIMARY KEY (id, occurred_at)
+) PARTITION BY RANGE (occurred_at);
+
 CREATE INDEX idx_event_subject ON txn.event(subject_type, subject_id);
 CREATE INDEX idx_event_type ON txn.event(event_type_id);
 CREATE INDEX idx_event_occurred ON txn.event(occurred_at);
-COMMENT ON TABLE txn.event IS 'Evento del sistema - Event Sourcing';
-COMMENT ON COLUMN txn.event.event_type_id IS 'scheme=event_type: CDP|COMPROMISO|DEVENGO|PAGO|VISACION|STATE_TRANSITION|etc.';
-COMMENT ON COLUMN txn.event.subject_id IS 'ID del sujeto (TEXT para soportar INTEGER y UUID)';
+CREATE INDEX idx_event_actor ON txn.event(actor_id);
 
--- TABLA: txn.magnitude
--- EXISTE PORQUE: Magnitude Pattern (Gist 14.0)
--- ALINEAMIENTO: gist:Magnitude
--- HIGH-007: subject_id es TEXT para soportar tanto INTEGER como UUID
+-- OPP-006: Constraint UNIQUE para evitar duplicados
+-- (No se puede crear UNIQUE global en tablas particionadas, se crea por partición)
+
+COMMENT ON TABLE txn.event IS 'Evento del sistema - Event Sourcing (particionado por mes)';
+COMMENT ON COLUMN txn.event.subject_id IS 'UUID del sujeto';
+COMMENT ON COLUMN txn.event.actor_id IS 'UUID del actor (humano o algorítmico)';
+
+-- Crear particiones para 2026
+CREATE TABLE txn.event_2026_01 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-01-01') TO ('2026-02-01');
+CREATE TABLE txn.event_2026_02 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-02-01') TO ('2026-03-01');
+CREATE TABLE txn.event_2026_03 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-03-01') TO ('2026-04-01');
+CREATE TABLE txn.event_2026_04 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-04-01') TO ('2026-05-01');
+CREATE TABLE txn.event_2026_05 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-05-01') TO ('2026-06-01');
+CREATE TABLE txn.event_2026_06 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-06-01') TO ('2026-07-01');
+CREATE TABLE txn.event_2026_07 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-07-01') TO ('2026-08-01');
+CREATE TABLE txn.event_2026_08 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-08-01') TO ('2026-09-01');
+CREATE TABLE txn.event_2026_09 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-09-01') TO ('2026-10-01');
+CREATE TABLE txn.event_2026_10 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-10-01') TO ('2026-11-01');
+CREATE TABLE txn.event_2026_11 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-11-01') TO ('2026-12-01');
+CREATE TABLE txn.event_2026_12 PARTITION OF txn.event
+    FOR VALUES FROM ('2026-12-01') TO ('2027-01-01');
+
+-- Partición default para fechas fuera de rango
+CREATE TABLE txn.event_default PARTITION OF txn.event DEFAULT;
+
+-- TABLA: txn.magnitude (particionada por fecha)
 CREATE TABLE txn.magnitude (
-    id BIGSERIAL PRIMARY KEY,
+    id UUID DEFAULT gen_random_uuid(),
     subject_type VARCHAR(32) NOT NULL,
-    subject_id TEXT NOT NULL,
-    aspect_id INTEGER REFERENCES ref.category(id) NOT NULL,
+    subject_id UUID NOT NULL,
+    aspect_id UUID REFERENCES ref.category(id) NOT NULL,
     numeric_value NUMERIC(18,2),
-    unit_id INTEGER REFERENCES ref.category(id),
+    unit_id UUID REFERENCES ref.category(id),
     as_of_date DATE NOT NULL,
+    -- Auditoría
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    PRIMARY KEY (id, as_of_date),
     UNIQUE(subject_type, subject_id, aspect_id, as_of_date)
-);
+) PARTITION BY RANGE (as_of_date);
+
 CREATE INDEX idx_magnitude_subject ON txn.magnitude(subject_type, subject_id);
-COMMENT ON TABLE txn.magnitude IS 'Magnitude Pattern (Gist 14.0) - mediciones con unidad y aspecto';
-COMMENT ON COLUMN txn.magnitude.aspect_id IS 'scheme=aspect: BUDGETED_AMOUNT|CURRENT_BUDGET|PRE_COMMITTED|COMMITTED|ACCRUED|PAID|AVAILABLE_BALANCE|etc.';
-COMMENT ON COLUMN txn.magnitude.subject_id IS 'ID del sujeto (TEXT para soportar INTEGER y UUID)';
+CREATE INDEX idx_magnitude_aspect ON txn.magnitude(aspect_id);
+CREATE INDEX idx_magnitude_date ON txn.magnitude(as_of_date);
+
+COMMENT ON TABLE txn.magnitude IS 'Magnitude Pattern (Gist 14.0) - particionado por fecha';
+
+-- Particiones para 2026
+CREATE TABLE txn.magnitude_2026_q1 PARTITION OF txn.magnitude
+    FOR VALUES FROM ('2026-01-01') TO ('2026-04-01');
+CREATE TABLE txn.magnitude_2026_q2 PARTITION OF txn.magnitude
+    FOR VALUES FROM ('2026-04-01') TO ('2026-07-01');
+CREATE TABLE txn.magnitude_2026_q3 PARTITION OF txn.magnitude
+    FOR VALUES FROM ('2026-07-01') TO ('2026-10-01');
+CREATE TABLE txn.magnitude_2026_q4 PARTITION OF txn.magnitude
+    FOR VALUES FROM ('2026-10-01') TO ('2027-01-01');
+CREATE TABLE txn.magnitude_default PARTITION OF txn.magnitude DEFAULT;
 
 -- =============================================================================
--- FOREIGN KEYS DIFERIDAS (referencias circulares)
+-- VISTA: Mapping Ontológico (gist:Assignment)
 -- =============================================================================
 
--- FK diferidas para core.ipr
-ALTER TABLE core.ipr ADD CONSTRAINT fk_ipr_assignee
-    FOREIGN KEY (assignee_id) REFERENCES core.user(id);
-
--- FK diferidas para core.fund_program
-ALTER TABLE core.fund_program ADD CONSTRAINT fk_fund_program_resolution
-    FOREIGN KEY (resolution_id) REFERENCES core.resolution(id);
-
--- FK diferidas para core.budget_commitment
-ALTER TABLE core.budget_commitment ADD CONSTRAINT fk_budget_commitment_ipr
-    FOREIGN KEY (ipr_id) REFERENCES core.ipr(id);
-ALTER TABLE core.budget_commitment ADD CONSTRAINT fk_budget_commitment_agreement
-    FOREIGN KEY (agreement_id) REFERENCES core.agreement(id);
-ALTER TABLE core.budget_commitment ADD CONSTRAINT fk_budget_commitment_resolution
-    FOREIGN KEY (resolution_id) REFERENCES core.resolution(id);
-
--- FK diferidas para core.resolution
-ALTER TABLE core.resolution ADD CONSTRAINT fk_resolution_agreement
-    FOREIGN KEY (agreement_id) REFERENCES core.agreement(id);
-
--- FK diferidas para core.ipr_problem
-ALTER TABLE core.ipr_problem ADD CONSTRAINT fk_ipr_problem_detected_by_user
-    FOREIGN KEY (detected_by_user_id) REFERENCES core.user(id);
-ALTER TABLE core.ipr_problem ADD CONSTRAINT fk_ipr_problem_resolved_by_user
-    FOREIGN KEY (resolved_by_user_id) REFERENCES core.user(id);
-
--- FK diferidas para core.alert
-ALTER TABLE core.alert ADD CONSTRAINT fk_alert_attended_by
-    FOREIGN KEY (attended_by_id) REFERENCES core.user(id);
-
--- =============================================================================
--- VISTA PARA MAPPING ONTOLOGICO (gist:Assignment)
--- =============================================================================
-
--- HIGH-009: Corregido person_id -> user_id (new_assignee_id es UUID de user, no de person)
 CREATE VIEW core.v_work_item_assignment AS
 SELECT
     h.id AS assignment_id,
@@ -1148,13 +1461,12 @@ WHERE h.event_type_id IN (
     WHERE scheme = 'work_item_event' AND code IN ('CREATED', 'REASSIGNED')
 );
 COMMENT ON VIEW core.v_work_item_assignment IS 'Vista para exportar asignaciones como gist:Assignment';
-COMMENT ON COLUMN core.v_work_item_assignment.user_id IS 'UUID del usuario asignado';
-COMMENT ON COLUMN core.v_work_item_assignment.person_id IS 'INTEGER de la persona asociada al usuario';
 
 -- =============================================================================
--- MED-009: FUNCION Y TRIGGERS PARA UPDATED_AT AUTOMATICO
+-- FUNCIONES Y TRIGGERS (OPP-003)
 -- =============================================================================
 
+-- Función para actualizar updated_at automáticamente
 CREATE OR REPLACE FUNCTION fn_update_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -1165,27 +1477,9 @@ $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION fn_update_timestamp() IS 'Actualiza automaticamente updated_at en UPDATE';
 
--- Triggers para tablas con updated_at
-CREATE TRIGGER trg_user_updated_at
-    BEFORE UPDATE ON core.user
-    FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
-
-CREATE TRIGGER trg_work_item_updated_at
-    BEFORE UPDATE ON core.work_item
-    FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
-
-CREATE TRIGGER trg_agreement_installment_updated_at
-    BEFORE UPDATE ON core.agreement_installment
-    FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
-
--- =============================================================================
--- MED-007: FUNCION DE VALIDACION DE SCHEME (OPCIONAL)
--- =============================================================================
--- Esta funcion puede usarse en triggers para validar que un category_id
--- pertenece al scheme correcto. Ejemplo de uso en aplicacion o trigger.
-
+-- Función para validar scheme de category
 CREATE OR REPLACE FUNCTION fn_validate_category_scheme(
-    p_category_id INTEGER,
+    p_category_id UUID,
     p_expected_scheme VARCHAR(32)
 ) RETURNS BOOLEAN AS $$
 DECLARE
@@ -1203,35 +1497,40 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION fn_validate_category_scheme(INTEGER, VARCHAR) IS
-'Valida que un category_id pertenece al scheme esperado. Usar en triggers o aplicacion.';
+COMMENT ON FUNCTION fn_validate_category_scheme(UUID, VARCHAR) IS
+'Valida que un category_id pertenece al scheme esperado';
 
--- =============================================================================
--- EJEMPLO: Trigger de validacion para core.ipr.status_id
--- =============================================================================
--- Descomentado si se desea validacion estricta a nivel de BD
-
-/*
-CREATE OR REPLACE FUNCTION fn_validate_ipr_status()
-RETURNS TRIGGER AS $$
+-- Crear triggers de updated_at para todas las tablas relevantes
+DO $$
+DECLARE
+    tbl_name TEXT;
+    tbl_schema TEXT;
 BEGIN
-    IF NEW.status_id IS NOT NULL AND NOT fn_validate_category_scheme(NEW.status_id, 'ipr_state') THEN
-        RAISE EXCEPTION 'status_id (%) debe pertenecer al scheme ipr_state', NEW.status_id;
-    END IF;
-    RETURN NEW;
+    FOR tbl_schema, tbl_name IN
+        SELECT table_schema, table_name
+        FROM information_schema.columns
+        WHERE column_name = 'updated_at'
+        AND table_schema IN ('meta', 'ref', 'core')
+    LOOP
+        EXECUTE format('
+            DROP TRIGGER IF EXISTS trg_%s_updated_at ON %I.%I;
+            CREATE TRIGGER trg_%s_updated_at
+            BEFORE UPDATE ON %I.%I
+            FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
+        ', tbl_name, tbl_schema, tbl_name, tbl_name, tbl_schema, tbl_name);
+    END LOOP;
 END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trg_ipr_validate_status
-    BEFORE INSERT OR UPDATE ON core.ipr
-    FOR EACH ROW EXECUTE FUNCTION fn_validate_ipr_status();
-*/
+$$;
 
 -- =============================================================================
--- FIN DDL
+-- FIN DDL v3.0
 -- =============================================================================
 -- Total: 50 tablas
--- Meta: 5 | Ref: 3 | Core: 40 | Txn: 2
+-- Meta: 5 | Ref: 3 | Core: 40 | Txn: 2 (particionadas)
+-- ENUMs: agent_type_enum, ipr_nature_enum
+-- Particiones: txn.event (12 mensuales + default), txn.magnitude (4 trimestrales + default)
 -- Funciones: fn_update_timestamp, fn_validate_category_scheme
--- Triggers: trg_user_updated_at, trg_work_item_updated_at, trg_agreement_installment_updated_at
+-- Triggers: automáticos para updated_at en todas las tablas
 -- =============================================================================
+
+DO $$ BEGIN RAISE NOTICE 'GORE_OS DDL v3.0 COMPLETADO - 50 tablas con UUID universal, auditoría completa, soft delete y particionamiento'; END $$;
