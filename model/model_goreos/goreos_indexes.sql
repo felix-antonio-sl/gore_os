@@ -45,7 +45,7 @@ CREATE INDEX IF NOT EXISTS idx_category_parent ON ref.category(parent_id) WHERE 
 CREATE INDEX IF NOT EXISTS idx_category_active ON ref.category(id) WHERE deleted_at IS NULL;
 
 -- ref.actor: Índices para tipos de actor
-CREATE INDEX IF NOT EXISTS idx_actor_code ON ref.actor(code);
+-- HIGH-004 FIX: idx_actor_code eliminado (redundante con UNIQUE constraint en DDL)
 CREATE INDEX IF NOT EXISTS idx_actor_internal ON ref.actor(is_internal);
 CREATE INDEX IF NOT EXISTS idx_actor_active ON ref.actor(id) WHERE deleted_at IS NULL;
 
@@ -71,8 +71,7 @@ CREATE INDEX IF NOT EXISTS idx_ipr_problems ON core.ipr(has_open_problems) WHERE
 -- CQ: "¿Qué IPR tienen nivel de alerta CRITICO?"
 CREATE INDEX IF NOT EXISTS idx_ipr_alert ON core.ipr(alert_level_id) WHERE alert_level_id IS NOT NULL;
 
--- Índice para búsqueda por código BIP
-CREATE UNIQUE INDEX IF NOT EXISTS idx_ipr_bip ON core.ipr(codigo_bip);
+-- HIGH-004 FIX: idx_ipr_bip eliminado (redundante con UNIQUE constraint en DDL)
 
 -- Índice para IPRs activas
 CREATE INDEX IF NOT EXISTS idx_ipr_active ON core.ipr(id) WHERE deleted_at IS NULL;
@@ -110,7 +109,8 @@ CREATE INDEX IF NOT EXISTS idx_workitem_due_active ON core.work_item(due_date)
     WHERE due_date IS NOT NULL AND deleted_at IS NULL;
 
 -- CQ: "¿Qué ítems están bloqueados?"
-CREATE INDEX IF NOT EXISTS idx_workitem_blocked ON core.work_item(updated_at)
+-- HIGH-005 FIX: Indexar blocked_by_item_id en lugar de updated_at
+CREATE INDEX IF NOT EXISTS idx_workitem_blocked ON core.work_item(blocked_by_item_id)
     WHERE blocked_by_item_id IS NOT NULL;
 
 -- CQ: "¿Qué ítems tiene la división X pendientes?"
@@ -161,7 +161,7 @@ CREATE INDEX IF NOT EXISTS idx_budget_commitment_ipr ON core.budget_commitment(i
 CREATE INDEX IF NOT EXISTS idx_budget_commitment_agreement ON core.budget_commitment(agreement_id) WHERE agreement_id IS NOT NULL;
 
 -- CQ: "¿Qué compromisos presupuestarios están vigentes?"
-CREATE INDEX IF NOT EXISTS idx_budget_commitment_number ON core.budget_commitment(commitment_number);
+-- HIGH-004 FIX: idx_budget_commitment_number eliminado (redundante con UNIQUE constraint en DDL)
 CREATE INDEX IF NOT EXISTS idx_budget_commitment_program ON core.budget_commitment(budget_program_id);
 
 -- =============================================================================

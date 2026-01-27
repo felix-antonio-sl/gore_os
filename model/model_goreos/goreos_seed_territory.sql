@@ -17,15 +17,16 @@
 -- ============================================================================
 
 -- Obtener IDs de categorías de territorio
+-- CRIT-006 FIX: Cambiar INTEGER a UUID (todas las PKs en DDL son UUID)
 DO $$
 DECLARE
-    v_region_type_id INTEGER;
-    v_provincia_type_id INTEGER;
-    v_comuna_type_id INTEGER;
-    v_region_id INTEGER;
-    v_prov_diguillin_id INTEGER;
-    v_prov_itata_id INTEGER;
-    v_prov_punilla_id INTEGER;
+    v_region_type_id UUID;
+    v_provincia_type_id UUID;
+    v_comuna_type_id UUID;
+    v_region_id UUID;
+    v_prov_diguillin_id UUID;
+    v_prov_itata_id UUID;
+    v_prov_punilla_id UUID;
 BEGIN
     -- Obtener tipos de territorio
     SELECT id INTO v_region_type_id FROM ref.category WHERE scheme = 'territory_type' AND code = 'REGION';

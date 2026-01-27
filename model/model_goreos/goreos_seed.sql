@@ -69,36 +69,41 @@ ON CONFLICT (scheme, code) DO UPDATE SET
 
 -- ESTADOS IPR OPERATIVOS (28 estados - gnub:IPRState subclasses)
 -- Fuente: goreNubleOntology.ttl:768-805
+-- HIGH-002 FIX: Crear categorías padre dentro del mismo scheme para jerarquía válida
 INSERT INTO ref.category (scheme, code, label, description, parent_code, sort_order) VALUES
+-- Categorías padre para agrupación (HIGH-002 FIX)
+('ipr_state', 'UNIVERSAL', 'Estados Universales', 'gnub:UniversalIPRState - Aplican a todos los tipos de IPR', NULL, 0),
+('ipr_state', 'ESTADO_PROYECTO', 'Estados Proyecto', 'gnub:ProjectIPRState - Específicos de proyectos de inversión', NULL, 19),
+('ipr_state', 'ESTADO_PROGRAMA', 'Estados Programa', 'gnub:ProgramIPRState - Específicos de programas operativos', NULL, 29),
 -- Estados Universales (gnub:UniversalIPRState)
-('ipr_state', 'INGRESADO', 'Ingresado', 'Iniciativa ingresada al sistema', NULL, 1),
-('ipr_state', 'EN_REVISION', 'En Revisión', 'Revisión de admisibilidad', NULL, 2),
-('ipr_state', 'ADMISIBLE', 'Admisible', 'Cumple requisitos formales', NULL, 3),
-('ipr_state', 'INADMISIBLE', 'Inadmisible', 'No cumple requisitos formales', NULL, 4),
-('ipr_state', 'EN_EVALUACION', 'En Evaluación', 'En proceso de evaluación técnica', NULL, 5),
-('ipr_state', 'CDP_EMITIDO', 'CDP Emitido', 'Certificado de disponibilidad presupuestaria emitido', NULL, 6),
-('ipr_state', 'EN_FORMALIZACION', 'En Formalización', 'Preparando convenio/contrato', NULL, 7),
-('ipr_state', 'FORMALIZADO', 'Formalizado', 'Convenio/contrato firmado', NULL, 8),
-('ipr_state', 'EN_EJECUCION', 'En Ejecución', 'Ejecución física y financiera activa', NULL, 9),
-('ipr_state', 'SUSPENDIDO', 'Suspendido', 'Ejecución suspendida temporalmente', NULL, 10),
-('ipr_state', 'EN_RENDICION', 'En Rendición', 'Proceso de rendición de cuentas', NULL, 11),
-('ipr_state', 'CERRADO', 'Cerrado', 'Iniciativa cerrada administrativamente', NULL, 12),
-('ipr_state', 'ANULADO', 'Anulado', 'Iniciativa anulada', NULL, 13),
--- Estados Proyecto (gnub:ProjectIPRState)
-('ipr_state', 'RS', 'RS', 'Rate of Social Return - Tasa Social calculada', 'PROYECTO', 20),
-('ipr_state', 'FI', 'FI', 'Favorable Incondicional', 'PROYECTO', 21),
-('ipr_state', 'FC', 'FC', 'Favorable Condicional', 'PROYECTO', 22),
-('ipr_state', 'OT', 'OT', 'Objetado Técnicamente', 'PROYECTO', 23),
-('ipr_state', 'AD', 'AD', 'Autorización de Diseño', 'PROYECTO', 24),
-('ipr_state', 'EN_LICITACION', 'En Licitación', 'Proceso de licitación activo', 'PROYECTO', 25),
-('ipr_state', 'ADJUDICADO', 'Adjudicado', 'Contrato adjudicado', 'PROYECTO', 26),
-('ipr_state', 'EN_OBRA', 'En Obra', 'Ejecución física de obra', 'PROYECTO', 27),
-('ipr_state', 'RECEPCION_PROVISORIA', 'Recepción Provisoria', 'Obra con recepción provisoria', 'PROYECTO', 28),
-('ipr_state', 'RECEPCION_DEFINITIVA', 'Recepción Definitiva', 'Obra con recepción definitiva', 'PROYECTO', 29),
--- Estados Programa (gnub:ProgramIPRState)
-('ipr_state', 'RF', 'RF', 'Recomendación Favorable', 'PROGRAMA', 30),
-('ipr_state', 'ITF', 'ITF', 'Informe Técnico Favorable', 'PROGRAMA', 31),
-('ipr_state', 'AT', 'AT', 'Aprobación Técnica', 'PROGRAMA', 32)
+('ipr_state', 'INGRESADO', 'Ingresado', 'Iniciativa ingresada al sistema', 'UNIVERSAL', 1),
+('ipr_state', 'EN_REVISION', 'En Revisión', 'Revisión de admisibilidad', 'UNIVERSAL', 2),
+('ipr_state', 'ADMISIBLE', 'Admisible', 'Cumple requisitos formales', 'UNIVERSAL', 3),
+('ipr_state', 'INADMISIBLE', 'Inadmisible', 'No cumple requisitos formales', 'UNIVERSAL', 4),
+('ipr_state', 'EN_EVALUACION', 'En Evaluación', 'En proceso de evaluación técnica', 'UNIVERSAL', 5),
+('ipr_state', 'CDP_EMITIDO', 'CDP Emitido', 'Certificado de disponibilidad presupuestaria emitido', 'UNIVERSAL', 6),
+('ipr_state', 'EN_FORMALIZACION', 'En Formalización', 'Preparando convenio/contrato', 'UNIVERSAL', 7),
+('ipr_state', 'FORMALIZADO', 'Formalizado', 'Convenio/contrato firmado', 'UNIVERSAL', 8),
+('ipr_state', 'EN_EJECUCION', 'En Ejecución', 'Ejecución física y financiera activa', 'UNIVERSAL', 9),
+('ipr_state', 'SUSPENDIDO', 'Suspendido', 'Ejecución suspendida temporalmente', 'UNIVERSAL', 10),
+('ipr_state', 'EN_RENDICION', 'En Rendición', 'Proceso de rendición de cuentas', 'UNIVERSAL', 11),
+('ipr_state', 'CERRADO', 'Cerrado', 'Iniciativa cerrada administrativamente', 'UNIVERSAL', 12),
+('ipr_state', 'ANULADO', 'Anulado', 'Iniciativa anulada', 'UNIVERSAL', 13),
+-- Estados Proyecto (gnub:ProjectIPRState) - HIGH-002 FIX: parent_code ahora válido
+('ipr_state', 'RS', 'RS', 'Rate of Social Return - Tasa Social calculada', 'ESTADO_PROYECTO', 20),
+('ipr_state', 'FI', 'FI', 'Favorable Incondicional', 'ESTADO_PROYECTO', 21),
+('ipr_state', 'FC', 'FC', 'Favorable Condicional', 'ESTADO_PROYECTO', 22),
+('ipr_state', 'OT', 'OT', 'Objetado Técnicamente', 'ESTADO_PROYECTO', 23),
+('ipr_state', 'AD', 'AD', 'Autorización de Diseño', 'ESTADO_PROYECTO', 24),
+('ipr_state', 'EN_LICITACION', 'En Licitación', 'Proceso de licitación activo', 'ESTADO_PROYECTO', 25),
+('ipr_state', 'ADJUDICADO', 'Adjudicado', 'Contrato adjudicado', 'ESTADO_PROYECTO', 26),
+('ipr_state', 'EN_OBRA', 'En Obra', 'Ejecución física de obra', 'ESTADO_PROYECTO', 27),
+('ipr_state', 'RECEPCION_PROVISORIA', 'Recepción Provisoria', 'Obra con recepción provisoria', 'ESTADO_PROYECTO', 28),
+('ipr_state', 'RECEPCION_DEFINITIVA', 'Recepción Definitiva', 'Obra con recepción definitiva', 'ESTADO_PROYECTO', 29),
+-- Estados Programa (gnub:ProgramIPRState) - HIGH-002 FIX: parent_code ahora válido
+('ipr_state', 'RF', 'RF', 'Recomendación Favorable', 'ESTADO_PROGRAMA', 30),
+('ipr_state', 'ITF', 'ITF', 'Informe Técnico Favorable', 'ESTADO_PROGRAMA', 31),
+('ipr_state', 'AT', 'AT', 'Aprobación Técnica', 'ESTADO_PROGRAMA', 32)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -134,14 +139,16 @@ ON CONFLICT (scheme, code) DO UPDATE SET
     sort_order = EXCLUDED.sort_order;
 
 -- MECANISMOS DE FINANCIAMIENTO - 7 TRACKS (omega:659-724)
+-- HIGH-001 FIX: Usar scheme 'mechanism' y códigos directos (SNI, C33, etc.)
+-- Alineado con documentación DDL y ontología gnub
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
-('mechanism_type', 'MEC_SNI', 'Track A: SNI General', '>15k UTM, MDSF evalúa, producto RS', 1),
-('mechanism_type', 'MEC_C33', 'Track B: Circular 33', 'C33, conservación/ANF, producto AD', 2),
-('mechanism_type', 'MEC_FRIL', 'Track C: FRIL', '<4.545 UTM, GORE evalúa, producto AT', 3),
-('mechanism_type', 'MEC_GLOSA06', 'Track D1: Glosa 06', 'Ejecución Directa, DIPRES/SES, producto RF', 4),
-('mechanism_type', 'MEC_TRANSFER', 'Track D2: Transferencias', 'Transferencias, Comité GORE, producto ITF', 5),
-('mechanism_type', 'MEC_SUBV8', 'Track E1: Subvención 8%', '8% concursable, Comisión, producto Puntaje', 6),
-('mechanism_type', 'MEC_FRPD', 'Track E2: FRPD Royalty', 'Royalty I+D+i, ANID/CORFO, producto Elegibilidad', 7)
+('mechanism', 'SNI', 'Track A: SNI General', '>15k UTM, MDSF evalúa, producto RS', 1),
+('mechanism', 'C33', 'Track B: Circular 33', 'C33, conservación/ANF, producto AD', 2),
+('mechanism', 'FRIL', 'Track C: FRIL', '<4.545 UTM, GORE evalúa, producto AT', 3),
+('mechanism', 'GLOSA06', 'Track D1: Glosa 06', 'Ejecución Directa, DIPRES/SES, producto RF', 4),
+('mechanism', 'TRANSFER', 'Track D2: Transferencias', 'Transferencias, Comité GORE, producto ITF', 5),
+('mechanism', 'SUBV8', 'Track E1: Subvención 8%', '8% concursable, Comisión, producto Puntaje', 6),
+('mechanism', 'FRPD', 'Track E2: FRPD Royalty', 'Royalty I+D+i, ANID/CORFO, producto Elegibilidad', 7)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -500,6 +507,19 @@ ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     sort_order = EXCLUDED.sort_order;
 
+-- ESTADOS DE COMPROMISO OPERATIVO (HIGH-003: requerido por core.operational_commitment.state_id)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('commitment_state', 'PENDIENTE', 'Pendiente', 'Compromiso registrado, pendiente de inicio', 1),
+('commitment_state', 'EN_PROGRESO', 'En Progreso', 'Compromiso en ejecución activa', 2),
+('commitment_state', 'COMPLETADO', 'Completado', 'Compromiso completado, pendiente verificación', 3),
+('commitment_state', 'VERIFICADO', 'Verificado', 'Compromiso verificado y cerrado', 4),
+('commitment_state', 'VENCIDO', 'Vencido', 'Compromiso con plazo vencido', 5),
+('commitment_state', 'CANCELADO', 'Cancelado', 'Compromiso cancelado', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
 -- ORIGEN DE WORK_ITEM
 INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('work_item_origin', 'MANUAL', 'Creación Manual', 'Creado manualmente por usuario', 1),
@@ -726,6 +746,169 @@ ON CONFLICT (code) DO UPDATE SET
     description = EXCLUDED.description,
     default_days = EXCLUDED.default_days,
     sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
+--    HIGH-003 FIX: TRANSICIONES DE ESTADO VÁLIDAS
+-- ============================================================================
+-- Poblar valid_transitions para schemes de estado (usado por fn_validate_state_transition)
+-- Formato: JSONB array con códigos de estados destino permitidos
+-- ============================================================================
+
+-- Transiciones de ipr_state (flujo principal de IPR)
+UPDATE ref.category SET valid_transitions = '["EN_REVISION", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'INGRESADO';
+
+UPDATE ref.category SET valid_transitions = '["ADMISIBLE", "INADMISIBLE"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_REVISION';
+
+UPDATE ref.category SET valid_transitions = '["EN_EVALUACION"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'ADMISIBLE';
+
+UPDATE ref.category SET valid_transitions = '["INGRESADO", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'INADMISIBLE';
+
+UPDATE ref.category SET valid_transitions = '["RS", "FI", "FC", "OT", "RF", "ITF", "AT", "AD"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_EVALUACION';
+
+-- Estados Proyecto post-evaluación
+UPDATE ref.category SET valid_transitions = '["CDP_EMITIDO", "OT"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'RS';
+
+UPDATE ref.category SET valid_transitions = '["CDP_EMITIDO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'FI';
+
+UPDATE ref.category SET valid_transitions = '["FI", "OT"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'FC';
+
+UPDATE ref.category SET valid_transitions = '["EN_EVALUACION", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'OT';
+
+UPDATE ref.category SET valid_transitions = '["EN_LICITACION"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'AD';
+
+UPDATE ref.category SET valid_transitions = '["ADJUDICADO", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_LICITACION';
+
+UPDATE ref.category SET valid_transitions = '["EN_OBRA"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'ADJUDICADO';
+
+UPDATE ref.category SET valid_transitions = '["RECEPCION_PROVISORIA", "SUSPENDIDO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_OBRA';
+
+UPDATE ref.category SET valid_transitions = '["RECEPCION_DEFINITIVA"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'RECEPCION_PROVISORIA';
+
+UPDATE ref.category SET valid_transitions = '["EN_RENDICION", "CERRADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'RECEPCION_DEFINITIVA';
+
+-- Estados Programa post-evaluación
+UPDATE ref.category SET valid_transitions = '["CDP_EMITIDO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'RF';
+
+UPDATE ref.category SET valid_transitions = '["CDP_EMITIDO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'ITF';
+
+UPDATE ref.category SET valid_transitions = '["CDP_EMITIDO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'AT';
+
+-- Estados comunes post-CDP
+UPDATE ref.category SET valid_transitions = '["EN_FORMALIZACION"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'CDP_EMITIDO';
+
+UPDATE ref.category SET valid_transitions = '["FORMALIZADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_FORMALIZACION';
+
+UPDATE ref.category SET valid_transitions = '["EN_EJECUCION"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'FORMALIZADO';
+
+UPDATE ref.category SET valid_transitions = '["EN_RENDICION", "SUSPENDIDO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_EJECUCION';
+
+UPDATE ref.category SET valid_transitions = '["EN_EJECUCION", "EN_OBRA", "ANULADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'SUSPENDIDO';
+
+UPDATE ref.category SET valid_transitions = '["CERRADO"]'::jsonb
+WHERE scheme = 'ipr_state' AND code = 'EN_RENDICION';
+
+-- Estados terminales (sin transiciones salientes)
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'ipr_state' AND code IN ('CERRADO', 'ANULADO');
+
+-- Transiciones de work_item_status
+UPDATE ref.category SET valid_transitions = '["EN_PROGRESO", "CANCELADO"]'::jsonb
+WHERE scheme = 'work_item_status' AND code = 'PENDIENTE';
+
+UPDATE ref.category SET valid_transitions = '["COMPLETADO", "BLOQUEADO", "CANCELADO"]'::jsonb
+WHERE scheme = 'work_item_status' AND code = 'EN_PROGRESO';
+
+UPDATE ref.category SET valid_transitions = '["EN_PROGRESO"]'::jsonb
+WHERE scheme = 'work_item_status' AND code = 'BLOQUEADO';
+
+UPDATE ref.category SET valid_transitions = '["VERIFICADO", "EN_PROGRESO"]'::jsonb
+WHERE scheme = 'work_item_status' AND code = 'COMPLETADO';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'work_item_status' AND code IN ('VERIFICADO', 'CANCELADO');
+
+-- Transiciones de commitment_state
+UPDATE ref.category SET valid_transitions = '["EN_PROGRESO", "CANCELADO", "VENCIDO"]'::jsonb
+WHERE scheme = 'commitment_state' AND code = 'PENDIENTE';
+
+UPDATE ref.category SET valid_transitions = '["COMPLETADO", "VENCIDO", "CANCELADO"]'::jsonb
+WHERE scheme = 'commitment_state' AND code = 'EN_PROGRESO';
+
+UPDATE ref.category SET valid_transitions = '["VERIFICADO", "EN_PROGRESO"]'::jsonb
+WHERE scheme = 'commitment_state' AND code = 'COMPLETADO';
+
+UPDATE ref.category SET valid_transitions = '["EN_PROGRESO"]'::jsonb
+WHERE scheme = 'commitment_state' AND code = 'VENCIDO';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'commitment_state' AND code IN ('VERIFICADO', 'CANCELADO');
+
+-- Transiciones de agreement_state
+UPDATE ref.category SET valid_transitions = '["EN_NEGOCIACION", "CANCELADO"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'BORRADOR';
+
+UPDATE ref.category SET valid_transitions = '["EN_REVISION_JURIDICA", "BORRADOR"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'EN_NEGOCIACION';
+
+UPDATE ref.category SET valid_transitions = '["FIRMADO_GORE", "EN_NEGOCIACION"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'EN_REVISION_JURIDICA';
+
+UPDATE ref.category SET valid_transitions = '["FIRMADO_CONTRAPARTE"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'FIRMADO_GORE';
+
+UPDATE ref.category SET valid_transitions = '["VIGENTE"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'FIRMADO_CONTRAPARTE';
+
+UPDATE ref.category SET valid_transitions = '["EN_MODIFICACION", "VENCIDO", "TERMINADO", "RESCILIADO"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'VIGENTE';
+
+UPDATE ref.category SET valid_transitions = '["VIGENTE"]'::jsonb
+WHERE scheme = 'agreement_state' AND code = 'EN_MODIFICACION';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'agreement_state' AND code IN ('VENCIDO', 'TERMINADO', 'RESCILIADO');
+
+-- Transiciones de act_state
+UPDATE ref.category SET valid_transitions = '["EN_REVISION"]'::jsonb
+WHERE scheme = 'act_state' AND code = 'BORRADOR';
+
+UPDATE ref.category SET valid_transitions = '["VISADO", "BORRADOR"]'::jsonb
+WHERE scheme = 'act_state' AND code = 'EN_REVISION';
+
+UPDATE ref.category SET valid_transitions = '["FIRMADO"]'::jsonb
+WHERE scheme = 'act_state' AND code = 'VISADO';
+
+UPDATE ref.category SET valid_transitions = '["TRAMITADO"]'::jsonb
+WHERE scheme = 'act_state' AND code = 'FIRMADO';
+
+UPDATE ref.category SET valid_transitions = '["TOMADO_RAZON", "RECHAZADO_CGR"]'::jsonb
+WHERE scheme = 'act_state' AND code = 'TRAMITADO';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'act_state' AND code IN ('TOMADO_RAZON', 'RECHAZADO_CGR', 'ANULADO');
 
 -- ============================================================================
 --    FIN SEED DATA

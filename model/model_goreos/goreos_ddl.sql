@@ -48,7 +48,49 @@ DROP TYPE IF EXISTS agent_type_enum CASCADE;
 CREATE TYPE agent_type_enum AS ENUM ('HUMAN', 'AI', 'ALGORITHMIC', 'ORGANIZATIONAL', 'MACHINE', 'MIXED');
 
 DROP TYPE IF EXISTS ipr_nature_enum CASCADE;
-CREATE TYPE ipr_nature_enum AS ENUM ('PROYECTO', 'PROGRAMA');
+-- CRIT-008 FIX: Expandir ENUM para incluir todas las naturalezas de IPR
+-- Alineado con ref.category scheme='ipr_nature' en goreos_seed.sql
+CREATE TYPE ipr_nature_enum AS ENUM (
+    'PROYECTO',           -- gnub:IPRProject - Capital (Subt 31/33)
+    'PROGRAMA',           -- gnub:OperationalProgram - Corriente (Subt 24)
+    'PROGRAMA_INVERSION', -- gnub:InvestmentProgram
+    'ESTUDIO_BASICO',     -- gnub:BasicStudy
+    'ANF'                 -- gnub:ANFAcquisition - C33 Activos No Financieros
+);
+
+-- MED-006 FIX: ENUMs para campos meta.* (mejora integridad y documentación)
+DROP TYPE IF EXISTS cognition_level_enum CASCADE;
+CREATE TYPE cognition_level_enum AS ENUM (
+    'C0',  -- Sin capacidad de decisión autónoma
+    'C1',  -- Ejecución de tareas predefinidas
+    'C2',  -- Decisiones tácticas dentro de parámetros
+    'C3'   -- Decisiones estratégicas y adaptativas
+);
+
+DROP TYPE IF EXISTS delegation_mode_enum CASCADE;
+CREATE TYPE delegation_mode_enum AS ENUM (
+    'M1',  -- Sin delegación (humano hace todo)
+    'M2',  -- Humano delega tareas específicas
+    'M3',  -- Humano supervisa, agente ejecuta
+    'M4',  -- Agente propone, humano aprueba
+    'M5',  -- Agente decide, humano puede vetar
+    'M6'   -- Agente autónomo con rendición de cuentas
+);
+
+DROP TYPE IF EXISTS process_layer_enum CASCADE;
+CREATE TYPE process_layer_enum AS ENUM (
+    'STRATEGIC',   -- Nivel de gobierno y política
+    'TACTICAL',    -- Nivel de gestión y coordinación
+    'OPERATIONAL'  -- Nivel de ejecución operativa
+);
+
+DROP TYPE IF EXISTS story_status_enum CASCADE;
+CREATE TYPE story_status_enum AS ENUM (
+    'DRAFT',     -- Historia en borrador
+    'ENRICHED',  -- Historia enriquecida/validada
+    'APPROVED',  -- Historia aprobada para implementación
+    'RETIRED'    -- Historia obsoleta/retirada
+);
 
 -- =============================================================================
 -- SCHEMAS
@@ -72,9 +114,10 @@ CREATE TABLE meta.role (
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
     agent_type agent_type_enum NOT NULL DEFAULT 'HUMAN',
-    cognition_level VARCHAR(4),
+    -- MED-006 FIX: VARCHAR → ENUM para integridad
+    cognition_level cognition_level_enum,
     human_accountable_id UUID REFERENCES meta.role(id),
-    delegation_mode VARCHAR(4),
+    delegation_mode delegation_mode_enum,
     ontology_uri TEXT,
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -98,7 +141,8 @@ CREATE TABLE meta.process (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code VARCHAR(32) UNIQUE NOT NULL,
     name TEXT NOT NULL,
-    layer VARCHAR(16),
+    -- MED-006 FIX: VARCHAR → ENUM para integridad
+    layer process_layer_enum,
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -145,7 +189,8 @@ CREATE TABLE meta.story (
     process_id UUID REFERENCES meta.process(id),
     domain VARCHAR(16),
     priority VARCHAR(4),
-    status VARCHAR(16) DEFAULT 'ENRICHED',
+    -- MED-006 FIX: VARCHAR → ENUM para integridad
+    status story_status_enum DEFAULT 'ENRICHED',
     user_description TEXT,
     aspect_id UUID,
     scope_id UUID,
@@ -168,11 +213,15 @@ CREATE TABLE meta.story_entity (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     story_id UUID REFERENCES meta.story(id) NOT NULL,
     entity_id UUID REFERENCES meta.entity(id) NOT NULL,
-    status VARCHAR(16),
-    -- Auditoría estándar
+    -- MED-006 FIX: VARCHAR → ENUM para integridad
+    status story_status_enum,
+    -- MED-004 FIX: Auditoría estándar completa (faltaban *_by_id)
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,  -- FK diferida a core.user
+    updated_by_id UUID,  -- FK diferida a core.user
     deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,  -- FK diferida a core.user
     UNIQUE(story_id, entity_id)
 );
 COMMENT ON TABLE meta.story_entity IS 'Relacion N:M entre historias y entidades';
@@ -211,7 +260,7 @@ CREATE TABLE ref.category (
 );
 CREATE INDEX idx_category_scheme ON ref.category(scheme);
 CREATE INDEX idx_category_phase ON ref.category(phase_id) WHERE phase_id IS NOT NULL;
-CREATE INDEX idx_category_deleted ON ref.category(deleted_at) WHERE deleted_at IS NULL;
+-- MED-001 FIX: idx_category_deleted eliminado (subóptimo, usar idx_category_active de goreos_indexes.sql)
 COMMENT ON TABLE ref.category IS 'Patron Category (Gist 14.0) - 75+ schemes de taxonomias flexibles';
 COMMENT ON COLUMN ref.category.phase_id IS 'Para scheme=ipr_state: FK a mcd_phase al que pertenece este estado';
 COMMENT ON COLUMN ref.category.valid_transitions IS 'Array JSON de codigos de estado validos como destino';
@@ -262,7 +311,7 @@ CREATE TABLE ref.actor (
     )
 );
 CREATE INDEX idx_actor_agent_type ON ref.actor(agent_type);
-CREATE INDEX idx_actor_deleted ON ref.actor(deleted_at) WHERE deleted_at IS NULL;
+-- MED-001 FIX: idx_actor_deleted eliminado (subóptimo, usar idx_actor_active de goreos_indexes.sql)
 COMMENT ON TABLE ref.actor IS 'Actores en flujos de proceso - humanos, algoritmicos, organizacionales';
 COMMENT ON COLUMN ref.actor.agent_type IS 'HUMAN|AI|ALGORITHMIC|ORGANIZATIONAL|MACHINE|MIXED';
 COMMENT ON COLUMN ref.actor.agent_definition_uri IS 'URI al YAML/JSON de definicion del agente (koda://...)';
@@ -313,7 +362,7 @@ CREATE TABLE core.organization (
     deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
-CREATE INDEX idx_organization_deleted ON core.organization(deleted_at) WHERE deleted_at IS NULL;
+-- MED-001 FIX: idx_organization_deleted eliminado (subóptimo, usar idx_org_active de goreos_indexes.sql)
 COMMENT ON TABLE core.organization IS 'Organizacion - Division, Departamento, Unidad';
 
 -- FK diferida para ref.actor.organization_id
@@ -342,14 +391,15 @@ CREATE TABLE core.person (
     deleted_by_id UUID,
     metadata JSONB DEFAULT '{}'::jsonb
 );
-CREATE INDEX idx_person_rut ON core.person(rut);
-CREATE INDEX idx_person_deleted ON core.person(deleted_at) WHERE deleted_at IS NULL;
+-- MED-002 FIX: idx_person_rut eliminado (redundante con UNIQUE constraint en rut)
+-- MED-001 FIX: idx_person_deleted eliminado (subóptimo, usar idx_person_active de goreos_indexes.sql)
 COMMENT ON TABLE core.person IS 'Persona natural - funcionario, ciudadano, proveedor';
 
 -- TABLA: core.user
 CREATE TABLE core.user (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    person_id UUID NOT NULL REFERENCES core.person(id),
+    -- HIGH-006 FIX: person_id ahora UNIQUE para garantizar relación 1:1 persona-usuario
+    person_id UUID NOT NULL UNIQUE REFERENCES core.person(id),
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     system_role_id UUID NOT NULL REFERENCES ref.category(id),
@@ -367,8 +417,8 @@ CREATE TABLE core.user (
     deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
-CREATE INDEX idx_user_email ON core.user(email);
-CREATE INDEX idx_user_deleted ON core.user(deleted_at) WHERE deleted_at IS NULL;
+-- MED-002 FIX: idx_user_email eliminado (redundante con UNIQUE constraint en email)
+-- MED-001 FIX: idx_user_deleted eliminado (subóptimo, usar idx_user_active de goreos_indexes.sql)
 COMMENT ON TABLE core.user IS 'Usuario del sistema con credenciales de autenticacion';
 COMMENT ON COLUMN core.user.system_role_id IS 'scheme=system_role: ADMIN_SISTEMA|ADMIN_REGIONAL|JEFE_DIVISION|ENCARGADO';
 
@@ -388,6 +438,11 @@ ALTER TABLE meta.entity ADD CONSTRAINT fk_entity_deleted_by FOREIGN KEY (deleted
 ALTER TABLE meta.story ADD CONSTRAINT fk_story_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
 ALTER TABLE meta.story ADD CONSTRAINT fk_story_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
 ALTER TABLE meta.story ADD CONSTRAINT fk_story_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+-- MED-004 FIX: FKs de auditoría para meta.story_entity
+ALTER TABLE meta.story_entity ADD CONSTRAINT fk_story_entity_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.story_entity ADD CONSTRAINT fk_story_entity_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE meta.story_entity ADD CONSTRAINT fk_story_entity_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
 
 ALTER TABLE ref.category ADD CONSTRAINT fk_category_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
 ALTER TABLE ref.category ADD CONSTRAINT fk_category_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
@@ -596,7 +651,7 @@ CREATE TABLE core.ipr (
 CREATE INDEX idx_ipr_phase ON core.ipr(mcd_phase_id);
 CREATE INDEX idx_ipr_status ON core.ipr(status_id);
 CREATE INDEX idx_ipr_mechanism ON core.ipr(mechanism_id);
-CREATE INDEX idx_ipr_deleted ON core.ipr(deleted_at) WHERE deleted_at IS NULL;
+-- MED-001 FIX: idx_ipr_deleted eliminado (subóptimo, usar idx_ipr_active de goreos_indexes.sql)
 COMMENT ON TABLE core.ipr IS 'Iniciativa de Inversion Publica Regional - transformacion territorial';
 COMMENT ON COLUMN core.ipr.ipr_nature IS 'PROYECTO|PROGRAMA (ENUM)';
 COMMENT ON COLUMN core.ipr.mcd_phase_id IS 'scheme=mcd_phase: F0|F1|F2|F3|F4|F5 (6 fases MCD)';
@@ -630,7 +685,8 @@ CREATE TABLE core.ipr_mechanism (
     innovacion_ctci BOOLEAN,
     -- Atributos SUBV8
     fondo_tematico VARCHAR(32),
-    puntaje_evaluacion NUMERIC(6,2),
+    -- MED-005 FIX: NUMERIC(6,2) → (5,2) para consistencia con otros porcentajes/puntajes
+    puntaje_evaluacion NUMERIC(5,2),
     asignacion_directa BOOLEAN,
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -816,11 +872,12 @@ CREATE TABLE core.agreement_installment (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     agreement_id UUID NOT NULL REFERENCES core.agreement(id),
     installment_number INTEGER NOT NULL,
-    amount NUMERIC(15,2) NOT NULL,
+    -- MED-005 FIX: NUMERIC(15,2) → (18,2) para consistencia con otros montos
+    amount NUMERIC(18,2) NOT NULL,
     due_date DATE NOT NULL,
     payment_status_id UUID NOT NULL REFERENCES ref.category(id),
     paid_at TIMESTAMPTZ,
-    paid_amount NUMERIC(15,2),
+    paid_amount NUMERIC(18,2),
     payment_reference VARCHAR(100),
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -1272,7 +1329,7 @@ CREATE INDEX idx_work_item_due ON core.work_item(due_date);
 CREATE INDEX idx_work_item_ipr ON core.work_item(ipr_id);
 CREATE INDEX idx_work_item_commitment ON core.work_item(commitment_id);
 CREATE INDEX idx_work_item_story ON core.work_item(story_id);
-CREATE INDEX idx_work_item_deleted ON core.work_item(deleted_at) WHERE deleted_at IS NULL;
+-- MED-001 FIX: idx_work_item_deleted eliminado (subóptimo, usar idx_workitem_active de goreos_indexes.sql)
 COMMENT ON TABLE core.work_item IS 'Item de trabajo unificado - atomo de gestion operativa';
 COMMENT ON COLUMN core.work_item.commitment_id IS 'FK a operational_commitment - trazabilidad compromiso->tarea';
 
@@ -1354,12 +1411,16 @@ COMMENT ON TABLE core.risk IS 'Riesgo identificado en un proceso o IPR';
 -- =============================================================================
 
 -- TABLA: txn.event (particionada por mes)
+-- CRIT-005 FIX: Separar actor_id (core.user) de actor_ref_id (ref.actor)
+-- actor_id ahora referencia core.user para consistencia con app.current_user_id
+-- actor_ref_id es opcional para referenciar ref.actor (agentes algorítmicos)
 CREATE TABLE txn.event (
     id UUID DEFAULT gen_random_uuid(),
     event_type_id UUID REFERENCES ref.category(id) NOT NULL,
     subject_type VARCHAR(32) NOT NULL,
     subject_id UUID NOT NULL,
-    actor_id UUID REFERENCES ref.actor(id),
+    actor_id UUID REFERENCES core.user(id),      -- Usuario que ejecuta la acción
+    actor_ref_id UUID REFERENCES ref.actor(id),  -- Referencia opcional a ref.actor
     occurred_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     recorded_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     data JSONB DEFAULT '{}'::jsonb,
@@ -1372,13 +1433,15 @@ CREATE INDEX idx_event_subject ON txn.event(subject_type, subject_id);
 CREATE INDEX idx_event_type ON txn.event(event_type_id);
 CREATE INDEX idx_event_occurred ON txn.event(occurred_at);
 CREATE INDEX idx_event_actor ON txn.event(actor_id);
+CREATE INDEX idx_event_actor_ref ON txn.event(actor_ref_id) WHERE actor_ref_id IS NOT NULL;
 
 -- OPP-006: Constraint UNIQUE para evitar duplicados
 -- (No se puede crear UNIQUE global en tablas particionadas, se crea por partición)
 
 COMMENT ON TABLE txn.event IS 'Evento del sistema - Event Sourcing (particionado por mes)';
 COMMENT ON COLUMN txn.event.subject_id IS 'UUID del sujeto';
-COMMENT ON COLUMN txn.event.actor_id IS 'UUID del actor (humano o algorítmico)';
+COMMENT ON COLUMN txn.event.actor_id IS 'UUID del usuario que ejecuta la acción (core.user)';
+COMMENT ON COLUMN txn.event.actor_ref_id IS 'UUID opcional del actor en ref.actor (agentes algorítmicos)';
 
 -- Crear particiones para 2026
 CREATE TABLE txn.event_2026_01 PARTITION OF txn.event
@@ -1467,10 +1530,11 @@ COMMENT ON VIEW core.v_work_item_assignment IS 'Vista para exportar asignaciones
 -- =============================================================================
 
 -- Función para actualizar updated_at automáticamente
+-- CRIT-001 FIX: Usar := para asignación en PL/pgSQL
 CREATE OR REPLACE FUNCTION fn_update_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.updated_at = now();
+    NEW.updated_at := now();
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -1501,6 +1565,7 @@ COMMENT ON FUNCTION fn_validate_category_scheme(UUID, VARCHAR) IS
 'Valida que un category_id pertenece al scheme esperado';
 
 -- Crear triggers de updated_at para todas las tablas relevantes
+-- CRIT-002 FIX: Separar EXECUTE en dos sentencias para compatibilidad
 DO $$
 DECLARE
     tbl_name TEXT;
@@ -1512,12 +1577,14 @@ BEGIN
         WHERE column_name = 'updated_at'
         AND table_schema IN ('meta', 'ref', 'core')
     LOOP
-        EXECUTE format('
-            DROP TRIGGER IF EXISTS trg_%s_updated_at ON %I.%I;
-            CREATE TRIGGER trg_%s_updated_at
+        -- Primero DROP del trigger existente
+        EXECUTE format('DROP TRIGGER IF EXISTS trg_%s_updated_at ON %I.%I',
+            tbl_name, tbl_schema, tbl_name);
+        -- Luego CREATE del nuevo trigger
+        EXECUTE format('CREATE TRIGGER trg_%s_updated_at
             BEFORE UPDATE ON %I.%I
-            FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp();
-        ', tbl_name, tbl_schema, tbl_name, tbl_name, tbl_schema, tbl_name);
+            FOR EACH ROW EXECUTE FUNCTION fn_update_timestamp()',
+            tbl_name, tbl_schema, tbl_name);
     END LOOP;
 END;
 $$;

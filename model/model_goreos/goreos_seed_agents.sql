@@ -103,17 +103,39 @@ ON CONFLICT (code) DO UPDATE SET
 
 -- =============================================================================
 -- ROLES META PARA AGENTES ALGORÍTMICOS
+-- CRIT-007 FIX: Agregar human_accountable_id para cumplir constraint HAIC
 -- =============================================================================
+-- Primero crear el rol humano supervisor que será accountable de los agentes
 -- Cada agente algorítmico tiene un rol asociado en meta.role
 -- =============================================================================
 
+-- Paso 1: Crear rol humano supervisor (requerido por constraint HAIC)
 INSERT INTO meta.role (
     code, name, agent_type, cognition_level, delegation_mode, ontology_uri
+) VALUES (
+    'ROLE_SUPERVISOR_AGENTES',
+    'Supervisor de Agentes Algorítmicos',
+    'HUMAN',
+    'C3',  -- Nivel de decisión sobre agentes
+    'M5',  -- Supervisión de delegación
+    'koda://roles/supervisor-agentes'
+)
+ON CONFLICT (code) DO UPDATE SET
+    name = EXCLUDED.name,
+    agent_type = EXCLUDED.agent_type,
+    cognition_level = EXCLUDED.cognition_level,
+    delegation_mode = EXCLUDED.delegation_mode,
+    ontology_uri = EXCLUDED.ontology_uri;
+
+-- Paso 2: Crear roles algorítmicos con human_accountable_id
+INSERT INTO meta.role (
+    code, name, agent_type, human_accountable_id, cognition_level, delegation_mode, ontology_uri
 ) VALUES
 (
     'ROLE_ORQUESTADOR',
     'Rol Orquestador Multi-Agente',
     'ALGORITHMIC',
+    (SELECT id FROM meta.role WHERE code = 'ROLE_SUPERVISOR_AGENTES'),
     'C3',  -- Nivel más alto: decide sobre otros agentes
     'M6',  -- Delegación completa
     'koda://roles/orquestador'
@@ -122,6 +144,7 @@ INSERT INTO meta.role (
     'ROLE_INGENIERO',
     'Rol Ingeniero de Software',
     'ALGORITHMIC',
+    (SELECT id FROM meta.role WHERE code = 'ROLE_SUPERVISOR_AGENTES'),
     'C2',  -- Decisiones técnicas
     'M4',  -- Delegación supervisada
     'koda://roles/ingeniero'
@@ -130,6 +153,7 @@ INSERT INTO meta.role (
     'ROLE_ONTOLOGISTA',
     'Rol Especialista Ontológico',
     'ALGORITHMIC',
+    (SELECT id FROM meta.role WHERE code = 'ROLE_SUPERVISOR_AGENTES'),
     'C2',
     'M4',
     'koda://roles/ontologista'
@@ -138,6 +162,7 @@ INSERT INTO meta.role (
     'ROLE_ARQUITECTO',
     'Rol Arquitecto de Datos',
     'ALGORITHMIC',
+    (SELECT id FROM meta.role WHERE code = 'ROLE_SUPERVISOR_AGENTES'),
     'C2',
     'M4',
     'koda://roles/arquitecto'
@@ -146,6 +171,7 @@ INSERT INTO meta.role (
     'ROLE_AUDITOR',
     'Rol Auditor de Calidad',
     'ALGORITHMIC',
+    (SELECT id FROM meta.role WHERE code = 'ROLE_SUPERVISOR_AGENTES'),
     'C1',  -- Ejecución de reglas
     'M3',
     'koda://roles/auditor'
@@ -153,6 +179,7 @@ INSERT INTO meta.role (
 ON CONFLICT (code) DO UPDATE SET
     name = EXCLUDED.name,
     agent_type = EXCLUDED.agent_type,
+    human_accountable_id = EXCLUDED.human_accountable_id,
     cognition_level = EXCLUDED.cognition_level,
     delegation_mode = EXCLUDED.delegation_mode,
     ontology_uri = EXCLUDED.ontology_uri;
