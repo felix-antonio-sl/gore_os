@@ -12,7 +12,7 @@ Modelo de datos relacional para GORE_OS, el sistema operativo institucional del 
 
 ### Características Principales
 
-- **50 tablas lógicas** organizadas en 4 schemas semánticos
+- **54 tablas lógicas** organizadas en 4 schemas semánticos (+4 en v3.1)
 - **UUID universal** como PK en todas las entidades
 - **Auditoría completa** (created/updated/deleted_at/by_id)
 - **Category Pattern** (Gist 14.0) para vocabularios controlados (75+ schemes)
@@ -85,11 +85,14 @@ psql -U postgres -d goreos -f goreos_seed_territory.sql
 # 5. Triggers de negocio (core, siempre activo)
 psql -U postgres -d goreos -f goreos_triggers.sql
 
-# 6. Triggers de remediación categorial (validación + sincronización) ✨ NUEVO
+# 6. Triggers de remediación categorial (validación + sincronización)
 psql -U postgres -d goreos -f goreos_triggers_remediation.sql
 
 # 7. Índices de optimización (basados en CQs)
 psql -U postgres -d goreos -f goreos_indexes.sql
+
+# 8. Remediación Ontológica v3.1 (relaciones N:M, patrón hasParty) ✨ NUEVO
+psql -U postgres -d goreos -f goreos_remediation_ontological.sql
 ```
 
 ### Verificación
@@ -399,6 +402,36 @@ db.session.execute("SELECT set_current_user(:user_id)", {'user_id': user.email})
 
 ## Changelog
 
+### v3.1 (2026-01-27) - Remediación Ontológica
+
+**Nuevas Tablas (Relaciones N:M categóricamente correctas)**:
+
+- ✅ `core.ipr_territory` - IPR↔Territory N:M con tipo de impacto (gnub:isLocatedIn)
+- ✅ `core.ipr_milestone` - Hitos de proyecto con planned/actual (gnub:ProjectMilestone)
+- ✅ `core.ipr_party` - Partes de IPR con roles (gist:hasParty)
+- ✅ `core.installment_milestone` - Cuota↔Hito N:M (gnub:triggersPayment)
+
+**Nuevos Schemes**:
+
+- ✅ `territory_impact` - Tipos de impacto territorial (4 categorías)
+- ✅ `milestone_type` - Tipos de hito (13 categorías)
+- ✅ `ipr_party_role` - Roles de parte (9 categorías)
+- ✅ Aspectos planificados: `PLANNED_PHYSICAL_PROGRESS`, `PLANNED_FINANCIAL_PROGRESS`
+
+**Vistas de Compatibilidad**:
+
+- ✅ `vw_ipr_executor`, `vw_ipr_applicant`, `vw_ipr_formulator`
+- ✅ `vw_ipr_parties` - Vista consolidada de todas las partes
+- ✅ `vw_budget_modification` - Vista sobre txn.event
+
+**Principios Gist 14.0 Aplicados**:
+
+- N:M sobre FK simples (cuando ontología permite múltiples valores)
+- Patrón gist:hasParty (partes con roles categorizados)
+- Event Sourcing (budget_modification como Event, no entidad)
+
+---
+
 ### v3.0 (2026-01-27)
 
 **Estructura**:
@@ -443,5 +476,5 @@ db.session.execute("SELECT set_current_user(:user_id)", {'user_id': user.email})
 ---
 
 **Última actualización**: 2026-01-27
-**Versión**: 3.0
+**Versión**: 3.1 (Remediación Ontológica)
 **Estado**: ✅ Producción Ready
