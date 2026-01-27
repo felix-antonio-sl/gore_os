@@ -1,5 +1,5 @@
 -- ============================================================================
--- GORE_OS v2.0 - SEED DATA TERRITORIAL
+-- GORE_OS v3.0 - SEED DATA TERRITORIAL
 -- ============================================================================
 -- Archivo: goreos_seed_territory.sql
 -- Descripción: Datos territoriales Región de Ñuble (código 16)
@@ -166,10 +166,10 @@ END $$;
 
 DO $$
 DECLARE
-    v_demo_type_id INTEGER;
-    v_eco_type_id INTEGER;
-    v_social_type_id INTEGER;
-    v_region_id INTEGER;
+    v_demo_type_id UUID;
+    v_eco_type_id UUID;
+    v_social_type_id UUID;
+    v_region_id UUID;
 BEGIN
     -- Obtener tipos de indicador
     SELECT id INTO v_demo_type_id FROM ref.category WHERE scheme = 'indicator_type' AND code = 'DEMOGRAFICO';
@@ -215,9 +215,9 @@ END $$;
 
 DO $$
 DECLARE
-    v_gore_type_id INTEGER;
-    v_division_type_id INTEGER;
-    v_gore_id INTEGER;
+    v_gore_type_id UUID;
+    v_division_type_id UUID;
+    v_gore_id UUID;
 BEGIN
     -- Obtener tipos de organización
     SELECT id INTO v_gore_type_id FROM ref.category WHERE scheme = 'org_type' AND code = 'GORE';

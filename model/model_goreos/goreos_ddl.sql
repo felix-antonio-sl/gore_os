@@ -1129,6 +1129,9 @@ CREATE TABLE core.document (
     ipr_id UUID REFERENCES core.ipr(id),
     agreement_id UUID REFERENCES core.agreement(id),
     storage_url TEXT,
+    -- TDE-001 FIX: Foliación digital (Art. 20 DS N°10)
+    sort_order INTEGER,
+    folio_number VARCHAR(20),
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -1138,7 +1141,10 @@ CREATE TABLE core.document (
     deleted_by_id UUID REFERENCES core.user(id),
     metadata JSONB DEFAULT '{}'::jsonb
 );
+CREATE INDEX idx_document_folio ON core.document(file_id, sort_order);
 COMMENT ON TABLE core.document IS 'Documento digital o fisico en el sistema';
+COMMENT ON COLUMN core.document.sort_order IS 'TDE-001: Orden de foliación digital en expediente (Art. 20 DS10)';
+COMMENT ON COLUMN core.document.folio_number IS 'TDE-001: Número de folio asignado al documento';
 
 -- =============================================================================
 -- CAPA 2: CORE - Parte 10: Control de Gestión
@@ -1295,6 +1301,8 @@ CREATE TABLE core.work_item (
     due_date DATE,
     -- HIGH-005: Funtor Story->WorkItem
     story_id UUID REFERENCES meta.story(id),
+    -- CAT-003 FIX: Preservar funtorialidad - rol requerido (semántica), distinto de assignee (instancia)
+    required_role_id UUID REFERENCES meta.role(id),
     -- HIGH-002: FK a operational_commitment
     commitment_id UUID REFERENCES core.operational_commitment(id),
     -- Vinculaciones a entidades formales
@@ -1332,6 +1340,7 @@ CREATE INDEX idx_work_item_story ON core.work_item(story_id);
 -- MED-001 FIX: idx_work_item_deleted eliminado (subóptimo, usar idx_workitem_active de goreos_indexes.sql)
 COMMENT ON TABLE core.work_item IS 'Item de trabajo unificado - atomo de gestion operativa';
 COMMENT ON COLUMN core.work_item.commitment_id IS 'FK a operational_commitment - trazabilidad compromiso->tarea';
+COMMENT ON COLUMN core.work_item.required_role_id IS 'CAT-003: Rol requerido (del story origen). Preserva funtor Story->WorkItem. Distinto de assignee_id (usuario concreto asignado)';
 
 CREATE TABLE core.work_item_history (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

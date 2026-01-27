@@ -1,0 +1,4955 @@
+{
+  "generated_at": "2026-01-27T10:52:36.527176",
+  "sources_assessed": 8,
+  "total_legacy_rows": 12520,
+  "target_entities": 5,
+  "assessments": [
+    {
+      "name": "partes",
+      "target_entity": "core.administrative_act",
+      "files_found": 3,
+      "files_expected": 3,
+      "total_rows": 7281,
+      "expected_rows": 7279,
+      "quality_issues": [],
+      "structural_score": 66.7,
+      "semantic_score": 63.0,
+      "quality_score": 86.0,
+      "transformational_score": 80.0,
+      "relational_score": 25,
+      "overall_score": 68.1,
+      "classification": "MEDIUM",
+      "file_profiles": [
+        {
+          "name": "RECIBIDOS.csv",
+          "rows": 5860,
+          "columns": 23,
+          "null_rate": 0.4743582133847751,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "ENROCADO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 3",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 4",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 5",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 6",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 7",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 9",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 10",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 11",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 12",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 13",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 14",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 15",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 16",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 17",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 18",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 19",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 20",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 21",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 22",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "RESOLUCIONES EXENTAS.csv",
+          "rows": 1258,
+          "columns": 9,
+          "null_rate": 0.237413884472708,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "I",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SOLICITA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FOLIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA DOCTO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MATERIA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "subject",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "FIRMA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "OBSERVACIONES",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "LINK AL DOCUMENTO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_url",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "RESOLUCIONES AFECTAS.csv",
+          "rows": 163,
+          "columns": 9,
+          "null_rate": 0.12951601908657123,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "Unnamed: 0",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SOLICITA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FOLIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA DOCTO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MATERIA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "subject",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "FIRMA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "OBSERVACIONES",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "LINK AL DOCUMENTO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_url",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "ESTADO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        "Unnamed: 3",
+        "FIRMA",
+        "OBSERVACIONES",
+        "Unnamed: 10",
+        "Unnamed: 9",
+        "Unnamed: 6",
+        "Unnamed: 15",
+        "Unnamed: 1",
+        "FOLIO",
+        "Unnamed: 7"
+      ],
+      "missing_required": []
+    },
+    {
+      "name": "250",
+      "target_entity": "core.ipr",
+      "files_found": 2,
+      "files_expected": 2,
+      "total_rows": 365,
+      "expected_rows": 189,
+      "quality_issues": [
+        "CONSOLIDADO.csv: 61.7% null rate (high sparsity)",
+        "BROUCHURE.csv: 4.3% duplicate rows",
+        "Missing required fields: ipr_nature"
+      ],
+      "structural_score": 47.1,
+      "semantic_score": 78.0,
+      "quality_score": 83.9,
+      "transformational_score": 47.1,
+      "relational_score": 100,
+      "overall_score": 67.5,
+      "classification": "MEDIUM",
+      "file_profiles": [
+        {
+          "name": "CONSOLIDADO.csv",
+          "rows": 181,
+          "columns": 35,
+          "null_rate": 0.6165745856353592,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "TRAZO PRIMARIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_portfolio_primary",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "TRAZO SECUNDARIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_portfolio_secondary",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "NOMBRE DE INICIATIVA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "name",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "DIVISIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_division",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "BIP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "codigo_bip",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "COMUNA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "territory_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "CONTRAPARTE TÉCNICA EXTERNA \n(NOMBRE.,  CARGO, CORREO, TELEFONO)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "RESPONSABLE SEGUIMIENTO GORE\n(NOMBRE.,  CARGO, CORREO, TELEFONO)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ESTADO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "status_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "ETAPA A LA CUAL POSTULA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "mcd_phase_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "FORMULADOR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "formulator_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "UNIDAD TÉCNICA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "executor_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "FUENTE FINANCIERA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "mechanism_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "ESTADO FINANCIERO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MONTO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_initial_amount",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "HITO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_milestone",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "MEDIDA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_measure_value",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "UNIDAD",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_measure_unit",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "ENE-MAR 2026",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MAR-JUN 2026",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "JUN-SEP 2026",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SEP-DIC 2026",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ENE-MAR 2027",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MAR-JUN 2027",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "JUN-SEP 2027",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SEP-DIC 2027",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ENE-MAR 2028",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MAR-JUN 2028",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "JUN-SEP 2028",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SEP-DIC 2028",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "2029  Y MÁS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA DE INICIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_start_date",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "FECHA DE TERMINO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_end_date",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "OBSERVACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ACCIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "BROUCHURE.csv",
+          "rows": 184,
+          "columns": 3,
+          "null_rate": 0.0,
+          "duplicate_rate": 0.043478260869565216,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "Unnamed: 0",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        "OBSERVACIÓN",
+        "MAR-JUN 2026",
+        "2029  Y MÁS",
+        "SEP-DIC 2028",
+        "SEP-DIC 2027",
+        "ESTADO FINANCIERO",
+        "SEP-DIC 2026",
+        "Unnamed: 1",
+        "MAR-JUN 2027",
+        "RESPONSABLE SEGUIMIENTO GORE\n(NOMBRE.,  CARGO, CORREO, TELEFONO)"
+      ],
+      "missing_required": [
+        "ipr_nature"
+      ]
+    },
+    {
+      "name": "convenios",
+      "target_entity": "core.agreement",
+      "files_found": 2,
+      "files_expected": 2,
+      "total_rows": 507,
+      "expected_rows": 544,
+      "quality_issues": [],
+      "structural_score": 33.3,
+      "semantic_score": 71.0,
+      "quality_score": 86.7,
+      "transformational_score": 50.0,
+      "relational_score": 75,
+      "overall_score": 60.9,
+      "classification": "MEDIUM",
+      "file_profiles": [
+        {
+          "name": "CONVENIOS 2023 y 2024.csv",
+          "rows": 408,
+          "columns": 24,
+          "null_rate": 0.14777369281045755,
+          "duplicate_rate": 0.004901960784313725,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "SUB",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ITEM",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " ASIG",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "CODIGO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "code",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "UNIDAD TECNICA ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "NOMBRE DE LA INICIATIVA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "PROVINCIA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_territory_prov",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "COMUNA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_territory_comuna",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": " MONTO FNDR M$ ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº RES INCORPORA/ CERT CORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA RES INCORPORA/ CERT CORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº RES CREA ASIGNACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA RES CREA  ASIGNACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ESTADO DE CONVENIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "state_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "FECHA FIRMA DE CONVENIO ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº RES APRUEBA CONVENIO ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA RES APRUEBA CONVENIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "TIPO DE RESOLUCIÓN ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ESTADO CONVENIO EN CGR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA TOMA DE RAZON DE CGR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº OFICIO ENVIA CONVENIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA OFICIO ENVIA CONVENIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "REFERENTE TECNICO O CONTRAPARTE TECNICA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº RES REFERENTE TECNICO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "CONVENIOS 2025.csv",
+          "rows": 99,
+          "columns": 22,
+          "null_rate": 0.3815426997245179,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "SUB",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ITEM",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " ASIG",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "CODIGO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "code",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "UNIDAD TECNICA ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "NOMBRE DE LA INICIATIVA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "PROVINCIA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_territory_prov",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "COMUNA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_territory_comuna",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": " MONTO FNDR M$",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº RES INCORPORA/ CERT CORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA RES INCORPORA/ CERT CORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº RES CREA ASIGNACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA RES CREA  ASIGNACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ESTADO RES CREA EN CGR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ESTADO DE CONVENIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "state_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "FECHA FIRMA DE CONVENIO ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº RES  Y FECHA APRUEBA CONVENIO ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ESTADO CONVENIO EN CGR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA TOMA DE RAZON DE CGR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nº  Y FECHA OFICIO ENVIA CONVENIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "REFERENTE TECNICO ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "RES REFERENTE TECNICO ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        "NOMBRE DE LA INICIATIVA",
+        "FECHA RES INCORPORA/ CERT CORE",
+        "REFERENTE TECNICO ",
+        "REFERENTE TECNICO O CONTRAPARTE TECNICA",
+        "UNIDAD TECNICA ",
+        "FECHA TOMA DE RAZON DE CGR",
+        "ESTADO CONVENIO EN CGR",
+        "ESTADO RES CREA EN CGR",
+        "ITEM",
+        "RES REFERENTE TECNICO "
+      ],
+      "missing_required": []
+    },
+    {
+      "name": "idis",
+      "target_entity": "core.ipr",
+      "files_found": 1,
+      "files_expected": 1,
+      "total_rows": 2794,
+      "expected_rows": 2794,
+      "quality_issues": [
+        "ANÁLISIS.csv: 140 formula errors (#REF!/#VALUE!)",
+        "ANÁLISIS.csv: 11.2% duplicate rows",
+        "ANÁLISIS.csv: 52.5% null rate (high sparsity)",
+        "Missing required fields: ipr_nature"
+      ],
+      "structural_score": 29.4,
+      "semantic_score": 52.0,
+      "quality_score": 69.0,
+      "transformational_score": 83.3,
+      "relational_score": 75,
+      "overall_score": 58.3,
+      "classification": "LOW",
+      "file_profiles": [
+        {
+          "name": "ANÁLISIS.csv",
+          "rows": 2794,
+          "columns": 78,
+          "null_rate": 0.525466659324927,
+          "duplicate_rate": 0.11202576950608446,
+          "ref_errors": 140,
+          "column_profiles": [
+            {
+              "name": "COD. ÚNICO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "VIGENCIA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "AÑO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "AÑO PRESP.",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "BIP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "DV",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "NOMBRE INICIATIVA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "name",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "REVISIÓN O REEVALUACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "TIPO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "PROVINCIA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "COMUNA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ETAPA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "mcd_phase_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "TIPOLOGÍA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SUBTIPOLOGÍAS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Categoría GORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SUBT",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "budget_subtitle_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "ITEM",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ASIG",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FORMULADOR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ORIGEN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "UNIDAD TÉCNICA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ALCANCE INICIATIVA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "DIVISIÓN VINCULADA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "CARTERA REZAGO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "BENEFICIARIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SECTOR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "SUBSECTOR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MONTO INICIATIVA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "_initial_amount",
+              "transform_needed": "TRANSFORM"
+            },
+            {
+              "name": "MONTO SECTORIAL",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MONTO FNDR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "MONTO FINAL APROB.",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "GASTO VIGENTE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "GASTO SIG. AÑOS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ESTADO ACTUAL",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": "status_id",
+              "transform_needed": "DIRECT"
+            },
+            {
+              "name": "FECHA ESTADO ACTUAL",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "RATE ACTUAL",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA ULTIMO RATE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° RATES EMITIDOS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "DIAS PARA RESPUESTA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° ORD. POSTULACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA ORD. POSTULACIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA RECEPC. GORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ANALISTA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA ASIGN. ANALISTA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° ORD.  A MIDESO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA ENVÍO A MIDESO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° ORD. CORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA ENVÍO ORD. A CORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° CERTIF. RS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA CERTIF. RS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° CERT.CORE O RES. EXTA INCORP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA CERTIF. APROBADO CORE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° MEMO PRESUPESTO\nRES. APRUEBA CONV",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA ENVÍO A PRESUPUESTO\nFECHA CONVENIO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "OBSERVACIONES GENERALES",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "EJE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "LINEAMIENTO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "OBJETIVO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "ACCION",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° EMPLEOS EST. HOMBRE",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° EMPLEOS EST. MUJER",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° EMPLEOS ESTIMADOS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° BENEF DIRECT HOM",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° BENEF DIRECTOS MUJ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° BENEF DIRECTOS TOTAL",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "CONTROL DE DIAS",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "CONTROL RESPUESTA OBSERVACIONES",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° DIAS RETRASO",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "RESPONDE OBSERVACIONES",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "FECHA RESPUESTA INGRESO PRE INVERSIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "N° DÍAS A LA ESPERA DE REVISIÓN",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "PRIORIZADO GOBERNADOR",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 72",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 73",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 74",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 75",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 76",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 77",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        "DV",
+        "Categoría GORE",
+        "BIP",
+        "MONTO FNDR",
+        "AÑO PRESP.",
+        "MONTO SECTORIAL",
+        "GASTO SIG. AÑOS",
+        "N° CERT.CORE O RES. EXTA INCORP",
+        "ASIG",
+        "GASTO VIGENTE"
+      ],
+      "missing_required": [
+        "ipr_nature"
+      ]
+    },
+    {
+      "name": "fril",
+      "target_entity": "core.ipr",
+      "files_found": 4,
+      "files_expected": 4,
+      "total_rows": 150,
+      "expected_rows": 167,
+      "quality_issues": [
+        "Fril Lic. y Con..csv: 2.6% duplicate rows",
+        "Missing required fields: ipr_nature"
+      ],
+      "structural_score": 17.6,
+      "semantic_score": 70.0,
+      "quality_score": 98.6,
+      "transformational_score": 50.0,
+      "relational_score": 25,
+      "overall_score": 54.1,
+      "classification": "LOW",
+      "file_profiles": [
+        {
+          "name": "31 Avan. y Adj..csv",
+          "rows": 49,
+          "columns": 9,
+          "null_rate": 0.015873015873015872,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": " Comuna ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Código ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Nombre Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Unidad Técnica ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Item Presupuestario ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Sub-Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Saldo 2026 ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Saldo 2027 ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "31 Lic. y Con..csv",
+          "rows": 23,
+          "columns": 9,
+          "null_rate": 0.03381642512077295,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": " Comuna ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Código ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Nombre Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Unidad Técnica ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Item Presupuestario ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Sub-Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Saldo 2026 ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Saldo 2027 ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "Fril Avan. y Adj..csv",
+          "rows": 40,
+          "columns": 7,
+          "null_rate": 0.02142857142857143,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": " Comuna ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Código ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Nombre Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Unidad Técnica ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Sub-Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Saldo 2026 ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "Fril Lic. y Con..csv",
+          "rows": 38,
+          "columns": 8,
+          "null_rate": 0.023026315789473683,
+          "duplicate_rate": 0.02631578947368421,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": " Comuna ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Código ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Nombre Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Unidad Técnica ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Item Presupuestario ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Sub-Estado Iniciativa ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": " Saldo 2026 ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        " Saldo 2026 ",
+        " Saldo 2027 ",
+        " Nombre Iniciativa ",
+        " Estado Iniciativa ",
+        " Sub-Estado Iniciativa ",
+        " Comuna ",
+        " Código ",
+        " Unidad Técnica ",
+        " Item Presupuestario "
+      ],
+      "missing_required": [
+        "ipr_nature"
+      ]
+    },
+    {
+      "name": "progs",
+      "target_entity": "core.ipr",
+      "files_found": 4,
+      "files_expected": 4,
+      "total_rows": 1259,
+      "expected_rows": 1700,
+      "quality_issues": [
+        "F.SOCIAL.csv: 2.6% duplicate rows",
+        "F.CULTURA.csv: 1.8% duplicate rows",
+        "F.DEPORTE.csv: 1 formula errors (#REF!/#VALUE!)",
+        "F.DEPORTE.csv: 1.5% duplicate rows",
+        "Missing required fields: ipr_nature"
+      ],
+      "structural_score": 17.6,
+      "semantic_score": 64.0,
+      "quality_score": 88.7,
+      "transformational_score": 50.0,
+      "relational_score": 50,
+      "overall_score": 53.1,
+      "classification": "LOW",
+      "file_profiles": [
+        {
+          "name": "F.SEGURIDAD.csv",
+          "rows": 557,
+          "columns": 20,
+          "null_rate": 0.09156193895870737,
+          "duplicate_rate": 0.005385996409335727,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "FONDO SEGURIDAD CIUDADANA",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 3",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 4",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 5",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 6",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 7",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 9",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 10",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 11",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 12",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 13",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 14",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 15",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 16",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 17",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 18",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 19",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "F.SOCIAL.csv",
+          "rows": 194,
+          "columns": 31,
+          "null_rate": 0.44146990355836385,
+          "duplicate_rate": 0.02577319587628866,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "FONDO SOCIAL",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 3",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 4",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 5",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 6",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 7",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 9",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 10",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 11",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 12",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 13",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 14",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 15",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 16",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 17",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 18",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 19",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 20",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 21",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 22",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 23",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 24",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 25",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 26",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 27",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 28",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 29",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 30",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "F.CULTURA.csv",
+          "rows": 171,
+          "columns": 21,
+          "null_rate": 0.14341409078251185,
+          "duplicate_rate": 0.017543859649122806,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "Unnamed: 0",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 3",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 4",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 5",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 6",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 7",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 9",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 10",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 11",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 12",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 13",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 14",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 15",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 16",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 17",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 18",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 19",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 20",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "F.DEPORTE.csv",
+          "rows": 337,
+          "columns": 22,
+          "null_rate": 0.19031561909900188,
+          "duplicate_rate": 0.01483679525222552,
+          "ref_errors": 1,
+          "column_profiles": [
+            {
+              "name": " ",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 3",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 4",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 5",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 6",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 7",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 9",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 10",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 11",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 12",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 13",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 14",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 15",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 16",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 17",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 18",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 19",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 20",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 21",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        "Unnamed: 24",
+        "Unnamed: 27",
+        "Unnamed: 3",
+        "FONDO SOCIAL",
+        "Unnamed: 23",
+        "Unnamed: 10",
+        "FONDO SEGURIDAD CIUDADANA",
+        "Unnamed: 9",
+        "Unnamed: 6",
+        "Unnamed: 25"
+      ],
+      "missing_required": [
+        "ipr_nature"
+      ]
+    },
+    {
+      "name": "funcionarios",
+      "target_entity": "core.person",
+      "files_found": 1,
+      "files_expected": 1,
+      "total_rows": 110,
+      "expected_rows": 110,
+      "quality_issues": [
+        "Missing required fields: names, paternal_surname"
+      ],
+      "structural_score": 16.7,
+      "semantic_score": 85.0,
+      "quality_score": 90.4,
+      "transformational_score": 16.7,
+      "relational_score": 25,
+      "overall_score": 49.3,
+      "classification": "LOW",
+      "file_profiles": [
+        {
+          "name": "listado_funcionarios_integrado_remediado.csv",
+          "rows": 110,
+          "columns": 44,
+          "null_rate": 0.1913223140495868,
+          "duplicate_rate": 0.0,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "Periodo",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Año",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Mes",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Tipo vínculo",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Estamento",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Nombre completo",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Cargo o función",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Grado EUS o jornada",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Calificación profesional o formación",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Región",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Fecha de inicio dd/mm/aa",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Fecha de término dd/mm/aa",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Fecha_inicio",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Fecha_termino",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Asignaciones especiales del mes (inc. en rem. bruta)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Remuneración bruta del mes (incluye bonos e incentivos, asig. especiales, horas extras)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Remuneración líquida del mes",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Rem. adicionales del mes (no inc. en rem. bruta)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Remuneración Bonos incentivos del mes (inc. en rem. bruta)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Derecho a horas extraordinarias",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias diurnas del mes(inc. en rem. bruta)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias nocturnas del mes(inc. en rem. bruta)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias festivas del mes (inc. en rem. bruta)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Viáticos del mes (no inc. en rem. bruta)",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Observaciones",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "_fuente",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Tipo de pago",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Descripción pago",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Número de cuotas",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Enlace funciones desarrolladas",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Mes_num",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Derecho_horas_extras",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Asignaciones especiales del mes (inc. en rem. bruta)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias diurnas del mes(inc. en rem. bruta)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias festivas del mes (inc. en rem. bruta)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias nocturnas del mes(inc. en rem. bruta)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Rem. adicionales del mes (no inc. en rem. bruta)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Remuneración Bonos incentivos del mes (inc. en rem. bruta)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Remuneración bruta del mes (incluye bonos e incentivos, asig. especiales, horas extras)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Remuneración líquida del mes_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Viáticos del mes (no inc. en rem. bruta)_CLP",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias diurnas del mes(inc. en rem. bruta)_Horas",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias festivas del mes (inc. en rem. bruta)_Horas",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Montos y horas extraordinarias nocturnas del mes(inc. en rem. bruta)_Horas",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        "Grado EUS o jornada",
+        "Fecha_inicio",
+        "Remuneración bruta del mes (incluye bonos e incentivos, asig. especiales, horas extras)",
+        "Montos y horas extraordinarias nocturnas del mes(inc. en rem. bruta)_Horas",
+        "Periodo",
+        "Estamento",
+        "Observaciones",
+        "Remuneración Bonos incentivos del mes (inc. en rem. bruta)",
+        "Año",
+        "Remuneración líquida del mes"
+      ],
+      "missing_required": [
+        "names",
+        "paternal_surname"
+      ]
+    },
+    {
+      "name": "modificaciones",
+      "target_entity": "core.budget_program",
+      "files_found": 2,
+      "files_expected": 2,
+      "total_rows": 54,
+      "expected_rows": 50,
+      "quality_issues": [
+        "MODIFICACIÓN N°1.csv: 21.4% duplicate rows",
+        "MODIFICACIÓN N°1.csv: 70.0% null rate (high sparsity)",
+        "MODIFICACIÓN N°2.csv: 10.0% duplicate rows",
+        "MODIFICACIÓN N°2.csv: 58.1% null rate (high sparsity)",
+        "Missing required fields: code, fiscal_year"
+      ],
+      "structural_score": 33.3,
+      "semantic_score": 47.0,
+      "quality_score": 63.3,
+      "transformational_score": 50.0,
+      "relational_score": 0,
+      "overall_score": 42.7,
+      "classification": "LOW",
+      "file_profiles": [
+        {
+          "name": "MODIFICACIÓN N°1.csv",
+          "rows": 14,
+          "columns": 10,
+          "null_rate": 0.7,
+          "duplicate_rate": 0.21428571428571427,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "Unnamed: 0",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 3",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 4",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 5",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 6",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 7",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 9",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        },
+        {
+          "name": "MODIFICACIÓN N°2.csv",
+          "rows": 40,
+          "columns": 12,
+          "null_rate": 0.5812499999999999,
+          "duplicate_rate": 0.1,
+          "ref_errors": 0,
+          "column_profiles": [
+            {
+              "name": "Unnamed: 0",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 1",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 2",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 3",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 4",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 5",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 6",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 7",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 8",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 9",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 10",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            },
+            {
+              "name": "Unnamed: 11",
+              "dtype": "string",
+              "null_count": 0,
+              "null_rate": 0.0,
+              "unique_count": 0,
+              "sample_values": [],
+              "ref_errors": 0,
+              "mapped_to": null,
+              "transform_needed": "UNMAPPED"
+            }
+          ]
+        }
+      ],
+      "unmapped_columns": [
+        "Unnamed: 6",
+        "Unnamed: 8",
+        "Unnamed: 3",
+        "Unnamed: 11",
+        "Unnamed: 5",
+        "Unnamed: 2",
+        "Unnamed: 1",
+        "Unnamed: 10",
+        "Unnamed: 0",
+        "Unnamed: 4"
+      ],
+      "missing_required": [
+        "code",
+        "fiscal_year"
+      ]
+    }
+  ],
+  "migration_order": [
+    {
+      "phase": 0,
+      "source": "setup",
+      "action": "Load ref.category, core.organization base"
+    },
+    {
+      "phase": 1,
+      "source": "funcionarios",
+      "action": "core.person, core.user",
+      "score": 49.3
+    },
+    {
+      "phase": 2,
+      "source": "250",
+      "action": "core.ipr",
+      "score": 67.5
+    },
+    {
+      "phase": 2,
+      "source": "idis",
+      "action": "core.ipr",
+      "score": 58.3
+    },
+    {
+      "phase": 2,
+      "source": "fril",
+      "action": "core.ipr",
+      "score": 54.1
+    },
+    {
+      "phase": 2,
+      "source": "progs",
+      "action": "core.ipr",
+      "score": 53.1
+    },
+    {
+      "phase": 3,
+      "source": "convenios",
+      "action": "core.agreement",
+      "score": 60.9
+    },
+    {
+      "phase": 4,
+      "source": "partes",
+      "action": "core.administrative_act",
+      "score": 68.1
+    },
+    {
+      "phase": 5,
+      "source": "modificaciones",
+      "action": "core.budget_program",
+      "score": 42.7
+    }
+  ],
+  "critical_issues": [
+    "ANÁLISIS.csv: 140 formula errors (#REF!/#VALUE!)",
+    "F.DEPORTE.csv: 1 formula errors (#REF!/#VALUE!)"
+  ],
+  "recommendations": [
+    {
+      "source": "250",
+      "priority": "P1",
+      "action": "Missing required fields: ipr_nature. Add derived/constant mappings.",
+      "issues": []
+    },
+    {
+      "source": "idis",
+      "priority": "P1",
+      "action": "LOW: idis needs preprocessing. Run cleaning scripts and validate before migration.",
+      "issues": [
+        "ANÁLISIS.csv: 140 formula errors (#REF!/#VALUE!)",
+        "ANÁLISIS.csv: 11.2% duplicate rows",
+        "ANÁLISIS.csv: 52.5% null rate (high sparsity)"
+      ]
+    },
+    {
+      "source": "fril",
+      "priority": "P1",
+      "action": "LOW: fril needs preprocessing. Run cleaning scripts and validate before migration.",
+      "issues": [
+        "Fril Lic. y Con..csv: 2.6% duplicate rows",
+        "Missing required fields: ipr_nature"
+      ]
+    },
+    {
+      "source": "progs",
+      "priority": "P1",
+      "action": "LOW: progs needs preprocessing. Run cleaning scripts and validate before migration.",
+      "issues": [
+        "F.SOCIAL.csv: 2.6% duplicate rows",
+        "F.CULTURA.csv: 1.8% duplicate rows",
+        "F.DEPORTE.csv: 1 formula errors (#REF!/#VALUE!)"
+      ]
+    },
+    {
+      "source": "funcionarios",
+      "priority": "P1",
+      "action": "LOW: funcionarios needs preprocessing. Run cleaning scripts and validate before migration.",
+      "issues": [
+        "Missing required fields: names, paternal_surname"
+      ]
+    },
+    {
+      "source": "modificaciones",
+      "priority": "P1",
+      "action": "LOW: modificaciones needs preprocessing. Run cleaning scripts and validate before migration.",
+      "issues": [
+        "MODIFICACIÓN N°1.csv: 21.4% duplicate rows",
+        "MODIFICACIÓN N°1.csv: 70.0% null rate (high sparsity)",
+        "MODIFICACIÓN N°2.csv: 10.0% duplicate rows"
+      ]
+    }
+  ]
+}

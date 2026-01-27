@@ -4,7 +4,7 @@
 -- Archivo: goreos_triggers.sql
 -- Descripción: Triggers de auditoría, soft delete y event sourcing
 -- Generado: 2026-01-26
--- Dependencias: goreos_ddl_v3.sql (debe ejecutarse primero)
+-- Dependencias: goreos_ddl.sql (debe ejecutarse primero)
 -- =============================================================================
 
 -- =============================================================================
@@ -111,6 +111,11 @@ DECLARE
     v_old_code VARCHAR(32);
     v_new_code VARCHAR(32);
 BEGIN
+    -- Si no hay cambio de estado, no validar transición
+    IF OLD.status_id IS NOT DISTINCT FROM NEW.status_id THEN
+        RETURN NEW;
+    END IF;
+
     -- Obtener código del estado anterior
     SELECT code INTO v_old_code
     FROM ref.category WHERE id = OLD.status_id;
@@ -123,9 +128,9 @@ BEGIN
     SELECT valid_transitions INTO v_valid_transitions
     FROM ref.category WHERE id = OLD.status_id;
 
-    -- Si hay transiciones definidas, validar
-    IF v_valid_transitions IS NOT NULL AND v_valid_transitions != '[]'::jsonb THEN
-        IF NOT v_valid_transitions ? v_new_code THEN
+    -- Si hay transiciones definidas, validar (incluye [] como estado terminal)
+    IF v_valid_transitions IS NOT NULL THEN
+        IF NOT (v_valid_transitions ? v_new_code) THEN
             RAISE EXCEPTION 'Transición de estado inválida: % -> %. Transiciones válidas: %',
                 v_old_code, v_new_code, v_valid_transitions;
         END IF;
@@ -444,8 +449,8 @@ COMMENT ON FUNCTION get_current_user() IS
 -- =============================================================================
 -- FIN TRIGGERS
 -- =============================================================================
--- Funciones: 8
--- Triggers activos: 3 (work_item_history, commitment_history, ipr_problem_flag)
+-- Funciones: 10
+-- Triggers activos: 4 (work_item_history, commitment_history, ipr_problem_flag, budget_program_current)
 -- Triggers opcionales: 5 (audit, soft_delete)
 -- =============================================================================
 

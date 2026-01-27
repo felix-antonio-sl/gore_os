@@ -1,5 +1,5 @@
 -- ============================================================================
--- GORE_OS v2.0 - SEED DATA
+-- GORE_OS v3.0 - SEED DATA
 -- ============================================================================
 -- Archivo: goreos_seed.sql
 -- Descripción: Datos iniciales para ref.category (75+ schemes) y ref.actor
@@ -18,7 +18,7 @@
 -- ref.actor ↔ gnub:Actor (participantes proceso DIPIR)
 -- scheme='mcd_phase' ↔ gnub:IPRPhase (6 fases F0-F5)
 -- scheme='ipr_state' ↔ gnub:IPRState (28 estados operativos)
--- scheme='mechanism_type' ↔ gnub:FinancingMechanism (7 tracks)
+-- scheme='mechanism' ↔ gnub:FinancingMechanism (7 tracks)
 -- scheme='aspect' ↔ gist:Aspect (7 aspects presupuestarios)
 -- scheme='event_type' ↔ gnub:BudgetaryTransaction subclases
 -- ============================================================================
@@ -132,7 +132,13 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('funding_source', 'PROPIOS', 'Propios', 'Recursos propios del GORE', 3),
 ('funding_source', 'ROYALTY', 'Royalty', 'Royalty Minero / FRPD', 4),
 ('funding_source', 'CREDITO', 'Crédito', 'Crédito o endeudamiento', 5),
-('funding_source', 'DONACION', 'Donación', 'Donaciones y aportes externos', 6)
+('funding_source', 'DONACION', 'Donación', 'Donaciones y aportes externos', 6),
+-- ONTO-001 FIX (Auditoría v5): Fondos faltantes vs onto_gorenuble
+('funding_source', 'FIC', 'FIC', 'gnubd:_Fund_FIC - Fondo de Innovación y Competitividad', 7),
+('funding_source', 'FATC', 'FATC', 'gnubd:_Fund_FATC - Fondo de Apoyo al Transporte y Conectividad', 8),
+('funding_source', 'FEI', 'FEI', 'gnubd:_Fund_FEI - Fondo de Equidad Interregional', 9),
+('funding_source', 'FEIRR', 'FEIRR', 'gnubd:_Fund_FEIRR - Fondo de Inversión y Reconversión Regional', 10),
+('funding_source', 'ISAR', 'ISAR', 'gnubd:_Fund_ISAR - Inversiones Sectoriales de Asignación Regional', 11)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -206,7 +212,12 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('event_type', 'ASIGNACION', 'Asignación', 'Asignación de responsable', 9),
 ('event_type', 'APROBACION', 'Aprobación', 'Evento de aprobación', 10),
 ('event_type', 'RECHAZO', 'Rechazo', 'Evento de rechazo', 11),
-('event_type', 'CIERRE', 'Cierre', 'Evento de cierre', 12)
+('event_type', 'CIERRE', 'Cierre', 'Evento de cierre', 12),
+-- TDE-002 FIX (Auditoría v5): Acciones de trazabilidad TDE (Art. 11 DS N°10)
+('event_type', 'ACCESO', 'Acceso', 'tde:TipoAccionTrazabilidad - Acceso a documento/expediente', 13),
+('event_type', 'ELIMINACION', 'Eliminación', 'tde:TipoAccionTrazabilidad - Eliminación lógica de documento', 14),
+('event_type', 'INCORPORACION', 'Incorporación', 'tde:TipoAccionTrazabilidad - Incorporación de documento a expediente', 15),
+('event_type', 'TRANSFERENCIA', 'Transferencia', 'tde:TipoAccionTrazabilidad - Transferencia de expediente entre OAE', 16)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -378,6 +389,42 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('committee_type', 'COMISION', 'Comisión', 'Comisión permanente o ad-hoc', 2),
 ('committee_type', 'COMITE_TECNICO', 'Comité Técnico', 'Comité técnico de evaluación', 3),
 ('committee_type', 'MESA_TRABAJO', 'Mesa de Trabajo', 'Mesa de trabajo intersectorial', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
+--    SCHEMA: ref.category - SCHEMES RENDICIÓN (ONTO-003 FIX Auditoría v5)
+-- ============================================================================
+-- Fuente: goreNubleReferenceData.ttl - gnub:RenditionState (5 instancias)
+
+-- ESTADOS DE RENDICIÓN (gnub:AccountabilityState)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('rendition_state', 'PENDIENTE', 'Pendiente', 'gnubd:_AccountabilityState_Pending - Rendición pendiente de inicio', 1),
+('rendition_state', 'EN_REVISION', 'En Revisión', 'gnubd:_AccountabilityState_InReview - En proceso de revisión técnica', 2),
+('rendition_state', 'OBSERVADA', 'Observada', 'gnubd:_AccountabilityState_Observed - Con observaciones a subsanar', 3),
+('rendition_state', 'APROBADA', 'Aprobada', 'gnubd:_AccountabilityState_Approved - Rendición aprobada', 4),
+('rendition_state', 'RECHAZADA', 'Rechazada', 'gnubd:_AccountabilityState_Rejected - Rendición rechazada', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
+--    SCHEMA: ref.category - SCHEMES EVALUACIÓN (ONTO-004 FIX Auditoría v5)
+-- ============================================================================
+-- Fuente: goreNubleReferenceData.ttl - gnub:EvaluationResult (6 instancias)
+-- Nota: Estos son RESULTADOS de evaluación, distintos de ESTADOS de IPR
+
+-- RESULTADOS DE EVALUACIÓN (gnub:EvaluationResult)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('evaluation_result', 'RS', 'Rentabilidad Social', 'gnubd:_EvalResult_RS - Tasa de retorno social calculada (MDSF)', 1),
+('evaluation_result', 'FI', 'Falta Información', 'gnubd:_EvalResult_FI - Subsanar documentación o antecedentes', 2),
+('evaluation_result', 'OT', 'Observaciones Técnicas', 'gnubd:_EvalResult_OT - Subsanar aspectos técnicos del proyecto', 3),
+('evaluation_result', 'RF', 'Recomendado Favorable', 'gnubd:_EvalResult_RF - DIPRES recomienda favorablemente (Glosa06)', 4),
+('evaluation_result', 'ITF', 'Informe Técnico Favorable', 'gnubd:_EvalResult_ITF - GORE emite ITF (programas)', 5),
+('evaluation_result', 'AD', 'Admisible', 'gnubd:_EvalResult_AD - Elegible para FRIL (<5k UTM)', 6)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -909,6 +956,61 @@ WHERE scheme = 'act_state' AND code = 'TRAMITADO';
 
 UPDATE ref.category SET valid_transitions = '[]'::jsonb
 WHERE scheme = 'act_state' AND code IN ('TOMADO_RAZON', 'RECHAZADO_CGR', 'ANULADO');
+
+-- Transiciones de payment_status (CAT-005 FIX)
+UPDATE ref.category SET valid_transitions = '["EN_PROCESO", "DIFERIDO"]'::jsonb
+WHERE scheme = 'payment_status' AND code = 'PENDIENTE';
+
+UPDATE ref.category SET valid_transitions = '["PAGADO", "RECHAZADO"]'::jsonb
+WHERE scheme = 'payment_status' AND code = 'EN_PROCESO';
+
+UPDATE ref.category SET valid_transitions = '["EN_PROCESO"]'::jsonb
+WHERE scheme = 'payment_status' AND code = 'DIFERIDO';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'payment_status' AND code IN ('PAGADO', 'RECHAZADO');
+
+-- Transiciones de file_status (CAT-005 FIX)
+UPDATE ref.category SET valid_transitions = '["EN_TRAMITE"]'::jsonb
+WHERE scheme = 'file_status' AND code = 'INICIADO';
+
+UPDATE ref.category SET valid_transitions = '["PENDIENTE_INFO", "EN_FIRMA", "ARCHIVADO"]'::jsonb
+WHERE scheme = 'file_status' AND code = 'EN_TRAMITE';
+
+UPDATE ref.category SET valid_transitions = '["EN_TRAMITE"]'::jsonb
+WHERE scheme = 'file_status' AND code = 'PENDIENTE_INFO';
+
+UPDATE ref.category SET valid_transitions = '["RESUELTO"]'::jsonb
+WHERE scheme = 'file_status' AND code = 'EN_FIRMA';
+
+UPDATE ref.category SET valid_transitions = '[]'::jsonb
+WHERE scheme = 'file_status' AND code IN ('RESUELTO', 'ARCHIVADO');
+
+-- ============================================================================
+--    RESOLUCIÓN DE JERARQUÍAS (parent_code -> parent_id)
+-- ============================================================================
+-- ref.category soporta jerarquía por FK (parent_id). El seed usa parent_code
+-- por legibilidad; este paso materializa la relación referencial.
+UPDATE ref.category AS child
+SET parent_id = parent.id
+FROM ref.category AS parent
+WHERE child.parent_code IS NOT NULL
+  AND parent.scheme = child.scheme
+  AND parent.code = child.parent_code;
+
+DO $$
+DECLARE
+    v_unresolved INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO v_unresolved
+    FROM ref.category
+    WHERE parent_code IS NOT NULL
+      AND parent_id IS NULL;
+
+    IF v_unresolved > 0 THEN
+        RAISE NOTICE 'WARN: % categorías con parent_code sin parent_id (revisar seed)', v_unresolved;
+    END IF;
+END $$;
 
 -- ============================================================================
 --    FIN SEED DATA

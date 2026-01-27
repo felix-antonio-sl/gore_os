@@ -4,7 +4,7 @@
 -- Archivo: goreos_seed_agents.sql
 -- Descripción: Datos iniciales para agentes algorítmicos en ref.actor
 -- Generado: 2026-01-26
--- Dependencias: goreos_ddl_v3.sql, goreos_seed.sql (debe ejecutarse después)
+-- Dependencias: goreos_ddl.sql, goreos_seed.sql (debe ejecutarse después)
 -- =============================================================================
 
 -- =============================================================================

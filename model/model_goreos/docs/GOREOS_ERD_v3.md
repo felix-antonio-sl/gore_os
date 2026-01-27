@@ -507,7 +507,9 @@ erDiagram
         uuid actor_id FK
         uuid actor_ref_id FK
         timestamptz occurred_at
+        timestamptz recorded_at
         jsonb data
+        uuid created_by_id FK
     }
 
     txn_magnitude {
@@ -517,7 +519,9 @@ erDiagram
         uuid aspect_id FK
         uuid unit_id FK
         numeric numeric_value
-        date effective_date
+        date as_of_date
+        timestamptz created_at
+        uuid created_by_id FK
     }
 
     ref_category ||--o{ txn_event : "event_type"
@@ -946,7 +950,8 @@ erDiagram
         uuid subject_id "Polymorphic FK"
         uuid actor_id FK "core.user"
         uuid actor_ref_id FK "ref.actor (optional)"
-        timestamptz occurred_at "Partition key"
+        timestamptz occurred_at "Partition key (PK compuesto)"
+        timestamptz recorded_at
         jsonb data "Event payload"
         uuid created_by_id FK
     }
@@ -958,8 +963,9 @@ erDiagram
         uuid aspect_id FK "BUDGETED|CURRENT|COMMITTED|..."
         uuid unit_id FK "CLP|UTM|UF|PERCENT"
         numeric numeric_value "(18,2)"
-        date effective_date "Partition key"
-        text source
+        date as_of_date "Partition key (PK compuesto)"
+        timestamptz created_at
+        uuid created_by_id FK
     }
 
     CATEGORY {
@@ -1153,7 +1159,7 @@ CANCELADO → [] (terminal)
 | Tabla | Estrategia | Columna | Particiones |
 |-------|------------|---------|-------------|
 | txn.event | RANGE | occurred_at | 12 mensuales + default |
-| txn.magnitude | RANGE | effective_date | 4 trimestrales + default |
+| txn.magnitude | RANGE | as_of_date | 4 trimestrales + default |
 
 ### 6.2 Índices Especiales
 

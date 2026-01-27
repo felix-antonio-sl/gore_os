@@ -1,10 +1,10 @@
 -- =============================================================================
 -- GORE_OS v3.0 - INDEXES
 -- =============================================================================
--- Archivo: goreos_indexes_v3.sql
+-- Archivo: goreos_indexes.sql
 -- Descripción: Índices optimizados para el modelo v3 con UUID y particionamiento
 -- Generado: 2026-01-26
--- Dependencias: goreos_ddl_v3.sql
+-- Dependencias: goreos_ddl.sql
 -- =============================================================================
 -- Principios de Indexación:
 -- 1. Índices compuestos para queries frecuentes (CQs del dominio)
@@ -60,7 +60,8 @@ CREATE INDEX IF NOT EXISTS idx_ipr_phase_mechanism ON core.ipr(mcd_phase_id, mec
 -- Ya existe idx_ipr_status en DDL
 
 -- CQ: "¿Cuál es el avance financiero de IPRs por año?"
-CREATE INDEX IF NOT EXISTS idx_ipr_year ON core.ipr(EXTRACT(YEAR FROM created_at));
+-- QLT-001 FIX: EXTRACT sobre timestamptz no es IMMUTABLE sin timezone explícito
+CREATE INDEX IF NOT EXISTS idx_ipr_year ON core.ipr(EXTRACT(YEAR FROM created_at AT TIME ZONE 'UTC'));
 
 -- CQ: "¿Qué IPR están asignadas al usuario X?"
 CREATE INDEX IF NOT EXISTS idx_ipr_assignee ON core.ipr(assignee_id) WHERE assignee_id IS NOT NULL;
