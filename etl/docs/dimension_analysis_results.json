@@ -1,0 +1,1161 @@
+[
+  {
+    "file": "dim_clasificador_presup.csv",
+    "rows": 76,
+    "columns": [
+      "id",
+      "subtitulo",
+      "item",
+      "asignacion"
+    ],
+    "column_count": 4,
+    "dtypes": {
+      "id": "object",
+      "subtitulo": "int64",
+      "item": "object",
+      "asignacion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "subtitulo": 0,
+      "item": 2,
+      "asignacion": 17
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "subtitulo": 0.0,
+      "item": 2.631578947368421,
+      "asignacion": 22.36842105263158
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 76,
+      "subtitulo": 4,
+      "item": 13,
+      "asignacion": 52
+    },
+    "sample": [
+      {
+        "id": "5ea6f33f-4d89-48b3-bd6c-e4c9228a0077",
+        "subtitulo": 33,
+        "item": "03",
+        "asignacion": "125"
+      },
+      {
+        "id": "82f10c25-743f-41db-9c1d-e3ce40919d1c",
+        "subtitulo": 31,
+        "item": "02",
+        "asignacion": NaN
+      },
+      {
+        "id": "c5613bb2-9273-4700-98bb-023fdda4c650",
+        "subtitulo": 24,
+        "item": "03",
+        "asignacion": NaN
+      }
+    ],
+    "memory_usage_mb": 0.014010429382324219
+  },
+  {
+    "file": "dim_division.csv",
+    "rows": 6,
+    "columns": [
+      "id",
+      "codigo",
+      "nombre",
+      "jefatura",
+      "departamentos",
+      "descripcion"
+    ],
+    "column_count": 6,
+    "dtypes": {
+      "id": "object",
+      "codigo": "object",
+      "nombre": "object",
+      "jefatura": "object",
+      "departamentos": "object",
+      "descripcion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "codigo": 0,
+      "nombre": 0,
+      "jefatura": 0,
+      "departamentos": 0,
+      "descripcion": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "codigo": 0.0,
+      "nombre": 0.0,
+      "jefatura": 0.0,
+      "departamentos": 0.0,
+      "descripcion": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 6,
+      "codigo": 6,
+      "nombre": 6,
+      "jefatura": 6,
+      "departamentos": 6,
+      "descripcion": 6
+    },
+    "sample": [
+      {
+        "id": "DIV-001",
+        "codigo": "DIPLADE",
+        "nombre": "División Planificación y Desarrollo",
+        "jefatura": "Erick Solo de Zaldivar",
+        "departamentos": "Comité Pertenencia + Depto Planificación Estratégica + Depto Desarrollo Proyectos + Depto Desarrollo Urbano",
+        "descripcion": "Planificación regional estratégica y ordenamiento territorial"
+      },
+      {
+        "id": "DIV-002",
+        "codigo": "DIPIR",
+        "nombre": "División Presupuesto e Inversión Regional",
+        "jefatura": "Juan Parada González",
+        "departamentos": "Depto Análisis y Evaluación + Depto Presupuesto + Depto Inversión",
+        "descripcion": "Gestión presupuestaria y evaluación de inversión regional"
+      },
+      {
+        "id": "DIV-003",
+        "codigo": "DIDESO",
+        "nombre": "División Desarrollo Social y Humano",
+        "jefatura": "Tamara Valenzuela F.",
+        "departamentos": "Depto Fondos Concursables + Depto Análisis y Gestión Territorial",
+        "descripcion": "Programas sociales y participación ciudadana"
+      }
+    ],
+    "memory_usage_mb": 0.0041141510009765625
+  },
+  {
+    "file": "dim_estado_ipr.csv",
+    "rows": 28,
+    "columns": [
+      "id",
+      "codigo",
+      "nombre",
+      "fase",
+      "orden",
+      "aplica_a",
+      "descripcion"
+    ],
+    "column_count": 7,
+    "dtypes": {
+      "id": "object",
+      "codigo": "object",
+      "nombre": "object",
+      "fase": "object",
+      "orden": "int64",
+      "aplica_a": "object",
+      "descripcion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "codigo": 0,
+      "nombre": 0,
+      "fase": 0,
+      "orden": 0,
+      "aplica_a": 0,
+      "descripcion": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "codigo": 0.0,
+      "nombre": 0.0,
+      "fase": 0.0,
+      "orden": 0.0,
+      "aplica_a": 0.0,
+      "descripcion": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 28,
+      "codigo": 28,
+      "nombre": 28,
+      "fase": 6,
+      "orden": 28,
+      "aplica_a": 3,
+      "descripcion": 28
+    },
+    "sample": [
+      {
+        "id": "EST-001",
+        "codigo": "PRE_ADMISIBLE",
+        "nombre": "Pre-Admisible CDR",
+        "fase": "ADMISIBILIDAD",
+        "orden": 1,
+        "aplica_a": "TODOS",
+        "descripcion": "Ingreso inicial a Cartera de Revisión"
+      },
+      {
+        "id": "EST-002",
+        "codigo": "PARA_REVISION",
+        "nombre": "Para Revisión Técnica",
+        "fase": "ADMISIBILIDAD",
+        "orden": 2,
+        "aplica_a": "TODOS",
+        "descripcion": "En cola de revisión técnica DIPIR"
+      },
+      {
+        "id": "EST-003",
+        "codigo": "ADMISIBLE",
+        "nombre": "Admisible",
+        "fase": "ADMISIBILIDAD",
+        "orden": 3,
+        "aplica_a": "TODOS",
+        "descripcion": "Cumple requisitos formales"
+      }
+    ],
+    "memory_usage_mb": 0.011865615844726562
+  },
+  {
+    "file": "dim_funcionario.csv",
+    "rows": 110,
+    "columns": [
+      "id",
+      "nombre_completo",
+      "cargo_ultimo",
+      "estamento",
+      "calificacion"
+    ],
+    "column_count": 5,
+    "dtypes": {
+      "id": "object",
+      "nombre_completo": "object",
+      "cargo_ultimo": "object",
+      "estamento": "object",
+      "calificacion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "nombre_completo": 0,
+      "cargo_ultimo": 0,
+      "estamento": 0,
+      "calificacion": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "nombre_completo": 0.0,
+      "cargo_ultimo": 0.0,
+      "estamento": 0.0,
+      "calificacion": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 110,
+      "nombre_completo": 110,
+      "cargo_ultimo": 87,
+      "estamento": 7,
+      "calificacion": 57
+    },
+    "sample": [
+      {
+        "id": "cbdce9c8-71c9-4aed-b6ba-61d883f7390b",
+        "nombre_completo": "Aburto Contreras, Abraham Aníbal",
+        "cargo_ultimo": "Profesional DIFOI",
+        "estamento": "Profesional",
+        "calificacion": "Ingeniero en Alimentos"
+      },
+      {
+        "id": "8da4ade3-43e7-4077-bb0d-ded73c08fe53",
+        "nombre_completo": "Aguilera Romero, Samuel",
+        "cargo_ultimo": "Profesional Oficina de Partes",
+        "estamento": "Profesional",
+        "calificacion": "Ingeniero en Administración"
+      },
+      {
+        "id": "8eecd3fc-8a12-467d-a571-d6f4d68d4072",
+        "nombre_completo": "Aguilera Zambrano, Alejandro Eugenio",
+        "cargo_ultimo": "Profesional Encargado de Comunicaciones",
+        "estamento": "Profesional",
+        "calificacion": "Periodista"
+      }
+    ],
+    "memory_usage_mb": 0.05991649627685547
+  },
+  {
+    "file": "dim_iniciativa.csv",
+    "rows": 510,
+    "columns": [
+      "id",
+      "codigo",
+      "nombre_raw",
+      "nombre_norm"
+    ],
+    "column_count": 4,
+    "dtypes": {
+      "id": "object",
+      "codigo": "object",
+      "nombre_raw": "object",
+      "nombre_norm": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "codigo": 0,
+      "nombre_raw": 0,
+      "nombre_norm": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "codigo": 0.0,
+      "nombre_raw": 0.0,
+      "nombre_norm": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 510,
+      "codigo": 510,
+      "nombre_raw": 509,
+      "nombre_norm": 509
+    },
+    "sample": [
+      {
+        "id": "4f226477-4a6f-4b7f-9f79-ba065e2d49b3",
+        "codigo": "40060888",
+        "nombre_raw": "MEJORAMIENTO EDIFICIO CONSISTORIAL, COMUNA DE COELEMU",
+        "nombre_norm": "MEJORAMIENTO EDIFICIO CONSISTORIAL, COMUNA DE COELEMU"
+      },
+      {
+        "id": "0e646a7e-9cd5-4181-bb76-effe706ce644",
+        "codigo": "40044053",
+        "nombre_raw": "CONSTRUCCIÓN DE CAMARINES Y SS.HH. SECTOR MAGDALENA, COMUNA DE COELEMU",
+        "nombre_norm": "CONSTRUCCIÓN DE CAMARINES Y SS.HH. SECTOR MAGDALENA, COMUNA DE COELEMU"
+      },
+      {
+        "id": "2d58d500-c17a-4bc6-b102-d3055a1b7e6d",
+        "codigo": "40052561",
+        "nombre_raw": "CONSERVACION ESCUELA VILLA JESUS DE COELEMU, COMUNA DE COELEMU",
+        "nombre_norm": "CONSERVACION ESCUELA VILLA JESUS DE COELEMU, COMUNA DE COELEMU"
+      }
+    ],
+    "memory_usage_mb": 0.2292165756225586
+  },
+  {
+    "file": "dim_iniciativa_idis.csv",
+    "rows": 2861,
+    "columns": [
+      "id",
+      "cod_unico",
+      "bip",
+      "dv",
+      "nombre_iniciativa",
+      "vigencia",
+      "etapa",
+      "tipologia",
+      "origen",
+      "unidad_tecnica",
+      "provincia",
+      "comuna",
+      "estado_actual",
+      "rate_actual",
+      "anio",
+      "anio_presupuestario"
+    ],
+    "column_count": 16,
+    "dtypes": {
+      "id": "object",
+      "cod_unico": "object",
+      "bip": "object",
+      "dv": "float64",
+      "nombre_iniciativa": "object",
+      "vigencia": "object",
+      "etapa": "object",
+      "tipologia": "object",
+      "origen": "object",
+      "unidad_tecnica": "object",
+      "provincia": "object",
+      "comuna": "object",
+      "estado_actual": "object",
+      "rate_actual": "object",
+      "anio": "float64",
+      "anio_presupuestario": "float64"
+    },
+    "nulls": {
+      "id": 0,
+      "cod_unico": 0,
+      "bip": 0,
+      "dv": 447,
+      "nombre_iniciativa": 80,
+      "vigencia": 444,
+      "etapa": 444,
+      "tipologia": 65,
+      "origen": 86,
+      "unidad_tecnica": 1835,
+      "provincia": 12,
+      "comuna": 83,
+      "estado_actual": 835,
+      "rate_actual": 684,
+      "anio": 7,
+      "anio_presupuestario": 86
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "cod_unico": 0.0,
+      "bip": 0.0,
+      "dv": 15.62390772457183,
+      "nombre_iniciativa": 2.7962250961202377,
+      "vigencia": 15.51904928346732,
+      "etapa": 15.51904928346732,
+      "tipologia": 2.2719328905976934,
+      "origen": 3.005941978329256,
+      "unidad_tecnica": 64.13841314225796,
+      "provincia": 0.4194337644180357,
+      "comuna": 2.9010835372247463,
+      "estado_actual": 29.185599440754984,
+      "rate_actual": 23.90772457182803,
+      "anio": 0.2446696959105208,
+      "anio_presupuestario": 3.005941978329256
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 2861,
+      "cod_unico": 2861,
+      "bip": 1934,
+      "dv": 5,
+      "nombre_iniciativa": 2414,
+      "vigencia": 3,
+      "etapa": 3,
+      "tipologia": 37,
+      "origen": 2,
+      "unidad_tecnica": 67,
+      "provincia": 5,
+      "comuna": 27,
+      "estado_actual": 33,
+      "rate_actual": 13,
+      "anio": 7,
+      "anio_presupuestario": 7
+    },
+    "sample": [
+      {
+        "id": "c9baac18-ce0f-4d1b-81c7-67d1ea3ea593",
+        "cod_unico": "1-2019",
+        "bip": "1",
+        "dv": 0.0,
+        "nombre_iniciativa": "PROGRAMA DE EMPLEO INVERSIÓN EN LA COMUNIDAD PARA EL AÑO 2019",
+        "vigencia": "NO VIGENTE",
+        "etapa": "EJECUCIÓN",
+        "tipologia": "PROGRAMA",
+        "origen": "SECTORIAL / OTRO",
+        "unidad_tecnica": NaN,
+        "provincia": "REGIONAL",
+        "comuna": "REGIONAL",
+        "estado_actual": "APRO CORE",
+        "rate_actual": "RS",
+        "anio": 2019.0,
+        "anio_presupuestario": 2019.0
+      },
+      {
+        "id": "456d9838-3528-46ca-b0d0-c82449bc1aef",
+        "cod_unico": "1-2020",
+        "bip": "1",
+        "dv": 0.0,
+        "nombre_iniciativa": "PROGRAMA DE INVERSIÓN EN LA COMUNIDAD 2020",
+        "vigencia": "VIGENTE",
+        "etapa": "EJECUCIÓN",
+        "tipologia": "PROGRAMA",
+        "origen": "SECTORIAL / OTRO",
+        "unidad_tecnica": NaN,
+        "provincia": "REGIONAL",
+        "comuna": "REGIONAL",
+        "estado_actual": "APRO CORE",
+        "rate_actual": "RS",
+        "anio": 2020.0,
+        "anio_presupuestario": 2020.0
+      },
+      {
+        "id": "4cef4eb4-c7b6-4f44-963b-51b46c419ad0",
+        "cod_unico": "2-2020",
+        "bip": "2",
+        "dv": 0.0,
+        "nombre_iniciativa": "PROGRAMA EMPLEO SEGUNDO SEMESTRE 2020",
+        "vigencia": "VIGENTE",
+        "etapa": "EJECUCIÓN",
+        "tipologia": "PROGRAMA",
+        "origen": "SECTORIAL / OTRO",
+        "unidad_tecnica": NaN,
+        "provincia": "REGIONAL",
+        "comuna": "REGIONAL",
+        "estado_actual": "APRO CORE",
+        "rate_actual": "RS",
+        "anio": 2020.0,
+        "anio_presupuestario": 2020.0
+      }
+    ],
+    "memory_usage_mb": 2.347900390625
+  },
+  {
+    "file": "dim_iniciativa_unificada.csv",
+    "rows": 2010,
+    "columns": [
+      "id",
+      "codigo_normalizado",
+      "cod_unico_idis",
+      "codigo_convenios",
+      "codigo_fril",
+      "codigo_progs",
+      "nombre_iniciativa",
+      "bip",
+      "tipologia",
+      "etapa",
+      "origen",
+      "unidad_tecnica",
+      "provincia",
+      "comuna",
+      "fuente_principal",
+      "tipo_ipr",
+      "mecanismo_id"
+    ],
+    "column_count": 17,
+    "dtypes": {
+      "id": "object",
+      "codigo_normalizado": "object",
+      "cod_unico_idis": "object",
+      "codigo_convenios": "object",
+      "codigo_fril": "float64",
+      "codigo_progs": "float64",
+      "nombre_iniciativa": "object",
+      "bip": "object",
+      "tipologia": "object",
+      "etapa": "object",
+      "origen": "object",
+      "unidad_tecnica": "object",
+      "provincia": "object",
+      "comuna": "object",
+      "fuente_principal": "object",
+      "tipo_ipr": "object",
+      "mecanismo_id": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "codigo_normalizado": 0,
+      "cod_unico_idis": 73,
+      "codigo_convenios": 1500,
+      "codigo_fril": 2010,
+      "codigo_progs": 2010,
+      "nombre_iniciativa": 5,
+      "bip": 73,
+      "tipologia": 122,
+      "etapa": 289,
+      "origen": 80,
+      "unidad_tecnica": 1340,
+      "provincia": 81,
+      "comuna": 81,
+      "fuente_principal": 0,
+      "tipo_ipr": 0,
+      "mecanismo_id": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "codigo_normalizado": 0.0,
+      "cod_unico_idis": 3.6318407960199006,
+      "codigo_convenios": 74.6268656716418,
+      "codigo_fril": 100.0,
+      "codigo_progs": 100.0,
+      "nombre_iniciativa": 0.24875621890547264,
+      "bip": 3.6318407960199006,
+      "tipologia": 6.069651741293533,
+      "etapa": 14.378109452736318,
+      "origen": 3.9800995024875623,
+      "unidad_tecnica": 66.66666666666666,
+      "provincia": 4.029850746268656,
+      "comuna": 4.029850746268656,
+      "fuente_principal": 0.0,
+      "tipo_ipr": 0.0,
+      "mecanismo_id": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 2010,
+      "codigo_normalizado": 2010,
+      "cod_unico_idis": 1937,
+      "codigo_convenios": 510,
+      "codigo_fril": 0,
+      "codigo_progs": 0,
+      "nombre_iniciativa": 1991,
+      "bip": 1934,
+      "tipologia": 30,
+      "etapa": 3,
+      "origen": 2,
+      "unidad_tecnica": 61,
+      "provincia": 5,
+      "comuna": 27,
+      "fuente_principal": 2,
+      "tipo_ipr": 2,
+      "mecanismo_id": 3
+    },
+    "sample": [
+      {
+        "id": "687327b7-bfc6-4f36-bc17-c5c7c8e92090",
+        "codigo_normalizado": "1",
+        "cod_unico_idis": "1-2019",
+        "codigo_convenios": NaN,
+        "codigo_fril": NaN,
+        "codigo_progs": NaN,
+        "nombre_iniciativa": "PROGRAMA DE EMPLEO INVERSIÓN EN LA COMUNIDAD PARA EL AÑO 2019",
+        "bip": "1",
+        "tipologia": "PROGRAMA",
+        "etapa": "EJECUCIÓN",
+        "origen": "SECTORIAL / OTRO",
+        "unidad_tecnica": NaN,
+        "provincia": "REGIONAL",
+        "comuna": "REGIONAL",
+        "fuente_principal": "IDIS",
+        "tipo_ipr": "PROGRAMA",
+        "mecanismo_id": "MEC-005"
+      },
+      {
+        "id": "11f82dbd-dd63-4ad7-bdf9-f0b8ab807fbf",
+        "codigo_normalizado": "2",
+        "cod_unico_idis": "2-2020",
+        "codigo_convenios": NaN,
+        "codigo_fril": NaN,
+        "codigo_progs": NaN,
+        "nombre_iniciativa": "PROGRAMA EMPLEO SEGUNDO SEMESTRE 2020",
+        "bip": "2",
+        "tipologia": "PROGRAMA",
+        "etapa": "EJECUCIÓN",
+        "origen": "SECTORIAL / OTRO",
+        "unidad_tecnica": NaN,
+        "provincia": "REGIONAL",
+        "comuna": "REGIONAL",
+        "fuente_principal": "IDIS",
+        "tipo_ipr": "PROGRAMA",
+        "mecanismo_id": "MEC-005"
+      },
+      {
+        "id": "2ea96553-837c-413f-8440-e7226bd7b5aa",
+        "codigo_normalizado": "20119065",
+        "cod_unico_idis": "20119065-2020",
+        "codigo_convenios": "20119065",
+        "codigo_fril": NaN,
+        "codigo_progs": NaN,
+        "nombre_iniciativa": "CONSTRUCCION HOGAR DE ANCIANOS COMUNA DE SAN IGNACIO",
+        "bip": "20119065",
+        "tipologia": "MIDESO",
+        "etapa": "DISEÑO",
+        "origen": "MUNICIPIO",
+        "unidad_tecnica": NaN,
+        "provincia": "DIGUILLÍN",
+        "comuna": "SAN IGNACIO",
+        "fuente_principal": "IDIS",
+        "tipo_ipr": "PROYECTO",
+        "mecanismo_id": "MEC-001"
+      }
+    ],
+    "memory_usage_mb": 1.8203954696655273
+  },
+  {
+    "file": "dim_institucion.csv",
+    "rows": 150,
+    "columns": [
+      "id",
+      "rut",
+      "unidad_tecnica_raw",
+      "unidad_tecnica_norm"
+    ],
+    "column_count": 4,
+    "dtypes": {
+      "id": "object",
+      "rut": "object",
+      "unidad_tecnica_raw": "object",
+      "unidad_tecnica_norm": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "rut": 135,
+      "unidad_tecnica_raw": 0,
+      "unidad_tecnica_norm": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "rut": 90.0,
+      "unidad_tecnica_raw": 0.0,
+      "unidad_tecnica_norm": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 150,
+      "rut": 15,
+      "unidad_tecnica_raw": 139,
+      "unidad_tecnica_norm": 139
+    },
+    "sample": [
+      {
+        "id": "c322c02e-edb8-472a-8e5e-84adea2d1812",
+        "rut": NaN,
+        "unidad_tecnica_raw": "MUNICIPALIDAD DE COELEMU",
+        "unidad_tecnica_norm": "MUNICIPALIDAD DE COELEMU"
+      },
+      {
+        "id": "3a09900f-f9a4-4f90-96f8-54b27738d6ed",
+        "rut": NaN,
+        "unidad_tecnica_raw": "MUNICIPALIDAD DE RANQUIL",
+        "unidad_tecnica_norm": "MUNICIPALIDAD DE RANQUIL"
+      },
+      {
+        "id": "8a0a5eef-87f2-4db7-93f1-94c456ee59ea",
+        "rut": NaN,
+        "unidad_tecnica_raw": "MUNICIPALIDAD DE ÑIQUEN",
+        "unidad_tecnica_norm": "MUNICIPALIDAD DE ÑIQUEN"
+      }
+    ],
+    "memory_usage_mb": 0.03956127166748047
+  },
+  {
+    "file": "dim_institucion_unificada.csv",
+    "rows": 1613,
+    "columns": [
+      "id",
+      "nombre_original",
+      "nombre_normalizado",
+      "nombre_nlp",
+      "rut",
+      "fuente_original",
+      "tipo_institucion"
+    ],
+    "column_count": 7,
+    "dtypes": {
+      "id": "object",
+      "nombre_original": "object",
+      "nombre_normalizado": "object",
+      "nombre_nlp": "object",
+      "rut": "object",
+      "fuente_original": "object",
+      "tipo_institucion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "nombre_original": 0,
+      "nombre_normalizado": 0,
+      "nombre_nlp": 0,
+      "rut": 88,
+      "fuente_original": 0,
+      "tipo_institucion": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "nombre_original": 0.0,
+      "nombre_normalizado": 0.0,
+      "nombre_nlp": 0.0,
+      "rut": 5.455672659640422,
+      "fuente_original": 0.0,
+      "tipo_institucion": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 1613,
+      "nombre_original": 1613,
+      "nombre_normalizado": 1613,
+      "nombre_nlp": 1611,
+      "rut": 1525,
+      "fuente_original": 2,
+      "tipo_institucion": 7
+    },
+    "sample": [
+      {
+        "id": "d4d758d6-b3ca-443e-8f9f-9c6791908175",
+        "nombre_original": "ONG, SOMOS TODOS CHILLÁN VIEJO, ASOCIACIÓN, AGRUPACIÓN SOCIA, EMPRENDIMIENTO, CULTURAL, DEPORTIVO, ADULTO MAYOR, ECOLÓGICO E INCLUSIVO SIN FINES DE LUCRO.",
+        "nombre_normalizado": "ONG, SOMOS TODOS CHILLÁN VIEJO, ASOCIACIÓN, AGRUPACIÓN SOCIA, EMPRENDIMIENTO, CULTURAL, DEPORTIVO, ADULTO MAYOR, ECOLÓGICO E INCLUSIVO SIN FINES DE LUCRO.",
+        "nombre_nlp": "ONG SOMOS TODOS CHILLÁN VIEJO ASOCIACIÓN AGRUPACIÓN SOCIA EMPRENDIMIENTO ECOLÓGICO E INCLUSIVO",
+        "rut": "65.212.746-0",
+        "fuente_original": "PROGS",
+        "tipo_institucion": "OSC"
+      },
+      {
+        "id": "2cf71357-60f2-4afb-8008-d2d918c7966a",
+        "nombre_original": "ASOCIACIÓN FUNCIONARIOS EDUCACIÓN PARADOCENTES, ADMINISTRATIVOS, AUXILIARES, SERVICIOS MENORES MUNICIPALIDAD DE NINHUE (AFE NINHUE)",
+        "nombre_normalizado": "ASOCIACIÓN FUNCIONARIOS EDUCACIÓN PARADOCENTES, ADMINISTRATIVOS, AUXILIARES, SERVICIOS MENORES MUNICIPALIDAD DE NINHUE (AFE NINHUE)",
+        "nombre_nlp": "ASOCIACIÓN FUNCIONARIOS EDUCACIÓN PARADOCENTES ADMINISTRATIVOS AUXILIARES SERVICIOS MENORES MUNICIPALIDAD NINHUE AFE NINHUE",
+        "rut": "73.672.700-5",
+        "fuente_original": "PROGS",
+        "tipo_institucion": "OSC"
+      },
+      {
+        "id": "20587eaa-630c-45c9-a98a-5ae923f56838",
+        "nombre_original": "ORGANIZACIÓN DE PADRES CON NIÑOS Y NIÑAS EN SITUACIÓN DE DISCAPACIDADES AMOR DE PADRES U O.N.G AMOR DE PADRES",
+        "nombre_normalizado": "ORGANIZACIÓN DE PADRES CON NIÑOS Y NIÑAS EN SITUACIÓN DE DISCAPACIDADES AMOR DE PADRES U O.N.G AMOR DE PADRES",
+        "nombre_nlp": "ORGANIZACIÓN PADRES CON NIÑOS NIÑAS EN SITUACIÓN DISCAPACIDADES AMOR PADRES U O N G AMOR PADRES",
+        "rut": "65.191.341-1",
+        "fuente_original": "PROGS",
+        "tipo_institucion": "OTROS"
+      }
+    ],
+    "memory_usage_mb": 0.8284711837768555
+  },
+  {
+    "file": "dim_mecanismo_financiamiento.csv",
+    "rows": 8,
+    "columns": [
+      "id",
+      "codigo",
+      "nombre",
+      "tipo_ipr",
+      "subtitulo",
+      "ejecutor_tipo",
+      "evaluador",
+      "dictamen",
+      "descripcion"
+    ],
+    "column_count": 9,
+    "dtypes": {
+      "id": "object",
+      "codigo": "object",
+      "nombre": "object",
+      "tipo_ipr": "object",
+      "subtitulo": "object",
+      "ejecutor_tipo": "object",
+      "evaluador": "object",
+      "dictamen": "object",
+      "descripcion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "codigo": 0,
+      "nombre": 0,
+      "tipo_ipr": 0,
+      "subtitulo": 0,
+      "ejecutor_tipo": 0,
+      "evaluador": 0,
+      "dictamen": 0,
+      "descripcion": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "codigo": 0.0,
+      "nombre": 0.0,
+      "tipo_ipr": 0.0,
+      "subtitulo": 0.0,
+      "ejecutor_tipo": 0.0,
+      "evaluador": 0.0,
+      "dictamen": 0.0,
+      "descripcion": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 8,
+      "codigo": 8,
+      "nombre": 8,
+      "tipo_ipr": 3,
+      "subtitulo": 4,
+      "ejecutor_tipo": 6,
+      "evaluador": 7,
+      "dictamen": 8,
+      "descripcion": 8
+    },
+    "sample": [
+      {
+        "id": "MEC-001",
+        "codigo": "SNI",
+        "nombre": "Sistema Nacional de Inversiones",
+        "tipo_ipr": "PROYECTO",
+        "subtitulo": "31/33",
+        "ejecutor_tipo": "GORE/Terceros",
+        "evaluador": "MDSF",
+        "dictamen": "RS",
+        "descripcion": "Evaluación técnico-económica estándar para proyectos >15.000 UTM"
+      },
+      {
+        "id": "MEC-002",
+        "codigo": "FRIL",
+        "nombre": "Fondo Regional de Iniciativa Local",
+        "tipo_ipr": "PROYECTO",
+        "subtitulo": "33",
+        "ejecutor_tipo": "Municipalidad",
+        "evaluador": "GORE (interno)",
+        "dictamen": "Aprobación Técnica",
+        "descripcion": "Proyectos municipales <5.000 UTM exentos de RS"
+      },
+      {
+        "id": "MEC-003",
+        "codigo": "C33",
+        "nombre": "Circular 33",
+        "tipo_ipr": "PROYECTO",
+        "subtitulo": "31/33",
+        "ejecutor_tipo": "GORE/Terceros",
+        "evaluador": "MDSF (simplificado)",
+        "dictamen": "AD",
+        "descripcion": "Conservación/ANF/Estudios Básicos con procedimiento simplificado"
+      }
+    ],
+    "memory_usage_mb": 0.0049762725830078125
+  },
+  {
+    "file": "dim_periodo.csv",
+    "rows": 3,
+    "columns": [
+      "id",
+      "anio",
+      "fuente_hoja"
+    ],
+    "column_count": 3,
+    "dtypes": {
+      "id": "object",
+      "anio": "float64",
+      "fuente_hoja": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "anio": 1,
+      "fuente_hoja": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "anio": 33.33333333333333,
+      "fuente_hoja": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 3,
+      "anio": 2,
+      "fuente_hoja": 3
+    },
+    "sample": [
+      {
+        "id": "3d7f77ff-af02-41ad-99cb-044636663162",
+        "anio": 2025.0,
+        "fuente_hoja": "CONVENIOS_2025"
+      },
+      {
+        "id": "df625fbf-456f-43b0-9a8a-b629f39e91c6",
+        "anio": NaN,
+        "fuente_hoja": "MODIFICACIONES"
+      },
+      {
+        "id": "8c644044-d568-45af-9b22-cde1ad3018a9",
+        "anio": 2024.0,
+        "fuente_hoja": "CONVENIOS_2023_2024"
+      }
+    ],
+    "memory_usage_mb": 0.0005769729614257812
+  },
+  {
+    "file": "dim_territorio.csv",
+    "rows": 44,
+    "columns": [
+      "id",
+      "provincia_raw",
+      "provincia_norm",
+      "comuna_raw",
+      "comuna_norm"
+    ],
+    "column_count": 5,
+    "dtypes": {
+      "id": "object",
+      "provincia_raw": "object",
+      "provincia_norm": "object",
+      "comuna_raw": "object",
+      "comuna_norm": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "provincia_raw": 18,
+      "provincia_norm": 18,
+      "comuna_raw": 0,
+      "comuna_norm": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "provincia_raw": 40.909090909090914,
+      "provincia_norm": 40.909090909090914,
+      "comuna_raw": 0.0,
+      "comuna_norm": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 44,
+      "provincia_raw": 4,
+      "provincia_norm": 4,
+      "comuna_raw": 26,
+      "comuna_norm": 25
+    },
+    "sample": [
+      {
+        "id": "eeb8454c-b62d-4f82-bc04-9a45bd06adf1",
+        "provincia_raw": "ITATA",
+        "provincia_norm": "ITATA",
+        "comuna_raw": "COELEMU",
+        "comuna_norm": "COELEMU"
+      },
+      {
+        "id": "21cd52bb-142e-42c2-b098-e0785d2a56bc",
+        "provincia_raw": "ITATA",
+        "provincia_norm": "ITATA",
+        "comuna_raw": "RANQUIL",
+        "comuna_norm": "RÁNQUIL"
+      },
+      {
+        "id": "f9442eb9-db7b-4f16-ae03-a39401e07d28",
+        "provincia_raw": "PUNILLA",
+        "provincia_norm": "PUNILLA",
+        "comuna_raw": "ÑIQUEN",
+        "comuna_norm": "ÑIQUÉN"
+      }
+    ],
+    "memory_usage_mb": 0.013106346130371094
+  },
+  {
+    "file": "dim_territorio_canonico.csv",
+    "rows": 23,
+    "columns": [
+      "id",
+      "nombre_oficial",
+      "provincia",
+      "region"
+    ],
+    "column_count": 4,
+    "dtypes": {
+      "id": "object",
+      "nombre_oficial": "object",
+      "provincia": "object",
+      "region": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "nombre_oficial": 0,
+      "provincia": 0,
+      "region": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "nombre_oficial": 0.0,
+      "provincia": 0.0,
+      "region": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 23,
+      "nombre_oficial": 23,
+      "provincia": 4,
+      "region": 1
+    },
+    "sample": [
+      {
+        "id": "5a7406d5-ef0c-4376-b359-b9fa3470df0a",
+        "nombre_oficial": "BULNES",
+        "provincia": "DIGUILLÍN",
+        "region": "ÑUBLE"
+      },
+      {
+        "id": "83591078-ebdb-44b3-b2c9-89d46a48232a",
+        "nombre_oficial": "CHILLÁN",
+        "provincia": "DIGUILLÍN",
+        "region": "ÑUBLE"
+      },
+      {
+        "id": "6fbdeeb8-7e03-497a-8170-800151c948ee",
+        "nombre_oficial": "CHILLÁN VIEJO",
+        "provincia": "DIGUILLÍN",
+        "region": "ÑUBLE"
+      }
+    ],
+    "memory_usage_mb": 0.006581306457519531
+  },
+  {
+    "file": "dim_tipo_evento.csv",
+    "rows": 7,
+    "columns": [
+      "id",
+      "familia",
+      "tipo_evento",
+      "descripcion"
+    ],
+    "column_count": 4,
+    "dtypes": {
+      "id": "object",
+      "familia": "object",
+      "tipo_evento": "object",
+      "descripcion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "familia": 0,
+      "tipo_evento": 0,
+      "descripcion": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "familia": 0.0,
+      "tipo_evento": 0.0,
+      "descripcion": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 7,
+      "familia": 3,
+      "tipo_evento": 7,
+      "descripcion": 7
+    },
+    "sample": [
+      {
+        "id": "51a42c4b-ae0c-47cb-9b5b-df04c2f96343",
+        "familia": "RESOLUCION",
+        "tipo_evento": "incorpora_cert_core",
+        "descripcion": "Res. Incorpora / Cert. CORE"
+      },
+      {
+        "id": "4e8a5aca-2be7-4abc-9ec9-4e16d0357942",
+        "familia": "RESOLUCION",
+        "tipo_evento": "crea_asignacion",
+        "descripcion": "Res. Crea Asignación"
+      },
+      {
+        "id": "8d80c2b8-875d-43a9-bb4e-117ed9aab422",
+        "familia": "RESOLUCION",
+        "tipo_evento": "aprueba_convenio",
+        "descripcion": "Res. Aprueba Convenio"
+      }
+    ],
+    "memory_usage_mb": 0.0021829605102539062
+  },
+  {
+    "file": "dim_trazo_250.csv",
+    "rows": 9,
+    "columns": [
+      "id",
+      "trazo",
+      "descripcion"
+    ],
+    "column_count": 3,
+    "dtypes": {
+      "id": "object",
+      "trazo": "object",
+      "descripcion": "object"
+    },
+    "nulls": {
+      "id": 0,
+      "trazo": 0,
+      "descripcion": 0
+    },
+    "null_percentages": {
+      "id": 0.0,
+      "trazo": 0.0,
+      "descripcion": 0.0
+    },
+    "duplicates": "0",
+    "unique_counts": {
+      "id": 9,
+      "trazo": 9,
+      "descripcion": 6
+    },
+    "sample": [
+      {
+        "id": "94c52398-e02a-4c48-b4e8-7fb571aebed1",
+        "trazo": "AMARILLO",
+        "descripcion": "Desarrollo Económico"
+      },
+      {
+        "id": "455abb17-ddd7-4537-b751-0a53b5d67cb2",
+        "trazo": "AZUL",
+        "descripcion": "Infraestructura y Conectividad"
+      },
+      {
+        "id": "75936e01-e889-4d65-ba6b-e6c2bdd72357",
+        "trazo": "BLANCO",
+        "descripcion": "Otro"
+      }
+    ],
+    "memory_usage_mb": 0.0019292831420898438
+  }
+]

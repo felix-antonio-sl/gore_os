@@ -11,6 +11,43 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 - Strictly unidirectional derivation: **Stories → Entities → Artifacts → Modules**
 - No code exists without a corresponding story
 
+**Current Project Status (2026-01-29)**:
+- 🗄️ **Database Model**: v3.1 Complete (63 tables, 4 schemas) - Production Ready
+- 📊 **ETL Pipeline**: Stage 1 Complete (470 scripts, 32K records normalized)
+- 🔄 **Migration**: FASE 1 Complete - 2/6 loaders (PersonLoader ✅, OrganizationLoader ✅)
+- 🚀 **Next**: FASE 2 - IPRLoader (2,010 initiatives to migrate)
+- 💻 **Applications**: Streamlit tooling operational, Flask app pending
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# 1. Start PostgreSQL
+docker-compose up -d postgres
+
+# 2. Verify connection
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT version();"
+
+# 3. Run ETL migration (current phase)
+cd etl/migration
+python loaders/phase1_person_loader.py      # Already complete ✅
+python loaders/phase1_org_loader.py         # Already complete ✅
+python loaders/phase2_ipr_loader.py         # Next: IPR migration
+
+# 4. Verify migration
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT
+    'core.person' as table, COUNT(*) as migrated
+FROM core.person
+WHERE metadata->>'source' = 'dim_funcionario'
+UNION ALL
+SELECT
+    'core.organization', COUNT(*)
+FROM core.organization
+WHERE metadata->>'source' = 'dim_institucion_unificada';"
+```
+
 ---
 
 ## 🏛️ FUNDAMENTO ARQUITECTÓNICO
@@ -77,6 +114,19 @@ apps/flask_app/             # Aplicación productiva (a construir)
 - ERD + Data Dictionary: `/model/model_goreos/docs/GOREOS_ERD_v3.md`
 - Decisiones de diseño: `/model/model_goreos/docs/DESIGN_DECISIONS.md`
 - ADR-003: `/architecture/decisions/ADR-003-modelo-como-base.md`
+
+**Docker Setup (Recommended):**
+
+```bash
+# Start PostgreSQL container
+docker-compose up -d postgres
+
+# Verify container is running
+docker ps | grep goreos_db
+
+# Container exposes port 5433 (not 5432) to host
+# Connection: localhost:5433/goreos_model (user: goreos, password: goreos_2026)
+```
 
 ---
 
@@ -214,6 +264,23 @@ goreos/
 
 ## Working with ETL Scripts
 
+### ETL Pipeline Architecture
+
+The ETL pipeline has **two main stages**:
+
+```
+Source → Normalized (100% COMPLETE)
+  ↓ 470 Python scripts executed
+  ↓ 23 CSV files in /etl/normalized/
+  ↓ ~32,000 records cleaned and validated
+  ↓ Star schema (15 dimensions + 8 facts)
+
+Normalized → PostgreSQL (IN PROGRESS)
+  ↓ Migration framework in /etl/migration/
+  ↓ 6 phases over 8 weeks
+  ↓ Target: core.person, core.ipr, core.agreement, etc.
+```
+
 ### Setup ETL Environment
 
 ```bash
@@ -251,14 +318,317 @@ python scripts/generate_relationship_matrix.py # Visualize entity graph
 python scripts/compatibility_assessment.py     # Assess legacy → v3.0 compatibility
 ```
 
-### ETL Output Structure
+### ETL Output Structure (Kimball Star Schema)
 
 ```
 etl/normalized/
-├── convenios_normalized.csv       # Cleaned convenios
-├── fril_normalized.csv            # Cleaned FRIL
-├── progs_normalized.csv           # Cleaned programs
-└── idis_normalized.csv            # Cleaned IDIs
+├── dimensions/                    # 15 dimension tables
+│   ├── dim_funcionario.csv        # 110 funcionarios (quality: EXCELLENT)
+│   ├── dim_institucion_unificada.csv  # 1,613 orgs (5.4% missing RUT)
+│   ├── dim_iniciativa_unificada.csv   # 2,010 initiatives
+│   └── dim_territorio.csv         # 44 geographic entities
+├── facts/                         # 8 fact tables
+│   ├── fact_linea_presupuestaria.csv  # 25,754 budget lines (core)
+│   ├── fact_convenio.csv          # 533 agreements
+│   ├── fact_evento_documental.csv # 2,373 document events
+│   └── fact_ejecucion_mensual.csv # 3,496 monthly executions
+├── metadata/
+│   ├── institution_id_mapping.csv # 150 canonical institution UUIDs
+│   └── modificaciones_errors.csv  # 23 known errors (#REF!)
+└── relationships/
+    ├── relationship_matrix.csv    # 26,045 pairs with strength scores
+    └── cross_domain_matches.csv   # 6,618 validated matches (confidence ≥0.9)
+```
+
+### ETL Migration to PostgreSQL
+
+The migration framework is in `etl/migration/` and follows a **6-phase LoaderBase pattern**:
+
+```bash
+# Setup migration environment
+cd etl/migration
+pip install -r requirements.txt
+
+# Configure connection
+# Edit /goreos/.env with PostgreSQL credentials:
+# DB_NAME=goreos_model
+# DB_USER=goreos
+# DB_PASSWORD=goreos_2026
+# DB_HOST=localhost
+# DB_PORT=5433
+
+# Test connection
+python utils/db.py
+
+# Analyze normalized data quality
+python analyze_dimensions.py  # Analyze 15 dimension files
+python analyze_facts.py        # Analyze 8 fact files
+
+# Run migration (6 phases)
+# Phase 1: Persons and Organizations
+python -c "from loaders.phase1_person_loader import PersonLoader; PersonLoader().run()"
+python -c "from loaders.phase1_org_loader import OrganizationLoader; OrganizationLoader().run()"
+
+# Phase 2-6: IPR, Agreements, Documents, Budget, Events
+# (See plan at ~/.claude/plans/warm-munching-prism.md)
+```
+
+### Migration Architecture Components
+
+- **`utils/db.py`**: PostgreSQL connection pool with SQLAlchemy
+- **`utils/validators.py`**: Schema validators for 8 target tables (RUT, email, dates, ranges)
+- **`utils/resolvers.py`**: FK resolution with caching (12+ lookup functions)
+- **`utils/deduplication.py`**: 4 dedup strategies (keep_first, keep_last, keep_newest, merge)
+- **`loaders/base.py`**: Abstract LoaderBase class implementing Load→Transform→Validate→Resolve FKs→Insert/Update pipeline
+- **`analyze_dimensions.py`**: Quality analysis tool for dimension tables
+- **`analyze_facts.py`**: Quality analysis tool for fact tables
+
+### Migration Quality Scores
+
+Based on `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md`:
+
+| Source | Score | Target Table | Key Challenge |
+|--------|-------|--------------|---------------|
+| dim_funcionario | 85/100 | core.person + core.user | None (excellent quality) |
+| dim_institucion | 75/100 | core.organization | 5.4% missing RUT |
+| dim_iniciativa | 67/100 | core.ipr | Complex state mapping (31 states) |
+| fact_convenio | 71/100 | core.agreement | LOOKUP_OR_CREATE orgs |
+| fact_linea_presup | 47/100 | core.budget_program | Reconstruct deltas |
+
+---
+
+## ETL Migration Guidelines (CRITICAL)
+
+**⚠️ MANDATORY READING**: When implementing any ETL loader in `/etl/migration/loaders/`, you MUST follow these guidelines. These rules are derived from 7 critical errors discovered during PersonLoader implementation (110/110 records migrated successfully after 7 iterations).
+
+### 📚 Required Documentation (Read Before Coding)
+
+1. **`/etl/migration/LECCIONES_APRENDIDAS.md`** (32 pages)
+   - Complete analysis of 7 critical errors and their solutions
+   - Patterns that worked well (hooks, caching, robust parsing)
+   - Post-execution validation queries
+   - Specific precautions for each upcoming loader
+
+2. **`/etl/migration/PRE_LOADER_CHECKLIST.md`** (80-minute workflow)
+   - Step-by-step implementation guide
+   - Complete loader template with all overrides
+   - Pre-execution tests (dry run → subset → full)
+   - Success criteria (≥95% success rate, 100% FK integrity)
+
+### 🔴 Critical Rules (DO NOT SKIP)
+
+#### 1. SQLAlchemy 2.0 - text() Wrapper Obligatory
+
+```python
+# ❌ WRONG
+session.execute("SELECT * FROM core.person WHERE id = :id", {'id': person_id})
+
+# ✅ CORRECT
+from sqlalchemy import text
+session.execute(text("SELECT * FROM core.person WHERE id = :id"), {'id': person_id})
+```
+
+**Apply to**: All SQL queries in loaders, resolvers, validators
+
+#### 2. Schema Verification First (Never Assume Field Names)
+
+```bash
+# ALWAYS verify schema before implementing loader
+PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "\d TABLE_NAME"
+
+# Or read DDL directly
+cat /Users/felixsanhueza/Developer/goreos/model/model_goreos/sql/goreos_ddl.sql
+```
+
+**Common Mismatches**:
+- core.person: `rut` (NOT tax_id), `names` (NOT first_name), `paternal_surname` (NOT last_name)
+- RUT is NULLABLE in most tables
+- Many tables have JSONB fields that require special handling
+
+#### 3. Override Pattern (Mandatory for Each Loader)
+
+Every loader MUST override these methods:
+
+```python
+class MyLoader(LoaderBase):
+
+    def get_natural_key(self, row: pd.Series) -> str:
+        """Extract natural key from source CSV"""
+        return str(row['NATURAL_KEY_FIELD'])
+
+    def get_natural_key_from_dict(self, row: Dict) -> str:
+        """Extract natural key from transformed dict"""
+        return str(row.get('TARGET_KEY_FIELD', ''))
+
+    def check_exists(self, session, natural_key: str) -> bool:
+        """Check if record exists - MUST use correct field for this table"""
+        if not natural_key:
+            return False
+        result = session.execute(
+            text("SELECT 1 FROM schema.table WHERE unique_field = :key AND deleted_at IS NULL LIMIT 1"),
+            {'key': natural_key}
+        ).fetchone()
+        return result is not None
+
+    # ONLY if table has JSONB fields
+    def pre_insert(self, row: Dict) -> Dict:
+        """Convert dict to JSON string for JSONB fields"""
+        row = row.copy()
+        if 'metadata' in row and isinstance(row['metadata'], dict):
+            row['metadata'] = json.dumps(row['metadata'])
+        return row
+```
+
+#### 4. JSONB Type Adaptation
+
+PostgreSQL JSONB fields require JSON strings, not Python dicts:
+
+```python
+# ❌ WRONG - will fail with "can't adapt type 'dict'"
+row = {'metadata': {'key': 'value'}}
+
+# ✅ CORRECT
+import json
+row = {'metadata': json.dumps({'key': 'value'})}
+```
+
+**Tables with JSONB**: core.person.metadata, core.organization.metadata, core.ipr.metadata, txn.event.payload
+
+#### 5. System User Required Fields
+
+When using `get_system_user_id()`, the system user MUST have:
+- `password_hash` (TEXT NOT NULL) - use dummy bcrypt hash
+- `system_role_id` (UUID NOT NULL FK → ref.category where scheme='system_role' and code='ADMIN_SISTEMA')
+- `person_id` (UUID NOT NULL FK → core.person)
+
+**Already implemented in**: `/etl/migration/utils/resolvers.py`
+
+#### 6. Validator Updates (Before Each Loader)
+
+Update `/etl/migration/utils/validators.py` with correct field names and validation logic BEFORE implementing loader.
+
+```python
+def _validate_TABLE(row: Dict) -> List[str]:
+    errors = []
+
+    # Validate NOT NULL fields
+    if 'required_field' not in row or not row['required_field']:
+        errors.append("Missing required_field (required)")
+
+    # Validate formats (RUT, email, UUID)
+    if row.get('rut') and not validate_rut(row['rut']):
+        errors.append(f"Invalid RUT: {row['rut']}")
+
+    # Validate ranges
+    if 'progress' in row and not (0 <= row['progress'] <= 1):
+        errors.append(f"progress out of range: {row['progress']}")
+
+    return errors
+```
+
+### 🚀 Execution Workflow (80 minutes per loader)
+
+1. **Schema Discovery** (10 min) - Verify DDL, document NOT NULL, UNIQUE, JSONB fields
+2. **Validator Update** (5 min) - Update validators.py with correct schema
+3. **Resolver Functions** (10 min) - Implement lookup_* functions with caching
+4. **Loader Implementation** (30 min) - Use template from PRE_LOADER_CHECKLIST.md
+5. **Dry Run Test** (5 min) - Test with dry_run=True
+6. **Subset Test** (5 min) - Test with 10 real records
+7. **PostgreSQL Verification** (5 min) - Query to verify data
+8. **Full Execution** (5 min) - Migrate all records
+9. **Post-Validation** (5 min) - FK integrity, duplicates, ranges
+
+### ✅ Success Criteria (Mandatory)
+
+- ✅ Success rate ≥ 95%
+- ✅ FK integrity = 100% (no orphan records)
+- ✅ No duplicate natural keys
+- ✅ Warnings ≤ 5%
+- ✅ Errors ≤ 1%
+
+### 🔍 Pre-Implementation Checklist (Copy-Paste This)
+
+```
+Schema Verification:
+[ ] Read DDL with \d table_name
+[ ] Document NOT NULL fields
+[ ] Document UNIQUE fields
+[ ] Identify JSONB fields
+[ ] Identify FK relationships
+
+Validator:
+[ ] Create/update _validate_TABLE() function
+[ ] Use correct field names from DDL
+[ ] Validate NOT NULL, formats, ranges
+[ ] Add to validate_row() router
+
+Resolver:
+[ ] Implement lookup_*() functions for FKs
+[ ] Add caching (_fk_cache dict)
+[ ] Use text() wrapper in all queries
+
+Loader:
+[ ] Import text from sqlalchemy
+[ ] Import json if JSONB fields exist
+[ ] Override get_natural_key()
+[ ] Override get_natural_key_from_dict()
+[ ] Override check_exists()
+[ ] Override pre_insert() if JSONB
+[ ] Implement transform_row() with all mappings
+[ ] Include created_by_id in all records
+
+Testing:
+[ ] Dry run passes (no DB writes)
+[ ] Subset (10 rows) passes
+[ ] PostgreSQL verification queries pass
+[ ] Full run achieves ≥95% success
+```
+
+### 📊 Current Migration Status
+
+- ✅ **FASE 1 - PersonLoader**: 110/110 records (100% success) - COMPLETED
+- 🔄 **FASE 1 - OrganizationLoader**: Not started - NEXT
+- ⏳ **FASE 2 - IPRLoader**: Pending
+- ⏳ **FASE 3 - AgreementLoader**: Pending
+- ⏳ **FASE 4 - DocumentLoader**: Pending
+- ⏳ **FASE 5 - BudgetProgramLoader**: Pending
+- ⏳ **FASE 6 - EventLoader**: Pending
+
+### 🎯 Quick Reference - Common Patterns
+
+**Caching FK Lookups**:
+```python
+_fk_cache: Dict[str, UUID] = {}
+
+def lookup_entity(key: str) -> Optional[UUID]:
+    cache_key = f"entity:{key}"
+    if cache_key in _fk_cache:
+        return _fk_cache[cache_key]
+    # ... query DB ...
+    _fk_cache[cache_key] = result
+    return result
+```
+
+**Mapping Legacy Values to ref.category**:
+```python
+def _resolve_type(self, legacy_value: str):
+    mapping = {
+        'LEGACY_A': 'CATEGORY_CODE_A',
+        'LEGACY_B': 'CATEGORY_CODE_B',
+    }
+    code = mapping.get(legacy_value.upper(), 'DEFAULT_CODE')
+    return lookup_category('scheme_name', code)
+```
+
+**Parsing Complex Fields**:
+```python
+def _parse_field(self, value: str) -> tuple:
+    if ',' not in value:
+        return (value, 'DEFAULT', None)  # Fallback
+
+    part1, part2 = value.split(',', 1)
+    # ... parsing logic with edge cases ...
+    return (parsed1, parsed2, parsed3)
 ```
 
 ## Ontological Foundation
@@ -304,7 +674,8 @@ The project uses two semantic frameworks:
 **ETL Documentation:**
 - `etl/README.md` - Legacy data sources, quality assessment
 - `etl/docs/MIGRATION_MATRIX.md` - Entity mapping legacy → v3.0
-- `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md` - Migration methodology
+- `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md` - Migration methodology (8 sources with compatibility scores 43-85/100)
+- Migration plan: `~/.claude/plans/warm-munching-prism.md` - 8-week, 6-phase migration plan with LoaderBase architecture
 
 ## Semantic Model (Stories → Entities)
 
@@ -357,3 +728,232 @@ GORE_OS integrates with Chilean national digital transformation systems:
 - ClaveÚnica (authentication), DocDigital, PISEE, SIAPER/CGR, SIGFE/DIPRES, MercadoPúblico
 - Follows Once-Only Principle: consume data via PISEE before asking citizens
 - Digital Default: all outgoing documents are digital (XML/PDF signed)
+
+---
+
+## Database Credentials & Configuration
+
+### PostgreSQL Connection Details
+
+**Development Database** (Docker container):
+- **Host**: localhost
+- **Port**: 5433 (NOT 5432 - avoid conflict with local PostgreSQL)
+- **Database**: goreos
+- **User**: goreos
+- **Password**: goreos_dev_password
+- **Connection String**: `postgresql://goreos:goreos_dev_password@localhost:5433/goreos`
+
+### Connection Commands
+
+```bash
+# psql connection
+PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos
+
+# SQLAlchemy connection (Python)
+DATABASE_URL = "postgresql://goreos:goreos_dev_password@localhost:5433/goreos"
+
+# Docker container management
+docker-compose up -d postgres          # Start PostgreSQL container
+docker-compose down                    # Stop all containers
+docker-compose ps                      # Check container status
+docker logs goreos_db                  # View PostgreSQL logs
+```
+
+### Docker Compose Configuration
+
+Located at `/Users/felixsanhueza/Developer/goreos/docker-compose.yml`:
+
+```yaml
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: goreos_db
+    environment:
+      POSTGRES_DB: goreos
+      POSTGRES_USER: goreos
+      POSTGRES_PASSWORD: goreos_dev_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=es_CL.UTF-8"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    command: postgres -c shared_preload_libraries='pg_stat_statements' -c pg_stat_statements.track=all
+```
+
+### Environment Variables (.env)
+
+Create `/Users/felixsanhueza/Developer/goreos/.env`:
+
+```bash
+# PostgreSQL Configuration
+DB_HOST=localhost
+DB_PORT=5433
+DB_NAME=goreos
+DB_USER=goreos
+DB_PASSWORD=goreos_dev_password
+
+# SQLAlchemy
+DATABASE_URL=postgresql://goreos:goreos_dev_password@localhost:5433/goreos
+
+# Migration Settings
+NORMALIZED_DIR=/Users/felixsanhueza/Developer/goreos/etl/normalized
+DRY_RUN=false
+BATCH_SIZE=1000
+
+# Flask Configuration (when implemented)
+FLASK_APP=app
+FLASK_ENV=development
+SECRET_KEY=dev-secret-key-change-in-production
+```
+
+### ETL Migration Connection
+
+Located at `/Users/felixsanhueza/Developer/goreos/etl/migration/config.py`:
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Database
+DB_HOST = os.getenv('DB_HOST', 'localhost')
+DB_PORT = int(os.getenv('DB_PORT', 5433))
+DB_NAME = os.getenv('DB_NAME', 'goreos')
+DB_USER = os.getenv('DB_USER', 'goreos')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'goreos_dev_password')
+
+# Migration
+NORMALIZED_DIR = os.path.join(os.path.dirname(__file__), '..', 'normalized')
+DRY_RUN = os.getenv('DRY_RUN', 'false').lower() == 'true'
+BATCH_SIZE = int(os.getenv('BATCH_SIZE', 1000))
+```
+
+### Verification Commands
+
+```bash
+# Test PostgreSQL connection
+PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "SELECT version();"
+
+# Verify database exists
+PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "\l"
+
+# Count tables by schema
+PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "
+    SELECT schemaname, COUNT(*) AS tables
+    FROM pg_tables
+    WHERE schemaname IN ('meta', 'ref', 'core', 'txn')
+    GROUP BY schemaname;"
+
+# Test ETL migration connection (Python)
+cd /Users/felixsanhueza/Developer/goreos/etl/migration
+python -c "from utils.db import test_connection; test_connection()"
+```
+
+### Troubleshooting
+
+**"Connection refused"**:
+```bash
+# Check container is running
+docker ps | grep goreos_db
+
+# If not running, start it
+docker-compose up -d postgres
+
+# Check logs
+docker logs goreos_db
+```
+
+**"Password authentication failed"**:
+```bash
+# Verify password in command
+echo $PGPASSWORD  # Should show: goreos_dev_password
+
+# Or use connection string
+psql postgresql://goreos:goreos_dev_password@localhost:5433/goreos
+```
+
+**"Database does not exist"**:
+```bash
+# Create database
+docker exec -it goreos_db createdb -U goreos goreos
+
+# Then install schema (8 DDL files)
+cd /Users/felixsanhueza/Developer/goreos/model/model_goreos/sql
+PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -f goreos_ddl.sql
+# ... (execute remaining 7 files)
+```
+
+### Security Notes
+
+- **Development only**: These credentials are for local development
+- **Production**: Use environment variables, secrets management (AWS Secrets Manager, HashiCorp Vault)
+- **Never commit**: Add `.env` to `.gitignore`
+- **Docker volume**: Database persists in `postgres_data` volume even after container restart
+
+---
+
+## 🔧 Common Issues & Solutions
+
+### "Database does not exist"
+```bash
+# Check actual database name
+docker exec goreos_db psql -U goreos -l
+
+# The database is called "goreos_model", not "goreos"
+# Update config.py: DB_NAME = 'goreos_model'
+```
+
+### "Category not found" warnings during migration
+```bash
+# Always verify scheme names BEFORE mapping
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;"
+
+# Then verify codes for specific scheme
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT code, label FROM ref.category
+WHERE scheme = 'ACTUAL_SCHEME_NAME'
+ORDER BY code;"
+```
+
+### "bind parameter required" during update
+- **Cause**: LoaderBase.update_record() uses generic WHERE clause
+- **Solution**: Override update_record() with same WHERE as check_exists()
+- **See**: `/etl/migration/LECCIONES_APRENDIDAS.md` §10
+
+### Migration appears to have duplicates
+```bash
+# Filter by metadata.source to exclude seed data
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT COUNT(*) FROM core.organization
+WHERE metadata->>'source' = 'dim_institucion_unificada';"
+```
+
+### "can't adapt type 'dict'" when inserting
+- **Cause**: PostgreSQL JSONB requires JSON string, not Python dict
+- **Solution**: Implement pre_insert() to convert with json.dumps()
+- **See**: `/etl/migration/LECCIONES_APRENDIDAS.md` §5
+
+---
+
+## 📚 Essential Reading
+
+**Before ANY ETL work**:
+1. `/etl/migration/LECCIONES_APRENDIDAS.md` - 13 problems + solutions from FASE 1
+2. `/etl/migration/PRE_LOADER_CHECKLIST.md` - 80-min workflow for each loader
+3. `/etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md` - Migration methodology
+
+**Database Documentation**:
+1. `/model/model_goreos/README.md` - Installation & verification
+2. `/model/model_goreos/docs/GOREOS_ERD_v3.md` - Complete ERD + Data Dictionary
+3. `/model/model_goreos/docs/DESIGN_DECISIONS.md` - Architectural decisions
+
+**Architecture**:
+1. `/architecture/Omega_GORE_OS_Definition_v3.0.0.md` - System specification
+2. `/architecture/standards/stack-tecnico-propuesto.md` - Complete tech stack
+
+---
+
+**Last Updated**: 2026-01-29
+**Document Version**: 2.2 (Added Quick Start + Common Issues + Current Status)
