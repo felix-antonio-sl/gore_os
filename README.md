@@ -1,5 +1,7 @@
 # GORE_OS — Sistema Operativo del Gobierno Regional de Ñuble
 
+> 👉 **Primera vez aquí? Empieza por [INDEX.md](INDEX.md) para navegación completa**
+
 **Versión:** 3.0.0 (Radical Refactor)  
 **Estado:** En desarrollo activo  
 **Filosofía:** Story-First & Minimalismo Radical
