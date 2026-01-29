@@ -129,9 +129,14 @@ def _validate_ipr(row: Dict) -> List[str]:
         errors.append("Missing name (required)")
 
     # IPR nature (enum validation)
-    valid_natures = ['PROYECTO', 'PROGRAMA', 'ESTUDIO_BASICO']
+    valid_natures = ['PROYECTO', 'PROGRAMA', 'PROGRAMA_INVERSION', 'ESTUDIO_BASICO', 'ANF']
     if 'ipr_nature' in row and row['ipr_nature'] not in valid_natures:
         errors.append(f"Invalid ipr_nature: {row['ipr_nature']} (must be one of {valid_natures})")
+
+    # codigo_bip length validation (VARCHAR 20)
+    if 'codigo_bip' in row and row['codigo_bip']:
+        if len(str(row['codigo_bip'])) > 20:
+            errors.append(f"codigo_bip too long (max 20 chars): {len(str(row['codigo_bip']))}")
 
     # Progress ranges (0-1)
     if 'physical_progress' in row:
