@@ -207,12 +207,23 @@ The project uses two semantic frameworks:
 
 ## Key Documentation Files
 
-**Core Specs (read these first):**
+**Core Documents:**
+- `INDEX.md` - Repository navigation guide (START HERE)
 - `MANIFESTO.md` - Political genesis and identity, 5 Motor Functions
 - `architecture/Omega_GORE_OS_Definition_v3.0.0.md` - System specification v3.0
-- `planclaude.md` - Master data model specification (Story-First derivation)
-- `gestion.md` - Operational data model (WorkItem, Resolutions, Alerts)
-- `entity_diagram.mmd` - Mermaid class diagram of polymorphic IPR model
+
+**Technical Specifications:**
+- `docs/technical/planclaude.md` - Master data model specification (Story-First derivation)
+- `docs/technical/gestion.md` - Operational data model (WorkItem, Resolutions, Alerts)
+- `docs/technical/especificaciones.md` - Detailed specifications
+
+**Stack & Standards:**
+- `architecture/stack.md` - Tech stack overview
+- `architecture/standards/stack-tecnico-propuesto.md` - Complete stack with code examples, Docker Compose, requirements
+- `architecture/standards/antipatrones-y-deuda-tecnica.md` - Anti-patterns guide and quality checklists
+
+**Diagrams & Visual:**
+- `architecture/diagrams/entity_diagram.mmd` - Mermaid class diagram of polymorphic IPR model
 
 **Database Documentation:**
 - `model/model_goreos/README.md` - Installation guide, verification, troubleshooting
