@@ -12,10 +12,10 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 - No code exists without a corresponding story
 
 **Current Project Status (2026-01-29)**:
-- 🗄️ **Database Model**: v3.1 Complete (63 tables, 4 schemas) - Production Ready
+- 🗄️ **Database Model**: v3.1 Complete (63 tables, 4 schemas, 78+ category schemes)
 - 📊 **ETL Pipeline**: Stage 1 Complete (470 scripts, 32K records normalized)
-- 🔄 **Migration**: FASE 1 Complete - 2/6 loaders (PersonLoader ✅, OrganizationLoader ✅)
-- 🚀 **Next**: FASE 2 - IPRLoader (2,010 initiatives to migrate)
+- ✅ **Migration FASE 1**: Complete - PersonLoader (110/110) + OrganizationLoader (1,612/1,613) = 1,722 records
+- 🔄 **Next**: FASE 2 - IPRLoader (2,010 initiatives from dim_iniciativa_unificada.csv)
 - 💻 **Applications**: Streamlit tooling operational, Flask app pending
 
 ---
@@ -29,23 +29,16 @@ docker-compose up -d postgres
 # 2. Verify connection
 docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT version();"
 
-# 3. Run ETL migration (current phase)
-cd etl/migration
-python loaders/phase1_person_loader.py      # Already complete ✅
-python loaders/phase1_org_loader.py         # Already complete ✅
-python loaders/phase2_ipr_loader.py         # Next: IPR migration
-
-# 4. Verify migration
+# 3. Verify FASE 1 migration (already complete)
 docker exec goreos_db psql -U goreos -d goreos_model -c "
-SELECT
-    'core.person' as table, COUNT(*) as migrated
-FROM core.person
-WHERE metadata->>'source' = 'dim_funcionario'
+SELECT 'core.person' as table, COUNT(*) as migrated FROM core.person WHERE metadata->>'source' = 'dim_funcionario'
 UNION ALL
-SELECT
-    'core.organization', COUNT(*)
-FROM core.organization
-WHERE metadata->>'source' = 'dim_institucion_unificada';"
+SELECT 'core.organization', COUNT(*) FROM core.organization WHERE metadata->>'source' = 'dim_institucion_unificada';"
+-- Expected: person=110, organization=1612
+
+# 4. Next: FASE 2 - IPRLoader
+cd etl/migration
+python loaders/phase2_ipr_loader.py  # 2,010 initiatives pending
 ```
 
 ---
@@ -166,28 +159,21 @@ psql -U postgres -d goreos -f goreos_remediation_ontological.sql  # N:M relation
 
 ```bash
 # Count tables by schema (expected: meta=5, ref=3, core=40+, txn=2+)
-psql -U postgres -d goreos -c "
+docker exec goreos_db psql -U goreos -d goreos_model -c "
     SELECT schemaname, COUNT(*) AS tables
     FROM pg_tables
     WHERE schemaname IN ('meta', 'ref', 'core', 'txn')
     GROUP BY schemaname
-    ORDER BY schemaname;
-"
+    ORDER BY schemaname;"
 
-# Verify triggers are active
-psql -U postgres -d goreos -c "
-    SELECT schemaname, tablename, COUNT(*) AS triggers
-    FROM pg_trigger t
-    JOIN pg_class c ON c.oid = t.tgrelid
-    JOIN pg_namespace n ON n.oid = c.relnamespace
-    WHERE n.nspname IN ('meta', 'ref', 'core', 'txn')
-      AND NOT t.tgisinternal
-    GROUP BY schemaname, tablename
-    ORDER BY schemaname, tablename;
-"
+# Verify seed data loaded (should return 78+ category schemes after remediation)
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT COUNT(DISTINCT scheme) FROM ref.category;"
 
-# Verify seed data loaded (should return 75+ category schemes)
-psql -U postgres -d goreos -c "SELECT COUNT(DISTINCT scheme) FROM ref.category;"
+# Verify FASE 1 migration data
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+    SELECT 'persons' as entity, COUNT(*) FROM core.person WHERE deleted_at IS NULL
+    UNION ALL
+    SELECT 'organizations', COUNT(*) FROM core.organization WHERE deleted_at IS NULL;"
 ```
 
 ## Database Architecture
@@ -434,7 +420,7 @@ session.execute(text("SELECT * FROM core.person WHERE id = :id"), {'id': person_
 
 ```bash
 # ALWAYS verify schema before implementing loader
-PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "\d TABLE_NAME"
+PGPASSWORD=goreos_2026 psql -h localhost -p 5433 -U goreos -d goreos -c "\d TABLE_NAME"
 
 # Or read DDL directly
 cat /Users/felixsanhueza/Developer/goreos/model/model_goreos/sql/goreos_ddl.sql
@@ -587,12 +573,14 @@ Testing:
 ### 📊 Current Migration Status
 
 - ✅ **FASE 1 - PersonLoader**: 110/110 records (100% success) - COMPLETED
-- 🔄 **FASE 1 - OrganizationLoader**: Not started - NEXT
-- ⏳ **FASE 2 - IPRLoader**: Pending
-- ⏳ **FASE 3 - AgreementLoader**: Pending
-- ⏳ **FASE 4 - DocumentLoader**: Pending
-- ⏳ **FASE 5 - BudgetProgramLoader**: Pending
-- ⏳ **FASE 6 - EventLoader**: Pending
+- ✅ **FASE 1 - OrganizationLoader**: 1,612/1,613 records (99.9% success) - COMPLETED
+- 🔄 **FASE 2 - IPRLoader**: 2,010 records - NEXT
+- ⏳ **FASE 3 - AgreementLoader**: 533 convenios - Pending
+- ⏳ **FASE 4 - DocumentLoader**: ~500 documents - Pending
+- ⏳ **FASE 5 - BudgetProgramLoader**: 25,754 budget lines - Pending
+- ⏳ **FASE 6 - EventLoader**: ~5,000 events - Pending
+
+**FASE 1 Total**: 1,722 records migrated (99.95% success rate)
 
 ### 🎯 Quick Reference - Common Patterns
 
@@ -737,20 +725,23 @@ GORE_OS integrates with Chilean national digital transformation systems:
 
 **Development Database** (Docker container):
 - **Host**: localhost
-- **Port**: 5433 (NOT 5432 - avoid conflict with local PostgreSQL)
-- **Database**: goreos
+- **Port**: 5433 (NOT 5432 - mapped from container's 5432)
+- **Database**: goreos_model
 - **User**: goreos
-- **Password**: goreos_dev_password
-- **Connection String**: `postgresql://goreos:goreos_dev_password@localhost:5433/goreos`
+- **Password**: goreos_2026
+- **Connection String**: `postgresql://goreos:goreos_2026@localhost:5433/goreos_model`
 
 ### Connection Commands
 
 ```bash
-# psql connection
-PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos
+# psql connection (via docker exec - recommended)
+docker exec goreos_db psql -U goreos -d goreos_model
+
+# psql connection (direct)
+PGPASSWORD=goreos_2026 psql -h localhost -p 5433 -U goreos -d goreos_model
 
 # SQLAlchemy connection (Python)
-DATABASE_URL = "postgresql://goreos:goreos_dev_password@localhost:5433/goreos"
+DATABASE_URL = "postgresql://goreos:goreos_2026@localhost:5433/goreos_model"
 
 # Docker container management
 docker-compose up -d postgres          # Start PostgreSQL container
@@ -771,7 +762,7 @@ services:
     environment:
       POSTGRES_DB: goreos
       POSTGRES_USER: goreos
-      POSTGRES_PASSWORD: goreos_dev_password
+      POSTGRES_PASSWORD: goreos_2026
       POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=es_CL.UTF-8"
     ports:
       - "5433:5432"
@@ -788,12 +779,12 @@ Create `/Users/felixsanhueza/Developer/goreos/.env`:
 # PostgreSQL Configuration
 DB_HOST=localhost
 DB_PORT=5433
-DB_NAME=goreos
+DB_NAME=goreos_model
 DB_USER=goreos
-DB_PASSWORD=goreos_dev_password
+DB_PASSWORD=goreos_2026
 
 # SQLAlchemy
-DATABASE_URL=postgresql://goreos:goreos_dev_password@localhost:5433/goreos
+DATABASE_URL=postgresql://goreos:goreos_2026@localhost:5433/goreos_model
 
 # Migration Settings
 NORMALIZED_DIR=/Users/felixsanhueza/Developer/goreos/etl/normalized
@@ -816,12 +807,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Database
+# Database (defaults match docker-compose setup)
 DB_HOST = os.getenv('DB_HOST', 'localhost')
-DB_PORT = int(os.getenv('DB_PORT', 5433))
-DB_NAME = os.getenv('DB_NAME', 'goreos')
+DB_PORT = int(os.getenv('DB_PORT', 5433))  # Docker maps 5433:5432
+DB_NAME = os.getenv('DB_NAME', 'goreos_model')  # Actual database name
 DB_USER = os.getenv('DB_USER', 'goreos')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'goreos_dev_password')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'goreos_2026')
 
 # Migration
 NORMALIZED_DIR = os.path.join(os.path.dirname(__file__), '..', 'normalized')
@@ -833,13 +824,13 @@ BATCH_SIZE = int(os.getenv('BATCH_SIZE', 1000))
 
 ```bash
 # Test PostgreSQL connection
-PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "SELECT version();"
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT version();"
 
 # Verify database exists
-PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "\l"
+docker exec goreos_db psql -U goreos -l
 
 # Count tables by schema
-PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -c "
+docker exec goreos_db psql -U goreos -d goreos_model -c "
     SELECT schemaname, COUNT(*) AS tables
     FROM pg_tables
     WHERE schemaname IN ('meta', 'ref', 'core', 'txn')
@@ -866,22 +857,25 @@ docker logs goreos_db
 
 **"Password authentication failed"**:
 ```bash
-# Verify password in command
-echo $PGPASSWORD  # Should show: goreos_dev_password
+# Use docker exec instead (avoids password issues)
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT 1;"
 
-# Or use connection string
-psql postgresql://goreos:goreos_dev_password@localhost:5433/goreos
+# Or use connection string with password
+psql postgresql://goreos:goreos_2026@localhost:5433/goreos_model
 ```
 
 **"Database does not exist"**:
 ```bash
-# Create database
-docker exec -it goreos_db createdb -U goreos goreos
+# Create database (if goreos_model doesn't exist)
+docker exec goreos_db createdb -U goreos goreos_model
 
 # Then install schema (8 DDL files)
 cd /Users/felixsanhueza/Developer/goreos/model/model_goreos/sql
-PGPASSWORD=goreos_dev_password psql -h localhost -p 5433 -U goreos -d goreos -f goreos_ddl.sql
-# ... (execute remaining 7 files)
+for f in goreos_ddl.sql goreos_seed.sql goreos_seed_agents.sql goreos_seed_territory.sql \
+         goreos_triggers.sql goreos_triggers_remediation.sql goreos_indexes.sql \
+         goreos_remediation_ontological.sql; do
+    docker exec -i goreos_db psql -U goreos -d goreos_model < $f
+done
 ```
 
 ### Security Notes
@@ -956,4 +950,22 @@ WHERE metadata->>'source' = 'dim_institucion_unificada';"
 ---
 
 **Last Updated**: 2026-01-29
-**Document Version**: 2.2 (Added Quick Start + Common Issues + Current Status)
+**Document Version**: 2.3 (FASE 1 complete, credentials fixed, schemes added)
+
+---
+
+## 📋 Recent Changes (2026-01-29 Remediation)
+
+### New Category Schemes Added to ref.category
+
+| Scheme | Values | Purpose |
+|--------|--------|---------|
+| `resolution_subtype` | 6 | APRUEBA_CONVENIO, MODIFICA_CONVENIO, APRUEBA_PAGO, MODIFICA_PRESUPUESTO, TERMINO_ANTICIPADO, PRORROGA |
+| `document_type` | 12 | CONVENIO, RESOLUCION, DECRETO, ESTADO_PAGO, CERTIFICADO, BOLETA_GARANTIA, INFORME_TECNICO, RENDICION, FACTURA, ORDEN_COMPRA, PLANO, OTRO |
+| `role_in_committee` | 5 | PRESIDENTE, SECRETARIO, VOCAL, ASESOR, INVITADO |
+
+### Remediation Completed
+- Fixed malformed RUT in dim_institucion_unificada.csv
+- Removed 6 .tmp files from facts/ (10,048 lines)
+- Removed obsolete backup files (resolvers_broken_backup.py, resolvers.py.broken)
+- Updated .gitignore with ETL patterns (*.duckdb, *.tmp, venv/, migration_logs/)
