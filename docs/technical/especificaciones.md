@@ -877,9 +877,9 @@ GOREOS es un sistema web para la gestión unificada de trabajo en el Gobierno Re
 
 | Capa | Tecnología |
 |------|------------|
-| Frontend | React 18 + TypeScript |
-| UI Framework | Tailwind CSS + Headless UI |
-| State Management | React Query + Zustand |
+| Frontend | HTMX 2.0.0 + Alpine.js 3.x + Jinja2 (SSR) |
+| UI Framework | Tailwind CSS 3.4.0 |
+| State Management | Server-driven (HTMX) + Alpine.js (client-local) |
 | Backend | Python 3.11 + Flask |
 | ORM | SQLAlchemy 2.0 |
 | Base de Datos | PostgreSQL 15 |
@@ -937,7 +937,7 @@ goreos/
 │  ▼             ▼                                                │
 │  ┌─────────┐   ┌─────────┐                                      │
 │  │Frontend │   │ Backend │                                      │
-│  │ (React) │   │ (Flask) │ ← 2 réplicas Gunicorn               │
+│  │ (HTMX)  │   │ (Flask) │ ← 2 réplicas Gunicorn               │
 │  └─────────┘   └────┬────┘                                      │
 │                     │                                            │
 │         ┌───────────┼───────────┐                               │
