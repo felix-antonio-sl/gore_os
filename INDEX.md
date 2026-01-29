@@ -1,6 +1,32 @@
 # GORE_OS - Sistema Operativo Institucional del Gobierno Regional de Ñuble
 
-> **Versión 3.0** | **Filosofía: Story-First & Radical Minimalism**
+> **Versión 3.1** | **Filosofía: Story-First & Radical Minimalism**
+
+---
+
+## 🏛️ FUNDAMENTO: El Modelo de Datos
+
+**ANTES de explorar GORE_OS, entiende la base:**
+
+El corazón del sistema es el modelo PostgreSQL en `/model/model_goreos`:
+- **54 tablas** auditadas y ejecutables en 4 schemas semánticos
+- **75+ vocabularios** controlados (Category Pattern)
+- **100% trazable** a 819 User Stories validadas
+- **Event Sourcing** híbrido con particionamiento
+- **Pipeline ETL** robusto: 470 scripts migran datos legacy
+
+**Setup inicial** (15 minutos):
+```bash
+./scripts/setup_dev_env.sh
+./scripts/verify_model.sh
+```
+
+**Guía completa**: [docs/setup/GETTING_STARTED.md](docs/setup/GETTING_STARTED.md)
+
+**Documentación del modelo**:
+- [model/model_goreos/README.md](model/model_goreos/README.md) - Instalación y guía
+- [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) - ERD + Data Dictionary
+- [architecture/decisions/ADR-003-modelo-como-base.md](architecture/decisions/ADR-003-modelo-como-base.md) - Decisión arquitectónica
 
 ---
 
