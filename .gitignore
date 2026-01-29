@@ -39,11 +39,34 @@ Thumbs.db
 # Python
 *.pyc
 *.pyo
+*.pyd
 __pycache__/
+*.so
+
+# Python virtual environments
 .venv/
 .venv_*/
+venv/
+env/
+ENV/
 *.egg-info/
+.eggs/
+dist/
+build/
+
+# Python testing
 .pytest_cache/
+.coverage
+.tox/
+htmlcov/
+
+# Python IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.python-version
 
 # Project-specific temporary files
 model/_*_extracted.txt
