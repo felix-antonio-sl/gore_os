@@ -72,3 +72,15 @@ htmlcov/
 model/_*_extracted.txt
 model/us_model_*.yml
 model/goreos_us_model*.sql
+
+# ETL temporary files
+*.tmp
+*.duckdb
+*.duckdb.wal
+
+# ETL virtual environments (additional paths)
+etl/scripts/venv/
+etl/migration/venv/
+
+# Migration logs (may contain sensitive data)
+etl/normalized/migration_logs/

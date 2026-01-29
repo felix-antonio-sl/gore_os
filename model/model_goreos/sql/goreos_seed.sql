@@ -987,6 +987,54 @@ UPDATE ref.category SET valid_transitions = '[]'::jsonb
 WHERE scheme = 'file_status' AND code IN ('RESUELTO', 'ARCHIVADO');
 
 -- ============================================================================
+--    SCHEMA: ref.category - SCHEMES REMEDIACIÓN PRE-FASE 2 (2026-01-29)
+-- ============================================================================
+
+-- SUBTIPOS DE RESOLUCIÓN (para core.resolution)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('resolution_subtype', 'APRUEBA_CONVENIO', 'Aprueba Convenio', 'Resolución que aprueba un convenio de transferencia', 1),
+('resolution_subtype', 'MODIFICA_CONVENIO', 'Modifica Convenio', 'Resolución que modifica un convenio existente', 2),
+('resolution_subtype', 'APRUEBA_PAGO', 'Aprueba Estado de Pago', 'Resolución que aprueba un estado de pago', 3),
+('resolution_subtype', 'MODIFICA_PRESUPUESTO', 'Modificación Presupuestaria', 'Decreto de modificación presupuestaria', 4),
+('resolution_subtype', 'TERMINO_ANTICIPADO', 'Término Anticipado', 'Resolución de término anticipado de convenio', 5),
+('resolution_subtype', 'PRORROGA', 'Prórroga', 'Resolución de prórroga de plazos', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- TIPOS DE DOCUMENTO (para core.document)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('document_type', 'CONVENIO', 'Convenio', 'Documento de convenio de transferencia', 1),
+('document_type', 'RESOLUCION', 'Resolución', 'Resolución exenta o afecta', 2),
+('document_type', 'DECRETO', 'Decreto', 'Decreto alcaldicio o regional', 3),
+('document_type', 'ESTADO_PAGO', 'Estado de Pago', 'Documento de estado de pago', 4),
+('document_type', 'CERTIFICADO', 'Certificado', 'Certificado de avance u otro', 5),
+('document_type', 'BOLETA_GARANTIA', 'Boleta de Garantía', 'Boleta de garantía bancaria', 6),
+('document_type', 'INFORME_TECNICO', 'Informe Técnico', 'Informe de supervisión técnica', 7),
+('document_type', 'RENDICION', 'Rendición', 'Documento de rendición de cuentas', 8),
+('document_type', 'FACTURA', 'Factura', 'Factura electrónica', 9),
+('document_type', 'ORDEN_COMPRA', 'Orden de Compra', 'Orden de compra MercadoPúblico', 10),
+('document_type', 'PLANO', 'Plano', 'Plano técnico o arquitectónico', 11),
+('document_type', 'OTRO', 'Otro', 'Otro tipo de documento', 99)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ROLES EN COMITÉ (para core.committee_member)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('role_in_committee', 'PRESIDENTE', 'Presidente', 'Presidente del comité', 1),
+('role_in_committee', 'SECRETARIO', 'Secretario', 'Secretario del comité', 2),
+('role_in_committee', 'VOCAL', 'Vocal', 'Miembro con voz y voto', 3),
+('role_in_committee', 'ASESOR', 'Asesor', 'Asesor técnico sin voto', 4),
+('role_in_committee', 'INVITADO', 'Invitado', 'Invitado sin voz ni voto', 5)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
 --    RESOLUCIÓN DE JERARQUÍAS (parent_code -> parent_id)
 -- ============================================================================
 -- ref.category soporta jerarquía por FK (parent_id). El seed usa parent_code
