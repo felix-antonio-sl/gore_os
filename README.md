@@ -2,9 +2,47 @@
 
 > 👉 **Primera vez aquí? Empieza por [INDEX.md](INDEX.md) para navegación completa**
 
-**Versión:** 3.0.0 (Radical Refactor)  
-**Estado:** En desarrollo activo  
+**Versión:** 3.1.0 (Remediación Documental)
+**Estado:** En desarrollo activo
 **Filosofía:** Story-First & Minimalismo Radical
+
+---
+
+## 🏛️ La Base: Modelo de Datos PostgreSQL
+
+**ANTES DE EXPLORAR GORE_OS**, entiende que todo se construye sobre un modelo de datos excepcional:
+
+### Características del Modelo
+
+- **Ubicación**: `/model/model_goreos`
+- **54 tablas** organizadas en 4 schemas semánticos (`meta`, `ref`, `core`, `txn`)
+- **100% derivado** de 819 User Stories validadas (trazabilidad story-first completa)
+- **Category Pattern** (Gist 14.0) para 75+ vocabularios controlados
+- **Event Sourcing** híbrido con particionamiento temporal
+- **Auditado exhaustivamente** (ver documentación de auditoría)
+
+### Instalación del Modelo (15 minutos)
+
+**Antes de cualquier desarrollo, instalar el modelo:**
+
+```bash
+cd model/model_goreos/sql
+createdb -U postgres goreos
+psql -U postgres -d goreos -f goreos_ddl.sql
+# ... (8 archivos en orden estricto)
+```
+
+**Ver instalación completa**: [model/model_goreos/README.md](model/model_goreos/README.md)
+
+### Pipeline de Datos
+
+El modelo PostgreSQL es alimentado por un robusto pipeline ETL:
+
+```
+/etl/sources/ → /etl/scripts/ (470 scripts) → /etl/normalized/ → PostgreSQL → Apps
+```
+
+**Documentación ETL**: [etl/README.md](etl/README.md)
 
 ---
 

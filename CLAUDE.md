@@ -11,6 +11,75 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 - Strictly unidirectional derivation: **Stories → Entities → Artifacts → Modules**
 - No code exists without a corresponding story
 
+---
+
+## 🏛️ FUNDAMENTO ARQUITECTÓNICO
+
+**CRÍTICO**: El corazón de GORE_OS es el modelo de datos PostgreSQL en `/model/model_goreos`.
+
+### Por qué el Modelo es la Base
+
+Este modelo PostgreSQL es el activo más valioso del proyecto:
+
+1. **Completo y Ejecutable**: 54 tablas organizadas en 4 schemas semánticos (`meta`, `ref`, `core`, `txn`)
+2. **Derivado de Stories**: 100% trazable a 819 User Stories validadas (Story-First architecture)
+3. **Auditado y Probado**: Ver `/model/model_goreos/docs/auditorias/AUDITORIA_CONSOLIDADA_v3_2026-01-27.md`
+4. **Category Pattern**: Gist 14.0 implementado - 75+ schemes para vocabularios controlados sin DDL
+5. **Event Sourcing**: Historia completa de cambios con particionamiento mensual/trimestral
+6. **ETL Ready**: 470 scripts en `/etl` han migrado datos legacy que alimentan este modelo
+
+### Instalación del Modelo (PRIMER PASO OBLIGATORIO)
+
+**Antes de cualquier desarrollo, instalar el modelo PostgreSQL:**
+
+```bash
+# 0. Crear base de datos
+createdb -U postgres goreos
+
+# 1-8. Ejecutar DDL en orden estricto (CRÍTICO: no omitir ni reordenar)
+cd model/model_goreos/sql
+psql -U postgres -d goreos -f goreos_ddl.sql
+psql -U postgres -d goreos -f goreos_seed.sql
+psql -U postgres -d goreos -f goreos_seed_agents.sql
+psql -U postgres -d goreos -f goreos_seed_territory.sql
+psql -U postgres -d goreos -f goreos_triggers.sql
+psql -U postgres -d goreos -f goreos_triggers_remediation.sql
+psql -U postgres -d goreos -f goreos_indexes.sql
+psql -U postgres -d goreos -f goreos_remediation_ontological.sql
+```
+
+### Arquitectura de 4 Schemas
+
+| Schema | Tablas | Propósito |
+|--------|--------|-----------|
+| `meta` | 5 | Átomos fundamentales (Role, Process, Entity, Story, Story-Entity) |
+| `ref` | 3 | Vocabularios controlados (Category, Actor, Commitment Types) |
+| `core` | 40+ | Entidades de negocio (IPR, Agreements, Budget, Work Items) |
+| `txn` | 2+ | Event Sourcing (Event, Magnitude) - Particionadas |
+
+### Pipeline de Datos: ETL → PostgreSQL → Apps
+
+```
+/etl/sources/               # Datos legacy (Excel, CSV, IDIS)
+      ↓
+/etl/scripts/               # 470 scripts de transformación Python
+      ↓
+/etl/normalized/            # Datos limpios y validados
+      ↓
+model/model_goreos (PostgreSQL)   # Modelo canónico (LA VERDAD)
+      ↓
+apps/streamlit_tooling/     # Tooling interno existente
+apps/flask_app/             # Aplicación productiva (a construir)
+```
+
+**Referencias clave del modelo:**
+- Documentación completa: `/model/model_goreos/README.md`
+- ERD + Data Dictionary: `/model/model_goreos/docs/GOREOS_ERD_v3.md`
+- Decisiones de diseño: `/model/model_goreos/docs/DESIGN_DECISIONS.md`
+- ADR-003: `/architecture/decisions/ADR-003-modelo-como-base.md`
+
+---
+
 ## Technology Stack
 
 - **Backend:** Python 3.11+, Flask 3.0.3 (Application Factory pattern), SQLAlchemy 2.0.30
