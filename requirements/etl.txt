@@ -1,0 +1,5 @@
+-r base.txt
+duckdb==0.9.2
+networkx>=3.0
+numpy>=1.24.0
+plotly>=5.18.0
