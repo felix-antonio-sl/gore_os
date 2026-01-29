@@ -1,0 +1,187 @@
+version: "3.8"
+
+services:
+  # =============================================================================
+  # PostgreSQL 16 - LA BASE DE GORE_OS
+  # =============================================================================
+  # El modelo en /model/model_goreos es el fundamento arquitectónico.
+  # Este servicio ejecuta automáticamente el DDL al inicio.
+  postgres:
+    image: postgres:16-alpine
+    container_name: goreos_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-goreos}
+      POSTGRES_USER: ${DB_USER:-goreos}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-CHANGE_THIS}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=es_CL.UTF-8"
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      # Persistencia de datos
+      - pgdata:/var/lib/postgresql/data
+
+      # Auto-ejecuta DDL al inicio (solo primera vez)
+      # Los archivos se ejecutan en orden alfabético
+      - ./model/model_goreos/sql:/docker-entrypoint-initdb.d:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-goreos}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - goreos_network
+
+  # =============================================================================
+  # PgAdmin 4 - Administración de Base de Datos (Desarrollo)
+  # =============================================================================
+  # Interfaz web para explorar y administrar PostgreSQL
+  # Acceso: http://localhost:5050
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: goreos_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@gorenuble.cl}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - goreos_network
+
+  # =============================================================================
+  # Redis - Cache & Message Broker (Futuro - Flask + Celery)
+  # =============================================================================
+  # Descomentado cuando se implemente Flask con Celery
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: goreos_redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${REDIS_PORT:-6379}:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   command: redis-server --appendonly yes
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 3s
+  #     retries: 5
+  #   networks:
+  #     - goreos_network
+
+  # =============================================================================
+  # Streamlit Tooling (Existente - Herramientas internas)
+  # =============================================================================
+  # Descomentado cuando se necesite levantar apps Streamlit
+  # streamlit_tooling:
+  #   build:
+  #     context: .
+  #     dockerfile: model/visor_model/Dockerfile
+  #   container_name: goreos_streamlit
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${STREAMLIT_SERVER_PORT:-8501}:8501"
+  #   environment:
+  #     - DB_HOST=postgres
+  #     - DB_PORT=5432
+  #     - DB_NAME=${DB_NAME:-goreos}
+  #     - DB_USER=${DB_USER:-goreos}
+  #     - DB_PASSWORD=${DB_PASSWORD:-CHANGE_THIS}
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   networks:
+  #     - goreos_network
+
+  # =============================================================================
+  # Flask App (Futuro - Aplicación Productiva)
+  # =============================================================================
+  # A crear cuando se implemente /apps/flask_app
+  # flask_app:
+  #   build:
+  #     context: .
+  #     dockerfile: apps/flask_app/Dockerfile
+  #   container_name: goreos_flask
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - FLASK_ENV=development
+  #     - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}
+  #     - REDIS_URL=redis://redis:6379/0
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   networks:
+  #     - goreos_network
+
+# =============================================================================
+# Volumes (Persistencia)
+# =============================================================================
+volumes:
+  pgdata:
+    name: goreos_pgdata
+    driver: local
+
+  pgadmin_data:
+    name: goreos_pgadmin_data
+    driver: local
+
+  # redis_data:
+  #   name: goreos_redis_data
+  #   driver: local
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  goreos_network:
+    name: goreos_network
+    driver: bridge
+
+# =============================================================================
+# Uso
+# =============================================================================
+# Levantar solo PostgreSQL + PgAdmin (desarrollo inicial):
+#   docker-compose up -d postgres pgadmin
+#
+# Levantar todo:
+#   docker-compose up -d
+#
+# Ver logs:
+#   docker-compose logs -f postgres
+#
+# Detener:
+#   docker-compose down
+#
+# Eliminar volúmenes (CUIDADO - borra datos):
+#   docker-compose down -v
+#
+# =============================================================================
+# Conexión a PostgreSQL desde host
+# =============================================================================
+# psql -h localhost -U goreos -d goreos
+# Password: (el configurado en .env o CHANGE_THIS por defecto)
+#
+# Desde PgAdmin:
+#   1. Acceder a http://localhost:5050
+#   2. Login con PGADMIN_DEFAULT_EMAIL / PGADMIN_DEFAULT_PASSWORD
+#   3. Agregar servidor:
+#      - Name: GORE_OS Local
+#      - Host: postgres (nombre del servicio)
+#      - Port: 5432
+#      - Database: goreos
+#      - Username: goreos
+#      - Password: [del .env]
