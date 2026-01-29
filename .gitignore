@@ -32,4 +32,20 @@ bun.lockb
 
 # OS
 .DS_Store
+.AppleDouble
+.LSOverride
 Thumbs.db
+
+# Python
+*.pyc
+*.pyo
+__pycache__/
+.venv/
+.venv_*/
+*.egg-info/
+.pytest_cache/
+
+# Project-specific temporary files
+model/_*_extracted.txt
+model/us_model_*.yml
+model/goreos_us_model*.sql
