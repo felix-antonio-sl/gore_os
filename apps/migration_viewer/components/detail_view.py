@@ -4,6 +4,12 @@ import pandas as pd
 import json
 from models.registry import get_table_config
 
+# Columnas a excluir de la vista de datos (siempre se muestran en secciones especiales)
+EXCLUDED_COLUMNS = {
+    "id", "metadata", "data", "created_at", "updated_at", "recorded_at",
+    "created_by_id", "updated_by_id", "deleted_at", "deleted_by_id"
+}
+
 
 def render_detail_view(row: pd.Series, table_name: str, conn):
     """Render detail view for selected record."""
@@ -23,7 +29,7 @@ def render_detail_view(row: pd.Series, table_name: str, conn):
 
         # Display all non-null fields
         for col in row.index:
-            if col in ["id", "metadata", "created_at", "updated_at", "created_by_id", "updated_by_id", "deleted_at", "deleted_by_id"]:
+            if col in EXCLUDED_COLUMNS:
                 continue
 
             value = row[col]
@@ -44,19 +50,19 @@ def render_detail_view(row: pd.Series, table_name: str, conn):
                 st.markdown(f"**{label}:** {value}")
 
     with col2:
-        st.markdown("#### Metadata")
+        st.markdown("#### Datos Adicionales")
 
-        # Show metadata JSON
-        metadata = row.get("metadata")
-        if metadata:
-            if isinstance(metadata, str):
+        # Show metadata/data JSON (metadata para core.*, data para txn.event)
+        json_data = row.get("metadata") or row.get("data")
+        if json_data:
+            if isinstance(json_data, str):
                 try:
-                    metadata = json.loads(metadata)
+                    json_data = json.loads(json_data)
                 except json.JSONDecodeError:
                     pass
 
-            if isinstance(metadata, dict) and metadata:
-                for key, value in metadata.items():
+            if isinstance(json_data, dict) and json_data:
+                for key, value in json_data.items():
                     st.markdown(f"**{key}:** {value}")
             else:
                 st.markdown("*(vacío)*")
@@ -66,12 +72,13 @@ def render_detail_view(row: pd.Series, table_name: str, conn):
         st.markdown("---")
         st.markdown("#### Auditoría")
 
-        # Timestamps
-        created_at = row.get("created_at")
+        # Timestamps (created_at/recorded_at según la tabla)
+        created_at = row.get("created_at") or row.get("recorded_at")
         updated_at = row.get("updated_at")
 
         if created_at:
-            st.markdown(f"**Creado:** {_format_datetime(created_at)}")
+            label = "Registrado" if "recorded_at" in row.index else "Creado"
+            st.markdown(f"**{label}:** {_format_datetime(created_at)}")
         if updated_at:
             st.markdown(f"**Actualizado:** {_format_datetime(updated_at)}")
 
