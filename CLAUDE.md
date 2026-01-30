@@ -12,14 +12,15 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 - Strict derivation: **Stories → Entities → Artifacts → Modules**
 - No code without a corresponding story
 
-## Current Status (2026-01-29)
+## Current Status (2026-01-30)
 
 - **Database model**: v3.1 complete (**63 tables**, **4 schemas**, **78+ category schemes**)
 - **ETL stage 1**: complete (**470 scripts**, **~32K** normalized records, star schema **15 dims + 8 facts**, **23 CSV** outputs)
-- **ETL → PostgreSQL migration**: **FASE 1–7 complete**, **43,256** records migrated (see verification queries below)
+- **ETL → PostgreSQL migration**: **FASE 1–7 complete**, **46,360** records migrated (see verification queries below)
+- **Relational integrity**: **ipr_party populated** (3,104 records, 100% IPR coverage)
 - **Apps**: Streamlit tooling operational; Flask app pending
 
-### Migration Summary (FASE 1–7)
+### Migration Summary (FASE 1–7 + Relational)
 
 | FASE | Target(s)                 | Records       | Success        |
 | ---- | ------------------------- | ------------- | -------------- |
@@ -33,7 +34,15 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 | 6    | `txn.magnitude`           | 3,496         | 100%           |
 | 6    | `txn.event` (rendiciones) | 1,667         | 100%           |
 | 7    | `core.ipr_territory`      | 1,965         | 95.9% coverage |
-| 7    | `core.person_org_link`    | 110           | 100%           |
+| 7    | `core.ipr_party`          | 3,104         | 100% coverage  |
+
+### IPR Party Distribution (N:M IPR↔Organization)
+
+| Role           | Records | Coverage |
+| -------------- | ------- | -------- |
+| MANDANTE       | 1,973   | 100%     |
+| UNIDAD_TECNICA | 655     | 33.2%    |
+| BENEFICIARIO   | 476     | 24.1%    |
 
 ---
 
@@ -58,17 +67,18 @@ FROM core.organization
 WHERE metadata->>'source' = 'dim_institucion_unificada';"
 # Expected: person=110, organization=1612
 
-# FASE 2-7 (logical rows)
+# FASE 2-7 + Relational (logical rows)
 docker exec goreos_db psql -U goreos -d goreos_model -c "
 SELECT 'core.ipr' AS table, COUNT(*) AS rows FROM core.ipr WHERE deleted_at IS NULL
 UNION ALL SELECT 'core.agreement', COUNT(*) FROM core.agreement WHERE deleted_at IS NULL
 UNION ALL SELECT 'core.budget_program', COUNT(*) FROM core.budget_program WHERE deleted_at IS NULL
 UNION ALL SELECT 'core.budget_commitment', COUNT(*) FROM core.budget_commitment WHERE deleted_at IS NULL
 UNION ALL SELECT 'core.ipr_territory', COUNT(*) FROM core.ipr_territory WHERE deleted_at IS NULL
+UNION ALL SELECT 'core.ipr_party', COUNT(*) FROM core.ipr_party WHERE deleted_at IS NULL
 UNION ALL SELECT 'txn.event', COUNT(*) FROM txn.event
 UNION ALL SELECT 'txn.magnitude', COUNT(*) FROM txn.magnitude;"
 # Expected: ipr=1,973, agreement=533, budget_program=25,753, budget_commitment=3,701,
-#           ipr_territory=1,965, event=4,040, magnitude=3,496
+#           ipr_territory=1,965, ipr_party=3,104, event=4,040, magnitude=3,496
 ```
 
 ---
