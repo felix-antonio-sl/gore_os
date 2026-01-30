@@ -1004,8 +1004,10 @@ erDiagram
 | mcd_phase_id | UUID | Yes | FK→ref.category | Fase MCD (F0-F5) |
 | status_id | UUID | Yes | FK→ref.category | Estado operativo (28 estados) |
 | budget_subtitle_id | UUID | Yes | FK→ref.category | Subtítulo presupuestario (21-35) |
-| funding_source_id | UUID | Yes | FK→ref.category | Fuente de financiamiento |
-| mechanism_id | UUID | Yes | FK→ref.category | Mecanismo de evaluación |
+| funding_source_id | UUID | Yes | FK→ref.category | Fuente de financiamiento (scheme=funding_source) |
+| mechanism_id | UUID | Yes | FK→ref.category | Mecanismo de evaluación (scheme=mechanism) |
+| investment_sector_id | UUID | Yes | FK→ref.category | Sector de inversión (scheme=investment_sector, 10 codes, v3.2) |
+| fund_category_id | UUID | Yes | FK→ref.category | Categoría fondo 8% (scheme=fondo_8pct, PROGRAMA_8PCT only, v3.2) |
 | formulator_id | UUID | Yes | FK→core.organization | Organización formuladora |
 | executor_id | UUID | Yes | FK→core.organization | Unidad técnica ejecutora |
 | territory_id | UUID | Yes | FK→core.territory | Territorio beneficiario |
@@ -1022,6 +1024,8 @@ erDiagram
 - `idx_ipr_phase` (mcd_phase_id)
 - `idx_ipr_status` (status_id)
 - `idx_ipr_mechanism` (mechanism_id)
+- `idx_ipr_investment_sector` (investment_sector_id WHERE investment_sector_id IS NOT NULL) - Partial (v3.2)
+- `idx_ipr_fund_category` (fund_category_id WHERE fund_category_id IS NOT NULL) - Partial (v3.2)
 - `idx_ipr_phase_mechanism` (mcd_phase_id, mechanism_id) - Composite
 
 ### 3.2 core.work_item (Ítem de Trabajo)
@@ -1077,7 +1081,11 @@ erDiagram
 - `mcd_phase` - Fases MCD (F0-F5)
 - `ipr_state` - Estados IPR (28)
 - `ipr_nature` - Naturaleza IPR
+- `ipr_type` - Tipos funcionales IPR (7)
 - `mechanism` - Mecanismos de evaluación (7 tracks)
+- `funding_source` - Fuentes de financiamiento (FNDR, FRIL, FRPD, ISAR)
+- `investment_sector` - Sectores de inversión (10 codes: SPORTS, CULTURE, EDUCATION, etc.) **v3.2**
+- `fondo_8pct` - Categorías fondo 8% FNDR (10 codes: DEPORTE, SEGURIDAD, ADULTO_MAYOR, etc.) **v3.2**
 - `work_item_status` - Estados work item (6)
 - `commitment_state` - Estados compromiso (6)
 - `agreement_state` - Estados convenio (10)

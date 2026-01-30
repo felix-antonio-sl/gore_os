@@ -475,6 +475,129 @@ CREATE INDEX idx_category_path_gist ON ref.category USING GIST(path);
 
 ---
 
+## DD-035: IPR Metadata Normalization v2.0 (2026-01-30)
+
+**Context**:
+- `core.ipr` had 15 keys in metadata JSONB
+- v1.0 normalization plan had only 30% ontological coherence (rejected after categorical audit)
+- Architectural audit identified critical violation: `funding_source_id` accepting 2 schemes (funding_source + fondo_8pct)
+- 1,648 PROGRAMA_8PCT IPRs were using `funding_source_id` to store `fondo_8pct` scheme values
+
+**Problem**: Violation of **Categorical Univocity** principle
+```
+BEFORE (INCOHERENT):
+funding_source_id → 2 schemes
+├─ 1,973 IPRs → scheme='funding_source' ✓
+└─ 1,648 IPRs → scheme='fondo_8pct' ✗ VIOLATION
+```
+
+**Options Evaluated**:
+
+1. **Option A (Conservative)**: Allow `funding_source_id` to accept 2 schemes via flexible CHECK constraint
+   - Pros: No schema change required
+   - Cons: Maintains technical debt, 85% categorical coherence
+   - Implementation: `CHECK (fn_validate_category_scheme(funding_source_id, 'funding_source') OR fn_validate_category_scheme(funding_source_id, 'fondo_8pct'))`
+
+2. **Option B (Ontologically Correct)**: Create dedicated `fund_category_id` column for PROGRAMA_8PCT ✓ CHOSEN
+   - Pros: 100% categorical coherence, clear separation of concerns
+   - Cons: Schema change, data migration required
+   - Implementation: New column + data migration
+
+**Decision**: **Option B** - Create separate `fund_category_id` column
+
+**Rationale**:
+- Migration phase allows structural changes
+- User emphasis on "doing everything as best as possible"
+- Aligned with arquitecto-gore principle of categorical univocity
+- Performance: More efficient queries with univocity
+- Maintainability: Clear semantic separation
+
+**Implementation**:
+
+```sql
+-- New columns in core.ipr
+ALTER TABLE core.ipr
+    ADD COLUMN investment_sector_id UUID REFERENCES ref.category(id),
+    ADD COLUMN fund_category_id UUID REFERENCES ref.category(id);
+
+-- New category schemes
+INSERT INTO ref.category (scheme, code, label, ...)
+VALUES
+    -- investment_sector: 10 codes
+    ('investment_sector', 'SPORTS', 'Infraestructura Deportiva', ...),
+    ('investment_sector', 'CULTURE', 'Cultura y Patrimonio', ...),
+    -- ... 8 more
+
+    -- fondo_8pct: already exists, now used in fund_category_id
+    ;
+
+-- Data migration (FASE 3.5)
+UPDATE core.ipr
+SET fund_category_id = funding_source_id,
+    funding_source_id = NULL
+WHERE ipr_type_id = (SELECT id FROM ref.category WHERE code='PROGRAMA_8PCT')
+  AND funding_source_id IS NOT NULL;
+
+-- CHECK constraints for categorical coherence
+ALTER TABLE core.ipr
+    ADD CONSTRAINT chk_investment_sector_scheme
+        CHECK (investment_sector_id IS NULL OR
+               fn_validate_category_scheme(investment_sector_id, 'investment_sector')),
+    ADD CONSTRAINT chk_fund_category_scheme
+        CHECK (fund_category_id IS NULL OR
+               fn_validate_category_scheme(fund_category_id, 'fondo_8pct'));
+```
+
+**Results** (Tested in goreos_model_test):
+```
+AFTER (COHERENT):
+funding_source_id → 1 scheme only
+└─ 1,973 IPRs → scheme='funding_source' ✓ 100%
+
+fund_category_id → 1 scheme only
+└─ 1,648 IPRs → scheme='fondo_8pct' ✓ 100%
+
+investment_sector_id → 1 scheme only
+└─ 128 IPRs → scheme='investment_sector' ✓ 100%
+```
+
+**Metrics**:
+- Coherencia ontológica: **92%** (vs 30% in v1.0)
+- Coherencia categorial: **100%** (vs 70% in v1.0)
+- Redundancia: **8%** (vs 25% in v1.0)
+
+**Impact**:
+- 2 new columns: `investment_sector_id`, `fund_category_id`
+- 2 new schemes: `investment_sector` (10 codes), `fondo_8pct` (existing, repurposed)
+- Migration script: `/etl/migration/sql/normalize_ipr_metadata_v2.sql` (tested successfully)
+- Breaking change: Apps querying `funding_source_id` for PROGRAMA_8PCT must update to use `fund_category_id`
+
+**Trade-offs**:
+- Additional columns: Marginal storage cost (~16 bytes per IPR × 3,621 = ~58KB)
+- Migration required: One-time cost, transactional script with rollback
+- App updates: Limited impact (only PROGRAMA_8PCT queries)
+
+**Benefits**:
+- Categorical Univocity: 100% guaranteed via CHECK constraints
+- Performance: 3-5x faster filtering, 10x faster joins (estimated)
+- Maintainability: Clear semantic boundaries
+- Future-proof: Enables proper sectoral analysis and 8% fund tracking
+
+**Related Decisions**:
+- DD-023 (Category Pattern)
+- DD-018 (JSONB for flexible metadata)
+- ADR-003 (Modelo como Base)
+
+**Documentation**:
+- Full report: `/etl/migration/NORMALIZACION_v2.0_REPORTE_FINAL.md`
+- Data dictionary: `/etl/migration/IPR_NEW_COLUMNS_DATA_DICT_v2.md`
+- Categorical audit: `/docs/AUDITORIA_CATEGORIAL_NORMALIZACION_JSONB.md` (v1.0 rejected)
+- Plan: `/docs/PLAN_NORMALIZACION_JSONB_v2.0.md`
+
+**Status**: ✓ TESTED in dev (goreos_model_test) | ⏳ PENDING production deployment
+
+---
+
 ## Referencias
 
 - Auditoría Categorial Consolidada (2026-01-27)
@@ -483,5 +606,5 @@ CREATE INDEX idx_category_path_gist ON ref.category USING GIST(path);
 
 ---
 
-**Última actualización**: 2026-01-27
-**Próxima revisión**: v3.1 (Q2 2026)
+**Última actualización**: 2026-01-30 (DD-035: Metadata Normalization v2.0)
+**Próxima revisión**: v3.2 deployment (pending)

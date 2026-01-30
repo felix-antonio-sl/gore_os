@@ -83,6 +83,8 @@ TABLES = {
             "status_id": {"table": "ref.category", "display": "label", "label": "Estado"},
             "mechanism_id": {"table": "ref.category", "display": "label", "label": "Mecanismo"},
             "funding_source_id": {"table": "ref.category", "display": "label", "label": "Fuente Financiamiento"},
+            "investment_sector_id": {"table": "ref.category", "display": "label", "label": "Sector Inversión"},
+            "fund_category_id": {"table": "ref.category", "display": "label", "label": "Categoría Fondo 8%"},
             "executor_id": {"table": "core.organization", "display": "name", "label": "Ejecutor"},
             "formulator_id": {"table": "core.organization", "display": "name", "label": "Formulador"},
         },
@@ -92,6 +94,9 @@ TABLES = {
             "ipr_nature": {"type": "text", "label": "Naturaleza"},
             "crea_activo": {"type": "boolean", "label": "Activo"},
             "mechanism_id": {"type": "relation", "label": "Mecanismo"},
+            "ipr_type_id": {"type": "relation", "label": "Tipo IPR"},
+            "investment_sector_id": {"type": "relation", "label": "Sector Inversión"},
+            "fund_category_id": {"type": "relation", "label": "Categoría Fondo 8%"},
         },
     },
     "core.agreement": {

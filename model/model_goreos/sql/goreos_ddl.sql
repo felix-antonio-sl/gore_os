@@ -1,8 +1,9 @@
 -- =============================================================================
--- GORE_OS DDL v3.0 - Modelo de Datos Institucional (UUID Universal)
+-- GORE_OS DDL v3.2 - Modelo de Datos Institucional (UUID Universal)
 -- =============================================================================
 -- GENERADO POR: Arquitecto-GORE + Debate Multiagente (Orquestador-Genérico)
--- FECHA: 2026-01-26
+-- FECHA CREACIÓN: 2026-01-26
+-- ÚLTIMA ACTUALIZACIÓN: 2026-01-30 (Normalization v2.0)
 -- TOTAL TABLAS: 50
 -- ARQUITECTURA: 4 schemas (meta, ref, core, txn)
 -- CAMBIOS v3.0:
@@ -12,6 +13,11 @@
 --   - ref.actor extendido para agentes algorítmicos (KODA)
 --   - Particionamiento en txn.event y txn.magnitude
 --   - ENUM SQL para tipos fijos
+-- CAMBIOS v3.2 (2026-01-30):
+--   - core.ipr: +investment_sector_id (scheme=investment_sector, 10 codes, gnub:InvestmentTypology)
+--   - core.ipr: +fund_category_id (scheme=fondo_8pct, 10 codes, PROGRAMA_8PCT only)
+--   - Categorical Univocity: funding_source_id/fund_category_id separation
+--   - Coherencia categorial: 100% (cada FK → 1 scheme único)
 -- ALINEAMIENTO: Gist 14.0, gnub:*, tde:*
 -- =============================================================================
 
@@ -32,6 +38,8 @@
 -- txn.event (event_type='DEVENGO') <-> gnub:AccrualEvent
 -- txn.event (event_type='PAGO') <-> gnub:PaymentEvent
 -- core.budget_commitment <-> gnub:BudgetaryCommitment rdfs:subClassOf gist:Commitment
+-- core.ipr.investment_sector_id <-> gnub:InvestmentTypology
+-- core.ipr.fund_category_id <-> gnub:FundCategory8PCT
 -- ref.category <-> gist:Category pattern
 -- ref.actor (agent_type='ALGORITHMIC') <-> koda:Agent
 -- =============================================================================
@@ -627,6 +635,9 @@ CREATE TABLE core.ipr (
     budget_subtitle_id UUID REFERENCES ref.category(id),
     funding_source_id UUID REFERENCES ref.category(id),
     mechanism_id UUID REFERENCES ref.category(id),
+    -- v3.2 - Metadata normalization v2.0 (2026-01-30)
+    investment_sector_id UUID REFERENCES ref.category(id),
+    fund_category_id UUID REFERENCES ref.category(id),
     crea_activo BOOLEAN DEFAULT TRUE,
     formulator_id UUID REFERENCES core.organization(id),
     executor_id UUID REFERENCES core.organization(id),
@@ -651,11 +662,15 @@ CREATE TABLE core.ipr (
 CREATE INDEX idx_ipr_phase ON core.ipr(mcd_phase_id);
 CREATE INDEX idx_ipr_status ON core.ipr(status_id);
 CREATE INDEX idx_ipr_mechanism ON core.ipr(mechanism_id);
+CREATE INDEX idx_ipr_investment_sector ON core.ipr(investment_sector_id) WHERE investment_sector_id IS NOT NULL;
+CREATE INDEX idx_ipr_fund_category ON core.ipr(fund_category_id) WHERE fund_category_id IS NOT NULL;
 -- MED-001 FIX: idx_ipr_deleted eliminado (subóptimo, usar idx_ipr_active de goreos_indexes.sql)
 COMMENT ON TABLE core.ipr IS 'Iniciativa de Inversion Publica Regional - transformacion territorial';
 COMMENT ON COLUMN core.ipr.ipr_nature IS 'PROYECTO|PROGRAMA (ENUM)';
 COMMENT ON COLUMN core.ipr.mcd_phase_id IS 'scheme=mcd_phase: F0|F1|F2|F3|F4|F5 (6 fases MCD)';
 COMMENT ON COLUMN core.ipr.mechanism_id IS 'scheme=mechanism: SNI|C33|FRIL|GLOSA06|TRANSFER|SUBV8|FRPD';
+COMMENT ON COLUMN core.ipr.investment_sector_id IS 'scheme=investment_sector: SPORTS|CULTURE|EDUCATION|HEALTH|ENVIRONMENT|TRANSPORT|SECURITY|TOURISM|SCIENCE|ECONOMIC_DEV (10 codes, ontology: gnub:InvestmentTypology)';
+COMMENT ON COLUMN core.ipr.fund_category_id IS 'scheme=fondo_8pct: DEPORTE|CULTURA|SEGURIDAD|ADULTO_MAYOR|SOCIAL|EQUIDAD_GENERO|etc (10 codes, only for PROGRAMA_8PCT, maintains categorical univocity)';
 
 -- HIGH-010: Sin mechanism_type_id redundante
 CREATE TABLE core.ipr_mechanism (

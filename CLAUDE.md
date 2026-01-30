@@ -12,9 +12,13 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 
 ## Current Status
 
-- **Database**: v3.1 complete (63 tables, 4 schemas, 56 category schemes)
-- **Data**: ~53K records (3,621 IPRs, 3,308 Organizations, 4,609 Budget Commitments, 4,040 Events)
+- **Database**: v3.2 (63 tables, 4 schemas, 78+ category schemes)
+- **Data**: ~53K records (3,621 IPRs, 3,308+ Organizations, 4,609 Budget Commitments, 4,040 Events)
 - **ETL migration**: Complete (7 phases: IDIS, Agreements, Budget, Events, Organizations, Programas 8%)
+- **Metadata normalization v2.0**: ✓ TESTED in dev | ⏳ PENDING production deployment
+  - Coherencia categorial: 100% (Categorical Univocity achieved)
+  - New columns: `investment_sector_id`, `fund_category_id`
+  - See `etl/migration/NORMALIZACION_v2.0_REPORTE_FINAL.md`
 - **Apps**: Streamlit migration_viewer operational; Flask app pending
 
 ## Quick Start
@@ -38,12 +42,12 @@ WHERE schemaname IN ('meta','ref','core','txn') GROUP BY schemaname;"
 
 ### 4-Schema structure
 
-| Schema | Purpose |
-|--------|---------|
-| `meta` | Role/Process/Entity/Story atoms |
-| `ref`  | Controlled vocabularies (Category pattern, 78+ schemes) |
-| `core` | Business entities (IPR, Agreements, Budget, etc.) |
-| `txn`  | Event sourcing (Event, Magnitude) - partitioned |
+| Schema | Purpose | Tables |
+|--------|---------|--------|
+| `meta` | Role/Process/Entity/Story atoms | 10 |
+| `ref`  | Controlled vocabularies (Category pattern, 78+ schemes) | 2 |
+| `core` | Business entities (IPR, Agreements, Budget, etc.) | 46 |
+| `txn`  | Event sourcing (Event, Magnitude) - partitioned | 5 |
 
 ### Data pipeline
 
@@ -68,7 +72,9 @@ etl/sources/ → etl/scripts/ → etl/normalized/ → model/model_goreos (Postgr
 
 Central entity: **IPR (Intervención Pública Regional)** - polymorphic
 - Types: INFRAESTRUCTURA, EQUIPAMIENTO, TRANSFERENCIA, PROGRAMA_SOCIAL, PROGRAMA_8PCT, CONSERVACION, ESTUDIO
-- Funding mechanisms: FNDR, FRIL, FRPD, ISAR, SUBV8 (8% FNDR)
+- Funding mechanisms: FNDR, FRIL, FRPD, ISAR (via `funding_source_id`)
+- Fund categories (8% FNDR): DEPORTE, CULTURA, SEGURIDAD, ADULTO_MAYOR, etc. (via `fund_category_id`, PROGRAMA_8PCT only)
+- Investment sectors: SPORTS, CULTURE, EDUCATION, HEALTH, etc. (via `investment_sector_id`)
 - Lifecycle: Status transitions from planning → execution → closure
 
 Critical entities:
@@ -153,24 +159,67 @@ Example: Programas 8% were migrated with full normalization:
 - `metadata->>'monto_transferido'` → `core.budget_commitment.amount`
 - Text fields (provincia/comuna) → `core.ipr_territory` junction table
 
-## Category Pattern
+## Category Pattern & Ontological Alignment
 
-Uses `ref.category` (56 schemes) instead of ENUMs for extensibility.
+Uses `ref.category` (78+ schemes) following **Gist 14.0 Category Pattern** with strict ontological alignment and **Categorical Univocity** enforcement.
 
-**Key schemes:**
-- `ipr_type`: INFRAESTRUCTURA, PROGRAMA_8PCT, etc.
-- `ipr_status`: PLANIFICACION, EN_EJECUCION, CERRADO, etc.
-- `funding_mechanism`: FNDR, FRIL, SUBV8, etc.
-- `fondo_8pct`: DEPORTE, CULTURA, SEGURIDAD, ADULTO_MAYOR, etc.
-- `org_type`: PUBLICO, PRIVADO, COMUNITARIA, etc.
-- `commitment_type`: PRESUPUESTO_INICIAL, TRANSFERENCIA_8PCT, etc.
-- `party_role`: MANDANTE, EJECUTOR, BENEFICIARIO, etc.
+### Core Ontologies
 
-Query available schemes:
+- **Gist 14.0**: Base ontology (Category, Magnitude, Event patterns)
+- **GORE Ñuble Ontology**: 199 terms (gnub:*) - see `docs/glosario_terminologico.md`
+- **TDE (Transformación Digital del Estado)**: 19 core terms (tde:*)
+- **Mappings**: Documented in DDL lines 21-37 (`model/model_goreos/sql/goreos_ddl.sql`)
+
+### Key Schemes
+
+- `ipr_type`: INFRAESTRUCTURA, PROGRAMA_8PCT, etc. (7 codes)
+- `ipr_party_role`: MANDANTE, EJECUTOR, BENEFICIARIO, UNIDAD_TECNICA (use this, NOT org_funding_role)
+- `funding_source`: FNDR, FRIL, FRPD, etc. (funding mechanisms for non-8% IPRs)
+- `fondo_8pct`: DEPORTE, CULTURA, SEGURIDAD, ADULTO_MAYOR, etc. (10 codes, via `fund_category_id` for PROGRAMA_8PCT)
+- `investment_sector`: SPORTS, CULTURE, EDUCATION, HEALTH, etc. (10 codes, sectorial classification)
+- `mechanism`: SNI, FRIL, SUBV8, etc. (financing mechanisms)
+- `org_type`: MUNICIPALIDAD, SERVICIO, DIVISION, UNIVERSIDAD, ORG_COMUNITARIA, etc.
+- `budget_subtitle`: 24, 31, 33 (budget classification)
+- `rendition_state`: COMPLETADO, PENDIENTE, EN_PROCESO (generic, NOT fund-specific)
+
+### Critical Rules for Creating New Schemes
+
+**BEFORE creating a new scheme, verify against categorical audit principles:**
+
+1. ❌ **DO NOT create schemes with only 1 value** (use boolean/timestamp instead)
+2. ❌ **DO NOT create entity-specific schemes** (e.g., `rendicion_8pct_state` - use generic `rendition_state`)
+3. ❌ **DO NOT duplicate existing schemes** (check `ipr_party_role` before creating `org_funding_role`)
+4. ❌ **DO NOT mix ontological dimensions** (funding sources ≠ mechanisms ≠ sectors)
+5. ❌ **DO NOT violate Categorical Univocity** (each FK column → exactly 1 scheme)
+6. ✅ **DO align with Gist/GNUB/TDE ontologies** (check glosario_terminologico.md)
+7. ✅ **DO use existing relational patterns** (M:N junction tables over denormalized schemes)
+8. ✅ **DO separate dimensions into different columns** (funding_source_id ≠ fund_category_id)
+
+**Example violations from categorical audits:**
+- `ipr_legacy_typology`: REJECTED (v1.0) - mixed 5 ontological dimensions
+- `org_funding_role`: REJECTED (v1.0) - duplicates `ipr_party_role`
+- `funding_source_id` accepting 2 schemes: FIXED (v2.0) - separated into `funding_source_id` + `fund_category_id`
+
+**Categorical Univocity Principle**: Each FK column must point to exactly ONE ref.category scheme.
+- ✓ CORRECT: `funding_source_id` → scheme='funding_source' only
+- ✓ CORRECT: `fund_category_id` → scheme='fondo_8pct' only
+- ✗ VIOLATION: Single FK pointing to multiple schemes
+
+**See full audits**:
+- `docs/AUDITORIA_CATEGORIAL_NORMALIZACION_JSONB.md` (v1.0 audit)
+- `etl/migration/NORMALIZACION_v2.0_REPORTE_FINAL.md` (v2.0 remediation)
+
+### Query Schemes
 
 ```bash
+# List all schemes
 docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;"
+
+# View scheme values
 docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT code,label FROM ref.category WHERE scheme='SCHEME_NAME';"
+
+# Check if scheme exists before creating
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT COUNT(*) FROM ref.category WHERE scheme='proposed_scheme_name';"
 ```
 
 ## Directory Structure
@@ -184,10 +233,33 @@ apps/            # streamlit_tooling/ flask_app/
 
 ## Key Docs
 
+### Essential Reading
+
 - `INDEX.md` - repo navigation
 - `MANIFESTO.md` - identity + genesis
 - `architecture/Omega_GORE_OS_Definition_v3.0.0.md` - system spec
+- `docs/glosario_terminologico.md` - 244 ontological terms (Gist 14.0 + GNUB + TDE)
+
+### Data Architecture
+
+- `model/model_goreos/docs/GOREOS_ERD_v3.md` - ERD + data dictionary
+- `model/model_goreos/docs/DESIGN_DECISIONS.md` - design rationale
+- `model/model_goreos/sql/goreos_ddl.sql` - DDL with ontological mappings (lines 21-37)
+
+### ETL & Migration
+
+- `etl/migration/LECCIONES_APRENDIDAS.md` - migration lessons learned
+- `etl/migration/PRE_LOADER_CHECKLIST.md` - pre-loader checklist
 - `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md` - migration methodology
+
+### Normalization & Audits
+
+- `etl/migration/NORMALIZACION_v2.0_REPORTE_FINAL.md` - **LATEST**: v2.0 normalization complete report (100% categorical coherence achieved)
+- `etl/migration/IPR_NEW_COLUMNS_DATA_DICT_v2.md` - Data dictionary for new columns (investment_sector_id, fund_category_id)
+- `docs/PLAN_NORMALIZACION_JSONB_v2.0.md` - v2.0 normalization plan (corrected after categorical audit)
+- `etl/migration/sql/normalize_ipr_metadata_v2.sql` - Production-ready normalization script (tested in dev)
+- `docs/AUDITORIA_CATEGORIAL_NORMALIZACION_JSONB.md` - v1.0 categorical audit (rejected plan)
+- `etl/migration/IPR_METADATA_NORMALIZATION_ANALYSIS.md` - IPR metadata field-by-field analysis
 
 ## Semantic Model
 
@@ -239,9 +311,37 @@ FROM core.ipr i
 JOIN ref.category c ON i.ipr_type_id = c.id
 GROUP BY c.code ORDER BY total DESC;"
 
-# Check orphaned records (IPRs without funding source)
+# Check categorical coherence (post-normalization v2.0)
 docker exec goreos_db psql -U goreos -d goreos_model -c "
-SELECT COUNT(*) FROM core.ipr WHERE funding_source_id IS NULL;"
+SELECT
+    'funding_source_id' AS campo,
+    COUNT(*) AS iprs,
+    COUNT(DISTINCT c.scheme) AS schemes,
+    STRING_AGG(DISTINCT c.scheme, ', ') AS scheme_list
+FROM core.ipr i
+JOIN ref.category c ON c.id = i.funding_source_id
+WHERE i.funding_source_id IS NOT NULL
+UNION ALL
+SELECT
+    'fund_category_id',
+    COUNT(*),
+    COUNT(DISTINCT c.scheme),
+    STRING_AGG(DISTINCT c.scheme, ', ')
+FROM core.ipr i
+JOIN ref.category c ON c.id = i.fund_category_id
+WHERE i.fund_category_id IS NOT NULL;
+"
+# Expected: schemes = 1 for both (Categorical Univocity)
+
+# Check PROGRAMA_8PCT coherence
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT
+    COUNT(*) FILTER (WHERE funding_source_id IS NOT NULL) as has_funding_source,
+    COUNT(*) FILTER (WHERE fund_category_id IS NOT NULL) as has_fund_category
+FROM core.ipr
+WHERE ipr_type_id = (SELECT id FROM ref.category WHERE code='PROGRAMA_8PCT');
+"
+# Expected: has_funding_source = 0, has_fund_category > 0
 
 # Check budget vs commitments alignment
 docker exec goreos_db psql -U goreos -d goreos_model -c "
@@ -258,11 +358,118 @@ LEFT JOIN core.ipr_territory it ON i.id = it.ipr_id
 WHERE it.ipr_id IS NULL;"
 ```
 
-## Compliance
+## Compliance & Governance
 
+### Ontological Compliance
+
+- **Gist 14.0**: Strict adherence to Category, Magnitude, Event patterns
+- **GNUB (GORE Ñuble)**: 199 classes mapped to PostgreSQL schema (gnub:IPR, gnub:BudgetaryCommitment, etc.)
+- **TDE (Transformación Digital del Estado)**: 19 core classes for digital government
 - **ORKO**: Ontology with HAIC constraint (AI agents require `human_accountable_id`)
-- **TDE**: ClaveÚnica, DocDigital, PISEE, Once-Only + Digital Default
+
+### Digital Government Standards
+
+- **TDE Core**: ClaveÚnica, DocDigital, PISEE, Once-Only + Digital Default
+- **DS N°10**: Electronic file management (expedientes electrónicos)
+- **MGDE (Marco de Gestión de Datos del Estado)**: Data governance framework
+
+### Data Quality Gates
+
+Before any schema change or new category scheme:
+
+1. ✅ **Categorical Audit**: Check alignment with Gist/GNUB/TDE ontologies
+2. ✅ **Redundancy Check**: Verify no existing scheme covers the need
+3. ✅ **Pattern Validation**: Ensure proper use of Category/Magnitude/Junction patterns
+4. ✅ **Univocity Validation**: Confirm each FK column points to exactly 1 scheme
+5. ✅ **User Story Traceability**: Confirm requirement derives from validated story
+
+**Audit Tools**:
+- Use arquitecto-gore agent role for categorical audits
+- Check coherence with: `fn_validate_category_scheme(uuid, varchar)` function
+- Verify univocity: Query `COUNT(DISTINCT c.scheme)` for each FK column
+
+**Methodology**: See `etl/migration/NORMALIZACION_v2.0_REPORTE_FINAL.md` for v2.0 approach
+
+## Metadata Normalization Workflow (Tested v2.0)
+
+When normalizing JSONB metadata to relational columns:
+
+### 1. Pre-Migration Analysis
+```bash
+# Identify JSONB keys to normalize
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT jsonb_object_keys(metadata) as key, COUNT(*) as occurrences
+FROM core.ipr
+WHERE metadata IS NOT NULL
+GROUP BY key
+ORDER BY occurrences DESC;"
+```
+
+### 2. Categorical Audit (CRITICAL)
+- Use arquitecto-gore agent for ontological alignment check
+- Verify against Gist/GNUB/TDE ontologies (`docs/glosario_terminologico.md`)
+- Check for Categorical Univocity violations
+- Document rejected schemes with rationale
+
+### 3. Schema Verification
+```bash
+# Always verify actual schema before writing migration
+docker exec goreos_db psql -U goreos -d goreos_model -c "\d core.TARGET_TABLE"
+```
+
+### 4. Test Environment Setup
+```bash
+# Clone production to test database
+docker exec goreos_db psql -U goreos -d postgres -c "
+DROP DATABASE IF EXISTS goreos_model_test;
+CREATE DATABASE goreos_model_test;"
+
+docker exec goreos_db bash -c "
+pg_dump -U goreos -d goreos_model | psql -U goreos -d goreos_model_test"
+```
+
+### 5. Migration Script Structure
+```sql
+-- Use transaction blocks per phase
+BEGIN;
+  -- Phase operations
+  -- Verification queries
+COMMIT;
+
+-- Use DO $$ blocks for PL/pgSQL
+DO $$
+BEGIN
+  RAISE NOTICE 'Status message';
+END $$;
+
+-- Always create backup
+CREATE TEMP TABLE backup_table AS SELECT * FROM target_table;
+```
+
+### 6. Post-Migration Verification
+```bash
+# Verify categorical coherence (must be 100%)
+docker exec goreos_db psql -U goreos -d goreos_model_test -c "
+SELECT
+    column_name,
+    COUNT(DISTINCT c.scheme) as schemes
+FROM core.ipr i
+JOIN ref.category c ON c.id = i.column_name
+GROUP BY column_name;"
+# Expected: schemes = 1 for all FK columns
+```
+
+### 7. CHECK Constraints
+```sql
+-- Add CHECK constraints for referential integrity
+ALTER TABLE core.ipr
+    ADD CONSTRAINT chk_column_scheme
+    CHECK (column_id IS NULL OR
+           fn_validate_category_scheme(column_id, 'scheme_name'));
+```
+
+**Reference Implementation**: See `etl/migration/sql/normalize_ipr_metadata_v2.sql`
 
 ---
 
-**Last updated**: 2026-01-30
+**Last updated**: 2026-01-30 (Normalization v2.0 Complete)
