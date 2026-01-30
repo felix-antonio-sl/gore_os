@@ -1,1083 +1,499 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code (claude.ai/code) when working in this repository.
 
 ## Project Overview
 
-GORE_OS is an institutional operating system for the Regional Government of Ñuble (GORE), Chile. It is an integrated model of data, processes, and organizational capabilities designed to digitalize and enable intelligence-driven decision-making for regional government operations.
+GORE_OS is an institutional operating system for the Regional Government of Ñuble (GORE), Chile: an integrated model of data, processes, and organizational capabilities to digitalize operations and enable intelligence-driven decision-making.
 
-**Core Philosophy: Story-First & Radical Minimalism**
-- Everything derives from User Stories (819+ validated stories)
-- Strictly unidirectional derivation: **Stories → Entities → Artifacts → Modules**
-- No code exists without a corresponding story
+**Core philosophy (Story-First + Radical Minimalism)**
 
-**Current Project Status (2026-01-29)**:
-- 🗄️ **Database Model**: v3.1 Complete (63 tables, 4 schemas, 78+ category schemes)
-- 📊 **ETL Pipeline**: Stage 1 Complete (470 scripts, 32K records normalized)
-- ✅ **Migration FASE 1**: Complete - PersonLoader (111) + OrganizationLoader (1,668) = 1,779 records
-- ✅ **Migration FASE 2**: Complete - IPRLoader (1,973/1,974) = 99.9% success rate
-- ✅ **Migration FASE 3**: Complete - AgreementLoader (533/533) = 100% success rate
-- ✅ **Migration FASE 4**: Complete - BudgetProgramLoader (25,753) = 100% success rate
-- ✅ **Migration FASE 5**: Complete - EventLoader (2,373) + BudgetCommitment (3,701) = 6,074 records
-- 🔄 **Next**: FASE 6 - Other Facts (~8,000 records: modificaciones, rendiciones, ejecución)
-- 💻 **Applications**: Streamlit tooling operational, Flask app pending
+- Everything derives from User Stories (819+ validated)
+- Strict derivation: **Stories → Entities → Artifacts → Modules**
+- No code without a corresponding story
 
-**Migration Totals**: 36,112 records migrated (FASE 1-5)
+## Current Status (2026-01-29)
+
+- **Database model**: v3.1 complete (**63 tables**, **4 schemas**, **78+ category schemes**)
+- **ETL stage 1**: complete (**470 scripts**, **~32K** normalized records, star schema **15 dims + 8 facts**, **23 CSV** outputs)
+- **ETL → PostgreSQL migration**: **FASE 1–7 complete**, **43,256** records migrated (see verification queries below)
+- **Apps**: Streamlit tooling operational; Flask app pending
+
+### Migration Summary (FASE 1–7)
+
+| FASE | Target(s)                 | Records       | Success        |
+| ---- | ------------------------- | ------------- | -------------- |
+| 1    | `core.person`             | 111           | 100%           |
+| 1    | `core.organization`       | 1,668         | 100%           |
+| 2    | `core.ipr`                | 1,973 / 1,974 | 99.9%          |
+| 3    | `core.agreement`          | 533           | 100%           |
+| 4    | `core.budget_program`     | 25,753        | 100%           |
+| 5    | `txn.event` (documentos)  | 2,373         | 100%           |
+| 5    | `core.budget_commitment`  | 3,701         | 100%           |
+| 6    | `txn.magnitude`           | 3,496         | 100%           |
+| 6    | `txn.event` (rendiciones) | 1,667         | 100%           |
+| 7    | `core.ipr_territory`      | 1,965         | 95.9% coverage |
+| 7    | `core.person_org_link`    | 110           | 100%           |
 
 ---
 
-## 🚀 Quick Start
+## Quick Start (Docker PostgreSQL)
 
 ```bash
-# 1. Start PostgreSQL
 docker-compose up -d postgres
-
-# 2. Verify connection
 docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT version();"
+```
 
-# 3. Verify FASE 1 migration (already complete)
+### Verify migrations (already complete)
+
+```bash
+# FASE 1 (counts by metadata.source; totals may differ from table totals/seed data)
 docker exec goreos_db psql -U goreos -d goreos_model -c "
-SELECT 'core.person' as table, COUNT(*) as migrated FROM core.person WHERE metadata->>'source' = 'dim_funcionario'
+SELECT 'core.person' AS table, COUNT(*) AS migrated
+FROM core.person
+WHERE metadata->>'source' = 'dim_funcionario'
 UNION ALL
-SELECT 'core.organization', COUNT(*) FROM core.organization WHERE metadata->>'source' = 'dim_institucion_unificada';"
--- Expected: person=110, organization=1612
+SELECT 'core.organization', COUNT(*)
+FROM core.organization
+WHERE metadata->>'source' = 'dim_institucion_unificada';"
+# Expected: person=110, organization=1612
 
-# 4. Verify FASE 2-5 migration (already complete)
+# FASE 2-7 (logical rows)
 docker exec goreos_db psql -U goreos -d goreos_model -c "
-SELECT 'core.ipr' as table, COUNT(*) as migrated FROM core.ipr WHERE deleted_at IS NULL
+SELECT 'core.ipr' AS table, COUNT(*) AS rows FROM core.ipr WHERE deleted_at IS NULL
 UNION ALL SELECT 'core.agreement', COUNT(*) FROM core.agreement WHERE deleted_at IS NULL
 UNION ALL SELECT 'core.budget_program', COUNT(*) FROM core.budget_program WHERE deleted_at IS NULL
+UNION ALL SELECT 'core.budget_commitment', COUNT(*) FROM core.budget_commitment WHERE deleted_at IS NULL
+UNION ALL SELECT 'core.ipr_territory', COUNT(*) FROM core.ipr_territory WHERE deleted_at IS NULL
 UNION ALL SELECT 'txn.event', COUNT(*) FROM txn.event
-UNION ALL SELECT 'core.budget_commitment', COUNT(*) FROM core.budget_commitment WHERE deleted_at IS NULL;"
--- Expected: ipr=1,973, agreement=533, budget_program=25,753, event=2,373, budget_commitment=3,701
-
-# 5. Next: FASE 6 - Other Facts
-# ~8,000 records pending (modificaciones, rendiciones, ejecución mensual)
+UNION ALL SELECT 'txn.magnitude', COUNT(*) FROM txn.magnitude;"
+# Expected: ipr=1,973, agreement=533, budget_program=25,753, budget_commitment=3,701,
+#           ipr_territory=1,965, event=4,040, magnitude=3,496
 ```
 
 ---
 
-## 🏛️ FUNDAMENTO ARQUITECTÓNICO
+## Architectural Foundation (CRITICAL)
 
-**CRÍTICO**: El corazón de GORE_OS es el modelo de datos PostgreSQL en `/model/model_goreos`.
+**The heart of GORE_OS is the PostgreSQL data model in `model/model_goreos/`.**
 
-### Por qué el Modelo es la Base
+Why the model is the base:
 
-Este modelo PostgreSQL es el activo más valioso del proyecto:
+1. **Executable**: DDL + seeds + triggers in `model/model_goreos/sql/` (4 semantic schemas: `meta`, `ref`, `core`, `txn`)
+2. **Derived from stories**: 100% traceable to the 819 stories (Story-First)
+3. **Audited**: see `model/model_goreos/docs/auditorias/AUDITORIA_CONSOLIDADA_v3_2026-01-27.md`
+4. **Category pattern**: `ref.category` (75+ schemes) instead of ENUMs; transitions via JSONB + triggers
+5. **Event sourcing hybrid**: `txn.event` + history tables (partitioning month/quarter)
+6. **ETL-ready**: `/etl` pipeline produced normalized legacy datasets that feed the model
 
-1. **Completo y Ejecutable**: 54 tablas organizadas en 4 schemas semánticos (`meta`, `ref`, `core`, `txn`)
-2. **Derivado de Stories**: 100% trazable a 819 User Stories validadas (Story-First architecture)
-3. **Auditado y Probado**: Ver `/model/model_goreos/docs/auditorias/AUDITORIA_CONSOLIDADA_v3_2026-01-27.md`
-4. **Category Pattern**: Gist 14.0 implementado - 75+ schemes para vocabularios controlados sin DDL
-5. **Event Sourcing**: Historia completa de cambios con particionamiento mensual/trimestral
-6. **ETL Ready**: 470 scripts en `/etl` han migrado datos legacy que alimentan este modelo
+### 4-Schema semantic structure
 
-### Instalación del Modelo (PRIMER PASO OBLIGATORIO)
+| Schema | Tables | Purpose                                                       |
+| ------ | ------ | ------------------------------------------------------------- |
+| `meta` | 5      | Role/Process/Entity/Story atoms + mapping                     |
+| `ref`  | 3      | Controlled vocabularies (Category, Actor, Commitment Types)   |
+| `core` | 40+    | Business entities (IPR, Agreements, Budget, Work Items, etc.) |
+| `txn`  | 2+     | Event sourcing (Event, Magnitude) - partitioned               |
 
-**Antes de cualquier desarrollo, instalar el modelo PostgreSQL:**
-
-```bash
-# 0. Crear base de datos
-createdb -U postgres goreos
-
-# 1-8. Ejecutar DDL en orden estricto (CRÍTICO: no omitir ni reordenar)
-cd model/model_goreos/sql
-psql -U postgres -d goreos -f goreos_ddl.sql
-psql -U postgres -d goreos -f goreos_seed.sql
-psql -U postgres -d goreos -f goreos_seed_agents.sql
-psql -U postgres -d goreos -f goreos_seed_territory.sql
-psql -U postgres -d goreos -f goreos_triggers.sql
-psql -U postgres -d goreos -f goreos_triggers_remediation.sql
-psql -U postgres -d goreos -f goreos_indexes.sql
-psql -U postgres -d goreos -f goreos_remediation_ontological.sql
-```
-
-### Arquitectura de 4 Schemas
-
-| Schema | Tablas | Propósito |
-|--------|--------|-----------|
-| `meta` | 5 | Átomos fundamentales (Role, Process, Entity, Story, Story-Entity) |
-| `ref` | 3 | Vocabularios controlados (Category, Actor, Commitment Types) |
-| `core` | 40+ | Entidades de negocio (IPR, Agreements, Budget, Work Items) |
-| `txn` | 2+ | Event Sourcing (Event, Magnitude) - Particionadas |
-
-### Pipeline de Datos: ETL → PostgreSQL → Apps
+### Data pipeline
 
 ```
-/etl/sources/               # Datos legacy (Excel, CSV, IDIS)
-      ↓
-/etl/scripts/               # 470 scripts de transformación Python
-      ↓
-/etl/normalized/            # Datos limpios y validados
-      ↓
-model/model_goreos (PostgreSQL)   # Modelo canónico (LA VERDAD)
-      ↓
-apps/streamlit_tooling/     # Tooling interno existente
-apps/flask_app/             # Aplicación productiva (a construir)
+etl/sources/ → etl/scripts/ → etl/normalized/ → model/model_goreos (PostgreSQL) → apps/
 ```
 
-**Referencias clave del modelo:**
-- Documentación completa: `/model/model_goreos/README.md`
-- ERD + Data Dictionary: `/model/model_goreos/docs/GOREOS_ERD_v3.md`
-- Decisiones de diseño: `/model/model_goreos/docs/DESIGN_DECISIONS.md`
-- ADR-003: `/architecture/decisions/ADR-003-modelo-como-base.md`
+### Model references
 
-**Docker Setup (Recommended):**
-
-```bash
-# Start PostgreSQL container
-docker-compose up -d postgres
-
-# Verify container is running
-docker ps | grep goreos_db
-
-# Container exposes port 5433 (not 5432) to host
-# Connection: localhost:5433/goreos_model (user: goreos, password: goreos_2026)
-```
+- `model/model_goreos/README.md` (install/verify/troubleshoot)
+- `model/model_goreos/docs/GOREOS_ERD_v3.md` (ERD + data dictionary)
+- `model/model_goreos/docs/DESIGN_DECISIONS.md` (design rationale)
+- `architecture/decisions/ADR-003-modelo-como-base.md` (ADR)
 
 ---
 
-## Technology Stack
+## Tech Stack
 
-- **Backend:** Python 3.11+, Flask 3.0.3 (Application Factory pattern), SQLAlchemy 2.0.30
-- **Frontend:** Server-Side Rendering with Jinja2, HTMX 2.0.0, Alpine.js 3.x, Tailwind CSS 3.4.0
-- **Database:** PostgreSQL 16 + PostGIS (geospatial for regional planning)
-- **Authentication:** Flask-Login integrated with ClaveÚnica (Chilean national identity)
-- **Infrastructure:** Docker + Docker Compose, Gunicorn WSGI, Nginx reverse proxy
-- **Background Jobs:** Celery with Redis broker
-- **ETL:** Pandas 2.0+, DuckDB 0.9.2, NetworkX
+- Backend: Python 3.11+, Flask 3.0.3, SQLAlchemy 2.0.30
+- Frontend: Jinja2 + HTMX 2.0.0 + Alpine.js 3.x + Tailwind CSS 3.4.0
+- DB: PostgreSQL 16 + PostGIS
+- Auth: Flask-Login + ClaveÚnica
+- Infra: Docker/Compose, Gunicorn, Nginx
+- Jobs: Celery + Redis
+- ETL: Pandas 2.0+, DuckDB 0.9.2, NetworkX
 
-## Database Setup & Commands
+---
 
-### Creating the Database from Scratch
+## Domain Model (quick)
 
-The database is defined in `model/model_goreos/sql/` with **8 SQL files** that must be executed in strict order:
+Central abstract entity: **IPR (Intervención Pública Regional)** (polymorphic)
+
+- Types: PROYECTO (capital) vs PROGRAMA (current)
+- Funding: FNDR, FRIL, FRPD, ISAR
+- Evaluation: SNI, C33, FRIL, Glosa 06, 8% FNDR, Transfers
+
+Critical entities:
+
+- EstadoPago (EEPP): REVISION → OBSERVADO → APROBADO → PAGADO
+- ResolucionModificatoria (budget/timeframe amendments)
+- Funcionario (ANALISTA, JEFE, VISADOR)
+- Unidad (DIPIR, DAF, JURIDICA)
+- WorkItem (unified work atom: stories/commitments/problems/alerts)
+
+Core processes:
+
+- PAYMENT_CYCLE (7-step financial execution)
+- AMENDMENT_CYCLE (4-step budget modification + CGR notification)
+- Sense-Decide-Act (SDA) operational loop
+
+---
+
+## Database Setup (from scratch)
+
+**Run the 8 SQL files in strict order** from `model/model_goreos/sql/`:
 
 ```bash
-# 0. Create database
 createdb -U postgres goreos
-
-# 1-8. Execute DDL files in order (CRITICAL: do not skip or reorder)
 cd model/model_goreos/sql
-psql -U postgres -d goreos -f goreos_ddl.sql                      # Schemas, tables, functions, ENUMs
-psql -U postgres -d goreos -f goreos_seed.sql                     # 75+ schemes, 350+ categories
-psql -U postgres -d goreos -f goreos_seed_agents.sql              # KODA agents with HAIC constraint
-psql -U postgres -d goreos -f goreos_seed_territory.sql           # 3 provinces, 21 comunas
-psql -U postgres -d goreos -f goreos_triggers.sql                 # Business logic triggers
-psql -U postgres -d goreos -f goreos_triggers_remediation.sql     # Category validation triggers
-psql -U postgres -d goreos -f goreos_indexes.sql                  # Performance indexes
-psql -U postgres -d goreos -f goreos_remediation_ontological.sql  # N:M relations (v3.1)
+for f in goreos_ddl.sql goreos_seed.sql goreos_seed_agents.sql goreos_seed_territory.sql \
+         goreos_triggers.sql goreos_triggers_remediation.sql goreos_indexes.sql \
+         goreos_remediation_ontological.sql; do
+  psql -U postgres -d goreos -f "$f"
+done
 ```
 
-### Verifying the Installation
+Install checks (Docker):
 
 ```bash
-# Count tables by schema (expected: meta=5, ref=3, core=40+, txn=2+)
 docker exec goreos_db psql -U goreos -d goreos_model -c "
-    SELECT schemaname, COUNT(*) AS tables
-    FROM pg_tables
-    WHERE schemaname IN ('meta', 'ref', 'core', 'txn')
-    GROUP BY schemaname
-    ORDER BY schemaname;"
+  SELECT schemaname, COUNT(*) AS tables
+  FROM pg_tables
+  WHERE schemaname IN ('meta','ref','core','txn')
+  GROUP BY schemaname
+  ORDER BY schemaname;"
 
-# Verify seed data loaded (should return 78+ category schemes after remediation)
 docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT COUNT(DISTINCT scheme) FROM ref.category;"
-
-# Verify FASE 1 migration data
-docker exec goreos_db psql -U goreos -d goreos_model -c "
-    SELECT 'persons' as entity, COUNT(*) FROM core.person WHERE deleted_at IS NULL
-    UNION ALL
-    SELECT 'organizations', COUNT(*) FROM core.organization WHERE deleted_at IS NULL;"
 ```
 
-## Database Architecture
+---
 
-### 4-Schema Semantic Structure
-
-The database uses **category theory** principles with 4 schemas:
-
-| Schema | Tables | Purpose |
-|--------|--------|---------|
-| `meta` | 5 | Fundamental atoms (Role, Process, Entity, Story, Story-Entity mapping) |
-| `ref` | 3 | Controlled vocabularies (Category pattern with 75+ schemes) |
-| `core` | 40+ | Business entities (IPR, Agreements, Budget, Work Items, etc.) |
-| `txn` | 2+ | Event Sourcing (Event, Magnitude) - partitioned by month/quarter |
-
-### Critical Design Patterns
-
-**Category Pattern (Gist 14.0):** All taxonomies use `ref.category` instead of ENUMs. 75+ schemes including:
-- `ipr_state` (31 states), `work_item_status` (6 states), `mechanism` (evaluation tracks)
-- State machines enforced via `valid_transitions` JSONB + triggers
-
-**UUID Universal:** All tables use UUID as PK (not SERIAL)
-
-**Audit Universal:** All tables have `created_at`, `updated_at`, `deleted_at`, `created_by_id`, `updated_by_id`
-
-**Soft Delete:** Deletion is logical (`deleted_at IS NOT NULL`), never physical
-
-**Event Sourcing Hybrid:**
-- History tables for critical entities (`core.work_item → core.work_item_history`)
-- Generic events in `txn.event` (partitioned monthly)
-
-## Domain Model
-
-### Central Abstract Entity: IPR (Intervención Pública Regional)
-Polymorphic type hierarchy with funding mechanisms:
-- **Types:** PROYECTO (capital investment) vs PROGRAMA (current expenditure)
-- **Funding:** FNDR, FRIL, FRPD, ISAR
-- **Evaluation:** SNI, C33, FRIL, Glosa 06, 8% FNDR, Transfers
-
-### Critical Entities
-- **EstadoPago (EEPP):** Payment workflow (REVISION → OBSERVADO → APROBADO → PAGADO)
-- **ResolucionModificatoria:** Budget/timeframe amendments
-- **Funcionario:** Human actors with roles (ANALISTA, JEFE, VISADOR)
-- **Unidad:** Organizational units (DIPIR, DAF, JURIDICA)
-- **WorkItem:** Unified work management atom (stories, commitments, problems, alerts)
-
-### Core Processes
-- **PAYMENT_CYCLE:** 7-step financial execution flow
-- **AMENDMENT_CYCLE:** 4-step budget modification with CGR notification
-- **Sense-Decide-Act (SDA):** Real-time operational cycle for work items
-
-## Directory Structure
+## Directory Structure (high level)
 
 ```
-goreos/
-├── architecture/          # C1-C4 documentation, ADRs, design system
-├── model/                 # THE HEART - Semantic domain model
-│   ├── stories/           # 819+ YAML user stories (source of truth)
-│   ├── roles/             # 410+ institutional roles
-│   ├── entities/          # 139+ domain entities (aceptadas/, candidates/)
-│   ├── processes/         # 84+ BPMN processes
-│   ├── GLOSARIO.yml       # Authoritative terminology
-│   └── model_goreos/      # Executable database (v3.1)
-│       ├── sql/           # 8 DDL files (execute in order!)
-│       ├── docs/          # ERD, audits, design decisions
-│       └── README.md      # Installation guide
-├── etl/                   # ETL pipeline for legacy data migration
-│   ├── sources/           # Legacy data (convenios, FRIL, IDIS, etc.)
-│   ├── scripts/           # ~30 Python transformation scripts
-│   ├── normalized/        # Cleaned & validated output
-│   └── requirements.txt   # pandas>=2.0.0, duckdb==0.9.2
-└── catalog/               # KODA federated catalog
+architecture/    # ADRs, C1-C4 docs, standards, diagrams
+model/           # stories/ roles/ entities/ processes/ + model_goreos/ (DDL + docs)
+etl/             # sources/ scripts/ normalized/ + migration/
+apps/            # streamlit_tooling/ and flask_app/
+catalog/         # KODA federated catalog
 ```
 
-## Working with ETL Scripts
+---
 
-### ETL Pipeline Architecture
+## ETL
 
-The ETL pipeline has **two main stages**:
+### Stage 1 (legacy → normalized): complete
+
+- 470 scripts executed
+- 23 CSV outputs in `etl/normalized/`
+- ~32,000 records cleaned/validated; Kimball star schema (15 dims + 8 facts)
+
+Key scripts (`etl/scripts/`):
+
+- Profiling: `profile_all.py`, `profile_funcionarios.py`
+- Normalization: `normalize_convenios.py`, `normalize_fril.py`, `normalize_progs.py`, `normalize_250.py`
+- Enrichment/unification: `enrich_ipr_type.py`, `enrich_institution_type.py`, `semantic_unify_institutions.py`
+- Linking/graph: `link_entities.py`, `generate_relationship_matrix.py`
+- Migration assessment: `compatibility_assessment.py`
+
+### Normalized outputs (selected)
 
 ```
-Source → Normalized (100% COMPLETE)
-  ↓ 470 Python scripts executed
-  ↓ 23 CSV files in /etl/normalized/
-  ↓ ~32,000 records cleaned and validated
-  ↓ Star schema (15 dimensions + 8 facts)
-
-Normalized → PostgreSQL (IN PROGRESS)
-  ↓ Migration framework in /etl/migration/
-  ↓ 6 phases over 8 weeks
-  ↓ Target: core.person, core.ipr, core.agreement, etc.
+etl/normalized/dimensions/: dim_funcionario (110), dim_institucion_unificada (1,613), dim_iniciativa_unificada (2,049), dim_convenio_ad_hoc (34), dim_territorio (44)
+etl/normalized/facts/: fact_linea_presupuestaria (25,754), fact_convenio (533), fact_evento_documental (2,373), fact_ejecucion_mensual (3,496)
+etl/normalized/metadata/: institution_id_mapping (150 UUIDs), modificaciones_errors (23)
+etl/normalized/relationships/: relationship_matrix (26,045), cross_domain_matches (6,618)
 ```
 
-### Setup ETL Environment
+### Migration framework (`etl/migration/`)
+
+- Pattern: **LoaderBase** (Load → Transform → Validate → Resolve FKs → Insert/Update)
+- Plan: `~/.claude/plans/warm-munching-prism.md`
+- Components:
+  - `etl/migration/utils/db.py` (SQLAlchemy pool)
+  - `etl/migration/utils/validators.py` (schema validators)
+  - `etl/migration/utils/resolvers.py` (FK lookup + caching; includes `get_system_user_id()`)
+  - `etl/migration/utils/deduplication.py`
+
+Environment setup:
 
 ```bash
 cd etl
-python3 -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Key ETL Scripts
+Migration env/config (defaults match `docker-compose.yml`):
 
-All scripts are in `etl/scripts/`:
+- DB: `localhost:5433`, db `goreos_model`, user `goreos`, pass `goreos_2026`
+- Prefer `.env` (see `.env.example`)
 
-```bash
-# Data profiling (quality assessment)
-python scripts/profile_all.py                  # Profile all legacy sources
-python scripts/profile_funcionarios.py         # Profile HR data
+Migration quality scores (from `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md`):
 
-# Normalization (cleaning + standardization)
-python scripts/normalize_convenios.py          # Convenios 2023-2025
-python scripts/normalize_fril.py               # FRIL initiatives
-python scripts/normalize_progs.py              # 8% FNDR programs
-python scripts/normalize_250.py                # Section 250 programs
-
-# Semantic enrichment
-python scripts/enrich_ipr_type.py              # Classify IPR types
-python scripts/enrich_institution_type.py      # Classify organizations
-python scripts/semantic_unify_institutions.py  # Deduplicate institutions
-
-# Entity linking
-python scripts/link_entities.py               # Create FK relationships
-python scripts/generate_relationship_matrix.py # Visualize entity graph
-
-# Migration assessment
-python scripts/compatibility_assessment.py     # Assess legacy → v3.0 compatibility
-```
-
-### ETL Output Structure (Kimball Star Schema)
-
-```
-etl/normalized/
-├── dimensions/                    # 15 dimension tables
-│   ├── dim_funcionario.csv        # 110 funcionarios (quality: EXCELLENT)
-│   ├── dim_institucion_unificada.csv  # 1,613 orgs (5.4% missing RUT)
-│   ├── dim_iniciativa_unificada.csv   # 2,049 initiatives (39 added from 250)
-│   ├── dim_convenio_ad_hoc.csv        # 34 ad-hoc conventions (CVC-AD-XX)
-│   └── dim_territorio.csv         # 44 geographic entities
-├── facts/                         # 8 fact tables
-│   ├── fact_linea_presupuestaria.csv  # 25,754 budget lines (core)
-│   ├── fact_convenio.csv          # 533 agreements
-│   ├── fact_evento_documental.csv # 2,373 document events
-│   └── fact_ejecucion_mensual.csv # 3,496 monthly executions
-├── metadata/
-│   ├── institution_id_mapping.csv # 150 canonical institution UUIDs
-│   └── modificaciones_errors.csv  # 23 known errors (#REF!)
-└── relationships/
-    ├── relationship_matrix.csv    # 26,045 pairs with strength scores
-    └── cross_domain_matches.csv   # 6,618 validated matches (confidence ≥0.9)
-```
-
-### ETL Migration to PostgreSQL
-
-The migration framework is in `etl/migration/` and follows a **6-phase LoaderBase pattern**:
-
-```bash
-# Setup migration environment
-cd etl/migration
-pip install -r requirements.txt
-
-# Configure connection
-# Edit /goreos/.env with PostgreSQL credentials:
-# DB_NAME=goreos_model
-# DB_USER=goreos
-# DB_PASSWORD=goreos_2026
-# DB_HOST=localhost
-# DB_PORT=5433
-
-# Test connection
-python utils/db.py
-
-# Analyze normalized data quality
-python analyze_dimensions.py  # Analyze 15 dimension files
-python analyze_facts.py        # Analyze 8 fact files
-
-# Run migration (6 phases)
-# Phase 1: Persons and Organizations
-python -c "from loaders.phase1_person_loader import PersonLoader; PersonLoader().run()"
-python -c "from loaders.phase1_org_loader import OrganizationLoader; OrganizationLoader().run()"
-
-# Phase 2-6: IPR, Agreements, Documents, Budget, Events
-# (See plan at ~/.claude/plans/warm-munching-prism.md)
-```
-
-### Migration Architecture Components
-
-- **`utils/db.py`**: PostgreSQL connection pool with SQLAlchemy
-- **`utils/validators.py`**: Schema validators for 8 target tables (RUT, email, dates, ranges)
-- **`utils/resolvers.py`**: FK resolution with caching (12+ lookup functions)
-- **`utils/deduplication.py`**: 4 dedup strategies (keep_first, keep_last, keep_newest, merge)
-- **`loaders/base.py`**: Abstract LoaderBase class implementing Load→Transform→Validate→Resolve FKs→Insert/Update pipeline
-- **`analyze_dimensions.py`**: Quality analysis tool for dimension tables
-- **`analyze_facts.py`**: Quality analysis tool for fact tables
-
-### Migration Quality Scores
-
-Based on `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md`:
-
-| Source | Score | Target Table | Key Challenge |
-|--------|-------|--------------|---------------|
-| dim_funcionario | 85/100 | core.person + core.user | None (excellent quality) |
-| dim_institucion | 75/100 | core.organization | 5.4% missing RUT |
-| dim_iniciativa | 67/100 | core.ipr | Complex state mapping (31 states) |
-| fact_convenio | 71/100 | core.agreement | LOOKUP_OR_CREATE orgs |
-| fact_linea_presup | 47/100 | core.budget_program | Reconstruct deltas |
+| Source              | Score  | Target                      | Key challenge                     |
+| ------------------- | ------ | --------------------------- | --------------------------------- |
+| `dim_funcionario`   | 85/100 | `core.person` + `core.user` | none                              |
+| `dim_institucion`   | 75/100 | `core.organization`         | 5.4% missing RUT                  |
+| `dim_iniciativa`    | 67/100 | `core.ipr`                  | complex state mapping (31 states) |
+| `fact_convenio`     | 71/100 | `core.agreement`            | LOOKUP_OR_CREATE orgs             |
+| `fact_linea_presup` | 47/100 | `core.budget_program`       | reconstruct deltas                |
 
 ---
 
-## ETL Migration Guidelines (CRITICAL)
+## ETL Loader Rules (CRITICAL)
 
-**⚠️ MANDATORY READING**: When implementing any ETL loader in `/etl/migration/loaders/`, you MUST follow these guidelines. These rules are derived from 7 critical errors discovered during PersonLoader implementation (110/110 records migrated successfully after 7 iterations).
+Mandatory reading before touching `etl/migration/loaders/`:
 
-### 📚 Required Documentation (Read Before Coding)
+1. `etl/migration/LECCIONES_APRENDIDAS.md`
+2. `etl/migration/PRE_LOADER_CHECKLIST.md`
+3. `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md`
 
-1. **`/etl/migration/LECCIONES_APRENDIDAS.md`** (32 pages)
-   - Complete analysis of 7 critical errors and their solutions
-   - Patterns that worked well (hooks, caching, robust parsing)
-   - Post-execution validation queries
-   - Specific precautions for each upcoming loader
+### Hard rules
 
-2. **`/etl/migration/PRE_LOADER_CHECKLIST.md`** (80-minute workflow)
-   - Step-by-step implementation guide
-   - Complete loader template with all overrides
-   - Pre-execution tests (dry run → subset → full)
-   - Success criteria (≥95% success rate, 100% FK integrity)
-
-### 🔴 Critical Rules (DO NOT SKIP)
-
-#### 1. SQLAlchemy 2.0 - text() Wrapper Obligatory
+1) **SQLAlchemy 2.0**: wrap SQL with `text()`.
 
 ```python
-# ❌ WRONG
-session.execute("SELECT * FROM core.person WHERE id = :id", {'id': person_id})
-
-# ✅ CORRECT
 from sqlalchemy import text
-session.execute(text("SELECT * FROM core.person WHERE id = :id"), {'id': person_id})
+session.execute(text("SELECT 1 FROM core.person WHERE id=:id"), {"id": person_id})
 ```
 
-**Apply to**: All SQL queries in loaders, resolvers, validators
-
-#### 2. Schema Verification First (Never Assume Field Names)
+2) **Verify schema first** (never assume field names):
 
 ```bash
-# ALWAYS verify schema before implementing loader
-PGPASSWORD=goreos_2026 psql -h localhost -p 5433 -U goreos -d goreos -c "\d TABLE_NAME"
-
-# Or read DDL directly
-cat /Users/felixsanhueza/Developer/goreos/model/model_goreos/sql/goreos_ddl.sql
+PGPASSWORD=goreos_2026 psql -h localhost -p 5433 -U goreos -d goreos_model -c "\d TABLE_NAME"
 ```
 
-**Common Mismatches**:
-- core.person: `rut` (NOT tax_id), `names` (NOT first_name), `paternal_surname` (NOT last_name)
-- RUT is NULLABLE in most tables
-- Many tables have JSONB fields that require special handling
+Common mismatches: `core.person.rut` (not `tax_id`), `names` (not `first_name`), `paternal_surname` (not `last_name`); RUT is often nullable; many JSONB fields.
 
-#### 3. Override Pattern (Mandatory for Each Loader)
+3) **Each loader must override**: `get_natural_key()`, `get_natural_key_from_dict()`, `check_exists()`; and `pre_insert()` if JSONB.
 
-Every loader MUST override these methods:
+4) **JSONB**: store JSON strings, not Python dicts.
 
 ```python
-class MyLoader(LoaderBase):
-
-    def get_natural_key(self, row: pd.Series) -> str:
-        """Extract natural key from source CSV"""
-        return str(row['NATURAL_KEY_FIELD'])
-
-    def get_natural_key_from_dict(self, row: Dict) -> str:
-        """Extract natural key from transformed dict"""
-        return str(row.get('TARGET_KEY_FIELD', ''))
-
-    def check_exists(self, session, natural_key: str) -> bool:
-        """Check if record exists - MUST use correct field for this table"""
-        if not natural_key:
-            return False
-        result = session.execute(
-            text("SELECT 1 FROM schema.table WHERE unique_field = :key AND deleted_at IS NULL LIMIT 1"),
-            {'key': natural_key}
-        ).fetchone()
-        return result is not None
-
-    # ONLY if table has JSONB fields
-    def pre_insert(self, row: Dict) -> Dict:
-        """Convert dict to JSON string for JSONB fields"""
-        row = row.copy()
-        if 'metadata' in row and isinstance(row['metadata'], dict):
-            row['metadata'] = json.dumps(row['metadata'])
-        return row
-```
-
-#### 4. JSONB Type Adaptation
-
-PostgreSQL JSONB fields require JSON strings, not Python dicts:
-
-```python
-# ❌ WRONG - will fail with "can't adapt type 'dict'"
-row = {'metadata': {'key': 'value'}}
-
-# ✅ CORRECT
 import json
-row = {'metadata': json.dumps({'key': 'value'})}
+row["metadata"] = json.dumps(row["metadata"]) if isinstance(row.get("metadata"), dict) else row.get("metadata")
 ```
 
-**Tables with JSONB**: core.person.metadata, core.organization.metadata, core.ipr.metadata, txn.event.payload
+JSONB tables: `core.person.metadata`, `core.organization.metadata`, `core.ipr.metadata`, `txn.event.payload`.
 
-#### 5. System User Required Fields
+5) **System user** (`get_system_user_id()`): must have `password_hash`, `system_role_id` (scheme=`system_role`, code=`ADMIN_SISTEMA`), `person_id` (FK to `core.person`).
 
-When using `get_system_user_id()`, the system user MUST have:
-- `password_hash` (TEXT NOT NULL) - use dummy bcrypt hash
-- `system_role_id` (UUID NOT NULL FK → ref.category where scheme='system_role' and code='ADMIN_SISTEMA')
-- `person_id` (UUID NOT NULL FK → core.person)
+6) **Update validators first**: edit `etl/migration/utils/validators.py` for correct fields/NOT NULL/format/ranges *before* writing the loader.
 
-**Already implemented in**: `/etl/migration/utils/resolvers.py`
+Known issue: if you hit **"bind parameter required"** on update, override `update_record()` to use the same WHERE clause as `check_exists()` (see `etl/migration/LECCIONES_APRENDIDAS.md` §10).
 
-#### 6. Validator Updates (Before Each Loader)
+### Execution workflow (per loader)
 
-Update `/etl/migration/utils/validators.py` with correct field names and validation logic BEFORE implementing loader.
+Schema discovery → validator update → resolvers → loader → dry run → 10-row subset → SQL verification → full run → post-validation.
+
+Success criteria: success ≥95%, FK integrity 100%, no duplicate natural keys, warnings ≤5%, errors ≤1%.
+
+Checklist (compact):
+
+```
+[schema] \d table; NOT NULL/UNIQUE/FK/JSONB documented
+[validators] implemented + routed
+[resolvers] lookup_* cached; all SQL uses text()
+[loader] natural_key + exists + JSONB pre_insert + created_by_id
+[tests] dry_run → subset(10) → verify queries → full
+```
+
+---
+
+## Common Loader Patterns
+
+Caching FK lookups:
 
 ```python
-def _validate_TABLE(row: Dict) -> List[str]:
-    errors = []
-
-    # Validate NOT NULL fields
-    if 'required_field' not in row or not row['required_field']:
-        errors.append("Missing required_field (required)")
-
-    # Validate formats (RUT, email, UUID)
-    if row.get('rut') and not validate_rut(row['rut']):
-        errors.append(f"Invalid RUT: {row['rut']}")
-
-    # Validate ranges
-    if 'progress' in row and not (0 <= row['progress'] <= 1):
-        errors.append(f"progress out of range: {row['progress']}")
-
-    return errors
+_fk_cache = {}
+cache_key = f"entity:{key}"
 ```
 
-### 🚀 Execution Workflow (80 minutes per loader)
+Mapping legacy values to `ref.category`:
 
-1. **Schema Discovery** (10 min) - Verify DDL, document NOT NULL, UNIQUE, JSONB fields
-2. **Validator Update** (5 min) - Update validators.py with correct schema
-3. **Resolver Functions** (10 min) - Implement lookup_* functions with caching
-4. **Loader Implementation** (30 min) - Use template from PRE_LOADER_CHECKLIST.md
-5. **Dry Run Test** (5 min) - Test with dry_run=True
-6. **Subset Test** (5 min) - Test with 10 real records
-7. **PostgreSQL Verification** (5 min) - Query to verify data
-8. **Full Execution** (5 min) - Migrate all records
-9. **Post-Validation** (5 min) - FK integrity, duplicates, ranges
-
-### ✅ Success Criteria (Mandatory)
-
-- ✅ Success rate ≥ 95%
-- ✅ FK integrity = 100% (no orphan records)
-- ✅ No duplicate natural keys
-- ✅ Warnings ≤ 5%
-- ✅ Errors ≤ 1%
-
-### 🔍 Pre-Implementation Checklist (Copy-Paste This)
-
-```
-Schema Verification:
-[ ] Read DDL with \d table_name
-[ ] Document NOT NULL fields
-[ ] Document UNIQUE fields
-[ ] Identify JSONB fields
-[ ] Identify FK relationships
-
-Validator:
-[ ] Create/update _validate_TABLE() function
-[ ] Use correct field names from DDL
-[ ] Validate NOT NULL, formats, ranges
-[ ] Add to validate_row() router
-
-Resolver:
-[ ] Implement lookup_*() functions for FKs
-[ ] Add caching (_fk_cache dict)
-[ ] Use text() wrapper in all queries
-
-Loader:
-[ ] Import text from sqlalchemy
-[ ] Import json if JSONB fields exist
-[ ] Override get_natural_key()
-[ ] Override get_natural_key_from_dict()
-[ ] Override check_exists()
-[ ] Override pre_insert() if JSONB
-[ ] Implement transform_row() with all mappings
-[ ] Include created_by_id in all records
-
-Testing:
-[ ] Dry run passes (no DB writes)
-[ ] Subset (10 rows) passes
-[ ] PostgreSQL verification queries pass
-[ ] Full run achieves ≥95% success
-```
-
-### 📊 Current Migration Status
-
-- ✅ **FASE 1 - PersonLoader**: 111/111 records (100% success) - COMPLETED
-- ✅ **FASE 1 - OrganizationLoader**: 1,668/1,668 records (100% success) - COMPLETED
-- ✅ **FASE 2 - IPRLoader**: 1,973/1,974 records (99.9% success) - COMPLETED
-- ✅ **FASE 3 - AgreementLoader**: 533/533 records (100% success) - COMPLETED
-- ✅ **FASE 4 - BudgetProgramLoader**: 25,753 records (100% success) - COMPLETED
-- ✅ **FASE 5 - EventLoader**: 2,373 document events (100% success) - COMPLETED
-- ✅ **FASE 5 - BudgetCommitment**: 3,701 IPR-Budget links (14.4% coverage) - COMPLETED
-- 🔄 **FASE 6 - Other Facts**: ~8,000 records (modificaciones, rendiciones, ejecución) - NEXT
-
-**Migration Totals**: 36,112 records migrated (FASE 1-5)
-
-| FASE | Table | Records | Success Rate |
-|------|-------|---------|--------------|
-| 1 | core.person | 111 | 100% |
-| 1 | core.organization | 1,668 | 100% |
-| 2 | core.ipr | 1,973 | 99.9% |
-| 3 | core.agreement | 533 | 100% |
-| 4 | core.budget_program | 25,753 | 100% |
-| 5 | txn.event | 2,373 | 100% |
-| 5 | core.budget_commitment | 3,701 | 100% |
-| **TOTAL** | | **36,112** | |
-
-### 🎯 Quick Reference - Common Patterns
-
-**Caching FK Lookups**:
 ```python
-_fk_cache: Dict[str, UUID] = {}
-
-def lookup_entity(key: str) -> Optional[UUID]:
-    cache_key = f"entity:{key}"
-    if cache_key in _fk_cache:
-        return _fk_cache[cache_key]
-    # ... query DB ...
-    _fk_cache[cache_key] = result
-    return result
+code = mapping.get(str(value).upper(), "DEFAULT_CODE")
+category_id = lookup_category("scheme_name", code)
 ```
 
-**Mapping Legacy Values to ref.category**:
-```python
-def _resolve_type(self, legacy_value: str):
-    mapping = {
-        'LEGACY_A': 'CATEGORY_CODE_A',
-        'LEGACY_B': 'CATEGORY_CODE_B',
-    }
-    code = mapping.get(legacy_value.upper(), 'DEFAULT_CODE')
-    return lookup_category('scheme_name', code)
-```
+---
 
-**Parsing Complex Fields**:
-```python
-def _parse_field(self, value: str) -> tuple:
-    if ',' not in value:
-        return (value, 'DEFAULT', None)  # Fallback
+## Ontology & Compliance
 
-    part1, part2 = value.split(',', 1)
-    # ... parsing logic with edge cases ...
-    return (parsed1, parsed2, parsed3)
-```
+- **ORKO**: 5 axioms (Transformation, Capacity, Information, Constraint, Intentionality) + 5 primitives (Capacity, Flow, Information, Boundary, Purpose); HAIC constraint: AI agents require `human_accountable_id`.
+- **KODA**: federation pattern; agents seeded in `model/model_goreos/sql/goreos_seed_agents.sql`.
+- **TDE compliance**: ClaveÚnica, DocDigital, PISEE, SIAPER/CGR, SIGFE/DIPRES, MercadoPúblico; Once-Only + Digital Default.
 
-## Ontological Foundation
-
-The project uses two semantic frameworks:
-
-**ORKO (Organizational Knowledge Ontology):**
-- 5 Axioms: Transformation, Capacity, Information, Constraint, Intentionality
-- 5 Primitives: Capacity, Flow, Information, Boundary, Purpose
-- Enforced via HAIC constraint: all AI agents must have `human_accountable_id`
-
-**KODA (Knowledge Design Architecture):**
-- Federation pattern for distributed knowledge across projects
-- Agents defined in `model/model_goreos/sql/goreos_seed_agents.sql`
-
-## Key Documentation Files
-
-**Core Documents:**
-- `INDEX.md` - Repository navigation guide (START HERE)
-- `MANIFESTO.md` - Political genesis and identity, 5 Motor Functions
-- `architecture/Omega_GORE_OS_Definition_v3.0.0.md` - System specification v3.0
-
-**Technical Specifications:**
-- `docs/technical/planclaude.md` - Master data model specification (Story-First derivation)
-- `docs/technical/gestion.md` - Operational data model (WorkItem, Resolutions, Alerts)
-- `docs/technical/especificaciones.md` - Detailed specifications
-
-**Stack & Standards:**
-- `architecture/stack.md` - Tech stack overview
-- `architecture/standards/stack-tecnico-propuesto.md` - Complete stack with code examples, Docker Compose, requirements
-- `architecture/standards/antipatrones-y-deuda-tecnica.md` - Anti-patterns guide and quality checklists
-
-**Diagrams & Visual:**
-- `architecture/diagrams/entity_diagram.mmd` - Mermaid class diagram of polymorphic IPR model
-
-**Database Documentation:**
-- `model/model_goreos/README.md` - Installation guide, verification, troubleshooting
-- `model/model_goreos/docs/GOREOS_ERD_v3.md` - Full ERD + Data Dictionary
-- `model/model_goreos/docs/GOREOS_CONCEPTUAL_MODEL.md` - Business semantics
-- `model/model_goreos/docs/DESIGN_DECISIONS.md` - Why ENUMs vs Category, Event Sourcing, etc.
-- `model/model_goreos/docs/auditorias/AUDITORIA_CONSOLIDADA_v3_2026-01-27.md` - Quality audit
-
-**ETL Documentation:**
-- `etl/README.md` - Legacy data sources, quality assessment
-- `etl/docs/MIGRATION_MATRIX.md` - Entity mapping legacy → v3.0
-- `etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md` - Migration methodology (8 sources with compatibility scores 43-85/100)
-- Migration plan: `~/.claude/plans/warm-munching-prism.md` - 8-week, 6-phase migration plan with LoaderBase architecture
+---
 
 ## Semantic Model (Stories → Entities)
 
-Stories are the **source of truth**. The derivation chain is:
-
 ```
-model/stories/*.yml (819 stories)
-    ↓
-model/entities/aceptadas/*.yml (139 entities)
-    ↓
-model/model_goreos/sql/goreos_ddl.sql (executable DDL)
-    ↓
-Flask Blueprints (when implemented)
+model/stories/*.yml (819 stories) → model/entities/aceptadas/*.yml (139 entities) → model/model_goreos/sql/goreos_ddl.sql → Flask blueprints (when implemented)
 ```
 
-### Story Structure (YAML)
+Story example:
 
 ```yaml
 id: ST-FIN-001
 title: "Aprobar Estado de Pago"
 actor: Jefe de Inversiones
 goal: "Validar avance físico/financiero de proyecto"
-acceptance_criteria:
-  - Verificar documentación técnica
-  - Calcular porcentaje de avance
-  - Emitir aprobación o generar observación
-related_entities:
-  - EstadoPago
-  - IPR
-  - Funcionario
+related_entities: [EstadoPago, IPR, Funcionario]
 ```
 
-### Entity Derivation
-
-Entities must trace to at least one story. Example:
+Entity example:
 
 ```yaml
-# model/entities/aceptadas/estado_pago.yml
 id: ENT-FIN-EEPP
 name: EstadoPago
-origin_stories:
-  - ST-FIN-001  # Aprobar EEPP
-  - ST-FIN-002  # Revisar técnicamente EEPP
-  - ST-FIN-003  # Pagar EEPP aprobado
+origin_stories: [ST-FIN-001, ST-FIN-002, ST-FIN-003]
 ```
-
-## TDE Compliance
-
-GORE_OS integrates with Chilean national digital transformation systems:
-- ClaveÚnica (authentication), DocDigital, PISEE, SIAPER/CGR, SIGFE/DIPRES, MercadoPúblico
-- Follows Once-Only Principle: consume data via PISEE before asking citizens
-- Digital Default: all outgoing documents are digital (XML/PDF signed)
 
 ---
 
-## Database Credentials & Configuration
+## Key Docs (start here)
 
-### PostgreSQL Connection Details
+- `INDEX.md` (repo navigation)
+- `MANIFESTO.md` (identity + genesis)
+- `architecture/Omega_GORE_OS_Definition_v3.0.0.md` (system spec)
+- `architecture/stack.md` and `architecture/standards/` (stack + standards + anti-patterns)
+- `docs/technical/` (planclaude, gestion, especificaciones)
+- `etl/README.md` and `etl/docs/` (migration matrix + assessment framework)
 
-**Development Database** (Docker container):
-- **Host**: localhost
-- **Port**: 5433 (NOT 5432 - mapped from container's 5432)
-- **Database**: goreos_model
-- **User**: goreos
-- **Password**: goreos_2026
-- **Connection String**: `postgresql://goreos:goreos_2026@localhost:5433/goreos_model`
+---
 
-### Connection Commands
+## DB Connection (dev)
 
-```bash
-# psql connection (via docker exec - recommended)
-docker exec goreos_db psql -U goreos -d goreos_model
+- Host `localhost`, port `5433`, db `goreos_model`, user `goreos`, pass `goreos_2026`
+- Connection string: `postgresql://goreos:goreos_2026@localhost:5433/goreos_model`
+- Prefer `docker exec goreos_db psql -U goreos -d goreos_model` for local work
+- Never commit `.env` (already in `.gitignore`)
+- Dev-only credentials; use secrets management in production
 
-# psql connection (direct)
-PGPASSWORD=goreos_2026 psql -h localhost -p 5433 -U goreos -d goreos_model
-
-# SQLAlchemy connection (Python)
-DATABASE_URL = "postgresql://goreos:goreos_2026@localhost:5433/goreos_model"
-
-# Docker container management
-docker-compose up -d postgres          # Start PostgreSQL container
-docker-compose down                    # Stop all containers
-docker-compose ps                      # Check container status
-docker logs goreos_db                  # View PostgreSQL logs
-```
-
-### Docker Compose Configuration
-
-Located at `/Users/felixsanhueza/Developer/goreos/docker-compose.yml`:
-
-```yaml
-services:
-  postgres:
-    image: postgis/postgis:16-3.4
-    container_name: goreos_db
-    environment:
-      POSTGRES_DB: goreos
-      POSTGRES_USER: goreos
-      POSTGRES_PASSWORD: goreos_2026
-      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=es_CL.UTF-8"
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    command: postgres -c shared_preload_libraries='pg_stat_statements' -c pg_stat_statements.track=all
-```
-
-### Environment Variables (.env)
-
-Create `/Users/felixsanhueza/Developer/goreos/.env`:
+If `goreos_model` does not exist inside the container:
 
 ```bash
-# PostgreSQL Configuration
-DB_HOST=localhost
-DB_PORT=5433
-DB_NAME=goreos_model
-DB_USER=goreos
-DB_PASSWORD=goreos_2026
-
-# SQLAlchemy
-DATABASE_URL=postgresql://goreos:goreos_2026@localhost:5433/goreos_model
-
-# Migration Settings
-NORMALIZED_DIR=/Users/felixsanhueza/Developer/goreos/etl/normalized
-DRY_RUN=false
-BATCH_SIZE=1000
-
-# Flask Configuration (when implemented)
-FLASK_APP=app
-FLASK_ENV=development
-SECRET_KEY=dev-secret-key-change-in-production
-```
-
-### ETL Migration Connection
-
-Located at `/Users/felixsanhueza/Developer/goreos/etl/migration/config.py`:
-
-```python
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-# Database (defaults match docker-compose setup)
-DB_HOST = os.getenv('DB_HOST', 'localhost')
-DB_PORT = int(os.getenv('DB_PORT', 5433))  # Docker maps 5433:5432
-DB_NAME = os.getenv('DB_NAME', 'goreos_model')  # Actual database name
-DB_USER = os.getenv('DB_USER', 'goreos')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'goreos_2026')
-
-# Migration
-NORMALIZED_DIR = os.path.join(os.path.dirname(__file__), '..', 'normalized')
-DRY_RUN = os.getenv('DRY_RUN', 'false').lower() == 'true'
-BATCH_SIZE = int(os.getenv('BATCH_SIZE', 1000))
-```
-
-### Verification Commands
-
-```bash
-# Test PostgreSQL connection
-docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT version();"
-
-# Verify database exists
-docker exec goreos_db psql -U goreos -l
-
-# Count tables by schema
-docker exec goreos_db psql -U goreos -d goreos_model -c "
-    SELECT schemaname, COUNT(*) AS tables
-    FROM pg_tables
-    WHERE schemaname IN ('meta', 'ref', 'core', 'txn')
-    GROUP BY schemaname;"
-
-# Test ETL migration connection (Python)
-cd /Users/felixsanhueza/Developer/goreos/etl/migration
-python -c "from utils.db import test_connection; test_connection()"
-```
-
-### Troubleshooting
-
-**"Connection refused"**:
-```bash
-# Check container is running
-docker ps | grep goreos_db
-
-# If not running, start it
-docker-compose up -d postgres
-
-# Check logs
-docker logs goreos_db
-```
-
-**"Password authentication failed"**:
-```bash
-# Use docker exec instead (avoids password issues)
-docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT 1;"
-
-# Or use connection string with password
-psql postgresql://goreos:goreos_2026@localhost:5433/goreos_model
-```
-
-**"Database does not exist"**:
-```bash
-# Create database (if goreos_model doesn't exist)
 docker exec goreos_db createdb -U goreos goreos_model
-
-# Then install schema (8 DDL files)
-cd /Users/felixsanhueza/Developer/goreos/model/model_goreos/sql
-for f in goreos_ddl.sql goreos_seed.sql goreos_seed_agents.sql goreos_seed_territory.sql \
-         goreos_triggers.sql goreos_triggers_remediation.sql goreos_indexes.sql \
-         goreos_remediation_ontological.sql; do
-    docker exec -i goreos_db psql -U goreos -d goreos_model < $f
-done
 ```
 
-### Security Notes
+Troubleshooting quick commands:
 
-- **Development only**: These credentials are for local development
-- **Production**: Use environment variables, secrets management (AWS Secrets Manager, HashiCorp Vault)
-- **Never commit**: Add `.env` to `.gitignore`
-- **Docker volume**: Database persists in `postgres_data` volume even after container restart
-
----
-
-## 🔧 Common Issues & Solutions
-
-### "Database does not exist"
 ```bash
-# Check actual database name
+docker-compose up -d postgres
+docker ps | rg goreos_db || docker ps | grep goreos_db
+docker logs goreos_db
 docker exec goreos_db psql -U goreos -l
-
-# The database is called "goreos_model", not "goreos"
-# Update config.py: DB_NAME = 'goreos_model'
 ```
 
-### "Category not found" warnings during migration
+Common migration issue (“Category not found”): list schemes/codes before mapping.
+
 ```bash
-# Always verify scheme names BEFORE mapping
-docker exec goreos_db psql -U goreos -d goreos_model -c "
-SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;"
-
-# Then verify codes for specific scheme
-docker exec goreos_db psql -U goreos -d goreos_model -c "
-SELECT code, label FROM ref.category
-WHERE scheme = 'ACTUAL_SCHEME_NAME'
-ORDER BY code;"
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;"
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT code,label FROM ref.category WHERE scheme='ACTUAL_SCHEME_NAME' ORDER BY code;"
 ```
 
-### "bind parameter required" during update
-- **Cause**: LoaderBase.update_record() uses generic WHERE clause
-- **Solution**: Override update_record() with same WHERE as check_exists()
-- **See**: `/etl/migration/LECCIONES_APRENDIDAS.md` §10
-
-### Migration appears to have duplicates
-```bash
-# Filter by metadata.source to exclude seed data
-docker exec goreos_db psql -U goreos -d goreos_model -c "
-SELECT COUNT(*) FROM core.organization
-WHERE metadata->>'source' = 'dim_institucion_unificada';"
-```
-
-### "can't adapt type 'dict'" when inserting
-- **Cause**: PostgreSQL JSONB requires JSON string, not Python dict
-- **Solution**: Implement pre_insert() to convert with json.dumps()
-- **See**: `/etl/migration/LECCIONES_APRENDIDAS.md` §5
-
 ---
 
-## 📚 Essential Reading
+## Recent Changes (2026-01-29 remediation)
 
-**Before ANY ETL work**:
-1. `/etl/migration/LECCIONES_APRENDIDAS.md` - 13 problems + solutions from FASE 1
-2. `/etl/migration/PRE_LOADER_CHECKLIST.md` - 80-min workflow for each loader
-3. `/etl/docs/COMPATIBILITY_ASSESSMENT_FRAMEWORK.md` - Migration methodology
+New category schemes in `ref.category`:
 
-**Database Documentation**:
-1. `/model/model_goreos/README.md` - Installation & verification
-2. `/model/model_goreos/docs/GOREOS_ERD_v3.md` - Complete ERD + Data Dictionary
-3. `/model/model_goreos/docs/DESIGN_DECISIONS.md` - Architectural decisions
+| Scheme               | Values | Purpose                                                                                                                                  |
+| -------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `resolution_subtype` | 6      | APRUEBA_CONVENIO, MODIFICA_CONVENIO, APRUEBA_PAGO, MODIFICA_PRESUPUESTO, TERMINO_ANTICIPADO, PRORROGA                                    |
+| `document_type`      | 12     | CONVENIO, RESOLUCION, DECRETO, ESTADO_PAGO, CERTIFICADO, BOLETA_GARANTIA, INFORME_TECNICO, RENDICION, FACTURA, ORDEN_COMPRA, PLANO, OTRO |
+| `role_in_committee`  | 5      | PRESIDENTE, SECRETARIO, VOCAL, ASESOR, INVITADO                                                                                          |
 
-**Architecture**:
-1. `/architecture/Omega_GORE_OS_Definition_v3.0.0.md` - System specification
-2. `/architecture/standards/stack-tecnico-propuesto.md` - Complete tech stack
+Remediation:
 
----
+- Fixed malformed RUT in `dim_institucion_unificada.csv`
+- Removed 6 `.tmp` files from facts (10,048 lines)
+- Removed obsolete backups (`resolvers_broken_backup.py`, `resolvers.py.broken`)
+- Updated `.gitignore` with ETL patterns (`*.duckdb`, `*.tmp`, `venv/`, `migration_logs/`)
 
-**Last Updated**: 2026-01-29
-**Document Version**: 2.6 (FASE 1-5 complete, 36,112 records migrated)
+FASE 2 diagnostics (`etl/migration/DIAGNOSTICO_SOLAPAMIENTO_FUENTES.md`):
 
----
+- +39 BIPs from “cartera 250” merged into `dim_iniciativa_unificada.csv`
+- 34 ad-hoc conventions split to `dim_convenio_ad_hoc.csv` (CVC-AD-XX)
+- 3 duplicated BIPs handled (variants in metadata)
 
-## 📋 Recent Changes (2026-01-29 Remediation)
+IPR distribution:
 
-### New Category Schemes Added to ref.category
+| Tipo            | Cantidad |
+| --------------- | -------- |
+| INFRAESTRUCTURA | 1,179    |
+| EQUIPAMIENTO    | 413      |
+| TRANSFERENCIA   | 292      |
+| PROGRAMA_SOCIAL | 57       |
+| CONSERVACION    | 22       |
+| ESTUDIO         | 10       |
 
-| Scheme | Values | Purpose |
-|--------|--------|---------|
-| `resolution_subtype` | 6 | APRUEBA_CONVENIO, MODIFICA_CONVENIO, APRUEBA_PAGO, MODIFICA_PRESUPUESTO, TERMINO_ANTICIPADO, PRORROGA |
-| `document_type` | 12 | CONVENIO, RESOLUCION, DECRETO, ESTADO_PAGO, CERTIFICADO, BOLETA_GARANTIA, INFORME_TECNICO, RENDICION, FACTURA, ORDEN_COMPRA, PLANO, OTRO |
-| `role_in_committee` | 5 | PRESIDENTE, SECRETARIO, VOCAL, ASESOR, INVITADO |
+| Fuente    | Registros |
+| --------- | --------- |
+| IDIS      | 1,933     |
+| 250       | 39        |
+| CONVENIOS | 1         |
 
-### Remediation Completed
-- Fixed malformed RUT in dim_institucion_unificada.csv
-- Removed 6 .tmp files from facts/ (10,048 lines)
-- Removed obsolete backup files (resolvers_broken_backup.py, resolvers.py.broken)
-- Updated .gitignore with ETL patterns (*.duckdb, *.tmp, venv/, migration_logs/)
+FASE 3–6 highlights:
 
-### FASE 2 Pre-Migration Analysis (2026-01-29)
+- FASE 3 (AgreementLoader): 533 agreements; 499 linked to IPR (93.6%); receiver 533/533 (100%)
+- FASE 4 (BudgetProgramLoader): 25,753 lines (2019–2025); 10,061 lines >0 (39%); total budget ~4.9B CLP; link via `metadata->>'iniciativa_id'`
+- FASE 5 (EventLoader): 2,373 document events; 100% event→agreement FK integrity
+- FASE 5 (BudgetCommitment): 3,701 links; coverage 14.4% of budget_program; 98% of IPRs (1,933/1,973) have ≥1 commitment
+- FASE 6A (MagnitudeLoader): 3,496 rows; 2019–2025 (78 months); total ~436M CLP
+- FASE 6B (RendicionLoader): 1,667 unique codes from 2,401 rows; stored as `txn.event` payload JSONB; total transferred ~1,377M CLP
 
-**Solapamiento FRIL/IDIS/250 Analizado**:
-- dim_iniciativa_unificada.csv completado con 39 BIPs faltantes de cartera 250
-- 34 convenios ad-hoc (CVC-AD-XX) separados a dim_convenio_ad_hoc.csv
-- 3 BIPs duplicados manejados (variantes guardadas en metadata)
-- Documentación: `/etl/migration/DIAGNOSTICO_SOLAPAMIENTO_FUENTES.md`
+Budget distribution by year:
 
-**IPR Distribution by Type**:
-| Tipo | Cantidad |
-|------|----------|
-| INFRAESTRUCTURA | 1,179 |
-| EQUIPAMIENTO | 413 |
-| TRANSFERENCIA | 292 |
-| PROGRAMA_SOCIAL | 57 |
-| CONSERVACION | 22 |
-| ESTUDIO | 10 |
-
-**IPR Distribution by Source**:
-| Fuente | Registros |
-|--------|-----------|
-| IDIS | 1,933 |
-| 250 | 39 |
-| CONVENIOS | 1 |
-
-### FASE 3 & 4 Migration (2026-01-29)
-
-**FASE 3 - AgreementLoader** (533 records):
-- Source: fact_convenio.csv
-- FK resolution via iniciativa_250 → codigo_bip → core.ipr
-- receiver_id resolved after loading institutions from dim_institucion.csv
-- 499 agreements linked to IPR (93.6%), 533 with receiver (100%)
-
-**FASE 4 - BudgetProgramLoader** (25,753 records):
-- Source: fact_linea_presupuestaria.csv
-- 7 fiscal years (2019-2025)
-- 10,061 records with amounts > 0 (39%)
-- Total budget: ~4.9 billion CLP
-- Linked to IPR via metadata->>'iniciativa_id'
-
-**Budget Distribution by Year**:
 | Fiscal Year | Lines | Amount (MM CLP) |
-|-------------|-------|-----------------|
-| 2019 | 5,418 | 2,085 |
-| 2020 | 3,972 | 1,484 |
-| 2021 | 3,586 | 1,041 |
-| 2022 | 3,848 | 211 |
-| 2023 | 5,669 | 33 |
-| 2024 | 2,637 | 11 |
-| 2025 | 623 | 0 |
+| ----------- | ----- | --------------- |
+| 2019        | 5,418 | 2,085           |
+| 2020        | 3,972 | 1,484           |
+| 2021        | 3,586 | 1,041           |
+| 2022        | 3,848 | 211             |
+| 2023        | 5,669 | 33              |
+| 2024        | 2,637 | 11              |
+| 2025        | 623   | 0               |
 
-### FASE 5 Migration (2026-01-29)
+Budget commitments by year:
 
-**FASE 5 - EventLoader** (2,373 records):
-- Source: fact_evento_documental.csv
-- Target: txn.event (partitioned table)
-- All events linked to agreements via subject_id
-- 100% FK integrity (event → agreement)
-
-**FASE 5 - BudgetCommitment** (3,701 records):
-- Created to link budget_program ↔ ipr
-- Mapping chain: IDIS.id → BIP → core.ipr.codigo_bip
-- Coverage: 14.4% of budget_programs (limited by source data trazability)
-- 98% of IPRs (1,933/1,973) have at least one budget commitment
-
-**Budget Commitments by Year**:
 | Fiscal Year | Commitments | Amount (MM CLP) |
-|-------------|-------------|-----------------|
-| 2019 | 787 | 304 |
-| 2020 | 568 | 212 |
-| 2021 | 514 | 149 |
-| 2022 | 556 | 39 |
-| 2023 | 811 | 4.7 |
-| 2024 | 376 | 1.7 |
-| 2025 | 89 | - |
+| ----------- | ----------- | --------------- |
+| 2019        | 787         | 304             |
+| 2020        | 568         | 212             |
+| 2021        | 514         | 149             |
+| 2022        | 556         | 39              |
+| 2023        | 811         | 4.7             |
+| 2024        | 376         | 1.7             |
+| 2025        | 89          | -               |
 
-**FK Integrity Summary (FASE 1-5)**:
-| Relation | Linked | Unlinked | % |
-|----------|--------|----------|---|
-| agreement → ipr | 499 | 34 | 93.6% |
-| agreement → receiver | 533 | 0 | 100% |
-| event → subject | 2,373 | 0 | 100% |
-| budget_commitment → ipr | 3,701 | 0 | 100% |
-| budget_commitment → budget | 3,701 | 0 | 100% |
+FK integrity (FASE 1–5):
+
+| Relation                   | Linked | Unlinked | %     |
+| -------------------------- | ------ | -------- | ----- |
+| agreement → ipr            | 499    | 34       | 93.6% |
+| agreement → receiver       | 533    | 0        | 100%  |
+| event → subject            | 2,373  | 0        | 100%  |
+| budget_commitment → ipr    | 3,701  | 0        | 100%  |
+| budget_commitment → budget | 3,701  | 0        | 100%  |
+
+Rendiciones by fund:
+
+| Fund           | Records | Primary State |
+| -------------- | ------- | ------------- |
+| SEGURIDAD      | 514     | COMPLETADO    |
+| DEPORTE        | 282     | COMPLETADO    |
+| ADULTO_MAYOR   | 219     | PENDIENTE     |
+| SOCIAL         | 163     | COMPLETADO    |
+| CULTURA        | 152     | COMPLETADO    |
+| EQUIDAD_GENERO | 110     | COMPLETADO    |
+
+**Last updated**: 2026-01-29

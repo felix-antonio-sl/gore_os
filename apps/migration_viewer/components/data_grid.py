@@ -4,6 +4,15 @@ import pandas as pd
 from models.registry import get_table_config
 from config import DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS
 
+# Columnas adicionales por tabla (para detalle y auditoría)
+# Las tablas txn.* son event-sourcing (inmutables, sin soft-delete)
+TABLE_EXTRA_COLUMNS = {
+    "txn.event": ["data", "recorded_at"],
+    "txn.magnitude": ["created_at"],
+    # Default para el resto de tablas
+    "_default": ["metadata", "created_at", "updated_at"],
+}
+
 
 def render_data_grid(
     table_name: str,
@@ -59,14 +68,19 @@ def render_data_grid(
                 st.rerun()
 
     # Build and execute query
-    columns_str = ", ".join(["id"] + display_columns + ["metadata", "created_at", "updated_at"])
+    # Usar columnas extra específicas por tabla (txn.* tienen columnas diferentes)
+    extra_cols = TABLE_EXTRA_COLUMNS.get(table_name, TABLE_EXTRA_COLUMNS["_default"])
+    columns_str = ", ".join(["id"] + display_columns + extra_cols)
     offset = current_page * page_size
+
+    # Determinar columna de ordenamiento (txn.event usa recorded_at)
+    order_column = "recorded_at" if table_name == "txn.event" else "created_at"
 
     query = f"""
         SELECT {columns_str}
         FROM {table_name}
         WHERE {where_clause}
-        ORDER BY created_at DESC
+        ORDER BY {order_column} DESC
         LIMIT {page_size} OFFSET {offset}
     """
 

@@ -123,6 +123,10 @@ def render_filters(table_name: str, conn) -> dict:
     return current_filters
 
 
+# Tablas particionadas sin soft-delete (txn schema - event sourcing)
+TABLES_WITHOUT_SOFT_DELETE = {"txn.event", "txn.magnitude"}
+
+
 def build_where_clause(table_name: str, search_query: str, filters: dict) -> tuple[str, dict]:
     """Build WHERE clause from search and filters."""
 
@@ -130,7 +134,11 @@ def build_where_clause(table_name: str, search_query: str, filters: dict) -> tup
     search_columns = config.get("search_columns", [])
     filters_config = config.get("filters", {})
 
-    conditions = ["deleted_at IS NULL"]
+    # Tablas txn.* no tienen deleted_at (event sourcing - inmutables)
+    if table_name in TABLES_WITHOUT_SOFT_DELETE:
+        conditions = ["1=1"]
+    else:
+        conditions = ["deleted_at IS NULL"]
     params = {}
 
     # Global search

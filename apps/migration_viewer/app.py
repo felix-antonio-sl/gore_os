@@ -2,6 +2,7 @@
 Migration Viewer - Visor de datos migrados a PostgreSQL
 GORE_OS Project
 """
+
 import streamlit as st
 from streamlit import connection
 
@@ -11,13 +12,14 @@ from components.sidebar import render_sidebar
 from components.search import render_search_bar, render_filters, build_where_clause
 from components.data_grid import render_data_grid, render_data_table
 from components.detail_view import render_detail_view
+from components.dashboard import render_dashboard
 
 # Page config
 st.set_page_config(
     page_title="GORE_OS - Visor de Migración",
     page_icon=":material/database:",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
 # Initialize session state
@@ -39,6 +41,10 @@ def get_connection():
     return st.connection("postgresql", type="sql", url=DATABASE_URL)
 
 
+# Tablas particionadas sin soft-delete (txn schema)
+TABLES_WITHOUT_SOFT_DELETE = {"txn.event", "txn.magnitude"}
+
+
 def get_available_tables(conn) -> dict:
     """Get tables that have data."""
     all_tables = get_all_tables()
@@ -46,9 +52,13 @@ def get_available_tables(conn) -> dict:
 
     for table_name, config in all_tables.items():
         try:
-            count_df = conn.query(
-                f"SELECT COUNT(*) as count FROM {table_name} WHERE deleted_at IS NULL"
-            )
+            # Tablas txn.* no tienen deleted_at (event sourcing)
+            if table_name in TABLES_WITHOUT_SOFT_DELETE:
+                query = f"SELECT COUNT(*) as count FROM {table_name}"
+            else:
+                query = f"SELECT COUNT(*) as count FROM {table_name} WHERE deleted_at IS NULL"
+
+            count_df = conn.query(query)
             count = int(count_df.iloc[0]["count"])
             if count > 0:
                 available[table_name] = {**config, "count": count}
@@ -84,26 +94,18 @@ def main():
     # Render sidebar and get selected table
     selected_table = render_sidebar(available_tables)
 
-    # If no table selected, show welcome message
+    # If no table selected, show summary dashboard
     if not selected_table:
-        st.info("Selecciona una tabla del menú lateral para comenzar a explorar.")
-
-        # Show summary cards
-        st.markdown("### Resumen de Datos")
-        cols = st.columns(len(available_tables))
-        for idx, (table_name, config) in enumerate(available_tables.items()):
-            with cols[idx]:
-                st.metric(
-                    label=config.get("label", table_name),
-                    value=f"{config.get('count', 0):,}"
-                )
+        render_dashboard(conn, available_tables)
         return
 
     # Get table config
     table_config = available_tables.get(selected_table, {})
 
     # Header for selected table
-    st.markdown(f"### :{table_config.get('icon', 'table')}: {table_config.get('label', selected_table)}")
+    st.markdown(
+        f"### :{table_config.get('icon', 'table')}: {table_config.get('label', selected_table)}"
+    )
     st.caption(f"`{selected_table}` - {table_config.get('count', 0):,} registros")
 
     # Search bar

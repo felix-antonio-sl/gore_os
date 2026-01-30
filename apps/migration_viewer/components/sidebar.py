@@ -1,4 +1,5 @@
 """Sidebar component with table navigation."""
+
 import streamlit as st
 from models.registry import get_all_tables
 
@@ -8,6 +9,22 @@ def render_sidebar(available_tables: dict) -> str | None:
 
     with st.sidebar:
         st.markdown("### :material/database: Tablas")
+
+        # Summary Button
+        if st.button(
+            "📊 Resumen Dashboard",
+            key="btn_dashboard",
+            use_container_width=True,
+            type=(
+                "primary"
+                if st.session_state.get("selected_table") is None
+                else "secondary"
+            ),
+        ):
+            st.session_state.selected_table = None
+            st.session_state.search_query = ""
+            st.rerun()
+
         st.markdown("---")
 
         selected_table = None
@@ -24,7 +41,11 @@ def render_sidebar(available_tables: dict) -> str | None:
                 button_label,
                 key=f"btn_{table_name}",
                 use_container_width=True,
-                type="secondary" if st.session_state.get("selected_table") != table_name else "primary"
+                type=(
+                    "secondary"
+                    if st.session_state.get("selected_table") != table_name
+                    else "primary"
+                ),
             ):
                 st.session_state.selected_table = table_name
                 st.session_state.current_page = 0
