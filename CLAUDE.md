@@ -18,6 +18,7 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 - **ETL stage 1**: complete (**470 scripts**, **~32K** normalized records, star schema **15 dims + 8 facts**, **23 CSV** outputs)
 - **ETL → PostgreSQL migration**: **FASE 1–7 complete**, **46,360** records migrated (see verification queries below)
 - **Relational integrity**: **ipr_party populated** (3,104 records, 100% IPR coverage)
+- **Semantic remediation**: **32 duplicate organizations merged** (1,652 active orgs, 24 with aliases)
 - **Apps**: Streamlit tooling operational; Flask app pending
 
 ### Migration Summary (FASE 1–7 + Relational)
@@ -43,6 +44,17 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 | MANDANTE       | 1,973   | 100%     |
 | UNIDAD_TECNICA | 655     | 33.2%    |
 | BENEFICIARIO   | 476     | 24.1%    |
+
+### Semantic Remediation (Organization Deduplication)
+
+32 duplicate organizations merged using semantic similarity (pg_trgm):
+
+- Variants unified: `MUNI X` = `MUN. X` = `MUNICIPALIDAD DE X`
+- Typos fixed: `CHILÁN` → `CHILLÁN`, `MUNICIPALIDA` → `MUNICIPALIDAD`
+- Accents normalized: `SEREMI EDUCACION` → `SEREMI EDUCACIÓN`
+
+Duplicates soft-deleted with `metadata.merged_into` pointing to canonical record.
+Canonical records have `metadata.aliases` array for search.
 
 ---
 
