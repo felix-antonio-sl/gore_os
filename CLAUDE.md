@@ -14,9 +14,15 @@ GORE_OS is an institutional operating system for the Regional Government of Ñub
 **Current Project Status (2026-01-29)**:
 - 🗄️ **Database Model**: v3.1 Complete (63 tables, 4 schemas, 78+ category schemes)
 - 📊 **ETL Pipeline**: Stage 1 Complete (470 scripts, 32K records normalized)
-- ✅ **Migration FASE 1**: Complete - PersonLoader (110/110) + OrganizationLoader (1,612/1,613) = 1,722 records
-- 🔄 **Next**: FASE 2 - IPRLoader (2,010 initiatives from dim_iniciativa_unificada.csv)
+- ✅ **Migration FASE 1**: Complete - PersonLoader (111) + OrganizationLoader (1,668) = 1,779 records
+- ✅ **Migration FASE 2**: Complete - IPRLoader (1,973/1,974) = 99.9% success rate
+- ✅ **Migration FASE 3**: Complete - AgreementLoader (533/533) = 100% success rate
+- ✅ **Migration FASE 4**: Complete - BudgetProgramLoader (25,753) = 100% success rate
+- ✅ **Migration FASE 5**: Complete - EventLoader (2,373) + BudgetCommitment (3,701) = 6,074 records
+- 🔄 **Next**: FASE 6 - Other Facts (~8,000 records: modificaciones, rendiciones, ejecución)
 - 💻 **Applications**: Streamlit tooling operational, Flask app pending
+
+**Migration Totals**: 36,112 records migrated (FASE 1-5)
 
 ---
 
@@ -36,9 +42,17 @@ UNION ALL
 SELECT 'core.organization', COUNT(*) FROM core.organization WHERE metadata->>'source' = 'dim_institucion_unificada';"
 -- Expected: person=110, organization=1612
 
-# 4. Next: FASE 2 - IPRLoader
-cd etl/migration
-python loaders/phase2_ipr_loader.py  # 2,010 initiatives pending
+# 4. Verify FASE 2-5 migration (already complete)
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT 'core.ipr' as table, COUNT(*) as migrated FROM core.ipr WHERE deleted_at IS NULL
+UNION ALL SELECT 'core.agreement', COUNT(*) FROM core.agreement WHERE deleted_at IS NULL
+UNION ALL SELECT 'core.budget_program', COUNT(*) FROM core.budget_program WHERE deleted_at IS NULL
+UNION ALL SELECT 'txn.event', COUNT(*) FROM txn.event
+UNION ALL SELECT 'core.budget_commitment', COUNT(*) FROM core.budget_commitment WHERE deleted_at IS NULL;"
+-- Expected: ipr=1,973, agreement=533, budget_program=25,753, event=2,373, budget_commitment=3,701
+
+# 5. Next: FASE 6 - Other Facts
+# ~8,000 records pending (modificaciones, rendiciones, ejecución mensual)
 ```
 
 ---
@@ -311,7 +325,8 @@ etl/normalized/
 ├── dimensions/                    # 15 dimension tables
 │   ├── dim_funcionario.csv        # 110 funcionarios (quality: EXCELLENT)
 │   ├── dim_institucion_unificada.csv  # 1,613 orgs (5.4% missing RUT)
-│   ├── dim_iniciativa_unificada.csv   # 2,010 initiatives
+│   ├── dim_iniciativa_unificada.csv   # 2,049 initiatives (39 added from 250)
+│   ├── dim_convenio_ad_hoc.csv        # 34 ad-hoc conventions (CVC-AD-XX)
 │   └── dim_territorio.csv         # 44 geographic entities
 ├── facts/                         # 8 fact tables
 │   ├── fact_linea_presupuestaria.csv  # 25,754 budget lines (core)
@@ -572,15 +587,27 @@ Testing:
 
 ### 📊 Current Migration Status
 
-- ✅ **FASE 1 - PersonLoader**: 110/110 records (100% success) - COMPLETED
-- ✅ **FASE 1 - OrganizationLoader**: 1,612/1,613 records (99.9% success) - COMPLETED
-- 🔄 **FASE 2 - IPRLoader**: 2,010 records - NEXT
-- ⏳ **FASE 3 - AgreementLoader**: 533 convenios - Pending
-- ⏳ **FASE 4 - DocumentLoader**: ~500 documents - Pending
-- ⏳ **FASE 5 - BudgetProgramLoader**: 25,754 budget lines - Pending
-- ⏳ **FASE 6 - EventLoader**: ~5,000 events - Pending
+- ✅ **FASE 1 - PersonLoader**: 111/111 records (100% success) - COMPLETED
+- ✅ **FASE 1 - OrganizationLoader**: 1,668/1,668 records (100% success) - COMPLETED
+- ✅ **FASE 2 - IPRLoader**: 1,973/1,974 records (99.9% success) - COMPLETED
+- ✅ **FASE 3 - AgreementLoader**: 533/533 records (100% success) - COMPLETED
+- ✅ **FASE 4 - BudgetProgramLoader**: 25,753 records (100% success) - COMPLETED
+- ✅ **FASE 5 - EventLoader**: 2,373 document events (100% success) - COMPLETED
+- ✅ **FASE 5 - BudgetCommitment**: 3,701 IPR-Budget links (14.4% coverage) - COMPLETED
+- 🔄 **FASE 6 - Other Facts**: ~8,000 records (modificaciones, rendiciones, ejecución) - NEXT
 
-**FASE 1 Total**: 1,722 records migrated (99.95% success rate)
+**Migration Totals**: 36,112 records migrated (FASE 1-5)
+
+| FASE | Table | Records | Success Rate |
+|------|-------|---------|--------------|
+| 1 | core.person | 111 | 100% |
+| 1 | core.organization | 1,668 | 100% |
+| 2 | core.ipr | 1,973 | 99.9% |
+| 3 | core.agreement | 533 | 100% |
+| 4 | core.budget_program | 25,753 | 100% |
+| 5 | txn.event | 2,373 | 100% |
+| 5 | core.budget_commitment | 3,701 | 100% |
+| **TOTAL** | | **36,112** | |
 
 ### 🎯 Quick Reference - Common Patterns
 
@@ -950,7 +977,7 @@ WHERE metadata->>'source' = 'dim_institucion_unificada';"
 ---
 
 **Last Updated**: 2026-01-29
-**Document Version**: 2.3 (FASE 1 complete, credentials fixed, schemes added)
+**Document Version**: 2.6 (FASE 1-5 complete, 36,112 records migrated)
 
 ---
 
@@ -969,3 +996,88 @@ WHERE metadata->>'source' = 'dim_institucion_unificada';"
 - Removed 6 .tmp files from facts/ (10,048 lines)
 - Removed obsolete backup files (resolvers_broken_backup.py, resolvers.py.broken)
 - Updated .gitignore with ETL patterns (*.duckdb, *.tmp, venv/, migration_logs/)
+
+### FASE 2 Pre-Migration Analysis (2026-01-29)
+
+**Solapamiento FRIL/IDIS/250 Analizado**:
+- dim_iniciativa_unificada.csv completado con 39 BIPs faltantes de cartera 250
+- 34 convenios ad-hoc (CVC-AD-XX) separados a dim_convenio_ad_hoc.csv
+- 3 BIPs duplicados manejados (variantes guardadas en metadata)
+- Documentación: `/etl/migration/DIAGNOSTICO_SOLAPAMIENTO_FUENTES.md`
+
+**IPR Distribution by Type**:
+| Tipo | Cantidad |
+|------|----------|
+| INFRAESTRUCTURA | 1,179 |
+| EQUIPAMIENTO | 413 |
+| TRANSFERENCIA | 292 |
+| PROGRAMA_SOCIAL | 57 |
+| CONSERVACION | 22 |
+| ESTUDIO | 10 |
+
+**IPR Distribution by Source**:
+| Fuente | Registros |
+|--------|-----------|
+| IDIS | 1,933 |
+| 250 | 39 |
+| CONVENIOS | 1 |
+
+### FASE 3 & 4 Migration (2026-01-29)
+
+**FASE 3 - AgreementLoader** (533 records):
+- Source: fact_convenio.csv
+- FK resolution via iniciativa_250 → codigo_bip → core.ipr
+- receiver_id resolved after loading institutions from dim_institucion.csv
+- 499 agreements linked to IPR (93.6%), 533 with receiver (100%)
+
+**FASE 4 - BudgetProgramLoader** (25,753 records):
+- Source: fact_linea_presupuestaria.csv
+- 7 fiscal years (2019-2025)
+- 10,061 records with amounts > 0 (39%)
+- Total budget: ~4.9 billion CLP
+- Linked to IPR via metadata->>'iniciativa_id'
+
+**Budget Distribution by Year**:
+| Fiscal Year | Lines | Amount (MM CLP) |
+|-------------|-------|-----------------|
+| 2019 | 5,418 | 2,085 |
+| 2020 | 3,972 | 1,484 |
+| 2021 | 3,586 | 1,041 |
+| 2022 | 3,848 | 211 |
+| 2023 | 5,669 | 33 |
+| 2024 | 2,637 | 11 |
+| 2025 | 623 | 0 |
+
+### FASE 5 Migration (2026-01-29)
+
+**FASE 5 - EventLoader** (2,373 records):
+- Source: fact_evento_documental.csv
+- Target: txn.event (partitioned table)
+- All events linked to agreements via subject_id
+- 100% FK integrity (event → agreement)
+
+**FASE 5 - BudgetCommitment** (3,701 records):
+- Created to link budget_program ↔ ipr
+- Mapping chain: IDIS.id → BIP → core.ipr.codigo_bip
+- Coverage: 14.4% of budget_programs (limited by source data trazability)
+- 98% of IPRs (1,933/1,973) have at least one budget commitment
+
+**Budget Commitments by Year**:
+| Fiscal Year | Commitments | Amount (MM CLP) |
+|-------------|-------------|-----------------|
+| 2019 | 787 | 304 |
+| 2020 | 568 | 212 |
+| 2021 | 514 | 149 |
+| 2022 | 556 | 39 |
+| 2023 | 811 | 4.7 |
+| 2024 | 376 | 1.7 |
+| 2025 | 89 | - |
+
+**FK Integrity Summary (FASE 1-5)**:
+| Relation | Linked | Unlinked | % |
+|----------|--------|----------|---|
+| agreement → ipr | 499 | 34 | 93.6% |
+| agreement → receiver | 533 | 0 | 100% |
+| event → subject | 2,373 | 0 | 100% |
+| budget_commitment → ipr | 3,701 | 0 | 100% |
+| budget_commitment → budget | 3,701 | 0 | 100% |

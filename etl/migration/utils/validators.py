@@ -166,9 +166,13 @@ def _validate_agreement(row: Dict) -> List[str]:
     """Validate core.agreement row"""
     errors = []
 
-    # Required fields
-    if 'number' not in row or not row['number']:
-        errors.append("Missing number (required, unique)")
+    # agreement_number is optional (nullable in schema)
+    # No required validation needed
+
+    # agreement_number length validation (VARCHAR 32)
+    if 'agreement_number' in row and row['agreement_number']:
+        if len(str(row['agreement_number'])) > 32:
+            errors.append(f"agreement_number too long (max 32 chars): {len(str(row['agreement_number']))}")
 
     # Date validations
     if 'start_date' in row and 'end_date' in row:
@@ -203,22 +207,37 @@ def _validate_agreement(row: Dict) -> List[str]:
     return errors
 
 def _validate_budget_program(row: Dict) -> List[str]:
-    """Validate core.budget_program row"""
+    """Validate core.budget_program row
+
+    Schema: core.budget_program
+    - code: varchar(32), required, unique with fiscal_year
+    - name: text, required
+    - fiscal_year: int, required
+    - initial_amount: numeric(18,2), required
+    """
     errors = []
 
     # Required fields
-    if 'budget_classifier' not in row or not row['budget_classifier']:
-        errors.append("Missing budget_classifier (required)")
+    if 'code' not in row or not row['code']:
+        errors.append("Missing code (required)")
+    elif len(str(row['code'])) > 32:
+        errors.append(f"code too long (max 32 chars): {len(str(row['code']))}")
 
-    if 'year' not in row or not row['year']:
-        errors.append("Missing year (required)")
-    elif not isinstance(row['year'], int):
-        errors.append(f"year must be integer: {row['year']}")
-    elif row['year'] < 2000 or row['year'] > 2100:
-        errors.append(f"year out of valid range: {row['year']}")
+    if 'name' not in row or not row['name']:
+        errors.append("Missing name (required)")
+
+    if 'fiscal_year' not in row or not row['fiscal_year']:
+        errors.append("Missing fiscal_year (required)")
+    elif not isinstance(row['fiscal_year'], int):
+        errors.append(f"fiscal_year must be integer: {row['fiscal_year']}")
+    elif row['fiscal_year'] < 2000 or row['fiscal_year'] > 2100:
+        errors.append(f"fiscal_year out of valid range: {row['fiscal_year']}")
+
+    if 'initial_amount' not in row:
+        errors.append("Missing initial_amount (required)")
 
     # Amount validations
-    for field in ['initial_amount', 'current_amount', 'executed_amount']:
+    for field in ['initial_amount', 'current_amount', 'committed_amount', 'accrued_amount', 'paid_amount']:
         if field in row:
             amt = row[field]
             if amt is not None and amt < 0:
@@ -242,18 +261,27 @@ def _validate_document(row: Dict) -> List[str]:
     return errors
 
 def _validate_event(row: Dict) -> List[str]:
-    """Validate txn.event row"""
+    """Validate txn.event row
+
+    Schema: txn.event (partitioned by occurred_at)
+    - event_type_id: uuid, required (FK ref.category)
+    - subject_type: varchar(32), required
+    - subject_id: uuid, required
+    - occurred_at: timestamp, required
+    """
     errors = []
 
     # Required fields
-    if 'event_type' not in row or not row['event_type']:
-        errors.append("Missing event_type (required)")
+    if 'event_type_id' not in row or not row['event_type_id']:
+        errors.append("Missing event_type_id (required)")
 
-    if 'aggregate_type' not in row or not row['aggregate_type']:
-        errors.append("Missing aggregate_type (required)")
+    if 'subject_type' not in row or not row['subject_type']:
+        errors.append("Missing subject_type (required)")
+    elif len(str(row['subject_type'])) > 32:
+        errors.append(f"subject_type too long (max 32 chars): {len(str(row['subject_type']))}")
 
-    if 'aggregate_id' not in row or not row['aggregate_id']:
-        errors.append("Missing aggregate_id (required FK)")
+    if 'subject_id' not in row or not row['subject_id']:
+        errors.append("Missing subject_id (required)")
 
     # Date validation
     if 'occurred_at' not in row or not row['occurred_at']:

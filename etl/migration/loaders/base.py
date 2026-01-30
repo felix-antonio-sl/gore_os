@@ -374,6 +374,11 @@ class LoaderBase(ABC):
                 # 1. Transform
                 transformed = self.transform_row(row)
 
+                # Skip if transform returns None (e.g., duplicate or filtered out)
+                if transformed is None:
+                    self.skip_count += 1
+                    continue
+
                 # 2. Validate
                 if not self.validate_transformed_row(transformed):
                     self.skip_count += 1
