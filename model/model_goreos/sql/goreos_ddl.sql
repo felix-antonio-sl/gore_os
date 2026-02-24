@@ -1,10 +1,10 @@
 -- =============================================================================
--- GORE_OS DDL v3.2 - Modelo de Datos Institucional (UUID Universal)
+-- GORE_OS DDL v3.4 - Modelo de Datos Institucional (UUID Universal)
 -- =============================================================================
 -- GENERADO POR: Arquitecto-GORE + Debate Multiagente (Orquestador-Genérico)
 -- FECHA CREACIÓN: 2026-01-26
--- ÚLTIMA ACTUALIZACIÓN: 2026-01-30 (Normalization v2.0)
--- TOTAL TABLAS: 50
+-- ÚLTIMA ACTUALIZACIÓN: 2026-01-30 (Normalization v3.4 MEDIA)
+-- TOTAL TABLAS: 52  -- v3.4: +core.position
 -- ARQUITECTURA: 4 schemas (meta, ref, core, txn)
 -- CAMBIOS v3.0:
 --   - UUID universal para todas las PKs
@@ -18,6 +18,24 @@
 --   - core.ipr: +fund_category_id (scheme=fondo_8pct, 10 codes, PROGRAMA_8PCT only)
 --   - Categorical Univocity: funding_source_id/fund_category_id separation
 --   - Coherencia categorial: 100% (cada FK → 1 scheme único)
+-- CAMBIOS v3.3 (2026-01-30):
+--   - core.organization: +rut VARCHAR(12) UNIQUE (tde:RUT)
+--   - core.person: +estamento_id UUID FK (tde:Estamento, 7 valores)
+--   - core.agreement: +technical_referent_id UUID FK (gnub:TechnicalReferent)
+--   - core.ipr_party: +agreement_id UUID FK (gnub:hasAgreement)
+--   - core.budget_program: +item_id, +allocation_id, +fndr_amount, +sectorial_amount
+--   - core.budget_carryover: Nueva tabla (gnub:BudgetCarryover)
+--   - ref.category: +schemes estamento(7), budget_item(14), budget_allocation(170), magnitude_aspect(4), currency(3)
+--   - txn.magnitude: 953 registros migrados desde event.data->>'monto_transferido'
+--   - Coherencia categorial: 100% (CHECK constraints activos)
+-- CAMBIOS v3.4 (2026-01-30) - Normalizaciones MEDIA completadas:
+--   - core.position: Nueva tabla para cargos (tde:Cargo)
+--   - core.person: +position_id, +qualification_id (professional_qualification)
+--   - core.agreement: +cgr_outcome_id (cgr_outcome scheme)
+--   - core.ipr: +is_municipal_origin BOOLEAN
+--   - core.ipr_party: Nueva tabla en DDL con +sponsor_division_id
+--   - ref.category: +scheme professional_qualification (14 códigos)
+--   - Total: 52 tablas (+1 core.position)
 -- ALINEAMIENTO: Gist 14.0, gnub:*, tde:*
 -- =============================================================================
 
@@ -358,9 +376,11 @@ CREATE TABLE core.organization (
     name TEXT NOT NULL,
     short_name VARCHAR(32),
     org_type_id UUID REFERENCES ref.category(id),
+    rut VARCHAR(12) UNIQUE,  -- v3.0: tde:RUT, gnub:IdentificadorTributario
     parent_id UUID REFERENCES core.organization(id),
     valid_from TIMESTAMPTZ,
     valid_to TIMESTAMPTZ,
+    CONSTRAINT chk_rut_format CHECK (rut IS NULL OR rut ~ '^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$'),
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -372,6 +392,7 @@ CREATE TABLE core.organization (
 );
 -- MED-001 FIX: idx_organization_deleted eliminado (subóptimo, usar idx_org_active de goreos_indexes.sql)
 COMMENT ON TABLE core.organization IS 'Organizacion - Division, Departamento, Unidad';
+COMMENT ON COLUMN core.organization.rut IS 'RUT chileno formato XX.XXX.XXX-X (tde:RUT)';
 
 -- FK diferida para ref.actor.organization_id
 ALTER TABLE ref.actor ADD CONSTRAINT fk_actor_organization
@@ -389,7 +410,12 @@ CREATE TABLE core.person (
     person_type_id UUID REFERENCES ref.category(id),
     organization_id UUID REFERENCES core.organization(id),
     role_id UUID REFERENCES meta.role(id),
+    estamento_id UUID REFERENCES ref.category(id),  -- v3.0: tde:Estamento (Ley 18.834)
+    position_id UUID REFERENCES core.position(id),  -- v3.4: tde:Cargo
+    qualification_id UUID REFERENCES ref.category(id),  -- v3.4: tde:CalificacionProfesional
     is_active BOOLEAN DEFAULT TRUE,
+    CONSTRAINT chk_estamento_scheme CHECK (estamento_id IS NULL OR fn_validate_category_scheme(estamento_id, 'estamento')),
+    CONSTRAINT chk_qualification_scheme CHECK (qualification_id IS NULL OR fn_validate_category_scheme(qualification_id, 'professional_qualification')),
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -402,6 +428,32 @@ CREATE TABLE core.person (
 -- MED-002 FIX: idx_person_rut eliminado (redundante con UNIQUE constraint en rut)
 -- MED-001 FIX: idx_person_deleted eliminado (subóptimo, usar idx_person_active de goreos_indexes.sql)
 COMMENT ON TABLE core.person IS 'Persona natural - funcionario, ciudadano, proveedor';
+COMMENT ON COLUMN core.person.estamento_id IS 'Clasificación funcionaria: PROFESIONAL, DIRECTIVO, TECNICO, etc. (tde:Estamento, Ley 18.834)';
+COMMENT ON COLUMN core.person.position_id IS 'Cargo actual (tde:Cargo, v3.4)';
+COMMENT ON COLUMN core.person.qualification_id IS 'Calificación profesional (tde:CalificacionProfesional, v3.4)';
+
+-- TABLA: core.position (v3.4)
+-- EXISTE PORQUE: Normalización v3.0 MEDIA - Cargos laborales (antes en person.metadata->>'cargo_ultimo')
+-- ALINEAMIENTO: tde:Cargo
+CREATE TABLE core.position (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(255) UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    organization_id UUID REFERENCES core.organization(id),
+    level SMALLINT,
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID,  -- FK diferida a core.user
+    updated_by_id UUID,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID,
+    metadata JSONB DEFAULT '{}'::jsonb
+);
+COMMENT ON TABLE core.position IS 'Cargos y posiciones laborales (tde:Cargo, v3.4)';
+COMMENT ON COLUMN core.position.code IS 'Código único del cargo normalizado';
+COMMENT ON COLUMN core.position.name IS 'Nombre completo del cargo';
+COMMENT ON COLUMN core.position.level IS 'Nivel jerárquico (1=más alto)';
 
 -- TABLA: core.user
 CREATE TABLE core.user (
@@ -471,6 +523,11 @@ ALTER TABLE core.organization ADD CONSTRAINT fk_org_deleted_by FOREIGN KEY (dele
 ALTER TABLE core.person ADD CONSTRAINT fk_person_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
 ALTER TABLE core.person ADD CONSTRAINT fk_person_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
 ALTER TABLE core.person ADD CONSTRAINT fk_person_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
+
+-- v3.4: FKs de auditoría para core.position
+ALTER TABLE core.position ADD CONSTRAINT fk_position_created_by FOREIGN KEY (created_by_id) REFERENCES core.user(id);
+ALTER TABLE core.position ADD CONSTRAINT fk_position_updated_by FOREIGN KEY (updated_by_id) REFERENCES core.user(id);
+ALTER TABLE core.position ADD CONSTRAINT fk_position_deleted_by FOREIGN KEY (deleted_by_id) REFERENCES core.user(id);
 
 -- =============================================================================
 -- CAPA 2: CORE - Parte 2: Territorio
@@ -558,6 +615,12 @@ CREATE TABLE core.budget_program (
     accrued_amount NUMERIC(18,2) DEFAULT 0,
     paid_amount NUMERIC(18,2) DEFAULT 0,
     owner_division_id UUID REFERENCES core.organization(id),
+    item_id UUID REFERENCES ref.category(id),  -- v3.0: gnub:BudgetItem (14 valores)
+    allocation_id UUID REFERENCES ref.category(id),  -- v3.0: gnub:BudgetAllocation (170 valores)
+    fndr_amount NUMERIC(18,2),  -- v3.0: Monto FNDR dimensionado
+    sectorial_amount NUMERIC(18,2),  -- v3.0: Monto sectorial dimensionado
+    CONSTRAINT chk_item_scheme CHECK (item_id IS NULL OR fn_validate_category_scheme(item_id, 'budget_item')),
+    CONSTRAINT chk_allocation_scheme CHECK (allocation_id IS NULL OR fn_validate_category_scheme(allocation_id, 'budget_allocation')),
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -570,6 +633,32 @@ CREATE TABLE core.budget_program (
 );
 CREATE INDEX idx_budget_program_year ON core.budget_program(fiscal_year);
 COMMENT ON TABLE core.budget_program IS 'Programa de Presupuesto Publico Regional (PPR)';
+COMMENT ON COLUMN core.budget_program.item_id IS 'Item presupuestario chileno (gnub:BudgetItem)';
+COMMENT ON COLUMN core.budget_program.allocation_id IS 'Asignación presupuestaria (gnub:BudgetAllocation)';
+COMMENT ON COLUMN core.budget_program.fndr_amount IS 'Monto FNDR dimensionado (v3.0)';
+COMMENT ON COLUMN core.budget_program.sectorial_amount IS 'Monto sectorial dimensionado (v3.0)';
+
+-- TABLA: core.budget_carryover (v3.0)
+-- EXISTE PORQUE: Normalización v3.0 - Arrastres presupuestarios anuales (antes en metadata)
+-- ALINEAMIENTO: gnub:BudgetCarryover
+CREATE TABLE core.budget_carryover (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    budget_program_id UUID NOT NULL REFERENCES core.budget_program(id) ON DELETE CASCADE,
+    fiscal_year SMALLINT NOT NULL CHECK (fiscal_year BETWEEN 2020 AND 2030),
+    amount NUMERIC(18,2) NOT NULL CHECK (amount >= 0),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
+    metadata JSONB DEFAULT '{}'::jsonb,
+    UNIQUE (budget_program_id, fiscal_year)
+);
+COMMENT ON TABLE core.budget_carryover IS 'Arrastres presupuestarios anuales (v3.0, gnub:BudgetCarryover)';
+COMMENT ON COLUMN core.budget_carryover.fiscal_year IS 'Año fiscal del arrastre';
+COMMENT ON COLUMN core.budget_carryover.amount IS 'Monto del arrastre en CLP';
 
 CREATE TABLE core.fund_program (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -638,6 +727,7 @@ CREATE TABLE core.ipr (
     -- v3.2 - Metadata normalization v2.0 (2026-01-30)
     investment_sector_id UUID REFERENCES ref.category(id),
     fund_category_id UUID REFERENCES ref.category(id),
+    is_municipal_origin BOOLEAN DEFAULT false,  -- v3.4: gnub:MunicipalOrigin
     crea_activo BOOLEAN DEFAULT TRUE,
     formulator_id UUID REFERENCES core.organization(id),
     executor_id UUID REFERENCES core.organization(id),
@@ -671,6 +761,7 @@ COMMENT ON COLUMN core.ipr.mcd_phase_id IS 'scheme=mcd_phase: F0|F1|F2|F3|F4|F5 
 COMMENT ON COLUMN core.ipr.mechanism_id IS 'scheme=mechanism: SNI|C33|FRIL|GLOSA06|TRANSFER|SUBV8|FRPD';
 COMMENT ON COLUMN core.ipr.investment_sector_id IS 'scheme=investment_sector: SPORTS|CULTURE|EDUCATION|HEALTH|ENVIRONMENT|TRANSPORT|SECURITY|TOURISM|SCIENCE|ECONOMIC_DEV (10 codes, ontology: gnub:InvestmentTypology)';
 COMMENT ON COLUMN core.ipr.fund_category_id IS 'scheme=fondo_8pct: DEPORTE|CULTURA|SEGURIDAD|ADULTO_MAYOR|SOCIAL|EQUIDAD_GENERO|etc (10 codes, only for PROGRAMA_8PCT, maintains categorical univocity)';
+COMMENT ON COLUMN core.ipr.is_municipal_origin IS 'True si origen es municipal (gnub:MunicipalOrigin, v3.4)';
 
 -- HIGH-010: Sin mechanism_type_id redundante
 CREATE TABLE core.ipr_mechanism (
@@ -713,6 +804,43 @@ CREATE TABLE core.ipr_mechanism (
     metadata JSONB DEFAULT '{}'::jsonb
 );
 COMMENT ON TABLE core.ipr_mechanism IS 'Atributos especificos por mecanismo (el mecanismo se obtiene de core.ipr.mechanism_id)';
+
+-- TABLA: core.ipr_party (v3.4)
+-- EXISTE PORQUE: Normalización v3.0 - Partes de IPR con roles (gnub:hasParty, gist:hasParty)
+-- ALINEAMIENTO: gnub:IPRParty, gist:hasParty
+CREATE TABLE core.ipr_party (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    ipr_id UUID NOT NULL REFERENCES core.ipr(id) ON DELETE CASCADE,
+    organization_id UUID NOT NULL REFERENCES core.organization(id),
+    party_role_id UUID NOT NULL REFERENCES ref.category(id),
+    agreement_id UUID REFERENCES core.agreement(id),  -- v3.3: gnub:hasAgreement
+    sponsor_division_id UUID REFERENCES core.organization(id),  -- v3.4: gnub:SponsorDivision
+    is_primary BOOLEAN DEFAULT FALSE,
+    valid_from DATE,
+    valid_to DATE,
+    responsibility_description TEXT,
+    contact_person TEXT,
+    contact_email VARCHAR(255),
+    CONSTRAINT chk_party_role_scheme CHECK (party_role_id IS NULL OR fn_validate_category_scheme(party_role_id, 'ipr_party_role')),
+    -- Auditoría estándar
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by_id UUID REFERENCES core.user(id),
+    updated_by_id UUID REFERENCES core.user(id),
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id),
+    metadata JSONB DEFAULT '{}'::jsonb,
+    -- Constraint: una organización solo puede tener un rol por IPR
+    CONSTRAINT uq_ipr_party_role UNIQUE (ipr_id, organization_id, party_role_id)
+);
+CREATE INDEX idx_ipr_party_ipr ON core.ipr_party(ipr_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_ipr_party_org ON core.ipr_party(organization_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_ipr_party_role ON core.ipr_party(party_role_id);
+CREATE INDEX idx_ipr_party_primary ON core.ipr_party(ipr_id, party_role_id)
+    WHERE is_primary = TRUE AND deleted_at IS NULL;
+COMMENT ON TABLE core.ipr_party IS 'Partes de IPR siguiendo gist:hasParty con roles categorizados (N:M, v3.4)';
+COMMENT ON COLUMN core.ipr_party.is_primary IS 'Parte principal para este rol (cuando hay múltiples ejecutores, uno es el principal)';
+COMMENT ON COLUMN core.ipr_party.sponsor_division_id IS 'División patrocinadora GORE (gnub:SponsorDivision, v3.4)';
 
 -- =============================================================================
 -- CONTINUACIÓN EN PARTE 2...
@@ -858,10 +986,13 @@ CREATE TABLE core.agreement (
     ipr_id UUID REFERENCES core.ipr(id),
     giver_id UUID REFERENCES core.organization(id),
     receiver_id UUID REFERENCES core.organization(id),
+    technical_referent_id UUID REFERENCES core.person(id),  -- v3.0: gnub:TechnicalReferent
+    cgr_outcome_id UUID REFERENCES ref.category(id),  -- v3.4: Estado CGR del convenio
     total_amount NUMERIC(18,2),
     signed_at TIMESTAMPTZ,
     valid_from TIMESTAMPTZ,
     valid_to TIMESTAMPTZ,
+    CONSTRAINT chk_cgr_outcome_scheme CHECK (cgr_outcome_id IS NULL OR fn_validate_category_scheme(cgr_outcome_id, 'cgr_outcome')),
     -- Auditoría estándar
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -874,6 +1005,8 @@ CREATE TABLE core.agreement (
 CREATE INDEX idx_agreement_state ON core.agreement(state_id);
 CREATE INDEX idx_agreement_ipr ON core.agreement(ipr_id);
 COMMENT ON TABLE core.agreement IS 'Convenio GORE - transferencia, mandato, colaboracion';
+COMMENT ON COLUMN core.agreement.technical_referent_id IS 'Referente técnico del convenio (gnub:TechnicalReferent, tde:ResponsableAsignado)';
+COMMENT ON COLUMN core.agreement.cgr_outcome_id IS 'Estado ante Contraloría (tde:EstadoCGR, v3.4)';
 
 -- FK diferidas
 ALTER TABLE core.resolution ADD CONSTRAINT fk_resolution_agreement
@@ -1614,14 +1747,16 @@ END;
 $$;
 
 -- =============================================================================
--- FIN DDL v3.0
+-- FIN DDL v3.4
 -- =============================================================================
--- Total: 50 tablas
--- Meta: 5 | Ref: 3 | Core: 40 | Txn: 2 (particionadas)
--- ENUMs: agent_type_enum, ipr_nature_enum
+-- Total: 52 tablas (v3.4: +core.position, +core.ipr_party)
+-- Meta: 5 | Ref: 3 | Core: 42 | Txn: 2 (particionadas)
+-- ENUMs: agent_type_enum, ipr_nature_enum, cognition_level_enum, delegation_mode_enum, process_layer_enum, story_status_enum
 -- Particiones: txn.event (12 mensuales + default), txn.magnitude (4 trimestrales + default)
 -- Funciones: fn_update_timestamp, fn_validate_category_scheme
 -- Triggers: automáticos para updated_at en todas las tablas
+-- Normalizaciones v3.0: rut, estamento_id, technical_referent_id, item_id, allocation_id, budget_carryover
+-- v3.4: +core.position, +position_id, +qualification_id, +cgr_outcome_id, +is_municipal_origin, +sponsor_division_id
 -- =============================================================================
 
-DO $$ BEGIN RAISE NOTICE 'GORE_OS DDL v3.0 COMPLETADO - 50 tablas con UUID universal, auditoría completa, soft delete y particionamiento'; END $$;
+DO $$ BEGIN RAISE NOTICE 'GORE_OS DDL v3.4 COMPLETADO - 52 tablas con UUID universal, auditoría completa, soft delete, particionamiento y normalizaciones v3.0 MEDIA'; END $$;

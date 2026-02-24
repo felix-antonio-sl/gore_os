@@ -1,7 +1,7 @@
-# GORE_OS v3.0 - Modelo de Datos
+# GORE_OS v3.4 - Modelo de Datos
 
 **Estado**: ✅ Ejecutable y Auditado
-**Última actualización**: 2026-01-27
+**Última actualización**: 2026-01-30
 **PostgreSQL**: 16+ (requiere PostGIS para funcionalidad territorial futura)
 
 ---
@@ -12,14 +12,15 @@ Modelo de datos relacional para GORE_OS, el sistema operativo institucional del 
 
 ### Características Principales
 
-- **54 tablas lógicas** organizadas en 4 schemas semánticos (+4 en v3.1)
+- **52 tablas lógicas** organizadas en 4 schemas semánticos (+5 en v3.4)
 - **UUID universal** como PK en todas las entidades
 - **Auditoría completa** (created/updated/deleted_at/by_id)
-- **Category Pattern** (Gist 14.0) para vocabularios controlados (75+ schemes)
+- **Category Pattern** (Gist 14.0) para vocabularios controlados (83+ schemes)
 - **Event Sourcing** opcional con particionamiento mensual/trimestral
 - **Soft Delete** en todas las entidades
 - **Validación semántica** enforced a nivel DB
 - **Máquinas de estado** con transiciones validadas
+- **Univocidad Categorial** 100% enforced (cada FK → 1 scheme exacto)
 
 ---
 
@@ -31,7 +32,7 @@ Modelo de datos relacional para GORE_OS, el sistema operativo institucional del 
 | ------ | ------ | ----------------------------------------------------------------- |
 | `meta` | 5      | Átomos fundamentales (Role, Process, Entity, Story, Story-Entity) |
 | `ref`  | 3      | Vocabularios controlados (Category, Actor, Commitment Types)      |
-| `core` | 40     | Entidades de negocio (IPR, Agreements, Budget, Work Items, etc.)  |
+| `core` | 42     | Entidades de negocio (IPR, Agreements, Budget, Work Items, etc.)  |
 | `txn`  | 2      | Event Sourcing (Event, Magnitude) - Particionadas                 |
 
 ### Entidades Centrales
@@ -48,10 +49,18 @@ Modelo de datos relacional para GORE_OS, el sistema operativo institucional del 
 - Estados: 6 estados con transiciones validadas
 - Trazabilidad: IPR, Agreement, Resolution, Commitment
 
-**Category Pattern**: 75+ schemes de vocabularios controlados
+**Person & Position**: Actores institucionales normalizados
+
+- RUT normalizado con validación (XX.XXX.XXX-X)
+- Cargo categorizado (position_id → position_category scheme)
+- Relación empleador (organization_id → core.organization)
+- Contacto normalizado (email, phone)
+
+**Category Pattern**: 83+ schemes de vocabularios controlados
 
 - Estados operativos (ipr_state: 31, work_item_status: 6, ...)
 - Tipos de entidades (agreement_type, mechanism, ...)
+- Roles y clasificaciones (org_type, position_category, ...)
 - Máquinas de estado con `valid_transitions` JSONB
 
 ---
@@ -106,7 +115,7 @@ psql -U postgres -d goreos -c "
     GROUP BY schemaname
     ORDER BY schemaname;
 "
-# Esperado: meta=5, ref=3, core=40, txn=2 (sin particiones) o 68 (con particiones)
+# Esperado: meta=5, ref=3, core=42, txn=2 (sin particiones) o 68 (con particiones)
 
 # Verificar triggers activos
 psql -U postgres -d goreos -c "
@@ -161,10 +170,11 @@ Todo deriva de historias de usuario validadas. No hay código sin story correspo
 
 Taxonomías flexibles sin DDL:
 
-- 75+ schemes (mcd_phase, ipr_state, mechanism, ...)
-- 350+ categorías
+- 83+ schemes (mcd_phase, ipr_state, mechanism, org_type, position_category, ...)
+- 400+ categorías
 - Jerarquía vía `parent_id`
 - Transiciones de estado vía `valid_transitions` JSONB
+- Univocidad categorial enforced (cada FK → 1 scheme)
 
 ### 3. Auditoría Universal
 
@@ -402,6 +412,52 @@ db.session.execute("SELECT set_current_user(:user_id)", {'user_id': user.email})
 
 ## Changelog
 
+### v3.4 (2026-01-30) - Normalización JSONB Fase 1
+
+**Nuevas Tablas**:
+
+- ✅ `core.position` - Cargos laborales categorizados (gnub:Position)
+
+**Nuevas Columnas Normalizadas**:
+
+- ✅ `core.person.rut` - RUT normalizado desde metadata (VARCHAR(12) UNIQUE)
+- ✅ `core.person.position_id` - Cargo del funcionario (FK a ref.category scheme='position_category')
+- ✅ `core.person.organization_id` - Organización empleadora (FK a core.organization)
+- ✅ `core.person.email` - Email de contacto
+- ✅ `core.person.phone` - Teléfono de contacto
+- ✅ `core.user_account.rut` - RUT normalizado desde metadata (VARCHAR(12) UNIQUE)
+- ✅ `core.organization.rut` - RUT normalizado desde metadata (VARCHAR(12) UNIQUE)
+
+**Nuevos Schemes** (5 total):
+
+- ✅ `position_category` - Categorías de cargos (14 categorías: ALCALDE, CONCEJAL, CONSEJERO_REGIONAL, etc.)
+- ✅ `person_source` - Fuentes de datos (3 categorías: SIRH, CORE, SIAPER)
+- ✅ `org_source` - Fuentes de datos (3 categorías: CONVENIO, IDIS, EXTERNAL)
+- ✅ `contract_type` - Tipos de contrato (6 categorías: PLANTA, CONTRATA, HONORARIOS, etc.)
+- ✅ `org_legal_status` - Estados legales (4 categorías: ACTIVA, INACTIVA, EN_LIQUIDACION, DISUELTA)
+
+**Índices** (17 nuevos):
+
+- ✅ Índices UNIQUE en RUT (person, user_account, organization)
+- ✅ Índices de búsqueda (lower(email), lower(phone))
+- ✅ Índices compuestos para queries frecuentes
+- ✅ Índices parciales (WHERE deleted_at IS NULL)
+
+**Principios Aplicados**:
+
+- ✅ Univocidad Categorial 100% mantenida
+- ✅ Normalización relacional > JSONB metadata
+- ✅ Compatibilidad retroactiva (metadata preservado como audit trail)
+- ✅ RUT validado con CHECK constraint (formato XX.XXX.XXX-X)
+
+**Estado de Integridad**:
+
+- ✅ 0 violaciones de Categorical Univocity
+- ✅ 100% schemes validados con fn_validate_category_scheme
+- ✅ JSONB metadata reducido a audit trail
+
+---
+
 ### v3.1 (2026-01-27) - Remediación Ontológica
 
 **Nuevas Tablas (Relaciones N:M categóricamente correctas)**:
@@ -439,7 +495,7 @@ db.session.execute("SELECT set_current_user(:user_id)", {'user_id': user.email})
 - ✅ 50 tablas con UUID universal
 - ✅ 4 schemas semánticos (meta, ref, core, txn)
 - ✅ Auditoría completa en todas las entidades
-- ✅ 6 ENUMs ontológicos + 75 schemes Category
+- ✅ 6 ENUMs ontológicos + 78 schemes Category
 
 **Integridad**:
 
@@ -475,6 +531,6 @@ db.session.execute("SELECT set_current_user(:user_id)", {'user_id': user.email})
 
 ---
 
-**Última actualización**: 2026-01-27
-**Versión**: 3.1 (Remediación Ontológica)
+**Última actualización**: 2026-01-30
+**Versión**: 3.4 (Normalización JSONB Fase 1)
 **Estado**: ✅ Producción Ready

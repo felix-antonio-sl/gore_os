@@ -1,64 +1,44 @@
 # GORE_OS - Sistema Operativo Institucional del Gobierno Regional de Ñuble
 
-> **Versión 3.1** | **Filosofía: Story-First & Radical Minimalism**
+> **Version 3.2** | **Story-First & Radical Minimalism**
 
 ---
 
-## 🏛️ FUNDAMENTO: El Modelo de Datos
+## La Base: Modelo de Datos PostgreSQL
 
-**ANTES de explorar GORE_OS, entiende la base:**
+El corazon del sistema es el modelo PostgreSQL en `/model/model_goreos`:
+- **71 tablas** en 4 schemas semanticos (`meta`, `ref`, `core`, `txn`)
+- **78+ vocabularios** controlados (Category Pattern, Gist 14.0)
+- **100% trazable** a 820 User Stories validadas
+- **Event Sourcing** hibrido con particionamiento
 
-El corazón del sistema es el modelo PostgreSQL en `/model/model_goreos`:
-- **54 tablas** auditadas y ejecutables en 4 schemas semánticos
-- **75+ vocabularios** controlados (Category Pattern)
-- **100% trazable** a 819 User Stories validadas
-- **Event Sourcing** híbrido con particionamiento
-- **Pipeline ETL** robusto: 470 scripts migran datos legacy
-
-**Setup inicial** (15 minutos):
-```bash
-./scripts/setup_dev_env.sh
-./scripts/verify_model.sh
-```
-
-**Guía completa**: [docs/setup/GETTING_STARTED.md](docs/setup/GETTING_STARTED.md)
-
-**Documentación del modelo**:
-- [model/model_goreos/README.md](model/model_goreos/README.md) - Instalación y guía
+**Documentacion del modelo**:
+- [model/model_goreos/README.md](model/model_goreos/README.md) - Guia del modelo
 - [model/model_goreos/docs/GOREOS_ERD_v3.md](model/model_goreos/docs/GOREOS_ERD_v3.md) - ERD + Data Dictionary
-- [architecture/decisions/ADR-003-modelo-como-base.md](architecture/decisions/ADR-003-modelo-como-base.md) - Decisión arquitectónica
+- [architecture/decisions/ADR-003-modelo-como-base.md](architecture/decisions/ADR-003-modelo-como-base.md) - Decision arquitectonica
 
 ---
 
-## ¿Por dónde empezar?
+## Por donde empezar?
 
 ### Para Nuevos Desarrolladores
 
-1. **[README.md](README.md)** - Introducción general al proyecto
-2. **[MANIFESTO.md](MANIFESTO.md)** - Filosofía Story-First y las 5 Funciones Motoras
-3. **[CLAUDE.md](CLAUDE.md)** - Guía para Claude Code (stack, arquitectura, comandos)
-4. **[architecture/stack.md](architecture/stack.md)** - Stack tecnológico detallado
-5. **[architecture/standards/stack-tecnico-propuesto.md](architecture/standards/stack-tecnico-propuesto.md)** - Stack completo con ejemplos de código
-6. **[architecture/standards/antipatrones-y-deuda-tecnica.md](architecture/standards/antipatrones-y-deuda-tecnica.md)** - Errores a evitar y mejores prácticas
+1. **[README.md](README.md)** - Introduccion general al proyecto
+2. **[MANIFESTO.md](MANIFESTO.md)** - Filosofia Story-First y las 5 Funciones Motoras
+3. **[CLAUDE.md](CLAUDE.md)** - Guia para Claude Code (arquitectura, modelo, comandos)
 
-### Para Arquitectos y Diseñadores de Datos
+### Para Arquitectos y Disenadores de Datos
 
-1. **[model/model_goreos/README.md](model/model_goreos/README.md)** - Modelo de datos v3.0 ejecutable
-2. **[docs/technical/planclaude.md](docs/technical/planclaude.md)** - Plan maestro KODA-CARTOGRAPHER
-3. **[architecture/Omega_GORE_OS_Definition_v3.0.0.md](architecture/Omega_GORE_OS_Definition_v3.0.0.md)** - Definición omega del sistema
-4. **[model/GLOSARIO.yml](model/GLOSARIO.yml)** - Glosario autoritativo de términos
+1. **[model/model_goreos/README.md](model/model_goreos/README.md)** - Modelo de datos v3.2 ejecutable
+2. **[architecture/Omega_GORE_OS_Definition_v3.0.0.md](architecture/Omega_GORE_OS_Definition_v3.0.0.md)** - Definicion omega del sistema
+3. **[model/GLOSARIO.yml](model/GLOSARIO.yml)** - Glosario autoritativo de 244 terminos
+4. **[docs/AUDITORIA_CATEGORIAL_v3.0.md](docs/AUDITORIA_CATEGORIAL_v3.0.md)** - Auditoria categorial completa
 
 ### Para Product Owners y Analistas
 
-1. **[model/stories/](model/stories/)** - 819+ historias de usuario validadas (fuente de verdad)
-2. **[docs/technical/gestion.md](docs/technical/gestion.md)** - Modelo de datos operativo
-3. **[docs/technical/especificaciones.md](docs/technical/especificaciones.md)** - Requisitos funcionales y técnicos
-
-### Para Ingenieros de Datos / ETL
-
-1. **[etl/README.md](etl/README.md)** - Pipeline ETL para migración de datos legacy
-2. **[etl/sources/](etl/sources/)** - Datos fuente (convenios, FRIL, IDIS)
-3. **[etl/scripts/](etl/scripts/)** - ~30 scripts de transformación Python
+1. **[model/stories/](model/stories/)** - 820+ historias de usuario validadas (fuente de verdad)
+2. **[model/entities/aceptadas/](model/entities/aceptadas/)** - 141 entidades aceptadas
+3. **[model/processes/](model/processes/)** - 92 procesos del dominio
 
 ---
 
@@ -66,39 +46,30 @@ El corazón del sistema es el modelo PostgreSQL en `/model/model_goreos`:
 
 ```
 goreos/
-├── architecture/          # Documentación C1-C4, ADRs, design system
-│   ├── stack.md           # Stack tecnológico oficial
-│   ├── diagrams/          # Diagramas Mermaid y visualizaciones
-│   └── standards/         # Estándares técnicos y guías de calidad
-├── model/                 # ⭐ EL CORAZÓN - Modelo semántico del dominio
-│   ├── stories/           # 819+ historias YAML (fuente de verdad)
-│   ├── entities/          # 139+ entidades del dominio
-│   ├── model_goreos/      # Modelo ejecutable v3.0 (DDL PostgreSQL)
-│   └── GLOSARIO.yml       # Terminología autoritativa
-├── etl/                   # Pipeline ETL para migración legacy
-├── db/                    # Configuración base de datos (ver db/README.md)
-├── docs/                  # Documentación técnica consolidada
-│   ├── technical/         # Especificaciones, planes maestros
-│   └── archive/           # Análisis históricos
-└── catalog/               # Catálogo federado KODA
+├── model/                     # EL CORAZON - Modelo semantico del dominio
+│   ├── stories/               # 820 historias YAML (fuente de verdad)
+│   ├── entities/aceptadas/    # 141 entidades aceptadas
+│   ├── processes/             # 92 procesos
+│   ├── model_goreos/          # Modelo ejecutable v3.2 (DDL PostgreSQL)
+│   │   ├── sql/               # DDL, indexes, seed, triggers
+│   │   └── docs/              # ERD, Design Decisions
+│   ├── omega/                 # Definiciones ontologicas
+│   └── GLOSARIO.yml           # 244 terminos (Gist 14.0 + GNUB + TDE)
+├── architecture/
+│   ├── decisions/             # ADRs (Architecture Decision Records)
+│   ├── Omega_GORE_OS_Definition_v3.0.0.md
+│   └── legacy/                # Docs del stack anterior (frozen)
+├── docs/
+│   ├── AUDITORIA_CATEGORIAL_v3.0.md
+│   ├── PLAN_NORMALIZACION_JSONB_v2.0.md
+│   └── legacy/                # ETL sources, migration SQL, docs historicos
+├── docker-compose.yml         # PostgreSQL + PgAdmin
+├── .env.example               # Variables de entorno
+├── CLAUDE.md                  # Guia para Claude Code
+├── INDEX.md                   # Este archivo
+├── MANIFESTO.md               # Identidad y genesis
+└── README.md                  # Introduccion general
 ```
-
----
-
-## Stack Tecnológico (Resumen)
-
-| Capa | Tecnología |
-|------|------------|
-| **Backend** | Python 3.11+, Flask 3.0.3, SQLAlchemy 2.0.30 |
-| **Frontend** | Jinja2 (SSR), HTMX 2.0.0, Alpine.js 3.x, Tailwind CSS 3.4.0 |
-| **Base de Datos** | PostgreSQL 16 + PostGIS |
-| **Infraestructura** | Docker, Gunicorn, Nginx, Celery + Redis |
-| **ETL** | Pandas, DuckDB, NetworkX |
-
-**Documentación detallada**:
-- [architecture/stack.md](architecture/stack.md) - Resumen del stack
-- [architecture/standards/stack-tecnico-propuesto.md](architecture/standards/stack-tecnico-propuesto.md) - Propuesta completa con ejemplos, Docker Compose, requirements.txt
-- [architecture/standards/antipatrones-y-deuda-tecnica.md](architecture/standards/antipatrones-y-deuda-tecnica.md) - Cómo usar el stack correctamente
 
 ---
 
@@ -108,15 +79,15 @@ goreos/
 
 > **"Si no hay Historia, no existe el requerimiento."**
 
-La derivación es unidireccional: **Stories → Entities → Artifacts → Modules**
+La derivacion es unidireccional: **Stories → Entities → Artifacts → Modules**
 
 ### Minimalismo Radical
 
-Solo 4 átomos fundamentales:
+Solo 4 atomos fundamentales:
 1. **Story** (Historia de Usuario) - Origen absoluto del valor
-2. **Entity** (Entidad) - Estructura de información
-3. **Role** (Rol) - Agente activo (humano o algorítmico)
-4. **Process** (Proceso) - Perspectiva dinámica
+2. **Entity** (Entidad) - Estructura de informacion
+3. **Role** (Rol) - Agente activo (humano o algoritmico)
+4. **Process** (Proceso) - Perspectiva dinamica
 
 ### Las 5 Funciones Motoras
 
@@ -129,40 +100,32 @@ El GORE ejecuta 5 funciones esenciales que GORE_OS soporta:
 
 ---
 
-## Modelo de Datos v3.0
+## Modelo de Datos v3.2
 
-El sistema se centra en **IPR (Intervención Pública Regional)** como entidad abstracta polimórfica:
+El sistema se centra en **IPR (Intervencion Publica Regional)** como entidad abstracta polimorfica:
 
-- **Tipos**: PROYECTO (inversión capital) vs PROGRAMA (gasto corriente)
+- **Tipos**: PROYECTO (inversion capital) vs PROGRAMA (gasto corriente)
 - **Fondos**: FNDR, FRIL, FRPD, ISAR
-- **Evaluación**: SNI, C33, FRIL, Glosa 06, 8% FNDR
+- **Evaluacion**: SNI, C33, FRIL, Glosa 06, 8% FNDR
 - **Estados**: 31 estados del ciclo de vida
 
 DDL ejecutable en: [model/model_goreos/sql/](model/model_goreos/sql/)
 
 ---
 
-## Integraciones TDE (Transformación Digital del Estado)
+## Integraciones TDE (Transformacion Digital del Estado)
 
 GORE_OS se integra con sistemas nacionales chilenos:
-- **ClaveÚnica** - Autenticación ciudadana
+- **ClaveUnica** - Autenticacion ciudadana
 - **PISEE** - Interoperabilidad (Once-Only Principle)
-- **DocDigital** - Firma electrónica
-- **SIGFE/DIPRES** - Integración presupuestaria
-- **SIAPER/CGR** - Toma de razón CGR
-
----
-
-## Changelog y Evolución
-
-Ver [JOURNAL.md](JOURNAL.md) para log de decisiones arquitectónicas y pivots técnicos.
-
-Versión actual: **v3.0.0 (Enero 2026)**
+- **DocDigital** - Firma electronica
+- **SIGFE/DIPRES** - Integracion presupuestaria
+- **SIAPER/CGR** - Toma de razon CGR
 
 ---
 
 ## Licencia y Contacto
 
-GORE_OS es desarrollado por el Gobierno Regional de Ñuble, Chile.
+GORE_OS es desarrollado por el Gobierno Regional de Nuble, Chile.
 
-Para consultas técnicas, ver [CLAUDE.md](CLAUDE.md) o contactar al equipo de desarrollo.
+Para consultas tecnicas, ver [CLAUDE.md](CLAUDE.md) o contactar al equipo de desarrollo.

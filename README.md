@@ -1,129 +1,89 @@
 # GORE_OS — Sistema Operativo del Gobierno Regional de Ñuble
 
-> 👉 **Primera vez aquí? Empieza por [INDEX.md](INDEX.md) para navegación completa**
+> Para navegacion completa del repositorio, ver [INDEX.md](INDEX.md)
 
-**Versión:** 3.1.0 (Remediación Documental)
-**Estado:** En desarrollo activo
-**Filosofía:** Story-First & Minimalismo Radical
+**Version:** 3.2.0
+**Estado:** En transicion a stack de agentes LLM
+**Filosofia:** Story-First & Minimalismo Radical
 
 ---
 
-## 🏛️ La Base: Modelo de Datos PostgreSQL
+## La Base: Modelo de Datos PostgreSQL
 
-**ANTES DE EXPLORAR GORE_OS**, entiende que todo se construye sobre un modelo de datos excepcional:
+**Todo se construye sobre el modelo de datos**:
 
-### Características del Modelo
+- **Ubicacion**: `/model/model_goreos`
+- **71 tablas** organizadas en 4 schemas semanticos (`meta`, `ref`, `core`, `txn`)
+- **100% derivado** de 820 User Stories validadas
+- **Category Pattern** (Gist 14.0) para 78+ vocabularios controlados
+- **Event Sourcing** hibrido con particionamiento temporal
+- **Univocidad categorial** verificada al 100%
 
-- **Ubicación**: `/model/model_goreos`
-- **54 tablas** organizadas en 4 schemas semánticos (`meta`, `ref`, `core`, `txn`)
-- **100% derivado** de 819 User Stories validadas (trazabilidad story-first completa)
-- **Category Pattern** (Gist 14.0) para 75+ vocabularios controlados
-- **Event Sourcing** híbrido con particionamiento temporal
-- **Auditado exhaustivamente** (ver documentación de auditoría)
-
-### Instalación del Modelo (15 minutos)
-
-**Antes de cualquier desarrollo, instalar el modelo:**
+### Quick Start
 
 ```bash
-cd model/model_goreos/sql
-createdb -U postgres goreos
-psql -U postgres -d goreos -f goreos_ddl.sql
-# ... (8 archivos en orden estricto)
+# Levantar PostgreSQL
+docker compose up -d postgres
+
+# Verificar conexion
+docker exec goreos_db psql -U goreos -d goreos_model -c "SELECT version();"
+
+# Ver tablas por schema
+docker exec goreos_db psql -U goreos -d goreos_model -c "
+SELECT schemaname, COUNT(*) AS tables FROM pg_tables
+WHERE schemaname IN ('meta','ref','core','txn') GROUP BY schemaname;"
 ```
 
-**Ver instalación completa**: [model/model_goreos/README.md](model/model_goreos/README.md)
-
-### Pipeline de Datos
-
-El modelo PostgreSQL es alimentado por un robusto pipeline ETL:
-
-```
-/etl/sources/ → /etl/scripts/ (470 scripts) → /etl/normalized/ → PostgreSQL → Apps
-```
-
-**Documentación ETL**: [etl/README.md](etl/README.md)
+**Documentacion del modelo**: [model/model_goreos/README.md](model/model_goreos/README.md)
 
 ---
 
-## ¿Qué es GORE_OS?
+## Que es GORE_OS?
 
-GORE_OS es el **sistema operativo institucional** del Gobierno Regional de Ñuble. No es un software tradicional, sino un **modelo integrado de datos, procesos y capacidades** que permite al GORE funcionar de manera coherente, auditable y evolucionar orgánicamente.
+GORE_OS es el **sistema operativo institucional** del Gobierno Regional de Nuble. No es un software tradicional, sino un **modelo integrado de datos, procesos y capacidades** que permite al GORE funcionar de manera coherente, auditable y evolucionar organicamente.
 
-> 📘 **Para la visión política y estratégica, ver [MANIFESTO.md](MANIFESTO.md)**
+> Para la vision politica y estrategica, ver [MANIFESTO.md](MANIFESTO.md)
 
 ---
 
 ## Principio Rector: Story-First
 
-La arquitectura de GORE_OS se adhiere a una regla de derivación estructural estricta y unidireccional:
-
-```mermaid
-graph LR
-    S[Story] -->|aparece en| E[Entity]
-    S -->|ejecutada por| R[Role]
-    S -->|transcurre en| P[Process]
-    S -->|se agrupa en| A[Artefacto]
-    A -->|emerge en| M[Module]
+```
+Stories → Entities → Artifacts → Modules
 ```
 
 1. **Story**: El punto de partida absoluto. Si no hay story, no existe el requerimiento.
 2. **Entity**: El modelo de datos necesario para soportar la story.
-3. **Role**: El agente (humano o máquina) que interactúa con la story.
-4. **Process**: La orquestación temporal de la story.
+3. **Role**: El agente (humano o maquina) que interactua con la story.
+4. **Process**: La orquestacion temporal de la story.
 
 ---
 
-## Estructura del Monorepo
+## Estructura del Repositorio
 
-```text
-gore_os/
-├── app/                      # 🐍 Aplicación Flask
-│   ├── blueprints/           # Módulos Funcionales (BP)
-│   ├── static/               # Assets (CSS/JS compilados)
-│   ├── templates/            # Plantillas Jinja2
-│   └── __init__.py           # Application Factory
-│
-├── architecture/             # 🏗️ Documentación Técnica
-├── model/                    # ❤️ Definiciones Semánticas
-├── docker-compose.yml        # Orquestación
-├── pyproject.toml            # Dependencias Python
-└── MANIFESTO.md              # 📜 Constitución del Sistema
+```
+goreos/
+├── model/                     # EL CORAZON - Modelo semantico
+│   ├── stories/               # 820 historias de usuario
+│   ├── entities/aceptadas/    # 141 entidades validadas
+│   ├── processes/             # 92 procesos
+│   ├── model_goreos/          # DDL PostgreSQL ejecutable
+│   ├── omega/                 # Definiciones ontologicas
+│   └── GLOSARIO.yml           # 244 terminos
+├── architecture/              # ADRs, definicion Omega
+├── docs/                      # Auditorias categoriales
+├── docker-compose.yml         # PostgreSQL + PgAdmin
+└── MANIFESTO.md               # Constitucion del sistema
 ```
 
 ---
 
-## Stack Tecnológico (v2.1)
+## Estado del Proyecto
 
-El stack técnico está diseñado para ser **Cloud First**, **Type Safe** y **High Performance**:
+El modelo de datos PostgreSQL (71 tablas, 78+ category schemes) y las 820 user stories son los activos de valor permanente. El codigo de aplicacion esta en transicion de un legacy (Flask+Streamlit) a un stack de agentes LLM (Next.js + FastAPI + MCP + PostgreSQL + pgvector).
 
-| Capa         | Tecnología               | Justificación                              |
-| ------------ | ------------------------ | ------------------------------------------ |
-| **Backend**  | **Python + Flask**       | Estándar en gobierno, robustez y librerías |
-| **Frontend** | **Jinja2 + HTMX**        | SSR rápido y simplicidad operativa         |
-| **Styling**  | **Tailwind CSS**         | Diseño moderno y consistente               |
-| **DB**       | **PostgreSQL + PostGIS** | Base de datos relacional y territorial     |
-| **ORM**      | **SQLAlchemy**           | Mapeo robusto y seguro                     |
-| **Deploy**   | **Docker + Gunicorn**    | Contenerización estándar y escalable       |
-| **Auth**     | **Flask-Login**          | Gestión clásica de sesiones y roles        |
+Los artefactos del stack anterior se preservan en `docs/legacy/` y `architecture/legacy/` como referencia historica.
 
 ---
 
-## Estado del Proyecto (3.0.0)
-
-Hemos realizado una **poda estructural radical** para eliminar redundancia y complejidad accidental:
-
-- **Conservado**: Stories, Roles, Entities, Processes, Architecture.
-- **Eliminado**: Domains, Modules, Competences, Capabilities, Agents (como átomos aislados).
-- **Objetivo**: Que los módulos y capacidades **emerjan** de la agrupación natural de historias validadas.
-
-### Próximos Pasos
-
-1. **Enriquecimiento de Stories**: Procesamiento 1x1 de las 819 historias para asegurar completitud.
-2. **Validación de Entidades**: Asegurar que cada entidad tenga trazabilidad a una historia.
-3. **Saneamiento de Roles**: Consolidar roles redundantes.
-4. **Emergencia de Módulos**: Agrupar historias para definir los módulos de software reales.
-
----
-
-*GORE_OS Dev Team — Diciembre 2025*
+*GORE_OS Dev Team — Febrero 2026*

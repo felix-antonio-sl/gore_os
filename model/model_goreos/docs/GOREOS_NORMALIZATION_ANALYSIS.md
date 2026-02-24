@@ -515,4 +515,91 @@ Las desnormalizaciones presentes son:
 
 ---
 
+## Historial de Normalizaciones
+
+### Normalization v3.0 - CRÍTICAS Phase
+
+**Executed**: 2026-01-27
+**Phase**: CRITICAL Priority (13 fields)
+
+Documented in `docs/AUDITORIA_CATEGORIAL_v3.0.md`
+
+**Metrics**:
+- Categorical Univocity: Maintained
+- New schemes: Multiple (estamento, rendition_state, etc.)
+- Total normalized fields: 13/13 (100%)
+
+---
+
+### Normalization v3.4 - MEDIA Phase
+
+**Executed**: 2026-01-30
+**Phase**: MEDIUM Priority (5 fields)
+
+| Field | Source | Destination | Records | Rationale |
+|-------|--------|-------------|---------|-----------|
+| `cargo_ultimo` | `person.metadata` | `core.position` + FK | 89/110 (81%) | High cardinality (70 unique), tde:Cargo |
+| `calificacion` | `person.metadata` | `professional_qualification` scheme | 110/110 (100%) | Fuzzy consolidation 57→14, tde:CalificacionProfesional |
+| `estado_cgr_norm` | `agreement.metadata` | `cgr_outcome` scheme | 129/129 (100%) | 7 states, tde:EstadoCGR |
+| `division` | `ipr_party.metadata` | `sponsor_division_id` FK | 37/37 (100%) | FK to organization, gnub:SponsorDivision |
+| `origen` | `ipr.metadata` | `is_municipal_origin` BOOLEAN | 1965/1965 (100%) | Binary choice (parsimony), gnub:MunicipalOrigin |
+
+**Metrics**:
+- Categorical Univocity: 100% maintained
+- New schemes: 5 (professional_qualification, cgr_outcome completed, estamento, magnitude_aspect, currency)
+- New table: `core.position`
+- New indexes: 17
+- Total normalized fields: 18/18 (100%)
+
+**Lessons Learned**:
+1. Fuzzy matching (CASE WHEN LIKE) effective for consolidating 57→14 professional qualifications
+2. Boolean preferred over scheme for binary choices (parsimony principle)
+3. Partial indexes with `WHERE IS NOT NULL` optimize FK lookup performance
+4. Manual mapping required for inconsistent nomenclature (division names)
+
+**New Entities**:
+
+```sql
+-- New table for positions
+CREATE TABLE core.position (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID NOT NULL REFERENCES core.organization(id),
+    title VARCHAR(200) NOT NULL,
+    is_active BOOLEAN DEFAULT true,
+    start_date DATE,
+    end_date DATE,
+    metadata JSONB,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Enhanced person table
+ALTER TABLE core.person
+    ADD COLUMN current_position_id UUID REFERENCES core.position(id),
+    ADD COLUMN professional_qualification_id UUID REFERENCES ref.category(id)
+        CHECK (fn_validate_category_scheme(professional_qualification_id, 'professional_qualification'));
+```
+
+**New Schemes**:
+
+```sql
+-- Professional qualifications (consolidated from 57 to 14)
+INSERT INTO ref.category (scheme, code, label) VALUES
+    ('professional_qualification', 'PROFESIONAL', 'Profesional'),
+    ('professional_qualification', 'TECNICO', 'Técnico'),
+    ('professional_qualification', 'ADMINISTRATIVO', 'Administrativo'),
+    ('professional_qualification', 'AUXILIAR', 'Auxiliar'),
+    -- ... 10 more
+
+-- CGR outcomes
+INSERT INTO ref.category (scheme, code, label) VALUES
+    ('cgr_outcome', 'APROBADO', 'Aprobado'),
+    ('cgr_outcome', 'RECHAZADO', 'Rechazado'),
+    ('cgr_outcome', 'OBSERVADO', 'Observado'),
+    -- ... 4 more
+```
+
+---
+
 *Análisis de Normalización generado para GORE_OS v3.0*
+*Actualizado: 2026-01-30 (v3.4 MEDIA Phase)*

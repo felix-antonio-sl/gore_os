@@ -1,8 +1,8 @@
-# Modelo Conceptual: GORE_OS v3.0
+# Modelo Conceptual: GORE_OS v3.4
 
 **Sistema**: Gestión Institucional para Gobiernos Regionales
 **Nivel**: Conceptual (Business View)
-**Fecha**: 2026-01-27
+**Fecha**: 2026-01-30
 **Audiencia**: Stakeholders de negocio, analistas, gerentes
 
 ---
@@ -35,6 +35,7 @@ mindmap
     Organización
       Instituciones
       Personas
+      Cargos
       Roles
 ```
 
@@ -48,9 +49,11 @@ erDiagram
     INICIATIVA_IPR ||--o{ COMPROMISO_PRESUPUESTARIO : "requiere"
     INICIATIVA_IPR ||--o{ PROBLEMA : "presenta"
     INICIATIVA_IPR }o--|| TERRITORIO : "beneficia"
+    INICIATIVA_IPR }o--o| ORGANIZACION : "patrocinada por división"
 
     CONVENIO ||--|{ CUOTA : "define"
     CONVENIO }o--|| ORGANIZACION : "firmado por"
+    CONVENIO }o--o| PERSONA : "referente técnico"
 
     PROGRAMA_PRESUPUESTARIO ||--o{ COMPROMISO_PRESUPUESTARIO : "financia"
 
@@ -63,6 +66,8 @@ erDiagram
     COMPROMISO_OPERATIVO ||--o{ ITEM_TRABAJO : "descompone en"
 
     PERSONA }o--|| ORGANIZACION : "pertenece a"
+    PERSONA }o--o| CARGO : "ejerce"
+    CARGO }o--|| ORGANIZACION : "definido por"
     USUARIO }o--|| PERSONA : "representa"
 
     ITEM_TRABAJO }o--o| USUARIO : "asignado a"
@@ -81,6 +86,7 @@ erDiagram
         string nombre "Nombre del proyecto"
         string naturaleza "Programa o Proyecto"
         money monto_total "Inversión total"
+        boolean origen_municipal "Iniciativa municipal"
     }
 
     MECANISMO {
@@ -114,6 +120,7 @@ erDiagram
         date vigencia_desde "Inicio"
         date vigencia_hasta "Término"
         money monto "Valor total"
+        string resultado_cgr "Toma de razón CGR"
     }
 
     CUOTA {
@@ -131,12 +138,15 @@ erDiagram
     CONVENIO ||--|{ CUOTA : "tiene"
     CONVENIO }o--|| ORGANIZACION : "entidad dadora"
     CONVENIO }o--|| ORGANIZACION : "entidad receptora"
+    CONVENIO }o--o| PERSONA : "referente técnico"
 ```
 
 **Conceptos clave:**
 - **Convenio**: Acuerdo legal entre instituciones
 - **Cuota**: Calendario de transferencias
 - **Dadora/Receptora**: Partes del convenio
+- **Referente técnico**: Persona responsable del seguimiento del convenio
+- **Resultado CGR**: Dictamen de toma de razón de Contraloría
 
 ---
 
@@ -255,9 +265,17 @@ erDiagram
         string sigla "Abreviatura"
     }
 
+    CARGO {
+        string codigo "Código cargo"
+        string nombre "Denominación cargo"
+        int nivel "Nivel jerárquico"
+    }
+
     PERSONA {
+        string rut "RUT funcionario"
         string nombre "Nombre completo"
-        string cargo "Cargo actual"
+        string calificacion "Profesión/Título"
+        string estamento "Planta/Contrata/Honorarios"
     }
 
     USUARIO {
@@ -267,7 +285,9 @@ erDiagram
     }
 
     ORGANIZACION ||--o{ DIVISION : "tiene"
+    ORGANIZACION ||--o{ CARGO : "define"
     ORGANIZACION ||--o{ PERSONA : "emplea"
+    CARGO ||--o{ PERSONA : "ocupado por"
     PERSONA ||--o| USUARIO : "accede como"
     DIVISION ||--o{ PERSONA : "integra"
 ```
@@ -275,8 +295,10 @@ erDiagram
 **Conceptos clave:**
 - **Organización**: Institución (GORE, municipios, servicios)
 - **División**: Unidad interna
-- **Persona**: Funcionario
+- **Cargo**: Puesto de trabajo definido en la estructura organizacional
+- **Persona**: Funcionario con RUT, calificación profesional y estamento
 - **Usuario**: Cuenta de acceso al sistema
+- **Estamento**: Clasificación del funcionario (Planta/Contrata/Honorarios)
 
 ---
 
@@ -366,7 +388,10 @@ erDiagram
 | IPR | Compromiso Presupuestario | 1:N | Una IPR requiere múltiples compromisos de gasto |
 | IPR | Territorio | N:1 | Una IPR beneficia a un territorio |
 | Convenio | Organización | N:2 | Todo convenio tiene dadora y receptora |
+| Convenio | Persona | N:1 | Todo convenio puede tener un referente técnico |
 | Sesión | Acuerdo | 1:N | Una sesión genera múltiples acuerdos |
+| Persona | Cargo | N:1 | Una persona ocupa un cargo |
+| IPR | División | N:1 | Una IPR puede ser patrocinada por una división |
 | Acuerdo | Compromiso Operativo | 1:1 | Un acuerdo puede originar un compromiso |
 | Problema | Compromiso Operativo | 1:1 | Un problema puede requerir un compromiso |
 | Compromiso Operativo | Ítem de Trabajo | 1:N | Un compromiso se descompone en tareas |
@@ -389,6 +414,9 @@ erDiagram
 | **CUT** | Código Único Territorial |
 | **Dadora** | Organización que transfiere recursos |
 | **Receptora** | Organización que recibe recursos |
+| **CGR** | Contraloría General de la República |
+| **Estamento** | Clasificación funcionaria (Planta, Contrata, Honorarios) |
+| **Calificación Profesional** | Título profesional o técnico del funcionario |
 
 ---
 
@@ -409,4 +437,87 @@ erDiagram
 
 ---
 
-*Modelo Conceptual generado para GORE_OS v3.0*
+## Esquemas de Referencia (ref.category)
+
+El sistema utiliza vocabularios controlados para categorizar entidades. A continuación, los esquemas principales:
+
+### Organización y Personal
+
+| Esquema | Descripción | Códigos Ejemplo |
+|---------|-------------|-----------------|
+| **org_type** | Tipo de organización | GORE, MUNICIPALIDAD, SERVICIO, UNIVERSIDAD, ORG_COMUNITARIA |
+| **estamento** | Clasificación funcionaria | PLANTA, CONTRATA, HONORARIOS, CODIGO_TRABAJO, SUPLENTE, REEMPLAZO, DIRECTIVO |
+| **professional_qualification** | Títulos profesionales/técnicos | ARQUITECTO, INGENIERO_CIVIL, ABOGADO, ASISTENTE_SOCIAL, TECNICO_AGRICOLA, CONTADOR_AUDITOR, PROFESOR, MEDICO, ENFERMERA, PSICOLOGO, PERIODISTA, GEOGRAFO, BIOLOGO, OTRO_PROFESIONAL |
+
+### IPR y Financiamiento
+
+| Esquema | Descripción | Códigos Ejemplo |
+|---------|-------------|-----------------|
+| **ipr_type** | Tipo de iniciativa IPR | INFRAESTRUCTURA, EQUIPAMIENTO, PROGRAMA_8PCT, TRANSFERENCIA, PROGRAMA_SOCIAL, CONSERVACION, ESTUDIO |
+| **funding_source** | Fuente financiamiento (no-8%) | FNDR, FRIL, FRPD, ISAR |
+| **fondo_8pct** | Categorías Programas 8% | DEPORTE, CULTURA, SEGURIDAD, ADULTO_MAYOR, EDUCACION, SALUD, MEDIO_AMBIENTE, CONECTIVIDAD, INFRAESTRUCTURA_COMUNITARIA, DISCAPACIDAD |
+| **investment_sector** | Sector de inversión | SPORTS, CULTURE, EDUCATION, HEALTH, ENVIRONMENT, INFRASTRUCTURE, CONNECTIVITY, SECURITY, SOCIAL, PRODUCTIVE |
+| **mechanism** | Mecanismo de inversión | SNI, FRIL, SUBV8, CONVENIO_TRANSFERENCIA |
+
+### Convenios y Presupuesto
+
+| Esquema | Descripción | Códigos Ejemplo |
+|---------|-------------|-----------------|
+| **agreement_type** | Tipo de convenio | CONVENIO_MARCO, CONVENIO_ESPECIFICO, MANDATO |
+| **cgr_outcome** | Resultado toma de razón CGR | TOMADO_RAZON, REPRESENTADO, PENDIENTE, EXENTO, RECHAZADO, NO_APLICA, EN_REVISION |
+| **budget_subtitle** | Subtítulo presupuestario | SUBTITULO_24, SUBTITULO_31, SUBTITULO_33 |
+| **rendition_state** | Estado de rendición | COMPLETADO, PENDIENTE, EN_PROCESO |
+
+### Relaciones y Magnitudes
+
+| Esquema | Descripción | Códigos Ejemplo |
+|---------|-------------|-----------------|
+| **ipr_party_role** | Rol organización en IPR | MANDANTE, EJECUTOR, BENEFICIARIO, UNIDAD_TECNICA |
+| **magnitude_aspect** | Aspecto de magnitud | MONETARY, PERCENTAGE, QUANTITY, TIME_DURATION |
+| **currency** | Moneda | CLP, USD, UF |
+
+### Territorio
+
+| Esquema | Descripción | Códigos Ejemplo |
+|---------|-------------|-----------------|
+| **territory_level** | Nivel territorial | REGION, PROVINCIA, COMUNA |
+
+---
+
+## Cambios en v3.4 (2026-01-30)
+
+### Nuevas Entidades
+- **CARGO (Position)**: Puestos de trabajo en estructura organizacional
+  - Atributos: codigo, nombre, nivel jerárquico
+  - Relación: CARGO → ORGANIZACION (many-to-one)
+
+### Actualizaciones de Entidades Existentes
+
+**PERSONA**:
+- + `rut` (VARCHAR): RUT del funcionario
+- + `calificacion` (FK → professional_qualification): Título profesional/técnico
+- + `cargo` (FK → CARGO): Cargo que ocupa
+- + `estamento` (FK → estamento): Planta/Contrata/Honorarios
+
+**CONVENIO**:
+- + `referente_tecnico` (FK → PERSONA): Responsable técnico del convenio
+- + `resultado_cgr` (FK → cgr_outcome): Dictamen CGR
+
+**INICIATIVA_IPR**:
+- + `origen_municipal` (BOOLEAN): Indica si es iniciativa municipal
+- + `division_patrocinadora` (FK → ORGANIZACION): División que patrocina
+
+**IPR_PARTY** (junction table):
+- + `agreement_id` (FK → CONVENIO): Vínculo con convenio
+- + `sponsor_division_id` (FK → ORGANIZACION): División patrocinadora
+
+### Nuevos Esquemas de Referencia
+- `professional_qualification`: 14 códigos (títulos profesionales/técnicos)
+- `cgr_outcome`: 7 códigos (resultados toma de razón CGR)
+- `estamento`: 7 códigos (clasificación funcionaria)
+- `magnitude_aspect`: 4 códigos (aspectos de magnitudes)
+- `currency`: 3 códigos (monedas)
+
+---
+
+*Modelo Conceptual generado para GORE_OS v3.4*

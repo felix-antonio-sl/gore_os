@@ -1,16 +1,22 @@
 -- =============================================================================
--- GORE_OS v3.0 - INDEXES
+-- GORE_OS INDEXES v3.4 - Índices de Normalización
 -- =============================================================================
 -- Archivo: goreos_indexes.sql
--- Descripción: Índices optimizados para el modelo v3 con UUID y particionamiento
--- Generado: 2026-01-26
+-- Descripción: Índices optimizados para el modelo v3.4 con normalización JSONB
+-- Última actualización: 2026-01-30
 -- Dependencias: goreos_ddl.sql
+-- =============================================================================
+-- Cambios v3.4:
+--   +12 índices FK para columnas normalizadas
+--   +2 índices composite para performance
+--   +3 índices para tablas nuevas (position, budget_carryover)
 -- =============================================================================
 -- Principios de Indexación:
 -- 1. Índices compuestos para queries frecuentes (CQs del dominio)
 -- 2. Índices parciales para registros activos (WHERE deleted_at IS NULL)
 -- 3. Índices GIN para búsquedas JSONB y arrays
 -- 4. Índices en particiones heredan de la tabla padre
+-- 5. Índices parciales para FK normalizadas (WHERE ... IS NOT NULL)
 -- =============================================================================
 
 -- =============================================================================
@@ -77,6 +83,22 @@ CREATE INDEX IF NOT EXISTS idx_ipr_alert ON core.ipr(alert_level_id) WHERE alert
 -- Índice para IPRs activas
 CREATE INDEX IF NOT EXISTS idx_ipr_active ON core.ipr(id) WHERE deleted_at IS NULL;
 
+-- v3.4 MEDIA: ipr.is_municipal_origin (partial para true)
+CREATE INDEX IF NOT EXISTS idx_ipr_municipal_origin ON core.ipr(is_municipal_origin) WHERE is_municipal_origin = true;
+
+-- v3.4 MEDIA: ipr.sponsor_division_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_ipr_sponsor_division ON core.ipr(sponsor_division_id) WHERE sponsor_division_id IS NOT NULL;
+
+-- =============================================================================
+--    SCHEMA: core - ÍNDICES IPR_PARTY (Junction Table)
+-- =============================================================================
+
+-- v3.0 CRÍTICA: ipr_party.agreement_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_ipr_party_agreement ON core.ipr_party(agreement_id) WHERE agreement_id IS NOT NULL;
+
+-- v3.4 MEDIA: ipr_party.sponsor_division_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_ipr_party_sponsor_division ON core.ipr_party(sponsor_division_id) WHERE sponsor_division_id IS NOT NULL;
+
 -- =============================================================================
 --    SCHEMA: core - ÍNDICES CONVENIOS
 -- =============================================================================
@@ -93,6 +115,12 @@ CREATE INDEX IF NOT EXISTS idx_agreement_receiver ON core.agreement(receiver_id)
 
 -- Índice para convenios activos
 CREATE INDEX IF NOT EXISTS idx_agreement_active ON core.agreement(id) WHERE deleted_at IS NULL;
+
+-- v3.0 CRÍTICA: agreement.technical_referent_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_agreement_technical_referent ON core.agreement(technical_referent_id) WHERE technical_referent_id IS NOT NULL;
+
+-- v3.4 MEDIA: agreement.cgr_outcome_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_agreement_cgr_outcome ON core.agreement(cgr_outcome_id) WHERE cgr_outcome_id IS NOT NULL;
 
 -- CQ: "¿Qué cuotas de convenio están vencidas?"
 CREATE INDEX IF NOT EXISTS idx_installment_due ON core.agreement_installment(due_date, payment_status_id);
@@ -165,6 +193,10 @@ CREATE INDEX IF NOT EXISTS idx_budget_commitment_agreement ON core.budget_commit
 -- HIGH-004 FIX: idx_budget_commitment_number eliminado (redundante con UNIQUE constraint en DDL)
 CREATE INDEX IF NOT EXISTS idx_budget_commitment_program ON core.budget_commitment(budget_program_id);
 
+-- v3.0 CRÍTICA: budget_program.item_id, allocation_id (FK normalizadas)
+CREATE INDEX IF NOT EXISTS idx_budget_program_item ON core.budget_program(item_id) WHERE item_id IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_budget_program_allocation ON core.budget_program(allocation_id) WHERE allocation_id IS NOT NULL;
+
 -- =============================================================================
 --    SCHEMA: core - ÍNDICES ORGANIZACIÓN Y PERSONAS
 -- =============================================================================
@@ -183,6 +215,18 @@ CREATE INDEX IF NOT EXISTS idx_user_active ON core.user(is_active, system_role_i
 CREATE INDEX IF NOT EXISTS idx_org_type ON core.organization(org_type_id);
 CREATE INDEX IF NOT EXISTS idx_org_parent ON core.organization(parent_id);
 CREATE INDEX IF NOT EXISTS idx_org_active ON core.organization(id) WHERE deleted_at IS NULL;
+
+-- v3.0 CRÍTICA: organization.rut (parcial para NOT NULL)
+CREATE INDEX IF NOT EXISTS idx_org_rut ON core.organization(rut) WHERE rut IS NOT NULL;
+
+-- v3.0 CRÍTICA: person.estamento_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_person_estamento ON core.person(estamento_id) WHERE estamento_id IS NOT NULL;
+
+-- v3.4 MEDIA: person.position_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_person_position ON core.person(position_id) WHERE position_id IS NOT NULL;
+
+-- v3.4 MEDIA: person.qualification_id (FK normalizada)
+CREATE INDEX IF NOT EXISTS idx_person_qualification ON core.person(qualification_id) WHERE qualification_id IS NOT NULL;
 
 -- =============================================================================
 --    SCHEMA: core - ÍNDICES TERRITORIO
@@ -262,6 +306,35 @@ CREATE INDEX IF NOT EXISTS idx_agreement_metadata ON core.agreement USING GIN(me
 CREATE INDEX IF NOT EXISTS idx_workitem_metadata ON core.work_item USING GIN(metadata jsonb_path_ops);
 
 -- =============================================================================
+--    SCHEMA: core - ÍNDICES TABLAS NUEVAS (Normalización v3.0/v3.4)
+-- =============================================================================
+
+-- v3.0 CRÍTICA: budget_carryover (tabla nueva para arrastres presupuestarios)
+CREATE INDEX IF NOT EXISTS idx_budget_carryover_program ON core.budget_carryover(budget_program_id);
+CREATE INDEX IF NOT EXISTS idx_budget_carryover_year ON core.budget_carryover(fiscal_year);
+
+-- v3.4 MEDIA: position (tabla nueva para cargos/puestos)
+CREATE INDEX IF NOT EXISTS idx_position_org ON core.position(organization_id) WHERE organization_id IS NOT NULL;
+
+-- =============================================================================
+--    ÍNDICES OPTIMIZACIÓN PERFORMANCE v3.4
+-- =============================================================================
+
+-- Composite index para queries financieros frecuentes
+-- CQ: "¿Cuál es el presupuesto por ítem y asignación en años recientes?"
+CREATE INDEX IF NOT EXISTS idx_budget_program_year_item_allocation
+ON core.budget_program (fiscal_year, item_id, allocation_id)
+WHERE fiscal_year BETWEEN 2023 AND 2026
+  AND item_id IS NOT NULL
+  AND allocation_id IS NOT NULL;
+
+-- Partial index para clasificación presupuestaria por subtítulo
+-- CQ: "¿Qué programas presupuestarios tienen subtítulo X?"
+CREATE INDEX IF NOT EXISTS idx_budget_program_subtitle
+ON core.budget_program (subtitle_id)
+WHERE subtitle_id IS NOT NULL;
+
+-- =============================================================================
 --    ESTADÍSTICAS
 -- =============================================================================
 
@@ -269,18 +342,41 @@ CREATE INDEX IF NOT EXISTS idx_workitem_metadata ON core.work_item USING GIN(met
 -- ANALYZE core.ipr;
 -- ANALYZE core.agreement;
 -- ANALYZE core.work_item;
+-- ANALYZE core.budget_program;
+-- ANALYZE core.budget_carryover;
+-- ANALYZE core.position;
 -- ANALYZE txn.event;
 -- ANALYZE txn.magnitude;
 
 -- =============================================================================
---    FIN ÍNDICES v3.0
+--    FIN ÍNDICES v3.4
 -- =============================================================================
--- Total índices creados: ~60
+-- Total índices creados: ~77
 -- Tipos:
 --   - B-tree: Búsquedas exactas y rangos
 --   - GIN: Arrays, JSONB, Full-text
---   - Parciales: Filtros frecuentes (deleted_at IS NULL, is_active)
+--   - Parciales: Filtros frecuentes (deleted_at IS NULL, is_active, IS NOT NULL)
+--   - Composite: Queries financieros multi-columna
 -- Nota: Índices en tablas particionadas se heredan automáticamente
 -- =============================================================================
+-- Índices v3.4 añadidos:
+--   - idx_org_rut (organization.rut parcial)
+--   - idx_person_estamento (person.estamento_id)
+--   - idx_person_position (person.position_id)
+--   - idx_person_qualification (person.qualification_id)
+--   - idx_agreement_technical_referent (agreement.technical_referent_id)
+--   - idx_agreement_cgr_outcome (agreement.cgr_outcome_id)
+--   - idx_ipr_municipal_origin (ipr.is_municipal_origin parcial)
+--   - idx_ipr_sponsor_division (ipr.sponsor_division_id)
+--   - idx_ipr_party_agreement (ipr_party.agreement_id)
+--   - idx_ipr_party_sponsor_division (ipr_party.sponsor_division_id)
+--   - idx_budget_program_item (budget_program.item_id)
+--   - idx_budget_program_allocation (budget_program.allocation_id)
+--   - idx_budget_carryover_program (budget_carryover.budget_program_id)
+--   - idx_budget_carryover_year (budget_carryover.fiscal_year)
+--   - idx_position_org (position.organization_id)
+--   - idx_budget_program_year_item_allocation (composite performance)
+--   - idx_budget_program_subtitle (parcial performance)
+-- =============================================================================
 
-DO $$ BEGIN RAISE NOTICE 'GORE_OS Indexes v3.0 cargados correctamente'; END $$;
+DO $$ BEGIN RAISE NOTICE 'GORE_OS Indexes v3.4 cargados correctamente'; END $$;

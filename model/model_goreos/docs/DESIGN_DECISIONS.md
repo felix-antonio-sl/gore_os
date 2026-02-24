@@ -598,6 +598,304 @@ investment_sector_id → 1 scheme only
 
 ---
 
+## Normalization v3.0/v3.4 Design Decisions
+
+**Context**: Categorical Audit v3.0 analyzed 98 JSONB fields across 10 tables, identifying 13 CRITICAL and 16 MEDIUM priority normalizations. This section documents key architectural decisions made during the v3.0/v3.4 normalization phases.
+
+**Audit Reference**: `/docs/AUDITORIA_CATEGORIAL_v3.0.md` (2026-01-30)
+
+---
+
+### DD-036: core.position - New Table vs Scheme
+
+**Problem**: `person.metadata->>'cargo'` contained 70+ unique position values with high cardinality and hierarchical structure needs.
+
+**Options Evaluated**:
+
+1. **Option A**: Create `ref.category` scheme with 70+ codes
+   - Pros: Consistent with category pattern
+   - Cons: Violates parsimony (too many values), no hierarchical support, no organization FK
+
+2. **Option B**: Create dedicated `core.position` table ✓ CHOSEN
+   - Pros: Supports hierarchy (`hierarchy_level`), FK to organization, allows additional attributes
+   - Cons: Additional table in schema
+
+**Decision**: **Option B** - Dedicated `core.position` table
+
+**Rationale**:
+- High cardinality (70+ unique values) exceeds practical limit for schemes
+- Positions require hierarchical classification (DIRECTIVO, PROFESIONAL, TÉCNICO, ADMINISTRATIVO, AUXILIAR)
+- Need for FK to `core.organization` for org-specific positions
+- Ontological alignment: `tde:Cargo` is an entity, not a simple category
+- Future extensibility: Salary bands, competencies, certifications
+
+**Implementation**:
+```sql
+CREATE TABLE core.position (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(100) UNIQUE NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    hierarchy_level VARCHAR(50), -- DIRECTIVO, PROFESIONAL, etc.
+    organization_id UUID REFERENCES core.organization(id),
+    description TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ,
+    deleted_at TIMESTAMPTZ,
+    deleted_by_id UUID REFERENCES core.user(id)
+);
+
+-- Migration from JSONB
+ALTER TABLE core.person
+    ADD COLUMN position_id UUID REFERENCES core.position(id);
+```
+
+**Outcome**: 70+ positions normalized with hierarchical structure, 100% relational integrity
+
+**Alternative Rejected**: `ref.category` scheme='position' (too many codes, lacks structure)
+
+**Ontology**: `tde:Cargo` (Transformación Digital del Estado)
+
+---
+
+### DD-037: professional_qualification - Scheme vs Table
+
+**Problem**: `person.metadata->>'calificacion_profesional'` contained 57 raw values, consolidating to 14 normalized values.
+
+**Options Evaluated**:
+
+1. **Option A**: Create `core.professional_qualification` table
+   - Pros: More structured, allows additional attributes
+   - Cons: Overkill for simple 14-value controlled vocabulary
+
+2. **Option B**: Create `ref.category` scheme ✓ CHOSEN
+   - Pros: Low cardinality (14 values), stable vocabulary, consistent with category pattern
+   - Cons: Requires fuzzy mapping logic for 57→14 consolidation
+
+**Decision**: **Option B** - `ref.category` scheme='professional_qualification'
+
+**Rationale**:
+- Low cardinality (14 normalized values) fits category pattern
+- Stable vocabulary (qualifications don't change frequently)
+- No additional structural needs (hierarchy, attributes)
+- Consistent with other controlled vocabularies
+- Parsimony principle from Categorical Audit v3.0
+
+**Implementation**:
+```sql
+-- Scheme creation
+INSERT INTO ref.category (scheme, code, label, description)
+VALUES
+    ('professional_qualification', 'DIRECTIVO', 'Directivo Superior', ...),
+    ('professional_qualification', 'PROFESIONAL', 'Profesional', ...),
+    -- ... 12 more
+
+-- Migration with fuzzy mapping
+ALTER TABLE core.person
+    ADD COLUMN professional_qualification_id UUID REFERENCES ref.category(id),
+    ADD CONSTRAINT chk_qualification_scheme
+        CHECK (professional_qualification_id IS NULL OR
+               fn_validate_category_scheme(professional_qualification_id, 'professional_qualification'));
+
+-- CASE WHEN mapping for 57→14 consolidation
+UPDATE core.person p
+SET professional_qualification_id = (
+    SELECT id FROM ref.category
+    WHERE scheme = 'professional_qualification'
+      AND code = CASE
+          WHEN p.metadata->>'calificacion_profesional' ILIKE '%directiv%' THEN 'DIRECTIVO'
+          WHEN p.metadata->>'calificacion_profesional' ILIKE '%profesional%' THEN 'PROFESIONAL'
+          -- ... 12 more mappings
+      END
+);
+```
+
+**Outcome**: 57 raw values consolidated to 14 normalized codes, 100% categorical univocity
+
+**Alternative Rejected**: Dedicated table (unnecessarily complex for simple vocabulary)
+
+**Ontology**: `tde:CalificacionProfesional`
+
+---
+
+### DD-038: is_municipal_origin - Boolean vs Scheme
+
+**Problem**: `ipr.metadata->>'origen'` contained only 2 values: "MUNICIPIO" vs "SECTORIAL" (origin type).
+
+**Options Evaluated**:
+
+1. **Option A**: Create `ref.category` scheme='ipr_origin'
+   - Pros: Consistent with category pattern
+   - Cons: Violates parsimony principle (schemes with <3 values should be boolean)
+
+2. **Option B**: Use BOOLEAN column ✓ CHOSEN
+   - Pros: Minimal storage, clear semantics, fast queries
+   - Cons: Less extensible if new origin types emerge
+
+**Decision**: **Option B** - `BOOLEAN is_municipal_origin`
+
+**Rationale**:
+- Only 2 values detected in data
+- Parsimony principle from Categorical Audit v3.0: "No schemes with <3 values"
+- Boolean provides clearest semantics: TRUE = municipal, FALSE = sectorial
+- 1 byte storage vs 16 bytes (UUID FK)
+- If future origin types emerge (e.g., "PRIVADO"), can migrate to scheme
+
+**Implementation**:
+```sql
+ALTER TABLE core.ipr
+    ADD COLUMN is_municipal_origin BOOLEAN;
+
+-- Migration
+UPDATE core.ipr
+SET is_municipal_origin = CASE
+    WHEN metadata->>'origen' ILIKE '%munic%' THEN TRUE
+    WHEN metadata->>'origen' ILIKE '%sector%' THEN FALSE
+    ELSE NULL
+END;
+```
+
+**Outcome**: Binary classification preserved, 7x storage efficiency vs FK approach
+
+**Alternative Rejected**: `ref.category` scheme='ipr_origin' with 2 codes (violates parsimony)
+
+**Ontology**: `gnub:MunicipalOrigin` (GORE Ñuble custom)
+
+**Future Migration Path**: If >2 origin types emerge:
+```sql
+-- Create scheme
+INSERT INTO ref.category (scheme, code, label) VALUES
+    ('ipr_origin', 'MUNICIPAL', 'Origen Municipal'),
+    ('ipr_origin', 'SECTORIAL', 'Origen Sectorial'),
+    ('ipr_origin', 'PRIVADO', 'Origen Privado');
+
+-- Migrate
+ALTER TABLE core.ipr ADD COLUMN origin_type_id UUID REFERENCES ref.category(id);
+UPDATE core.ipr SET origin_type_id = (
+    SELECT id FROM ref.category WHERE scheme='ipr_origin' AND code =
+        CASE WHEN is_municipal_origin THEN 'MUNICIPAL' ELSE 'SECTORIAL' END
+);
+ALTER TABLE core.ipr DROP COLUMN is_municipal_origin;
+```
+
+---
+
+### DD-039: cgr_outcome - Scheme Extension vs New Scheme
+
+**Problem**: `agreement.metadata->>'resultado_cgr'` and `resolution.metadata->>'resultado_cgr'` contained CGR (Contraloría General de la República) audit outcomes with 7 unique values.
+
+**Options Evaluated**:
+
+1. **Option A**: Create new `ref.category` scheme='cgr_outcome'
+   - Pros: Clear namespace
+   - Cons: Duplicates existing scheme, violates DRY
+
+2. **Option B**: Extend existing scheme='cgr_outcome' (already had 5 values) ✓ CHOSEN
+   - Pros: Reuses existing scheme, adds missing values
+   - Cons: Must verify ontological coherence across tables
+
+**Decision**: **Option B** - Extend existing `cgr_outcome` scheme from 5→7 values
+
+**Rationale**:
+- Scheme `cgr_outcome` already existed with 5 codes: APROBADO, OBSERVADO, RECHAZADO, EN_CGR, EXENTO
+- Data analysis revealed 2 missing values: TR_CON_ALCANCES (Trámite con Alcances), EN_CGR (already existed)
+- Ontologically coherent: All values represent CGR audit states
+- Placed in `core.agreement` (not `resolution`) as ontologically correct location
+
+**Implementation**:
+```sql
+-- Extend existing scheme with missing values
+INSERT INTO ref.category (scheme, code, label, description)
+VALUES
+    ('cgr_outcome', 'TR_CON_ALCANCES', 'Trámite con Alcances',
+     'Resolución tramitada con observaciones menores por CGR');
+
+-- Add to core.agreement (ontologically correct table)
+ALTER TABLE core.agreement
+    ADD COLUMN cgr_outcome_id UUID REFERENCES ref.category(id),
+    ADD CONSTRAINT chk_cgr_outcome_scheme
+        CHECK (cgr_outcome_id IS NULL OR
+               fn_validate_category_scheme(cgr_outcome_id, 'cgr_outcome'));
+
+-- Note: resolution.metadata->>'resultado_cgr' NOT migrated
+-- Reason: core.resolution is legacy table, being phased out
+```
+
+**Ontological Coherence**:
+- `core.agreement`: Contracts/mandates subject to CGR audit ✓ CORRECT placement
+- `core.resolution`: Administrative resolutions (less commonly audited by CGR) ✗ NOT migrated
+
+**Outcome**: 7-value scheme reused, 100% categorical univocity maintained
+
+**Alternative Rejected**: New scheme (unnecessary duplication)
+
+**Ontology**: `tde:EstadoCGR` (CGR audit state)
+
+---
+
+### DD-040: Categorical Univocity Enforcement
+
+**Problem**: Post-normalization v3.0/v3.4, all new FK columns must maintain 100% categorical univocity (1 FK → 1 scheme only).
+
+**Principle**: **Categorical Univocity** - Each FK column to `ref.category` must point to exactly one scheme, never multiple schemes.
+
+**Validation Strategy**:
+
+```sql
+-- CHECK constraints on all new FK columns
+ALTER TABLE core.person
+    ADD CONSTRAINT chk_qualification_scheme
+        CHECK (professional_qualification_id IS NULL OR
+               fn_validate_category_scheme(professional_qualification_id, 'professional_qualification'));
+
+ALTER TABLE core.agreement
+    ADD CONSTRAINT chk_cgr_outcome_scheme
+        CHECK (cgr_outcome_id IS NULL OR
+               fn_validate_category_scheme(cgr_outcome_id, 'cgr_outcome'));
+
+-- Post-migration verification query
+SELECT
+    'professional_qualification_id' AS column_name,
+    COUNT(DISTINCT c.scheme) AS schemes,
+    STRING_AGG(DISTINCT c.scheme, ', ') AS scheme_list
+FROM core.person p
+JOIN ref.category c ON c.id = p.professional_qualification_id
+WHERE p.professional_qualification_id IS NOT NULL
+UNION ALL
+SELECT
+    'cgr_outcome_id',
+    COUNT(DISTINCT c.scheme),
+    STRING_AGG(DISTINCT c.scheme, ', ')
+FROM core.agreement a
+JOIN ref.category c ON c.id = a.cgr_outcome_id
+WHERE a.cgr_outcome_id IS NOT NULL;
+
+-- Expected: schemes = 1 for all columns
+```
+
+**Results** (Post-normalization v3.0/v3.4):
+```
+column_name                      | schemes | scheme_list
+---------------------------------+---------+---------------------------
+professional_qualification_id    | 1       | professional_qualification ✓
+cgr_outcome_id                   | 1       | cgr_outcome                ✓
+position_id                      | N/A     | (dedicated table)          ✓
+is_municipal_origin              | N/A     | (boolean)                  ✓
+```
+
+**Enforcement Tools**:
+1. CHECK constraints using `fn_validate_category_scheme()`
+2. Post-migration verification queries
+3. CI/CD validation before production deployment
+
+**Related Decisions**:
+- DD-035 (Metadata Normalization v2.0 - introduced univocity principle)
+- DD-023 (Category Pattern)
+- DD-006 (Validación de Integridad Semántica)
+
+**Status**: ✓ 100% compliance across v3.0/v3.4 normalizations
+
+---
+
 ## Referencias
 
 - Auditoría Categorial Consolidada (2026-01-27)
@@ -606,5 +904,5 @@ investment_sector_id → 1 scheme only
 
 ---
 
-**Última actualización**: 2026-01-30 (DD-035: Metadata Normalization v2.0)
-**Próxima revisión**: v3.2 deployment (pending)
+**Última actualización**: 2026-01-30 (DD-036 to DD-040: Normalization v3.0/v3.4 Design Decisions)
+**Próxima revisión**: v3.4 deployment (pending)

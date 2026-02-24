@@ -1,11 +1,19 @@
 -- ============================================================================
--- GORE_OS v3.0 - SEED DATA
+-- GORE_OS SEED v3.4 - Datos Semilla (Category Schemes)
 -- ============================================================================
 -- Archivo: goreos_seed.sql
--- Descripción: Datos iniciales para ref.category (75+ schemes) y ref.actor
--- Generado: 2026-01-26
+-- Descripción: Datos iniciales para ref.category (83+ schemes) y ref.actor
+-- Última actualización: 2026-01-30
 -- Fuentes: planclaude.md, especificaciones.md, goreNubleOntology.ttl,
 --          goreNubleReferenceData.ttl, tdeCore.ttl, omega_gore_nuble_mermaid.md
+-- ============================================================================
+-- Cambios v3.4:
+--   +scheme professional_qualification (14 códigos)
+--   +scheme cgr_outcome completado (7 códigos)
+--   +scheme estamento (7 códigos)
+--   +scheme magnitude_aspect (4 códigos)
+--   +scheme currency (3 códigos)
+-- Total schemes: 83+
 -- ============================================================================
 -- IDEMPOTENCIA: Este script usa ON CONFLICT para ser ejecutable múltiples veces
 -- sin generar errores por duplicados. Cada INSERT actualizará registros existentes.
@@ -266,16 +274,22 @@ ON CONFLICT (scheme, code) DO UPDATE SET
     description = EXCLUDED.description,
     sort_order = EXCLUDED.sort_order;
 
--- RESULTADO CGR
-INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
-('cgr_outcome', 'TOMA_RAZON', 'Toma de Razón', 'CGR aprueba', 1),
-('cgr_outcome', 'CURSA_OBS', 'Cursa con Observaciones', 'CGR aprueba con observaciones', 2),
-('cgr_outcome', 'REPRESENTA', 'Representa', 'CGR rechaza', 3),
-('cgr_outcome', 'RETIRO', 'Retiro', 'GORE retira para corrección', 4),
-('cgr_outcome', 'EXENTO', 'Exento', 'No requiere toma de razón', 5)
+-- ============================================================================
+-- SCHEME: cgr_outcome (v3.4 - completado)
+-- DESCRIPCIÓN: Estados ante Contraloría General de la República (tde:EstadoCGR)
+-- ============================================================================
+INSERT INTO ref.category (scheme, code, label, description, metadata, sort_order) VALUES
+('cgr_outcome', 'TOMA_RAZON', 'Toma de Razón', 'CGR aprueba', '{"ontology": "tde:EstadoCGR"}', 1),
+('cgr_outcome', 'REPRESENTA', 'Representa', 'CGR rechaza', '{"ontology": "tde:EstadoCGR"}', 2),
+('cgr_outcome', 'TR_CON_ALCANCES', 'Toma de Razón con Alcances', 'CGR aprueba con observaciones menores', '{"ontology": "tde:EstadoCGR"}', 3),
+('cgr_outcome', 'EN_CGR', 'En Contraloría', 'En proceso de toma de razón', '{"ontology": "tde:EstadoCGR"}', 4),
+('cgr_outcome', 'CURSA_OBS', 'Cursa con Observaciones', 'CGR aprueba con observaciones', '{"ontology": "tde:EstadoCGR"}', 5),
+('cgr_outcome', 'EXENTO', 'Exento', 'No requiere toma de razón', '{"ontology": "tde:EstadoCGR"}', 6),
+('cgr_outcome', 'RETIRO', 'Retiro', 'GORE retira para corrección', '{"ontology": "tde:EstadoCGR"}', 7)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
+    metadata = EXCLUDED.metadata,
     sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
@@ -734,6 +748,82 @@ ON CONFLICT (scheme, code) DO UPDATE SET
     sort_order = EXCLUDED.sort_order;
 
 -- ============================================================================
+--    SCHEMA: ref.category - SCHEMES NORMALIZACIÓN v3.0/v3.4
+-- ============================================================================
+
+-- ============================================================================
+-- SCHEME: estamento (v3.0)
+-- DESCRIPCIÓN: Clasificación funcionaria chilena (tde:Estamento, Ley 18.834)
+-- ============================================================================
+INSERT INTO ref.category (scheme, code, label, description, metadata, sort_order) VALUES
+('estamento', 'PROFESIONAL', 'Profesional', 'Estamento profesional', '{"ontology": "tde:Estamento", "ley": "18.834"}', 1),
+('estamento', 'DIRECTIVO', 'Directivo', 'Estamento directivo', '{"ontology": "tde:Estamento", "ley": "18.834"}', 2),
+('estamento', 'ADMINISTRATIVO', 'Administrativo', 'Estamento administrativo', '{"ontology": "tde:Estamento", "ley": "18.834"}', 3),
+('estamento', 'TECNICO', 'Técnico', 'Estamento técnico', '{"ontology": "tde:Estamento", "ley": "18.834"}', 4),
+('estamento', 'AUXILIAR', 'Auxiliar', 'Estamento auxiliar', '{"ontology": "tde:Estamento", "ley": "18.834"}', 5),
+('estamento', 'HONORARIOS', 'Honorarios', 'Personal a honorarios', '{"ontology": "tde:Estamento", "ley": "18.834"}', 6),
+('estamento', 'AUTORIDAD', 'Autoridad de Gobierno', 'Autoridades de gobierno regional', '{"ontology": "tde:Estamento"}', 7)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    metadata = EXCLUDED.metadata,
+    sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
+-- SCHEME: professional_qualification (v3.4)
+-- DESCRIPCIÓN: Calificaciones profesionales del personal (tde:CalificacionProfesional)
+-- ============================================================================
+INSERT INTO ref.category (scheme, code, label, description, metadata, sort_order) VALUES
+('professional_qualification', 'INGENIERO', 'Ingeniero', 'Ingeniero civil o de ejecución', '{"ontology": "tde:CalificacionProfesional"}', 1),
+('professional_qualification', 'ARQUITECTO', 'Arquitecto', 'Arquitecto', '{"ontology": "tde:CalificacionProfesional"}', 2),
+('professional_qualification', 'ABOGADO', 'Abogado', 'Abogado', '{"ontology": "tde:CalificacionProfesional"}', 3),
+('professional_qualification', 'CONTADOR', 'Contador/Auditor', 'Contador público o auditor', '{"ontology": "tde:CalificacionProfesional"}', 4),
+('professional_qualification', 'ADMINISTRADOR', 'Administrador Público', 'Administrador público', '{"ontology": "tde:CalificacionProfesional"}', 5),
+('professional_qualification', 'ECONOMISTA', 'Economista', 'Economista o ingeniero comercial', '{"ontology": "tde:CalificacionProfesional"}', 6),
+('professional_qualification', 'TRABAJADOR_SOCIAL', 'Trabajador Social', 'Trabajador o asistente social', '{"ontology": "tde:CalificacionProfesional"}', 7),
+('professional_qualification', 'PSICOLOGO', 'Psicólogo', 'Psicólogo', '{"ontology": "tde:CalificacionProfesional"}', 8),
+('professional_qualification', 'PERIODISTA', 'Periodista/Comunicador', 'Periodista o comunicador social', '{"ontology": "tde:CalificacionProfesional"}', 9),
+('professional_qualification', 'PROFESOR', 'Profesor/Docente', 'Profesor o docente', '{"ontology": "tde:CalificacionProfesional"}', 10),
+('professional_qualification', 'GEOGRAFO', 'Geógrafo', 'Geógrafo', '{"ontology": "tde:CalificacionProfesional"}', 11),
+('professional_qualification', 'TECNICO', 'Técnico', 'Técnico de nivel superior', '{"ontology": "tde:CalificacionProfesional"}', 12),
+('professional_qualification', 'SECRETARIA', 'Secretaria/Administrativo', 'Secretaria o administrativo', '{"ontology": "tde:CalificacionProfesional"}', 13),
+('professional_qualification', 'OTRO', 'Otra calificación', 'Otra calificación profesional', '{"ontology": "tde:CalificacionProfesional"}', 99)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    metadata = EXCLUDED.metadata,
+    sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
+-- SCHEME: magnitude_aspect (v3.0)
+-- DESCRIPCIÓN: Aspectos de magnitudes financieras (gist:MagnitudeAspect)
+-- ============================================================================
+INSERT INTO ref.category (scheme, code, label, description, metadata, sort_order) VALUES
+('magnitude_aspect', 'TRANSFER_AMOUNT', 'Monto Transferido', 'Monto efectivamente transferido', '{"ontology": "gist:MagnitudeAspect"}', 1),
+('magnitude_aspect', 'BUDGET_AMOUNT', 'Monto Presupuestado', 'Monto presupuestado inicial', '{"ontology": "gist:MagnitudeAspect"}', 2),
+('magnitude_aspect', 'COMMITTED_AMOUNT', 'Monto Comprometido', 'Monto comprometido contractualmente', '{"ontology": "gist:MagnitudeAspect"}', 3),
+('magnitude_aspect', 'EXECUTED_AMOUNT', 'Monto Ejecutado', 'Monto ejecutado/devengado', '{"ontology": "gist:MagnitudeAspect"}', 4)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    metadata = EXCLUDED.metadata,
+    sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
+-- SCHEME: currency (v3.0)
+-- DESCRIPCIÓN: Monedas ISO 4217 (gist:UnitOfMeasure)
+-- ============================================================================
+INSERT INTO ref.category (scheme, code, label, description, metadata, sort_order) VALUES
+('currency', 'CLP', 'Peso Chileno', 'Moneda nacional chilena', '{"iso_4217": "CLP", "symbol": "$", "decimals": 0}', 1),
+('currency', 'UF', 'Unidad de Fomento', 'Unidad de fomento (reajustable)', '{"symbol": "UF", "decimals": 2}', 2),
+('currency', 'USD', 'Dólar Estadounidense', 'Dólar de Estados Unidos', '{"iso_4217": "USD", "symbol": "US$", "decimals": 2}', 3)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    metadata = EXCLUDED.metadata,
+    sort_order = EXCLUDED.sort_order;
+
+-- ============================================================================
 --    SCHEMA: ref.actor - ACTORES DIPIR (23 actores)
 -- ============================================================================
 -- Fuente: dipir_ssot_koda.yaml
@@ -1063,8 +1153,9 @@ END $$;
 -- ============================================================================
 --    FIN SEED DATA
 -- ============================================================================
--- Total schemes: 75+
--- Total categories: ~350
+-- Total schemes: 83+
+-- Total categories: ~385
 -- Total actors: 23
 -- Total commitment types: 10
+-- Última actualización: 2026-01-30 (v3.4)
 -- ============================================================================
