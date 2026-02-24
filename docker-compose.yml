@@ -1,12 +1,12 @@
-version: "3.8"
-
 services:
   # =============================================================================
   # PostgreSQL 16 - LA BASE DE GORE_OS
   # =============================================================================
-  # El modelo en /model/model_goreos es el fundamento arquitectónico.
-  # Este servicio ejecuta automáticamente el DDL al inicio.
+  # El container goreos_db ya corre en la red visor_model_default.
+  # Este servicio se define con profile "standalone" para levantarlo solo cuando
+  # NO exista el container externo.
   postgres:
+    profiles: ["standalone"]
     image: postgres:16-alpine
     container_name: goreos_db
     restart: unless-stopped
@@ -26,13 +26,64 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - goreos_network
+      - visor_model_default
+
+  # =============================================================================
+  # FastAPI Backend
+  # =============================================================================
+  # Acceso: http://localhost:8000/api/docs
+  api:
+    build: ./api
+    container_name: goreos_api
+    restart: unless-stopped
+    environment:
+      DB_NAME: ${DB_NAME:-goreos_model}
+      DB_USER: ${DB_USER:-goreos}
+      DB_PASSWORD: ${DB_PASSWORD:-goreos_2026}
+      DB_HOST: goreos_db
+      DB_PORT: 5432
+      JWT_SECRET: ${JWT_SECRET:-goreos-dev-secret-change-in-production}
+      CORS_ORIGINS: '["http://localhost:3000"]'
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8000/api/health\")'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - visor_model_default
+
+  # =============================================================================
+  # Next.js Frontend
+  # =============================================================================
+  # Acceso: http://localhost:3000
+  web:
+    build: ./web
+    container_name: goreos_web
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - visor_model_default
 
   # =============================================================================
   # PgAdmin 4 - Administración de Base de Datos (Desarrollo)
   # =============================================================================
   # Acceso: http://localhost:5050
   pgadmin:
+    profiles: ["standalone"]
     image: dpage/pgadmin4:latest
     container_name: goreos_pgadmin
     restart: unless-stopped
@@ -45,11 +96,8 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data:/var/lib/pgadmin
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
-      - goreos_network
+      - visor_model_default
 
 # =============================================================================
 # Volumes
@@ -66,27 +114,32 @@ volumes:
 # Networks
 # =============================================================================
 networks:
-  goreos_network:
-    name: goreos_network
-    driver: bridge
+  visor_model_default:
+    external: true
+    name: visor_model_default
 
 # =============================================================================
 # Uso
 # =============================================================================
-# Levantar PostgreSQL + PgAdmin:
-#   docker compose up -d
+# Levantar API + Web (goreos_db ya debe estar corriendo en visor_model_default):
+#   docker compose up -d api web
 #
-# Solo PostgreSQL:
-#   docker compose up -d postgres
+# Solo API:
+#   docker compose up -d api
+#
+# Modo standalone (levanta todo incluyendo PostgreSQL):
+#   docker compose --profile standalone up -d
 #
 # Ver logs:
-#   docker compose logs -f postgres
+#   docker compose logs -f api
+#   docker compose logs -f web
 #
 # Detener:
 #   docker compose down
 #
-# Eliminar volúmenes (CUIDADO - borra datos):
-#   docker compose down -v
+# Rebuild:
+#   docker compose build api
+#   docker compose up -d api web
 #
 # =============================================================================
 # Conexión a PostgreSQL desde host
@@ -96,7 +149,7 @@ networks:
 # Desde PgAdmin:
 #   1. Acceder a http://localhost:5050
 #   2. Agregar servidor:
-#      - Host: postgres
+#      - Host: goreos_db
 #      - Port: 5432
-#      - Database: goreos
-#      - Username/Password: ver .env
+#      - Database: goreos_model
+#      - Username/Password: goreos / goreos_2026

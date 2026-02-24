@@ -539,7 +539,11 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('system_role', 'ADMIN_SISTEMA', 'Administrador del Sistema', 'Configura sistema, usuarios, importa datos', 1),
 ('system_role', 'ADMIN_REGIONAL', 'Administrador Regional', 'Visión 360°, coordina divisiones, gestiona crisis', 2),
 ('system_role', 'JEFE_DIVISION', 'Jefe de División', 'Supervisa división, verifica trabajo, asigna', 3),
-('system_role', 'ENCARGADO', 'Encargado', 'Ejecuta trabajo, actualiza avances, reporta problemas', 4)
+('system_role', 'ENCARGADO', 'Encargado', 'Ejecuta trabajo, actualiza avances, reporta problemas', 4),
+('system_role', 'JEFE_DGI', 'Jefe DGI', 'Dirige Departamento de Gestión Institucional, decide escalamientos', 5),
+('system_role', 'ESP_CONTROL_GESTION', 'Especialista Control de Gestión', 'Monitorea indicadores, valida datos, genera alertas', 6),
+('system_role', 'ESP_PROCESOS', 'Especialista Procesos', 'Levanta procesos BPMN, gestiona mejora continua DMAIC', 7),
+('system_role', 'ESP_TD', 'Especialista Transformación Digital', 'Monitorea cumplimiento Ley 21.180, gestiona KB', 8)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,
@@ -631,6 +635,17 @@ INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
 ('problem_impact', 'RIESGO_RENDICION', 'Riesgo Rendición', 'Puede afectar rendición', 4),
 ('problem_impact', 'INCUMPLIMIENTO_PLAZO', 'Incumplimiento Plazo', 'Riesgo de plazo legal', 5),
 ('problem_impact', 'OTRO', 'Otro', 'Otro tipo de impacto', 6)
+ON CONFLICT (scheme, code) DO UPDATE SET
+    label = EXCLUDED.label,
+    description = EXCLUDED.description,
+    sort_order = EXCLUDED.sort_order;
+
+-- ESTADOS DE PROBLEMA (requerido por core.ipr_problem.state_id)
+INSERT INTO ref.category (scheme, code, label, description, sort_order) VALUES
+('problem_state', 'ABIERTO', 'Abierto', 'Problema detectado, sin gestión iniciada', 1),
+('problem_state', 'EN_GESTION', 'En Gestión', 'Problema con acciones de resolución en curso', 2),
+('problem_state', 'RESUELTO', 'Resuelto', 'Problema resuelto satisfactoriamente', 3),
+('problem_state', 'CERRADO_SIN_RESOLVER', 'Cerrado Sin Resolver', 'Problema cerrado sin resolución efectiva', 4)
 ON CONFLICT (scheme, code) DO UPDATE SET
     label = EXCLUDED.label,
     description = EXCLUDED.description,

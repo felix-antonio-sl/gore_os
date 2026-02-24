@@ -1,0 +1,285 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { api } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
+import { KpiCard } from "@/components/kpi-card";
+import { DataTable } from "@/components/data-table";
+import { AlertCard } from "@/components/alert-card";
+import { StatusBadge } from "@/components/status-badge";
+import { TemporalIndicator } from "@/components/temporal-indicator";
+import { CockpitJefeDGIView } from "@/components/cockpit-jefe-dgi";
+import { CockpitControlGestionView } from "@/components/cockpit-control-gestion";
+import { CockpitProcesosView } from "@/components/cockpit-procesos";
+import { CockpitTDView } from "@/components/cockpit-td";
+import type {
+  DashboardData,
+  CompromisoListItem,
+  AlertaListItem,
+  CockpitJefeDGI,
+  CockpitControlGestion,
+  CockpitProcesos,
+  CockpitTD,
+} from "@/types";
+
+// Union type for all DGI cockpit responses
+type DGICockpitData =
+  | { role: "JEFE_DGI"; data: CockpitJefeDGI }
+  | { role: "ESP_CONTROL_GESTION"; data: CockpitControlGestion }
+  | { role: "ESP_PROCESOS"; data: CockpitProcesos }
+  | { role: "ESP_TD"; data: CockpitTD };
+
+// ─── Operational Dashboard ──────────────────────────────────────────────────
+
+function OperationalDashboard() {
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    api
+      .get<DashboardData>("/api/dashboard")
+      .then(setData)
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  const handleAttend = async (id: string) => {
+    try {
+      await api.post(`/api/alertas/${id}/atender`, {});
+      setData((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          alerts: prev.alerts.filter((a) => a.id !== id),
+        };
+      });
+    } catch (err) {
+      console.error("Error al atender alerta:", err);
+    }
+  };
+
+  const handleViewSubject = (type: string, subjectId: string) => {
+    if (type === "core.ipr" || type === "ipr") {
+      router.push(`/ipr/${subjectId}`);
+    }
+  };
+
+  const commitmentColumns = [
+    { key: "description", label: "Descripción" },
+    {
+      key: "ipr_codigo_bip",
+      label: "BIP",
+      render: (value: unknown) => (
+        <span className="text-xs text-muted-foreground">{String(value ?? "-")}</span>
+      ),
+    },
+    { key: "responsible_name", label: "Responsable" },
+    {
+      key: "due_date",
+      label: "Vence",
+      render: (_: unknown, row: unknown) => {
+        const r = row as CompromisoListItem;
+        return <TemporalIndicator daysRemaining={r.days_remaining} state={r.state} />;
+      },
+    },
+    {
+      key: "state",
+      label: "Estado",
+      render: (value: unknown) => <StatusBadge status={String(value ?? "")} size="sm" />,
+    },
+  ];
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <div className="rounded-md bg-destructive/10 border border-destructive/20 px-4 py-3 text-sm text-destructive">
+          Error al cargar el dashboard: {error}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6 space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold">Panel de Control</h1>
+        <p className="text-muted-foreground text-sm mt-1">
+          Resumen operativo del Gobierno Regional de Ñuble
+        </p>
+      </div>
+
+      {/* KPIs */}
+      {isLoading ? (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-24 rounded-xl bg-muted animate-pulse" />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {data?.kpis.map((kpi, i) => (
+            <KpiCard
+              key={i}
+              label={kpi.label}
+              value={kpi.value}
+              sublabel={kpi.sublabel}
+              color={kpi.color}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Compromisos */}
+      <div>
+        <h2 className="text-lg font-semibold mb-3">Compromisos Recientes</h2>
+        <DataTable
+          columns={commitmentColumns}
+          data={data?.commitments ?? []}
+          page={1}
+          totalPages={1}
+          total={data?.commitments.length ?? 0}
+          onPageChange={() => {}}
+          isLoading={isLoading}
+        />
+      </div>
+
+      {/* Alertas */}
+      <div>
+        <h2 className="text-lg font-semibold mb-3">Alertas Activas</h2>
+        {isLoading ? (
+          <div className="space-y-2">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-20 rounded-lg bg-muted animate-pulse" />
+            ))}
+          </div>
+        ) : data?.alerts.length === 0 ? (
+          <p className="text-sm text-muted-foreground">No hay alertas activas.</p>
+        ) : (
+          <div className="space-y-3">
+            {data?.alerts.map((alert: AlertaListItem) => (
+              <AlertCard
+                key={alert.id}
+                alert={alert}
+                onAttend={handleAttend}
+                onViewSubject={handleViewSubject}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── DGI Cockpit Loader ─────────────────────────────────────────────────────
+
+function DGICockpit() {
+  const { user } = useAuth();
+  const [cockpit, setCockpit] = useState<DGICockpitData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    api
+      .get<unknown>("/api/dgi/cockpit")
+      .then((raw) => {
+        if (!user) return;
+        const role = user.role_code;
+        if (role === "JEFE_DGI") {
+          setCockpit({ role: "JEFE_DGI", data: raw as CockpitJefeDGI });
+        } else if (role === "ESP_CONTROL_GESTION") {
+          setCockpit({ role: "ESP_CONTROL_GESTION", data: raw as CockpitControlGestion });
+        } else if (role === "ESP_PROCESOS") {
+          setCockpit({ role: "ESP_PROCESOS", data: raw as CockpitProcesos });
+        } else if (role === "ESP_TD") {
+          setCockpit({ role: "ESP_TD", data: raw as CockpitTD });
+        }
+      })
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setIsLoading(false));
+  }, [user]);
+
+  if (isLoading) {
+    return (
+      <div className="p-6 space-y-6">
+        {/* Skeleton header */}
+        <div className="space-y-2">
+          <div className="h-8 w-64 rounded bg-muted animate-pulse" />
+          <div className="h-4 w-48 rounded bg-muted animate-pulse" />
+        </div>
+        {/* Skeleton semaforo row */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="h-24 rounded-lg bg-muted animate-pulse" />
+          ))}
+        </div>
+        {/* Skeleton cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="h-48 rounded-xl bg-muted animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <div className="rounded-md bg-destructive/10 border border-destructive/20 px-4 py-3 text-sm text-destructive">
+          Error al cargar el cockpit DGI: {error}
+        </div>
+      </div>
+    );
+  }
+
+  if (!cockpit) {
+    return (
+      <div className="p-6">
+        <div className="rounded-md bg-muted px-4 py-3 text-sm text-muted-foreground">
+          No hay datos de cockpit disponibles para tu rol.
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6">
+      {cockpit.role === "JEFE_DGI" && <CockpitJefeDGIView data={cockpit.data} />}
+      {cockpit.role === "ESP_CONTROL_GESTION" && (
+        <CockpitControlGestionView data={cockpit.data} />
+      )}
+      {cockpit.role === "ESP_PROCESOS" && <CockpitProcesosView data={cockpit.data} />}
+      {cockpit.role === "ESP_TD" && <CockpitTDView data={cockpit.data} />}
+    </div>
+  );
+}
+
+// ─── Main Page ───────────────────────────────────────────────────────────────
+
+export default function DashboardPage() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="p-6 space-y-4">
+        <div className="h-8 w-48 rounded bg-muted animate-pulse" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-24 rounded-xl bg-muted animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (user?.population === "dgi") {
+    return <DGICockpit />;
+  }
+
+  return <OperationalDashboard />;
+}
+
