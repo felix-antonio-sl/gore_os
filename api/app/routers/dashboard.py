@@ -48,7 +48,7 @@ async def _dashboard_encargado(user: dict, db: AsyncSession) -> DashboardRespons
     alerts_kpi_sql = text("""
         SELECT COUNT(*) AS mis_alertas
         FROM core.alert a
-        WHERE a.subject_type = 'ipr'
+        WHERE a.subject_type = 'core.ipr'
           AND a.subject_id IN (
               SELECT id FROM core.ipr
               WHERE assignee_id = :uid AND deleted_at IS NULL
@@ -114,7 +114,7 @@ async def _dashboard_encargado(user: dict, db: AsyncSession) -> DashboardRespons
             a.triggered_at
         FROM core.alert a
         LEFT JOIN ref.category sev ON sev.id = a.severity_id
-        WHERE a.subject_type = 'ipr'
+        WHERE a.subject_type = 'core.ipr'
           AND a.subject_id IN (
               SELECT id FROM core.ipr
               WHERE assignee_id = :uid AND deleted_at IS NULL
@@ -187,7 +187,7 @@ async def _dashboard_jefe_division(user: dict, db: AsyncSession) -> DashboardRes
     alert_kpi_sql = text("""
         SELECT COUNT(*) AS alertas_div
         FROM core.alert a
-        WHERE a.subject_type = 'ipr'
+        WHERE a.subject_type = 'core.ipr'
           AND a.subject_id IN (
               SELECT id FROM core.ipr
               WHERE sponsor_division_id = :div_id AND deleted_at IS NULL
@@ -298,7 +298,7 @@ async def _dashboard_admin_regional(user: dict, db: AsyncSession) -> DashboardRe
     criticas_sql = text("""
         SELECT COUNT(DISTINCT i.id) AS iprs_criticas
         FROM core.ipr i
-        JOIN core.alert a ON a.subject_type = 'ipr' AND a.subject_id = i.id
+        JOIN core.alert a ON a.subject_type = 'core.ipr' AND a.subject_id = i.id
         JOIN ref.category sev ON sev.id = a.severity_id
         WHERE sev.code = 'CRITICO'
           AND a.resolved_at IS NULL

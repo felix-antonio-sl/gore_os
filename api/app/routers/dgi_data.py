@@ -95,6 +95,7 @@ async def _update_dimension_indicators(db: AsyncSession, dimension_code: str, ne
         WHERE dimension_id = (
             SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_dimension' AND code = :dim LIMIT 1
         )
+          AND deleted_at IS NULL
         RETURNING id
     """), {"val": new_value, "signal": signal_code, "dim": dimension_code})
     return len(result.fetchall())

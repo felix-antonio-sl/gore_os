@@ -97,14 +97,15 @@ async def _next_agreement_number(db: AsyncSession) -> str:
     year = date.today().year
     result = await db.execute(
         text("""
-            SELECT COUNT(*) AS cnt
+            SELECT MAX(CAST(SUBSTRING(agreement_number FROM 10) AS INTEGER)) AS max_seq
             FROM core.agreement
-            WHERE agreement_number LIKE :pattern AND deleted_at IS NULL
+            WHERE agreement_number ~ :pattern
         """),
-        {"pattern": f"AGR-{year}-%"},
+        {"pattern": f"^AGR-{year}-[0-9]+$"},
     )
-    cnt = result.scalar() or 0
-    return f"AGR-{year}-{cnt + 1:05d}"
+    row = result.mappings().first()
+    next_seq = ((row["max_seq"] or 0) + 1) if row else 1
+    return f"AGR-{year}-{next_seq:05d}"
 
 
 # ---------------------------------------------------------------------------
@@ -319,7 +320,10 @@ async def update_convenio(
 ):
     await _get_convenio_or_404(convenio_id, db)
 
-    updates = body.model_dump(exclude_none=True)
+    # Allowlist: solo estas columnas son actualizables via PATCH
+    UPDATABLE_COLUMNS = {"state_id", "total_amount", "valid_to", "cgr_outcome_id"}
+
+    updates = {k: v for k, v in body.model_dump(exclude_none=True).items() if k in UPDATABLE_COLUMNS}
     if not updates:
         return {"message": "Sin cambios"}
 

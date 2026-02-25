@@ -373,7 +373,10 @@ async def update_presupuesto(
     elif role not in ADMIN_ROLES:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
 
-    updates = body.model_dump(exclude_none=True)
+    # Allowlist: solo estas columnas son actualizables via PATCH
+    UPDATABLE_COLUMNS = {"initial_amount", "current_amount", "committed_amount", "accrued_amount", "paid_amount"}
+
+    updates = {k: v for k, v in body.model_dump(exclude_none=True).items() if k in UPDATABLE_COLUMNS}
     if not updates:
         return {"message": "Sin cambios"}
 

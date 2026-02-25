@@ -390,27 +390,34 @@ async def update_report_section(
 ):
     # Verify report exists
     row = (await db.execute(text(
-        "SELECT id, metadata FROM core.dgi_report WHERE id = :id AND deleted_at IS NULL"
+        "SELECT id FROM core.dgi_report WHERE id = :id AND deleted_at IS NULL"
     ), {"id": str(report_id)})).mappings().first()
 
     if not row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Informe no encontrado")
 
     from datetime import datetime, timezone
-    metadata = row["metadata"] or {}
-    if isinstance(metadata, str):
-        metadata = json.loads(metadata)
-
-    metadata.setdefault("section_edits", {})
-    metadata["section_edits"][body.section_id] = {
+    edit_value = json.dumps({
         "content": body.content,
         "edited_at": datetime.now(timezone.utc).isoformat(),
         "edited_by": str(user["id"]),
-    }
+    })
 
-    await db.execute(text(
-        "UPDATE core.dgi_report SET metadata = CAST(:meta AS jsonb), updated_at = NOW() WHERE id = :id"
-    ), {"meta": json.dumps(metadata), "id": str(report_id)})
+    # Atomic JSONB merge: no read-modify-write, prevents lost updates under concurrency
+    await db.execute(text("""
+        UPDATE core.dgi_report
+        SET metadata = jsonb_set(
+                jsonb_set(
+                    COALESCE(metadata, '{}'),
+                    '{section_edits}',
+                    COALESCE(metadata->'section_edits', '{}')
+                ),
+                ARRAY['section_edits', :section_id],
+                CAST(:edit_value AS jsonb)
+            ),
+            updated_at = NOW()
+        WHERE id = :id
+    """), {"section_id": body.section_id, "edit_value": edit_value, "id": str(report_id)})
     await db.commit()
     return {"message": "Sección actualizada"}
 
