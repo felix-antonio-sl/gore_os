@@ -1,0 +1,31 @@
+import type React from "react";
+
+export interface Column {
+  key: string;
+  label: string;
+  render?: (value: unknown, row: unknown) => React.ReactNode;
+}
+
+export interface Filter {
+  key: string;
+  label: string;
+  options: { value: string; label: string }[];
+}
+
+export interface FetchResult {
+  items: unknown[];
+  total: number;
+  totalPages: number;
+}
+
+export interface DomainConfig {
+  id: string;
+  label: string;
+  fetchData: (params: URLSearchParams) => Promise<FetchResult>;
+  columns: Column[];
+  filters: Filter[];
+  searchPlaceholder: string;
+  DetailPanel: React.ComponentType<{ item: unknown; onClose: () => void }>;
+  // Whether the API returns paginated (server) or plain array (client)
+  paginationMode: "server" | "client";
+}

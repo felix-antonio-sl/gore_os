@@ -5,7 +5,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.schemas.dgi import IndicatorItem, DataSourceItem
+import math
+from datetime import datetime, timedelta, timezone
+from app.schemas.dgi import (
+    IndicatorItem, DataSourceItem,
+    OrganizacionItem, PersonaItem, TerritorioItem, EventoItem, RendicionItem,
+)
 
 router = APIRouter(prefix="/api/dgi/data", tags=["dgi"])
 
@@ -330,3 +335,338 @@ async def list_data_sources(
         )
         for r in rows
     ]
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/organizaciones
+# ---------------------------------------------------------------------------
+
+@router.get("/organizaciones")
+async def list_organizaciones(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+    org_type: str | None = None,
+    search: str | None = None,
+):
+    conditions = ["o.deleted_at IS NULL"]
+    params: dict = {}
+
+    if org_type:
+        conditions.append("ot.code = :org_type")
+        params["org_type"] = org_type
+
+    if search:
+        conditions.append("(o.name ILIKE :search OR o.code ILIKE :search)")
+        params["search"] = f"%{search}%"
+
+    where_clause = " AND ".join(conditions)
+
+    base_query = f"""
+        FROM core.organization o
+        LEFT JOIN ref.category ot ON ot.id = o.org_type_id
+        LEFT JOIN core.organization parent ON parent.id = o.parent_id
+        WHERE {where_clause}
+    """
+
+    total = (await db.execute(text(f"SELECT COUNT(*) {base_query}"), params)).scalar() or 0
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows = (await db.execute(text(f"""
+        SELECT o.id, o.code, o.name, o.short_name, o.rut,
+               ot.label AS org_type, parent.name AS parent_name,
+               (SELECT COUNT(*) FROM core."user" u
+                WHERE u.division_id = o.id AND u.deleted_at IS NULL) AS user_count
+        {base_query}
+        ORDER BY o.name
+        LIMIT :limit OFFSET :offset
+    """), params)).mappings().all()
+
+    items = [OrganizacionItem(
+        id=r["id"], code=r["code"], name=r["name"],
+        short_name=r["short_name"], org_type=r["org_type"],
+        parent_name=r["parent_name"], rut=r["rut"],
+        user_count=r["user_count"] or 0,
+    ) for r in rows]
+
+    return {
+        "items": [i.model_dump() for i in items],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+    }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/personas
+# ---------------------------------------------------------------------------
+
+@router.get("/personas")
+async def list_personas(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+    organization_id: str | None = None,
+    search: str | None = None,
+):
+    conditions = ["p.deleted_at IS NULL"]
+    params: dict = {}
+
+    if organization_id:
+        conditions.append("p.organization_id = :organization_id")
+        params["organization_id"] = organization_id
+
+    if search:
+        conditions.append(
+            "(p.names ILIKE :search OR p.paternal_surname ILIKE :search OR p.email ILIKE :search)"
+        )
+        params["search"] = f"%{search}%"
+
+    where_clause = " AND ".join(conditions)
+
+    base_query = f"""
+        FROM core.person p
+        LEFT JOIN core.organization org ON org.id = p.organization_id
+        LEFT JOIN ref.category est ON est.id = p.estamento_id
+        LEFT JOIN core."position" pos ON pos.id = p.position_id
+        WHERE {where_clause}
+    """
+
+    total = (await db.execute(text(f"SELECT COUNT(*) {base_query}"), params)).scalar() or 0
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows = (await db.execute(text(f"""
+        SELECT p.id, p.names, p.paternal_surname, p.maternal_surname,
+               p.email, p.phone, p.is_active,
+               org.name AS organization_name,
+               est.label AS estamento, pos.name AS position_name
+        {base_query}
+        ORDER BY p.paternal_surname, p.names
+        LIMIT :limit OFFSET :offset
+    """), params)).mappings().all()
+
+    items = [PersonaItem(
+        id=r["id"], names=r["names"], paternal_surname=r["paternal_surname"],
+        maternal_surname=r["maternal_surname"], email=r["email"], phone=r["phone"],
+        is_active=r["is_active"] if r["is_active"] is not None else True,
+        organization_name=r["organization_name"],
+        estamento=r["estamento"], position_name=r["position_name"],
+    ) for r in rows]
+
+    return {
+        "items": [i.model_dump() for i in items],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+    }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/territorio
+# ---------------------------------------------------------------------------
+
+@router.get("/territorio")
+async def list_territorio(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+    territory_type: str | None = None,
+    search: str | None = None,
+):
+    conditions = ["t.deleted_at IS NULL"]
+    params: dict = {}
+
+    if territory_type:
+        conditions.append("tt.code = :territory_type")
+        params["territory_type"] = territory_type
+
+    if search:
+        conditions.append("(t.name ILIKE :search OR t.code ILIKE :search)")
+        params["search"] = f"%{search}%"
+
+    where_clause = " AND ".join(conditions)
+
+    base_query = f"""
+        FROM core.territory t
+        JOIN ref.category tt ON tt.id = t.territory_type_id
+        LEFT JOIN core.territory parent ON parent.id = t.parent_id
+        WHERE {where_clause}
+    """
+
+    total = (await db.execute(text(f"SELECT COUNT(*) {base_query}"), params)).scalar() or 0
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows = (await db.execute(text(f"""
+        SELECT t.id, t.code, t.name, t.population, t.area_km2,
+               tt.label AS territory_type, parent.name AS parent_name
+        {base_query}
+        ORDER BY t.code
+        LIMIT :limit OFFSET :offset
+    """), params)).mappings().all()
+
+    items = [TerritorioItem(
+        id=r["id"], code=r["code"], name=r["name"],
+        territory_type=r["territory_type"], parent_name=r["parent_name"],
+        population=r["population"], area_km2=float(r["area_km2"]) if r["area_km2"] else None,
+    ) for r in rows]
+
+    return {
+        "items": [i.model_dump() for i in items],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+    }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/eventos  (partitioned table — REQUIRES date range)
+# ---------------------------------------------------------------------------
+
+@router.get("/eventos")
+async def list_eventos(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+    subject_type: str | None = None,
+    event_type: str | None = None,
+    date_from: str | None = None,
+    date_to: str | None = None,
+    search: str | None = None,
+):
+    # Default date range: last 30 days (required for partition pruning)
+    now = datetime.now(timezone.utc)
+    df = datetime.fromisoformat(date_from) if date_from else (now - timedelta(days=30))
+    dt = datetime.fromisoformat(date_to) if date_to else now
+
+    conditions = ["e.occurred_at >= :date_from", "e.occurred_at < :date_to"]
+    params: dict = {"date_from": df, "date_to": dt}
+
+    if subject_type:
+        conditions.append("e.subject_type = :subject_type")
+        params["subject_type"] = subject_type
+
+    if event_type:
+        conditions.append("et.code = :event_type")
+        params["event_type"] = event_type
+
+    if search:
+        conditions.append("e.subject_type ILIKE :search")
+        params["search"] = f"%{search}%"
+
+    where_clause = " AND ".join(conditions)
+
+    base_query = f"""
+        FROM txn.event e
+        JOIN ref.category et ON et.id = e.event_type_id
+        LEFT JOIN core."user" u ON u.id = e.actor_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE {where_clause}
+    """
+
+    total = (await db.execute(text(f"SELECT COUNT(*) {base_query}"), params)).scalar() or 0
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows = (await db.execute(text(f"""
+        SELECT e.id, e.occurred_at, et.code AS event_type, et.label AS event_type_label,
+               e.subject_type, e.subject_id,
+               (p.names || ' ' || p.paternal_surname) AS actor_name,
+               e.data->>'summary' AS summary
+        {base_query}
+        ORDER BY e.occurred_at DESC
+        LIMIT :limit OFFSET :offset
+    """), params)).mappings().all()
+
+    items = [EventoItem(
+        id=r["id"], occurred_at=r["occurred_at"],
+        event_type=r["event_type"], event_type_label=r["event_type_label"],
+        subject_type=r["subject_type"], subject_id=r["subject_id"],
+        actor_name=r["actor_name"], summary=r["summary"],
+    ) for r in rows]
+
+    return {
+        "items": [i.model_dump() for i in items],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+    }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/rendiciones
+# ---------------------------------------------------------------------------
+
+@router.get("/rendiciones")
+async def list_rendiciones(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+    state: str | None = None,
+    search: str | None = None,
+):
+    conditions = ["r.deleted_at IS NULL"]
+    params: dict = {}
+
+    if state:
+        conditions.append("st.code = :state")
+        params["state"] = state
+
+    if search:
+        conditions.append("(a.agreement_number ILIKE :search OR org.name ILIKE :search)")
+        params["search"] = f"%{search}%"
+
+    where_clause = " AND ".join(conditions)
+
+    base_query = f"""
+        FROM core.rendition r
+        JOIN core.agreement a ON a.id = r.agreement_id
+        LEFT JOIN core.organization org ON org.id = r.renderer_id
+        LEFT JOIN ref.category st ON st.id = r.state_id
+        WHERE {where_clause}
+    """
+
+    total = (await db.execute(text(f"SELECT COUNT(*) {base_query}"), params)).scalar() or 0
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows = (await db.execute(text(f"""
+        SELECT r.id, r.period_start, r.period_end, r.submitted_at,
+               a.agreement_number, a.total_amount AS agreement_total_amount,
+               org.name AS renderer_name, st.label AS state_label
+        {base_query}
+        ORDER BY r.submitted_at DESC NULLS LAST
+        LIMIT :limit OFFSET :offset
+    """), params)).mappings().all()
+
+    items = [RendicionItem(
+        id=r["id"], agreement_number=r["agreement_number"],
+        renderer_name=r["renderer_name"], state_label=r["state_label"],
+        period_start=r["period_start"], period_end=r["period_end"],
+        submitted_at=r["submitted_at"],
+        agreement_total_amount=float(r["agreement_total_amount"]) if r["agreement_total_amount"] else None,
+    ) for r in rows]
+
+    return {
+        "items": [i.model_dump() for i in items],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+    }

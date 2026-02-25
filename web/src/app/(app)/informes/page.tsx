@@ -369,6 +369,7 @@ function ReportDetailView({
   report: DGIReport;
   onClose: () => void;
 }) {
+  const router = useRouter();
   return (
     <div className="fixed inset-0 bg-black/20 z-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-lg shadow-2xl">
@@ -426,7 +427,8 @@ function ReportDetailView({
           <Button
             size="sm"
             onClick={() => {
-              alert("Ver informe completo — Próximamente disponible");
+              onClose();
+              router.push(`/informes/${report.id}`);
             }}
           >
             <Eye className="size-4 mr-1.5" />

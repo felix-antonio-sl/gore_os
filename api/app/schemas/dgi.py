@@ -166,7 +166,69 @@ class ReportContent(BaseModel):
     status: str
     period_start: date | None
     period_end: date | None
+    recipient: str | None
+    generated_by_name: str | None
+    created_at: datetime
     sections: list[ReportContentSection]
+
+
+# ---------------------------------------------------------------------------
+# Explorer domain items
+# ---------------------------------------------------------------------------
+class OrganizacionItem(BaseModel):
+    id: UUID
+    code: str
+    name: str
+    short_name: str | None
+    org_type: str | None
+    parent_name: str | None
+    rut: str | None
+    user_count: int
+
+
+class PersonaItem(BaseModel):
+    id: UUID
+    names: str
+    paternal_surname: str
+    maternal_surname: str | None
+    email: str | None
+    phone: str | None
+    is_active: bool
+    organization_name: str | None
+    estamento: str | None
+    position_name: str | None
+
+
+class TerritorioItem(BaseModel):
+    id: UUID
+    code: str
+    name: str
+    territory_type: str | None
+    parent_name: str | None
+    population: int | None
+    area_km2: float | None
+
+
+class EventoItem(BaseModel):
+    id: UUID
+    occurred_at: datetime
+    event_type: str
+    event_type_label: str
+    subject_type: str
+    subject_id: UUID
+    actor_name: str | None
+    summary: str | None
+
+
+class RendicionItem(BaseModel):
+    id: UUID
+    agreement_number: str | None
+    renderer_name: str | None
+    state_label: str | None
+    period_start: date | None
+    period_end: date | None
+    submitted_at: datetime | None
+    agreement_total_amount: float | None
 
 
 class ReportCreate(BaseModel):

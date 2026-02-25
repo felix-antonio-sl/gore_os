@@ -14,6 +14,9 @@ import {
   FileText,
   Wallet,
   Handshake,
+  UserCheck,
+  FolderKanban,
+  CalendarClock,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Separator } from "@/components/ui/separator";
@@ -33,10 +36,12 @@ const operationalNav: NavItem[] = [
   { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
   { label: "Presupuesto", href: "/presupuesto", icon: <Wallet className="size-4" /> },
   { label: "Convenios", href: "/convenios", icon: <Handshake className="size-4" /> },
+  { label: "Reuniones", href: "/reuniones", icon: <CalendarClock className="size-4" /> },
 ];
 
 const adminOnlyNav: NavItem[] = [
-  { label: "Usuarios", href: "/usuarios", icon: <Users className="size-4" /> },
+  { label: "Usuarios", href: "/admin/usuarios", icon: <Users className="size-4" /> },
+  { label: "Divisiones", href: "/admin/divisiones", icon: <Building2 className="size-4" /> },
 ];
 
 const dgiNav: NavItem[] = [
@@ -60,6 +65,18 @@ export function Sidebar() {
     navItems = dgiNav;
   } else {
     navItems = [...operationalNav];
+    if (user.role_code === "JEFE_DIVISION") {
+      navItems = [
+        ...navItems,
+        { label: "Mi División", href: "/mi-division", icon: <FolderKanban className="size-4" /> },
+      ];
+    }
+    if (user.role_code === "ENCARGADO") {
+      navItems = [
+        ...navItems,
+        { label: "Mis Compromisos", href: "/mis-compromisos", icon: <UserCheck className="size-4" /> },
+      ];
+    }
     if (user.role_code === "ADMIN_SISTEMA") {
       navItems = [...navItems, ...adminOnlyNav];
     }

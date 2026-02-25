@@ -69,7 +69,7 @@ Key files:
 - `api/app/main.py` — app factory, router registration
 - `api/app/core/deps.py` — `CurrentUser` dependency (extracts user dict from JWT)
 - `api/app/core/security.py` — `OPERATIONAL_ROLES` / `DGI_ROLES` sets, password hashing, JWT
-- `api/app/routers/` — 13 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports)
+- `api/app/routers/` — 15 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports)
 
 API conventions:
 - All routes prefixed `/api/` (e.g., `/api/ipr`, `/api/dgi/cockpit`)
@@ -92,7 +92,7 @@ Key patterns:
 - `web/src/lib/api.ts` — singleton `ApiClient` with `get<T>()`, `post<T>()`, `patch<T>()`. Token in localStorage (`goreos_token`). Auto-redirect to `/login` on 401.
 - `web/src/lib/auth.tsx` — `AuthProvider` context, `useAuth()` hook returns `{user, loading, login, logout}`
 - `web/src/types/index.ts` — all TypeScript interfaces. `User.population` (`"operativa" | "dgi"`) drives sidebar/dashboard routing.
-- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (7 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios) vs `dgiNav` (5 items) based on `user.population`
+- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (8 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
 
@@ -157,11 +157,13 @@ open http://localhost:8000/api/docs
 Central entity: **IPR (Intervención Pública Regional)** — polymorphic (7 types: INFRAESTRUCTURA, EQUIPAMIENTO, TRANSFERENCIA, PROGRAMA_SOCIAL, PROGRAMA_8PCT, CONSERVACION, ESTUDIO).
 
 Operational layer:
-- **operational_commitment**: Tasks with due dates, state machine (PENDIENTE → EN_PROGRESO → COMPLETADO → VERIFICADO), tracked via `commitment_history`
-- **ipr_problem**: Issues detected on IPRs (ABIERTO → EN_GESTION → RESUELTO), typed (TECNICO, FINANCIERO, LEGAL, etc.)
+- **operational_commitment**: Tasks with due dates, state machine (PENDIENTE → EN_PROGRESO → COMPLETADO → VERIFICADO), tracked via `commitment_history`. Full CRUD: create form at `/compromisos/nuevo`, state actions in drawer.
+- **ipr_problem**: Issues detected on IPRs (ABIERTO → EN_GESTION → RESUELTO | CERRADO_SIN_RESOLVER), typed (TECNICO, FINANCIERO, LEGAL, etc.). Full CRUD: create form at `/problemas/nuevo`, resolve/close in drawer via PATCH with `state_id`.
 - **alert**: System-generated warnings with severity (CRITICO, ALTO, ATENCION, INFO), can be attended/resolved
 - **budget_program**: Fiscal year budget programs per division with execution tracking (initial → current → committed → accrued → paid). Related: `budget_carryover` (year-over-year), `budget_commitment` (CDPs linked to IPRs/agreements)
 - **agreement**: Institutional agreements (MANDATO, TRANSFERENCIA, COLABORACION, etc.) with state machine (BORRADOR → VIGENTE → VENCIDO/TERMINADO). Related: `agreement_installment` (payment schedule with status tracking)
+- **progress_report**: Periodic physical/financial progress reports per IPR. Create via `POST /api/ipr/{id}/avances`, list via `GET /api/ipr/{id}/avances`. Auto-incremented `report_number`.
+- **crisis_meeting**: Crisis meetings module using existing `core.committee` + `core.session` + `core.crisis_meeting` + `core.minute` + `core.session_agreement` tables. Full lifecycle: PROGRAMADA → EN_CURSO → FINALIZADA. Auto-suggestions from critical alerts, overdue commitments, open problems.
 
 DGI layer:
 - **dgi_indicator**: Institutional semaphore (5 dimensions: PRESUPUESTO, CARTERA_IPR, CONVENIOS, TDE, RIESGOS) with signal (VERDE/AMARILLO/ROJO). Values computed from real DB aggregates via `POST /api/dgi/data/indicators/refresh` (4/5 dimensions; TDE is static)
@@ -186,6 +188,7 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 - `model/model_goreos/docs/GOREOS_ERD_v3.md` — ERD + data dictionary
 - `model/GLOSARIO.yml` — 244 ontological terms (Gist 14.0 + GNUB + TDE)
 - `docs/plans/2026-02-24-dgi-ui-ux-design.md` — DGI UI/UX design document
+- `docs/GORE_OS_Testing_Ciclo3.md` — Testing document with all features, credentials, and test cases
 - `architecture/Omega_GORE_OS_Definition_v3.0.0.md` — system specification
 
 ## Critical Rules
@@ -200,3 +203,9 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 8. **Demo data convention**: All demo records use `DEMO-` prefix in code/number fields. Never mix demo data with real data. Use `goreos_unseed_demo_ciclo2.sql` to clean.
 9. **DGI indicator refresh**: Run `POST /api/dgi/data/indicators/refresh` to recompute semaphore values from real data. Idempotent. TDE dimension has no real data source yet.
 10. **Report section edits**: Stored atomically in `metadata` JSONB using `jsonb_set` (not read-modify-write). Auto-populated content is regenerated on each GET; only user edits persist.
+11. **Organization table**: `core.organization` does NOT have `is_active` column. Use `deleted_at IS NULL` to check if active. The type FK column is `org_type_id` (NOT `organization_type_id`).
+12. **Role restriction pattern**: Use a helper function `_require_roles(user, ...)` called inside the endpoint body. Do NOT use `require_roles()` from `deps.py` as a default parameter value — it conflicts with `CurrentUser` (which is `Annotated[dict, Depends()]`).
+13. **Reuniones module**: Uses existing DDL tables (`core.committee`, `core.session`, `core.crisis_meeting`, `core.minute`, `core.session_agreement`, `core.agenda_item_context`). No DDL migration needed. A dedicated crisis committee (code `COMITE-CRISIS`) is auto-created on first use.
+14. **Dashboard endpoints**: Role-specific dashboards: `GET /api/dashboard` (base, role-aware), `GET /api/dashboard/ejecutivo` (ADMIN with division breakdown), `GET /api/dashboard/mi-division` (JEFE_DIVISION team load), `GET /api/dashboard/mis-compromisos` (ENCARGADO grouped commitments).
+15. **Admin module**: `GET/POST/PATCH /api/admin/usuarios`, `POST /api/admin/usuarios/{id}/toggle-activo`, `POST /api/admin/usuarios/{id}/reset-password`, `GET/POST/PATCH /api/admin/divisiones`. All restricted to ADMIN_SISTEMA.
+16. **After code changes**: Always restart API container (`docker compose restart api`) — uvicorn hot-reload may not catch new files/imports.

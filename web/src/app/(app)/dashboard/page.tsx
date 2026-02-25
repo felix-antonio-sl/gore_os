@@ -13,6 +13,8 @@ import { CockpitJefeDGIView } from "@/components/cockpit-jefe-dgi";
 import { CockpitControlGestionView } from "@/components/cockpit-control-gestion";
 import { CockpitProcesosView } from "@/components/cockpit-procesos";
 import { CockpitTDView } from "@/components/cockpit-td";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type {
   DashboardData,
   CompromisoListItem,
@@ -22,6 +24,18 @@ import type {
   CockpitProcesos,
   CockpitTD,
 } from "@/types";
+
+interface DivisionBreakdown {
+  division_name: string;
+  vencidos: number;
+  total_compromisos: number;
+  problemas_abiertos: number;
+  ejecucion_pct: number;
+}
+
+interface ExecutiveDashboardData extends DashboardData {
+  divisions: DivisionBreakdown[];
+}
 
 // Union type for all DGI cockpit responses
 type DGICockpitData =
@@ -33,18 +47,22 @@ type DGICockpitData =
 // ─── Operational Dashboard ──────────────────────────────────────────────────
 
 function OperationalDashboard() {
-  const [data, setData] = useState<DashboardData | null>(null);
+  const [data, setData] = useState<ExecutiveDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { user: authUser } = useAuth();
+
+  const isExecutive = authUser && ["ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(authUser.role_code);
 
   useEffect(() => {
+    const endpoint = isExecutive ? "/api/dashboard/ejecutivo" : "/api/dashboard";
     api
-      .get<DashboardData>("/api/dashboard")
+      .get<ExecutiveDashboardData>(endpoint)
       .then(setData)
       .catch((err: Error) => setError(err.message))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [isExecutive]);
 
   const handleAttend = async (id: string) => {
     try {
@@ -145,6 +163,54 @@ function OperationalDashboard() {
           isLoading={isLoading}
         />
       </div>
+
+      {/* Division breakdown for executives */}
+      {isExecutive && data?.divisions && data.divisions.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Desglose por División</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {data.divisions.map((div) => (
+                <div
+                  key={div.division_name}
+                  className="flex items-center justify-between py-2 border-b last:border-0"
+                >
+                  <span className="font-medium text-sm">{div.division_name}</span>
+                  <div className="flex gap-2 items-center">
+                    {div.vencidos > 0 && (
+                      <Badge variant="destructive" className="text-xs">
+                        {div.vencidos} vencidos
+                      </Badge>
+                    )}
+                    <Badge variant="outline" className="text-xs">
+                      {div.total_compromisos} compromisos
+                    </Badge>
+                    {div.problemas_abiertos > 0 && (
+                      <Badge variant="outline" className="text-xs border-orange-400 text-orange-600">
+                        {div.problemas_abiertos} problemas
+                      </Badge>
+                    )}
+                    <Badge
+                      variant="secondary"
+                      className={`text-xs ${
+                        div.ejecucion_pct >= 70
+                          ? "bg-green-100 text-green-800"
+                          : div.ejecucion_pct >= 40
+                          ? "bg-amber-100 text-amber-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {div.ejecucion_pct}% ejec.
+                    </Badge>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Alertas */}
       <div>

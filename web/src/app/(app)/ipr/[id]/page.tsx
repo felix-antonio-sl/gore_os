@@ -3,14 +3,24 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import { StatusBadge } from "@/components/status-badge";
 import { DataTable } from "@/components/data-table";
 import { AlertCard } from "@/components/alert-card";
 import { TemporalIndicator } from "@/components/temporal-indicator";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ArrowLeft, Plus, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem, ConvenioListItem } from "@/types";
 
@@ -28,6 +38,25 @@ interface IprDetail {
   total_budget?: number;
   start_date?: string;
   end_date?: string;
+}
+
+interface ProgressReport {
+  id: string;
+  report_number: number;
+  report_date: string;
+  physical_progress: number | null;
+  financial_progress: number | null;
+  description: string | null;
+  issues_detected: string | null;
+  reported_by_name: string | null;
+  created_at: string;
+}
+
+interface UserOption {
+  id: string;
+  nombre: string;
+  apellido_paterno: string;
+  division_name: string | null;
 }
 
 const alertBorderMap: Record<string, string> = {
@@ -62,6 +91,7 @@ function formatCurrency(value: number | undefined): string {
 export default function IprDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const { user } = useAuth();
   const id = params.id as string;
 
   const [ipr, setIpr] = useState<IprDetail | null>(null);
@@ -78,6 +108,29 @@ export default function IprDetailPage() {
 
   const [convenios, setConvenios] = useState<PaginatedResponse<ConvenioListItem> | null>(null);
   const [convLoading, setConvLoading] = useState(false);
+
+  // Avances state
+  const [avances, setAvances] = useState<ProgressReport[] | null>(null);
+  const [avancesLoading, setAvancesLoading] = useState(false);
+
+  // Avance form drawer
+  const [showAvanceForm, setShowAvanceForm] = useState(false);
+  const [avanceDate, setAvanceDate] = useState(() => new Date().toISOString().split("T")[0]);
+  const [avancePhysical, setAvancePhysical] = useState("");
+  const [avanceFinancial, setAvanceFinancial] = useState("");
+  const [avanceDesc, setAvanceDesc] = useState("");
+  const [avanceIssues, setAvanceIssues] = useState("");
+  const [avanceSubmitting, setAvanceSubmitting] = useState(false);
+  const [avanceError, setAvanceError] = useState<string | null>(null);
+
+  // Assignee drawer
+  const [showAssignee, setShowAssignee] = useState(false);
+  const [usersList, setUsersList] = useState<UserOption[]>([]);
+  const [selectedAssignee, setSelectedAssignee] = useState("");
+  const [assigneeSubmitting, setAssigneeSubmitting] = useState(false);
+  const [assigneeError, setAssigneeError] = useState<string | null>(null);
+
+  const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
 
   useEffect(() => {
     api
@@ -127,8 +180,74 @@ export default function IprDetailPage() {
       .finally(() => setConvLoading(false));
   };
 
+  const loadAvances = (force = false) => {
+    if (avances && !force) return;
+    setAvancesLoading(true);
+    api
+      .get<ProgressReport[]>(`/api/ipr/${id}/avances`)
+      .then(setAvances)
+      .catch(() => setAvances(null))
+      .finally(() => setAvancesLoading(false));
+  };
+
+  const handleAvanceSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!avanceDate) {
+      setAvanceError("La fecha es requerida.");
+      return;
+    }
+    setAvanceSubmitting(true);
+    setAvanceError(null);
+    try {
+      await api.post(`/api/ipr/${id}/avances`, {
+        report_date: avanceDate,
+        physical_progress: avancePhysical ? parseFloat(avancePhysical) : null,
+        financial_progress: avanceFinancial ? parseFloat(avanceFinancial) : null,
+        description: avanceDesc || null,
+        issues_detected: avanceIssues || null,
+      });
+      setShowAvanceForm(false);
+      setAvanceDate(new Date().toISOString().split("T")[0]);
+      setAvancePhysical("");
+      setAvanceFinancial("");
+      setAvanceDesc("");
+      setAvanceIssues("");
+      setAvances(null);
+      loadAvances(true);
+    } catch (err) {
+      setAvanceError(err instanceof Error ? err.message : "Error al registrar avance");
+    } finally {
+      setAvanceSubmitting(false);
+    }
+  };
+
+  const openAssigneeDrawer = () => {
+    setShowAssignee(true);
+    setAssigneeError(null);
+    setSelectedAssignee("");
+    api.get<UserOption[]>("/api/catalogs/users").then(setUsersList).catch(() => {});
+  };
+
+  const handleAssigneeSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedAssignee) {
+      setAssigneeError("Seleccione un usuario.");
+      return;
+    }
+    setAssigneeSubmitting(true);
+    setAssigneeError(null);
+    try {
+      await api.patch(`/api/ipr/${id}`, { assignee_id: selectedAssignee });
+      setShowAssignee(false);
+    } catch (err) {
+      setAssigneeError(err instanceof Error ? err.message : "Error al asignar responsable");
+    } finally {
+      setAssigneeSubmitting(false);
+    }
+  };
+
   const compromisoColumns = [
-    { key: "description", label: "Descripción" },
+    { key: "description", label: "Descripcion" },
     { key: "responsible_name", label: "Responsable" },
     {
       key: "due_date",
@@ -148,7 +267,7 @@ export default function IprDetailPage() {
   const problemaColumns = [
     {
       key: "days_open",
-      label: "Días abierto",
+      label: "Dias abierto",
       render: (v: unknown) => <span className="text-xs tabular-nums">{String(v ?? 0)}d</span>,
     },
     { key: "problem_type_label", label: "Tipo" },
@@ -164,6 +283,41 @@ export default function IprDetailPage() {
       label: "Estado",
       render: (v: unknown) => <StatusBadge status={String(v ?? "")} size="sm" />,
     },
+  ];
+
+  const avanceColumns = [
+    {
+      key: "report_number",
+      label: "#",
+      render: (v: unknown) => <span className="font-mono text-xs">{String(v)}</span>,
+    },
+    {
+      key: "report_date",
+      label: "Fecha",
+      render: (v: unknown) => <span className="text-xs">{v ? formatDate(String(v)) : "-"}</span>,
+    },
+    {
+      key: "physical_progress",
+      label: "% Fisico",
+      render: (v: unknown) => (
+        <span className="text-xs tabular-nums">{v != null ? `${Number(v).toFixed(1)}%` : "-"}</span>
+      ),
+    },
+    {
+      key: "financial_progress",
+      label: "% Financiero",
+      render: (v: unknown) => (
+        <span className="text-xs tabular-nums">{v != null ? `${Number(v).toFixed(1)}%` : "-"}</span>
+      ),
+    },
+    {
+      key: "description",
+      label: "Descripcion",
+      render: (v: unknown) => (
+        <span className="text-xs line-clamp-1 max-w-xs">{String(v ?? "-")}</span>
+      ),
+    },
+    { key: "reported_by_name", label: "Reportado por" },
   ];
 
   const alertLevel = ipr?.alert_level;
@@ -218,9 +372,17 @@ export default function IprDetailPage() {
               <p className="text-sm text-muted-foreground mt-1">{ipr.description}</p>
             )}
           </div>
-          <div className="text-right shrink-0">
-            <p className="text-2xl font-bold">{formatCurrency(ipr.total_budget)}</p>
-            <p className="text-xs text-muted-foreground">Presupuesto total</p>
+          <div className="flex flex-col items-end gap-2 shrink-0">
+            <div className="text-right">
+              <p className="text-2xl font-bold">{formatCurrency(ipr.total_budget)}</p>
+              <p className="text-xs text-muted-foreground">Presupuesto total</p>
+            </div>
+            {canAssign && (
+              <Button size="sm" variant="outline" onClick={openAssigneeDrawer}>
+                <UserPlus className="size-4 mr-1" />
+                Asignar Responsable
+              </Button>
+            )}
           </div>
         </div>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
@@ -250,7 +412,7 @@ export default function IprDetailPage() {
           )}
           {ipr.end_date && (
             <div>
-              <span className="text-muted-foreground">Término: </span>
+              <span className="text-muted-foreground">Termino: </span>
               <span className="font-medium">{formatDate(ipr.end_date)}</span>
             </div>
           )}
@@ -263,6 +425,7 @@ export default function IprDetailPage() {
         if (tab === "problemas") loadProblemas();
         if (tab === "alertas") loadAlertas();
         if (tab === "convenios") loadConvenios();
+        if (tab === "avances") loadAvances();
       }}>
         <TabsList>
           <TabsTrigger value="compromisos" onClick={loadCompromisos}>
@@ -276,6 +439,9 @@ export default function IprDetailPage() {
           </TabsTrigger>
           <TabsTrigger value="convenios" onClick={loadConvenios}>
             Convenios
+          </TabsTrigger>
+          <TabsTrigger value="avances" onClick={() => loadAvances()}>
+            Avances
           </TabsTrigger>
         </TabsList>
 
@@ -335,7 +501,7 @@ export default function IprDetailPage() {
               columns={[
                 {
                   key: "agreement_number",
-                  label: "N° Convenio",
+                  label: "N Convenio",
                   render: (v: unknown) => <span className="font-mono text-xs">{String(v ?? "-")}</span>,
                 },
                 {
@@ -375,7 +541,162 @@ export default function IprDetailPage() {
             />
           )}
         </TabsContent>
+
+        <TabsContent value="avances" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {avances ? `${avances.length} reportes de avance` : ""}
+            </p>
+            <Button size="sm" onClick={() => setShowAvanceForm(true)}>
+              <Plus className="size-4 mr-1" />
+              Registrar Avance
+            </Button>
+          </div>
+          {avancesLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-12 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          ) : !avances || avances.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No hay reportes de avance para este IPR.</p>
+          ) : (
+            <DataTable
+              columns={avanceColumns}
+              data={avances}
+              page={1}
+              totalPages={1}
+              total={avances.length}
+              onPageChange={() => {}}
+              isLoading={avancesLoading}
+            />
+          )}
+        </TabsContent>
       </Tabs>
+
+      {/* Avance Form Drawer */}
+      <DrawerPanel
+        open={showAvanceForm}
+        onClose={() => setShowAvanceForm(false)}
+        title="Registrar Avance"
+      >
+        <form onSubmit={handleAvanceSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Fecha del reporte *</label>
+            <Input
+              type="date"
+              value={avanceDate}
+              onChange={(e) => setAvanceDate(e.target.value)}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Avance fisico (%)</label>
+            <Input
+              type="number"
+              min="0"
+              max="100"
+              step="0.1"
+              value={avancePhysical}
+              onChange={(e) => setAvancePhysical(e.target.value)}
+              placeholder="0 - 100"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Avance financiero (%)</label>
+            <Input
+              type="number"
+              min="0"
+              max="100"
+              step="0.1"
+              value={avanceFinancial}
+              onChange={(e) => setAvanceFinancial(e.target.value)}
+              placeholder="0 - 100"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Descripcion</label>
+            <textarea
+              className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={avanceDesc}
+              onChange={(e) => setAvanceDesc(e.target.value)}
+              placeholder="Descripcion del avance..."
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Problemas detectados</label>
+            <textarea
+              className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={avanceIssues}
+              onChange={(e) => setAvanceIssues(e.target.value)}
+              placeholder="Problemas o riesgos detectados..."
+            />
+          </div>
+
+          {avanceError && (
+            <p className="text-sm text-red-600">{avanceError}</p>
+          )}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={avanceSubmitting}>
+              {avanceSubmitting ? "Guardando..." : "Guardar Avance"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowAvanceForm(false)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
+
+      {/* Assignee Drawer */}
+      <DrawerPanel
+        open={showAssignee}
+        onClose={() => setShowAssignee(false)}
+        title="Asignar Responsable"
+      >
+        <form onSubmit={handleAssigneeSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Responsable *</label>
+            <Select value={selectedAssignee} onValueChange={setSelectedAssignee}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione usuario" />
+              </SelectTrigger>
+              <SelectContent>
+                {usersList.map((u) => (
+                  <SelectItem key={u.id} value={u.id}>
+                    {u.nombre} {u.apellido_paterno}
+                    {u.division_name ? ` (${u.division_name})` : ""}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {assigneeError && (
+            <p className="text-sm text-red-600">{assigneeError}</p>
+          )}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={assigneeSubmitting}>
+              {assigneeSubmitting ? "Asignando..." : "Asignar"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowAssignee(false)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
     </div>
   );
 }

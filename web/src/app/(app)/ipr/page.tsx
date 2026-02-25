@@ -3,10 +3,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import type { PaginatedResponse, IPRListItem } from "@/types";
 
 const IPR_TYPE_OPTIONS = [
@@ -62,6 +65,9 @@ export default function IprPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { user } = useAuth();
+
+  const canCreate = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
   const [data, setData] = useState<PaginatedResponse<IPRListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -185,11 +191,19 @@ export default function IprPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">IPR</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Intervenciones Públicas Regionales
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">IPR</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Intervenciones Públicas Regionales
+          </p>
+        </div>
+        {canCreate && (
+          <Button onClick={() => router.push("/ipr/nuevo")} size="sm">
+            <Plus className="size-4 mr-1" />
+            Nueva IPR
+          </Button>
+        )}
       </div>
 
       <FilterBar

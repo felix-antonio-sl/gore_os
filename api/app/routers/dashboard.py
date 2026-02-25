@@ -10,6 +10,12 @@ from app.schemas.dashboard import (
     DashboardCommitment,
     DashboardAlert,
     DashboardProblem,
+    TeamMemberLoad,
+    MiDivisionResponse,
+    CompromisoGroup,
+    MisCompromisosResponse,
+    DivisionBreakdown,
+    DashboardExecutivoResponse,
 )
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
@@ -494,3 +500,241 @@ async def get_dashboard(
 
     # Fallback: same as admin regional
     return await _dashboard_admin_regional(user, db)
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dashboard/mi-division — Team stats for JEFE_DIVISION
+# ---------------------------------------------------------------------------
+
+@router.get("/mi-division", response_model=MiDivisionResponse)
+async def get_mi_division(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    division_id = str(user["division_id"]) if user.get("division_id") else None
+    if not division_id:
+        return MiDivisionResponse(kpis=[], team=[], commitments=[])
+
+    # KPIs de la división
+    kpi_sql = text("""
+        SELECT
+            SUM(CASE WHEN sc.code NOT IN ('VERIFICADO','CANCELADO') AND oc.due_date < CURRENT_DATE THEN 1 ELSE 0 END) AS vencidos,
+            SUM(CASE WHEN sc.code = 'PENDIENTE' THEN 1 ELSE 0 END) AS pendientes,
+            SUM(CASE WHEN sc.code = 'COMPLETADO' THEN 1 ELSE 0 END) AS por_verificar,
+            COUNT(*) FILTER (WHERE sc.code NOT IN ('VERIFICADO','CANCELADO')) AS activos
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        WHERE oc.division_id = :div_id AND oc.deleted_at IS NULL
+    """)
+    kpi_row = (await db.execute(kpi_sql, {"div_id": division_id})).mappings().first()
+
+    kpis = [
+        KPICard(label="Vencidos", value=kpi_row["vencidos"] or 0, sublabel="Compromisos vencidos", color="red"),
+        KPICard(label="Pendientes", value=kpi_row["pendientes"] or 0, sublabel="Sin iniciar", color="amber"),
+        KPICard(label="Por Verificar", value=kpi_row["por_verificar"] or 0, sublabel="Completados", color="blue"),
+        KPICard(label="Activos", value=kpi_row["activos"] or 0, sublabel="Total en curso", color="green"),
+    ]
+
+    # Carga por persona del equipo
+    team_sql = text("""
+        SELECT
+            u.id AS user_id,
+            p.names || ' ' || p.paternal_surname AS name,
+            SUM(CASE WHEN sc.code = 'PENDIENTE' THEN 1 ELSE 0 END) AS pendientes,
+            SUM(CASE WHEN sc.code = 'EN_PROGRESO' THEN 1 ELSE 0 END) AS en_progreso,
+            SUM(CASE WHEN sc.code = 'COMPLETADO' THEN 1 ELSE 0 END) AS completados,
+            SUM(CASE WHEN sc.code NOT IN ('VERIFICADO','CANCELADO') AND oc.due_date < CURRENT_DATE THEN 1 ELSE 0 END) AS vencidos,
+            COUNT(*) AS total
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        JOIN core."user" u ON u.id = oc.responsible_id
+        JOIN core.person p ON p.id = u.person_id
+        WHERE oc.division_id = :div_id
+          AND oc.deleted_at IS NULL
+          AND sc.code NOT IN ('VERIFICADO', 'CANCELADO')
+        GROUP BY u.id, p.names, p.paternal_surname
+        ORDER BY SUM(CASE WHEN sc.code NOT IN ('VERIFICADO','CANCELADO') AND oc.due_date < CURRENT_DATE THEN 1 ELSE 0 END) DESC
+    """)
+    team_rows = (await db.execute(team_sql, {"div_id": division_id})).mappings().all()
+    team = [TeamMemberLoad(**dict(r)) for r in team_rows]
+
+    # Compromisos vencidos de la división
+    comm_sql = text("""
+        SELECT
+            oc.id, oc.description,
+            ipr.codigo_bip AS ipr_codigo_bip,
+            p.names || ' ' || p.paternal_surname AS responsible_name,
+            oc.due_date, sc.code AS state,
+            (oc.due_date - CURRENT_DATE) AS days_remaining
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = oc.ipr_id AND ipr.deleted_at IS NULL
+        LEFT JOIN core."user" u ON u.id = oc.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE oc.division_id = :div_id
+          AND sc.code NOT IN ('VERIFICADO', 'CANCELADO')
+          AND oc.due_date < CURRENT_DATE
+          AND oc.deleted_at IS NULL
+        ORDER BY oc.due_date ASC
+        LIMIT 20
+    """)
+    comm_rows = (await db.execute(comm_sql, {"div_id": division_id})).mappings().all()
+    commitments = [DashboardCommitment(**dict(r)) for r in comm_rows]
+
+    return MiDivisionResponse(kpis=kpis, team=team, commitments=commitments)
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dashboard/mis-compromisos — Personal commitments for ENCARGADO
+# ---------------------------------------------------------------------------
+
+@router.get("/mis-compromisos", response_model=MisCompromisosResponse)
+async def get_mis_compromisos(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    user_id = str(user["id"])
+
+    # KPIs personales
+    kpi_sql = text("""
+        SELECT
+            SUM(CASE WHEN sc.code NOT IN ('VERIFICADO','CANCELADO') AND oc.due_date < CURRENT_DATE THEN 1 ELSE 0 END) AS vencidos,
+            SUM(CASE WHEN sc.code = 'PENDIENTE' THEN 1 ELSE 0 END) AS pendientes,
+            SUM(CASE WHEN sc.code = 'EN_PROGRESO' THEN 1 ELSE 0 END) AS en_progreso,
+            SUM(CASE WHEN sc.code = 'COMPLETADO' AND oc.completed_at >= date_trunc('month', CURRENT_DATE) THEN 1 ELSE 0 END) AS completados_mes
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        WHERE oc.responsible_id = :uid AND oc.deleted_at IS NULL
+    """)
+    kpi_row = (await db.execute(kpi_sql, {"uid": user_id})).mappings().first()
+
+    kpis = [
+        KPICard(label="Vencidos", value=kpi_row["vencidos"] or 0, sublabel="Requieren atencion", color="red"),
+        KPICard(label="Pendientes", value=kpi_row["pendientes"] or 0, sublabel="Sin iniciar", color="amber"),
+        KPICard(label="En Progreso", value=kpi_row["en_progreso"] or 0, sublabel="En ejecucion", color="blue"),
+        KPICard(label="Completados", value=kpi_row["completados_mes"] or 0, sublabel="Este mes", color="green"),
+    ]
+
+    # Vencidos
+    vencidos_sql = text("""
+        SELECT oc.id, oc.description, ipr.codigo_bip AS ipr_codigo_bip,
+               p.names || ' ' || p.paternal_surname AS responsible_name,
+               oc.due_date, sc.code AS state, (oc.due_date - CURRENT_DATE) AS days_remaining
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = oc.ipr_id AND ipr.deleted_at IS NULL
+        LEFT JOIN core."user" u ON u.id = oc.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE oc.responsible_id = :uid AND oc.deleted_at IS NULL
+          AND sc.code NOT IN ('VERIFICADO','CANCELADO') AND oc.due_date < CURRENT_DATE
+        ORDER BY oc.due_date ASC LIMIT 20
+    """)
+    vencidos_rows = (await db.execute(vencidos_sql, {"uid": user_id})).mappings().all()
+
+    # Esta semana
+    semana_sql = text("""
+        SELECT oc.id, oc.description, ipr.codigo_bip AS ipr_codigo_bip,
+               p.names || ' ' || p.paternal_surname AS responsible_name,
+               oc.due_date, sc.code AS state, (oc.due_date - CURRENT_DATE) AS days_remaining
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = oc.ipr_id AND ipr.deleted_at IS NULL
+        LEFT JOIN core."user" u ON u.id = oc.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE oc.responsible_id = :uid AND oc.deleted_at IS NULL
+          AND sc.code NOT IN ('VERIFICADO','CANCELADO')
+          AND oc.due_date >= CURRENT_DATE AND oc.due_date <= CURRENT_DATE + INTERVAL '7 days'
+        ORDER BY oc.due_date ASC LIMIT 20
+    """)
+    semana_rows = (await db.execute(semana_sql, {"uid": user_id})).mappings().all()
+
+    # Pendientes (no vencidos, no esta semana)
+    pendientes_sql = text("""
+        SELECT oc.id, oc.description, ipr.codigo_bip AS ipr_codigo_bip,
+               p.names || ' ' || p.paternal_surname AS responsible_name,
+               oc.due_date, sc.code AS state, (oc.due_date - CURRENT_DATE) AS days_remaining
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = oc.ipr_id AND ipr.deleted_at IS NULL
+        LEFT JOIN core."user" u ON u.id = oc.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE oc.responsible_id = :uid AND oc.deleted_at IS NULL
+          AND sc.code IN ('PENDIENTE', 'EN_PROGRESO')
+          AND oc.due_date > CURRENT_DATE + INTERVAL '7 days'
+        ORDER BY oc.due_date ASC LIMIT 20
+    """)
+    pendientes_rows = (await db.execute(pendientes_sql, {"uid": user_id})).mappings().all()
+
+    groups = [
+        CompromisoGroup(
+            label="Vencidos",
+            count=len(vencidos_rows),
+            items=[DashboardCommitment(**dict(r)) for r in vencidos_rows],
+        ),
+        CompromisoGroup(
+            label="Esta Semana",
+            count=len(semana_rows),
+            items=[DashboardCommitment(**dict(r)) for r in semana_rows],
+        ),
+        CompromisoGroup(
+            label="Pendientes",
+            count=len(pendientes_rows),
+            items=[DashboardCommitment(**dict(r)) for r in pendientes_rows],
+        ),
+    ]
+
+    return MisCompromisosResponse(kpis=kpis, groups=groups)
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dashboard/ejecutivo — Enhanced executive dashboard
+# ---------------------------------------------------------------------------
+
+@router.get("/ejecutivo", response_model=DashboardExecutivoResponse)
+async def get_dashboard_ejecutivo(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    # Base dashboard data
+    base = await _dashboard_admin_regional(user, db)
+
+    # Division breakdown
+    div_sql = text("""
+        SELECT
+            o.name AS division_name,
+            COALESCE(SUM(CASE WHEN sc.code NOT IN ('VERIFICADO','CANCELADO') AND oc.due_date < CURRENT_DATE THEN 1 ELSE 0 END), 0) AS vencidos,
+            COALESCE(COUNT(oc.id), 0) AS total_compromisos,
+            COALESCE((
+                SELECT COUNT(*)
+                FROM core.ipr_problem ip
+                JOIN ref.category ps ON ps.id = ip.state_id
+                JOIN core.ipr i ON i.id = ip.ipr_id
+                WHERE ps.code IN ('ABIERTO', 'EN_GESTION')
+                  AND i.sponsor_division_id = o.id
+                  AND i.deleted_at IS NULL AND ip.deleted_at IS NULL
+            ), 0) AS problemas_abiertos,
+            COALESCE((
+                SELECT ROUND(SUM(bp.paid_amount)::numeric / NULLIF(SUM(bp.current_amount), 0)::numeric * 100, 1)
+                FROM core.budget_program bp
+                WHERE bp.owner_division_id = o.id
+                  AND bp.fiscal_year = EXTRACT(YEAR FROM CURRENT_DATE)
+                  AND bp.deleted_at IS NULL
+            ), 0) AS ejecucion_pct
+        FROM core.organization o
+        LEFT JOIN core.operational_commitment oc ON oc.division_id = o.id AND oc.deleted_at IS NULL
+        LEFT JOIN ref.category sc ON sc.id = oc.state_id
+        WHERE o.deleted_at IS NULL
+        GROUP BY o.id, o.name
+        HAVING COUNT(oc.id) > 0
+        ORDER BY o.name
+    """)
+    div_rows = (await db.execute(div_sql)).mappings().all()
+    divisions = [DivisionBreakdown(**dict(r)) for r in div_rows]
+
+    return DashboardExecutivoResponse(
+        kpis=base.kpis,
+        commitments=base.commitments,
+        alerts=base.alerts,
+        problems=base.problems,
+        divisions=divisions,
+    )

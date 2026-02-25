@@ -348,3 +348,44 @@ export interface CockpitTD {
   committee: DGICommitteeSession | null;
   normative_alerts: { message: string; days_until: number }[];
 }
+
+// ---------------------------------------------------------------------------
+// Reuniones de Crisis Types
+// ---------------------------------------------------------------------------
+export interface ReunionListItem {
+  id: string;
+  session_id: string;
+  session_number: number;
+  scheduled_at: string;
+  started_at: string | null;
+  finished_at: string | null;
+  summary: string | null;
+  organizer_name: string | null;
+  status: "PROGRAMADA" | "EN_CURSO" | "FINALIZADA";
+  topic_count: number;
+}
+
+export interface TopicItem {
+  id: string;
+  agreement_number: number;
+  subject: string;
+  decision: string | null;
+  responsible_name: string | null;
+  due_date: string | null;
+  status: string | null;
+  ipr_codigo_bip: string | null;
+  context_type: string | null;
+}
+
+export interface ReunionDetail extends ReunionListItem {
+  location: string | null;
+  topics: TopicItem[];
+}
+
+export interface AutoSuggestion {
+  type: "alerta_critica" | "compromiso_vencido" | "problema_abierto";
+  subject: string;
+  detail: string;
+  target_id: string;
+  ipr_codigo_bip: string | null;
+}

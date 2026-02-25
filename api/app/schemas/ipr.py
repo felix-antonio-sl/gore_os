@@ -41,3 +41,16 @@ class IPRDetail(BaseModel):
     problem_count: int
     alert_count: int
     created_at: datetime
+
+
+class IprCreate(BaseModel):
+    codigo_bip: str
+    name: str
+    ipr_type_id: UUID | None = None
+    status_id: UUID | None = None
+    sponsor_division_id: UUID | None = None
+    description: str | None = None
+
+
+class IprAssigneeUpdate(BaseModel):
+    assignee_id: UUID

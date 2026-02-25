@@ -46,3 +46,39 @@ async def get_users_list(
     query += " ORDER BY p.paternal_surname, p.names"
     result = await db.execute(text(query), params)
     return [dict(r) for r in result.mappings().all()]
+
+
+@router.get("/iprs")
+async def get_iprs_list(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    search: str | None = None,
+):
+    query = """
+        SELECT i.id, i.codigo_bip, i.name
+        FROM core.ipr i
+        WHERE i.deleted_at IS NULL
+    """
+    params: dict = {}
+    if search:
+        query += " AND (i.codigo_bip ILIKE :search OR i.name ILIKE :search)"
+        params["search"] = f"%{search}%"
+    query += " ORDER BY i.codigo_bip LIMIT 200"
+    result = await db.execute(text(query), params)
+    return [dict(r) for r in result.mappings().all()]
+
+
+@router.get("/divisions")
+async def get_divisions_list(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    result = await db.execute(
+        text("""
+            SELECT id, code, name
+            FROM core.organization
+            WHERE deleted_at IS NULL
+            ORDER BY name
+        """)
+    )
+    return [dict(r) for r in result.mappings().all()]

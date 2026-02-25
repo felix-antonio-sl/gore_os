@@ -327,10 +327,13 @@ async def get_report_content(
     # Fetch report header
     row = (await db.execute(text("""
         SELECT r.id, r.code, r.title, rt.code AS report_type, st.code AS status,
-               r.period_start, r.period_end, r.metadata
+               r.period_start, r.period_end, r.metadata, r.recipient, r.created_at,
+               (p.names || ' ' || p.paternal_surname) AS generated_by_name
         FROM core.dgi_report r
         JOIN ref.category rt ON rt.id = r.report_type_id
         JOIN ref.category st ON st.id = r.status_id
+        LEFT JOIN core."user" u ON u.id = r.generated_by_id
+        LEFT JOIN core.person p ON p.id = u.person_id
         WHERE r.id = :id AND r.deleted_at IS NULL
     """), {"id": str(report_id)})).mappings().first()
 
@@ -373,6 +376,9 @@ async def get_report_content(
         status=row["status"],
         period_start=row["period_start"],
         period_end=row["period_end"],
+        recipient=row["recipient"],
+        generated_by_name=row["generated_by_name"],
+        created_at=row["created_at"],
         sections=sections,
     )
 

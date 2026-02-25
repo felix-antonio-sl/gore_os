@@ -11,6 +11,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { TimelineHistory } from "@/components/timeline-history";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import type { PaginatedResponse, CompromisoListItem, HistoryEntry } from "@/types";
 
 const ESTADO_OPTIONS = [
@@ -195,13 +196,25 @@ export default function CompromisosPage() {
     },
   ];
 
+  const canCreate =
+    user &&
+    ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
+
   return (
     <div className="p-6 space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">Compromisos</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Gestión de compromisos operativos
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Compromisos</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Gestión de compromisos operativos
+          </p>
+        </div>
+        {canCreate && (
+          <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
+            <Plus className="size-4 mr-1" />
+            Nuevo Compromiso
+          </Button>
+        )}
       </div>
 
       <FilterBar
