@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 GORE_OS is an institutional operating system for the Regional Government of Ñuble (GORE), Chile. It serves two user populations on a shared PostgreSQL database:
 
-- **Operativa** (ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ENCARGADO): Manage IPR crisis — commitments, problems, alerts. Replaces Excel workflows.
-- **DGI** (JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD): Monitor institutional indicators, analyze data, generate reports, manage improvement initiatives.
+- **Operativa** (ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ENCARGADO): Manage IPR crisis — commitments, problems, alerts, budget programs, agreements. Replaces Excel workflows.
+- **DGI** (JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD): Monitor institutional indicators (real-time from DB), analyze data, generate auto-populated reports, manage improvement initiatives.
 
 One app, two navigation experiences. Single login → role detection → routing to appropriate sidebar/dashboard.
 
@@ -25,15 +25,26 @@ docker compose --profile standalone up -d
 curl http://localhost:8000/api/health     # API
 curl -I http://localhost:3000             # Web (307 redirect to /login)
 
+# Load demo data (budget programs + agreements with DEMO- prefix):
+docker exec -i goreos_db psql -U goreos -d goreos_model \
+  < model/model_goreos/sql/goreos_seed_demo_ciclo2.sql
+
+# Remove demo data (only DEMO- records, real data untouched):
+docker exec -i goreos_db psql -U goreos -d goreos_model \
+  < model/model_goreos/sql/goreos_unseed_demo_ciclo2.sql
+
+# Refresh DGI indicators from real DB aggregates:
+TOKEN=$(curl -s -X POST http://localhost:8000/api/auth/login \
+  -d "username=jefe.dgi@goreos.cl&password=admin123" \
+  -H "Content-Type: application/x-www-form-urlencoded" | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+curl -s -X POST -H "Authorization: Bearer $TOKEN" http://localhost:8000/api/dgi/data/indicators/refresh
+
 # Database shell:
 docker exec goreos_db psql -U goreos -d goreos_model
 
 # View logs:
 docker compose logs -f api
 docker compose logs -f web
-
-# Rebuild after code changes (volumes mount source, so usually auto-reload):
-docker compose build api && docker compose up -d api
 ```
 
 ## Architecture
@@ -58,7 +69,7 @@ Key files:
 - `api/app/main.py` — app factory, router registration
 - `api/app/core/deps.py` — `CurrentUser` dependency (extracts user dict from JWT)
 - `api/app/core/security.py` — `OPERATIONAL_ROLES` / `DGI_ROLES` sets, password hashing, JWT
-- `api/app/routers/` — 11 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports)
+- `api/app/routers/` — 13 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports)
 
 API conventions:
 - All routes prefixed `/api/` (e.g., `/api/ipr`, `/api/dgi/cockpit`)
@@ -66,6 +77,7 @@ API conventions:
 - DGI list endpoints return plain arrays (not paginated)
 - Dashboard endpoint (`GET /api/dashboard`) is role-aware: dispatches to different queries per role
 - DGI cockpit endpoint (`GET /api/dgi/cockpit`) returns different response shapes per DGI role
+- PATCH endpoints use allowlisted column names — field names in Pydantic update models must match DB columns exactly
 - Person table columns: `names`, `paternal_surname` (NOT `nombre`, `apellido_paterno`)
 - User table FK: `system_role_id` (NOT `role_id`)
 
@@ -80,7 +92,7 @@ Key patterns:
 - `web/src/lib/api.ts` — singleton `ApiClient` with `get<T>()`, `post<T>()`, `patch<T>()`. Token in localStorage (`goreos_token`). Auto-redirect to `/login` on 401.
 - `web/src/lib/auth.tsx` — `AuthProvider` context, `useAuth()` hook returns `{user, loading, login, logout}`
 - `web/src/types/index.ts` — all TypeScript interfaces. `User.population` (`"operativa" | "dgi"`) drives sidebar/dashboard routing.
-- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` vs `dgiNav` based on `user.population`
+- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (7 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios) vs `dgiNav` (5 items) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
 
@@ -98,6 +110,8 @@ Key patterns:
 **Category Pattern**: `ref.category(scheme, code, label)` — each FK column points to exactly ONE scheme (Categorical Univocity). Before creating new schemes, check existing ones: `SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;`
 
 **DGI schemes**: `dgi_initiative_status`, `dgi_indicator_dimension`, `dgi_signal`, `dgi_report_type`, `dgi_report_status`, `dgi_bpmn_status`, `dgi_dmaic_phase`, `dgi_session_status`, `dgi_alert_status`, `dgi_decree_status`, `dgi_source_status`
+
+**Budget schemes** (Ciclo 2): `budget_item` (14), `budget_allocation` (15), `program_type` (5), `budget_commitment_status` (5). Pre-existing: `budget_subtitle` (8), `funding_source` (11), `payment_status` (5), `agreement_type` (6), `agreement_state` (10 with transitions), `cgr_outcome` (7).
 
 ### Docker Networking
 
@@ -146,16 +160,29 @@ Operational layer:
 - **operational_commitment**: Tasks with due dates, state machine (PENDIENTE → EN_PROGRESO → COMPLETADO → VERIFICADO), tracked via `commitment_history`
 - **ipr_problem**: Issues detected on IPRs (ABIERTO → EN_GESTION → RESUELTO), typed (TECNICO, FINANCIERO, LEGAL, etc.)
 - **alert**: System-generated warnings with severity (CRITICO, ALTO, ATENCION, INFO), can be attended/resolved
+- **budget_program**: Fiscal year budget programs per division with execution tracking (initial → current → committed → accrued → paid). Related: `budget_carryover` (year-over-year), `budget_commitment` (CDPs linked to IPRs/agreements)
+- **agreement**: Institutional agreements (MANDATO, TRANSFERENCIA, COLABORACION, etc.) with state machine (BORRADOR → VIGENTE → VENCIDO/TERMINADO). Related: `agreement_installment` (payment schedule with status tracking)
 
 DGI layer:
-- **dgi_indicator**: Institutional semaphore (5 dimensions: PRESUPUESTO, CARTERA_IPR, CONVENIOS, TDE, RIESGOS) with signal (VERDE/AMARILLO/ROJO)
+- **dgi_indicator**: Institutional semaphore (5 dimensions: PRESUPUESTO, CARTERA_IPR, CONVENIOS, TDE, RIESGOS) with signal (VERDE/AMARILLO/ROJO). Values computed from real DB aggregates via `POST /api/dgi/data/indicators/refresh` (4/5 dimensions; TDE is static)
 - **dgi_initiative**: Kanban board with WIP limits, optional DMAIC phases
-- **dgi_report**: Institutional reports (FLASH, SEMANAL, MENSUAL, TEMATICO)
+- **dgi_report**: Institutional reports (FLASH, SEMANAL, MENSUAL, TEMATICO) with 6 auto-populated sections from real data. User edits stored in `metadata` JSONB via atomic `jsonb_set`. Sections: resumen, tabla_indicadores, alertas, avance_dgi, decisiones, prioridades.
+
+## Demo Data Strategy
+
+Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
+- `goreos_seed_demo_ciclo2.sql` — structural schemes (permanent) + demo records (removable)
+- `goreos_unseed_demo_ciclo2.sql` — deletes only `DEMO-` records, real data untouched
+- FKs to real data use subqueries (e.g., `SELECT id FROM core.organization WHERE code='DAF'`), not hardcoded UUIDs
+- Demo budget programs: DEMO-BP-001..006 (3 divisions, varied execution 30%-80%)
+- Demo agreements: DEMO-AGR-001..004 (2 VIGENTE, 1 EN_MODIFICACION, 1 VENCIDO, with installments)
+- Demo CDPs: DEMO-CDP-001..008 (linked to real IPRs)
 
 ## Key References
 
 - `model/model_goreos/sql/goreos_ddl.sql` — DDL (77 tables), ontological mappings in lines 21-37
 - `model/model_goreos/sql/goreos_seed.sql` — 90+ category schemes
+- `model/model_goreos/sql/goreos_seed_demo_ciclo2.sql` — demo data for budget + agreements
 - `model/model_goreos/docs/GOREOS_ERD_v3.md` — ERD + data dictionary
 - `model/GLOSARIO.yml` — 244 ontological terms (Gist 14.0 + GNUB + TDE)
 - `docs/plans/2026-02-24-dgi-ui-ux-design.md` — DGI UI/UX design document
@@ -166,6 +193,10 @@ DGI layer:
 1. **Categorical Univocity**: Each FK column → exactly 1 `ref.category` scheme. Never mix dimensions.
 2. **Person columns**: Use `names` and `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 3. **API consistency**: Operational endpoints use POST for state changes (e.g., `POST /compromisos/{id}/completar`). DGI list endpoints return plain arrays. Paginated endpoints return `{items, total, page, page_size, total_pages}`.
-4. **Alert subject_type**: Stored as `'core.ipr'` in DB (fully qualified), not `'ipr'`.
+4. **Alert subject_type**: Stored as `'core.ipr'` in DB (fully qualified), not `'ipr'`. Always use `'core.ipr'` in all SQL queries.
 5. **Docker network**: `goreos_db` is on `visor_model_default` (external). Don't create a separate postgres service unless using `--profile standalone`.
 6. **No ORM models**: Backend uses raw SQL with `text()` from SQLAlchemy. All queries go through `db.execute(text("..."), params).mappings()`.
+7. **PATCH allowlist**: PATCH endpoints must validate column names against an explicit allowlist. Field names in Pydantic update models must match DB column names exactly.
+8. **Demo data convention**: All demo records use `DEMO-` prefix in code/number fields. Never mix demo data with real data. Use `goreos_unseed_demo_ciclo2.sql` to clean.
+9. **DGI indicator refresh**: Run `POST /api/dgi/data/indicators/refresh` to recompute semaphore values from real data. Idempotent. TDE dimension has no real data source yet.
+10. **Report section edits**: Stored atomically in `metadata` JSONB using `jsonb_set` (not read-modify-write). Auto-populated content is regenerated on each GET; only user edits persist.
