@@ -145,3 +145,38 @@ class CockpitTD(BaseModel):
     kb_stats: dict
     committee: CommitteeSessionItem | None
     normative_alerts: list[dict]
+
+
+# ---------------------------------------------------------------------------
+# Report content (auto-populated sections)
+# ---------------------------------------------------------------------------
+class ReportContentSection(BaseModel):
+    section_id: str
+    title: str
+    content: str
+    auto_populated: bool
+    last_edited_at: datetime | None = None
+
+
+class ReportContent(BaseModel):
+    id: UUID
+    code: str | None
+    title: str
+    report_type: str
+    status: str
+    period_start: date | None
+    period_end: date | None
+    sections: list[ReportContentSection]
+
+
+class ReportCreate(BaseModel):
+    title: str
+    report_type: str  # FLASH, SEMANAL, MENSUAL, TEMATICO
+    period_start: date | None = None
+    period_end: date | None = None
+    recipient: str | None = None
+
+
+class ReportSectionUpdate(BaseModel):
+    section_id: str
+    content: str

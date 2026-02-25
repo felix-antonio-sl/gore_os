@@ -1,0 +1,438 @@
+import math
+from fastapi import APIRouter, Depends, Query, HTTPException, status
+from uuid import UUID
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
+
+from app.core.deps import CurrentUser
+from app.core.database import get_db
+from app.schemas.common import PaginatedResponse
+from app.schemas.convenio import (
+    ConvenioListItem,
+    ConvenioDetail,
+    ConvenioCreate,
+    ConvenioUpdate,
+    InstallmentItem,
+    InstallmentCreate,
+    InstallmentUpdate,
+)
+
+router = APIRouter(prefix="/api/convenios", tags=["convenios"])
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+async def _get_convenio_or_404(convenio_id: UUID, db: AsyncSession) -> dict:
+    result = await db.execute(
+        text("""
+            SELECT
+                a.id,
+                a.agreement_number,
+                a.ipr_id,
+                a.total_amount,
+                a.signed_at,
+                a.valid_from,
+                a.valid_to,
+                a.created_at,
+                at_cat.code   AS agreement_type,
+                at_cat.label  AS agreement_type_label,
+                st_cat.code   AS state,
+                st_cat.label  AS state_label,
+                ipr.codigo_bip AS ipr_codigo_bip,
+                ipr.name       AS ipr_name,
+                org_g.name     AS giver_name,
+                org_r.name     AS receiver_name,
+                CASE
+                    WHEN st_cat.code = 'VIGENTE' AND a.valid_to IS NOT NULL
+                    THEN EXTRACT(DAY FROM a.valid_to - NOW())::int
+                    ELSE NULL
+                END             AS days_to_expiry,
+                (p.names || ' ' || p.paternal_surname) AS technical_referent_name,
+                cgr_cat.code   AS cgr_outcome,
+                cgr_cat.label  AS cgr_outcome_label
+            FROM core.agreement a
+            JOIN ref.category at_cat ON at_cat.id = a.agreement_type_id
+            JOIN ref.category st_cat ON st_cat.id = a.state_id
+            LEFT JOIN core.ipr ipr ON ipr.id = a.ipr_id
+            LEFT JOIN core.organization org_g ON org_g.id = a.giver_id
+            LEFT JOIN core.organization org_r ON org_r.id = a.receiver_id
+            LEFT JOIN core.person p ON p.id = a.technical_referent_id
+            LEFT JOIN ref.category cgr_cat ON cgr_cat.id = a.cgr_outcome_id
+            WHERE a.id = :id AND a.deleted_at IS NULL
+        """),
+        {"id": str(convenio_id)},
+    )
+    row = result.mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Convenio no encontrado")
+    return dict(row)
+
+
+async def _get_installments(convenio_id: UUID, db: AsyncSession) -> list[dict]:
+    result = await db.execute(
+        text("""
+            SELECT
+                ai.id,
+                ai.installment_number,
+                ai.amount,
+                ai.due_date,
+                ai.paid_at,
+                ai.paid_amount,
+                ai.payment_reference,
+                ps.code   AS payment_status,
+                ps.label  AS payment_status_label
+            FROM core.agreement_installment ai
+            JOIN ref.category ps ON ps.id = ai.payment_status_id
+            WHERE ai.agreement_id = :aid AND ai.deleted_at IS NULL
+            ORDER BY ai.installment_number ASC
+        """),
+        {"aid": str(convenio_id)},
+    )
+    return [dict(r) for r in result.mappings().all()]
+
+
+async def _next_agreement_number(db: AsyncSession) -> str:
+    from datetime import date
+    year = date.today().year
+    result = await db.execute(
+        text("""
+            SELECT COUNT(*) AS cnt
+            FROM core.agreement
+            WHERE agreement_number LIKE :pattern AND deleted_at IS NULL
+        """),
+        {"pattern": f"AGR-{year}-%"},
+    )
+    cnt = result.scalar() or 0
+    return f"AGR-{year}-{cnt + 1:05d}"
+
+
+# ---------------------------------------------------------------------------
+# GET /api/convenios — List (paginated, filtered)
+# ---------------------------------------------------------------------------
+
+@router.get("", response_model=PaginatedResponse)
+async def list_convenios(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+    state: str | None = None,
+    agreement_type: str | None = None,
+    ipr_id: UUID | None = None,
+    search: str | None = None,
+):
+    params: dict = {}
+    conditions = ["a.deleted_at IS NULL"]
+
+    if state:
+        conditions.append("st_cat.code = :state")
+        params["state"] = state
+
+    if agreement_type:
+        conditions.append("at_cat.code = :agreement_type")
+        params["agreement_type"] = agreement_type
+
+    if ipr_id:
+        conditions.append("a.ipr_id = :ipr_id")
+        params["ipr_id"] = str(ipr_id)
+
+    if search:
+        conditions.append("(a.agreement_number ILIKE :search OR ipr.codigo_bip ILIKE :search OR ipr.name ILIKE :search)")
+        params["search"] = f"%{search}%"
+
+    where_clause = " AND ".join(conditions)
+
+    base_query = f"""
+        FROM core.agreement a
+        JOIN ref.category at_cat ON at_cat.id = a.agreement_type_id
+        JOIN ref.category st_cat ON st_cat.id = a.state_id
+        LEFT JOIN core.ipr ipr ON ipr.id = a.ipr_id
+        LEFT JOIN core.organization org_g ON org_g.id = a.giver_id
+        LEFT JOIN core.organization org_r ON org_r.id = a.receiver_id
+        WHERE {where_clause}
+    """
+
+    count_result = await db.execute(text(f"SELECT COUNT(*) AS total {base_query}"), params)
+    total = count_result.scalar() or 0
+
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows_result = await db.execute(
+        text(f"""
+            SELECT
+                a.id,
+                a.agreement_number,
+                a.ipr_id,
+                a.total_amount,
+                a.signed_at,
+                a.valid_from,
+                a.valid_to,
+                at_cat.code   AS agreement_type,
+                at_cat.label  AS agreement_type_label,
+                st_cat.code   AS state,
+                st_cat.label  AS state_label,
+                ipr.codigo_bip AS ipr_codigo_bip,
+                ipr.name       AS ipr_name,
+                org_g.name     AS giver_name,
+                org_r.name     AS receiver_name,
+                CASE
+                    WHEN st_cat.code = 'VIGENTE' AND a.valid_to IS NOT NULL
+                    THEN EXTRACT(DAY FROM a.valid_to - NOW())::int
+                    ELSE NULL
+                END AS days_to_expiry,
+                (SELECT COUNT(*) FROM core.agreement_installment ai WHERE ai.agreement_id = a.id AND ai.deleted_at IS NULL) AS installment_count,
+                (SELECT COUNT(*) FROM core.agreement_installment ai JOIN ref.category ps ON ps.id = ai.payment_status_id WHERE ai.agreement_id = a.id AND ps.code = 'PAGADO' AND ai.deleted_at IS NULL) AS paid_installments
+            {base_query}
+            ORDER BY
+                CASE st_cat.code
+                    WHEN 'VIGENTE' THEN 1
+                    WHEN 'EN_MODIFICACION' THEN 2
+                    WHEN 'FIRMADO_CONTRAPARTE' THEN 3
+                    WHEN 'FIRMADO_GORE' THEN 4
+                    ELSE 5
+                END ASC,
+                a.valid_to ASC NULLS LAST
+            LIMIT :limit OFFSET :offset
+        """),
+        params,
+    )
+    rows = rows_result.mappings().all()
+
+    items = [
+        ConvenioListItem(
+            id=r["id"],
+            agreement_number=r["agreement_number"],
+            agreement_type=r["agreement_type"],
+            agreement_type_label=r["agreement_type_label"],
+            state=r["state"],
+            state_label=r["state_label"],
+            ipr_id=r["ipr_id"],
+            ipr_codigo_bip=r["ipr_codigo_bip"],
+            ipr_name=r["ipr_name"],
+            giver_name=r["giver_name"],
+            receiver_name=r["receiver_name"],
+            total_amount=r["total_amount"],
+            signed_at=r["signed_at"],
+            valid_from=r["valid_from"],
+            valid_to=r["valid_to"],
+            days_to_expiry=r["days_to_expiry"],
+            installment_count=r["installment_count"] or 0,
+            paid_installments=r["paid_installments"] or 0,
+        )
+        for r in rows
+    ]
+
+    return PaginatedResponse(
+        items=items,
+        total=total,
+        page=page,
+        page_size=page_size,
+        total_pages=math.ceil(total / page_size) if total > 0 else 0,
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /api/convenios/{id} — Detail with installments
+# ---------------------------------------------------------------------------
+
+@router.get("/{convenio_id}", response_model=ConvenioDetail)
+async def get_convenio(
+    convenio_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    row = await _get_convenio_or_404(convenio_id, db)
+    installments_raw = await _get_installments(convenio_id, db)
+
+    # Installment counts for list fields
+    installments = [InstallmentItem(**r) for r in installments_raw]
+    installment_count = len(installments)
+    paid_installments = sum(1 for i in installments if i.payment_status == "PAGADO")
+
+    return ConvenioDetail(
+        **row,
+        installment_count=installment_count,
+        paid_installments=paid_installments,
+        installments=installments,
+    )
+
+
+# ---------------------------------------------------------------------------
+# POST /api/convenios — Create
+# ---------------------------------------------------------------------------
+
+@router.post("", status_code=status.HTTP_201_CREATED)
+async def create_convenio(
+    body: ConvenioCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    agreement_number = body.agreement_number or await _next_agreement_number(db)
+
+    result = await db.execute(
+        text("""
+            INSERT INTO core.agreement (
+                agreement_number, agreement_type_id, state_id,
+                ipr_id, giver_id, receiver_id,
+                total_amount, signed_at, valid_from, valid_to,
+                created_by_id, created_at, updated_at
+            ) VALUES (
+                :agreement_number, :agreement_type_id, :state_id,
+                :ipr_id, :giver_id, :receiver_id,
+                :total_amount, :signed_at, :valid_from, :valid_to,
+                :created_by_id, NOW(), NOW()
+            )
+            RETURNING id, agreement_number
+        """),
+        {
+            "agreement_number": agreement_number,
+            "agreement_type_id": str(body.agreement_type_id),
+            "state_id": str(body.state_id),
+            "ipr_id": str(body.ipr_id) if body.ipr_id else None,
+            "giver_id": str(body.giver_id) if body.giver_id else None,
+            "receiver_id": str(body.receiver_id) if body.receiver_id else None,
+            "total_amount": body.total_amount,
+            "signed_at": body.signed_at,
+            "valid_from": body.valid_from,
+            "valid_to": body.valid_to,
+            "created_by_id": str(user["id"]),
+        },
+    )
+    await db.commit()
+    row = result.mappings().first()
+    return {"id": row["id"], "agreement_number": row["agreement_number"]}
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/convenios/{id} — Update
+# ---------------------------------------------------------------------------
+
+@router.patch("/{convenio_id}")
+async def update_convenio(
+    convenio_id: UUID,
+    body: ConvenioUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    await _get_convenio_or_404(convenio_id, db)
+
+    updates = body.model_dump(exclude_none=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    # Convert UUIDs to string
+    for k in ["state_id", "cgr_outcome_id"]:
+        if k in updates:
+            updates[k] = str(updates[k])
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(convenio_id)
+    updates["updated_by_id"] = str(user["id"])
+
+    await db.execute(
+        text(f"UPDATE core.agreement SET {set_clauses}, updated_at = NOW(), updated_by_id = :updated_by_id WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+    return {"message": "Actualizado correctamente"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/convenios/{id}/cuotas — List installments
+# ---------------------------------------------------------------------------
+
+@router.get("/{convenio_id}/cuotas", response_model=list[InstallmentItem])
+async def list_cuotas(
+    convenio_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    await _get_convenio_or_404(convenio_id, db)
+    installments_raw = await _get_installments(convenio_id, db)
+    return [InstallmentItem(**r) for r in installments_raw]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/convenios/{id}/cuotas — Add installment
+# ---------------------------------------------------------------------------
+
+@router.post("/{convenio_id}/cuotas", status_code=status.HTTP_201_CREATED)
+async def add_cuota(
+    convenio_id: UUID,
+    body: InstallmentCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    await _get_convenio_or_404(convenio_id, db)
+
+    # Check unique installment_number
+    dup = await db.execute(
+        text("SELECT 1 FROM core.agreement_installment WHERE agreement_id = :aid AND installment_number = :num AND deleted_at IS NULL"),
+        {"aid": str(convenio_id), "num": body.installment_number},
+    )
+    if dup.scalar():
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe una cuota con ese número")
+
+    result = await db.execute(
+        text("""
+            INSERT INTO core.agreement_installment (
+                agreement_id, installment_number, amount, due_date, payment_status_id,
+                created_at, updated_at
+            ) VALUES (
+                :agreement_id, :installment_number, :amount, :due_date, :payment_status_id,
+                NOW(), NOW()
+            )
+            RETURNING id
+        """),
+        {
+            "agreement_id": str(convenio_id),
+            "installment_number": body.installment_number,
+            "amount": body.amount,
+            "due_date": body.due_date,
+            "payment_status_id": str(body.payment_status_id),
+        },
+    )
+    await db.commit()
+    row = result.mappings().first()
+    return {"id": row["id"]}
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/convenios/{id}/cuotas/{cuota_id} — Update installment
+# ---------------------------------------------------------------------------
+
+@router.patch("/{convenio_id}/cuotas/{cuota_id}")
+async def update_cuota(
+    convenio_id: UUID,
+    cuota_id: UUID,
+    body: InstallmentUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    # Verify cuota belongs to convenio
+    check = await db.execute(
+        text("SELECT 1 FROM core.agreement_installment WHERE id = :id AND agreement_id = :aid AND deleted_at IS NULL"),
+        {"id": str(cuota_id), "aid": str(convenio_id)},
+    )
+    if not check.scalar():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cuota no encontrada")
+
+    updates = body.model_dump(exclude_none=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    if "payment_status_id" in updates:
+        updates["payment_status_id"] = str(updates["payment_status_id"])
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(cuota_id)
+
+    await db.execute(
+        text(f"UPDATE core.agreement_installment SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+    return {"message": "Cuota actualizada"}

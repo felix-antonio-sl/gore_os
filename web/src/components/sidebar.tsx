@@ -12,6 +12,8 @@ import {
   KanbanSquare,
   Database,
   FileText,
+  Wallet,
+  Handshake,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Separator } from "@/components/ui/separator";
@@ -29,6 +31,8 @@ const operationalNav: NavItem[] = [
   { label: "Compromisos", href: "/compromisos", icon: <CheckSquare className="size-4" /> },
   { label: "Problemas", href: "/problemas", icon: <AlertTriangle className="size-4" /> },
   { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
+  { label: "Presupuesto", href: "/presupuesto", icon: <Wallet className="size-4" /> },
+  { label: "Convenios", href: "/convenios", icon: <Handshake className="size-4" /> },
 ];
 
 const adminOnlyNav: NavItem[] = [

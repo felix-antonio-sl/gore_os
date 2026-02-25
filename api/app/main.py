@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
 from app.routers import auth, ipr, compromisos, problemas, alertas, dashboard, catalogs
 from app.routers import dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports
+from app.routers import presupuesto, convenios
 
 settings = get_settings()
 
@@ -34,6 +35,8 @@ def create_app() -> FastAPI:
     app.include_router(dgi_initiatives.router)
     app.include_router(dgi_data.router)
     app.include_router(dgi_reports.router)
+    app.include_router(presupuesto.router)
+    app.include_router(convenios.router)
 
     @app.get("/api/health")
     async def health():

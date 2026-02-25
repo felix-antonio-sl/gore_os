@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem } from "@/types";
+import type { PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem, ConvenioListItem } from "@/types";
 
 interface IprDetail {
   id: string;
@@ -76,6 +76,9 @@ export default function IprDetailPage() {
   const [alertas, setAlertas] = useState<PaginatedResponse<AlertaListItem> | null>(null);
   const [alertLoading, setAlertLoading] = useState(false);
 
+  const [convenios, setConvenios] = useState<PaginatedResponse<ConvenioListItem> | null>(null);
+  const [convLoading, setConvLoading] = useState(false);
+
   useEffect(() => {
     api
       .get<IprDetail>(`/api/ipr/${id}`)
@@ -112,6 +115,16 @@ export default function IprDetailPage() {
       .then(setAlertas)
       .catch(() => setAlertas(null))
       .finally(() => setAlertLoading(false));
+  };
+
+  const loadConvenios = () => {
+    if (convenios) return;
+    setConvLoading(true);
+    api
+      .get<PaginatedResponse<ConvenioListItem>>(`/api/convenios?ipr_id=${id}&page_size=50`)
+      .then(setConvenios)
+      .catch(() => setConvenios(null))
+      .finally(() => setConvLoading(false));
   };
 
   const compromisoColumns = [
@@ -249,6 +262,7 @@ export default function IprDetailPage() {
         if (tab === "compromisos") loadCompromisos();
         if (tab === "problemas") loadProblemas();
         if (tab === "alertas") loadAlertas();
+        if (tab === "convenios") loadConvenios();
       }}>
         <TabsList>
           <TabsTrigger value="compromisos" onClick={loadCompromisos}>
@@ -259,6 +273,9 @@ export default function IprDetailPage() {
           </TabsTrigger>
           <TabsTrigger value="alertas" onClick={loadAlertas}>
             Alertas
+          </TabsTrigger>
+          <TabsTrigger value="convenios" onClick={loadConvenios}>
+            Convenios
           </TabsTrigger>
         </TabsList>
 
@@ -301,6 +318,61 @@ export default function IprDetailPage() {
                 <AlertCard key={alert.id} alert={alert} />
               ))}
             </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="convenios" className="mt-4">
+          {convLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          ) : !convenios || convenios.items.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No hay convenios para este IPR.</p>
+          ) : (
+            <DataTable
+              columns={[
+                {
+                  key: "agreement_number",
+                  label: "N° Convenio",
+                  render: (v: unknown) => <span className="font-mono text-xs">{String(v ?? "-")}</span>,
+                },
+                {
+                  key: "agreement_type_label",
+                  label: "Tipo",
+                  render: (v: unknown) => <Badge variant="outline" className="text-xs">{String(v ?? "-")}</Badge>,
+                },
+                {
+                  key: "total_amount",
+                  label: "Monto",
+                  render: (v: unknown) => (
+                    <span className="font-mono text-xs tabular-nums">
+                      {v != null ? new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", notation: "compact", maximumFractionDigits: 1 }).format(Number(v)) : "-"}
+                    </span>
+                  ),
+                },
+                {
+                  key: "state",
+                  label: "Estado",
+                  render: (v: unknown) => <StatusBadge status={String(v ?? "")} size="sm" />,
+                },
+                {
+                  key: "installment_count",
+                  label: "Cuotas",
+                  render: (_: unknown, row: unknown) => {
+                    const r = row as ConvenioListItem;
+                    return <span className="text-xs">{r.paid_installments}/{r.installment_count}</span>;
+                  },
+                },
+              ]}
+              data={convenios.items}
+              page={1}
+              totalPages={1}
+              total={convenios.total}
+              onPageChange={() => {}}
+              isLoading={convLoading}
+            />
           )}
         </TabsContent>
       </Tabs>

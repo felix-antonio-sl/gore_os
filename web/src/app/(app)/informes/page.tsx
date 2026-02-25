@@ -17,10 +17,33 @@ import {
   CheckCircle2,
   Clock,
   AlertCircle,
-  ChevronRight,
+  Save,
+  X,
+  Plus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { DGIReport } from "@/types";
+
+// ---------------------------------------------------------------------------
+// Local types for report content
+// ---------------------------------------------------------------------------
+interface ReportContentSection {
+  section_id: string;
+  title: string;
+  content: string;
+  auto_populated: boolean;
+  last_edited_at: string | null;
+}
+
+interface ReportContent {
+  id: string;
+  title: string;
+  report_type: string;
+  status: string;
+  period_start: string | null;
+  period_end: string | null;
+  sections: ReportContentSection[];
+}
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -69,21 +92,6 @@ const reportStatusLabels: Record<string, string> = {
 // Mock draft report (in-progress informe)
 // ---------------------------------------------------------------------------
 
-interface ReportSection {
-  id: string;
-  title: string;
-  status: "auto" | "pending";
-}
-
-const DRAFT_SECTIONS: ReportSection[] = [
-  { id: "resumen", title: "Resumen ejecutivo", status: "auto" },
-  { id: "tabla_ind", title: "Tabla indicadores", status: "auto" },
-  { id: "alertas", title: "Alertas activas", status: "auto" },
-  { id: "avance_dgi", title: "Avance iniciativas DGI", status: "auto" },
-  { id: "decisiones", title: "Decisiones requeridas AR", status: "pending" },
-  { id: "prioridades", title: "Prioridades próxima semana", status: "pending" },
-];
-
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -130,20 +138,55 @@ function ReportStatusBadge({ status }: { status: string }) {
 }
 
 // ---------------------------------------------------------------------------
-// In-progress draft card
+// In-progress draft card — data-driven
 // ---------------------------------------------------------------------------
 
-function DraftReportCard() {
-  const handlePreview = () => {
-    alert("Previsualizar PDF — Próximamente disponible");
+function DraftReportCardLive({ report }: { report: DGIReport }) {
+  const [content, setContent] = useState<ReportContent | null>(null);
+  const [contentLoading, setContentLoading] = useState(true);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editText, setEditText] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setContentLoading(true);
+    api
+      .get<ReportContent>(`/api/dgi/reports/${report.id}/content`)
+      .then(setContent)
+      .catch(() => setContent(null))
+      .finally(() => setContentLoading(false));
+  }, [report.id]);
+
+  const startEdit = (section: ReportContentSection) => {
+    setEditingId(section.section_id);
+    setEditText(section.content);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditText("");
+  };
+
+  const saveEdit = async (sectionId: string) => {
+    setSaving(true);
+    try {
+      await api.patch(`/api/dgi/reports/${report.id}`, {
+        section_id: sectionId,
+        content: editText,
+      });
+      // Refresh content
+      const updated = await api.get<ReportContent>(`/api/dgi/reports/${report.id}/content`);
+      setContent(updated);
+      setEditingId(null);
+    } catch {
+      // keep editing open on error
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleExport = () => {
-    alert("Exportar Informe — Próximamente disponible");
-  };
-
-  const handleEdit = (sectionTitle: string) => {
-    alert(`Editar sección "${sectionTitle}" — Próximamente disponible`);
+    window.open(`/api/dgi/reports/${report.id}/export`, "_blank");
   };
 
   return (
@@ -152,35 +195,25 @@ function DraftReportCard() {
         <div className="flex items-start justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-blue-100 text-blue-700 border-blue-200 font-semibold">
-                Semanal
-              </Badge>
-              <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-gray-100 text-gray-600 border-gray-200">
-                Borrador
-              </Badge>
+              <ReportTypeBadge type={report.report_type} />
+              <ReportStatusBadge status={report.status} />
             </div>
-            <CardTitle className="text-base leading-tight">Informe Semanal S09</CardTitle>
-            <p className="text-xs text-muted-foreground">
-              Período: 24-Feb a 28-Feb 2026
-            </p>
+            <CardTitle className="text-base leading-tight">{report.title}</CardTitle>
+            {(report.period_start || report.period_end) && (
+              <p className="text-xs text-muted-foreground">
+                Período: {formatDate(report.period_start)} → {formatDate(report.period_end)}
+              </p>
+            )}
           </div>
           <div className="flex gap-2 shrink-0">
             <Button
+              size="sm"
               variant="outline"
-              size="sm"
-              className="h-8 text-xs gap-1.5"
-              onClick={handlePreview}
-            >
-              <Eye className="size-3.5" />
-              Previsualizar PDF
-            </Button>
-            <Button
-              size="sm"
               className="h-8 text-xs gap-1.5"
               onClick={handleExport}
             >
               <Download className="size-3.5" />
-              Exportar
+              Exportar JSON
             </Button>
           </div>
         </div>
@@ -190,47 +223,138 @@ function DraftReportCard() {
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
           Secciones del informe
         </p>
-        <div className="space-y-1.5">
-          {DRAFT_SECTIONS.map((section) => (
-            <div
-              key={section.id}
-              className="flex items-center justify-between rounded-md border bg-background px-3 py-2"
-            >
-              <div className="flex items-center gap-2.5">
-                {section.status === "auto" ? (
-                  <CheckCircle2 className="size-4 text-green-600 shrink-0" />
+        {contentLoading ? (
+          <div className="space-y-2">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-10 rounded bg-muted animate-pulse" />
+            ))}
+          </div>
+        ) : content ? (
+          <div className="space-y-1.5">
+            {content.sections.map((section) => (
+              <div key={section.section_id} className="rounded-md border bg-background">
+                {editingId === section.section_id ? (
+                  <div className="p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">{section.title}</span>
+                      <div className="flex gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-6"
+                          onClick={cancelEdit}
+                          disabled={saving}
+                        >
+                          <X className="size-3.5" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          className="size-6"
+                          onClick={() => saveEdit(section.section_id)}
+                          disabled={saving}
+                        >
+                          <Save className="size-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                    <textarea
+                      className="w-full text-xs font-mono rounded border bg-muted/30 p-2 resize-y min-h-[120px] focus:outline-none focus:ring-1 focus:ring-ring"
+                      value={editText}
+                      onChange={(e) => setEditText(e.target.value)}
+                    />
+                  </div>
                 ) : (
-                  <Clock className="size-4 text-amber-500 shrink-0" />
+                  <div className="flex items-start justify-between px-3 py-2 gap-2">
+                    <div className="flex items-start gap-2.5 min-w-0">
+                      {section.auto_populated ? (
+                        <CheckCircle2 className="size-4 text-green-600 shrink-0 mt-0.5" />
+                      ) : (
+                        <Edit2 className="size-4 text-blue-500 shrink-0 mt-0.5" />
+                      )}
+                      <div className="min-w-0">
+                        <p className="text-sm">{section.title}</p>
+                        <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                          {section.content.split("\n")[0]}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <Badge
+                        variant="outline"
+                        className={cn(
+                          "text-[10px] px-1.5 py-0",
+                          section.auto_populated
+                            ? "bg-green-50 text-green-700 border-green-200"
+                            : "bg-blue-50 text-blue-700 border-blue-200"
+                        )}
+                      >
+                        {section.auto_populated ? "Auto-poblado" : "Editado"}
+                      </Badge>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-6 text-muted-foreground hover:text-foreground"
+                        onClick={() => startEdit(section)}
+                      >
+                        <Edit2 className="size-3.5" />
+                      </Button>
+                    </div>
+                  </div>
                 )}
-                <span className="text-sm">{section.title}</span>
               </div>
-              <div className="flex items-center gap-2">
-                {section.status === "auto" ? (
-                  <>
-                    <Badge
-                      variant="outline"
-                      className="text-[10px] px-1.5 py-0 bg-green-50 text-green-700 border-green-200"
-                    >
-                      Auto-poblado
-                    </Badge>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="size-6 text-muted-foreground hover:text-foreground"
-                      onClick={() => handleEdit(section.title)}
-                    >
-                      <Edit2 className="size-3.5" />
-                    </Button>
-                  </>
-                ) : (
-                  <span className="text-xs text-muted-foreground italic">— Pendiente —</span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">No se pudo cargar el contenido del informe.</p>
+        )}
       </CardContent>
     </Card>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Create report button (when no draft exists)
+// ---------------------------------------------------------------------------
+
+function CreateReportButton({ onCreated }: { onCreated: () => void }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleCreate = async () => {
+    setLoading(true);
+    try {
+      const today = new Date();
+      const weekNum = Math.ceil((today.getDate() - today.getDay() + 1) / 7);
+      const monday = new Date(today);
+      monday.setDate(today.getDate() - today.getDay() + 1);
+      const friday = new Date(monday);
+      friday.setDate(monday.getDate() + 4);
+
+      await api.post("/api/dgi/reports", {
+        title: `Informe Semanal S${String(weekNum).padStart(2, "0")} ${today.getFullYear()}`,
+        report_type: "SEMANAL",
+        period_start: monday.toISOString().split("T")[0],
+        period_end: friday.toISOString().split("T")[0],
+      });
+      onCreated();
+    } catch {
+      // silently fail
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-3 rounded-lg border border-dashed border-blue-300 bg-blue-50/20 px-4 py-3">
+      <FileText className="size-5 text-blue-400 shrink-0" />
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium">Sin informe en curso esta semana</p>
+        <p className="text-xs text-muted-foreground">Crea el informe semanal para comenzar a completar las secciones.</p>
+      </div>
+      <Button size="sm" className="shrink-0 gap-1.5" onClick={handleCreate} disabled={loading}>
+        <Plus className="size-3.5" />
+        Crear Informe
+      </Button>
+    </div>
   );
 }
 
@@ -332,6 +456,7 @@ export default function InformesPage() {
   const [reports, setReports] = useState<DGIReport[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedReport, setSelectedReport] = useState<DGIReport | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   // URL helpers
   const buildUrl = useCallback(
@@ -359,18 +484,19 @@ export default function InformesPage() {
 
   // Fetch reports
   useEffect(() => {
-    setIsLoading(true);
     const params = new URLSearchParams();
     params.set("page", String(page));
     params.set("page_size", "20");
     if (activeType !== "ALL") params.set("report_type", activeType);
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsLoading(true);
     api
       .get<DGIReport[]>(`/api/dgi/reports?${params.toString()}`)
       .then(setReports)
       .catch(() => setReports(null))
       .finally(() => setIsLoading(false));
-  }, [activeType, page]);
+  }, [activeType, page, refreshKey]);
 
   // Detect draft report
   const draftReport = reports?.find((r) => r.status === "BORRADOR") ?? null;
@@ -481,7 +607,11 @@ export default function InformesPage() {
                 Semana actual
               </Badge>
             </div>
-            <DraftReportCard />
+            {draftReport ? (
+              <DraftReportCardLive report={draftReport} />
+            ) : (
+              <CreateReportButton onCreated={() => setRefreshKey((k) => k + 1)} />
+            )}
           </section>
 
           <Separator />

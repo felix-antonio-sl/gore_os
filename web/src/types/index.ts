@@ -137,6 +137,106 @@ export interface HistoryEntry {
 }
 
 // ---------------------------------------------------------------------------
+// Presupuesto Types
+// ---------------------------------------------------------------------------
+export interface PresupuestoListItem {
+  id: string;
+  code: string;
+  name: string;
+  fiscal_year: number;
+  division_id: string | null;
+  division_name: string | null;
+  subtitle_label: string | null;
+  program_type_label: string | null;
+  initial_amount: number;
+  current_amount: number | null;
+  committed_amount: number;
+  accrued_amount: number;
+  paid_amount: number;
+  execution_pct: number;
+}
+
+export interface CarryoverItem {
+  id: string;
+  fiscal_year: number;
+  amount: number;
+}
+
+export interface BudgetCommitmentItem {
+  id: string;
+  commitment_number: string;
+  amount: number;
+  issued_at: string;
+  expires_at: string | null;
+  status_label: string | null;
+  ipr_codigo_bip: string | null;
+}
+
+export interface PresupuestoDetail extends PresupuestoListItem {
+  item_label: string | null;
+  allocation_label: string | null;
+  fndr_amount: number | null;
+  sectorial_amount: number | null;
+  created_at: string;
+  carryovers: CarryoverItem[];
+  budget_commitments: BudgetCommitmentItem[];
+}
+
+export interface PresupuestoResumen {
+  group_key: string;
+  group_label: string;
+  initial_amount: number;
+  current_amount: number;
+  paid_amount: number;
+  execution_pct: number;
+  program_count: number;
+}
+
+// ---------------------------------------------------------------------------
+// Convenios Types
+// ---------------------------------------------------------------------------
+export interface InstallmentItem {
+  id: string;
+  installment_number: number;
+  amount: number;
+  due_date: string;
+  payment_status: string;
+  payment_status_label: string;
+  paid_at: string | null;
+  paid_amount: number | null;
+  payment_reference: string | null;
+}
+
+export interface ConvenioListItem {
+  id: string;
+  agreement_number: string | null;
+  agreement_type: string;
+  agreement_type_label: string;
+  state: string;
+  state_label: string;
+  ipr_id: string | null;
+  ipr_codigo_bip: string | null;
+  ipr_name: string | null;
+  giver_name: string | null;
+  receiver_name: string | null;
+  total_amount: number | null;
+  signed_at: string | null;
+  valid_from: string | null;
+  valid_to: string | null;
+  days_to_expiry: number | null;
+  installment_count: number;
+  paid_installments: number;
+}
+
+export interface ConvenioDetail extends ConvenioListItem {
+  technical_referent_name: string | null;
+  cgr_outcome: string | null;
+  cgr_outcome_label: string | null;
+  created_at: string;
+  installments: InstallmentItem[];
+}
+
+// ---------------------------------------------------------------------------
 // DGI Types
 // ---------------------------------------------------------------------------
 export interface DGIIndicator {

@@ -11,6 +11,140 @@ router = APIRouter(prefix="/api/dgi/data", tags=["dgi"])
 
 
 # ---------------------------------------------------------------------------
+# Helpers: computar aggregates reales por dimensión
+# ---------------------------------------------------------------------------
+
+async def _compute_presupuesto(db: AsyncSession) -> dict:
+    """Ejecución presupuestaria: paid/current del año fiscal actual."""
+    row = (await db.execute(text("""
+        SELECT
+            COALESCE(ROUND(SUM(paid_amount)::numeric / NULLIF(SUM(current_amount), 0)::numeric * 100, 1), 0) AS exec_pct,
+            COALESCE(SUM(initial_amount), 0) AS total_initial,
+            COALESCE(SUM(paid_amount), 0)    AS total_paid
+        FROM core.budget_program
+        WHERE fiscal_year = EXTRACT(YEAR FROM CURRENT_DATE) AND deleted_at IS NULL
+    """))).mappings().first()
+    pct = float(row["exec_pct"] or 0)
+    signal = "VERDE" if pct >= 70 else ("AMARILLO" if pct >= 40 else "ROJO")
+    return {"value": pct, "signal": signal, "unit": "PERCENT"}
+
+
+async def _compute_cartera_ipr(db: AsyncSession) -> dict:
+    """% IPRs con alerta CRITICO activa."""
+    row = (await db.execute(text("""
+        SELECT
+            COUNT(DISTINCT i.id)                                              AS total_ipr,
+            COUNT(DISTINCT a.subject_id)
+                FILTER (WHERE sev.code = 'CRITICO' AND a.resolved_at IS NULL) AS critical_ipr
+        FROM core.ipr i
+        LEFT JOIN core.alert a ON a.subject_type = 'core.ipr' AND a.subject_id = i.id AND a.deleted_at IS NULL
+        LEFT JOIN ref.category sev ON sev.id = a.severity_id
+        WHERE i.deleted_at IS NULL
+    """))).mappings().first()
+    total = int(row["total_ipr"] or 0)
+    critical = int(row["critical_ipr"] or 0)
+    pct = round(critical / total * 100, 1) if total > 0 else 0.0
+    signal = "VERDE" if pct < 5 else ("AMARILLO" if pct < 15 else "ROJO")
+    return {"value": pct, "signal": signal, "unit": "PERCENT", "total": total, "critical": critical}
+
+
+async def _compute_convenios(db: AsyncSession) -> dict:
+    """% convenios vencidos sobre el total activo."""
+    row = (await db.execute(text("""
+        SELECT
+            SUM(CASE WHEN st.code = 'VIGENTE'  THEN 1 ELSE 0 END) AS vigentes,
+            SUM(CASE WHEN st.code = 'VENCIDO'  THEN 1 ELSE 0 END) AS vencidos,
+            SUM(CASE WHEN st.code = 'VIGENTE' AND a.valid_to < NOW() + INTERVAL '30 days' THEN 1 ELSE 0 END) AS por_vencer
+        FROM core.agreement a
+        JOIN ref.category st ON st.id = a.state_id
+        WHERE a.deleted_at IS NULL
+    """))).mappings().first()
+    vigentes = int(row["vigentes"] or 0)
+    vencidos = int(row["vencidos"] or 0)
+    total = vigentes + vencidos
+    pct = round(vencidos / total * 100, 1) if total > 0 else 0.0
+    signal = "VERDE" if pct < 5 else ("AMARILLO" if pct < 20 else "ROJO")
+    return {"value": pct, "signal": signal, "unit": "PERCENT", "vigentes": vigentes, "vencidos": vencidos}
+
+
+async def _compute_riesgos(db: AsyncSession) -> dict:
+    """Alertas no resueltas + problemas abiertos."""
+    row = (await db.execute(text("""
+        SELECT
+            (SELECT COUNT(*) FROM core.alert WHERE resolved_at IS NULL AND deleted_at IS NULL)        AS alertas,
+            (SELECT COUNT(*) FROM core.ipr_problem ip
+             JOIN ref.category ps ON ps.id = ip.state_id
+             WHERE ps.code IN ('ABIERTO', 'EN_GESTION') AND ip.deleted_at IS NULL)                   AS problemas
+    """))).mappings().first()
+    alertas = int(row["alertas"] or 0)
+    problemas = int(row["problemas"] or 0)
+    total = alertas + problemas
+    signal = "VERDE" if total < 5 else ("AMARILLO" if total < 15 else "ROJO")
+    return {"value": float(total), "signal": signal, "unit": "COUNT", "alertas": alertas, "problemas": problemas}
+
+
+async def _update_dimension_indicators(db: AsyncSession, dimension_code: str, new_value: float, signal_code: str) -> int:
+    """UPDATE todos los indicadores de una dimensión con el nuevo valor y señal."""
+    result = await db.execute(text("""
+        UPDATE core.dgi_indicator
+        SET
+            current_value    = :val,
+            signal_id        = (SELECT id FROM ref.category WHERE scheme = 'dgi_signal' AND code = :signal LIMIT 1),
+            last_updated_at  = NOW(),
+            updated_at       = NOW()
+        WHERE dimension_id = (
+            SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_dimension' AND code = :dim LIMIT 1
+        )
+        RETURNING id
+    """), {"val": new_value, "signal": signal_code, "dim": dimension_code})
+    return len(result.fetchall())
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/data/indicators/refresh — Recalcular indicadores desde BD real
+# ---------------------------------------------------------------------------
+
+@router.post("/indicators/refresh")
+async def refresh_indicators(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Recalcula y persiste los valores reales de los indicadores DGI desde la BD.
+    Dimensiones actualizadas: PRESUPUESTO, CARTERA_IPR, CONVENIOS, RIESGOS.
+    TDE se mantiene estático (sin fuente de datos real aún).
+    Idempotente: ejecutar N veces produce el mismo resultado.
+    """
+    results = {}
+
+    # PRESUPUESTO
+    ppto = await _compute_presupuesto(db)
+    n = await _update_dimension_indicators(db, "PRESUPUESTO", ppto["value"], ppto["signal"])
+    results["PRESUPUESTO"] = {**ppto, "updated_rows": n}
+
+    # CARTERA_IPR
+    ipr = await _compute_cartera_ipr(db)
+    n = await _update_dimension_indicators(db, "CARTERA_IPR", ipr["value"], ipr["signal"])
+    results["CARTERA_IPR"] = {**ipr, "updated_rows": n}
+
+    # CONVENIOS
+    conv = await _compute_convenios(db)
+    n = await _update_dimension_indicators(db, "CONVENIOS", conv["value"], conv["signal"])
+    results["CONVENIOS"] = {**conv, "updated_rows": n}
+
+    # RIESGOS
+    riesgos = await _compute_riesgos(db)
+    n = await _update_dimension_indicators(db, "RIESGOS", riesgos["value"], riesgos["signal"])
+    results["RIESGOS"] = {**riesgos, "updated_rows": n}
+
+    # TDE: no update (mantiene valores del seed)
+    results["TDE"] = {"note": "Sin fuente de datos real. Valores del seed se mantienen."}
+
+    await db.commit()
+    return {"status": "ok", "dimensions": results}
+
+
+# ---------------------------------------------------------------------------
 # GET /api/dgi/data/indicators — All indicators (with optional dimension filter)
 # ---------------------------------------------------------------------------
 @router.get("/indicators", response_model=list[IndicatorItem])

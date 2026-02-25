@@ -295,15 +295,66 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
         for r in trends_rows
     ]
 
-    # ── Work queue: hardcoded daily tasks from manual operacional ─────────
-    work_queue = [
-        {"priority": "ALTA", "task": "Revisar fuentes de datos vencidas", "status": "Pendiente", "deadline": "Hoy"},
-        {"priority": "ALTA", "task": "Actualizar indicadores PRESUPUESTO y CARTERA_IPR", "status": "En progreso", "deadline": "Hoy"},
-        {"priority": "ALTA", "task": "Revisar alertas CRITICO sin atender", "status": "Pendiente", "deadline": "Hoy"},
-        {"priority": "MEDIA", "task": "Generar borrador Informe Semanal", "status": "Pendiente", "deadline": "Viernes"},
-        {"priority": "MEDIA", "task": "Verificar coherencia BudgetCommitment vs SIGFE", "status": "Pendiente", "deadline": "Viernes"},
-        {"priority": "BAJA", "task": "Enviar reporte diario a Jefe DGI", "status": "Pendiente", "deadline": "17:00"},
-    ]
+    # ── Work queue: derivado de fuentes atrasadas + indicadores en alerta ──
+    work_queue = []
+
+    # Fuentes de datos atrasadas → tarea ALTA
+    overdue_sources = [s for s in data_sources if s.status in ("ATRASADO", "SIN_DATOS")]
+    if overdue_sources:
+        names = ", ".join(s.source_name for s in overdue_sources[:3])
+        work_queue.append({
+            "priority": "ALTA",
+            "task": f"Validar {len(overdue_sources)} fuente(s) con datos atrasados: {names}",
+            "status": "Pendiente",
+            "deadline": "Hoy",
+        })
+
+    # Indicadores ROJO → tarea ALTA
+    rojo_inds = [i for i in indicators_alert if i.signal == "ROJO"]
+    if rojo_inds:
+        names_ind = ", ".join(i.name for i in rojo_inds[:3])
+        work_queue.append({
+            "priority": "ALTA",
+            "task": f"Investigar {len(rojo_inds)} indicador(es) en ROJO: {names_ind}",
+            "status": "Pendiente",
+            "deadline": "Hoy",
+        })
+
+    # Indicadores AMARILLO → tarea MEDIA
+    amarillo_inds = [i for i in indicators_alert if i.signal == "AMARILLO"]
+    if amarillo_inds:
+        work_queue.append({
+            "priority": "MEDIA",
+            "task": f"Monitorear {len(amarillo_inds)} indicador(es) en AMARILLO",
+            "status": "En seguimiento",
+            "deadline": "Semana",
+        })
+
+    # Informe semanal pendiente → tarea MEDIA
+    report_check_sql = text("""
+        SELECT COUNT(*) AS pending
+        FROM core.dgi_report r
+        JOIN ref.category st ON st.id = r.status_id
+        JOIN ref.category rt ON rt.id = r.report_type_id
+        WHERE st.code = 'BORRADOR' AND rt.code = 'SEMANAL'
+    """)
+    report_check = (await db.execute(report_check_sql)).scalar() or 0
+    if report_check == 0:
+        work_queue.append({
+            "priority": "MEDIA",
+            "task": "Generar borrador Informe Semanal",
+            "status": "Pendiente",
+            "deadline": "Viernes",
+        })
+
+    # Si no hay nada urgente, agregar tarea base
+    if not work_queue:
+        work_queue.append({
+            "priority": "BAJA",
+            "task": "Revisar tablero de indicadores y preparar reporte diario",
+            "status": "Pendiente",
+            "deadline": "17:00",
+        })
 
     return CockpitControlGestion(
         data_sources=data_sources,
