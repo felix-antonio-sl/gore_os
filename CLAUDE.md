@@ -74,7 +74,7 @@ Key files:
 API conventions:
 - All routes prefixed `/api/` (e.g., `/api/ipr`, `/api/dgi/cockpit`)
 - Paginated endpoints return `{items, total, page, page_size, total_pages}`
-- DGI list endpoints return plain arrays (not paginated)
+- DGI list endpoints return plain arrays by default; `GET /api/dgi/initiatives` supports optional pagination via `?page=1&page_size=N` (omit for backward-compatible plain array)
 - Dashboard endpoint (`GET /api/dashboard`) is role-aware: dispatches to different queries per role
 - DGI cockpit endpoint (`GET /api/dgi/cockpit`) returns different response shapes per DGI role
 - PATCH endpoints use allowlisted column names — field names in Pydantic update models must match DB columns exactly
@@ -141,7 +141,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**53 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**71 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -160,7 +160,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules: `test_auth` (5), `test_compromisos` (12), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6).
+Test modules: `test_auth` (5), `test_compromisos` (12), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (18).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -198,13 +198,18 @@ open http://localhost:8000/api/docs
 Central entity: **IPR (Intervención Pública Regional)** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSERVACION, TRANSFERENCIA, SUBSIDIO, ESTUDIO, PROGRAMA_SOCIAL, PROGRAMA_8PCT).
 
 Operational layer:
-- **operational_commitment**: Tasks with due dates, state machine (PENDIENTE → EN_PROGRESO → COMPLETADO → VERIFICADO), tracked via `commitment_history`. Full CRUD: create form at `/compromisos/nuevo`, state actions in drawer.
-- **ipr_problem**: Issues detected on IPRs (ABIERTO → EN_GESTION → RESUELTO | CERRADO_SIN_RESOLVER), typed (TECNICO, FINANCIERO, LEGAL, etc.). Full CRUD: create form at `/problemas/nuevo`, resolve/close in drawer via PATCH with `state_id`.
-- **alert**: System-generated warnings with severity (CRITICO, ALTO, ATENCION, INFO), can be attended/resolved
-- **budget_program**: Fiscal year budget programs per division with execution tracking (initial → current → committed → accrued → paid). Related: `budget_carryover` (year-over-year), `budget_commitment` (CDPs linked to IPRs/agreements)
-- **agreement**: Institutional agreements (MANDATO, TRANSFERENCIA, COLABORACION, etc.) with 13-state machine (BORRADOR → EN_NEGOCIACION → EN_REVISION_JURIDICA → EN_REVISION_FINANCIERA → VISADO_INTERNO → FIRMADO_GORE → FIRMADO_CONTRAPARTE → VIGENTE/TDR_PENDIENTE → VENCIDO/TERMINADO/RESCILIADO). Related: `agreement_installment` (payment schedule with status tracking)
+- **operational_commitment**: Tasks with due dates, state machine (PENDIENTE → EN_PROGRESO → COMPLETADO → VERIFICADO), tracked via `commitment_history`. Full CRUD: create form at `/compromisos/nuevo`, inline creation from IPR detail via `IprCompromisoDrawer`, state actions in drawer. Drawer shows clickable IPR link (navigates to `/ipr/{id}`).
+- **ipr_problem**: Issues detected on IPRs (ABIERTO → EN_GESTION → RESUELTO | CERRADO_SIN_RESOLVER), typed (TECNICO, FINANCIERO, LEGAL, etc.). Full CRUD: create form at `/problemas/nuevo`, inline creation from IPR detail via `IprProblemaDrawer`, resolve/close in drawer via PATCH with `state_id`. Drawer shows state timeline (detected → en gestión → resolved) and clickable IPR link.
+- **alert**: System-generated warnings with severity (CRITICO, ALTO, ATENCION, INFO), can be attended/resolved. `AlertCard` supports `onViewSubject` callback for navigation to any subject_type (`core.ipr`, `core.operational_commitment`, `core.ipr_problem`, `core.agreement`).
+- **budget_program**: Fiscal year budget programs per division with execution tracking (initial → current → committed → accrued → paid). Related: `budget_carryover` (year-over-year), `budget_commitment` (CDPs linked to IPRs/agreements). CDPs queryable by IPR via `GET /api/presupuesto/cdps-por-ipr/{ipr_id}`. Presupuesto list filterable by `division_id` in both backend and frontend.
+- **agreement**: Institutional agreements (MANDATO, TRANSFERENCIA, COLABORACION, etc.) with 13-state machine (BORRADOR → EN_NEGOCIACION → EN_REVISION_JURIDICA → EN_REVISION_FINANCIERA → VISADO_INTERNO → FIRMADO_GORE → FIRMADO_CONTRAPARTE → VIGENTE/TDR_PENDIENTE → VENCIDO/TERMINADO/RESCILIADO). Related: `agreement_installment` (payment schedule with status tracking — full CRUD: create via inline form in drawer, register payment inline). Drawer shows clickable IPR link. Orphan filter: `GET /api/convenios?orphan=true` returns conventions without linked IPR.
 - **progress_report**: Periodic physical/financial progress reports per IPR. Create via `POST /api/ipr/{id}/avances`, list via `GET /api/ipr/{id}/avances`. Auto-incremented `report_number`.
-- **crisis_meeting**: Crisis meetings module using existing `core.committee` + `core.session` + `core.crisis_meeting` + `core.minute` + `core.session_agreement` tables. Full lifecycle: PROGRAMADA → EN_CURSO → FINALIZADA. Auto-suggestions from critical alerts, overdue commitments, open problems.
+- **crisis_meeting**: Crisis meetings module using existing `core.committee` + `core.session` + `core.crisis_meeting` + `core.minute` + `core.session_agreement` tables. Full lifecycle: PROGRAMADA → EN_CURSO → FINALIZADA. Auto-suggestions from critical alerts, overdue commitments, open problems. Topic BIP badges are clickable links to IPR detail.
+
+Cross-entity navigation (bidirectional):
+- **IPR → satellites**: IPR detail page has tabs for Compromisos, Problemas, Alertas, Convenios, CDPs, Avances — each loads filtered data lazily
+- **Satellites → IPR**: Drawers in compromisos, problemas, convenios, presupuesto pages show clickable `ipr_codigo_bip` that navigates to `/ipr/{id}`. Reunion topic BIP badges also link to IPR.
+- **IPR list filters**: `?assignee_id=X` filters by assigned user (available for all roles)
 
 DGI layer:
 - **dgi_indicator**: Institutional semaphore (5 dimensions: PRESUPUESTO, CARTERA_IPR, CONVENIOS, TDE, RIESGOS) with signal (VERDE/AMARILLO/ROJO). Values computed from real DB aggregates via `POST /api/dgi/data/indicators/refresh` (4/5 dimensions; TDE is static)
@@ -257,3 +262,7 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 19. **DDL circular dependencies**: `goreos_ddl.sql` defines `fn_validate_category_scheme` AFTER the tables that use it in CHECK constraints, and `core.person` references `core.position` which is defined later. Never apply DDL directly to a fresh database — use `pg_dump --schema-only` from `goreos_model` instead.
 20. **Test user seed**: Test users (person + user records) are NOT in any standard seed SQL file. They live in `model/model_goreos/sql/goreos_seed_users.sql` (uses subqueries for FK resolution). The setup script `scripts/setup_test_db.sh` handles the full test DB creation.
 21. **Confrontation migration**: `goreos_migration_confrontacion.sql` is a data-only migration (no DDL changes). It expanded org_type (2 new), reclassified 16 orgs, built 3-level hierarchy, added 3 agreement states, added 5 system roles, and soft-deleted 6 legacy duplicates. Rollback via `goreos_rollback_confrontacion.sql`. Both are idempotent (ON CONFLICT / WHERE guards).
+22. **Cross-entity navigation pattern**: When a list item references another entity (e.g., `ipr_codigo_bip` in compromisos), always include the FK `ipr_id` in both the Pydantic schema and the SQL SELECT so the frontend can build a clickable link. The standard UI pattern is `<button onClick={() => router.push('/ipr/${id}')}>{codigo_bip}</button>` with `text-blue-600 hover:underline` styling. Close the drawer first (`setSelectedId(null)`) before navigating.
+23. **CDPs by IPR endpoint**: `GET /api/presupuesto/cdps-por-ipr/{ipr_id}` returns `list[BudgetCommitmentItem]` — all budget commitments linked to an IPR. This route is defined BEFORE `/{presupuesto_id}` in the router to avoid path conflicts.
+24. **Convenio installment CRUD**: `POST /api/convenios/{id}/cuotas` requires `installment_number`, `amount`, `due_date`, `payment_status_id`. `PATCH /api/convenios/{id}/cuotas/{cuota_id}` accepts `payment_status_id`, `paid_at`, `paid_amount`, `payment_reference`. Frontend uses inline forms within the convenio drawer (no separate page).
+25. **DGI initiatives pagination**: `GET /api/dgi/initiatives` accepts optional `page` + `page_size` params. When `page` is provided, returns `{items, total, page, page_size, total_pages}`. When omitted, returns plain array for backward compatibility. Never change the default (unpaginated) behavior — existing DGI Kanban board depends on it.

@@ -1,8 +1,8 @@
-# GORE_OS — Documento de Testeo Ciclo 4
+# GORE_OS — Documento de Testeo
 
-**Fecha**: 2026-02-25
-**Version**: 4.0 (Ciclo 1 + Ciclo 2 + Ciclo 3 + Ciclo 4)
-**Objetivo**: Guia completa para testeo funcional de GORE_OS incluyendo UX Polish, Charts y CRUD completions del Ciclo 4.
+**Fecha**: 2026-02-26
+**Version**: 6.0 (Ciclo 1-6 + Tests + Confrontacion)
+**Objetivo**: Guia completa para testeo funcional de GORE_OS incluyendo la auditoria ontologica de relaciones del Ciclo 6.
 
 ---
 
@@ -64,7 +64,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 |--------|--------|-------|-------------|
 | Login/Auth | Completo | C1 | JWT + 8 roles (4 op + 4 DGI) |
 | Dashboard operativo | Completo | C1+C3+C4 | Role-aware con KPIs, desglose por division, charts recharts |
-| IPR lista + detalle | Completo | C1 | Paginado, filtros, tabs compromisos/problemas/alertas/convenios |
+| IPR lista + detalle | Completo | C1+C6 | Paginado, filtros (incl. assignee_id), 6 tabs: compromisos/problemas/alertas/convenios/CDPs/avances |
 | IPR crear | Completo | C3 | Form completo con auto-generacion de codigo BIP |
 | IPR editar | **Nuevo C4** | C4 | Edicion inline nombre/descripcion/tipo/estado (roles admin) |
 | IPR asignar responsable | Completo | C3 | Boton en detalle IPR para roles admin |
@@ -76,8 +76,8 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | Problemas crear | Completo | C3 | Form con IPR, tipo, impacto, descripcion |
 | Problemas resolver/cerrar | Completo | C3 | Drawer con acciones: En Gestion, Resolver, Cerrar |
 | Alertas | Completo | C1 | Lista con severidad, atencion |
-| Presupuesto | Completo | C2+C4 | CRUD programas, resumen, CDPs, edicion montos inline |
-| Convenios | Completo | C2+C4 | CRUD convenios + cuotas, edicion estado/monto/fecha |
+| Presupuesto | Completo | C2+C4+C6 | CRUD programas, resumen, CDPs, edicion montos inline, filtro division frontend |
+| Convenios | Completo | C2+C4+C6 | CRUD convenios + cuotas inline (crear/registrar pago), edicion estado/monto/fecha, filtro orphan |
 | Mi Division | Completo | C3 | Dashboard JEFE con carga por persona |
 | Mis Compromisos | Completo | C3 | Vista personal agrupada (vencidos/semana/pendientes) |
 | Dashboard ejecutivo | Completo | C3 | Desglose por division con metricas comparativas |
@@ -91,8 +91,10 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | DGI gauges | **Nuevo C4** | C4 | Gauges semaforo en cockpit DGI con iconos visuales |
 | DGI Cockpits | Completo | C2 | 4 cockpits por rol DGI |
 | DGI Indicadores | Completo | C2 | Semaforo 5 dimensiones, refresh desde BD real |
-| DGI Iniciativas | Completo | C2 | Kanban con WIP limits |
+| DGI Iniciativas | Completo | C2+C6 | Kanban con WIP limits, paginacion opcional |
 | DGI Informes | Completo | C2 | 4 tipos, 6 secciones auto-populadas |
+| Navegacion bidireccional | **Nuevo C6** | C6 | Links clickeables entre entidades satelite e IPR en 6 paginas |
+| Timeline problemas | **Nuevo C6** | C6 | Historial visual de estados en drawer de problemas |
 
 ### 2.2 Resumen de Nuevas Funcionalidades Ciclo 3
 
@@ -124,6 +126,22 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | F6 | IPR Edit | Edicion de nombre, descripcion, tipo, estado para ADMIN_SISTEMA y ADMIN_REGIONAL | CRUD |
 | F7 | Presupuesto Edit | Edicion inline de montos (inicial, vigente, comprometido, devengado, pagado) | CRUD |
 | F8 | Convenios Edit | Edicion de estado, monto, fecha termino en drawer de convenio | CRUD |
+
+### 2.4 Resumen de Nuevas Funcionalidades Ciclo 6 (Auditoria Ontologica)
+
+| # | Feature | Descripcion | Tier |
+|---|---------|-------------|------|
+| R1 | Navegacion bidireccional | Links clickeables IPR ↔ satelites en 6 drawers/paginas | TIER 1 |
+| R2 | AlertCard multi-subject | AlertCard navega a IPR, compromiso, problema o convenio segun subject_type | TIER 1 |
+| R3 | Reunion topics BIP link | Badge BIP en temas de reunion es clickeable hacia IPR detail | TIER 1 |
+| R4 | Filtro assignee_id en IPR | `GET /api/ipr?assignee_id=X` filtra por usuario asignado | TIER 2 |
+| R5 | Filtro orphan en convenios | `GET /api/convenios?orphan=true` devuelve convenios sin IPR vinculado | TIER 2 |
+| R6 | Paginacion DGI initiatives | `GET /api/dgi/initiatives?page=1&page_size=N` paginacion opcional | TIER 2 |
+| R7 | Cuotas crear inline | Formulario inline en drawer convenio para crear cuota | TIER 3 |
+| R8 | Cuotas registrar pago | Formulario inline por cuota para registrar pago con monto y referencia | TIER 3 |
+| R9 | Filtro division presupuesto | Select division en FilterBar de presupuesto (carga desde catalogs) | TIER 3 |
+| R10 | Tab CDPs en IPR detail | Nuevo tab CDPs en IPR detail + endpoint `GET /api/presupuesto/cdps-por-ipr/{id}` | TIER 3 |
+| R11 | Timeline problemas | Historial visual de estados (detectado → en gestion → resuelto/cerrado) en drawer | TIER 3 |
 
 ---
 
@@ -486,6 +504,117 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 6. **Esperado**: Badge de estado actualizado en el drawer
 7. **Verificar**: Cerrar y reabrir drawer → valores persisten
 
+### 4.8 Wave 7 — Auditoria Ontologica: Navegacion + Filtros + CRUD (Ciclo 6)
+
+#### TC-31: Navegacion Bidireccional — Compromiso → IPR
+1. Login como `regional@goreos.cl`
+2. Ir a `/compromisos` → click en un compromiso con IPR asociada
+3. En el drawer, buscar la linea "IPR: XXXXXXXX"
+4. **Esperado**: El codigo BIP es un link azul clickeable
+5. Click en el BIP
+6. **Esperado**: Drawer se cierra, navega a `/ipr/{id}` del IPR asociado
+7. **Verificar**: La pagina de detalle IPR carga correctamente con los 6 tabs
+
+#### TC-32: Navegacion Bidireccional — Problema → IPR
+1. Login como `regional@goreos.cl`
+2. Ir a `/problemas` → click en un problema
+3. En el drawer, buscar la linea "IPR: XXXXXXXX"
+4. **Esperado**: BIP es link azul clickeable
+5. Click → navega a `/ipr/{id}`
+
+#### TC-33: Navegacion Bidireccional — Convenio → IPR
+1. Ir a `/convenios` → click en un convenio con IPR asociada
+2. En el drawer, buscar "IPR: XXXXXXXX — Nombre"
+3. **Esperado**: BIP es link azul clickeable
+4. Click → navega a `/ipr/{id}`
+
+#### TC-34: Navegacion Bidireccional — Presupuesto CDP → IPR
+1. Ir a `/presupuesto` → click en un programa con CDPs
+2. En el drawer, seccion CDPs, buscar "IPR: XXXXXXXX"
+3. **Esperado**: BIP es link azul clickeable
+4. Click → navega a `/ipr/{id}`
+
+#### TC-35: Navegacion Bidireccional — Reunion Topic → IPR
+1. Ir a `/reuniones/{id}` (detalle de reunion con temas que tienen IPR)
+2. En la lista de temas, buscar badge "BIP: XXXXXXXX"
+3. **Esperado**: Badge BIP es link azul clickeable
+4. Click → navega a `/ipr/{id}`
+
+#### TC-36: AlertCard Multi-Subject en IPR Detail
+1. Ir a `/ipr/{id}` → click tab "Alertas"
+2. **Esperado**: Cada AlertCard tiene boton "Ver"
+3. Click "Ver" en una alerta de tipo IPR
+4. **Esperado**: Navega a `/ipr/{subject_id}`
+5. **Verificar**: Si hay alertas de tipo compromiso/problema → navega a `/compromisos` o `/problemas`
+
+#### TC-37: IPR Detail — Tab CDPs
+1. Ir a `/ipr/{id}` (IPR con CDPs vinculados)
+2. Click tab "CDPs"
+3. **Esperado**: Tab muestra lista de CDPs con:
+   - Numero de compromiso presupuestario (font-mono)
+   - Badge de estado
+   - Fecha emision → vencimiento
+   - Monto (font-mono)
+4. **Verificar**: Si IPR no tiene CDPs → mensaje "No hay CDPs vinculados a este IPR."
+5. **Verificar API**: `GET /api/presupuesto/cdps-por-ipr/{ipr_id}` retorna array de BudgetCommitmentItem
+
+#### TC-38: Filtro Division en Presupuesto
+1. Login como `regional@goreos.cl`
+2. Ir a `/presupuesto`
+3. **Esperado**: FilterBar muestra 3 selects: Ano, Subtitulo, Division
+4. Seleccionar una division
+5. **Esperado**: Tabla se filtra mostrando solo programas de esa division
+6. **Verificar**: Badge de filtro activo muestra "Division: {nombre}"
+7. Click "Limpiar" → todos los filtros se resetean
+
+#### TC-39: Filtro Orphan en Convenios (API)
+1. `GET /api/convenios?orphan=true`
+2. **Esperado**: Todos los convenios retornados tienen `ipr_id: null`
+3. `GET /api/convenios?orphan=true&page_size=5`
+4. **Esperado**: Respuesta paginada con max 5 items, todos sin IPR
+
+#### TC-40: Filtro Assignee en IPR (API)
+1. Obtener user_id de un usuario con IPRs asignadas
+2. `GET /api/ipr?assignee_id={user_id}`
+3. **Esperado**: Solo IPRs donde el assignee es ese usuario
+4. `GET /api/ipr?assignee_id=00000000-0000-0000-0000-000000000000`
+5. **Esperado**: `total: 0` (UUID inexistente)
+
+#### TC-41: Paginacion DGI Initiatives (API)
+1. Login como `jefe.dgi@goreos.cl`
+2. `GET /api/dgi/initiatives?page=1&page_size=3`
+3. **Esperado**: Respuesta con `{items, total, page, page_size, total_pages}`
+4. `GET /api/dgi/initiatives` (sin params)
+5. **Esperado**: Array plano (retrocompatible, no paginado)
+
+#### TC-42: Crear Cuota Inline en Convenio
+1. Login como `regional@goreos.cl`
+2. Ir a `/convenios` → click en un convenio
+3. En seccion "Cuotas", click boton "+Cuota"
+4. **Esperado**: Form inline con campos Monto y Fecha
+5. Completar: Monto=5000000, Fecha=proximo mes → click "Crear"
+6. **Esperado**: Nueva cuota aparece en la lista con estado PENDIENTE
+7. **Verificar**: Numero de cuota se auto-incrementa
+
+#### TC-43: Registrar Pago de Cuota
+1. Con un convenio que tiene cuotas PENDIENTE (TC-42)
+2. En una cuota pendiente, click "Registrar Pago"
+3. **Esperado**: Form inline con Monto pagado y Referencia
+4. Completar: Monto=5000000, Ref="TRF-2026-001" → click "Confirmar"
+5. **Esperado**: Cuota cambia a estado PAGADO con fecha y referencia
+6. **Verificar**: Contador pagadas se actualiza (ej: "2/3 pagadas")
+
+#### TC-44: Timeline de Estados en Problema
+1. Login como `regional@goreos.cl`
+2. Ir a `/problemas` → click en un problema
+3. En el drawer, buscar seccion "Historial"
+4. **Esperado**: Timeline visual con:
+   - Punto azul: "Detectado — ABIERTO" con fecha y nombre del detector
+   - Punto ambar: "EN_GESTION" (si aplica)
+   - Punto verde/rojo: "Resuelto"/"Cerrado sin resolver" con fecha y nombre (si aplica)
+5. **Verificar**: Problema en estado ABIERTO solo muestra el primer punto
+6. **Verificar**: Problema RESUELTO muestra los 3 puntos completos
+
 ---
 
 ## 5. Endpoints API — Referencia Rapida
@@ -497,7 +626,7 @@ POST /api/auth/login          Login (form-urlencoded: username, password)
 
 ### 5.2 IPR
 ```
-GET    /api/ipr                Lista paginada, filtros: ipr_type, status, sector, search
+GET    /api/ipr                Lista paginada, filtros: ipr_type, status, sector, search, assignee_id
 GET    /api/ipr/{id}           Detalle con conteos
 POST   /api/ipr                Crear IPR (ADMIN_SISTEMA, ADMIN_REGIONAL)
 PATCH  /api/ipr/{id}           Editar IPR (nombre, descripcion, tipo, estado, assignee)
@@ -545,22 +674,24 @@ GET    /api/search?q={query}&limit={n}  Busqueda cross-entity (IPR, compromisos,
 
 ### 5.7 Presupuesto
 ```
-GET    /api/presupuesto/resumen  Resumen agrupado
-GET    /api/presupuesto          Lista programas
-GET    /api/presupuesto/{id}     Detalle con CDPs
-POST   /api/presupuesto          Crear programa
-PATCH  /api/presupuesto/{id}     Actualizar montos
+GET    /api/presupuesto/resumen              Resumen agrupado
+GET    /api/presupuesto/cdps-por-ipr/{id}    CDPs vinculados a un IPR (Nuevo C6)
+GET    /api/presupuesto                      Lista programas (filtros: fiscal_year, division_id, subtitle)
+GET    /api/presupuesto/{id}                 Detalle con CDPs
+POST   /api/presupuesto                      Crear programa
+PATCH  /api/presupuesto/{id}                 Actualizar montos
 ```
 
 ### 5.8 Convenios
 ```
-GET    /api/convenios               Lista
-GET    /api/convenios/{id}          Detalle con cuotas
+GET    /api/convenios               Lista (filtros: state, agreement_type, ipr_id, orphan, search, date_from/to)
+GET    /api/convenios/{id}          Detalle con cuotas + historial
 POST   /api/convenios               Crear
-PATCH  /api/convenios/{id}          Actualizar
+PATCH  /api/convenios/{id}          Actualizar (estado, monto, fecha, CGR)
+GET    /api/convenios/{id}/transiciones  Estados destino validos
 GET    /api/convenios/{id}/cuotas   Listar cuotas
-POST   /api/convenios/{id}/cuotas   Agregar cuota
-PATCH  /api/convenios/{id}/cuotas/{cid}  Actualizar cuota
+POST   /api/convenios/{id}/cuotas   Agregar cuota (UI inline en drawer)
+PATCH  /api/convenios/{id}/cuotas/{cid}  Actualizar cuota / registrar pago
 ```
 
 ### 5.9 Reuniones
@@ -600,7 +731,10 @@ GET    /api/catalogs/divisions             Divisiones activas
 ### 5.12 DGI
 ```
 GET    /api/dgi/cockpit                    Cockpit por rol DGI
-GET    /api/dgi/initiatives                Iniciativas
+GET    /api/dgi/initiatives                Iniciativas (filtros: status, responsible_id, page, page_size)
+POST   /api/dgi/initiatives                Crear iniciativa
+PATCH  /api/dgi/initiatives/{id}           Actualizar iniciativa
+POST   /api/dgi/initiatives/{id}/move      Mover en Kanban (WIP limits)
 POST   /api/dgi/data/indicators/refresh    Recalcular indicadores
 GET    /api/dgi/reports                    Informes
 ```
@@ -617,12 +751,16 @@ GET    /api/dgi/reports                    Informes
 | Ciclo 2 | Presupuesto, Convenios, DGI (cockpits, indicadores, iniciativas, informes) | Completado |
 | Ciclo 3 | Migracion para_titi: forms CRUD, IPR escritura, admin, dashboards, reuniones | Completado |
 | Ciclo 4 | UX Polish (CSV export, Bell notif, ⌘K search), Charts (recharts dashboard, DGI gauges), CRUD (IPR/Presupuesto/Convenios edit) | Completado |
+| Ciclo 5 | ComboboxAsync, Initiative CRUD, divisions filter, spec v1.0 | Completado |
+| Tests  | 71 integration tests (8 modulos), test DB setup, security readonly suite | Completado |
+| Confrontacion | Migracion datos: org_type(+2), jerarquia 3 niveles, agreement_state(+3), roles(+5) | Completado |
+| Ciclo 6 | Auditoria ontologica: navegacion bidireccional (7), filtros API (3), CRUD completions (4) | Completado |
 
 ### 6.2 Pendiente / Proximos Ciclos
 
 | Item | Prioridad | Descripcion |
 |------|-----------|-------------|
-| Tests automatizados | Alta | Unit tests backend (pytest), integration tests API, E2E frontend |
+| Tests automatizados | ~~Alta~~ | ~~71 tests backend completados~~ — Pendiente: E2E frontend |
 | Exportar a PDF | Media | Exportar reportes e informes DGI a PDF |
 | Auditoria de acciones | Media | Log de acciones de usuario (quien hizo que, cuando) |
 | Notificaciones email | Media | Notificaciones por email para alertas criticas y compromisos vencidos |
