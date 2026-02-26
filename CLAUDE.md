@@ -69,7 +69,7 @@ Key files:
 - `api/app/main.py` — app factory, router registration
 - `api/app/core/deps.py` — `CurrentUser` dependency (extracts user dict from JWT)
 - `api/app/core/security.py` — `OPERATIONAL_ROLES` / `DGI_ROLES` sets, password hashing, JWT
-- `api/app/routers/` — 15 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports)
+- `api/app/routers/` — 16 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports)
 
 API conventions:
 - All routes prefixed `/api/` (e.g., `/api/ipr`, `/api/dgi/cockpit`)
@@ -112,7 +112,13 @@ Key patterns:
 
 **DGI schemes**: `dgi_initiative_status`, `dgi_indicator_dimension`, `dgi_signal`, `dgi_report_type`, `dgi_report_status`, `dgi_bpmn_status`, `dgi_dmaic_phase`, `dgi_session_status`, `dgi_alert_status`, `dgi_decree_status`, `dgi_source_status`
 
-**Budget schemes** (Ciclo 2): `budget_item` (14), `budget_allocation` (15), `program_type` (5), `budget_commitment_status` (5). Pre-existing: `budget_subtitle` (8), `funding_source` (11), `payment_status` (5), `agreement_type` (6), `agreement_state` (10 with transitions), `cgr_outcome` (7).
+**Budget schemes** (Ciclo 2): `budget_item` (14), `budget_allocation` (15), `program_type` (5), `budget_commitment_status` (5). Pre-existing: `budget_subtitle` (8), `funding_source` (11), `payment_status` (5), `agreement_type` (6), `agreement_state` (13 with transitions — includes EN_REVISION_FINANCIERA, VISADO_INTERNO, TDR_PENDIENTE), `cgr_outcome` (7).
+
+**Organization types**: `org_type` scheme has 14 codes. Internal GORE orgs use 6: GORE (1), DIVISION (8), DEPARTAMENTO (6), UNIDAD (8), STAFF_UNIT (7), ADVISORY_BODY (3). External orgs use: MUNICIPALIDAD, SERVICIO, MINISTERIO, UNIVERSIDAD, ONG, EMPRESA, ORG_COMUNITARIA, COMUNITARIA.
+
+**Organization hierarchy**: 3-level depth via `parent_id` endofunctor: GORE-NUBLE → Divisions → Departamentos → Unidades. Example: GORE-NUBLE → DAF → FINANZAS → UCR.
+
+**System roles**: `system_role` scheme has 13 codes: GOBERNADOR (0), ADMIN_SISTEMA (1), ADMIN_REGIONAL (2), JEFE_DIVISION (3), ENCARGADO (4), JEFE_DGI (5), ESP_CONTROL_GESTION (6), ESP_PROCESOS (7), ESP_TD (8), CONSEJERO_REGIONAL (9), SECRETARIO_EJECUTIVO (10), JEFE_DEPARTAMENTO (11), JEFE_UNIDAD (12).
 
 ### Docker Networking
 
@@ -132,6 +138,37 @@ All passwords: `admin123`
 | `procesos@goreos.cl` | ESP_PROCESOS | dgi |
 | `td@goreos.cl` | ESP_TD | dgi |
 | `admin@goreos.cl` | ADMIN_SISTEMA | operativa |
+
+## Testing
+
+**53 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+
+```bash
+# Setup test DB (first time or to reset):
+./scripts/setup_test_db.sh
+
+# Run full suite inside API container:
+docker compose exec api pytest -v
+
+# Run single module:
+docker compose exec api pytest tests/test_compromisos.py -v
+
+# Run single test:
+docker compose exec api pytest tests/test_auth.py::test_login_success -v
+
+# Install test deps in container (if container was rebuilt):
+docker compose exec api pip install pytest pytest-asyncio httpx
+```
+
+Test modules: `test_auth` (5), `test_compromisos` (12), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6).
+
+**Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
+
+**Test architecture**: `conftest.py` creates a fresh `AsyncSession` per test against `goreos_test`, overrides `get_db` dependency, generates real JWT tokens for 5 roles (admin, regional, jefe, encargado, dgi). The `catalog` fixture pre-fetches common IDs (commitment types, problem types, agreement states, etc.).
+
+**Known issue**: `test_convenios::test_patch_state` is marked `xfail` — trigger `fn_validate_state_transition` references `OLD.status_id` but the column is `state_id`.
+
+**DGI category schemes** (e.g., `dgi_initiative_status`) are NOT in `goreos_seed.sql` — they only exist in `goreos_model` and are copied to `goreos_test` via `COPY ref.category`. If adding new DGI schemes, insert them into production first.
 
 ## Common Commands
 
@@ -165,7 +202,7 @@ Operational layer:
 - **ipr_problem**: Issues detected on IPRs (ABIERTO → EN_GESTION → RESUELTO | CERRADO_SIN_RESOLVER), typed (TECNICO, FINANCIERO, LEGAL, etc.). Full CRUD: create form at `/problemas/nuevo`, resolve/close in drawer via PATCH with `state_id`.
 - **alert**: System-generated warnings with severity (CRITICO, ALTO, ATENCION, INFO), can be attended/resolved
 - **budget_program**: Fiscal year budget programs per division with execution tracking (initial → current → committed → accrued → paid). Related: `budget_carryover` (year-over-year), `budget_commitment` (CDPs linked to IPRs/agreements)
-- **agreement**: Institutional agreements (MANDATO, TRANSFERENCIA, COLABORACION, etc.) with state machine (BORRADOR → VIGENTE → VENCIDO/TERMINADO). Related: `agreement_installment` (payment schedule with status tracking)
+- **agreement**: Institutional agreements (MANDATO, TRANSFERENCIA, COLABORACION, etc.) with 13-state machine (BORRADOR → EN_NEGOCIACION → EN_REVISION_JURIDICA → EN_REVISION_FINANCIERA → VISADO_INTERNO → FIRMADO_GORE → FIRMADO_CONTRAPARTE → VIGENTE/TDR_PENDIENTE → VENCIDO/TERMINADO/RESCILIADO). Related: `agreement_installment` (payment schedule with status tracking)
 - **progress_report**: Periodic physical/financial progress reports per IPR. Create via `POST /api/ipr/{id}/avances`, list via `GET /api/ipr/{id}/avances`. Auto-incremented `report_number`.
 - **crisis_meeting**: Crisis meetings module using existing `core.committee` + `core.session` + `core.crisis_meeting` + `core.minute` + `core.session_agreement` tables. Full lifecycle: PROGRAMADA → EN_CURSO → FINALIZADA. Auto-suggestions from critical alerts, overdue commitments, open problems.
 
@@ -189,6 +226,8 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 - `model/model_goreos/sql/goreos_ddl.sql` — DDL (78 tables), ontological mappings in lines 21-37
 - `model/model_goreos/sql/goreos_seed.sql` — 90+ category schemes
 - `model/model_goreos/sql/goreos_seed_demo_ciclo2.sql` — demo data for budget + agreements
+- `model/model_goreos/sql/goreos_migration_confrontacion.sql` — categorical data migration (org types, hierarchy, agreement states, roles, legacy cleanup)
+- `model/model_goreos/sql/goreos_rollback_confrontacion.sql` — rollback for above migration
 - `model/model_goreos/docs/GOREOS_ERD_v3.md` — ERD + data dictionary
 - `model/GLOSARIO.yml` — 244 ontological terms (Gist 14.0 + GNUB + TDE)
 - `docs/plans/2026-02-24-dgi-ui-ux-design.md` — DGI UI/UX design document
@@ -213,5 +252,8 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 14. **Dashboard endpoints**: Role-specific dashboards: `GET /api/dashboard` (base, role-aware), `GET /api/dashboard/ejecutivo` (ADMIN with division breakdown), `GET /api/dashboard/mi-division` (JEFE_DIVISION team load), `GET /api/dashboard/mis-compromisos` (ENCARGADO grouped commitments).
 15. **Admin module**: `GET/POST/PATCH /api/admin/usuarios`, `POST /api/admin/usuarios/{id}/toggle-activo`, `POST /api/admin/usuarios/{id}/reset-password`, `GET/POST/PATCH /api/admin/divisiones`. All restricted to ADMIN_SISTEMA.
 16. **After code changes**: Always restart API container (`docker compose restart api`) — uvicorn hot-reload may not catch new files/imports.
-17. **Large dataset selects**: `core.ipr` has 3,600+ rows, `core.organization` has 3,300+ rows. Never load all records into a `<Select>`. Use `ComboboxAsync` for IPR fields (server-side search via `GET /api/catalogs/iprs?search=TERM`). For divisions, `GET /api/catalogs/divisions` returns only ~31 real divisions (DIVISION + GORE type) — any query that joins `core.organization` without filtering `org_type_id` will return all organizations.
+17. **Large dataset selects**: `core.ipr` has 3,600+ rows, `core.organization` has 3,300+ rows. Never load all records into a `<Select>`. Use `ComboboxAsync` for IPR fields (server-side search via `GET /api/catalogs/iprs?search=TERM`). For divisions, `GET /api/catalogs/divisions` returns only ~9 entries (DIVISION + GORE type) — any query that joins `core.organization` without filtering `org_type_id` will return all organizations. Note: after the confrontation migration, many internal orgs were reclassified to STAFF_UNIT, DEPARTAMENTO, UNIDAD, ADVISORY_BODY — these are intentionally excluded from the divisions catalog.
 18. **API error messages**: `ApiClient` in `api.ts` automatically extracts `.detail` from FastAPI JSON error responses. Backend `HTTPException(detail="...")` strings reach frontend `catch (err)` blocks as clean text — no need to parse JSON in component code.
+19. **DDL circular dependencies**: `goreos_ddl.sql` defines `fn_validate_category_scheme` AFTER the tables that use it in CHECK constraints, and `core.person` references `core.position` which is defined later. Never apply DDL directly to a fresh database — use `pg_dump --schema-only` from `goreos_model` instead.
+20. **Test user seed**: Test users (person + user records) are NOT in any standard seed SQL file. They live in `model/model_goreos/sql/goreos_seed_users.sql` (uses subqueries for FK resolution). The setup script `scripts/setup_test_db.sh` handles the full test DB creation.
+21. **Confrontation migration**: `goreos_migration_confrontacion.sql` is a data-only migration (no DDL changes). It expanded org_type (2 new), reclassified 16 orgs, built 3-level hierarchy, added 3 agreement states, added 5 system roles, and soft-deleted 6 legacy duplicates. Rollback via `goreos_rollback_confrontacion.sql`. Both are idempotent (ON CONFLICT / WHERE guards).
