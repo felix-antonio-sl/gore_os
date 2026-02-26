@@ -5,15 +5,35 @@ import { api } from "@/lib/api";
 import { KanbanCard } from "@/components/kanban-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus, AlertTriangle } from "lucide-react";
 import type { DGIInitiative } from "@/types";
+
+interface UserOption {
+  id: string;
+  nombre: string;
+  apellido_paterno: string;
+}
 
 type WipColumn = "BACKLOG" | "EN_CURSO" | "REVISION" | "COMPLETADO";
 
 const COLUMNS: { key: WipColumn; label: string; wipLimit?: number }[] = [
   { key: "BACKLOG", label: "Backlog" },
   { key: "EN_CURSO", label: "En Curso", wipLimit: 5 },
-  { key: "REVISION", label: "Revisión", wipLimit: 3 },
+  { key: "REVISION", label: "Revisión", wipLimit: 2 },
   { key: "COMPLETADO", label: "Completado" },
 ];
 
@@ -28,6 +48,21 @@ export default function TableroPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [moving, setMoving] = useState<string | null>(null);
+  const [moveError, setMoveError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Users catalog for responsable select
+  const [users, setUsers] = useState<UserOption[]>([]);
+
+  // Dialog state
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [formName, setFormName] = useState("");
+  const [formDescription, setFormDescription] = useState("");
+  const [formTargetDate, setFormTargetDate] = useState("");
+  const [formTotalDays, setFormTotalDays] = useState("");
+  const [formResponsableId, setFormResponsableId] = useState("");
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     api
@@ -35,7 +70,57 @@ export default function TableroPage() {
       .then(setInitiatives)
       .catch((err: Error) => setError(err.message))
       .finally(() => setIsLoading(false));
+  }, [refreshKey]);
+
+  useEffect(() => {
+    api.get<UserOption[]>("/api/catalogs/users").then(setUsers).catch(() => {});
   }, []);
+
+  function openCreate() {
+    setEditingId(null);
+    setFormName("");
+    setFormDescription("");
+    setFormTargetDate("");
+    setFormTotalDays("");
+    setFormResponsableId("");
+    setDialogOpen(true);
+  }
+
+  function openEdit(initiative: DGIInitiative) {
+    setEditingId(initiative.id);
+    setFormName(initiative.name);
+    setFormDescription(initiative.description ?? "");
+    setFormTargetDate(initiative.target_date ?? "");
+    setFormTotalDays(initiative.total_days?.toString() ?? "");
+    setFormResponsableId(initiative.responsible_id ?? "");
+    setDialogOpen(true);
+  }
+
+  async function handleSave() {
+    if (!formName.trim()) return;
+    setSaving(true);
+    try {
+      const payload: Record<string, unknown> = {
+        name: formName.trim(),
+        description: formDescription.trim() || null,
+        target_date: formTargetDate || null,
+        total_days: formTotalDays ? parseInt(formTotalDays) : null,
+        responsible_id: formResponsableId || null,
+      };
+
+      if (editingId) {
+        await api.patch(`/api/dgi/initiatives/${editingId}`, payload);
+      } else {
+        await api.post("/api/dgi/initiatives", { ...payload, status: "BACKLOG" });
+      }
+      setDialogOpen(false);
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      console.error("Error saving initiative:", err);
+    } finally {
+      setSaving(false);
+    }
+  }
 
   async function handleMove(initiative: DGIInitiative, direction: "left" | "right") {
     const currentIdx = getColumnIndex(initiative.wip_column as WipColumn);
@@ -44,6 +129,7 @@ export default function TableroPage() {
     const targetStatus = COLUMN_ORDER[targetIdx];
 
     setMoving(initiative.id);
+    setMoveError(null);
     try {
       await api.post<DGIInitiative>(`/api/dgi/initiatives/${initiative.id}/move`, {
         status: targetStatus,
@@ -56,7 +142,7 @@ export default function TableroPage() {
         )
       );
     } catch (err) {
-      console.error("Error moving initiative:", err);
+      setMoveError(err instanceof Error ? err.message : "Error al mover iniciativa");
     } finally {
       setMoving(null);
     }
@@ -85,11 +171,25 @@ export default function TableroPage() {
             Gestión visual de iniciativas DMAIC en curso
           </p>
         </div>
-        <Button size="sm" variant="outline" disabled>
+        <Button size="sm" variant="outline" onClick={openCreate}>
           <Plus className="size-4 mr-1" />
           Nueva Iniciativa
         </Button>
       </div>
+
+      {/* WIP move error banner */}
+      {moveError && (
+        <div className="flex items-start gap-2 rounded-md bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+          <AlertTriangle className="size-4 shrink-0 mt-0.5" />
+          <span>{moveError}</span>
+          <button
+            className="ml-auto text-amber-600 hover:text-amber-800"
+            onClick={() => setMoveError(null)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* Kanban Board */}
       {isLoading ? (
@@ -141,14 +241,18 @@ export default function TableroPage() {
                       <div
                         key={initiative.id}
                         className={
-                          moving === initiative.id ? "opacity-50 pointer-events-none" : ""
+                          moving === initiative.id ? "opacity-50 pointer-events-none" : "cursor-pointer"
                         }
+                        onClick={() => openEdit(initiative)}
                       >
                         <KanbanCard
                           initiative={initiative}
                           isFirst={col.key === "BACKLOG"}
                           isLast={col.key === "COMPLETADO"}
-                          onMove={(direction) => handleMove(initiative, direction)}
+                          onMove={(direction) => {
+                            // Prevent card click when moving
+                            handleMove(initiative, direction);
+                          }}
                         />
                       </div>
                     ))
@@ -166,10 +270,87 @@ export default function TableroPage() {
             No hay iniciativas registradas.
           </p>
           <p className="text-muted-foreground text-xs mt-1">
-            Usa el botón "Nueva Iniciativa" para agregar la primera.
+            Usa el botón &quot;Nueva Iniciativa&quot; para agregar la primera.
           </p>
         </div>
       )}
+
+      {/* Create/Edit Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>{editingId ? "Editar Iniciativa" : "Nueva Iniciativa"}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <div className="space-y-2">
+              <label htmlFor="ini-name" className="text-sm font-medium">Nombre *</label>
+              <Input
+                id="ini-name"
+                value={formName}
+                onChange={(e) => setFormName(e.target.value)}
+                placeholder="Nombre de la iniciativa"
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="ini-desc" className="text-sm font-medium">Descripción</label>
+              <textarea
+                id="ini-desc"
+                value={formDescription}
+                onChange={(e) => setFormDescription(e.target.value)}
+                placeholder="Descripción (opcional)"
+                rows={3}
+                className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="ini-responsable" className="text-sm font-medium">Responsable</label>
+              <Select value={formResponsableId} onValueChange={setFormResponsableId}>
+                <SelectTrigger id="ini-responsable">
+                  <SelectValue placeholder="Seleccione responsable" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Sin asignar</SelectItem>
+                  {users.map((u) => (
+                    <SelectItem key={u.id} value={u.id}>
+                      {u.nombre} {u.apellido_paterno}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label htmlFor="ini-target" className="text-sm font-medium">Fecha objetivo</label>
+                <Input
+                  id="ini-target"
+                  type="date"
+                  value={formTargetDate}
+                  onChange={(e) => setFormTargetDate(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="ini-days" className="text-sm font-medium">Días totales</label>
+                <Input
+                  id="ini-days"
+                  type="number"
+                  value={formTotalDays}
+                  onChange={(e) => setFormTotalDays(e.target.value)}
+                  placeholder="ej: 30"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                Cancelar
+              </Button>
+              <Button onClick={handleSave} disabled={saving || !formName.trim()}>
+                {saving ? "Guardando..." : editingId ? "Guardar Cambios" : "Crear Iniciativa"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -374,6 +374,7 @@ async def list_divisiones(
                 GROUP BY division_id
             ) uc ON uc.division_id = o.id
             WHERE o.deleted_at IS NULL
+              AND c.code IN ('DIVISION', 'GORE')
             ORDER BY o.name
         """)
     )

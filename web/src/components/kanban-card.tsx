@@ -83,7 +83,7 @@ export function KanbanCard({ initiative, onMove, isFirst = false, isLast = false
               size="sm"
               variant="ghost"
               className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground"
-              onClick={() => onMove("left")}
+              onClick={(e) => { e.stopPropagation(); onMove("left"); }}
             >
               ← Mover
             </Button>
@@ -93,7 +93,7 @@ export function KanbanCard({ initiative, onMove, isFirst = false, isLast = false
               size="sm"
               variant="ghost"
               className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground ml-auto"
-              onClick={() => onMove("right")}
+              onClick={(e) => { e.stopPropagation(); onMove("right"); }}
             >
               Mover →
             </Button>

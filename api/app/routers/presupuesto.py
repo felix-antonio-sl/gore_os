@@ -261,7 +261,7 @@ async def get_presupuesto(
         text("""
             SELECT id, fiscal_year, amount
             FROM core.budget_carryover
-            WHERE budget_program_id = :pid AND deleted_at IS NULL
+            WHERE budget_program_id = :pid
             ORDER BY fiscal_year DESC
         """),
         {"pid": str(presupuesto_id)},
@@ -291,6 +291,7 @@ async def get_presupuesto(
 
     return PresupuestoDetail(
         **row,
+        execution_pct=_execution_pct(row.get("paid_amount"), row.get("current_amount")),
         carryovers=carryovers,
         budget_commitments=budget_commitments,
     )

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { ArrowLeft } from "lucide-react";
 
 interface CommitmentType {
@@ -43,7 +44,6 @@ export default function NuevoCompromisoPage() {
 
   const [commitmentTypes, setCommitmentTypes] = useState<CommitmentType[]>([]);
   const [users, setUsers] = useState<UserOption[]>([]);
-  const [iprs, setIprs] = useState<IprOption[]>([]);
 
   const [description, setDescription] = useState("");
   const [commitmentTypeId, setCommitmentTypeId] = useState("");
@@ -55,10 +55,17 @@ export default function NuevoCompromisoPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const searchIprs = useCallback(async (q: string): Promise<ComboboxOption[]> => {
+    const data = await api.get<IprOption[]>(`/api/catalogs/iprs?search=${encodeURIComponent(q)}`);
+    return data.map((ipr) => ({
+      value: ipr.id,
+      label: `${ipr.codigo_bip} — ${ipr.name}`,
+    }));
+  }, []);
+
   useEffect(() => {
     api.get<CommitmentType[]>("/api/catalogs/commitment-types").then(setCommitmentTypes).catch(() => {});
     api.get<UserOption[]>("/api/catalogs/users").then(setUsers).catch(() => {});
-    api.get<IprOption[]>("/api/catalogs/iprs").then(setIprs).catch(() => {});
   }, []);
 
   // Auto-set due date based on commitment type default_days
@@ -183,19 +190,12 @@ export default function NuevoCompromisoPage() {
 
             <div className="space-y-1.5">
               <label className="text-sm font-medium">IPR asociada</label>
-              <Select value={iprId} onValueChange={setIprId}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sin IPR asociada" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">Sin IPR</SelectItem>
-                  {iprs.map((ipr) => (
-                    <SelectItem key={ipr.id} value={ipr.id}>
-                      {ipr.codigo_bip} — {ipr.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <ComboboxAsync
+                value={iprId}
+                onChange={setIprId}
+                searchFn={searchIprs}
+                placeholder="Buscar IPR por código o nombre..."
+              />
             </div>
 
             <div className="space-y-1.5">

@@ -5,7 +5,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.schemas.dgi import InitiativeItem, InitiativeMove
+from app.core.security import DGI_ROLES
+from app.schemas.dgi import InitiativeItem, InitiativeCreate, InitiativeUpdate, InitiativeMove
+
+
+def _require_dgi(user: dict):
+    if user.get("role_code") not in DGI_ROLES:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Solo roles DGI pueden gestionar iniciativas")
 
 router = APIRouter(prefix="/api/dgi/initiatives", tags=["dgi"])
 
@@ -27,6 +33,7 @@ async def _get_initiative_row(initiative_id: str, db: AsyncSession) -> dict | No
             ini.code,
             ini.name,
             ini.description,
+            ini.responsible_id,
             p.names || ' ' || p.paternal_surname AS responsible_name,
             st.code         AS status,
             ph.code         AS dmaic_phase,
@@ -85,6 +92,7 @@ async def list_initiatives(
             ini.code,
             ini.name,
             ini.description,
+            ini.responsible_id,
             p.names || ' ' || p.paternal_surname AS responsible_name,
             st.code         AS status,
             ph.code         AS dmaic_phase,
@@ -122,6 +130,7 @@ async def list_initiatives(
             code=r["code"],
             name=r["name"],
             description=r["description"],
+            responsible_id=r["responsible_id"],
             responsible_name=r["responsible_name"],
             status=r["status"],
             dmaic_phase=r["dmaic_phase"],
@@ -135,6 +144,139 @@ async def list_initiatives(
         )
         for r in rows
     ]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/initiatives — Create initiative
+# ---------------------------------------------------------------------------
+@router.post("", status_code=status.HTTP_201_CREATED, response_model=InitiativeItem)
+async def create_initiative(
+    body: InitiativeCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_dgi(user)
+
+    # Resolve status_id (default BACKLOG)
+    status_code = body.status.upper() if body.status else "BACKLOG"
+    st_row = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'dgi_initiative_status' AND code = :code"),
+        {"code": status_code},
+    )).mappings().first()
+    if not st_row:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Estado inválido: {status_code}")
+    status_id = str(st_row["id"])
+
+    # Resolve dmaic_phase_id (optional)
+    dmaic_phase_id = None
+    if body.dmaic_phase:
+        ph_row = (await db.execute(
+            text("SELECT id FROM ref.category WHERE scheme = 'dgi_dmaic_phase' AND code = :code"),
+            {"code": body.dmaic_phase.upper()},
+        )).mappings().first()
+        if ph_row:
+            dmaic_phase_id = str(ph_row["id"])
+
+    # Auto-generate code
+    count_row = (await db.execute(text("SELECT COUNT(*) FROM core.dgi_initiative"))).scalar() or 0
+    code = f"INI-{count_row + 1:04d}"
+
+    result = await db.execute(
+        text("""
+            INSERT INTO core.dgi_initiative (code, name, description, responsible_id, status_id, dmaic_phase_id, target_date, total_days, wip_column, created_by_id)
+            VALUES (:code, :name, :description, :responsible_id, :status_id, :dmaic_phase_id, :target_date, :total_days, :wip_column, :created_by_id)
+            RETURNING id
+        """),
+        {
+            "code": code,
+            "name": body.name,
+            "description": body.description,
+            "responsible_id": str(user["id"]),
+            "status_id": status_id,
+            "dmaic_phase_id": dmaic_phase_id,
+            "target_date": body.target_date,
+            "total_days": body.total_days,
+            "wip_column": status_code,
+            "created_by_id": str(user["id"]),
+        },
+    )
+    new_id = str(result.scalar())
+    await db.commit()
+
+    row = await _get_initiative_row(new_id, db)
+    return InitiativeItem(
+        id=row["id"], code=row["code"], name=row["name"], description=row["description"],
+        responsible_id=row["responsible_id"], responsible_name=row["responsible_name"],
+        status=row["status"], dmaic_phase=row["dmaic_phase"],
+        division_name=row["division_name"], start_date=row["start_date"], target_date=row["target_date"],
+        current_day=row["current_day"] or 0, total_days=row["total_days"],
+        progress=row["progress"] or 0.0, wip_column=row["wip_column"],
+    )
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/dgi/initiatives/{id} — Update initiative
+# ---------------------------------------------------------------------------
+@router.patch("/{initiative_id}", response_model=InitiativeItem)
+async def update_initiative(
+    initiative_id: UUID,
+    body: InitiativeUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_dgi(user)
+
+    initiative_id_str = str(initiative_id)
+    existing = await _get_initiative_row(initiative_id_str, db)
+    if not existing:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Iniciativa no encontrada")
+
+    UPDATABLE = {"name", "description", "target_date", "total_days", "responsible_id", "division_id"}
+    updates = {k: v for k, v in body.model_dump(exclude_none=True).items() if k in UPDATABLE}
+
+    # Handle dmaic_phase → resolve to FK
+    if body.dmaic_phase is not None:
+        ph_row = (await db.execute(
+            text("SELECT id FROM ref.category WHERE scheme = 'dgi_dmaic_phase' AND code = :code"),
+            {"code": body.dmaic_phase.upper()},
+        )).mappings().first()
+        if ph_row:
+            updates["dmaic_phase_id"] = str(ph_row["id"])
+
+    if not updates:
+        return InitiativeItem(
+            id=existing["id"], code=existing["code"], name=existing["name"], description=existing["description"],
+            responsible_id=existing["responsible_id"], responsible_name=existing["responsible_name"],
+            status=existing["status"], dmaic_phase=existing["dmaic_phase"],
+            division_name=existing["division_name"], start_date=existing["start_date"], target_date=existing["target_date"],
+            current_day=existing["current_day"] or 0, total_days=existing["total_days"],
+            progress=existing["progress"] or 0.0, wip_column=existing["wip_column"],
+        )
+
+    # Convert UUID fields to str for SQL
+    for k in ("responsible_id", "division_id", "dmaic_phase_id"):
+        if k in updates and updates[k] is not None:
+            updates[k] = str(updates[k])
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = initiative_id_str
+    updates["updated_by_id"] = str(user["id"])
+
+    await db.execute(
+        text(f"UPDATE core.dgi_initiative SET {set_clauses}, updated_at = NOW(), updated_by_id = :updated_by_id WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+
+    row = await _get_initiative_row(initiative_id_str, db)
+    return InitiativeItem(
+        id=row["id"], code=row["code"], name=row["name"], description=row["description"],
+        responsible_id=row["responsible_id"], responsible_name=row["responsible_name"],
+        status=row["status"], dmaic_phase=row["dmaic_phase"],
+        division_name=row["division_name"], start_date=row["start_date"], target_date=row["target_date"],
+        current_day=row["current_day"] or 0, total_days=row["total_days"],
+        progress=row["progress"] or 0.0, wip_column=row["wip_column"],
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -190,6 +332,7 @@ async def move_initiative(
             code=existing["code"],
             name=existing["name"],
             description=existing["description"],
+            responsible_id=existing["responsible_id"],
             responsible_name=existing["responsible_name"],
             status=existing["status"],
             dmaic_phase=existing["dmaic_phase"],
@@ -252,6 +395,7 @@ async def move_initiative(
         code=updated["code"],
         name=updated["name"],
         description=updated["description"],
+        responsible_id=updated["responsible_id"],
         responsible_name=updated["responsible_name"],
         status=updated["status"],
         dmaic_phase=updated["dmaic_phase"],

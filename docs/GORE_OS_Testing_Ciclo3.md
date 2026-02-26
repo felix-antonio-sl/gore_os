@@ -1,8 +1,8 @@
-# GORE_OS — Documento de Testeo Ciclo 3
+# GORE_OS — Documento de Testeo Ciclo 4
 
 **Fecha**: 2026-02-25
-**Version**: 3.0 (Ciclo 1 + Ciclo 2 + Ciclo 3)
-**Objetivo**: Guia completa para testeo funcional de GORE_OS tras la migracion de funcionalidad desde para_titi.
+**Version**: 4.0 (Ciclo 1 + Ciclo 2 + Ciclo 3 + Ciclo 4)
+**Objetivo**: Guia completa para testeo funcional de GORE_OS incluyendo UX Polish, Charts y CRUD completions del Ciclo 4.
 
 ---
 
@@ -58,31 +58,37 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 
 ## 2. Estado del Desarrollo
 
-### 2.1 Funcionalidad Completada (Ciclo 1 + 2 + 3)
+### 2.1 Funcionalidad Completada (Ciclo 1 + 2 + 3 + 4)
 
 | Modulo | Estado | Ciclo | Descripcion |
 |--------|--------|-------|-------------|
 | Login/Auth | Completo | C1 | JWT + 8 roles (4 op + 4 DGI) |
-| Dashboard operativo | Completo | C1+C3 | Role-aware con KPIs, desglose por division para ejecutivos |
+| Dashboard operativo | Completo | C1+C3+C4 | Role-aware con KPIs, desglose por division, charts recharts |
 | IPR lista + detalle | Completo | C1 | Paginado, filtros, tabs compromisos/problemas/alertas/convenios |
-| IPR crear | **Nuevo C3** | C3 | Form completo con auto-generacion de codigo BIP |
-| IPR asignar responsable | **Nuevo C3** | C3 | Boton en detalle IPR para roles admin |
-| IPR registrar avance | **Nuevo C3** | C3 | Tab Avances en detalle IPR + form progress_report |
+| IPR crear | Completo | C3 | Form completo con auto-generacion de codigo BIP |
+| IPR editar | **Nuevo C4** | C4 | Edicion inline nombre/descripcion/tipo/estado (roles admin) |
+| IPR asignar responsable | Completo | C3 | Boton en detalle IPR para roles admin |
+| IPR registrar avance | Completo | C3 | Tab Avances en detalle IPR + form progress_report |
 | Compromisos lista | Completo | C1 | Paginado, filtros, drawer con historial + acciones |
-| Compromisos crear | **Nuevo C3** | C3 | Form con tipo, responsable, fecha, IPR asociada |
+| Compromisos crear | Completo | C3 | Form con tipo, responsable, fecha, IPR asociada |
 | Compromisos acciones | Completo | C1 | Completar, verificar, devolver con historial |
 | Problemas lista | Completo | C1 | Paginado, filtros por estado y tipo |
-| Problemas crear | **Nuevo C3** | C3 | Form con IPR, tipo, impacto, descripcion |
-| Problemas resolver/cerrar | **Nuevo C3** | C3 | Drawer con acciones: En Gestion, Resolver, Cerrar |
+| Problemas crear | Completo | C3 | Form con IPR, tipo, impacto, descripcion |
+| Problemas resolver/cerrar | Completo | C3 | Drawer con acciones: En Gestion, Resolver, Cerrar |
 | Alertas | Completo | C1 | Lista con severidad, atencion |
-| Presupuesto | Completo | C2 | CRUD programas, resumen, CDPs |
-| Convenios | Completo | C2 | CRUD convenios + cuotas |
-| Mi Division | **Nuevo C3** | C3 | Dashboard JEFE con carga por persona |
-| Mis Compromisos | **Nuevo C3** | C3 | Vista personal agrupada (vencidos/semana/pendientes) |
-| Dashboard ejecutivo | **Nuevo C3** | C3 | Desglose por division con metricas comparativas |
-| Admin usuarios | **Nuevo C3** | C3 | CRUD completo + toggle activo + reset password |
-| Admin divisiones | **Nuevo C3** | C3 | CRUD con conteo de usuarios |
-| Reuniones de crisis | **Nuevo C3** | C3 | Modulo completo: crear, preparar, conducir, finalizar |
+| Presupuesto | Completo | C2+C4 | CRUD programas, resumen, CDPs, edicion montos inline |
+| Convenios | Completo | C2+C4 | CRUD convenios + cuotas, edicion estado/monto/fecha |
+| Mi Division | Completo | C3 | Dashboard JEFE con carga por persona |
+| Mis Compromisos | Completo | C3 | Vista personal agrupada (vencidos/semana/pendientes) |
+| Dashboard ejecutivo | Completo | C3 | Desglose por division con metricas comparativas |
+| Admin usuarios | Completo | C3 | CRUD completo + toggle activo + reset password |
+| Admin divisiones | Completo | C3 | CRUD con conteo de usuarios |
+| Reuniones de crisis | Completo | C3 | Modulo completo: crear, preparar, conducir, finalizar |
+| Busqueda global | **Nuevo C4** | C4 | Dialog ⌘K con resultados agrupados por tipo de entidad |
+| Notificaciones bell | **Nuevo C4** | C4 | Popover con alertas activas recientes y badge contador |
+| CSV Export | **Nuevo C4** | C4 | Exportar datos desde DGI Explorer a CSV |
+| Dashboard charts | **Nuevo C4** | C4 | 3 charts recharts: ejecucion presupuestaria, compromisos, alertas |
+| DGI gauges | **Nuevo C4** | C4 | Gauges semaforo en cockpit DGI con iconos visuales |
 | DGI Cockpits | Completo | C2 | 4 cockpits por rol DGI |
 | DGI Indicadores | Completo | C2 | Semaforo 5 dimensiones, refresh desde BD real |
 | DGI Iniciativas | Completo | C2 | Kanban con WIP limits |
@@ -105,6 +111,19 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | G11 | Mis Compromisos | `/mis-compromisos` + `GET /api/dashboard/mis-compromisos` | W4 |
 | G12 | Reuniones de crisis | Modulo completo: `/reuniones` + 8 endpoints API | W5 |
 | G13 | Dashboard ejecutivo | `/api/dashboard/ejecutivo` con desglose divisiones | W4 |
+
+### 2.3 Resumen de Nuevas Funcionalidades Ciclo 4
+
+| # | Feature | Descripcion | Tipo |
+|---|---------|-------------|------|
+| F1 | CSV Export | Exportar datos desde DGI Explorer a archivo CSV | UX |
+| F2 | Notificaciones Bell | Badge con contador + popover alertas activas en header | UX |
+| F3 | Busqueda global ⌘K | Dialog de busqueda con resultados agrupados (IPR, compromisos, problemas) | UX |
+| F4 | Dashboard Charts | 3 charts recharts: ejecucion presupuestaria (bar), compromisos por estado (donut), alertas por severidad (horizontal bar) | Charts |
+| F5 | DGI Gauges | Iconos semaforo visuales en cockpit Jefe DGI | Charts |
+| F6 | IPR Edit | Edicion de nombre, descripcion, tipo, estado para ADMIN_SISTEMA y ADMIN_REGIONAL | CRUD |
+| F7 | Presupuesto Edit | Edicion inline de montos (inicial, vigente, comprometido, devengado, pagado) | CRUD |
+| F8 | Convenios Edit | Edicion de estado, monto, fecha termino en drawer de convenio | CRUD |
 
 ---
 
@@ -348,6 +367,7 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | Crear compromiso | Si | Si | Si | No |
 | Crear problema | Si | Si | Si | Si |
 | Crear IPR | Si | Si | No | No |
+| Editar IPR | Si | Si | No | No |
 | Verificar compromiso | Si | Si | Si (propia div) | No |
 | Admin usuarios | Si | No | No | No |
 | Admin divisiones | Si | No | No | No |
@@ -355,6 +375,8 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | Mis Compromisos | No | No | No | Si |
 | Dashboard ejecutivo | Si | Si | No | No |
 | Crear reunion | Si | Si | Si | No |
+| Busqueda global ⌘K | Si | Si | Si | Si |
+| Ver notificaciones bell | Si | Si | Si | Si |
 
 #### TC-19: Navegacion Sidebar
 1. Login con cada usuario de prueba
@@ -368,6 +390,101 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 4. Login JEFE_DIVISION → crear reunion → preparar (ver sugerencias del paso 2-3)
 5. Conducir reunion → agregar temas → revisar → finalizar
 6. Verificar que compromisos creados en la reunion aparecen en la lista general
+
+### 4.7 Wave 6 — UX Polish + Charts + CRUD (Ciclo 4)
+
+#### TC-21: CSV Export desde DGI Explorer
+1. Login como `jefe.dgi@goreos.cl` (JEFE_DGI)
+2. Ir a `/datos` → seleccionar dominio "IPR"
+3. Esperar que cargue la tabla de datos
+4. Click boton "Exportar CSV" en el header de la tabla
+5. **Esperado**: Se descarga un archivo `.csv` con los datos de la tabla
+6. **Verificar**: Abrir el CSV — debe contener las columnas y filas visibles en la tabla
+
+#### TC-22: Notificaciones Bell — Badge + Popover
+1. Login como `regional@goreos.cl`
+2. Verificar en el header: icono campana visible junto al avatar
+3. Si hay alertas activas: badge rojo con numero visible sobre la campana
+4. Click en la campana
+5. **Esperado**: Popover se abre mostrando:
+   - Titulo "Alertas activas" con conteo
+   - Lista de hasta 5 alertas recientes con severidad (icono color), mensaje y fecha
+   - Link "Ver todas las alertas →" al pie
+6. Click en "Ver todas las alertas →"
+7. **Esperado**: Navega a `/alertas`
+
+#### TC-23: Busqueda Global ⌘K — Query + Resultados
+1. Login como `regional@goreos.cl`
+2. Click en boton "Buscar ⌘K" en el header (o presionar ⌘K / Ctrl+K)
+3. **Esperado**: Dialog de busqueda se abre con input y placeholder "Buscar IPR, compromisos, problemas, personas..."
+4. Escribir "DAF" (minimo 2 caracteres)
+5. **Esperado**: Resultados agrupados por tipo:
+   - **IPR**: NORMALIZACION ESCUELA DAFNE ZAPATA ROZAS (30387725)
+   - **Compromisos**: Entrega informe tecnico avance semestral DAF (OC-0001)
+   - **Problemas**: Facturas pendientes de visacion contable DAF... (PR-00002)
+6. Escribir 1 solo caracter → muestra "Escribe al menos 2 caracteres para buscar"
+7. **Verificar**: Buscar termino sin resultados → muestra "Sin resultados para ..."
+
+#### TC-24: Busqueda Global ⌘K — Navegacion a Entidad
+1. Con el dialog de busqueda abierto y resultados visibles (TC-23)
+2. Click en un resultado de tipo IPR
+3. **Esperado**: Dialog se cierra y navega a `/ipr/{id}` del IPR seleccionado
+4. Volver a abrir ⌘K → click en resultado de compromiso
+5. **Esperado**: Navega a `/compromisos?id={id}`
+6. **Verificar**: Presionar Escape cierra el dialog sin navegar
+
+#### TC-25: Dashboard Charts — Operativo (3 Charts Recharts)
+1. Login como `regional@goreos.cl` (ADMIN_REGIONAL)
+2. Ir a `/dashboard`
+3. **Esperado**: Debajo de los KPIs, 3 charts visibles:
+   - **Ejecucion Presupuestaria**: Bar chart vertical por division (% ejecucion)
+   - **Compromisos por Estado**: Donut chart con leyenda (EN_PROGRESO, PENDIENTE, VENCIDO, VERIFICADO)
+   - **Alertas por Severidad**: Horizontal bar chart (Critico, Alto, Atencion)
+4. **Verificar**: Charts muestran datos reales (no vacios ni placeholders)
+5. **Verificar**: Los datos coinciden con `GET /api/dashboard/chart-data`
+
+#### TC-26: Dashboard Charts — DGI Gauges (Semaforo)
+1. Login como `jefe.dgi@goreos.cl` (JEFE_DGI)
+2. Ir a `/dashboard`
+3. **Esperado**: Cockpit Jefe DGI con:
+   - 5 tarjetas de semaforo institucional (PRESUPUESTO, CARTERA_IPR, CONVENIOS, TDE, RIESGOS)
+   - Cada tarjeta con signal de color (verde=OK, amarillo=Atencion, rojo=Critico)
+   - Iconos gauge visuales debajo de las tarjetas por cada dimension
+4. **Verificar**: Sidebar muestra nav DGI (Home, Alertas, Tablero, Datos, Informes)
+5. **Verificar**: Badge "DGI" visible junto a GORE_OS en el header
+
+#### TC-27: IPR Edit (ADMIN_REGIONAL puede editar)
+1. Login como `regional@goreos.cl` (ADMIN_REGIONAL)
+2. Ir a `/ipr` → click en cualquier IPR para ver detalle
+3. **Esperado**: Boton "Editar" visible en la seccion de detalle (junto a "Asignar Responsable")
+4. Click "Editar" → se abre formulario de edicion
+5. Cambiar nombre de la IPR → guardar
+6. **Esperado**: Nombre actualizado exitosamente
+7. **Verificar**: Login como `admin@goreos.cl` → tambien debe ver boton "Editar"
+
+#### TC-28: IPR Edit — Role Gating (ENCARGADO no puede)
+1. Login como `encargado.daf@goreos.cl` (ENCARGADO)
+2. Ir a `/ipr/{id}` (detalle de cualquier IPR)
+3. **Esperado**: Boton "Editar" NO visible. Solo vista de lectura.
+4. **Verificar API**: `PATCH /api/ipr/{id}` con token ENCARGADO retorna 403 "Sin permisos suficientes"
+
+#### TC-29: Presupuesto Edit Montos
+1. Login como `regional@goreos.cl` (ADMIN_REGIONAL)
+2. Ir a `/presupuesto` → click en un programa presupuestario
+3. En el drawer de detalle, buscar boton "Editar Montos"
+4. Click → inputs editables para: inicial, vigente, comprometido, devengado, pagado
+5. Cambiar un monto → click "Guardar"
+6. **Esperado**: Montos actualizados, drawer se refresca con valores nuevos
+7. **Verificar API**: `PATCH /api/presupuesto/{id}` retorna 200
+
+#### TC-30: Convenios Edit (Estado + Monto + Fecha)
+1. Login como `regional@goreos.cl` (ADMIN_REGIONAL)
+2. Ir a `/convenios` → click en un convenio
+3. En el drawer de detalle, buscar boton "Editar"
+4. Click → formulario con campos editables: estado, monto, fecha termino
+5. Cambiar estado del convenio → click "Guardar"
+6. **Esperado**: Badge de estado actualizado en el drawer
+7. **Verificar**: Cerrar y reabrir drawer → valores persisten
 
 ---
 
@@ -383,7 +500,7 @@ POST /api/auth/login          Login (form-urlencoded: username, password)
 GET    /api/ipr                Lista paginada, filtros: ipr_type, status, sector, search
 GET    /api/ipr/{id}           Detalle con conteos
 POST   /api/ipr                Crear IPR (ADMIN_SISTEMA, ADMIN_REGIONAL)
-PATCH  /api/ipr/{id}           Asignar responsable
+PATCH  /api/ipr/{id}           Editar IPR (nombre, descripcion, tipo, estado, assignee)
 POST   /api/ipr/{id}/avances   Registrar avance (progress_report)
 GET    /api/ipr/{id}/avances   Listar avances
 ```
@@ -418,6 +535,12 @@ GET    /api/dashboard                   Dashboard role-aware
 GET    /api/dashboard/mi-division       Stats equipo (JEFE_DIVISION)
 GET    /api/dashboard/mis-compromisos   Compromisos agrupados (ENCARGADO)
 GET    /api/dashboard/ejecutivo         Dashboard con desglose divisiones
+GET    /api/dashboard/chart-data        Datos para charts (commitments_by_state, alerts_by_severity, budget_by_division)
+```
+
+### 5.6b Busqueda Global (Nuevo C4)
+```
+GET    /api/search?q={query}&limit={n}  Busqueda cross-entity (IPR, compromisos, problemas). Min 2 chars.
 ```
 
 ### 5.7 Presupuesto
@@ -493,15 +616,16 @@ GET    /api/dgi/reports                    Informes
 | Ciclo 1 | Base operativa: Login, Dashboard, IPR (read-only), Compromisos CRUD, Problemas lista, Alertas | Completado |
 | Ciclo 2 | Presupuesto, Convenios, DGI (cockpits, indicadores, iniciativas, informes) | Completado |
 | Ciclo 3 | Migracion para_titi: forms CRUD, IPR escritura, admin, dashboards, reuniones | Completado |
+| Ciclo 4 | UX Polish (CSV export, Bell notif, ⌘K search), Charts (recharts dashboard, DGI gauges), CRUD (IPR/Presupuesto/Convenios edit) | Completado |
 
 ### 6.2 Pendiente / Proximos Ciclos
 
 | Item | Prioridad | Descripcion |
 |------|-----------|-------------|
 | Tests automatizados | Alta | Unit tests backend (pytest), integration tests API, E2E frontend |
-| Notificaciones | Media | Notificaciones en-app y/o email para alertas, compromisos vencidos |
-| Exportar a Excel/PDF | Media | Exportar listas y reportes a formatos descargables |
+| Exportar a PDF | Media | Exportar reportes e informes DGI a PDF |
 | Auditoria de acciones | Media | Log de acciones de usuario (quien hizo que, cuando) |
+| Notificaciones email | Media | Notificaciones por email para alertas criticas y compromisos vencidos |
 | DGI dimension TDE | Baja | Fuente de datos real para dimension Transformacion Digital |
 | Integracion SIGFE | Baja | Conexion con sistema financiero del Estado |
 | App movil (PWA) | Baja | Acceso desde dispositivos moviles |

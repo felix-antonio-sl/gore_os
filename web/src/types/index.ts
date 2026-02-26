@@ -272,6 +272,7 @@ export interface DGIInitiative {
   code: string | null;
   name: string;
   description: string | null;
+  responsible_id: string | null;
   responsible_name: string | null;
   status: string;
   dmaic_phase: string | null;

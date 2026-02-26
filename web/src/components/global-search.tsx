@@ -84,7 +84,7 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
     debounceRef.current = setTimeout(async () => {
       try {
         const data = await api.get<SearchResponse>(
-          `/search?q=${encodeURIComponent(query)}&limit=5`
+          `/api/search?q=${encodeURIComponent(query)}&limit=5`
         );
         setResults(data.results);
       } catch {
@@ -115,7 +115,7 @@ export function GlobalSearch({ open, onOpenChange }: GlobalSearchProps) {
   };
 
   return (
-    <CommandDialog open={open} onOpenChange={onOpenChange}>
+    <CommandDialog open={open} onOpenChange={onOpenChange} shouldFilter={false}>
       <CommandInput
         placeholder="Buscar IPR, compromisos, problemas, personas..."
         value={query}

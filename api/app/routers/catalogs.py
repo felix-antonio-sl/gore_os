@@ -75,10 +75,12 @@ async def get_divisions_list(
 ):
     result = await db.execute(
         text("""
-            SELECT id, code, name
-            FROM core.organization
-            WHERE deleted_at IS NULL
-            ORDER BY name
+            SELECT o.id, o.code, o.name
+            FROM core.organization o
+            JOIN ref.category c ON o.org_type_id = c.id
+            WHERE o.deleted_at IS NULL
+              AND c.code IN ('DIVISION', 'GORE')
+            ORDER BY o.name
         """)
     )
     return [dict(r) for r in result.mappings().all()]

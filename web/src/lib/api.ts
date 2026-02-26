@@ -37,7 +37,9 @@ class ApiClient {
     }
     if (!res.ok) {
       const text = await res.text();
-      throw new Error(text || `Error ${res.status}`);
+      let message = text;
+      try { message = JSON.parse(text).detail ?? text; } catch { /* not JSON */ }
+      throw new Error(message || `Error ${res.status}`);
     }
     return res.json();
   }

@@ -35,6 +35,7 @@ class InitiativeItem(BaseModel):
     code: str | None
     name: str
     description: str | None
+    responsible_id: UUID | None
     responsible_name: str | None
     status: str
     dmaic_phase: str | None
@@ -54,6 +55,16 @@ class InitiativeCreate(BaseModel):
     dmaic_phase: str | None = None
     target_date: date | None = None
     total_days: int | None = None
+
+
+class InitiativeUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    dmaic_phase: str | None = None
+    target_date: date | None = None
+    total_days: int | None = None
+    responsible_id: UUID | None = None
+    division_id: UUID | None = None
 
 
 class InitiativeMove(BaseModel):

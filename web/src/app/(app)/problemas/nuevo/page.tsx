@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { ArrowLeft } from "lucide-react";
 import type { CategoryRef } from "@/types";
 
@@ -26,7 +27,6 @@ export default function NuevoProblemaPage() {
 
   const [problemTypes, setProblemTypes] = useState<CategoryRef[]>([]);
   const [impacts, setImpacts] = useState<CategoryRef[]>([]);
-  const [iprs, setIprs] = useState<IprOption[]>([]);
 
   const [iprId, setIprId] = useState("");
   const [problemTypeId, setProblemTypeId] = useState("");
@@ -38,10 +38,17 @@ export default function NuevoProblemaPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const searchIprs = useCallback(async (q: string): Promise<ComboboxOption[]> => {
+    const data = await api.get<IprOption[]>(`/api/catalogs/iprs?search=${encodeURIComponent(q)}`);
+    return data.map((ipr) => ({
+      value: ipr.id,
+      label: `${ipr.codigo_bip} — ${ipr.name}`,
+    }));
+  }, []);
+
   useEffect(() => {
     api.get<CategoryRef[]>("/api/catalogs/categories/problem_type").then(setProblemTypes).catch(() => {});
     api.get<CategoryRef[]>("/api/catalogs/categories/impact").then(setImpacts).catch(() => {});
-    api.get<IprOption[]>("/api/catalogs/iprs").then(setIprs).catch(() => {});
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -90,18 +97,12 @@ export default function NuevoProblemaPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-sm font-medium">IPR asociada *</label>
-              <Select value={iprId} onValueChange={setIprId}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Seleccione IPR" />
-                </SelectTrigger>
-                <SelectContent>
-                  {iprs.map((ipr) => (
-                    <SelectItem key={ipr.id} value={ipr.id}>
-                      {ipr.codigo_bip} — {ipr.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <ComboboxAsync
+                value={iprId}
+                onChange={setIprId}
+                searchFn={searchIprs}
+                placeholder="Buscar IPR por código o nombre..."
+              />
             </div>
 
             <div className="space-y-1.5">
