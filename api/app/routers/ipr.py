@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate
+from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
 from app.schemas.common import PaginatedResponse
 
@@ -335,17 +335,28 @@ async def create_ipr(
 
 
 # ---------------------------------------------------------------------------
-# PATCH /api/ipr/{id} — Update IPR assignee
+# PATCH /api/ipr/{id} — Update IPR fields (general edit)
 # ---------------------------------------------------------------------------
 
+_IPR_FIELD_ALLOWLIST = {
+    "name": "name",
+    "ipr_type_id": "ipr_type_id",
+    "status_id": "status_id",
+    "investment_sector_id": "investment_sector_id",
+    "funding_source_id": "funding_source_id",
+    "sponsor_division_id": "sponsor_division_id",
+    "assignee_id": "assignee_id",
+}
+
 @router.patch("/{ipr_id}")
-async def update_ipr_assignee(
+async def update_ipr(
     ipr_id: UUID,
-    body: IprAssigneeUpdate,
+    body: IprUpdate,
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    """Assign a responsible user to an IPR. ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION."""
+    """Update IPR fields. ADMIN_SISTEMA, ADMIN_REGIONAL can edit all fields.
+    JEFE_DIVISION can only update assignee_id."""
     _require_roles(user, *_ASSIGN_ROLES)
 
     # Verify IPR exists
@@ -356,29 +367,37 @@ async def update_ipr_assignee(
     if not check.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="IPR no encontrado")
 
-    # Verify assignee exists
-    user_check = await db.execute(
-        text('SELECT id FROM core."user" WHERE id = :uid AND is_active = true AND deleted_at IS NULL'),
-        {"uid": str(body.assignee_id)},
-    )
-    if not user_check.first():
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuario asignado no encontrado")
+    updates = body.model_dump(exclude_none=True)
+    if not updates:
+        return {"message": "Sin cambios"}
 
-    await db.execute(
-        text("""
-            UPDATE core.ipr
-            SET assignee_id = :assignee_id, updated_by_id = :user_id, updated_at = NOW()
-            WHERE id = :id
-        """),
-        {
-            "assignee_id": str(body.assignee_id),
-            "user_id": str(user["id"]),
-            "id": str(ipr_id),
-        },
-    )
+    # JEFE_DIVISION can only update assignee_id
+    role = user.get("role_code", "")
+    if role == "JEFE_DIVISION":
+        updates = {k: v for k, v in updates.items() if k == "assignee_id"}
+        if not updates:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No tiene permisos para editar estos campos")
+
+    set_clauses = []
+    params: dict = {"id": str(ipr_id), "user_id": str(user["id"])}
+    for field, value in updates.items():
+        col = _IPR_FIELD_ALLOWLIST.get(field)
+        if col is None:
+            continue
+        set_clauses.append(f"{col} = :{field}")
+        params[field] = str(value) if value is not None else None
+
+    if not set_clauses:
+        return {"message": "Sin cambios válidos"}
+
+    set_clauses.append("updated_by_id = :user_id")
+    set_clauses.append("updated_at = NOW()")
+
+    sql = text(f"UPDATE core.ipr SET {', '.join(set_clauses)} WHERE id = :id")
+    await db.execute(sql, params)
     await db.commit()
 
-    return {"message": "Responsable asignado exitosamente"}
+    return {"message": "IPR actualizado exitosamente"}
 
 
 # ---------------------------------------------------------------------------

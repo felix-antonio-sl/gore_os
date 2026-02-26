@@ -16,6 +16,9 @@ from app.schemas.dashboard import (
     MisCompromisosResponse,
     DivisionBreakdown,
     DashboardExecutivoResponse,
+    ChartDataPoint,
+    BudgetChartPoint,
+    ChartDataResponse,
 )
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
@@ -737,4 +740,109 @@ async def get_dashboard_ejecutivo(
         alerts=base.alerts,
         problems=base.problems,
         divisions=divisions,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Chart data endpoint
+# ---------------------------------------------------------------------------
+@router.get("/chart-data", response_model=ChartDataResponse)
+async def get_chart_data(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Datos para charts del dashboard: compromisos por estado, alertas por severidad,
+    ejecución presupuestaria por división."""
+
+    # ── Compromisos por estado ──────────────────────────────────────────────
+    comm_sql = text("""
+        SELECT sc.code AS state, COUNT(*) AS cnt
+        FROM core.operational_commitment oc
+        JOIN ref.category sc ON sc.id = oc.state_id
+        WHERE oc.deleted_at IS NULL
+        GROUP BY sc.code
+    """)
+    comm_rows = (await db.execute(comm_sql)).mappings().all()
+
+    STATE_COLORS = {
+        "PENDIENTE": "#f59e0b",
+        "EN_PROGRESO": "#3b82f6",
+        "COMPLETADO": "#10b981",
+        "VERIFICADO": "#6366f1",
+        "CANCELADO": "#9ca3af",
+        "VENCIDO": "#ef4444",
+    }
+    commitments_by_state = [
+        ChartDataPoint(
+            name=r["state"],
+            value=r["cnt"],
+            color=STATE_COLORS.get(r["state"], "#9ca3af"),
+        )
+        for r in comm_rows
+    ]
+
+    # ── Alertas por severidad ───────────────────────────────────────────────
+    alert_sql = text("""
+        SELECT COALESCE(sev.code, 'SIN_CLASIFICAR') AS severity, COUNT(*) AS cnt
+        FROM core.alert a
+        LEFT JOIN ref.category sev ON sev.id = a.severity_id
+        WHERE a.deleted_at IS NULL
+          AND a.resolved_at IS NULL
+        GROUP BY sev.code
+    """)
+    alert_rows = (await db.execute(alert_sql)).mappings().all()
+
+    SEVERITY_COLORS = {
+        "CRITICO": "#ef4444",
+        "ALTO": "#f97316",
+        "ATENCION": "#f59e0b",
+        "INFO": "#3b82f6",
+    }
+    alerts_by_severity = [
+        ChartDataPoint(
+            name=r["severity"],
+            value=r["cnt"],
+            color=SEVERITY_COLORS.get(r["severity"], "#9ca3af"),
+        )
+        for r in alert_rows
+    ]
+
+    # ── Presupuesto por división ────────────────────────────────────────────
+    budget_sql = text("""
+        SELECT
+            o.short_name AS division,
+            COALESCE(SUM(bp.paid_amount), 0)    AS pagado,
+            COALESCE(SUM(bp.current_amount), 0) AS vigente,
+            CASE
+                WHEN COALESCE(SUM(bp.current_amount), 0) = 0 THEN 0
+                ELSE ROUND(
+                    SUM(bp.paid_amount)::numeric
+                    / SUM(bp.current_amount)::numeric * 100, 1
+                )
+            END AS ejecucion_pct
+        FROM core.organization o
+        JOIN core.budget_program bp ON bp.owner_division_id = o.id
+        WHERE bp.fiscal_year = EXTRACT(YEAR FROM CURRENT_DATE)
+          AND bp.deleted_at IS NULL
+          AND o.deleted_at IS NULL
+        GROUP BY o.id, o.short_name
+        ORDER BY ejecucion_pct DESC
+        LIMIT 10
+    """)
+    budget_rows = (await db.execute(budget_sql)).mappings().all()
+
+    budget_by_division = [
+        BudgetChartPoint(
+            division=r["division"],
+            ejecucion_pct=float(r["ejecucion_pct"]),
+            pagado=float(r["pagado"]),
+            vigente=float(r["vigente"]),
+        )
+        for r in budget_rows
+    ]
+
+    return ChartDataResponse(
+        commitments_by_state=commitments_by_state,
+        alerts_by_severity=alerts_by_severity,
+        budget_by_division=budget_by_division,
     )

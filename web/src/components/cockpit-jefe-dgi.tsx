@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { AlertTriangle, Users, FileText, CheckSquare } from "lucide-react";
 import { SemaforoCard } from "@/components/semaforo-card";
+import { SemaforoGauge } from "@/components/charts/semaforo-gauge";
 import { cn } from "@/lib/utils";
 import type { CockpitJefeDGI } from "@/types";
 
@@ -53,6 +54,17 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
               label={dim.label}
               signal={dim.signal}
               indicatorCount={dim.indicator_count}
+            />
+          ))}
+        </div>
+        {/* Gauge visual row */}
+        <div className="mt-4 flex items-center justify-center gap-6 flex-wrap">
+          {semaforo.map((dim) => (
+            <SemaforoGauge
+              key={dim.dimension}
+              signal={dim.signal}
+              label={dim.label}
+              dimension={dim.dimension}
             />
           ))}
         </div>

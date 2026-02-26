@@ -9,6 +9,16 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAuth } from "@/lib/auth";
 import type { PaginatedResponse, ConvenioListItem, ConvenioDetail } from "@/types";
 
 const STATE_OPTIONS = [
@@ -59,16 +69,38 @@ function formatDate(dateStr: string | null | undefined): string {
   }
 }
 
+const CGR_OPTIONS = [
+  { value: "TOMADO_RAZON", label: "Toma razón" },
+  { value: "REPRESENTADO", label: "Representado" },
+  { value: "EXENTO", label: "Exento" },
+  { value: "ENVIADO", label: "Enviado" },
+  { value: "PENDIENTE", label: "Pendiente" },
+  { value: "NO_APLICA", label: "No aplica" },
+  { value: "EN_REVISION", label: "En revisión" },
+];
+
 export default function ConveniosPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { user } = useAuth();
 
   const [data, setData] = useState<PaginatedResponse<ConvenioListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<ConvenioDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+
+  // Edit state
+  const [isEditing, setIsEditing] = useState(false);
+  const [editState, setEditState] = useState("");
+  const [editTotalAmount, setEditTotalAmount] = useState("");
+  const [editValidTo, setEditValidTo] = useState("");
+  const [editCgrOutcome, setEditCgrOutcome] = useState("");
+  const [editSubmitting, setEditSubmitting] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+
+  const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
   const page = Number(searchParams.get("page") ?? "1");
   const state = searchParams.get("state") ?? "";
@@ -115,12 +147,50 @@ export default function ConveniosPage() {
     const item = row as ConvenioListItem;
     setSelectedId(item.id);
     setDetail(null);
+    setIsEditing(false);
+    setEditError(null);
     setDetailLoading(true);
     api
       .get<ConvenioDetail>(`/api/convenios/${item.id}`)
       .then(setDetail)
       .catch(() => setDetail(null))
       .finally(() => setDetailLoading(false));
+  };
+
+  const openEdit = () => {
+    if (!detail) return;
+    setEditState(detail.state ?? "");
+    setEditTotalAmount(String(detail.total_amount ?? ""));
+    setEditValidTo(detail.valid_to ? detail.valid_to.slice(0, 10) : "");
+    setEditCgrOutcome("");
+    setEditError(null);
+    setIsEditing(true);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedId) return;
+    setEditSubmitting(true);
+    setEditError(null);
+    const body: Record<string, unknown> = {};
+    if (editState) body.state = editState;
+    if (editTotalAmount) body.total_amount = parseFloat(editTotalAmount);
+    if (editValidTo) body.valid_to = editValidTo;
+    if (editCgrOutcome) body.cgr_outcome = editCgrOutcome;
+    try {
+      await api.patch(`/api/convenios/${selectedId}`, body);
+      setIsEditing(false);
+      setDetailLoading(true);
+      api
+        .get<ConvenioDetail>(`/api/convenios/${selectedId}`)
+        .then(setDetail)
+        .catch(() => {})
+        .finally(() => setDetailLoading(false));
+    } catch (err) {
+      setEditError(err instanceof Error ? err.message : "Error al guardar");
+    } finally {
+      setEditSubmitting(false);
+    }
   };
 
   const columns = [
@@ -229,6 +299,74 @@ export default function ConveniosPage() {
                 <Badge variant="outline" className="text-xs">{detail.agreement_type_label}</Badge>
                 <StatusBadge status={detail.state} size="sm" />
               </div>
+              {canEdit && !isEditing && (
+                <Button size="sm" variant="outline" onClick={openEdit} className="mt-2 w-full">
+                  Editar
+                </Button>
+              )}
+              {isEditing && (
+                <form onSubmit={handleEditSubmit} className="mt-3 space-y-3">
+                  <p className="text-xs font-semibold uppercase text-muted-foreground tracking-wide">Editar Convenio</p>
+                  <div className="space-y-1">
+                    <label className="text-xs text-muted-foreground">Estado</label>
+                    <Select value={editState} onValueChange={setEditState}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Seleccione estado" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {STATE_OPTIONS.map((opt) => (
+                          <SelectItem key={opt.value} value={opt.value} className="text-xs">
+                            {opt.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs text-muted-foreground">Monto total (CLP)</label>
+                    <Input
+                      type="number"
+                      min="0"
+                      value={editTotalAmount}
+                      onChange={(e) => setEditTotalAmount(e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs text-muted-foreground">Vigencia hasta</label>
+                    <Input
+                      type="date"
+                      value={editValidTo}
+                      onChange={(e) => setEditValidTo(e.target.value)}
+                      className="h-8 text-xs"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs text-muted-foreground">Resultado CGR</label>
+                    <Select value={editCgrOutcome} onValueChange={setEditCgrOutcome}>
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="Sin cambio" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {CGR_OPTIONS.map((opt) => (
+                          <SelectItem key={opt.value} value={opt.value} className="text-xs">
+                            {opt.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  {editError && <p className="text-xs text-red-600">{editError}</p>}
+                  <div className="flex gap-2 pt-1">
+                    <Button type="submit" size="sm" disabled={editSubmitting}>
+                      {editSubmitting ? "Guardando..." : "Guardar"}
+                    </Button>
+                    <Button type="button" size="sm" variant="outline" onClick={() => setIsEditing(false)}>
+                      Cancelar
+                    </Button>
+                  </div>
+                </form>
+              )}
               {detail.ipr_name && (
                 <p className="text-sm mt-2">
                   <span className="text-muted-foreground">IPR: </span>

@@ -3,10 +3,13 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
 
 const SUBTITLE_OPTIONS = [
@@ -59,12 +62,25 @@ export default function PresupuestoPage() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { user } = useAuth();
 
   const [data, setData] = useState<PaginatedResponse<PresupuestoListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<PresupuestoDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+
+  // Edit state
+  const [isEditing, setIsEditing] = useState(false);
+  const [editInitial, setEditInitial] = useState("");
+  const [editCurrent, setEditCurrent] = useState("");
+  const [editCommitted, setEditCommitted] = useState("");
+  const [editAccrued, setEditAccrued] = useState("");
+  const [editPaid, setEditPaid] = useState("");
+  const [editSubmitting, setEditSubmitting] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+
+  const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
   const page = Number(searchParams.get("page") ?? "1");
   const fiscal_year = searchParams.get("fiscal_year") ?? "";
@@ -113,12 +129,53 @@ export default function PresupuestoPage() {
     const item = row as PresupuestoListItem;
     setSelectedId(item.id);
     setDetail(null);
+    setIsEditing(false);
+    setEditError(null);
     setDetailLoading(true);
     api
       .get<PresupuestoDetail>(`/api/presupuesto/${item.id}`)
       .then(setDetail)
       .catch(() => setDetail(null))
       .finally(() => setDetailLoading(false));
+  };
+
+  const openEdit = () => {
+    if (!detail) return;
+    setEditInitial(String(detail.initial_amount ?? ""));
+    setEditCurrent(String(detail.current_amount ?? ""));
+    setEditCommitted(String(detail.committed_amount ?? ""));
+    setEditAccrued(String(detail.accrued_amount ?? ""));
+    setEditPaid(String(detail.paid_amount ?? ""));
+    setEditError(null);
+    setIsEditing(true);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedId) return;
+    setEditSubmitting(true);
+    setEditError(null);
+    try {
+      await api.patch(`/api/presupuesto/${selectedId}`, {
+        initial_amount: editInitial ? parseFloat(editInitial) : undefined,
+        current_amount: editCurrent ? parseFloat(editCurrent) : undefined,
+        committed_amount: editCommitted ? parseFloat(editCommitted) : undefined,
+        accrued_amount: editAccrued ? parseFloat(editAccrued) : undefined,
+        paid_amount: editPaid ? parseFloat(editPaid) : undefined,
+      });
+      setIsEditing(false);
+      // Refresh detail
+      setDetailLoading(true);
+      api
+        .get<PresupuestoDetail>(`/api/presupuesto/${selectedId}`)
+        .then(setDetail)
+        .catch(() => {})
+        .finally(() => setDetailLoading(false));
+    } catch (err) {
+      setEditError(err instanceof Error ? err.message : "Error al guardar");
+    } finally {
+      setEditSubmitting(false);
+    }
   };
 
   const columns = [
@@ -224,35 +281,76 @@ export default function PresupuestoPage() {
               <ExecutionBar pct={detail.execution_pct} />
             </div>
 
-            {/* Montos */}
-            <div className="rounded-lg border divide-y text-sm">
-              <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Monto inicial</span>
-                <span className="font-mono">{formatCLP(detail.initial_amount)}</span>
-              </div>
-              <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Monto vigente</span>
-                <span className="font-mono">{formatCLP(detail.current_amount)}</span>
-              </div>
-              <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Comprometido</span>
-                <span className="font-mono">{formatCLP(detail.committed_amount)}</span>
-              </div>
-              <div className="flex justify-between px-3 py-2">
-                <span className="text-muted-foreground">Devengado</span>
-                <span className="font-mono">{formatCLP(detail.accrued_amount)}</span>
-              </div>
-              <div className="flex justify-between px-3 py-2 font-medium">
-                <span>Pagado</span>
-                <span className="font-mono">{formatCLP(detail.paid_amount)}</span>
-              </div>
-              {detail.fndr_amount != null && (
-                <div className="flex justify-between px-3 py-2">
-                  <span className="text-muted-foreground">FNDR</span>
-                  <span className="font-mono">{formatCLP(detail.fndr_amount)}</span>
+            {/* Montos — vista o edición */}
+            {isEditing ? (
+              <form onSubmit={handleEditSubmit} className="space-y-3">
+                <p className="text-xs font-semibold uppercase text-muted-foreground tracking-wide">Editar Montos (CLP)</p>
+                {[
+                  { label: "Monto inicial", value: editInitial, setter: setEditInitial },
+                  { label: "Monto vigente", value: editCurrent, setter: setEditCurrent },
+                  { label: "Comprometido", value: editCommitted, setter: setEditCommitted },
+                  { label: "Devengado", value: editAccrued, setter: setEditAccrued },
+                  { label: "Pagado", value: editPaid, setter: setEditPaid },
+                ].map(({ label, value, setter }) => (
+                  <div key={label} className="flex items-center gap-2">
+                    <label className="text-xs text-muted-foreground w-28 shrink-0">{label}</label>
+                    <Input
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={value}
+                      onChange={(e) => setter(e.target.value)}
+                      className="h-7 text-xs"
+                    />
+                  </div>
+                ))}
+                {editError && <p className="text-xs text-red-600">{editError}</p>}
+                <div className="flex gap-2 pt-1">
+                  <Button type="submit" size="sm" disabled={editSubmitting}>
+                    {editSubmitting ? "Guardando..." : "Guardar"}
+                  </Button>
+                  <Button type="button" size="sm" variant="outline" onClick={() => setIsEditing(false)}>
+                    Cancelar
+                  </Button>
                 </div>
-              )}
-            </div>
+              </form>
+            ) : (
+              <>
+                {canEdit && (
+                  <Button size="sm" variant="outline" onClick={openEdit} className="w-full">
+                    Editar Montos
+                  </Button>
+                )}
+                <div className="rounded-lg border divide-y text-sm">
+                  <div className="flex justify-between px-3 py-2">
+                    <span className="text-muted-foreground">Monto inicial</span>
+                    <span className="font-mono">{formatCLP(detail.initial_amount)}</span>
+                  </div>
+                  <div className="flex justify-between px-3 py-2">
+                    <span className="text-muted-foreground">Monto vigente</span>
+                    <span className="font-mono">{formatCLP(detail.current_amount)}</span>
+                  </div>
+                  <div className="flex justify-between px-3 py-2">
+                    <span className="text-muted-foreground">Comprometido</span>
+                    <span className="font-mono">{formatCLP(detail.committed_amount)}</span>
+                  </div>
+                  <div className="flex justify-between px-3 py-2">
+                    <span className="text-muted-foreground">Devengado</span>
+                    <span className="font-mono">{formatCLP(detail.accrued_amount)}</span>
+                  </div>
+                  <div className="flex justify-between px-3 py-2 font-medium">
+                    <span>Pagado</span>
+                    <span className="font-mono">{formatCLP(detail.paid_amount)}</span>
+                  </div>
+                  {detail.fndr_amount != null && (
+                    <div className="flex justify-between px-3 py-2">
+                      <span className="text-muted-foreground">FNDR</span>
+                      <span className="font-mono">{formatCLP(detail.fndr_amount)}</span>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
 
             {/* Clasificación */}
             {(detail.subtitle_label || detail.item_label || detail.allocation_label) && (

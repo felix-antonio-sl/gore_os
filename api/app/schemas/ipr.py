@@ -54,3 +54,13 @@ class IprCreate(BaseModel):
 
 class IprAssigneeUpdate(BaseModel):
     assignee_id: UUID
+
+
+class IprUpdate(BaseModel):
+    name: str | None = None
+    ipr_type_id: UUID | None = None
+    status_id: UUID | None = None
+    investment_sector_id: UUID | None = None
+    funding_source_id: UUID | None = None
+    sponsor_division_id: UUID | None = None
+    assignee_id: UUID | None = None

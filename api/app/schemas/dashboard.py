@@ -81,3 +81,22 @@ class DivisionBreakdown(BaseModel):
 
 class DashboardExecutivoResponse(DashboardResponse):
     divisions: list[DivisionBreakdown]
+
+
+class ChartDataPoint(BaseModel):
+    name: str
+    value: int
+    color: str | None = None
+
+
+class BudgetChartPoint(BaseModel):
+    division: str
+    ejecucion_pct: float
+    pagado: float
+    vigente: float
+
+
+class ChartDataResponse(BaseModel):
+    commitments_by_state: list[ChartDataPoint]
+    alerts_by_severity: list[ChartDataPoint]
+    budget_by_division: list[BudgetChartPoint]
