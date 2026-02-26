@@ -20,12 +20,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, Plus, UserPlus, Pencil } from "lucide-react";
+import { ArrowLeft, Plus, UserPlus, Pencil, Trash2, MapPin, Flag, Building2, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { IprCompromisoDrawer } from "@/components/ipr-compromiso-drawer";
 import { IprProblemaDrawer } from "@/components/ipr-problema-drawer";
 import { IprConvenioDrawer } from "@/components/ipr-convenio-drawer";
-import type { PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem, ConvenioListItem, BudgetCommitmentItem } from "@/types";
+import type {
+  PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem,
+  ConvenioListItem, BudgetCommitmentItem, IprPartyItem, IprTerritoryItem,
+  IprMilestoneItem, CategoryRef, TerritoryOption,
+} from "@/types";
 import { WRITE_OPERATIONAL_ROLES } from "@/types";
 
 interface IprDetail {
@@ -175,11 +180,44 @@ export default function IprDetailPage() {
   const [showProblemaDrawer, setShowProblemaDrawer] = useState(false);
   const [showConvenioDrawer, setShowConvenioDrawer] = useState(false);
 
+  // Partes state
+  const [partes, setPartes] = useState<IprPartyItem[] | null>(null);
+  const [partesLoading, setPartesLoading] = useState(false);
+  const [showParteForm, setShowParteForm] = useState(false);
+  const [parteOrgId, setParteOrgId] = useState("");
+  const [parteRoleId, setParteRoleId] = useState("");
+  const [parteRoles, setParteRoles] = useState<CategoryRef[]>([]);
+  const [parteSubmitting, setParteSubmitting] = useState(false);
+  const [parteError, setParteError] = useState<string | null>(null);
+
+  // Territorio state
+  const [territorios, setTerritorios] = useState<IprTerritoryItem[] | null>(null);
+  const [terrLoading, setTerrLoading] = useState(false);
+  const [showTerrForm, setShowTerrForm] = useState(false);
+  const [terrTerritoryId, setTerrTerritoryId] = useState("");
+  const [terrImpactId, setTerrImpactId] = useState("");
+  const [terrOptions, setTerrOptions] = useState<TerritoryOption[]>([]);
+  const [terrImpactTypes, setTerrImpactTypes] = useState<CategoryRef[]>([]);
+  const [terrSubmitting, setTerrSubmitting] = useState(false);
+  const [terrError, setTerrError] = useState<string | null>(null);
+
+  // Hitos state
+  const [hitos, setHitos] = useState<IprMilestoneItem[] | null>(null);
+  const [hitosLoading, setHitosLoading] = useState(false);
+  const [showHitoForm, setShowHitoForm] = useState(false);
+  const [hitoTypeId, setHitoTypeId] = useState("");
+  const [hitoPlannedDate, setHitoPlannedDate] = useState("");
+  const [hitoDesc, setHitoDesc] = useState("");
+  const [hitoTypes, setHitoTypes] = useState<CategoryRef[]>([]);
+  const [hitoSubmitting, setHitoSubmitting] = useState(false);
+  const [hitoError, setHitoError] = useState<string | null>(null);
+
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
   const canCreateCompromiso = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
   const canCreateProblema = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
   const canCreateConvenio = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
+  const canManageChildren = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
   useEffect(() => {
     api
@@ -247,6 +285,173 @@ export default function IprDetailPage() {
       .then(setAvances)
       .catch(() => setAvances(null))
       .finally(() => setAvancesLoading(false));
+  };
+
+  const loadPartes = (force = false) => {
+    if (partes && !force) return;
+    setPartesLoading(true);
+    api
+      .get<IprPartyItem[]>(`/api/ipr/${id}/partes`)
+      .then(setPartes)
+      .catch(() => setPartes(null))
+      .finally(() => setPartesLoading(false));
+  };
+
+  const loadTerritorios = (force = false) => {
+    if (territorios && !force) return;
+    setTerrLoading(true);
+    api
+      .get<IprTerritoryItem[]>(`/api/ipr/${id}/territorio`)
+      .then(setTerritorios)
+      .catch(() => setTerritorios(null))
+      .finally(() => setTerrLoading(false));
+  };
+
+  const loadHitos = (force = false) => {
+    if (hitos && !force) return;
+    setHitosLoading(true);
+    api
+      .get<IprMilestoneItem[]>(`/api/ipr/${id}/hitos`)
+      .then(setHitos)
+      .catch(() => setHitos(null))
+      .finally(() => setHitosLoading(false));
+  };
+
+  const openParteForm = () => {
+    setParteOrgId("");
+    setParteRoleId("");
+    setParteError(null);
+    setShowParteForm(true);
+    if (parteRoles.length === 0) {
+      api.get<CategoryRef[]>("/api/catalogs/categories/ipr_party_role").then(setParteRoles).catch(() => {});
+    }
+  };
+
+  const handleParteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!parteOrgId || !parteRoleId) {
+      setParteError("Organizacion y rol son requeridos.");
+      return;
+    }
+    setParteSubmitting(true);
+    setParteError(null);
+    try {
+      await api.post(`/api/ipr/${id}/partes`, {
+        organization_id: parteOrgId,
+        party_role_id: parteRoleId,
+      });
+      setShowParteForm(false);
+      loadPartes(true);
+    } catch (err) {
+      setParteError(err instanceof Error ? err.message : "Error al agregar parte");
+    } finally {
+      setParteSubmitting(false);
+    }
+  };
+
+  const handleDeleteParty = async (partyId: string) => {
+    try {
+      await api.delete(`/api/ipr/${id}/partes/${partyId}`);
+      loadPartes(true);
+    } catch {
+      // silent
+    }
+  };
+
+  const openTerrForm = () => {
+    setTerrTerritoryId("");
+    setTerrImpactId("");
+    setTerrError(null);
+    setShowTerrForm(true);
+    if (terrOptions.length === 0) {
+      api.get<TerritoryOption[]>("/api/catalogs/territories").then(setTerrOptions).catch(() => {});
+    }
+    if (terrImpactTypes.length === 0) {
+      api.get<CategoryRef[]>("/api/catalogs/categories/territory_impact").then(setTerrImpactTypes).catch(() => {});
+    }
+  };
+
+  const handleTerrSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!terrTerritoryId || !terrImpactId) {
+      setTerrError("Territorio y tipo de impacto son requeridos.");
+      return;
+    }
+    setTerrSubmitting(true);
+    setTerrError(null);
+    try {
+      await api.post(`/api/ipr/${id}/territorio`, {
+        territory_id: terrTerritoryId,
+        impact_type_id: terrImpactId,
+      });
+      setShowTerrForm(false);
+      loadTerritorios(true);
+    } catch (err) {
+      setTerrError(err instanceof Error ? err.message : "Error al agregar territorio");
+    } finally {
+      setTerrSubmitting(false);
+    }
+  };
+
+  const handleDeleteTerritory = async (recordId: string) => {
+    try {
+      await api.delete(`/api/ipr/${id}/territorio/${recordId}`);
+      loadTerritorios(true);
+    } catch {
+      // silent
+    }
+  };
+
+  const openHitoForm = () => {
+    setHitoTypeId("");
+    setHitoPlannedDate("");
+    setHitoDesc("");
+    setHitoError(null);
+    setShowHitoForm(true);
+    if (hitoTypes.length === 0) {
+      api.get<CategoryRef[]>("/api/catalogs/categories/milestone_type").then(setHitoTypes).catch(() => {});
+    }
+  };
+
+  const handleHitoSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!hitoTypeId || !hitoPlannedDate) {
+      setHitoError("Tipo de hito y fecha planificada son requeridos.");
+      return;
+    }
+    setHitoSubmitting(true);
+    setHitoError(null);
+    try {
+      await api.post(`/api/ipr/${id}/hitos`, {
+        milestone_type_id: hitoTypeId,
+        planned_date: hitoPlannedDate,
+        description: hitoDesc || null,
+      });
+      setShowHitoForm(false);
+      loadHitos(true);
+    } catch (err) {
+      setHitoError(err instanceof Error ? err.message : "Error al crear hito");
+    } finally {
+      setHitoSubmitting(false);
+    }
+  };
+
+  const handleCompleteHito = async (hitoId: string) => {
+    try {
+      await api.patch(`/api/ipr/${id}/hitos/${hitoId}`, {
+        actual_date: new Date().toISOString().split("T")[0],
+      });
+      loadHitos(true);
+    } catch {
+      // silent
+    }
+  };
+
+  const searchOrganizations = async (query: string): Promise<ComboboxOption[]> => {
+    const data = await api.get<{ id: string; name: string; code: string }[]>(
+      `/api/catalogs/organizations?search=${encodeURIComponent(query)}`
+    );
+    return data.map((o) => ({ value: o.id, label: `${o.name} (${o.code})` }));
   };
 
   const handleAvanceSubmit = async (e: React.FormEvent) => {
@@ -542,8 +747,11 @@ export default function IprDetailPage() {
         if (tab === "convenios") loadConvenios();
         if (tab === "cdps") loadCdps();
         if (tab === "avances") loadAvances();
+        if (tab === "partes") loadPartes();
+        if (tab === "territorio") loadTerritorios();
+        if (tab === "hitos") loadHitos();
       }}>
-        <TabsList>
+        <TabsList className="flex-wrap">
           <TabsTrigger value="compromisos" onClick={() => loadCompromisos()}>
             Compromisos
           </TabsTrigger>
@@ -561,6 +769,15 @@ export default function IprDetailPage() {
           </TabsTrigger>
           <TabsTrigger value="avances" onClick={() => loadAvances()}>
             Avances
+          </TabsTrigger>
+          <TabsTrigger value="partes" onClick={() => loadPartes()}>
+            Partes
+          </TabsTrigger>
+          <TabsTrigger value="territorio" onClick={() => loadTerritorios()}>
+            Territorio
+          </TabsTrigger>
+          <TabsTrigger value="hitos" onClick={() => loadHitos()}>
+            Hitos
           </TabsTrigger>
         </TabsList>
 
@@ -771,6 +988,232 @@ export default function IprDetailPage() {
             />
           )}
         </TabsContent>
+
+        {/* Partes Tab */}
+        <TabsContent value="partes" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {partes ? `${partes.length} partes involucradas` : ""}
+            </p>
+            {canManageChildren && (
+              <Button size="sm" onClick={openParteForm}>
+                <Plus className="size-4 mr-1" />
+                Agregar Parte
+              </Button>
+            )}
+          </div>
+          {partesLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          ) : !partes || partes.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No hay partes registradas para este IPR.</p>
+          ) : (
+            <div className="space-y-2">
+              {partes.map((p) => (
+                <div key={p.id} className="rounded-md border px-4 py-3 text-sm">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Building2 className="size-4 text-muted-foreground" />
+                      <span className="font-medium">{p.organization_name}</span>
+                      {p.organization_code && (
+                        <span className="font-mono text-xs text-muted-foreground">{p.organization_code}</span>
+                      )}
+                      {p.is_primary && (
+                        <Badge variant="default" className="text-xs">Principal</Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="text-xs">{p.role_label}</Badge>
+                      {canManageChildren && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="size-7 p-0 text-muted-foreground hover:text-red-600"
+                          onClick={() => handleDeleteParty(p.id)}
+                        >
+                          <Trash2 className="size-3.5" />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                  {(p.contact_person || p.contact_email || p.agreement_number) && (
+                    <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                      {p.contact_person && <span>Contacto: {p.contact_person}</span>}
+                      {p.contact_email && <span>{p.contact_email}</span>}
+                      {p.agreement_number && <span>Convenio: {p.agreement_number}</span>}
+                      {p.valid_from && <span>Desde: {formatDate(p.valid_from)}</span>}
+                      {p.valid_to && <span>Hasta: {formatDate(p.valid_to)}</span>}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        {/* Territorio Tab */}
+        <TabsContent value="territorio" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {territorios ? `${territorios.length} territorios vinculados` : ""}
+            </p>
+            {canManageChildren && (
+              <Button size="sm" onClick={openTerrForm}>
+                <Plus className="size-4 mr-1" />
+                Agregar Territorio
+              </Button>
+            )}
+          </div>
+          {terrLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          ) : !territorios || territorios.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No hay territorios vinculados a este IPR.</p>
+          ) : (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {territorios.map((t) => (
+                <div key={t.id} className="rounded-lg border p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="size-4 text-muted-foreground shrink-0" />
+                      <div>
+                        <p className="font-medium text-sm">{t.territory_name}</p>
+                        {t.territory_code && (
+                          <p className="text-xs text-muted-foreground font-mono">{t.territory_code}</p>
+                        )}
+                      </div>
+                    </div>
+                    {canManageChildren && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="size-7 p-0 text-muted-foreground hover:text-red-600"
+                        onClick={() => handleDeleteTerritory(t.id)}
+                      >
+                        <Trash2 className="size-3.5" />
+                      </Button>
+                    )}
+                  </div>
+                  <div className="mt-2 flex items-center gap-2">
+                    <Badge variant="outline" className="text-xs">{t.impact_type_label}</Badge>
+                    {t.is_primary && <Badge variant="default" className="text-xs">Principal</Badge>}
+                  </div>
+                  {t.notes && <p className="mt-2 text-xs text-muted-foreground">{t.notes}</p>}
+                </div>
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        {/* Hitos Tab */}
+        <TabsContent value="hitos" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {hitos ? `${hitos.length} hitos` : ""}
+            </p>
+            {canManageChildren && (
+              <Button size="sm" onClick={openHitoForm}>
+                <Plus className="size-4 mr-1" />
+                Nuevo Hito
+              </Button>
+            )}
+          </div>
+          {hitosLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          ) : !hitos || hitos.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No hay hitos registrados para este IPR.</p>
+          ) : (
+            <div className="space-y-3">
+              {hitos.map((h) => {
+                const today = new Date().toISOString().split("T")[0];
+                const isCompleted = !!h.actual_date;
+                const isOverdue = !isCompleted && h.planned_date < today;
+                const isFuture = !isCompleted && h.planned_date >= today;
+                const borderColor = isCompleted
+                  ? (h.deviation_days != null && h.deviation_days > 0 ? "border-l-amber-500" : "border-l-green-500")
+                  : isOverdue
+                  ? "border-l-red-500"
+                  : "border-l-gray-300";
+
+                return (
+                  <div
+                    key={h.id}
+                    className={cn("rounded-md border border-l-4 px-4 py-3 text-sm", borderColor)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Flag className="size-4 text-muted-foreground" />
+                        <span className="font-medium">{h.milestone_type_label}</span>
+                        {h.deviation_days != null && (
+                          <Badge
+                            variant="outline"
+                            className={cn(
+                              "text-xs",
+                              h.deviation_days > 0
+                                ? "text-red-600 border-red-200"
+                                : h.deviation_days < 0
+                                ? "text-green-600 border-green-200"
+                                : "text-gray-600"
+                            )}
+                          >
+                            {h.deviation_days > 0
+                              ? `+${h.deviation_days}d atraso`
+                              : h.deviation_days < 0
+                              ? `${h.deviation_days}d adelanto`
+                              : "A tiempo"}
+                          </Badge>
+                        )}
+                        {isOverdue && (
+                          <Badge variant="outline" className="text-xs text-red-600 border-red-200">
+                            Vencido
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isCompleted ? (
+                          <Badge variant="default" className="text-xs bg-green-600">Completado</Badge>
+                        ) : canManageChildren ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-xs h-7"
+                            onClick={() => handleCompleteHito(h.id)}
+                          >
+                            <CheckCircle2 className="size-3.5 mr-1" />
+                            Completar
+                          </Button>
+                        ) : isFuture ? (
+                          <Badge variant="outline" className="text-xs">Pendiente</Badge>
+                        ) : null}
+                      </div>
+                    </div>
+                    <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                      <span>Planificado: {formatDate(h.planned_date)}</span>
+                      {h.actual_date && <span>Completado: {formatDate(h.actual_date)}</span>}
+                      {h.completed_by_name && <span>Por: {h.completed_by_name}</span>}
+                    </div>
+                    {h.description && (
+                      <p className="mt-1 text-xs text-muted-foreground">{h.description}</p>
+                    )}
+                    {h.verification_notes && (
+                      <p className="mt-1 text-xs italic text-muted-foreground">Notas: {h.verification_notes}</p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </TabsContent>
       </Tabs>
 
       {/* Avance Form Drawer */}
@@ -926,6 +1369,149 @@ export default function IprDetailPage() {
               variant="outline"
               onClick={() => setShowEdit(false)}
             >
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
+
+      {/* Parte Form Drawer */}
+      <DrawerPanel
+        open={showParteForm}
+        onClose={() => setShowParteForm(false)}
+        title="Agregar Parte"
+      >
+        <form onSubmit={handleParteSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Organizacion *</label>
+            <ComboboxAsync
+              value={parteOrgId}
+              onChange={setParteOrgId}
+              searchFn={searchOrganizations}
+              placeholder="Buscar organizacion..."
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Rol *</label>
+            <Select value={parteRoleId} onValueChange={setParteRoleId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione rol" />
+              </SelectTrigger>
+              <SelectContent>
+                {parteRoles.map((r) => (
+                  <SelectItem key={r.id} value={r.id}>
+                    {r.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          {parteError && <p className="text-sm text-red-600">{parteError}</p>}
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={parteSubmitting}>
+              {parteSubmitting ? "Guardando..." : "Agregar Parte"}
+            </Button>
+            <Button type="button" variant="outline" onClick={() => setShowParteForm(false)}>
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
+
+      {/* Territorio Form Drawer */}
+      <DrawerPanel
+        open={showTerrForm}
+        onClose={() => setShowTerrForm(false)}
+        title="Agregar Territorio"
+      >
+        <form onSubmit={handleTerrSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Territorio *</label>
+            <Select value={terrTerritoryId} onValueChange={setTerrTerritoryId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione territorio" />
+              </SelectTrigger>
+              <SelectContent>
+                {terrOptions.map((t) => (
+                  <SelectItem key={t.id} value={t.id}>
+                    {t.name} ({t.territory_type})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Tipo de impacto *</label>
+            <Select value={terrImpactId} onValueChange={setTerrImpactId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione tipo de impacto" />
+              </SelectTrigger>
+              <SelectContent>
+                {terrImpactTypes.map((t) => (
+                  <SelectItem key={t.id} value={t.id}>
+                    {t.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          {terrError && <p className="text-sm text-red-600">{terrError}</p>}
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={terrSubmitting}>
+              {terrSubmitting ? "Guardando..." : "Agregar Territorio"}
+            </Button>
+            <Button type="button" variant="outline" onClick={() => setShowTerrForm(false)}>
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
+
+      {/* Hito Form Drawer */}
+      <DrawerPanel
+        open={showHitoForm}
+        onClose={() => setShowHitoForm(false)}
+        title="Nuevo Hito"
+      >
+        <form onSubmit={handleHitoSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Tipo de hito *</label>
+            <Select value={hitoTypeId} onValueChange={setHitoTypeId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccione tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                {hitoTypes.map((t) => (
+                  <SelectItem key={t.id} value={t.id}>
+                    {t.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Fecha planificada *</label>
+            <Input
+              type="date"
+              value={hitoPlannedDate}
+              onChange={(e) => setHitoPlannedDate(e.target.value)}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Descripcion</label>
+            <textarea
+              className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              value={hitoDesc}
+              onChange={(e) => setHitoDesc(e.target.value)}
+              placeholder="Descripcion del hito..."
+            />
+          </div>
+          {hitoError && <p className="text-sm text-red-600">{hitoError}</p>}
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={hitoSubmitting}>
+              {hitoSubmitting ? "Guardando..." : "Crear Hito"}
+            </Button>
+            <Button type="button" variant="outline" onClick={() => setShowHitoForm(false)}>
               Cancelar
             </Button>
           </div>

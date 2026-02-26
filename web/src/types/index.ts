@@ -383,6 +383,63 @@ export interface CockpitTD {
 }
 
 // ---------------------------------------------------------------------------
+// IPR Children Types (Partes, Territorio, Hitos)
+// ---------------------------------------------------------------------------
+export interface IprPartyItem {
+  id: string;
+  organization_name: string;
+  organization_code: string | null;
+  role_code: string;
+  role_label: string;
+  is_primary: boolean;
+  valid_from: string | null;
+  valid_to: string | null;
+  contact_person: string | null;
+  contact_email: string | null;
+  responsibility_description: string | null;
+  agreement_number: string | null;
+}
+
+export interface IprTerritoryItem {
+  id: string;
+  territory_name: string;
+  territory_code: string | null;
+  impact_type_code: string;
+  impact_type_label: string;
+  is_primary: boolean;
+  notes: string | null;
+}
+
+export interface IprMilestoneItem {
+  id: string;
+  milestone_type_code: string;
+  milestone_type_label: string;
+  description: string | null;
+  planned_date: string;
+  actual_date: string | null;
+  deviation_days: number | null;
+  completed_by_name: string | null;
+  verification_notes: string | null;
+  created_at: string;
+}
+
+export interface TerritoryOption {
+  id: string;
+  code: string;
+  name: string;
+  territory_type: string;
+}
+
+export interface OrganizationOption {
+  id: string;
+  code: string;
+  name: string;
+  short_name: string;
+  org_type: string;
+  rut: string | null;
+}
+
+// ---------------------------------------------------------------------------
 // Reuniones de Crisis Types
 // ---------------------------------------------------------------------------
 export interface ReunionListItem {

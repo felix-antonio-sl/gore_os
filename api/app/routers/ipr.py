@@ -9,6 +9,9 @@ from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
+from app.schemas.ipr_party import IprPartyCreate, IprPartyItem
+from app.schemas.ipr_territory import IprTerritoryCreate, IprTerritoryItem
+from app.schemas.ipr_milestone import IprMilestoneCreate, IprMilestoneUpdate, IprMilestoneItem
 from app.schemas.common import PaginatedResponse
 
 router = APIRouter(prefix="/api/ipr", tags=["ipr"])
@@ -561,3 +564,389 @@ async def list_progress_reports(
         )
         for row in rows
     ]
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/partes — List parties for an IPR
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/partes", response_model=list[IprPartyItem])
+async def list_ipr_parties(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all parties (organizations with roles) for an IPR."""
+    sql = text("""
+        SELECT ip.id, o.name AS organization_name, o.code AS organization_code,
+               c.code AS role_code, c.label AS role_label,
+               ip.is_primary, ip.valid_from, ip.valid_to,
+               ip.contact_person, ip.contact_email, ip.responsibility_description,
+               a.agreement_number
+        FROM core.ipr_party ip
+        JOIN core.organization o ON o.id = ip.organization_id
+        JOIN ref.category c ON c.id = ip.party_role_id
+        LEFT JOIN core.agreement a ON a.id = ip.agreement_id
+        WHERE ip.ipr_id = :ipr_id AND ip.deleted_at IS NULL
+        ORDER BY ip.is_primary DESC, c.label
+    """)
+    result = await db.execute(sql, {"ipr_id": str(ipr_id)})
+    rows = result.mappings().all()
+    return [
+        IprPartyItem(
+            id=row["id"],
+            organization_name=row["organization_name"],
+            organization_code=row["organization_code"],
+            role_code=row["role_code"],
+            role_label=row["role_label"],
+            is_primary=row["is_primary"] or False,
+            valid_from=row["valid_from"],
+            valid_to=row["valid_to"],
+            contact_person=row["contact_person"],
+            contact_email=row["contact_email"],
+            responsibility_description=row["responsibility_description"],
+            agreement_number=row["agreement_number"],
+        )
+        for row in rows
+    ]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/{id}/partes — Add a party to an IPR
+# ---------------------------------------------------------------------------
+
+@router.post("/{ipr_id}/partes", status_code=status.HTTP_201_CREATED)
+async def create_ipr_party(
+    ipr_id: UUID,
+    body: IprPartyCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Add an organization-role pair to an IPR. Admin roles only."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+
+    # Verify IPR exists
+    check = await db.execute(
+        text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(ipr_id)},
+    )
+    if not check.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="IPR no encontrado")
+
+    sql = text("""
+        INSERT INTO core.ipr_party (
+            ipr_id, organization_id, party_role_id, agreement_id,
+            is_primary, valid_from, valid_to,
+            responsibility_description, contact_person, contact_email,
+            created_by_id, updated_by_id
+        ) VALUES (
+            :ipr_id, :organization_id, :party_role_id, :agreement_id,
+            :is_primary, :valid_from, :valid_to,
+            :responsibility_description, :contact_person, :contact_email,
+            :user_id, :user_id
+        )
+        RETURNING id
+    """)
+    try:
+        result = await db.execute(sql, {
+            "ipr_id": str(ipr_id),
+            "organization_id": str(body.organization_id),
+            "party_role_id": str(body.party_role_id),
+            "agreement_id": str(body.agreement_id) if body.agreement_id else None,
+            "is_primary": body.is_primary,
+            "valid_from": body.valid_from,
+            "valid_to": body.valid_to,
+            "responsibility_description": body.responsibility_description,
+            "contact_person": body.contact_person,
+            "contact_email": body.contact_email,
+            "user_id": str(user["id"]),
+        })
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"])}
+    except Exception as e:
+        await db.rollback()
+        err_str = str(e)
+        if "uq_ipr_party_role" in err_str or "ipr_party" in err_str and "unique" in err_str.lower():
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Esta organizacion ya tiene ese rol en este IPR",
+            )
+        raise
+
+
+# ---------------------------------------------------------------------------
+# DELETE /api/ipr/{id}/partes/{party_id} — Soft-delete a party
+# ---------------------------------------------------------------------------
+
+@router.delete("/{ipr_id}/partes/{party_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_ipr_party(
+    ipr_id: UUID,
+    party_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Soft-delete an IPR party. Admin roles only."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+
+    result = await db.execute(
+        text("""
+            UPDATE core.ipr_party
+            SET deleted_at = NOW(), updated_by_id = :user_id
+            WHERE id = :id AND ipr_id = :ipr_id AND deleted_at IS NULL
+        """),
+        {"id": str(party_id), "ipr_id": str(ipr_id), "user_id": str(user["id"])},
+    )
+    if result.rowcount == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parte no encontrada")
+    await db.commit()
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/territorio — List territories for an IPR
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/territorio", response_model=list[IprTerritoryItem])
+async def list_ipr_territories(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all territory associations for an IPR."""
+    sql = text("""
+        SELECT it.id, t.name AS territory_name, t.code AS territory_code,
+               c.code AS impact_type_code, c.label AS impact_type_label,
+               it.is_primary, it.notes
+        FROM core.ipr_territory it
+        JOIN core.territory t ON t.id = it.territory_id
+        JOIN ref.category c ON c.id = it.impact_type_id
+        WHERE it.ipr_id = :ipr_id AND it.deleted_at IS NULL
+        ORDER BY it.is_primary DESC, t.name
+    """)
+    result = await db.execute(sql, {"ipr_id": str(ipr_id)})
+    rows = result.mappings().all()
+    return [
+        IprTerritoryItem(
+            id=row["id"],
+            territory_name=row["territory_name"],
+            territory_code=row["territory_code"],
+            impact_type_code=row["impact_type_code"],
+            impact_type_label=row["impact_type_label"],
+            is_primary=row["is_primary"] or False,
+            notes=row["notes"],
+        )
+        for row in rows
+    ]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/{id}/territorio — Add a territory to an IPR
+# ---------------------------------------------------------------------------
+
+@router.post("/{ipr_id}/territorio", status_code=status.HTTP_201_CREATED)
+async def create_ipr_territory(
+    ipr_id: UUID,
+    body: IprTerritoryCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Associate a territory with an IPR. Admin roles only."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+
+    check = await db.execute(
+        text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(ipr_id)},
+    )
+    if not check.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="IPR no encontrado")
+
+    sql = text("""
+        INSERT INTO core.ipr_territory (
+            ipr_id, territory_id, impact_type_id, is_primary, notes,
+            created_by_id, updated_by_id
+        ) VALUES (
+            :ipr_id, :territory_id, :impact_type_id, :is_primary, :notes,
+            :user_id, :user_id
+        )
+        RETURNING id
+    """)
+    try:
+        result = await db.execute(sql, {
+            "ipr_id": str(ipr_id),
+            "territory_id": str(body.territory_id),
+            "impact_type_id": str(body.impact_type_id),
+            "is_primary": body.is_primary,
+            "notes": body.notes,
+            "user_id": str(user["id"]),
+        })
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"])}
+    except Exception as e:
+        await db.rollback()
+        err_str = str(e)
+        if "uq_ipr_territory_impact" in err_str or "ipr_territory" in err_str and "unique" in err_str.lower():
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Este territorio ya tiene ese tipo de impacto en este IPR",
+            )
+        raise
+
+
+# ---------------------------------------------------------------------------
+# DELETE /api/ipr/{id}/territorio/{record_id} — Soft-delete territory
+# ---------------------------------------------------------------------------
+
+@router.delete("/{ipr_id}/territorio/{record_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_ipr_territory(
+    ipr_id: UUID,
+    record_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Soft-delete an IPR territory association. Admin roles only."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+
+    result = await db.execute(
+        text("""
+            UPDATE core.ipr_territory
+            SET deleted_at = NOW(), updated_by_id = :user_id
+            WHERE id = :id AND ipr_id = :ipr_id AND deleted_at IS NULL
+        """),
+        {"id": str(record_id), "ipr_id": str(ipr_id), "user_id": str(user["id"])},
+    )
+    if result.rowcount == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Territorio no encontrado")
+    await db.commit()
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/hitos — List milestones for an IPR
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/hitos", response_model=list[IprMilestoneItem])
+async def list_ipr_milestones(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all milestones for an IPR, ordered by planned_date."""
+    sql = text("""
+        SELECT im.id, c.code AS milestone_type_code, c.label AS milestone_type_label,
+               im.description, im.planned_date, im.actual_date, im.deviation_days,
+               CONCAT(p.names, ' ', p.paternal_surname) AS completed_by_name,
+               im.verification_notes, im.created_at
+        FROM core.ipr_milestone im
+        JOIN ref.category c ON c.id = im.milestone_type_id
+        LEFT JOIN core."user" u ON u.id = im.completed_by_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE im.ipr_id = :ipr_id AND im.deleted_at IS NULL
+        ORDER BY im.planned_date ASC
+    """)
+    result = await db.execute(sql, {"ipr_id": str(ipr_id)})
+    rows = result.mappings().all()
+    return [
+        IprMilestoneItem(
+            id=row["id"],
+            milestone_type_code=row["milestone_type_code"],
+            milestone_type_label=row["milestone_type_label"],
+            description=row["description"],
+            planned_date=row["planned_date"],
+            actual_date=row["actual_date"],
+            deviation_days=row["deviation_days"],
+            completed_by_name=row["completed_by_name"],
+            verification_notes=row["verification_notes"],
+            created_at=row["created_at"],
+        )
+        for row in rows
+    ]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/ipr/{id}/hitos — Create a milestone
+# ---------------------------------------------------------------------------
+
+@router.post("/{ipr_id}/hitos", status_code=status.HTTP_201_CREATED)
+async def create_ipr_milestone(
+    ipr_id: UUID,
+    body: IprMilestoneCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Create a new milestone for an IPR. Admin roles only."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+
+    check = await db.execute(
+        text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(ipr_id)},
+    )
+    if not check.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="IPR no encontrado")
+
+    sql = text("""
+        INSERT INTO core.ipr_milestone (
+            ipr_id, milestone_type_id, description, planned_date,
+            created_by_id, updated_by_id
+        ) VALUES (
+            :ipr_id, :milestone_type_id, :description, :planned_date,
+            :user_id, :user_id
+        )
+        RETURNING id
+    """)
+    result = await db.execute(sql, {
+        "ipr_id": str(ipr_id),
+        "milestone_type_id": str(body.milestone_type_id),
+        "description": body.description,
+        "planned_date": body.planned_date,
+        "user_id": str(user["id"]),
+    })
+    row = result.mappings().first()
+    await db.commit()
+    return {"id": str(row["id"])}
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/ipr/{id}/hitos/{hito_id} — Mark milestone completed
+# ---------------------------------------------------------------------------
+
+@router.patch("/{ipr_id}/hitos/{hito_id}")
+async def update_ipr_milestone(
+    ipr_id: UUID,
+    hito_id: UUID,
+    body: IprMilestoneUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Update milestone (mark as completed with actual_date). Admin roles only."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+
+    updates = body.model_dump(exclude_none=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    set_clauses = ["updated_by_id = :user_id", "updated_at = NOW()"]
+    params: dict = {
+        "id": str(hito_id),
+        "ipr_id": str(ipr_id),
+        "user_id": str(user["id"]),
+    }
+
+    if "actual_date" in updates:
+        set_clauses.append("actual_date = :actual_date")
+        set_clauses.append("completed_by_id = :user_id")
+        params["actual_date"] = updates["actual_date"]
+
+    if "verification_notes" in updates:
+        set_clauses.append("verification_notes = :verification_notes")
+        params["verification_notes"] = updates["verification_notes"]
+
+    sql = text(f"""
+        UPDATE core.ipr_milestone
+        SET {', '.join(set_clauses)}
+        WHERE id = :id AND ipr_id = :ipr_id AND deleted_at IS NULL
+    """)
+    result = await db.execute(sql, params)
+    if result.rowcount == 0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Hito no encontrado")
+    await db.commit()
+    return {"message": "Hito actualizado"}

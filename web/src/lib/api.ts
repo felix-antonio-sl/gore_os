@@ -56,6 +56,26 @@ class ApiClient {
     return this.fetch<T>(path, { method: "PATCH", body: JSON.stringify(body) });
   }
 
+  async delete(path: string) {
+    const headers: HeadersInit = {};
+    const token = this.getToken();
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+    const res = await fetch(`${API_BASE}${path}`, { method: "DELETE", headers });
+
+    if (res.status === 401) {
+      this.clearToken();
+      if (typeof window !== "undefined") window.location.href = "/login";
+      throw new Error("No autorizado");
+    }
+    if (!res.ok && res.status !== 204) {
+      const text = await res.text();
+      let message = text;
+      try { message = JSON.parse(text).detail ?? text; } catch { /* not JSON */ }
+      throw new Error(message || `Error ${res.status}`);
+    }
+  }
+
   async login(email: string, password: string) {
     const formData = new URLSearchParams();
     formData.append("username", email);
