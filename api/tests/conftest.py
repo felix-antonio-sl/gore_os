@@ -22,26 +22,17 @@ TEST_DB_URL = "postgresql+asyncpg://goreos:goreos_2026@goreos_db:5432/goreos_tes
 
 
 # ---------------------------------------------------------------------------
-# Engine & session (session-scoped for performance)
+# Engine & session (function-scoped to avoid event loop conflicts)
 # ---------------------------------------------------------------------------
 
-@pytest_asyncio.fixture(scope="session")
-async def test_engine():
-    engine = create_async_engine(TEST_DB_URL, echo=False, pool_pre_ping=True)
-    yield engine
-    await engine.dispose()
-
-
-@pytest_asyncio.fixture(scope="session")
-async def session_factory(test_engine):
-    return async_sessionmaker(test_engine, class_=AsyncSession, expire_on_commit=False)
-
-
 @pytest_asyncio.fixture
-async def db(session_factory):
-    """Fresh DB session per test."""
-    async with session_factory() as session:
+async def db():
+    """Fresh DB engine + session per test (avoids cross-loop issues)."""
+    engine = create_async_engine(TEST_DB_URL, echo=False, pool_pre_ping=True)
+    factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+    async with factory() as session:
         yield session
+    await engine.dispose()
 
 
 # ---------------------------------------------------------------------------
