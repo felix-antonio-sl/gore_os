@@ -9,6 +9,9 @@ import { DataTable } from "@/components/data-table";
 import { AlertCard } from "@/components/alert-card";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
+import { ExecutionBarChart } from "@/components/charts/execution-bar-chart";
+import { CommitmentDonut } from "@/components/charts/commitment-donut";
+import { AlertsBySeverity } from "@/components/charts/alerts-by-severity";
 import { CockpitJefeDGIView } from "@/components/cockpit-jefe-dgi";
 import { CockpitControlGestionView } from "@/components/cockpit-control-gestion";
 import { CockpitProcesosView } from "@/components/cockpit-procesos";
@@ -37,6 +40,25 @@ interface ExecutiveDashboardData extends DashboardData {
   divisions: DivisionBreakdown[];
 }
 
+interface ChartDataPoint {
+  name: string;
+  value: number;
+  color?: string;
+}
+
+interface BudgetChartPoint {
+  division: string;
+  ejecucion_pct: number;
+  pagado: number;
+  vigente: number;
+}
+
+interface ChartDataResponse {
+  commitments_by_state: ChartDataPoint[];
+  alerts_by_severity: ChartDataPoint[];
+  budget_by_division: BudgetChartPoint[];
+}
+
 // Union type for all DGI cockpit responses
 type DGICockpitData =
   | { role: "JEFE_DGI"; data: CockpitJefeDGI }
@@ -48,6 +70,7 @@ type DGICockpitData =
 
 function OperationalDashboard() {
   const [data, setData] = useState<ExecutiveDashboardData | null>(null);
+  const [chartData, setChartData] = useState<ChartDataResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -57,9 +80,14 @@ function OperationalDashboard() {
 
   useEffect(() => {
     const endpoint = isExecutive ? "/api/dashboard/ejecutivo" : "/api/dashboard";
-    api
-      .get<ExecutiveDashboardData>(endpoint)
-      .then(setData)
+    Promise.all([
+      api.get<ExecutiveDashboardData>(endpoint),
+      api.get<ChartDataResponse>("/api/dashboard/chart-data"),
+    ])
+      .then(([dashData, charts]) => {
+        setData(dashData);
+        setChartData(charts);
+      })
       .catch((err: Error) => setError(err.message))
       .finally(() => setIsLoading(false));
   }, [isExecutive]);
@@ -147,6 +175,38 @@ function OperationalDashboard() {
               color={kpi.color}
             />
           ))}
+        </div>
+      )}
+
+      {/* Charts */}
+      {!isLoading && chartData && (
+        <div className={`grid gap-4 ${isExecutive ? "grid-cols-1 lg:grid-cols-3" : "grid-cols-1 lg:grid-cols-2"}`}>
+          {isExecutive && (
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium">Ejecución Presupuestaria</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <ExecutionBarChart data={chartData.budget_by_division} />
+              </CardContent>
+            </Card>
+          )}
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium">Compromisos por Estado</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <CommitmentDonut data={chartData.commitments_by_state} />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium">Alertas por Severidad</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <AlertsBySeverity data={chartData.alerts_by_severity} />
+            </CardContent>
+          </Card>
         </div>
       )}
 

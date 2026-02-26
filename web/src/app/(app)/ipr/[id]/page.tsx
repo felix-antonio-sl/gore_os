@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, Plus, UserPlus } from "lucide-react";
+import { ArrowLeft, Plus, UserPlus, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem, ConvenioListItem } from "@/types";
 
@@ -130,7 +130,14 @@ export default function IprDetailPage() {
   const [assigneeSubmitting, setAssigneeSubmitting] = useState(false);
   const [assigneeError, setAssigneeError] = useState<string | null>(null);
 
+  // Edit IPR drawer
+  const [showEdit, setShowEdit] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editSubmitting, setEditSubmitting] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
+  const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
   useEffect(() => {
     api
@@ -218,6 +225,32 @@ export default function IprDetailPage() {
       setAvanceError(err instanceof Error ? err.message : "Error al registrar avance");
     } finally {
       setAvanceSubmitting(false);
+    }
+  };
+
+  const openEditDrawer = () => {
+    setEditName(ipr?.name ?? "");
+    setEditError(null);
+    setShowEdit(true);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editName.trim()) {
+      setEditError("El nombre es requerido.");
+      return;
+    }
+    setEditSubmitting(true);
+    setEditError(null);
+    try {
+      await api.patch(`/api/ipr/${id}`, { name: editName.trim() });
+      setShowEdit(false);
+      // Refresh IPR data
+      api.get<IprDetail>(`/api/ipr/${id}`).then(setIpr).catch(() => {});
+    } catch (err) {
+      setEditError(err instanceof Error ? err.message : "Error al actualizar IPR");
+    } finally {
+      setEditSubmitting(false);
     }
   };
 
@@ -377,12 +410,20 @@ export default function IprDetailPage() {
               <p className="text-2xl font-bold">{formatCurrency(ipr.total_budget)}</p>
               <p className="text-xs text-muted-foreground">Presupuesto total</p>
             </div>
-            {canAssign && (
-              <Button size="sm" variant="outline" onClick={openAssigneeDrawer}>
-                <UserPlus className="size-4 mr-1" />
-                Asignar Responsable
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {canEdit && (
+                <Button size="sm" variant="outline" onClick={openEditDrawer}>
+                  <Pencil className="size-4 mr-1" />
+                  Editar
+                </Button>
+              )}
+              {canAssign && (
+                <Button size="sm" variant="outline" onClick={openAssigneeDrawer}>
+                  <UserPlus className="size-4 mr-1" />
+                  Asignar Responsable
+                </Button>
+              )}
+            </div>
           </div>
         </div>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
@@ -691,6 +732,41 @@ export default function IprDetailPage() {
               type="button"
               variant="outline"
               onClick={() => setShowAssignee(false)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </DrawerPanel>
+
+      {/* Edit IPR Drawer */}
+      <DrawerPanel
+        open={showEdit}
+        onClose={() => setShowEdit(false)}
+        title="Editar IPR"
+      >
+        <form onSubmit={handleEditSubmit} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Nombre *</label>
+            <Input
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+              placeholder="Nombre del IPR"
+            />
+          </div>
+
+          {editError && (
+            <p className="text-sm text-red-600">{editError}</p>
+          )}
+
+          <div className="flex gap-2 pt-2">
+            <Button type="submit" disabled={editSubmitting}>
+              {editSubmitting ? "Guardando..." : "Guardar"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setShowEdit(false)}
             >
               Cancelar
             </Button>

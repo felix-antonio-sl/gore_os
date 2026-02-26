@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { domainRegistry } from "./domains";
+import { exportCSV } from "@/lib/csv-export";
 
 // ---------------------------------------------------------------------------
 // Domain sidebar config
@@ -133,7 +134,12 @@ export default function DatosPage() {
           variant="outline"
           size="sm"
           className="h-8 text-xs gap-1.5"
-          onClick={() => alert("Exportar CSV — Próximamente disponible")}
+          onClick={() => {
+            if (config && items.length > 0) {
+              const date = new Date().toISOString().slice(0, 10);
+              exportCSV(config.columns, items, `goreos_${activeDomain}_${date}`);
+            }
+          }}
         >
           <Download className="size-3.5" />
           Exportar CSV

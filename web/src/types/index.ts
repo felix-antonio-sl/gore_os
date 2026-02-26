@@ -1,3 +1,10 @@
+export interface SearchResult {
+  id: string;
+  code: string | null;
+  name: string;
+  entity_type: string;
+}
+
 export interface User {
   id: string;
   email: string;
