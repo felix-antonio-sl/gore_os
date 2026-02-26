@@ -1,0 +1,204 @@
+"""
+Shared fixtures for GORE_OS backend integration tests.
+
+Strategy:
+- Test DB: goreos_test (created by scripts/setup_test_db.sh)
+- Auth: Real JWT tokens with real user IDs from seeded DB
+- Session: Each test gets a fresh session, commits are real
+- Run: docker compose exec api pytest -v
+"""
+import pytest
+import pytest_asyncio
+from httpx import AsyncClient, ASGITransport
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy import text
+
+from app.main import create_app
+from app.core.database import get_db
+from app.core.security import create_access_token
+
+
+TEST_DB_URL = "postgresql+asyncpg://goreos:goreos_2026@goreos_db:5432/goreos_test"
+
+
+# ---------------------------------------------------------------------------
+# Engine & session (session-scoped for performance)
+# ---------------------------------------------------------------------------
+
+@pytest_asyncio.fixture(scope="session")
+async def test_engine():
+    engine = create_async_engine(TEST_DB_URL, echo=False, pool_pre_ping=True)
+    yield engine
+    await engine.dispose()
+
+
+@pytest_asyncio.fixture(scope="session")
+async def session_factory(test_engine):
+    return async_sessionmaker(test_engine, class_=AsyncSession, expire_on_commit=False)
+
+
+@pytest_asyncio.fixture
+async def db(session_factory):
+    """Fresh DB session per test."""
+    async with session_factory() as session:
+        yield session
+
+
+# ---------------------------------------------------------------------------
+# FastAPI test client with DB override
+# ---------------------------------------------------------------------------
+
+@pytest_asyncio.fixture
+async def client(db):
+    """httpx AsyncClient that uses the test DB."""
+    async def _override_get_db():
+        yield db
+
+    app = create_app()
+    app.dependency_overrides[get_db] = _override_get_db
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app),
+        base_url="http://test",
+    ) as ac:
+        yield ac
+
+
+# ---------------------------------------------------------------------------
+# Auth token fixtures — one per role
+# ---------------------------------------------------------------------------
+
+async def _get_user_id(db: AsyncSession, email: str) -> str:
+    result = await db.execute(
+        text('SELECT id FROM core."user" WHERE email = :email'),
+        {"email": email},
+    )
+    row = result.mappings().first()
+    assert row, f"Test user {email} not found in goreos_test. Run scripts/setup_test_db.sh"
+    return str(row["id"])
+
+
+@pytest_asyncio.fixture
+async def admin_token(db):
+    uid = await _get_user_id(db, "admin@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ADMIN_SISTEMA"})
+
+
+@pytest_asyncio.fixture
+async def regional_token(db):
+    uid = await _get_user_id(db, "regional@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ADMIN_REGIONAL"})
+
+
+@pytest_asyncio.fixture
+async def jefe_token(db):
+    uid = await _get_user_id(db, "jefe.daf@goreos.cl")
+    return create_access_token({"sub": uid, "role": "JEFE_DIVISION"})
+
+
+@pytest_asyncio.fixture
+async def encargado_token(db):
+    uid = await _get_user_id(db, "encargado.daf@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ENCARGADO"})
+
+
+@pytest_asyncio.fixture
+async def dgi_token(db):
+    uid = await _get_user_id(db, "jefe.dgi@goreos.cl")
+    return create_access_token({"sub": uid, "role": "JEFE_DGI"})
+
+
+# ---------------------------------------------------------------------------
+# Auth header helpers
+# ---------------------------------------------------------------------------
+
+def auth(token: str) -> dict:
+    """Returns Authorization header dict."""
+    return {"Authorization": f"Bearer {token}"}
+
+
+# ---------------------------------------------------------------------------
+# Catalog helpers — pre-fetch IDs needed for test data creation
+# ---------------------------------------------------------------------------
+
+@pytest_asyncio.fixture
+async def catalog(db):
+    """Pre-fetched catalog IDs for creating test data."""
+    # Commitment type
+    ct = await db.execute(text("SELECT id FROM ref.operational_commitment_type LIMIT 1"))
+    commitment_type_id = str(ct.scalar())
+
+    # Problem type
+    pt = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'problem_type' LIMIT 1")
+    )
+    problem_type_id = str(pt.scalar())
+
+    # Agreement type
+    at_ = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'agreement_type' LIMIT 1")
+    )
+    agreement_type_id = str(at_.scalar())
+
+    # Agreement state BORRADOR
+    ast_ = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'agreement_state' AND code = 'BORRADOR'")
+    )
+    agreement_state_borrador_id = str(ast_.scalar())
+
+    # Agreement state VIGENTE
+    asv = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'agreement_state' AND code = 'VIGENTE'")
+    )
+    agreement_state_vigente_id = str(asv.scalar())
+
+    # Payment status PENDIENTE
+    ps = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'payment_status' AND code = 'PENDIENTE'")
+    )
+    payment_status_pendiente_id = str(ps.scalar())
+
+    # Budget subtitle
+    bs = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'budget_subtitle' LIMIT 1")
+    )
+    budget_subtitle_id = str(bs.scalar())
+
+    # Users with division info
+    users = {}
+    for email in [
+        "admin@goreos.cl", "regional@goreos.cl",
+        "jefe.daf@goreos.cl", "encargado.daf@goreos.cl",
+        "jefe.dgi@goreos.cl",
+    ]:
+        result = await db.execute(
+            text('SELECT id, division_id FROM core."user" WHERE email = :e'),
+            {"e": email},
+        )
+        row = result.mappings().first()
+        users[email] = {
+            "id": str(row["id"]),
+            "division_id": str(row["division_id"]) if row["division_id"] else None,
+        }
+
+    # A division
+    div = await db.execute(
+        text("""
+            SELECT o.id FROM core.organization o
+            JOIN ref.category c ON o.org_type_id = c.id
+            WHERE c.code = 'DIVISION' AND o.deleted_at IS NULL LIMIT 1
+        """)
+    )
+    division_id = str(div.scalar())
+
+    return {
+        "commitment_type_id": commitment_type_id,
+        "problem_type_id": problem_type_id,
+        "agreement_type_id": agreement_type_id,
+        "agreement_state_borrador_id": agreement_state_borrador_id,
+        "agreement_state_vigente_id": agreement_state_vigente_id,
+        "payment_status_pendiente_id": payment_status_pendiente_id,
+        "budget_subtitle_id": budget_subtitle_id,
+        "users": users,
+        "division_id": division_id,
+    }
