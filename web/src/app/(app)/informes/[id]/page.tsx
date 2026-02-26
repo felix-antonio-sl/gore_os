@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Edit2, CheckCircle } from "lucide-react";
+import { ArrowLeft, Edit2, CheckCircle, Send, RotateCcw, ShieldCheck } from "lucide-react";
 
 interface ReportSection {
   section_id: string;
@@ -57,9 +58,25 @@ export default function InformeDetailPage() {
   const router = useRouter();
   const id = params.id as string;
 
+  const { user } = useAuth();
   const [report, setReport] = useState<ReportContent | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [statusLoading, setStatusLoading] = useState(false);
+
+  const changeStatus = async (newStatus: string) => {
+    setStatusLoading(true);
+    try {
+      await api.post(`/api/dgi/reports/${id}/status`, { status: newStatus });
+      // Reload content
+      const updated = await api.get<ReportContent>(`/api/dgi/reports/${id}/content`);
+      setReport(updated);
+    } catch (err) {
+      console.error("Error al cambiar estado:", err);
+    } finally {
+      setStatusLoading(false);
+    }
+  };
 
   useEffect(() => {
     api
@@ -107,6 +124,27 @@ export default function InformeDetailPage() {
         </div>
         <h1 className="text-2xl font-bold">{report.title}</h1>
       </div>
+
+      {/* Workflow actions */}
+      {user && (
+        <div className="flex gap-2 flex-wrap">
+          {report.status === "BORRADOR" && (
+            <Button size="sm" onClick={() => changeStatus("EN_REVISION")} disabled={statusLoading}>
+              <Send className="size-4 mr-1" />Enviar a Revisión
+            </Button>
+          )}
+          {report.status === "EN_REVISION" && user.role_code === "JEFE_DGI" && (
+            <>
+              <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={() => changeStatus("ENVIADO")} disabled={statusLoading}>
+                <ShieldCheck className="size-4 mr-1" />Aprobar y Enviar
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => changeStatus("BORRADOR")} disabled={statusLoading}>
+                <RotateCcw className="size-4 mr-1" />Devolver a Borrador
+              </Button>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Metadata */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-lg border bg-muted/20">

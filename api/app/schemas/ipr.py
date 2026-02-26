@@ -46,6 +46,7 @@ class IPRDetail(BaseModel):
     commitment_count: int
     problem_count: int
     alert_count: int
+    agreement_count: int = 0
     created_at: datetime
 
 

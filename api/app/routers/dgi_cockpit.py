@@ -106,21 +106,42 @@ async def _cockpit_jefe_dgi(user: dict, db: AsyncSession) -> CockpitJefeDGI:
     """)
     team_rows = (await db.execute(team_sql)).mappings().all()
 
-    _role_activity = {
-        "ESP_CONTROL_GESTION": "Revisión indicadores semanales",
-        "ESP_TD": "Actualización tablero TDE",
-        "ESP_PROCESOS": "Levantamiento BPMN División X",
-    }
+    # Real activity: count active initiatives + last report per user
+    team_status = []
+    for r in team_rows:
+        uid = str(r["id"])
+        # Count active initiatives assigned to this user
+        ini_row = (await db.execute(text("""
+            SELECT COUNT(*) AS cnt
+            FROM core.dgi_initiative i
+            JOIN ref.category st ON st.id = i.status_id
+            WHERE i.responsible_id = :uid AND st.code IN ('EN_CURSO', 'REVISION')
+        """), {"uid": uid})).mappings().first()
+        ini_count = ini_row["cnt"] if ini_row else 0
 
-    team_status = [
-        {
-            "id": str(r["id"]),
+        # Last report edited by this user
+        rep_row = (await db.execute(text("""
+            SELECT r.title, r.updated_at
+            FROM core.dgi_report r
+            WHERE r.generated_by_id = :uid AND r.deleted_at IS NULL
+            ORDER BY r.updated_at DESC LIMIT 1
+        """), {"uid": uid})).mappings().first()
+
+        if ini_count > 0 and rep_row:
+            activity = f"{ini_count} iniciativa(s) activa(s) · Último informe: {rep_row['title']}"
+        elif ini_count > 0:
+            activity = f"{ini_count} iniciativa(s) activa(s)"
+        elif rep_row:
+            activity = f"Último informe: {rep_row['title']}"
+        else:
+            activity = "Sin actividad reciente"
+
+        team_status.append({
+            "id": uid,
             "name": r["full_name"],
             "role": r["role_label"],
-            "activity": _role_activity.get(r["role_code"], "Sin actividad registrada"),
-        }
-        for r in team_rows
-    ]
+            "activity": activity,
+        })
 
     # ── Critical alerts: top 3 CRITICO ────────────────────────────────────
     alerts_sql = text("""

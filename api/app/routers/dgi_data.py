@@ -121,6 +121,14 @@ async def refresh_indicators(
     TDE se mantiene estático (sin fuente de datos real aún).
     Idempotente: ejecutar N veces produce el mismo resultado.
     """
+    # Capture snapshots of current values BEFORE updating
+    await db.execute(text("""
+        INSERT INTO core.dgi_indicator_snapshot (indicator_id, value, signal_id, recorded_at)
+        SELECT i.id, i.current_value, i.signal_id, NOW()
+        FROM core.dgi_indicator i
+        WHERE i.deleted_at IS NULL AND i.current_value IS NOT NULL
+    """))
+
     results = {}
 
     # PRESUPUESTO
@@ -273,6 +281,36 @@ async def get_indicator(
         description=row["description"],
         last_updated_at=row["last_updated_at"],
     )
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/indicators/{id}/history — Snapshot time series
+# ---------------------------------------------------------------------------
+@router.get("/indicators/{indicator_id}/history")
+async def get_indicator_history(
+    indicator_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    days: int = Query(90, ge=1, le=365),
+):
+    """Return snapshot time series for an indicator over the last N days."""
+    sql = text("""
+        SELECT s.value, sig.code AS signal, s.recorded_at
+        FROM core.dgi_indicator_snapshot s
+        LEFT JOIN ref.category sig ON sig.id = s.signal_id
+        WHERE s.indicator_id = :id
+          AND s.recorded_at >= NOW() - MAKE_INTERVAL(days => :days)
+        ORDER BY s.recorded_at ASC
+    """)
+    rows = (await db.execute(sql, {"id": str(indicator_id), "days": days})).mappings().all()
+    return [
+        {
+            "value": float(r["value"]) if r["value"] is not None else None,
+            "signal": r["signal"],
+            "recorded_at": r["recorded_at"].isoformat(),
+        }
+        for r in rows
+    ]
 
 
 # ---------------------------------------------------------------------------

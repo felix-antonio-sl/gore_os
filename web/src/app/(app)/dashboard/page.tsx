@@ -16,6 +16,7 @@ import { CockpitJefeDGIView } from "@/components/cockpit-jefe-dgi";
 import { CockpitControlGestionView } from "@/components/cockpit-control-gestion";
 import { CockpitProcesosView } from "@/components/cockpit-procesos";
 import { CockpitTDView } from "@/components/cockpit-td";
+import { SemaforoCard } from "@/components/semaforo-card";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type {
@@ -36,8 +37,16 @@ interface DivisionBreakdown {
   ejecucion_pct: number;
 }
 
+interface SemaforoItem {
+  dimension: string;
+  label: string;
+  signal: "VERDE" | "AMARILLO" | "ROJO";
+  indicator_count: number;
+}
+
 interface ExecutiveDashboardData extends DashboardData {
   divisions: DivisionBreakdown[];
+  semaforo?: SemaforoItem[];
 }
 
 interface ChartDataPoint {
@@ -65,6 +74,27 @@ type DGICockpitData =
   | { role: "ESP_CONTROL_GESTION"; data: CockpitControlGestion }
   | { role: "ESP_PROCESOS"; data: CockpitProcesos }
   | { role: "ESP_TD"; data: CockpitTD };
+
+// Drill-down map: KPI label → destination route
+const DRILLDOWNS: Record<string, string> = {
+  // ADMIN_REGIONAL / Executive
+  "IPRs críticas": "/alertas?severity=CRITICO",
+  "Compromisos vencidos": "/compromisos?overdue=true",
+  "Ejec. Presupuestaria": "/presupuesto",
+  "Convenios por vencer": "/convenios?state=VIGENTE",
+  // JEFE_DIVISION
+  "Vencidos mi div": "/compromisos?overdue=true",
+  "Por Verificar": "/compromisos?estado=COMPLETADO",
+  "Problemas abiertos": "/problemas?estado=ABIERTO",
+  // ENCARGADO
+  "Pendientes": "/compromisos?estado=PENDIENTE",
+  "En Progreso": "/compromisos?estado=EN_PROGRESO",
+  "Completados": "/compromisos?estado=COMPLETADO",
+  "Mis Alertas": "/alertas",
+  // mi-division
+  "Vencidos": "/compromisos?overdue=true",
+  "Activos": "/compromisos",
+};
 
 // ─── Operational Dashboard ──────────────────────────────────────────────────
 
@@ -173,8 +203,27 @@ function OperationalDashboard() {
               value={kpi.value}
               sublabel={kpi.sublabel}
               color={kpi.color}
+              onClick={DRILLDOWNS[kpi.label] ? () => router.push(DRILLDOWNS[kpi.label]) : undefined}
             />
           ))}
+        </div>
+      )}
+
+      {/* Semáforo DGI (solo ejecutivos) */}
+      {!isLoading && isExecutive && data?.semaforo && data.semaforo.length > 0 && (
+        <div>
+          <h2 className="text-lg font-semibold mb-3">Semáforo Institucional</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+            {data.semaforo.map((s) => (
+              <SemaforoCard
+                key={s.dimension}
+                dimension={s.dimension}
+                label={s.label}
+                signal={s.signal}
+                indicatorCount={s.indicator_count}
+              />
+            ))}
+          </div>
         </div>
       )}
 

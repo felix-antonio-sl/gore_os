@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import { BarChart2, AlertCircle, TrendingUp, ClipboardList } from "lucide-react";
 import { ProgressBarIndicator } from "@/components/progress-bar-indicator";
+import { SparklineIndicator } from "@/components/sparkline-indicator";
 import { cn } from "@/lib/utils";
 import type { CockpitControlGestion, DGIDataSource } from "@/types";
 
@@ -129,6 +130,7 @@ export function CockpitControlGestionView({ data }: Props) {
                         </p>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
+                        <SparklineIndicator indicatorId={ind.id} days={90} />
                         {ind.signal && (
                           <Badge
                             variant="outline"

@@ -3,8 +3,9 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
-from app.core.security import verify_password, create_access_token, DGI_ROLES
-from app.schemas.auth import LoginResponse, UserInfo
+from app.core.deps import CurrentUser
+from app.core.security import verify_password, hash_password, create_access_token, DGI_ROLES
+from app.schemas.auth import LoginResponse, UserInfo, ChangePasswordRequest
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
@@ -49,3 +50,30 @@ async def login(form: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = 
             population=population,
         ),
     )
+
+
+@router.post("/change-password")
+async def change_password(
+    body: ChangePasswordRequest,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Change the current user's password. Requires current password verification."""
+    result = await db.execute(
+        text('SELECT password_hash FROM core."user" WHERE id = :id AND deleted_at IS NULL'),
+        {"id": str(user["id"])},
+    )
+    row = result.mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Usuario no encontrado")
+
+    if not verify_password(body.current_password, row["password_hash"]):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Contraseña actual incorrecta")
+
+    new_hash = hash_password(body.new_password)
+    await db.execute(
+        text('UPDATE core."user" SET password_hash = :hash, updated_at = NOW() WHERE id = :id'),
+        {"hash": new_hash, "id": str(user["id"])},
+    )
+    await db.commit()
+    return {"message": "Contraseña actualizada exitosamente"}

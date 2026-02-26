@@ -203,3 +203,68 @@ async def test_encargado_sees_only_own(client, regional_token, encargado_token, 
     encargado_id = catalog["users"]["encargado.daf@goreos.cl"]["id"]
     for item in items:
         assert item["responsible_id"] == encargado_id
+
+
+# ---------------------------------------------------------------------------
+# PATCH observations
+# ---------------------------------------------------------------------------
+
+async def test_patch_observations(client, regional_token, catalog):
+    """PATCH observations updates text without changing state."""
+    data = await _create_commitment(client, regional_token, catalog)
+    cid = data["id"]
+
+    resp = await client.patch(
+        f"/api/compromisos/{cid}",
+        json={"observations": "Nota actualizada"},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200
+
+    detail = await client.get(f"/api/compromisos/{cid}", headers=auth(regional_token))
+    assert detail.json()["observations"] == "Nota actualizada"
+    assert detail.json()["state"] == "PENDIENTE"  # state unchanged
+
+
+async def test_patch_no_state_change(client, regional_token, catalog):
+    """PATCH with empty body returns 'Sin cambios'."""
+    data = await _create_commitment(client, regional_token, catalog)
+    resp = await client.patch(
+        f"/api/compromisos/{data['id']}",
+        json={},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200
+    assert "Sin cambios" in resp.json().get("message", "")
+
+
+# ---------------------------------------------------------------------------
+# Reassignment
+# ---------------------------------------------------------------------------
+
+async def test_reassign_commitment(client, regional_token, jefe_token, catalog):
+    """JEFE can reassign a commitment to another user."""
+    data = await _create_commitment(client, regional_token, catalog)
+    cid = data["id"]
+    new_responsible = catalog["users"]["jefe.daf@goreos.cl"]["id"]
+
+    resp = await client.patch(
+        f"/api/compromisos/{cid}",
+        json={"responsible_id": new_responsible},
+        headers=auth(jefe_token),
+    )
+    assert resp.status_code == 200
+
+    detail = await client.get(f"/api/compromisos/{cid}", headers=auth(regional_token))
+    assert detail.json()["responsible_id"] == new_responsible
+
+
+async def test_reassign_forbidden_encargado(client, regional_token, encargado_token, catalog):
+    """ENCARGADO cannot reassign (403)."""
+    data = await _create_commitment(client, regional_token, catalog)
+    resp = await client.patch(
+        f"/api/compromisos/{data['id']}",
+        json={"responsible_id": catalog["users"]["admin@goreos.cl"]["id"]},
+        headers=auth(encargado_token),
+    )
+    assert resp.status_code == 403

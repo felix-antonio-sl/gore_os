@@ -253,3 +253,7 @@ class ReportCreate(BaseModel):
 class ReportSectionUpdate(BaseModel):
     section_id: str
     content: str
+
+
+class ReportStatusChange(BaseModel):
+    status: str  # EN_REVISION, ENVIADO, BORRADOR

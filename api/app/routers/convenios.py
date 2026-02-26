@@ -1,4 +1,5 @@
 import math
+from datetime import date as date_type
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,6 +7,7 @@ from sqlalchemy import text
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.schemas.common import PaginatedResponse
 from app.schemas.convenio import (
     ConvenioListItem,
@@ -22,6 +24,12 @@ router = APIRouter(prefix="/api/convenios", tags=["convenios"])
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+
+def _require_roles(user: dict, *roles: str) -> None:
+    if user["role_code"] not in roles:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
+
 
 async def _get_convenio_or_404(convenio_id: UUID, db: AsyncSession) -> dict:
     result = await db.execute(
@@ -67,6 +75,26 @@ async def _get_convenio_or_404(convenio_id: UUID, db: AsyncSession) -> dict:
     if not row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Convenio no encontrado")
     return dict(row)
+
+
+async def _get_agreement_history(convenio_id: UUID, db: AsyncSession) -> list[dict]:
+    result = await db.execute(
+        text("""
+            SELECT ah.id, ah.changed_at, ah.comment,
+                   prev.code  AS previous_state,
+                   nxt.code   AS new_state,
+                   (p.names || ' ' || p.paternal_surname) AS changed_by_name
+            FROM core.agreement_history ah
+            JOIN ref.category nxt ON ah.new_state_id = nxt.id
+            LEFT JOIN ref.category prev ON ah.previous_state_id = prev.id
+            LEFT JOIN core."user" cu ON ah.changed_by_id = cu.id
+            LEFT JOIN core.person p ON cu.person_id = p.id
+            WHERE ah.agreement_id = :aid
+            ORDER BY ah.changed_at DESC
+        """),
+        {"aid": str(convenio_id)},
+    )
+    return [dict(r) for r in result.mappings().all()]
 
 
 async def _get_installments(convenio_id: UUID, db: AsyncSession) -> list[dict]:
@@ -122,9 +150,18 @@ async def list_convenios(
     agreement_type: str | None = None,
     ipr_id: UUID | None = None,
     search: str | None = None,
+    date_from: date_type | None = None,
+    date_to: date_type | None = None,
 ):
     params: dict = {}
     conditions = ["a.deleted_at IS NULL"]
+
+    if date_from:
+        conditions.append("a.valid_to >= :date_from")
+        params["date_from"] = str(date_from)
+    if date_to:
+        conditions.append("a.valid_to <= :date_to")
+        params["date_to"] = str(date_to)
 
     if state:
         conditions.append("st_cat.code = :state")
@@ -247,6 +284,7 @@ async def get_convenio(
 ):
     row = await _get_convenio_or_404(convenio_id, db)
     installments_raw = await _get_installments(convenio_id, db)
+    history_raw = await _get_agreement_history(convenio_id, db)
 
     # Installment counts for list fields
     installments = [InstallmentItem(**r) for r in installments_raw]
@@ -258,6 +296,7 @@ async def get_convenio(
         installment_count=installment_count,
         paid_installments=paid_installments,
         installments=installments,
+        history=history_raw,
     )
 
 
@@ -271,6 +310,7 @@ async def create_convenio(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     agreement_number = body.agreement_number or await _next_agreement_number(db)
 
     result = await db.execute(
@@ -387,6 +427,7 @@ async def update_convenio(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     await _get_convenio_or_404(convenio_id, db)
 
     # Allowlist: solo estas columnas son actualizables via PATCH
@@ -488,6 +529,7 @@ async def add_cuota(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     await _get_convenio_or_404(convenio_id, db)
 
     # Check unique installment_number
@@ -534,6 +576,7 @@ async def update_cuota(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     # Verify cuota belongs to convenio
     check = await db.execute(
         text("SELECT 1 FROM core.agreement_installment WHERE id = :id AND agreement_id = :aid AND deleted_at IS NULL"),

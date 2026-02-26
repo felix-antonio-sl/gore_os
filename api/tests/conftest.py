@@ -99,6 +99,12 @@ async def dgi_token(db):
     return create_access_token({"sub": uid, "role": "JEFE_DGI"})
 
 
+@pytest_asyncio.fixture
+async def consejero_token(db):
+    uid = await _get_user_id(db, "consejero@goreos.cl")
+    return create_access_token({"sub": uid, "role": "CONSEJERO_REGIONAL"})
+
+
 # ---------------------------------------------------------------------------
 # Auth header helpers
 # ---------------------------------------------------------------------------

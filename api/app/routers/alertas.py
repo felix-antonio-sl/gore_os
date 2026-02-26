@@ -1,4 +1,5 @@
 import math
+from datetime import date
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,9 +7,15 @@ from sqlalchemy import text
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.schemas.alerta import AlertaListItem, AlertaAttendRequest
 
 router = APIRouter(prefix="/api/alertas", tags=["alertas"])
+
+
+def _require_roles(user: dict, *roles: str) -> None:
+    if user["role_code"] not in roles:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
 
 # ---------------------------------------------------------------------------
 # Severity ordering: CRITICO > ALTO > ATENCION > INFO
@@ -62,10 +69,19 @@ async def list_alertas(
     alert_type: str | None = None,
     subject_type: str | None = None,
     subject_id: str | None = None,
+    date_from: date | None = None,
+    date_to: date | None = None,
 ):
     role = user["role_code"]
     params: dict = {}
     conditions = ["a.deleted_at IS NULL"]
+
+    if date_from:
+        conditions.append("a.triggered_at::date >= :date_from")
+        params["date_from"] = str(date_from)
+    if date_to:
+        conditions.append("a.triggered_at::date <= :date_to")
+        params["date_to"] = str(date_to)
 
     if active_only:
         conditions.append("a.resolved_at IS NULL")
@@ -207,6 +223,7 @@ async def attend_alerta(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     # Verify alert exists and is not deleted
     check_result = await db.execute(
         text("""

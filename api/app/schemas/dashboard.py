@@ -79,8 +79,16 @@ class DivisionBreakdown(BaseModel):
     ejecucion_pct: float
 
 
+class SemaforoItem(BaseModel):
+    dimension: str
+    label: str
+    signal: str
+    indicator_count: int
+
+
 class DashboardExecutivoResponse(DashboardResponse):
     divisions: list[DivisionBreakdown]
+    semaforo: list[SemaforoItem] = []
 
 
 class ChartDataPoint(BaseModel):

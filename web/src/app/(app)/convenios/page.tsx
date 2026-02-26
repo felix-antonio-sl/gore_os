@@ -8,6 +8,7 @@ import { FilterBar } from "@/components/filter-bar";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
+import { TimelineHistory } from "@/components/timeline-history";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAuth } from "@/lib/auth";
+import { Download } from "lucide-react";
+import { exportCSV } from "@/lib/csv-export";
 import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, CategoryRef } from "@/types";
+
+const CSV_COLUMNS = [
+  { key: "agreement_number", label: "Número" },
+  { key: "agreement_type_label", label: "Tipo" },
+  { key: "state", label: "Estado" },
+  { key: "receiver_name", label: "Contraparte" },
+  { key: "total_amount", label: "Monto" },
+  { key: "valid_to", label: "Vigencia Hasta" },
+];
 
 const STATE_OPTIONS = [
   { value: "VIGENTE", label: "Vigente" },
@@ -101,6 +113,8 @@ export default function ConveniosPage() {
   const page = Number(searchParams.get("page") ?? "1");
   const state = searchParams.get("state") ?? "";
   const agreement_type = searchParams.get("agreement_type") ?? "";
+  const dateFrom = searchParams.get("date_from") ?? "";
+  const dateTo = searchParams.get("date_to") ?? "";
 
   const filterValues: Record<string, string> = { state, agreement_type };
 
@@ -129,6 +143,8 @@ export default function ConveniosPage() {
     params.set("page_size", "20");
     if (state) params.set("state", state);
     if (agreement_type) params.set("agreement_type", agreement_type);
+    if (dateFrom) params.set("date_from", dateFrom);
+    if (dateTo) params.set("date_to", dateTo);
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
@@ -137,7 +153,7 @@ export default function ConveniosPage() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, state, agreement_type]);
+  }, [page, state, agreement_type, dateFrom, dateTo]);
 
   const openDetail = (row: unknown) => {
     const item = row as ConvenioListItem;
@@ -255,11 +271,16 @@ export default function ConveniosPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">Convenios</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Gestión de convenios y cuotas de pago
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Convenios</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Gestión de convenios y cuotas de pago
+          </p>
+        </div>
+        <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "convenios")}>
+          <Download className="size-4 mr-1" />CSV
+        </Button>
       </div>
 
       <FilterBar
@@ -272,6 +293,13 @@ export default function ConveniosPage() {
         onClear={handleClear}
         searchPlaceholder="Buscar por número o BIP..."
       />
+
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-muted-foreground whitespace-nowrap">Vigencia hasta:</span>
+        <Input type="date" className="h-8 w-36 text-xs" value={dateFrom} onChange={(e) => router.push(buildUrl({ date_from: e.target.value, page: 1 }))} />
+        <span className="text-xs text-muted-foreground">—</span>
+        <Input type="date" className="h-8 w-36 text-xs" value={dateTo} onChange={(e) => router.push(buildUrl({ date_to: e.target.value, page: 1 }))} />
+      </div>
 
       <DataTable
         columns={columns}
@@ -460,6 +488,14 @@ export default function ConveniosPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Historial de estados */}
+            {detail.history && detail.history.length > 0 && (
+              <div className="pt-2 border-t">
+                <h3 className="text-sm font-semibold mb-3">Historial de Estados</h3>
+                <TimelineHistory entries={detail.history} />
               </div>
             )}
           </div>

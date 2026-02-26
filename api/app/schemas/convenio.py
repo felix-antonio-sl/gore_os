@@ -38,12 +38,22 @@ class ConvenioListItem(BaseModel):
     paid_installments: int
 
 
+class AgreementHistoryEntry(BaseModel):
+    id: UUID
+    previous_state: Optional[str] = None
+    new_state: str
+    changed_by_name: Optional[str] = None
+    comment: Optional[str] = None
+    changed_at: datetime
+
+
 class ConvenioDetail(ConvenioListItem):
     technical_referent_name: Optional[str] = None
     cgr_outcome: Optional[str] = None
     cgr_outcome_label: Optional[str] = None
     created_at: datetime
     installments: list[InstallmentItem]
+    history: list[AgreementHistoryEntry] = []
 
 
 class ConvenioCreate(BaseModel):

@@ -29,6 +29,7 @@ async def get_users_list(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
     division_id: str | None = None,
+    search: str | None = None,
 ):
     query = """
         SELECT u.id, u.email, u.division_id, p.names as nombre, p.paternal_surname as apellido_paterno,
@@ -39,11 +40,14 @@ async def get_users_list(
         LEFT JOIN core.organization o ON u.division_id = o.id
         WHERE u.is_active = true AND u.deleted_at IS NULL
     """
-    params = {}
+    params: dict = {}
     if division_id:
         query += " AND u.division_id = :div"
         params["div"] = division_id
-    query += " ORDER BY p.paternal_surname, p.names"
+    if search:
+        query += " AND (p.names ILIKE :s OR p.paternal_surname ILIKE :s OR u.email ILIKE :s)"
+        params["s"] = f"%{search}%"
+    query += " ORDER BY p.paternal_surname, p.names LIMIT 50"
     result = await db.execute(text(query), params)
     return [dict(r) for r in result.mappings().all()]
 

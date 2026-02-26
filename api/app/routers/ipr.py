@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
 from app.schemas.common import PaginatedResponse
@@ -248,7 +249,14 @@ async def get_ipr(
                 WHERE a.subject_type = 'ipr'
                   AND a.subject_id = i.id
                   AND a.deleted_at IS NULL
-            ) AS alert_count
+            ) AS alert_count,
+            -- agreement count
+            (
+                SELECT COUNT(*)
+                FROM core.agreement ag
+                WHERE ag.ipr_id = i.id
+                  AND ag.deleted_at IS NULL
+            ) AS agreement_count
         FROM core.ipr i
         LEFT JOIN ref.category  ct   ON ct.id   = i.ipr_type_id
         LEFT JOIN ref.category  st   ON st.id   = i.status_id
@@ -300,6 +308,7 @@ async def get_ipr(
         commitment_count=row["commitment_count"] or 0,
         problem_count=row["problem_count"] or 0,
         alert_count=row["alert_count"] or 0,
+        agreement_count=row["agreement_count"] or 0,
         created_at=row["created_at"],
     )
 
@@ -452,6 +461,7 @@ async def create_progress_report(
     db: AsyncSession = Depends(get_db),
 ):
     """Create a new progress report for an IPR."""
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     # Verify IPR exists
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),

@@ -11,8 +11,20 @@ import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { TimelineHistory } from "@/components/timeline-history";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
+import { Plus, Download, UserCheck } from "lucide-react";
+import { exportCSV } from "@/lib/csv-export";
 import type { PaginatedResponse, CompromisoListItem, HistoryEntry } from "@/types";
+
+const CSV_COLUMNS = [
+  { key: "code", label: "Código" },
+  { key: "description", label: "Descripción" },
+  { key: "responsible_name", label: "Responsable" },
+  { key: "state", label: "Estado" },
+  { key: "due_date", label: "Fecha Límite" },
+  { key: "days_remaining", label: "Días Restantes" },
+];
 
 const ESTADO_OPTIONS = [
   { value: "PENDIENTE", label: "Pendiente" },
@@ -26,6 +38,7 @@ const ESTADO_OPTIONS = [
 const DIVISION_OPTIONS: { value: string; label: string }[] = [];
 
 interface CompromisoDetail extends CompromisoListItem {
+  observations?: string | null;
   history?: HistoryEntry[];
   notes?: string;
 }
@@ -56,11 +69,20 @@ export default function CompromisosPage() {
   const [detail, setDetail] = useState<CompromisoDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
+  const [editObs, setEditObs] = useState("");
+  const [obsEditing, setObsEditing] = useState(false);
+  const [obsSaving, setObsSaving] = useState(false);
+  const [reassigning, setReassigning] = useState(false);
+  const [reassignUser, setReassignUser] = useState("");
+  const [reassignLoading, setReassignLoading] = useState(false);
 
   const page = Number(searchParams.get("page") ?? "1");
   const estado = searchParams.get("estado") ?? "";
   const division = searchParams.get("division") ?? "";
   const soloMios = searchParams.get("solo_mios") === "1";
+  const overdue = searchParams.get("overdue") === "true";
+  const dateFrom = searchParams.get("date_from") ?? "";
+  const dateTo = searchParams.get("date_to") ?? "";
 
   const filterValues: Record<string, string> = {
     estado,
@@ -102,13 +124,16 @@ export default function CompromisosPage() {
     if (estado) params.set("state", estado);
     if (division) params.set("division_id", division);
     if (soloMios && user?.id) params.set("responsible_id", user.id);
+    if (overdue) params.set("overdue", "true");
+    if (dateFrom) params.set("date_from", dateFrom);
+    if (dateTo) params.set("date_to", dateTo);
 
     api
       .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?${params.toString()}`)
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, estado, division, soloMios, user?.id, refreshKey]);
+  }, [page, estado, division, soloMios, overdue, dateFrom, dateTo, user?.id, refreshKey]);
 
   const openDetail = (row: unknown) => {
     const compromiso = row as CompromisoListItem;
@@ -119,6 +144,8 @@ export default function CompromisosPage() {
     api.get<CompromisoDetail>(`/api/compromisos/${compromiso.id}`)
       .then((det) => {
         setDetail(det);
+        setEditObs(det.observations ?? "");
+        setObsEditing(false);
       })
       .catch(() => {
         setDetail(compromiso as CompromisoDetail);
@@ -140,6 +167,46 @@ export default function CompromisosPage() {
     }
   };
 
+  const searchUsers = async (query: string): Promise<ComboboxOption[]> => {
+    const users = await api.get<{ id: string; nombre: string; apellido_paterno: string; division_name: string | null }[]>(
+      `/api/catalogs/users?search=${encodeURIComponent(query)}`
+    );
+    return users.map((u) => ({
+      value: u.id,
+      label: `${u.nombre} ${u.apellido_paterno}${u.division_name ? ` (${u.division_name})` : ""}`,
+    }));
+  };
+
+  const handleReassign = async () => {
+    if (!selectedId || !reassignUser) return;
+    setReassignLoading(true);
+    try {
+      await api.patch(`/api/compromisos/${selectedId}`, { responsible_id: reassignUser });
+      setReassigning(false);
+      setReassignUser("");
+      setSelectedId(null);
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      console.error("Error al reasignar:", err);
+    } finally {
+      setReassignLoading(false);
+    }
+  };
+
+  const saveObservations = async () => {
+    if (!selectedId) return;
+    setObsSaving(true);
+    try {
+      await api.patch(`/api/compromisos/${selectedId}`, { observations: editObs });
+      setDetail((prev) => prev ? { ...prev, observations: editObs } : prev);
+      setObsEditing(false);
+    } catch (err) {
+      console.error("Error al guardar observaciones:", err);
+    } finally {
+      setObsSaving(false);
+    }
+  };
+
   const canComplete =
     detail &&
     detail.state === "PENDIENTE" &&
@@ -157,6 +224,13 @@ export default function CompromisosPage() {
     (detail.state === "COMPLETADO" || detail.state === "EN_PROGRESO") &&
     user &&
     ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(user.role_code);
+
+  const canReassign =
+    detail &&
+    detail.state !== "VERIFICADO" &&
+    detail.state !== "CANCELADO" &&
+    user &&
+    ["JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA", "GOBERNADOR", "JEFE_DEPARTAMENTO"].includes(user.role_code);
 
   const columns = [
     {
@@ -209,12 +283,17 @@ export default function CompromisosPage() {
             Gestión de compromisos operativos
           </p>
         </div>
-        {canCreate && (
-          <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
-            <Plus className="size-4 mr-1" />
-            Nuevo Compromiso
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "compromisos")}>
+            <Download className="size-4 mr-1" />CSV
           </Button>
-        )}
+          {canCreate && (
+            <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
+              <Plus className="size-4 mr-1" />
+              Nuevo Compromiso
+            </Button>
+          )}
+        </div>
       </div>
 
       <FilterBar
@@ -227,6 +306,13 @@ export default function CompromisosPage() {
         onClear={handleClear}
         searchPlaceholder="Buscar compromiso..."
       />
+
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-muted-foreground whitespace-nowrap">Vencimiento:</span>
+        <Input type="date" className="h-8 w-36 text-xs" value={dateFrom} onChange={(e) => router.push(buildUrl({ date_from: e.target.value, page: 1 }))} />
+        <span className="text-xs text-muted-foreground">—</span>
+        <Input type="date" className="h-8 w-36 text-xs" value={dateTo} onChange={(e) => router.push(buildUrl({ date_to: e.target.value, page: 1 }))} />
+      </div>
 
       <DataTable
         columns={columns}
@@ -287,6 +373,68 @@ export default function CompromisosPage() {
                 <p className="text-sm">
                   <span className="text-muted-foreground">Verificado: </span>
                   {formatDate(detail.verified_at)}
+                </p>
+              )}
+            </div>
+
+            {/* Reasignación */}
+            {canReassign && (
+              <div className="pt-2 border-t">
+                {!reassigning ? (
+                  <Button variant="outline" size="sm" onClick={() => setReassigning(true)}>
+                    <UserCheck className="size-4 mr-1" />Reasignar
+                  </Button>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium">Reasignar a:</p>
+                    <ComboboxAsync
+                      value={reassignUser}
+                      onChange={setReassignUser}
+                      searchFn={searchUsers}
+                      placeholder="Buscar usuario..."
+                    />
+                    <div className="flex gap-2">
+                      <Button size="sm" onClick={handleReassign} disabled={!reassignUser || reassignLoading}>
+                        {reassignLoading ? "Reasignando..." : "Confirmar"}
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => { setReassigning(false); setReassignUser(""); }}>
+                        Cancelar
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Observaciones */}
+            <div className="pt-2 border-t">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-sm font-semibold">Observaciones</h3>
+                {!obsEditing ? (
+                  <Button variant="ghost" size="sm" className="h-6 text-xs" onClick={() => setObsEditing(true)}>
+                    Editar
+                  </Button>
+                ) : (
+                  <div className="flex gap-1">
+                    <Button variant="ghost" size="sm" className="h-6 text-xs" onClick={() => { setObsEditing(false); setEditObs(detail.observations ?? ""); }}>
+                      Cancelar
+                    </Button>
+                    <Button size="sm" className="h-6 text-xs" onClick={saveObservations} disabled={obsSaving}>
+                      {obsSaving ? "Guardando..." : "Guardar"}
+                    </Button>
+                  </div>
+                )}
+              </div>
+              {obsEditing ? (
+                <textarea
+                  className="w-full rounded-md border bg-background px-3 py-2 text-sm min-h-[80px] resize-y focus:outline-none focus:ring-2 focus:ring-ring"
+                  value={editObs}
+                  onChange={(e) => setEditObs(e.target.value)}
+                  placeholder="Agregar observaciones..."
+                />
+              ) : (
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                  {detail.observations || "Sin observaciones"}
                 </p>
               )}
             </div>

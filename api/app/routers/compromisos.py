@@ -1,4 +1,5 @@
 import math
+from datetime import date
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,7 +7,8 @@ from sqlalchemy import text
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.schemas.compromiso import CompromisoCreate, CompromisoListItem, CompromisoDetail, HistoryEntry, StateChangeRequest
+from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.schemas.compromiso import CompromisoCreate, CompromisoListItem, CompromisoDetail, HistoryEntry, StateChangeRequest, CompromisoUpdate
 
 router = APIRouter(prefix="/api/compromisos", tags=["compromisos"])
 
@@ -108,6 +110,8 @@ async def list_compromisos(
     ipr_id: UUID | None = None,
     overdue: bool | None = None,
     mine: bool | None = None,
+    date_from: date | None = None,
+    date_to: date | None = None,
 ):
     role = user["role_code"]
     params: dict = {}
@@ -143,6 +147,13 @@ async def list_compromisos(
     if ipr_id:
         conditions.append("oc.ipr_id = :ipr_id")
         params["ipr_id"] = str(ipr_id)
+
+    if date_from:
+        conditions.append("oc.due_date >= :date_from")
+        params["date_from"] = str(date_from)
+    if date_to:
+        conditions.append("oc.due_date <= :date_to")
+        params["date_to"] = str(date_to)
 
     if overdue is True:
         conditions.append(
@@ -324,6 +335,61 @@ async def create_compromiso(
     await db.commit()
     row = result.mappings().first()
     return {"id": str(row["id"]), "code": row["code"]}
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/compromisos/{id} — Update fields
+# ---------------------------------------------------------------------------
+
+_PATCH_ALLOWLIST = {"observations", "due_date", "description", "responsible_id"}
+
+
+@router.patch("/{compromiso_id}")
+async def update_compromiso(
+    compromiso_id: UUID,
+    data: CompromisoUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
+    await _get_compromiso_or_404(compromiso_id, db)
+
+    updates = {k: v for k, v in data.model_dump(exclude_none=True).items() if k in _PATCH_ALLOWLIST}
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    # responsible_id changes require MANAGER_ROLES
+    if "responsible_id" in updates:
+        _require_roles(user, *MANAGER_ROLES)
+        # Auto-resolve division_id from new responsible
+        div_result = await db.execute(
+            text('SELECT division_id FROM core."user" WHERE id = :uid AND deleted_at IS NULL'),
+            {"uid": str(updates["responsible_id"])},
+        )
+        div_row = div_result.mappings().first()
+        if div_row and div_row["division_id"]:
+            updates["division_id"] = str(div_row["division_id"])
+
+    set_clauses = []
+    params: dict = {"id": str(compromiso_id), "updated_by": str(user["id"])}
+    for field, value in updates.items():
+        set_clauses.append(f"{field} = :{field}")
+        params[field] = str(value) if value is not None else None
+
+    set_clauses.append("updated_by_id = :updated_by")
+    set_clauses.append("updated_at = NOW()")
+
+    await db.execute(
+        text(f"UPDATE core.operational_commitment SET {', '.join(set_clauses)} WHERE id = :id AND deleted_at IS NULL"),
+        params,
+    )
+    await db.commit()
+
+    updated = await _get_compromiso_or_404(compromiso_id, db)
+    return CompromisoDetail(
+        **{k: updated[k] for k in updated if k != "history"},
+        history=[],
+    ).model_dump()
 
 
 # ---------------------------------------------------------------------------

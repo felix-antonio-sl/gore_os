@@ -9,9 +9,19 @@ import { FilterBar } from "@/components/filter-bar";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { exportCSV } from "@/lib/csv-export";
 import type { PaginatedResponse, IPRListItem } from "@/types";
+
+const CSV_COLUMNS = [
+  { key: "codigo_bip", label: "Código BIP" },
+  { key: "name", label: "Nombre" },
+  { key: "ipr_type", label: "Tipo" },
+  { key: "status", label: "Estado" },
+  { key: "investment_sector", label: "Sector" },
+  { key: "executor_name", label: "Ejecutor" },
+];
 
 const IPR_TYPE_OPTIONS = [
   { value: "INFRAESTRUCTURA", label: "Infraestructura" },
@@ -247,12 +257,17 @@ export default function IprPage() {
             Intervenciones Públicas Regionales
           </p>
         </div>
-        {canCreate && (
-          <Button onClick={() => router.push("/ipr/nuevo")} size="sm">
-            <Plus className="size-4 mr-1" />
-            Nueva IPR
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "ipr")}>
+            <Download className="size-4 mr-1" />CSV
           </Button>
-        )}
+          {canCreate && (
+            <Button onClick={() => router.push("/ipr/nuevo")} size="sm">
+              <Plus className="size-4 mr-1" />
+              Nueva IPR
+            </Button>
+          )}
+        </div>
       </div>
 
       <FilterBar

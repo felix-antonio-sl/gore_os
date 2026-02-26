@@ -253,6 +253,7 @@ export interface ConvenioDetail extends ConvenioListItem {
   cgr_outcome_label: string | null;
   created_at: string;
   installments: InstallmentItem[];
+  history?: { id: string; previous_state: string | null; new_state: string; changed_by_name: string | null; comment: string | null; changed_at: string }[];
 }
 
 // ---------------------------------------------------------------------------

@@ -16,10 +16,31 @@ from app.schemas.dashboard import (
     MisCompromisosResponse,
     DivisionBreakdown,
     DashboardExecutivoResponse,
+    SemaforoItem,
     ChartDataPoint,
     BudgetChartPoint,
     ChartDataResponse,
 )
+
+# ---------------------------------------------------------------------------
+# Semaforo helpers (shared with DGI cockpit)
+# ---------------------------------------------------------------------------
+_SIGNAL_PRIORITY = {"ROJO": 3, "AMARILLO": 2, "VERDE": 1}
+_DIMENSION_LABELS = {
+    "PRESUPUESTO": "Presupuesto",
+    "CARTERA_IPR": "Cartera IPR",
+    "CONVENIOS": "Convenios",
+    "TDE": "Transformación Digital",
+    "RIESGOS": "Riesgos",
+}
+
+
+def _worst_signal(signals: list[str | None]) -> str:
+    best = "VERDE"
+    for s in signals:
+        if s and _SIGNAL_PRIORITY.get(s, 0) > _SIGNAL_PRIORITY.get(best, 0):
+            best = s
+    return best
 
 router = APIRouter(prefix="/api/dashboard", tags=["dashboard"])
 
@@ -737,12 +758,41 @@ async def get_dashboard_ejecutivo(
     div_rows = (await db.execute(div_sql)).mappings().all()
     divisions = [DivisionBreakdown(**dict(r)) for r in div_rows]
 
+    # ── Semaforo DGI ───────────────────────────────────────────────────────
+    ind_sql = text("""
+        SELECT
+            dim.code   AS dimension,
+            sig.code   AS signal
+        FROM core.dgi_indicator i
+        JOIN ref.category dim ON dim.id = i.dimension_id
+        LEFT JOIN ref.category sig ON sig.id = i.signal_id
+        ORDER BY dim.code
+    """)
+    ind_rows = (await db.execute(ind_sql)).mappings().all()
+
+    dim_signals: dict[str, list[str | None]] = {}
+    for r in ind_rows:
+        dim_signals.setdefault(r["dimension"], []).append(r["signal"])
+
+    semaforo = []
+    for dim_code in ["PRESUPUESTO", "CARTERA_IPR", "CONVENIOS", "TDE", "RIESGOS"]:
+        signals = dim_signals.get(dim_code, [])
+        semaforo.append(
+            SemaforoItem(
+                dimension=dim_code,
+                label=_DIMENSION_LABELS.get(dim_code, dim_code),
+                signal=_worst_signal(signals) if signals else "VERDE",
+                indicator_count=len(signals),
+            )
+        )
+
     return DashboardExecutivoResponse(
         kpis=base.kpis,
         commitments=base.commitments,
         alerts=base.alerts,
         problems=base.problems,
         divisions=divisions,
+        semaforo=semaforo,
     )
 
 

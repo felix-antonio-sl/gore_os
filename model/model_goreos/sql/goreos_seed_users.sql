@@ -11,7 +11,8 @@ INSERT INTO core.person (id, names, paternal_surname, email, is_active) VALUES
 ('a0000001-0000-0000-0000-000000000005','Carmen','Rojas','jefe.dgi@goreos.cl',true),
 ('a0000001-0000-0000-0000-000000000006','Pedro','López','control.gestion@goreos.cl',true),
 ('a0000001-0000-0000-0000-000000000007','Paola','Leiva','procesos@goreos.cl',true),
-('a0000001-0000-0000-0000-000000000008','Roberto','Torres','td@goreos.cl',true);
+('a0000001-0000-0000-0000-000000000008','Roberto','Torres','td@goreos.cl',true),
+('a0000001-0000-0000-0000-000000000009','Luis','Henríquez','consejero@goreos.cl',true);
 
 -- Users (password: admin123 for all)
 -- Uses subqueries to resolve division/role IDs from seeded data
@@ -25,6 +26,7 @@ DECLARE
     v_esp_control UUID;
     v_esp_procesos UUID;
     v_esp_td UUID;
+    v_consejero UUID;
     v_daf UUID;
     v_dgi UUID;
     v_hash TEXT := '$2b$12$i3hvqlxesIL8chg5P7rii.f1UuWsZfCDK4dkbSmHqAtCIJSm3cIQe';
@@ -39,6 +41,7 @@ BEGIN
     SELECT id INTO v_esp_control FROM ref.category WHERE scheme='system_role' AND code='ESP_CONTROL_GESTION';
     SELECT id INTO v_esp_procesos FROM ref.category WHERE scheme='system_role' AND code='ESP_PROCESOS';
     SELECT id INTO v_esp_td FROM ref.category WHERE scheme='system_role' AND code='ESP_TD';
+    SELECT id INTO v_consejero FROM ref.category WHERE scheme='system_role' AND code='CONSEJERO_REGIONAL';
 
     -- Divisions
     SELECT id INTO v_daf FROM core.organization WHERE code='DAF';
@@ -80,5 +83,9 @@ BEGIN
     INSERT INTO core."user" (id, email, password_hash, person_id, system_role_id, division_id, is_active)
     VALUES ('b0000001-0000-0000-0000-000000000008','td@goreos.cl',v_hash,'a0000001-0000-0000-0000-000000000008',v_esp_td,v_dgi,true);
 
-    RAISE NOTICE 'Test users seeded: 9 users';
+    -- Consejero Regional
+    INSERT INTO core."user" (id, email, password_hash, person_id, system_role_id, is_active)
+    VALUES ('b0000001-0000-0000-0000-000000000009','consejero@goreos.cl',v_hash,'a0000001-0000-0000-0000-000000000009',v_consejero,true);
+
+    RAISE NOTICE 'Test users seeded: 10 users';
 END $$;

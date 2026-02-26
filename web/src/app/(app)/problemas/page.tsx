@@ -10,8 +10,18 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Download } from "lucide-react";
+import { exportCSV } from "@/lib/csv-export";
 import type { PaginatedResponse, ProblemaListItem, CategoryRef } from "@/types";
+
+const CSV_COLUMNS = [
+  { key: "code", label: "Código" },
+  { key: "ipr_codigo_bip", label: "IPR" },
+  { key: "problem_type_label", label: "Tipo" },
+  { key: "impact_label", label: "Impacto" },
+  { key: "state", label: "Estado" },
+  { key: "detected_at", label: "Detectado" },
+];
 
 interface ProblemaDetail extends ProblemaListItem {
   impact_description: string | null;
@@ -278,10 +288,15 @@ export default function ProblemasPage() {
             Registro de problemas e impedimentos en IPRs
           </p>
         </div>
-        <Button onClick={() => router.push("/problemas/nuevo")} size="sm">
-          <Plus className="size-4 mr-1" />
-          Nuevo Problema
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "problemas")}>
+            <Download className="size-4 mr-1" />CSV
+          </Button>
+          <Button onClick={() => router.push("/problemas/nuevo")} size="sm">
+            <Plus className="size-4 mr-1" />
+            Nuevo Problema
+          </Button>
+        </div>
       </div>
 
       <FilterBar

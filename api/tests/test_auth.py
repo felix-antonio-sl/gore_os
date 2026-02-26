@@ -54,3 +54,59 @@ async def test_protected_endpoint_expired_token(client):
         headers={"Authorization": f"Bearer {expired}"},
     )
     assert resp.status_code == 401
+
+
+# ---------------------------------------------------------------------------
+# Password change tests
+# ---------------------------------------------------------------------------
+
+async def test_change_password_success(client, regional_token):
+    """Change password and verify login with new password works."""
+    from tests.conftest import auth
+
+    # Change password
+    resp = await client.post(
+        "/api/auth/change-password",
+        json={"current_password": "admin123", "new_password": "newpass1234"},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200
+
+    # Login with new password
+    resp2 = await client.post(
+        "/api/auth/login",
+        data={"username": "regional@goreos.cl", "password": "newpass1234"},
+    )
+    assert resp2.status_code == 200
+
+    # Restore original password
+    new_token = resp2.json()["access_token"]
+    await client.post(
+        "/api/auth/change-password",
+        json={"current_password": "newpass1234", "new_password": "admin123"},
+        headers=auth(new_token),
+    )
+
+
+async def test_change_password_wrong_current(client, admin_token):
+    """Wrong current password returns 401."""
+    from tests.conftest import auth
+
+    resp = await client.post(
+        "/api/auth/change-password",
+        json={"current_password": "wrongpassword", "new_password": "newpass1234"},
+        headers=auth(admin_token),
+    )
+    assert resp.status_code == 401
+
+
+async def test_change_password_too_short(client, admin_token):
+    """Password shorter than 8 chars returns 422."""
+    from tests.conftest import auth
+
+    resp = await client.post(
+        "/api/auth/change-password",
+        json={"current_password": "admin123", "new_password": "short"},
+        headers=auth(admin_token),
+    )
+    assert resp.status_code == 422

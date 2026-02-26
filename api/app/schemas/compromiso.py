@@ -67,5 +67,12 @@ class CompromisoCreate(BaseModel):
     observations: str | None = None
 
 
+class CompromisoUpdate(BaseModel):
+    observations: str | None = None
+    due_date: date | None = None
+    description: str | None = None
+    responsible_id: UUID | None = None
+
+
 class StateChangeRequest(BaseModel):
     observations: str | None = None

@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Search, AlertTriangle, Info } from "lucide-react";
+import { Bell, Search, AlertTriangle, Info, KeyRound } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -49,6 +58,36 @@ export function Header() {
   const [recentAlerts, setRecentAlerts] = useState<AlertaListItem[]>([]);
   const [bellOpen, setBellOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [pwdOpen, setPwdOpen] = useState(false);
+  const [pwdForm, setPwdForm] = useState({ current: "", next: "" });
+  const [pwdError, setPwdError] = useState("");
+  const [pwdLoading, setPwdLoading] = useState(false);
+  const [pwdSuccess, setPwdSuccess] = useState(false);
+
+  const handleChangePassword = async () => {
+    setPwdError("");
+    if (pwdForm.next.length < 8) {
+      setPwdError("La nueva contraseña debe tener al menos 8 caracteres");
+      return;
+    }
+    setPwdLoading(true);
+    try {
+      await api.post("/auth/change-password", {
+        current_password: pwdForm.current,
+        new_password: pwdForm.next,
+      });
+      setPwdSuccess(true);
+      setTimeout(() => {
+        setPwdOpen(false);
+        setPwdSuccess(false);
+        setPwdForm({ current: "", next: "" });
+      }, 1500);
+    } catch (err: unknown) {
+      setPwdError(err instanceof Error ? err.message : "Error al cambiar contraseña");
+    } finally {
+      setPwdLoading(false);
+    }
+  };
 
   const fetchAlerts = () => {
     api
@@ -176,6 +215,13 @@ export function Header() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => setPwdOpen(true)}
+            >
+              <KeyRound className="size-4 mr-2" />
+              Cambiar Contraseña
+            </DropdownMenuItem>
+            <DropdownMenuItem
               className="text-destructive cursor-pointer"
               onClick={logout}
             >
@@ -183,6 +229,51 @@ export function Header() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {/* Password change dialog */}
+        <Dialog open={pwdOpen} onOpenChange={(open) => { setPwdOpen(open); if (!open) { setPwdError(""); setPwdSuccess(false); setPwdForm({ current: "", next: "" }); } }}>
+          <DialogContent className="sm:max-w-[380px]">
+            <DialogHeader>
+              <DialogTitle>Cambiar Contraseña</DialogTitle>
+              <DialogDescription>
+                Ingrese su contraseña actual y la nueva contraseña.
+              </DialogDescription>
+            </DialogHeader>
+            {pwdSuccess ? (
+              <p className="text-sm text-green-600 py-4 text-center">Contraseña actualizada correctamente</p>
+            ) : (
+              <div className="grid gap-3 py-2">
+                <div className="grid gap-1.5">
+                  <label htmlFor="current-pwd" className="text-sm font-medium">Contraseña actual</label>
+                  <Input
+                    id="current-pwd"
+                    type="password"
+                    value={pwdForm.current}
+                    onChange={(e) => setPwdForm((f) => ({ ...f, current: e.target.value }))}
+                  />
+                </div>
+                <div className="grid gap-1.5">
+                  <label htmlFor="new-pwd" className="text-sm font-medium">Nueva contraseña</label>
+                  <Input
+                    id="new-pwd"
+                    type="password"
+                    value={pwdForm.next}
+                    onChange={(e) => setPwdForm((f) => ({ ...f, next: e.target.value }))}
+                    placeholder="Mínimo 8 caracteres"
+                  />
+                </div>
+                {pwdError && <p className="text-sm text-destructive">{pwdError}</p>}
+              </div>
+            )}
+            <DialogFooter>
+              {!pwdSuccess && (
+                <Button onClick={handleChangePassword} disabled={pwdLoading || !pwdForm.current || !pwdForm.next}>
+                  {pwdLoading ? "Guardando..." : "Guardar"}
+                </Button>
+              )}
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </header>
   );

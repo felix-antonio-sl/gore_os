@@ -10,7 +10,18 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Download } from "lucide-react";
+import { exportCSV } from "@/lib/csv-export";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
+
+const CSV_COLUMNS = [
+  { key: "division_name", label: "División" },
+  { key: "name", label: "Programa" },
+  { key: "initial_amount", label: "Presupuesto Inicial" },
+  { key: "current_amount", label: "Presupuesto Vigente" },
+  { key: "committed_amount", label: "Comprometido" },
+  { key: "execution_pct", label: "% Ejecución" },
+];
 
 const SUBTITLE_OPTIONS = [
   { value: "21", label: "Subtítulo 21 — Personal" },
@@ -217,11 +228,16 @@ export default function PresupuestoPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">Presupuesto</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Programas presupuestarios y ejecución financiera
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Presupuesto</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Programas presupuestarios y ejecución financiera
+          </p>
+        </div>
+        <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "presupuesto")}>
+          <Download className="size-4 mr-1" />CSV
+        </Button>
       </div>
 
       <FilterBar

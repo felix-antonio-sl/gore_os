@@ -5,7 +5,18 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { api } from "@/lib/api";
 import { AlertCard } from "@/components/alert-card";
 import { FilterBar } from "@/components/filter-bar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Download } from "lucide-react";
+import { exportCSV } from "@/lib/csv-export";
 import type { PaginatedResponse, AlertaListItem } from "@/types";
+
+const CSV_COLUMNS = [
+  { key: "severity", label: "Severidad" },
+  { key: "message", label: "Mensaje" },
+  { key: "subject_label", label: "Sujeto" },
+  { key: "triggered_at", label: "Fecha" },
+];
 
 const NIVEL_OPTIONS = [
   { value: "CRITICO", label: "Crítico" },
@@ -34,6 +45,8 @@ export default function AlertasPage() {
   const nivel = searchParams.get("nivel") ?? "";
   const tipo = searchParams.get("tipo") ?? "";
   const soloActivas = searchParams.get("activas") !== "0";
+  const dateFrom = searchParams.get("date_from") ?? "";
+  const dateTo = searchParams.get("date_to") ?? "";
 
   const filterValues: Record<string, string> = {
     nivel,
@@ -70,13 +83,15 @@ export default function AlertasPage() {
     if (nivel) params.set("severity", nivel);
     if (tipo) params.set("alert_type", tipo);
     if (!soloActivas) params.set("active_only", "false");
+    if (dateFrom) params.set("date_from", dateFrom);
+    if (dateTo) params.set("date_to", dateTo);
 
     api
       .get<PaginatedResponse<AlertaListItem>>(`/api/alertas?${params.toString()}`)
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [nivel, tipo, soloActivas, refreshKey]);
+  }, [nivel, tipo, soloActivas, dateFrom, dateTo, refreshKey]);
 
   const handleAttend = async (id: string) => {
     try {
@@ -105,11 +120,16 @@ export default function AlertasPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">Alertas</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Alertas y notificaciones del sistema
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Alertas</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            Alertas y notificaciones del sistema
+          </p>
+        </div>
+        <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "alertas")}>
+          <Download className="size-4 mr-1" />CSV
+        </Button>
       </div>
 
       <FilterBar
@@ -121,6 +141,13 @@ export default function AlertasPage() {
         onChange={handleFilterChange}
         onClear={handleClear}
       />
+
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-muted-foreground whitespace-nowrap">Fecha:</span>
+        <Input type="date" className="h-8 w-36 text-xs" value={dateFrom} onChange={(e) => router.push(buildUrl({ date_from: e.target.value }))} />
+        <span className="text-xs text-muted-foreground">—</span>
+        <Input type="date" className="h-8 w-36 text-xs" value={dateTo} onChange={(e) => router.push(buildUrl({ date_to: e.target.value }))} />
+      </div>
 
       {isLoading ? (
         <div className="space-y-3">

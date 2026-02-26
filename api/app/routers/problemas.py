@@ -6,6 +6,7 @@ from sqlalchemy import text
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.schemas.problema import ProblemaCreate, ProblemaDetail, ProblemaListItem, ProblemaUpdate
 
 router = APIRouter(prefix="/api/problemas", tags=["problemas"])
@@ -15,6 +16,11 @@ router = APIRouter(prefix="/api/problemas", tags=["problemas"])
 # ---------------------------------------------------------------------------
 
 OPEN_STATES = ("ABIERTO", "EN_GESTION")
+
+
+def _require_roles(user: dict, *roles: str) -> None:
+    if user["role_code"] not in roles:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
 
 
 async def _get_problema_or_404(problema_id: UUID, db: AsyncSession) -> dict:
@@ -195,6 +201,7 @@ async def create_problema(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     code = await _next_pr_code(db)
 
     result = await db.execute(
@@ -241,6 +248,7 @@ async def update_problema(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     # Verify the problem exists
     current = await _get_problema_or_404(problema_id, db)
 

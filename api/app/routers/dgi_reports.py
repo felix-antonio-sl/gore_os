@@ -7,7 +7,8 @@ from uuid import UUID
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
-from app.schemas.dgi import ReportItem, ReportContent, ReportContentSection, ReportCreate, ReportSectionUpdate
+from app.core.security import DGI_ROLES
+from app.schemas.dgi import ReportItem, ReportContent, ReportContentSection, ReportCreate, ReportSectionUpdate, ReportStatusChange
 
 router = APIRouter(prefix="/api/dgi/reports", tags=["dgi"])
 
@@ -426,6 +427,82 @@ async def update_report_section(
     """), {"section_id": body.section_id, "edit_value": edit_value, "id": str(report_id)})
     await db.commit()
     return {"message": "Sección actualizada"}
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/reports/{id}/status — Change report status (approval workflow)
+# ---------------------------------------------------------------------------
+
+# Valid transitions: BORRADOR→EN_REVISION (any DGI), EN_REVISION→ENVIADO (JEFE_DGI),
+#                    EN_REVISION→BORRADOR (JEFE_DGI, devolver)
+_VALID_TRANSITIONS: dict[str, dict[str, set[str]]] = {
+    "BORRADOR": {"EN_REVISION": DGI_ROLES},
+    "EN_REVISION": {
+        "ENVIADO": {"JEFE_DGI"},
+        "BORRADOR": {"JEFE_DGI"},
+    },
+}
+
+
+def _require_dgi_roles(user: dict) -> None:
+    if user["role_code"] not in DGI_ROLES:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Acceso restringido a roles DGI")
+
+
+@router.post("/{report_id}/status")
+async def change_report_status(
+    report_id: UUID,
+    body: ReportStatusChange,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Change report status following the approval workflow."""
+    _require_dgi_roles(user)
+
+    # Get current status
+    row = (await db.execute(text("""
+        SELECT st.code AS current_status
+        FROM core.dgi_report r
+        JOIN ref.category st ON st.id = r.status_id
+        WHERE r.id = :id AND r.deleted_at IS NULL
+    """), {"id": str(report_id)})).mappings().first()
+
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Informe no encontrado")
+
+    current = row["current_status"]
+    target = body.status.upper()
+
+    # Validate transition
+    allowed_targets = _VALID_TRANSITIONS.get(current, {})
+    if target not in allowed_targets:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Transición inválida: {current} → {target}",
+        )
+
+    # Check role permission for this specific transition
+    allowed_roles = allowed_targets[target]
+    if user["role_code"] not in allowed_roles:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Solo {', '.join(allowed_roles)} puede realizar esta transición",
+        )
+
+    # Apply
+    set_parts = [
+        "status_id = (SELECT id FROM ref.category WHERE scheme = 'dgi_report_status' AND code = :target LIMIT 1)",
+        "updated_at = NOW()",
+    ]
+    if target == "ENVIADO":
+        set_parts.append("sent_at = NOW()")
+
+    await db.execute(
+        text(f"UPDATE core.dgi_report SET {', '.join(set_parts)} WHERE id = :id"),
+        {"target": target, "id": str(report_id)},
+    )
+    await db.commit()
+    return {"message": f"Estado cambiado a {target}"}
 
 
 # ---------------------------------------------------------------------------
