@@ -69,3 +69,4 @@ ENV/
 
 # Temporary files
 *.tmp
+.worktrees/
