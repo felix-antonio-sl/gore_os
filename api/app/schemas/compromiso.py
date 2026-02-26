@@ -7,6 +7,7 @@ class CompromisoListItem(BaseModel):
     id: UUID
     code: str | None
     description: str
+    ipr_id: UUID | None = None
     ipr_codigo_bip: str | None
     ipr_name: str | None
     commitment_type: str | None

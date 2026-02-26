@@ -192,6 +192,7 @@ async def list_compromisos(
                 oc.id,
                 oc.code,
                 oc.description,
+                oc.ipr_id,
                 ipr.codigo_bip                              AS ipr_codigo_bip,
                 ipr.name                                    AS ipr_name,
                 type_cat.name                               AS commitment_type,

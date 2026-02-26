@@ -149,6 +149,7 @@ async def list_convenios(
     state: str | None = None,
     agreement_type: str | None = None,
     ipr_id: UUID | None = None,
+    orphan: bool | None = Query(None, description="If true, return only conventions without linked IPR"),
     search: str | None = None,
     date_from: date_type | None = None,
     date_to: date_type | None = None,
@@ -174,6 +175,8 @@ async def list_convenios(
     if ipr_id:
         conditions.append("a.ipr_id = :ipr_id")
         params["ipr_id"] = str(ipr_id)
+    elif orphan is True:
+        conditions.append("a.ipr_id IS NULL")
 
     if search:
         conditions.append("(a.agreement_number ILIKE :search OR ipr.codigo_bip ILIKE :search OR ipr.name ILIKE :search)")
@@ -431,7 +434,7 @@ async def update_convenio(
     await _get_convenio_or_404(convenio_id, db)
 
     # Allowlist: solo estas columnas son actualizables via PATCH
-    UPDATABLE_COLUMNS = {"state_id", "total_amount", "valid_to", "cgr_outcome_id"}
+    UPDATABLE_COLUMNS = {"state_id", "ipr_id", "total_amount", "valid_to", "cgr_outcome_id"}
 
     updates = {k: v for k, v in body.model_dump(exclude_none=True).items() if k in UPDATABLE_COLUMNS}
     if not updates:
@@ -444,7 +447,7 @@ async def update_convenio(
         await _validate_amount_thresholds(convenio_id, current_code, new_code, db)
 
     # Convert UUIDs to string
-    for k in ["state_id", "cgr_outcome_id"]:
+    for k in ["state_id", "ipr_id", "cgr_outcome_id"]:
         if k in updates:
             updates[k] = str(updates[k])
 

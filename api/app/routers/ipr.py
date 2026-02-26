@@ -41,6 +41,7 @@ async def list_iprs(
     mechanism: Optional[str] = Query(None, description="Filter by mechanism category code"),
     mcd_phase: Optional[str] = Query(None, description="Filter by mcd_phase category code"),
     search: Optional[str] = Query(None, description="ILIKE search on codigo_bip or name"),
+    assignee_id: Optional[UUID] = Query(None, description="Filter by assignee user UUID"),
 ):
     """
     List IPRs with server-side pagination and role-aware filtering.
@@ -48,6 +49,7 @@ async def list_iprs(
     - JEFE_DIVISION: restricted to IPRs where sponsor_division_id = user.division_id
     - ENCARGADO: restricted to IPRs where assignee_id = user.id
     - Admin roles: unrestricted access
+    - assignee_id: explicit filter by assigned user (any role)
     """
     role_code = user["role_code"]
     user_id = str(user["id"])
@@ -64,6 +66,11 @@ async def list_iprs(
     elif role_code in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO") and division_id:
         conditions.append("i.sponsor_division_id = :division_id")
         params["division_id"] = division_id
+
+    # Explicit assignee filter (available for all roles, overrides role-based if both set)
+    if assignee_id:
+        conditions.append("i.assignee_id = :filter_assignee_id")
+        params["filter_assignee_id"] = str(assignee_id)
 
     # Optional category code filters
     if ipr_type:

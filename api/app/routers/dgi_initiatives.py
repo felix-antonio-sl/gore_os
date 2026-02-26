@@ -1,3 +1,4 @@
+import math
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import text
@@ -59,19 +60,24 @@ async def _get_initiative_row(initiative_id: str, db: AsyncSession) -> dict | No
 # ---------------------------------------------------------------------------
 # GET /api/dgi/initiatives — List all initiatives
 # ---------------------------------------------------------------------------
-@router.get("", response_model=list[InitiativeItem])
+@router.get("")
 async def list_initiatives(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
     status_filter: str | None = Query(None, alias="status"),
     responsible_id: UUID | None = None,
+    page: int | None = Query(None, ge=1, description="Page number (omit for unpaginated array)"),
+    page_size: int | None = Query(None, ge=1, le=100, description="Items per page"),
 ):
     """
-    List all DGI initiatives.
+    List DGI initiatives.
 
     Optional filters:
     - status: filter by initiative status code (BACKLOG, EN_CURSO, REVISION, COMPLETADO)
     - responsible_id: filter by responsible user UUID
+
+    Pagination: pass page + page_size for paginated response.
+    Omit both for backward-compatible plain array.
     """
     conditions = ["1=1"]
     params: dict = {}
@@ -86,8 +92,30 @@ async def list_initiatives(
 
     where_clause = " AND ".join(conditions)
 
-    sql = text(f"""
-        SELECT
+    base_from = f"""
+        FROM core.dgi_initiative ini
+        JOIN ref.category st ON st.id = ini.status_id
+        LEFT JOIN ref.category ph ON ph.id = ini.dmaic_phase_id
+        LEFT JOIN core.organization org ON org.id = ini.division_id
+        LEFT JOIN core."user" u ON u.id = ini.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE {where_clause}
+    """
+
+    order_by = """
+        ORDER BY
+            CASE st.code
+                WHEN 'EN_CURSO'   THEN 1
+                WHEN 'REVISION'   THEN 2
+                WHEN 'BACKLOG'    THEN 3
+                WHEN 'COMPLETADO' THEN 4
+                ELSE 5
+            END,
+            ini.target_date ASC NULLS LAST,
+            ini.name
+    """
+
+    select_cols = """
             ini.id,
             ini.code,
             ini.name,
@@ -103,47 +131,46 @@ async def list_initiatives(
             ini.total_days,
             ini.progress,
             ini.wip_column
-        FROM core.dgi_initiative ini
-        JOIN ref.category st ON st.id = ini.status_id
-        LEFT JOIN ref.category ph ON ph.id = ini.dmaic_phase_id
-        LEFT JOIN core.organization org ON org.id = ini.division_id
-        LEFT JOIN core."user" u ON u.id = ini.responsible_id
-        LEFT JOIN core.person p ON p.id = u.person_id
-        WHERE {where_clause}
-        ORDER BY
-            CASE st.code
-                WHEN 'EN_CURSO'   THEN 1
-                WHEN 'REVISION'   THEN 2
-                WHEN 'BACKLOG'    THEN 3
-                WHEN 'COMPLETADO' THEN 4
-                ELSE 5
-            END,
-            ini.target_date ASC NULLS LAST,
-            ini.name
-    """)
+    """
 
-    rows = (await db.execute(sql, params)).mappings().all()
-
-    return [
-        InitiativeItem(
-            id=r["id"],
-            code=r["code"],
-            name=r["name"],
-            description=r["description"],
-            responsible_id=r["responsible_id"],
-            responsible_name=r["responsible_name"],
-            status=r["status"],
-            dmaic_phase=r["dmaic_phase"],
-            division_name=r["division_name"],
-            start_date=r["start_date"],
-            target_date=r["target_date"],
-            current_day=r["current_day"] or 0,
-            total_days=r["total_days"],
-            progress=r["progress"] or 0.0,
-            wip_column=r["wip_column"],
+    def _to_item(r: dict) -> InitiativeItem:
+        return InitiativeItem(
+            id=r["id"], code=r["code"], name=r["name"], description=r["description"],
+            responsible_id=r["responsible_id"], responsible_name=r["responsible_name"],
+            status=r["status"], dmaic_phase=r["dmaic_phase"],
+            division_name=r["division_name"], start_date=r["start_date"], target_date=r["target_date"],
+            current_day=r["current_day"] or 0, total_days=r["total_days"],
+            progress=r["progress"] or 0.0, wip_column=r["wip_column"],
         )
-        for r in rows
-    ]
+
+    # Paginated mode
+    if page is not None:
+        effective_page_size = page_size or 20
+        count_result = await db.execute(text(f"SELECT COUNT(*) {base_from}"), params)
+        total = count_result.scalar() or 0
+        total_pages = math.ceil(total / effective_page_size) if total > 0 else 0
+
+        offset = (page - 1) * effective_page_size
+        params["limit"] = effective_page_size
+        params["offset"] = offset
+
+        rows = (await db.execute(
+            text(f"SELECT {select_cols} {base_from} {order_by} LIMIT :limit OFFSET :offset"),
+            params,
+        )).mappings().all()
+
+        items = [_to_item(dict(r)) for r in rows]
+        return {
+            "items": [i.model_dump() for i in items],
+            "total": total,
+            "page": page,
+            "page_size": effective_page_size,
+            "total_pages": total_pages,
+        }
+
+    # Unpaginated mode (backward compatible)
+    rows = (await db.execute(text(f"SELECT {select_cols} {base_from} {order_by}"), params)).mappings().all()
+    return [_to_item(dict(r)) for r in rows]
 
 
 # ---------------------------------------------------------------------------

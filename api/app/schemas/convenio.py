@@ -71,6 +71,7 @@ class ConvenioCreate(BaseModel):
 
 class ConvenioUpdate(BaseModel):
     state_id: Optional[UUID] = None
+    ipr_id: Optional[UUID] = None
     total_amount: Optional[Decimal] = None
     valid_to: Optional[datetime] = None
     cgr_outcome_id: Optional[UUID] = None

@@ -346,7 +346,18 @@ export default function ProblemasPage() {
               </div>
               <p className="font-medium">{detail.description}</p>
               <p className="text-xs text-muted-foreground">
-                IPR: <span className="font-mono">{detail.ipr_codigo_bip}</span>
+                IPR:{" "}
+                {detail.ipr_id ? (
+                  <button
+                    type="button"
+                    className="font-mono text-blue-600 hover:underline cursor-pointer"
+                    onClick={() => { setSelectedId(null); router.push(`/ipr/${detail.ipr_id}`); }}
+                  >
+                    {detail.ipr_codigo_bip}
+                  </button>
+                ) : (
+                  <span className="font-mono">{detail.ipr_codigo_bip}</span>
+                )}
                 {detail.ipr_name && ` — ${detail.ipr_name}`}
               </p>
               <div className="flex gap-2">
@@ -394,6 +405,44 @@ export default function ProblemasPage() {
                   {detail.resolved_at && ` el ${formatDate(detail.resolved_at)}`}
                 </p>
               )}
+            </div>
+
+            {/* State timeline */}
+            <div className="pt-2 border-t">
+              <h3 className="text-sm font-semibold mb-2">Historial</h3>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                  <div className="text-xs">
+                    <p className="font-medium">Detectado — ABIERTO</p>
+                    <p className="text-muted-foreground">
+                      {formatDate(detail.detected_at)}
+                      {detail.detected_by_name && ` por ${detail.detected_by_name}`}
+                    </p>
+                  </div>
+                </div>
+                {detail.state !== "ABIERTO" && (
+                  <div className="flex items-start gap-2">
+                    <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                    <div className="text-xs">
+                      <p className="font-medium">EN_GESTION</p>
+                      <p className="text-muted-foreground">Pasado a gestión</p>
+                    </div>
+                  </div>
+                )}
+                {detail.resolved_by_name && (
+                  <div className="flex items-start gap-2">
+                    <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${detail.state === "RESUELTO" ? "bg-green-500" : "bg-red-500"}`} />
+                    <div className="text-xs">
+                      <p className="font-medium">{detail.state === "RESUELTO" ? "Resuelto" : "Cerrado sin resolver"}</p>
+                      <p className="text-muted-foreground">
+                        {detail.resolved_at && formatDate(detail.resolved_at)}
+                        {` por ${detail.resolved_by_name}`}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Actions */}

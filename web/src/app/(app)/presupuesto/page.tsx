@@ -91,14 +91,18 @@ export default function PresupuestoPage() {
   const [editSubmitting, setEditSubmitting] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
 
+  // Division filter options
+  const [divisionOptions, setDivisionOptions] = useState<{ value: string; label: string }[]>([]);
+
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
   const page = Number(searchParams.get("page") ?? "1");
   const fiscal_year = searchParams.get("fiscal_year") ?? "";
   const subtitle = searchParams.get("subtitle") ?? "";
+  const division_id = searchParams.get("division_id") ?? "";
   const search = searchParams.get("search") ?? "";
 
-  const filterValues: Record<string, string> = { fiscal_year, subtitle, search };
+  const filterValues: Record<string, string> = { fiscal_year, subtitle, division_id, search };
 
   const buildUrl = useCallback(
     (overrides: Record<string, string | number>) => {
@@ -120,11 +124,18 @@ export default function PresupuestoPage() {
   const handlePageChange = (newPage: number) => router.push(buildUrl({ page: newPage }));
 
   useEffect(() => {
+    api.get<{ id: string; name: string }[]>("/api/catalogs/divisions").then((divs) => {
+      setDivisionOptions(divs.map((d) => ({ value: d.id, label: d.name })));
+    }).catch(() => {});
+  }, []);
+
+  useEffect(() => {
     const params = new URLSearchParams();
     params.set("page", String(page));
     params.set("page_size", "20");
     if (fiscal_year) params.set("fiscal_year", fiscal_year);
     if (subtitle) params.set("subtitle", subtitle);
+    if (division_id) params.set("division_id", division_id);
     if (search) params.set("search", search);
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -134,7 +145,7 @@ export default function PresupuestoPage() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, fiscal_year, subtitle, search]);
+  }, [page, fiscal_year, subtitle, division_id, search]);
 
   const openDetail = (row: unknown) => {
     const item = row as PresupuestoListItem;
@@ -244,6 +255,7 @@ export default function PresupuestoPage() {
         filters={[
           { key: "fiscal_year", label: "Año", options: YEAR_OPTIONS },
           { key: "subtitle", label: "Subtítulo", options: SUBTITLE_OPTIONS },
+          { key: "division_id", label: "División", options: divisionOptions },
         ]}
         values={filterValues}
         onChange={handleFilterChange}
@@ -420,7 +432,20 @@ export default function PresupuestoPage() {
                         <span className="font-mono text-xs">{formatCLP(cdp.amount)}</span>
                       </div>
                       {cdp.ipr_codigo_bip && (
-                        <p className="text-xs text-muted-foreground mt-0.5">IPR: {cdp.ipr_codigo_bip}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          IPR:{" "}
+                          {cdp.ipr_id ? (
+                            <button
+                              type="button"
+                              className="font-mono text-blue-600 hover:underline cursor-pointer"
+                              onClick={() => { setSelectedId(null); router.push(`/ipr/${cdp.ipr_id}`); }}
+                            >
+                              {cdp.ipr_codigo_bip}
+                            </button>
+                          ) : (
+                            <span className="font-mono">{cdp.ipr_codigo_bip}</span>
+                          )}
+                        </p>
                       )}
                     </div>
                   ))}

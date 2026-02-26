@@ -245,6 +245,39 @@ async def list_presupuesto(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/presupuesto/cdps-por-ipr/{ipr_id} — CDPs linked to an IPR
+# ---------------------------------------------------------------------------
+
+@router.get("/cdps-por-ipr/{ipr_id}", response_model=list[BudgetCommitmentItem])
+async def list_cdps_by_ipr(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all budget commitments (CDPs) linked to a specific IPR."""
+    result = await db.execute(
+        text("""
+            SELECT
+                bc.id,
+                bc.commitment_number,
+                bc.amount,
+                bc.issued_at,
+                bc.expires_at,
+                st.label  AS status_label,
+                bc.ipr_id,
+                ipr.codigo_bip AS ipr_codigo_bip
+            FROM core.budget_commitment bc
+            LEFT JOIN ref.category st ON st.id = bc.status_id
+            LEFT JOIN core.ipr ipr ON ipr.id = bc.ipr_id
+            WHERE bc.ipr_id = :ipr_id AND bc.deleted_at IS NULL
+            ORDER BY bc.issued_at DESC
+        """),
+        {"ipr_id": str(ipr_id)},
+    )
+    return [BudgetCommitmentItem(**dict(r)) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
 # GET /api/presupuesto/{id} — Detail
 # ---------------------------------------------------------------------------
 
@@ -278,6 +311,7 @@ async def get_presupuesto(
                 bc.issued_at,
                 bc.expires_at,
                 st.label  AS status_label,
+                bc.ipr_id,
                 ipr.codigo_bip AS ipr_codigo_bip
             FROM core.budget_commitment bc
             LEFT JOIN ref.category st ON st.id = bc.status_id

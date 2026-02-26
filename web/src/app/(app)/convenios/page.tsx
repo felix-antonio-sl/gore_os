@@ -20,9 +20,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAuth } from "@/lib/auth";
-import { Download } from "lucide-react";
+import { Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
-import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, CategoryRef } from "@/types";
+import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, CategoryRef, InstallmentItem } from "@/types";
 
 const CSV_COLUMNS = [
   { key: "agreement_number", label: "Número" },
@@ -107,6 +107,20 @@ export default function ConveniosPage() {
   const [editError, setEditError] = useState<string | null>(null);
   const [validTransitions, setValidTransitions] = useState<{ id: string; code: string; label: string }[]>([]);
   const [cgrOptions, setCgrOptions] = useState<CategoryRef[]>([]);
+
+  // Cuota state
+  const [showCuotaForm, setShowCuotaForm] = useState(false);
+  const [cuotaAmount, setCuotaAmount] = useState("");
+  const [cuotaDueDate, setCuotaDueDate] = useState("");
+  const [cuotaSubmitting, setCuotaSubmitting] = useState(false);
+  const [cuotaError, setCuotaError] = useState<string | null>(null);
+  const [paymentStatuses, setPaymentStatuses] = useState<CategoryRef[]>([]);
+
+  // Payment registration state
+  const [payingCuotaId, setPayingCuotaId] = useState<string | null>(null);
+  const [payAmount, setPayAmount] = useState("");
+  const [payRef, setPayRef] = useState("");
+  const [paySubmitting, setPaySubmitting] = useState(false);
 
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
@@ -211,6 +225,79 @@ export default function ConveniosPage() {
       setEditError(err instanceof Error ? err.message : "Error al guardar");
     } finally {
       setEditSubmitting(false);
+    }
+  };
+
+  const refreshDetail = () => {
+    if (!selectedId) return;
+    setDetailLoading(true);
+    api
+      .get<ConvenioDetail>(`/api/convenios/${selectedId}`)
+      .then(setDetail)
+      .catch(() => {})
+      .finally(() => setDetailLoading(false));
+  };
+
+  const openCuotaForm = () => {
+    setCuotaAmount("");
+    setCuotaDueDate("");
+    setCuotaError(null);
+    setShowCuotaForm(true);
+    if (paymentStatuses.length === 0) {
+      api.get<CategoryRef[]>("/api/catalogs/categories/payment_status").then(setPaymentStatuses).catch(() => {});
+    }
+  };
+
+  const handleCuotaSubmit = async () => {
+    if (!selectedId || !cuotaAmount || !cuotaDueDate) return;
+    const pendienteStatus = paymentStatuses.find((s) => s.code === "PENDIENTE");
+    if (!pendienteStatus) { setCuotaError("Estado PENDIENTE no encontrado"); return; }
+    const nextNumber = (detail?.installments.length ?? 0) + 1;
+    setCuotaSubmitting(true);
+    setCuotaError(null);
+    try {
+      await api.post(`/api/convenios/${selectedId}/cuotas`, {
+        installment_number: nextNumber,
+        amount: parseFloat(cuotaAmount),
+        due_date: cuotaDueDate,
+        payment_status_id: pendienteStatus.id,
+      });
+      setShowCuotaForm(false);
+      refreshDetail();
+    } catch (err) {
+      setCuotaError(err instanceof Error ? err.message : "Error al crear cuota");
+    } finally {
+      setCuotaSubmitting(false);
+    }
+  };
+
+  const openPayForm = (inst: InstallmentItem) => {
+    setPayingCuotaId(inst.id);
+    setPayAmount(String(inst.amount));
+    setPayRef("");
+    if (paymentStatuses.length === 0) {
+      api.get<CategoryRef[]>("/api/catalogs/categories/payment_status").then(setPaymentStatuses).catch(() => {});
+    }
+  };
+
+  const handlePaySubmit = async () => {
+    if (!selectedId || !payingCuotaId) return;
+    const pagadoStatus = paymentStatuses.find((s) => s.code === "PAGADO");
+    if (!pagadoStatus) return;
+    setPaySubmitting(true);
+    try {
+      await api.patch(`/api/convenios/${selectedId}/cuotas/${payingCuotaId}`, {
+        payment_status_id: pagadoStatus.id,
+        paid_at: new Date().toISOString(),
+        paid_amount: payAmount ? parseFloat(payAmount) : null,
+        payment_reference: payRef || null,
+      });
+      setPayingCuotaId(null);
+      refreshDetail();
+    } catch {
+      // silently fail
+    } finally {
+      setPaySubmitting(false);
     }
   };
 
@@ -407,7 +494,17 @@ export default function ConveniosPage() {
               {detail.ipr_name && (
                 <p className="text-sm mt-2">
                   <span className="text-muted-foreground">IPR: </span>
-                  <span className="font-mono text-xs">{detail.ipr_codigo_bip}</span>
+                  {detail.ipr_id ? (
+                    <button
+                      type="button"
+                      className="font-mono text-xs text-blue-600 hover:underline cursor-pointer"
+                      onClick={() => { setSelectedId(null); router.push(`/ipr/${detail.ipr_id}`); }}
+                    >
+                      {detail.ipr_codigo_bip}
+                    </button>
+                  ) : (
+                    <span className="font-mono text-xs">{detail.ipr_codigo_bip}</span>
+                  )}
                   {` — ${detail.ipr_name}`}
                 </p>
               )}
@@ -457,13 +554,37 @@ export default function ConveniosPage() {
             )}
 
             {/* Cuotas */}
-            {detail.installments.length > 0 && (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <p className="font-medium text-xs uppercase text-muted-foreground tracking-wide">
-                    Cuotas ({detail.paid_installments}/{detail.installment_count} pagadas)
-                  </p>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <p className="font-medium text-xs uppercase text-muted-foreground tracking-wide">
+                  Cuotas ({detail.paid_installments}/{detail.installment_count} pagadas)
+                </p>
+                {canEdit && !showCuotaForm && (
+                  <Button size="sm" variant="outline" className="h-6 text-xs" onClick={openCuotaForm}>
+                    <Plus className="size-3 mr-1" />Cuota
+                  </Button>
+                )}
+              </div>
+
+              {/* Add cuota form */}
+              {showCuotaForm && (
+                <div className="rounded-md border p-3 space-y-2 bg-muted/30">
+                  <p className="text-xs font-medium">Nueva cuota #{(detail.installments.length) + 1}</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input type="number" min="0" placeholder="Monto (CLP)" value={cuotaAmount} onChange={(e) => setCuotaAmount(e.target.value)} className="h-7 text-xs" />
+                    <Input type="date" value={cuotaDueDate} onChange={(e) => setCuotaDueDate(e.target.value)} className="h-7 text-xs" />
+                  </div>
+                  {cuotaError && <p className="text-xs text-red-600">{cuotaError}</p>}
+                  <div className="flex gap-1">
+                    <Button size="sm" className="h-6 text-xs" onClick={handleCuotaSubmit} disabled={cuotaSubmitting || !cuotaAmount || !cuotaDueDate}>
+                      {cuotaSubmitting ? "..." : "Crear"}
+                    </Button>
+                    <Button size="sm" variant="ghost" className="h-6 text-xs" onClick={() => setShowCuotaForm(false)}>Cancelar</Button>
+                  </div>
                 </div>
+              )}
+
+              {detail.installments.length > 0 && (
                 <div className="space-y-2">
                   {detail.installments.map((inst) => (
                     <div key={inst.id} className="rounded-md border px-3 py-2 text-sm">
@@ -485,11 +606,32 @@ export default function ConveniosPage() {
                       {inst.payment_reference && (
                         <p className="text-xs text-muted-foreground mt-0.5">Ref: {inst.payment_reference}</p>
                       )}
+                      {/* Pay button */}
+                      {canEdit && inst.payment_status !== "PAGADO" && payingCuotaId !== inst.id && (
+                        <Button size="sm" variant="outline" className="h-5 text-[10px] mt-1" onClick={() => openPayForm(inst)}>
+                          Registrar Pago
+                        </Button>
+                      )}
+                      {/* Pay form inline */}
+                      {payingCuotaId === inst.id && (
+                        <div className="mt-2 space-y-1.5 p-2 rounded bg-muted/30">
+                          <div className="grid grid-cols-2 gap-1.5">
+                            <Input type="number" min="0" placeholder="Monto pagado" value={payAmount} onChange={(e) => setPayAmount(e.target.value)} className="h-6 text-xs" />
+                            <Input placeholder="Referencia" value={payRef} onChange={(e) => setPayRef(e.target.value)} className="h-6 text-xs" />
+                          </div>
+                          <div className="flex gap-1">
+                            <Button size="sm" className="h-5 text-[10px]" onClick={handlePaySubmit} disabled={paySubmitting}>
+                              {paySubmitting ? "..." : "Confirmar"}
+                            </Button>
+                            <Button size="sm" variant="ghost" className="h-5 text-[10px]" onClick={() => setPayingCuotaId(null)}>Cancelar</Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Historial de estados */}
             {detail.history && detail.history.length > 0 && (

@@ -43,6 +43,16 @@ export const OPERATIONAL_ROLES: RoleCode[] = [
   "JEFE_UNIDAD",
 ];
 
+export const WRITE_OPERATIONAL_ROLES: RoleCode[] = [
+  "ADMIN_SISTEMA",
+  "ADMIN_REGIONAL",
+  "JEFE_DIVISION",
+  "ENCARGADO",
+  "GOBERNADOR",
+  "SECRETARIO_EJECUTIVO",
+  "JEFE_DEPARTAMENTO",
+];
+
 export const DGI_ROLES: RoleCode[] = [
   "JEFE_DGI",
   "ESP_CONTROL_GESTION",
@@ -85,6 +95,7 @@ export interface CompromisoListItem {
   id: string;
   code: string | null;
   description: string;
+  ipr_id: string | null;
   ipr_codigo_bip: string | null;
   ipr_name: string | null;
   commitment_type: string | null;
@@ -188,6 +199,7 @@ export interface BudgetCommitmentItem {
   issued_at: string;
   expires_at: string | null;
   status_label: string | null;
+  ipr_id: string | null;
   ipr_codigo_bip: string | null;
 }
 
@@ -394,6 +406,7 @@ export interface TopicItem {
   responsible_name: string | null;
   due_date: string | null;
   status: string | null;
+  ipr_id: string | null;
   ipr_codigo_bip: string | null;
   context_type: string | null;
 }

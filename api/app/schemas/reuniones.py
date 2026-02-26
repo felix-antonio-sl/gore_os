@@ -25,6 +25,7 @@ class TopicItem(BaseModel):
     responsible_name: Optional[str] = None
     due_date: Optional[date] = None
     status: Optional[str] = None
+    ipr_id: Optional[UUID] = None
     ipr_codigo_bip: Optional[str] = None
     context_type: Optional[str] = None  # 'alerta', 'compromiso', 'problema'
 

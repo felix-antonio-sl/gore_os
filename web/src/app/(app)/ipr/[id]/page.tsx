@@ -22,7 +22,11 @@ import {
 } from "@/components/ui/select";
 import { ArrowLeft, Plus, UserPlus, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem, ConvenioListItem } from "@/types";
+import { IprCompromisoDrawer } from "@/components/ipr-compromiso-drawer";
+import { IprProblemaDrawer } from "@/components/ipr-problema-drawer";
+import { IprConvenioDrawer } from "@/components/ipr-convenio-drawer";
+import type { PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem, ConvenioListItem, BudgetCommitmentItem } from "@/types";
+import { WRITE_OPERATIONAL_ROLES } from "@/types";
 
 interface IprDetail {
   id: string;
@@ -135,6 +139,10 @@ export default function IprDetailPage() {
   const [convenios, setConvenios] = useState<PaginatedResponse<ConvenioListItem> | null>(null);
   const [convLoading, setConvLoading] = useState(false);
 
+  // CDPs state
+  const [cdps, setCdps] = useState<BudgetCommitmentItem[] | null>(null);
+  const [cdpsLoading, setCdpsLoading] = useState(false);
+
   // Avances state
   const [avances, setAvances] = useState<ProgressReport[] | null>(null);
   const [avancesLoading, setAvancesLoading] = useState(false);
@@ -162,8 +170,16 @@ export default function IprDetailPage() {
   const [editSubmitting, setEditSubmitting] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
 
+  // Inline creation drawers
+  const [showCompromisoDrawer, setShowCompromisoDrawer] = useState(false);
+  const [showProblemaDrawer, setShowProblemaDrawer] = useState(false);
+  const [showConvenioDrawer, setShowConvenioDrawer] = useState(false);
+
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+  const canCreateCompromiso = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
+  const canCreateProblema = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
+  const canCreateConvenio = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
 
   useEffect(() => {
     api
@@ -173,8 +189,8 @@ export default function IprDetailPage() {
       .finally(() => setIprLoading(false));
   }, [id]);
 
-  const loadCompromisos = () => {
-    if (compromisos) return;
+  const loadCompromisos = (force = false) => {
+    if (compromisos && !force) return;
     setCompLoading(true);
     api
       .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?ipr_id=${id}&page_size=50`)
@@ -183,8 +199,8 @@ export default function IprDetailPage() {
       .finally(() => setCompLoading(false));
   };
 
-  const loadProblemas = () => {
-    if (problemas) return;
+  const loadProblemas = (force = false) => {
+    if (problemas && !force) return;
     setProbLoading(true);
     api
       .get<PaginatedResponse<ProblemaListItem>>(`/api/problemas?ipr_id=${id}&page_size=50`)
@@ -203,14 +219,24 @@ export default function IprDetailPage() {
       .finally(() => setAlertLoading(false));
   };
 
-  const loadConvenios = () => {
-    if (convenios) return;
+  const loadConvenios = (force = false) => {
+    if (convenios && !force) return;
     setConvLoading(true);
     api
       .get<PaginatedResponse<ConvenioListItem>>(`/api/convenios?ipr_id=${id}&page_size=50`)
       .then(setConvenios)
       .catch(() => setConvenios(null))
       .finally(() => setConvLoading(false));
+  };
+
+  const loadCdps = () => {
+    if (cdps) return;
+    setCdpsLoading(true);
+    api
+      .get<BudgetCommitmentItem[]>(`/api/presupuesto/cdps-por-ipr/${id}`)
+      .then(setCdps)
+      .catch(() => setCdps(null))
+      .finally(() => setCdpsLoading(false));
   };
 
   const loadAvances = (force = false) => {
@@ -514,20 +540,24 @@ export default function IprDetailPage() {
         if (tab === "problemas") loadProblemas();
         if (tab === "alertas") loadAlertas();
         if (tab === "convenios") loadConvenios();
+        if (tab === "cdps") loadCdps();
         if (tab === "avances") loadAvances();
       }}>
         <TabsList>
-          <TabsTrigger value="compromisos" onClick={loadCompromisos}>
+          <TabsTrigger value="compromisos" onClick={() => loadCompromisos()}>
             Compromisos
           </TabsTrigger>
-          <TabsTrigger value="problemas" onClick={loadProblemas}>
+          <TabsTrigger value="problemas" onClick={() => loadProblemas()}>
             Problemas
           </TabsTrigger>
           <TabsTrigger value="alertas" onClick={loadAlertas}>
             Alertas
           </TabsTrigger>
-          <TabsTrigger value="convenios" onClick={loadConvenios}>
+          <TabsTrigger value="convenios" onClick={() => loadConvenios()}>
             Convenios
+          </TabsTrigger>
+          <TabsTrigger value="cdps" onClick={loadCdps}>
+            CDPs
           </TabsTrigger>
           <TabsTrigger value="avances" onClick={() => loadAvances()}>
             Avances
@@ -535,6 +565,17 @@ export default function IprDetailPage() {
         </TabsList>
 
         <TabsContent value="compromisos" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {compromisos ? `${compromisos.total} compromisos` : ""}
+            </p>
+            {canCreateCompromiso && (
+              <Button size="sm" onClick={() => setShowCompromisoDrawer(true)}>
+                <Plus className="size-4 mr-1" />
+                Nuevo Compromiso
+              </Button>
+            )}
+          </div>
           <DataTable
             columns={compromisoColumns}
             data={compromisos?.items ?? []}
@@ -547,6 +588,17 @@ export default function IprDetailPage() {
         </TabsContent>
 
         <TabsContent value="problemas" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {problemas ? `${problemas.total} problemas` : ""}
+            </p>
+            {canCreateProblema && (
+              <Button size="sm" onClick={() => setShowProblemaDrawer(true)}>
+                <Plus className="size-4 mr-1" />
+                Nuevo Problema
+              </Button>
+            )}
+          </div>
           <DataTable
             columns={problemaColumns}
             data={problemas?.items ?? []}
@@ -570,13 +622,33 @@ export default function IprDetailPage() {
           ) : (
             <div className="space-y-3">
               {alertas.items.map((alert) => (
-                <AlertCard key={alert.id} alert={alert} />
+                <AlertCard
+                  key={alert.id}
+                  alert={alert}
+                  onViewSubject={(type, subjectId) => {
+                    if (type === "core.ipr") router.push(`/ipr/${subjectId}`);
+                    else if (type === "core.agreement") router.push("/convenios");
+                    else if (type === "core.operational_commitment") router.push("/compromisos");
+                    else if (type === "core.ipr_problem") router.push("/problemas");
+                  }}
+                />
               ))}
             </div>
           )}
         </TabsContent>
 
         <TabsContent value="convenios" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {convenios ? `${convenios.total} convenios` : ""}
+            </p>
+            {canCreateConvenio && (
+              <Button size="sm" onClick={() => setShowConvenioDrawer(true)}>
+                <Plus className="size-4 mr-1" />
+                Agregar Convenio
+              </Button>
+            )}
+          </div>
           {convLoading ? (
             <div className="space-y-2">
               {Array.from({ length: 3 }).map((_, i) => (
@@ -626,8 +698,46 @@ export default function IprDetailPage() {
               totalPages={1}
               total={convenios.total}
               onPageChange={() => {}}
+              onRowClick={() => {
+                router.push("/convenios");
+              }}
               isLoading={convLoading}
             />
+          )}
+        </TabsContent>
+
+        <TabsContent value="cdps" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {cdps ? `${cdps.length} CDPs vinculados` : ""}
+            </p>
+          </div>
+          {cdpsLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          ) : !cdps || cdps.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No hay CDPs vinculados a este IPR.</p>
+          ) : (
+            <div className="space-y-2">
+              {cdps.map((cdp) => (
+                <div key={cdp.id} className="rounded-md border px-3 py-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="font-mono text-xs">{cdp.commitment_number}</span>
+                    {cdp.status_label && <StatusBadge status={cdp.status_label} size="sm" />}
+                  </div>
+                  <div className="flex justify-between mt-1">
+                    <span className="text-muted-foreground text-xs">
+                      {cdp.issued_at ? formatDate(cdp.issued_at) : "-"}
+                      {cdp.expires_at ? ` → ${formatDate(cdp.expires_at)}` : ""}
+                    </span>
+                    <span className="font-mono text-xs">{formatCurrency(cdp.amount)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </TabsContent>
 
@@ -821,6 +931,26 @@ export default function IprDetailPage() {
           </div>
         </form>
       </DrawerPanel>
+
+      {/* Inline creation drawers */}
+      <IprCompromisoDrawer
+        open={showCompromisoDrawer}
+        onClose={() => setShowCompromisoDrawer(false)}
+        iprId={id}
+        onCreated={() => loadCompromisos(true)}
+      />
+      <IprProblemaDrawer
+        open={showProblemaDrawer}
+        onClose={() => setShowProblemaDrawer(false)}
+        iprId={id}
+        onCreated={() => loadProblemas(true)}
+      />
+      <IprConvenioDrawer
+        open={showConvenioDrawer}
+        onClose={() => setShowConvenioDrawer(false)}
+        iprId={id}
+        onCreated={() => loadConvenios(true)}
+      />
     </div>
   );
 }

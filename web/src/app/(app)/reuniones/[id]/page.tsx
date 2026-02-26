@@ -591,9 +591,19 @@ export default function ReunionDetailPage() {
                         </Badge>
                       )}
                       {topic.ipr_codigo_bip && (
-                        <span className="font-mono text-[10px] text-muted-foreground">
-                          BIP: {topic.ipr_codigo_bip}
-                        </span>
+                        topic.ipr_id ? (
+                          <button
+                            type="button"
+                            className="font-mono text-[10px] text-blue-600 hover:underline cursor-pointer"
+                            onClick={() => router.push(`/ipr/${topic.ipr_id}`)}
+                          >
+                            BIP: {topic.ipr_codigo_bip}
+                          </button>
+                        ) : (
+                          <span className="font-mono text-[10px] text-muted-foreground">
+                            BIP: {topic.ipr_codigo_bip}
+                          </span>
+                        )
                       )}
                     </div>
                     <p className="text-sm font-medium">{topic.subject}</p>

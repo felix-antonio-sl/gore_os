@@ -18,6 +18,7 @@ class BudgetCommitmentItem(BaseModel):
     issued_at: date
     expires_at: Optional[date]
     status_label: Optional[str]
+    ipr_id: Optional[UUID] = None
     ipr_codigo_bip: Optional[str]
 
 

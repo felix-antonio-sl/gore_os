@@ -280,6 +280,7 @@ async def get_reunion(
                     sa.due_date,
                     (rp.names || ' ' || rp.paternal_surname) AS responsible_name,
                     sc.code AS status,
+                    sa.ipr_id,
                     ipr.codigo_bip AS ipr_codigo_bip,
                     aic.target_type AS context_type
                 FROM core.session_agreement sa
@@ -301,6 +302,7 @@ async def get_reunion(
                 responsible_name=t["responsible_name"],
                 due_date=t["due_date"],
                 status=t["status"],
+                ipr_id=t["ipr_id"],
                 ipr_codigo_bip=t["ipr_codigo_bip"],
                 context_type=t["context_type"],
             ))

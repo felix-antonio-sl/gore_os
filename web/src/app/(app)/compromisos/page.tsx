@@ -347,7 +347,18 @@ export default function CompromisosPage() {
               <p className="font-medium">{detail.description}</p>
               {detail.ipr_codigo_bip && (
                 <p className="text-xs text-muted-foreground">
-                  IPR: <span className="font-mono">{detail.ipr_codigo_bip}</span>
+                  IPR:{" "}
+                  {detail.ipr_id ? (
+                    <button
+                      type="button"
+                      className="font-mono text-blue-600 hover:underline cursor-pointer"
+                      onClick={() => { setSelectedId(null); router.push(`/ipr/${detail.ipr_id}`); }}
+                    >
+                      {detail.ipr_codigo_bip}
+                    </button>
+                  ) : (
+                    <span className="font-mono">{detail.ipr_codigo_bip}</span>
+                  )}
                   {detail.ipr_name && ` — ${detail.ipr_name}`}
                 </p>
               )}
