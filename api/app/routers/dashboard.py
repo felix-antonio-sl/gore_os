@@ -810,7 +810,7 @@ async def get_chart_data(
     # ── Presupuesto por división ────────────────────────────────────────────
     budget_sql = text("""
         SELECT
-            o.short_name AS division,
+            COALESCE(o.short_name, o.name, 'Sin nombre') AS division,
             COALESCE(SUM(bp.paid_amount), 0)    AS pagado,
             COALESCE(SUM(bp.current_amount), 0) AS vigente,
             CASE
@@ -825,7 +825,7 @@ async def get_chart_data(
         WHERE bp.fiscal_year = EXTRACT(YEAR FROM CURRENT_DATE)
           AND bp.deleted_at IS NULL
           AND o.deleted_at IS NULL
-        GROUP BY o.id, o.short_name
+        GROUP BY o.id, o.short_name, o.name
         ORDER BY ejecucion_pct DESC
         LIMIT 10
     """)
