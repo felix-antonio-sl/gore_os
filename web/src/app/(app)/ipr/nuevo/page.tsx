@@ -35,12 +35,18 @@ export default function NuevaIprPage() {
   const [iprTypes, setIprTypes] = useState<CategoryOption[]>([]);
   const [statuses, setStatuses] = useState<CategoryOption[]>([]);
   const [divisions, setDivisions] = useState<DivisionOption[]>([]);
+  const [mechanisms, setMechanisms] = useState<CategoryOption[]>([]);
+  const [fundingSources, setFundingSources] = useState<CategoryOption[]>([]);
+  const [mcdPhases, setMcdPhases] = useState<CategoryOption[]>([]);
 
   const [codigoBip, setCodigoBip] = useState("");
   const [name, setName] = useState("");
   const [iprTypeId, setIprTypeId] = useState("");
   const [statusId, setStatusId] = useState("");
   const [divisionId, setDivisionId] = useState("");
+  const [mechanismId, setMechanismId] = useState("");
+  const [fundingSourceId, setFundingSourceId] = useState("");
+  const [mcdPhaseId, setMcdPhaseId] = useState("");
   const [description, setDescription] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
@@ -50,6 +56,9 @@ export default function NuevaIprPage() {
     api.get<CategoryOption[]>("/api/catalogs/categories/ipr_type").then(setIprTypes).catch(() => {});
     api.get<CategoryOption[]>("/api/catalogs/categories/ipr_state").then(setStatuses).catch(() => {});
     api.get<DivisionOption[]>("/api/catalogs/divisions").then(setDivisions).catch(() => {});
+    api.get<CategoryOption[]>("/api/catalogs/categories/mechanism").then(setMechanisms).catch(() => {});
+    api.get<CategoryOption[]>("/api/catalogs/categories/funding_source").then(setFundingSources).catch(() => {});
+    api.get<CategoryOption[]>("/api/catalogs/categories/mcd_phase").then(setMcdPhases).catch(() => {});
   }, []);
 
   const canCreate =
@@ -80,6 +89,9 @@ export default function NuevaIprPage() {
         ipr_type_id: iprTypeId || null,
         status_id: statusId || null,
         sponsor_division_id: divisionId || null,
+        mechanism_id: mechanismId || null,
+        funding_source_id: fundingSourceId || null,
+        mcd_phase_id: mcdPhaseId || null,
         description: description || null,
       });
       router.push("/ipr");
@@ -168,6 +180,54 @@ export default function NuevaIprPage() {
                   {divisions.map((d) => (
                     <SelectItem key={d.id} value={d.id}>
                       {d.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Mecanismo</label>
+              <Select value={mechanismId} onValueChange={setMechanismId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione mecanismo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {mechanisms.map((m) => (
+                    <SelectItem key={m.id} value={m.id}>
+                      {m.code} — {m.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Fuente de financiamiento</label>
+              <Select value={fundingSourceId} onValueChange={setFundingSourceId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione fuente" />
+                </SelectTrigger>
+                <SelectContent>
+                  {fundingSources.map((f) => (
+                    <SelectItem key={f.id} value={f.id}>
+                      {f.code} — {f.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Fase MCD</label>
+              <Select value={mcdPhaseId} onValueChange={setMcdPhaseId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione fase" />
+                </SelectTrigger>
+                <SelectContent>
+                  {mcdPhases.map((p) => (
+                    <SelectItem key={p.id} value={p.id}>
+                      {p.code} — {p.label}
                     </SelectItem>
                   ))}
                 </SelectContent>

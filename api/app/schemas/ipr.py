@@ -11,6 +11,8 @@ class IPRListItem(BaseModel):
     status: str | None
     investment_sector: str | None
     funding_source: str | None
+    mechanism: str | None = None
+    mcd_phase: str | None = None
     alert_level: str | None
     has_open_problems: bool
     executor_name: str | None
@@ -28,7 +30,11 @@ class IPRDetail(BaseModel):
     investment_sector: str | None
     funding_source: str | None
     fund_category: str | None
+    fund_category_label: str | None = None
     mechanism: str | None
+    mechanism_label: str | None = None
+    mcd_phase: str | None = None
+    mcd_phase_label: str | None = None
     alert_level: str | None
     has_open_problems: bool
     executor_name: str | None
@@ -49,6 +55,9 @@ class IprCreate(BaseModel):
     ipr_type_id: UUID | None = None
     status_id: UUID | None = None
     sponsor_division_id: UUID | None = None
+    mechanism_id: UUID | None = None
+    funding_source_id: UUID | None = None
+    mcd_phase_id: UUID | None = None
     description: str | None = None
 
 
@@ -62,5 +71,8 @@ class IprUpdate(BaseModel):
     status_id: UUID | None = None
     investment_sector_id: UUID | None = None
     funding_source_id: UUID | None = None
+    mechanism_id: UUID | None = None
+    mcd_phase_id: UUID | None = None
+    fund_category_id: UUID | None = None
     sponsor_division_id: UUID | None = None
     assignee_id: UUID | None = None

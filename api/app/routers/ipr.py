@@ -13,10 +13,13 @@ from app.schemas.common import PaginatedResponse
 router = APIRouter(prefix="/api/ipr", tags=["ipr"])
 
 # Roles that have unrestricted access to all IPRs
-_ADMIN_ROLES = {"ADMIN_REGIONAL", "ADMIN_SISTEMA", "JEFE_DGI", "ESP_CONTROL_GESTION", "ESP_TD", "ESP_PROCESOS"}
+_ADMIN_ROLES = {
+    "ADMIN_REGIONAL", "ADMIN_SISTEMA", "GOBERNADOR", "SECRETARIO_EJECUTIVO",
+    "JEFE_DGI", "ESP_CONTROL_GESTION", "ESP_TD", "ESP_PROCESOS",
+}
 
-_CREATE_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL"}
-_ASSIGN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"}
+_CREATE_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"}
+_ASSIGN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "JEFE_DEPARTAMENTO"}
 
 
 def _require_roles(user: dict, *roles: str) -> None:
@@ -34,6 +37,8 @@ async def list_iprs(
     status: Optional[str] = Query(None, description="Filter by ipr_state category code"),
     sector: Optional[str] = Query(None, description="Filter by investment_sector category code"),
     alert_level: Optional[str] = Query(None, description="Filter by alert_level category code"),
+    mechanism: Optional[str] = Query(None, description="Filter by mechanism category code"),
+    mcd_phase: Optional[str] = Query(None, description="Filter by mcd_phase category code"),
     search: Optional[str] = Query(None, description="ILIKE search on codigo_bip or name"),
 ):
     """
@@ -52,10 +57,10 @@ async def list_iprs(
     params: dict = {}
 
     # Role-based scope restriction
-    if role_code == "ENCARGADO":
+    if role_code in ("ENCARGADO", "JEFE_UNIDAD"):
         conditions.append("i.assignee_id = :assignee_id")
         params["assignee_id"] = user_id
-    elif role_code == "JEFE_DIVISION" and division_id:
+    elif role_code in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO") and division_id:
         conditions.append("i.sponsor_division_id = :division_id")
         params["division_id"] = division_id
 
@@ -83,6 +88,18 @@ async def list_iprs(
             "i.alert_level_id = (SELECT id FROM ref.category WHERE scheme = 'alert_level' AND code = :alert_level LIMIT 1)"
         )
         params["alert_level"] = alert_level
+
+    if mechanism:
+        conditions.append(
+            "i.mechanism_id = (SELECT id FROM ref.category WHERE scheme = 'mechanism' AND code = :mechanism LIMIT 1)"
+        )
+        params["mechanism"] = mechanism
+
+    if mcd_phase:
+        conditions.append(
+            "i.mcd_phase_id = (SELECT id FROM ref.category WHERE scheme = 'mcd_phase' AND code = :mcd_phase LIMIT 1)"
+        )
+        params["mcd_phase"] = mcd_phase
 
     if search:
         conditions.append(
@@ -115,6 +132,8 @@ async def list_iprs(
             st.code        AS status,
             sec.code       AS investment_sector,
             fs.code        AS funding_source,
+            mech.code      AS mechanism,
+            mcd.code       AS mcd_phase,
             al.code        AS alert_level,
             i.has_open_problems,
             exc.name       AS executor_name,
@@ -125,11 +144,13 @@ async def list_iprs(
                 ELSE NULL
             END            AS total_budget
         FROM core.ipr i
-        LEFT JOIN ref.category  ct  ON ct.id  = i.ipr_type_id
-        LEFT JOIN ref.category  st  ON st.id  = i.status_id
-        LEFT JOIN ref.category  sec ON sec.id = i.investment_sector_id
-        LEFT JOIN ref.category  fs  ON fs.id  = i.funding_source_id
-        LEFT JOIN ref.category  al  ON al.id  = i.alert_level_id
+        LEFT JOIN ref.category  ct   ON ct.id   = i.ipr_type_id
+        LEFT JOIN ref.category  st   ON st.id   = i.status_id
+        LEFT JOIN ref.category  sec  ON sec.id  = i.investment_sector_id
+        LEFT JOIN ref.category  fs   ON fs.id   = i.funding_source_id
+        LEFT JOIN ref.category  mech ON mech.id = i.mechanism_id
+        LEFT JOIN ref.category  mcd  ON mcd.id  = i.mcd_phase_id
+        LEFT JOIN ref.category  al   ON al.id   = i.alert_level_id
         LEFT JOIN core.organization exc ON exc.id = i.executor_id
         WHERE {where_clause}
         ORDER BY
@@ -153,6 +174,8 @@ async def list_iprs(
             status=row["status"],
             investment_sector=row["investment_sector"],
             funding_source=row["funding_source"],
+            mechanism=row["mechanism"],
+            mcd_phase=row["mcd_phase"],
             alert_level=row["alert_level"],
             has_open_problems=row["has_open_problems"] or False,
             executor_name=row["executor_name"],
@@ -192,7 +215,11 @@ async def get_ipr(
             sec.code        AS investment_sector,
             fs.code         AS funding_source,
             fc.code         AS fund_category,
+            fc.label        AS fund_category_label,
             mech.code       AS mechanism,
+            mech.label      AS mechanism_label,
+            mcd.code        AS mcd_phase,
+            mcd.label       AS mcd_phase_label,
             al.code         AS alert_level,
             i.has_open_problems,
             exc.name        AS executor_name,
@@ -229,6 +256,7 @@ async def get_ipr(
         LEFT JOIN ref.category  fs   ON fs.id   = i.funding_source_id
         LEFT JOIN ref.category  fc   ON fc.id   = i.fund_category_id
         LEFT JOIN ref.category  mech ON mech.id = i.mechanism_id
+        LEFT JOIN ref.category  mcd  ON mcd.id  = i.mcd_phase_id
         LEFT JOIN ref.category  al   ON al.id   = i.alert_level_id
         LEFT JOIN core.organization exc ON exc.id = i.executor_id
         LEFT JOIN core.organization frm ON frm.id = i.formulator_id
@@ -256,7 +284,11 @@ async def get_ipr(
         investment_sector=row["investment_sector"],
         funding_source=row["funding_source"],
         fund_category=row["fund_category"],
+        fund_category_label=row["fund_category_label"],
         mechanism=row["mechanism"],
+        mechanism_label=row["mechanism_label"],
+        mcd_phase=row["mcd_phase"],
+        mcd_phase_label=row["mcd_phase_label"],
         alert_level=row["alert_level"],
         has_open_problems=row["has_open_problems"] or False,
         executor_name=row["executor_name"],
@@ -311,10 +343,12 @@ async def create_ipr(
     sql = text("""
         INSERT INTO core.ipr (
             codigo_bip, name, ipr_nature, ipr_type_id, status_id,
-            sponsor_division_id, created_by_id, updated_by_id, metadata
+            sponsor_division_id, mechanism_id, funding_source_id, mcd_phase_id,
+            created_by_id, updated_by_id, metadata
         ) VALUES (
             :codigo_bip, :name, 'PROYECTO', :ipr_type_id, :status_id,
-            :sponsor_division_id, :user_id, :user_id, CAST(:metadata AS jsonb)
+            :sponsor_division_id, :mechanism_id, :funding_source_id, :mcd_phase_id,
+            :user_id, :user_id, CAST(:metadata AS jsonb)
         )
         RETURNING id, codigo_bip
     """)
@@ -325,6 +359,9 @@ async def create_ipr(
         "ipr_type_id": str(body.ipr_type_id) if body.ipr_type_id else None,
         "status_id": str(body.status_id) if body.status_id else None,
         "sponsor_division_id": str(body.sponsor_division_id) if body.sponsor_division_id else None,
+        "mechanism_id": str(body.mechanism_id) if body.mechanism_id else None,
+        "funding_source_id": str(body.funding_source_id) if body.funding_source_id else None,
+        "mcd_phase_id": str(body.mcd_phase_id) if body.mcd_phase_id else None,
         "user_id": str(user["id"]),
         "metadata": metadata,
     })
@@ -344,6 +381,9 @@ _IPR_FIELD_ALLOWLIST = {
     "status_id": "status_id",
     "investment_sector_id": "investment_sector_id",
     "funding_source_id": "funding_source_id",
+    "mechanism_id": "mechanism_id",
+    "mcd_phase_id": "mcd_phase_id",
+    "fund_category_id": "fund_category_id",
     "sponsor_division_id": "sponsor_division_id",
     "assignee_id": "assignee_id",
 }
@@ -373,7 +413,7 @@ async def update_ipr(
 
     # JEFE_DIVISION can only update assignee_id
     role = user.get("role_code", "")
-    if role == "JEFE_DIVISION":
+    if role in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO"):
         updates = {k: v for k, v in updates.items() if k == "assignee_id"}
         if not updates:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No tiene permisos para editar estos campos")

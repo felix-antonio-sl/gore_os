@@ -311,6 +311,75 @@ async def create_convenio(
 # PATCH /api/convenios/{id} — Update
 # ---------------------------------------------------------------------------
 
+_UTM_VALUE = 67_294  # UTM febrero 2026
+
+
+async def _validate_state_transition(
+    convenio_id: UUID,
+    new_state_id: str,
+    db: AsyncSession,
+) -> tuple[str, str]:
+    """Validate state transition. Returns (current_code, new_code) or raises HTTP 409."""
+    # Get current state code + valid_transitions, and new state code
+    result = await db.execute(
+        text("""
+            SELECT
+                cur.code       AS current_code,
+                cur.valid_transitions AS valid_transitions,
+                nxt.code       AS new_code
+            FROM core.agreement a
+            JOIN ref.category cur ON cur.id = a.state_id
+            JOIN ref.category nxt ON nxt.id = :new_state_id
+            WHERE a.id = :id AND a.deleted_at IS NULL
+        """),
+        {"id": str(convenio_id), "new_state_id": new_state_id},
+    )
+    row = result.mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Convenio no encontrado")
+
+    current_code = row["current_code"]
+    new_code = row["new_code"]
+    valid = row["valid_transitions"] or []
+
+    if new_code not in valid:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Transición inválida: {current_code} → {new_code}. Destinos válidos: {', '.join(valid) if valid else '(estado terminal)'}",
+        )
+
+    return current_code, new_code
+
+
+async def _validate_amount_thresholds(
+    convenio_id: UUID,
+    current_code: str,
+    new_code: str,
+    db: AsyncSession,
+) -> None:
+    """Validate UTM-based thresholds for sensitive transitions."""
+    result = await db.execute(
+        text("SELECT total_amount FROM core.agreement WHERE id = :id"),
+        {"id": str(convenio_id)},
+    )
+    row = result.mappings().first()
+    total_amount = float(row["total_amount"]) if row and row["total_amount"] else 0
+
+    # >1.000 UTM → requiere pasar por VISADO_INTERNO antes de FIRMADO_GORE
+    if new_code == "FIRMADO_GORE" and current_code != "VISADO_INTERNO" and total_amount > 1_000 * _UTM_VALUE:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Convenios >1.000 UTM requieren Visado Interno del AR antes de pasar a Firmado GORE",
+        )
+
+    # >2.500 UTM → requiere pasar por TDR_PENDIENTE antes de VIGENTE
+    if new_code == "VIGENTE" and current_code != "TDR_PENDIENTE" and total_amount > 2_500 * _UTM_VALUE:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Convenios >2.500 UTM requieren Toma de Razón CGR (TdR Pendiente) antes de pasar a Vigente",
+        )
+
+
 @router.patch("/{convenio_id}")
 async def update_convenio(
     convenio_id: UUID,
@@ -327,6 +396,12 @@ async def update_convenio(
     if not updates:
         return {"message": "Sin cambios"}
 
+    # Validate state transition if state_id is being changed
+    if "state_id" in updates:
+        new_state_id = str(updates["state_id"])
+        current_code, new_code = await _validate_state_transition(convenio_id, new_state_id, db)
+        await _validate_amount_thresholds(convenio_id, current_code, new_code, db)
+
     # Convert UUIDs to string
     for k in ["state_id", "cgr_outcome_id"]:
         if k in updates:
@@ -342,6 +417,49 @@ async def update_convenio(
     )
     await db.commit()
     return {"message": "Actualizado correctamente"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/convenios/{id}/transiciones — Valid state transitions
+# ---------------------------------------------------------------------------
+
+@router.get("/{convenio_id}/transiciones")
+async def get_valid_transitions(
+    convenio_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Return the valid destination states for this agreement's current state."""
+    result = await db.execute(
+        text("""
+            SELECT
+                cur.code AS current_code,
+                cur.valid_transitions AS valid_transitions
+            FROM core.agreement a
+            JOIN ref.category cur ON cur.id = a.state_id
+            WHERE a.id = :id AND a.deleted_at IS NULL
+        """),
+        {"id": str(convenio_id)},
+    )
+    row = result.mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Convenio no encontrado")
+
+    valid_codes = row["valid_transitions"] or []
+    if not valid_codes:
+        return []
+
+    # Fetch id, code, label for each valid destination
+    dest_result = await db.execute(
+        text("""
+            SELECT id, code, label
+            FROM ref.category
+            WHERE scheme = 'agreement_state' AND code = ANY(:codes)
+            ORDER BY label
+        """),
+        {"codes": valid_codes},
+    )
+    return [dict(r) for r in dest_result.mappings().all()]
 
 
 # ---------------------------------------------------------------------------

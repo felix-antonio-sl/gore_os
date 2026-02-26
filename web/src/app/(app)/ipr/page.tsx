@@ -10,6 +10,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { PaginatedResponse, IPRListItem } from "@/types";
 
 const IPR_TYPE_OPTIONS = [
@@ -44,11 +45,40 @@ const ALERT_LEVEL_OPTIONS = [
   { value: "INFO", label: "Info" },
 ];
 
+const MECHANISM_OPTIONS = [
+  { value: "SNI", label: "SNI General" },
+  { value: "C33", label: "Circular 33" },
+  { value: "FRIL", label: "FRIL" },
+  { value: "GLOSA06", label: "Glosa 06" },
+  { value: "TRANSFER", label: "Transferencias" },
+  { value: "SUBV8", label: "Subvención 8%" },
+  { value: "FRPD", label: "FRPD Royalty" },
+];
+
+const MCD_PHASE_OPTIONS = [
+  { value: "F0", label: "F0 Formulación" },
+  { value: "F1", label: "F1 Admisibilidad" },
+  { value: "F2", label: "F2 Evaluación" },
+  { value: "F3", label: "F3 Priorización" },
+  { value: "F4", label: "F4 Ejecución" },
+  { value: "F5", label: "F5 Cierre" },
+];
+
 const alertLevelColors: Record<string, string> = {
   CRITICO: "bg-red-600 text-white",
   ALTO: "bg-orange-500 text-white",
   ATENCION: "bg-amber-400 text-white",
   INFO: "bg-blue-500 text-white",
+};
+
+const mechanismColors: Record<string, string> = {
+  SNI: "bg-indigo-100 text-indigo-800 border-indigo-200",
+  C33: "bg-violet-100 text-violet-800 border-violet-200",
+  FRIL: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  GLOSA06: "bg-sky-100 text-sky-800 border-sky-200",
+  TRANSFER: "bg-amber-100 text-amber-800 border-amber-200",
+  SUBV8: "bg-rose-100 text-rose-800 border-rose-200",
+  FRPD: "bg-teal-100 text-teal-800 border-teal-200",
 };
 
 function formatCurrency(value: number | null): string {
@@ -77,6 +107,8 @@ export default function IprPage() {
   const estado = searchParams.get("estado") ?? "";
   const sector = searchParams.get("sector") ?? "";
   const alertLevel = searchParams.get("alert_level") ?? "";
+  const mechanism = searchParams.get("mechanism") ?? "";
+  const mcdPhase = searchParams.get("mcd_phase") ?? "";
   const search = searchParams.get("search") ?? "";
 
   const filterValues: Record<string, string> = {
@@ -84,6 +116,8 @@ export default function IprPage() {
     estado,
     sector,
     alert_level: alertLevel,
+    mechanism,
+    mcd_phase: mcdPhase,
   };
 
   const buildUrl = useCallback(
@@ -126,6 +160,8 @@ export default function IprPage() {
     if (estado) params.set("status", estado);
     if (sector) params.set("sector", sector);
     if (alertLevel) params.set("alert_level", alertLevel);
+    if (mechanism) params.set("mechanism", mechanism);
+    if (mcdPhase) params.set("mcd_phase", mcdPhase);
     if (search) params.set("search", search);
 
     api
@@ -133,7 +169,7 @@ export default function IprPage() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, tipo, estado, sector, alertLevel, search]);
+  }, [page, tipo, estado, sector, alertLevel, mechanism, mcdPhase, search]);
 
   const columns = [
     {
@@ -174,6 +210,19 @@ export default function IprPage() {
       ),
     },
     {
+      key: "mechanism",
+      label: "Mecanismo",
+      render: (value: unknown) => {
+        const v = String(value ?? "");
+        if (!v) return <span className="text-muted-foreground text-xs">—</span>;
+        return (
+          <Badge variant="outline" className={cn("text-xs", mechanismColors[v])}>
+            {v}
+          </Badge>
+        );
+      },
+    },
+    {
       key: "status",
       label: "Estado",
       render: (value: unknown) => <StatusBadge status={String(value ?? "")} size="sm" />,
@@ -212,6 +261,8 @@ export default function IprPage() {
           { key: "estado", label: "Estado", options: STATUS_OPTIONS },
           { key: "sector", label: "Sector", options: SECTOR_OPTIONS },
           { key: "alert_level", label: "Alerta", options: ALERT_LEVEL_OPTIONS },
+          { key: "mechanism", label: "Mecanismo", options: MECHANISM_OPTIONS },
+          { key: "mcd_phase", label: "Fase MCD", options: MCD_PHASE_OPTIONS },
         ]}
         values={filterValues}
         onChange={handleFilterChange}

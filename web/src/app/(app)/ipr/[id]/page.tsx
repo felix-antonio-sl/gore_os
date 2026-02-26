@@ -33,8 +33,15 @@ interface IprDetail {
   status?: string;
   investment_sector?: string;
   funding_source?: string;
+  fund_category?: string;
+  fund_category_label?: string;
+  mechanism?: string;
+  mechanism_label?: string;
+  mcd_phase?: string;
+  mcd_phase_label?: string;
   alert_level?: string;
   executor_name?: string;
+  formulator_name?: string;
   total_budget?: number;
   start_date?: string;
   end_date?: string;
@@ -64,6 +71,25 @@ const alertBorderMap: Record<string, string> = {
   ALTO: "border-l-orange-500",
   ATENCION: "border-l-amber-400",
   INFO: "border-l-blue-500",
+};
+
+const mechanismColors: Record<string, string> = {
+  SNI: "bg-indigo-100 text-indigo-800 border-indigo-200",
+  C33: "bg-violet-100 text-violet-800 border-violet-200",
+  FRIL: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  GLOSA06: "bg-sky-100 text-sky-800 border-sky-200",
+  TRANSFER: "bg-amber-100 text-amber-800 border-amber-200",
+  SUBV8: "bg-rose-100 text-rose-800 border-rose-200",
+  FRPD: "bg-teal-100 text-teal-800 border-teal-200",
+};
+
+const mcdPhaseColors: Record<string, string> = {
+  F0: "bg-slate-100 text-slate-700 border-slate-200",
+  F1: "bg-blue-100 text-blue-700 border-blue-200",
+  F2: "bg-cyan-100 text-cyan-700 border-cyan-200",
+  F3: "bg-amber-100 text-amber-700 border-amber-200",
+  F4: "bg-green-100 text-green-700 border-green-200",
+  F5: "bg-gray-100 text-gray-700 border-gray-200",
 };
 
 function formatDate(dateStr: string): string {
@@ -426,17 +452,39 @@ export default function IprDetailPage() {
             </div>
           </div>
         </div>
-        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm">
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {ipr.mechanism && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-muted-foreground">Mecanismo:</span>
+              <Badge variant="outline" className={cn("text-xs", mechanismColors[ipr.mechanism])}>
+                {ipr.mechanism}
+              </Badge>
+              {ipr.mechanism_label && (
+                <span className="text-xs text-muted-foreground">{ipr.mechanism_label}</span>
+              )}
+            </div>
+          )}
+          {ipr.funding_source && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-muted-foreground">Fuente:</span>
+              <span className="font-medium">{ipr.fund_category_label || ipr.funding_source}</span>
+            </div>
+          )}
+          {ipr.mcd_phase && (
+            <div className="flex items-center gap-1.5">
+              <span className="text-muted-foreground">Fase MCD:</span>
+              <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[ipr.mcd_phase])}>
+                {ipr.mcd_phase}
+              </Badge>
+              {ipr.mcd_phase_label && (
+                <span className="text-xs text-muted-foreground">{ipr.mcd_phase_label}</span>
+              )}
+            </div>
+          )}
           {ipr.executor_name && (
             <div>
               <span className="text-muted-foreground">Ejecutor: </span>
               <span className="font-medium">{ipr.executor_name}</span>
-            </div>
-          )}
-          {ipr.funding_source && (
-            <div>
-              <span className="text-muted-foreground">Fuente: </span>
-              <span className="font-medium">{ipr.funding_source}</span>
             </div>
           )}
           {ipr.investment_sector && (

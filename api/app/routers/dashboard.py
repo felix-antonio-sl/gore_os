@@ -485,15 +485,18 @@ async def get_dashboard(
     """
     role_code = user["role_code"]
 
-    if role_code == "ENCARGADO":
+    if role_code in ("ENCARGADO", "JEFE_UNIDAD"):
         return await _dashboard_encargado(user, db)
 
-    if role_code == "JEFE_DIVISION":
+    if role_code in ("JEFE_DIVISION", "JEFE_DEPARTAMENTO"):
         return await _dashboard_jefe_division(user, db)
 
     if role_code in (
         "ADMIN_REGIONAL",
         "ADMIN_SISTEMA",
+        "GOBERNADOR",
+        "SECRETARIO_EJECUTIVO",
+        "CONSEJERO_REGIONAL",
         "JEFE_DGI",
         "ESP_CONTROL_GESTION",
         "ESP_TD",

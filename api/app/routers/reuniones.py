@@ -22,7 +22,7 @@ router = APIRouter(prefix="/api/reuniones", tags=["reuniones"])
 
 CRISIS_COMMITTEE_CODE = "COMITE-CRISIS"
 CRISIS_COMMITTEE_NAME = "Comite de Crisis IPR"
-_MANAGER_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"}
+_MANAGER_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "SECRETARIO_EJECUTIVO", "JEFE_DEPARTAMENTO"}
 
 
 def _require_manager(user: dict) -> None:

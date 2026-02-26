@@ -14,8 +14,8 @@ router = APIRouter(prefix="/api/compromisos", tags=["compromisos"])
 # Helpers
 # ---------------------------------------------------------------------------
 
-ADMIN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL"}
-MANAGER_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"}
+ADMIN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"}
+MANAGER_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "JEFE_DEPARTAMENTO"}
 
 
 def _require_roles(user: dict, *roles: str) -> None:

@@ -21,6 +21,11 @@ export type RoleCode =
   | "ADMIN_REGIONAL"
   | "JEFE_DIVISION"
   | "ENCARGADO"
+  | "GOBERNADOR"
+  | "CONSEJERO_REGIONAL"
+  | "SECRETARIO_EJECUTIVO"
+  | "JEFE_DEPARTAMENTO"
+  | "JEFE_UNIDAD"
   | "JEFE_DGI"
   | "ESP_CONTROL_GESTION"
   | "ESP_PROCESOS"
@@ -31,6 +36,11 @@ export const OPERATIONAL_ROLES: RoleCode[] = [
   "ADMIN_REGIONAL",
   "JEFE_DIVISION",
   "ENCARGADO",
+  "GOBERNADOR",
+  "CONSEJERO_REGIONAL",
+  "SECRETARIO_EJECUTIVO",
+  "JEFE_DEPARTAMENTO",
+  "JEFE_UNIDAD",
 ];
 
 export const DGI_ROLES: RoleCode[] = [
@@ -63,6 +73,8 @@ export interface IPRListItem {
   status: string | null;
   investment_sector: string | null;
   funding_source: string | null;
+  mechanism: string | null;
+  mcd_phase: string | null;
   alert_level: string | null;
   has_open_problems: boolean;
   executor_name: string | null;

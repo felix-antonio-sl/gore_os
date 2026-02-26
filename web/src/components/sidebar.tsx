@@ -65,13 +65,13 @@ export function Sidebar() {
     navItems = dgiNav;
   } else {
     navItems = [...operationalNav];
-    if (user.role_code === "JEFE_DIVISION") {
+    if (["JEFE_DIVISION", "JEFE_DEPARTAMENTO"].includes(user.role_code)) {
       navItems = [
         ...navItems,
         { label: "Mi División", href: "/mi-division", icon: <FolderKanban className="size-4" /> },
       ];
     }
-    if (user.role_code === "ENCARGADO") {
+    if (["ENCARGADO", "JEFE_UNIDAD"].includes(user.role_code)) {
       navItems = [
         ...navItems,
         { label: "Mis Compromisos", href: "/mis-compromisos", icon: <UserCheck className="size-4" /> },

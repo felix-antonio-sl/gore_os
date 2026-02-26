@@ -76,7 +76,7 @@ function OperationalDashboard() {
   const router = useRouter();
   const { user: authUser } = useAuth();
 
-  const isExecutive = authUser && ["ADMIN_REGIONAL", "ADMIN_SISTEMA"].includes(authUser.role_code);
+  const isExecutive = authUser && ["ADMIN_REGIONAL", "ADMIN_SISTEMA", "GOBERNADOR", "SECRETARIO_EJECUTIVO"].includes(authUser.role_code);
 
   useEffect(() => {
     const endpoint = isExecutive ? "/api/dashboard/ejecutivo" : "/api/dashboard";
