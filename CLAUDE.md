@@ -99,11 +99,11 @@ Key patterns:
 
 ### Database
 
-**77 tables across 4 schemas** (71 original + 6 DGI):
+**78 tables across 4 schemas** (58 logical + 20 txn partitions):
 
 | Schema | Purpose |
 |--------|---------|
-| `meta` | Role/Process/Entity/Story atoms (10 tables) |
+| `meta` | Role/Process/Entity/Story atoms (5 tables) |
 | `ref`  | Controlled vocabularies via `ref.category` — 90+ schemes + `ref.operational_commitment_type` |
 | `core` | Business entities: IPR, Agreement, Budget, User, plus operational (commitment, problem, alert) and DGI (indicator, initiative, report, bpmn_model, committee_session, data_source_status) |
 | `txn`  | Event sourcing (partitioned) |
@@ -158,7 +158,7 @@ open http://localhost:8000/api/docs
 
 ## Domain Model
 
-Central entity: **IPR (Intervención Pública Regional)** — polymorphic (7 types: INFRAESTRUCTURA, EQUIPAMIENTO, TRANSFERENCIA, PROGRAMA_SOCIAL, PROGRAMA_8PCT, CONSERVACION, ESTUDIO).
+Central entity: **IPR (Intervención Pública Regional)** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSERVACION, TRANSFERENCIA, SUBSIDIO, ESTUDIO, PROGRAMA_SOCIAL, PROGRAMA_8PCT).
 
 Operational layer:
 - **operational_commitment**: Tasks with due dates, state machine (PENDIENTE → EN_PROGRESO → COMPLETADO → VERIFICADO), tracked via `commitment_history`. Full CRUD: create form at `/compromisos/nuevo`, state actions in drawer.
@@ -186,7 +186,7 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 
 ## Key References
 
-- `model/model_goreos/sql/goreos_ddl.sql` — DDL (77 tables), ontological mappings in lines 21-37
+- `model/model_goreos/sql/goreos_ddl.sql` — DDL (78 tables), ontological mappings in lines 21-37
 - `model/model_goreos/sql/goreos_seed.sql` — 90+ category schemes
 - `model/model_goreos/sql/goreos_seed_demo_ciclo2.sql` — demo data for budget + agreements
 - `model/model_goreos/docs/GOREOS_ERD_v3.md` — ERD + data dictionary

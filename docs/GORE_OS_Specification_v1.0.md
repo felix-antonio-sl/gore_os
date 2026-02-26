@@ -1,7 +1,7 @@
 # GORE_OS — Especificacion Funcional y Tecnica v1.0
 
 > Documento generado: 2026-02-25
-> Ultima revision: Ciclo 4 completado (UX Polish + Charts + CRUD)
+> Ultima revision: Ciclo 5 (Searchable Selects + Tablero DGI Fixes + Spec)
 
 ---
 
@@ -151,7 +151,7 @@ El dashboard es **role-aware**: un unico endpoint despacha a implementaciones di
 
 #### Entidad Central
 
-La IPR es la entidad central del sistema. Poliformica con 5 naturalezas (PROYECTO, PROGRAMA, PROGRAMA_INVERSION, ESTUDIO_BASICO, ANF) y 7 tipos (INFRAESTRUCTURA, EQUIPAMIENTO, CONSERVACION, TRANSFERENCIA, SUBSIDIO, ESTUDIO, PROGRAMA_SOCIAL).
+La IPR es la entidad central del sistema. Poliformica con 5 naturalezas (PROYECTO, PROGRAMA, PROGRAMA_INVERSION, ESTUDIO_BASICO, ANF) y 8 tipos (INFRAESTRUCTURA, EQUIPAMIENTO, CONSERVACION, TRANSFERENCIA, SUBSIDIO, ESTUDIO, PROGRAMA_SOCIAL, PROGRAMA_8PCT).
 
 **3,622+ registros** en la base de datos real.
 
@@ -551,19 +551,34 @@ Resultados agrupados por tipo con iconos y navegacion directa.
 
 ### 5.2 Componentes UI Reutilizables
 
+#### Componentes de Dominio (20)
+
 | Componente | Proposito | Uso |
 |-----------|-----------|-----|
+| `AppShell` | Wrapper de layout autenticado | Layout principal |
+| `Sidebar` | Navegacion condicional operativa/DGI | Layout principal |
+| `Header` | Barra superior con usuario + notificaciones | Layout principal |
+| `GlobalSearch` | Palette ⌘K de busqueda multi-entidad | Transversal |
 | `DataTable` | Tabla paginada generica | Todas las listas |
 | `FilterBar` | Barra de filtros + busqueda | Todas las listas |
 | `DrawerPanel` | Panel lateral deslizable | Detalles + acciones |
 | `StatusBadge` | Badge de estado con colores predefinidos | Estados de entidades |
 | `TemporalIndicator` | Indicador de dias restantes con urgencia | Compromisos, convenios |
+| `ProgressBarIndicator` | Barra de progreso visual | Presupuesto, avances |
 | `AlertCard` | Tarjeta de alerta con borde color | Alertas |
 | `KpiCard` | Tarjeta KPI con valor grande | Dashboards |
 | `KanbanCard` | Tarjeta de iniciativa con progreso | Tablero DGI |
 | `SemaforoCard` | Indicador semaforo (dimension DGI) | Cockpit DGI |
 | `ComboboxAsync` | Select buscable con busqueda server-side | IPR (3,622+ registros) |
 | `TimelineHistory` | Timeline vertical de eventos | Historial compromisos |
+| `CockpitJefeDgi` | Vista ejecutiva DGI | Dashboard DGI (JEFE_DGI) |
+| `CockpitControlGestion` | Vista monitoreo DGI | Dashboard DGI (ESP_CG) |
+| `CockpitProcesos` | Vista iniciativas DGI | Dashboard DGI (ESP_PROC) |
+| `CockpitTd` | Vista transformacion digital | Dashboard DGI (ESP_TD) |
+
+#### Primitivos UI (shadcn/ui — 16)
+
+`Avatar`, `Badge`, `Button`, `Card`, `Command`, `Dialog`, `DropdownMenu`, `Input`, `Popover`, `ScrollArea`, `Select`, `Separator`, `Sheet`, `Table`, `Tabs`, `Tooltip`
 
 ### 5.3 Graficos (Recharts)
 
@@ -589,8 +604,8 @@ Funcion `exportCSV(columns, data, filename)` disponible en tablas del explorador
 |---------|--------|-----------|
 | `meta` | 5 | Atomos fundamentales: Role, Process, Entity, Story, StoryEntity |
 | `ref` | 3 | Vocabularios controlados: Category (Gist 14.0 pattern), Actor (BPMN), OperationalCommitmentType |
-| `core` | ~42 | Entidades de negocio: organizacion, personas, IPR, presupuesto, convenios, alertas, gobernanza, DGI |
-| `txn` | 2 | Event sourcing: Event (particionado por mes), Magnitude (particionado por trimestre) |
+| `core` | 50 | Entidades de negocio: organizacion, personas, IPR, presupuesto, convenios, alertas, gobernanza, DGI |
+| `txn` | 2 logicas (20 fisicas) | Event sourcing: Event (particionado por mes), Magnitude (particionado por trimestre) |
 
 ### 6.2 Patron Categorial (ref.category)
 
@@ -814,7 +829,7 @@ Todas las tablas incluyen columnas de auditoria: `created_at`, `updated_at`, `cr
 |--------|------|-------------|
 | GET | `/api/health` | Health check |
 
-**Total: 62 endpoints en 17 routers.**
+**Total: 79 endpoints en 16 routers + health check.**
 
 ---
 
@@ -824,6 +839,7 @@ Todas las tablas incluyen columnas de auditoria: `created_at`, `updated_at`, `cr
 
 | Ruta | Componente | Descripcion |
 |------|-----------|-------------|
+| `/` | RootPage | Redirect a `/login` o `/dashboard` segun estado de sesion |
 | `/login` | LoginPage | Formulario de autenticacion |
 | `/dashboard` | DashboardPage | Panel de control (role-aware) |
 | `/ipr` | IprListPage | Lista paginada de IPRs |
@@ -904,15 +920,15 @@ Estrategia de datos demo con prefijo `DEMO-` para identificacion clara:
 
 | Metrica | Valor |
 |---------|-------|
-| Endpoints API totales | 62 |
-| Routers backend | 17 |
-| Paginas frontend | 27 |
-| Componentes reutilizables | 15+ |
+| Endpoints API totales | 79 |
+| Routers backend | 16 (+health) |
+| Paginas frontend | 25 |
+| Componentes reutilizables | 24 |
 | Componentes de graficos | 4 |
-| Tablas en BD | 77 |
+| Tablas en BD | 78 (58 logicas + 20 particiones txn) |
 | Esquemas ref.category | 90+ |
 | Roles de sistema | 8 |
-| Tipos de IPR | 7 |
+| Tipos de IPR | 8 |
 | Naturalezas IPR | 5 |
 | Estados de convenio | 10 |
 | Tipos de alerta | 12 |
