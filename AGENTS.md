@@ -2,6 +2,8 @@
 
 ## Habla con el usuario en español
 
+## No trabajes con arboles, sino commits a la rama principal en forma directa
+
 ## Project Structure & Module Organization
 - `model/model_goreos/`: core PostgreSQL model (`sql/` for DDL, seeds, migrations; `docs/` for model docs).
 - `api/`: FastAPI backend.

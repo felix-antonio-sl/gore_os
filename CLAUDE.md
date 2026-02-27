@@ -141,7 +141,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**71 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**86 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -160,7 +160,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules: `test_auth` (5), `test_compromisos` (12), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (18).
+Test modules: `test_auth` (8), `test_compromisos` (14), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -229,6 +229,37 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 - Demo agreements: DEMO-AGR-001..004 (2 VIGENTE, 1 EN_MODIFICACION, 1 VENCIDO, with installments)
 - Demo CDPs: DEMO-CDP-001..008 (linked to real IPRs)
 
+## ETL Pipeline
+
+Scripts in `api/scripts/etl/` for ingesting legacy CSV/XLSX data into `core.*` tables.
+
+```bash
+# Run inside API container:
+docker compose exec api python -m scripts.etl.enrich_persons --dry-run
+docker compose exec api python -m scripts.etl.enrich_persons --nomina /app/data/etl/funcionarios/NOMINA.xlsx
+docker compose exec api python -m scripts.etl.enrich_persons --rut-only --nomina /path/to/NOMINA.xlsx
+
+# Copy data files to container first:
+docker cp /local/path/file.csv goreos_api:/app/data/etl/funcionarios/
+```
+
+Key modules:
+- `api/scripts/etl/common.py` — shared utilities: DB session, CSV reader (auto-encoding/delimiter, `skip_rows` param), name parser, FK resolvers with cache, RUT normalizer, batch commit, stats tracking
+- `api/scripts/etl/enrich_persons.py` — Phase 1: enrich `core.person` from Funcionarios CSVs (metadata) + NOMINA xlsx (RUT)
+- `api/scripts/etl/load_documents.py` — Phase 2: load PARTES CSVs → `core.document` (~10.5K docs)
+
+All scripts support `--dry-run`, `--limit N`, `--verbose`. Idempotent (JSONB merge, ON CONFLICT, skip-if-exists).
+
+```bash
+# Phase 2: load PARTES documents
+docker cp docs/legacy/etl/sources/partes/originales/ goreos_api:/app/data/etl/partes/
+docker compose exec api python -m scripts.etl.load_documents --dry-run
+docker compose exec api python -m scripts.etl.load_documents --source RECIBIDOS  # single source
+docker compose exec api python -m scripts.etl.load_documents                      # all sources
+```
+
+CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Architecture doc: `docs/ETL_ARCHITECTURE_v1.0.md`.
+
 ## Key References
 
 - `model/model_goreos/sql/goreos_ddl.sql` — DDL (78 tables), ontological mappings in lines 21-37
@@ -241,6 +272,8 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 - `docs/plans/2026-02-24-dgi-ui-ux-design.md` — DGI UI/UX design document
 - `docs/GORE_OS_Testing_Ciclo3.md` — Testing document with all features, credentials, and test cases
 - `architecture/Omega_GORE_OS_Definition_v3.0.0.md` — system specification
+- `docs/ETL_ARCHITECTURE_v1.0.md` — ETL pipeline design (8 domains, execution order, mappings)
+- `model/model_goreos/sql/goreos_seed_etl_phase2.sql` — seed `document_channel` scheme (prerequisite for Phase 2)
 
 ## Critical Rules
 
@@ -273,3 +306,6 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 27. **UNIQUE constraint names in DDL**: `ipr_party` uses `uq_ipr_party_role`, `ipr_territory` uses `uq_ipr_territory_impact`. When catching duplicate errors in FastAPI, check for these exact names in the exception string.
 28. **ApiClient.delete()**: The `api.ts` singleton now has a `delete(path)` method for HTTP DELETE. It handles 204 No Content responses correctly (no JSON parsing). Use `await api.delete('/api/...')`.
 29. **IPR detail page size**: The page is ~1,200+ lines with 9 tabs. If adding more tabs, consider extracting each tab content to a separate component file.
+30. **asyncpg type cast syntax**: In raw SQL with `text()` + asyncpg, do NOT use `:param::jsonb` — asyncpg confuses `::` with parameter syntax. Use `CAST(:param AS jsonb)` instead. Same applies to any type cast after a named parameter.
+31. **ETL scripts runtime**: ETL scripts run inside the API container (`docker compose exec api python -m scripts.etl.<module>`). CSVs must be copied to the container first via `docker cp`. Scripts use the container's DB_HOST (`goreos_db`), not `localhost`.
+32. **PARTES CSV structural quirks**: Some source files have a garbage first row instead of headers (RECIBIDOS row 0 = `"ENROCADO"`, OFICIOS INTERNOS row 0 = `"}"`). Use `read_csv(path, skip_rows=1)` for these. MEMOS and MEMOS INTERNOS have an unnamed first column (empty string key) — skip it. Always inspect headers before mapping columns from a new PARTES source.
