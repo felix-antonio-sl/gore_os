@@ -50,6 +50,13 @@ stage_funcionarios() {
   copy_file "$src_dir/listado_funcionarios_integrado_remediado.csv" "$dst_dir/listado_funcionarios_integrado_remediado.csv"
 }
 
+stage_contacts() {
+  local src_dir="$SRC_BASE/contacts/originales"
+  local dst_dir="$DST_BASE/contacts"
+
+  copy_file "$src_dir/contacts_2026-02-26.csv" "$dst_dir/contacts_2026-02-26.csv"
+}
+
 case "$MODE" in
   partes)
     stage_partes
@@ -57,12 +64,16 @@ case "$MODE" in
   funcionarios)
     stage_funcionarios
     ;;
+  contacts)
+    stage_contacts
+    ;;
   all)
     stage_partes
     stage_funcionarios
+    stage_contacts
     ;;
   *)
-    echo "Usage: $0 [partes|funcionarios|all]" >&2
+    echo "Usage: $0 [partes|funcionarios|contacts|all]" >&2
     exit 1
     ;;
 esac

@@ -23,4 +23,5 @@ Keep repository code and canonical source data separated from runtime staging co
 ## Scope Notes
 - Phase 2 documents loader (`load_documents.py`) uses 6 PARTES files.
 - Person enrichment (`enrich_persons.py`) uses NOMINA + TransparenciaActiva + listado integrated.
+- Email enrichment (`enrich_person_emails.py`) uses contacts CSV staged under `/app/data/etl/contacts/`.
 - Additional PARTES files (`RENDICIONES*`, `RESOLUCIONES*`) remain out of Phase 2 scope.
