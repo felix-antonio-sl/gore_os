@@ -166,7 +166,7 @@ Test modules: `test_auth` (8), `test_compromisos` (14), `test_presupuesto` (8), 
 
 **Test architecture**: `conftest.py` creates a fresh `AsyncSession` per test against `goreos_test`, overrides `get_db` dependency, generates real JWT tokens for 5 roles (admin, regional, jefe, encargado, dgi). The `catalog` fixture pre-fetches common IDs (commitment types, problem types, agreement states, etc.).
 
-**Known issue**: `test_convenios::test_patch_state` is marked `xfail` — trigger `fn_validate_state_transition` references `OLD.status_id` but the column is `state_id`.
+**Known issue**: `test_initiatives::test_move_to_en_curso` may fail if test DB has accumulated 5+ EN_CURSO initiatives from prior runs (WIP limit 5). Clean with `DELETE FROM core.dgi_initiative WHERE deleted_at IS NULL;` on `goreos_test`.
 
 **DGI category schemes** (e.g., `dgi_initiative_status`) are NOT in `goreos_seed.sql` — they only exist in `goreos_model` and are copied to `goreos_test` via `COPY ref.category`. If adding new DGI schemes, insert them into production first.
 
@@ -274,6 +274,8 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 - `model/model_goreos/sql/goreos_rollback_confrontacion.sql` — rollback for above migration
 - `model/model_goreos/sql/goreos_migration_rendition_coproduct.sql` — relax rendition FKs: nullable agreement_id/renderer_id, add ipr_id FK, CHECK (agreement OR ipr)
 - `model/model_goreos/sql/goreos_rollback_rendition_coproduct.sql` — rollback for rendition coproduct migration
+- `model/model_goreos/sql/goreos_migration_wave1_trigger_fix.sql` — fix fn_validate_state_transition (dynamic column via TG_ARGV[0])
+- `model/model_goreos/sql/goreos_rollback_wave1_trigger_fix.sql` — rollback for Wave 1 trigger fix
 - `model/model_goreos/docs/GOREOS_ERD_v3.md` — ERD + data dictionary
 - `model/GLOSARIO.yml` — 244 ontological terms (Gist 14.0 + GNUB + TDE)
 - `docs/plans/2026-02-24-dgi-ui-ux-design.md` — DGI UI/UX design document
@@ -286,7 +288,7 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 
 ## Known Gaps (Audit 2026-02-27)
 
-**Critical**: Art. 18 Res. 30 CGR — `convenios.py` POST cuotas does NOT validate pending renditions before transfers. 1,234 renditions all in PENDIENTE state. Trigger `fn_validate_state_transition` references `OLD.status_id` but column is `state_id` (xfail test).
+**Critical**: Art. 18 Res. 30 CGR — `convenios.py` POST cuotas does NOT validate pending renditions before transfers. 1,234 renditions all in PENDIENTE state. Trigger bug FIXED (Wave 1) — `fn_validate_state_transition` now uses `TG_ARGV[0]` for dynamic column access. PATCH rendiciones endpoint available at `/api/dgi/data/rendiciones/{id}`.
 
 **High**: MCD phases are static data (1,973/3,622 IPRs have phase, no workflow transitions). Poly-Switch routing not implemented (mechanism_id exists but no evaluation logic). 0/11 financial thresholds codified. 0/8 budget glosa rules. SISREC rendition workflow missing.
 
