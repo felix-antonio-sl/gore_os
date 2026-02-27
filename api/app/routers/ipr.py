@@ -25,6 +25,112 @@ _ADMIN_ROLES = {
 _CREATE_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"}
 _ASSIGN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "JEFE_DEPARTAMENTO"}
 
+# ---------------------------------------------------------------------------
+# Fibración categórica: ipr_state → mcd_phase
+# Cada status pertenece a exactamente una fase MCD.
+# ANULADO es terminal cross-cutting — preserva la fase previa.
+# ---------------------------------------------------------------------------
+STATUS_PHASE_FIBER: dict[str, str] = {
+    # F0: Formulación & Ingreso
+    "INGRESADO": "F0",
+    # F1: Admisibilidad
+    "EN_REVISION": "F1", "ADMISIBLE": "F1", "INADMISIBLE": "F1",
+    # F2: Evaluación Técnica
+    "EN_EVALUACION": "F2",
+    "RS": "F2", "FI": "F2", "FC": "F2", "OT": "F2",
+    "AD": "F2", "RF": "F2", "ITF": "F2", "AT": "F2",
+    # F3: Priorización & Asignación
+    "CDP_EMITIDO": "F3",
+    # F4: Formalización & Ejecución
+    "EN_FORMALIZACION": "F4", "FORMALIZADO": "F4",
+    "EN_EJECUCION": "F4", "EN_LICITACION": "F4",
+    "ADJUDICADO": "F4", "EN_OBRA": "F4",
+    "RECEPCION_PROVISORIA": "F4", "RECEPCION_DEFINITIVA": "F4",
+    "SUSPENDIDO": "F4",
+    # F5: Cierre
+    "EN_RENDICION": "F5", "CERRADO": "F5",
+}
+
+_PHASE_ORDER = {"F0": 0, "F1": 1, "F2": 2, "F3": 3, "F4": 4, "F5": 5}
+
+
+async def _evaluate_phase_gates(
+    ipr_id: UUID, current_phase: str, target_phase: str, db: AsyncSession
+) -> list[dict]:
+    """Evaluate gates for a fiber boundary crossing."""
+    gates: list[dict] = []
+    transition = f"{current_phase}->{target_phase}"
+
+    if transition == "F0->F1":
+        row = (await db.execute(
+            text("SELECT mechanism_id FROM core.ipr WHERE id = :id"),
+            {"id": str(ipr_id)},
+        )).mappings().first()
+        has_mechanism = row and row["mechanism_id"] is not None
+        gates.append({
+            "name": "mechanism_required",
+            "met": has_mechanism,
+            "detail": "IPR requiere mecanismo de financiamiento asignado",
+        })
+
+    elif transition == "F2->F3":
+        row = (await db.execute(
+            text("SELECT c.code FROM core.ipr i JOIN ref.category c ON c.id = i.status_id WHERE i.id = :id"),
+            {"id": str(ipr_id)},
+        )).mappings().first()
+        current_status = row["code"] if row else None
+        favorable = current_status in ("RS", "FI", "RF", "ITF", "AT", "AD")
+        gates.append({
+            "name": "favorable_outcome",
+            "met": favorable,
+            "detail": f"Dictamen debe ser favorable para avanzar a priorización (actual: {current_status})",
+        })
+
+    elif transition == "F3->F4":
+        cnt = (await db.execute(
+            text("SELECT COUNT(*) FROM core.budget_commitment WHERE ipr_id = :id AND deleted_at IS NULL"),
+            {"id": str(ipr_id)},
+        )).scalar() or 0
+        gates.append({
+            "name": "cdp_exists",
+            "met": cnt > 0,
+            "detail": f"Requiere al menos 1 CDP vinculado ({cnt} encontrado(s))",
+        })
+
+    elif transition == "F4->F5":
+        pending = (await db.execute(
+            text("""
+                SELECT COUNT(*) FROM core.rendition r
+                JOIN ref.category st ON st.id = r.state_id
+                WHERE r.ipr_id = :id AND r.deleted_at IS NULL
+                  AND st.scheme = 'rendition_state'
+                  AND st.code NOT IN ('APROBADA', 'RECHAZADA')
+            """),
+            {"id": str(ipr_id)},
+        )).scalar() or 0
+        gates.append({
+            "name": "renditions_clear",
+            "met": pending == 0,
+            "detail": f"Todas las rendiciones deben estar aprobadas/rechazadas ({pending} pendiente(s))",
+        })
+
+        open_probs = (await db.execute(
+            text("""
+                SELECT COUNT(*) FROM core.ipr_problem ip
+                JOIN ref.category ps ON ps.id = ip.state_id
+                WHERE ip.ipr_id = :id AND ip.deleted_at IS NULL
+                  AND ps.code IN ('ABIERTO', 'EN_GESTION')
+            """),
+            {"id": str(ipr_id)},
+        )).scalar() or 0
+        gates.append({
+            "name": "problems_clear",
+            "met": open_probs == 0,
+            "detail": f"No debe haber problemas abiertos ({open_probs} encontrado(s))",
+        })
+
+    return gates
+
 
 def _require_roles(user: dict, *roles: str) -> None:
     if user["role_code"] not in roles:
@@ -437,6 +543,48 @@ async def update_ipr(
         if not updates:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No tiene permisos para editar estos campos")
 
+    # --- Fiber derivation: auto-compute mcd_phase on status change ---
+    if "status_id" in updates and updates["status_id"] is not None:
+        new_status_id = str(updates["status_id"])
+
+        codes = (await db.execute(
+            text("""
+                SELECT
+                    cur.code AS current_code,
+                    nxt.code AS target_code
+                FROM core.ipr i
+                JOIN ref.category cur ON cur.id = i.status_id
+                JOIN ref.category nxt ON nxt.id = CAST(:new_status_id AS uuid)
+                WHERE i.id = :id
+            """),
+            {"id": str(ipr_id), "new_status_id": new_status_id},
+        )).mappings().first()
+
+        if codes:
+            current_code = codes["current_code"]
+            target_code = codes["target_code"]
+            current_phase = STATUS_PHASE_FIBER.get(current_code)
+            target_phase = STATUS_PHASE_FIBER.get(target_code)
+
+            # ANULADO: preserve current phase, no gates
+            if target_code != "ANULADO" and current_phase and target_phase and current_phase != target_phase:
+                gates = await _evaluate_phase_gates(ipr_id, current_phase, target_phase, db)
+                failed = [g for g in gates if not g["met"]]
+                if failed:
+                    details = "; ".join(g["detail"] for g in failed)
+                    raise HTTPException(
+                        status_code=status.HTTP_409_CONFLICT,
+                        detail=f"Gates no cumplidos para {current_phase}\u2192{target_phase}: {details}",
+                    )
+
+                # Auto-derive mcd_phase_id
+                phase_id = (await db.execute(
+                    text("SELECT id FROM ref.category WHERE scheme = 'mcd_phase' AND code = :code"),
+                    {"code": target_phase},
+                )).scalar()
+                if phase_id:
+                    updates["mcd_phase_id"] = str(phase_id)
+
     set_clauses = []
     params: dict = {"id": str(ipr_id), "user_id": str(user["id"])}
     for field, value in updates.items():
@@ -457,6 +605,75 @@ async def update_ipr(
     await db.commit()
 
     return {"message": "IPR actualizado exitosamente"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/ipr/{id}/transiciones — Valid next states with gate status
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/transiciones")
+async def get_ipr_transitions(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Return valid next states for this IPR with gate status per phase boundary."""
+    row = (await db.execute(
+        text("""
+            SELECT st.code AS current_code, st.valid_transitions,
+                   mcd.code AS current_phase
+            FROM core.ipr i
+            JOIN ref.category st ON st.id = i.status_id
+            LEFT JOIN ref.category mcd ON mcd.id = i.mcd_phase_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+
+    if not row:
+        raise HTTPException(status_code=404, detail="IPR no encontrado")
+
+    valid_codes = row["valid_transitions"] or []
+    current_phase = row["current_phase"]
+
+    if not valid_codes:
+        return []
+
+    # Fetch destination state details
+    dests = (await db.execute(
+        text("""
+            SELECT id, code, label FROM ref.category
+            WHERE scheme = 'ipr_state' AND code = ANY(:codes)
+            ORDER BY sort_order
+        """),
+        {"codes": valid_codes},
+    )).mappings().all()
+
+    result = []
+    for d in dests:
+        target_phase = STATUS_PHASE_FIBER.get(d["code"])
+        phase_change = (
+            d["code"] != "ANULADO"
+            and current_phase is not None
+            and target_phase is not None
+            and target_phase != current_phase
+        )
+        gates = []
+        if phase_change:
+            gates = await _evaluate_phase_gates(ipr_id, current_phase, target_phase, db)
+
+        blocked = any(not g["met"] for g in gates)
+        result.append({
+            "id": str(d["id"]),
+            "code": d["code"],
+            "label": d["label"],
+            "target_phase": target_phase,
+            "phase_change": phase_change,
+            "gates": gates,
+            "blocked": blocked,
+        })
+
+    return result
 
 
 # ---------------------------------------------------------------------------

@@ -351,12 +351,25 @@ export interface DGICommitteeSession {
   notes: string | null;
 }
 
+export interface RenditionStateSummary {
+  code: string;
+  label: string;
+  count: number;
+}
+
+export interface RenditionSummary {
+  total: number;
+  by_state: RenditionStateSummary[];
+  amount_at_risk: number | null;
+}
+
 export interface CockpitJefeDGI {
   semaforo: DGIDimensionSummary[];
   decisions_pending: number;
   team_status: { role: string; name: string; activity: string }[];
   critical_alerts: { id: string; message: string; severity: string }[];
   report_status: { title: string; status: string; due: string } | null;
+  rendition_summary: RenditionSummary | null;
 }
 
 export interface CockpitControlGestion {
@@ -479,4 +492,23 @@ export interface AutoSuggestion {
   detail: string;
   target_id: string;
   ipr_codigo_bip: string | null;
+}
+
+// ---------------------------------------------------------------------------
+// IPR Lifecycle / Transitions
+// ---------------------------------------------------------------------------
+export interface GateStatus {
+  name: string;
+  met: boolean;
+  detail: string;
+}
+
+export interface IprTransition {
+  id: string;
+  code: string;
+  label: string;
+  target_phase: string | null;
+  phase_change: boolean;
+  gates: GateStatus[];
+  blocked: boolean;
 }

@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, Plus, UserPlus, Pencil, Trash2, MapPin, Flag, Building2, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Plus, UserPlus, Pencil, Trash2, MapPin, Flag, Building2, CheckCircle2, ShieldCheck, ShieldX, ChevronRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { IprCompromisoDrawer } from "@/components/ipr-compromiso-drawer";
@@ -29,7 +29,7 @@ import { IprConvenioDrawer } from "@/components/ipr-convenio-drawer";
 import type {
   PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem,
   ConvenioListItem, BudgetCommitmentItem, IprPartyItem, IprTerritoryItem,
-  IprMilestoneItem, CategoryRef, TerritoryOption,
+  IprMilestoneItem, CategoryRef, TerritoryOption, IprTransition,
 } from "@/types";
 import { WRITE_OPERATIONAL_ROLES } from "@/types";
 
@@ -100,6 +100,15 @@ const mcdPhaseColors: Record<string, string> = {
   F4: "bg-green-100 text-green-700 border-green-200",
   F5: "bg-gray-100 text-gray-700 border-gray-200",
 };
+
+const MCD_PHASES = [
+  { code: "F0", label: "Formulación" },
+  { code: "F1", label: "Admisibilidad" },
+  { code: "F2", label: "Evaluación" },
+  { code: "F3", label: "Priorización" },
+  { code: "F4", label: "Ejecución" },
+  { code: "F5", label: "Cierre" },
+];
 
 function formatDate(dateStr: string): string {
   try {
@@ -212,8 +221,16 @@ export default function IprDetailPage() {
   const [hitoSubmitting, setHitoSubmitting] = useState(false);
   const [hitoError, setHitoError] = useState<string | null>(null);
 
+  // Transitions state
+  const [transitions, setTransitions] = useState<IprTransition[] | null>(null);
+  const [transLoading, setTransLoading] = useState(false);
+  const [selectedTransition, setSelectedTransition] = useState("");
+  const [transSubmitting, setTransSubmitting] = useState(false);
+  const [transError, setTransError] = useState<string | null>(null);
+
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
+  const canTransition = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
   const canCreateCompromiso = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
   const canCreateProblema = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
   const canCreateConvenio = user && WRITE_OPERATIONAL_ROLES.includes(user.role_code);
@@ -226,6 +243,40 @@ export default function IprDetailPage() {
       .catch(() => setIpr(null))
       .finally(() => setIprLoading(false));
   }, [id]);
+
+  const loadTransitions = () => {
+    if (!canTransition) return;
+    setTransLoading(true);
+    api
+      .get<IprTransition[]>(`/api/ipr/${id}/transiciones`)
+      .then(setTransitions)
+      .catch(() => setTransitions(null))
+      .finally(() => setTransLoading(false));
+  };
+
+  useEffect(() => {
+    if (canTransition && !iprLoading && ipr) loadTransitions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canTransition, iprLoading]);
+
+  const handleTransition = async () => {
+    if (!selectedTransition) return;
+    setTransSubmitting(true);
+    setTransError(null);
+    try {
+      await api.patch(`/api/ipr/${id}`, { status_id: selectedTransition });
+      // Refresh IPR data and transitions
+      const updated = await api.get<IprDetail>(`/api/ipr/${id}`);
+      setIpr(updated);
+      setTransitions(null);
+      setSelectedTransition("");
+      loadTransitions();
+    } catch (err) {
+      setTransError(err instanceof Error ? err.message : "Error al transicionar");
+    } finally {
+      setTransSubmitting(false);
+    }
+  };
 
   const loadCompromisos = (force = false) => {
     if (compromisos && !force) return;
@@ -738,6 +789,131 @@ export default function IprDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Phase Stepper */}
+      {ipr.mcd_phase && (
+        <div className="rounded-xl border bg-card p-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-medium text-muted-foreground">Ciclo de Vida MCD</h3>
+            {ipr.mcd_phase && (
+              <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[ipr.mcd_phase])}>
+                {ipr.mcd_phase} — {ipr.mcd_phase_label}
+              </Badge>
+            )}
+          </div>
+          <div className="flex items-center gap-0">
+            {MCD_PHASES.map((phase, idx) => {
+              const currentIdx = MCD_PHASES.findIndex(p => p.code === ipr.mcd_phase);
+              const isActive = idx === currentIdx;
+              const isPast = idx < currentIdx;
+              return (
+                <div key={phase.code} className="flex items-center flex-1 min-w-0">
+                  <div className="flex flex-col items-center flex-1">
+                    <div
+                      className={cn(
+                        "size-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors",
+                        isActive && "bg-primary text-primary-foreground border-primary",
+                        isPast && "bg-primary/20 text-primary border-primary/40",
+                        !isActive && !isPast && "bg-muted text-muted-foreground border-border",
+                      )}
+                    >
+                      {isPast ? <CheckCircle2 className="size-4" /> : phase.code}
+                    </div>
+                    <span className={cn(
+                      "text-[10px] mt-1 text-center leading-tight",
+                      isActive ? "font-semibold text-foreground" : "text-muted-foreground",
+                    )}>
+                      {phase.label}
+                    </span>
+                  </div>
+                  {idx < MCD_PHASES.length - 1 && (
+                    <div className={cn(
+                      "h-0.5 flex-1 min-w-2",
+                      idx < currentIdx ? "bg-primary/40" : "bg-border",
+                    )} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Transition Section */}
+      {canTransition && transitions && transitions.length > 0 && (
+        <div className="rounded-xl border bg-card p-4">
+          <h3 className="text-sm font-medium mb-3">Avanzar Estado</h3>
+          <div className="flex items-end gap-3 flex-wrap">
+            <div className="flex-1 min-w-[200px]">
+              <Select value={selectedTransition} onValueChange={setSelectedTransition}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Seleccionar estado destino..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {transitions.map((t) => (
+                    <SelectItem key={t.id} value={t.id} disabled={t.blocked}>
+                      <span className="flex items-center gap-2">
+                        <span>{t.label}</span>
+                        {t.target_phase && (
+                          <Badge variant="outline" className={cn("text-[10px] py-0", mcdPhaseColors[t.target_phase] || "")}>
+                            {t.target_phase}
+                          </Badge>
+                        )}
+                        {t.phase_change && !t.blocked && (
+                          <ChevronRight className="size-3 text-green-600" />
+                        )}
+                        {t.blocked && (
+                          <ShieldX className="size-3 text-red-500" />
+                        )}
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <Button
+              size="sm"
+              disabled={!selectedTransition || transSubmitting}
+              onClick={handleTransition}
+            >
+              {transSubmitting && <Loader2 className="size-4 mr-1 animate-spin" />}
+              Transicionar
+            </Button>
+          </div>
+          {/* Gate details for selected transition */}
+          {selectedTransition && (() => {
+            const sel = transitions.find(t => t.id === selectedTransition);
+            if (!sel || sel.gates.length === 0) return null;
+            return (
+              <div className="mt-3 space-y-1">
+                <p className="text-xs font-medium text-muted-foreground">
+                  Gates para {ipr.mcd_phase} → {sel.target_phase}:
+                </p>
+                {sel.gates.map((g) => (
+                  <div key={g.name} className="flex items-center gap-2 text-xs">
+                    {g.met ? (
+                      <ShieldCheck className="size-3.5 text-green-600 shrink-0" />
+                    ) : (
+                      <ShieldX className="size-3.5 text-red-500 shrink-0" />
+                    )}
+                    <span className={g.met ? "text-muted-foreground" : "text-red-600 font-medium"}>
+                      {g.detail}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+          {transError && (
+            <p className="text-xs text-red-600 mt-2">{transError}</p>
+          )}
+        </div>
+      )}
+      {canTransition && transLoading && (
+        <div className="rounded-xl border bg-card p-4">
+          <div className="h-8 rounded bg-muted animate-pulse" />
+        </div>
+      )}
 
       {/* Tabs */}
       <Tabs defaultValue="compromisos" onValueChange={(tab) => {
