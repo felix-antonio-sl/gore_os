@@ -247,6 +247,7 @@ Key modules:
 - `api/scripts/etl/common.py` — shared utilities: DB session, CSV reader (auto-encoding/delimiter, `skip_rows` param), name parser, FK resolvers with cache, RUT normalizer, batch commit, stats tracking
 - `api/scripts/etl/enrich_persons.py` — Phase 1: enrich `core.person` from Funcionarios CSVs (metadata) + NOMINA xlsx (RUT)
 - `api/scripts/etl/load_documents.py` — Phase 2: load PARTES CSVs → `core.document` (~10.5K docs)
+- `api/scripts/etl/load_admin_acts.py` — Phase 2C: project documents → `core.administrative_act` + `core.resolution` + `core.rendition`. Rendition linking uses coproduct: IPR BIP code (primary, 52%) or crosswalk→agreement (0.25%). 1,234 renditions materialized.
 
 All scripts support `--dry-run`, `--limit N`, `--verbose`. Idempotent (JSONB merge, ON CONFLICT, skip-if-exists).
 
@@ -267,6 +268,8 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 - `model/model_goreos/sql/goreos_seed_demo_ciclo2.sql` — demo data for budget + agreements
 - `model/model_goreos/sql/goreos_migration_confrontacion.sql` — categorical data migration (org types, hierarchy, agreement states, roles, legacy cleanup)
 - `model/model_goreos/sql/goreos_rollback_confrontacion.sql` — rollback for above migration
+- `model/model_goreos/sql/goreos_migration_rendition_coproduct.sql` — relax rendition FKs: nullable agreement_id/renderer_id, add ipr_id FK, CHECK (agreement OR ipr)
+- `model/model_goreos/sql/goreos_rollback_rendition_coproduct.sql` — rollback for rendition coproduct migration
 - `model/model_goreos/docs/GOREOS_ERD_v3.md` — ERD + data dictionary
 - `model/GLOSARIO.yml` — 244 ontological terms (Gist 14.0 + GNUB + TDE)
 - `docs/plans/2026-02-24-dgi-ui-ux-design.md` — DGI UI/UX design document
