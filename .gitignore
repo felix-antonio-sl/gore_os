@@ -70,3 +70,8 @@ ENV/
 # Temporary files
 *.tmp
 .worktrees/
+
+# ETL local staging data (raw inputs are sourced from docs/legacy/etl/sources)
+api/data/**
+!api/data/.gitkeep
+!api/data/README.md

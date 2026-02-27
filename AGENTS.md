@@ -17,6 +17,7 @@
 - `docker compose up -d api web`: run backend + frontend against `goreos_db`.
 - `docker compose --profile standalone up -d`: run full stack including Postgres/PgAdmin.
 - `docker compose exec api pytest`: run backend tests.
+- `./scripts/stage_etl_data.sh all`: stage ETL input files into `api/data/` from canonical legacy sources.
 - `docker compose exec api python -m scripts.etl.load_documents --dry-run`: ETL dry-run.
 - `cd web && npm run dev`: run frontend locally.
 - `cd web && npm run lint`: run ESLint.
@@ -45,4 +46,4 @@
 ## Security & Configuration Tips
 - Do not commit real secrets; use `.env.example` as template.
 - Default local DB target is `goreos_db` (`DB_HOST=goreos_db`, `DB_NAME=goreos_model`).
-- Avoid committing raw source datasets unless explicitly required for reproducibility.
+- Keep raw ETL sources under `docs/legacy/etl/sources/`; treat `api/data/` as local staging only.
