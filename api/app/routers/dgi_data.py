@@ -666,14 +666,17 @@ async def list_rendiciones(
         params["state"] = state
 
     if search:
-        conditions.append("(a.agreement_number ILIKE :search OR org.name ILIKE :search)")
+        conditions.append(
+            "(a.agreement_number ILIKE :search OR org.name ILIKE :search OR ipr.codigo_bip ILIKE :search)"
+        )
         params["search"] = f"%{search}%"
 
     where_clause = " AND ".join(conditions)
 
     base_query = f"""
         FROM core.rendition r
-        JOIN core.agreement a ON a.id = r.agreement_id
+        LEFT JOIN core.agreement a ON a.id = r.agreement_id
+        LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
         LEFT JOIN core.organization org ON org.id = r.renderer_id
         LEFT JOIN ref.category st ON st.id = r.state_id
         WHERE {where_clause}
@@ -687,6 +690,7 @@ async def list_rendiciones(
     rows = (await db.execute(text(f"""
         SELECT r.id, r.period_start, r.period_end, r.submitted_at,
                a.agreement_number, a.total_amount AS agreement_total_amount,
+               ipr.codigo_bip AS ipr_codigo_bip, r.ipr_id,
                org.name AS renderer_name, st.label AS state_label
         {base_query}
         ORDER BY r.submitted_at DESC NULLS LAST
@@ -695,6 +699,7 @@ async def list_rendiciones(
 
     items = [RendicionItem(
         id=r["id"], agreement_number=r["agreement_number"],
+        ipr_codigo_bip=r["ipr_codigo_bip"], ipr_id=r["ipr_id"],
         renderer_name=r["renderer_name"], state_label=r["state_label"],
         period_start=r["period_start"], period_end=r["period_end"],
         submitted_at=r["submitted_at"],

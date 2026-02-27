@@ -234,6 +234,8 @@ class EventoItem(BaseModel):
 class RendicionItem(BaseModel):
     id: UUID
     agreement_number: str | None
+    ipr_codigo_bip: str | None
+    ipr_id: UUID | None
     renderer_name: str | None
     state_label: str | None
     period_start: date | None

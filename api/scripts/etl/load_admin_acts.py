@@ -3,7 +3,10 @@ ETL Phase 2C — Project document layer into transactional legal entities.
 
 Functor K: C_DB(core.document) -> C_DB(core.administrative_act, core.resolution, core.rendition)
   - Resolution documents (EXENTA/AFECTA) -> administrative_act + resolution
-  - Rendition documents -> optional rendition creation only when agreement linkage is resolvable
+  - Rendition documents -> rendition creation when linked to agreement OR ipr (coproduct)
+    - Primary path: legacy_codigo -> ipr.codigo_bip (52% match rate)
+    - Secondary: crosswalk CSV -> agreement_id (~0.25%)
+    - Fallback: direct legacy_codigo == agreement_number
 
 Safety:
   - Idempotent by metadata.document_code
@@ -411,7 +414,7 @@ async def load_renditions_if_linked(
     crosswalk_path: Path | None,
     allow_fallback_direct_match: bool,
 ) -> tuple[int, int, int, int, list[str]]:
-    """Insert renditions only when linkage is explicit and deterministic."""
+    """Insert renditions when linkage to agreement OR ipr is resolvable."""
     inserted = 0
     linked = 0
     unresolved = 0
@@ -434,15 +437,31 @@ async def load_renditions_if_linked(
     ).mappings().all()
     agreement_by_norm = {normalize_code(a["agreement_number"]): str(a["id"]) for a in agreements}
 
+    # Pre-load IPR lookup by normalized codigo_bip
+    iprs = (
+        await db.execute(
+            text(
+                """
+                SELECT id, codigo_bip
+                FROM core.ipr
+                WHERE deleted_at IS NULL
+                  AND codigo_bip IS NOT NULL
+                """
+            )
+        )
+    ).mappings().all()
+    ipr_by_bip = {normalize_code(i["codigo_bip"]): str(i["id"]) for i in iprs}
+
     crosswalk, cw_errors, crosswalk_loaded = await load_crosswalk(
         db,
         crosswalk_path,
-        require_file=insert_if_linked,
+        require_file=False,  # crosswalk is optional — IPR linking is the primary path
     )
     errors.extend(cw_errors)
-    if insert_if_linked and (not crosswalk_loaded or cw_errors):
-        errors.append("Rendition insertion aborted: crosswalk file is missing or invalid.")
-        return inserted, linked, unresolved, skipped, errors
+    if crosswalk_loaded and cw_errors:
+        log.warning(f"Crosswalk has {len(cw_errors)} validation errors; continuing with IPR-based linking")
+    if not crosswalk_loaded:
+        log.info("No crosswalk file — rendition linking will use IPR BIP codes only")
 
     q = text(
         """
@@ -485,11 +504,22 @@ async def load_renditions_if_linked(
             legacy_code = (meta.get("codigo") or "").strip()
             norm_legacy = normalize_code(legacy_code)
             agreement_id = None
+            ipr_id = None
             renderer_id = None
+            link_method = "none"
 
+            # Path 1: legacy_codigo -> ipr.codigo_bip (primary, covers 52%)
+            if norm_legacy:
+                ipr_id = ipr_by_bip.get(norm_legacy)
+                if ipr_id:
+                    link_method = "ipr"
+
+            # Path 2: crosswalk -> agreement (deterministic, covers ~0.25%)
             cw = crosswalk.get(norm_legacy) if norm_legacy else None
             if cw and cw.get("status") == "approved":
                 agreement_id = cw.get("resolved_agreement_id")
+                if agreement_id:
+                    link_method = "crosswalk" if not ipr_id else "ipr+crosswalk"
 
                 renderer_org_id = cw.get("renderer_org_id") or ""
                 if renderer_org_id:
@@ -513,14 +543,19 @@ async def load_renditions_if_linked(
                 if not renderer_id and cw.get("renderer_name"):
                     renderer_id = await resolve_org_by_name(db, cw["renderer_name"])
 
+            # Path 3: fallback direct match legacy_codigo == agreement_number
             if not agreement_id and allow_fallback_direct_match and legacy_code:
                 agreement_id = agreement_by_norm.get(norm_legacy)
+                if agreement_id and link_method == "none":
+                    link_method = "fallback"
 
+            # Resolve renderer from document metadata (best-effort, optional)
             org_name = (meta.get("institucion") or doc.get("name") or "").strip()
             if not renderer_id:
                 renderer_id = await resolve_org_by_name(db, org_name) if org_name else None
 
-            if not agreement_id or not renderer_id:
+            # Gate: at least one business link must exist (matches CHECK constraint)
+            if not agreement_id and not ipr_id:
                 unresolved += 1
                 continue
 
@@ -533,6 +568,8 @@ async def load_renditions_if_linked(
                 "document_code": code,
                 "document_source": meta.get("_etl_source"),
                 "legacy_codigo": legacy_code,
+                "link_method": link_method,
+                "ipr_id": ipr_id,
                 "crosswalk_status": (cw or {}).get("status"),
                 "renderer_name_raw": org_name,
                 "_etl_phase": "2c",
@@ -545,22 +582,24 @@ async def load_renditions_if_linked(
                 else doc["created_at"]
             )
 
+            link_desc = f"ipr={ipr_id[:8]}..." if ipr_id else f"agr={agreement_id[:8]}..." if agreement_id else "none"
             if dry_run:
                 log.info(
-                    f"[DRY-RUN][RENDITION] INSERT doc={code} agreement={agreement_id[:8]}..."
+                    f"[DRY-RUN][RENDITION] INSERT doc={code} {link_desc} method={link_method}"
                 )
             else:
                 await db.execute(
                     text(
                         """
                         INSERT INTO core.rendition
-                            (agreement_id, renderer_id, state_id, submitted_at, metadata)
+                            (agreement_id, ipr_id, renderer_id, state_id, submitted_at, metadata)
                         VALUES
-                            (:agreement_id, :renderer_id, :state_id, :submitted_at, CAST(:meta AS jsonb))
+                            (:agreement_id, :ipr_id, :renderer_id, :state_id, :submitted_at, CAST(:meta AS jsonb))
                         """
                     ),
                     {
                         "agreement_id": agreement_id,
+                        "ipr_id": ipr_id,
                         "renderer_id": renderer_id,
                         "state_id": rendition_state_id,
                         "submitted_at": submitted_at,
@@ -640,7 +679,7 @@ def main():
     parser.add_argument(
         "--insert-renditions-if-linked",
         action="store_true",
-        help="Insert into core.rendition only for linkable rows (default is audit-only).",
+        help="Insert into core.rendition for rows linkable to agreement OR ipr (default is audit-only).",
     )
     parser.add_argument(
         "--rendition-crosswalk",
