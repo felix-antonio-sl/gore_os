@@ -12,7 +12,9 @@ Keep repository code and canonical source data separated from runtime staging co
 ## Standard Workflow
 1. Stage data locally:
    ```bash
-   ./scripts/stage_etl_data.sh all
+   ./scripts/stage_etl_data.sh partes_full
+   ./scripts/stage_etl_data.sh funcionarios
+   ./scripts/stage_etl_data.sh contacts
    ```
 2. Run ETL dry-run:
    ```bash
@@ -22,6 +24,6 @@ Keep repository code and canonical source data separated from runtime staging co
 
 ## Scope Notes
 - Phase 2 documents loader (`load_documents.py`) uses 6 PARTES files.
+- Phase 2B documents extension adds 4 PARTES files (`RENDICIONES*`, `RESOLUCIONES*`).
 - Person enrichment (`enrich_persons.py`) uses NOMINA + TransparenciaActiva + listado integrated.
 - Email enrichment (`enrich_person_emails.py`) uses contacts CSV staged under `/app/data/etl/contacts/`.
-- Additional PARTES files (`RENDICIONES*`, `RESOLUCIONES*`) remain out of Phase 2 scope.

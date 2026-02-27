@@ -2,7 +2,7 @@
 ETL Phase 2 — Load PARTES CSVs → core.document.
 
 Functor F: C_PARTES → C_DB(core.document)
-  Objects: 6 CSV sources (RECIBIDOS, OFICIOS, MEMOS, CARTAS, MEMOS INTERNOS, OFICIOS INTERNOS)
+  Objects: PARTES CSV sources (Phase 2 + Phase 2B extensions)
   Morphisms: column mappings per source → core.document columns
   Idempotence: ON CONFLICT (code) DO NOTHING
 
@@ -15,6 +15,7 @@ Usage:
   docker compose exec api python -m scripts.etl.load_documents --source RECIBIDOS
 """
 
+import csv
 import json
 import sys
 from dataclasses import dataclass, field
@@ -111,6 +112,50 @@ def make_code(prefix: str, id_val: str, seen: set) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Custom readers for malformed multi-block CSVs
+# ---------------------------------------------------------------------------
+
+def read_rendiciones_fndr_adnc(path: Path) -> list[dict]:
+    """Read dual-block CSV (FNDR + ADNC/ADCD) into normalized row dicts."""
+    rows: list[dict] = []
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        raw = list(csv.reader(f, delimiter=",", quotechar='"'))
+
+    # Data starts at row 4; each physical row may contain up to two renditions.
+    for idx, row in enumerate(raw[4:], start=5):
+        if len(row) < 13:
+            continue
+
+        def add_row(
+            block: str,
+            code: str,
+            fecha_dcto: str,
+            fecha_ingreso: str,
+            fecha_entrega: str,
+            institucion: str,
+        ):
+            code = code.strip()
+            if not code:
+                return
+            rows.append(
+                {
+                    "CODIGO": code,
+                    "FECHA DCTO": fecha_dcto.strip(),
+                    "FECHA INGRESO": fecha_ingreso.strip(),
+                    "FECHA ENTREGA": fecha_entrega.strip(),
+                    "NOMBRE INSTITUCIÓN": institucion.strip(),
+                    "BLOQUE": block,
+                    "ROW_INDEX": str(idx),
+                }
+            )
+
+        add_row("FNDR", row[1], row[2], row[3], row[4], row[5])
+        add_row("ADNC_ADCD", row[8], row[9], row[10], row[11], row[12])
+
+    return rows
+
+
+# ---------------------------------------------------------------------------
 # Source configurations
 # ---------------------------------------------------------------------------
 
@@ -129,6 +174,10 @@ class SourceConfig:
     meta_cols: list[tuple[str, str]] = field(default_factory=list)
     # optional channel column
     channel_col: str = ""
+    # static metadata fields added to all rows from this source
+    fixed_meta: dict[str, str] = field(default_factory=dict)
+    # custom row reader for malformed CSV structures
+    custom_reader: Callable[[Path], list[dict]] | None = None
 
 
 SOURCES: list[SourceConfig] = [
@@ -258,6 +307,90 @@ SOURCES: list[SourceConfig] = [
             ("derivado_a",       "DERIVADO A: (DIVISIÓN)"),
         ],
     ),
+    SourceConfig(
+        name="RENDICIONES_2024",
+        filename="RENDICIONES 2024.csv",
+        prefix="REN24",
+        skip_rows=3,  # header starts at row 3
+        id_col="CÓDIGO",
+        name_col="NOMBRE DE LA INICIATIVA",
+        type_col="",
+        default_type="RENDICION",
+        url_col="",
+        channel_col="",
+        meta_cols=[
+            ("correlativo",      "CORRELATIVO"),
+            ("tipo_documento",   "TIPO DOCUMENTO"),
+            ("codigo",           "CÓDIGO"),
+            ("fecha_dcto",       "FECHA DCTO"),
+            ("fecha_ingreso",    "FECHA INGRESO"),
+            ("fecha_entrega",    "FECHA ENTREGA"),
+            ("institucion",      "NOMBRE INSTITUCIÓN"),
+            ("monto_rendicion",  "MONTO DE LA RENDICIÓN"),
+            ("recepcionado_por", "RECEPCIONADO POR"),
+            ("firma",            "FIRMA"),
+        ],
+    ),
+    SourceConfig(
+        name="RENDICIONES_FNDR_ADNC",
+        filename="RENDICIONES FNDR Y ADNC.csv",
+        prefix="RENX",
+        id_col="CODIGO",
+        name_col="NOMBRE INSTITUCIÓN",
+        type_col="",
+        default_type="RENDICION",
+        url_col="",
+        channel_col="",
+        meta_cols=[
+            ("codigo",        "CODIGO"),
+            ("fecha_dcto",    "FECHA DCTO"),
+            ("fecha_ingreso", "FECHA INGRESO"),
+            ("fecha_entrega", "FECHA ENTREGA"),
+            ("institucion",   "NOMBRE INSTITUCIÓN"),
+            ("bloque",        "BLOQUE"),
+            ("row_index",     "ROW_INDEX"),
+        ],
+        custom_reader=read_rendiciones_fndr_adnc,
+    ),
+    SourceConfig(
+        name="RESOLUCIONES_AFECTAS",
+        filename="RESOLUCIONES AFECTAS.csv",
+        prefix="RFA",
+        id_col="FOLIO",
+        name_col="MATERIA",
+        type_col="",
+        default_type="RESOLUCION",
+        url_col="LINK AL DOCUMENTO",
+        channel_col="OBSERVACIONES",
+        meta_cols=[
+            ("solicita",      "SOLICITA"),
+            ("folio",         "FOLIO"),
+            ("fecha_docto",   "FECHA DOCTO"),
+            ("firma",         "FIRMA"),
+            ("observaciones", "OBSERVACIONES"),
+            ("estado",        "ESTADO"),
+        ],
+        fixed_meta={"tipo_resolucion": "AFECTA"},
+    ),
+    SourceConfig(
+        name="RESOLUCIONES_EXENTAS",
+        filename="RESOLUCIONES EXENTAS.csv",
+        prefix="REX",
+        id_col="FOLIO",
+        name_col="MATERIA",
+        type_col="",
+        default_type="RESOLUCION",
+        url_col="LINK AL DOCUMENTO",
+        channel_col="OBSERVACIONES",
+        meta_cols=[
+            ("solicita",      "SOLICITA"),
+            ("folio",         "FOLIO"),
+            ("fecha_docto",   "FECHA DOCTO"),
+            ("firma",         "FIRMA"),
+            ("observaciones", "OBSERVACIONES"),
+        ],
+        fixed_meta={"tipo_resolucion": "EXENTA"},
+    ),
 ]
 
 
@@ -280,7 +413,10 @@ async def load_source(
     filepath = data_dir / cfg.filename
 
     try:
-        rows = read_csv(filepath, skip_rows=cfg.skip_rows)
+        if cfg.custom_reader:
+            rows = cfg.custom_reader(filepath)
+        else:
+            rows = read_csv(filepath, skip_rows=cfg.skip_rows)
     except (FileNotFoundError, ValueError) as e:
         log.warning(f"[{cfg.name}] Cannot read: {e}")
         stats.errors.append(str(e))
@@ -347,6 +483,9 @@ async def load_source(
                 if ch_raw:
                     meta["canal_raw"] = ch_raw
                     meta["canal"] = map_channel(ch_raw)
+
+            if cfg.fixed_meta:
+                meta.update(cfg.fixed_meta)
 
             meta["_etl_source"] = cfg.filename
 

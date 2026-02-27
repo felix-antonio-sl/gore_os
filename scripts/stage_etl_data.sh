@@ -38,6 +38,16 @@ stage_partes() {
   copy_file "$src_dir/OFICIOS INTERNOS.csv" "$dst_dir/OFICIOS INTERNOS.csv"
 }
 
+stage_partes_2b() {
+  local src_dir="$SRC_BASE/partes/originales"
+  local dst_dir="$DST_BASE/partes"
+
+  copy_file "$src_dir/RENDICIONES 2024.csv" "$dst_dir/RENDICIONES 2024.csv"
+  copy_file "$src_dir/RENDICIONES FNDR Y ADNC.csv" "$dst_dir/RENDICIONES FNDR Y ADNC.csv"
+  copy_file "$src_dir/RESOLUCIONES AFECTAS.csv" "$dst_dir/RESOLUCIONES AFECTAS.csv"
+  copy_file "$src_dir/RESOLUCIONES EXENTAS.csv" "$dst_dir/RESOLUCIONES EXENTAS.csv"
+}
+
 stage_funcionarios() {
   local src_dir="$SRC_BASE/funcionarios"
   local src_orig_dir="$SRC_BASE/funcionarios/originales"
@@ -61,6 +71,13 @@ case "$MODE" in
   partes)
     stage_partes
     ;;
+  partes2b)
+    stage_partes_2b
+    ;;
+  partes_full)
+    stage_partes
+    stage_partes_2b
+    ;;
   funcionarios)
     stage_funcionarios
     ;;
@@ -69,11 +86,12 @@ case "$MODE" in
     ;;
   all)
     stage_partes
+    stage_partes_2b
     stage_funcionarios
     stage_contacts
     ;;
   *)
-    echo "Usage: $0 [partes|funcionarios|contacts|all]" >&2
+    echo "Usage: $0 [partes|partes2b|partes_full|funcionarios|contacts|all]" >&2
     exit 1
     ;;
 esac
