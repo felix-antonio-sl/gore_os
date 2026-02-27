@@ -281,6 +281,18 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 - `architecture/Omega_GORE_OS_Definition_v3.0.0.md` — system specification
 - `docs/ETL_ARCHITECTURE_v1.0.md` — ETL pipeline design (8 domains, execution order, mappings)
 - `model/model_goreos/sql/goreos_seed_etl_phase2.sql` — seed `document_channel` scheme (prerequisite for Phase 2)
+- `docs/GORE_OS_Audit_v1.0.md` — Institutional audit: executive summary, gaps, H1+H2 plan
+- `docs/GORE_OS_Audit_Detail_v1.0.md` — Detailed audit: 819 stories × implementation cross, ontology × schema
+
+## Known Gaps (Audit 2026-02-27)
+
+**Critical**: Art. 18 Res. 30 CGR — `convenios.py` POST cuotas does NOT validate pending renditions before transfers. 1,234 renditions all in PENDIENTE state. Trigger `fn_validate_state_transition` references `OLD.status_id` but column is `state_id` (xfail test).
+
+**High**: MCD phases are static data (1,973/3,622 IPRs have phase, no workflow transitions). Poly-Switch routing not implemented (mechanism_id exists but no evaluation logic). 0/11 financial thresholds codified. 0/8 budget glosa rules. SISREC rendition workflow missing.
+
+**Medium**: CORE only crisis_meetings (no ordinary sessions/voting). 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, etc.). Budget classifier is flat (only subtitle, missing 5 levels). IPR `sponsor_division_id` and `assignee_id` are 0% populated.
+
+**Coverage**: 102 API endpoints, 86 tests, 6/16 domains implemented, ~10% of 819 user stories covered. Full audit in `docs/GORE_OS_Audit_v1.0.md`.
 
 ## Critical Rules
 
