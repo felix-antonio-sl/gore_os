@@ -38,6 +38,9 @@ Harden rendition linkage so `core.rendition` inserts occur only with explicit, v
 - Strict dry-run with missing crosswalk:
   - `docker compose exec api python -m scripts.etl.load_admin_acts --dry-run --limit 10 --insert-renditions-if-linked --rendition-crosswalk /app/data/etl/crosswalk/does_not_exist.csv`
   - Result: explicit crosswalk errors + process exits with code `1`.
+- Live run with staged crosswalk:
+  - `docker compose exec api python -m scripts.etl.load_admin_acts --insert-renditions-if-linked`
+  - Result: `inserted=0`, `skipped=5213`, `errors=0`.
 
 ## Current Data Status
 - Canonical crosswalk exists in repo with `1935` legacy codes.
