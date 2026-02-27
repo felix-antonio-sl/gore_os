@@ -15,6 +15,7 @@ Keep repository code and canonical source data separated from runtime staging co
    ./scripts/stage_etl_data.sh partes_full
    ./scripts/stage_etl_data.sh funcionarios
    ./scripts/stage_etl_data.sh contacts
+   ./scripts/stage_etl_data.sh crosswalk
    ```
 2. Run ETL dry-run:
    ```bash
@@ -27,3 +28,4 @@ Keep repository code and canonical source data separated from runtime staging co
 - Phase 2B documents extension adds 4 PARTES files (`RENDICIONES*`, `RESOLUCIONES*`).
 - Person enrichment (`enrich_persons.py`) uses NOMINA + TransparenciaActiva + listado integrated.
 - Email enrichment (`enrich_person_emails.py`) uses contacts CSV staged under `/app/data/etl/contacts/`.
+- Rendition linkage for Phase 2C.1 uses crosswalk staged at `/app/data/etl/crosswalk/rendition_agreement_crosswalk.csv`.

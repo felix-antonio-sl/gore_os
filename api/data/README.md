@@ -11,6 +11,7 @@ Stage inputs from canonical sources:
 ./scripts/stage_etl_data.sh partes_full
 ./scripts/stage_etl_data.sh funcionarios
 ./scripts/stage_etl_data.sh contacts
+./scripts/stage_etl_data.sh crosswalk
 ./scripts/stage_etl_data.sh all
 ```
 

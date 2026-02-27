@@ -18,6 +18,7 @@ Usage:
 import json
 import re
 import sys
+import csv
 from datetime import datetime, time, timezone
 from pathlib import Path
 
@@ -40,10 +41,104 @@ from scripts.etl.common import (
 
 RESOLUTION_SOURCES = ("RESOLUCIONES AFECTAS.csv", "RESOLUCIONES EXENTAS.csv")
 RENDITION_SOURCES = ("RENDICIONES 2024.csv", "RENDICIONES FNDR Y ADNC.csv")
+DEFAULT_CROSSWALK_PATH = Path("/app/data/etl/crosswalk/rendition_agreement_crosswalk.csv")
 
 
 def normalize_code(raw: str) -> str:
     return re.sub(r"[^A-Za-z0-9]", "", (raw or "").upper())
+
+
+async def load_crosswalk(
+    db,
+    crosswalk_path: Path | None,
+    require_file: bool = False,
+) -> tuple[dict[str, dict], list[str], bool]:
+    """Load and validate rendition crosswalk keyed by normalized legacy code."""
+    errors: list[str] = []
+    mapping: dict[str, dict] = {}
+
+    if not crosswalk_path:
+        return mapping, errors, False
+    if not crosswalk_path.exists():
+        if require_file:
+            errors.append(f"Crosswalk file not found: {crosswalk_path}")
+        else:
+            log.warning(f"Crosswalk not found, continuing without crosswalk: {crosswalk_path}")
+        return mapping, errors, False
+
+    with open(crosswalk_path, encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for i, row in enumerate(reader, start=2):
+            legacy_raw = (row.get("legacy_codigo") or "").strip()
+            if not legacy_raw:
+                continue
+            norm_legacy = normalize_code(legacy_raw)
+            if not norm_legacy:
+                continue
+
+            if norm_legacy in mapping:
+                errors.append(f"Crosswalk duplicate legacy_codigo at row {i}: {legacy_raw}")
+                continue
+
+            mapping[norm_legacy] = {
+                "legacy_codigo": legacy_raw,
+                "agreement_number": (row.get("agreement_number") or "").strip(),
+                "agreement_id": (row.get("agreement_id") or "").strip(),
+                "renderer_org_id": (row.get("renderer_org_id") or "").strip(),
+                "renderer_name": (row.get("renderer_name") or "").strip(),
+                "status": normalize_text(row.get("status") or "pending"),
+                "confidence": (row.get("confidence") or "").strip(),
+                "notes": (row.get("notes") or "").strip(),
+            }
+
+    if not mapping:
+        return mapping, errors, True
+
+    agreements = (
+        await db.execute(
+            text(
+                """
+                SELECT id, agreement_number
+                FROM core.agreement
+                WHERE deleted_at IS NULL
+                """
+            )
+        )
+    ).mappings().all()
+    by_id = {str(a["id"]): str(a["id"]) for a in agreements}
+    by_number = {normalize_code(a["agreement_number"]): str(a["id"]) for a in agreements if a["agreement_number"]}
+
+    for norm_legacy, cw in mapping.items():
+        if cw["status"] not in ("approved", "pending", "rejected"):
+            errors.append(f"Crosswalk {cw['legacy_codigo']}: invalid status '{cw['status']}'")
+
+        if cw["status"] != "approved":
+            continue
+
+        aid = cw["agreement_id"]
+        anum = cw["agreement_number"]
+        resolved_by_number = by_number.get(normalize_code(anum)) if anum else None
+
+        if aid and aid not in by_id:
+            errors.append(f"Crosswalk {cw['legacy_codigo']}: agreement_id not found '{aid}'")
+            continue
+
+        if anum and not resolved_by_number:
+            errors.append(f"Crosswalk {cw['legacy_codigo']}: agreement_number not found '{anum}'")
+            continue
+
+        if aid and resolved_by_number and aid != resolved_by_number:
+            errors.append(
+                f"Crosswalk {cw['legacy_codigo']}: agreement_id/number mismatch "
+                f"({aid} vs {resolved_by_number})"
+            )
+            continue
+
+        cw["resolved_agreement_id"] = aid or resolved_by_number
+        if not cw["resolved_agreement_id"]:
+            errors.append(f"Crosswalk {cw['legacy_codigo']}: approved row missing agreement reference")
+
+    return mapping, errors, True
 
 
 def map_resolution_type(subject: str) -> str:
@@ -313,8 +408,10 @@ async def load_renditions_if_linked(
     dry_run: bool,
     limit: int,
     insert_if_linked: bool,
+    crosswalk_path: Path | None,
+    allow_fallback_direct_match: bool,
 ) -> tuple[int, int, int, int, list[str]]:
-    """Try to link rendition documents to agreements by code; insert only when linkable."""
+    """Insert renditions only when linkage is explicit and deterministic."""
     inserted = 0
     linked = 0
     unresolved = 0
@@ -336,6 +433,16 @@ async def load_renditions_if_linked(
         )
     ).mappings().all()
     agreement_by_norm = {normalize_code(a["agreement_number"]): str(a["id"]) for a in agreements}
+
+    crosswalk, cw_errors, crosswalk_loaded = await load_crosswalk(
+        db,
+        crosswalk_path,
+        require_file=insert_if_linked,
+    )
+    errors.extend(cw_errors)
+    if insert_if_linked and (not crosswalk_loaded or cw_errors):
+        errors.append("Rendition insertion aborted: crosswalk file is missing or invalid.")
+        return inserted, linked, unresolved, skipped, errors
 
     q = text(
         """
@@ -376,10 +483,42 @@ async def load_renditions_if_linked(
                 continue
 
             legacy_code = (meta.get("codigo") or "").strip()
-            agreement_id = agreement_by_norm.get(normalize_code(legacy_code)) if legacy_code else None
+            norm_legacy = normalize_code(legacy_code)
+            agreement_id = None
+            renderer_id = None
+
+            cw = crosswalk.get(norm_legacy) if norm_legacy else None
+            if cw and cw.get("status") == "approved":
+                agreement_id = cw.get("resolved_agreement_id")
+
+                renderer_org_id = cw.get("renderer_org_id") or ""
+                if renderer_org_id:
+                    exists_renderer = (
+                        await db.execute(
+                            text(
+                                """
+                                SELECT id
+                                FROM core.organization
+                                WHERE deleted_at IS NULL
+                                  AND id = :id
+                                LIMIT 1
+                                """
+                            ),
+                            {"id": renderer_org_id},
+                        )
+                    ).mappings().first()
+                    if exists_renderer:
+                        renderer_id = str(exists_renderer["id"])
+
+                if not renderer_id and cw.get("renderer_name"):
+                    renderer_id = await resolve_org_by_name(db, cw["renderer_name"])
+
+            if not agreement_id and allow_fallback_direct_match and legacy_code:
+                agreement_id = agreement_by_norm.get(norm_legacy)
 
             org_name = (meta.get("institucion") or doc.get("name") or "").strip()
-            renderer_id = await resolve_org_by_name(db, org_name) if org_name else None
+            if not renderer_id:
+                renderer_id = await resolve_org_by_name(db, org_name) if org_name else None
 
             if not agreement_id or not renderer_id:
                 unresolved += 1
@@ -394,6 +533,7 @@ async def load_renditions_if_linked(
                 "document_code": code,
                 "document_source": meta.get("_etl_source"),
                 "legacy_codigo": legacy_code,
+                "crosswalk_status": (cw or {}).get("status"),
                 "renderer_name_raw": org_name,
                 "_etl_phase": "2c",
             }
@@ -442,6 +582,8 @@ async def run_phase_2c(
     limit: int,
     issuer_org_code: str | None,
     insert_renditions_if_linked: bool,
+    rendition_crosswalk: Path | None,
+    allow_fallback_direct_match: bool,
 ) -> ETLStats:
     stats = ETLStats()
     db = await get_session()
@@ -459,6 +601,8 @@ async def run_phase_2c(
             dry_run=dry_run,
             limit=limit,
             insert_if_linked=insert_renditions_if_linked,
+            crosswalk_path=rendition_crosswalk,
+            allow_fallback_direct_match=allow_fallback_direct_match,
         )
 
         stats.inserted = act_ins + res_ins + ren_ins
@@ -496,7 +640,18 @@ def main():
     parser.add_argument(
         "--insert-renditions-if-linked",
         action="store_true",
-        help="Insert into core.rendition only for linkable rows (default is audit-only)",
+        help="Insert into core.rendition only for linkable rows (default is audit-only).",
+    )
+    parser.add_argument(
+        "--rendition-crosswalk",
+        type=str,
+        default=str(DEFAULT_CROSSWALK_PATH),
+        help=f"CSV crosswalk path for rendition linkage (default: {DEFAULT_CROSSWALK_PATH})",
+    )
+    parser.add_argument(
+        "--allow-fallback-direct-match",
+        action="store_true",
+        help="Allow fallback by direct normalized legacy_codigo == agreement_number (off by default).",
     )
     args = parser.parse_args()
 
@@ -512,8 +667,13 @@ def main():
             limit=args.limit,
             issuer_org_code=args.issuer_org_code,
             insert_renditions_if_linked=args.insert_renditions_if_linked,
+            rendition_crosswalk=Path(args.rendition_crosswalk) if args.rendition_crosswalk else None,
+            allow_fallback_direct_match=args.allow_fallback_direct_match,
         )
         stats.log_summary("Phase 2C")
+        if args.insert_renditions_if_linked and any("crosswalk" in e.lower() for e in stats.errors):
+            log.error("Strict rendition mode failed due to crosswalk validation errors.")
+            sys.exit(1)
         if stats.total_processed > 0:
             error_rate = len(stats.errors) / stats.total_processed
             if error_rate > 0.10:

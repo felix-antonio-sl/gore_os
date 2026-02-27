@@ -67,6 +67,13 @@ stage_contacts() {
   copy_file "$src_dir/contacts_2026-02-26.csv" "$dst_dir/contacts_2026-02-26.csv"
 }
 
+stage_crosswalk() {
+  local src_dir="$SRC_BASE/partes/crosswalk"
+  local dst_dir="$DST_BASE/crosswalk"
+
+  copy_file "$src_dir/rendition_agreement_crosswalk.csv" "$dst_dir/rendition_agreement_crosswalk.csv"
+}
+
 case "$MODE" in
   partes)
     stage_partes
@@ -84,14 +91,18 @@ case "$MODE" in
   contacts)
     stage_contacts
     ;;
+  crosswalk)
+    stage_crosswalk
+    ;;
   all)
     stage_partes
     stage_partes_2b
     stage_funcionarios
     stage_contacts
+    stage_crosswalk
     ;;
   *)
-    echo "Usage: $0 [partes|partes2b|partes_full|funcionarios|contacts|all]" >&2
+    echo "Usage: $0 [partes|partes2b|partes_full|funcionarios|contacts|crosswalk|all]" >&2
     exit 1
     ;;
 esac
