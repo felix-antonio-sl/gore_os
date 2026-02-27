@@ -248,6 +248,10 @@ Key modules:
 - `api/scripts/etl/enrich_persons.py` — Phase 1: enrich `core.person` from Funcionarios CSVs (metadata) + NOMINA xlsx (RUT)
 - `api/scripts/etl/load_documents.py` — Phase 2: load PARTES CSVs → `core.document` (~10.5K docs)
 - `api/scripts/etl/load_admin_acts.py` — Phase 2C: project documents → `core.administrative_act` + `core.resolution` + `core.rendition`. Rendition linking uses coproduct: IPR BIP code (primary, 52%) or crosswalk→agreement (0.25%). 1,234 renditions materialized.
+- `api/scripts/etl/enrich_agreements.py` — Phase 3: enrich `core.agreement` from 3 CONVENIOS CSVs (536 rows). Updates CGR outcome, technical referent, signed date + rich metadata. 476 agreements enriched.
+- `api/scripts/etl/load_fril.py` — Phase 4: FRIL CSVs (173 rows) → `core.ipr_territory` (UBICACION). Includes TREHUACO→Treguaco alias.
+- `api/scripts/etl/load_modifications.py` — Phase 5: 24 budget modification CSVs → `txn.event` (MODIFICACION). Custom positional parser for institutional-header CSVs. 211 events.
+- `api/scripts/etl/load_idis.py` — Phase 6: IDIS ANÁLISIS.csv (2,605 rows) → `core.ipr_territory` + `core.ipr_party` (UNIDAD_TECNICA, FORMULADOR). 2,383 records. Only uses ANÁLISIS — CONSOLIDADO/MASTER have corruption.
 
 All scripts support `--dry-run`, `--limit N`, `--verbose`. Idempotent (JSONB merge, ON CONFLICT, skip-if-exists).
 
