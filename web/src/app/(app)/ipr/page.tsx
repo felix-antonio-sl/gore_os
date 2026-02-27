@@ -91,6 +91,15 @@ const mechanismColors: Record<string, string> = {
   FRPD: "bg-teal-100 text-teal-800 border-teal-200",
 };
 
+const mcdPhaseColors: Record<string, string> = {
+  F0: "bg-slate-100 text-slate-700 border-slate-200",
+  F1: "bg-blue-100 text-blue-700 border-blue-200",
+  F2: "bg-cyan-100 text-cyan-700 border-cyan-200",
+  F3: "bg-purple-100 text-purple-700 border-purple-200",
+  F4: "bg-green-100 text-green-700 border-green-200",
+  F5: "bg-gray-100 text-gray-700 border-gray-200",
+};
+
 function formatCurrency(value: number | null): string {
   if (value === null) return "-";
   return new Intl.NumberFormat("es-CL", {
@@ -227,6 +236,19 @@ export default function IprPage() {
         if (!v) return <span className="text-muted-foreground text-xs">—</span>;
         return (
           <Badge variant="outline" className={cn("text-xs", mechanismColors[v])}>
+            {v}
+          </Badge>
+        );
+      },
+    },
+    {
+      key: "mcd_phase",
+      label: "Fase MCD",
+      render: (value: unknown) => {
+        const v = String(value ?? "");
+        if (!v) return <span className="text-muted-foreground text-xs">—</span>;
+        return (
+          <Badge variant="outline" className={cn("text-xs", mcdPhaseColors[v])}>
             {v}
           </Badge>
         );

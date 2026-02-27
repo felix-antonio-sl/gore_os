@@ -25,7 +25,7 @@ export interface DomainConfig {
   columns: Column[];
   filters: Filter[];
   searchPlaceholder: string;
-  DetailPanel: React.ComponentType<{ item: unknown; onClose: () => void }>;
+  DetailPanel: React.ComponentType<{ item: unknown; onClose: () => void; onRefresh?: () => void }>;
   // Whether the API returns paginated (server) or plain array (client)
   paginationMode: "server" | "client";
 }

@@ -143,6 +143,12 @@ async def catalog(db):
     )
     agreement_state_borrador_id = str(ast_.scalar())
 
+    # Agreement state EN_NEGOCIACION
+    asn = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'agreement_state' AND code = 'EN_NEGOCIACION'")
+    )
+    agreement_state_en_negociacion_id = str(asn.scalar())
+
     # Agreement state VIGENTE
     asv = await db.execute(
         text("SELECT id FROM ref.category WHERE scheme = 'agreement_state' AND code = 'VIGENTE'")
@@ -193,6 +199,7 @@ async def catalog(db):
         "problem_type_id": problem_type_id,
         "agreement_type_id": agreement_type_id,
         "agreement_state_borrador_id": agreement_state_borrador_id,
+        "agreement_state_en_negociacion_id": agreement_state_en_negociacion_id,
         "agreement_state_vigente_id": agreement_state_vigente_id,
         "payment_status_pendiente_id": payment_status_pendiente_id,
         "budget_subtitle_id": budget_subtitle_id,

@@ -10,6 +10,7 @@ from app.schemas.dgi import (
     CockpitProcesos,
     CockpitTD,
     DimensionSummary,
+    RenditionSummary,
     IndicatorItem,
     InitiativeItem,
     BPMNModelItem,
@@ -198,12 +199,37 @@ async def _cockpit_jefe_dgi(user: dict, db: AsyncSession) -> CockpitJefeDGI:
             "due": report_row["period_end"].isoformat() if report_row["period_end"] else None,
         }
 
+    # ── Rendition summary: count by state + amount at risk ────────────────
+    rend_rows = (await db.execute(text("""
+        SELECT st.code, st.label, COUNT(*) AS cnt
+        FROM core.rendition r
+        JOIN ref.category st ON st.id = r.state_id
+        WHERE r.deleted_at IS NULL AND st.scheme = 'rendition_state'
+        GROUP BY st.code, st.label, st.sort_order
+        ORDER BY st.sort_order
+    """))).mappings().all()
+
+    risk_row = (await db.execute(text("""
+        SELECT COALESCE(SUM(DISTINCT a.total_amount), 0) AS total_risk
+        FROM core.rendition r
+        JOIN ref.category st ON st.id = r.state_id
+        LEFT JOIN core.agreement a ON a.id = r.agreement_id
+        WHERE r.deleted_at IS NULL AND st.code NOT IN ('APROBADA', 'RECHAZADA')
+    """))).mappings().first()
+
+    rendition_summary = RenditionSummary(
+        total=sum(r["cnt"] for r in rend_rows),
+        by_state=[{"code": r["code"], "label": r["label"], "count": r["cnt"]} for r in rend_rows],
+        amount_at_risk=float(risk_row["total_risk"]) if risk_row and float(risk_row["total_risk"]) > 0 else None,
+    )
+
     return CockpitJefeDGI(
         semaforo=semaforo,
         decisions_pending=int(decisions_pending),
         team_status=team_status,
         critical_alerts=critical_alerts,
         report_status=report_status,
+        rendition_summary=rendition_summary,
     )
 
 

@@ -27,6 +27,12 @@ class DimensionSummary(BaseModel):
     indicator_count: int
 
 
+class RenditionSummary(BaseModel):
+    total: int
+    by_state: list[dict]  # [{code, label, count}]
+    amount_at_risk: float | None
+
+
 # ---------------------------------------------------------------------------
 # Initiative (Kanban)
 # ---------------------------------------------------------------------------
@@ -133,6 +139,7 @@ class CockpitJefeDGI(BaseModel):
     team_status: list[dict]
     critical_alerts: list[dict]
     report_status: dict | None
+    rendition_summary: RenditionSummary | None = None
 
 
 class CockpitControlGestion(BaseModel):
@@ -237,11 +244,19 @@ class RendicionItem(BaseModel):
     ipr_codigo_bip: str | None
     ipr_id: UUID | None
     renderer_name: str | None
+    state_code: str | None = None
     state_label: str | None
     period_start: date | None
     period_end: date | None
     submitted_at: datetime | None
     agreement_total_amount: float | None
+
+
+class RendicionUpdate(BaseModel):
+    state_id: UUID | None = None
+    period_start: date | None = None
+    period_end: date | None = None
+    submitted_at: datetime | None = None
 
 
 class ReportCreate(BaseModel):

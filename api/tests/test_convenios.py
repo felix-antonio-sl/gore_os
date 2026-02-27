@@ -2,6 +2,7 @@
 import uuid
 import pytest
 from datetime import date, timedelta
+from sqlalchemy import text
 from tests.conftest import auth
 
 
@@ -26,13 +27,12 @@ async def test_create_agreement(client, regional_token, catalog):
     assert data.get("agreement_number", "").startswith("AGR-")
 
 
-@pytest.mark.xfail(reason="Trigger fn_validate_state_transition references OLD.status_id but column is state_id")
 async def test_patch_state(client, regional_token, catalog):
-    """Update agreement state to VIGENTE."""
+    """Update agreement state BORRADOR → EN_NEGOCIACION (valid transition)."""
     data = await _create_agreement(client, regional_token, catalog)
     resp = await client.patch(
         f"/api/convenios/{data['id']}",
-        json={"state_id": catalog["agreement_state_vigente_id"]},
+        json={"state_id": catalog["agreement_state_en_negociacion_id"]},
         headers=auth(regional_token),
     )
     assert resp.status_code == 200
@@ -101,3 +101,95 @@ async def test_list_paginated(client, regional_token):
     body = resp.json()
     assert "items" in body
     assert "total" in body
+
+
+async def _create_test_ipr(db) -> str:
+    """Insert a minimal test IPR and return its id."""
+    code = f"T-{uuid.uuid4().hex[:12].upper()}"
+    row = (await db.execute(
+        text("""
+            INSERT INTO core.ipr (codigo_bip, name, ipr_nature, created_at, updated_at)
+            VALUES (:code, 'Test IPR Art 18', 'PROYECTO', NOW(), NOW())
+            RETURNING id
+        """),
+        {"code": code},
+    )).mappings().first()
+    await db.commit()
+    return str(row["id"])
+
+
+async def test_add_cuota_blocked_by_pending_rendition(client, regional_token, catalog, db):
+    """Art. 18 CGR: POST cuotas blocked when agreement has pending renditions."""
+    ipr_id = await _create_test_ipr(db)
+
+    # Create agreement linked to this IPR
+    data = await _create_agreement(client, regional_token, catalog, ipr_id=ipr_id)
+    agreement_id = data["id"]
+
+    # Get the PENDIENTE rendition state id
+    pending_state = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'rendition_state' AND code = 'PENDIENTE'")
+    )).scalar()
+    assert pending_state, "rendition_state PENDIENTE not found"
+
+    # Insert a PENDIENTE rendition linked to the same IPR
+    await db.execute(
+        text("""
+            INSERT INTO core.rendition (ipr_id, state_id, created_at, updated_at)
+            VALUES (:ipr_id, :state_id, NOW(), NOW())
+        """),
+        {"ipr_id": ipr_id, "state_id": str(pending_state)},
+    )
+    await db.commit()
+
+    # POST cuota should be blocked
+    resp = await client.post(
+        f"/api/convenios/{agreement_id}/cuotas",
+        json={
+            "installment_number": 1,
+            "amount": 5000000,
+            "due_date": str(date.today() + timedelta(days=90)),
+            "payment_status_id": catalog["payment_status_pendiente_id"],
+        },
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 409
+    assert "Art. 18" in resp.json()["detail"]
+
+
+async def test_add_cuota_allowed_when_renditions_approved(client, regional_token, catalog, db):
+    """POST cuotas succeeds when all renditions are APROBADA."""
+    ipr_id = await _create_test_ipr(db)
+
+    # Create agreement linked to this IPR
+    data = await _create_agreement(client, regional_token, catalog, ipr_id=ipr_id)
+    agreement_id = data["id"]
+
+    # Get the APROBADA rendition state id
+    approved_state = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'rendition_state' AND code = 'APROBADA'")
+    )).scalar()
+    assert approved_state, "rendition_state APROBADA not found"
+
+    # Insert an APROBADA rendition linked to the same IPR
+    await db.execute(
+        text("""
+            INSERT INTO core.rendition (ipr_id, state_id, created_at, updated_at)
+            VALUES (:ipr_id, :state_id, NOW(), NOW())
+        """),
+        {"ipr_id": ipr_id, "state_id": str(approved_state)},
+    )
+    await db.commit()
+
+    # POST cuota should succeed
+    resp = await client.post(
+        f"/api/convenios/{agreement_id}/cuotas",
+        json={
+            "installment_number": 1,
+            "amount": 5000000,
+            "due_date": str(date.today() + timedelta(days=90)),
+            "payment_status_id": catalog["payment_status_pendiente_id"],
+        },
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 201

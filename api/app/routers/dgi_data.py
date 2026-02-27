@@ -10,7 +10,9 @@ from datetime import datetime, timedelta, timezone
 from app.schemas.dgi import (
     IndicatorItem, DataSourceItem,
     OrganizacionItem, PersonaItem, TerritorioItem, EventoItem, RendicionItem,
+    RendicionUpdate,
 )
+from app.core.security import DGI_ROLES
 
 router = APIRouter(prefix="/api/dgi/data", tags=["dgi"])
 
@@ -691,7 +693,7 @@ async def list_rendiciones(
         SELECT r.id, r.period_start, r.period_end, r.submitted_at,
                a.agreement_number, a.total_amount AS agreement_total_amount,
                ipr.codigo_bip AS ipr_codigo_bip, r.ipr_id,
-               org.name AS renderer_name, st.label AS state_label
+               org.name AS renderer_name, st.code AS state_code, st.label AS state_label
         {base_query}
         ORDER BY r.submitted_at DESC NULLS LAST
         LIMIT :limit OFFSET :offset
@@ -700,7 +702,7 @@ async def list_rendiciones(
     items = [RendicionItem(
         id=r["id"], agreement_number=r["agreement_number"],
         ipr_codigo_bip=r["ipr_codigo_bip"], ipr_id=r["ipr_id"],
-        renderer_name=r["renderer_name"], state_label=r["state_label"],
+        renderer_name=r["renderer_name"], state_code=r["state_code"], state_label=r["state_label"],
         period_start=r["period_start"], period_end=r["period_end"],
         submitted_at=r["submitted_at"],
         agreement_total_amount=float(r["agreement_total_amount"]) if r["agreement_total_amount"] else None,
@@ -713,3 +715,109 @@ async def list_rendiciones(
         "page_size": page_size,
         "total_pages": math.ceil(total / page_size) if total > 0 else 0,
     }
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/dgi/data/rendiciones/{rendicion_id}
+# ---------------------------------------------------------------------------
+
+# Rendition state machine (code → allowed target codes)
+_RENDICION_TRANSITIONS = {
+    "PENDIENTE": {"EN_REVISION"},
+    "EN_REVISION": {"OBSERVADA", "APROBADA", "RECHAZADA"},
+    "OBSERVADA": {"EN_REVISION"},
+    # APROBADA and RECHAZADA are terminal — no transitions
+}
+
+RENDICION_UPDATABLE = {"state_id", "period_start", "period_end", "submitted_at"}
+
+
+def _require_dgi_roles(user: dict) -> None:
+    if user["role_code"] not in DGI_ROLES:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Solo roles DGI pueden modificar rendiciones",
+        )
+
+
+@router.patch("/rendiciones/{rendicion_id}")
+async def patch_rendicion(
+    rendicion_id: UUID,
+    body: RendicionUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Update a rendición. Validates state transitions:
+    PENDIENTE → EN_REVISION → OBSERVADA/APROBADA/RECHAZADA.
+    OBSERVADA can go back to EN_REVISION (re-submit).
+    APROBADA and RECHAZADA are terminal states.
+    """
+    _require_dgi_roles(user)
+
+    # Verify rendicion exists
+    row = (await db.execute(
+        text("SELECT id, state_id FROM core.rendition WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(rendicion_id)},
+    )).mappings().first()
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Rendición no encontrada")
+
+    # Build update fields from non-None values
+    updates = body.model_dump(exclude_none=True)
+    if not updates:
+        raise HTTPException(status_code=400, detail="No hay campos para actualizar")
+
+    # Validate all fields are in allowlist
+    invalid = set(updates.keys()) - RENDICION_UPDATABLE
+    if invalid:
+        raise HTTPException(status_code=400, detail=f"Campos no permitidos: {invalid}")
+
+    # Validate state transition if state_id is changing
+    if "state_id" in updates:
+        # Get current state code
+        current_state = (await db.execute(
+            text("SELECT code FROM ref.category WHERE id = :id"),
+            {"id": str(row["state_id"])},
+        )).scalar()
+
+        # Get target state code
+        new_state = (await db.execute(
+            text("SELECT code FROM ref.category WHERE id = :id"),
+            {"id": str(updates["state_id"])},
+        )).scalar()
+
+        if not new_state:
+            raise HTTPException(status_code=400, detail="state_id inválido")
+
+        allowed = _RENDICION_TRANSITIONS.get(current_state, set())
+        if new_state not in allowed:
+            raise HTTPException(
+                status_code=409,
+                detail=f"Transición inválida: {current_state} → {new_state}. "
+                       f"Permitidas: {sorted(allowed) if allowed else 'ninguna (estado terminal)'}",
+            )
+
+    # Build SET clause
+    set_parts = []
+    params: dict = {"id": str(rendicion_id), "user_id": user["id"]}
+
+    for col, val in updates.items():
+        param_name = f"v_{col}"
+        set_parts.append(f"{col} = :{param_name}")
+        params[param_name] = str(val) if isinstance(val, UUID) else val
+
+    set_parts.append("updated_at = NOW()")
+    set_parts.append("updated_by_id = :user_id")
+
+    sql = text(f"""
+        UPDATE core.rendition
+        SET {', '.join(set_parts)}
+        WHERE id = :id AND deleted_at IS NULL
+    """)
+
+    await db.execute(sql, params)
+    await db.commit()
+
+    return {"message": "Rendición actualizada"}

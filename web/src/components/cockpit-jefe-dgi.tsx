@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { AlertTriangle, Users, FileText, CheckSquare } from "lucide-react";
+import { AlertTriangle, Users, FileText, CheckSquare, Receipt } from "lucide-react";
 import { SemaforoCard } from "@/components/semaforo-card";
 import { SemaforoGauge } from "@/components/charts/semaforo-gauge";
 import { cn } from "@/lib/utils";
@@ -28,7 +28,7 @@ const reportStatusBadge: Record<string, { label: string; className: string }> = 
 };
 
 export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
-  const { semaforo, decisions_pending, team_status, critical_alerts, report_status } = data;
+  const { semaforo, decisions_pending, team_status, critical_alerts, report_status, rendition_summary } = data;
 
   return (
     <div className="space-y-6">
@@ -239,6 +239,62 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
                   })}
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </section>
+      )}
+
+      {/* Rendiciones — Art. 18 CGR */}
+      {rendition_summary && rendition_summary.total > 0 && (
+        <section>
+          <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+            <Receipt className="size-4 text-purple-600" />
+            Rendiciones
+            <Badge variant="outline" className="ml-auto text-xs">
+              {rendition_summary.total} total
+            </Badge>
+          </h2>
+          <Card>
+            <CardContent className="px-6 py-4">
+              <div className="flex flex-wrap gap-2 mb-3">
+                {rendition_summary.by_state.map((s) => {
+                  const colorMap: Record<string, string> = {
+                    PENDIENTE: "bg-gray-100 text-gray-700 border-gray-300",
+                    EN_REVISION: "bg-amber-50 text-amber-700 border-amber-300",
+                    OBSERVADA: "bg-orange-50 text-orange-700 border-orange-300",
+                    APROBADA: "bg-green-50 text-green-700 border-green-300",
+                    RECHAZADA: "bg-red-50 text-red-700 border-red-300",
+                  };
+                  return (
+                    <Badge
+                      key={s.code}
+                      variant="outline"
+                      className={cn("text-xs", colorMap[s.code] ?? "border-gray-300")}
+                    >
+                      {s.label}: {s.count}
+                    </Badge>
+                  );
+                })}
+              </div>
+              {rendition_summary.amount_at_risk != null && (
+                <div className="flex items-center gap-2 text-sm">
+                  <AlertTriangle className="size-3.5 text-amber-600 shrink-0" />
+                  <span className="text-muted-foreground">Monto en riesgo:</span>
+                  <span className="font-mono font-semibold tabular-nums text-amber-700">
+                    {new Intl.NumberFormat("es-CL", {
+                      style: "currency",
+                      currency: "CLP",
+                      notation: "compact",
+                      maximumFractionDigits: 1,
+                    }).format(rendition_summary.amount_at_risk)}
+                  </span>
+                </div>
+              )}
+              {rendition_summary.by_state.some((s) => s.code === "PENDIENTE" && s.count > 0) && (
+                <p className="mt-2 text-xs text-red-600 font-medium">
+                  Art. 18 Res. 30 CGR: Transferencias bloqueadas hasta aprobar rendiciones pendientes
+                </p>
+              )}
             </CardContent>
           </Card>
         </section>

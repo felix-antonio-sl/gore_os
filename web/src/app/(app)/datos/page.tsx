@@ -48,6 +48,7 @@ export default function DatosPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedItem, setSelectedItem] = useState<unknown | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const config = domainRegistry[activeDomain];
 
@@ -116,7 +117,7 @@ export default function DatosPage() {
       })
       .finally(() => setIsLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeDomain, searchParams.toString()]);
+  }, [activeDomain, searchParams.toString(), refreshKey]);
 
   const hasDetailPanel = selectedItem !== null;
 
@@ -241,6 +242,7 @@ export default function DatosPage() {
             <config.DetailPanel
               item={selectedItem}
               onClose={() => setSelectedItem(null)}
+              onRefresh={() => { setSelectedItem(null); setRefreshKey(k => k + 1); }}
             />
           </div>
         )}

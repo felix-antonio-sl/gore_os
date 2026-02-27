@@ -120,6 +120,34 @@ async def _get_installments(convenio_id: UUID, db: AsyncSession) -> list[dict]:
     return [dict(r) for r in result.mappings().all()]
 
 
+async def _check_pending_renditions(agreement_id: UUID, db: AsyncSession) -> None:
+    """Art. 18 Res. 30 CGR: Bloquea si hay rendiciones no-terminales vinculadas."""
+    result = await db.execute(
+        text("""
+            SELECT COUNT(*) AS pending_count
+            FROM core.rendition r
+            JOIN ref.category st ON st.id = r.state_id
+            WHERE r.deleted_at IS NULL
+              AND st.scheme = 'rendition_state'
+              AND st.code NOT IN ('APROBADA', 'RECHAZADA')
+              AND (
+                  r.agreement_id = :agreement_id
+                  OR r.ipr_id = (
+                      SELECT ipr_id FROM core.agreement
+                      WHERE id = :agreement_id AND ipr_id IS NOT NULL
+                  )
+              )
+        """),
+        {"agreement_id": str(agreement_id)},
+    )
+    pending = result.mappings().first()["pending_count"]
+    if pending > 0:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Art. 18 Res. 30 CGR: Existen {pending} rendición(es) pendiente(s) de aprobación vinculada(s) a este convenio.",
+        )
+
+
 async def _next_agreement_number(db: AsyncSession) -> str:
     from datetime import date
     year = date.today().year
@@ -535,6 +563,9 @@ async def add_cuota(
     _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     await _get_convenio_or_404(convenio_id, db)
 
+    # Art. 18 Res. 30 CGR: bloquear si hay rendiciones pendientes
+    await _check_pending_renditions(convenio_id, db)
+
     # Check unique installment_number
     dup = await db.execute(
         text("SELECT 1 FROM core.agreement_installment WHERE agreement_id = :aid AND installment_number = :num AND deleted_at IS NULL"),
@@ -591,6 +622,15 @@ async def update_cuota(
     updates = body.model_dump(exclude_none=True)
     if not updates:
         return {"message": "Sin cambios"}
+
+    # Art. 18 Res. 30 CGR: bloquear pago efectivo si hay rendiciones pendientes
+    if "payment_status_id" in updates:
+        target_code = (await db.execute(
+            text("SELECT code FROM ref.category WHERE id = :id AND scheme = 'payment_status'"),
+            {"id": str(updates["payment_status_id"])},
+        )).scalar()
+        if target_code in ("PAGADO", "EN_PROCESO"):
+            await _check_pending_renditions(convenio_id, db)
 
     if "payment_status_id" in updates:
         updates["payment_status_id"] = str(updates["payment_status_id"])
