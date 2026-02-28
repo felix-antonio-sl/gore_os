@@ -69,7 +69,8 @@ Key files:
 - `api/app/main.py` — app factory, router registration
 - `api/app/core/deps.py` — `CurrentUser` dependency (extracts user dict from JWT)
 - `api/app/core/security.py` — `OPERATIONAL_ROLES` / `DGI_ROLES` sets, password hashing, JWT
-- `api/app/routers/` — 16 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports)
+- `api/app/routers/` — 17 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, actos)
+- `api/app/routers/actos.py` — 5 endpoints: administrative acts CRUD + 7-step state machine + auto-resolution creation
 
 API conventions:
 - All routes prefixed `/api/` (e.g., `/api/ipr`, `/api/dgi/cockpit`)
@@ -92,7 +93,7 @@ Key patterns:
 - `web/src/lib/api.ts` — singleton `ApiClient` with `get<T>()`, `post<T>()`, `patch<T>()`. Token in localStorage (`goreos_token`). Auto-redirect to `/login` on 401. On error, extracts `.detail` from FastAPI JSON error bodies automatically.
 - `web/src/lib/auth.tsx` — `AuthProvider` context, `useAuth()` hook returns `{user, loading, login, logout}`
 - `web/src/types/index.ts` — all TypeScript interfaces. `User.population` (`"operativa" | "dgi"`) drives sidebar/dashboard routing.
-- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (8 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
+- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (9 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Actos, Reuniones) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
 - `web/src/components/combobox-async.tsx` — reusable searchable select with server-side search (debounce 300ms, `shouldFilter={false}`). Use for any field with 500+ options (e.g., IPR Asociada). Props: `value`, `onChange`, `searchFn(query) → Promise<ComboboxOption[]>`, `placeholder`.
@@ -141,7 +142,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**86 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**103 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -160,7 +161,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules: `test_auth` (8), `test_compromisos` (14), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14).
+Test modules: `test_auth` (8), `test_compromisos` (14), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_actos` (9).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -207,6 +208,7 @@ Operational layer:
 - **ipr_party**: Organizations with typed roles (9 roles: POSTULANTE, FORMULADOR, EJECUTOR, COFINANCIADOR, UNIDAD_TECNICA, FISCALIZADOR, BENEFICIARIO, MANDANTE, MANDATARIO). CRUD via `GET/POST /api/ipr/{id}/partes`, `DELETE /api/ipr/{id}/partes/{party_id}`. UNIQUE constraint `uq_ipr_party_role` on (ipr_id, organization_id, party_role_id). Admin-only write.
 - **ipr_territory**: Territory associations with impact types (4: UBICACION, IMPACTO_DIRECTO, IMPACTO_INDIRECTO, ZONA_INFLUENCIA). CRUD via `GET/POST /api/ipr/{id}/territorio`, `DELETE /api/ipr/{id}/territorio/{id}`. UNIQUE constraint `uq_ipr_territory_impact`. Admin-only write.
 - **ipr_milestone**: Project lifecycle milestones (13 types) with planned/actual dates and auto-computed `deviation_days` (GENERATED column). CRUD via `GET/POST /api/ipr/{id}/hitos`, `PATCH /api/ipr/{id}/hitos/{id}` (mark completed). Admin-only write.
+- **administrative_act**: Institutional acts (DECRETO, RESOLUCION, DECRETO_ALCALDICIO) with 7-step state machine (BORRADOR→EN_REVISION→VISADO→FIRMADO→ENVIADO_CGR→OBSERVADO/TOMADO_RAZON + ANULADO). CRUD via `GET/POST/PATCH /api/actos`, transitions via `GET /api/actos/{id}/transiciones`. Auto-creates `core.resolution` for RESOLUCION type. `signer_id` FK → `meta.role`. CGR tracking via `cgr_number`, `cgr_date`, `cgr_outcome_id`. "Resoluciones" tab in IPR detail shows resolutions linked to IPR.
 - **crisis_meeting**: Crisis meetings module using existing `core.committee` + `core.session` + `core.crisis_meeting` + `core.minute` + `core.session_agreement` tables. Full lifecycle: PROGRAMADA → EN_CURSO → FINALIZADA. Auto-suggestions from critical alerts, overdue commitments, open problems. Topic BIP badges are clickable links to IPR detail.
 
 Cross-entity navigation (bidirectional):
@@ -290,11 +292,11 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 
 **Critical**: Art. 18 Res. 30 CGR — `convenios.py` POST cuotas does NOT validate pending renditions before transfers. 1,234 renditions all in PENDIENTE state. Trigger bug FIXED (Wave 1) — `fn_validate_state_transition` now uses `TG_ARGV[0]` for dynamic column access. PATCH rendiciones endpoint available at `/api/dgi/data/rendiciones/{id}`.
 
-**High**: MCD phases are static data (1,973/3,622 IPRs have phase, no workflow transitions). Poly-Switch routing not implemented (mechanism_id exists but no evaluation logic). 0/11 financial thresholds codified. 0/8 budget glosa rules. SISREC rendition workflow missing.
+**High**: Administrative acts workflow implemented (Wave 4) but no `core.administrative_act_history` table for audit trail. Poly-Switch routing not implemented (mechanism_id exists but no evaluation logic). 0/11 financial thresholds codified. 0/8 budget glosa rules. SISREC rendition workflow missing.
 
 **Medium**: CORE only crisis_meetings (no ordinary sessions/voting). 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, etc.). Budget classifier is flat (only subtitle, missing 5 levels). IPR `sponsor_division_id` and `assignee_id` are 0% populated.
 
-**Coverage**: 102 API endpoints, 86 tests, 6/16 domains implemented, ~10% of 819 user stories covered. Full audit in `docs/GORE_OS_Audit_v1.0.md`.
+**Coverage**: ~107 API endpoints, 103 tests, 7/16 domains implemented, ~12% of 819 user stories covered. Full audit in `docs/GORE_OS_Audit_v1.0.md`.
 
 ## Critical Rules
 
@@ -326,7 +328,9 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 26. **Catalog endpoints**: `GET /api/catalogs/organizations?search=TERM` for org search (uses `ComboboxAsync`), `GET /api/catalogs/territories` for all 25 territories (small dataset, no search needed). Territory table uses `territory_type_id` FK to `ref.category`, NOT a `territory_level` column.
 27. **UNIQUE constraint names in DDL**: `ipr_party` uses `uq_ipr_party_role`, `ipr_territory` uses `uq_ipr_territory_impact`. When catching duplicate errors in FastAPI, check for these exact names in the exception string.
 28. **ApiClient.delete()**: The `api.ts` singleton now has a `delete(path)` method for HTTP DELETE. It handles 204 No Content responses correctly (no JSON parsing). Use `await api.delete('/api/...')`.
-29. **IPR detail page size**: The page is ~1,200+ lines with 9 tabs. If adding more tabs, consider extracting each tab content to a separate component file.
+29. **IPR detail page size**: The page is ~1,300+ lines with 10 tabs. If adding more tabs, consider extracting each tab content to a separate component file.
 30. **asyncpg type cast syntax**: In raw SQL with `text()` + asyncpg, do NOT use `:param::jsonb` — asyncpg confuses `::` with parameter syntax. Use `CAST(:param AS jsonb)` instead. Same applies to any type cast after a named parameter.
 31. **ETL scripts runtime**: ETL scripts run inside the API container (`docker compose exec api python -m scripts.etl.<module>`). CSVs must be copied to the container first via `docker cp`. Scripts use the container's DB_HOST (`goreos_db`), not `localhost`.
 32. **PARTES CSV structural quirks**: Some source files have a garbage first row instead of headers (RECIBIDOS row 0 = `"ENROCADO"`, OFICIOS INTERNOS row 0 = `"}"`). Use `read_csv(path, skip_rows=1)` for these. MEMOS and MEMOS INTERNOS have an unnamed first column (empty string key) — skip it. Always inspect headers before mapping columns from a new PARTES source.
+33. **Actos administrativos module**: `api/app/routers/actos.py` — 5 endpoints (list, detail, create, update, transitions). 7-step state machine: BORRADOR→EN_REVISION→VISADO→FIRMADO→ENVIADO_CGR→OBSERVADO/TOMADO_RAZON + ANULADO cross-cutting from any non-terminal state. Uses split PATCH allowlist (`_ACT_FIELD_ALLOWLIST` for `core.administrative_act`, `_RES_FIELDS` for `core.resolution`). Auto-creates `core.resolution` when `act_type='RESOLUCION'`. `signer_id` FK → `meta.role` (NOT `core.person`). DB trigger `trg_act_state_transition` validates transitions — ensure ANULADO is in `valid_transitions` for all non-terminal states in `ref.category`.
+34. **IPR detail tabs**: 10 tabs total (Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones). Page is ~1,300+ lines. New tabs should be extracted to separate component files.
