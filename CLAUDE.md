@@ -96,6 +96,7 @@ Key patterns:
 - `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (9 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Actos, Reuniones) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
+- `web/src/lib/format.ts` — shared formatting utilities (es-CL locale): `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency`. All 21 frontend files import from here — never define local format functions.
 - `web/src/components/combobox-async.tsx` — reusable searchable select with server-side search (debounce 300ms, `shouldFilter={false}`). Use for any field with 500+ options (e.g., IPR Asociada). Props: `value`, `onChange`, `searchFn(query) → Promise<ComboboxOption[]>`, `placeholder`.
 
 ### Database
@@ -142,7 +143,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**103 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**137 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -161,7 +162,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules: `test_auth` (8), `test_compromisos` (14), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_actos` (9).
+Test modules: `test_auth` (8), `test_compromisos` (14), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_actos` (9), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -334,3 +335,6 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 32. **PARTES CSV structural quirks**: Some source files have a garbage first row instead of headers (RECIBIDOS row 0 = `"ENROCADO"`, OFICIOS INTERNOS row 0 = `"}"`). Use `read_csv(path, skip_rows=1)` for these. MEMOS and MEMOS INTERNOS have an unnamed first column (empty string key) — skip it. Always inspect headers before mapping columns from a new PARTES source.
 33. **Actos administrativos module**: `api/app/routers/actos.py` — 5 endpoints (list, detail, create, update, transitions). 7-step state machine: BORRADOR→EN_REVISION→VISADO→FIRMADO→ENVIADO_CGR→OBSERVADO/TOMADO_RAZON + ANULADO cross-cutting from any non-terminal state. Uses split PATCH allowlist (`_ACT_FIELD_ALLOWLIST` for `core.administrative_act`, `_RES_FIELDS` for `core.resolution`). Auto-creates `core.resolution` when `act_type='RESOLUCION'`. `signer_id` FK → `meta.role` (NOT `core.person`). DB trigger `trg_act_state_transition` validates transitions — ensure ANULADO is in `valid_transitions` for all non-terminal states in `ref.category`.
 34. **IPR detail tabs**: 10 tabs total (Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones). Page is ~1,300+ lines. New tabs should be extracted to separate component files.
+35. **Shared format utilities**: All date/currency formatting MUST use `import { formatDate, formatCLP, ... } from "@/lib/format"`. Never define local `formatDate`/`formatCLP`/`formatCurrency` functions in page or component files.
+36. **Advisory locks on code generators**: All sequential code generators (`_next_oc_code`, `_next_pr_code`, `_next_agreement_number`, `_next_act_number`, IPR BIP auto-gen) use `pg_advisory_xact_lock(hashtext('entity_code'))` before `SELECT MAX(...)` to prevent race conditions.
+37. **Alert subject_type values**: DB stores fully-qualified names: `'core.ipr'`, `'core.operational_commitment'`, `'core.ipr_problem'`, `'core.organization'`. Always use the `core.` prefix in SQL comparisons — never the short form `'ipr'`.
