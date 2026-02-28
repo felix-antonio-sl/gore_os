@@ -37,6 +37,7 @@ const operationalNav: NavItem[] = [
   { label: "Presupuesto", href: "/presupuesto", icon: <Wallet className="size-4" /> },
   { label: "Convenios", href: "/convenios", icon: <Handshake className="size-4" /> },
   { label: "Reuniones", href: "/reuniones", icon: <CalendarClock className="size-4" /> },
+  { label: "Actos", href: "/actos", icon: <FileText className="size-4" /> },
 ];
 
 const adminOnlyNav: NavItem[] = [

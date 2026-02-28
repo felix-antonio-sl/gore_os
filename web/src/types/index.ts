@@ -512,3 +512,45 @@ export interface IprTransition {
   gates: GateStatus[];
   blocked: boolean;
 }
+
+// ---------------------------------------------------------------------------
+// Actos Administrativos Types
+// ---------------------------------------------------------------------------
+export interface ActoListItem {
+  id: string;
+  act_number: string;
+  act_type: string;
+  act_type_label: string;
+  subject: string;
+  state: string;
+  state_label: string;
+  issuer_name: string | null;
+  signer_name: string | null;
+  issued_at: string;
+  requires_cgr: boolean;
+  cgr_outcome: string | null;
+  cgr_outcome_label: string | null;
+  resolution_type: string | null;
+  resolution_type_label: string | null;
+  ipr_id: string | null;
+  ipr_codigo_bip: string | null;
+  agreement_id: string | null;
+  agreement_number: string | null;
+  budget_amount: number | null;
+}
+
+export interface ActoDetail extends ActoListItem {
+  effective_from: string | null;
+  effective_to: string | null;
+  cgr_submitted_at: string | null;
+  cgr_resolved_at: string | null;
+  resolution_subtype: string | null;
+  resolution_subtype_label: string | null;
+  created_at: string;
+}
+
+export interface ActoTransition {
+  id: string;
+  code: string;
+  label: string;
+}

@@ -29,7 +29,7 @@ import { IprConvenioDrawer } from "@/components/ipr-convenio-drawer";
 import type {
   PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem,
   ConvenioListItem, BudgetCommitmentItem, IprPartyItem, IprTerritoryItem,
-  IprMilestoneItem, CategoryRef, TerritoryOption, IprTransition,
+  IprMilestoneItem, CategoryRef, TerritoryOption, IprTransition, ActoListItem,
 } from "@/types";
 import { WRITE_OPERATIONAL_ROLES } from "@/types";
 
@@ -213,6 +213,10 @@ export default function IprDetailPage() {
   // Hitos state
   const [hitos, setHitos] = useState<IprMilestoneItem[] | null>(null);
   const [hitosLoading, setHitosLoading] = useState(false);
+
+  // Resoluciones state
+  const [resoluciones, setResoluciones] = useState<ActoListItem[] | null>(null);
+  const [resolucionesLoading, setResolucionesLoading] = useState(false);
   const [showHitoForm, setShowHitoForm] = useState(false);
   const [hitoTypeId, setHitoTypeId] = useState("");
   const [hitoPlannedDate, setHitoPlannedDate] = useState("");
@@ -366,6 +370,16 @@ export default function IprDetailPage() {
       .then(setHitos)
       .catch(() => setHitos(null))
       .finally(() => setHitosLoading(false));
+  };
+
+  const loadResoluciones = () => {
+    if (resoluciones) return;
+    setResolucionesLoading(true);
+    api
+      .get<{ items: ActoListItem[] }>(`/api/actos?ipr_id=${id}&page_size=100`)
+      .then((data) => setResoluciones(data.items))
+      .catch(() => setResoluciones(null))
+      .finally(() => setResolucionesLoading(false));
   };
 
   const openParteForm = () => {
@@ -955,6 +969,9 @@ export default function IprDetailPage() {
           <TabsTrigger value="hitos" onClick={() => loadHitos()}>
             Hitos
           </TabsTrigger>
+          <TabsTrigger value="resoluciones" onClick={() => loadResoluciones()}>
+            Resoluciones
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="compromisos" className="mt-4">
@@ -1387,6 +1404,47 @@ export default function IprDetailPage() {
                   </div>
                 );
               })}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="resoluciones" className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              {resoluciones ? `${resoluciones.length} resoluciones vinculadas` : ""}
+            </p>
+          </div>
+          {resolucionesLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          ) : !resoluciones || resoluciones.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No hay resoluciones vinculadas a este IPR.</p>
+          ) : (
+            <div className="space-y-2">
+              {resoluciones.map((acto) => (
+                <div
+                  key={acto.id}
+                  className="rounded-md border px-3 py-2 text-sm cursor-pointer hover:bg-muted/50"
+                  onClick={() => router.push(`/actos?search=${encodeURIComponent(acto.act_number)}`)}
+                >
+                  <div className="flex justify-between">
+                    <span className="font-mono text-xs">{acto.act_number}</span>
+                    <StatusBadge status={acto.state} size="sm" />
+                  </div>
+                  <p className="text-xs line-clamp-1 mt-1">{acto.subject}</p>
+                  <div className="flex justify-between mt-1">
+                    <span className="text-muted-foreground text-xs">
+                      {acto.resolution_type_label ?? acto.act_type_label}
+                    </span>
+                    {acto.budget_amount !== null && acto.budget_amount !== undefined && (
+                      <span className="font-mono text-xs">{formatCurrency(acto.budget_amount)}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </TabsContent>
