@@ -4,13 +4,9 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatCLP } from "@/lib/format";
 import type { PaginatedResponse, PresupuestoListItem } from "@/types";
 import type { DomainConfig } from "./types";
-
-function formatCLP(v: number | null | undefined): string {
-  if (v == null) return "-";
-  return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", notation: "compact", maximumFractionDigits: 1 }).format(v);
-}
 
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (

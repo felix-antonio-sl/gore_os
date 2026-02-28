@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus, KeyRound } from "lucide-react";
+import { formatDate } from "@/lib/format";
 import type { PaginatedResponse, CategoryRef } from "@/types";
 
 interface UserListItem {
@@ -61,18 +62,6 @@ const ACTIVE_OPTIONS = [
   { value: "true", label: "Activo" },
   { value: "false", label: "Inactivo" },
 ];
-
-function formatDate(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
 
 export default function UsuariosPage() {
   const router = useRouter();

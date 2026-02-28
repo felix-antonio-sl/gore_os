@@ -4,6 +4,7 @@ import { AlertTriangle, AlertCircle, Info } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { formatDateTimeShort } from "@/lib/format";
 import type { AlertaListItem } from "@/types";
 
 interface AlertCardProps {
@@ -26,20 +27,6 @@ const severityIconMap: Record<string, React.ReactNode> = {
   INFO: <Info className="size-4 text-blue-600 shrink-0" />,
 };
 
-function formatDateTime(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
-
 export function AlertCard({ alert, onAttend, onViewSubject }: AlertCardProps) {
   const severity = alert.severity ?? "INFO";
   const borderClass = severityBorderMap[severity] ?? "border-l-blue-600";
@@ -54,7 +41,7 @@ export function AlertCard({ alert, onAttend, onViewSubject }: AlertCardProps) {
             <div className="flex items-center justify-between gap-2">
               <p className="font-semibold text-sm">{alert.alert_type_label}</p>
               <span className="text-xs text-muted-foreground shrink-0">
-                {formatDateTime(alert.triggered_at)}
+                {formatDateTimeShort(alert.triggered_at)}
               </span>
             </div>
             <p className="text-sm text-muted-foreground mt-1">{alert.message}</p>

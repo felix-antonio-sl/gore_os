@@ -26,6 +26,7 @@ import {
   Bug,
   CheckCircle2,
 } from "lucide-react";
+import { formatDateLong, formatDate } from "@/lib/format";
 import type { ReunionDetail, TopicItem, AutoSuggestion } from "@/types";
 
 interface IprOption {
@@ -39,35 +40,6 @@ interface UserOption {
   nombre: string;
   apellido_paterno: string;
   division_name: string | null;
-}
-
-function formatDateTime(dateStr: string | null | undefined): string {
-  if (!dateStr) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      weekday: "long",
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
-
-function formatDate(dateStr: string | null | undefined): string {
-  if (!dateStr) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
 }
 
 function StatusBadgeReunion({ status }: { status: string }) {
@@ -329,7 +301,7 @@ export default function ReunionDetailPage() {
               <StatusBadgeReunion status={reunion.status} />
             </div>
             <p className="text-sm text-muted-foreground mt-1">
-              {formatDateTime(reunion.scheduled_at)}
+              {formatDateLong(reunion.scheduled_at)}
             </p>
             {reunion.location && (
               <p className="text-sm mt-0.5">

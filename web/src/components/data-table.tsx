@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Inbox } from "lucide-react";
 
 interface Column {
   key: string;
@@ -69,9 +70,13 @@ export function DataTable({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="text-center text-muted-foreground py-8"
+                  className="py-12"
                 >
-                  Sin resultados
+                  <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                    <Inbox className="h-10 w-10 stroke-1" />
+                    <p className="text-sm font-medium">Sin resultados</p>
+                    <p className="text-xs">Intente ajustar los filtros</p>
+                  </div>
                 </TableCell>
               </TableRow>
             ) : (

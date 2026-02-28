@@ -22,6 +22,7 @@ import {
   Plus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/format";
 import type { DGIReport } from "@/types";
 
 // ---------------------------------------------------------------------------
@@ -95,19 +96,6 @@ const reportStatusLabels: Record<string, string> = {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-function formatDate(dateStr: string | null): string {
-  if (!dateStr) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
 
 function ReportTypeBadge({ type }: { type: string }) {
   return (

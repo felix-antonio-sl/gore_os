@@ -100,7 +100,7 @@ export function IprProblemaDrawer({ open, onClose, iprId, onCreated }: Props) {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-sm font-medium">Descripcion del problema *</label>
+          <label className="text-sm font-medium">Descripción del problema *</label>
           <textarea
             className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             value={description}
@@ -127,7 +127,7 @@ export function IprProblemaDrawer({ open, onClose, iprId, onCreated }: Props) {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-sm font-medium">Descripcion del impacto</label>
+          <label className="text-sm font-medium">Descripción del impacto</label>
           <textarea
             className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             value={impactDescription}
@@ -137,12 +137,12 @@ export function IprProblemaDrawer({ open, onClose, iprId, onCreated }: Props) {
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-sm font-medium">Solucion propuesta</label>
+          <label className="text-sm font-medium">Solución propuesta</label>
           <textarea
             className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             value={proposedSolution}
             onChange={(e) => setProposedSolution(e.target.value)}
-            placeholder="Proponga una solucion..."
+            placeholder="Proponga una solución..."
           />
         </div>
 

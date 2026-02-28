@@ -96,6 +96,7 @@ async def _get_acto_or_404(acto_id: UUID, db: AsyncSession) -> dict:
 async def _next_act_number(db: AsyncSession) -> str:
     from datetime import date
     year = date.today().year
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('act_number'))"))
     result = await db.execute(
         text("""
             SELECT MAX(CAST(SUBSTRING(act_number FROM 10) AS INTEGER)) AS max_seq
@@ -274,68 +275,76 @@ async def create_acto(
     act_number = body.act_number or await _next_act_number(db)
 
     # Insert administrative_act
-    act_result = await db.execute(
-        text("""
-            INSERT INTO core.administrative_act (
-                act_number, act_type_id, subject, issuer_id,
-                issued_at, state_id, requires_cgr,
-                created_by_id, created_at, updated_at
-            ) VALUES (
-                :act_number, :act_type_id, :subject, :issuer_id,
-                :issued_at, :state_id, :requires_cgr,
-                :created_by_id, NOW(), NOW()
-            )
-            RETURNING id, act_number
-        """),
-        {
-            "act_number": act_number,
-            "act_type_id": str(body.act_type_id),
-            "subject": body.subject,
-            "issuer_id": str(body.issuer_id) if body.issuer_id else None,
-            "issued_at": body.issued_at,
-            "state_id": borrador_id,
-            "requires_cgr": body.requires_cgr,
-            "created_by_id": str(user["id"]),
-        },
-    )
-    act_row = act_result.mappings().first()
-    act_id = str(act_row["id"])
-
-    # Auto-create resolution if act_type is RESOLUCION
-    resolution_id = None
-    if type_code == "RESOLUCION":
-        if not body.resolution_type_id:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="resolution_type_id requerido para actos tipo RESOLUCION",
-            )
-        res_result = await db.execute(
+    try:
+        act_result = await db.execute(
             text("""
-                INSERT INTO core.resolution (
-                    administrative_act_id, resolution_type_id, resolution_subtype_id,
-                    ipr_id, agreement_id, budget_amount,
+                INSERT INTO core.administrative_act (
+                    act_number, act_type_id, subject, issuer_id,
+                    issued_at, state_id, requires_cgr,
                     created_by_id, created_at, updated_at
                 ) VALUES (
-                    :act_id, :resolution_type_id, :resolution_subtype_id,
-                    :ipr_id, :agreement_id, :budget_amount,
+                    :act_number, :act_type_id, :subject, :issuer_id,
+                    :issued_at, :state_id, :requires_cgr,
                     :created_by_id, NOW(), NOW()
                 )
-                RETURNING id
+                RETURNING id, act_number
             """),
             {
-                "act_id": act_id,
-                "resolution_type_id": str(body.resolution_type_id),
-                "resolution_subtype_id": str(body.resolution_subtype_id) if body.resolution_subtype_id else None,
-                "ipr_id": str(body.ipr_id) if body.ipr_id else None,
-                "agreement_id": str(body.agreement_id) if body.agreement_id else None,
-                "budget_amount": body.budget_amount,
+                "act_number": act_number,
+                "act_type_id": str(body.act_type_id),
+                "subject": body.subject,
+                "issuer_id": str(body.issuer_id) if body.issuer_id else None,
+                "issued_at": body.issued_at,
+                "state_id": borrador_id,
+                "requires_cgr": body.requires_cgr,
                 "created_by_id": str(user["id"]),
             },
         )
-        resolution_id = str(res_result.mappings().first()["id"])
+        act_row = act_result.mappings().first()
+        act_id = str(act_row["id"])
 
-    await db.commit()
-    return {"id": act_id, "act_number": act_row["act_number"], "resolution_id": resolution_id}
+        # Auto-create resolution if act_type is RESOLUCION
+        resolution_id = None
+        if type_code == "RESOLUCION":
+            if not body.resolution_type_id:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="resolution_type_id requerido para actos tipo RESOLUCION",
+                )
+            res_result = await db.execute(
+                text("""
+                    INSERT INTO core.resolution (
+                        administrative_act_id, resolution_type_id, resolution_subtype_id,
+                        ipr_id, agreement_id, budget_amount,
+                        created_by_id, created_at, updated_at
+                    ) VALUES (
+                        :act_id, :resolution_type_id, :resolution_subtype_id,
+                        :ipr_id, :agreement_id, :budget_amount,
+                        :created_by_id, NOW(), NOW()
+                    )
+                    RETURNING id
+                """),
+                {
+                    "act_id": act_id,
+                    "resolution_type_id": str(body.resolution_type_id),
+                    "resolution_subtype_id": str(body.resolution_subtype_id) if body.resolution_subtype_id else None,
+                    "ipr_id": str(body.ipr_id) if body.ipr_id else None,
+                    "agreement_id": str(body.agreement_id) if body.agreement_id else None,
+                    "budget_amount": body.budget_amount,
+                    "created_by_id": str(user["id"]),
+                },
+            )
+            resolution_id = str(res_result.mappings().first()["id"])
+
+        await db.commit()
+        return {"id": act_id, "act_number": act_row["act_number"], "resolution_id": resolution_id}
+    except HTTPException:
+        raise
+    except Exception as e:
+        await db.rollback()
+        if "unique" in str(e).lower() or "duplicate" in str(e).lower():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un acto con ese número")
+        raise
 
 
 # ---------------------------------------------------------------------------

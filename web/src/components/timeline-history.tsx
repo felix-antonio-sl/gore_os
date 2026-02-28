@@ -1,24 +1,11 @@
 "use client";
 
 import { StatusBadge } from "@/components/status-badge";
+import { formatDateTimeShort } from "@/lib/format";
 import type { HistoryEntry } from "@/types";
 
 interface TimelineHistoryProps {
   entries: HistoryEntry[];
-}
-
-function formatDateTime(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
 }
 
 export function TimelineHistory({ entries }: TimelineHistoryProps) {
@@ -43,7 +30,7 @@ export function TimelineHistory({ entries }: TimelineHistoryProps) {
           {/* Content */}
           <div className="pb-6 flex-1 min-w-0">
             <p className="text-xs text-muted-foreground mb-1">
-              {formatDateTime(entry.changed_at)}
+              {formatDateTimeShort(entry.changed_at)}
               {entry.changed_by_name && (
                 <span className="ml-2 font-medium text-foreground">
                   {entry.changed_by_name}

@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Edit2, CheckCircle, Send, RotateCcw, ShieldCheck } from "lucide-react";
+import { formatDate } from "@/lib/format";
 
 interface ReportSection {
   section_id: string;
@@ -30,13 +31,6 @@ interface ReportContent {
   generated_by_name: string | null;
   created_at: string;
   sections: ReportSection[];
-}
-
-function formatDate(s: string | null): string {
-  if (!s) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(s));
-  } catch { return s; }
 }
 
 const STATUS_LABELS: Record<string, string> = {

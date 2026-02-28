@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { X, Loader2 } from "lucide-react";
+import { formatDate, formatCLP } from "@/lib/format";
 import type { PaginatedResponse, CategoryRef } from "@/types";
 import type { DomainConfig } from "./types";
 
@@ -23,18 +24,6 @@ interface RendicionItem {
   period_end: string | null;
   submitted_at: string | null;
   agreement_total_amount: number | null;
-}
-
-function formatDate(s: string | null): string {
-  if (!s) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(s));
-  } catch { return s; }
-}
-
-function formatCLP(v: number | null): string {
-  if (v == null) return "-";
-  return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", notation: "compact", maximumFractionDigits: 1 }).format(v);
 }
 
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {

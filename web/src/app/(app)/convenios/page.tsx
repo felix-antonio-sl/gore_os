@@ -22,6 +22,7 @@ import {
 import { useAuth } from "@/lib/auth";
 import { Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
+import { formatCLP, formatDate } from "@/lib/format";
 import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, CategoryRef, InstallmentItem } from "@/types";
 
 const CSV_COLUMNS = [
@@ -65,25 +66,6 @@ const PAYMENT_STATUS_COLORS: Record<string, string> = {
   DIFERIDO: "text-orange-700 bg-orange-50 border-orange-200",
   RECHAZADO: "text-red-700 bg-red-50 border-red-200",
 };
-
-function formatCLP(value: number | null | undefined): string {
-  if (value === null || value === undefined) return "-";
-  return new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value);
-}
-
-function formatDate(dateStr: string | null | undefined): string {
-  if (!dateStr) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
 
 export default function ConveniosPage() {
   const router = useRouter();
@@ -365,9 +347,17 @@ export default function ConveniosPage() {
             Gestión de convenios y cuotas de pago
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "convenios")}>
-          <Download className="size-4 mr-1" />CSV
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "convenios")}>
+            <Download className="size-4 mr-1" />CSV
+          </Button>
+          {canEdit && (
+            <Button size="sm" onClick={() => router.push("/convenios/nuevo")}>
+              <Plus className="size-4 mr-1" />
+              Nuevo Convenio
+            </Button>
+          )}
+        </div>
       </div>
 
       <FilterBar

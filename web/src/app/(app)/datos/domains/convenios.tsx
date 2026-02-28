@@ -5,20 +5,9 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { StatusBadge } from "@/components/status-badge";
 import { X } from "lucide-react";
+import { formatCLP, formatDate } from "@/lib/format";
 import type { PaginatedResponse, ConvenioListItem } from "@/types";
 import type { DomainConfig } from "./types";
-
-function formatCLP(v: number | null | undefined): string {
-  if (v == null) return "-";
-  return new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", notation: "compact", maximumFractionDigits: 1 }).format(v);
-}
-
-function formatDate(s: string | null | undefined): string {
-  if (!s) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(s));
-  } catch { return s; }
-}
 
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (

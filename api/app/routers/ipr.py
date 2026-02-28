@@ -1,3 +1,4 @@
+import math
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from typing import Optional
@@ -236,7 +237,7 @@ async def list_iprs(
     count_result = await db.execute(count_sql, params)
     total = count_result.scalar() or 0
 
-    total_pages = max(1, (total + page_size - 1) // page_size) if total > 0 else 0
+    total_pages = math.ceil(total / page_size) if total > 0 else 0
     offset = (page - 1) * page_size
 
     # Data query
@@ -445,6 +446,7 @@ async def create_ipr(
     codigo_bip = body.codigo_bip.strip()
     if not codigo_bip:
         # Auto-generate next BIP code
+        await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('ipr_code'))"))
         seq = await db.execute(
             text("SELECT COALESCE(MAX(CAST(SUBSTRING(codigo_bip FROM '[0-9]+$') AS INT)), 0) + 1 FROM core.ipr")
         )

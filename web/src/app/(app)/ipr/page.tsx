@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Plus, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { exportCSV } from "@/lib/csv-export";
+import { formatCurrency } from "@/lib/format";
 import type { PaginatedResponse, IPRListItem } from "@/types";
 
 const CSV_COLUMNS = [
@@ -99,16 +100,6 @@ const mcdPhaseColors: Record<string, string> = {
   F4: "bg-green-100 text-green-700 border-green-200",
   F5: "bg-gray-100 text-gray-700 border-gray-200",
 };
-
-function formatCurrency(value: number | null): string {
-  if (value === null) return "-";
-  return new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value);
-}
 
 export default function IprPage() {
   const router = useRouter();

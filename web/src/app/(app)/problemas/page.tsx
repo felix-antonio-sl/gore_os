@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus, Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
+import { formatDate } from "@/lib/format";
 import type { PaginatedResponse, ProblemaListItem, CategoryRef } from "@/types";
 
 const CSV_COLUMNS = [
@@ -48,18 +49,6 @@ const TIPO_OPTIONS = [
   { value: "AMBIENTAL", label: "Ambiental" },
   { value: "SOCIAL", label: "Social" },
 ];
-
-function formatDate(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
 
 export default function ProblemasPage() {
   const router = useRouter();

@@ -5,6 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TrendingUp, TrendingDown, Minus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/format";
 import type { DGIIndicator } from "@/types";
 import type { DomainConfig } from "./types";
 
@@ -23,13 +24,6 @@ function TrendIcon({ trend }: { trend: "up" | "down" | "flat" | null }) {
 function SignalDot({ signal }: { signal: "VERDE" | "AMARILLO" | "ROJO" | null }) {
   if (!signal) return <span className="inline-block size-2.5 rounded-full bg-gray-300" />;
   return <span className={cn("inline-block size-2.5 rounded-full", signalColors[signal] ?? "bg-gray-300")} title={signal} />;
-}
-
-function formatDate(dateStr: string | null): string {
-  if (!dateStr) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(dateStr));
-  } catch { return dateStr; }
 }
 
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
+import { formatDateTime } from "@/lib/format";
 import type { PaginatedResponse } from "@/types";
 import type { DomainConfig } from "./types";
 
@@ -16,15 +17,6 @@ interface EventoItem {
   subject_id: string;
   actor_name: string | null;
   summary: string | null;
-}
-
-function formatDateTime(s: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit", month: "short", year: "numeric",
-      hour: "2-digit", minute: "2-digit",
-    }).format(new Date(s));
-  } catch { return s; }
 }
 
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {

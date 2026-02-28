@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { ShieldCheck, BookOpen, CalendarDays, AlertTriangle } from "lucide-react";
 import { ProgressBarIndicator } from "@/components/progress-bar-indicator";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/format";
 import type { CockpitTD } from "@/types";
 
 interface Props {
@@ -17,18 +18,6 @@ const decreeBadge: Record<string, { label: string; className: string }> = {
   PARCIAL: { label: "PAR", className: "bg-amber-100 text-amber-700 border-amber-300" },
   PENDIENTE: { label: "PEN", className: "bg-red-100 text-red-700 border-red-300" },
 };
-
-function formatDate(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
 
 export function CockpitTDView({ data }: Props) {
   const { compliance_bars, velocity, decrees, kb_stats, committee, normative_alerts } = data;

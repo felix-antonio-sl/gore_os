@@ -8,22 +8,8 @@ import { DataTable } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { formatDateTime } from "@/lib/format";
 import type { PaginatedResponse, ReunionListItem } from "@/types";
-
-function formatDateTime(dateStr: string | null | undefined): string {
-  if (!dateStr) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
 
 function StatusBadgeReunion({ status }: { status: string }) {
   switch (status) {

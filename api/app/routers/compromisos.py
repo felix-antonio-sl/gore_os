@@ -82,6 +82,7 @@ async def _get_history(compromiso_id: UUID, db: AsyncSession) -> list[dict]:
 
 
 async def _next_oc_code(db: AsyncSession) -> str:
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('oc_code'))"))
     result = await db.execute(
         text("""
             SELECT MAX(CAST(SUBSTRING(code FROM 4) AS INTEGER)) AS max_seq
@@ -306,36 +307,42 @@ async def create_compromiso(
         if div_row:
             division_id = div_row["division_id"]
 
-    result = await db.execute(
-        text("""
-            INSERT INTO core.operational_commitment (
-                code, ipr_id, problem_id, commitment_type_id, description,
-                responsible_id, division_id, due_date, observations,
-                state_id, created_by_id, updated_by_id
-            ) VALUES (
-                :code, :ipr_id, :problem_id, :commitment_type_id, :description,
-                :responsible_id, :division_id, :due_date, :observations,
-                (SELECT id FROM ref.category WHERE scheme = 'commitment_state' AND code = 'PENDIENTE'),
-                :created_by_id, :created_by_id
-            )
-            RETURNING id, code
-        """),
-        {
-            "code": code,
-            "ipr_id": str(data.ipr_id) if data.ipr_id else None,
-            "problem_id": str(data.problem_id) if data.problem_id else None,
-            "commitment_type_id": str(data.commitment_type_id),
-            "description": data.description,
-            "responsible_id": str(data.responsible_id),
-            "division_id": str(division_id) if division_id else None,
-            "due_date": data.due_date,
-            "observations": data.observations,
-            "created_by_id": str(user["id"]),
-        },
-    )
-    await db.commit()
-    row = result.mappings().first()
-    return {"id": str(row["id"]), "code": row["code"]}
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.operational_commitment (
+                    code, ipr_id, problem_id, commitment_type_id, description,
+                    responsible_id, division_id, due_date, observations,
+                    state_id, created_by_id, updated_by_id
+                ) VALUES (
+                    :code, :ipr_id, :problem_id, :commitment_type_id, :description,
+                    :responsible_id, :division_id, :due_date, :observations,
+                    (SELECT id FROM ref.category WHERE scheme = 'commitment_state' AND code = 'PENDIENTE'),
+                    :created_by_id, :created_by_id
+                )
+                RETURNING id, code
+            """),
+            {
+                "code": code,
+                "ipr_id": str(data.ipr_id) if data.ipr_id else None,
+                "problem_id": str(data.problem_id) if data.problem_id else None,
+                "commitment_type_id": str(data.commitment_type_id),
+                "description": data.description,
+                "responsible_id": str(data.responsible_id),
+                "division_id": str(division_id) if division_id else None,
+                "due_date": data.due_date,
+                "observations": data.observations,
+                "created_by_id": str(user["id"]),
+            },
+        )
+        await db.commit()
+        row = result.mappings().first()
+        return {"id": str(row["id"]), "code": row["code"]}
+    except Exception as e:
+        await db.rollback()
+        if "unique" in str(e).lower() or "duplicate" in str(e).lower():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un compromiso con datos duplicados")
+        raise
 
 
 # ---------------------------------------------------------------------------

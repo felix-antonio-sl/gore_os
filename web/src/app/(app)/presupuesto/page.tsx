@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
+import { formatCLP, formatDate } from "@/lib/format";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
 
 const CSV_COLUMNS = [
@@ -37,24 +38,6 @@ const YEAR_OPTIONS = [
   { value: "2025", label: "2025" },
   { value: "2024", label: "2024" },
 ];
-
-function formatCLP(value: number | null | undefined): string {
-  if (value === null || value === undefined) return "-";
-  return new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value);
-}
-
-function formatDate(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", { day: "2-digit", month: "short", year: "numeric" }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
 
 function ExecutionBar({ pct }: { pct: number }) {
   const color = pct >= 70 ? "bg-green-500" : pct >= 40 ? "bg-amber-500" : "bg-red-500";

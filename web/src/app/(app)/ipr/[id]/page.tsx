@@ -32,6 +32,7 @@ import type {
   IprMilestoneItem, CategoryRef, TerritoryOption, IprTransition, ActoListItem,
 } from "@/types";
 import { WRITE_OPERATIONAL_ROLES } from "@/types";
+import { formatDate, formatCurrency } from "@/lib/format";
 
 interface IprDetail {
   id: string;
@@ -109,28 +110,6 @@ const MCD_PHASES = [
   { code: "F4", label: "Ejecución" },
   { code: "F5", label: "Cierre" },
 ];
-
-function formatDate(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
-
-function formatCurrency(value: number | undefined): string {
-  if (value === undefined || value === null) return "-";
-  return new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value);
-}
 
 export default function IprDetailPage() {
   const params = useParams();
@@ -395,7 +374,7 @@ export default function IprDetailPage() {
   const handleParteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!parteOrgId || !parteRoleId) {
-      setParteError("Organizacion y rol son requeridos.");
+      setParteError("Organización y rol son requeridos.");
       return;
     }
     setParteSubmitting(true);
@@ -602,7 +581,7 @@ export default function IprDetailPage() {
   };
 
   const compromisoColumns = [
-    { key: "description", label: "Descripcion" },
+    { key: "description", label: "Descripción" },
     { key: "responsible_name", label: "Responsable" },
     {
       key: "due_date",
@@ -667,7 +646,7 @@ export default function IprDetailPage() {
     },
     {
       key: "description",
-      label: "Descripcion",
+      label: "Descripción",
       render: (v: unknown) => (
         <span className="text-xs line-clamp-1 max-w-xs">{String(v ?? "-")}</span>
       ),
@@ -1493,12 +1472,12 @@ export default function IprDetailPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Descripcion</label>
+            <label className="text-sm font-medium">Descripción</label>
             <textarea
               className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               value={avanceDesc}
               onChange={(e) => setAvanceDesc(e.target.value)}
-              placeholder="Descripcion del avance..."
+              placeholder="Descripción del avance..."
             />
           </div>
 
@@ -1617,12 +1596,12 @@ export default function IprDetailPage() {
       >
         <form onSubmit={handleParteSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Organizacion *</label>
+            <label className="text-sm font-medium">Organización *</label>
             <ComboboxAsync
               value={parteOrgId}
               onChange={setParteOrgId}
               searchFn={searchOrganizations}
-              placeholder="Buscar organizacion..."
+              placeholder="Buscar organización..."
             />
           </div>
           <div className="space-y-1.5">
@@ -1732,12 +1711,12 @@ export default function IprDetailPage() {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-sm font-medium">Descripcion</label>
+            <label className="text-sm font-medium">Descripción</label>
             <textarea
               className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               value={hitoDesc}
               onChange={(e) => setHitoDesc(e.target.value)}
-              placeholder="Descripcion del hito..."
+              placeholder="Descripción del hito..."
             />
           </div>
           {hitoError && <p className="text-sm text-red-600">{hitoError}</p>}

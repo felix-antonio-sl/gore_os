@@ -34,19 +34,19 @@ SEVERITY_ORDER = """
 # Subject label subquery — resolves human-readable label based on subject_type
 SUBJECT_LABEL_SUBQUERY = """
     CASE a.subject_type
-        WHEN 'ipr' THEN (
+        WHEN 'core.ipr' THEN (
             SELECT i.codigo_bip || ' - ' || i.name
             FROM core.ipr i WHERE i.id = a.subject_id
         )
-        WHEN 'operational_commitment' THEN (
+        WHEN 'core.operational_commitment' THEN (
             SELECT oc.code || ': ' || oc.description
             FROM core.operational_commitment oc WHERE oc.id = a.subject_id
         )
-        WHEN 'ipr_problem' THEN (
+        WHEN 'core.ipr_problem' THEN (
             SELECT pr.code || ': ' || pr.description
             FROM core.ipr_problem pr WHERE pr.id = a.subject_id
         )
-        WHEN 'organization' THEN (
+        WHEN 'core.organization' THEN (
             SELECT org.name FROM core.organization org WHERE org.id = a.subject_id
         )
         ELSE NULL
@@ -106,7 +106,7 @@ async def list_alertas(
         # Alerts related to IPRs where the user is the responsible/ejecutor
         conditions.append("""
             (
-                (a.subject_type = 'ipr' AND a.subject_id IN (
+                (a.subject_type = 'core.ipr' AND a.subject_id IN (
                     SELECT ip.ipr_id FROM core.ipr_party ip
                     WHERE ip.party_id = :user_id
                       AND ip.party_role_id = (
@@ -114,12 +114,12 @@ async def list_alertas(
                       )
                 ))
                 OR
-                (a.subject_type = 'operational_commitment' AND a.subject_id IN (
+                (a.subject_type = 'core.operational_commitment' AND a.subject_id IN (
                     SELECT oc.id FROM core.operational_commitment oc
                     WHERE oc.responsible_id = :user_id AND oc.deleted_at IS NULL
                 ))
                 OR
-                (a.subject_type = 'ipr_problem' AND a.subject_id IN (
+                (a.subject_type = 'core.ipr_problem' AND a.subject_id IN (
                     SELECT pr.id FROM core.ipr_problem pr
                     WHERE pr.detected_by_id = :user_id AND pr.deleted_at IS NULL
                 ))
@@ -131,7 +131,7 @@ async def list_alertas(
         # Alerts related to IPRs managed by users in the jefe's division
         conditions.append("""
             (
-                (a.subject_type = 'ipr' AND a.subject_id IN (
+                (a.subject_type = 'core.ipr' AND a.subject_id IN (
                     SELECT ip.ipr_id FROM core.ipr_party ip
                     JOIN core."user" u2 ON ip.party_id = u2.id
                     WHERE u2.division_id = :div_id
@@ -140,12 +140,12 @@ async def list_alertas(
                       )
                 ))
                 OR
-                (a.subject_type = 'operational_commitment' AND a.subject_id IN (
+                (a.subject_type = 'core.operational_commitment' AND a.subject_id IN (
                     SELECT oc.id FROM core.operational_commitment oc
                     WHERE oc.division_id = :div_id AND oc.deleted_at IS NULL
                 ))
                 OR
-                (a.subject_type = 'ipr_problem' AND a.subject_id IN (
+                (a.subject_type = 'core.ipr_problem' AND a.subject_id IN (
                     SELECT pr.id FROM core.ipr_problem pr
                     JOIN core.ipr ipr2 ON pr.ipr_id = ipr2.id
                     JOIN core.ipr_party ip2 ON ip2.ipr_id = ipr2.id

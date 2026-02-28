@@ -19,6 +19,7 @@ import {
 import { useAuth } from "@/lib/auth";
 import { Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
+import { formatDate, formatCLP } from "@/lib/format";
 import type {
   PaginatedResponse,
   ActoListItem,
@@ -74,29 +75,6 @@ const STATE_STEP_COLORS: Record<string, string> = {
   RECHAZADO_CGR: "bg-red-500",
   ANULADO: "bg-gray-500",
 };
-
-function formatDate(dateStr: string | null | undefined): string {
-  if (!dateStr) return "-";
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
-}
-
-function formatCLP(value: number | null | undefined): string {
-  if (value === null || value === undefined) return "-";
-  return new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value);
-}
 
 function StateStepper({ currentState }: { currentState: string }) {
   const isTerminalBad = currentState === "RECHAZADO_CGR" || currentState === "ANULADO";

@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { Plus, Download, UserCheck } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
+import { formatDate } from "@/lib/format";
 import type { PaginatedResponse, CompromisoListItem, HistoryEntry } from "@/types";
 
 const CSV_COLUMNS = [
@@ -41,18 +42,6 @@ interface CompromisoDetail extends CompromisoListItem {
   observations?: string | null;
   history?: HistoryEntry[];
   notes?: string;
-}
-
-function formatDate(dateStr: string): string {
-  try {
-    return new Intl.DateTimeFormat("es-CL", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(dateStr));
-  } catch {
-    return dateStr;
-  }
 }
 
 export default function CompromisosPage() {

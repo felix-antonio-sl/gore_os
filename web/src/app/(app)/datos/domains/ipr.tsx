@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatCurrency } from "@/lib/format";
 import type { PaginatedResponse, IPRListItem } from "@/types";
 import type { DomainConfig } from "./types";
 
@@ -15,16 +16,6 @@ const alertLevelColors: Record<string, string> = {
   ATENCION: "bg-amber-400 text-white",
   INFO: "bg-blue-500 text-white",
 };
-
-function formatCurrency(value: number | null): string {
-  if (value === null) return "-";
-  return new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currency: "CLP",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(value);
-}
 
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (

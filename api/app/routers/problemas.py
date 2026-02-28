@@ -61,6 +61,7 @@ async def _get_problema_or_404(problema_id: UUID, db: AsyncSession) -> dict:
 
 
 async def _next_pr_code(db: AsyncSession) -> str:
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('pr_code'))"))
     result = await db.execute(
         text("""
             SELECT MAX(CAST(SUBSTRING(code FROM 4) AS INTEGER)) AS max_seq
@@ -204,37 +205,43 @@ async def create_problema(
     _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     code = await _next_pr_code(db)
 
-    result = await db.execute(
-        text("""
-            INSERT INTO core.ipr_problem (
-                code, ipr_id, problem_type_id, impact_id, description,
-                impact_description, proposed_solution,
-                detected_by_id, detected_at,
-                state_id, created_by_id
-            ) VALUES (
-                :code, :ipr_id, :problem_type_id, :impact_id, :description,
-                :impact_description, :proposed_solution,
-                :detected_by_id, NOW(),
-                (SELECT id FROM ref.category WHERE scheme = 'problem_state' AND code = 'ABIERTO'),
-                :created_by_id
-            )
-            RETURNING id, code
-        """),
-        {
-            "code": code,
-            "ipr_id": str(data.ipr_id),
-            "problem_type_id": str(data.problem_type_id),
-            "impact_id": str(data.impact_id) if data.impact_id else None,
-            "description": data.description,
-            "impact_description": data.impact_description,
-            "proposed_solution": data.proposed_solution,
-            "detected_by_id": str(user["id"]),
-            "created_by_id": str(user["id"]),
-        },
-    )
-    await db.commit()
-    row = result.mappings().first()
-    return {"id": str(row["id"]), "code": row["code"]}
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.ipr_problem (
+                    code, ipr_id, problem_type_id, impact_id, description,
+                    impact_description, proposed_solution,
+                    detected_by_id, detected_at,
+                    state_id, created_by_id
+                ) VALUES (
+                    :code, :ipr_id, :problem_type_id, :impact_id, :description,
+                    :impact_description, :proposed_solution,
+                    :detected_by_id, NOW(),
+                    (SELECT id FROM ref.category WHERE scheme = 'problem_state' AND code = 'ABIERTO'),
+                    :created_by_id
+                )
+                RETURNING id, code
+            """),
+            {
+                "code": code,
+                "ipr_id": str(data.ipr_id),
+                "problem_type_id": str(data.problem_type_id),
+                "impact_id": str(data.impact_id) if data.impact_id else None,
+                "description": data.description,
+                "impact_description": data.impact_description,
+                "proposed_solution": data.proposed_solution,
+                "detected_by_id": str(user["id"]),
+                "created_by_id": str(user["id"]),
+            },
+        )
+        await db.commit()
+        row = result.mappings().first()
+        return {"id": str(row["id"]), "code": row["code"]}
+    except Exception as e:
+        await db.rollback()
+        if "unique" in str(e).lower() or "duplicate" in str(e).lower():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un problema con datos duplicados")
+        raise
 
 
 # ---------------------------------------------------------------------------

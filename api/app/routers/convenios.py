@@ -151,6 +151,7 @@ async def _check_pending_renditions(agreement_id: UUID, db: AsyncSession) -> Non
 async def _next_agreement_number(db: AsyncSession) -> str:
     from datetime import date
     year = date.today().year
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('agr_number'))"))
     result = await db.execute(
         text("""
             SELECT MAX(CAST(SUBSTRING(agreement_number FROM 10) AS INTEGER)) AS max_seq
@@ -344,38 +345,44 @@ async def create_convenio(
     _require_roles(user, *WRITE_OPERATIONAL_ROLES)
     agreement_number = body.agreement_number or await _next_agreement_number(db)
 
-    result = await db.execute(
-        text("""
-            INSERT INTO core.agreement (
-                agreement_number, agreement_type_id, state_id,
-                ipr_id, giver_id, receiver_id,
-                total_amount, signed_at, valid_from, valid_to,
-                created_by_id, created_at, updated_at
-            ) VALUES (
-                :agreement_number, :agreement_type_id, :state_id,
-                :ipr_id, :giver_id, :receiver_id,
-                :total_amount, :signed_at, :valid_from, :valid_to,
-                :created_by_id, NOW(), NOW()
-            )
-            RETURNING id, agreement_number
-        """),
-        {
-            "agreement_number": agreement_number,
-            "agreement_type_id": str(body.agreement_type_id),
-            "state_id": str(body.state_id),
-            "ipr_id": str(body.ipr_id) if body.ipr_id else None,
-            "giver_id": str(body.giver_id) if body.giver_id else None,
-            "receiver_id": str(body.receiver_id) if body.receiver_id else None,
-            "total_amount": body.total_amount,
-            "signed_at": body.signed_at,
-            "valid_from": body.valid_from,
-            "valid_to": body.valid_to,
-            "created_by_id": str(user["id"]),
-        },
-    )
-    await db.commit()
-    row = result.mappings().first()
-    return {"id": row["id"], "agreement_number": row["agreement_number"]}
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.agreement (
+                    agreement_number, agreement_type_id, state_id,
+                    ipr_id, giver_id, receiver_id,
+                    total_amount, signed_at, valid_from, valid_to,
+                    created_by_id, created_at, updated_at
+                ) VALUES (
+                    :agreement_number, :agreement_type_id, :state_id,
+                    :ipr_id, :giver_id, :receiver_id,
+                    :total_amount, :signed_at, :valid_from, :valid_to,
+                    :created_by_id, NOW(), NOW()
+                )
+                RETURNING id, agreement_number
+            """),
+            {
+                "agreement_number": agreement_number,
+                "agreement_type_id": str(body.agreement_type_id),
+                "state_id": str(body.state_id),
+                "ipr_id": str(body.ipr_id) if body.ipr_id else None,
+                "giver_id": str(body.giver_id) if body.giver_id else None,
+                "receiver_id": str(body.receiver_id) if body.receiver_id else None,
+                "total_amount": body.total_amount,
+                "signed_at": body.signed_at,
+                "valid_from": body.valid_from,
+                "valid_to": body.valid_to,
+                "created_by_id": str(user["id"]),
+            },
+        )
+        await db.commit()
+        row = result.mappings().first()
+        return {"id": row["id"], "agreement_number": row["agreement_number"]}
+    except Exception as e:
+        await db.rollback()
+        if "unique" in str(e).lower() or "duplicate" in str(e).lower():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un convenio con ese número")
+        raise
 
 
 # ---------------------------------------------------------------------------
