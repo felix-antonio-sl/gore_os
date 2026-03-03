@@ -2,6 +2,7 @@ import math
 from datetime import date as date_type
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
+from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
@@ -37,6 +38,47 @@ _TERMINAL_STATES = {"TOMADO_RAZON", "RECHAZADO_CGR", "ANULADO"}
 def _require_roles(user: dict, *roles: str) -> None:
     if user["role_code"] not in roles:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
+
+
+async def _check_cgr_threshold(acto_id: UUID, db: AsyncSession) -> dict | None:
+    """Check if an acto's resolution budget_amount exceeds CGR Toma de Razón threshold.
+    Returns warning dict if threshold exceeded, None otherwise."""
+    row = (await db.execute(
+        text("""
+            SELECT r.budget_amount
+            FROM core.resolution r
+            WHERE r.administrative_act_id = :act_id AND r.deleted_at IS NULL
+        """),
+        {"act_id": str(acto_id)},
+    )).mappings().first()
+
+    if not row or not row["budget_amount"]:
+        return None
+
+    budget_amount = float(row["budget_amount"])
+
+    # Load threshold from DB
+    th_row = (await db.execute(
+        text("SELECT value_utm FROM core.financial_threshold WHERE code = 'CGR_TOMA_RAZON' AND is_active = TRUE")
+    )).mappings().first()
+    if not th_row or not th_row["value_utm"]:
+        return None
+
+    utm_row = (await db.execute(
+        text("SELECT value_utm FROM core.financial_threshold WHERE code = 'UTM_VALUE' AND is_active = TRUE")
+    )).mappings().first()
+    utm = int(utm_row["value_utm"]) if utm_row and utm_row["value_utm"] else 67_294
+
+    threshold_clp = float(th_row["value_utm"]) * utm
+    if budget_amount <= threshold_clp:
+        return None
+
+    return {
+        "warning": "cgr_toma_razon",
+        "detail": f"Monto resolución (${budget_amount:,.0f}) supera {int(th_row['value_utm']):,} UTM — requiere Toma de Razón CGR",
+        "threshold_utm": float(th_row["value_utm"]),
+        "budget_amount": budget_amount,
+    }
 
 
 _BASE_SELECT = """
@@ -393,9 +435,16 @@ async def update_acto(
     res_updates = {k: v for k, v in payload.items() if k in _RES_FIELDS}
 
     # Validate state transition if state_id is being changed
+    warnings = []
     if "state_id" in act_updates:
         new_state_id = str(act_updates["state_id"])
         current_code, new_code = await _validate_state_transition(acto_id, new_state_id, db)
+
+        # CGR threshold warning on ENVIADO_CGR transition
+        if new_code == "ENVIADO_CGR":
+            cgr_warning = await _check_cgr_threshold(acto_id, db)
+            if cgr_warning:
+                warnings.append(cgr_warning)
 
         # CGR tracking: auto-set timestamps on relevant transitions
         if new_code == "TRAMITADO":
@@ -448,7 +497,10 @@ async def update_acto(
             )
 
     await db.commit()
-    return {"message": "Actualizado correctamente"}
+    result = {"message": "Actualizado correctamente"}
+    if warnings:
+        result["warnings"] = warnings
+    return result
 
 
 # ---------------------------------------------------------------------------

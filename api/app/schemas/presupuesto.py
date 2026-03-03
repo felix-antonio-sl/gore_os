@@ -30,6 +30,8 @@ class PresupuestoListItem(BaseModel):
     division_name: Optional[str]
     subtitle_label: Optional[str]
     program_type_label: Optional[str]
+    item_label: Optional[str] = None
+    allocation_label: Optional[str] = None
     initial_amount: Decimal
     current_amount: Optional[Decimal]
     committed_amount: Decimal

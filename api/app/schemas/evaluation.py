@@ -15,6 +15,7 @@ class EvaluationAssignmentUpdate(BaseModel):
     observations: str | None = None
     completed_at: datetime | None = None
     deadline_at: datetime | None = None
+    numeric_score: float | None = None
 
 
 class EvaluationAssignmentItem(BaseModel):
@@ -30,3 +31,4 @@ class EvaluationAssignmentItem(BaseModel):
     result_code: str | None = None
     result_label: str | None = None
     observations: str | None = None
+    numeric_score: float | None = None

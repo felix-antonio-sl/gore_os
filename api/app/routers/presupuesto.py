@@ -1,6 +1,7 @@
 import math
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
+from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 
@@ -32,6 +33,169 @@ def _execution_pct(paid: float | None, current: float | None) -> float:
     if current and current > 0 and paid is not None:
         return round(float(paid) / float(current) * 100, 1)
     return 0.0
+
+
+async def _get_glosa_thresholds(db: AsyncSession) -> list[dict]:
+    """Load all active glosa thresholds from DB."""
+    result = await db.execute(
+        text("""
+            SELECT code, label, value_pct, source_normativa
+            FROM core.financial_threshold
+            WHERE enforcement_point = 'GLOSA' AND is_active = TRUE
+        """)
+    )
+    return [dict(r) for r in result.mappings().all()]
+
+
+# Mapping from glosa threshold codes to budget_item scheme codes
+_GLOSA_ITEM_MAP = {
+    "GLOSA_ADMIN_MAX": {"BIENES_SERVICIOS_CONSUMO"},
+    "GLOSA_HONORARIOS_MAX": {"HONORARIOS"},
+    "GLOSA_REMUNERACIONES_MAX": {"PERSONAL"},
+    "GLOSA_ANF_MAX": {"ACTIVOS_NO_FINANCIEROS"},
+    "GLOSA_EQUIPAMIENTO_MAX": {"EQUIPAMIENTO", "EQUIPAMIENTO_INFORMATICO"},
+}
+
+
+async def check_glosa_rules(ipr_id: UUID, db: AsyncSession) -> list[dict]:
+    """Evaluate glosa spending rules for an IPR's linked CDPs.
+    Returns list of gate dicts for violations found."""
+    gates: list[dict] = []
+
+    glosa_thresholds = await _get_glosa_thresholds(db)
+    if not glosa_thresholds:
+        return gates
+
+    # Get total budget and per-item breakdown from CDPs linked to this IPR
+    result = await db.execute(
+        text("""
+            SELECT
+                COALESCE(SUM(bc.amount), 0) AS total_cdp,
+                item_cat.code AS item_code,
+                COALESCE(SUM(bc.amount), 0) AS item_amount
+            FROM core.budget_commitment bc
+            JOIN core.budget_program bp ON bp.id = bc.budget_program_id
+            LEFT JOIN ref.category item_cat ON item_cat.id = bp.item_id
+            WHERE bc.ipr_id = :ipr_id AND bc.deleted_at IS NULL
+            GROUP BY item_cat.code
+        """),
+        {"ipr_id": str(ipr_id)},
+    )
+    rows = result.mappings().all()
+    if not rows:
+        return gates
+
+    # Calculate total
+    total_cdp = sum(float(r["item_amount"]) for r in rows)
+    if total_cdp <= 0:
+        return gates
+
+    # Build item breakdown
+    item_amounts: dict[str, float] = {}
+    for r in rows:
+        code = r["item_code"] or "SIN_ITEM"
+        item_amounts[code] = float(r["item_amount"])
+
+    # Check each glosa threshold
+    for threshold in glosa_thresholds:
+        code = threshold["code"]
+        max_pct = float(threshold["value_pct"])
+        item_codes = _GLOSA_ITEM_MAP.get(code, set())
+        if not item_codes:
+            continue
+
+        # Sum all matching item amounts
+        matching_amount = sum(item_amounts.get(ic, 0) for ic in item_codes)
+        actual_pct = (matching_amount / total_cdp * 100) if total_cdp > 0 else 0
+
+        if actual_pct > max_pct:
+            gates.append({
+                "name": code.lower(),
+                "met": False,
+                "detail": (
+                    f"{threshold['label']}: {actual_pct:.1f}% excede tope de {max_pct:.0f}% "
+                    f"(${matching_amount:,.0f} de ${total_cdp:,.0f} total CDPs)"
+                ),
+            })
+        else:
+            gates.append({
+                "name": code.lower(),
+                "met": True,
+                "detail": f"{threshold['label']}: {actual_pct:.1f}% dentro del tope {max_pct:.0f}%",
+            })
+
+    # Glosa 03 prohibition: FNDR-funded IPRs cannot have PERSONAL expenditure
+    glosa03_gates = await _check_glosa03_prohibition(ipr_id, db)
+    gates.extend(glosa03_gates)
+
+    return gates
+
+
+# Mechanisms that use FNDR funding (Glosa 03 applies)
+_FNDR_MECHANISMS = {"SNI", "FRIL", "C33"}
+
+
+async def _check_glosa03_prohibition(ipr_id: UUID, db: AsyncSession) -> list[dict]:
+    """Glosa 03: FNDR-funded IPRs cannot allocate budget to PERSONAL.
+
+    Checks if IPR's mechanism is in {SNI, FRIL, C33} or funding_source is FNDR,
+    then verifies no CDPs are linked to budget_programs with item = PERSONAL.
+    """
+    gates: list[dict] = []
+
+    # Check if IPR uses FNDR-related mechanism or funding source
+    ipr_row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, fs.code AS funding_source_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            LEFT JOIN ref.category fs ON fs.id = i.funding_source_id
+            WHERE i.id = :ipr_id AND i.deleted_at IS NULL
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().first()
+
+    if not ipr_row:
+        return gates
+
+    mechanism = ipr_row["mechanism_code"]
+    funding = ipr_row["funding_source_code"]
+
+    # Only applies if FNDR-related
+    is_fndr = mechanism in _FNDR_MECHANISMS or funding == "FNDR"
+    if not is_fndr:
+        return gates
+
+    # Check for CDPs linked to PERSONAL budget items
+    personal_count = (await db.execute(
+        text("""
+            SELECT COUNT(*) FROM core.budget_commitment bc
+            JOIN core.budget_program bp ON bp.id = bc.budget_program_id
+            JOIN ref.category item_cat ON item_cat.id = bp.item_id
+            WHERE bc.ipr_id = :ipr_id AND bc.deleted_at IS NULL
+              AND item_cat.code = 'PERSONAL'
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).scalar() or 0
+
+    if personal_count > 0:
+        source = mechanism if mechanism in _FNDR_MECHANISMS else f"FNDR ({funding})"
+        gates.append({
+            "name": "glosa03_prohibition",
+            "met": False,
+            "detail": (
+                f"Glosa 03: Prohibición de gasto en personal con financiamiento {source}. "
+                f"Se encontraron {personal_count} CDP(s) vinculados a ítem PERSONAL"
+            ),
+        })
+    else:
+        gates.append({
+            "name": "glosa03_prohibition",
+            "met": True,
+            "detail": "Glosa 03: Sin gasto en personal con financiamiento FNDR",
+        })
+
+    return gates
 
 
 async def _get_presupuesto_or_404(presupuesto_id: UUID, db: AsyncSession) -> dict:
@@ -147,6 +311,9 @@ async def list_presupuesto(
     fiscal_year: int | None = None,
     division_id: UUID | None = None,
     subtitle: str | None = None,
+    item: str | None = None,
+    allocation: str | None = None,
+    program_type: str | None = None,
     search: str | None = None,
 ):
     role = user["role_code"]
@@ -170,6 +337,18 @@ async def list_presupuesto(
         conditions.append("sub.code = :subtitle")
         params["subtitle"] = subtitle
 
+    if item:
+        conditions.append("item_cat.code = :item")
+        params["item"] = item
+
+    if allocation:
+        conditions.append("alloc_cat.code = :allocation")
+        params["allocation"] = allocation
+
+    if program_type:
+        conditions.append("pt.code = :program_type")
+        params["program_type"] = program_type
+
     if search:
         conditions.append("(bp.code ILIKE :search OR bp.name ILIKE :search)")
         params["search"] = f"%{search}%"
@@ -181,6 +360,8 @@ async def list_presupuesto(
         LEFT JOIN core.organization org ON org.id = bp.owner_division_id
         LEFT JOIN ref.category sub  ON sub.id  = bp.subtitle_id
         LEFT JOIN ref.category pt   ON pt.id   = bp.program_type_id
+        LEFT JOIN ref.category item_cat  ON item_cat.id  = bp.item_id
+        LEFT JOIN ref.category alloc_cat ON alloc_cat.id = bp.allocation_id
         WHERE {where_clause}
     """
 
@@ -202,6 +383,8 @@ async def list_presupuesto(
                 org.name                           AS division_name,
                 sub.label                          AS subtitle_label,
                 pt.label                           AS program_type_label,
+                item_cat.label                     AS item_label,
+                alloc_cat.label                    AS allocation_label,
                 bp.initial_amount,
                 bp.current_amount,
                 COALESCE(bp.committed_amount, 0)   AS committed_amount,
@@ -225,6 +408,8 @@ async def list_presupuesto(
             division_name=r["division_name"],
             subtitle_label=r["subtitle_label"],
             program_type_label=r["program_type_label"],
+            item_label=r["item_label"],
+            allocation_label=r["allocation_label"],
             initial_amount=r["initial_amount"],
             current_amount=r["current_amount"],
             committed_amount=r["committed_amount"],

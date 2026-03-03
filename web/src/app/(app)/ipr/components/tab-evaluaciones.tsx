@@ -39,6 +39,7 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
   const [resultTypes, setResultTypes] = useState<CategoryRef[]>([]);
   const [resultId, setResultId] = useState("");
   const [resultObs, setResultObs] = useState("");
+  const [resultScore, setResultScore] = useState("");
   const [resultSubmitting, setResultSubmitting] = useState(false);
 
   const loadEvaluaciones = () => {
@@ -82,11 +83,13 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
       const body: Record<string, unknown> = {};
       if (resultId) body.result_id = resultId;
       if (resultObs) body.observations = resultObs;
+      if (resultScore) body.numeric_score = parseFloat(resultScore);
       body.completed_at = new Date().toISOString();
       await api.patch(`/api/ipr/${iprId}/evaluaciones/${evalId}`, body);
       setEditingId(null);
       setResultId("");
       setResultObs("");
+      setResultScore("");
       loadEvaluaciones();
     } catch {
       // silently fail
@@ -223,6 +226,12 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
                 </p>
               )}
 
+              {ev.numeric_score !== null && ev.numeric_score !== undefined && (
+                <p className="text-xs mt-1 text-muted-foreground">
+                  Puntaje: <span className="font-medium text-foreground">{ev.numeric_score}</span>
+                </p>
+              )}
+
               {ev.observations && (
                 <p className="text-xs mt-1 italic">{ev.observations}</p>
               )}
@@ -230,7 +239,7 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
               {/* Inline result form */}
               {editingId === ev.id && (
                 <div className="mt-3 pt-3 border-t space-y-2">
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     <Select value={resultId} onValueChange={setResultId}>
                       <SelectTrigger className="h-8 text-xs">
                         <SelectValue placeholder="Resultado..." />
@@ -243,6 +252,16 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
                         ))}
                       </SelectContent>
                     </Select>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="100"
+                      placeholder="Puntaje..."
+                      value={resultScore}
+                      onChange={(e) => setResultScore(e.target.value)}
+                      className="h-8 text-xs"
+                    />
                     <Input
                       placeholder="Observaciones..."
                       value={resultObs}

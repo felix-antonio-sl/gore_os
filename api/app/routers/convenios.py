@@ -391,7 +391,55 @@ async def create_convenio(
 # PATCH /api/convenios/{id} — Update
 # ---------------------------------------------------------------------------
 
-_UTM_VALUE = 67_294  # UTM febrero 2026
+async def _get_utm_value(db: AsyncSession) -> int:
+    """Get current UTM value from DB (administrable)."""
+    row = (await db.execute(
+        text("SELECT value_utm FROM core.financial_threshold WHERE code = 'UTM_VALUE' AND is_active = TRUE")
+    )).mappings().first()
+    if row and row["value_utm"]:
+        return int(row["value_utm"])
+    return 67_294  # fallback
+
+
+async def _get_threshold_value(code: str, db: AsyncSession) -> float | None:
+    """Get a threshold's UTM value by code."""
+    row = (await db.execute(
+        text("SELECT value_utm FROM core.financial_threshold WHERE code = :code AND is_active = TRUE"),
+        {"code": code},
+    )).mappings().first()
+    if row and row["value_utm"]:
+        return float(row["value_utm"])
+    return None
+
+
+async def _check_garantia_threshold(agreement_id: UUID, db: AsyncSession) -> dict | None:
+    """Convenios above GARANTIA_CONVENIO threshold require garantia de fiel cumplimiento.
+    Returns warning dict if threshold exceeded, None otherwise."""
+    threshold_utm = await _get_threshold_value("GARANTIA_CONVENIO", db)
+    if threshold_utm is None:
+        return None
+
+    utm = await _get_utm_value(db)
+    threshold_clp = threshold_utm * utm
+
+    row = (await db.execute(
+        text("SELECT total_amount FROM core.agreement WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(agreement_id)},
+    )).mappings().first()
+
+    if not row or not row["total_amount"]:
+        return None
+
+    total = float(row["total_amount"])
+    if total <= threshold_clp:
+        return None
+
+    return {
+        "warning": "garantia_required",
+        "detail": f"Convenio supera {int(threshold_utm):,} UTM (${total:,.0f} CLP) — requiere garantía de fiel cumplimiento",
+        "threshold_utm": threshold_utm,
+        "total_amount": total,
+    }
 
 
 async def _validate_state_transition(
@@ -437,7 +485,7 @@ async def _validate_amount_thresholds(
     new_code: str,
     db: AsyncSession,
 ) -> None:
-    """Validate UTM-based thresholds for sensitive transitions."""
+    """Validate UTM-based thresholds for sensitive transitions (reads from DB)."""
     result = await db.execute(
         text("SELECT total_amount FROM core.agreement WHERE id = :id"),
         {"id": str(convenio_id)},
@@ -445,18 +493,22 @@ async def _validate_amount_thresholds(
     row = result.mappings().first()
     total_amount = float(row["total_amount"]) if row and row["total_amount"] else 0
 
-    # >1.000 UTM → requiere pasar por VISADO_INTERNO antes de FIRMADO_GORE
-    if new_code == "FIRMADO_GORE" and current_code != "VISADO_INTERNO" and total_amount > 1_000 * _UTM_VALUE:
+    utm = await _get_utm_value(db)
+
+    # GARANTIA_CONVENIO threshold: >1.000 UTM → requiere VISADO_INTERNO antes de FIRMADO_GORE
+    garantia_utm = await _get_threshold_value("GARANTIA_CONVENIO", db) or 1000
+    if new_code == "FIRMADO_GORE" and current_code != "VISADO_INTERNO" and total_amount > garantia_utm * utm:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Convenios >1.000 UTM requieren Visado Interno del AR antes de pasar a Firmado GORE",
+            detail=f"Convenios >{int(garantia_utm):,} UTM requieren Visado Interno del AR antes de pasar a Firmado GORE",
         )
 
-    # >2.500 UTM → requiere pasar por TDR_PENDIENTE antes de VIGENTE
-    if new_code == "VIGENTE" and current_code != "TDR_PENDIENTE" and total_amount > 2_500 * _UTM_VALUE:
+    # CGR_TOMA_RAZON threshold: >2.500 UTM → requiere TDR_PENDIENTE antes de VIGENTE
+    cgr_utm = await _get_threshold_value("CGR_TOMA_RAZON", db) or 2500
+    if new_code == "VIGENTE" and current_code != "TDR_PENDIENTE" and total_amount > cgr_utm * utm:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Convenios >2.500 UTM requieren Toma de Razón CGR (TdR Pendiente) antes de pasar a Vigente",
+            detail=f"Convenios >{int(cgr_utm):,} UTM requieren Toma de Razón CGR (TdR Pendiente) antes de pasar a Vigente",
         )
 
 
@@ -478,10 +530,16 @@ async def update_convenio(
         return {"message": "Sin cambios"}
 
     # Validate state transition if state_id is being changed
+    warnings = []
     if "state_id" in updates:
         new_state_id = str(updates["state_id"])
         current_code, new_code = await _validate_state_transition(convenio_id, new_state_id, db)
         await _validate_amount_thresholds(convenio_id, current_code, new_code, db)
+        # Check garantía threshold (informational warning)
+        if new_code in ("FIRMADO_GORE", "FIRMADO_CONTRAPARTE", "VIGENTE"):
+            garantia = await _check_garantia_threshold(convenio_id, db)
+            if garantia:
+                warnings.append(garantia)
 
     # Convert UUIDs to string
     for k in ["state_id", "ipr_id", "cgr_outcome_id"]:
@@ -497,7 +555,10 @@ async def update_convenio(
         updates,
     )
     await db.commit()
-    return {"message": "Actualizado correctamente"}
+    result = {"message": "Actualizado correctamente"}
+    if warnings:
+        result["warnings"] = warnings
+    return result
 
 
 # ---------------------------------------------------------------------------

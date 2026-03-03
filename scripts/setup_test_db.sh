@@ -32,6 +32,15 @@ docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/
 # Apply Wave 7 migration (Poly-Switch: evaluation_assignment table + evaluator_type scheme)
 docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_wave7_evaluation.sql
 
+# Apply Ciclo 23 migration (SNI levels + SEREMI evaluator type)
+docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_ciclo23_sni_levels.sql
+
+# Copy core parametric tables from production
+for tbl in core.financing_track core.financial_threshold core.sni_level_config; do
+    docker exec goreos_db psql -U goreos -d goreos_model -c "COPY $tbl TO STDOUT" | \
+        docker exec -i goreos_db psql -U goreos -d goreos_test -c "SET session_replication_role = 'replica'; COPY $tbl FROM STDIN" 2>/dev/null || true
+done
+
 # Re-enable FK checks
 docker exec -i goreos_db psql -U goreos -d goreos_test -c "SET session_replication_role = 'origin';"
 

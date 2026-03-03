@@ -18,6 +18,9 @@ import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "
 const CSV_COLUMNS = [
   { key: "division_name", label: "División" },
   { key: "name", label: "Programa" },
+  { key: "program_type_label", label: "Tipo Programa" },
+  { key: "item_label", label: "Ítem" },
+  { key: "allocation_label", label: "Asignación" },
   { key: "initial_amount", label: "Presupuesto Inicial" },
   { key: "current_amount", label: "Presupuesto Vigente" },
   { key: "committed_amount", label: "Comprometido" },
@@ -202,6 +205,13 @@ export default function PresupuestoPage() {
     {
       key: "subtitle_label",
       label: "Subtítulo",
+      render: (v: unknown) => (
+        <span className="text-xs text-muted-foreground">{String(v ?? "-")}</span>
+      ),
+    },
+    {
+      key: "item_label",
+      label: "Ítem",
       render: (v: unknown) => (
         <span className="text-xs text-muted-foreground">{String(v ?? "-")}</span>
       ),

@@ -18,6 +18,7 @@ from app.schemas.admin import (
     DivisionCreate,
     DivisionUpdate,
 )
+from app.schemas.threshold import ThresholdListItem, ThresholdCreate, ThresholdUpdate
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -610,3 +611,238 @@ async def update_financing_track(
     await db.execute(sql, params)
     await db.commit()
     return {"message": "Track actualizado"}
+
+
+# ===========================================================================
+# FINANCIAL THRESHOLDS (Compliance engine configuration)
+# ===========================================================================
+
+
+_THRESHOLD_FIELDS = {
+    "label", "value_utm", "value_pct", "enforcement_point",
+    "source_normativa", "applies_to_track", "is_active",
+}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/thresholds — List all financial thresholds
+# ---------------------------------------------------------------------------
+
+@router.get("/thresholds", response_model=list[ThresholdListItem])
+async def list_thresholds(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    result = await db.execute(
+        text("""
+            SELECT id, code, label, value_utm, value_pct,
+                   enforcement_point, source_normativa, applies_to_track,
+                   is_active, created_at, updated_at
+            FROM core.financial_threshold
+            ORDER BY enforcement_point, code
+        """)
+    )
+    return [ThresholdListItem(**dict(r)) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/thresholds — Create a financial threshold
+# ---------------------------------------------------------------------------
+
+@router.post("/thresholds", status_code=status.HTTP_201_CREATED)
+async def create_threshold(
+    data: ThresholdCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.financial_threshold (
+                    code, label, value_utm, value_pct,
+                    enforcement_point, source_normativa, applies_to_track
+                ) VALUES (
+                    :code, :label, :value_utm, :value_pct,
+                    :enforcement_point, :source_normativa, :applies_to_track
+                )
+                RETURNING id
+            """),
+            {
+                "code": data.code,
+                "label": data.label,
+                "value_utm": data.value_utm,
+                "value_pct": data.value_pct,
+                "enforcement_point": data.enforcement_point,
+                "source_normativa": data.source_normativa,
+                "applies_to_track": data.applies_to_track,
+            },
+        )
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"]), "code": data.code}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="Ya existe un umbral con ese código")
+    except Exception:
+        await db.rollback()
+        raise
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/thresholds/{id} — Update a financial threshold
+# ---------------------------------------------------------------------------
+
+@router.patch("/thresholds/{threshold_id}")
+async def update_threshold(
+    threshold_id: UUID,
+    data: ThresholdUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    existing = await db.execute(
+        text("SELECT id FROM core.financial_threshold WHERE id = :id"),
+        {"id": str(threshold_id)},
+    )
+    if not existing.first():
+        raise HTTPException(status_code=404, detail="Umbral no encontrado")
+
+    updates = data.model_dump(exclude_none=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    # Validate field names against allowlist
+    for key in updates:
+        if key not in _THRESHOLD_FIELDS:
+            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(threshold_id)
+    await db.execute(
+        text(f"UPDATE core.financial_threshold SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+    return {"message": "Umbral actualizado"}
+
+
+# ===========================================================================
+# SNI LEVEL CONFIG (Proporcionalidad rules — HΩ-11)
+# ===========================================================================
+
+
+_SNI_LEVEL_FIELDS = {
+    "label", "min_utm", "max_utm", "evaluator_code",
+    "requires_external_eval", "is_active",
+}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/sni-levels — List all SNI levels
+# ---------------------------------------------------------------------------
+
+@router.get("/sni-levels")
+async def list_sni_levels(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    result = await db.execute(
+        text("""
+            SELECT id, level_number, label, min_utm, max_utm,
+                   evaluator_code, requires_external_eval, is_active,
+                   created_at, updated_at
+            FROM core.sni_level_config
+            ORDER BY level_number
+        """)
+    )
+    return [dict(r) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/sni-levels — Create a new SNI level
+# ---------------------------------------------------------------------------
+
+@router.post("/sni-levels", status_code=status.HTTP_201_CREATED)
+async def create_sni_level(
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    required = {"level_number", "label", "evaluator_code"}
+    missing = required - set(data.keys())
+    if missing:
+        raise HTTPException(status_code=422, detail=f"Campos requeridos faltantes: {missing}")
+
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.sni_level_config (
+                    level_number, label, min_utm, max_utm,
+                    evaluator_code, requires_external_eval
+                ) VALUES (
+                    :level_number, :label, :min_utm, :max_utm,
+                    :evaluator_code, :requires_external_eval
+                )
+                RETURNING id
+            """),
+            {
+                "level_number": data["level_number"],
+                "label": data["label"],
+                "min_utm": data.get("min_utm", 0),
+                "max_utm": data.get("max_utm"),
+                "evaluator_code": data["evaluator_code"],
+                "requires_external_eval": data.get("requires_external_eval", False),
+            },
+        )
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"]), "level_number": data["level_number"]}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="Ya existe un nivel con ese número")
+    except Exception:
+        await db.rollback()
+        raise
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/sni-levels/{id} — Update an SNI level
+# ---------------------------------------------------------------------------
+
+@router.patch("/sni-levels/{level_id}")
+async def update_sni_level(
+    level_id: UUID,
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    existing = await db.execute(
+        text("SELECT id FROM core.sni_level_config WHERE id = :id"),
+        {"id": str(level_id)},
+    )
+    if not existing.first():
+        raise HTTPException(status_code=404, detail="Nivel SNI no encontrado")
+
+    if not data:
+        return {"message": "Sin cambios"}
+
+    # Validate field names against allowlist
+    for key in data:
+        if key not in _SNI_LEVEL_FIELDS:
+            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in data)
+    params = {**data, "id": str(level_id)}
+    await db.execute(
+        text(f"UPDATE core.sni_level_config SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
+        params,
+    )
+    await db.commit()
+    return {"message": "Nivel SNI actualizado"}

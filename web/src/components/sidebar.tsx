@@ -18,6 +18,8 @@ import {
   FolderKanban,
   CalendarClock,
   Vote,
+  ShieldCheck,
+  Layers,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Separator } from "@/components/ui/separator";
@@ -45,6 +47,8 @@ const operationalNav: NavItem[] = [
 const adminOnlyNav: NavItem[] = [
   { label: "Usuarios", href: "/admin/usuarios", icon: <Users className="size-4" /> },
   { label: "Divisiones", href: "/admin/divisiones", icon: <Building2 className="size-4" /> },
+  { label: "Umbrales", href: "/admin/umbrales", icon: <ShieldCheck className="size-4" /> },
+  { label: "Niveles SNI", href: "/admin/niveles-sni", icon: <Layers className="size-4" /> },
 ];
 
 const dgiNav: NavItem[] = [

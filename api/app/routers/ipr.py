@@ -1,4 +1,5 @@
 import math
+from datetime import timedelta
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from typing import Optional
@@ -15,6 +16,7 @@ from app.schemas.ipr_territory import IprTerritoryCreate, IprTerritoryItem
 from app.schemas.ipr_milestone import IprMilestoneCreate, IprMilestoneUpdate, IprMilestoneItem
 from app.schemas.evaluation import EvaluationAssignmentCreate, EvaluationAssignmentUpdate, EvaluationAssignmentItem
 from app.schemas.common import PaginatedResponse
+from app.routers.presupuesto import check_glosa_rules
 
 router = APIRouter(prefix="/api/ipr", tags=["ipr"])
 
@@ -88,30 +90,243 @@ async def _get_track_config(mechanism_code: str, db: AsyncSession) -> dict | Non
         "rs_validity_years": row["rs_validity_years"],
     }
 
-# CORE approval constants
-_UTM_VALUE = 67_294       # UTM feb 2026
-_CORE_THRESHOLD_UTM = 7_000
+# CORE approval constants (fallbacks if DB thresholds unavailable)
 _CORE_QUORUM_SIMPLE = 9
 
 
-async def _check_core_approval(ipr_id: UUID, db: AsyncSession) -> dict | None:
-    """Check if IPR needs and has CORE approval (>7.000 UTM).
-    Returns a gate dict if applicable, or None if threshold not reached."""
+async def _get_utm_value(db: AsyncSession) -> int:
+    """Get current UTM value from DB (administrable)."""
+    row = (await db.execute(
+        text("SELECT value_utm FROM core.financial_threshold WHERE code = 'UTM_VALUE' AND is_active = TRUE")
+    )).mappings().first()
+    if row and row["value_utm"]:
+        return int(row["value_utm"])
+    return 67_294  # fallback
+
+
+async def _get_threshold(code: str, db: AsyncSession) -> dict | None:
+    """Load a universal threshold by code."""
+    row = (await db.execute(
+        text("""
+            SELECT code, label, value_utm, value_pct, enforcement_point, source_normativa
+            FROM core.financial_threshold
+            WHERE code = :code AND is_active = TRUE
+        """),
+        {"code": code},
+    )).mappings().first()
+    if not row:
+        return None
+    return dict(row)
+
+
+async def _check_utm_threshold(ipr_id: UUID, threshold_code: str, db: AsyncSession) -> dict | None:
+    """Generic gate: check if IPR monto exceeds a UTM threshold.
+    Returns {name, met, detail} gate dict or None if below threshold."""
+    threshold = await _get_threshold(threshold_code, db)
+    if not threshold or not threshold["value_utm"]:
+        return None
+
+    utm = await _get_utm_value(db)
+    monto = await _get_ipr_monto(ipr_id, db)
+
+    threshold_clp = float(threshold["value_utm"]) * utm
+    if monto <= threshold_clp:
+        return None
+    return {
+        "name": threshold_code.lower(),
+        "value_utm": float(threshold["value_utm"]),
+        "monto": monto,
+        "threshold_clp": threshold_clp,
+    }
+
+
+async def _get_ipr_monto(ipr_id: UUID, db: AsyncSession) -> float:
+    """Get IPR monto_total from metadata JSONB."""
     row = (await db.execute(
         text("SELECT metadata->>'monto_total' AS monto FROM core.ipr WHERE id = :id"),
         {"id": str(ipr_id)},
     )).mappings().first()
-
-    monto = 0.0
     if row and row["monto"]:
         try:
-            monto = float(row["monto"])
+            return float(row["monto"])
         except (ValueError, TypeError):
-            monto = 0.0
+            pass
+    return 0.0
 
-    threshold = _CORE_THRESHOLD_UTM * _UTM_VALUE
-    if monto <= threshold:
-        return None  # Below threshold — no CORE gate needed
+
+async def _check_track_amount_gates(
+    ipr_id: UUID, mechanism_code: str | None, transition: str, db: AsyncSession,
+) -> list[dict]:
+    """Evaluate track-specific amount gates for a phase transition.
+
+    Reads thresholds from financing_track.thresholds JSONB and compares
+    against IPR monto_total. Returns list of gate dicts.
+    """
+    gates: list[dict] = []
+    if not mechanism_code:
+        return gates
+
+    track = await _get_track_config(mechanism_code, db)
+    if not track:
+        return gates
+
+    thresholds = track.get("thresholds", {})
+    if not thresholds:
+        return gates
+
+    utm = await _get_utm_value(db)
+    monto = await _get_ipr_monto(ipr_id, db)
+
+    if transition == "F2->F3":
+        # max_utm: block if IPR amount exceeds track ceiling
+        if "max_utm" in thresholds:
+            max_clp = float(thresholds["max_utm"]) * utm
+            exceeds = monto > max_clp
+            gates.append({
+                "name": "track_max_utm",
+                "met": not exceeds,
+                "detail": (
+                    f"Tope {mechanism_code}: monto ${monto:,.0f} "
+                    f"{'excede' if exceeds else 'dentro de'} "
+                    f"máximo {thresholds['max_utm']:,} UTM (${max_clp:,.0f})"
+                ),
+            })
+
+        # min_clp: block if IPR amount is below track floor
+        if "min_clp" in thresholds:
+            min_val = float(thresholds["min_clp"])
+            below = monto < min_val and monto > 0
+            gates.append({
+                "name": "track_min_clp",
+                "met": not below,
+                "detail": (
+                    f"Mínimo {mechanism_code}: monto ${monto:,.0f} "
+                    f"{'bajo' if below else 'cumple'} "
+                    f"mínimo ${min_val:,.0f}"
+                ),
+            })
+
+        # puntaje_min: check evaluation numeric_score (Wave D)
+        if "puntaje_min" in thresholds:
+            min_score = float(thresholds["puntaje_min"])
+            score_row = (await db.execute(
+                text("""
+                    SELECT numeric_score FROM core.evaluation_assignment
+                    WHERE ipr_id = :ipr_id AND deleted_at IS NULL
+                      AND numeric_score IS NOT NULL
+                    ORDER BY assigned_at DESC LIMIT 1
+                """),
+                {"ipr_id": str(ipr_id)},
+            )).mappings().first()
+            score = float(score_row["numeric_score"]) if score_row else None
+            if score is not None:
+                meets = score >= min_score
+                gates.append({
+                    "name": "track_puntaje_min",
+                    "met": meets,
+                    "detail": (
+                        f"Puntaje {mechanism_code}: {score:.2f} "
+                        f"{'cumple' if meets else 'bajo'} "
+                        f"mínimo {min_score:.2f}"
+                    ),
+                })
+            else:
+                gates.append({
+                    "name": "track_puntaje_min",
+                    "met": False,
+                    "detail": f"Puntaje {mechanism_code}: sin puntaje registrado (mínimo requerido: {min_score:.2f})",
+                })
+
+    elif transition == "F3->F4":
+        # cgr_res30_utm: informational gate (track-specific CGR threshold)
+        if "cgr_res30_utm" in thresholds:
+            cgr_clp = float(thresholds["cgr_res30_utm"]) * utm
+            exceeds = monto > cgr_clp
+            gates.append({
+                "name": "track_cgr_res30",
+                "met": True,  # informational — never blocks
+                "detail": (
+                    f"CGR Res.30 {mechanism_code}: monto ${monto:,.0f} "
+                    f"{'supera' if exceeds else 'bajo'} "
+                    f"umbral {thresholds['cgr_res30_utm']:,} UTM (${cgr_clp:,.0f}) — informativo"
+                ),
+            })
+
+        # licitacion_max_days: block if LICITACION milestone deviation exceeds threshold
+        if "licitacion_max_days" in thresholds:
+            max_days = int(thresholds["licitacion_max_days"])
+            dev_row = (await db.execute(
+                text("""
+                    SELECT im.deviation_days
+                    FROM core.ipr_milestone im
+                    JOIN ref.category c ON c.id = im.milestone_type_id
+                    WHERE im.ipr_id = :ipr_id AND im.deleted_at IS NULL
+                      AND c.code = 'LICITACION' AND im.actual_date IS NOT NULL
+                    ORDER BY im.actual_date DESC LIMIT 1
+                """),
+                {"ipr_id": str(ipr_id)},
+            )).mappings().first()
+            if dev_row and dev_row["deviation_days"] is not None:
+                deviation = int(dev_row["deviation_days"])
+                exceeds = deviation > max_days
+                gates.append({
+                    "name": "track_licitacion_days",
+                    "met": not exceeds,
+                    "detail": (
+                        f"Licitación {mechanism_code}: desviación {deviation} días "
+                        f"{'excede' if exceeds else 'dentro de'} "
+                        f"máximo {max_days} días"
+                    ),
+                })
+
+    elif transition == "F4->F5":
+        # sisrec_mandatory_utm: require renditions if amount exceeds threshold
+        if "sisrec_mandatory_utm" in thresholds:
+            sisrec_clp = float(thresholds["sisrec_mandatory_utm"]) * utm
+            if monto > sisrec_clp:
+                rend_count = (await db.execute(
+                    text("""
+                        SELECT COUNT(*) FROM core.rendition
+                        WHERE ipr_id = :ipr_id AND deleted_at IS NULL
+                    """),
+                    {"ipr_id": str(ipr_id)},
+                )).scalar() or 0
+                has_renditions = rend_count > 0
+                gates.append({
+                    "name": "track_sisrec_mandatory",
+                    "met": has_renditions,
+                    "detail": (
+                        f"SISREC obligatorio {mechanism_code}: monto ${monto:,.0f} "
+                        f"supera {thresholds['sisrec_mandatory_utm']:,} UTM — "
+                        f"{'tiene' if has_renditions else 'requiere'} "
+                        f"rendiciones ({rend_count} encontrada(s))"
+                    ),
+                })
+
+    return gates
+
+
+async def _check_core_approval(
+    ipr_id: UUID, db: AsyncSession, threshold_utm_override: int | None = None,
+) -> dict | None:
+    """Check if IPR needs and has CORE approval.
+
+    If threshold_utm_override is provided (from financing_track.thresholds.core_approval),
+    it takes precedence over the universal CORE_APPROVAL threshold from DB.
+    Returns a gate dict if applicable, or None if threshold not reached.
+    """
+    if threshold_utm_override is not None:
+        utm = await _get_utm_value(db)
+        monto = await _get_ipr_monto(ipr_id, db)
+        threshold_clp = float(threshold_utm_override) * utm
+        if monto <= threshold_clp:
+            return None
+        threshold_utm = threshold_utm_override
+    else:
+        check = await _check_utm_threshold(ipr_id, "CORE_APPROVAL", db)
+        if check is None:
+            return None  # Below threshold — no CORE gate needed
+        threshold_utm = int(check["value_utm"])
 
     # Check for APROBADO vote on session_agreement linked to this IPR
     vote_result = (await db.execute(
@@ -132,7 +347,434 @@ async def _check_core_approval(ipr_id: UUID, db: AsyncSession) -> dict | None:
     return {
         "name": "core_approval",
         "met": approved,
-        "detail": f"Requiere aprobación CORE (monto >${_CORE_THRESHOLD_UTM:,} UTM). Votos a favor: {favor}/{_CORE_QUORUM_SIMPLE}",
+        "detail": f"Requiere aprobación CORE (monto >{threshold_utm:,} UTM). Votos a favor: {favor}/{_CORE_QUORUM_SIMPLE}",
+    }
+
+
+async def _check_fril_fraccionamiento(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-01: Detect artificial fragmentation of FRIL projects.
+
+    Looks for sibling FRIL IPRs with same executor + same territory (comuna) + created
+    within ±90 days. If combined monto exceeds FRIL max_utm threshold, blocks.
+    Returns gate dict or None if check is not applicable.
+    """
+    # Load IPR's mechanism, executor, and creation date
+    ipr_row = (await db.execute(
+        text("""
+            SELECT i.id, i.executor_id, i.created_at, i.metadata->>'monto_total' AS monto,
+                   m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row or ipr_row["mechanism_code"] != "FRIL":
+        return None
+    if not ipr_row["executor_id"]:
+        return None  # No executor — can't check siblings
+
+    # Get territories linked to this IPR
+    terr_rows = (await db.execute(
+        text("""
+            SELECT territory_id FROM core.ipr_territory
+            WHERE ipr_id = :id AND deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().all()
+    if not terr_rows:
+        return None  # No territory — can't check
+
+    territory_ids = [str(r["territory_id"]) for r in terr_rows]
+
+    # Find sibling FRIL IPRs: same executor, overlapping territory, ±90 days
+    siblings = (await db.execute(
+        text("""
+            SELECT i.id, i.metadata->>'monto_total' AS monto
+            FROM core.ipr i
+            JOIN ref.category m ON m.id = i.mechanism_id
+            JOIN core.ipr_territory it ON it.ipr_id = i.id AND it.deleted_at IS NULL
+            WHERE m.code = 'FRIL'
+              AND i.executor_id = :executor_id
+              AND i.id != :ipr_id
+              AND i.deleted_at IS NULL
+              AND it.territory_id = ANY(:territory_ids)
+              AND i.created_at BETWEEN :date_from AND :date_to
+        """),
+        {
+            "executor_id": str(ipr_row["executor_id"]),
+            "ipr_id": str(ipr_id),
+            "territory_ids": territory_ids,
+            "date_from": ipr_row["created_at"] - timedelta(days=90),
+            "date_to": ipr_row["created_at"] + timedelta(days=90),
+        },
+    )).mappings().all()
+
+    if not siblings:
+        return None  # No siblings found — no fragmentation risk
+
+    # Calculate combined monto
+    own_monto = float(ipr_row["monto"]) if ipr_row["monto"] else 0.0
+    sibling_montos = sum(float(s["monto"]) for s in siblings if s["monto"])
+    combined = own_monto + sibling_montos
+
+    # Check against FRIL max_utm threshold
+    track = await _get_track_config("FRIL", db)
+    if not track:
+        return None
+    max_utm = track.get("thresholds", {}).get("max_utm")
+    if not max_utm:
+        return None
+
+    utm = await _get_utm_value(db)
+    max_clp = float(max_utm) * utm
+    exceeds = combined > max_clp
+
+    return {
+        "name": "fril_fraccionamiento",
+        "met": not exceeds,
+        "detail": (
+            f"Fraccionamiento FRIL: {len(siblings)} proyecto(s) hermano(s) "
+            f"(mismo ejecutor + comuna + ±90 días). "
+            f"Monto combinado ${combined:,.0f} "
+            f"{'excede' if exceeds else 'dentro de'} "
+            f"tope {max_utm:,} UTM (${max_clp:,.0f})"
+        ),
+    }
+
+
+async def _check_fril_max_per_comuna(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-09: Max 5 FRIL projects per territory per fiscal year.
+
+    Exempt: IPRs with fril_category IN ('A2', 'A3') (emergency/reconstruction).
+    Returns gate dict or None if not applicable.
+    """
+    # Load IPR mechanism and year
+    ipr_row = (await db.execute(
+        text("""
+            SELECT i.id, i.created_at, m.code AS mechanism_code,
+                   i.metadata->>'fril_category' AS fril_category
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row or ipr_row["mechanism_code"] != "FRIL":
+        return None
+
+    # If this IPR itself is A2/A3, it's exempt
+    if ipr_row["fril_category"] in ("A2", "A3"):
+        return None
+
+    # Get territories linked to this IPR
+    terr_rows = (await db.execute(
+        text("""
+            SELECT territory_id FROM core.ipr_territory
+            WHERE ipr_id = :id AND deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().all()
+    if not terr_rows:
+        return None  # No territory — can't check
+
+    fiscal_year = ipr_row["created_at"].year
+
+    # Check each territory
+    for terr in terr_rows:
+        count_row = (await db.execute(
+            text("""
+                SELECT COUNT(DISTINCT i.id) AS cnt
+                FROM core.ipr i
+                JOIN ref.category m ON m.id = i.mechanism_id
+                JOIN core.ipr_territory it ON it.ipr_id = i.id AND it.deleted_at IS NULL
+                WHERE m.code = 'FRIL'
+                  AND it.territory_id = :territory_id
+                  AND EXTRACT(YEAR FROM i.created_at) = :fiscal_year
+                  AND i.deleted_at IS NULL
+                  AND i.id != :ipr_id
+                  AND (i.metadata->>'fril_category' IS NULL
+                       OR i.metadata->>'fril_category' NOT IN ('A2', 'A3'))
+            """),
+            {
+                "territory_id": str(terr["territory_id"]),
+                "fiscal_year": fiscal_year,
+                "ipr_id": str(ipr_id),
+            },
+        )).mappings().first()
+
+        existing = int(count_row["cnt"]) if count_row else 0
+        if existing >= 5:
+            # Get territory name for detail
+            terr_name_row = (await db.execute(
+                text("SELECT name FROM core.territory WHERE id = :id"),
+                {"id": str(terr["territory_id"])},
+            )).mappings().first()
+            terr_name = terr_name_row["name"] if terr_name_row else "desconocido"
+            return {
+                "name": "fril_max_comuna",
+                "met": False,
+                "detail": (
+                    f"Máximo 5 FRIL por comuna/año: {terr_name} ya tiene "
+                    f"{existing} proyecto(s) FRIL en {fiscal_year} (excluye A2/A3)"
+                ),
+            }
+
+    return None  # All territories have capacity
+
+
+async def _check_rs_vigencia(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-05: RS evaluation validity check.
+
+    RS (or any favorable product) expires after rs_validity_years without budget assignment.
+    Checks at F3→F4: blocks if last favorable evaluation is expired.
+    """
+    # Load IPR mechanism
+    ipr_row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row or not ipr_row["mechanism_code"]:
+        return None
+
+    track = await _get_track_config(ipr_row["mechanism_code"], db)
+    if not track or not track.get("rs_validity_years"):
+        return None  # Track doesn't have validity constraint
+
+    validity_years = int(track["rs_validity_years"])
+    favorable_products = set(track.get("favorable_products", []))
+    if not favorable_products:
+        return None
+
+    # Find most recent completed evaluation with favorable result
+    eval_row = (await db.execute(
+        text("""
+            SELECT ea.completed_at, rc.code AS result_code
+            FROM core.evaluation_assignment ea
+            LEFT JOIN ref.category rc ON rc.id = ea.result_id
+            WHERE ea.ipr_id = :ipr_id AND ea.deleted_at IS NULL
+              AND ea.completed_at IS NOT NULL
+            ORDER BY ea.completed_at DESC LIMIT 1
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().first()
+
+    if not eval_row:
+        return {
+            "name": "rs_vigencia",
+            "met": False,
+            "detail": f"Sin evaluación completada — se requiere dictamen favorable ({', '.join(sorted(favorable_products))})",
+        }
+
+    result_code = eval_row["result_code"]
+    if result_code not in favorable_products:
+        return {
+            "name": "rs_vigencia",
+            "met": False,
+            "detail": f"Último dictamen ({result_code}) no es favorable — se requiere: {', '.join(sorted(favorable_products))}",
+        }
+
+    # Check expiry
+    from datetime import datetime, timezone
+    completed_at = eval_row["completed_at"]
+    if completed_at.tzinfo is None:
+        completed_at = completed_at.replace(tzinfo=timezone.utc)
+    now = datetime.now(timezone.utc)
+    expiry = completed_at + timedelta(days=validity_years * 365)
+    expired = now > expiry
+
+    return {
+        "name": "rs_vigencia",
+        "met": not expired,
+        "detail": (
+            f"Dictamen {result_code} completado {completed_at.strftime('%Y-%m-%d')} — "
+            f"vigencia {validity_years} años {'(expirado, requiere re-evaluación)' if expired else '(vigente)'}"
+        ),
+    }
+
+
+async def _check_evaluation_type_match(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-12: Verify evaluation result matches mechanism's expected products.
+
+    Informational gate (never blocks): warns if evaluation result_code doesn't match
+    the track's favorable_products or unfavorable_products.
+    """
+    ipr_row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row or not ipr_row["mechanism_code"]:
+        return None
+
+    track = await _get_track_config(ipr_row["mechanism_code"], db)
+    if not track:
+        return None
+
+    # Get all known product codes for this track
+    known_products = set(track.get("favorable_products", [])) | set(track.get("unfavorable_products", []))
+    if not known_products:
+        return None
+
+    # Find completed evaluations with result codes
+    evals = (await db.execute(
+        text("""
+            SELECT rc.code AS result_code
+            FROM core.evaluation_assignment ea
+            JOIN ref.category rc ON rc.id = ea.result_id
+            WHERE ea.ipr_id = :ipr_id AND ea.deleted_at IS NULL
+              AND ea.completed_at IS NOT NULL
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().all()
+
+    if not evals:
+        return None  # No completed evaluations — nothing to check
+
+    mismatched = [e["result_code"] for e in evals if e["result_code"] not in known_products]
+    if not mismatched:
+        return None  # All match — no warning needed
+
+    return {
+        "name": "eval_type_match",
+        "met": True,  # Informational — never blocks
+        "detail": (
+            f"Advertencia: dictamen(es) {', '.join(mismatched)} no corresponde(n) "
+            f"al track {ipr_row['mechanism_code']} "
+            f"(productos esperados: {', '.join(sorted(known_products))})"
+        ),
+    }
+
+
+async def _check_c33_conservation(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-07: C33 conservation cost ratio check.
+
+    If conservation cost > conservation_exempt_pct (default 30%) of replacement cost,
+    suggests reclassification to SNI. Informational — never blocks.
+    """
+    ipr_row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code,
+                   i.metadata->>'costo_conservacion' AS costo_conservacion,
+                   i.metadata->>'costo_reposicion' AS costo_reposicion
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row or ipr_row["mechanism_code"] != "C33":
+        return None
+
+    costo_cons = ipr_row["costo_conservacion"]
+    costo_repo = ipr_row["costo_reposicion"]
+
+    if not costo_cons or not costo_repo:
+        return {
+            "name": "c33_conservation",
+            "met": True,  # Informational
+            "detail": "C33: Ingresar costo_conservacion y costo_reposicion en metadata para evaluar ratio de conservación",
+        }
+
+    try:
+        cons = float(costo_cons)
+        repo = float(costo_repo)
+    except (ValueError, TypeError):
+        return {
+            "name": "c33_conservation",
+            "met": True,
+            "detail": "C33: Valores de costo inválidos en metadata",
+        }
+
+    if repo <= 0:
+        return None
+
+    # Load threshold from track config
+    track = await _get_track_config("C33", db)
+    exempt_pct = 30.0
+    if track:
+        exempt_pct = float(track.get("thresholds", {}).get("conservation_exempt_pct", 30))
+
+    ratio = (cons / repo) * 100
+    exceeds = ratio > exempt_pct
+
+    return {
+        "name": "c33_conservation",
+        "met": True,  # Informational — never blocks
+        "detail": (
+            f"C33 conservación: ratio {ratio:.1f}% "
+            f"(${cons:,.0f} / ${repo:,.0f}) "
+            f"{'excede' if exceeds else 'dentro de'} umbral {exempt_pct:.0f}%"
+            f"{' — considerar reclasificación a SNI' if exceeds else ''}"
+        ),
+    }
+
+
+async def _check_sni_proporcionalidad(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-11: SNI proportionality levels by project amount.
+
+    Reads sni_level_config table and determines the evaluation level + expected evaluator.
+    Informational — never blocks.
+    """
+    ipr_row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row or ipr_row["mechanism_code"] != "SNI":
+        return None
+
+    monto = await _get_ipr_monto(ipr_id, db)
+    utm = await _get_utm_value(db)
+    monto_utm = monto / utm if utm > 0 else 0
+
+    # Load SNI levels from DB
+    levels = (await db.execute(
+        text("""
+            SELECT level_number, label, min_utm, max_utm, evaluator_code, requires_external_eval
+            FROM core.sni_level_config
+            WHERE is_active = TRUE
+            ORDER BY level_number
+        """),
+    )).mappings().all()
+
+    if not levels:
+        return None  # Table not populated
+
+    # Find matching level
+    matched_level = None
+    for level in levels:
+        min_u = float(level["min_utm"])
+        max_u = float(level["max_utm"]) if level["max_utm"] is not None else float('inf')
+        if min_u <= monto_utm < max_u or (level["max_utm"] is None and monto_utm >= min_u):
+            matched_level = level
+            break
+
+    if not matched_level:
+        matched_level = levels[-1]  # Fallback to highest level
+
+    ext_label = "evaluación externa obligatoria" if matched_level["requires_external_eval"] else "sin evaluación externa"
+
+    return {
+        "name": "sni_proporcionalidad",
+        "met": True,  # Informational — never blocks
+        "detail": (
+            f"SNI {matched_level['label']}: monto {monto_utm:,.0f} UTM "
+            f"→ evaluador recomendado: {matched_level['evaluator_code']} ({ext_label})"
+        ),
     }
 
 
@@ -154,6 +796,40 @@ async def _evaluate_phase_gates(
             "met": has_mechanism,
             "detail": "IPR requiere mecanismo de financiamiento asignado",
         })
+
+        # HΩ-09: Max 5 FRIL per territory per fiscal year
+        fril_max = await _check_fril_max_per_comuna(ipr_id, db)
+        if fril_max is not None:
+            gates.append(fril_max)
+
+    elif transition == "F1->F2":
+        # Informational gate: IPRs <=5.000 UTM may be exempt from RATE/SNI evaluation
+        rate_check = await _check_utm_threshold(ipr_id, "RATE_EXENCION", db)
+        if rate_check is None:
+            # Below threshold — informational: could be exempt
+            utm = await _get_utm_value(db)
+            threshold = await _get_threshold("RATE_EXENCION", db)
+            threshold_utm = int(threshold["value_utm"]) if threshold else 5000
+            gates.append({
+                "name": "rate_exencion",
+                "met": True,
+                "detail": f"IPR bajo umbral de {threshold_utm:,} UTM — potencialmente exento de evaluación RATE/SNI (informativo)",
+            })
+
+        # HΩ-01: FRIL fragmentation detection
+        fril_frac = await _check_fril_fraccionamiento(ipr_id, db)
+        if fril_frac is not None:
+            gates.append(fril_frac)
+
+        # HΩ-07: C33 conservation ratio check
+        c33_gate = await _check_c33_conservation(ipr_id, db)
+        if c33_gate is not None:
+            gates.append(c33_gate)
+
+        # HΩ-11: SNI proporcionalidad levels
+        sni_gate = await _check_sni_proporcionalidad(ipr_id, db)
+        if sni_gate is not None:
+            gates.append(sni_gate)
 
     elif transition == "F2->F3":
         row = (await db.execute(
@@ -189,6 +865,15 @@ async def _evaluate_phase_gates(
             ),
         })
 
+        # Track-specific amount gates for F2→F3
+        track_gates = await _check_track_amount_gates(ipr_id, mechanism_code, "F2->F3", db)
+        gates.extend(track_gates)
+
+        # HΩ-12: Evaluation type match warning
+        eval_match = await _check_evaluation_type_match(ipr_id, db)
+        if eval_match is not None:
+            gates.append(eval_match)
+
     elif transition == "F3->F4":
         cnt = (await db.execute(
             text("SELECT COUNT(*) FROM core.budget_commitment WHERE ipr_id = :id AND deleted_at IS NULL"),
@@ -200,10 +885,38 @@ async def _evaluate_phase_gates(
             "detail": f"Requiere al menos 1 CDP vinculado ({cnt} encontrado(s))",
         })
 
-        # CORE approval gate: IPRs >7.000 UTM require Consejo Regional vote
-        core_gate = await _check_core_approval(ipr_id, db)
+        # Load track for CORE approval override + track-specific gates
+        mech_row = (await db.execute(
+            text("""
+                SELECT m.code AS mechanism_code FROM core.ipr i
+                LEFT JOIN ref.category m ON m.id = i.mechanism_id
+                WHERE i.id = :id
+            """),
+            {"id": str(ipr_id)},
+        )).mappings().first()
+        f34_mechanism = mech_row["mechanism_code"] if mech_row else None
+        f34_track = await _get_track_config(f34_mechanism, db) if f34_mechanism else None
+
+        # CORE approval gate: use track override if available, else universal threshold
+        core_override = None
+        if f34_track and "core_approval" in f34_track.get("thresholds", {}):
+            core_override = int(f34_track["thresholds"]["core_approval"])
+        core_gate = await _check_core_approval(ipr_id, db, threshold_utm_override=core_override)
         if core_gate is not None:
             gates.append(core_gate)
+
+        # Glosa rules: check budget composition limits
+        glosa_gates = await check_glosa_rules(ipr_id, db)
+        gates.extend(glosa_gates)
+
+        # Track-specific gates for F3→F4
+        track_gates_f34 = await _check_track_amount_gates(ipr_id, f34_mechanism, "F3->F4", db)
+        gates.extend(track_gates_f34)
+
+        # HΩ-05: RS evaluation validity check
+        rs_gate = await _check_rs_vigencia(ipr_id, db)
+        if rs_gate is not None:
+            gates.append(rs_gate)
 
     elif transition == "F4->F5":
         pending = (await db.execute(
@@ -236,6 +949,19 @@ async def _evaluate_phase_gates(
             "met": open_probs == 0,
             "detail": f"No debe haber problemas abiertos ({open_probs} encontrado(s))",
         })
+
+        # Track-specific gates for F4→F5
+        mech_row_f45 = (await db.execute(
+            text("""
+                SELECT m.code AS mechanism_code FROM core.ipr i
+                LEFT JOIN ref.category m ON m.id = i.mechanism_id
+                WHERE i.id = :id
+            """),
+            {"id": str(ipr_id)},
+        )).mappings().first()
+        f45_mechanism = mech_row_f45["mechanism_code"] if mech_row_f45 else None
+        track_gates_f45 = await _check_track_amount_gates(ipr_id, f45_mechanism, "F4->F5", db)
+        gates.extend(track_gates_f45)
 
     return gates
 
@@ -462,7 +1188,7 @@ async def get_track_info(
                     SELECT ea.id, et.code AS evaluator_type, o.short_name AS evaluator_org_name,
                            ea.evaluator_name, ea.assigned_at, ea.deadline_at,
                            ea.completed_at, ea.result_code, r.label AS result_label,
-                           ea.observations
+                           ea.observations, ea.numeric_score
                     FROM core.evaluation_assignment ea
                     JOIN ref.category et ON et.id = ea.evaluator_type_id
                     LEFT JOIN core.organization o ON o.id = ea.evaluator_organization_id
@@ -1374,7 +2100,8 @@ async def list_evaluations(
                    o.short_name AS evaluator_org_name,
                    ea.evaluator_name, ea.assigned_at, ea.deadline_at,
                    ea.completed_at, ea.result_code,
-                   r.label AS result_label, ea.observations
+                   r.label AS result_label, ea.observations,
+                   ea.numeric_score
             FROM core.evaluation_assignment ea
             JOIN ref.category et ON et.id = ea.evaluator_type_id
             LEFT JOIN core.organization o ON o.id = ea.evaluator_organization_id
@@ -1414,11 +2141,36 @@ async def create_evaluation(
     evaluator_type_id = body.evaluator_type_id
     if not evaluator_type_id:
         mechanism_code = ipr_row["mechanism_code"]
-        track = await _get_track_config(mechanism_code, db) if mechanism_code else None
-        if track:
+        evaluator_code = None
+
+        # SNI override: determine evaluator from sni_level_config based on monto
+        if mechanism_code == "SNI":
+            monto = await _get_ipr_monto(ipr_id, db)
+            utm = await _get_utm_value(db)
+            monto_utm = monto / utm if utm > 0 else 0
+            level_row = (await db.execute(
+                text("""
+                    SELECT evaluator_code FROM core.sni_level_config
+                    WHERE is_active = TRUE
+                      AND min_utm <= :monto_utm
+                      AND (max_utm IS NULL OR max_utm > :monto_utm)
+                    ORDER BY level_number LIMIT 1
+                """),
+                {"monto_utm": monto_utm},
+            )).mappings().first()
+            if level_row:
+                evaluator_code = level_row["evaluator_code"]
+
+        # Fallback to track default evaluator
+        if not evaluator_code:
+            track = await _get_track_config(mechanism_code, db) if mechanism_code else None
+            if track:
+                evaluator_code = track["evaluator"]
+
+        if evaluator_code:
             et_row = (await db.execute(
                 text("SELECT id FROM ref.category WHERE scheme = 'evaluator_type' AND code = :code"),
-                {"code": track["evaluator"]},
+                {"code": evaluator_code},
             )).mappings().first()
             if et_row:
                 evaluator_type_id = et_row["id"]
@@ -1492,6 +2244,10 @@ async def update_evaluation(
     if "deadline_at" in updates:
         set_clauses.append("deadline_at = :deadline_at")
         params["deadline_at"] = updates["deadline_at"]
+
+    if "numeric_score" in updates:
+        set_clauses.append("numeric_score = :numeric_score")
+        params["numeric_score"] = updates["numeric_score"]
 
     sql = text(f"""
         UPDATE core.evaluation_assignment

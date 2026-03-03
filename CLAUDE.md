@@ -71,7 +71,7 @@ Key files:
 - `api/app/core/security.py` — `OPERATIONAL_ROLES` / `DGI_ROLES` sets, password hashing, JWT
 - `api/app/middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
 - `api/app/routers/` — 18 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, actos, core_sessions)
-- `api/app/routers/admin.py` — 12 endpoints: usuarios CRUD + toggle/reset + divisiones CRUD + financing-tracks CRUD
+- `api/app/routers/admin.py` — 18 endpoints: usuarios CRUD + toggle/reset + divisiones CRUD + financing-tracks CRUD + thresholds CRUD + sni-levels CRUD
 - `api/app/routers/actos.py` — 5 endpoints: administrative acts CRUD + 7-step state machine + auto-resolution creation
 - `api/app/routers/core_sessions.py` — 9 endpoints: CORE sessions CRUD + voting + lifecycle gate F3→F4
 
@@ -96,7 +96,7 @@ Key patterns:
 - `web/src/lib/api.ts` — singleton `ApiClient` with `get<T>()`, `post<T>()`, `patch<T>()`. Token in localStorage (`goreos_token`). Auto-redirect to `/login` on 401. On error, extracts `.detail` from FastAPI JSON error bodies automatically.
 - `web/src/lib/auth.tsx` — `AuthProvider` context, `useAuth()` hook returns `{user, loading, login, logout}`
 - `web/src/types/index.ts` — all TypeScript interfaces. `User.population` (`"operativa" | "dgi"`) drives sidebar/dashboard routing.
-- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (10 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones, Actos, Sesiones CORE) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
+- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (10 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones, Actos, Sesiones CORE) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones, Umbrales, Niveles SNI for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
 - `web/src/lib/format.ts` — shared formatting utilities (es-CL locale): `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency`. All 21 frontend files import from here — never define local format functions.
@@ -104,7 +104,7 @@ Key patterns:
 
 ### Database
 
-**81 tables across 4 schemas** (61 logical + 20 txn partitions):
+**83 tables across 4 schemas** (63 logical + 20 txn partitions):
 
 | Schema | Purpose |
 |--------|---------|
@@ -148,7 +148,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**210 integration tests (203 pass + 4 known fail + 3 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**248 integration tests (244 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -167,7 +167,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules (23): `test_auth` (8), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_concurrency` (5), `test_sisrec` (18).
+Test modules (26): `test_auth` (8), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_concurrency` (5), `test_sisrec` (18), `test_thresholds` (18), `test_track_enforcement` (20), **`test_track_rules` (18)**.
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -295,7 +295,8 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 - `architecture/Omega_GORE_OS_Definition_v3.0.0.md` — system specification
 - `docs/ETL_ARCHITECTURE_v1.0.md` — ETL pipeline design (8 domains, execution order, mappings)
 - `model/model_goreos/sql/goreos_seed_etl_phase2.sql` — seed `document_channel` scheme (prerequisite for Phase 2)
-- `docs/GORE_OS_Audit_v1.0.md` — Institutional audit: executive summary, gaps, H1+H2 plan
+- `docs/GORE_OS_Audit_v2.0.md` — Institutional audit v2.0: CQ×Stories×Ontology×Omega triangulation (4 sources), 472 CQs scored, 15 HΩ findings, 81+ Omega rules mapped, delta v1.0→v2.0
+- `docs/GORE_OS_Audit_v1.0.md` — Institutional audit v1.0: executive summary, gaps, H1+H2 plan
 - `docs/GORE_OS_Audit_Detail_v1.0.md` — Detailed audit: 819 stories × implementation cross, ontology × schema
 - `model/model_goreos/sql/goreos_migration_wave5_core_voting.sql` — CORE governance voting (session_vote table + 3 schemes)
 - `model/model_goreos/sql/goreos_rollback_wave5_core_voting.sql` — rollback for Wave 5
@@ -308,6 +309,12 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 - `model/model_goreos/sql/goreos_rollback_wave9_tracking.sql` — rollback for Wave 9
 - `model/model_goreos/sql/goreos_migration_wave10_sisrec.sql` — SISREC multi-role (3 states + amount + rendition_history + trigger)
 - `model/model_goreos/sql/goreos_rollback_wave10_sisrec.sql` — rollback for Wave 10
+- `model/model_goreos/sql/goreos_migration_ciclo20_thresholds.sql` — core.financial_threshold table (9 umbrales + UTM_VALUE)
+- `model/model_goreos/sql/goreos_rollback_ciclo20_thresholds.sql` — rollback for Ciclo 20+21
+- `model/model_goreos/sql/goreos_migration_ciclo22_eval_score.sql` — numeric_score column for evaluation_assignment (FRPD puntaje gate)
+- `model/model_goreos/sql/goreos_rollback_ciclo22_eval_score.sql` — rollback for Ciclo 22
+- `model/model_goreos/sql/goreos_migration_ciclo23_sni_levels.sql` — core.sni_level_config table (4 SNI levels + SEREMI evaluator type)
+- `model/model_goreos/sql/goreos_rollback_ciclo23_sni_levels.sql` — rollback for Ciclo 23
 - `scripts/run_migrations.sh` — Migration runner script (applies pending DDL in order)
 - `docs/ONBOARDING.md` — Developer onboarding guide
 - `docs/adr/` — 6 Architecture Decision Records (ADR-001 through ADR-006)
@@ -316,11 +323,11 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 
 **Critical**: ~~Art. 18 CGR~~ RESUELTO — `_check_pending_renditions()` en `convenios.py` bloquea POST/PATCH cuotas si hay rendiciones no-terminales. Ciclo 19 extends check to `paid_amount`/`paid_at` fields. SISREC multi-role workflow: 8 states, role-based transitions, audit trail, SLA alerts.
 
-**High**: ~~Administrative act history~~ RESUELTO (Wave 6, Ciclo 13) — `core.administrative_act_history` + trigger `trg_act_history` + helper `_get_act_history` + campo `history` en `ActoDetail`. SISREC MVP RESUELTO (Ciclo 13) — `POST /api/dgi/data/rendiciones` + `GET /api/dgi/data/rendiciones/{id}`. ~~Poly-Switch routing~~ RESUELTO (Ciclo 18) — `TRACK_CONFIG` → `core.financing_track` table (Ciclo Remediación Wave 6). ~~Migration tracking~~ RESUELTO (Ciclo Remediación Wave 7) — `core.schema_migration` + `run_migrations.sh`. 0/11 financial thresholds codified. 0/8 budget glosa rules.
+**High**: ~~Administrative act history~~ RESUELTO (Wave 6, Ciclo 13) — `core.administrative_act_history` + trigger `trg_act_history` + helper `_get_act_history` + campo `history` en `ActoDetail`. SISREC MVP RESUELTO (Ciclo 13) — `POST /api/dgi/data/rendiciones` + `GET /api/dgi/data/rendiciones/{id}`. ~~Poly-Switch routing~~ RESUELTO (Ciclo 18) — `TRACK_CONFIG` → `core.financing_track` table (Ciclo Remediación Wave 6). ~~Migration tracking~~ RESUELTO (Ciclo Remediación Wave 7) — `core.schema_migration` + `run_migrations.sh`. ~~Financial thresholds~~ MAYORMENTE RESUELTO (Ciclo 20+21 + Ciclo 22) — 9 universal en `core.financial_threshold`, 6/9 track-específicos enforced via `_check_track_amount_gates()` (FRIL max/min, FRPD CGR/puntaje, SUBV8 SISREC, FRIL licitación). 3 track thresholds pendientes. ~~Budget glosa rules~~ MAYORMENTE RESUELTO (Ciclo 20+21 + Ciclo 22) — 6/8 glosas codificadas: 5 porcentuales + Glosa 03 prohibition (FNDR→PERSONAL).
 
-**Medium**: CORE governance implemented (Wave 5: ordinary sessions + voting + F3→F4 gate for IPRs >7.000 UTM). 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, etc.). Budget classifier is flat (only subtitle, missing 5 levels). IPR `sponsor_division_id` and `assignee_id` are 0% populated.
+**Medium**: CORE governance implemented (Wave 5: ordinary sessions + voting + F3→F4 gate for IPRs >7.000 UTM, now DB-driven). 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, etc.). ~~Budget classifier flat~~ PARCIAL (Ciclo 20+21) — 4/6 levels active (program_type, item, allocation, subtitle) in API+UI; levels 1-2 are institutional constants. IPR `sponsor_division_id` and `assignee_id` are 0% populated.
 
-**Coverage**: ~125 API endpoints, 210 tests (203 pass + 4 known fail + 3 skip), 23 test modules, 8/16 domains implemented, ~15% of 819 user stories covered. All 5 H1+H2 waves + Ciclo 13 compliance push + Ciclo Remediación (8 waves) + Ciclo 19 SISREC completed. Full audit in `docs/GORE_OS_Audit_v1.0.md`.
+**Coverage**: ~131 API endpoints, 266 tests (262 pass + 4 skip), 26 test modules, 8/16 domains implemented, ~15% of 819 user stories covered. All 5 H1+H2 waves + Ciclo 13 compliance push + Ciclo Remediación (8 waves) + Ciclo 19 SISREC + Ciclo 20+21 Compliance Doble + Ciclo 22 Track Enforcement + Ciclo 23 Track Rules Engine completed. Full audit in `docs/GORE_OS_Audit_v2.0.md`.
 
 ## Critical Rules
 
@@ -338,7 +345,7 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 12. **Role restriction pattern**: Use a helper function `_require_roles(user, ...)` called inside the endpoint body. Do NOT use `require_roles()` from `deps.py` as a default parameter value — it conflicts with `CurrentUser` (which is `Annotated[dict, Depends()]`).
 13. **Reuniones module**: Uses existing DDL tables (`core.committee`, `core.session`, `core.crisis_meeting`, `core.minute`, `core.session_agreement`, `core.agenda_item_context`). No DDL migration needed. A dedicated crisis committee (code `COMITE-CRISIS`) is auto-created on first use. Sibling module: `core_sessions.py` handles CORE ordinary sessions with voting.
 14. **Dashboard endpoints**: Role-specific dashboards: `GET /api/dashboard` (base, role-aware), `GET /api/dashboard/ejecutivo` (ADMIN with division breakdown), `GET /api/dashboard/mi-division` (JEFE_DIVISION team load), `GET /api/dashboard/mis-compromisos` (ENCARGADO grouped commitments).
-15. **Admin module**: `GET/POST/PATCH /api/admin/usuarios`, `POST /api/admin/usuarios/{id}/toggle-activo`, `POST /api/admin/usuarios/{id}/reset-password`, `GET/POST/PATCH /api/admin/divisiones`, `GET/POST/PATCH /api/admin/financing-tracks`. All restricted to ADMIN_SISTEMA.
+15. **Admin module**: `GET/POST/PATCH /api/admin/usuarios`, `POST /api/admin/usuarios/{id}/toggle-activo`, `POST /api/admin/usuarios/{id}/reset-password`, `GET/POST/PATCH /api/admin/divisiones`, `GET/POST/PATCH /api/admin/financing-tracks`, `GET/POST/PATCH /api/admin/thresholds`, `GET/POST/PATCH /api/admin/sni-levels`. All restricted to ADMIN_SISTEMA.
 16. **After code changes**: Always restart API container (`docker compose restart api`) — uvicorn hot-reload may not catch new files/imports.
 17. **Large dataset selects**: `core.ipr` has 3,600+ rows, `core.organization` has 3,300+ rows. Never load all records into a `<Select>`. Use `ComboboxAsync` for IPR fields (server-side search via `GET /api/catalogs/iprs?search=TERM`). For divisions, `GET /api/catalogs/divisions` returns only ~9 entries (DIVISION + GORE type) — any query that joins `core.organization` without filtering `org_type_id` will return all organizations. Note: after the confrontation migration, many internal orgs were reclassified to STAFF_UNIT, DEPARTAMENTO, UNIDAD, ADVISORY_BODY — these are intentionally excluded from the divisions catalog.
 18. **API error messages**: `ApiClient` in `api.ts` automatically extracts `.detail` from FastAPI JSON error responses. Backend `HTTPException(detail="...")` strings reach frontend `catch (err)` blocks as clean text — no need to parse JSON in component code.
@@ -369,3 +376,16 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 43. **Migration tracking**: `core.schema_migration` table tracks applied DDL migrations. Runner: `./scripts/run_migrations.sh [container] [db]`. All historical migrations registered retroactively. New migrations must be registered in the script.
 44. **IPR tab components**: 10 tabs extracted to `web/src/app/(app)/ipr/components/tab-*.tsx` (tab-compromisos, tab-problemas, tab-alertas, tab-convenios, tab-cdps, tab-avances, tab-partes, tab-territorio, tab-hitos, tab-resoluciones). Each is self-contained with own state/fetch/loading. Main page retains hero section, stepper, transitions, and edit/assignee drawers.
 45. **SISREC multi-role workflow**: Rendiciones use 8-state machine with role-based transitions. States: PENDIENTE → EN_REVISION_RTF → VISADA_RTF → EN_REVISION_UCR → APROBADA/RECHAZADA + OBSERVADA loop. `_RENDICION_TRANSITIONS` defines valid transitions; `_RENDICION_TRANSITION_ROLES` maps `(from, to)` pairs to allowed role sets. Operativa can initiate (PENDIENTE→EN_REVISION_RTF) and resubmit (OBSERVADA→EN_REVISION_RTF). DGI can visa, observe, approve, reject. `core.rendition_history` + `fn_rendition_history()` trigger records state changes. SLA: `_RENDICION_SLA_DAYS` dict (`EN_REVISION_RTF: 7`, `EN_REVISION_UCR: 2`). Legacy `EN_REVISION` state frozen at sort_order=99. Art. 18 gap fix: `convenios.py` PATCH cuotas now also checks renditions when `paid_amount` or `paid_at` are updated (not just `payment_status_id`).
+46. **Financial thresholds**: `core.financial_threshold` table stores 10 administrable thresholds (4 universal UTM + 5 glosa % + 1 UTM_VALUE config). Helpers: `_get_utm_value(db)` reads UTM from DB (fallback 67294), `_get_threshold(code, db)` loads any threshold, `_check_utm_threshold(ipr_id, code, db)` generic IPR amount check. CORE approval gate now reads from DB instead of hardcoded `_CORE_THRESHOLD_UTM`. Convenio `_validate_amount_thresholds` reads GARANTIA_CONVENIO and CGR_TOMA_RAZON from DB.
+47. **Glosa rules engine**: `check_glosa_rules(ipr_id, db)` in `presupuesto.py` evaluates 5 glosa spending limits against CDPs linked to an IPR. `_GLOSA_ITEM_MAP` maps threshold codes to budget_item scheme codes. Integrated in `_evaluate_phase_gates()` at F3→F4 transition. Results are gate dicts with `{name, met, detail}`.
+48. **Budget classifier 4-level**: `PresupuestoListItem` now includes `item_label` and `allocation_label` (promoted from Detail). List endpoint accepts `item`, `allocation`, `program_type` query params for filtering. Frontend shows "Ítem" column in DataTable. Levels 1-2 (Partida, Capítulo) are institutional constants.
+49. **Track-specific enforcement**: `_check_track_amount_gates(ipr_id, mechanism_code, transition, db)` in `ipr.py` reads `financing_track.thresholds` JSONB and evaluates track-specific gates at phase transitions. Supports: `max_utm` (F2→F3, blocking), `min_clp` (F2→F3, blocking), `puntaje_min` (F2→F3, blocking — reads `evaluation_assignment.numeric_score`), `cgr_res30_utm` (F3→F4, informational), `licitacion_max_days` (F3→F4, blocking — reads `ipr_milestone.deviation_days`), `sisrec_mandatory_utm` (F4→F5, blocking — requires renditions), `core_approval` (F3→F4, overrides universal CORE threshold). Helper `_get_ipr_monto()` extracts monto from `metadata->>'monto_total'`.
+50. **Glosa 03 prohibition**: `_check_glosa03_prohibition(ipr_id, db)` in `presupuesto.py` blocks FNDR-funded IPRs (mechanism IN {SNI, FRIL, C33} or funding_source = FNDR) from having CDPs with `budget_item = PERSONAL`. Integrated at end of `check_glosa_rules()`.
+51. **Evaluation numeric_score**: `core.evaluation_assignment.numeric_score` NUMERIC(5,2) column added by `goreos_migration_ciclo22_eval_score.sql`. Used by FRPD `puntaje_min` gate. PATCH endpoint accepts `numeric_score` field. Frontend shows score field in result registration form.
+52. **FRIL fraccionamiento detection**: `_check_fril_fraccionamiento(ipr_id, db)` at F1→F2 detects artificial project fragmentation. Looks for FRIL siblings with same `executor_id` + same territory + ±90 days. If combined monto > FRIL `max_utm`, blocks. Requires both `executor_id` and `ipr_territory` to be populated.
+53. **FRIL max 5/comuna**: `_check_fril_max_per_comuna(ipr_id, db)` at F0→F1 limits FRIL projects to 5 per territory per fiscal year. IPRs with `metadata->>'fril_category'` IN ('A2','A3') are exempt. Territory comes from `ipr_territory` table.
+54. **RS evaluation validity**: `_check_rs_vigencia(ipr_id, db)` at F3→F4 checks if favorable evaluation (RS/ITF/etc.) has expired per `financing_track.rs_validity_years`. SNI default is 3 years. Blocks if expired or missing.
+55. **Evaluation type match**: `_check_evaluation_type_match(ipr_id, db)` at F2→F3 warns (informational) if evaluation result code doesn't match track's `favorable_products` or `unfavorable_products`. Never blocks.
+56. **C33 conservation ratio**: `_check_c33_conservation(ipr_id, db)` at F1→F2 checks if `metadata->>'costo_conservacion'` / `metadata->>'costo_reposicion'` exceeds `conservation_exempt_pct` (default 30%). Informational — suggests reclassification to SNI if exceeded.
+57. **SNI proporcionalidad**: `_check_sni_proporcionalidad(ipr_id, db)` at F1→F2 reads `core.sni_level_config` to determine evaluation level by monto UTM. 4 levels: ≤1,500 (GORE_DAE), 1,500-5,000 (SEREMI), 5,000-25,000 (MDSF), >25,000 (MDSF+external). `create_evaluation()` auto-assigns level-specific evaluator for SNI mechanism.
+58. **SNI level config table**: `core.sni_level_config` (level_number, label, min_utm, max_utm, evaluator_code, requires_external_eval). 4 seeded levels. Admin CRUD via `GET/POST/PATCH /api/admin/sni-levels`.

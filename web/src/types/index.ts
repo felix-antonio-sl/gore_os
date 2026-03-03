@@ -178,6 +178,8 @@ export interface PresupuestoListItem {
   division_name: string | null;
   subtitle_label: string | null;
   program_type_label: string | null;
+  item_label: string | null;
+  allocation_label: string | null;
   initial_amount: number;
   current_amount: number | null;
   committed_amount: number;
@@ -634,4 +636,5 @@ export interface EvaluationAssignment {
   result_code: string | null;
   result_label: string | null;
   observations: string | null;
+  numeric_score: number | null;
 }
