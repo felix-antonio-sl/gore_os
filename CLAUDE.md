@@ -264,14 +264,15 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~131 API endpoints, 288 tests (284 pass + 4 skip), 27 modules, ~15% of 819 user stories. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: ~131 API endpoints, 288 tests (284 pass + 4 skip), 27 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
-- 3/9 track-specific thresholds pending, 2/8 glosas pending, budget classifier 4/6 levels
-- 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO, JEFE_DEPARTAMENTO, JEFE_UNIDAD)
-- IPR `sponsor_division_id` and `assignee_id` are 0% populated
+- HΩ-02 Parentesco 8% (kinship disqualification — not started)
+- HΩ-14 SISREC ciclo completo 13-14d (partial — only RTF 7d + UCR 2d of 8 phases)
+- HΩ-15 Budget Cycle Timeline T-1→T→T+1 (not started)
+- 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 4/6 levels
 - 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR)
-- 10/12 SLAs without enforcement (only RTF 7d + UCR 2d implemented)
+- 5 system roles with 0 users, IPR `sponsor_division_id`/`assignee_id` = 0% populated
 
 ## Critical Rules
 
