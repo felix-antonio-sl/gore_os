@@ -637,4 +637,7 @@ export interface EvaluationAssignment {
   result_label: string | null;
   observations: string | null;
   numeric_score: number | null;
+  rank_position: number | null;
+  rank_total: number | null;
+  convocatoria_code: string | null;
 }

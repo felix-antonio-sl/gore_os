@@ -232,6 +232,19 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
                 </p>
               )}
 
+              {ev.rank_position != null && (
+                <p className="text-xs mt-1 text-muted-foreground">
+                  Ranking: <span className="font-medium text-foreground">
+                    {ev.rank_position}{ev.rank_total ? ` / ${ev.rank_total}` : ""}
+                  </span>
+                  {ev.convocatoria_code && (
+                    <span className="ml-2 text-muted-foreground">
+                      (Conv. {ev.convocatoria_code})
+                    </span>
+                  )}
+                </p>
+              )}
+
               {ev.observations && (
                 <p className="text-xs mt-1 italic">{ev.observations}</p>
               )}

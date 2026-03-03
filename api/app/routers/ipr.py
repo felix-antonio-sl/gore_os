@@ -778,6 +778,353 @@ async def _check_sni_proporcionalidad(ipr_id: UUID, db: AsyncSession) -> dict | 
     }
 
 
+async def _check_fril_tender_deadline(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-08: FRIL tender deadline — blocks F3→F4 if tender not started within N days."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, i.updated_at
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "FRIL":
+        return None
+
+    track = await _get_track_config("FRIL", db)
+    deadline_days = int((track or {}).get("thresholds", {}).get("tender_deadline_days", 90))
+    ipr_updated = row["updated_at"]
+
+    # Check if LICITACION milestone exists with actual_date
+    lic_row = (await db.execute(
+        text("""
+            SELECT actual_date FROM core.ipr_milestone im
+            JOIN ref.category mt ON mt.id = im.milestone_type_id
+            WHERE im.ipr_id = :id AND mt.code = 'LICITACION'
+              AND im.deleted_at IS NULL AND im.actual_date IS NOT NULL
+            LIMIT 1
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+
+    if lic_row:
+        return None  # Tender started — gate passes silently
+
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    if ipr_updated.tzinfo is None:
+        from datetime import timezone as tz
+        ipr_updated = ipr_updated.replace(tzinfo=tz.utc)
+    elapsed = (now - ipr_updated).days
+
+    if elapsed > deadline_days:
+        return {
+            "name": "fril_tender_deadline",
+            "met": False,
+            "detail": (
+                f"FRIL: {elapsed} días sin licitación desde aprobación técnica "
+                f"(máximo {deadline_days} días). Requiere hito LICITACION con fecha real."
+            ),
+        }
+
+    return {
+        "name": "fril_tender_deadline",
+        "met": True,
+        "detail": (
+            f"FRIL: {elapsed}/{deadline_days} días transcurridos sin licitación. "
+            f"Plazo vigente."
+        ),
+    }
+
+
+async def _check_glosa06_single_purpose(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-06: Glosa 06 programs must have exactly 1 MML Purpose."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, i.metadata
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "GLOSA06":
+        return None
+
+    metadata = row["metadata"] or {}
+    purpose_count_raw = metadata.get("mml_purpose_count")
+
+    if purpose_count_raw is None:
+        return {
+            "name": "glosa06_single_purpose",
+            "met": False,
+            "detail": (
+                "Glosa 06: falta metadata 'mml_purpose_count'. "
+                "Ingrese el conteo de Propósitos MML para continuar."
+            ),
+        }
+
+    try:
+        purpose_count = int(purpose_count_raw)
+    except (ValueError, TypeError):
+        return {
+            "name": "glosa06_single_purpose",
+            "met": False,
+            "detail": f"Glosa 06: valor inválido de mml_purpose_count: '{purpose_count_raw}'",
+        }
+
+    if purpose_count != 1:
+        return {
+            "name": "glosa06_single_purpose",
+            "met": False,
+            "detail": (
+                f"Glosa 06: requiere exactamente 1 Propósito MML, "
+                f"pero se encontraron {purpose_count}."
+            ),
+        }
+
+    return None  # Exactly 1 — gate passes silently
+
+
+# SLA constants for moroso check (same as dgi_data.py, defined locally to avoid circular import)
+async def _check_pagare_notarial(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-03: SUBV8 requires notarial promissory note covering 100% with ≥18m validity."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, i.metadata
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "SUBV8":
+        return None
+
+    metadata = row["metadata"] or {}
+    monto_total = await _get_ipr_monto(ipr_id, db)
+    pagare_monto_raw = metadata.get("pagare_monto")
+    pagare_fecha_raw = metadata.get("pagare_fecha_vencimiento")
+
+    if not pagare_monto_raw or not pagare_fecha_raw:
+        return {
+            "name": "pagare_notarial",
+            "met": False,
+            "detail": (
+                "SUBV8: requiere pagaré notarial. Ingrese 'pagare_monto' y "
+                "'pagare_fecha_vencimiento' en metadata del IPR."
+            ),
+        }
+
+    try:
+        pagare_monto = float(pagare_monto_raw)
+    except (ValueError, TypeError):
+        return {
+            "name": "pagare_notarial",
+            "met": False,
+            "detail": f"SUBV8: valor inválido de pagare_monto: '{pagare_monto_raw}'",
+        }
+
+    if pagare_monto < monto_total:
+        return {
+            "name": "pagare_notarial",
+            "met": False,
+            "detail": (
+                f"SUBV8: pagaré (${pagare_monto:,.0f}) no cubre 100% del monto total "
+                f"(${monto_total:,.0f}). Debe ser ≥ monto total."
+            ),
+        }
+
+    # Check validity period
+    track = await _get_track_config("SUBV8", db)
+    validity_months = int((track or {}).get("thresholds", {}).get("pagare_validity_months", 18))
+
+    from datetime import datetime, timezone
+    try:
+        fecha_venc = datetime.fromisoformat(pagare_fecha_raw)
+        if fecha_venc.tzinfo is None:
+            fecha_venc = fecha_venc.replace(tzinfo=timezone.utc)
+    except ValueError:
+        return {
+            "name": "pagare_notarial",
+            "met": False,
+            "detail": f"SUBV8: fecha de vencimiento inválida: '{pagare_fecha_raw}'",
+        }
+
+    now = datetime.now(timezone.utc)
+    remaining_days = (fecha_venc - now).days
+    min_days = validity_months * 30  # Approximate
+
+    if remaining_days < min_days:
+        return {
+            "name": "pagare_notarial",
+            "met": False,
+            "detail": (
+                f"SUBV8: pagaré vence en {remaining_days} días, "
+                f"requiere mínimo {validity_months} meses ({min_days} días) de vigencia."
+            ),
+        }
+
+    return None  # Passes silently
+
+
+async def _check_directorio_certificate(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-04: SUBV8 requires board certificate issued within N days (default 60)."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, i.metadata
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "SUBV8":
+        return None
+
+    metadata = row["metadata"] or {}
+    cert_date_raw = metadata.get("directorio_cert_date")
+
+    if not cert_date_raw:
+        return {
+            "name": "directorio_certificate",
+            "met": False,
+            "detail": (
+                "SUBV8: requiere certificado de directorio vigente. "
+                "Ingrese 'directorio_cert_date' en metadata del IPR."
+            ),
+        }
+
+    from datetime import datetime, timezone
+    try:
+        cert_date = datetime.fromisoformat(cert_date_raw)
+        if cert_date.tzinfo is None:
+            cert_date = cert_date.replace(tzinfo=timezone.utc)
+    except ValueError:
+        return {
+            "name": "directorio_certificate",
+            "met": False,
+            "detail": f"SUBV8: fecha de certificado inválida: '{cert_date_raw}'",
+        }
+
+    track = await _get_track_config("SUBV8", db)
+    max_days = int((track or {}).get("thresholds", {}).get("directorio_max_days", 60))
+
+    now = datetime.now(timezone.utc)
+    age_days = (now - cert_date).days
+
+    if age_days > max_days:
+        return {
+            "name": "directorio_certificate",
+            "met": False,
+            "detail": (
+                f"SUBV8: certificado de directorio tiene {age_days} días de antigüedad "
+                f"(máximo {max_days} días). Requiere renovación."
+            ),
+        }
+
+    return None  # Passes silently
+
+
+async def _check_ranking_persistence(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-13: Informational — warn if competitive mechanism lacks ranking data."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] not in ("SUBV8", "FRPD"):
+        return None
+
+    # Check for completed evaluations missing rank_position
+    missing = (await db.execute(
+        text("""
+            SELECT COUNT(*) FROM core.evaluation_assignment
+            WHERE ipr_id = :id AND deleted_at IS NULL
+              AND completed_at IS NOT NULL AND rank_position IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).scalar() or 0
+
+    if missing > 0:
+        return {
+            "name": "ranking_persistence",
+            "met": True,  # Informational — never blocks
+            "detail": (
+                f"Mecanismo competitivo ({row['mechanism_code']}): "
+                f"{missing} evaluación(es) completada(s) sin ranking asignado. "
+                f"Registre rank_position/rank_total para trazabilidad."
+            ),
+        }
+
+    return None  # All good — no warning needed
+
+
+# SLA constants for moroso check (same as dgi_data.py, defined locally to avoid circular import)
+_MOROSO_SLA_DAYS = {"EN_REVISION_RTF": 7, "EN_REVISION_UCR": 2}
+
+
+async def _check_morosos_sisrec(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-10: Block SUBV8 funds if executor has overdue renditions on any IPR."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, i.executor_id
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "SUBV8":
+        return None
+    if not row["executor_id"]:
+        return None  # No executor — skip silently
+
+    executor_id = str(row["executor_id"])
+
+    # Find overdue renditions for this executor across ALL IPRs
+    overdue = (await db.execute(
+        text("""
+            SELECT COUNT(*) FROM core.rendition r
+            JOIN ref.category st ON st.id = r.state_id
+            JOIN core.ipr i2 ON i2.id = r.ipr_id
+            WHERE i2.executor_id = CAST(:executor_id AS uuid)
+              AND r.deleted_at IS NULL
+              AND st.scheme = 'rendition_state'
+              AND (
+                  (st.code = 'EN_REVISION_RTF' AND r.updated_at < NOW() - INTERVAL '7 days')
+                  OR
+                  (st.code = 'EN_REVISION_UCR' AND r.updated_at < NOW() - INTERVAL '2 days')
+              )
+        """),
+        {"executor_id": executor_id},
+    )).scalar() or 0
+
+    if overdue > 0:
+        # Get executor name for detail message
+        org_row = (await db.execute(
+            text("SELECT short_name FROM core.organization WHERE id = CAST(:id AS uuid)"),
+            {"id": executor_id},
+        )).mappings().first()
+        org_name = org_row["short_name"] if org_row else "desconocida"
+        return {
+            "name": "morosos_sisrec",
+            "met": False,
+            "detail": (
+                f"SUBV8: entidad ejecutora '{org_name}' tiene {overdue} rendición(es) vencida(s) "
+                f"(SLA: RTF {_MOROSO_SLA_DAYS['EN_REVISION_RTF']}d, UCR {_MOROSO_SLA_DAYS['EN_REVISION_UCR']}d). "
+                f"Bloqueo total de fondos hasta regularización."
+            ),
+        }
+
+    return None  # No overdue renditions — gate passes silently
+
+
 async def _evaluate_phase_gates(
     ipr_id: UUID, current_phase: str, target_phase: str, db: AsyncSession
 ) -> list[dict]:
@@ -831,6 +1178,11 @@ async def _evaluate_phase_gates(
         if sni_gate is not None:
             gates.append(sni_gate)
 
+        # HΩ-06: Glosa 06 single-purpose MML
+        glosa06_gate = await _check_glosa06_single_purpose(ipr_id, db)
+        if glosa06_gate is not None:
+            gates.append(glosa06_gate)
+
     elif transition == "F2->F3":
         row = (await db.execute(
             text("""
@@ -873,6 +1225,21 @@ async def _evaluate_phase_gates(
         eval_match = await _check_evaluation_type_match(ipr_id, db)
         if eval_match is not None:
             gates.append(eval_match)
+
+        # HΩ-13: Ranking persistence warning for competitive mechanisms
+        ranking_gate = await _check_ranking_persistence(ipr_id, db)
+        if ranking_gate is not None:
+            gates.append(ranking_gate)
+
+        # HΩ-03: Pagaré notarial for SUBV8
+        pagare_gate = await _check_pagare_notarial(ipr_id, db)
+        if pagare_gate is not None:
+            gates.append(pagare_gate)
+
+        # HΩ-04: Directorio certificate for SUBV8
+        dir_gate = await _check_directorio_certificate(ipr_id, db)
+        if dir_gate is not None:
+            gates.append(dir_gate)
 
     elif transition == "F3->F4":
         cnt = (await db.execute(
@@ -918,6 +1285,16 @@ async def _evaluate_phase_gates(
         if rs_gate is not None:
             gates.append(rs_gate)
 
+        # HΩ-08: FRIL tender deadline check
+        fril_tender = await _check_fril_tender_deadline(ipr_id, db)
+        if fril_tender is not None:
+            gates.append(fril_tender)
+
+        # HΩ-10: Morosos SISREC — entity-scoped overdue renditions
+        morosos_gate = await _check_morosos_sisrec(ipr_id, db)
+        if morosos_gate is not None:
+            gates.append(morosos_gate)
+
     elif transition == "F4->F5":
         pending = (await db.execute(
             text("""
@@ -962,6 +1339,11 @@ async def _evaluate_phase_gates(
         f45_mechanism = mech_row_f45["mechanism_code"] if mech_row_f45 else None
         track_gates_f45 = await _check_track_amount_gates(ipr_id, f45_mechanism, "F4->F5", db)
         gates.extend(track_gates_f45)
+
+        # HΩ-10: Morosos SISREC — entity-scoped overdue renditions (also at F4→F5)
+        morosos_gate_f45 = await _check_morosos_sisrec(ipr_id, db)
+        if morosos_gate_f45 is not None:
+            gates.append(morosos_gate_f45)
 
     return gates
 
@@ -2101,7 +2483,8 @@ async def list_evaluations(
                    ea.evaluator_name, ea.assigned_at, ea.deadline_at,
                    ea.completed_at, ea.result_code,
                    r.label AS result_label, ea.observations,
-                   ea.numeric_score
+                   ea.numeric_score,
+                   ea.rank_position, ea.rank_total, ea.convocatoria_code
             FROM core.evaluation_assignment ea
             JOIN ref.category et ON et.id = ea.evaluator_type_id
             LEFT JOIN core.organization o ON o.id = ea.evaluator_organization_id
@@ -2182,11 +2565,13 @@ async def create_evaluation(
         text("""
             INSERT INTO core.evaluation_assignment (
                 ipr_id, evaluator_type_id, evaluator_organization_id,
-                evaluator_name, deadline_at, created_by_id
+                evaluator_name, deadline_at, created_by_id,
+                rank_position, rank_total, convocatoria_code
             ) VALUES (
                 CAST(:ipr_id AS uuid), CAST(:evaluator_type_id AS uuid),
                 CAST(:evaluator_org_id AS uuid), :evaluator_name,
-                :deadline_at, CAST(:user_id AS uuid)
+                :deadline_at, CAST(:user_id AS uuid),
+                :rank_position, :rank_total, :convocatoria_code
             )
             RETURNING id
         """),
@@ -2197,6 +2582,9 @@ async def create_evaluation(
             "evaluator_name": body.evaluator_name,
             "deadline_at": body.deadline_at,
             "user_id": str(user["id"]),
+            "rank_position": body.rank_position,
+            "rank_total": body.rank_total,
+            "convocatoria_code": body.convocatoria_code,
         },
     )).mappings().first()
     await db.commit()
@@ -2248,6 +2636,18 @@ async def update_evaluation(
     if "numeric_score" in updates:
         set_clauses.append("numeric_score = :numeric_score")
         params["numeric_score"] = updates["numeric_score"]
+
+    if "rank_position" in updates:
+        set_clauses.append("rank_position = :rank_position")
+        params["rank_position"] = updates["rank_position"]
+
+    if "rank_total" in updates:
+        set_clauses.append("rank_total = :rank_total")
+        params["rank_total"] = updates["rank_total"]
+
+    if "convocatoria_code" in updates:
+        set_clauses.append("convocatoria_code = :convocatoria_code")
+        params["convocatoria_code"] = updates["convocatoria_code"]
 
     sql = text(f"""
         UPDATE core.evaluation_assignment

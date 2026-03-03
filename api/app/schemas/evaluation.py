@@ -8,6 +8,9 @@ class EvaluationAssignmentCreate(BaseModel):
     evaluator_organization_id: UUID | None = None
     evaluator_name: str | None = None
     deadline_at: datetime | None = None
+    rank_position: int | None = None
+    rank_total: int | None = None
+    convocatoria_code: str | None = None
 
 
 class EvaluationAssignmentUpdate(BaseModel):
@@ -16,6 +19,9 @@ class EvaluationAssignmentUpdate(BaseModel):
     completed_at: datetime | None = None
     deadline_at: datetime | None = None
     numeric_score: float | None = None
+    rank_position: int | None = None
+    rank_total: int | None = None
+    convocatoria_code: str | None = None
 
 
 class EvaluationAssignmentItem(BaseModel):
@@ -32,3 +38,6 @@ class EvaluationAssignmentItem(BaseModel):
     result_label: str | None = None
     observations: str | None = None
     numeric_score: float | None = None
+    rank_position: int | None = None
+    rank_total: int | None = None
+    convocatoria_code: str | None = None
