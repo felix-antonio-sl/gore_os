@@ -5,7 +5,7 @@ from app.middleware.security import SecurityHeadersMiddleware
 from app.routers import auth, ipr, compromisos, problemas, alertas, dashboard, catalogs
 from app.routers import dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports
 from app.routers import presupuesto, convenios, admin, reuniones
-from app.routers import search, actos, core_sessions
+from app.routers import search, actos, core_sessions, dgi_cartera
 
 settings = get_settings()
 
@@ -46,6 +46,7 @@ def create_app() -> FastAPI:
     app.include_router(search.router)
     app.include_router(actos.router)
     app.include_router(core_sessions.router)
+    app.include_router(dgi_cartera.router)
 
     @app.get("/api/health")
     async def health():

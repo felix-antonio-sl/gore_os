@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { AlertTriangle, Users, FileText, CheckSquare, Receipt } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { SemaforoCard } from "@/components/semaforo-card";
 import { SemaforoGauge } from "@/components/charts/semaforo-gauge";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,7 @@ const reportStatusBadge: Record<string, { label: string; className: string }> = 
 };
 
 export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
+  const router = useRouter();
   const { semaforo, decisions_pending, team_status, critical_alerts, report_status, rendition_summary } = data;
 
   return (
@@ -54,6 +56,15 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
               label={dim.label}
               signal={dim.signal}
               indicatorCount={dim.indicator_count}
+              onClick={
+                dim.dimension === "CARTERA_IPR"
+                  ? () => router.push(
+                      dim.signal === "VERDE"
+                        ? "/cartera"
+                        : `/cartera?health_signal=${dim.signal}`
+                    )
+                  : undefined
+              }
             />
           ))}
         </div>

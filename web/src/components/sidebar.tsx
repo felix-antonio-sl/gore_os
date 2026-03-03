@@ -53,6 +53,7 @@ const adminOnlyNav: NavItem[] = [
 
 const dgiNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
+  { label: "Cartera", href: "/cartera", icon: <FolderKanban className="size-4" /> },
   { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
   { label: "Tablero", href: "/tablero", icon: <KanbanSquare className="size-4" /> },
   { label: "Datos", href: "/datos", icon: <Database className="size-4" /> },

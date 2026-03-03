@@ -623,6 +623,63 @@ export interface TrackInfo {
   evaluations: EvaluationAssignment[];
 }
 
+// ---------------------------------------------------------------------------
+// DGI Cartera IPR Types
+// ---------------------------------------------------------------------------
+export type HealthSignal = "VERDE" | "AMARILLO" | "ROJO";
+
+export interface CarteraIPRItem {
+  id: string;
+  codigo_bip: string;
+  name: string;
+  mechanism: string | null;
+  mcd_phase: string | null;
+  division_name: string | null;
+  division_id: string | null;
+  monto_total: number | null;
+  health_signal: HealthSignal;
+  health_reasons: string[];
+  days_since_update: number;
+  physical_progress: number | null;
+  financial_progress: number | null;
+  cdp_total: number;
+  cdp_paid: number;
+  budget_execution_pct: number | null;
+  agreement_count: number;
+  agreement_latest_state: string | null;
+  overdue_installments: number;
+  resolution_count: number;
+  pending_cgr: number;
+  open_problems: number;
+  active_alerts: number;
+  critical_alerts: number;
+  overdue_commitments: number;
+}
+
+export interface CarteraSummary {
+  total: number;
+  verde: number;
+  amarillo: number;
+  rojo: number;
+  overdue_installments_total: number;
+  pending_cgr_total: number;
+  monto_total: number;
+  total_paid: number;
+}
+
+export interface CuotaVencidaItem {
+  id: string;
+  ipr_id: string | null;
+  ipr_codigo_bip: string | null;
+  agreement_id: string;
+  agreement_number: string | null;
+  counterpart_name: string | null;
+  installment_number: number;
+  amount: number;
+  due_date: string;
+  days_overdue: number;
+}
+
 export interface EvaluationAssignment {
   id: string;
   ipr_id?: string;

@@ -70,7 +70,7 @@ Key files:
 - `api/app/core/deps.py` — `CurrentUser` dependency (extracts user dict from JWT)
 - `api/app/core/security.py` — `OPERATIONAL_ROLES` / `DGI_ROLES` sets, password hashing, JWT
 - `api/app/middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
-- `api/app/routers/` — 18 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, actos, core_sessions)
+- `api/app/routers/` — 19 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, dgi_cartera, actos, core_sessions)
 - `api/app/routers/admin.py` — 18 endpoints: usuarios CRUD + toggle/reset + divisiones CRUD + financing-tracks CRUD + thresholds CRUD + sni-levels CRUD
 - `api/app/routers/actos.py` — 5 endpoints: administrative acts CRUD + 7-step state machine + auto-resolution creation
 - `api/app/routers/core_sessions.py` — 9 endpoints: CORE sessions CRUD + voting + lifecycle gate F3→F4
@@ -96,7 +96,7 @@ Key patterns:
 - `web/src/lib/api.ts` — singleton `ApiClient` with `get<T>()`, `post<T>()`, `patch<T>()`. Token in localStorage (`goreos_token`). Auto-redirect to `/login` on 401. On error, extracts `.detail` from FastAPI JSON error bodies automatically.
 - `web/src/lib/auth.tsx` — `AuthProvider` context, `useAuth()` hook returns `{user, loading, login, logout}`
 - `web/src/types/index.ts` — all TypeScript interfaces. `User.population` (`"operativa" | "dgi"`) drives sidebar/dashboard routing.
-- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (10 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones, Actos, Sesiones CORE) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones, Umbrales, Niveles SNI for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
+- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (10 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones, Actos, Sesiones CORE) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones, Umbrales, Niveles SNI for ADMIN_SISTEMA) vs `dgiNav` (6 items: Home, Cartera, Alertas, Tablero, Datos, Informes) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
 - `web/src/lib/format.ts` — shared formatting utilities (es-CL locale): `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency`. All 21 frontend files import from here — never define local format functions.
@@ -148,7 +148,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**288 integration tests (284 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**300 integration tests (295 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -167,7 +167,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules (27): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_concurrency` (5), `test_sisrec` (18), `test_thresholds` (18), `test_track_enforcement` (20), `test_track_rules` (18), `test_ciclo24` (22).
+Test modules (28): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (18), `test_thresholds` (18), `test_track_enforcement` (20), `test_track_rules` (18), `test_ciclo24` (22).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -227,6 +227,7 @@ Cross-entity navigation (bidirectional):
 
 DGI layer:
 - **rendition**: Rendiciones de cuentas with multi-role state machine (SISREC). 8 states: PENDIENTE → EN_REVISION_RTF → VISADA_RTF → EN_REVISION_UCR → APROBADA/RECHAZADA, with OBSERVADA loop. Role-based transitions: operativa can initiate/resubmit, DGI can visa/approve/reject. History audit trail via `core.rendition_history` + trigger. SLA: 7d RTF, 2d UCR. `GET /api/dgi/data/rendiciones/vencidas` for overdue. `amount` field for rendered amount.
+- **dgi_cartera**: DGI portfolio control — unified view of all IPRs with aggregated data (progress, CDPs, agreements, installments, resolutions, problems, alerts, commitments). Health signal computation (VERDE/AMARILLO/ROJO) via `_compute_health_signal()`. 3 endpoints: `GET /api/dgi/cartera` (paginated with health_signal post-filter), `GET /api/dgi/cartera/resumen` (summary cards), `GET /api/dgi/cartera/cuotas-vencidas` (overdue installments cross-portfolio). Cockpit drill-down: CARTERA_IPR semáforo card links to `/cartera?health_signal=`.
 - **dgi_indicator**: Institutional semaphore (5 dimensions: PRESUPUESTO, CARTERA_IPR, CONVENIOS, TDE, RIESGOS) with signal (VERDE/AMARILLO/ROJO). Values computed from real DB aggregates via `POST /api/dgi/data/indicators/refresh` (4/5 dimensions; TDE is static)
 - **dgi_initiative**: Kanban board with WIP limits enforced server-side (EN_CURSO: 5, REVISION: 2). `POST /api/dgi/initiatives/{id}/move` raises HTTP 409 if limit reached. `InitiativeItem` response includes both `responsible_id` (UUID) and `responsible_name` (string) for pre-populating edit forms.
 - **dgi_report**: Institutional reports (FLASH, SEMANAL, MENSUAL, TEMATICO) with 6 auto-populated sections from real data. User edits stored in `metadata` JSONB via atomic `jsonb_set`. Sections: resumen, tabla_indicadores, alertas, avance_dgi, decisiones, prioridades.
@@ -264,7 +265,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~131 API endpoints, 288 tests (284 pass + 4 skip), 27 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: ~134 API endpoints, 300 tests (295 pass + 4 skip), 28 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
 - HΩ-02 Parentesco 8% (kinship disqualification — not started)
