@@ -1,7 +1,7 @@
 # GORE_OS — Especificacion Funcional y Tecnica v1.0
 
 > Documento generado: 2026-02-25
-> Ultima revision: Ciclo 5 (Searchable Selects + Tablero DGI Fixes + Spec)
+> Ultima revision: Ciclo 12 (Post-Wave 5: CORE Governance + Doc Sync)
 
 ---
 
@@ -164,7 +164,7 @@ La IPR es la entidad central del sistema. Poliformica con 5 naturalezas (PROYECT
 
 #### Detalle (Pagina con Tabs)
 
-5 pestanas con informacion relacionada:
+10 pestanas con informacion relacionada (las primeras 5 principales):
 1. **Compromisos**: DataTable filtrada por `ipr_id`
 2. **Problemas**: DataTable filtrada por `ipr_id`
 3. **Alertas**: AlertCard list filtrada por `subject_type=core.ipr`
@@ -367,7 +367,50 @@ PROGRAMADA → EN_CURSO → FINALIZADA
 
 ---
 
-### 3.9 Administracion
+### 3.9 Sesiones CORE Ordinarias y Votacion
+
+**Ruta**: `/core-sessions`, `/core-sessions/[id]`, `/core-sessions/nueva`
+**Endpoints**: `POST /api/core-sessions`, `GET /api/core-sessions`, `GET /api/core-sessions/{id}`, `POST /api/core-sessions/{id}/iniciar`, `POST /api/core-sessions/{id}/finalizar`, `POST /api/core-sessions/{id}/temas`, `POST /api/core-sessions/{id}/temas/{tid}/votar`, `GET /api/core-sessions/{id}/temas/{tid}/votos`, `GET /api/core-sessions/{id}/miembros`
+
+#### Maquina de Estados
+
+```
+PROGRAMADA → EN_CURSO → FINALIZADA
+```
+
+#### Modelo de Votacion
+
+- **Comite**: CONSEJO-REGIONAL (auto-creado en primer uso), 16 miembros
+- **Tipos de sesion**: ORDINARIA, EXTRAORDINARIA
+- **Opciones de voto**: A_FAVOR, EN_CONTRA, ABSTENCION
+- **Quorum**: SIMPLE (9/16 votos a favor), CALIFICADA (11/16 votos a favor)
+- **Tabla DDL**: `core.session_vote` (Wave 5 migration)
+
+#### Lista
+
+- Filtro: estado (tabs: Todas, PROGRAMADA, EN_CURSO, FINALIZADA)
+- Columnas: numero sesion, tipo (ORDINARIA/EXTRAORDINARIA), fecha programada, estado (badge), cantidad de temas, temas aprobados
+
+#### Detalle y Votacion
+
+- Header con metadata de sesion + tipo quorum
+- Temas de agenda: cada tema vinculado a una IPR (BIP clickeable)
+- Panel de votacion: botones A_FAVOR / EN_CONTRA / ABSTENCION por tema
+- Resultado: aprobado (verde), rechazado (rojo), pendiente (gris) segun quorum
+- Detalle de votos: lista de votantes con su voto
+
+#### Creacion
+
+- Campos: tipo sesion, tipo quorum, fecha/hora programada, descripcion
+- Crea automaticamente: sesion numerada en comite CONSEJO-REGIONAL
+
+#### Gate F3→F4 (IPR Lifecycle)
+
+IPRs con monto total >7.000 UTM (~$471M CLP) requieren aprobacion del CORE para avanzar de fase F3 a F4. El endpoint `GET /api/ipr/{id}/transiciones` verifica la existencia de un tema de sesion CORE aprobado.
+
+---
+
+### 3.10 Administracion
 
 **Ruta**: `/admin/usuarios`, `/admin/usuarios/nuevo`, `/admin/divisiones`
 **Endpoints**: `GET/POST/PATCH /api/admin/usuarios`, `POST /api/admin/usuarios/{id}/toggle-activo`, `POST /api/admin/usuarios/{id}/reset-password`, `GET/POST/PATCH /api/admin/divisiones`
@@ -598,7 +641,7 @@ Funcion `exportCSV(columns, data, filename)` disponible en tablas del explorador
 
 ### 6.1 Esquemas de Base de Datos
 
-**77 tablas distribuidas en 4 esquemas**:
+**79 tablas distribuidas en 4 esquemas**:
 
 | Esquema | Tablas | Proposito |
 |---------|--------|-----------|
@@ -611,7 +654,7 @@ Funcion `exportCSV(columns, data, filename)` disponible en tablas del explorador
 
 Pilar central del modelo: `ref.category(scheme, code, label)` implementa **Univocidad Categorial** — cada columna FK apunta a exactamente 1 scheme. Nunca mezclar dimensiones.
 
-**90+ schemes** incluyendo: `ipr_type`, `ipr_state`, `budget_subtitle`, `agreement_type`, `agreement_state`, `problem_type`, `commitment_state`, `alert_level`, `system_role`, `org_type`, y todos los schemes DGI.
+**93+ schemes** incluyendo: `ipr_type`, `ipr_state`, `budget_subtitle`, `agreement_type`, `agreement_state`, `problem_type`, `commitment_state`, `alert_level`, `system_role`, `org_type`, todos los schemes DGI, y governance schemes (session_type, vote_option, quorum_type).
 
 ### 6.3 Entidades Principales
 
@@ -643,6 +686,7 @@ Pilar central del modelo: `ref.category(scheme, code, label)` implementa **Univo
 #### Gobernanza
 - `core.committee`, `core.session`, `core.minute`, `core.session_agreement`
 - `core.crisis_meeting` (especializacion de session, usa comite auto-creado COMITE-CRISIS)
+- `core.session_vote` (votos individuales por tema de agenda, Wave 5)
 - `core.agenda_item_context` (vincula temas de reunion a IPRs)
 
 #### DGI
@@ -806,6 +850,8 @@ Todas las tablas incluyen columnas de auditoria: `created_at`, `updated_at`, `cr
 | GET | `/api/dgi/data/territorio` | Explorador territorio |
 | GET | `/api/dgi/data/eventos` | Explorador eventos (requiere rango fecha) |
 | GET | `/api/dgi/data/rendiciones` | Explorador rendiciones |
+| POST | `/api/dgi/data/rendiciones` | Crear rendicion (SISREC MVP) |
+| GET | `/api/dgi/data/rendiciones/{id}` | Detalle rendicion |
 
 ### 7.15 DGI — Informes
 
@@ -817,19 +863,33 @@ Todas las tablas incluyen columnas de auditoria: `created_at`, `updated_at`, `cr
 | PATCH | `/api/dgi/reports/{id}` | Editar seccion (JSONB atomico) |
 | GET | `/api/dgi/reports/{id}/export` | Exportar JSON estructurado |
 
-### 7.16 Busqueda
+### 7.16 Sesiones CORE
+
+| Metodo | Ruta | Descripcion |
+|--------|------|-------------|
+| POST | `/api/core-sessions` | Crear sesion CORE |
+| GET | `/api/core-sessions` | Listar sesiones paginadas |
+| GET | `/api/core-sessions/{id}` | Detalle con temas + votos |
+| POST | `/api/core-sessions/{id}/iniciar` | Iniciar sesion (PROGRAMADA → EN_CURSO) |
+| POST | `/api/core-sessions/{id}/finalizar` | Finalizar sesion (EN_CURSO → FINALIZADA) |
+| POST | `/api/core-sessions/{id}/temas` | Agregar tema de agenda |
+| POST | `/api/core-sessions/{id}/temas/{tid}/votar` | Registrar voto |
+| GET | `/api/core-sessions/{id}/temas/{tid}/votos` | Detalle de votos por tema |
+| GET | `/api/core-sessions/{id}/miembros` | Lista miembros + asistencia |
+
+### 7.17 Busqueda
 
 | Metodo | Ruta | Descripcion |
 |--------|------|-------------|
 | GET | `/api/search` | Busqueda global multi-entidad |
 
-### 7.17 Sistema
+### 7.18 Sistema
 
 | Metodo | Ruta | Descripcion |
 |--------|------|-------------|
 | GET | `/api/health` | Health check |
 
-**Total: 79 endpoints en 16 routers + health check.**
+**Total: ~113 endpoints en 18 routers + health check.**
 
 ---
 
@@ -843,7 +903,7 @@ Todas las tablas incluyen columnas de auditoria: `created_at`, `updated_at`, `cr
 | `/login` | LoginPage | Formulario de autenticacion |
 | `/dashboard` | DashboardPage | Panel de control (role-aware) |
 | `/ipr` | IprListPage | Lista paginada de IPRs |
-| `/ipr/[id]` | IprDetailPage | Detalle con 5 tabs |
+| `/ipr/[id]` | IprDetailPage | Detalle con 10 tabs |
 | `/ipr/nuevo` | NuevaIprPage | Formulario de creacion |
 | `/compromisos` | CompromisosPage | Lista con drawer de acciones |
 | `/compromisos/nuevo` | NuevoCompromisoPage | Formulario con ComboboxAsync |
@@ -860,6 +920,9 @@ Todas las tablas incluyen columnas de auditoria: `created_at`, `updated_at`, `cr
 | `/admin/usuarios` | UsuariosPage | CRUD usuarios (ADMIN_SISTEMA) |
 | `/admin/usuarios/nuevo` | NuevoUsuarioPage | Formulario creacion |
 | `/admin/divisiones` | DivisionesPage | CRUD divisiones (ADMIN_SISTEMA) |
+| `/core-sessions` | CoreSessionsPage | Lista sesiones CORE |
+| `/core-sessions/[id]` | CoreSessionDetailPage | Detalle + votacion |
+| `/core-sessions/nueva` | NuevaCoreSessionPage | Crear sesion CORE |
 
 ### 8.2 Poblacion DGI
 
@@ -920,13 +983,14 @@ Estrategia de datos demo con prefijo `DEMO-` para identificacion clara:
 
 | Metrica | Valor |
 |---------|-------|
-| Endpoints API totales | 79 |
-| Routers backend | 16 (+health) |
-| Paginas frontend | 25 |
+| Endpoints API totales | ~113 |
+| Routers backend | 18 (+health) |
+| Paginas frontend | 31 |
 | Componentes reutilizables | 24 |
 | Componentes de graficos | 4 |
-| Tablas en BD | 78 (58 logicas + 20 particiones txn) |
-| Esquemas ref.category | 90+ |
+| Tablas en BD | 79 (59 logicas + 20 particiones txn) |
+| Esquemas ref.category | 93+ |
+| Tests de integracion | 155 (154 pass + 1 skip) across 17 modules |
 | Roles de sistema | 8 |
 | Tipos de IPR | 8 |
 | Naturalezas IPR | 5 |

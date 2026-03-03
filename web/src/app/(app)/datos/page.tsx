@@ -199,6 +199,11 @@ export default function DatosPage() {
               {/* Search-only bar for domains with no filter dropdowns */}
               {config.filters.length === 0 && (
                 <div className="px-4 pt-3 pb-2 border-b shrink-0">
+                  {config.CreateAction && (
+                    <div className="flex justify-end mb-2">
+                      <config.CreateAction onRefresh={() => setRefreshKey((k) => k + 1)} />
+                    </div>
+                  )}
                   <FilterBar
                     filters={[]}
                     values={{}}

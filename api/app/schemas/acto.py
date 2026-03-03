@@ -29,6 +29,15 @@ class ActoListItem(BaseModel):
     budget_amount: Optional[Decimal] = None
 
 
+class ActoHistoryEntry(BaseModel):
+    id: UUID
+    previous_state: Optional[str] = None
+    new_state: str
+    changed_by_name: Optional[str] = None
+    comment: Optional[str] = None
+    changed_at: datetime
+
+
 class ActoDetail(ActoListItem):
     effective_from: Optional[datetime] = None
     effective_to: Optional[datetime] = None
@@ -37,6 +46,7 @@ class ActoDetail(ActoListItem):
     resolution_subtype: Optional[str] = None
     resolution_subtype_label: Optional[str] = None
     created_at: datetime
+    history: list["ActoHistoryEntry"] = []
 
 
 class ActoCreate(BaseModel):

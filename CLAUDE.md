@@ -69,8 +69,9 @@ Key files:
 - `api/app/main.py` — app factory, router registration
 - `api/app/core/deps.py` — `CurrentUser` dependency (extracts user dict from JWT)
 - `api/app/core/security.py` — `OPERATIONAL_ROLES` / `DGI_ROLES` sets, password hashing, JWT
-- `api/app/routers/` — 17 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, actos)
+- `api/app/routers/` — 18 routers (auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin, reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, actos, core_sessions)
 - `api/app/routers/actos.py` — 5 endpoints: administrative acts CRUD + 7-step state machine + auto-resolution creation
+- `api/app/routers/core_sessions.py` — 9 endpoints: CORE sessions CRUD + voting + lifecycle gate F3→F4
 
 API conventions:
 - All routes prefixed `/api/` (e.g., `/api/ipr`, `/api/dgi/cockpit`)
@@ -93,7 +94,7 @@ Key patterns:
 - `web/src/lib/api.ts` — singleton `ApiClient` with `get<T>()`, `post<T>()`, `patch<T>()`. Token in localStorage (`goreos_token`). Auto-redirect to `/login` on 401. On error, extracts `.detail` from FastAPI JSON error bodies automatically.
 - `web/src/lib/auth.tsx` — `AuthProvider` context, `useAuth()` hook returns `{user, loading, login, logout}`
 - `web/src/types/index.ts` — all TypeScript interfaces. `User.population` (`"operativa" | "dgi"`) drives sidebar/dashboard routing.
-- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (9 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Actos, Reuniones) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
+- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (10 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones, Actos, Sesiones CORE) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones for ADMIN_SISTEMA) vs `dgiNav` (5 items) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
 - `web/src/lib/format.ts` — shared formatting utilities (es-CL locale): `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency`. All 21 frontend files import from here — never define local format functions.
@@ -101,18 +102,20 @@ Key patterns:
 
 ### Database
 
-**78 tables across 4 schemas** (58 logical + 20 txn partitions):
+**79 tables across 4 schemas** (59 logical + 20 txn partitions):
 
 | Schema | Purpose |
 |--------|---------|
 | `meta` | Role/Process/Entity/Story atoms (5 tables) |
-| `ref`  | Controlled vocabularies via `ref.category` — 90+ schemes + `ref.operational_commitment_type` |
+| `ref`  | Controlled vocabularies via `ref.category` — 93+ schemes + `ref.operational_commitment_type` |
 | `core` | Business entities: IPR, Agreement, Budget, User, plus operational (commitment, problem, alert) and DGI (indicator, initiative, report, bpmn_model, committee_session, data_source_status) |
 | `txn`  | Event sourcing (partitioned) |
 
 **Category Pattern**: `ref.category(scheme, code, label)` — each FK column points to exactly ONE scheme (Categorical Univocity). Before creating new schemes, check existing ones: `SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;`
 
 **DGI schemes**: `dgi_initiative_status`, `dgi_indicator_dimension`, `dgi_signal`, `dgi_report_type`, `dgi_report_status`, `dgi_bpmn_status`, `dgi_dmaic_phase`, `dgi_session_status`, `dgi_alert_status`, `dgi_decree_status`, `dgi_source_status`
+
+**Governance schemes** (Wave 5): `session_type` (ORDINARIA, EXTRAORDINARIA), `vote_option` (A_FAVOR, EN_CONTRA, ABSTENCION), `quorum_type` (SIMPLE, CALIFICADA)
 
 **Budget schemes** (Ciclo 2): `budget_item` (14), `budget_allocation` (15), `program_type` (5), `budget_commitment_status` (5). Pre-existing: `budget_subtitle` (8), `funding_source` (11), `payment_status` (5), `agreement_type` (6), `agreement_state` (13 with transitions — includes EN_REVISION_FINANCIERA, VISADO_INTERNO, TDR_PENDIENTE), `cgr_outcome` (7).
 
@@ -143,7 +146,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**137 integration tests** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**155 integration tests (154 pass + 1 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -162,7 +165,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules: `test_auth` (8), `test_compromisos` (14), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (7), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_actos` (9), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8).
+Test modules: `test_auth` (8), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -213,7 +216,7 @@ Operational layer:
 - **crisis_meeting**: Crisis meetings module using existing `core.committee` + `core.session` + `core.crisis_meeting` + `core.minute` + `core.session_agreement` tables. Full lifecycle: PROGRAMADA → EN_CURSO → FINALIZADA. Auto-suggestions from critical alerts, overdue commitments, open problems. Topic BIP badges are clickable links to IPR detail.
 
 Cross-entity navigation (bidirectional):
-- **IPR → satellites**: IPR detail page has 9 tabs: Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos — each loads filtered data lazily
+- **IPR → satellites**: IPR detail page has 10 tabs: Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones — each loads filtered data lazily
 - **Satellites → IPR**: Drawers in compromisos, problemas, convenios, presupuesto pages show clickable `ipr_codigo_bip` that navigates to `/ipr/{id}`. Reunion topic BIP badges also link to IPR.
 - **IPR list filters**: `?assignee_id=X` filters by assigned user (available for all roles)
 
@@ -270,7 +273,7 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 
 ## Key References
 
-- `model/model_goreos/sql/goreos_ddl.sql` — DDL (78 tables), ontological mappings in lines 21-37
+- `model/model_goreos/sql/goreos_ddl.sql` — DDL (79 tables), ontological mappings in lines 21-37
 - `model/model_goreos/sql/goreos_seed.sql` — 90+ category schemes
 - `model/model_goreos/sql/goreos_seed_demo_ciclo2.sql` — demo data for budget + agreements
 - `model/model_goreos/sql/goreos_migration_confrontacion.sql` — categorical data migration (org types, hierarchy, agreement states, roles, legacy cleanup)
@@ -288,16 +291,21 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 - `model/model_goreos/sql/goreos_seed_etl_phase2.sql` — seed `document_channel` scheme (prerequisite for Phase 2)
 - `docs/GORE_OS_Audit_v1.0.md` — Institutional audit: executive summary, gaps, H1+H2 plan
 - `docs/GORE_OS_Audit_Detail_v1.0.md` — Detailed audit: 819 stories × implementation cross, ontology × schema
+- `model/model_goreos/sql/goreos_migration_wave5_core_voting.sql` — CORE governance voting (session_vote table + 3 schemes)
+- `model/model_goreos/sql/goreos_rollback_wave5_core_voting.sql` — rollback for Wave 5
+- `model/model_goreos/sql/goreos_seed_core_members.sql` — 16 CORE committee members for test DB
+- `model/model_goreos/sql/goreos_migration_wave6_act_history.sql` — audit trail actos (core.administrative_act_history + trigger)
+- `model/model_goreos/sql/goreos_rollback_wave6_act_history.sql` — rollback for Wave 6
 
 ## Known Gaps (Audit 2026-02-27)
 
-**Critical**: Art. 18 Res. 30 CGR — `convenios.py` POST cuotas does NOT validate pending renditions before transfers. 1,234 renditions all in PENDIENTE state. Trigger bug FIXED (Wave 1) — `fn_validate_state_transition` now uses `TG_ARGV[0]` for dynamic column access. PATCH rendiciones endpoint available at `/api/dgi/data/rendiciones/{id}`.
+**Critical**: ~~Art. 18 CGR~~ RESUELTO — `_check_pending_renditions()` en `convenios.py` bloquea POST/PATCH cuotas si hay rendiciones PENDIENTE. Trigger bug FIXED (Wave 1). PATCH rendiciones endpoint disponible en `/api/dgi/data/rendiciones/{id}`.
 
-**High**: Administrative acts workflow implemented (Wave 4) but no `core.administrative_act_history` table for audit trail. Poly-Switch routing not implemented (mechanism_id exists but no evaluation logic). 0/11 financial thresholds codified. 0/8 budget glosa rules. SISREC rendition workflow missing.
+**High**: ~~Administrative act history~~ RESUELTO (Wave 6, Ciclo 13) — `core.administrative_act_history` + trigger `trg_act_history` + helper `_get_act_history` + campo `history` en `ActoDetail`. SISREC MVP RESUELTO (Ciclo 13) — `POST /api/dgi/data/rendiciones` + `GET /api/dgi/data/rendiciones/{id}`. Poly-Switch routing not implemented. 0/11 financial thresholds codified. 0/8 budget glosa rules.
 
-**Medium**: CORE only crisis_meetings (no ordinary sessions/voting). 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, etc.). Budget classifier is flat (only subtitle, missing 5 levels). IPR `sponsor_division_id` and `assignee_id` are 0% populated.
+**Medium**: CORE governance implemented (Wave 5: ordinary sessions + voting + F3→F4 gate for IPRs >7.000 UTM). 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, etc.). Budget classifier is flat (only subtitle, missing 5 levels). IPR `sponsor_division_id` and `assignee_id` are 0% populated.
 
-**Coverage**: ~107 API endpoints, 103 tests, 7/16 domains implemented, ~12% of 819 user stories covered. Full audit in `docs/GORE_OS_Audit_v1.0.md`.
+**Coverage**: ~113 API endpoints, 155 tests (154 pass + 1 skip), 8/16 domains implemented, ~15% of 819 user stories covered. All 5 H1+H2 waves + Ciclo 13 compliance push completed. Full audit in `docs/GORE_OS_Audit_v1.0.md`.
 
 ## Critical Rules
 
@@ -313,7 +321,7 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 10. **Report section edits**: Stored atomically in `metadata` JSONB using `jsonb_set` (not read-modify-write). Auto-populated content is regenerated on each GET; only user edits persist.
 11. **Organization table**: `core.organization` does NOT have `is_active` column. Use `deleted_at IS NULL` to check if active. The type FK column is `org_type_id` (NOT `organization_type_id`).
 12. **Role restriction pattern**: Use a helper function `_require_roles(user, ...)` called inside the endpoint body. Do NOT use `require_roles()` from `deps.py` as a default parameter value — it conflicts with `CurrentUser` (which is `Annotated[dict, Depends()]`).
-13. **Reuniones module**: Uses existing DDL tables (`core.committee`, `core.session`, `core.crisis_meeting`, `core.minute`, `core.session_agreement`, `core.agenda_item_context`). No DDL migration needed. A dedicated crisis committee (code `COMITE-CRISIS`) is auto-created on first use.
+13. **Reuniones module**: Uses existing DDL tables (`core.committee`, `core.session`, `core.crisis_meeting`, `core.minute`, `core.session_agreement`, `core.agenda_item_context`). No DDL migration needed. A dedicated crisis committee (code `COMITE-CRISIS`) is auto-created on first use. Sibling module: `core_sessions.py` handles CORE ordinary sessions with voting.
 14. **Dashboard endpoints**: Role-specific dashboards: `GET /api/dashboard` (base, role-aware), `GET /api/dashboard/ejecutivo` (ADMIN with division breakdown), `GET /api/dashboard/mi-division` (JEFE_DIVISION team load), `GET /api/dashboard/mis-compromisos` (ENCARGADO grouped commitments).
 15. **Admin module**: `GET/POST/PATCH /api/admin/usuarios`, `POST /api/admin/usuarios/{id}/toggle-activo`, `POST /api/admin/usuarios/{id}/reset-password`, `GET/POST/PATCH /api/admin/divisiones`. All restricted to ADMIN_SISTEMA.
 16. **After code changes**: Always restart API container (`docker compose restart api`) — uvicorn hot-reload may not catch new files/imports.
@@ -338,3 +346,4 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 35. **Shared format utilities**: All date/currency formatting MUST use `import { formatDate, formatCLP, ... } from "@/lib/format"`. Never define local `formatDate`/`formatCLP`/`formatCurrency` functions in page or component files.
 36. **Advisory locks on code generators**: All sequential code generators (`_next_oc_code`, `_next_pr_code`, `_next_agreement_number`, `_next_act_number`, IPR BIP auto-gen) use `pg_advisory_xact_lock(hashtext('entity_code'))` before `SELECT MAX(...)` to prevent race conditions.
 37. **Alert subject_type values**: DB stores fully-qualified names: `'core.ipr'`, `'core.operational_commitment'`, `'core.ipr_problem'`, `'core.organization'`. Always use the `core.` prefix in SQL comparisons — never the short form `'ipr'`.
+38. **CORE sessions module**: `core_sessions.py` uses committee code `CONSEJO-REGIONAL` (auto-created on first use). Quorum: SIMPLE = 9/16, CALIFICADA = 11/16. Vote schemes: `vote_option` (A_FAVOR, EN_CONTRA, ABSTENCION), `quorum_type` (SIMPLE, CALIFICADA), `session_type` (ORDINARIA, EXTRAORDINARIA). DDL: `core.session_vote` table added via Wave 5 migration. Gate F3→F4: IPRs >7.000 UTM require CORE approval (checked in `ipr.py` transitions endpoint).

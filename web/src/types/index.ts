@@ -547,10 +547,58 @@ export interface ActoDetail extends ActoListItem {
   resolution_subtype: string | null;
   resolution_subtype_label: string | null;
   created_at: string;
+  history: HistoryEntry[];
 }
 
 export interface ActoTransition {
   id: string;
   code: string;
   label: string;
+}
+
+// ---------------------------------------------------------------------------
+// CORE Sessions (Consejo Regional)
+// ---------------------------------------------------------------------------
+export interface CoreSessionListItem {
+  id: string;
+  session_number: number;
+  session_type: string;
+  scheduled_at: string;
+  started_at: string | null;
+  ended_at: string | null;
+  summary: string | null;
+  status: "PROGRAMADA" | "EN_CURSO" | "FINALIZADA";
+  topic_count: number;
+  quorum_reached: boolean | null;
+}
+
+export interface TopicWithVotes {
+  id: string;
+  agreement_number: number;
+  subject: string;
+  decision: string | null;
+  ipr_id: string | null;
+  ipr_codigo_bip: string | null;
+  quorum_type: string;
+  votes_favor: number;
+  votes_contra: number;
+  votes_abstencion: number;
+  votes_total: number;
+  required_votes: number;
+  result: "APROBADO" | "RECHAZADO" | "PENDIENTE";
+}
+
+export interface MemberAttendance {
+  member_id: string;
+  person_name: string;
+  role_in_committee: string | null;
+  has_voted_in_session: boolean;
+}
+
+export interface CoreSessionDetail extends CoreSessionListItem {
+  location: string | null;
+  minute_id: string | null;
+  topics: TopicWithVotes[];
+  members_present: number;
+  members_total: number;
 }

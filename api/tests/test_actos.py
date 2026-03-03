@@ -251,3 +251,76 @@ async def test_link_resolution_to_ipr(client, regional_token, db):
         {"aid": created["id"]},
     )
     assert str(res.scalar()) == ipr_id
+
+
+# ---------------------------------------------------------------------------
+# History tests (B2 — audit trail)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_history_recorded_on_transition(client, regional_token, db):
+    """BORRADOR → EN_REVISION crea entrada en historial."""
+    act_ids = await _fetch_act_ids(db)
+    created = await _create_acto(client, regional_token, act_ids)
+
+    # Transition BORRADOR → EN_REVISION
+    await client.patch(
+        f"/api/actos/{created['id']}",
+        json={"state_id": act_ids["state_en_revision_id"]},
+        headers=auth(regional_token),
+    )
+
+    resp = await client.get(f"/api/actos/{created['id']}", headers=auth(regional_token))
+    assert resp.status_code == 200
+    detail = resp.json()
+    assert len(detail["history"]) >= 1
+    entry = detail["history"][0]
+    assert entry["previous_state"] == "BORRADOR"
+    assert entry["new_state"] == "EN_REVISION"
+
+
+@pytest.mark.asyncio
+async def test_history_multiple_transitions(client, regional_token, db):
+    """Dos transiciones generan 2+ entradas; la primera es la más reciente."""
+    act_ids = await _fetch_act_ids(db)
+    created = await _create_acto(client, regional_token, act_ids)
+
+    # Transition 1: BORRADOR → EN_REVISION
+    await client.patch(
+        f"/api/actos/{created['id']}",
+        json={"state_id": act_ids["state_en_revision_id"]},
+        headers=auth(regional_token),
+    )
+    # Transition 2: EN_REVISION → VISADO
+    await client.patch(
+        f"/api/actos/{created['id']}",
+        json={"state_id": act_ids["state_visado_id"]},
+        headers=auth(regional_token),
+    )
+
+    resp = await client.get(f"/api/actos/{created['id']}", headers=auth(regional_token))
+    assert resp.status_code == 200
+    history = resp.json()["history"]
+    assert len(history) >= 2
+    # Most recent first (ORDER BY changed_at DESC)
+    assert history[0]["new_state"] == "VISADO"
+    assert history[1]["new_state"] == "EN_REVISION"
+
+
+@pytest.mark.asyncio
+async def test_history_not_recorded_for_non_state_patch(client, regional_token, db):
+    """PATCH de campo no-estado (subject) no genera entrada en historial."""
+    act_ids = await _fetch_act_ids(db)
+    created = await _create_acto(client, regional_token, act_ids)
+
+    # Patch subject only — no state change
+    await client.patch(
+        f"/api/actos/{created['id']}",
+        json={"subject": "Asunto modificado sin cambio de estado"},
+        headers=auth(regional_token),
+    )
+
+    resp = await client.get(f"/api/actos/{created['id']}", headers=auth(regional_token))
+    assert resp.status_code == 200
+    assert resp.json()["history"] == []

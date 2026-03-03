@@ -54,6 +54,53 @@ STATUS_PHASE_FIBER: dict[str, str] = {
 
 _PHASE_ORDER = {"F0": 0, "F1": 1, "F2": 2, "F3": 3, "F4": 4, "F5": 5}
 
+# CORE approval constants
+_UTM_VALUE = 67_294       # UTM feb 2026
+_CORE_THRESHOLD_UTM = 7_000
+_CORE_QUORUM_SIMPLE = 9
+
+
+async def _check_core_approval(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """Check if IPR needs and has CORE approval (>7.000 UTM).
+    Returns a gate dict if applicable, or None if threshold not reached."""
+    row = (await db.execute(
+        text("SELECT metadata->>'monto_total' AS monto FROM core.ipr WHERE id = :id"),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+
+    monto = 0.0
+    if row and row["monto"]:
+        try:
+            monto = float(row["monto"])
+        except (ValueError, TypeError):
+            monto = 0.0
+
+    threshold = _CORE_THRESHOLD_UTM * _UTM_VALUE
+    if monto <= threshold:
+        return None  # Below threshold — no CORE gate needed
+
+    # Check for APROBADO vote on session_agreement linked to this IPR
+    vote_result = (await db.execute(
+        text("""
+            SELECT
+                COUNT(*) FILTER (WHERE vc.code = 'A_FAVOR') AS favor,
+                COUNT(*) FILTER (WHERE vc.code = 'EN_CONTRA') AS contra
+            FROM core.session_vote sv
+            JOIN core.session_agreement sa ON sa.id = sv.session_agreement_id
+            JOIN ref.category vc ON vc.id = sv.vote_option_id
+            WHERE sa.ipr_id = :ipr_id
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().first()
+
+    favor = vote_result["favor"] if vote_result else 0
+    approved = favor >= _CORE_QUORUM_SIMPLE
+    return {
+        "name": "core_approval",
+        "met": approved,
+        "detail": f"Requiere aprobación CORE (monto >${_CORE_THRESHOLD_UTM:,} UTM). Votos a favor: {favor}/{_CORE_QUORUM_SIMPLE}",
+    }
+
 
 async def _evaluate_phase_gates(
     ipr_id: UUID, current_phase: str, target_phase: str, db: AsyncSession
@@ -97,6 +144,11 @@ async def _evaluate_phase_gates(
             "met": cnt > 0,
             "detail": f"Requiere al menos 1 CDP vinculado ({cnt} encontrado(s))",
         })
+
+        # CORE approval gate: IPRs >7.000 UTM require Consejo Regional vote
+        core_gate = await _check_core_approval(ipr_id, db)
+        if core_gate is not None:
+            gates.append(core_gate)
 
     elif transition == "F4->F5":
         pending = (await db.execute(

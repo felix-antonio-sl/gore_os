@@ -28,4 +28,6 @@ export interface DomainConfig {
   DetailPanel: React.ComponentType<{ item: unknown; onClose: () => void; onRefresh?: () => void }>;
   // Whether the API returns paginated (server) or plain array (client)
   paginationMode: "server" | "client";
+  // Optional action component rendered above the filter bar (e.g. "Nueva Rendición")
+  CreateAction?: React.ComponentType<{ onRefresh: () => void }>;
 }

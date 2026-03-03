@@ -259,6 +259,22 @@ class RendicionUpdate(BaseModel):
     submitted_at: datetime | None = None
 
 
+class RendicionCreate(BaseModel):
+    agreement_id: UUID | None = None
+    ipr_id: UUID | None = None
+    renderer_id: UUID | None = None
+    period_start: date | None = None
+    period_end: date | None = None
+    submitted_at: datetime | None = None  # default: NOW() server-side
+
+
+class RendicionDetail(RendicionItem):
+    agreement_id: UUID | None = None
+    renderer_id: UUID | None = None
+    metadata: dict | None = None
+    created_at: datetime | None = None
+
+
 class ReportCreate(BaseModel):
     title: str
     report_type: str  # FLASH, SEMANAL, MENSUAL, TEMATICO

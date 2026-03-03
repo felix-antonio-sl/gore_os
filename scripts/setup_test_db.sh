@@ -26,6 +26,9 @@ docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/
 # Seed test users
 docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_seed_users.sql
 
+# Seed CORE committee members (16 consejeros)
+docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_seed_core_members.sql
+
 # Re-enable FK checks
 docker exec -i goreos_db psql -U goreos -d goreos_test -c "SET session_replication_role = 'origin';"
 

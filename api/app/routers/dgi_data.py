@@ -9,10 +9,12 @@ import math
 from datetime import datetime, timedelta, timezone
 from app.schemas.dgi import (
     IndicatorItem, DataSourceItem,
-    OrganizacionItem, PersonaItem, TerritorioItem, EventoItem, RendicionItem,
-    RendicionUpdate,
+    OrganizacionItem, PersonaItem, TerritorioItem, EventoItem,
+    RendicionItem, RendicionDetail, RendicionCreate, RendicionUpdate,
 )
-from app.core.security import DGI_ROLES
+from app.core.security import DGI_ROLES, WRITE_OPERATIONAL_ROLES
+
+_RENDICION_WRITE_ROLES = WRITE_OPERATIONAL_ROLES | DGI_ROLES
 
 router = APIRouter(prefix="/api/dgi/data", tags=["dgi"])
 
@@ -715,6 +717,87 @@ async def list_rendiciones(
         "page_size": page_size,
         "total_pages": math.ceil(total / page_size) if total > 0 else 0,
     }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/rendiciones/{rendicion_id} — Detail
+# ---------------------------------------------------------------------------
+
+@router.get("/rendiciones/{rendicion_id}", response_model=RendicionDetail)
+async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession = Depends(get_db)):
+    row = (await db.execute(
+        text("""
+            SELECT r.id, r.agreement_id, r.ipr_id, r.renderer_id,
+                   r.period_start, r.period_end, r.submitted_at,
+                   r.metadata, r.created_at,
+                   a.agreement_number, a.total_amount AS agreement_total_amount,
+                   ipr.codigo_bip AS ipr_codigo_bip,
+                   org.name AS renderer_name,
+                   st.code AS state_code, st.label AS state_label
+            FROM core.rendition r
+            LEFT JOIN core.agreement a ON a.id = r.agreement_id
+            LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
+            LEFT JOIN core.organization org ON org.id = r.renderer_id
+            LEFT JOIN ref.category st ON st.id = r.state_id
+            WHERE r.id = :id AND r.deleted_at IS NULL
+        """),
+        {"id": str(rendicion_id)},
+    )).mappings().first()
+    if not row:
+        raise HTTPException(status_code=404, detail="Rendición no encontrada")
+    return RendicionDetail(
+        id=row["id"], agreement_id=row["agreement_id"], ipr_id=row["ipr_id"],
+        renderer_id=row["renderer_id"], agreement_number=row["agreement_number"],
+        ipr_codigo_bip=row["ipr_codigo_bip"], renderer_name=row["renderer_name"],
+        state_code=row["state_code"], state_label=row["state_label"],
+        period_start=row["period_start"], period_end=row["period_end"],
+        submitted_at=row["submitted_at"],
+        agreement_total_amount=float(row["agreement_total_amount"]) if row["agreement_total_amount"] else None,
+        metadata=dict(row["metadata"]) if row["metadata"] else None,
+        created_at=row["created_at"],
+    )
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/data/rendiciones — Create rendicion (SISREC MVP)
+# ---------------------------------------------------------------------------
+
+@router.post("/rendiciones", status_code=status.HTTP_201_CREATED)
+async def create_rendicion(body: RendicionCreate, user: CurrentUser, db: AsyncSession = Depends(get_db)):
+    if user["role_code"] not in _RENDICION_WRITE_ROLES:
+        raise HTTPException(status_code=403, detail="Rol sin permiso para crear rendiciones")
+    if not body.agreement_id and not body.ipr_id:
+        raise HTTPException(status_code=422, detail="Se requiere agreement_id o ipr_id (al menos uno)")
+
+    pendiente_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'rendition_state' AND code = 'PENDIENTE'"),
+    )).scalar()
+
+    row = (await db.execute(
+        text("""
+            INSERT INTO core.rendition (
+                agreement_id, ipr_id, renderer_id, state_id,
+                period_start, period_end, submitted_at,
+                created_by_id, created_at, updated_at
+            ) VALUES (
+                :agreement_id, :ipr_id, :renderer_id, :state_id,
+                :period_start, :period_end, COALESCE(:submitted_at, NOW()),
+                :created_by_id, NOW(), NOW()
+            ) RETURNING id
+        """),
+        {
+            "agreement_id": str(body.agreement_id) if body.agreement_id else None,
+            "ipr_id": str(body.ipr_id) if body.ipr_id else None,
+            "renderer_id": str(body.renderer_id) if body.renderer_id else None,
+            "state_id": str(pendiente_id),
+            "period_start": body.period_start,
+            "period_end": body.period_end,
+            "submitted_at": body.submitted_at,
+            "created_by_id": str(user["id"]),
+        },
+    )).mappings().first()
+    await db.commit()
+    return {"id": str(row["id"])}
 
 
 # ---------------------------------------------------------------------------

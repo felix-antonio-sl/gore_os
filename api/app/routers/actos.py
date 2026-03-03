@@ -9,7 +9,7 @@ from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
 from app.schemas.common import PaginatedResponse
-from app.schemas.acto import ActoListItem, ActoDetail, ActoCreate, ActoUpdate
+from app.schemas.acto import ActoListItem, ActoDetail, ActoCreate, ActoUpdate, ActoHistoryEntry
 
 router = APIRouter(prefix="/api/actos", tags=["actos"])
 
@@ -91,6 +91,26 @@ async def _get_acto_or_404(acto_id: UUID, db: AsyncSession) -> dict:
     if not row:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Acto administrativo no encontrado")
     return dict(row)
+
+
+async def _get_act_history(act_id: UUID, db: AsyncSession) -> list[dict]:
+    result = await db.execute(
+        text("""
+            SELECT h.id, h.changed_at, h.comment,
+                   prev_cat.code AS previous_state,
+                   new_cat.code  AS new_state,
+                   (p.names || ' ' || p.paternal_surname) AS changed_by_name
+            FROM core.administrative_act_history h
+            JOIN ref.category new_cat ON h.new_state_id = new_cat.id
+            LEFT JOIN ref.category prev_cat ON h.previous_state_id = prev_cat.id
+            LEFT JOIN core."user" cu ON h.changed_by_id = cu.id
+            LEFT JOIN core.person p ON cu.person_id = p.id
+            WHERE h.act_id = :act_id
+            ORDER BY h.changed_at DESC
+        """),
+        {"act_id": str(act_id)},
+    )
+    return [dict(r) for r in result.mappings().all()]
 
 
 async def _next_act_number(db: AsyncSession) -> str:
@@ -242,7 +262,8 @@ async def get_acto(
     db: AsyncSession = Depends(get_db),
 ):
     row = await _get_acto_or_404(acto_id, db)
-    return ActoDetail(**row)
+    history = await _get_act_history(acto_id, db)
+    return ActoDetail(**row, history=[ActoHistoryEntry(**h) for h in history])
 
 
 # ---------------------------------------------------------------------------

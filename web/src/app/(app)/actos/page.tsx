@@ -20,6 +20,7 @@ import { useAuth } from "@/lib/auth";
 import { Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate, formatCLP } from "@/lib/format";
+import { TimelineHistory } from "@/components/timeline-history";
 import type {
   PaginatedResponse,
   ActoListItem,
@@ -545,6 +546,14 @@ export default function ActosPage() {
                     </div>
                   )}
                 </div>
+              </div>
+            )}
+
+            {/* Historial de estados */}
+            {detail.history && detail.history.length > 0 && (
+              <div className="pt-2 border-t">
+                <h3 className="text-sm font-semibold mb-3">Historial</h3>
+                <TimelineHistory entries={detail.history} />
               </div>
             )}
           </div>

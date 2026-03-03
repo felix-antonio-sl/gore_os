@@ -4,7 +4,7 @@ from app.core.config import get_settings
 from app.routers import auth, ipr, compromisos, problemas, alertas, dashboard, catalogs
 from app.routers import dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports
 from app.routers import presupuesto, convenios, admin, reuniones
-from app.routers import search, actos
+from app.routers import search, actos, core_sessions
 
 settings = get_settings()
 
@@ -42,6 +42,7 @@ def create_app() -> FastAPI:
     app.include_router(reuniones.router)
     app.include_router(search.router)
     app.include_router(actos.router)
+    app.include_router(core_sessions.router)
 
     @app.get("/api/health")
     async def health():

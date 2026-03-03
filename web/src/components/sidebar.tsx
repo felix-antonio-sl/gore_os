@@ -17,6 +17,7 @@ import {
   UserCheck,
   FolderKanban,
   CalendarClock,
+  Vote,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Separator } from "@/components/ui/separator";
@@ -38,6 +39,7 @@ const operationalNav: NavItem[] = [
   { label: "Convenios", href: "/convenios", icon: <Handshake className="size-4" /> },
   { label: "Reuniones", href: "/reuniones", icon: <CalendarClock className="size-4" /> },
   { label: "Actos", href: "/actos", icon: <FileText className="size-4" /> },
+  { label: "Sesiones CORE", href: "/core-sessions", icon: <Vote className="size-4" /> },
 ];
 
 const adminOnlyNav: NavItem[] = [

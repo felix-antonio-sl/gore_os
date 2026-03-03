@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { X, Loader2 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ComboboxAsync } from "@/components/combobox-async";
+import type { ComboboxOption } from "@/components/combobox-async";
+import { X, Loader2, Plus } from "lucide-react";
 import { formatDate, formatCLP } from "@/lib/format";
 import type { PaginatedResponse, CategoryRef } from "@/types";
 import type { DomainConfig } from "./types";
@@ -166,6 +169,114 @@ function RendicionDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
   );
 }
 
+function NuevaRendicionAction({ onRefresh }: { onRefresh: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [iprId, setIprId] = useState("");
+  const [rendererId, setRendererId] = useState("");
+  const [periodStart, setPeriodStart] = useState("");
+  const [periodEnd, setPeriodEnd] = useState("");
+  const [submittedAt, setSubmittedAt] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const searchIprs = async (q: string): Promise<ComboboxOption[]> => {
+    const res = await api.get<{ items: { id: string; codigo_bip: string; name: string }[] }>(
+      `/api/catalogs/iprs?search=${encodeURIComponent(q)}&page_size=20`
+    );
+    return res.items.map((i) => ({ value: i.id, label: `${i.codigo_bip} — ${i.name}` }));
+  };
+
+  const searchOrgs = async (q: string): Promise<ComboboxOption[]> => {
+    const res = await api.get<{ id: string; name: string }[]>(
+      `/api/catalogs/organizations?search=${encodeURIComponent(q)}`
+    );
+    return res.map((o) => ({ value: o.id, label: o.name }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!iprId) { setError("Seleccione una IPR"); return; }
+    setSubmitting(true);
+    setError(null);
+    try {
+      await api.post("/api/dgi/data/rendiciones", {
+        ipr_id: iprId || undefined,
+        renderer_id: rendererId || undefined,
+        period_start: periodStart || undefined,
+        period_end: periodEnd || undefined,
+        submitted_at: submittedAt ? new Date(submittedAt).toISOString() : undefined,
+      });
+      setOpen(false);
+      setIprId(""); setRendererId(""); setPeriodStart(""); setPeriodEnd(""); setSubmittedAt("");
+      onRefresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al crear rendición");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button size="sm" className="h-7 text-xs gap-1.5">
+          <Plus className="size-3.5" />
+          Nueva Rendición
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Registrar Rendición</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-1">
+            <label className="text-xs font-medium">IPR *</label>
+            <ComboboxAsync
+              value={iprId}
+              onChange={setIprId}
+              searchFn={searchIprs}
+              placeholder="Buscar por BIP o nombre..."
+            />
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs font-medium">Ejecutor (opcional)</label>
+            <ComboboxAsync
+              value={rendererId}
+              onChange={setRendererId}
+              searchFn={searchOrgs}
+              placeholder="Buscar organización..."
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <label className="text-xs font-medium">Período inicio</label>
+              <input type="date" value={periodStart} onChange={(e) => setPeriodStart(e.target.value)}
+                className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-medium">Período fin</label>
+              <input type="date" value={periodEnd} onChange={(e) => setPeriodEnd(e.target.value)}
+                className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
+            </div>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs font-medium">Fecha de envío (opcional)</label>
+            <input type="date" value={submittedAt} onChange={(e) => setSubmittedAt(e.target.value)}
+              className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
+          </div>
+          {error && <p className="text-xs text-red-600">{error}</p>}
+          <div className="flex justify-end gap-2 pt-2">
+            <Button type="button" variant="outline" size="sm" onClick={() => setOpen(false)}>Cancelar</Button>
+            <Button type="submit" size="sm" disabled={submitting}>
+              {submitting ? "Guardando..." : "Registrar"}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export const rendicionesConfig: DomainConfig = {
   id: "rendiciones",
   label: "Rendiciones",
@@ -207,4 +318,5 @@ export const rendicionesConfig: DomainConfig = {
     return { items: response.items, total: response.total, totalPages: response.total_pages };
   },
   DetailPanel: RendicionDetailPanel,
+  CreateAction: NuevaRendicionAction,
 };
