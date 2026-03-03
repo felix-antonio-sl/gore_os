@@ -148,7 +148,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**248 integration tests (244 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**288 integration tests (284 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -167,7 +167,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules (26): `test_auth` (8), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_concurrency` (5), `test_sisrec` (18), `test_thresholds` (18), `test_track_enforcement` (20), **`test_track_rules` (18)**.
+Test modules (27): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_concurrency` (5), `test_sisrec` (18), `test_thresholds` (18), `test_track_enforcement` (20), `test_track_rules` (18), `test_ciclo24` (22).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -243,98 +243,42 @@ Demo data uses prefix `DEMO-` in codes/numbers for clear identification:
 
 ## ETL Pipeline
 
-Scripts in `api/scripts/etl/` for ingesting legacy CSV/XLSX data into `core.*` tables.
+6 scripts in `api/scripts/etl/` for ingesting legacy CSV/XLSX → `core.*` tables. All support `--dry-run`, `--limit N`, `--verbose`. Idempotent.
 
 ```bash
-# Run inside API container:
-docker compose exec api python -m scripts.etl.enrich_persons --dry-run
-docker compose exec api python -m scripts.etl.enrich_persons --nomina /app/data/etl/funcionarios/NOMINA.xlsx
-docker compose exec api python -m scripts.etl.enrich_persons --rut-only --nomina /path/to/NOMINA.xlsx
-
-# Copy data files to container first:
-docker cp /local/path/file.csv goreos_api:/app/data/etl/funcionarios/
+# Run inside API container (copy CSVs first via docker cp):
+docker compose exec api python -m scripts.etl.<module> --dry-run
 ```
 
-Key modules:
-- `api/scripts/etl/common.py` — shared utilities: DB session, CSV reader (auto-encoding/delimiter, `skip_rows` param), name parser, FK resolvers with cache, RUT normalizer, batch commit, stats tracking
-- `api/scripts/etl/enrich_persons.py` — Phase 1: enrich `core.person` from Funcionarios CSVs (metadata) + NOMINA xlsx (RUT)
-- `api/scripts/etl/load_documents.py` — Phase 2: load PARTES CSVs → `core.document` (~10.5K docs)
-- `api/scripts/etl/load_admin_acts.py` — Phase 2C: project documents → `core.administrative_act` + `core.resolution` + `core.rendition`. Rendition linking uses coproduct: IPR BIP code (primary, 52%) or crosswalk→agreement (0.25%). 1,234 renditions materialized.
-- `api/scripts/etl/enrich_agreements.py` — Phase 3: enrich `core.agreement` from 3 CONVENIOS CSVs (536 rows). Updates CGR outcome, technical referent, signed date + rich metadata. 476 agreements enriched.
-- `api/scripts/etl/load_fril.py` — Phase 4: FRIL CSVs (173 rows) → `core.ipr_territory` (UBICACION). Includes TREHUACO→Treguaco alias.
-- `api/scripts/etl/load_modifications.py` — Phase 5: 24 budget modification CSVs → `txn.event` (MODIFICACION). Custom positional parser for institutional-header CSVs. 211 events.
-- `api/scripts/etl/load_idis.py` — Phase 6: IDIS ANÁLISIS.csv (2,605 rows) → `core.ipr_territory` + `core.ipr_party` (UNIDAD_TECNICA, FORMULADOR). 2,383 records. Only uses ANÁLISIS — CONSOLIDADO/MASTER have corruption.
-
-All scripts support `--dry-run`, `--limit N`, `--verbose`. Idempotent (JSONB merge, ON CONFLICT, skip-if-exists).
-
-```bash
-# Phase 2: load PARTES documents
-docker cp docs/legacy/etl/sources/partes/originales/ goreos_api:/app/data/etl/partes/
-docker compose exec api python -m scripts.etl.load_documents --dry-run
-docker compose exec api python -m scripts.etl.load_documents --source RECIBIDOS  # single source
-docker compose exec api python -m scripts.etl.load_documents                      # all sources
-```
-
-CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Architecture doc: `docs/ETL_ARCHITECTURE_v1.0.md`.
+Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_acts` (Phase 2C), `enrich_agreements` (Phase 3), `load_fril` (Phase 4), `load_modifications` (Phase 5), `load_idis` (Phase 6). Architecture: `docs/ETL_ARCHITECTURE_v1.0.md`.
 
 ## Key References
 
-- `model/model_goreos/sql/goreos_ddl.sql` — DDL (81 tables), ontological mappings in lines 21-37
-- `model/model_goreos/sql/goreos_seed.sql` — 90+ category schemes
-- `model/model_goreos/sql/goreos_seed_demo_ciclo2.sql` — demo data for budget + agreements
-- `model/model_goreos/sql/goreos_migration_confrontacion.sql` — categorical data migration (org types, hierarchy, agreement states, roles, legacy cleanup)
-- `model/model_goreos/sql/goreos_rollback_confrontacion.sql` — rollback for above migration
-- `model/model_goreos/sql/goreos_migration_rendition_coproduct.sql` — relax rendition FKs: nullable agreement_id/renderer_id, add ipr_id FK, CHECK (agreement OR ipr)
-- `model/model_goreos/sql/goreos_rollback_rendition_coproduct.sql` — rollback for rendition coproduct migration
-- `model/model_goreos/sql/goreos_migration_wave1_trigger_fix.sql` — fix fn_validate_state_transition (dynamic column via TG_ARGV[0])
-- `model/model_goreos/sql/goreos_rollback_wave1_trigger_fix.sql` — rollback for Wave 1 trigger fix
-- `model/model_goreos/docs/GOREOS_ERD_v3.md` — ERD + data dictionary
-- `model/GLOSARIO.yml` — 244 ontological terms (Gist 14.0 + GNUB + TDE)
-- `docs/plans/2026-02-24-dgi-ui-ux-design.md` — DGI UI/UX design document
-- `docs/GORE_OS_Testing_Ciclo3.md` — Testing document with all features, credentials, and test cases
-- `architecture/Omega_GORE_OS_Definition_v3.0.0.md` — system specification
-- `docs/ETL_ARCHITECTURE_v1.0.md` — ETL pipeline design (8 domains, execution order, mappings)
-- `model/model_goreos/sql/goreos_seed_etl_phase2.sql` — seed `document_channel` scheme (prerequisite for Phase 2)
-- `docs/GORE_OS_Audit_v2.0.md` — Institutional audit v2.0: CQ×Stories×Ontology×Omega triangulation (4 sources), 472 CQs scored, 15 HΩ findings, 81+ Omega rules mapped, delta v1.0→v2.0
-- `docs/GORE_OS_Audit_v1.0.md` — Institutional audit v1.0: executive summary, gaps, H1+H2 plan
-- `docs/GORE_OS_Audit_Detail_v1.0.md` — Detailed audit: 819 stories × implementation cross, ontology × schema
-- `model/model_goreos/sql/goreos_migration_wave5_core_voting.sql` — CORE governance voting (session_vote table + 3 schemes)
-- `model/model_goreos/sql/goreos_rollback_wave5_core_voting.sql` — rollback for Wave 5
-- `model/model_goreos/sql/goreos_seed_core_members.sql` — 16 CORE committee members for test DB
-- `model/model_goreos/sql/goreos_migration_wave6_act_history.sql` — audit trail actos (core.administrative_act_history + trigger)
-- `model/model_goreos/sql/goreos_rollback_wave6_act_history.sql` — rollback for Wave 6
-- `model/model_goreos/sql/goreos_migration_wave8_financing_track.sql` — `core.financing_track` table (replaces TRACK_CONFIG dict)
-- `model/model_goreos/sql/goreos_rollback_wave8_financing_track.sql` — rollback for Wave 8
-- `model/model_goreos/sql/goreos_migration_wave9_tracking.sql` — `core.schema_migration` table for DDL tracking
-- `model/model_goreos/sql/goreos_rollback_wave9_tracking.sql` — rollback for Wave 9
-- `model/model_goreos/sql/goreos_migration_wave10_sisrec.sql` — SISREC multi-role (3 states + amount + rendition_history + trigger)
-- `model/model_goreos/sql/goreos_rollback_wave10_sisrec.sql` — rollback for Wave 10
-- `model/model_goreos/sql/goreos_migration_ciclo20_thresholds.sql` — core.financial_threshold table (9 umbrales + UTM_VALUE)
-- `model/model_goreos/sql/goreos_rollback_ciclo20_thresholds.sql` — rollback for Ciclo 20+21
-- `model/model_goreos/sql/goreos_migration_ciclo22_eval_score.sql` — numeric_score column for evaluation_assignment (FRPD puntaje gate)
-- `model/model_goreos/sql/goreos_rollback_ciclo22_eval_score.sql` — rollback for Ciclo 22
-- `model/model_goreos/sql/goreos_migration_ciclo23_sni_levels.sql` — core.sni_level_config table (4 SNI levels + SEREMI evaluator type)
-- `model/model_goreos/sql/goreos_rollback_ciclo23_sni_levels.sql` — rollback for Ciclo 23
-- `scripts/run_migrations.sh` — Migration runner script (applies pending DDL in order)
-- `docs/ONBOARDING.md` — Developer onboarding guide
-- `docs/adr/` — 6 Architecture Decision Records (ADR-001 through ADR-006)
+**Core schema**: `model/model_goreos/sql/goreos_ddl.sql` (DDL), `goreos_seed.sql` (90+ schemes), `model/model_goreos/docs/GOREOS_ERD_v3.md` (ERD + data dictionary), `model/GLOSARIO.yml` (244 ontological terms)
 
-## Known Gaps (Audit 2026-02-27)
+**Specification**: `architecture/Omega_GORE_OS_Definition_v3.0.0.md`, `docs/GORE_OS_Audit_v2.0.md` (472 CQs, 15 HΩ findings)
 
-**Critical**: ~~Art. 18 CGR~~ RESUELTO — `_check_pending_renditions()` en `convenios.py` bloquea POST/PATCH cuotas si hay rendiciones no-terminales. Ciclo 19 extends check to `paid_amount`/`paid_at` fields. SISREC multi-role workflow: 8 states, role-based transitions, audit trail, SLA alerts.
+**Migrations**: All in `model/model_goreos/sql/goreos_migration_*.sql` with matching `goreos_rollback_*.sql`. Tracked in `core.schema_migration`. Runner: `scripts/run_migrations.sh`.
 
-**High**: ~~Administrative act history~~ RESUELTO (Wave 6, Ciclo 13) — `core.administrative_act_history` + trigger `trg_act_history` + helper `_get_act_history` + campo `history` en `ActoDetail`. SISREC MVP RESUELTO (Ciclo 13) — `POST /api/dgi/data/rendiciones` + `GET /api/dgi/data/rendiciones/{id}`. ~~Poly-Switch routing~~ RESUELTO (Ciclo 18) — `TRACK_CONFIG` → `core.financing_track` table (Ciclo Remediación Wave 6). ~~Migration tracking~~ RESUELTO (Ciclo Remediación Wave 7) — `core.schema_migration` + `run_migrations.sh`. ~~Financial thresholds~~ MAYORMENTE RESUELTO (Ciclo 20+21 + Ciclo 22) — 9 universal en `core.financial_threshold`, 6/9 track-específicos enforced via `_check_track_amount_gates()` (FRIL max/min, FRPD CGR/puntaje, SUBV8 SISREC, FRIL licitación). 3 track thresholds pendientes. ~~Budget glosa rules~~ MAYORMENTE RESUELTO (Ciclo 20+21 + Ciclo 22) — 6/8 glosas codificadas: 5 porcentuales + Glosa 03 prohibition (FNDR→PERSONAL).
+**Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_ARCHITECTURE_v1.0.md`, `docs/adr/` (6 ADRs)
 
-**Medium**: CORE governance implemented (Wave 5: ordinary sessions + voting + F3→F4 gate for IPRs >7.000 UTM, now DB-driven). 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, etc.). ~~Budget classifier flat~~ PARCIAL (Ciclo 20+21) — 4/6 levels active (program_type, item, allocation, subtitle) in API+UI; levels 1-2 are institutional constants. IPR `sponsor_division_id` and `assignee_id` are 0% populated.
+## Known Gaps & Coverage
 
-**Coverage**: ~131 API endpoints, 266 tests (262 pass + 4 skip), 26 test modules, 8/16 domains implemented, ~15% of 819 user stories covered. All 5 H1+H2 waves + Ciclo 13 compliance push + Ciclo Remediación (8 waves) + Ciclo 19 SISREC + Ciclo 20+21 Compliance Doble + Ciclo 22 Track Enforcement + Ciclo 23 Track Rules Engine completed. Full audit in `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: ~131 API endpoints, 288 tests (284 pass + 4 skip), 27 modules, ~15% of 819 user stories. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+
+**Open gaps**:
+- 3/9 track-specific thresholds pending, 2/8 glosas pending, budget classifier 4/6 levels
+- 5 system roles with 0 users (GOBERNADOR, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO, JEFE_DEPARTAMENTO, JEFE_UNIDAD)
+- IPR `sponsor_division_id` and `assignee_id` are 0% populated
+- 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR)
+- 10/12 SLAs without enforcement (only RTF 7d + UCR 2d implemented)
 
 ## Critical Rules
 
 1. **Categorical Univocity**: Each FK column → exactly 1 `ref.category` scheme. Never mix dimensions.
 2. **Person columns**: Use `names` and `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 3. **API consistency**: Operational endpoints use POST for state changes (e.g., `POST /compromisos/{id}/completar`). DGI list endpoints return plain arrays. Paginated endpoints return `{items, total, page, page_size, total_pages}`.
-4. **Alert subject_type**: Stored as `'core.ipr'` in DB (fully qualified), not `'ipr'`. Always use `'core.ipr'` in all SQL queries.
+4. **Alert subject_type**: DB stores fully-qualified names: `'core.ipr'`, `'core.operational_commitment'`, `'core.ipr_problem'`, `'core.organization'`. Always use the `core.` prefix in SQL — never the short form.
 5. **Docker network**: `goreos_db` is on `visor_model_default` (external). Don't create a separate postgres service unless using `--profile standalone`.
 6. **No ORM models**: Backend uses raw SQL with `text()` from SQLAlchemy. All queries go through `db.execute(text("..."), params).mappings()`.
 7. **PATCH allowlist**: PATCH endpoints must validate column names against an explicit allowlist. Field names in Pydantic update models must match DB column names exactly.
@@ -359,33 +303,26 @@ CSV sources live in `docs/legacy/etl/sources/` (8 domains, 14K+ records). Archit
 26. **Catalog endpoints**: `GET /api/catalogs/organizations?search=TERM` for org search (uses `ComboboxAsync`), `GET /api/catalogs/territories` for all 25 territories (small dataset, no search needed). Territory table uses `territory_type_id` FK to `ref.category`, NOT a `territory_level` column.
 27. **UNIQUE constraint names in DDL**: `ipr_party` uses `uq_ipr_party_role`, `ipr_territory` uses `uq_ipr_territory_impact`. When catching duplicate errors in FastAPI, check for these exact names in the exception string.
 28. **ApiClient.delete()**: The `api.ts` singleton now has a `delete(path)` method for HTTP DELETE. It handles 204 No Content responses correctly (no JSON parsing). Use `await api.delete('/api/...')`.
-29. **IPR detail page size**: The page is ~640 lines with 18 useState hooks after tab extraction. 10 tab components live in `web/src/app/(app)/ipr/components/tab-*.tsx`. Page retains hero, stepper, transitions, edit/assignee drawers.
-30. **asyncpg type cast syntax**: In raw SQL with `text()` + asyncpg, do NOT use `:param::jsonb` — asyncpg confuses `::` with parameter syntax. Use `CAST(:param AS jsonb)` instead. Same applies to any type cast after a named parameter.
-31. **ETL scripts runtime**: ETL scripts run inside the API container (`docker compose exec api python -m scripts.etl.<module>`). CSVs must be copied to the container first via `docker cp`. Scripts use the container's DB_HOST (`goreos_db`), not `localhost`.
-32. **PARTES CSV structural quirks**: Some source files have a garbage first row instead of headers (RECIBIDOS row 0 = `"ENROCADO"`, OFICIOS INTERNOS row 0 = `"}"`). Use `read_csv(path, skip_rows=1)` for these. MEMOS and MEMOS INTERNOS have an unnamed first column (empty string key) — skip it. Always inspect headers before mapping columns from a new PARTES source.
-33. **Actos administrativos module**: `api/app/routers/actos.py` — 5 endpoints (list, detail, create, update, transitions). 7-step state machine: BORRADOR→EN_REVISION→VISADO→FIRMADO→ENVIADO_CGR→OBSERVADO/TOMADO_RAZON + ANULADO cross-cutting from any non-terminal state. Uses split PATCH allowlist (`_ACT_FIELD_ALLOWLIST` for `core.administrative_act`, `_RES_FIELDS` for `core.resolution`). Auto-creates `core.resolution` when `act_type='RESOLUCION'`. `signer_id` FK → `meta.role` (NOT `core.person`). DB trigger `trg_act_state_transition` validates transitions — ensure ANULADO is in `valid_transitions` for all non-terminal states in `ref.category`.
-34. **IPR detail tabs**: 11 tabs total (Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones, Evaluación). Each tab extracted to `web/src/app/(app)/ipr/components/tab-{name}.tsx` — self-contained with own state, fetch, and loading logic.
-35. **Shared format utilities**: All date/currency formatting MUST use `import { formatDate, formatCLP, ... } from "@/lib/format"`. Never define local `formatDate`/`formatCLP`/`formatCurrency` functions in page or component files.
-36. **Advisory locks on code generators**: All sequential code generators (`_next_oc_code`, `_next_pr_code`, `_next_agreement_number`, `_next_act_number`, IPR BIP auto-gen) use `pg_advisory_xact_lock(hashtext('entity_code'))` before `SELECT MAX(...)` to prevent race conditions.
-37. **Alert subject_type values**: DB stores fully-qualified names: `'core.ipr'`, `'core.operational_commitment'`, `'core.ipr_problem'`, `'core.organization'`. Always use the `core.` prefix in SQL comparisons — never the short form `'ipr'`.
-38. **CORE sessions module**: `core_sessions.py` uses committee code `CONSEJO-REGIONAL` (auto-created on first use). Quorum: SIMPLE = 9/16, CALIFICADA = 11/16. Vote schemes: `vote_option` (A_FAVOR, EN_CONTRA, ABSTENCION), `quorum_type` (SIMPLE, CALIFICADA), `session_type` (ORDINARIA, EXTRAORDINARIA). DDL: `core.session_vote` table added via Wave 5 migration. Gate F3→F4: IPRs >7.000 UTM require CORE approval (checked in `ipr.py` transitions endpoint).
-39. **Security middleware**: `SecurityHeadersMiddleware` in `api/app/middleware/security.py` adds 4 headers to every response: X-Frame-Options (DENY), X-Content-Type-Options (nosniff), X-XSS-Protection (1; mode=block), Referrer-Policy (strict-origin-when-cross-origin). Registered in `main.py`.
-40. **Brute-force protection**: 5 failed login attempts → account locked 15 min. Fields `failed_login_attempts` + `locked_until` on `core.user`. HTTP 429 on lockout. Successful login resets counter.
-41. **JWT secret validation**: `config.py` has a `model_validator` that rejects the default secret key when `ENV != "development"`. Docker-compose passes `ENV` variable. Never deploy with `ENV=development`.
-42. **Financing tracks**: `core.financing_track` table replaces hardcoded `TRACK_CONFIG` dict. Admin CRUD via `GET/POST/PATCH /api/admin/financing-tracks`. `_get_track_config()` async helper in `ipr.py` loads tracks from DB with caching.
-43. **Migration tracking**: `core.schema_migration` table tracks applied DDL migrations. Runner: `./scripts/run_migrations.sh [container] [db]`. All historical migrations registered retroactively. New migrations must be registered in the script.
-44. **IPR tab components**: 10 tabs extracted to `web/src/app/(app)/ipr/components/tab-*.tsx` (tab-compromisos, tab-problemas, tab-alertas, tab-convenios, tab-cdps, tab-avances, tab-partes, tab-territorio, tab-hitos, tab-resoluciones). Each is self-contained with own state/fetch/loading. Main page retains hero section, stepper, transitions, and edit/assignee drawers.
-45. **SISREC multi-role workflow**: Rendiciones use 8-state machine with role-based transitions. States: PENDIENTE → EN_REVISION_RTF → VISADA_RTF → EN_REVISION_UCR → APROBADA/RECHAZADA + OBSERVADA loop. `_RENDICION_TRANSITIONS` defines valid transitions; `_RENDICION_TRANSITION_ROLES` maps `(from, to)` pairs to allowed role sets. Operativa can initiate (PENDIENTE→EN_REVISION_RTF) and resubmit (OBSERVADA→EN_REVISION_RTF). DGI can visa, observe, approve, reject. `core.rendition_history` + `fn_rendition_history()` trigger records state changes. SLA: `_RENDICION_SLA_DAYS` dict (`EN_REVISION_RTF: 7`, `EN_REVISION_UCR: 2`). Legacy `EN_REVISION` state frozen at sort_order=99. Art. 18 gap fix: `convenios.py` PATCH cuotas now also checks renditions when `paid_amount` or `paid_at` are updated (not just `payment_status_id`).
-46. **Financial thresholds**: `core.financial_threshold` table stores 10 administrable thresholds (4 universal UTM + 5 glosa % + 1 UTM_VALUE config). Helpers: `_get_utm_value(db)` reads UTM from DB (fallback 67294), `_get_threshold(code, db)` loads any threshold, `_check_utm_threshold(ipr_id, code, db)` generic IPR amount check. CORE approval gate now reads from DB instead of hardcoded `_CORE_THRESHOLD_UTM`. Convenio `_validate_amount_thresholds` reads GARANTIA_CONVENIO and CGR_TOMA_RAZON from DB.
-47. **Glosa rules engine**: `check_glosa_rules(ipr_id, db)` in `presupuesto.py` evaluates 5 glosa spending limits against CDPs linked to an IPR. `_GLOSA_ITEM_MAP` maps threshold codes to budget_item scheme codes. Integrated in `_evaluate_phase_gates()` at F3→F4 transition. Results are gate dicts with `{name, met, detail}`.
-48. **Budget classifier 4-level**: `PresupuestoListItem` now includes `item_label` and `allocation_label` (promoted from Detail). List endpoint accepts `item`, `allocation`, `program_type` query params for filtering. Frontend shows "Ítem" column in DataTable. Levels 1-2 (Partida, Capítulo) are institutional constants.
-49. **Track-specific enforcement**: `_check_track_amount_gates(ipr_id, mechanism_code, transition, db)` in `ipr.py` reads `financing_track.thresholds` JSONB and evaluates track-specific gates at phase transitions. Supports: `max_utm` (F2→F3, blocking), `min_clp` (F2→F3, blocking), `puntaje_min` (F2→F3, blocking — reads `evaluation_assignment.numeric_score`), `cgr_res30_utm` (F3→F4, informational), `licitacion_max_days` (F3→F4, blocking — reads `ipr_milestone.deviation_days`), `sisrec_mandatory_utm` (F4→F5, blocking — requires renditions), `core_approval` (F3→F4, overrides universal CORE threshold). Helper `_get_ipr_monto()` extracts monto from `metadata->>'monto_total'`.
-50. **Glosa 03 prohibition**: `_check_glosa03_prohibition(ipr_id, db)` in `presupuesto.py` blocks FNDR-funded IPRs (mechanism IN {SNI, FRIL, C33} or funding_source = FNDR) from having CDPs with `budget_item = PERSONAL`. Integrated at end of `check_glosa_rules()`.
-51. **Evaluation numeric_score**: `core.evaluation_assignment.numeric_score` NUMERIC(5,2) column added by `goreos_migration_ciclo22_eval_score.sql`. Used by FRPD `puntaje_min` gate. PATCH endpoint accepts `numeric_score` field. Frontend shows score field in result registration form.
-52. **FRIL fraccionamiento detection**: `_check_fril_fraccionamiento(ipr_id, db)` at F1→F2 detects artificial project fragmentation. Looks for FRIL siblings with same `executor_id` + same territory + ±90 days. If combined monto > FRIL `max_utm`, blocks. Requires both `executor_id` and `ipr_territory` to be populated.
-53. **FRIL max 5/comuna**: `_check_fril_max_per_comuna(ipr_id, db)` at F0→F1 limits FRIL projects to 5 per territory per fiscal year. IPRs with `metadata->>'fril_category'` IN ('A2','A3') are exempt. Territory comes from `ipr_territory` table.
-54. **RS evaluation validity**: `_check_rs_vigencia(ipr_id, db)` at F3→F4 checks if favorable evaluation (RS/ITF/etc.) has expired per `financing_track.rs_validity_years`. SNI default is 3 years. Blocks if expired or missing.
-55. **Evaluation type match**: `_check_evaluation_type_match(ipr_id, db)` at F2→F3 warns (informational) if evaluation result code doesn't match track's `favorable_products` or `unfavorable_products`. Never blocks.
-56. **C33 conservation ratio**: `_check_c33_conservation(ipr_id, db)` at F1→F2 checks if `metadata->>'costo_conservacion'` / `metadata->>'costo_reposicion'` exceeds `conservation_exempt_pct` (default 30%). Informational — suggests reclassification to SNI if exceeded.
-57. **SNI proporcionalidad**: `_check_sni_proporcionalidad(ipr_id, db)` at F1→F2 reads `core.sni_level_config` to determine evaluation level by monto UTM. 4 levels: ≤1,500 (GORE_DAE), 1,500-5,000 (SEREMI), 5,000-25,000 (MDSF), >25,000 (MDSF+external). `create_evaluation()` auto-assigns level-specific evaluator for SNI mechanism.
-58. **SNI level config table**: `core.sni_level_config` (level_number, label, min_utm, max_utm, evaluator_code, requires_external_eval). 4 seeded levels. Admin CRUD via `GET/POST/PATCH /api/admin/sni-levels`.
+29. **asyncpg type cast syntax**: In raw SQL with `text()` + asyncpg, do NOT use `:param::jsonb` — asyncpg confuses `::` with parameter syntax. Use `CAST(:param AS jsonb)` instead.
+30. **ETL scripts runtime**: ETL scripts run inside the API container (`docker compose exec api python -m scripts.etl.<module>`). CSVs must be copied to the container first via `docker cp`. Scripts use the container's DB_HOST (`goreos_db`), not `localhost`.
+31. **PARTES CSV structural quirks**: Some source files have a garbage first row instead of headers (RECIBIDOS row 0 = `"ENROCADO"`, OFICIOS INTERNOS row 0 = `"}"`). Use `read_csv(path, skip_rows=1)` for these. Always inspect headers before mapping columns.
+32. **Actos administrativos**: 7-step state machine: BORRADOR→EN_REVISION→VISADO→FIRMADO→ENVIADO_CGR→OBSERVADO/TOMADO_RAZON + ANULADO cross-cutting. Split PATCH allowlist (`_ACT_FIELD_ALLOWLIST` + `_RES_FIELDS`). Auto-creates `core.resolution` for RESOLUCION type. `signer_id` FK → `meta.role` (NOT `core.person`). DB trigger validates transitions — ensure ANULADO in `valid_transitions` for all non-terminal states.
+33. **IPR detail page**: 11 tabs (Compromisos, Problemas, Alertas, Convenios, CDPs, Avances, Partes, Territorio, Hitos, Resoluciones, Evaluación). 10 tab components in `web/src/app/(app)/ipr/components/tab-*.tsx` — self-contained with own state/fetch. Main page (~640 lines) retains hero, stepper, transitions, edit/assignee drawers.
+34. **Shared format utilities**: All date/currency formatting MUST use `import { formatDate, formatCLP, ... } from "@/lib/format"`. Never define local format functions.
+35. **Advisory locks on code generators**: All sequential code generators use `pg_advisory_xact_lock(hashtext('entity_code'))` before `SELECT MAX(...)` to prevent race conditions.
+36. **CORE sessions**: `core_sessions.py` uses committee `CONSEJO-REGIONAL` (auto-created). Quorum: SIMPLE=9/16, CALIFICADA=11/16. Gate F3→F4: IPRs >7.000 UTM require CORE approval.
+37. **Security**: `SecurityHeadersMiddleware` (4 headers), brute-force lockout (5 attempts → 15 min lock, HTTP 429), JWT secret validation rejects default key when `ENV != "development"`.
+38. **Financing tracks**: `core.financing_track` table replaces hardcoded `TRACK_CONFIG` dict. Admin CRUD via `/api/admin/financing-tracks`. `_get_track_config()` loads from DB with caching.
+39. **Migration tracking**: `core.schema_migration` table. Runner: `./scripts/run_migrations.sh [container] [db]`. New migrations must be registered in the script.
+40. **SISREC workflow**: 8-state rendition machine with role-based transitions. `_RENDICION_TRANSITIONS` + `_RENDICION_TRANSITION_ROLES` maps. Operativa initiates/resubmits, DGI visas/approves/rejects. `core.rendition_history` trigger for audit. SLA: RTF 7d, UCR 2d. Art. 18: `convenios.py` checks renditions on cuota payment updates.
+41. **Financial thresholds**: `core.financial_threshold` (10 rows: 4 UTM + 5 glosa% + UTM_VALUE). Helpers: `_get_utm_value(db)`, `_get_threshold(code, db)`, `_check_utm_threshold(ipr_id, code, db)`.
+42. **Glosa rules**: `check_glosa_rules(ipr_id, db)` evaluates 5 glosa limits + `_check_glosa03_prohibition()` blocks FNDR→PERSONAL. Integrated at F3→F4.
+43. **Budget classifier 4-level**: List endpoint accepts `item`, `allocation`, `program_type` filters. Levels 1-2 (Partida, Capítulo) are institutional constants.
+44. **Track enforcement framework**: `_check_track_amount_gates()` reads `financing_track.thresholds` JSONB. Supports: `max_utm`, `min_clp`, `puntaje_min` (F2→F3), `cgr_res30_utm`, `licitacion_max_days` (F3→F4), `sisrec_mandatory_utm` (F4→F5), `core_approval` (overrides universal CORE). `_get_ipr_monto()` reads `metadata->>'monto_total'`.
+45. **Evaluation schema**: `numeric_score` NUMERIC(5,2) on `evaluation_assignment` (FRPD puntaje gate). `rank_position`, `rank_total`, `convocatoria_code` for competitive mechanisms. `core.sni_level_config` (4 levels, admin CRUD via `/api/admin/sni-levels`).
+46. **Track gate functions** (all in `ipr.py`, called by `_evaluate_phase_gates()`):
+    - **FRIL**: `_check_fril_max_per_comuna` (F0→F1, max 5/territory, A2/A3 exempt), `_check_fril_fraccionamiento` (F1→F2, same executor+territory+±90d), `_check_fril_tender_deadline` (F3→F4, LICITACION milestone within deadline)
+    - **SNI**: `_check_sni_proporcionalidad` (F1→F2, 4 eval levels by UTM), `_check_rs_vigencia` (F3→F4, eval expiry per `rs_validity_years`)
+    - **C33**: `_check_c33_conservation` (F1→F2, conservation/reposition ratio, informational)
+    - **SUBV8**: `_check_pagare_notarial` (F2→F3, ≥100% monto, ≥18mo), `_check_directorio_certificate` (F2→F3, cert freshness), `_check_morosos_sisrec` (F3→F4+F4→F5, executor overdue renditions), `_check_ranking_persistence` (F2→F3, informational)
+    - **ALL**: `_check_evaluation_type_match` (F2→F3, informational), `_check_glosa06_single_purpose` (F1→F2, single MML purpose)
