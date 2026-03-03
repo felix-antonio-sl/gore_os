@@ -110,3 +110,98 @@ async def test_change_password_too_short(client, admin_token):
         headers=auth(admin_token),
     )
     assert resp.status_code == 422
+
+
+# ---------------------------------------------------------------------------
+# Brute-force protection tests
+# ---------------------------------------------------------------------------
+
+async def test_login_lockout_after_5_failures(client, db):
+    """Account is locked after 5 failed login attempts, returns 429 on 6th."""
+    from sqlalchemy import text
+    # Reset lockout state for admin user
+    await db.execute(
+        text('UPDATE core."user" SET failed_login_attempts = 0, locked_until = NULL WHERE email = :e'),
+        {"e": "admin@goreos.cl"},
+    )
+    await db.commit()
+
+    for i in range(5):
+        resp = await client.post(
+            "/api/auth/login",
+            data={"username": "admin@goreos.cl", "password": "wrongpass"},
+        )
+        assert resp.status_code == 401, f"Attempt {i+1} should return 401"
+
+    # 6th attempt → 429
+    resp = await client.post(
+        "/api/auth/login",
+        data={"username": "admin@goreos.cl", "password": "wrongpass"},
+    )
+    assert resp.status_code == 429
+
+    # Cleanup: unlock the user
+    await db.execute(
+        text('UPDATE core."user" SET failed_login_attempts = 0, locked_until = NULL WHERE email = :e'),
+        {"e": "admin@goreos.cl"},
+    )
+    await db.commit()
+
+
+async def test_login_locked_blocks_correct_password(client, db):
+    """Even correct password is rejected while account is locked."""
+    from sqlalchemy import text
+    # Force lock
+    await db.execute(
+        text("UPDATE core.\"user\" SET failed_login_attempts = 5, locked_until = NOW() + INTERVAL '15 minutes' WHERE email = :e"),
+        {"e": "admin@goreos.cl"},
+    )
+    await db.commit()
+
+    resp = await client.post(
+        "/api/auth/login",
+        data={"username": "admin@goreos.cl", "password": "admin123"},
+    )
+    assert resp.status_code == 429
+
+    # Cleanup
+    await db.execute(
+        text('UPDATE core."user" SET failed_login_attempts = 0, locked_until = NULL WHERE email = :e'),
+        {"e": "admin@goreos.cl"},
+    )
+    await db.commit()
+
+
+async def test_login_lockout_resets_on_success(client, db):
+    """Successful login resets failed_login_attempts counter."""
+    from sqlalchemy import text
+    # Set 3 failed attempts (below threshold)
+    await db.execute(
+        text('UPDATE core."user" SET failed_login_attempts = 3, locked_until = NULL WHERE email = :e'),
+        {"e": "admin@goreos.cl"},
+    )
+    await db.commit()
+
+    resp = await client.post(
+        "/api/auth/login",
+        data={"username": "admin@goreos.cl", "password": "admin123"},
+    )
+    assert resp.status_code == 200
+
+    # Verify counter was reset
+    result = await db.execute(
+        text('SELECT failed_login_attempts FROM core."user" WHERE email = :e'),
+        {"e": "admin@goreos.cl"},
+    )
+    row = result.mappings().first()
+    assert row["failed_login_attempts"] == 0
+
+
+async def test_security_headers_present(client):
+    """Security headers are present in API responses."""
+    resp = await client.get("/api/health")
+    assert resp.status_code == 200
+    assert resp.headers.get("X-Frame-Options") == "DENY"
+    assert resp.headers.get("X-Content-Type-Options") == "nosniff"
+    assert resp.headers.get("X-XSS-Protection") == "1; mode=block"
+    assert resp.headers.get("Referrer-Policy") == "strict-origin-when-cross-origin"

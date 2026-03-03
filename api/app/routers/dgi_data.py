@@ -125,41 +125,45 @@ async def refresh_indicators(
     TDE se mantiene estático (sin fuente de datos real aún).
     Idempotente: ejecutar N veces produce el mismo resultado.
     """
-    # Capture snapshots of current values BEFORE updating
-    await db.execute(text("""
-        INSERT INTO core.dgi_indicator_snapshot (indicator_id, value, signal_id, recorded_at)
-        SELECT i.id, i.current_value, i.signal_id, NOW()
-        FROM core.dgi_indicator i
-        WHERE i.deleted_at IS NULL AND i.current_value IS NOT NULL
-    """))
+    try:
+        # Capture snapshots of current values BEFORE updating
+        await db.execute(text("""
+            INSERT INTO core.dgi_indicator_snapshot (indicator_id, value, signal_id, recorded_at)
+            SELECT i.id, i.current_value, i.signal_id, NOW()
+            FROM core.dgi_indicator i
+            WHERE i.deleted_at IS NULL AND i.current_value IS NOT NULL
+        """))
 
-    results = {}
+        results = {}
 
-    # PRESUPUESTO
-    ppto = await _compute_presupuesto(db)
-    n = await _update_dimension_indicators(db, "PRESUPUESTO", ppto["value"], ppto["signal"])
-    results["PRESUPUESTO"] = {**ppto, "updated_rows": n}
+        # PRESUPUESTO
+        ppto = await _compute_presupuesto(db)
+        n = await _update_dimension_indicators(db, "PRESUPUESTO", ppto["value"], ppto["signal"])
+        results["PRESUPUESTO"] = {**ppto, "updated_rows": n}
 
-    # CARTERA_IPR
-    ipr = await _compute_cartera_ipr(db)
-    n = await _update_dimension_indicators(db, "CARTERA_IPR", ipr["value"], ipr["signal"])
-    results["CARTERA_IPR"] = {**ipr, "updated_rows": n}
+        # CARTERA_IPR
+        ipr = await _compute_cartera_ipr(db)
+        n = await _update_dimension_indicators(db, "CARTERA_IPR", ipr["value"], ipr["signal"])
+        results["CARTERA_IPR"] = {**ipr, "updated_rows": n}
 
-    # CONVENIOS
-    conv = await _compute_convenios(db)
-    n = await _update_dimension_indicators(db, "CONVENIOS", conv["value"], conv["signal"])
-    results["CONVENIOS"] = {**conv, "updated_rows": n}
+        # CONVENIOS
+        conv = await _compute_convenios(db)
+        n = await _update_dimension_indicators(db, "CONVENIOS", conv["value"], conv["signal"])
+        results["CONVENIOS"] = {**conv, "updated_rows": n}
 
-    # RIESGOS
-    riesgos = await _compute_riesgos(db)
-    n = await _update_dimension_indicators(db, "RIESGOS", riesgos["value"], riesgos["signal"])
-    results["RIESGOS"] = {**riesgos, "updated_rows": n}
+        # RIESGOS
+        riesgos = await _compute_riesgos(db)
+        n = await _update_dimension_indicators(db, "RIESGOS", riesgos["value"], riesgos["signal"])
+        results["RIESGOS"] = {**riesgos, "updated_rows": n}
 
-    # TDE: no update (mantiene valores del seed)
-    results["TDE"] = {"note": "Sin fuente de datos real. Valores del seed se mantienen."}
+        # TDE: no update (mantiene valores del seed)
+        results["TDE"] = {"note": "Sin fuente de datos real. Valores del seed se mantienen."}
 
-    await db.commit()
-    return {"status": "ok", "dimensions": results}
+        await db.commit()
+        return {"status": "ok", "dimensions": results}
+    except Exception:
+        await db.rollback()
+        raise
 
 
 # ---------------------------------------------------------------------------

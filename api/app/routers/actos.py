@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -361,10 +362,11 @@ async def create_acto(
         return {"id": act_id, "act_number": act_row["act_number"], "resolution_id": resolution_id}
     except HTTPException:
         raise
-    except Exception as e:
+    except IntegrityError:
         await db.rollback()
-        if "unique" in str(e).lower() or "duplicate" in str(e).lower():
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un acto con ese número")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un acto con ese número")
+    except Exception:
+        await db.rollback()
         raise
 
 

@@ -43,6 +43,7 @@ services:
       DB_HOST: goreos_db
       DB_PORT: 5432
       JWT_SECRET: ${JWT_SECRET:-goreos-dev-secret-change-in-production}
+      ENV: ${ENV:-development}
       CORS_ORIGINS: '["http://localhost:3000"]'
     ports:
       - "8000:8000"

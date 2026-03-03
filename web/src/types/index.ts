@@ -602,3 +602,36 @@ export interface CoreSessionDetail extends CoreSessionListItem {
   members_present: number;
   members_total: number;
 }
+
+// ---------------------------------------------------------------------------
+// Poly-Switch (Track Info + Evaluation Assignment)
+// ---------------------------------------------------------------------------
+export interface TrackInfo {
+  mechanism: string | null;
+  mechanism_label: string | null;
+  evaluator: string | null;
+  evaluator_label: string | null;
+  favorable_products: string[];
+  unfavorable_products: string[];
+  terminal_negative: string[];
+  thresholds: Record<string, number>;
+  sla_days: Record<string, number>;
+  required_attrs: string[];
+  mechanism_attrs: Record<string, string | number | boolean | null>;
+  evaluations: EvaluationAssignment[];
+}
+
+export interface EvaluationAssignment {
+  id: string;
+  ipr_id?: string;
+  evaluator_type: string;
+  evaluator_type_label: string | null;
+  evaluator_org_name: string | null;
+  evaluator_name: string | null;
+  assigned_at: string;
+  deadline_at: string | null;
+  completed_at: string | null;
+  result_code: string | null;
+  result_label: string | null;
+  observations: string | null;
+}

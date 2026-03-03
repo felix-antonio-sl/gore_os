@@ -5,9 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { StatusBadge } from "@/components/status-badge";
-import { DataTable } from "@/components/data-table";
-import { AlertCard } from "@/components/alert-card";
-import { TemporalIndicator } from "@/components/temporal-indicator";
 import { DrawerPanel } from "@/components/drawer-panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -20,19 +17,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft, Plus, UserPlus, Pencil, Trash2, MapPin, Flag, Building2, CheckCircle2, ShieldCheck, ShieldX, ChevronRight, Loader2 } from "lucide-react";
+import { ArrowLeft, UserPlus, Pencil, CheckCircle2, ShieldCheck, ShieldX, ChevronRight, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
-import { IprCompromisoDrawer } from "@/components/ipr-compromiso-drawer";
-import { IprProblemaDrawer } from "@/components/ipr-problema-drawer";
-import { IprConvenioDrawer } from "@/components/ipr-convenio-drawer";
-import type {
-  PaginatedResponse, CompromisoListItem, ProblemaListItem, AlertaListItem,
-  ConvenioListItem, BudgetCommitmentItem, IprPartyItem, IprTerritoryItem,
-  IprMilestoneItem, CategoryRef, TerritoryOption, IprTransition, ActoListItem,
-} from "@/types";
+import type { IprTransition, TrackInfo } from "@/types";
 import { WRITE_OPERATIONAL_ROLES } from "@/types";
 import { formatDate, formatCurrency } from "@/lib/format";
+import { TrackCard } from "../components/track-card";
+import { TabCompromisos } from "../components/tab-compromisos";
+import { TabProblemas } from "../components/tab-problemas";
+import { TabAlertas } from "../components/tab-alertas";
+import { TabConvenios } from "../components/tab-convenios";
+import { TabCdps } from "../components/tab-cdps";
+import { TabAvances } from "../components/tab-avances";
+import { TabPartes } from "../components/tab-partes";
+import { TabTerritorio } from "../components/tab-territorio";
+import { TabHitos } from "../components/tab-hitos";
+import { TabResoluciones } from "../components/tab-resoluciones";
+import { TabEvaluaciones } from "../components/tab-evaluaciones";
 
 interface IprDetail {
   id: string;
@@ -55,18 +56,6 @@ interface IprDetail {
   total_budget?: number;
   start_date?: string;
   end_date?: string;
-}
-
-interface ProgressReport {
-  id: string;
-  report_number: number;
-  report_date: string;
-  physical_progress: number | null;
-  financial_progress: number | null;
-  description: string | null;
-  issues_detected: string | null;
-  reported_by_name: string | null;
-  created_at: string;
 }
 
 interface UserOption {
@@ -120,36 +109,6 @@ export default function IprDetailPage() {
   const [ipr, setIpr] = useState<IprDetail | null>(null);
   const [iprLoading, setIprLoading] = useState(true);
 
-  const [compromisos, setCompromisos] = useState<PaginatedResponse<CompromisoListItem> | null>(null);
-  const [compLoading, setCompLoading] = useState(false);
-
-  const [problemas, setProblemas] = useState<PaginatedResponse<ProblemaListItem> | null>(null);
-  const [probLoading, setProbLoading] = useState(false);
-
-  const [alertas, setAlertas] = useState<PaginatedResponse<AlertaListItem> | null>(null);
-  const [alertLoading, setAlertLoading] = useState(false);
-
-  const [convenios, setConvenios] = useState<PaginatedResponse<ConvenioListItem> | null>(null);
-  const [convLoading, setConvLoading] = useState(false);
-
-  // CDPs state
-  const [cdps, setCdps] = useState<BudgetCommitmentItem[] | null>(null);
-  const [cdpsLoading, setCdpsLoading] = useState(false);
-
-  // Avances state
-  const [avances, setAvances] = useState<ProgressReport[] | null>(null);
-  const [avancesLoading, setAvancesLoading] = useState(false);
-
-  // Avance form drawer
-  const [showAvanceForm, setShowAvanceForm] = useState(false);
-  const [avanceDate, setAvanceDate] = useState(() => new Date().toISOString().split("T")[0]);
-  const [avancePhysical, setAvancePhysical] = useState("");
-  const [avanceFinancial, setAvanceFinancial] = useState("");
-  const [avanceDesc, setAvanceDesc] = useState("");
-  const [avanceIssues, setAvanceIssues] = useState("");
-  const [avanceSubmitting, setAvanceSubmitting] = useState(false);
-  const [avanceError, setAvanceError] = useState<string | null>(null);
-
   // Assignee drawer
   const [showAssignee, setShowAssignee] = useState(false);
   const [usersList, setUsersList] = useState<UserOption[]>([]);
@@ -163,53 +122,15 @@ export default function IprDetailPage() {
   const [editSubmitting, setEditSubmitting] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
 
-  // Inline creation drawers
-  const [showCompromisoDrawer, setShowCompromisoDrawer] = useState(false);
-  const [showProblemaDrawer, setShowProblemaDrawer] = useState(false);
-  const [showConvenioDrawer, setShowConvenioDrawer] = useState(false);
-
-  // Partes state
-  const [partes, setPartes] = useState<IprPartyItem[] | null>(null);
-  const [partesLoading, setPartesLoading] = useState(false);
-  const [showParteForm, setShowParteForm] = useState(false);
-  const [parteOrgId, setParteOrgId] = useState("");
-  const [parteRoleId, setParteRoleId] = useState("");
-  const [parteRoles, setParteRoles] = useState<CategoryRef[]>([]);
-  const [parteSubmitting, setParteSubmitting] = useState(false);
-  const [parteError, setParteError] = useState<string | null>(null);
-
-  // Territorio state
-  const [territorios, setTerritorios] = useState<IprTerritoryItem[] | null>(null);
-  const [terrLoading, setTerrLoading] = useState(false);
-  const [showTerrForm, setShowTerrForm] = useState(false);
-  const [terrTerritoryId, setTerrTerritoryId] = useState("");
-  const [terrImpactId, setTerrImpactId] = useState("");
-  const [terrOptions, setTerrOptions] = useState<TerritoryOption[]>([]);
-  const [terrImpactTypes, setTerrImpactTypes] = useState<CategoryRef[]>([]);
-  const [terrSubmitting, setTerrSubmitting] = useState(false);
-  const [terrError, setTerrError] = useState<string | null>(null);
-
-  // Hitos state
-  const [hitos, setHitos] = useState<IprMilestoneItem[] | null>(null);
-  const [hitosLoading, setHitosLoading] = useState(false);
-
-  // Resoluciones state
-  const [resoluciones, setResoluciones] = useState<ActoListItem[] | null>(null);
-  const [resolucionesLoading, setResolucionesLoading] = useState(false);
-  const [showHitoForm, setShowHitoForm] = useState(false);
-  const [hitoTypeId, setHitoTypeId] = useState("");
-  const [hitoPlannedDate, setHitoPlannedDate] = useState("");
-  const [hitoDesc, setHitoDesc] = useState("");
-  const [hitoTypes, setHitoTypes] = useState<CategoryRef[]>([]);
-  const [hitoSubmitting, setHitoSubmitting] = useState(false);
-  const [hitoError, setHitoError] = useState<string | null>(null);
-
   // Transitions state
   const [transitions, setTransitions] = useState<IprTransition[] | null>(null);
   const [transLoading, setTransLoading] = useState(false);
   const [selectedTransition, setSelectedTransition] = useState("");
   const [transSubmitting, setTransSubmitting] = useState(false);
   const [transError, setTransError] = useState<string | null>(null);
+
+  // Track info state (Poly-Switch)
+  const [trackInfo, setTrackInfo] = useState<TrackInfo | null>(null);
 
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
@@ -225,6 +146,10 @@ export default function IprDetailPage() {
       .then(setIpr)
       .catch(() => setIpr(null))
       .finally(() => setIprLoading(false));
+    api
+      .get<TrackInfo>(`/api/ipr/${id}/track-info`)
+      .then(setTrackInfo)
+      .catch(() => setTrackInfo(null));
   }, [id]);
 
   const loadTransitions = () => {
@@ -258,274 +183,6 @@ export default function IprDetailPage() {
       setTransError(err instanceof Error ? err.message : "Error al transicionar");
     } finally {
       setTransSubmitting(false);
-    }
-  };
-
-  const loadCompromisos = (force = false) => {
-    if (compromisos && !force) return;
-    setCompLoading(true);
-    api
-      .get<PaginatedResponse<CompromisoListItem>>(`/api/compromisos?ipr_id=${id}&page_size=50`)
-      .then(setCompromisos)
-      .catch(() => setCompromisos(null))
-      .finally(() => setCompLoading(false));
-  };
-
-  const loadProblemas = (force = false) => {
-    if (problemas && !force) return;
-    setProbLoading(true);
-    api
-      .get<PaginatedResponse<ProblemaListItem>>(`/api/problemas?ipr_id=${id}&page_size=50`)
-      .then(setProblemas)
-      .catch(() => setProblemas(null))
-      .finally(() => setProbLoading(false));
-  };
-
-  const loadAlertas = () => {
-    if (alertas) return;
-    setAlertLoading(true);
-    api
-      .get<PaginatedResponse<AlertaListItem>>(`/api/alertas?subject_type=core.ipr&subject_id=${id}&page_size=50`)
-      .then(setAlertas)
-      .catch(() => setAlertas(null))
-      .finally(() => setAlertLoading(false));
-  };
-
-  const loadConvenios = (force = false) => {
-    if (convenios && !force) return;
-    setConvLoading(true);
-    api
-      .get<PaginatedResponse<ConvenioListItem>>(`/api/convenios?ipr_id=${id}&page_size=50`)
-      .then(setConvenios)
-      .catch(() => setConvenios(null))
-      .finally(() => setConvLoading(false));
-  };
-
-  const loadCdps = () => {
-    if (cdps) return;
-    setCdpsLoading(true);
-    api
-      .get<BudgetCommitmentItem[]>(`/api/presupuesto/cdps-por-ipr/${id}`)
-      .then(setCdps)
-      .catch(() => setCdps(null))
-      .finally(() => setCdpsLoading(false));
-  };
-
-  const loadAvances = (force = false) => {
-    if (avances && !force) return;
-    setAvancesLoading(true);
-    api
-      .get<ProgressReport[]>(`/api/ipr/${id}/avances`)
-      .then(setAvances)
-      .catch(() => setAvances(null))
-      .finally(() => setAvancesLoading(false));
-  };
-
-  const loadPartes = (force = false) => {
-    if (partes && !force) return;
-    setPartesLoading(true);
-    api
-      .get<IprPartyItem[]>(`/api/ipr/${id}/partes`)
-      .then(setPartes)
-      .catch(() => setPartes(null))
-      .finally(() => setPartesLoading(false));
-  };
-
-  const loadTerritorios = (force = false) => {
-    if (territorios && !force) return;
-    setTerrLoading(true);
-    api
-      .get<IprTerritoryItem[]>(`/api/ipr/${id}/territorio`)
-      .then(setTerritorios)
-      .catch(() => setTerritorios(null))
-      .finally(() => setTerrLoading(false));
-  };
-
-  const loadHitos = (force = false) => {
-    if (hitos && !force) return;
-    setHitosLoading(true);
-    api
-      .get<IprMilestoneItem[]>(`/api/ipr/${id}/hitos`)
-      .then(setHitos)
-      .catch(() => setHitos(null))
-      .finally(() => setHitosLoading(false));
-  };
-
-  const loadResoluciones = () => {
-    if (resoluciones) return;
-    setResolucionesLoading(true);
-    api
-      .get<{ items: ActoListItem[] }>(`/api/actos?ipr_id=${id}&page_size=100`)
-      .then((data) => setResoluciones(data.items))
-      .catch(() => setResoluciones(null))
-      .finally(() => setResolucionesLoading(false));
-  };
-
-  const openParteForm = () => {
-    setParteOrgId("");
-    setParteRoleId("");
-    setParteError(null);
-    setShowParteForm(true);
-    if (parteRoles.length === 0) {
-      api.get<CategoryRef[]>("/api/catalogs/categories/ipr_party_role").then(setParteRoles).catch(() => {});
-    }
-  };
-
-  const handleParteSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!parteOrgId || !parteRoleId) {
-      setParteError("Organización y rol son requeridos.");
-      return;
-    }
-    setParteSubmitting(true);
-    setParteError(null);
-    try {
-      await api.post(`/api/ipr/${id}/partes`, {
-        organization_id: parteOrgId,
-        party_role_id: parteRoleId,
-      });
-      setShowParteForm(false);
-      loadPartes(true);
-    } catch (err) {
-      setParteError(err instanceof Error ? err.message : "Error al agregar parte");
-    } finally {
-      setParteSubmitting(false);
-    }
-  };
-
-  const handleDeleteParty = async (partyId: string) => {
-    try {
-      await api.delete(`/api/ipr/${id}/partes/${partyId}`);
-      loadPartes(true);
-    } catch {
-      // silent
-    }
-  };
-
-  const openTerrForm = () => {
-    setTerrTerritoryId("");
-    setTerrImpactId("");
-    setTerrError(null);
-    setShowTerrForm(true);
-    if (terrOptions.length === 0) {
-      api.get<TerritoryOption[]>("/api/catalogs/territories").then(setTerrOptions).catch(() => {});
-    }
-    if (terrImpactTypes.length === 0) {
-      api.get<CategoryRef[]>("/api/catalogs/categories/territory_impact").then(setTerrImpactTypes).catch(() => {});
-    }
-  };
-
-  const handleTerrSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!terrTerritoryId || !terrImpactId) {
-      setTerrError("Territorio y tipo de impacto son requeridos.");
-      return;
-    }
-    setTerrSubmitting(true);
-    setTerrError(null);
-    try {
-      await api.post(`/api/ipr/${id}/territorio`, {
-        territory_id: terrTerritoryId,
-        impact_type_id: terrImpactId,
-      });
-      setShowTerrForm(false);
-      loadTerritorios(true);
-    } catch (err) {
-      setTerrError(err instanceof Error ? err.message : "Error al agregar territorio");
-    } finally {
-      setTerrSubmitting(false);
-    }
-  };
-
-  const handleDeleteTerritory = async (recordId: string) => {
-    try {
-      await api.delete(`/api/ipr/${id}/territorio/${recordId}`);
-      loadTerritorios(true);
-    } catch {
-      // silent
-    }
-  };
-
-  const openHitoForm = () => {
-    setHitoTypeId("");
-    setHitoPlannedDate("");
-    setHitoDesc("");
-    setHitoError(null);
-    setShowHitoForm(true);
-    if (hitoTypes.length === 0) {
-      api.get<CategoryRef[]>("/api/catalogs/categories/milestone_type").then(setHitoTypes).catch(() => {});
-    }
-  };
-
-  const handleHitoSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!hitoTypeId || !hitoPlannedDate) {
-      setHitoError("Tipo de hito y fecha planificada son requeridos.");
-      return;
-    }
-    setHitoSubmitting(true);
-    setHitoError(null);
-    try {
-      await api.post(`/api/ipr/${id}/hitos`, {
-        milestone_type_id: hitoTypeId,
-        planned_date: hitoPlannedDate,
-        description: hitoDesc || null,
-      });
-      setShowHitoForm(false);
-      loadHitos(true);
-    } catch (err) {
-      setHitoError(err instanceof Error ? err.message : "Error al crear hito");
-    } finally {
-      setHitoSubmitting(false);
-    }
-  };
-
-  const handleCompleteHito = async (hitoId: string) => {
-    try {
-      await api.patch(`/api/ipr/${id}/hitos/${hitoId}`, {
-        actual_date: new Date().toISOString().split("T")[0],
-      });
-      loadHitos(true);
-    } catch {
-      // silent
-    }
-  };
-
-  const searchOrganizations = async (query: string): Promise<ComboboxOption[]> => {
-    const data = await api.get<{ id: string; name: string; code: string }[]>(
-      `/api/catalogs/organizations?search=${encodeURIComponent(query)}`
-    );
-    return data.map((o) => ({ value: o.id, label: `${o.name} (${o.code})` }));
-  };
-
-  const handleAvanceSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!avanceDate) {
-      setAvanceError("La fecha es requerida.");
-      return;
-    }
-    setAvanceSubmitting(true);
-    setAvanceError(null);
-    try {
-      await api.post(`/api/ipr/${id}/avances`, {
-        report_date: avanceDate,
-        physical_progress: avancePhysical ? parseFloat(avancePhysical) : null,
-        financial_progress: avanceFinancial ? parseFloat(avanceFinancial) : null,
-        description: avanceDesc || null,
-        issues_detected: avanceIssues || null,
-      });
-      setShowAvanceForm(false);
-      setAvanceDate(new Date().toISOString().split("T")[0]);
-      setAvancePhysical("");
-      setAvanceFinancial("");
-      setAvanceDesc("");
-      setAvanceIssues("");
-      setAvances(null);
-      loadAvances(true);
-    } catch (err) {
-      setAvanceError(err instanceof Error ? err.message : "Error al registrar avance");
-    } finally {
-      setAvanceSubmitting(false);
     }
   };
 
@@ -579,80 +236,6 @@ export default function IprDetailPage() {
       setAssigneeSubmitting(false);
     }
   };
-
-  const compromisoColumns = [
-    { key: "description", label: "Descripción" },
-    { key: "responsible_name", label: "Responsable" },
-    {
-      key: "due_date",
-      label: "Vence",
-      render: (_: unknown, row: unknown) => {
-        const r = row as CompromisoListItem;
-        return <TemporalIndicator daysRemaining={r.days_remaining} state={r.state} />;
-      },
-    },
-    {
-      key: "state",
-      label: "Estado",
-      render: (v: unknown) => <StatusBadge status={String(v ?? "")} size="sm" />,
-    },
-  ];
-
-  const problemaColumns = [
-    {
-      key: "days_open",
-      label: "Dias abierto",
-      render: (v: unknown) => <span className="text-xs tabular-nums">{String(v ?? 0)}d</span>,
-    },
-    { key: "problem_type_label", label: "Tipo" },
-    {
-      key: "impact_label",
-      label: "Impacto",
-      render: (v: unknown) => (
-        <Badge variant="outline" className="text-xs">{String(v ?? "-")}</Badge>
-      ),
-    },
-    {
-      key: "state",
-      label: "Estado",
-      render: (v: unknown) => <StatusBadge status={String(v ?? "")} size="sm" />,
-    },
-  ];
-
-  const avanceColumns = [
-    {
-      key: "report_number",
-      label: "#",
-      render: (v: unknown) => <span className="font-mono text-xs">{String(v)}</span>,
-    },
-    {
-      key: "report_date",
-      label: "Fecha",
-      render: (v: unknown) => <span className="text-xs">{v ? formatDate(String(v)) : "-"}</span>,
-    },
-    {
-      key: "physical_progress",
-      label: "% Fisico",
-      render: (v: unknown) => (
-        <span className="text-xs tabular-nums">{v != null ? `${Number(v).toFixed(1)}%` : "-"}</span>
-      ),
-    },
-    {
-      key: "financial_progress",
-      label: "% Financiero",
-      render: (v: unknown) => (
-        <span className="text-xs tabular-nums">{v != null ? `${Number(v).toFixed(1)}%` : "-"}</span>
-      ),
-    },
-    {
-      key: "description",
-      label: "Descripción",
-      render: (v: unknown) => (
-        <span className="text-xs line-clamp-1 max-w-xs">{String(v ?? "-")}</span>
-      ),
-    },
-    { key: "reported_by_name", label: "Reportado por" },
-  ];
 
   const alertLevel = ipr?.alert_level;
   const borderClass = alertLevel ? alertBorderMap[alertLevel] : "";
@@ -908,607 +491,71 @@ export default function IprDetailPage() {
         </div>
       )}
 
+      {/* Track Card (Poly-Switch) */}
+      {trackInfo && trackInfo.mechanism && (
+        <TrackCard track={trackInfo} />
+      )}
+
       {/* Tabs */}
-      <Tabs defaultValue="compromisos" onValueChange={(tab) => {
-        if (tab === "compromisos") loadCompromisos();
-        if (tab === "problemas") loadProblemas();
-        if (tab === "alertas") loadAlertas();
-        if (tab === "convenios") loadConvenios();
-        if (tab === "cdps") loadCdps();
-        if (tab === "avances") loadAvances();
-        if (tab === "partes") loadPartes();
-        if (tab === "territorio") loadTerritorios();
-        if (tab === "hitos") loadHitos();
-      }}>
+      <Tabs defaultValue="compromisos">
         <TabsList className="flex-wrap">
-          <TabsTrigger value="compromisos" onClick={() => loadCompromisos()}>
-            Compromisos
-          </TabsTrigger>
-          <TabsTrigger value="problemas" onClick={() => loadProblemas()}>
-            Problemas
-          </TabsTrigger>
-          <TabsTrigger value="alertas" onClick={loadAlertas}>
-            Alertas
-          </TabsTrigger>
-          <TabsTrigger value="convenios" onClick={() => loadConvenios()}>
-            Convenios
-          </TabsTrigger>
-          <TabsTrigger value="cdps" onClick={loadCdps}>
-            CDPs
-          </TabsTrigger>
-          <TabsTrigger value="avances" onClick={() => loadAvances()}>
-            Avances
-          </TabsTrigger>
-          <TabsTrigger value="partes" onClick={() => loadPartes()}>
-            Partes
-          </TabsTrigger>
-          <TabsTrigger value="territorio" onClick={() => loadTerritorios()}>
-            Territorio
-          </TabsTrigger>
-          <TabsTrigger value="hitos" onClick={() => loadHitos()}>
-            Hitos
-          </TabsTrigger>
-          <TabsTrigger value="resoluciones" onClick={() => loadResoluciones()}>
-            Resoluciones
-          </TabsTrigger>
+          <TabsTrigger value="compromisos">Compromisos</TabsTrigger>
+          <TabsTrigger value="problemas">Problemas</TabsTrigger>
+          <TabsTrigger value="alertas">Alertas</TabsTrigger>
+          <TabsTrigger value="convenios">Convenios</TabsTrigger>
+          <TabsTrigger value="cdps">CDPs</TabsTrigger>
+          <TabsTrigger value="avances">Avances</TabsTrigger>
+          <TabsTrigger value="partes">Partes</TabsTrigger>
+          <TabsTrigger value="territorio">Territorio</TabsTrigger>
+          <TabsTrigger value="hitos">Hitos</TabsTrigger>
+          <TabsTrigger value="resoluciones">Resoluciones</TabsTrigger>
+          <TabsTrigger value="evaluaciones">Evaluación</TabsTrigger>
         </TabsList>
 
         <TabsContent value="compromisos" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {compromisos ? `${compromisos.total} compromisos` : ""}
-            </p>
-            {canCreateCompromiso && (
-              <Button size="sm" onClick={() => setShowCompromisoDrawer(true)}>
-                <Plus className="size-4 mr-1" />
-                Nuevo Compromiso
-              </Button>
-            )}
-          </div>
-          <DataTable
-            columns={compromisoColumns}
-            data={compromisos?.items ?? []}
-            page={1}
-            totalPages={1}
-            total={compromisos?.total ?? 0}
-            onPageChange={() => {}}
-            isLoading={compLoading}
-          />
+          <TabCompromisos iprId={id} canCreate={!!canCreateCompromiso} />
         </TabsContent>
 
         <TabsContent value="problemas" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {problemas ? `${problemas.total} problemas` : ""}
-            </p>
-            {canCreateProblema && (
-              <Button size="sm" onClick={() => setShowProblemaDrawer(true)}>
-                <Plus className="size-4 mr-1" />
-                Nuevo Problema
-              </Button>
-            )}
-          </div>
-          <DataTable
-            columns={problemaColumns}
-            data={problemas?.items ?? []}
-            page={1}
-            totalPages={1}
-            total={problemas?.total ?? 0}
-            onPageChange={() => {}}
-            isLoading={probLoading}
-          />
+          <TabProblemas iprId={id} canCreate={!!canCreateProblema} />
         </TabsContent>
 
         <TabsContent value="alertas" className="mt-4">
-          {alertLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-20 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !alertas || alertas.items.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay alertas para este IPR.</p>
-          ) : (
-            <div className="space-y-3">
-              {alertas.items.map((alert) => (
-                <AlertCard
-                  key={alert.id}
-                  alert={alert}
-                  onViewSubject={(type, subjectId) => {
-                    if (type === "core.ipr") router.push(`/ipr/${subjectId}`);
-                    else if (type === "core.agreement") router.push("/convenios");
-                    else if (type === "core.operational_commitment") router.push("/compromisos");
-                    else if (type === "core.ipr_problem") router.push("/problemas");
-                  }}
-                />
-              ))}
-            </div>
-          )}
+          <TabAlertas iprId={id} />
         </TabsContent>
 
         <TabsContent value="convenios" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {convenios ? `${convenios.total} convenios` : ""}
-            </p>
-            {canCreateConvenio && (
-              <Button size="sm" onClick={() => setShowConvenioDrawer(true)}>
-                <Plus className="size-4 mr-1" />
-                Agregar Convenio
-              </Button>
-            )}
-          </div>
-          {convLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !convenios || convenios.items.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay convenios para este IPR.</p>
-          ) : (
-            <DataTable
-              columns={[
-                {
-                  key: "agreement_number",
-                  label: "N Convenio",
-                  render: (v: unknown) => <span className="font-mono text-xs">{String(v ?? "-")}</span>,
-                },
-                {
-                  key: "agreement_type_label",
-                  label: "Tipo",
-                  render: (v: unknown) => <Badge variant="outline" className="text-xs">{String(v ?? "-")}</Badge>,
-                },
-                {
-                  key: "total_amount",
-                  label: "Monto",
-                  render: (v: unknown) => (
-                    <span className="font-mono text-xs tabular-nums">
-                      {v != null ? new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", notation: "compact", maximumFractionDigits: 1 }).format(Number(v)) : "-"}
-                    </span>
-                  ),
-                },
-                {
-                  key: "state",
-                  label: "Estado",
-                  render: (v: unknown) => <StatusBadge status={String(v ?? "")} size="sm" />,
-                },
-                {
-                  key: "installment_count",
-                  label: "Cuotas",
-                  render: (_: unknown, row: unknown) => {
-                    const r = row as ConvenioListItem;
-                    return <span className="text-xs">{r.paid_installments}/{r.installment_count}</span>;
-                  },
-                },
-              ]}
-              data={convenios.items}
-              page={1}
-              totalPages={1}
-              total={convenios.total}
-              onPageChange={() => {}}
-              onRowClick={() => {
-                router.push("/convenios");
-              }}
-              isLoading={convLoading}
-            />
-          )}
+          <TabConvenios iprId={id} canCreate={!!canCreateConvenio} />
         </TabsContent>
 
         <TabsContent value="cdps" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {cdps ? `${cdps.length} CDPs vinculados` : ""}
-            </p>
-          </div>
-          {cdpsLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !cdps || cdps.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay CDPs vinculados a este IPR.</p>
-          ) : (
-            <div className="space-y-2">
-              {cdps.map((cdp) => (
-                <div key={cdp.id} className="rounded-md border px-3 py-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="font-mono text-xs">{cdp.commitment_number}</span>
-                    {cdp.status_label && <StatusBadge status={cdp.status_label} size="sm" />}
-                  </div>
-                  <div className="flex justify-between mt-1">
-                    <span className="text-muted-foreground text-xs">
-                      {cdp.issued_at ? formatDate(cdp.issued_at) : "-"}
-                      {cdp.expires_at ? ` → ${formatDate(cdp.expires_at)}` : ""}
-                    </span>
-                    <span className="font-mono text-xs">{formatCurrency(cdp.amount)}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <TabCdps iprId={id} />
         </TabsContent>
 
         <TabsContent value="avances" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {avances ? `${avances.length} reportes de avance` : ""}
-            </p>
-            <Button size="sm" onClick={() => setShowAvanceForm(true)}>
-              <Plus className="size-4 mr-1" />
-              Registrar Avance
-            </Button>
-          </div>
-          {avancesLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-12 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !avances || avances.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay reportes de avance para este IPR.</p>
-          ) : (
-            <DataTable
-              columns={avanceColumns}
-              data={avances}
-              page={1}
-              totalPages={1}
-              total={avances.length}
-              onPageChange={() => {}}
-              isLoading={avancesLoading}
-            />
-          )}
+          <TabAvances iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
-        {/* Partes Tab */}
         <TabsContent value="partes" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {partes ? `${partes.length} partes involucradas` : ""}
-            </p>
-            {canManageChildren && (
-              <Button size="sm" onClick={openParteForm}>
-                <Plus className="size-4 mr-1" />
-                Agregar Parte
-              </Button>
-            )}
-          </div>
-          {partesLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !partes || partes.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay partes registradas para este IPR.</p>
-          ) : (
-            <div className="space-y-2">
-              {partes.map((p) => (
-                <div key={p.id} className="rounded-md border px-4 py-3 text-sm">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Building2 className="size-4 text-muted-foreground" />
-                      <span className="font-medium">{p.organization_name}</span>
-                      {p.organization_code && (
-                        <span className="font-mono text-xs text-muted-foreground">{p.organization_code}</span>
-                      )}
-                      {p.is_primary && (
-                        <Badge variant="default" className="text-xs">Principal</Badge>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">{p.role_label}</Badge>
-                      {canManageChildren && (
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="size-7 p-0 text-muted-foreground hover:text-red-600"
-                          onClick={() => handleDeleteParty(p.id)}
-                        >
-                          <Trash2 className="size-3.5" />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                  {(p.contact_person || p.contact_email || p.agreement_number) && (
-                    <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                      {p.contact_person && <span>Contacto: {p.contact_person}</span>}
-                      {p.contact_email && <span>{p.contact_email}</span>}
-                      {p.agreement_number && <span>Convenio: {p.agreement_number}</span>}
-                      {p.valid_from && <span>Desde: {formatDate(p.valid_from)}</span>}
-                      {p.valid_to && <span>Hasta: {formatDate(p.valid_to)}</span>}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+          <TabPartes iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
-        {/* Territorio Tab */}
         <TabsContent value="territorio" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {territorios ? `${territorios.length} territorios vinculados` : ""}
-            </p>
-            {canManageChildren && (
-              <Button size="sm" onClick={openTerrForm}>
-                <Plus className="size-4 mr-1" />
-                Agregar Territorio
-              </Button>
-            )}
-          </div>
-          {terrLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !territorios || territorios.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay territorios vinculados a este IPR.</p>
-          ) : (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {territorios.map((t) => (
-                <div key={t.id} className="rounded-lg border p-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="size-4 text-muted-foreground shrink-0" />
-                      <div>
-                        <p className="font-medium text-sm">{t.territory_name}</p>
-                        {t.territory_code && (
-                          <p className="text-xs text-muted-foreground font-mono">{t.territory_code}</p>
-                        )}
-                      </div>
-                    </div>
-                    {canManageChildren && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="size-7 p-0 text-muted-foreground hover:text-red-600"
-                        onClick={() => handleDeleteTerritory(t.id)}
-                      >
-                        <Trash2 className="size-3.5" />
-                      </Button>
-                    )}
-                  </div>
-                  <div className="mt-2 flex items-center gap-2">
-                    <Badge variant="outline" className="text-xs">{t.impact_type_label}</Badge>
-                    {t.is_primary && <Badge variant="default" className="text-xs">Principal</Badge>}
-                  </div>
-                  {t.notes && <p className="mt-2 text-xs text-muted-foreground">{t.notes}</p>}
-                </div>
-              ))}
-            </div>
-          )}
+          <TabTerritorio iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
-        {/* Hitos Tab */}
         <TabsContent value="hitos" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {hitos ? `${hitos.length} hitos` : ""}
-            </p>
-            {canManageChildren && (
-              <Button size="sm" onClick={openHitoForm}>
-                <Plus className="size-4 mr-1" />
-                Nuevo Hito
-              </Button>
-            )}
-          </div>
-          {hitosLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !hitos || hitos.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay hitos registrados para este IPR.</p>
-          ) : (
-            <div className="space-y-3">
-              {hitos.map((h) => {
-                const today = new Date().toISOString().split("T")[0];
-                const isCompleted = !!h.actual_date;
-                const isOverdue = !isCompleted && h.planned_date < today;
-                const isFuture = !isCompleted && h.planned_date >= today;
-                const borderColor = isCompleted
-                  ? (h.deviation_days != null && h.deviation_days > 0 ? "border-l-amber-500" : "border-l-green-500")
-                  : isOverdue
-                  ? "border-l-red-500"
-                  : "border-l-gray-300";
-
-                return (
-                  <div
-                    key={h.id}
-                    className={cn("rounded-md border border-l-4 px-4 py-3 text-sm", borderColor)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Flag className="size-4 text-muted-foreground" />
-                        <span className="font-medium">{h.milestone_type_label}</span>
-                        {h.deviation_days != null && (
-                          <Badge
-                            variant="outline"
-                            className={cn(
-                              "text-xs",
-                              h.deviation_days > 0
-                                ? "text-red-600 border-red-200"
-                                : h.deviation_days < 0
-                                ? "text-green-600 border-green-200"
-                                : "text-gray-600"
-                            )}
-                          >
-                            {h.deviation_days > 0
-                              ? `+${h.deviation_days}d atraso`
-                              : h.deviation_days < 0
-                              ? `${h.deviation_days}d adelanto`
-                              : "A tiempo"}
-                          </Badge>
-                        )}
-                        {isOverdue && (
-                          <Badge variant="outline" className="text-xs text-red-600 border-red-200">
-                            Vencido
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {isCompleted ? (
-                          <Badge variant="default" className="text-xs bg-green-600">Completado</Badge>
-                        ) : canManageChildren ? (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-xs h-7"
-                            onClick={() => handleCompleteHito(h.id)}
-                          >
-                            <CheckCircle2 className="size-3.5 mr-1" />
-                            Completar
-                          </Button>
-                        ) : isFuture ? (
-                          <Badge variant="outline" className="text-xs">Pendiente</Badge>
-                        ) : null}
-                      </div>
-                    </div>
-                    <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                      <span>Planificado: {formatDate(h.planned_date)}</span>
-                      {h.actual_date && <span>Completado: {formatDate(h.actual_date)}</span>}
-                      {h.completed_by_name && <span>Por: {h.completed_by_name}</span>}
-                    </div>
-                    {h.description && (
-                      <p className="mt-1 text-xs text-muted-foreground">{h.description}</p>
-                    )}
-                    {h.verification_notes && (
-                      <p className="mt-1 text-xs italic text-muted-foreground">Notas: {h.verification_notes}</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          <TabHitos iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
         <TabsContent value="resoluciones" className="mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">
-              {resoluciones ? `${resoluciones.length} resoluciones vinculadas` : ""}
-            </p>
-          </div>
-          {resolucionesLoading ? (
-            <div className="space-y-2">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-16 rounded-lg bg-muted animate-pulse" />
-              ))}
-            </div>
-          ) : !resoluciones || resoluciones.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No hay resoluciones vinculadas a este IPR.</p>
-          ) : (
-            <div className="space-y-2">
-              {resoluciones.map((acto) => (
-                <div
-                  key={acto.id}
-                  className="rounded-md border px-3 py-2 text-sm cursor-pointer hover:bg-muted/50"
-                  onClick={() => router.push(`/actos?search=${encodeURIComponent(acto.act_number)}`)}
-                >
-                  <div className="flex justify-between">
-                    <span className="font-mono text-xs">{acto.act_number}</span>
-                    <StatusBadge status={acto.state} size="sm" />
-                  </div>
-                  <p className="text-xs line-clamp-1 mt-1">{acto.subject}</p>
-                  <div className="flex justify-between mt-1">
-                    <span className="text-muted-foreground text-xs">
-                      {acto.resolution_type_label ?? acto.act_type_label}
-                    </span>
-                    {acto.budget_amount !== null && acto.budget_amount !== undefined && (
-                      <span className="font-mono text-xs">{formatCurrency(acto.budget_amount)}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <TabResoluciones iprId={id} />
+        </TabsContent>
+
+        <TabsContent value="evaluaciones" className="mt-4">
+          <TabEvaluaciones iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
       </Tabs>
-
-      {/* Avance Form Drawer */}
-      <DrawerPanel
-        open={showAvanceForm}
-        onClose={() => setShowAvanceForm(false)}
-        title="Registrar Avance"
-      >
-        <form onSubmit={handleAvanceSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Fecha del reporte *</label>
-            <Input
-              type="date"
-              value={avanceDate}
-              onChange={(e) => setAvanceDate(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Avance fisico (%)</label>
-            <Input
-              type="number"
-              min="0"
-              max="100"
-              step="0.1"
-              value={avancePhysical}
-              onChange={(e) => setAvancePhysical(e.target.value)}
-              placeholder="0 - 100"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Avance financiero (%)</label>
-            <Input
-              type="number"
-              min="0"
-              max="100"
-              step="0.1"
-              value={avanceFinancial}
-              onChange={(e) => setAvanceFinancial(e.target.value)}
-              placeholder="0 - 100"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Descripción</label>
-            <textarea
-              className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              value={avanceDesc}
-              onChange={(e) => setAvanceDesc(e.target.value)}
-              placeholder="Descripción del avance..."
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Problemas detectados</label>
-            <textarea
-              className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              value={avanceIssues}
-              onChange={(e) => setAvanceIssues(e.target.value)}
-              placeholder="Problemas o riesgos detectados..."
-            />
-          </div>
-
-          {avanceError && (
-            <p className="text-sm text-red-600">{avanceError}</p>
-          )}
-
-          <div className="flex gap-2 pt-2">
-            <Button type="submit" disabled={avanceSubmitting}>
-              {avanceSubmitting ? "Guardando..." : "Guardar Avance"}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setShowAvanceForm(false)}
-            >
-              Cancelar
-            </Button>
-          </div>
-        </form>
-      </DrawerPanel>
 
       {/* Assignee Drawer */}
       <DrawerPanel
@@ -1588,168 +635,6 @@ export default function IprDetailPage() {
         </form>
       </DrawerPanel>
 
-      {/* Parte Form Drawer */}
-      <DrawerPanel
-        open={showParteForm}
-        onClose={() => setShowParteForm(false)}
-        title="Agregar Parte"
-      >
-        <form onSubmit={handleParteSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Organización *</label>
-            <ComboboxAsync
-              value={parteOrgId}
-              onChange={setParteOrgId}
-              searchFn={searchOrganizations}
-              placeholder="Buscar organización..."
-            />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Rol *</label>
-            <Select value={parteRoleId} onValueChange={setParteRoleId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione rol" />
-              </SelectTrigger>
-              <SelectContent>
-                {parteRoles.map((r) => (
-                  <SelectItem key={r.id} value={r.id}>
-                    {r.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          {parteError && <p className="text-sm text-red-600">{parteError}</p>}
-          <div className="flex gap-2 pt-2">
-            <Button type="submit" disabled={parteSubmitting}>
-              {parteSubmitting ? "Guardando..." : "Agregar Parte"}
-            </Button>
-            <Button type="button" variant="outline" onClick={() => setShowParteForm(false)}>
-              Cancelar
-            </Button>
-          </div>
-        </form>
-      </DrawerPanel>
-
-      {/* Territorio Form Drawer */}
-      <DrawerPanel
-        open={showTerrForm}
-        onClose={() => setShowTerrForm(false)}
-        title="Agregar Territorio"
-      >
-        <form onSubmit={handleTerrSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Territorio *</label>
-            <Select value={terrTerritoryId} onValueChange={setTerrTerritoryId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione territorio" />
-              </SelectTrigger>
-              <SelectContent>
-                {terrOptions.map((t) => (
-                  <SelectItem key={t.id} value={t.id}>
-                    {t.name} ({t.territory_type})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Tipo de impacto *</label>
-            <Select value={terrImpactId} onValueChange={setTerrImpactId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione tipo de impacto" />
-              </SelectTrigger>
-              <SelectContent>
-                {terrImpactTypes.map((t) => (
-                  <SelectItem key={t.id} value={t.id}>
-                    {t.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          {terrError && <p className="text-sm text-red-600">{terrError}</p>}
-          <div className="flex gap-2 pt-2">
-            <Button type="submit" disabled={terrSubmitting}>
-              {terrSubmitting ? "Guardando..." : "Agregar Territorio"}
-            </Button>
-            <Button type="button" variant="outline" onClick={() => setShowTerrForm(false)}>
-              Cancelar
-            </Button>
-          </div>
-        </form>
-      </DrawerPanel>
-
-      {/* Hito Form Drawer */}
-      <DrawerPanel
-        open={showHitoForm}
-        onClose={() => setShowHitoForm(false)}
-        title="Nuevo Hito"
-      >
-        <form onSubmit={handleHitoSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Tipo de hito *</label>
-            <Select value={hitoTypeId} onValueChange={setHitoTypeId}>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccione tipo" />
-              </SelectTrigger>
-              <SelectContent>
-                {hitoTypes.map((t) => (
-                  <SelectItem key={t.id} value={t.id}>
-                    {t.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Fecha planificada *</label>
-            <Input
-              type="date"
-              value={hitoPlannedDate}
-              onChange={(e) => setHitoPlannedDate(e.target.value)}
-            />
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">Descripción</label>
-            <textarea
-              className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              value={hitoDesc}
-              onChange={(e) => setHitoDesc(e.target.value)}
-              placeholder="Descripción del hito..."
-            />
-          </div>
-          {hitoError && <p className="text-sm text-red-600">{hitoError}</p>}
-          <div className="flex gap-2 pt-2">
-            <Button type="submit" disabled={hitoSubmitting}>
-              {hitoSubmitting ? "Guardando..." : "Crear Hito"}
-            </Button>
-            <Button type="button" variant="outline" onClick={() => setShowHitoForm(false)}>
-              Cancelar
-            </Button>
-          </div>
-        </form>
-      </DrawerPanel>
-
-      {/* Inline creation drawers */}
-      <IprCompromisoDrawer
-        open={showCompromisoDrawer}
-        onClose={() => setShowCompromisoDrawer(false)}
-        iprId={id}
-        onCreated={() => loadCompromisos(true)}
-      />
-      <IprProblemaDrawer
-        open={showProblemaDrawer}
-        onClose={() => setShowProblemaDrawer(false)}
-        iprId={id}
-        onCreated={() => loadProblemas(true)}
-      />
-      <IprConvenioDrawer
-        open={showConvenioDrawer}
-        onClose={() => setShowConvenioDrawer(false)}
-        iprId={id}
-        onCreated={() => loadConvenios(true)}
-      />
     </div>
   );
 }

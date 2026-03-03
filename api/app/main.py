@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
+from app.middleware.security import SecurityHeadersMiddleware
 from app.routers import auth, ipr, compromisos, problemas, alertas, dashboard, catalogs
 from app.routers import dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports
 from app.routers import presupuesto, convenios, admin, reuniones
@@ -10,13 +11,15 @@ settings = get_settings()
 
 
 def create_app() -> FastAPI:
+    is_dev = settings.ENV == "development"
     app = FastAPI(
         title="GORE_OS API",
         version="0.1.0",
-        docs_url="/api/docs",
-        openapi_url="/api/openapi.json",
+        docs_url="/api/docs" if is_dev else None,
+        openapi_url="/api/openapi.json" if is_dev else None,
     )
 
+    app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.CORS_ORIGINS,

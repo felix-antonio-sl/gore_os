@@ -8,11 +8,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
-from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate
+from app.schemas.ipr import IPRListItem, IPRDetail, IprCreate, IprAssigneeUpdate, IprUpdate, TrackInfo
 from app.schemas.progress_report import ProgressReportCreate, ProgressReportItem
 from app.schemas.ipr_party import IprPartyCreate, IprPartyItem
 from app.schemas.ipr_territory import IprTerritoryCreate, IprTerritoryItem
 from app.schemas.ipr_milestone import IprMilestoneCreate, IprMilestoneUpdate, IprMilestoneItem
+from app.schemas.evaluation import EvaluationAssignmentCreate, EvaluationAssignmentUpdate, EvaluationAssignmentItem
 from app.schemas.common import PaginatedResponse
 
 router = APIRouter(prefix="/api/ipr", tags=["ipr"])
@@ -53,6 +54,39 @@ STATUS_PHASE_FIBER: dict[str, str] = {
 }
 
 _PHASE_ORDER = {"F0": 0, "F1": 1, "F2": 2, "F3": 3, "F4": 4, "F5": 5}
+
+# ---------------------------------------------------------------------------
+# Universal fallback for IPRs without mechanism (backward compat)
+_UNIVERSAL_FAVORABLE = {"RS", "FI", "RF", "ITF", "AT", "AD"}
+
+
+async def _get_track_config(mechanism_code: str, db: AsyncSession) -> dict | None:
+    """Load financing track configuration from DB. Returns None if not found."""
+    result = await db.execute(
+        text("""
+            SELECT code, label, evaluator_code, evaluator_label,
+                   favorable_products, unfavorable_products, terminal_negative,
+                   thresholds, required_attrs, sla_days, rs_validity_years
+            FROM core.financing_track
+            WHERE code = :code AND is_active = TRUE
+        """),
+        {"code": mechanism_code},
+    )
+    row = result.mappings().first()
+    if not row:
+        return None
+    return {
+        "label": row["label"],
+        "evaluator": row["evaluator_code"],
+        "evaluator_label": row["evaluator_label"],
+        "favorable_products": list(row["favorable_products"] or []),
+        "unfavorable_products": list(row["unfavorable_products"] or []),
+        "terminal_negative": list(row["terminal_negative"] or []),
+        "thresholds": dict(row["thresholds"] or {}),
+        "required_attrs": list(row["required_attrs"] or []),
+        "sla_days": dict(row["sla_days"] or {}),
+        "rs_validity_years": row["rs_validity_years"],
+    }
 
 # CORE approval constants
 _UTM_VALUE = 67_294       # UTM feb 2026
@@ -123,15 +157,36 @@ async def _evaluate_phase_gates(
 
     elif transition == "F2->F3":
         row = (await db.execute(
-            text("SELECT c.code FROM core.ipr i JOIN ref.category c ON c.id = i.status_id WHERE i.id = :id"),
+            text("""
+                SELECT s.code AS status_code, m.code AS mechanism_code
+                FROM core.ipr i
+                JOIN ref.category s ON s.id = i.status_id
+                LEFT JOIN ref.category m ON m.id = i.mechanism_id
+                WHERE i.id = :id
+            """),
             {"id": str(ipr_id)},
         )).mappings().first()
-        current_status = row["code"] if row else None
-        favorable = current_status in ("RS", "FI", "RF", "ITF", "AT", "AD")
+        current_status = row["status_code"] if row else None
+        mechanism_code = row["mechanism_code"] if row else None
+
+        # Track-aware: use mechanism-specific favorable products, or universal fallback
+        track = await _get_track_config(mechanism_code, db) if mechanism_code else None
+        if track:
+            favorable_set = set(track["favorable_products"])
+            track_label = track["label"]
+        else:
+            favorable_set = _UNIVERSAL_FAVORABLE
+            track_label = "universal (sin mecanismo)"
+
+        favorable = current_status in favorable_set
         gates.append({
             "name": "favorable_outcome",
             "met": favorable,
-            "detail": f"Dictamen debe ser favorable para avanzar a priorización (actual: {current_status})",
+            "detail": (
+                f"Dictamen debe ser favorable para avanzar a priorización "
+                f"(actual: {current_status}, track: {track_label}, "
+                f"productos válidos: {', '.join(sorted(favorable_set))})"
+            ),
         })
 
     elif transition == "F3->F4":
@@ -361,6 +416,84 @@ async def list_iprs(
         page_size=page_size,
         total_pages=total_pages,
     )
+
+
+@router.get("/{ipr_id}/track-info", response_model=TrackInfo)
+async def get_track_info(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Return poly-switch track info for an IPR based on its mechanism."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code, m.label AS mechanism_label
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row:
+        raise HTTPException(status_code=404, detail="IPR no encontrada")
+
+    mechanism_code = row["mechanism_code"]
+    track = await _get_track_config(mechanism_code, db) if mechanism_code else None
+
+    # Fetch mechanism-specific attributes from core.ipr_mechanism
+    mechanism_attrs: dict = {}
+    if mechanism_code and track:
+        mech_row = (await db.execute(
+            text("SELECT * FROM core.ipr_mechanism WHERE ipr_id = :id AND deleted_at IS NULL"),
+            {"id": str(ipr_id)},
+        )).mappings().first()
+        if mech_row:
+            for attr in track.get("required_attrs", []):
+                val = mech_row.get(attr)
+                if val is not None:
+                    mechanism_attrs[attr] = val
+
+    # Fetch evaluation assignments (table may not exist yet — Wave B migration)
+    evaluations: list[dict] = []
+    if track:
+        try:
+            eval_rows = (await db.execute(
+                text("""
+                    SELECT ea.id, et.code AS evaluator_type, o.short_name AS evaluator_org_name,
+                           ea.evaluator_name, ea.assigned_at, ea.deadline_at,
+                           ea.completed_at, ea.result_code, r.label AS result_label,
+                           ea.observations
+                    FROM core.evaluation_assignment ea
+                    JOIN ref.category et ON et.id = ea.evaluator_type_id
+                    LEFT JOIN core.organization o ON o.id = ea.evaluator_organization_id
+                    LEFT JOIN ref.category r ON r.id = ea.result_id
+                    WHERE ea.ipr_id = :id AND ea.deleted_at IS NULL
+                    ORDER BY ea.assigned_at DESC
+                """),
+                {"id": str(ipr_id)},
+            )).mappings().all()
+            evaluations = [dict(e) for e in eval_rows]
+        except Exception:
+            await db.rollback()
+            evaluations = []
+
+    if track:
+        return TrackInfo(
+            mechanism=mechanism_code,
+            mechanism_label=track["label"],
+            evaluator=track["evaluator"],
+            evaluator_label=track["evaluator_label"],
+            favorable_products=track["favorable_products"],
+            unfavorable_products=track.get("unfavorable_products", []),
+            terminal_negative=track.get("terminal_negative", []),
+            thresholds=track.get("thresholds", {}),
+            sla_days=track.get("sla_days", {}),
+            required_attrs=track.get("required_attrs", []),
+            mechanism_attrs=mechanism_attrs,
+            evaluations=evaluations,
+        )
+
+    return TrackInfo(mechanism=mechanism_code, mechanism_label=row["mechanism_label"])
 
 
 @router.get("/{ipr_id}", response_model=IPRDetail)
@@ -1221,3 +1354,153 @@ async def update_ipr_milestone(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Hito no encontrado")
     await db.commit()
     return {"message": "Hito actualizado"}
+
+
+# ---------------------------------------------------------------------------
+# Evaluation Assignments (Poly-Switch Wave B)
+# ---------------------------------------------------------------------------
+
+@router.get("/{ipr_id}/evaluaciones", response_model=list[EvaluationAssignmentItem])
+async def list_evaluations(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List evaluation assignments for an IPR."""
+    rows = (await db.execute(
+        text("""
+            SELECT ea.id, ea.ipr_id,
+                   et.code AS evaluator_type, et.label AS evaluator_type_label,
+                   o.short_name AS evaluator_org_name,
+                   ea.evaluator_name, ea.assigned_at, ea.deadline_at,
+                   ea.completed_at, ea.result_code,
+                   r.label AS result_label, ea.observations
+            FROM core.evaluation_assignment ea
+            JOIN ref.category et ON et.id = ea.evaluator_type_id
+            LEFT JOIN core.organization o ON o.id = ea.evaluator_organization_id
+            LEFT JOIN ref.category r ON r.id = ea.result_id
+            WHERE ea.ipr_id = :ipr_id AND ea.deleted_at IS NULL
+            ORDER BY ea.assigned_at DESC
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().all()
+    return [EvaluationAssignmentItem(**dict(r)) for r in rows]
+
+
+@router.post("/{ipr_id}/evaluaciones", status_code=status.HTTP_201_CREATED)
+async def create_evaluation(
+    ipr_id: UUID,
+    body: EvaluationAssignmentCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Create an evaluation assignment. Auto-assigns evaluator_type from financing_track DB if omitted."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+
+    # Verify IPR exists
+    ipr_row = (await db.execute(
+        text("""
+            SELECT i.id, m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not ipr_row:
+        raise HTTPException(status_code=404, detail="IPR no encontrada")
+
+    # Auto-assign evaluator_type from financing_track DB if not provided
+    evaluator_type_id = body.evaluator_type_id
+    if not evaluator_type_id:
+        mechanism_code = ipr_row["mechanism_code"]
+        track = await _get_track_config(mechanism_code, db) if mechanism_code else None
+        if track:
+            et_row = (await db.execute(
+                text("SELECT id FROM ref.category WHERE scheme = 'evaluator_type' AND code = :code"),
+                {"code": track["evaluator"]},
+            )).mappings().first()
+            if et_row:
+                evaluator_type_id = et_row["id"]
+
+    if not evaluator_type_id:
+        raise HTTPException(status_code=400, detail="evaluator_type_id requerido (no se pudo auto-asignar)")
+
+    row = (await db.execute(
+        text("""
+            INSERT INTO core.evaluation_assignment (
+                ipr_id, evaluator_type_id, evaluator_organization_id,
+                evaluator_name, deadline_at, created_by_id
+            ) VALUES (
+                CAST(:ipr_id AS uuid), CAST(:evaluator_type_id AS uuid),
+                CAST(:evaluator_org_id AS uuid), :evaluator_name,
+                :deadline_at, CAST(:user_id AS uuid)
+            )
+            RETURNING id
+        """),
+        {
+            "ipr_id": str(ipr_id),
+            "evaluator_type_id": str(evaluator_type_id),
+            "evaluator_org_id": str(body.evaluator_organization_id) if body.evaluator_organization_id else None,
+            "evaluator_name": body.evaluator_name,
+            "deadline_at": body.deadline_at,
+            "user_id": str(user["id"]),
+        },
+    )).mappings().first()
+    await db.commit()
+    return {"id": str(row["id"]), "message": "Evaluación asignada"}
+
+
+@router.patch("/{ipr_id}/evaluaciones/{eval_id}")
+async def update_evaluation(
+    ipr_id: UUID,
+    eval_id: UUID,
+    body: EvaluationAssignmentUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Update an evaluation assignment (result, observations, completion)."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION")
+
+    set_clauses = ["updated_at = NOW()", "updated_by_id = CAST(:user_id AS uuid)"]
+    params: dict = {"id": str(eval_id), "ipr_id": str(ipr_id), "user_id": str(user["id"])}
+
+    updates = body.model_dump(exclude_unset=True)
+    if not updates:
+        raise HTTPException(status_code=400, detail="No hay campos para actualizar")
+
+    if "result_id" in updates and updates["result_id"] is not None:
+        set_clauses.append("result_id = CAST(:result_id AS uuid)")
+        params["result_id"] = str(updates["result_id"])
+        # Denormalize result_code
+        rc_row = (await db.execute(
+            text("SELECT code FROM ref.category WHERE id = CAST(:rid AS uuid)"),
+            {"rid": str(updates["result_id"])},
+        )).mappings().first()
+        if rc_row:
+            set_clauses.append("result_code = :result_code")
+            params["result_code"] = rc_row["code"]
+
+    if "observations" in updates:
+        set_clauses.append("observations = :observations")
+        params["observations"] = updates["observations"]
+
+    if "completed_at" in updates:
+        set_clauses.append("completed_at = :completed_at")
+        params["completed_at"] = updates["completed_at"]
+
+    if "deadline_at" in updates:
+        set_clauses.append("deadline_at = :deadline_at")
+        params["deadline_at"] = updates["deadline_at"]
+
+    sql = text(f"""
+        UPDATE core.evaluation_assignment
+        SET {', '.join(set_clauses)}
+        WHERE id = CAST(:id AS uuid) AND ipr_id = CAST(:ipr_id AS uuid)
+          AND deleted_at IS NULL
+    """)
+    result = await db.execute(sql, params)
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Evaluación no encontrada")
+    await db.commit()
+    return {"message": "Evaluación actualizada"}

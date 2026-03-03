@@ -374,6 +374,11 @@ async def move_initiative(
 
     # ── Check WIP limit for target column ────────────────────────────────
     if target_status in _WIP_LIMITS:
+        # Serialize concurrent WIP checks for the same column
+        await db.execute(
+            text("SELECT pg_advisory_xact_lock(hashtext(:col))"),
+            {"col": f"wip_{target_status}"},
+        )
         wip_count_result = await db.execute(
             text("""
                 SELECT COUNT(*) AS current_wip

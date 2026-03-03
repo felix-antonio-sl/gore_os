@@ -77,3 +77,18 @@ class IprUpdate(BaseModel):
     fund_category_id: UUID | None = None
     sponsor_division_id: UUID | None = None
     assignee_id: UUID | None = None
+
+
+class TrackInfo(BaseModel):
+    mechanism: str | None = None
+    mechanism_label: str | None = None
+    evaluator: str | None = None
+    evaluator_label: str | None = None
+    favorable_products: list[str] = []
+    unfavorable_products: list[str] = []
+    terminal_negative: list[str] = []
+    thresholds: dict[str, float] = {}
+    sla_days: dict[str, int] = {}
+    required_attrs: list[str] = []
+    mechanism_attrs: dict = {}
+    evaluations: list = []

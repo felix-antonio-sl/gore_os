@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import text
@@ -8,6 +10,9 @@ from app.core.security import verify_password, hash_password, create_access_toke
 from app.schemas.auth import LoginResponse, UserInfo, ChangePasswordRequest
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
+
+_MAX_LOGIN_ATTEMPTS = 5
+_LOCKOUT_MINUTES = 15
 
 
 @router.post("/login", response_model=LoginResponse)
@@ -27,11 +32,42 @@ async def login(form: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = 
     )
     user = result.mappings().first()
 
-    if not user or not verify_password(form.password, user["password_hash"]):
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales inválidas")
+
+    # --- Brute-force protection ---
+    locked_until = user["locked_until"]
+    if locked_until and locked_until > datetime.now(timezone.utc):
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="Cuenta bloqueada temporalmente por múltiples intentos fallidos. Intente nuevamente en 15 minutos.",
+        )
+
+    if not verify_password(form.password, user["password_hash"]):
+        new_attempts = (user["failed_login_attempts"] or 0) + 1
+        lock_clause = ""
+        params: dict = {"uid": str(user["id"]), "attempts": new_attempts}
+        if new_attempts >= _MAX_LOGIN_ATTEMPTS:
+            lock_clause = ", locked_until = NOW() + INTERVAL ':mins minutes'"
+            # Use raw SQL interval to avoid asyncpg cast issues
+            lock_clause = f", locked_until = NOW() + INTERVAL '{_LOCKOUT_MINUTES} minutes'"
+        await db.execute(
+            text(f'UPDATE core."user" SET failed_login_attempts = :attempts{lock_clause}, updated_at = NOW() WHERE id = CAST(:uid AS uuid)'),
+            params,
+        )
+        await db.commit()
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales inválidas")
 
     if not user["is_active"]:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuario desactivado")
+
+    # Login exitoso: resetear contadores
+    if user["failed_login_attempts"] or user["locked_until"]:
+        await db.execute(
+            text('UPDATE core."user" SET failed_login_attempts = 0, locked_until = NULL, updated_at = NOW() WHERE id = CAST(:uid AS uuid)'),
+            {"uid": str(user["id"])},
+        )
+        await db.commit()
 
     token = create_access_token({"sub": str(user["id"]), "role": user["role_code"]})
 

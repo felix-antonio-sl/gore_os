@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -255,45 +256,51 @@ async def create_core_session(
         raise HTTPException(status_code=400, detail=f"Tipo de sesión inválido: {body.session_type}")
     session_type_id = str(st_row["id"])
 
-    # 1. Create session
-    session_result = await db.execute(
-        text("""
-            INSERT INTO core.session (
-                committee_id, session_number, session_type_id,
-                scheduled_at, location, created_by_id
-            ) VALUES (
-                :committee_id, :session_number, :session_type_id,
-                :scheduled_at, :location, :created_by_id
-            )
-            RETURNING id
-        """),
-        {
-            "committee_id": committee_id,
-            "session_number": session_number,
-            "session_type_id": session_type_id,
-            "scheduled_at": body.scheduled_at,
-            "location": body.location,
-            "created_by_id": str(user["id"]),
-        },
-    )
-    session_id = str(session_result.mappings().first()["id"])
+    try:
+        # 1. Create session
+        session_result = await db.execute(
+            text("""
+                INSERT INTO core.session (
+                    committee_id, session_number, session_type_id,
+                    scheduled_at, location, created_by_id
+                ) VALUES (
+                    :committee_id, :session_number, :session_type_id,
+                    :scheduled_at, :location, :created_by_id
+                )
+                RETURNING id
+            """),
+            {
+                "committee_id": committee_id,
+                "session_number": session_number,
+                "session_type_id": session_type_id,
+                "scheduled_at": body.scheduled_at,
+                "location": body.location,
+                "created_by_id": str(user["id"]),
+            },
+        )
+        session_id = str(session_result.mappings().first()["id"])
 
-    # 2. Auto-create minute
-    minute_number = f"ACTA-CORE-{session_number}"
-    await db.execute(
-        text("""
-            INSERT INTO core.minute (session_id, minute_number, created_by_id)
-            VALUES (:session_id, :minute_number, :created_by_id)
-        """),
-        {
-            "session_id": session_id,
-            "minute_number": minute_number,
-            "created_by_id": str(user["id"]),
-        },
-    )
+        # 2. Auto-create minute
+        minute_number = f"ACTA-CORE-{session_number}"
+        await db.execute(
+            text("""
+                INSERT INTO core.minute (session_id, minute_number, created_by_id)
+                VALUES (:session_id, :minute_number, :created_by_id)
+            """),
+            {
+                "session_id": session_id,
+                "minute_number": minute_number,
+                "created_by_id": str(user["id"]),
+            },
+        )
 
-    await db.commit()
-    return {"id": session_id, "session_number": session_number}
+        await db.commit()
+        return {"id": session_id, "session_number": session_number}
+    except HTTPException:
+        raise
+    except Exception:
+        await db.rollback()
+        raise
 
 
 # ---------------------------------------------------------------------------
@@ -640,13 +647,14 @@ async def cast_vote(
             },
         )
         await db.commit()
-    except Exception as e:
+    except IntegrityError:
         await db.rollback()
-        if "unique" in str(e).lower() or "duplicate" in str(e).lower():
-            raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Ya registró su voto para este tema",
-            )
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Ya registró su voto para este tema",
+        )
+    except Exception:
+        await db.rollback()
         raise
 
     return {"message": "Voto registrado"}

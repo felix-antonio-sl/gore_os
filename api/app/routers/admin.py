@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from pydantic import BaseModel
 
 from app.core.deps import CurrentUser
@@ -182,44 +183,51 @@ async def create_usuario(
     if existing.first():
         raise HTTPException(status_code=409, detail="Ya existe un usuario con ese email")
 
-    # Create person first
-    person_result = await db.execute(
-        text("""
-            INSERT INTO core.person (names, paternal_surname, maternal_surname, email, rut, phone)
-            VALUES (:names, :paternal_surname, :maternal_surname, :email, :rut, :phone)
-            RETURNING id
-        """),
-        {
-            "names": data.names,
-            "paternal_surname": data.paternal_surname,
-            "maternal_surname": data.maternal_surname,
-            "email": data.email,
-            "rut": data.rut,
-            "phone": data.phone,
-        },
-    )
-    person_id = person_result.scalar()
+    try:
+        # Create person first
+        person_result = await db.execute(
+            text("""
+                INSERT INTO core.person (names, paternal_surname, maternal_surname, email, rut, phone)
+                VALUES (:names, :paternal_surname, :maternal_surname, :email, :rut, :phone)
+                RETURNING id
+            """),
+            {
+                "names": data.names,
+                "paternal_surname": data.paternal_surname,
+                "maternal_surname": data.maternal_surname,
+                "email": data.email,
+                "rut": data.rut,
+                "phone": data.phone,
+            },
+        )
+        person_id = person_result.scalar()
 
-    # Create user linked to person
-    pw_hash = hash_password(data.password)
-    user_result = await db.execute(
-        text("""
-            INSERT INTO core."user" (person_id, email, password_hash, system_role_id, division_id)
-            VALUES (:person_id, :email, :password_hash, :system_role_id, :division_id)
-            RETURNING id
-        """),
-        {
-            "person_id": str(person_id),
-            "email": data.email,
-            "password_hash": pw_hash,
-            "system_role_id": str(data.system_role_id),
-            "division_id": str(data.division_id) if data.division_id else None,
-        },
-    )
-    new_user_id = user_result.scalar()
-    await db.commit()
+        # Create user linked to person
+        pw_hash = hash_password(data.password)
+        user_result = await db.execute(
+            text("""
+                INSERT INTO core."user" (person_id, email, password_hash, system_role_id, division_id)
+                VALUES (:person_id, :email, :password_hash, :system_role_id, :division_id)
+                RETURNING id
+            """),
+            {
+                "person_id": str(person_id),
+                "email": data.email,
+                "password_hash": pw_hash,
+                "system_role_id": str(data.system_role_id),
+                "division_id": str(data.division_id) if data.division_id else None,
+            },
+        )
+        new_user_id = user_result.scalar()
+        await db.commit()
 
-    return {"id": str(new_user_id), "email": data.email}
+        return {"id": str(new_user_id), "email": data.email}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Ya existe un usuario con ese email")
+    except Exception:
+        await db.rollback()
+        raise
 
 
 # ---------------------------------------------------------------------------
@@ -464,3 +472,141 @@ async def update_division(
     await db.commit()
 
     return {"message": "División actualizada"}
+
+
+# ===========================================================================
+# FINANCING TRACKS (Poly-Switch configuration)
+# ===========================================================================
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/financing-tracks — List all financing tracks
+# ---------------------------------------------------------------------------
+
+@router.get("/financing-tracks")
+async def list_financing_tracks(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    result = await db.execute(
+        text("""
+            SELECT id, code, label, evaluator_code, evaluator_label,
+                   favorable_products, unfavorable_products, terminal_negative,
+                   thresholds, required_attrs, sla_days, rs_validity_years, is_active
+            FROM core.financing_track
+            ORDER BY code
+        """)
+    )
+    return [dict(r) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/financing-tracks — Create a financing track
+# ---------------------------------------------------------------------------
+
+@router.post("/financing-tracks", status_code=status.HTTP_201_CREATED)
+async def create_financing_track(
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    required = {"code", "label", "evaluator_code", "evaluator_label"}
+    missing = required - set(data.keys())
+    if missing:
+        raise HTTPException(status_code=422, detail=f"Campos requeridos faltantes: {missing}")
+
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.financing_track (
+                    code, label, evaluator_code, evaluator_label,
+                    favorable_products, unfavorable_products, terminal_negative,
+                    thresholds, required_attrs, sla_days, rs_validity_years
+                ) VALUES (
+                    :code, :label, :evaluator_code, :evaluator_label,
+                    :favorable_products, :unfavorable_products, :terminal_negative,
+                    CAST(:thresholds AS jsonb), :required_attrs,
+                    CAST(:sla_days AS jsonb), :rs_validity_years
+                )
+                RETURNING id
+            """),
+            {
+                "code": data["code"],
+                "label": data["label"],
+                "evaluator_code": data["evaluator_code"],
+                "evaluator_label": data["evaluator_label"],
+                "favorable_products": data.get("favorable_products", []),
+                "unfavorable_products": data.get("unfavorable_products", []),
+                "terminal_negative": data.get("terminal_negative", []),
+                "thresholds": str(data.get("thresholds", {})).replace("'", '"'),
+                "required_attrs": data.get("required_attrs", []),
+                "sla_days": str(data.get("sla_days", {})).replace("'", '"'),
+                "rs_validity_years": data.get("rs_validity_years"),
+            },
+        )
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"]), "code": data["code"]}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="Ya existe un track con ese código")
+    except Exception:
+        await db.rollback()
+        raise
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/financing-tracks/{id} — Update a financing track
+# ---------------------------------------------------------------------------
+
+_TRACK_FIELDS = {
+    "label", "evaluator_code", "evaluator_label",
+    "favorable_products", "unfavorable_products", "terminal_negative",
+    "required_attrs", "rs_validity_years", "is_active",
+}
+_TRACK_JSONB_FIELDS = {"thresholds", "sla_days"}
+
+
+@router.patch("/financing-tracks/{track_id}")
+async def update_financing_track(
+    track_id: UUID,
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    existing = await db.execute(
+        text("SELECT id FROM core.financing_track WHERE id = :id"),
+        {"id": str(track_id)},
+    )
+    if not existing.first():
+        raise HTTPException(status_code=404, detail="Track no encontrado")
+
+    if not data:
+        return {"message": "Sin cambios"}
+
+    set_parts = []
+    params: dict = {"id": str(track_id)}
+
+    for key, val in data.items():
+        if key in _TRACK_FIELDS:
+            param = f"v_{key}"
+            set_parts.append(f"{key} = :{param}")
+            params[param] = val
+        elif key in _TRACK_JSONB_FIELDS:
+            import json
+            param = f"v_{key}"
+            set_parts.append(f"{key} = CAST(:{param} AS jsonb)")
+            params[param] = json.dumps(val) if isinstance(val, dict) else val
+
+    if not set_parts:
+        return {"message": "Sin campos válidos para actualizar"}
+
+    set_parts.append("updated_at = NOW()")
+    sql = text(f"UPDATE core.financing_track SET {', '.join(set_parts)} WHERE id = :id")
+    await db.execute(sql, params)
+    await db.commit()
+    return {"message": "Track actualizado"}

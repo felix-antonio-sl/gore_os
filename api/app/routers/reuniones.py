@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
@@ -204,55 +205,59 @@ async def create_reunion(
     committee_id = await _ensure_crisis_committee(db)
     session_number = await _next_session_number(committee_id, db)
 
-    # 1. Create session
-    session_result = await db.execute(
-        text("""
-            INSERT INTO core.session (committee_id, session_number, scheduled_at, location, created_by_id)
-            VALUES (:committee_id, :session_number, :scheduled_at, :location, :created_by_id)
-            RETURNING id
-        """),
-        {
-            "committee_id": committee_id,
-            "session_number": session_number,
-            "scheduled_at": body.scheduled_at,
-            "location": body.location,
-            "created_by_id": str(user["id"]),
-        },
-    )
-    session_id = str(session_result.mappings().first()["id"])
+    try:
+        # 1. Create session
+        session_result = await db.execute(
+            text("""
+                INSERT INTO core.session (committee_id, session_number, scheduled_at, location, created_by_id)
+                VALUES (:committee_id, :session_number, :scheduled_at, :location, :created_by_id)
+                RETURNING id
+            """),
+            {
+                "committee_id": committee_id,
+                "session_number": session_number,
+                "scheduled_at": body.scheduled_at,
+                "location": body.location,
+                "created_by_id": str(user["id"]),
+            },
+        )
+        session_id = str(session_result.mappings().first()["id"])
 
-    # 2. Create crisis_meeting
-    cm_result = await db.execute(
-        text("""
-            INSERT INTO core.crisis_meeting (session_id, summary, organizer_id, created_by_id)
-            VALUES (:session_id, :summary, :organizer_id, :created_by_id)
-            RETURNING id
-        """),
-        {
-            "session_id": session_id,
-            "summary": body.summary,
-            "organizer_id": str(user["id"]),
-            "created_by_id": str(user["id"]),
-        },
-    )
-    cm_id = str(cm_result.mappings().first()["id"])
+        # 2. Create crisis_meeting
+        cm_result = await db.execute(
+            text("""
+                INSERT INTO core.crisis_meeting (session_id, summary, organizer_id, created_by_id)
+                VALUES (:session_id, :summary, :organizer_id, :created_by_id)
+                RETURNING id
+            """),
+            {
+                "session_id": session_id,
+                "summary": body.summary,
+                "organizer_id": str(user["id"]),
+                "created_by_id": str(user["id"]),
+            },
+        )
+        cm_id = str(cm_result.mappings().first()["id"])
 
-    # 3. Auto-create minute
-    minute_number = f"ACT-{session_number}"
-    await db.execute(
-        text("""
-            INSERT INTO core.minute (session_id, minute_number, created_by_id)
-            VALUES (:session_id, :minute_number, :created_by_id)
-        """),
-        {
-            "session_id": session_id,
-            "minute_number": minute_number,
-            "created_by_id": str(user["id"]),
-        },
-    )
+        # 3. Auto-create minute
+        minute_number = f"ACT-{session_number}"
+        await db.execute(
+            text("""
+                INSERT INTO core.minute (session_id, minute_number, created_by_id)
+                VALUES (:session_id, :minute_number, :created_by_id)
+            """),
+            {
+                "session_id": session_id,
+                "minute_number": minute_number,
+                "created_by_id": str(user["id"]),
+            },
+        )
 
-    await db.commit()
-    return {"id": cm_id, "session_id": session_id}
+        await db.commit()
+        return {"id": cm_id, "session_id": session_id}
+    except Exception:
+        await db.rollback()
+        raise
 
 
 # ---------------------------------------------------------------------------
