@@ -250,6 +250,9 @@ class RendicionItem(BaseModel):
     period_end: date | None
     submitted_at: datetime | None
     agreement_total_amount: float | None
+    amount: float | None = None
+    is_overdue: bool = False
+    days_in_state: float | None = None
 
 
 class RendicionUpdate(BaseModel):
@@ -257,6 +260,8 @@ class RendicionUpdate(BaseModel):
     period_start: date | None = None
     period_end: date | None = None
     submitted_at: datetime | None = None
+    amount: float | None = None
+    comment: str | None = None
 
 
 class RendicionCreate(BaseModel):
@@ -266,6 +271,16 @@ class RendicionCreate(BaseModel):
     period_start: date | None = None
     period_end: date | None = None
     submitted_at: datetime | None = None  # default: NOW() server-side
+    amount: float | None = None
+
+
+class RendicionHistoryEntry(BaseModel):
+    id: UUID
+    previous_state: str | None
+    new_state: str
+    changed_by_name: str | None
+    comment: str | None
+    changed_at: datetime
 
 
 class RendicionDetail(RendicionItem):
@@ -273,6 +288,7 @@ class RendicionDetail(RendicionItem):
     renderer_id: UUID | None = None
     metadata: dict | None = None
     created_at: datetime | None = None
+    history: list[RendicionHistoryEntry] = []
 
 
 class ReportCreate(BaseModel):

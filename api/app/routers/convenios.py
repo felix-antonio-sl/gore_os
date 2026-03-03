@@ -633,13 +633,18 @@ async def update_cuota(
         return {"message": "Sin cambios"}
 
     # Art. 18 Res. 30 CGR: bloquear pago efectivo si hay rendiciones pendientes
+    needs_rendition_check = False
     if "payment_status_id" in updates:
         target_code = (await db.execute(
             text("SELECT code FROM ref.category WHERE id = :id AND scheme = 'payment_status'"),
             {"id": str(updates["payment_status_id"])},
         )).scalar()
         if target_code in ("PAGADO", "EN_PROCESO"):
-            await _check_pending_renditions(convenio_id, db)
+            needs_rendition_check = True
+    if "paid_amount" in updates or "paid_at" in updates:
+        needs_rendition_check = True
+    if needs_rendition_check:
+        await _check_pending_renditions(convenio_id, db)
 
     if "payment_status_id" in updates:
         updates["payment_status_id"] = str(updates["payment_status_id"])

@@ -76,6 +76,44 @@ export function StatusBadge({ status, size = "default" }: StatusBadgeProps) {
           Cerrado sin Resolver
         </Badge>
       );
+    case "EN_REVISION_RTF":
+      return (
+        <Badge variant="outline" className={cn("border-amber-400 text-amber-700 bg-amber-50", sizeClass)}>
+          En Revisión RTF
+        </Badge>
+      );
+    case "VISADA_RTF":
+      return (
+        <Badge variant="outline" className={cn("border-blue-400 text-blue-700 bg-blue-50", sizeClass)}>
+          Visada RTF
+        </Badge>
+      );
+    case "EN_REVISION_UCR":
+      return (
+        <Badge variant="outline" className={cn("border-indigo-400 text-indigo-700 bg-indigo-50", sizeClass)}>
+          En Revisión UCR
+        </Badge>
+      );
+    case "OBSERVADA":
+      return (
+        <Badge variant="outline" className={cn("border-orange-400 text-orange-700 bg-orange-50", sizeClass)}>
+          Observada
+        </Badge>
+      );
+    case "APROBADA":
+      return (
+        <Badge variant="default" className={cn("bg-green-600", sizeClass)}>
+          <CheckIcon className="size-3" />
+          Aprobada
+        </Badge>
+      );
+    case "RECHAZADA":
+      return (
+        <Badge variant="destructive" className={sizeClass}>
+          <XIcon className="size-3" />
+          Rechazada
+        </Badge>
+      );
     default:
       return (
         <Badge variant="secondary" className={sizeClass}>

@@ -11,6 +11,7 @@ from app.schemas.dgi import (
     IndicatorItem, DataSourceItem,
     OrganizacionItem, PersonaItem, TerritorioItem, EventoItem,
     RendicionItem, RendicionDetail, RendicionCreate, RendicionUpdate,
+    RendicionHistoryEntry,
 )
 from app.core.security import DGI_ROLES, WRITE_OPERATIONAL_ROLES
 
@@ -696,10 +697,11 @@ async def list_rendiciones(
     params["offset"] = offset
 
     rows = (await db.execute(text(f"""
-        SELECT r.id, r.period_start, r.period_end, r.submitted_at,
+        SELECT r.id, r.period_start, r.period_end, r.submitted_at, r.amount,
                a.agreement_number, a.total_amount AS agreement_total_amount,
                ipr.codigo_bip AS ipr_codigo_bip, r.ipr_id,
-               org.name AS renderer_name, st.code AS state_code, st.label AS state_label
+               org.name AS renderer_name, st.code AS state_code, st.label AS state_label,
+               EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 AS days_in_state
         {base_query}
         ORDER BY r.submitted_at DESC NULLS LAST
         LIMIT :limit OFFSET :offset
@@ -712,6 +714,78 @@ async def list_rendiciones(
         period_start=r["period_start"], period_end=r["period_end"],
         submitted_at=r["submitted_at"],
         agreement_total_amount=float(r["agreement_total_amount"]) if r["agreement_total_amount"] else None,
+        amount=float(r["amount"]) if r["amount"] else None,
+        days_in_state=round(float(r["days_in_state"]), 1) if r["days_in_state"] else None,
+        is_overdue=(
+            r["state_code"] in _RENDICION_SLA_DAYS
+            and r["days_in_state"] is not None
+            and float(r["days_in_state"]) > _RENDICION_SLA_DAYS[r["state_code"]]
+        ),
+    ) for r in rows]
+
+    return {
+        "items": [i.model_dump() for i in items],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": math.ceil(total / page_size) if total > 0 else 0,
+    }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/rendiciones/vencidas — Overdue renditions (SLA breach)
+# ---------------------------------------------------------------------------
+
+@router.get("/rendiciones/vencidas")
+async def list_rendiciones_vencidas(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(25, ge=1, le=100),
+):
+    """Rendiciones that have exceeded their SLA time in a reviewable state."""
+    # Build CASE expression for SLA thresholds
+    sla_conditions = " OR ".join(
+        f"(st.code = '{code}' AND EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 > {days})"
+        for code, days in _RENDICION_SLA_DAYS.items()
+    )
+
+    base_query = f"""
+        FROM core.rendition r
+        LEFT JOIN core.agreement a ON a.id = r.agreement_id
+        LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
+        LEFT JOIN core.organization org ON org.id = r.renderer_id
+        LEFT JOIN ref.category st ON st.id = r.state_id
+        WHERE r.deleted_at IS NULL AND ({sla_conditions})
+    """
+
+    params: dict = {}
+    total = (await db.execute(text(f"SELECT COUNT(*) {base_query}"), params)).scalar() or 0
+    offset = (page - 1) * page_size
+    params["limit"] = page_size
+    params["offset"] = offset
+
+    rows = (await db.execute(text(f"""
+        SELECT r.id, r.period_start, r.period_end, r.submitted_at, r.amount,
+               a.agreement_number, a.total_amount AS agreement_total_amount,
+               ipr.codigo_bip AS ipr_codigo_bip, r.ipr_id,
+               org.name AS renderer_name, st.code AS state_code, st.label AS state_label,
+               EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 AS days_in_state
+        {base_query}
+        ORDER BY days_in_state DESC
+        LIMIT :limit OFFSET :offset
+    """), params)).mappings().all()
+
+    items = [RendicionItem(
+        id=r["id"], agreement_number=r["agreement_number"],
+        ipr_codigo_bip=r["ipr_codigo_bip"], ipr_id=r["ipr_id"],
+        renderer_name=r["renderer_name"], state_code=r["state_code"], state_label=r["state_label"],
+        period_start=r["period_start"], period_end=r["period_end"],
+        submitted_at=r["submitted_at"],
+        agreement_total_amount=float(r["agreement_total_amount"]) if r["agreement_total_amount"] else None,
+        amount=float(r["amount"]) if r["amount"] else None,
+        days_in_state=round(float(r["days_in_state"]), 1) if r["days_in_state"] else None,
+        is_overdue=True,
     ) for r in rows]
 
     return {
@@ -732,12 +806,13 @@ async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession 
     row = (await db.execute(
         text("""
             SELECT r.id, r.agreement_id, r.ipr_id, r.renderer_id,
-                   r.period_start, r.period_end, r.submitted_at,
+                   r.period_start, r.period_end, r.submitted_at, r.amount,
                    r.metadata, r.created_at,
                    a.agreement_number, a.total_amount AS agreement_total_amount,
                    ipr.codigo_bip AS ipr_codigo_bip,
                    org.name AS renderer_name,
-                   st.code AS state_code, st.label AS state_label
+                   st.code AS state_code, st.label AS state_label,
+                   EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 AS days_in_state
             FROM core.rendition r
             LEFT JOIN core.agreement a ON a.id = r.agreement_id
             LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
@@ -749,6 +824,7 @@ async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession 
     )).mappings().first()
     if not row:
         raise HTTPException(status_code=404, detail="Rendición no encontrada")
+    history = await _get_rendition_history(rendicion_id, db)
     return RendicionDetail(
         id=row["id"], agreement_id=row["agreement_id"], ipr_id=row["ipr_id"],
         renderer_id=row["renderer_id"], agreement_number=row["agreement_number"],
@@ -757,8 +833,16 @@ async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession 
         period_start=row["period_start"], period_end=row["period_end"],
         submitted_at=row["submitted_at"],
         agreement_total_amount=float(row["agreement_total_amount"]) if row["agreement_total_amount"] else None,
+        amount=float(row["amount"]) if row["amount"] else None,
+        days_in_state=round(float(row["days_in_state"]), 1) if row["days_in_state"] else None,
+        is_overdue=(
+            row["state_code"] in _RENDICION_SLA_DAYS
+            and row["days_in_state"] is not None
+            and float(row["days_in_state"]) > _RENDICION_SLA_DAYS[row["state_code"]]
+        ),
         metadata=dict(row["metadata"]) if row["metadata"] else None,
         created_at=row["created_at"],
+        history=[RendicionHistoryEntry(**h) for h in history],
     )
 
 
@@ -781,11 +865,11 @@ async def create_rendicion(body: RendicionCreate, user: CurrentUser, db: AsyncSe
         text("""
             INSERT INTO core.rendition (
                 agreement_id, ipr_id, renderer_id, state_id,
-                period_start, period_end, submitted_at,
+                period_start, period_end, submitted_at, amount,
                 created_by_id, created_at, updated_at
             ) VALUES (
                 :agreement_id, :ipr_id, :renderer_id, :state_id,
-                :period_start, :period_end, COALESCE(:submitted_at, NOW()),
+                :period_start, :period_end, COALESCE(:submitted_at, NOW()), :amount,
                 :created_by_id, NOW(), NOW()
             ) RETURNING id
         """),
@@ -797,6 +881,7 @@ async def create_rendicion(body: RendicionCreate, user: CurrentUser, db: AsyncSe
             "period_start": body.period_start,
             "period_end": body.period_end,
             "submitted_at": body.submitted_at,
+            "amount": body.amount,
             "created_by_id": str(user["id"]),
         },
     )).mappings().first()
@@ -810,21 +895,53 @@ async def create_rendicion(body: RendicionCreate, user: CurrentUser, db: AsyncSe
 
 # Rendition state machine (code → allowed target codes)
 _RENDICION_TRANSITIONS = {
-    "PENDIENTE": {"EN_REVISION"},
-    "EN_REVISION": {"OBSERVADA", "APROBADA", "RECHAZADA"},
-    "OBSERVADA": {"EN_REVISION"},
+    "PENDIENTE":       {"EN_REVISION_RTF"},
+    "EN_REVISION_RTF": {"OBSERVADA", "VISADA_RTF"},
+    "VISADA_RTF":      {"EN_REVISION_UCR"},
+    "EN_REVISION_UCR": {"OBSERVADA", "APROBADA", "RECHAZADA"},
+    "OBSERVADA":       {"EN_REVISION_RTF"},
     # APROBADA and RECHAZADA are terminal — no transitions
 }
 
-RENDICION_UPDATABLE = {"state_id", "period_start", "period_end", "submitted_at"}
+# Role-based transition authorization: (from, to) → allowed role set
+_RENDICION_TRANSITION_ROLES: dict[tuple[str, str], set[str]] = {
+    ("PENDIENTE", "EN_REVISION_RTF"):       _RENDICION_WRITE_ROLES,
+    ("EN_REVISION_RTF", "OBSERVADA"):       DGI_ROLES,
+    ("EN_REVISION_RTF", "VISADA_RTF"):      DGI_ROLES,
+    ("VISADA_RTF", "EN_REVISION_UCR"):      DGI_ROLES,
+    ("EN_REVISION_UCR", "OBSERVADA"):       DGI_ROLES,
+    ("EN_REVISION_UCR", "APROBADA"):        DGI_ROLES,
+    ("EN_REVISION_UCR", "RECHAZADA"):       DGI_ROLES,
+    ("OBSERVADA", "EN_REVISION_RTF"):       _RENDICION_WRITE_ROLES,
+}
+
+# SLA days per reviewable state
+_RENDICION_SLA_DAYS: dict[str, int] = {
+    "EN_REVISION_RTF": 7,
+    "EN_REVISION_UCR": 2,
+}
+
+RENDICION_UPDATABLE = {"state_id", "period_start", "period_end", "submitted_at", "amount"}
 
 
-def _require_dgi_roles(user: dict) -> None:
-    if user["role_code"] not in DGI_ROLES:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Solo roles DGI pueden modificar rendiciones",
-        )
+async def _get_rendition_history(rendition_id: UUID, db: AsyncSession) -> list[dict]:
+    result = await db.execute(
+        text("""
+            SELECT h.id, h.changed_at, h.comment,
+                   prev_cat.code AS previous_state,
+                   new_cat.code  AS new_state,
+                   (p.names || ' ' || p.paternal_surname) AS changed_by_name
+            FROM core.rendition_history h
+            JOIN ref.category new_cat ON h.new_state_id = new_cat.id
+            LEFT JOIN ref.category prev_cat ON h.previous_state_id = prev_cat.id
+            LEFT JOIN core."user" cu ON h.changed_by_id = cu.id
+            LEFT JOIN core.person p ON cu.person_id = p.id
+            WHERE h.rendition_id = :rendition_id
+            ORDER BY h.changed_at DESC
+        """),
+        {"rendition_id": str(rendition_id)},
+    )
+    return [dict(r) for r in result.mappings().all()]
 
 
 @router.patch("/rendiciones/{rendicion_id}")
@@ -835,13 +952,11 @@ async def patch_rendicion(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Update a rendición. Validates state transitions:
-    PENDIENTE → EN_REVISION → OBSERVADA/APROBADA/RECHAZADA.
-    OBSERVADA can go back to EN_REVISION (re-submit).
-    APROBADA and RECHAZADA are terminal states.
+    Update a rendición. Multi-role state machine:
+    PENDIENTE → EN_REVISION_RTF → VISADA_RTF → EN_REVISION_UCR → APROBADA/RECHAZADA.
+    OBSERVADA loops back to EN_REVISION_RTF.
+    Role authorization checked per-transition.
     """
-    _require_dgi_roles(user)
-
     # Verify rendicion exists
     row = (await db.execute(
         text("SELECT id, state_id FROM core.rendition WHERE id = :id AND deleted_at IS NULL"),
@@ -851,8 +966,10 @@ async def patch_rendicion(
     if not row:
         raise HTTPException(status_code=404, detail="Rendición no encontrada")
 
-    # Build update fields from non-None values
+    # Build update fields from non-None values, excluding comment (handled separately)
     updates = body.model_dump(exclude_none=True)
+    comment = updates.pop("comment", None)
+
     if not updates:
         raise HTTPException(status_code=400, detail="No hay campos para actualizar")
 
@@ -886,6 +1003,21 @@ async def patch_rendicion(
                        f"Permitidas: {sorted(allowed) if allowed else 'ninguna (estado terminal)'}",
             )
 
+        # Role-based authorization for this specific transition
+        allowed_roles = _RENDICION_TRANSITION_ROLES.get((current_state, new_state))
+        if allowed_roles and user["role_code"] not in allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Rol {user['role_code']} no puede ejecutar {current_state} → {new_state}",
+            )
+    else:
+        # Non-transition updates: require write roles
+        if user["role_code"] not in _RENDICION_WRITE_ROLES:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Rol sin permiso para modificar rendiciones",
+            )
+
     # Build SET clause
     set_parts = []
     params: dict = {"id": str(rendicion_id), "user_id": user["id"]}
@@ -905,6 +1037,22 @@ async def patch_rendicion(
     """)
 
     await db.execute(sql, params)
+
+    # If state changed and comment provided, update the most recent history row
+    if "state_id" in updates and comment:
+        await db.execute(
+            text("""
+                UPDATE core.rendition_history
+                SET comment = :comment
+                WHERE id = (
+                    SELECT id FROM core.rendition_history
+                    WHERE rendition_id = :rendition_id
+                    ORDER BY changed_at DESC LIMIT 1
+                )
+            """),
+            {"comment": comment, "rendition_id": str(rendicion_id)},
+        )
+
     await db.commit()
 
     return {"message": "Rendición actualizada"}

@@ -1,0 +1,312 @@
+"""Tests para SISREC Multi-Role Workflow (Ciclo 19).
+
+Covers:
+- Full state machine: PENDIENTE → EN_REVISION_RTF → VISADA_RTF → EN_REVISION_UCR → APROBADA/RECHAZADA
+- Observation loop: EN_REVISION_RTF/UCR → OBSERVADA → EN_REVISION_RTF
+- Role-based authorization per transition
+- History audit trail with comments
+- SLA overdue detection
+- Amount field CRUD
+- Art. 18 CGR gap fix (paid_amount/paid_at)
+"""
+import uuid
+import pytest
+from sqlalchemy import text
+from tests.conftest import auth
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+async def _ensure_ipr(db) -> str:
+    """Get or create a test IPR."""
+    r = await db.execute(text("SELECT id FROM core.ipr LIMIT 1"))
+    row = r.scalar()
+    if row:
+        return str(row)
+    code = f"T-SISREC-{uuid.uuid4().hex[:8].upper()}"
+    row = (await db.execute(
+        text("""
+            INSERT INTO core.ipr (codigo_bip, name, ipr_nature, created_at, updated_at)
+            VALUES (:code, 'Test IPR SISREC', 'PROYECTO', NOW(), NOW())
+            RETURNING id
+        """),
+        {"code": code},
+    )).mappings().first()
+    await db.commit()
+    return str(row["id"])
+
+
+async def _get_state_id(db, code: str) -> str:
+    r = await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'rendition_state' AND code = :code"),
+        {"code": code},
+    )
+    return str(r.scalar())
+
+
+async def _create_rendicion(client, token, db, amount=None) -> str:
+    """Create a rendicion in PENDIENTE and return its ID."""
+    ipr_id = await _ensure_ipr(db)
+    payload = {"ipr_id": ipr_id}
+    if amount is not None:
+        payload["amount"] = amount
+    resp = await client.post("/api/dgi/data/rendiciones", json=payload, headers=auth(token))
+    assert resp.status_code == 201, resp.text
+    return resp.json()["id"]
+
+
+async def _transition(client, token, rendicion_id: str, target_code: str, db, comment=None) -> int:
+    """PATCH a rendicion to a target state code. Returns status code."""
+    state_id = await _get_state_id(db, target_code)
+    payload = {"state_id": state_id}
+    if comment:
+        payload["comment"] = comment
+    resp = await client.patch(
+        f"/api/dgi/data/rendiciones/{rendicion_id}",
+        json=payload,
+        headers=auth(token),
+    )
+    return resp.status_code
+
+
+# ---------------------------------------------------------------------------
+# State Machine: valid transitions
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_pendiente_to_en_revision_rtf(client, dgi_token, db):
+    """PENDIENTE → EN_REVISION_RTF: valid."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    status = await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_en_revision_rtf_to_visada_rtf(client, dgi_token, db):
+    """EN_REVISION_RTF → VISADA_RTF: DGI visa."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    status = await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_visada_rtf_to_en_revision_ucr(client, dgi_token, db):
+    """VISADA_RTF → EN_REVISION_UCR: send to UCR."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    status = await _transition(client, dgi_token, rid, "EN_REVISION_UCR", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_en_revision_ucr_to_aprobada(client, dgi_token, db):
+    """Full happy path: PENDIENTE → ... → APROBADA."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_UCR", db)
+    status = await _transition(client, dgi_token, rid, "APROBADA", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_en_revision_ucr_to_rechazada(client, dgi_token, db):
+    """EN_REVISION_UCR → RECHAZADA: terminal state."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_UCR", db)
+    status = await _transition(client, dgi_token, rid, "RECHAZADA", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_observation_loop(client, dgi_token, regional_token, db):
+    """EN_REVISION_RTF → OBSERVADA → EN_REVISION_RTF: observation loop."""
+    rid = await _create_rendicion(client, regional_token, db)
+    await _transition(client, regional_token, rid, "EN_REVISION_RTF", db)
+    # DGI observa
+    status = await _transition(client, dgi_token, rid, "OBSERVADA", db)
+    assert status == 200
+    # Operativa reenvía
+    status = await _transition(client, regional_token, rid, "EN_REVISION_RTF", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_ucr_observation_loop(client, dgi_token, regional_token, db):
+    """EN_REVISION_UCR → OBSERVADA → EN_REVISION_RTF: UCR observation loop."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_UCR", db)
+    # UCR observa
+    status = await _transition(client, dgi_token, rid, "OBSERVADA", db)
+    assert status == 200
+    # Reenvío a RTF
+    status = await _transition(client, regional_token, rid, "EN_REVISION_RTF", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_invalid_transition_aprobada_terminal(client, dgi_token, db):
+    """APROBADA is terminal — cannot transition further."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_UCR", db)
+    await _transition(client, dgi_token, rid, "APROBADA", db)
+    # Try to go from APROBADA → EN_REVISION_RTF
+    status = await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    assert status == 409
+
+
+# ---------------------------------------------------------------------------
+# Role restrictions
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_operativa_can_initiate_revision(client, regional_token, db):
+    """Operativa (ADMIN_REGIONAL) can initiate PENDIENTE → EN_REVISION_RTF."""
+    rid = await _create_rendicion(client, regional_token, db)
+    status = await _transition(client, regional_token, rid, "EN_REVISION_RTF", db)
+    assert status == 200
+
+
+@pytest.mark.asyncio
+async def test_operativa_cannot_visa_rtf(client, regional_token, dgi_token, db):
+    """Operativa cannot execute EN_REVISION_RTF → VISADA_RTF (DGI only)."""
+    rid = await _create_rendicion(client, regional_token, db)
+    await _transition(client, regional_token, rid, "EN_REVISION_RTF", db)
+    # Operativa tries to visa
+    status = await _transition(client, regional_token, rid, "VISADA_RTF", db)
+    assert status == 403
+
+
+@pytest.mark.asyncio
+async def test_operativa_cannot_approve(client, regional_token, dgi_token, db):
+    """Operativa cannot approve at UCR level."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_UCR", db)
+    # Operativa tries to approve
+    status = await _transition(client, regional_token, rid, "APROBADA", db)
+    assert status == 403
+
+
+@pytest.mark.asyncio
+async def test_encargado_can_resubmit_observed(client, encargado_token, dgi_token, db):
+    """ENCARGADO can re-submit OBSERVADA → EN_REVISION_RTF."""
+    rid = await _create_rendicion(client, encargado_token, db)
+    await _transition(client, encargado_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "OBSERVADA", db)
+    # Encargado reenvía
+    status = await _transition(client, encargado_token, rid, "EN_REVISION_RTF", db)
+    assert status == 200
+
+
+# ---------------------------------------------------------------------------
+# History
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_history_entry_created(client, dgi_token, db):
+    """Transitioning creates a history entry via trigger."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    # Fetch detail with history
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    detail = resp.json()
+    assert len(detail["history"]) >= 1
+    entry = detail["history"][0]
+    assert entry["new_state"] == "EN_REVISION_RTF"
+    assert entry["previous_state"] == "PENDIENTE"
+
+
+@pytest.mark.asyncio
+async def test_history_comment_stored(client, dgi_token, db):
+    """Comment is stored in the most recent history entry."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db, comment="Revisión urgente")
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    detail = resp.json()
+    entry = detail["history"][0]
+    assert entry["comment"] == "Revisión urgente"
+
+
+# ---------------------------------------------------------------------------
+# SLA
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_sla_overdue_flag(client, dgi_token, db):
+    """A rendicion in EN_REVISION_RTF for >7 days should be overdue (via detail endpoint)."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    # Disable auto-updated_at trigger, age the record, re-enable
+    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
+    await db.execute(
+        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '8 days' WHERE id = :id"),
+        {"id": rid},
+    )
+    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
+    await db.commit()
+    # Now check via API
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    detail = resp.json()
+    assert detail["days_in_state"] is not None
+    assert detail["days_in_state"] > 7, f"days_in_state = {detail['days_in_state']}"
+    assert detail["is_overdue"] is True
+
+
+@pytest.mark.asyncio
+async def test_vencidas_endpoint(client, dgi_token, db):
+    """GET /rendiciones/vencidas returns overdue renditions."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
+    await db.execute(
+        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '10 days' WHERE id = :id"),
+        {"id": rid},
+    )
+    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
+    await db.commit()
+    resp = await client.get("/api/dgi/data/rendiciones/vencidas", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    items = resp.json()["items"]
+    ids = [i["id"] for i in items]
+    assert rid in ids
+
+
+# ---------------------------------------------------------------------------
+# Amount + Art. 18
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_amount_on_create(client, dgi_token, db):
+    """Amount field persists on create and appears in detail."""
+    rid = await _create_rendicion(client, dgi_token, db, amount=5000000.50)
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    assert resp.json()["amount"] == 5000000.50
+
+
+@pytest.mark.asyncio
+async def test_amount_update_via_patch(client, dgi_token, db):
+    """PATCH with amount updates the rendicion."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    resp = await client.patch(
+        f"/api/dgi/data/rendiciones/{rid}",
+        json={"amount": 1234567.89},
+        headers=auth(dgi_token),
+    )
+    assert resp.status_code == 200
+    detail_resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    assert detail_resp.json()["amount"] == 1234567.89

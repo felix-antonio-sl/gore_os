@@ -10,9 +10,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ComboboxAsync } from "@/components/combobox-async";
 import type { ComboboxOption } from "@/components/combobox-async";
-import { X, Loader2, Plus } from "lucide-react";
+import { StatusBadge } from "@/components/status-badge";
+import { TimelineHistory } from "@/components/timeline-history";
+import { X, Loader2, Plus, AlertTriangle } from "lucide-react";
 import { formatDate, formatCLP } from "@/lib/format";
-import type { PaginatedResponse, CategoryRef } from "@/types";
+import type { PaginatedResponse, CategoryRef, HistoryEntry } from "@/types";
 import type { DomainConfig } from "./types";
 
 interface RendicionItem {
@@ -27,6 +29,17 @@ interface RendicionItem {
   period_end: string | null;
   submitted_at: string | null;
   agreement_total_amount: number | null;
+  amount: number | null;
+  is_overdue: boolean;
+  days_in_state: number | null;
+}
+
+interface RendicionDetailData extends RendicionItem {
+  agreement_id: string | null;
+  renderer_id: string | null;
+  metadata: Record<string, unknown> | null;
+  created_at: string | null;
+  history: HistoryEntry[];
 }
 
 function DetailRow({ label, value }: { label: string; value: React.ReactNode }) {
@@ -38,24 +51,41 @@ function DetailRow({ label, value }: { label: string; value: React.ReactNode }) 
   );
 }
 
-// State transition actions map
-const STATE_ACTIONS: Record<string, { label: string; target: string; variant: "default" | "outline" | "destructive" }[]> = {
+// Multi-role state transition actions
+// DGI roles see RTF/UCR review actions; operativa sees initiate/re-submit
+interface StateAction {
+  label: string;
+  target: string;
+  variant: "default" | "outline" | "destructive";
+  population: "dgi" | "operativa" | "any";
+}
+
+const STATE_ACTIONS: Record<string, StateAction[]> = {
   PENDIENTE: [
-    { label: "Iniciar Revisión", target: "EN_REVISION", variant: "default" },
+    { label: "Enviar a Revisión RTF", target: "EN_REVISION_RTF", variant: "default", population: "any" },
   ],
-  EN_REVISION: [
-    { label: "Aprobar", target: "APROBADA", variant: "default" },
-    { label: "Observar", target: "OBSERVADA", variant: "outline" },
-    { label: "Rechazar", target: "RECHAZADA", variant: "destructive" },
+  EN_REVISION_RTF: [
+    { label: "Visar RTF", target: "VISADA_RTF", variant: "default", population: "dgi" },
+    { label: "Observar", target: "OBSERVADA", variant: "outline", population: "dgi" },
+  ],
+  VISADA_RTF: [
+    { label: "Enviar a UCR", target: "EN_REVISION_UCR", variant: "default", population: "dgi" },
+  ],
+  EN_REVISION_UCR: [
+    { label: "Aprobar", target: "APROBADA", variant: "default", population: "dgi" },
+    { label: "Observar", target: "OBSERVADA", variant: "outline", population: "dgi" },
+    { label: "Rechazar", target: "RECHAZADA", variant: "destructive", population: "dgi" },
   ],
   OBSERVADA: [
-    { label: "Re-enviar a Revisión", target: "EN_REVISION", variant: "default" },
+    { label: "Re-enviar a Revisión RTF", target: "EN_REVISION_RTF", variant: "default", population: "any" },
   ],
 };
 
 const stateBadgeColor: Record<string, string> = {
   PENDIENTE: "bg-gray-100 text-gray-700 border-gray-300",
-  EN_REVISION: "bg-amber-50 text-amber-700 border-amber-300",
+  EN_REVISION_RTF: "bg-amber-50 text-amber-700 border-amber-300",
+  VISADA_RTF: "bg-blue-50 text-blue-700 border-blue-300",
+  EN_REVISION_UCR: "bg-indigo-50 text-indigo-700 border-indigo-300",
   OBSERVADA: "bg-orange-50 text-orange-700 border-orange-300",
   APROBADA: "bg-green-50 text-green-700 border-green-300",
   RECHAZADA: "bg-red-50 text-red-700 border-red-300",
@@ -64,11 +94,14 @@ const stateBadgeColor: Record<string, string> = {
 function RendicionDetailPanel({ item, onClose, onRefresh }: { item: unknown; onClose: () => void; onRefresh?: () => void }) {
   const r = item as RendicionItem;
   const { user } = useAuth();
-  const isDGI = user?.population === "dgi";
+  const population = user?.population ?? "operativa";
 
   const [stateMap, setStateMap] = useState<Record<string, string>>({});
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [comment, setComment] = useState("");
+  const [detail, setDetail] = useState<RendicionDetailData | null>(null);
+  const [loadingDetail, setLoadingDetail] = useState(false);
 
   // Fetch rendition_state category codes → ids
   useEffect(() => {
@@ -81,22 +114,38 @@ function RendicionDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
       .catch(() => {});
   }, []);
 
+  // Fetch detail (with history) when panel opens
+  useEffect(() => {
+    setLoadingDetail(true);
+    api.get<RendicionDetailData>(`/api/dgi/data/rendiciones/${r.id}`)
+      .then(setDetail)
+      .catch(() => {})
+      .finally(() => setLoadingDetail(false));
+  }, [r.id]);
+
   const handleAction = useCallback(async (targetCode: string) => {
     const targetId = stateMap[targetCode];
     if (!targetId) return;
     setActionLoading(targetCode);
     setError(null);
     try {
-      await api.patch(`/api/dgi/data/rendiciones/${r.id}`, { state_id: targetId });
+      const payload: Record<string, unknown> = { state_id: targetId };
+      if (comment.trim()) payload.comment = comment.trim();
+      await api.patch(`/api/dgi/data/rendiciones/${r.id}`, payload);
+      setComment("");
       onRefresh?.();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al actualizar");
     } finally {
       setActionLoading(null);
     }
-  }, [r.id, stateMap, onRefresh]);
+  }, [r.id, stateMap, comment, onRefresh]);
 
-  const actions = r.state_code ? STATE_ACTIONS[r.state_code] ?? [] : [];
+  // Filter actions by user population
+  const allActions = r.state_code ? STATE_ACTIONS[r.state_code] ?? [] : [];
+  const actions = allActions.filter(
+    (a) => a.population === "any" || a.population === population
+  );
 
   return (
     <div className="h-full flex flex-col">
@@ -117,9 +166,15 @@ function RendicionDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
             label="Estado"
             value={
               r.state_code ? (
-                <Badge variant="outline" className={`text-xs ${stateBadgeColor[r.state_code] ?? ""}`}>
-                  {r.state_label ?? r.state_code}
-                </Badge>
+                <div className="flex items-center gap-1.5">
+                  <StatusBadge status={r.state_code} size="sm" />
+                  {r.is_overdue && (
+                    <Badge variant="destructive" className="text-[10px] px-1.5 py-0 gap-0.5">
+                      <AlertTriangle className="size-3" />
+                      Vencida ({r.days_in_state?.toFixed(0)}d)
+                    </Badge>
+                  )}
+                </div>
               ) : (
                 r.state_label ?? "-"
               )
@@ -136,14 +191,28 @@ function RendicionDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
           <Separator />
           <DetailRow label="Enviado" value={formatDate(r.submitted_at)} />
           <Separator />
+          <DetailRow label="Monto rendido" value={<span className="font-mono tabular-nums">{r.amount ? formatCLP(r.amount) : "-"}</span>} />
+          <Separator />
           <DetailRow label="Monto convenio" value={<span className="font-mono tabular-nums">{formatCLP(r.agreement_total_amount)}</span>} />
+          {r.days_in_state !== null && (
+            <>
+              <Separator />
+              <DetailRow label="Días en estado" value={<span className="tabular-nums">{r.days_in_state?.toFixed(1)}</span>} />
+            </>
+          )}
 
           {/* State transition actions */}
-          {isDGI && actions.length > 0 && (
+          {actions.length > 0 && (
             <>
               <Separator />
               <div className="pt-1">
                 <p className="text-xs font-semibold text-muted-foreground mb-2">Acciones</p>
+                <textarea
+                  placeholder="Comentario (opcional)"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  className="w-full mb-2 h-16 text-xs rounded-md border border-input bg-background px-3 py-2 resize-none"
+                />
                 <div className="flex flex-wrap gap-2">
                   {actions.map((action) => (
                     <Button
@@ -163,6 +232,21 @@ function RendicionDetailPanel({ item, onClose, onRefresh }: { item: unknown; onC
               </div>
             </>
           )}
+
+          {/* History timeline */}
+          <Separator />
+          <div className="pt-1">
+            <p className="text-xs font-semibold text-muted-foreground mb-2">Historial</p>
+            {loadingDetail ? (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <Loader2 className="size-3 animate-spin" /> Cargando...
+              </div>
+            ) : detail?.history && detail.history.length > 0 ? (
+              <TimelineHistory entries={detail.history} />
+            ) : (
+              <p className="text-xs text-muted-foreground">Sin historial disponible.</p>
+            )}
+          </div>
         </div>
       </ScrollArea>
     </div>
@@ -176,6 +260,7 @@ function NuevaRendicionAction({ onRefresh }: { onRefresh: () => void }) {
   const [periodStart, setPeriodStart] = useState("");
   const [periodEnd, setPeriodEnd] = useState("");
   const [submittedAt, setSubmittedAt] = useState("");
+  const [amount, setAmount] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -205,9 +290,10 @@ function NuevaRendicionAction({ onRefresh }: { onRefresh: () => void }) {
         period_start: periodStart || undefined,
         period_end: periodEnd || undefined,
         submitted_at: submittedAt ? new Date(submittedAt).toISOString() : undefined,
+        amount: amount ? parseFloat(amount) : undefined,
       });
       setOpen(false);
-      setIprId(""); setRendererId(""); setPeriodStart(""); setPeriodEnd(""); setSubmittedAt("");
+      setIprId(""); setRendererId(""); setPeriodStart(""); setPeriodEnd(""); setSubmittedAt(""); setAmount("");
       onRefresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al crear rendición");
@@ -260,6 +346,12 @@ function NuevaRendicionAction({ onRefresh }: { onRefresh: () => void }) {
             </div>
           </div>
           <div className="space-y-1">
+            <label className="text-xs font-medium">Monto rendido (opcional)</label>
+            <input type="number" step="1" min="0" value={amount} onChange={(e) => setAmount(e.target.value)}
+              placeholder="$0"
+              className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
+          </div>
+          <div className="space-y-1">
             <label className="text-xs font-medium">Fecha de envío (opcional)</label>
             <input type="date" value={submittedAt} onChange={(e) => setSubmittedAt(e.target.value)}
               className="w-full h-8 text-xs rounded-md border border-input bg-background px-3 py-1" />
@@ -291,11 +383,19 @@ export const rendicionesConfig: DomainConfig = {
       key: "state_code", label: "Estado",
       render: (_, row) => {
         const r = row as RendicionItem;
-        const color = r.state_code ? stateBadgeColor[r.state_code] ?? "" : "";
         return (
-          <Badge variant="outline" className={`text-[10px] ${color}`}>
-            {r.state_label ?? "-"}
-          </Badge>
+          <div className="flex items-center gap-1">
+            {r.state_code ? (
+              <StatusBadge status={r.state_code} size="sm" />
+            ) : (
+              <Badge variant="outline" className="text-[10px]">{r.state_label ?? "-"}</Badge>
+            )}
+            {r.is_overdue && (
+              <Badge variant="destructive" className="text-[10px] px-1 py-0">
+                <AlertTriangle className="size-2.5" />
+              </Badge>
+            )}
+          </div>
         );
       },
     },
@@ -306,7 +406,7 @@ export const rendicionesConfig: DomainConfig = {
         return <span className="text-xs tabular-nums">{formatDate(r.period_start)} — {formatDate(r.period_end)}</span>;
       },
     },
-    { key: "agreement_total_amount", label: "Monto", render: (v) => <span className="text-xs font-mono tabular-nums">{formatCLP(v as number)}</span> },
+    { key: "amount", label: "Monto", render: (v) => <span className="text-xs font-mono tabular-nums">{v ? formatCLP(v as number) : "-"}</span> },
   ],
   fetchData: async (params) => {
     const apiParams = new URLSearchParams();
