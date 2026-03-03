@@ -1,8 +1,8 @@
 # GORE_OS — Documento de Testeo
 
-**Fecha**: 2026-02-26
-**Version**: 6.0 (Ciclo 1-6 + Tests + Confrontacion)
-**Objetivo**: Guia completa para testeo funcional de GORE_OS incluyendo la auditoria ontologica de relaciones del Ciclo 6.
+**Fecha**: 2026-03-03
+**Version**: 7.0 (Ciclo 1-6 + Tests + Confrontacion + Ciclo 19 SISREC)
+**Objetivo**: Guia completa para testeo funcional de GORE_OS incluyendo el workflow multi-rol SISREC del Ciclo 19.
 
 ---
 
@@ -95,6 +95,25 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | DGI Informes | Completo | C2 | 4 tipos, 6 secciones auto-populadas |
 | Navegacion bidireccional | **Nuevo C6** | C6 | Links clickeables entre entidades satelite e IPR en 6 paginas |
 | Timeline problemas | **Nuevo C6** | C6 | Historial visual de estados en drawer de problemas |
+| SISREC Workflow | **Nuevo C19** | C19 | Rendiciones multi-rol: 8 estados, RTF→UCR, audit trail, SLA |
+| StatusBadge rendiciones | **Nuevo C19** | C19 | 6 badges para estados SISREC (RTF, UCR, observada, aprobada, rechazada) |
+| SLA rendiciones | **Nuevo C19** | C19 | Indicador de vencimiento + endpoint `/rendiciones/vencidas` |
+| Art. 18 CGR fix | **Nuevo C19** | C19 | Bloqueo de pago extendido a paid_amount/paid_at |
+
+### 2.5 Resumen de Nuevas Funcionalidades Ciclo 19 (SISREC Multi-Role Workflow)
+
+| # | Feature | Descripcion | Wave |
+|---|---------|-------------|------|
+| S1 | State machine multi-rol | 8 estados: PENDIENTE → EN_REVISION_RTF → VISADA_RTF → EN_REVISION_UCR → APROBADA/RECHAZADA + OBSERVADA loop | A+B |
+| S2 | Autorizacion por transicion | Cada transicion tiene roles permitidos: operativa inicia/reenvia, DGI visa/aprueba/rechaza | B |
+| S3 | Audit trail | `core.rendition_history` + trigger + comment por transicion | A+B |
+| S4 | SLA detection | 7 dias RTF, 2 dias UCR. Campo `is_overdue` + `days_in_state` computados. Endpoint `/vencidas` | B |
+| S5 | Amount field | Campo `amount` (monto rendido) en crear y editar rendicion | A+B+C |
+| S6 | Art. 18 CGR extension | PATCH cuotas ahora verifica rendiciones pendientes tambien en paid_amount/paid_at | B |
+| S7 | StatusBadge 6 cases | EN_REVISION_RTF (amber), VISADA_RTF (blue), EN_REVISION_UCR (indigo), OBSERVADA (orange), APROBADA (green), RECHAZADA (red) | C |
+| S8 | History timeline | TimelineHistory reutilizado en drawer de rendiciones con historial de transiciones | C |
+| S9 | Comment textarea | Textarea para comentario opcional en cada transicion de estado | C |
+| S10 | 18 integration tests | State machine, role restrictions, history, SLA, amount en `test_sisrec.py` | D |
 
 ### 2.2 Resumen de Nuevas Funcionalidades Ciclo 3
 
@@ -615,6 +634,83 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 5. **Verificar**: Problema en estado ABIERTO solo muestra el primer punto
 6. **Verificar**: Problema RESUELTO muestra los 3 puntos completos
 
+### 4.9 Ciclo 19 — SISREC Multi-Role Workflow
+
+#### TC-45: Crear Rendicion con Monto
+1. Login como `regional@goreos.cl` (ADMIN_REGIONAL)
+2. Ir a `/datos` → seleccionar dominio "Rendiciones"
+3. Click "Nueva Rendicion"
+4. Completar:
+   - IPR: buscar y seleccionar una IPR
+   - Ejecutor: buscar organizacion (opcional)
+   - Periodo inicio/fin: fechas
+   - Monto rendido: 5000000
+5. Click "Registrar"
+6. **Esperado**: Rendicion aparece en lista con estado PENDIENTE y monto $5.000.000
+
+#### TC-46: Flujo Completo — Happy Path (PENDIENTE → APROBADA)
+1. Login como `regional@goreos.cl` → crear rendicion (TC-45)
+2. Abrir la rendicion en el panel lateral
+3. Click "Enviar a Revision RTF"
+4. **Esperado**: Estado cambia a EN_REVISION_RTF (badge amber)
+5. Login como `jefe.dgi@goreos.cl` (JEFE_DGI)
+6. Abrir la misma rendicion
+7. Escribir comentario: "Documentacion completa" → click "Visar RTF"
+8. **Esperado**: Estado cambia a VISADA_RTF (badge blue)
+9. Click "Enviar a UCR"
+10. **Esperado**: Estado cambia a EN_REVISION_UCR (badge indigo)
+11. Click "Aprobar"
+12. **Esperado**: Estado cambia a APROBADA (badge verde con check). No hay mas acciones disponibles.
+
+#### TC-47: Loop de Observacion (RTF → OBSERVADA → RTF)
+1. Login como `regional@goreos.cl` → crear rendicion → enviar a revision RTF
+2. Login como `jefe.dgi@goreos.cl`
+3. Escribir "Falta boleta N°123" → click "Observar"
+4. **Esperado**: Estado OBSERVADA (badge orange)
+5. Login como `regional@goreos.cl`
+6. **Esperado**: Boton "Re-enviar a Revision RTF" visible
+7. Click "Re-enviar a Revision RTF"
+8. **Esperado**: Estado vuelve a EN_REVISION_RTF
+
+#### TC-48: Restriccion de Rol — Operativa NO puede visar
+1. Login como `regional@goreos.cl`
+2. Crear rendicion y enviarla a revision RTF
+3. Intentar "Visar RTF" desde el mismo usuario
+4. **Esperado**: Boton NO visible (solo DGI ve acciones de visa/aprobacion)
+5. **Verificar API**: `PATCH /api/dgi/data/rendiciones/{id}` con state_id de VISADA_RTF → HTTP 403
+
+#### TC-49: Historial de Transiciones
+1. Ejecutar flujo completo (TC-46)
+2. Abrir rendicion aprobada en panel lateral
+3. Buscar seccion "Historial"
+4. **Esperado**: Timeline con 4+ entradas:
+   - PENDIENTE → EN_REVISION_RTF
+   - EN_REVISION_RTF → VISADA_RTF (con comment "Documentacion completa")
+   - VISADA_RTF → EN_REVISION_UCR
+   - EN_REVISION_UCR → APROBADA
+5. **Verificar**: Cada entrada muestra fecha, nombre del usuario, y comment (si hay)
+
+#### TC-50: SLA Vencida
+1. Crear rendicion via API y transicionar a EN_REVISION_RTF
+2. Esperar 7+ dias (o modificar `updated_at` en DB para simular)
+3. Ir a `/datos` → "Rendiciones"
+4. **Esperado**: Badge rojo "Vencida (Xd)" junto al estado
+5. **Verificar API**: `GET /api/dgi/data/rendiciones/vencidas` incluye la rendicion
+
+#### TC-51: Art. 18 CGR — Bloqueo de Pago por Rendicion Pendiente
+1. Crear un convenio con cuota e IPR vinculada
+2. Crear una rendicion vinculada al mismo convenio/IPR en estado PENDIENTE
+3. Intentar registrar pago en la cuota (paid_amount o paid_at)
+4. **Esperado**: HTTP 409 "Art. 18 Res. 30 CGR: Existen N rendicion(es) pendiente(s)..."
+5. Aprobar la rendicion (flujo completo)
+6. Reintentar registrar pago
+7. **Esperado**: Pago se registra correctamente
+
+#### TC-52: Rechazo en UCR
+1. Crear rendicion → enviar a RTF → visar RTF → enviar a UCR
+2. Login como DGI → escribir "No cumple normativa" → click "Rechazar"
+3. **Esperado**: Estado RECHAZADA (badge rojo con X). No hay mas acciones. Estado terminal.
+
 ---
 
 ## 5. Endpoints API — Referencia Rapida
@@ -739,6 +835,21 @@ POST   /api/dgi/data/indicators/refresh    Recalcular indicadores
 GET    /api/dgi/reports                    Informes
 ```
 
+### 5.13 Rendiciones SISREC (Nuevo C19)
+```
+GET    /api/dgi/data/rendiciones                  Lista paginada (filtros: state, search)
+GET    /api/dgi/data/rendiciones/vencidas          Rendiciones que superan SLA (7d RTF, 2d UCR)
+GET    /api/dgi/data/rendiciones/{id}              Detalle con historial de transiciones
+POST   /api/dgi/data/rendiciones                   Crear rendicion (ipr_id requerido, amount opcional)
+PATCH  /api/dgi/data/rendiciones/{id}              Transicionar estado / actualizar campos
+```
+
+**Campos PATCH**: `state_id` (transicion), `amount`, `period_start`, `period_end`, `submitted_at`, `comment` (en body, se guarda en historial).
+
+**Transiciones por rol**: ver seccion 7 "Rendicion (SISREC Multi-Role)".
+
+**Campos computados en respuesta**: `is_overdue` (bool), `days_in_state` (float), `history` (en detail).
+
 ---
 
 ## 6. Hoja de Ruta
@@ -755,6 +866,7 @@ GET    /api/dgi/reports                    Informes
 | Tests  | 71 integration tests (8 modulos), test DB setup, security readonly suite | Completado |
 | Confrontacion | Migracion datos: org_type(+2), jerarquia 3 niveles, agreement_state(+3), roles(+5) | Completado |
 | Ciclo 6 | Auditoria ontologica: navegacion bidireccional (7), filtros API (3), CRUD completions (4) | Completado |
+| Ciclo 19 | SISREC multi-role: 8-state machine RTF→UCR, audit trail, SLA, Art. 18 fix, 18 tests | Completado |
 
 ### 6.2 Pendiente / Proximos Ciclos
 
@@ -801,6 +913,29 @@ PROGRAMADA → EN_CURSO → FINALIZADA
 (creada)     (iniciar)   (finalizar)
 ```
 
+### Rendicion (SISREC Multi-Role)
+```
+PENDIENTE ──→ EN_REVISION_RTF ──→ VISADA_RTF ──→ EN_REVISION_UCR ──→ APROBADA
+ (any)         (DGI)↓               (DGI)          (DGI)↓    ↘
+               OBSERVADA ←──────────────────────── OBSERVADA   RECHAZADA
+                 ↓ (any)
+               EN_REVISION_RTF (loop)
+```
+
+**Roles por transicion**:
+| Transicion | Roles permitidos |
+|-----------|-----------------|
+| PENDIENTE → EN_REVISION_RTF | Operativa + DGI (cualquiera) |
+| EN_REVISION_RTF → VISADA_RTF | Solo DGI |
+| EN_REVISION_RTF → OBSERVADA | Solo DGI |
+| VISADA_RTF → EN_REVISION_UCR | Solo DGI |
+| EN_REVISION_UCR → APROBADA | Solo DGI |
+| EN_REVISION_UCR → RECHAZADA | Solo DGI |
+| EN_REVISION_UCR → OBSERVADA | Solo DGI |
+| OBSERVADA → EN_REVISION_RTF | Operativa + DGI (reenvio) |
+
+**SLA**: EN_REVISION_RTF = 7 dias, EN_REVISION_UCR = 2 dias.
+
 ---
 
 ## 8. Esquemas de Categoria (ref.category)
@@ -817,6 +952,7 @@ Esquemas frecuentes para pruebas:
 | `ipr_state` | EN_FORMULACION, EN_EJECUCION, TERMINADO, CERRADO | Estado IPR |
 | `alert_level` | CRITICO, ALTO, ATENCION, INFO | Severidad alerta |
 | `system_role` | ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ENCARGADO, JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD | Roles del sistema |
+| `rendition_state` | PENDIENTE, EN_REVISION_RTF, VISADA_RTF, EN_REVISION_UCR, OBSERVADA, APROBADA, RECHAZADA (+EN_REVISION legacy) | Estado rendiciones SISREC |
 
 ---
 
