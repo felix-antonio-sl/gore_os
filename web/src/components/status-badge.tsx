@@ -40,7 +40,7 @@ export function StatusBadge({ status, size = "default" }: StatusBadgeProps) {
       );
     case "VENCIDO":
       return (
-        <Badge variant="destructive" className={cn("animate-pulse", sizeClass)}>
+        <Badge variant="destructive" className={sizeClass}>
           Vencido
         </Badge>
       );

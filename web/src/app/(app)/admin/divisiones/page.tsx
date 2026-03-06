@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toast } from "sonner";
 import { Plus } from "lucide-react";
 
 interface DivisionItem {
@@ -98,7 +99,7 @@ export default function DivisionesPage() {
       const updated = { ...selectedItem, ...body };
       setSelectedItem(updated);
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Error al guardar");
+      toast.error(err instanceof Error ? err.message : "Error al guardar");
     } finally {
       setEditSaving(false);
     }

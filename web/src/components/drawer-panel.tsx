@@ -19,7 +19,7 @@ interface DrawerPanelProps {
 export function DrawerPanel({ open, onClose, title, children }: DrawerPanelProps) {
   return (
     <Sheet open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose(); }}>
-      <SheetContent side="right" className="w-[400px] sm:w-[400px] flex flex-col p-0">
+      <SheetContent side="right" className="flex flex-col p-0">
         <SheetHeader className="px-6 py-4 border-b">
           <SheetTitle>{title}</SheetTitle>
         </SheetHeader>

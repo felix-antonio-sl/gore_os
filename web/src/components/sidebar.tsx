@@ -20,6 +20,7 @@ import {
   Vote,
   ShieldCheck,
   Layers,
+  Receipt,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Separator } from "@/components/ui/separator";
@@ -55,12 +56,17 @@ const dgiNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
   { label: "Cartera", href: "/cartera", icon: <FolderKanban className="size-4" /> },
   { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
+  { label: "Rendiciones", href: "/datos?dominio=rendiciones", icon: <Receipt className="size-4" /> },
   { label: "Tablero", href: "/tablero", icon: <KanbanSquare className="size-4" /> },
   { label: "Datos", href: "/datos", icon: <Database className="size-4" /> },
   { label: "Informes", href: "/informes", icon: <FileText className="size-4" /> },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  onNavClick?: () => void;
+}
+
+export function Sidebar({ onNavClick }: SidebarProps = {}) {
   const { user } = useAuth();
   const pathname = usePathname();
 
@@ -99,12 +105,14 @@ export function Sidebar() {
         {firstItem && (
           <Link
             href={firstItem.href}
+            aria-current={pathname === firstItem.href || pathname.startsWith(firstItem.href + "/") ? "page" : undefined}
             className={cn(
               "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
               pathname === firstItem.href || pathname.startsWith(firstItem.href + "/")
                 ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground"
             )}
+            onClick={onNavClick}
           >
             {firstItem.icon}
             {firstItem.label}
@@ -117,12 +125,14 @@ export function Sidebar() {
           <Link
             key={item.href}
             href={item.href}
+            aria-current={pathname === item.href || pathname.startsWith(item.href + "/") ? "page" : undefined}
             className={cn(
               "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
               pathname === item.href || pathname.startsWith(item.href + "/")
                 ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground"
             )}
+            onClick={onNavClick}
           >
             {item.icon}
             {item.label}

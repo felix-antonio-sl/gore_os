@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
 import { ArrowLeft, Edit2, CheckCircle, Send, RotateCcw, ShieldCheck } from "lucide-react";
 import { formatDate } from "@/lib/format";
 
@@ -66,7 +67,7 @@ export default function InformeDetailPage() {
       const updated = await api.get<ReportContent>(`/api/dgi/reports/${id}/content`);
       setReport(updated);
     } catch (err) {
-      console.error("Error al cambiar estado:", err);
+      toast.error(err instanceof Error ? err.message : "Error al cambiar estado");
     } finally {
       setStatusLoading(false);
     }

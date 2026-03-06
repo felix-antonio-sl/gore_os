@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { api } from "@/lib/api";
 import { KpiCard } from "@/components/kpi-card";
 import { DataTable } from "@/components/data-table";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
+import { Input } from "@/components/ui/input";
 import type { KPICardData, CompromisoListItem } from "@/types";
 
 interface CompromisoGroup {
@@ -25,9 +26,13 @@ const groupColors: Record<string, string> = {
   "Pendientes": "text-blue-600",
 };
 
+const PAGE_SIZE = 10;
+
 export default function MisCompromisosPage() {
   const [data, setData] = useState<MisCompromisosData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [groupPages, setGroupPages] = useState<Record<string, number>>({});
 
   useEffect(() => {
     api
@@ -91,6 +96,16 @@ export default function MisCompromisosPage() {
         </div>
       )}
 
+      {/* Búsqueda */}
+      {!isLoading && data && (
+        <Input
+          placeholder="Buscar por descripción o BIP..."
+          value={searchQuery}
+          onChange={(e) => { setSearchQuery(e.target.value); setGroupPages({}); }}
+          className="h-9 w-full sm:w-72"
+        />
+      )}
+
       {/* Grupos de compromisos */}
       {isLoading ? (
         <div className="space-y-4">
@@ -99,33 +114,45 @@ export default function MisCompromisosPage() {
           ))}
         </div>
       ) : (
-        data?.groups.map((group) => (
-          <div key={group.label}>
-            <h2 className={`text-lg font-semibold mb-3 ${groupColors[group.label] ?? ""}`}>
-              {group.label}
-              {group.count > 0 && (
-                <span className="ml-2 text-sm font-normal text-muted-foreground">
-                  ({group.count})
-                </span>
+        data?.groups.map((group) => {
+          const filtered = searchQuery
+            ? group.items.filter((item) =>
+                item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (item.ipr_codigo_bip ?? "").toLowerCase().includes(searchQuery.toLowerCase())
+              )
+            : group.items;
+          const currentPage = groupPages[group.label] ?? 1;
+          const totalPages = Math.max(Math.ceil(filtered.length / PAGE_SIZE), 1);
+          const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+          return (
+            <div key={group.label}>
+              <h2 className={`text-lg font-semibold mb-3 ${groupColors[group.label] ?? ""}`}>
+                {group.label}
+                {filtered.length > 0 && (
+                  <span className="ml-2 text-sm font-normal text-muted-foreground">
+                    ({filtered.length})
+                  </span>
+                )}
+              </h2>
+              {filtered.length === 0 ? (
+                <p className="text-sm text-muted-foreground py-2">
+                  No hay compromisos en esta categoría.
+                </p>
+              ) : (
+                <DataTable
+                  columns={columns}
+                  data={paged}
+                  page={currentPage}
+                  totalPages={totalPages}
+                  total={filtered.length}
+                  onPageChange={(p) => setGroupPages((prev) => ({ ...prev, [group.label]: p }))}
+                  isLoading={false}
+                />
               )}
-            </h2>
-            {group.items.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-2">
-                No hay compromisos en esta categoría.
-              </p>
-            ) : (
-              <DataTable
-                columns={columns}
-                data={group.items}
-                page={1}
-                totalPages={1}
-                total={group.count}
-                onPageChange={() => {}}
-                isLoading={false}
-              />
-            )}
-          </div>
-        ))
+            </div>
+          );
+        })
       )}
     </div>
   );

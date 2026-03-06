@@ -7,6 +7,7 @@ import { AlertCard } from "@/components/alert-card";
 import { FilterBar } from "@/components/filter-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import { Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import type { PaginatedResponse, AlertaListItem } from "@/types";
@@ -108,7 +109,7 @@ export default function AlertasPage() {
         };
       });
     } catch (err) {
-      console.error("Error al atender alerta:", err);
+      toast.error(err instanceof Error ? err.message : "Error al atender alerta");
     }
   };
 

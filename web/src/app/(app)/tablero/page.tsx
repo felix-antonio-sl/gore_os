@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 import { Plus, AlertTriangle } from "lucide-react";
 import type { DGIInitiative } from "@/types";
 
@@ -116,7 +117,7 @@ export default function TableroPage() {
       setDialogOpen(false);
       setRefreshKey((k) => k + 1);
     } catch (err) {
-      console.error("Error saving initiative:", err);
+      toast.error(err instanceof Error ? err.message : "Error al guardar iniciativa");
     } finally {
       setSaving(false);
     }

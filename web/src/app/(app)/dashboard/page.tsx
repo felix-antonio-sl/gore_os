@@ -17,6 +17,7 @@ import { CockpitControlGestionView } from "@/components/cockpit-control-gestion"
 import { CockpitProcesosView } from "@/components/cockpit-procesos";
 import { CockpitTDView } from "@/components/cockpit-td";
 import { SemaforoCard } from "@/components/semaforo-card";
+import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type {
@@ -133,7 +134,7 @@ function OperationalDashboard() {
         };
       });
     } catch (err) {
-      console.error("Error al atender alerta:", err);
+      toast.error(err instanceof Error ? err.message : "Error al atender alerta");
     }
   };
 

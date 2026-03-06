@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { SemaforoCard } from "@/components/semaforo-card";
 import { SemaforoGauge } from "@/components/charts/semaforo-gauge";
 import { cn } from "@/lib/utils";
+import { formatCLP } from "@/lib/format";
 import type { CockpitJefeDGI } from "@/types";
 
 interface CockpitJefeDGIProps {
@@ -100,25 +101,10 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
             {decisions_pending === 0 ? (
               <p className="text-sm text-muted-foreground italic">Sin pendientes. Todo al día.</p>
             ) : (
-              <div className="space-y-2">
-                {Array.from({ length: Math.min(decisions_pending, 4) }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between gap-3 rounded-md border px-3 py-2 bg-orange-50"
-                  >
-                    <span className="text-sm text-muted-foreground">
-                      Decisión pendiente #{i + 1}
-                    </span>
-                    <Button size="sm" variant="outline" className="h-7 text-xs shrink-0">
-                      Decidir
-                    </Button>
-                  </div>
-                ))}
-                {decisions_pending > 4 && (
-                  <p className="text-xs text-muted-foreground text-center pt-1">
-                    +{decisions_pending - 4} más pendientes
-                  </p>
-                )}
+              <div className="rounded-md border px-3 py-3 bg-orange-50">
+                <p className="text-sm text-orange-800">
+                  {decisions_pending} decisión{decisions_pending !== 1 ? "es" : ""} pendiente{decisions_pending !== 1 ? "s" : ""} — revise alertas y compromisos
+                </p>
               </div>
             )}
           </CardContent>
@@ -175,10 +161,10 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
                   <p className="text-sm text-red-800">{alert.message}</p>
                 </div>
                 <div className="flex gap-2 shrink-0">
-                  <Button size="sm" variant="outline" className="h-7 text-xs border-red-300 text-red-700 hover:bg-red-100">
+                  <Button size="sm" variant="outline" className="h-7 text-xs border-red-300 text-red-700 hover:bg-red-100" disabled title="Próximamente">
                     Escalar
                   </Button>
-                  <Button size="sm" variant="ghost" className="h-7 text-xs text-red-600">
+                  <Button size="sm" variant="ghost" className="h-7 text-xs text-red-600" disabled title="Próximamente">
                     Playbook
                   </Button>
                 </div>
@@ -292,12 +278,7 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
                   <AlertTriangle className="size-3.5 text-amber-600 shrink-0" />
                   <span className="text-muted-foreground">Monto en riesgo:</span>
                   <span className="font-mono font-semibold tabular-nums text-amber-700">
-                    {new Intl.NumberFormat("es-CL", {
-                      style: "currency",
-                      currency: "CLP",
-                      notation: "compact",
-                      maximumFractionDigits: 1,
-                    }).format(rendition_summary.amount_at_risk)}
+                    {formatCLP(rendition_summary.amount_at_risk)}
                   </span>
                 </div>
               )}

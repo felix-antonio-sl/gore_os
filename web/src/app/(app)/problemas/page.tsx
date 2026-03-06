@@ -10,6 +10,7 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { Plus, Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate } from "@/lib/format";
@@ -166,7 +167,7 @@ export default function ProblemasPage() {
       setSelectedId(null);
       setRefreshKey((k) => k + 1);
     } catch (err) {
-      console.error("Error al resolver:", err);
+      toast.error(err instanceof Error ? err.message : "Error al resolver");
     } finally {
       setActionLoading(false);
     }
@@ -186,7 +187,7 @@ export default function ProblemasPage() {
       setSelectedId(null);
       setRefreshKey((k) => k + 1);
     } catch (err) {
-      console.error("Error al cerrar:", err);
+      toast.error(err instanceof Error ? err.message : "Error al cerrar");
     } finally {
       setActionLoading(false);
     }
@@ -205,7 +206,7 @@ export default function ProblemasPage() {
       setSelectedId(null);
       setRefreshKey((k) => k + 1);
     } catch (err) {
-      console.error("Error al cambiar estado:", err);
+      toast.error(err instanceof Error ? err.message : "Error al cambiar estado");
     } finally {
       setActionLoading(false);
     }

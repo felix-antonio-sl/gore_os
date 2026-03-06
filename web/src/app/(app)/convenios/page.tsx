@@ -19,7 +19,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useAuth } from "@/lib/auth";
+import { toast } from "sonner";
 import { Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCLP, formatDate } from "@/lib/format";
@@ -103,6 +112,7 @@ export default function ConveniosPage() {
   const [payAmount, setPayAmount] = useState("");
   const [payRef, setPayRef] = useState("");
   const [paySubmitting, setPaySubmitting] = useState(false);
+  const [confirmPayOpen, setConfirmPayOpen] = useState(false);
 
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
@@ -267,6 +277,7 @@ export default function ConveniosPage() {
     const pagadoStatus = paymentStatuses.find((s) => s.code === "PAGADO");
     if (!pagadoStatus) return;
     setPaySubmitting(true);
+    setConfirmPayOpen(false);
     try {
       await api.patch(`/api/convenios/${selectedId}/cuotas/${payingCuotaId}`, {
         payment_status_id: pagadoStatus.id,
@@ -276,8 +287,8 @@ export default function ConveniosPage() {
       });
       setPayingCuotaId(null);
       refreshDetail();
-    } catch {
-      // silently fail
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Error al registrar pago");
     } finally {
       setPaySubmitting(false);
     }
@@ -598,7 +609,7 @@ export default function ConveniosPage() {
                       )}
                       {/* Pay button */}
                       {canEdit && inst.payment_status !== "PAGADO" && payingCuotaId !== inst.id && (
-                        <Button size="sm" variant="outline" className="h-5 text-[10px] mt-1" onClick={() => openPayForm(inst)}>
+                        <Button size="sm" variant="outline" className="h-8 text-xs mt-1" onClick={() => openPayForm(inst)}>
                           Registrar Pago
                         </Button>
                       )}
@@ -610,7 +621,7 @@ export default function ConveniosPage() {
                             <Input placeholder="Referencia" value={payRef} onChange={(e) => setPayRef(e.target.value)} className="h-6 text-xs" />
                           </div>
                           <div className="flex gap-1">
-                            <Button size="sm" className="h-5 text-[10px]" onClick={handlePaySubmit} disabled={paySubmitting}>
+                            <Button size="sm" className="h-5 text-[10px]" onClick={() => setConfirmPayOpen(true)} disabled={paySubmitting}>
                               {paySubmitting ? "..." : "Confirmar"}
                             </Button>
                             <Button size="sm" variant="ghost" className="h-5 text-[10px]" onClick={() => setPayingCuotaId(null)}>Cancelar</Button>
@@ -635,6 +646,24 @@ export default function ConveniosPage() {
           <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>
         )}
       </DrawerPanel>
+
+      {/* Confirmación de pago */}
+      <Dialog open={confirmPayOpen} onOpenChange={setConfirmPayOpen}>
+        <DialogContent className="sm:max-w-[380px]">
+          <DialogHeader>
+            <DialogTitle>Confirmar Pago</DialogTitle>
+            <DialogDescription>
+              Registrar pago de {payAmount ? formatCLP(parseFloat(payAmount)) : "—"}{payRef ? ` (Ref: ${payRef})` : ""}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setConfirmPayOpen(false)}>Cancelar</Button>
+            <Button onClick={handlePaySubmit} disabled={paySubmitting}>
+              {paySubmitting ? "Registrando..." : "Confirmar Pago"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

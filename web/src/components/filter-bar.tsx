@@ -54,7 +54,7 @@ export function FilterBar({
             placeholder={searchPlaceholder}
             value={searchValue ?? ""}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="h-9 w-56"
+            className="h-9 w-full sm:w-56"
           />
         )}
         {filters.map((filter) => (
@@ -63,7 +63,7 @@ export function FilterBar({
             value={values[filter.key] ?? ""}
             onValueChange={(value) => onChange(filter.key, value === "__all__" ? "" : value)}
           >
-            <SelectTrigger className="h-9 w-44">
+            <SelectTrigger className="h-9 w-full sm:w-44">
               <SelectValue placeholder={filter.label} />
             </SelectTrigger>
             <SelectContent>

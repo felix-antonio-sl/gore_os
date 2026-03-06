@@ -42,7 +42,7 @@ export function DataTable({
 }: DataTableProps) {
   if (isLoading) {
     return (
-      <div className="space-y-2">
+      <div className="space-y-2" aria-busy="true">
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="h-10 rounded bg-muted animate-pulse" />
         ))}
@@ -57,7 +57,7 @@ export function DataTable({
   return (
     <div className="space-y-2">
       <div className="rounded-md border">
-        <Table>
+        <Table aria-label="Tabla de datos">
           <TableHeader>
             <TableRow>
               {columns.map((col) => (
@@ -85,6 +85,10 @@ export function DataTable({
                   key={rowIndex}
                   className={cn(onRowClick && "cursor-pointer")}
                   onClick={() => onRowClick && onRowClick(row)}
+                  {...(onRowClick ? {
+                    tabIndex: 0,
+                    onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onRowClick(row); } },
+                  } : {})}
                 >
                   {columns.map((col) => (
                     <TableCell key={col.key}>
@@ -99,7 +103,7 @@ export function DataTable({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between px-1 text-sm text-muted-foreground">
+      <div className="flex items-center justify-between px-1 text-sm text-muted-foreground" aria-live="polite">
         <span>
           Mostrando {startItem === 0 ? 0 : startItem}–{endItem} de {total}
         </span>
@@ -109,6 +113,7 @@ export function DataTable({
             size="sm"
             disabled={page <= 1}
             onClick={() => onPageChange(page - 1)}
+            aria-label="Página anterior"
           >
             &lt;
           </Button>
@@ -120,6 +125,7 @@ export function DataTable({
             size="sm"
             disabled={page >= totalPages}
             onClick={() => onPageChange(page + 1)}
+            aria-label="Página siguiente"
           >
             &gt;
           </Button>

@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 import { Plus, KeyRound } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import type { PaginatedResponse, CategoryRef } from "@/types";
@@ -210,7 +211,7 @@ export default function UsuariosPage() {
       // Refresh list
       refreshList();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Error al guardar");
+      toast.error(err instanceof Error ? err.message : "Error al guardar");
     } finally {
       setEditSaving(false);
     }
@@ -223,7 +224,7 @@ export default function UsuariosPage() {
       loadDetail(detail.id);
       refreshList();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Error");
+      toast.error(err instanceof Error ? err.message : "Error");
     }
   };
 

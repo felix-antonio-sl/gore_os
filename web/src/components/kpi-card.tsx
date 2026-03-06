@@ -38,6 +38,11 @@ export function KpiCard({ label, value, sublabel, color, onClick }: KpiCardProps
         onClick && "cursor-pointer hover:shadow-md transition-shadow"
       )}
       onClick={onClick}
+      {...(onClick ? {
+        role: "button",
+        tabIndex: 0,
+        onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } },
+      } : {})}
     >
       <CardContent className="px-5 py-0">
         <p className="text-sm font-medium text-muted-foreground mb-1">{label}</p>

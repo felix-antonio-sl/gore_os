@@ -1,10 +1,11 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 interface AppShellProps {
   children: ReactNode;
@@ -19,6 +20,7 @@ function getWeekNumber(date: Date): number {
 export function AppShell({ children }: AppShellProps) {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -45,14 +47,23 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Sidebar */}
-      <Sidebar />
+      {/* Sidebar — desktop */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
+
+      {/* Sidebar — mobile */}
+      <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
+        <SheetContent side="left" className="w-56 p-0">
+          <Sidebar onNavClick={() => setMobileNavOpen(false)} />
+        </SheetContent>
+      </Sheet>
 
       {/* Main content area */}
       <div className="flex flex-col flex-1 min-w-0">
         {/* Header */}
         <div className="h-14 shrink-0">
-          <Header />
+          <Header onMenuToggle={() => setMobileNavOpen(true)} />
         </div>
 
         {/* Page content */}
@@ -66,7 +77,7 @@ export function AppShell({ children }: AppShellProps) {
             <span className="inline-block size-2 rounded-full bg-green-500" />
             Conectado
           </span>
-          <span>Semana {weekNumber} / 2026</span>
+          <span>Semana {weekNumber} / {new Date().getFullYear()}</span>
         </div>
       </div>
     </div>

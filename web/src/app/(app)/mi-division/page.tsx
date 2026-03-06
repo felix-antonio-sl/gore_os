@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { KpiCard } from "@/components/kpi-card";
@@ -9,6 +9,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { KPICardData, CompromisoListItem } from "@/types";
 
 interface TeamMember {
@@ -31,6 +32,8 @@ export default function MiDivisionPage() {
   const { user } = useAuth();
   const [data, setData] = useState<MiDivisionData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [teamSort, setTeamSort] = useState<"name" | "vencidos" | "total">("vencidos");
+  const [vencidosPage, setVencidosPage] = useState(1);
 
   useEffect(() => {
     api
@@ -39,6 +42,20 @@ export default function MiDivisionPage() {
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
   }, []);
+
+  const VENCIDOS_PAGE_SIZE = 10;
+
+  const sortedTeam = useMemo(() => {
+    if (!data?.team) return [];
+    return [...data.team].sort((a, b) => {
+      if (teamSort === "vencidos") return b.vencidos - a.vencidos;
+      if (teamSort === "total") return b.total - a.total;
+      return a.name.localeCompare(b.name);
+    });
+  }, [data?.team, teamSort]);
+
+  const vencidosTotalPages = Math.max(Math.ceil((data?.commitments.length ?? 0) / VENCIDOS_PAGE_SIZE), 1);
+  const vencidosPaged = data?.commitments.slice((vencidosPage - 1) * VENCIDOS_PAGE_SIZE, vencidosPage * VENCIDOS_PAGE_SIZE) ?? [];
 
   if (!user || user.role_code !== "JEFE_DIVISION") {
     return (
@@ -99,7 +116,22 @@ export default function MiDivisionPage() {
       {/* Carga por persona */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Carga por Persona</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg">Carga por Persona</CardTitle>
+            <div className="flex gap-1">
+              {(["vencidos", "total", "name"] as const).map((key) => (
+                <Button
+                  key={key}
+                  size="sm"
+                  variant={teamSort === key ? "default" : "outline"}
+                  className="h-7 text-xs"
+                  onClick={() => setTeamSort(key)}
+                >
+                  {key === "vencidos" ? "Vencidos" : key === "total" ? "Total" : "Nombre"}
+                </Button>
+              ))}
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -112,7 +144,7 @@ export default function MiDivisionPage() {
             <p className="text-sm text-muted-foreground">Sin datos de equipo.</p>
           ) : (
             <div className="space-y-2">
-              {data.team.map((member) => (
+              {sortedTeam.map((member) => (
                 <div
                   key={member.user_id}
                   className="flex items-center justify-between py-2 border-b last:border-0"
@@ -146,11 +178,11 @@ export default function MiDivisionPage() {
         <h2 className="text-lg font-semibold mb-3">Compromisos Vencidos</h2>
         <DataTable
           columns={commitmentColumns}
-          data={data?.commitments ?? []}
-          page={1}
-          totalPages={1}
+          data={vencidosPaged}
+          page={vencidosPage}
+          totalPages={vencidosTotalPages}
           total={data?.commitments.length ?? 0}
-          onPageChange={() => {}}
+          onPageChange={setVencidosPage}
           isLoading={isLoading}
         />
       </div>

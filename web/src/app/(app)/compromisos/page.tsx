@@ -13,6 +13,7 @@ import { TimelineHistory } from "@/components/timeline-history";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
+import { toast } from "sonner";
 import { Plus, Download, UserCheck } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate } from "@/lib/format";
@@ -150,7 +151,7 @@ export default function CompromisosPage() {
       setSelectedId(null);
       setRefreshKey((k) => k + 1);
     } catch (err) {
-      console.error("Error al actualizar estado:", err);
+      toast.error(err instanceof Error ? err.message : "Error al actualizar estado");
     } finally {
       setActionLoading(false);
     }
@@ -176,7 +177,7 @@ export default function CompromisosPage() {
       setSelectedId(null);
       setRefreshKey((k) => k + 1);
     } catch (err) {
-      console.error("Error al reasignar:", err);
+      toast.error(err instanceof Error ? err.message : "Error al reasignar");
     } finally {
       setReassignLoading(false);
     }
@@ -190,7 +191,7 @@ export default function CompromisosPage() {
       setDetail((prev) => prev ? { ...prev, observations: editObs } : prev);
       setObsEditing(false);
     } catch (err) {
-      console.error("Error al guardar observaciones:", err);
+      toast.error(err instanceof Error ? err.message : "Error al guardar observaciones");
     } finally {
       setObsSaving(false);
     }

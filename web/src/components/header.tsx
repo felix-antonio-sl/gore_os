@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Search, AlertTriangle, Info, KeyRound } from "lucide-react";
+import { Bell, Search, AlertTriangle, Info, KeyRound, Menu } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,11 @@ function SeverityIcon({ severity }: { severity: string | null }) {
   return <AlertTriangle className={cn("size-3.5 shrink-0", SEVERITY_STYLES[severity] ?? "text-muted-foreground")} />;
 }
 
-export function Header() {
+interface HeaderProps {
+  onMenuToggle?: () => void;
+}
+
+export function Header({ onMenuToggle }: HeaderProps = {}) {
   const { user, logout } = useAuth();
 
   const isDgi = user?.population === "dgi";
@@ -113,6 +117,11 @@ export function Header() {
     <header className="h-14 border-b bg-background flex items-center justify-between px-4">
       {/* Left */}
       <div className="flex items-center gap-3">
+        {onMenuToggle && (
+          <Button variant="ghost" size="icon" className="md:hidden h-8 w-8" onClick={onMenuToggle} aria-label="Abrir menú">
+            <Menu className="size-5" />
+          </Button>
+        )}
         <span className="text-lg font-bold tracking-tight">GORE_OS</span>
         {isDgi && (
           <Badge variant="secondary" className="text-xs">
