@@ -10,9 +10,11 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Download } from "lucide-react";
+import { Download, Plus, ChevronDown } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCLP, formatDate } from "@/lib/format";
+import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
+import { toast } from "sonner";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
 
 const CSV_COLUMNS = [
@@ -77,6 +79,12 @@ export default function PresupuestoPage() {
   const [editSubmitting, setEditSubmitting] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
 
+  // CDP creation state
+  const [showCdpForm, setShowCdpForm] = useState(false);
+  const [cdpAmount, setCdpAmount] = useState("");
+  const [cdpIprId, setCdpIprId] = useState("");
+  const [cdpSubmitting, setCdpSubmitting] = useState(false);
+
   // Division filter options
   const [divisionOptions, setDivisionOptions] = useState<{ value: string; label: string }[]>([]);
 
@@ -132,6 +140,43 @@ export default function PresupuestoPage() {
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
   }, [page, fiscal_year, subtitle, division_id, search]);
+
+  const searchIprs = async (query: string): Promise<ComboboxOption[]> => {
+    const results = await api.get<{ id: string; codigo_bip: string; name: string }[]>(
+      `/api/catalogs/iprs?search=${encodeURIComponent(query)}`
+    );
+    return results.map((r) => ({ value: r.id, label: `${r.codigo_bip} — ${r.name}` }));
+  };
+
+  const refreshDetail = () => {
+    if (!selectedId) return;
+    setDetailLoading(true);
+    api
+      .get<PresupuestoDetail>(`/api/presupuesto/${selectedId}`)
+      .then(setDetail)
+      .catch(() => {})
+      .finally(() => setDetailLoading(false));
+  };
+
+  const handleCdpSubmit = async () => {
+    if (!selectedId || !cdpAmount) return;
+    setCdpSubmitting(true);
+    try {
+      await api.post(`/api/presupuesto/${selectedId}/cdps`, {
+        amount: parseInt(cdpAmount),
+        ipr_id: cdpIprId || undefined,
+      });
+      toast.success("CDP creado exitosamente");
+      setCdpAmount("");
+      setCdpIprId("");
+      setShowCdpForm(false);
+      refreshDetail();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Error al crear CDP");
+    } finally {
+      setCdpSubmitting(false);
+    }
+  };
 
   const openDetail = (row: unknown) => {
     const item = row as PresupuestoListItem;
@@ -239,9 +284,16 @@ export default function PresupuestoPage() {
             Programas presupuestarios y ejecución financiera
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "presupuesto")}>
-          <Download className="size-4 mr-1" />CSV
-        </Button>
+        <div className="flex gap-2">
+          {canEdit && (
+            <Button size="sm" onClick={() => router.push("/presupuesto/nuevo")}>
+              <Plus className="size-4 mr-1" />Nuevo Programa
+            </Button>
+          )}
+          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "presupuesto")}>
+            <Download className="size-4 mr-1" />CSV
+          </Button>
+        </div>
       </div>
 
       <FilterBar
@@ -405,11 +457,11 @@ export default function PresupuestoPage() {
             )}
 
             {/* CDPs */}
-            {detail.budget_commitments.length > 0 && (
-              <div className="space-y-2">
-                <p className="font-medium text-xs uppercase text-muted-foreground tracking-wide">
-                  CDPs ({detail.budget_commitments.length})
-                </p>
+            <div className="space-y-2">
+              <p className="font-medium text-xs uppercase text-muted-foreground tracking-wide">
+                CDPs ({detail.budget_commitments.length})
+              </p>
+              {detail.budget_commitments.length > 0 && (
                 <div className="space-y-2">
                   {detail.budget_commitments.map((cdp) => (
                     <div key={cdp.id} className="rounded-md border px-3 py-2 text-sm">
@@ -443,8 +495,65 @@ export default function PresupuestoPage() {
                     </div>
                   ))}
                 </div>
-              </div>
-            )}
+              )}
+
+              {/* CDP creation form */}
+              {canEdit && (
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setShowCdpForm(!showCdpForm)}
+                    className="flex items-center gap-1 text-xs text-blue-600 hover:underline"
+                  >
+                    <ChevronDown className={`size-3 transition-transform ${showCdpForm ? "rotate-180" : ""}`} />
+                    Nuevo CDP
+                  </button>
+                  {showCdpForm && (
+                    <div className="mt-2 space-y-2 rounded-md border p-3">
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">Monto (CLP) *</label>
+                        <Input
+                          type="number"
+                          min="1"
+                          step="1"
+                          value={cdpAmount}
+                          onChange={(e) => setCdpAmount(e.target.value)}
+                          className="h-7 text-xs"
+                          placeholder="Monto del CDP"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs text-muted-foreground">IPR Asociada (opcional)</label>
+                        <ComboboxAsync
+                          value={cdpIprId}
+                          onChange={setCdpIprId}
+                          searchFn={searchIprs}
+                          placeholder="Buscar IPR..."
+                        />
+                      </div>
+                      <div className="flex gap-2 pt-1">
+                        <Button
+                          size="sm"
+                          className="h-7 text-xs"
+                          disabled={!cdpAmount || cdpSubmitting}
+                          onClick={handleCdpSubmit}
+                        >
+                          {cdpSubmitting ? "Creando..." : "Crear CDP"}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-7 text-xs"
+                          onClick={() => { setShowCdpForm(false); setCdpAmount(""); setCdpIprId(""); }}
+                        >
+                          Cancelar
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           <p className="text-muted-foreground text-sm">No se pudo cargar el detalle.</p>

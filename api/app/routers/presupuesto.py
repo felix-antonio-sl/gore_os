@@ -16,6 +16,7 @@ from app.schemas.presupuesto import (
     PresupuestoResumen,
     CarryoverItem,
     BudgetCommitmentItem,
+    BudgetCommitmentCreate,
 )
 
 router = APIRouter(prefix="/api/presupuesto", tags=["presupuesto"])
@@ -460,6 +461,92 @@ async def list_cdps_by_ipr(
         {"ipr_id": str(ipr_id)},
     )
     return [BudgetCommitmentItem(**dict(r)) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/presupuesto/{id}/cdps — Create CDP
+# ---------------------------------------------------------------------------
+
+@router.post("/{presupuesto_id}/cdps", status_code=status.HTTP_201_CREATED)
+async def create_cdp(
+    presupuesto_id: UUID,
+    body: BudgetCommitmentCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_roles(user, *ADMIN_ROLES)
+
+    # Verify program exists and get fiscal year + available balance
+    prog = await _get_presupuesto_or_404(presupuesto_id, db)
+    current = float(prog.get("current_amount") or prog.get("initial_amount") or 0)
+    committed = float(prog.get("committed_amount") or 0)
+    available = current - committed
+
+    if body.amount > available:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Monto ({body.amount:,}) excede saldo disponible ({available:,.0f} CLP)",
+        )
+
+    fiscal_year = prog["fiscal_year"]
+
+    # Generate sequential commitment_number with advisory lock
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('cdp_number'))"))
+    seq_result = await db.execute(
+        text("""
+            SELECT MAX(CAST(SUBSTRING(commitment_number FROM 10) AS INTEGER)) AS max_seq
+            FROM core.budget_commitment
+            WHERE commitment_number ~ :pattern AND deleted_at IS NULL
+        """),
+        {"pattern": f"^CDP-{fiscal_year}-[0-9]+$"},
+    )
+    seq_row = seq_result.mappings().first()
+    next_seq = ((seq_row["max_seq"] or 0) + 1) if seq_row else 1
+    commitment_number = f"CDP-{fiscal_year}-{next_seq:04d}"
+
+    # Get EMITIDO status
+    emitido_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'budget_commitment_status' AND code = 'EMITIDO'")
+    )).scalar()
+
+    result = await db.execute(
+        text("""
+            INSERT INTO core.budget_commitment (
+                commitment_number, budget_program_id, amount, issued_at,
+                ipr_id, agreement_id, status_id,
+                created_by_id, created_at, updated_at
+            ) VALUES (
+                :commitment_number, :budget_program_id, :amount, CURRENT_DATE,
+                :ipr_id, :agreement_id, :status_id,
+                :created_by_id, NOW(), NOW()
+            )
+            RETURNING id, commitment_number
+        """),
+        {
+            "commitment_number": commitment_number,
+            "budget_program_id": str(presupuesto_id),
+            "amount": body.amount,
+            "ipr_id": str(body.ipr_id) if body.ipr_id else None,
+            "agreement_id": str(body.agreement_id) if body.agreement_id else None,
+            "status_id": str(emitido_id) if emitido_id else None,
+            "created_by_id": str(user["id"]),
+        },
+    )
+
+    # Update committed_amount on the program
+    await db.execute(
+        text("""
+            UPDATE core.budget_program
+            SET committed_amount = COALESCE(committed_amount, 0) + :amount,
+                updated_at = NOW()
+            WHERE id = :pid
+        """),
+        {"amount": body.amount, "pid": str(presupuesto_id)},
+    )
+
+    await db.commit()
+    row = result.mappings().first()
+    return {"id": row["id"], "commitment_number": row["commitment_number"]}
 
 
 # ---------------------------------------------------------------------------

@@ -64,6 +64,13 @@ class PresupuestoCreate(BaseModel):
     current_amount: Optional[Decimal] = None
 
 
+class BudgetCommitmentCreate(BaseModel):
+    description: Optional[str] = None
+    amount: int
+    ipr_id: Optional[UUID] = None
+    agreement_id: Optional[UUID] = None
+
+
 class PresupuestoUpdate(BaseModel):
     initial_amount: Optional[Decimal] = None
     current_amount: Optional[Decimal] = None

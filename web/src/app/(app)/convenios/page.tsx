@@ -107,6 +107,14 @@ export default function ConveniosPage() {
   const [cuotaError, setCuotaError] = useState<string | null>(null);
   const [paymentStatuses, setPaymentStatuses] = useState<CategoryRef[]>([]);
 
+  // Bulk cuota state
+  const [showBulkForm, setShowBulkForm] = useState(false);
+  const [bulkTotalAmount, setBulkTotalAmount] = useState("");
+  const [bulkNumInstallments, setBulkNumInstallments] = useState("6");
+  const [bulkStartDate, setBulkStartDate] = useState("");
+  const [bulkFrequency, setBulkFrequency] = useState("1");
+  const [bulkSubmitting, setBulkSubmitting] = useState(false);
+
   // Payment registration state
   const [payingCuotaId, setPayingCuotaId] = useState<string | null>(null);
   const [payAmount, setPayAmount] = useState("");
@@ -262,6 +270,34 @@ export default function ConveniosPage() {
       setCuotaSubmitting(false);
     }
   };
+
+  const handleBulkSubmit = async () => {
+    if (!selectedId || !bulkTotalAmount || !bulkNumInstallments || !bulkStartDate) return;
+    setBulkSubmitting(true);
+    try {
+      await api.post(`/api/convenios/${selectedId}/cuotas/bulk`, {
+        total_amount: parseInt(bulkTotalAmount),
+        num_installments: parseInt(bulkNumInstallments),
+        start_date: bulkStartDate,
+        frequency_months: parseInt(bulkFrequency),
+      });
+      toast.success(`${bulkNumInstallments} cuotas generadas exitosamente`);
+      setShowBulkForm(false);
+      setBulkTotalAmount("");
+      setBulkNumInstallments("6");
+      setBulkStartDate("");
+      setBulkFrequency("1");
+      refreshDetail();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Error al generar cuotas");
+    } finally {
+      setBulkSubmitting(false);
+    }
+  };
+
+  const bulkAmountPer = bulkTotalAmount && bulkNumInstallments
+    ? Math.floor(parseInt(bulkTotalAmount) / parseInt(bulkNumInstallments))
+    : 0;
 
   const openPayForm = (inst: InstallmentItem) => {
     setPayingCuotaId(inst.id);
@@ -560,12 +596,63 @@ export default function ConveniosPage() {
                 <p className="font-medium text-xs uppercase text-muted-foreground tracking-wide">
                   Cuotas ({detail.paid_installments}/{detail.installment_count} pagadas)
                 </p>
-                {canEdit && !showCuotaForm && (
-                  <Button size="sm" variant="outline" className="h-6 text-xs" onClick={openCuotaForm}>
-                    <Plus className="size-3 mr-1" />Cuota
-                  </Button>
+                {canEdit && !showCuotaForm && !showBulkForm && (
+                  <div className="flex gap-1">
+                    <Button size="sm" variant="outline" className="h-6 text-xs" onClick={openCuotaForm}>
+                      <Plus className="size-3 mr-1" />Cuota
+                    </Button>
+                    <Button size="sm" variant="outline" className="h-6 text-xs" onClick={() => setShowBulkForm(true)}>
+                      Generar
+                    </Button>
+                  </div>
                 )}
               </div>
+
+              {/* Bulk cuota form */}
+              {showBulkForm && (
+                <div className="rounded-md border p-3 space-y-2 bg-muted/30">
+                  <p className="text-xs font-medium">Generar Cuotas Masivamente</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-muted-foreground">Monto total (CLP)</label>
+                      <Input type="number" min="1" value={bulkTotalAmount} onChange={(e) => setBulkTotalAmount(e.target.value)} className="h-7 text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-muted-foreground">Cantidad cuotas</label>
+                      <Input type="number" min="1" max="60" value={bulkNumInstallments} onChange={(e) => setBulkNumInstallments(e.target.value)} className="h-7 text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-muted-foreground">Fecha inicio</label>
+                      <Input type="date" value={bulkStartDate} onChange={(e) => setBulkStartDate(e.target.value)} className="h-7 text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] text-muted-foreground">Frecuencia</label>
+                      <Select value={bulkFrequency} onValueChange={setBulkFrequency}>
+                        <SelectTrigger className="h-7 text-xs">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Mensual</SelectItem>
+                          <SelectItem value="3">Trimestral</SelectItem>
+                          <SelectItem value="6">Semestral</SelectItem>
+                          <SelectItem value="12">Anual</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  {bulkAmountPer > 0 && (
+                    <p className="text-[10px] text-muted-foreground">
+                      {bulkNumInstallments} cuotas de {formatCLP(bulkAmountPer)} CLP
+                    </p>
+                  )}
+                  <div className="flex gap-1">
+                    <Button size="sm" className="h-6 text-xs" onClick={handleBulkSubmit} disabled={bulkSubmitting || !bulkTotalAmount || !bulkNumInstallments || !bulkStartDate}>
+                      {bulkSubmitting ? "Generando..." : "Generar"}
+                    </Button>
+                    <Button size="sm" variant="ghost" className="h-6 text-xs" onClick={() => setShowBulkForm(false)}>Cancelar</Button>
+                  </div>
+                </div>
+              )}
 
               {/* Add cuota form */}
               {showCuotaForm && (

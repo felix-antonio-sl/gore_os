@@ -118,6 +118,60 @@ async def _create_test_ipr(db) -> str:
     return str(row["id"])
 
 
+async def test_bulk_cuotas(client, regional_token, catalog):
+    """Bulk generate 6 monthly installments."""
+    data = await _create_agreement(client, regional_token, catalog)
+    resp = await client.post(
+        f"/api/convenios/{data['id']}/cuotas/bulk",
+        json={
+            "total_amount": 12000000,
+            "num_installments": 6,
+            "start_date": str(date.today()),
+            "frequency_months": 1,
+        },
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 201, resp.text
+    cuotas = resp.json()
+    assert len(cuotas) == 6
+    # First cuota gets remainder: 12000000 // 6 = 2000000, remainder = 0
+    assert cuotas[0]["amount"] == 2000000
+    # All cuotas have sequential numbers
+    numbers = [c["installment_number"] for c in cuotas]
+    assert numbers == [1, 2, 3, 4, 5, 6]
+
+
+async def test_bulk_cuotas_after_existing(client, regional_token, catalog):
+    """Bulk cuotas auto-increment from existing installment numbers."""
+    data = await _create_agreement(client, regional_token, catalog)
+    # Create one cuota first
+    await client.post(
+        f"/api/convenios/{data['id']}/cuotas",
+        json={
+            "installment_number": 1,
+            "amount": 5000000,
+            "due_date": str(date.today() + timedelta(days=30)),
+            "payment_status_id": catalog["payment_status_pendiente_id"],
+        },
+        headers=auth(regional_token),
+    )
+    # Bulk create 3 more
+    resp = await client.post(
+        f"/api/convenios/{data['id']}/cuotas/bulk",
+        json={
+            "total_amount": 9000000,
+            "num_installments": 3,
+            "start_date": str(date.today() + timedelta(days=60)),
+            "frequency_months": 1,
+        },
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 201
+    cuotas = resp.json()
+    assert len(cuotas) == 3
+    assert cuotas[0]["installment_number"] == 2  # starts after existing #1
+
+
 async def test_add_cuota_blocked_by_pending_rendition(client, regional_token, catalog, db):
     """Art. 18 CGR: POST cuotas blocked when agreement has pending renditions."""
     ipr_id = await _create_test_ipr(db)
@@ -132,13 +186,17 @@ async def test_add_cuota_blocked_by_pending_rendition(client, regional_token, ca
     )).scalar()
     assert pending_state, "rendition_state PENDIENTE not found"
 
-    # Insert a PENDIENTE rendition linked to the same IPR
+    renderer_id = (await db.execute(
+        text("SELECT id FROM core.organization WHERE deleted_at IS NULL LIMIT 1")
+    )).scalar()
+
+    # Insert a PENDIENTE rendition linked to the agreement + IPR
     await db.execute(
         text("""
-            INSERT INTO core.rendition (ipr_id, state_id, created_at, updated_at)
-            VALUES (:ipr_id, :state_id, NOW(), NOW())
+            INSERT INTO core.rendition (agreement_id, renderer_id, ipr_id, state_id, created_at, updated_at)
+            VALUES (:agreement_id, :renderer_id, :ipr_id, :state_id, NOW(), NOW())
         """),
-        {"ipr_id": ipr_id, "state_id": str(pending_state)},
+        {"agreement_id": agreement_id, "renderer_id": str(renderer_id), "ipr_id": ipr_id, "state_id": str(pending_state)},
     )
     await db.commit()
 
@@ -157,6 +215,50 @@ async def test_add_cuota_blocked_by_pending_rendition(client, regional_token, ca
     assert "Art. 18" in resp.json()["detail"]
 
 
+async def test_art18_error_includes_rendition_detail(client, regional_token, catalog, db):
+    """Art. 18 CGR: error 409 includes rendition code and status in detail message."""
+    ipr_id = await _create_test_ipr(db)
+    data = await _create_agreement(client, regional_token, catalog, ipr_id=ipr_id)
+    agreement_id = data["id"]
+
+    pending_state = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'rendition_state' AND code = 'PENDIENTE'")
+    )).scalar()
+    assert pending_state
+
+    # Insert a rendition — rendition table has no code column, uses agreement_id FK
+    # Must also provide renderer_id (NOT NULL)
+    renderer_id = (await db.execute(
+        text("SELECT id FROM core.organization WHERE deleted_at IS NULL LIMIT 1")
+    )).scalar()
+    assert renderer_id, "No organization found for renderer_id"
+
+    await db.execute(
+        text("""
+            INSERT INTO core.rendition (agreement_id, renderer_id, ipr_id, state_id, amount, created_at, updated_at)
+            VALUES (:agreement_id, :renderer_id, :ipr_id, :state_id, 5000000, NOW(), NOW())
+        """),
+        {"agreement_id": agreement_id, "renderer_id": str(renderer_id), "ipr_id": ipr_id, "state_id": str(pending_state)},
+    )
+    await db.commit()
+
+    resp = await client.post(
+        f"/api/convenios/{agreement_id}/cuotas",
+        json={
+            "installment_number": 1,
+            "amount": 5000000,
+            "due_date": str(date.today() + timedelta(days=90)),
+            "payment_status_id": catalog["payment_status_pendiente_id"],
+        },
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 409
+    detail_msg = resp.json()["detail"]
+    assert "Art. 18" in detail_msg
+    # Should contain truncated rendition ID and status label
+    assert "Pendiente" in detail_msg or "pendiente" in detail_msg.lower()
+
+
 async def test_add_cuota_allowed_when_renditions_approved(client, regional_token, catalog, db):
     """POST cuotas succeeds when all renditions are APROBADA."""
     ipr_id = await _create_test_ipr(db)
@@ -171,13 +273,17 @@ async def test_add_cuota_allowed_when_renditions_approved(client, regional_token
     )).scalar()
     assert approved_state, "rendition_state APROBADA not found"
 
-    # Insert an APROBADA rendition linked to the same IPR
+    renderer_id = (await db.execute(
+        text("SELECT id FROM core.organization WHERE deleted_at IS NULL LIMIT 1")
+    )).scalar()
+
+    # Insert an APROBADA rendition linked to the agreement + IPR
     await db.execute(
         text("""
-            INSERT INTO core.rendition (ipr_id, state_id, created_at, updated_at)
-            VALUES (:ipr_id, :state_id, NOW(), NOW())
+            INSERT INTO core.rendition (agreement_id, renderer_id, ipr_id, state_id, created_at, updated_at)
+            VALUES (:agreement_id, :renderer_id, :ipr_id, :state_id, NOW(), NOW())
         """),
-        {"ipr_id": ipr_id, "state_id": str(approved_state)},
+        {"agreement_id": agreement_id, "renderer_id": str(renderer_id), "ipr_id": ipr_id, "state_id": str(approved_state)},
     )
     await db.commit()
 

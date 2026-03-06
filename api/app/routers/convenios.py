@@ -18,6 +18,7 @@ from app.schemas.convenio import (
     InstallmentItem,
     InstallmentCreate,
     InstallmentUpdate,
+    BulkCuotaRequest,
 )
 
 router = APIRouter(prefix="/api/convenios", tags=["convenios"])
@@ -125,7 +126,13 @@ async def _check_pending_renditions(agreement_id: UUID, db: AsyncSession) -> Non
     """Art. 18 Res. 30 CGR: Bloquea si hay rendiciones no-terminales vinculadas."""
     result = await db.execute(
         text("""
-            SELECT COUNT(*) AS pending_count
+            SELECT COUNT(*) AS pending_count,
+                   json_agg(json_build_object(
+                       'id', LEFT(r.id::text, 8),
+                       'status', st.label,
+                       'status_code', st.code,
+                       'amount', r.amount
+                   ) ORDER BY r.created_at) FILTER (WHERE r.id IS NOT NULL) AS details
             FROM core.rendition r
             JOIN ref.category st ON st.id = r.state_id
             WHERE r.deleted_at IS NULL
@@ -141,11 +148,18 @@ async def _check_pending_renditions(agreement_id: UUID, db: AsyncSession) -> Non
         """),
         {"agreement_id": str(agreement_id)},
     )
-    pending = result.mappings().first()["pending_count"]
+    row = result.mappings().first()
+    pending = row["pending_count"]
     if pending > 0:
+        details = row["details"] or []
+        summary = "; ".join(
+            f"{d['id']}… ({d['status']})" for d in details[:5]
+        )
+        if pending > 5:
+            summary += f" … y {pending - 5} más"
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail=f"Art. 18 Res. 30 CGR: Existen {pending} rendición(es) pendiente(s) de aprobación vinculada(s) a este convenio.",
+            detail=f"Art. 18 Res. 30 CGR: Existen {pending} rendición(es) pendiente(s). Detalle: {summary}",
         )
 
 
@@ -617,6 +631,84 @@ async def list_cuotas(
     await _get_convenio_or_404(convenio_id, db)
     installments_raw = await _get_installments(convenio_id, db)
     return [InstallmentItem(**r) for r in installments_raw]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/convenios/{id}/cuotas/bulk — Bulk generate installments
+# ---------------------------------------------------------------------------
+
+def _add_months(d: date_type, months: int) -> date_type:
+    """Add months to a date, clamping to last day of target month."""
+    import calendar
+    month = d.month - 1 + months
+    year = d.year + month // 12
+    month = month % 12 + 1
+    day = min(d.day, calendar.monthrange(year, month)[1])
+    return d.replace(year=year, month=month, day=day)
+
+
+@router.post("/{convenio_id}/cuotas/bulk", status_code=status.HTTP_201_CREATED)
+async def bulk_create_cuotas(
+    convenio_id: UUID,
+    body: BulkCuotaRequest,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_roles(user, *WRITE_OPERATIONAL_ROLES)
+    await _get_convenio_or_404(convenio_id, db)
+
+    if body.num_installments < 1 or body.num_installments > 60:
+        raise HTTPException(status_code=422, detail="num_installments debe estar entre 1 y 60")
+    if body.total_amount <= 0:
+        raise HTTPException(status_code=422, detail="total_amount debe ser mayor a 0")
+
+    # Get max existing installment_number
+    max_row = (await db.execute(
+        text("SELECT COALESCE(MAX(installment_number), 0) AS max_num FROM core.agreement_installment WHERE agreement_id = :aid AND deleted_at IS NULL"),
+        {"aid": str(convenio_id)},
+    )).mappings().first()
+    start_num = (max_row["max_num"] if max_row else 0) + 1
+
+    # Lookup PENDIENTE payment status
+    pendiente_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'payment_status' AND code = 'PENDIENTE'")
+    )).scalar()
+    if not pendiente_id:
+        raise HTTPException(status_code=500, detail="payment_status PENDIENTE no encontrado")
+
+    # Distribute amounts
+    amount_per = body.total_amount // body.num_installments
+    remainder = body.total_amount % body.num_installments
+
+    created = []
+    for i in range(body.num_installments):
+        num = start_num + i
+        amount = amount_per + (remainder if i == 0 else 0)
+        due = _add_months(body.start_date, i * body.frequency_months)
+
+        row = (await db.execute(
+            text("""
+                INSERT INTO core.agreement_installment (
+                    agreement_id, installment_number, amount, due_date, payment_status_id,
+                    created_at, updated_at
+                ) VALUES (
+                    :agreement_id, :num, :amount, :due_date, :payment_status_id,
+                    NOW(), NOW()
+                )
+                RETURNING id, installment_number, amount, due_date
+            """),
+            {
+                "agreement_id": str(convenio_id),
+                "num": num,
+                "amount": amount,
+                "due_date": due,
+                "payment_status_id": str(pendiente_id),
+            },
+        )).mappings().first()
+        created.append(dict(row))
+
+    await db.commit()
+    return created
 
 
 # ---------------------------------------------------------------------------

@@ -4,7 +4,15 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
+import { DrawerPanel } from "@/components/drawer-panel";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { domainRegistry } from "./domains";
@@ -119,6 +127,16 @@ export default function DatosPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeDomain, searchParams.toString(), refreshKey]);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
   const hasDetailPanel = selectedItem !== null;
 
   return (
@@ -147,17 +165,33 @@ export default function DatosPage() {
         </Button>
       </div>
 
-      {/* Body: 3-panel layout */}
+      {/* Mobile domain selector */}
+      <div className="px-5 py-2 border-b md:hidden">
+        <Select value={activeDomain} onValueChange={(v) => handleDomainChange(v as DomainId)}>
+          <SelectTrigger className="h-9">
+            <SelectValue placeholder="Dominio" />
+          </SelectTrigger>
+          <SelectContent>
+            {DOMAINS.map((domain) => (
+              <SelectItem key={domain.id} value={domain.id}>
+                {domain.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Body: responsive layout */}
       <div
         className={cn(
-          "flex-1 overflow-hidden grid",
-          hasDetailPanel
-            ? "grid-cols-[200px_1fr_340px]"
-            : "grid-cols-[200px_1fr]"
+          "flex-1 overflow-hidden grid grid-cols-1",
+          hasDetailPanel && !isMobile
+            ? "md:grid-cols-[200px_1fr_340px]"
+            : "md:grid-cols-[200px_1fr]"
         )}
       >
-        {/* Left: Domain sidebar */}
-        <aside className="border-r bg-muted/20 overflow-y-auto">
+        {/* Left: Domain sidebar (desktop only) */}
+        <aside className="border-r bg-muted/20 overflow-y-auto hidden md:block">
           <div className="py-2">
             <p className="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
               Dominios
@@ -241,8 +275,8 @@ export default function DatosPage() {
           )}
         </div>
 
-        {/* Right: Detail panel */}
-        {hasDetailPanel && config && (
+        {/* Right: Detail panel — inline on desktop */}
+        {hasDetailPanel && config && !isMobile && (
           <div className="border-l bg-background overflow-hidden flex flex-col">
             <config.DetailPanel
               item={selectedItem}
@@ -252,6 +286,23 @@ export default function DatosPage() {
           </div>
         )}
       </div>
+
+      {/* Mobile: Detail panel as DrawerPanel */}
+      {isMobile && config && (
+        <DrawerPanel
+          open={hasDetailPanel}
+          onClose={() => setSelectedItem(null)}
+          title="Detalle"
+        >
+          {hasDetailPanel && (
+            <config.DetailPanel
+              item={selectedItem}
+              onClose={() => setSelectedItem(null)}
+              onRefresh={() => { setSelectedItem(null); setRefreshKey(k => k + 1); }}
+            />
+          )}
+        </DrawerPanel>
+      )}
     </div>
   );
 }

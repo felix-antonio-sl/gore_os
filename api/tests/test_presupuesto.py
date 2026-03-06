@@ -130,6 +130,40 @@ async def test_jefe_only_own_division(client, regional_token, jefe_token, catalo
     assert resp.status_code in (200, 403)
 
 
+async def test_create_cdp(client, regional_token, catalog):
+    """Create CDP linked to a budget program."""
+    data = await _create_budget(
+        client, regional_token, catalog,
+        initial_amount=10000000,
+        current_amount=10000000,
+    )
+    resp = await client.post(
+        f"/api/presupuesto/{data['id']}/cdps",
+        json={"amount": 5000000},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 201, resp.text
+    body = resp.json()
+    assert "commitment_number" in body
+    assert body["commitment_number"].startswith("CDP-")
+
+
+async def test_create_cdp_exceeds_available(client, regional_token, catalog):
+    """CDP amount exceeding available balance returns 409."""
+    data = await _create_budget(
+        client, regional_token, catalog,
+        initial_amount=1000000,
+        current_amount=1000000,
+    )
+    resp = await client.post(
+        f"/api/presupuesto/{data['id']}/cdps",
+        json={"amount": 2000000},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 409
+    assert "saldo disponible" in resp.json()["detail"]
+
+
 async def test_encargado_cannot_create(client, encargado_token, catalog):
     """ENCARGADO cannot create budget programs."""
     resp = await client.post(

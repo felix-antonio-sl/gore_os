@@ -84,6 +84,13 @@ class InstallmentCreate(BaseModel):
     payment_status_id: UUID
 
 
+class BulkCuotaRequest(BaseModel):
+    total_amount: int
+    num_installments: int
+    start_date: date
+    frequency_months: int = 1
+
+
 class InstallmentUpdate(BaseModel):
     payment_status_id: Optional[UUID] = None
     paid_at: Optional[datetime] = None
