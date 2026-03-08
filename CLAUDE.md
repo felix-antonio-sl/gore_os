@@ -148,7 +148,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**356 integration tests (352 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**369 integration tests (364 pass + 5 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -167,7 +167,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules (29): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (10), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (12), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (27), `test_thresholds` (18), `test_track_enforcement` (32), `test_track_rules` (18), `test_ciclo24` (22), `test_sisrec_8phase` (12).
+Test modules (30): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (10), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (12), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (27), `test_thresholds` (18), `test_track_enforcement` (32), `test_track_rules` (18), `test_ciclo24` (22), `test_sisrec_8phase` (12), `test_parametric` (13).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -267,7 +267,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~148 API endpoints, 356 tests (352 pass + 4 skip), 29 modules, 20 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Full audit: `docs/GORE_OS_Audit_v3.0.md`.
+**Coverage**: ~160 API endpoints, 369 tests (364 pass + 5 skip), 30 modules, 20 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
 
 **Open gaps**:
 - 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 4/6 levels
@@ -335,3 +335,4 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 52. **Kinship declarations (HΩ-02)**: `core.kinship_declaration` table with UNIQUE(ipr_id, person_id, declaration_type). CRUD via `/api/ipr/{id}/parentesco` (4 endpoints). Gate `_check_kinship_declarations()` at F1→F2 for SUBV8 only — blocks if no declarations or if any declares conflict. Authority roles: GOBERNADOR, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO, ADMIN_REGIONAL, JEFE_DIVISION. Declarations reference `core.person` via FK. Person search: `GET /api/catalogs/persons?search=`. Frontend: tab "Parentesco" (#12) in IPR detail.
 51. **Budget Cycle Timeline (TP-05)**: `core.budget_cycle_milestone` (17 seed rows, parametric) + `core.budget_cycle_tracking` (per fiscal year, operational). 5 endpoints on presupuesto router: `GET /ciclo/hitos`, `POST /ciclo/{year}` (initialize, idempotent 201/200), `GET /ciclo/{year}` (timeline), `GET /ciclo/{year}/resumen` (summary), `PATCH /ciclo/tracking/{id}` (update status). Statuses: PENDIENTE, EN_CURSO, COMPLETADO, OMITIDO. Auto-sets `completed_at`/`completed_by_id` on COMPLETADO. Frontend: `/presupuesto/ciclo` page with phase-grouped timeline. Sidebar: "Ciclo Ppto." nav item.
 53. **SISREC 8-Phase CGR**: TP-06 table `core.rendition_phase` (8 seed rows). External phases (1-3) as metadata timestamps in `rendition.metadata` JSONB. Phase 8 via `archived_at` (not new state — APROBADA remains terminal). Escalation: `core.rendition_escalation` with 3 levels (1x, 1.5x, 2x SLA). `_STATE_TO_PHASE_CODE` maps states to TP-06 phases. `POST /rendiciones/check-escalations` batch-detects overdue and creates alerts.
+54. **Parametric tables TP-02/04**: `core.subv8_fund` (7 thematic funds) + `core.subv8_fund_ceiling` (~22 per-institution ceilings with functional UNIQUE index via `COALESCE(area, '')`). `core.fril_category` (12 categories A1-D3, `is_exempt_commune_limit` for A2/A3). Admin CRUD: 8 endpoints for subv8 funds/ceilings + 3 for FRIL categories + 1 TP-01 routing query (`GET /financing-tracks/routing?ipr_id=X`). `_check_fril_max_per_comuna()` reads exemptions from DB instead of hardcoded tuple.
