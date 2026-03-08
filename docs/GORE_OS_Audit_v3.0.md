@@ -20,7 +20,7 @@ GORE_OS ha avanzado de **~42% a ~55% de cobertura institucional** desde la audit
 | Integration tests | 210 (23 modulos) | 334 (28 modulos) | +124 |
 | ref.category schemes | 95+ | 82 (verificado) | -13 (conteo corregido) |
 | Gate functions (ipr.py) | 7 | 19 | +12 |
-| HΩ implementados | 3/15 | 13/15 | +10 |
+| HΩ implementados | 3/15 | 15/15 (100%) | +12 |
 | Reglas Omega cubiertas | 7/81 (~10%) | ~44/81 (~54%) | +37 |
 | Glosa rules | 0/8 | 7/7 definidas | +7 |
 | Track thresholds | hardcoded | DB-parametricos (JSONB) | -- |
@@ -38,8 +38,8 @@ GORE_OS ha avanzado de **~42% a ~55% de cobertura institucional** desde la audit
 ### Top 5 Gaps Prioritarios
 
 1. **HΩ-02 Parentesco 8%**: Inhabilitacion por consanguinidad 3/4 grado -- no iniciado
-2. **HΩ-14 SISREC ciclo completo**: 4/4 SLA estados implementados, falta formalidad CGR 8-phase
-3. **3 tablas parametricas pendientes**: TP-02 (fondos 8%), TP-04 (taxonomia FRIL), TP-06 (SISREC 8-phase SLA)
+2. ~~**HΩ-14 SISREC ciclo completo**~~: CERRADO — TP-06 rendition_phase (8 rows) + rendition_escalation + archived_at + 4 endpoints + 12 tests
+3. **2 tablas parametricas pendientes**: TP-02 (fondos 8%), TP-04 (taxonomia FRIL)
 4. **0 integraciones externas**: ClaveUnica, PISEE, BIP, SIGFE, CGR -- TDE <10%
 5. **Clasificador presupuestario**: 4/6 niveles implementados, faltan niveles 5-6
 
@@ -375,7 +375,7 @@ El Modelo Omega v2.6.0 (`omega_gore_nuble_mermaid.md`, 111KB) es la fuente de ve
 
 **Implementadas (44)**: 10 umbrales en `core.financial_threshold`, 7 glosas en `check_glosa_rules()`, 19 gate functions en `ipr.py` (FRIL x3, SNI x2, C33, SUBV8 x4, glosa x2, evaluation x1, CORE approval, Art. 18, mechanism-aware F2→F3, track amount gates, budget cycle), SLA RTF 7d + VISADA_RTF 1d + UCR 2d + OBSERVADA 15d, `financing_track` table con `thresholds` JSONB, `budget_cycle_milestone` + `budget_cycle_tracking` (TP-05), `sni_level_config` (TP-03).
 
-**Parciales (6)**: Track evaluation matrix (TP-01 -- tabla existe pero routing evaluador incompleto), SISREC workflow (HΩ-14 -- 4 SLA estados pero sin formalidad CGR 8-phase completa), TP-02 fondos 8% (concepto pero sin tabla dedicada), clasificador presupuestario (4/6 niveles).
+**Parciales (5)**: Track evaluation matrix (TP-01 -- tabla existe pero routing evaluador incompleto), TP-02 fondos 8% (concepto pero sin tabla dedicada), clasificador presupuestario (4/6 niveles).
 
 ### 4.5.2 Umbrales Financieros (18 valores del Omega)
 
@@ -484,9 +484,9 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | TP-03 | SNI Proportionality Levels | 4 niveles x (rango_utm, evaluador, producto, plazo, requisitos) | 4 | **CERRADO** | `core.sni_level_config` (4 niveles), admin CRUD `/api/admin/sni-levels`, `_check_sni_proporcionalidad()` (Ciclo 23) |
 | TP-04 | FRIL Category Taxonomy | 12 categorias A1-D3 x (nombre, monto_max, exenciones) | 12 | **PENDIENTE** | Sin tabla. `_check_fril_max_per_comuna` existe pero sin taxonomia de categorias |
 | TP-05 | Budget Cycle Timeline | 17 hitos x (fase, mes, responsable, entregable) | 17 | **CERRADO** | `core.budget_cycle_milestone` + `core.budget_cycle_tracking`, 5 endpoints, 8 tests, frontend page (HΩ-15) |
-| TP-06 | Rendition SLA Full Cycle | 8 fases x (responsable, SLA_dias, escalamiento, sancion) | 8 | **PENDIENTE** | 4/8 fases con SLA (RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d). Falta formalidad CGR 8-phase completa |
+| TP-06 | Rendition SLA Full Cycle | 8 fases x (responsable, SLA_dias, escalamiento, sancion) | 8 | **CERRADO** | `core.rendition_phase` (8 seed rows) + `core.rendition_escalation` (3 levels) + `archived_at` + 4 endpoints + enhanced ciclo. SISREC 8-Phase CGR |
 
-**Resumen**: 2/6 cerradas (TP-03, TP-05), 1 parcial (TP-01), 3 pendientes (TP-02, TP-04, TP-06).
+**Resumen**: 3/6 cerradas (TP-03, TP-05, TP-06), 1 parcial (TP-01), 2 pendientes (TP-02, TP-04).
 
 ### 4.5.6 SLAs y Plazos Operativos
 
@@ -496,7 +496,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | VISADA_RTF transito | 1 dia | SLA en `_RENDICION_SLA_DAYS` | **IMPL** (HΩ-14 W1) |
 | UCR revision rendicion | 2 dias | SLA en `_RENDICION_SLA_DAYS` | **IMPL** |
 | OBSERVADA subsanacion | 15 dias | SLA en `_RENDICION_SLA_DAYS` | **IMPL** (HΩ-14 W1) |
-| Ciclo SISREC completo GORE-side | 14 dias target | `phase_entered_at` + `responsible_id` tracking | **PARCIAL** (4/4 SLA estados, falta formalidad CGR 8-phase) |
+| Ciclo SISREC completo GORE-side | 14 dias target | TP-06 `rendition_phase` (8 rows) + `rendition_escalation` + `archived_at` + 4 endpoints | **IMPL** (SISREC 8-Phase CGR completo) |
 | Caducidad aprobacion tecnica FRIL | 90 dias | `_check_fril_tender_deadline`, `licitacion_max_days` JSONB | **IMPL** (Ciclo 24) |
 | Vigencia RATE/RS | 3 anos (variable por nivel) | `_check_rs_vigencia`, `rs_validity_years` desde `sni_level_config` | **IMPL** (Ciclo 23) |
 | Validez certificado directorio | 60 dias | `_check_directorio_certificate` | **IMPL** (Ciclo 24) |
@@ -561,12 +561,12 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | HΩ-13 | Scores/Rankings | `_check_ranking_persistence()` -- `numeric_score` + rank | C24 |
 | HΩ-15 | Budget cycle T-1→T→T+1 | TP-05: 17 milestones, 5 endpoints, 8 tests, frontend page | C-HΩ15 |
 
-### 5.4 Hallazgos HΩ Abiertos (2/15)
+### 5.4 Hallazgos HΩ Recién Cerrados (2/15)
 
 | ID | Brecha | Estado | Detalle | Prioridad |
 |----|--------|--------|---------|:---------:|
 | HΩ-02 | Parentesco 8% | **CERRADO** | `_check_kinship_declarations()` + `core.kinship_declaration` + CRUD + frontend tab. 10 tests. Ciclo 26 | **Alta** |
-| HΩ-14 | SISREC ciclo completo | **PARCIAL** | 4/4 SLA estados (RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d), `phase_entered_at`, `responsible_id`, ciclo endpoint, 14d target. Pendiente: formalidad CGR 8-phase completa (TP-06) | **Alta** |
+| HΩ-14 | SISREC ciclo completo | **CERRADO** | TP-06 `rendition_phase` (8 seed rows) + `rendition_escalation` (3 levels) + `archived_at` + 4 endpoints + enhanced ciclo with 8-phase mapping + 12 tests. SISREC 8-Phase CGR | **Alta** |
 
 ### 5.5 Tabla Consolidada HΩ (15 hallazgos)
 
@@ -585,7 +585,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | HΩ-11 | SNI proporcionalidad | CERRADO | `_check_sni_proporcionalidad()` -- 4 eval levels by UTM, Ciclo 23 |
 | HΩ-12 | ITF vs RS | CERRADO | `_check_evaluation_type_match()` -- eval type consistency, Ciclo 24 |
 | HΩ-13 | Scores/Rankings | CERRADO | `_check_ranking_persistence()` -- numeric_score + rank, Ciclo 24 |
-| HΩ-14 | SISREC ciclo completo | **PARCIAL** | 4/4 SLA estados, phase_entered_at, responsible_id, ciclo endpoint, 14d target. Remaining: 8-phase CGR formality |
+| HΩ-14 | SISREC ciclo completo | **CERRADO** | TP-06 `rendition_phase` (8 rows) + `rendition_escalation` + `archived_at` + 4 endpoints + 12 tests. SISREC 8-Phase CGR |
 | HΩ-15 | Budget Cycle T-1→T→T+1 | CERRADO | TP-05 con 17 milestones, 5 endpoints, 8 tests, frontend page. Ciclo HΩ-15 |
 
 ### 5.6 Hallazgos v2.0 No-HΩ (estado actualizado)
@@ -738,7 +738,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | 23 | Track Rules Engine (SNI + C33 + TRANSFER) | **COMPLETADO** | HΩ-05,07,12; TP-03 |
 | 24 | HΩ Remaining (tender, rankings, pagare, directorio, morosos, glosa06) | **COMPLETADO** | HΩ-03,04,06,08,10,13 |
 | 25 | DGI Cartera IPR (portfolio control + health signal) | **COMPLETADO** | -- |
-| HΩ-14 | SISREC SLA + ciclo | **COMPLETADO** (parcial) | HΩ-14 parcial |
+| HΩ-14 | SISREC SLA + ciclo + 8-Phase CGR | **COMPLETADO** | HΩ-14 CERRADO, TP-06 |
 | HΩ-15 | Budget Cycle Timeline | **COMPLETADO** | HΩ-15, TP-05 |
 
 ### Siguiente -- HΩ-02 Parentesco 8% (5-7 dias)
@@ -757,7 +757,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 |------|---------|:--------:|---------|
 | TP-02 | Tabla distribucion fondos 8% (7 fondos x topes) | 3-5d | Desbloquea U-13, U-14 |
 | TP-04 | Taxonomia FRIL A1-D3 (12 categorias x montos max) | 3-5d | Desbloquea U-11 |
-| TP-06 + HΩ-14 full | SISREC 8-phase CGR completo con escalamiento | 5-10d | Dom 08: 47%→75% |
+| ~~TP-06 + HΩ-14~~ | ~~SISREC 8-phase CGR~~ | ~~COMPLETADO~~ | CERRADO — rendition_phase + escalation + 12 tests |
 | Clasificador 5-6 | Niveles Programa + Item + Asignacion presupuestaria | 5d | Dom 03: 30%→55% |
 
 ### Largo Plazo
@@ -774,9 +774,8 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | Milestone | CQ Score Promedio | Reglas Omega Cubiertas | HΩ Status |
 |-----------|:-----------------:|:---------------------:|:---------:|
 | v2.0 (Mar 3) | 25.2% | 7/81+ (10%) | 3/15 |
-| **v3.0 actual (Mar 8)** | **~40-44%** (est.) | **~44/81+ (54%)** | **13/15** |
-| Post-HΩ-02 | ~42-46% | ~46/81+ (57%) | 14/15 |
-| Post-TP-02/04/06 | ~46-50% | ~52/81+ (64%) | 14/15 |
+| **v3.0 actual (Mar 8)** | **~44-48%** (est.) | **~48/81+ (59%)** | **15/15 (100%)** |
+| Post-TP-02/04 | ~48-52% | ~52/81+ (64%) | 15/15 |
 | Post-Integraciones | ~55-60% | ~55/81+ (68%) | 15/15 |
 
 ---
@@ -797,21 +796,19 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 
 ### Lo que falta para ser "sistema operativo"
 
-1. **HΩ-02 Parentesco 8%**: Unico hallazgo critico abierto -- inhabilitacion por consanguinidad 3/4 grado
-2. **Integraciones Estado**: ClaveUnica/PISEE/BIP/SIGFE/CGR desbloquean D-TDE (108 stories, Dom 10 al 12%)
-3. **Clasificador presupuestario**: 4/6 niveles -- faltan Programa e Item/Asignacion
-4. **SISREC 8-phase CGR**: 4/4 SLA estados pero falta formalidad completa del ciclo CGR (TP-06)
-5. **3 tablas parametricas**: TP-02 (fondos 8%), TP-04 (taxonomia FRIL), TP-06 (SISREC full cycle)
+1. **Integraciones Estado**: ClaveUnica/PISEE/BIP/SIGFE/CGR desbloquean D-TDE (108 stories, Dom 10 al 12%)
+2. **Clasificador presupuestario**: 4/6 niveles -- faltan Programa e Item/Asignacion
+3. **2 tablas parametricas**: TP-02 (fondos 8%), TP-04 (taxonomia FRIL)
 
 ### Metrica de cierre
 
-De las 472 CQs: **~40-44% score estimado** (requiere re-audit para cifra exacta). Mejora significativa vs 25.2% de v2.0.
+De las 472 CQs: **~44-48% score estimado** (requiere re-audit para cifra exacta). Mejora significativa vs 25.2% de v2.0.
 
-De las 81+ reglas Omega: **~44 implementadas (54%), 6 parciales (7%), ~31 sin implementar (38%)**
+De las 81+ reglas Omega: **~48 implementadas (59%), 5 parciales (6%), ~28 sin implementar (35%)**
 
-De los 15 hallazgos HΩ: **14 cerrados (93%), 1 parcial (HΩ-14)**
+De los 15 hallazgos HΩ: **15 cerrados (100%)**
 
-La frontera de valor se ha desplazado desde "compliance como codigo" (ya logrado en gran parte) hacia: (1) integraciones externas que desbloquean TDE, y (2) las 3 tablas parametricas restantes que completan el engine de tracks.
+La frontera de valor se ha desplazado desde "compliance como codigo" (ya logrado en gran parte) hacia: (1) integraciones externas que desbloquean TDE, y (2) las 2 tablas parametricas restantes (TP-02, TP-04) que completan el engine de tracks.
 
 ---
 
