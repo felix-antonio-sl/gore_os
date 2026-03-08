@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { KpiCard } from "@/components/kpi-card";
@@ -45,14 +45,11 @@ export default function MiDivisionPage() {
 
   const VENCIDOS_PAGE_SIZE = 10;
 
-  const sortedTeam = useMemo(() => {
-    if (!data?.team) return [];
-    return [...data.team].sort((a, b) => {
-      if (teamSort === "vencidos") return b.vencidos - a.vencidos;
-      if (teamSort === "total") return b.total - a.total;
-      return a.name.localeCompare(b.name);
-    });
-  }, [data?.team, teamSort]);
+  const sortedTeam = data?.team ? [...data.team].sort((a, b) => {
+    if (teamSort === "vencidos") return b.vencidos - a.vencidos;
+    if (teamSort === "total") return b.total - a.total;
+    return a.name.localeCompare(b.name);
+  }) : [];
 
   const vencidosTotalPages = Math.max(Math.ceil((data?.commitments.length ?? 0) / VENCIDOS_PAGE_SIZE), 1);
   const vencidosPaged = data?.commitments.slice((vencidosPage - 1) * VENCIDOS_PAGE_SIZE, vencidosPage * VENCIDOS_PAGE_SIZE) ?? [];

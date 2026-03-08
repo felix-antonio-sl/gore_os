@@ -162,7 +162,7 @@ export default function IprPage() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
+    let active = true;
     const params = new URLSearchParams();
     params.set("page", String(page));
     params.set("page_size", "20");
@@ -174,11 +174,25 @@ export default function IprPage() {
     if (mcdPhase) params.set("mcd_phase", mcdPhase);
     if (search) params.set("search", search);
 
+    queueMicrotask(() => {
+      if (active) setIsLoading(true);
+    });
+
     api
       .get<PaginatedResponse<IPRListItem>>(`/api/ipr?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
-      .finally(() => setIsLoading(false));
+      .then((response) => {
+        if (active) setData(response);
+      })
+      .catch(() => {
+        if (active) setData(null);
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [page, tipo, estado, sector, alertLevel, mechanism, mcdPhase, search]);
 
   const columns = [

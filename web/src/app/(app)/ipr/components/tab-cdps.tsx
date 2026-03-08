@@ -15,12 +15,26 @@ export function TabCdps({ iprId }: TabCdpsProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+    let active = true;
+    queueMicrotask(() => {
+      if (active) setLoading(true);
+    });
+
     api
       .get<BudgetCommitmentItem[]>(`/api/presupuesto/cdps-por-ipr/${iprId}`)
-      .then(setCdps)
-      .catch(() => setCdps(null))
-      .finally(() => setLoading(false));
+      .then((response) => {
+        if (active) setCdps(response);
+      })
+      .catch(() => {
+        if (active) setCdps(null);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [iprId]);
 
   return (

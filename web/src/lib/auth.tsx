@@ -25,19 +25,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    const token = api.getToken();
-    if (token) {
-      const stored = localStorage.getItem("goreos_user");
-      if (stored) {
-        try {
-          setUser(JSON.parse(stored));
-        } catch {
-          api.clearToken();
-          localStorage.removeItem("goreos_user");
+    let active = true;
+
+    queueMicrotask(() => {
+      if (!active) return;
+
+      const token = api.getToken();
+      if (token) {
+        const stored = localStorage.getItem("goreos_user");
+        if (stored) {
+          try {
+            setUser(JSON.parse(stored));
+          } catch {
+            api.clearToken();
+            localStorage.removeItem("goreos_user");
+          }
         }
       }
-    }
-    setLoading(false);
+
+      setLoading(false);
+    });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   const login = async (email: string, password: string) => {

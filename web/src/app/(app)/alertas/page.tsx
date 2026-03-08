@@ -78,7 +78,7 @@ export default function AlertasPage() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
+    let active = true;
     const params = new URLSearchParams();
     params.set("page_size", "50");
     if (nivel) params.set("severity", nivel);
@@ -87,11 +87,25 @@ export default function AlertasPage() {
     if (dateFrom) params.set("date_from", dateFrom);
     if (dateTo) params.set("date_to", dateTo);
 
+    queueMicrotask(() => {
+      if (active) setIsLoading(true);
+    });
+
     api
       .get<PaginatedResponse<AlertaListItem>>(`/api/alertas?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
-      .finally(() => setIsLoading(false));
+      .then((response) => {
+        if (active) setData(response);
+      })
+      .catch(() => {
+        if (active) setData(null);
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [nivel, tipo, soloActivas, dateFrom, dateTo, refreshKey]);
 
   const handleAttend = async (id: string) => {

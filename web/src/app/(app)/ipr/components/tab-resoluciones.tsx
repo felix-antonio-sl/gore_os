@@ -17,12 +17,26 @@ export function TabResoluciones({ iprId }: TabResolucionesProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+    let active = true;
+    queueMicrotask(() => {
+      if (active) setLoading(true);
+    });
+
     api
       .get<{ items: ActoListItem[] }>(`/api/actos?ipr_id=${iprId}&page_size=100`)
-      .then((data) => setResoluciones(data.items))
-      .catch(() => setResoluciones(null))
-      .finally(() => setLoading(false));
+      .then((data) => {
+        if (active) setResoluciones(data.items);
+      })
+      .catch(() => {
+        if (active) setResoluciones(null);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [iprId]);
 
   return (

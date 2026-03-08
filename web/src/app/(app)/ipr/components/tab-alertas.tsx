@@ -16,14 +16,28 @@ export function TabAlertas({ iprId }: TabAlertasProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+    let active = true;
+    queueMicrotask(() => {
+      if (active) setLoading(true);
+    });
+
     api
       .get<PaginatedResponse<AlertaListItem>>(
         `/api/alertas?subject_type=core.ipr&subject_id=${iprId}&page_size=50`
       )
-      .then(setAlertas)
-      .catch(() => setAlertas(null))
-      .finally(() => setLoading(false));
+      .then((response) => {
+        if (active) setAlertas(response);
+      })
+      .catch(() => {
+        if (active) setAlertas(null);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [iprId]);
 
   if (loading) {

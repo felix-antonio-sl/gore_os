@@ -35,6 +35,32 @@ async def db():
     await engine.dispose()
 
 
+@pytest_asyncio.fixture(autouse=True)
+async def cleanup_test_artifacts(db: AsyncSession):
+    """Remove persistent artifacts created by stateful integration tests."""
+    await db.execute(
+        text("""
+            DELETE FROM core.ipr_territory
+            WHERE ipr_id IN (
+                SELECT id FROM core.ipr WHERE codigo_bip LIKE 'TRULE-%'
+            )
+        """)
+    )
+    await db.execute(
+        text("""
+            DELETE FROM core.evaluation_assignment
+            WHERE ipr_id IN (
+                SELECT id FROM core.ipr WHERE codigo_bip LIKE 'TRULE-%'
+            )
+        """)
+    )
+    await db.execute(text("DELETE FROM core.ipr WHERE codigo_bip LIKE 'TRULE-%'"))
+    await db.execute(
+        text("DELETE FROM core.dgi_initiative WHERE name LIKE 'Test Initiative %'")
+    )
+    await db.commit()
+
+
 # ---------------------------------------------------------------------------
 # FastAPI test client with DB override
 # ---------------------------------------------------------------------------

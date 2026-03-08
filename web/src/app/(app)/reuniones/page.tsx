@@ -63,17 +63,31 @@ export default function ReunionesPage() {
   const handlePageChange = (newPage: number) => router.push(buildUrl({ page: newPage }));
 
   useEffect(() => {
+    let active = true;
     const params = new URLSearchParams();
     params.set("page", String(page));
     params.set("page_size", "20");
     if (statusFilter) params.set("status", statusFilter);
 
-    setIsLoading(true);
+    queueMicrotask(() => {
+      if (active) setIsLoading(true);
+    });
+
     api
       .get<PaginatedResponse<ReunionListItem>>(`/api/reuniones?${params.toString()}`)
-      .then(setData)
-      .catch(() => setData(null))
-      .finally(() => setIsLoading(false));
+      .then((response) => {
+        if (active) setData(response);
+      })
+      .catch(() => {
+        if (active) setData(null);
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   }, [page, statusFilter]);
 
   const canCreate =
