@@ -467,9 +467,18 @@ async def _check_fril_max_per_comuna(ipr_id: UUID, db: AsyncSession) -> dict | N
     if not ipr_row or ipr_row["mechanism_code"] != "FRIL":
         return None
 
-    # If this IPR itself is A2/A3, it's exempt
-    if ipr_row["fril_category"] in ("A2", "A3"):
-        return None
+    # Check exemption from core.fril_category table (TP-04)
+    fril_cat = ipr_row["fril_category"]
+    if fril_cat:
+        exempt = (await db.execute(
+            text("""
+                SELECT is_exempt_commune_limit FROM core.fril_category
+                WHERE code = :code AND is_active = true
+            """),
+            {"code": fril_cat},
+        )).scalar()
+        if exempt:
+            return None
 
     # Load parametric limit from track config
     track = await _get_track_config("FRIL", db)
