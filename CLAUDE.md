@@ -267,12 +267,12 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~134 API endpoints, 326 tests (322 pass + 4 skip), 28 modules, 19 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: ~139 API endpoints, 334 tests (330 pass + 4 skip), 28 modules, 19 gate functions in `ipr.py`. HΩ findings: 13/15 implemented, 1 partial, 1 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
 - HΩ-02 Parentesco 8% (kinship disqualification — not started)
 - HΩ-14 SISREC ciclo completo 13-14d (partial — only RTF 7d + UCR 2d of 8 phases)
-- HΩ-15 Budget Cycle Timeline T-1→T→T+1 (not started)
+- HΩ-15 Budget Cycle Timeline T-1→T→T+1 (implemented — TP-05 with 17 milestones)
 - 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 4/6 levels
 - 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR)
 - 5 system roles with 0 users, IPR `sponsor_division_id`/`assignee_id` = 0% populated
@@ -335,3 +335,4 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 48. **Bulk cuotas**: `POST /api/convenios/{id}/cuotas/bulk` generates N installments. Schema: `BulkCuotaRequest(total_amount, num_installments, start_date, frequency_months=1)`. Distributes evenly with remainder on first cuota. Auto-increments from max existing `installment_number`. Route registered BEFORE `/{id}/cuotas` to avoid path conflicts. `_add_months()` helper uses `calendar.monthrange` for end-of-month safety.
 49. **Rendition table schema**: `core.rendition` DDL base + 3 migrations. Added by migrations: `amount` (wave10_sisrec), `ipr_id` (rendition_coproduct), `phase_entered_at` + `responsible_id` (sisrec_phase_tracking). NO `code` column — use `LEFT(r.id::text, 8)`. `phase_entered_at` is the SLA-accurate timestamp (only resets on state transitions, NOT on any update). Use `COALESCE(r.phase_entered_at, r.updated_at)` in queries. `responsible_id` FK → `core.user` for reviewer assignment.
 50. **Responsive with Radix portals**: `DrawerPanel` (Radix Sheet) renders via portals outside the DOM tree — CSS `display:none` on parent does NOT prevent the Sheet from opening. Use `window.matchMedia` with `isMobile` state to conditionally render the Sheet component. See `/datos/page.tsx` for reference.
+51. **Budget Cycle Timeline (TP-05)**: `core.budget_cycle_milestone` (17 seed rows, parametric) + `core.budget_cycle_tracking` (per fiscal year, operational). 5 endpoints on presupuesto router: `GET /ciclo/hitos`, `POST /ciclo/{year}` (initialize, idempotent 201/200), `GET /ciclo/{year}` (timeline), `GET /ciclo/{year}/resumen` (summary), `PATCH /ciclo/tracking/{id}` (update status). Statuses: PENDIENTE, EN_CURSO, COMPLETADO, OMITIDO. Auto-sets `completed_at`/`completed_by_id` on COMPLETADO. Frontend: `/presupuesto/ciclo` page with phase-grouped timeline. Sidebar: "Ciclo Ppto." nav item.
