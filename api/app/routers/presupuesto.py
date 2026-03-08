@@ -199,17 +199,19 @@ async def _check_glosa03_prohibition(ipr_id: UUID, db: AsyncSession) -> list[dic
     return gates
 
 
-# Glosa 07 transfer limits: admin and honorarios capped at 5% each
-_GLOSA07_LIMITS = {
+# Glosa 07 transfer limits: admin and honorarios caps (parametric from DB)
+_GLOSA07_LIMITS_DEFAULT = {
     "glosa07_admin_max": {"items": {"BIENES_SERVICIOS_CONSUMO", "BIENES_SERVICIOS"}, "max_pct": 5.0,
+                          "threshold_key": "glosa07_admin_max_pct",
                           "label": "Glosa 07: Gasto administrativo"},
     "glosa07_honorarios_max": {"items": {"HONORARIOS"}, "max_pct": 5.0,
+                               "threshold_key": "glosa07_honorarios_max_pct",
                                "label": "Glosa 07: Honorarios"},
 }
 
 
 async def check_glosa07_transfer_limits(ipr_id: UUID, db: AsyncSession) -> list[dict]:
-    """Glosa 07: TRANSFER mechanism IPRs have 5% caps on admin and honorarios."""
+    """Glosa 07: TRANSFER mechanism IPRs have parametric caps on admin and honorarios."""
     gates: list[dict] = []
 
     # Only applies to TRANSFER mechanism
@@ -225,6 +227,12 @@ async def check_glosa07_transfer_limits(ipr_id: UUID, db: AsyncSession) -> list[
 
     if not mech_row or mech_row["mechanism_code"] != "TRANSFER":
         return gates
+
+    # Load parametric limits from TRANSFER track thresholds
+    track_row = (await db.execute(
+        text("SELECT thresholds FROM core.financing_track WHERE code = 'TRANSFER' AND is_active = TRUE"),
+    )).mappings().first()
+    track_thresholds = dict(track_row["thresholds"] or {}) if track_row else {}
 
     # Get CDP item breakdown (same query as check_glosa_rules)
     result = await db.execute(
@@ -254,10 +262,10 @@ async def check_glosa07_transfer_limits(ipr_id: UUID, db: AsyncSession) -> list[
     if total_cdp <= 0:
         return gates
 
-    for gate_name, rule in _GLOSA07_LIMITS.items():
+    for gate_name, rule in _GLOSA07_LIMITS_DEFAULT.items():
         matching = sum(item_amounts.get(ic, 0) for ic in rule["items"])
         actual_pct = (matching / total_cdp * 100)
-        max_pct = rule["max_pct"]
+        max_pct = float(track_thresholds.get(rule["threshold_key"], rule["max_pct"]))
 
         if actual_pct > max_pct:
             gates.append({

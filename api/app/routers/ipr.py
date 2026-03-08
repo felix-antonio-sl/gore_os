@@ -374,6 +374,10 @@ async def _check_fril_fraccionamiento(ipr_id: UUID, db: AsyncSession) -> dict | 
     if not ipr_row["executor_id"]:
         return None  # No executor — can't check siblings
 
+    # Load track config for parametric thresholds
+    track = await _get_track_config("FRIL", db)
+    sibling_days = int((track or {}).get("thresholds", {}).get("fril_sibling_days", 90))
+
     # Get territories linked to this IPR
     terr_rows = (await db.execute(
         text("""
@@ -405,8 +409,8 @@ async def _check_fril_fraccionamiento(ipr_id: UUID, db: AsyncSession) -> dict | 
             "executor_id": str(ipr_row["executor_id"]),
             "ipr_id": str(ipr_id),
             "territory_ids": territory_ids,
-            "date_from": ipr_row["created_at"] - timedelta(days=90),
-            "date_to": ipr_row["created_at"] + timedelta(days=90),
+            "date_from": ipr_row["created_at"] - timedelta(days=sibling_days),
+            "date_to": ipr_row["created_at"] + timedelta(days=sibling_days),
         },
     )).mappings().all()
 
@@ -418,8 +422,7 @@ async def _check_fril_fraccionamiento(ipr_id: UUID, db: AsyncSession) -> dict | 
     sibling_montos = sum(float(s["monto"]) for s in siblings if s["monto"])
     combined = own_monto + sibling_montos
 
-    # Check against FRIL max_utm threshold
-    track = await _get_track_config("FRIL", db)
+    # Check against FRIL max_utm threshold (track already loaded above)
     if not track:
         return None
     max_utm = track.get("thresholds", {}).get("max_utm")
@@ -435,7 +438,7 @@ async def _check_fril_fraccionamiento(ipr_id: UUID, db: AsyncSession) -> dict | 
         "met": not exceeds,
         "detail": (
             f"Fraccionamiento FRIL: {len(siblings)} proyecto(s) hermano(s) "
-            f"(mismo ejecutor + comuna + ±90 días). "
+            f"(mismo ejecutor + comuna + ±{sibling_days} días). "
             f"Monto combinado ${combined:,.0f} "
             f"{'excede' if exceeds else 'dentro de'} "
             f"tope {max_utm:,} UTM (${max_clp:,.0f})"
@@ -466,6 +469,10 @@ async def _check_fril_max_per_comuna(ipr_id: UUID, db: AsyncSession) -> dict | N
     # If this IPR itself is A2/A3, it's exempt
     if ipr_row["fril_category"] in ("A2", "A3"):
         return None
+
+    # Load parametric limit from track config
+    track = await _get_track_config("FRIL", db)
+    max_per_territory = int((track or {}).get("thresholds", {}).get("fril_max_per_territory", 5))
 
     # Get territories linked to this IPR
     terr_rows = (await db.execute(
@@ -504,7 +511,7 @@ async def _check_fril_max_per_comuna(ipr_id: UUID, db: AsyncSession) -> dict | N
         )).mappings().first()
 
         existing = int(count_row["cnt"]) if count_row else 0
-        if existing >= 5:
+        if existing >= max_per_territory:
             # Get territory name for detail
             terr_name_row = (await db.execute(
                 text("SELECT name FROM core.territory WHERE id = :id"),
@@ -515,7 +522,7 @@ async def _check_fril_max_per_comuna(ipr_id: UUID, db: AsyncSession) -> dict | N
                 "name": "fril_max_comuna",
                 "met": False,
                 "detail": (
-                    f"Máximo 5 FRIL por comuna/año: {terr_name} ya tiene "
+                    f"Máximo {max_per_territory} FRIL por comuna/año: {terr_name} ya tiene "
                     f"{existing} proyecto(s) FRIL en {fiscal_year} (excluye A2/A3)"
                 ),
             }
@@ -968,18 +975,21 @@ async def _check_pagare_notarial(ipr_id: UUID, db: AsyncSession) -> dict | None:
             "detail": f"SUBV8: valor inválido de pagare_monto: '{pagare_monto_raw}'",
         }
 
-    if pagare_monto < monto_total:
+    # Check coverage and validity against track thresholds
+    track = await _get_track_config("SUBV8", db)
+    coverage_pct = float((track or {}).get("thresholds", {}).get("pagare_coverage_pct", 100))
+    min_required = monto_total * (coverage_pct / 100)
+
+    if pagare_monto < min_required:
         return {
             "name": "pagare_notarial",
             "met": False,
             "detail": (
-                f"SUBV8: pagaré (${pagare_monto:,.0f}) no cubre 100% del monto total "
-                f"(${monto_total:,.0f}). Debe ser ≥ monto total."
+                f"SUBV8: pagaré (${pagare_monto:,.0f}) no cubre {coverage_pct:.0f}% del monto total "
+                f"(${monto_total:,.0f}). Debe ser ≥ ${min_required:,.0f}."
             ),
         }
 
-    # Check validity period
-    track = await _get_track_config("SUBV8", db)
     validity_months = int((track or {}).get("thresholds", {}).get("pagare_validity_months", 18))
 
     from datetime import datetime, timezone
