@@ -540,3 +540,112 @@ async def test_core_below_threshold_no_gate(
     assert resp.status_code == 200
     gate = _find_gate(resp.json(), "F4", "core_approval")
     assert gate is None, "CORE gate should not appear when monto is below threshold"
+
+
+# ---------------------------------------------------------------------------
+# Wave F: Glosa 06 single-purpose MML (3 tests)
+# ---------------------------------------------------------------------------
+
+async def _merge_ipr_metadata(db: AsyncSession, ipr_id: str, extra: dict) -> None:
+    """Merge extra keys into IPR metadata JSONB."""
+    import json
+    await db.execute(
+        text("""
+            UPDATE core.ipr
+            SET metadata = COALESCE(metadata, '{}') || CAST(:extra AS jsonb)
+            WHERE id = CAST(:id AS uuid)
+        """),
+        {"id": ipr_id, "extra": json.dumps(extra)},
+    )
+    await db.commit()
+
+
+async def test_glosa06_passes_single_purpose(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 06: IPR with exactly 1 MML purpose should pass (no gate returned)."""
+    ipr_id = await _create_test_ipr(db, "INGRESADO", "F1", "GLOSA06")
+    await _merge_ipr_metadata(db, ipr_id, {"mml_purpose_count": 1})
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F2", "glosa06_single_purpose")
+    assert gate is None, "Glosa 06 should pass silently with 1 MML purpose"
+
+
+async def test_glosa06_blocks_multiple_purposes(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 06: IPR with 2 MML purposes should be blocked."""
+    ipr_id = await _create_test_ipr(db, "INGRESADO", "F1", "GLOSA06")
+    await _merge_ipr_metadata(db, ipr_id, {"mml_purpose_count": 2})
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F2", "glosa06_single_purpose")
+    if gate:
+        assert gate["met"] is False, "Glosa 06 should block with multiple MML purposes"
+        assert "2" in gate["detail"]
+
+
+async def test_glosa06_blocks_missing_metadata(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 06: IPR without mml_purpose_count metadata should be blocked."""
+    ipr_id = await _create_test_ipr(db, "INGRESADO", "F1", "GLOSA06")
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F2", "glosa06_single_purpose")
+    if gate:
+        assert gate["met"] is False, "Glosa 06 should block when metadata is missing"
+        assert "falta" in gate["detail"].lower()
+
+
+# ---------------------------------------------------------------------------
+# Wave G: Glosa porcentuales — spending limits (3 tests)
+# ---------------------------------------------------------------------------
+
+async def test_glosa_remuneraciones_exceeds_threshold(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa porcentual: PERSONAL > 30% of total CDPs should be flagged."""
+    ipr_id = await _create_test_ipr(db, "CDP_EMITIDO", "F3", "FRIL", monto=200_000_000)
+    # PERSONAL = 4M, BIENES_SERVICIOS = 6M → PERSONAL = 40% > 30%
+    await _create_cdp_with_item(db, ipr_id, "PERSONAL", 4_000_000)
+    await _create_cdp_with_item(db, ipr_id, "BIENES_SERVICIOS", 6_000_000)
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F4", "glosa_remuneraciones_max")
+    if gate:
+        assert gate["met"] is False, "PERSONAL at 40% should exceed 30% threshold"
+        assert "40" in gate["detail"] or "excede" in gate["detail"]
+
+
+async def test_glosa_remuneraciones_within_threshold(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa porcentual: PERSONAL ≤ 30% of total CDPs should pass."""
+    ipr_id = await _create_test_ipr(db, "CDP_EMITIDO", "F3", "FRIL", monto=200_000_000)
+    # PERSONAL = 2M, BIENES_SERVICIOS = 8M → PERSONAL = 20% < 30%
+    await _create_cdp_with_item(db, ipr_id, "PERSONAL", 2_000_000)
+    await _create_cdp_with_item(db, ipr_id, "BIENES_SERVICIOS", 8_000_000)
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F4", "glosa_remuneraciones_max")
+    if gate:
+        assert gate["met"] is True, "PERSONAL at 20% should be within 30% threshold"
+
+
+async def test_glosa_no_cdps_no_gates(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa porcentual: IPR with no CDPs should not produce glosa gates."""
+    ipr_id = await _create_test_ipr(db, "CDP_EMITIDO", "F3", "FRIL", monto=200_000_000)
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F4", "glosa_remuneraciones_max")
+    assert gate is None, "No CDPs → no glosa gates"
