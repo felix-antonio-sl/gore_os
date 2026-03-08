@@ -687,6 +687,8 @@ async def list_rendiciones(
         LEFT JOIN core.agreement a ON a.id = r.agreement_id
         LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
         LEFT JOIN core.organization org ON org.id = r.renderer_id
+        LEFT JOIN core."user" ru ON ru.id = r.responsible_id
+        LEFT JOIN core.person rp ON rp.id = ru.person_id
         LEFT JOIN ref.category st ON st.id = r.state_id
         WHERE {where_clause}
     """
@@ -700,8 +702,10 @@ async def list_rendiciones(
         SELECT r.id, r.period_start, r.period_end, r.submitted_at, r.amount,
                a.agreement_number, a.total_amount AS agreement_total_amount,
                ipr.codigo_bip AS ipr_codigo_bip, r.ipr_id,
-               org.name AS renderer_name, st.code AS state_code, st.label AS state_label,
-               EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 AS days_in_state
+               org.name AS renderer_name,
+               (rp.names || ' ' || rp.paternal_surname) AS responsible_name,
+               st.code AS state_code, st.label AS state_label,
+               EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 AS days_in_state
         {base_query}
         ORDER BY r.submitted_at DESC NULLS LAST
         LIMIT :limit OFFSET :offset
@@ -710,7 +714,8 @@ async def list_rendiciones(
     items = [RendicionItem(
         id=r["id"], agreement_number=r["agreement_number"],
         ipr_codigo_bip=r["ipr_codigo_bip"], ipr_id=r["ipr_id"],
-        renderer_name=r["renderer_name"], state_code=r["state_code"], state_label=r["state_label"],
+        renderer_name=r["renderer_name"], responsible_name=r["responsible_name"],
+        state_code=r["state_code"], state_label=r["state_label"],
         period_start=r["period_start"], period_end=r["period_end"],
         submitted_at=r["submitted_at"],
         agreement_total_amount=float(r["agreement_total_amount"]) if r["agreement_total_amount"] else None,
@@ -744,9 +749,9 @@ async def list_rendiciones_vencidas(
     page_size: int = Query(25, ge=1, le=100),
 ):
     """Rendiciones that have exceeded their SLA time in a reviewable state."""
-    # Build CASE expression for SLA thresholds
+    # Build CASE expression for SLA thresholds (uses phase_entered_at for accuracy)
     sla_conditions = " OR ".join(
-        f"(st.code = '{code}' AND EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 > {days})"
+        f"(st.code = '{code}' AND EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 > {days})"
         for code, days in _RENDICION_SLA_DAYS.items()
     )
 
@@ -755,6 +760,8 @@ async def list_rendiciones_vencidas(
         LEFT JOIN core.agreement a ON a.id = r.agreement_id
         LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
         LEFT JOIN core.organization org ON org.id = r.renderer_id
+        LEFT JOIN core."user" ru ON ru.id = r.responsible_id
+        LEFT JOIN core.person rp ON rp.id = ru.person_id
         LEFT JOIN ref.category st ON st.id = r.state_id
         WHERE r.deleted_at IS NULL AND ({sla_conditions})
     """
@@ -769,8 +776,10 @@ async def list_rendiciones_vencidas(
         SELECT r.id, r.period_start, r.period_end, r.submitted_at, r.amount,
                a.agreement_number, a.total_amount AS agreement_total_amount,
                ipr.codigo_bip AS ipr_codigo_bip, r.ipr_id,
-               org.name AS renderer_name, st.code AS state_code, st.label AS state_label,
-               EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 AS days_in_state
+               org.name AS renderer_name,
+               (rp.names || ' ' || rp.paternal_surname) AS responsible_name,
+               st.code AS state_code, st.label AS state_label,
+               EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 AS days_in_state
         {base_query}
         ORDER BY days_in_state DESC
         LIMIT :limit OFFSET :offset
@@ -779,7 +788,8 @@ async def list_rendiciones_vencidas(
     items = [RendicionItem(
         id=r["id"], agreement_number=r["agreement_number"],
         ipr_codigo_bip=r["ipr_codigo_bip"], ipr_id=r["ipr_id"],
-        renderer_name=r["renderer_name"], state_code=r["state_code"], state_label=r["state_label"],
+        renderer_name=r["renderer_name"], responsible_name=r["responsible_name"],
+        state_code=r["state_code"], state_label=r["state_label"],
         period_start=r["period_start"], period_end=r["period_end"],
         submitted_at=r["submitted_at"],
         agreement_total_amount=float(r["agreement_total_amount"]) if r["agreement_total_amount"] else None,
@@ -901,18 +911,22 @@ async def get_rendicion_ciclo(
 async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession = Depends(get_db)):
     row = (await db.execute(
         text("""
-            SELECT r.id, r.agreement_id, r.ipr_id, r.renderer_id,
+            SELECT r.id, r.agreement_id, r.ipr_id, r.renderer_id, r.responsible_id,
                    r.period_start, r.period_end, r.submitted_at, r.amount,
-                   r.metadata, r.created_at,
+                   r.phase_entered_at, r.metadata, r.created_at,
                    a.agreement_number, a.total_amount AS agreement_total_amount,
                    ipr.codigo_bip AS ipr_codigo_bip,
                    org.name AS renderer_name,
+                   (rp.names || ' ' || rp.paternal_surname) AS responsible_name,
                    st.code AS state_code, st.label AS state_label,
-                   EXTRACT(EPOCH FROM (NOW() - r.updated_at)) / 86400.0 AS days_in_state
+                   EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 AS days_in_state,
+                   EXTRACT(EPOCH FROM (NOW() - r.created_at)) / 86400.0 AS total_cycle_days
             FROM core.rendition r
             LEFT JOIN core.agreement a ON a.id = r.agreement_id
             LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
             LEFT JOIN core.organization org ON org.id = r.renderer_id
+            LEFT JOIN core."user" ru ON ru.id = r.responsible_id
+            LEFT JOIN core.person rp ON rp.id = ru.person_id
             LEFT JOIN ref.category st ON st.id = r.state_id
             WHERE r.id = :id AND r.deleted_at IS NULL
         """),
@@ -921,10 +935,13 @@ async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession 
     if not row:
         raise HTTPException(status_code=404, detail="Rendición no encontrada")
     history = await _get_rendition_history(rendicion_id, db)
+    total_cycle = round(float(row["total_cycle_days"]), 1) if row["total_cycle_days"] else None
     return RendicionDetail(
         id=row["id"], agreement_id=row["agreement_id"], ipr_id=row["ipr_id"],
-        renderer_id=row["renderer_id"], agreement_number=row["agreement_number"],
+        renderer_id=row["renderer_id"], responsible_id=row["responsible_id"],
+        agreement_number=row["agreement_number"],
         ipr_codigo_bip=row["ipr_codigo_bip"], renderer_name=row["renderer_name"],
+        responsible_name=row["responsible_name"],
         state_code=row["state_code"], state_label=row["state_label"],
         period_start=row["period_start"], period_end=row["period_end"],
         submitted_at=row["submitted_at"],
@@ -937,6 +954,9 @@ async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession 
             and float(row["days_in_state"]) > _RENDICION_SLA_DAYS[row["state_code"]]
         ),
         sla_days=_RENDICION_SLA_DAYS.get(row["state_code"]),
+        phase_entered_at=row["phase_entered_at"],
+        total_cycle_days=total_cycle,
+        cycle_overdue=total_cycle is not None and total_cycle > _RENDICION_CYCLE_TARGET_DAYS,
         metadata=dict(row["metadata"]) if row["metadata"] else None,
         created_at=row["created_at"],
         history=[RendicionHistoryEntry(**h) for h in history],
@@ -963,11 +983,11 @@ async def create_rendicion(body: RendicionCreate, user: CurrentUser, db: AsyncSe
             INSERT INTO core.rendition (
                 agreement_id, ipr_id, renderer_id, state_id,
                 period_start, period_end, submitted_at, amount,
-                created_by_id, created_at, updated_at
+                phase_entered_at, created_by_id, created_at, updated_at
             ) VALUES (
                 :agreement_id, :ipr_id, :renderer_id, :state_id,
                 :period_start, :period_end, COALESCE(:submitted_at, NOW()), :amount,
-                :created_by_id, NOW(), NOW()
+                NOW(), :created_by_id, NOW(), NOW()
             ) RETURNING id
         """),
         {
@@ -1020,7 +1040,10 @@ _RENDICION_SLA_DAYS: dict[str, int] = {
     "OBSERVADA": 15,
 }
 
-RENDICION_UPDATABLE = {"state_id", "period_start", "period_end", "submitted_at", "amount"}
+RENDICION_UPDATABLE = {"state_id", "responsible_id", "period_start", "period_end", "submitted_at", "amount"}
+
+# CGR institutional target: full rendition cycle should complete in 14 days
+_RENDICION_CYCLE_TARGET_DAYS = 14
 
 
 async def _get_rendition_history(rendition_id: UUID, db: AsyncSession) -> list[dict]:
@@ -1128,6 +1151,10 @@ async def patch_rendicion(
 
     set_parts.append("updated_at = NOW()")
     set_parts.append("updated_by_id = :user_id")
+
+    # Track phase entry time accurately (only reset on state transitions)
+    if "state_id" in updates:
+        set_parts.append("phase_entered_at = NOW()")
 
     sql = text(f"""
         UPDATE core.rendition

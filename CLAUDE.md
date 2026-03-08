@@ -148,7 +148,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**322 integration tests (318 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**326 integration tests (322 pass + 4 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -167,7 +167,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules (28): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (10), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (12), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (23), `test_thresholds` (18), `test_track_enforcement` (32), `test_track_rules` (18), `test_ciclo24` (22).
+Test modules (28): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (10), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (12), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (27), `test_thresholds` (18), `test_track_enforcement` (32), `test_track_rules` (18), `test_ciclo24` (22).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -267,7 +267,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~134 API endpoints, 322 tests (318 pass + 4 skip), 28 modules, 17 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: ~134 API endpoints, 326 tests (322 pass + 4 skip), 28 modules, 17 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
 - HΩ-02 Parentesco 8% (kinship disqualification — not started)
@@ -318,7 +318,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 37. **Security**: `SecurityHeadersMiddleware` (4 headers), brute-force lockout (5 attempts → 15 min lock, HTTP 429), JWT secret validation rejects default key when `ENV != "development"`.
 38. **Financing tracks**: `core.financing_track` table replaces hardcoded `TRACK_CONFIG` dict. Admin CRUD via `/api/admin/financing-tracks`. `_get_track_config()` loads from DB with caching.
 39. **Migration tracking**: `core.schema_migration` table. Runner: `./scripts/run_migrations.sh [container] [db]`. New migrations must be registered in the script.
-40. **SISREC workflow**: 8-state rendition machine with role-based transitions. `_RENDICION_TRANSITIONS` + `_RENDICION_TRANSITION_ROLES` maps. Operativa initiates/resubmits, DGI visas/approves/rejects. `core.rendition_history` trigger for audit. SLA 4 states: RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d. `GET /rendiciones/{id}/ciclo` returns phase timeline with per-phase SLA tracking. Art. 18: `convenios.py` checks renditions on cuota payment updates.
+40. **SISREC workflow**: 8-state rendition machine with role-based transitions. `_RENDICION_TRANSITIONS` + `_RENDICION_TRANSITION_ROLES` maps. Operativa initiates/resubmits, DGI visas/approves/rejects. `core.rendition_history` trigger for audit. SLA 4 states: RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d. `phase_entered_at` column tracks when current state was entered (more accurate than `updated_at` which resets on any field change). `responsible_id` FK assigns a reviewer. `GET /rendiciones/{id}/ciclo` returns phase timeline. CGR cycle target: 14 days (`_RENDICION_CYCLE_TARGET_DAYS`). Art. 18: `convenios.py` checks renditions on cuota payment updates.
 41. **Financial thresholds**: `core.financial_threshold` (10 rows: 4 UTM + 5 glosa% + UTM_VALUE). Helpers: `_get_utm_value(db)`, `_get_threshold(code, db)`, `_check_utm_threshold(ipr_id, code, db)`.
 42. **Glosa rules**: `check_glosa_rules(ipr_id, db)` evaluates 5 glosa limits + `_check_glosa03_prohibition()` blocks FNDR→PERSONAL. Integrated at F3→F4.
 43. **Budget classifier 4-level**: List endpoint accepts `item`, `allocation`, `program_type` filters. Levels 1-2 (Partida, Capítulo) are institutional constants.

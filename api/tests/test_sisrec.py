@@ -19,6 +19,17 @@ from tests.conftest import auth
 # Helpers
 # ---------------------------------------------------------------------------
 
+async def _age_rendicion(db, rid: str, interval: str) -> None:
+    """Age a rendicion's phase_entered_at and updated_at by the given interval."""
+    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
+    await db.execute(
+        text(f"UPDATE core.rendition SET updated_at = NOW() - INTERVAL '{interval}', "
+             f"phase_entered_at = NOW() - INTERVAL '{interval}' WHERE id = :id"),
+        {"id": rid},
+    )
+    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
+    await db.commit()
+
 async def _ensure_ipr(db) -> str:
     """Get or create a test IPR."""
     r = await db.execute(text("SELECT id FROM core.ipr LIMIT 1"))
@@ -249,14 +260,7 @@ async def test_sla_overdue_flag(client, dgi_token, db):
     """A rendicion in EN_REVISION_RTF for >7 days should be overdue (via detail endpoint)."""
     rid = await _create_rendicion(client, dgi_token, db)
     await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
-    # Disable auto-updated_at trigger, age the record, re-enable
-    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
-    await db.execute(
-        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '8 days' WHERE id = :id"),
-        {"id": rid},
-    )
-    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
-    await db.commit()
+    await _age_rendicion(db, rid, "8 days")
     # Now check via API
     resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
     assert resp.status_code == 200
@@ -271,13 +275,7 @@ async def test_vencidas_endpoint(client, dgi_token, db):
     """GET /rendiciones/vencidas returns overdue renditions."""
     rid = await _create_rendicion(client, dgi_token, db)
     await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
-    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
-    await db.execute(
-        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '10 days' WHERE id = :id"),
-        {"id": rid},
-    )
-    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
-    await db.commit()
+    await _age_rendicion(db, rid, "10 days")
     # Use max page_size to avoid stale renditions from prior runs pushing ours off page 1
     resp = await client.get("/api/dgi/data/rendiciones/vencidas?page_size=100", headers=auth(dgi_token))
     assert resp.status_code == 200
@@ -334,14 +332,7 @@ async def test_visada_rtf_overdue(client, dgi_token, db):
     rid = await _create_rendicion(client, dgi_token, db)
     await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
     await _transition(client, dgi_token, rid, "VISADA_RTF", db)
-    # Age the record past 1-day SLA
-    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
-    await db.execute(
-        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '2 days' WHERE id = :id"),
-        {"id": rid},
-    )
-    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
-    await db.commit()
+    await _age_rendicion(db, rid, "2 days")
     resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
     assert resp.status_code == 200
     detail = resp.json()
@@ -355,14 +346,7 @@ async def test_observada_overdue(client, dgi_token, regional_token, db):
     rid = await _create_rendicion(client, dgi_token, db)
     await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
     await _transition(client, dgi_token, rid, "OBSERVADA", db)
-    # Age past 15-day SLA
-    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
-    await db.execute(
-        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '16 days' WHERE id = :id"),
-        {"id": rid},
-    )
-    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
-    await db.commit()
+    await _age_rendicion(db, rid, "16 days")
     resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
     assert resp.status_code == 200
     assert resp.json()["is_overdue"] is True
@@ -375,13 +359,7 @@ async def test_vencidas_includes_visada_rtf(client, dgi_token, db):
     rid = await _create_rendicion(client, dgi_token, db)
     await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
     await _transition(client, dgi_token, rid, "VISADA_RTF", db)
-    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
-    await db.execute(
-        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '3 days' WHERE id = :id"),
-        {"id": rid},
-    )
-    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
-    await db.commit()
+    await _age_rendicion(db, rid, "3 days")
     resp = await client.get("/api/dgi/data/rendiciones/vencidas?page_size=100", headers=auth(dgi_token))
     assert resp.status_code == 200
     ids = [i["id"] for i in resp.json()["items"]]
@@ -411,3 +389,82 @@ async def test_ciclo_endpoint(client, dgi_token, db):
     assert visada["phase_code"] == "VISADA_RTF"
     assert visada["sla_days"] == 1
     assert visada["exited_at"] is None  # current phase
+
+
+# ---------------------------------------------------------------------------
+# Wave 2: Phase tracking + responsible assignment + cycle target
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_phase_entered_at_set_on_transition(client, dgi_token, db):
+    """phase_entered_at is set on creation and updated on each transition."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    detail = resp.json()
+    assert detail["phase_entered_at"] is not None
+    first_ts = detail["phase_entered_at"]
+    # Transition to EN_REVISION_RTF
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    resp2 = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    detail2 = resp2.json()
+    assert detail2["phase_entered_at"] is not None
+    assert detail2["phase_entered_at"] >= first_ts
+
+
+@pytest.mark.asyncio
+async def test_responsible_id_assignment(client, dgi_token, db):
+    """Assigning responsible_id via PATCH persists and appears in detail."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    # Get a valid user ID (the DGI user)
+    user_row = (await db.execute(
+        text('SELECT id FROM core."user" WHERE email = :email'),
+        {"email": "jefe.dgi@goreos.cl"},
+    )).mappings().first()
+    user_id = str(user_row["id"])
+    resp = await client.patch(
+        f"/api/dgi/data/rendiciones/{rid}",
+        json={"responsible_id": user_id},
+        headers=auth(dgi_token),
+    )
+    assert resp.status_code == 200
+    detail_resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    detail = detail_resp.json()
+    assert detail["responsible_id"] == user_id
+    assert detail["responsible_name"] is not None
+
+
+@pytest.mark.asyncio
+async def test_phase_entered_at_not_reset_by_amount_update(client, dgi_token, db):
+    """Updating amount does NOT reset phase_entered_at (only state transitions do)."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    # Age phase_entered_at
+    await _age_rendicion(db, rid, "5 days")
+    # Update amount (non-state field)
+    resp = await client.patch(
+        f"/api/dgi/data/rendiciones/{rid}",
+        json={"amount": 999999.99},
+        headers=auth(dgi_token),
+    )
+    assert resp.status_code == 200
+    # days_in_state should still reflect the aged phase_entered_at, not NOW()
+    detail_resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    detail = detail_resp.json()
+    assert detail["days_in_state"] > 4, f"days_in_state = {detail['days_in_state']} (should be ~5)"
+
+
+@pytest.mark.asyncio
+async def test_cycle_overdue_flag(client, dgi_token, db):
+    """total_cycle_days and cycle_overdue track CGR 14-day institutional target."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    # Age created_at to exceed 14-day cycle target
+    await db.execute(
+        text("UPDATE core.rendition SET created_at = NOW() - INTERVAL '15 days' WHERE id = :id"),
+        {"id": rid},
+    )
+    await db.commit()
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    detail = resp.json()
+    assert detail["total_cycle_days"] > 14
+    assert detail["cycle_overdue"] is True

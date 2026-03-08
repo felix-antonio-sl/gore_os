@@ -244,6 +244,7 @@ class RendicionItem(BaseModel):
     ipr_codigo_bip: str | None
     ipr_id: UUID | None
     renderer_name: str | None
+    responsible_name: str | None = None
     state_code: str | None = None
     state_label: str | None
     period_start: date | None
@@ -257,6 +258,7 @@ class RendicionItem(BaseModel):
 
 class RendicionUpdate(BaseModel):
     state_id: UUID | None = None
+    responsible_id: UUID | None = None
     period_start: date | None = None
     period_end: date | None = None
     submitted_at: datetime | None = None
@@ -286,7 +288,11 @@ class RendicionHistoryEntry(BaseModel):
 class RendicionDetail(RendicionItem):
     agreement_id: UUID | None = None
     renderer_id: UUID | None = None
+    responsible_id: UUID | None = None
     sla_days: int | None = None
+    phase_entered_at: datetime | None = None
+    total_cycle_days: float | None = None
+    cycle_overdue: bool = False
     metadata: dict | None = None
     created_at: datetime | None = None
     history: list[RendicionHistoryEntry] = []
