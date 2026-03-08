@@ -58,6 +58,7 @@ async def cleanup_test_artifacts(db: AsyncSession):
     await db.execute(
         text("DELETE FROM core.dgi_initiative WHERE name LIKE 'Test Initiative %'")
     )
+    await db.execute(text("DELETE FROM core.budget_cycle_tracking WHERE fiscal_year IN (2025, 2026, 2027)"))
     await db.commit()
 
 

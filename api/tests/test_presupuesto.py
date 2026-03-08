@@ -177,3 +177,94 @@ async def test_encargado_cannot_create(client, encargado_token, catalog):
         headers=auth(encargado_token),
     )
     assert resp.status_code == 403
+
+
+# --- Budget Cycle Timeline Tests (HΩ-15) ---
+
+async def test_list_milestones(client, regional_token):
+    """GET /api/presupuesto/ciclo/hitos returns 17 seed milestones."""
+    resp = await client.get("/api/presupuesto/ciclo/hitos", headers=auth(regional_token))
+    assert resp.status_code == 200
+    data = resp.json()
+    assert len(data) == 17
+    assert data[0]["ordinal"] == 1
+    assert data[0]["phase"] == "T-1"
+    assert data[-1]["ordinal"] == 17
+
+
+async def test_initialize_cycle(client, regional_token):
+    """POST /api/presupuesto/ciclo/2026 creates tracking rows for all 17 milestones."""
+    resp = await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    assert resp.status_code == 201, resp.text
+    data = resp.json()
+    assert data["fiscal_year"] == 2026
+    assert data["total_milestones"] == 17
+    assert data["completed"] == 0
+    assert data["pendiente"] == 17
+
+
+async def test_initialize_cycle_idempotent(client, regional_token):
+    """POST /api/presupuesto/ciclo/2027 is idempotent (second call returns same data)."""
+    resp1 = await client.post("/api/presupuesto/ciclo/2027", headers=auth(regional_token))
+    assert resp1.status_code == 201
+    resp2 = await client.post("/api/presupuesto/ciclo/2027", headers=auth(regional_token))
+    assert resp2.status_code == 200
+    assert resp2.json()["total_milestones"] == 17
+
+
+async def test_get_cycle_timeline(client, regional_token):
+    """GET /api/presupuesto/ciclo/2026 returns timeline with all milestones."""
+    await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    resp = await client.get("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    assert resp.status_code == 200
+    data = resp.json()
+    assert len(data) == 17
+    assert data[0]["status"] == "PENDIENTE"
+    assert data[0]["phase"] == "T-1"
+
+
+async def test_update_milestone_status(client, regional_token):
+    """PATCH milestone tracking to mark as COMPLETADO."""
+    await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    timeline = (await client.get("/api/presupuesto/ciclo/2026", headers=auth(regional_token))).json()
+    first_id = timeline[0]["id"]
+
+    resp = await client.patch(
+        f"/api/presupuesto/ciclo/tracking/{first_id}",
+        json={"status": "COMPLETADO"},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200
+    assert resp.json()["status"] == "COMPLETADO"
+    assert resp.json()["completed_at"] is not None
+
+
+async def test_update_milestone_invalid_status(client, regional_token):
+    """PATCH with invalid status returns 422."""
+    await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    timeline = (await client.get("/api/presupuesto/ciclo/2026", headers=auth(regional_token))).json()
+    first_id = timeline[0]["id"]
+
+    resp = await client.patch(
+        f"/api/presupuesto/ciclo/tracking/{first_id}",
+        json={"status": "INVALIDO"},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 422
+
+
+async def test_encargado_cannot_modify_cycle(client, encargado_token):
+    """ENCARGADO cannot initialize or modify cycle."""
+    resp = await client.post("/api/presupuesto/ciclo/2026", headers=auth(encargado_token))
+    assert resp.status_code == 403
+
+
+async def test_cycle_summary(client, regional_token):
+    """GET /api/presupuesto/ciclo/2026/resumen returns completion stats."""
+    await client.post("/api/presupuesto/ciclo/2026", headers=auth(regional_token))
+    resp = await client.get("/api/presupuesto/ciclo/2026/resumen", headers=auth(regional_token))
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["fiscal_year"] == 2026
+    assert data["total_milestones"] == 17
+    assert data["completion_pct"] == 0.0

@@ -1,5 +1,6 @@
 import math
 from fastapi import APIRouter, Depends, Query, HTTPException, status
+from fastapi.responses import JSONResponse
 from uuid import UUID
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,6 +18,10 @@ from app.schemas.presupuesto import (
     CarryoverItem,
     BudgetCommitmentItem,
     BudgetCommitmentCreate,
+    BudgetCycleMilestoneItem,
+    BudgetCycleTrackingItem,
+    BudgetCycleTrackingUpdate,
+    BudgetCycleSummary,
 )
 
 router = APIRouter(prefix="/api/presupuesto", tags=["presupuesto"])
@@ -634,6 +639,200 @@ async def create_cdp(
     await db.commit()
     row = result.mappings().first()
     return {"id": row["id"], "commitment_number": row["commitment_number"]}
+
+
+# ---------------------------------------------------------------------------
+# Budget Cycle Timeline (TP-05 / HΩ-15)
+# ---------------------------------------------------------------------------
+
+_VALID_CYCLE_STATUSES = {"PENDIENTE", "EN_CURSO", "COMPLETADO", "OMITIDO"}
+
+
+@router.get("/ciclo/hitos", response_model=list[BudgetCycleMilestoneItem])
+async def list_cycle_milestones(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all 17 standard budget cycle milestones (parametric TP-05)."""
+    result = await db.execute(
+        text("""
+            SELECT id, phase, quarter, ordinal, month_label, name, responsible, deliverable
+            FROM core.budget_cycle_milestone
+            ORDER BY ordinal
+        """)
+    )
+    return [BudgetCycleMilestoneItem(**dict(r)) for r in result.mappings().all()]
+
+
+@router.post("/ciclo/{fiscal_year}", status_code=201)
+async def initialize_cycle(
+    fiscal_year: int,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Initialize tracking rows for all milestones in a fiscal year. Idempotent."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR")
+
+    if fiscal_year < 2020 or fiscal_year > 2040:
+        raise HTTPException(status_code=422, detail="Año fiscal fuera de rango (2020-2040)")
+
+    # Check if already initialized
+    existing = (await db.execute(
+        text("SELECT COUNT(*) FROM core.budget_cycle_tracking WHERE fiscal_year = :fy"),
+        {"fy": fiscal_year},
+    )).scalar()
+
+    if existing and existing > 0:
+        summary = await _cycle_summary(db, fiscal_year)
+        return JSONResponse(content=summary, status_code=200)
+
+    # Insert tracking row for each milestone
+    await db.execute(
+        text("""
+            INSERT INTO core.budget_cycle_tracking (milestone_id, fiscal_year)
+            SELECT id, :fy FROM core.budget_cycle_milestone
+            ORDER BY ordinal
+            ON CONFLICT (milestone_id, fiscal_year) DO NOTHING
+        """),
+        {"fy": fiscal_year},
+    )
+    await db.commit()
+
+    return await _cycle_summary(db, fiscal_year)
+
+
+@router.get("/ciclo/{fiscal_year}", response_model=list[BudgetCycleTrackingItem])
+async def get_cycle_timeline(
+    fiscal_year: int,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Get the full timeline for a fiscal year with tracking status."""
+    result = await db.execute(
+        text("""
+            SELECT t.id, t.milestone_id, m.ordinal, m.phase, m.quarter,
+                   m.month_label, m.name, m.responsible, m.deliverable,
+                   t.fiscal_year, t.status, t.planned_date, t.completed_at,
+                   t.notes,
+                   CASE WHEN p.id IS NOT NULL
+                        THEN p.names || ' ' || p.paternal_surname
+                        ELSE NULL END AS completed_by_name
+            FROM core.budget_cycle_tracking t
+            JOIN core.budget_cycle_milestone m ON m.id = t.milestone_id
+            LEFT JOIN core."user" u ON u.id = t.completed_by_id
+            LEFT JOIN core.person p ON p.id = u.person_id
+            WHERE t.fiscal_year = :fy
+            ORDER BY m.ordinal
+        """),
+        {"fy": fiscal_year},
+    )
+    rows = result.mappings().all()
+    if not rows:
+        raise HTTPException(status_code=404, detail=f"Ciclo {fiscal_year} no inicializado")
+    return [BudgetCycleTrackingItem(**dict(r)) for r in rows]
+
+
+@router.get("/ciclo/{fiscal_year}/resumen", response_model=BudgetCycleSummary)
+async def get_cycle_summary(
+    fiscal_year: int,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Get completion summary for a fiscal year cycle."""
+    summary = await _cycle_summary(db, fiscal_year)
+    return summary
+
+
+@router.patch("/ciclo/tracking/{tracking_id}")
+async def update_cycle_tracking(
+    tracking_id: UUID,
+    body: BudgetCycleTrackingUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Update a milestone tracking entry (status, planned_date, notes)."""
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "JEFE_DIVISION")
+
+    # Validate status if provided
+    if body.status and body.status not in _VALID_CYCLE_STATUSES:
+        raise HTTPException(status_code=422, detail=f"Status inválido. Valores: {_VALID_CYCLE_STATUSES}")
+
+    # Build dynamic SET clause
+    sets = []
+    params: dict = {"tid": str(tracking_id)}
+
+    if body.status is not None:
+        sets.append("status = :status")
+        params["status"] = body.status
+        if body.status == "COMPLETADO":
+            sets.append("completed_at = NOW()")
+            sets.append("completed_by_id = :uid")
+            params["uid"] = str(user["id"])
+        elif body.status in ("PENDIENTE", "EN_CURSO"):
+            sets.append("completed_at = NULL")
+            sets.append("completed_by_id = NULL")
+
+    if body.planned_date is not None:
+        sets.append("planned_date = :planned_date")
+        params["planned_date"] = str(body.planned_date)
+
+    if body.notes is not None:
+        sets.append("notes = :notes")
+        params["notes"] = body.notes
+
+    if not sets:
+        raise HTTPException(status_code=422, detail="Sin campos para actualizar")
+
+    sets.append("updated_at = NOW()")
+    set_clause = ", ".join(sets)
+
+    result = await db.execute(
+        text(f"""
+            UPDATE core.budget_cycle_tracking SET {set_clause}
+            WHERE id = :tid
+            RETURNING id, milestone_id, fiscal_year, status, planned_date,
+                      completed_at, notes
+        """),
+        params,
+    )
+    row = result.mappings().first()
+    if not row:
+        raise HTTPException(status_code=404, detail="Tracking entry not found")
+
+    await db.commit()
+    return dict(row)
+
+
+async def _cycle_summary(db: AsyncSession, fiscal_year: int) -> dict:
+    """Build cycle summary response."""
+    result = await db.execute(
+        text("""
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE status = 'COMPLETADO') AS completed,
+                COUNT(*) FILTER (WHERE status = 'EN_CURSO') AS en_curso,
+                COUNT(*) FILTER (WHERE status = 'PENDIENTE') AS pendiente,
+                COUNT(*) FILTER (WHERE status = 'OMITIDO') AS omitido
+            FROM core.budget_cycle_tracking
+            WHERE fiscal_year = :fy
+        """),
+        {"fy": fiscal_year},
+    )
+    row = result.mappings().first()
+    if not row or row["total"] == 0:
+        raise HTTPException(status_code=404, detail=f"Ciclo {fiscal_year} no inicializado")
+
+    total = row["total"]
+    completed = row["completed"]
+    return {
+        "fiscal_year": fiscal_year,
+        "total_milestones": total,
+        "completed": completed,
+        "en_curso": row["en_curso"],
+        "pendiente": row["pendiente"],
+        "omitido": row["omitido"],
+        "completion_pct": round(completed / total * 100, 1) if total > 0 else 0.0,
+    }
 
 
 # ---------------------------------------------------------------------------
