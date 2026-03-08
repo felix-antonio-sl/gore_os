@@ -15,6 +15,7 @@ from app.schemas.ipr_party import IprPartyCreate, IprPartyItem
 from app.schemas.ipr_territory import IprTerritoryCreate, IprTerritoryItem
 from app.schemas.ipr_milestone import IprMilestoneCreate, IprMilestoneUpdate, IprMilestoneItem
 from app.schemas.evaluation import EvaluationAssignmentCreate, EvaluationAssignmentUpdate, EvaluationAssignmentItem
+from app.schemas.kinship import KinshipDeclarationCreate, KinshipDeclarationItem, KinshipDeclarationValidate
 from app.schemas.common import PaginatedResponse
 from app.routers.presupuesto import check_glosa_rules, check_glosa07_transfer_limits
 
@@ -2721,3 +2722,213 @@ async def update_evaluation(
         raise HTTPException(status_code=404, detail="Evaluación no encontrada")
     await db.commit()
     return {"message": "Evaluación actualizada"}
+
+
+# ---------------------------------------------------------------------------
+# HΩ-02: Kinship declarations (parentesco)
+# ---------------------------------------------------------------------------
+
+_KINSHIP_WRITE_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL"}
+
+
+async def _get_kinship_declaration(decl_id, db: AsyncSession) -> dict:
+    """Fetch a single kinship declaration with joined person names."""
+    row = (await db.execute(
+        text("""
+            SELECT kd.id, kd.ipr_id, kd.person_id,
+                   (p.names || ' ' || p.paternal_surname) AS person_name,
+                   p.rut AS person_rut,
+                   kd.declaration_type, kd.declares_no_conflict,
+                   kd.related_authority_id,
+                   CASE WHEN kd.related_authority_id IS NOT NULL
+                        THEN (SELECT pa.names || ' ' || pa.paternal_surname
+                              FROM core.person pa WHERE pa.id = kd.related_authority_id)
+                   END AS related_authority_name,
+                   kd.relationship_type, kd.relationship_degree,
+                   kd.declared_at, kd.validated_by_id, kd.validated_at
+            FROM core.kinship_declaration kd
+            JOIN core.person p ON p.id = kd.person_id
+            WHERE kd.id = CAST(:id AS uuid) AND kd.deleted_at IS NULL
+        """),
+        {"id": str(decl_id)},
+    )).mappings().first()
+    return dict(row)
+
+
+@router.get("/{ipr_id}/parentesco", response_model=list[KinshipDeclarationItem])
+async def list_kinship_declarations(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all kinship declarations for an IPR."""
+    result = await db.execute(
+        text("""
+            SELECT kd.id, kd.ipr_id, kd.person_id,
+                   (p.names || ' ' || p.paternal_surname) AS person_name,
+                   p.rut AS person_rut,
+                   kd.declaration_type, kd.declares_no_conflict,
+                   kd.related_authority_id,
+                   CASE WHEN kd.related_authority_id IS NOT NULL
+                        THEN (SELECT pa.names || ' ' || pa.paternal_surname
+                              FROM core.person pa WHERE pa.id = kd.related_authority_id)
+                   END AS related_authority_name,
+                   kd.relationship_type, kd.relationship_degree,
+                   kd.declared_at, kd.validated_by_id, kd.validated_at
+            FROM core.kinship_declaration kd
+            JOIN core.person p ON p.id = kd.person_id
+            WHERE kd.ipr_id = :ipr_id AND kd.deleted_at IS NULL
+            ORDER BY kd.declared_at DESC
+        """),
+        {"ipr_id": str(ipr_id)},
+    )
+    return [dict(r) for r in result.mappings().all()]
+
+
+@router.post("/{ipr_id}/parentesco", response_model=KinshipDeclarationItem, status_code=201)
+async def create_kinship_declaration(
+    ipr_id: UUID,
+    body: KinshipDeclarationCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Create a kinship declaration for an IPR."""
+    _require_roles(user, *_KINSHIP_WRITE_ROLES)
+
+    # Validate declaration_type
+    if body.declaration_type not in ("EVALUADOR", "REPRESENTANTE_LEGAL", "PERSONAL_CONTRATADO"):
+        raise HTTPException(status_code=422, detail="declaration_type inválido")
+
+    # If declares conflict, require authority details
+    if not body.declares_no_conflict:
+        if not body.related_authority_id or not body.relationship_type or body.relationship_degree is None:
+            raise HTTPException(
+                status_code=422,
+                detail="Si declara conflicto, debe indicar autoridad relacionada, tipo y grado de parentesco",
+            )
+
+    # Verify person exists
+    person = (await db.execute(
+        text("SELECT id FROM core.person WHERE id = CAST(:pid AS uuid) AND is_active = true"),
+        {"pid": str(body.person_id)},
+    )).mappings().first()
+    if not person:
+        raise HTTPException(status_code=404, detail="Persona no encontrada")
+
+    # Verify related authority is actually a GORE authority (if provided)
+    if body.related_authority_id:
+        authority_check = (await db.execute(
+            text("""
+                SELECT u.id FROM core."user" u
+                JOIN ref.category r ON u.system_role_id = r.id
+                WHERE u.person_id = CAST(:pid AS uuid) AND u.is_active = true
+                  AND r.code IN ('GOBERNADOR', 'CONSEJERO_REGIONAL', 'SECRETARIO_EJECUTIVO',
+                                 'ADMIN_REGIONAL', 'JEFE_DIVISION')
+            """),
+            {"pid": str(body.related_authority_id)},
+        )).mappings().first()
+        if not authority_check:
+            raise HTTPException(
+                status_code=422,
+                detail="La persona indicada como autoridad no tiene un rol de autoridad GORE",
+            )
+
+    try:
+        row = (await db.execute(
+            text("""
+                INSERT INTO core.kinship_declaration (
+                    ipr_id, person_id, declaration_type, declares_no_conflict,
+                    related_authority_id, relationship_type, relationship_degree
+                ) VALUES (
+                    CAST(:ipr_id AS uuid), CAST(:person_id AS uuid), :declaration_type,
+                    :declares_no_conflict, CAST(:related_authority_id AS uuid),
+                    :relationship_type, :relationship_degree
+                )
+                RETURNING id, declared_at, created_at
+            """),
+            {
+                "ipr_id": str(ipr_id),
+                "person_id": str(body.person_id),
+                "declaration_type": body.declaration_type,
+                "declares_no_conflict": body.declares_no_conflict,
+                "related_authority_id": str(body.related_authority_id) if body.related_authority_id else None,
+                "relationship_type": body.relationship_type,
+                "relationship_degree": body.relationship_degree,
+            },
+        )).mappings().first()
+        await db.commit()
+    except Exception as exc:
+        await db.rollback()
+        if "uq_kinship_decl" in str(exc):
+            raise HTTPException(
+                status_code=409,
+                detail="Ya existe una declaración de esta persona con este tipo para este IPR",
+            )
+        raise
+
+    # Re-fetch full item
+    return await _get_kinship_declaration(row["id"], db)
+
+
+@router.patch("/{ipr_id}/parentesco/{decl_id}", response_model=KinshipDeclarationItem)
+async def validate_kinship_declaration(
+    ipr_id: UUID,
+    decl_id: UUID,
+    body: KinshipDeclarationValidate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Validate (or invalidate) a kinship declaration. Admin only."""
+    _require_roles(user, "ADMIN_SISTEMA")
+
+    existing = (await db.execute(
+        text("""
+            SELECT id FROM core.kinship_declaration
+            WHERE id = CAST(:id AS uuid) AND ipr_id = CAST(:ipr_id AS uuid) AND deleted_at IS NULL
+        """),
+        {"id": str(decl_id), "ipr_id": str(ipr_id)},
+    )).mappings().first()
+    if not existing:
+        raise HTTPException(status_code=404, detail="Declaración no encontrada")
+
+    if body.validated:
+        await db.execute(
+            text("""
+                UPDATE core.kinship_declaration
+                SET validated_by_id = CAST(:uid AS uuid), validated_at = now(), updated_at = now()
+                WHERE id = CAST(:id AS uuid)
+            """),
+            {"id": str(decl_id), "uid": str(user["id"])},
+        )
+    else:
+        await db.execute(
+            text("""
+                UPDATE core.kinship_declaration
+                SET validated_by_id = NULL, validated_at = NULL, updated_at = now()
+                WHERE id = CAST(:id AS uuid)
+            """),
+            {"id": str(decl_id)},
+        )
+    await db.commit()
+    return await _get_kinship_declaration(decl_id, db)
+
+
+@router.delete("/{ipr_id}/parentesco/{decl_id}", status_code=204)
+async def delete_kinship_declaration(
+    ipr_id: UUID,
+    decl_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Soft-delete a kinship declaration. Admin only."""
+    _require_roles(user, "ADMIN_SISTEMA")
+    result = await db.execute(
+        text("""
+            UPDATE core.kinship_declaration SET deleted_at = now(), updated_at = now()
+            WHERE id = CAST(:id AS uuid) AND ipr_id = CAST(:ipr_id AS uuid) AND deleted_at IS NULL
+        """),
+        {"id": str(decl_id), "ipr_id": str(ipr_id)},
+    )
+    if result.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Declaración no encontrada")
+    await db.commit()
