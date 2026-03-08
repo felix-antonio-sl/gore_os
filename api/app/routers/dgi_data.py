@@ -11,7 +11,7 @@ from app.schemas.dgi import (
     IndicatorItem, DataSourceItem,
     OrganizacionItem, PersonaItem, TerritorioItem, EventoItem,
     RendicionItem, RendicionDetail, RendicionCreate, RendicionUpdate,
-    RendicionHistoryEntry,
+    RendicionHistoryEntry, RendicionPhaseEntry,
 )
 from app.core.security import DGI_ROLES, WRITE_OPERATIONAL_ROLES
 
@@ -798,6 +798,102 @@ async def list_rendiciones_vencidas(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/dgi/data/rendiciones/{rendicion_id}/ciclo — Phase timeline
+# ---------------------------------------------------------------------------
+
+@router.get("/rendiciones/{rendicion_id}/ciclo")
+async def get_rendicion_ciclo(
+    rendicion_id: UUID, user: CurrentUser, db: AsyncSession = Depends(get_db),
+):
+    """Phase-by-phase cycle view of a rendition's lifecycle with SLA tracking."""
+    row = (await db.execute(
+        text("""
+            SELECT r.id, r.created_at, st.code AS state_code
+            FROM core.rendition r
+            LEFT JOIN ref.category st ON st.id = r.state_id
+            WHERE r.id = :id AND r.deleted_at IS NULL
+        """),
+        {"id": str(rendicion_id)},
+    )).mappings().first()
+    if not row:
+        raise HTTPException(status_code=404, detail="Rendición no encontrada")
+
+    history_rows = (await db.execute(
+        text("""
+            SELECT h.changed_at,
+                   new_cat.code  AS new_state,
+                   new_cat.label AS new_state_label
+            FROM core.rendition_history h
+            JOIN ref.category new_cat ON h.new_state_id = new_cat.id
+            WHERE h.rendition_id = :rid
+            ORDER BY h.changed_at ASC
+        """),
+        {"rid": str(rendicion_id)},
+    )).mappings().all()
+
+    now = datetime.now(timezone.utc)
+    phases: list[dict] = []
+
+    if history_rows:
+        # Phase 0: PENDIENTE from creation to first transition
+        first_ts = history_rows[0]["changed_at"]
+        d0 = (first_ts - row["created_at"]).total_seconds() / 86400.0
+        sla0 = _RENDICION_SLA_DAYS.get("PENDIENTE")
+        phases.append({
+            "phase_code": "PENDIENTE",
+            "phase_label": "Pendiente",
+            "entered_at": row["created_at"],
+            "exited_at": first_ts,
+            "duration_days": round(d0, 1),
+            "sla_days": sla0,
+            "is_overdue": sla0 is not None and d0 > sla0,
+        })
+
+        for i, h in enumerate(history_rows):
+            entered = h["changed_at"]
+            if i + 1 < len(history_rows):
+                exited = history_rows[i + 1]["changed_at"]
+                dur = (exited - entered).total_seconds() / 86400.0
+            else:
+                exited = None
+                dur = (now - entered).total_seconds() / 86400.0
+            sla = _RENDICION_SLA_DAYS.get(h["new_state"])
+            phases.append({
+                "phase_code": h["new_state"],
+                "phase_label": h["new_state_label"],
+                "entered_at": entered,
+                "exited_at": exited,
+                "duration_days": round(dur, 1),
+                "sla_days": sla,
+                "is_overdue": sla is not None and dur > sla,
+            })
+    else:
+        # No transitions yet — still in PENDIENTE
+        dur = (now - row["created_at"]).total_seconds() / 86400.0
+        sla0 = _RENDICION_SLA_DAYS.get("PENDIENTE")
+        phases.append({
+            "phase_code": "PENDIENTE",
+            "phase_label": "Pendiente",
+            "entered_at": row["created_at"],
+            "exited_at": None,
+            "duration_days": round(dur, 1),
+            "sla_days": sla0,
+            "is_overdue": sla0 is not None and dur > sla0,
+        })
+
+    total_elapsed = (now - row["created_at"]).total_seconds() / 86400.0
+    overdue_count = sum(1 for p in phases if p["is_overdue"])
+
+    return {
+        "rendicion_id": rendicion_id,
+        "current_state": row["state_code"],
+        "total_elapsed_days": round(total_elapsed, 1),
+        "phases": phases,
+        "overdue_count": overdue_count,
+    }
+
+
+# ---------------------------------------------------------------------------
 # GET /api/dgi/data/rendiciones/{rendicion_id} — Detail
 # ---------------------------------------------------------------------------
 
@@ -840,6 +936,7 @@ async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession 
             and row["days_in_state"] is not None
             and float(row["days_in_state"]) > _RENDICION_SLA_DAYS[row["state_code"]]
         ),
+        sla_days=_RENDICION_SLA_DAYS.get(row["state_code"]),
         metadata=dict(row["metadata"]) if row["metadata"] else None,
         created_at=row["created_at"],
         history=[RendicionHistoryEntry(**h) for h in history],
@@ -915,10 +1012,12 @@ _RENDICION_TRANSITION_ROLES: dict[tuple[str, str], set[str]] = {
     ("OBSERVADA", "EN_REVISION_RTF"):       _RENDICION_WRITE_ROLES,
 }
 
-# SLA days per reviewable state
+# SLA days per reviewable state (CGR normative)
 _RENDICION_SLA_DAYS: dict[str, int] = {
     "EN_REVISION_RTF": 7,
+    "VISADA_RTF": 1,
     "EN_REVISION_UCR": 2,
+    "OBSERVADA": 15,
 }
 
 RENDICION_UPDATABLE = {"state_id", "period_start", "period_end", "submitted_at", "amount"}

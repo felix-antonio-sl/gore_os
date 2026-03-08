@@ -311,3 +311,103 @@ async def test_amount_update_via_patch(client, dgi_token, db):
     assert resp.status_code == 200
     detail_resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
     assert detail_resp.json()["amount"] == 1234567.89
+
+
+# ---------------------------------------------------------------------------
+# SLA extended (4 reviewable states) + Ciclo endpoint
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_sla_days_in_detail(client, dgi_token, db):
+    """Detail response includes sla_days for current state."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    detail = resp.json()
+    assert detail["sla_days"] == 7  # EN_REVISION_RTF SLA
+
+
+@pytest.mark.asyncio
+async def test_visada_rtf_overdue(client, dgi_token, db):
+    """VISADA_RTF with >1 day is overdue (new SLA state)."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    # Age the record past 1-day SLA
+    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
+    await db.execute(
+        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '2 days' WHERE id = :id"),
+        {"id": rid},
+    )
+    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
+    await db.commit()
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    detail = resp.json()
+    assert detail["sla_days"] == 1
+    assert detail["is_overdue"] is True
+
+
+@pytest.mark.asyncio
+async def test_observada_overdue(client, dgi_token, regional_token, db):
+    """OBSERVADA with >15 days is overdue (new SLA state)."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "OBSERVADA", db)
+    # Age past 15-day SLA
+    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
+    await db.execute(
+        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '16 days' WHERE id = :id"),
+        {"id": rid},
+    )
+    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
+    await db.commit()
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    assert resp.json()["is_overdue"] is True
+    assert resp.json()["sla_days"] == 15
+
+
+@pytest.mark.asyncio
+async def test_vencidas_includes_visada_rtf(client, dgi_token, db):
+    """Vencidas endpoint now captures VISADA_RTF overdue renditions."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
+    await db.execute(
+        text("UPDATE core.rendition SET updated_at = NOW() - INTERVAL '3 days' WHERE id = :id"),
+        {"id": rid},
+    )
+    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
+    await db.commit()
+    resp = await client.get("/api/dgi/data/rendiciones/vencidas?page_size=100", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    ids = [i["id"] for i in resp.json()["items"]]
+    assert rid in ids
+
+
+@pytest.mark.asyncio
+async def test_ciclo_endpoint(client, dgi_token, db):
+    """Ciclo endpoint returns phase timeline with SLA info."""
+    rid = await _create_rendicion(client, dgi_token, db)
+    await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
+    await _transition(client, dgi_token, rid, "VISADA_RTF", db)
+    resp = await client.get(f"/api/dgi/data/rendiciones/{rid}/ciclo", headers=auth(dgi_token))
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["current_state"] == "VISADA_RTF"
+    assert len(data["phases"]) == 3  # PENDIENTE, EN_REVISION_RTF, VISADA_RTF
+    # Check phase structure
+    pendiente = data["phases"][0]
+    assert pendiente["phase_code"] == "PENDIENTE"
+    assert pendiente["exited_at"] is not None
+    assert pendiente["sla_days"] is None  # PENDIENTE has no SLA
+    rtf = data["phases"][1]
+    assert rtf["phase_code"] == "EN_REVISION_RTF"
+    assert rtf["sla_days"] == 7
+    visada = data["phases"][2]
+    assert visada["phase_code"] == "VISADA_RTF"
+    assert visada["sla_days"] == 1
+    assert visada["exited_at"] is None  # current phase

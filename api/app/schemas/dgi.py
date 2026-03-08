@@ -286,9 +286,20 @@ class RendicionHistoryEntry(BaseModel):
 class RendicionDetail(RendicionItem):
     agreement_id: UUID | None = None
     renderer_id: UUID | None = None
+    sla_days: int | None = None
     metadata: dict | None = None
     created_at: datetime | None = None
     history: list[RendicionHistoryEntry] = []
+
+
+class RendicionPhaseEntry(BaseModel):
+    phase_code: str
+    phase_label: str | None = None
+    entered_at: datetime
+    exited_at: datetime | None = None
+    duration_days: float | None = None
+    sla_days: int | None = None
+    is_overdue: bool = False
 
 
 class ReportCreate(BaseModel):
