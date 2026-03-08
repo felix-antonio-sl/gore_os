@@ -40,6 +40,15 @@ async def cleanup_test_artifacts(db: AsyncSession):
     """Remove persistent artifacts created by stateful integration tests."""
     await db.execute(
         text("""
+            DELETE FROM core.kinship_declaration
+            WHERE ipr_id IN (
+                SELECT id FROM core.ipr WHERE codigo_bip LIKE 'KIN-%'
+            )
+        """)
+    )
+    await db.execute(text("DELETE FROM core.ipr WHERE codigo_bip LIKE 'KIN-%'"))
+    await db.execute(
+        text("""
             DELETE FROM core.ipr_territory
             WHERE ipr_id IN (
                 SELECT id FROM core.ipr WHERE codigo_bip LIKE 'TRULE-%'
