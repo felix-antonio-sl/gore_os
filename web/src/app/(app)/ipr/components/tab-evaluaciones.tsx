@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -42,18 +42,18 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
   const [resultScore, setResultScore] = useState("");
   const [resultSubmitting, setResultSubmitting] = useState(false);
 
-  const loadEvaluaciones = () => {
+  const loadEvaluaciones = useCallback(() => {
     setLoading(true);
     api
       .get<EvaluationAssignment[]>(`/api/ipr/${iprId}/evaluaciones`)
       .then(setEvaluaciones)
       .catch(() => setEvaluaciones([]))
       .finally(() => setLoading(false));
-  };
+  }, [iprId]);
 
   useEffect(() => {
     loadEvaluaciones();
-  }, [iprId]);
+  }, [loadEvaluaciones]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();

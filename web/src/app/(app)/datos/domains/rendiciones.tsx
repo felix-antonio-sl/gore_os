@@ -81,16 +81,6 @@ const STATE_ACTIONS: Record<string, StateAction[]> = {
   ],
 };
 
-const stateBadgeColor: Record<string, string> = {
-  PENDIENTE: "bg-gray-100 text-gray-700 border-gray-300",
-  EN_REVISION_RTF: "bg-amber-50 text-amber-700 border-amber-300",
-  VISADA_RTF: "bg-blue-50 text-blue-700 border-blue-300",
-  EN_REVISION_UCR: "bg-indigo-50 text-indigo-700 border-indigo-300",
-  OBSERVADA: "bg-orange-50 text-orange-700 border-orange-300",
-  APROBADA: "bg-green-50 text-green-700 border-green-300",
-  RECHAZADA: "bg-red-50 text-red-700 border-red-300",
-};
-
 function RendicionDetailPanel({ item, onClose, onRefresh }: { item: unknown; onClose: () => void; onRefresh?: () => void }) {
   const r = item as RendicionItem;
   const { user } = useAuth();

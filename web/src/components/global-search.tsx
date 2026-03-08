@@ -36,7 +36,7 @@ const ENTITY_ROUTES: Record<string, (id: string) => string> = {
   ipr: (id) => `/ipr/${id}`,
   compromiso: (id) => `/compromisos?id=${id}`,
   problema: (id) => `/problemas?id=${id}`,
-  persona: (id) => `/datos?dominio=personas`,
+  persona: () => `/datos?dominio=personas`,
 };
 
 interface GlobalSearchProps {

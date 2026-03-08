@@ -34,7 +34,6 @@ export default function NuevoPresupuestoPage() {
 
   const [divisions, setDivisions] = useState<DivisionOption[]>([]);
   const [programTypes, setProgramTypes] = useState<CategoryOption[]>([]);
-  const [fundingSources, setFundingSources] = useState<CategoryOption[]>([]);
   const [subtitles, setSubtitles] = useState<CategoryOption[]>([]);
 
   const [fiscalYear, setFiscalYear] = useState(String(new Date().getFullYear()));
@@ -43,7 +42,6 @@ export default function NuevoPresupuestoPage() {
   const [code, setCode] = useState("");
   const [programTypeId, setProgramTypeId] = useState("");
   const [subtitleId, setSubtitleId] = useState("");
-  const [fundingSourceId, setFundingSourceId] = useState("");
   const [initialBudget, setInitialBudget] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
@@ -54,7 +52,6 @@ export default function NuevoPresupuestoPage() {
   useEffect(() => {
     api.get<DivisionOption[]>("/api/catalogs/divisions").then(setDivisions).catch(() => {});
     api.get<CategoryOption[]>("/api/catalogs/categories/program_type").then(setProgramTypes).catch(() => {});
-    api.get<CategoryOption[]>("/api/catalogs/categories/funding_source").then(setFundingSources).catch(() => {});
     api.get<CategoryOption[]>("/api/catalogs/categories/budget_subtitle").then(setSubtitles).catch(() => {});
   }, []);
 

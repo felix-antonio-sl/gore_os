@@ -96,7 +96,7 @@ Key patterns:
 - `web/src/lib/api.ts` — singleton `ApiClient` with `get<T>()`, `post<T>()`, `patch<T>()`. Token in localStorage (`goreos_token`). Auto-redirect to `/login` on 401. On error, extracts `.detail` from FastAPI JSON error bodies automatically.
 - `web/src/lib/auth.tsx` — `AuthProvider` context, `useAuth()` hook returns `{user, loading, login, logout}`
 - `web/src/types/index.ts` — all TypeScript interfaces. `User.population` (`"operativa" | "dgi"`) drives sidebar/dashboard routing.
-- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (10 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones, Actos, Sesiones CORE) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones, Umbrales, Niveles SNI for ADMIN_SISTEMA) vs `dgiNav` (6 items: Home, Cartera, Alertas, Tablero, Datos, Informes) based on `user.population`
+- `web/src/components/sidebar.tsx` — conditional nav: `operationalNav` (10 items: Inicio, IPR, Compromisos, Problemas, Alertas, Presupuesto, Convenios, Reuniones, Actos, Sesiones CORE) + role-specific items (Mi División for JEFE_DIVISION, Mis Compromisos for ENCARGADO) + `adminOnlyNav` (Usuarios, Divisiones, Umbrales, Niveles SNI for ADMIN_SISTEMA) vs `dgiNav` (7 items: Home, Cartera, Alertas, Rendiciones, Tablero, Datos, Informes) based on `user.population`
 - `web/src/app/(app)/layout.tsx` — AppShell wrapper for authenticated routes
 - `web/src/app/(app)/dashboard/page.tsx` — detects population, renders operational dashboard or DGI cockpit component per role
 - `web/src/lib/format.ts` — shared formatting utilities (es-CL locale): `formatDate`, `formatDateTime`, `formatDateTimeShort`, `formatDateLong`, `formatCLP`, `formatCurrency`. All 21 frontend files import from here — never define local format functions.
@@ -167,7 +167,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules (28): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (8), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (9), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (18), `test_thresholds` (18), `test_track_enforcement` (20), `test_track_rules` (18), `test_ciclo24` (22).
+Test modules (28): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (10), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (12), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (18), `test_thresholds` (18), `test_track_enforcement` (20), `test_track_rules` (18), `test_ciclo24` (22).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -265,7 +265,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~134 API endpoints, 300 tests (295 pass + 4 skip), 28 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: ~132 API endpoints, 305 tests (301 pass + 4 skip), 28 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
 - HΩ-02 Parentesco 8% (kinship disqualification — not started)
@@ -328,3 +328,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
     - **C33**: `_check_c33_conservation` (F1→F2, conservation/reposition ratio, informational)
     - **SUBV8**: `_check_pagare_notarial` (F2→F3, ≥100% monto, ≥18mo), `_check_directorio_certificate` (F2→F3, cert freshness), `_check_morosos_sisrec` (F3→F4+F4→F5, executor overdue renditions), `_check_ranking_persistence` (F2→F3, informational)
     - **ALL**: `_check_evaluation_type_match` (F2→F3, informational), `_check_glosa06_single_purpose` (F1→F2, single MML purpose)
+47. **CDP creation**: `POST /api/presupuesto/{id}/cdps` creates a budget commitment with advisory-locked sequential number (`CDP-{year}-{seq:04d}`). Validates `amount ≤ available balance` (current - committed). Auto-sets status to EMITIDO. Updates `committed_amount` on the program. Schema: `BudgetCommitmentCreate(amount, description?, ipr_id?, agreement_id?)`.
+48. **Bulk cuotas**: `POST /api/convenios/{id}/cuotas/bulk` generates N installments. Schema: `BulkCuotaRequest(total_amount, num_installments, start_date, frequency_months=1)`. Distributes evenly with remainder on first cuota. Auto-increments from max existing `installment_number`. Route registered BEFORE `/{id}/cuotas` to avoid path conflicts. `_add_months()` helper uses `calendar.monthrange` for end-of-month safety.
+49. **Rendition table schema**: `core.rendition` DDL has only `agreement_id` (NOT NULL), `renderer_id` (NOT NULL), `state_id`, `period_start/end`, `submitted_at`. Columns `amount` and `ipr_id` were added by migrations (`wave10_sisrec`, `rendition_coproduct`). Table has NO `code` column — use `LEFT(r.id::text, 8)` for display identifiers.
+50. **Responsive with Radix portals**: `DrawerPanel` (Radix Sheet) renders via portals outside the DOM tree — CSS `display:none` on parent does NOT prevent the Sheet from opening. Use `window.matchMedia` with `isMobile` state to conditionally render the Sheet component. See `/datos/page.tsx` for reference.

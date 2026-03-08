@@ -41,7 +41,6 @@ export default function AlertasPage() {
 
   const [data, setData] = useState<PaginatedResponse<AlertaListItem> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [refreshKey, setRefreshKey] = useState(0);
 
   const nivel = searchParams.get("nivel") ?? "";
   const tipo = searchParams.get("tipo") ?? "";
@@ -106,7 +105,7 @@ export default function AlertasPage() {
     return () => {
       active = false;
     };
-  }, [nivel, tipo, soloActivas, dateFrom, dateTo, refreshKey]);
+  }, [nivel, tipo, soloActivas, dateFrom, dateTo]);
 
   const handleAttend = async (id: string) => {
     try {

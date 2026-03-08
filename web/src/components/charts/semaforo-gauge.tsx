@@ -24,7 +24,7 @@ const SIGNAL_LABEL: Record<string, string> = {
   ROJO: "Crítico",
 };
 
-export function SemaforoGauge({ signal, label, dimension }: Props) {
+export function SemaforoGauge({ signal, label }: Props) {
   const config = SIGNAL_CONFIG[signal as keyof typeof SIGNAL_CONFIG] ?? {
     color: "#9ca3af",
     value: 50,

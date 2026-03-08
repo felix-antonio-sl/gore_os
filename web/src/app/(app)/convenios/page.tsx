@@ -160,7 +160,6 @@ export default function ConveniosPage() {
     if (dateFrom) params.set("date_from", dateFrom);
     if (dateTo) params.set("date_to", dateTo);
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
     api
       .get<PaginatedResponse<ConvenioListItem>>(`/api/convenios?${params.toString()}`)

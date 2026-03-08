@@ -132,7 +132,6 @@ export default function PresupuestoPage() {
     if (division_id) params.set("division_id", division_id);
     if (search) params.set("search", search);
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoading(true);
     api
       .get<PaginatedResponse<PresupuestoListItem>>(`/api/presupuesto?${params.toString()}`)
