@@ -73,12 +73,14 @@ async def _transition(client, token, rid: str, target_code: str, db) -> int:
 
 async def _age_rendicion(db, rid: str, interval: str) -> None:
     await db.execute(text("ALTER TABLE core.rendition DISABLE TRIGGER trg_rendition_updated_at"))
-    await db.execute(
-        text(f"UPDATE core.rendition SET updated_at = NOW() - INTERVAL '{interval}', "
-             f"phase_entered_at = NOW() - INTERVAL '{interval}' WHERE id = :id"),
-        {"id": rid},
-    )
-    await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
+    try:
+        await db.execute(
+            text(f"UPDATE core.rendition SET updated_at = NOW() - INTERVAL '{interval}', "
+                 f"phase_entered_at = NOW() - INTERVAL '{interval}' WHERE id = :id"),
+            {"id": rid},
+        )
+    finally:
+        await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
     await db.commit()
 
 

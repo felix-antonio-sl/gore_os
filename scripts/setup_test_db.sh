@@ -38,6 +38,9 @@ docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/
 # Apply Ciclo 24 migrations (rankings columns + track thresholds)
 docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_ciclo24_rankings.sql
 
+# Apply SISREC 8-phase migration (TP-06 seed rows + escalation table)
+docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_sisrec_8phase.sql
+
 # Copy core parametric tables from production
 for tbl in core.financing_track core.financial_threshold core.sni_level_config; do
     docker exec goreos_db psql -U goreos -d goreos_model -c "COPY $tbl TO STDOUT" | \
