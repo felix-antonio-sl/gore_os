@@ -698,3 +698,29 @@ export interface EvaluationAssignment {
   rank_total: number | null;
   convocatoria_code: string | null;
 }
+
+export interface KinshipDeclaration {
+  id: string;
+  ipr_id: string;
+  person_id: string;
+  person_name: string;
+  person_rut: string | null;
+  declaration_type: string;
+  declares_no_conflict: boolean;
+  related_authority_id: string | null;
+  related_authority_name: string | null;
+  relationship_type: string | null;
+  relationship_degree: number | null;
+  declared_at: string;
+  validated_by_id: string | null;
+  validated_at: string | null;
+}
+
+export interface PersonRef {
+  id: string;
+  rut: string | null;
+  names: string;
+  paternal_surname: string;
+  maternal_surname: string | null;
+  organization_name: string | null;
+}

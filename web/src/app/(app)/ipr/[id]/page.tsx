@@ -34,6 +34,7 @@ import { TabTerritorio } from "../components/tab-territorio";
 import { TabHitos } from "../components/tab-hitos";
 import { TabResoluciones } from "../components/tab-resoluciones";
 import { TabEvaluaciones } from "../components/tab-evaluaciones";
+import { TabParentesco } from "../components/tab-parentesco";
 
 interface IprDetail {
   id: string;
@@ -510,6 +511,7 @@ export default function IprDetailPage() {
           <TabsTrigger value="hitos">Hitos</TabsTrigger>
           <TabsTrigger value="resoluciones">Resoluciones</TabsTrigger>
           <TabsTrigger value="evaluaciones">Evaluación</TabsTrigger>
+          <TabsTrigger value="parentesco">Parentesco</TabsTrigger>
         </TabsList>
 
         <TabsContent value="compromisos" className="mt-4">
@@ -554,6 +556,10 @@ export default function IprDetailPage() {
 
         <TabsContent value="evaluaciones" className="mt-4">
           <TabEvaluaciones iprId={id} canManage={!!canManageChildren} />
+        </TabsContent>
+
+        <TabsContent value="parentesco" className="mt-4">
+          <TabParentesco iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
       </Tabs>
 
