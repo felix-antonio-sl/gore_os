@@ -16,7 +16,7 @@ from app.schemas.ipr_territory import IprTerritoryCreate, IprTerritoryItem
 from app.schemas.ipr_milestone import IprMilestoneCreate, IprMilestoneUpdate, IprMilestoneItem
 from app.schemas.evaluation import EvaluationAssignmentCreate, EvaluationAssignmentUpdate, EvaluationAssignmentItem
 from app.schemas.common import PaginatedResponse
-from app.routers.presupuesto import check_glosa_rules
+from app.routers.presupuesto import check_glosa_rules, check_glosa07_transfer_limits
 
 router = APIRouter(prefix="/api/ipr", tags=["ipr"])
 
@@ -887,6 +887,48 @@ async def _check_glosa06_single_purpose(ipr_id: UUID, db: AsyncSession) -> dict 
     return None  # Exactly 1 — gate passes silently
 
 
+async def _check_glosa06_direct_executor(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """Glosa 06: GORE must be the direct executor (no delegation to third parties)."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "GLOSA06":
+        return None
+
+    # Check if GORE is registered as EJECUTOR in ipr_party
+    gore_executor = (await db.execute(
+        text("""
+            SELECT COUNT(*) AS cnt
+            FROM core.ipr_party ip
+            JOIN ref.category role ON role.id = ip.party_role_id
+            JOIN core.organization o ON o.id = ip.organization_id
+            WHERE ip.ipr_id = :ipr_id
+              AND role.code = 'EJECUTOR'
+              AND o.code = 'GORE-NUBLE'
+              AND ip.deleted_at IS NULL
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).scalar() or 0
+
+    if gore_executor == 0:
+        return {
+            "name": "glosa06_direct_executor",
+            "met": False,
+            "detail": (
+                "Glosa 06: GORE debe ser ejecutor directo. "
+                "Registre GORE-NUBLE como EJECUTOR en Partes del IPR."
+            ),
+        }
+
+    return None  # GORE is executor — gate passes silently
+
+
 # SLA constants for moroso check (same as dgi_data.py, defined locally to avoid circular import)
 async def _check_pagare_notarial(ipr_id: UUID, db: AsyncSession) -> dict | None:
     """HΩ-03: SUBV8 requires notarial promissory note covering 100% with ≥18m validity."""
@@ -1183,6 +1225,11 @@ async def _evaluate_phase_gates(
         if glosa06_gate is not None:
             gates.append(glosa06_gate)
 
+        # Glosa 06: GORE must be direct executor
+        glosa06_exec = await _check_glosa06_direct_executor(ipr_id, db)
+        if glosa06_exec is not None:
+            gates.append(glosa06_exec)
+
     elif transition == "F2->F3":
         row = (await db.execute(
             text("""
@@ -1275,6 +1322,10 @@ async def _evaluate_phase_gates(
         # Glosa rules: check budget composition limits
         glosa_gates = await check_glosa_rules(ipr_id, db)
         gates.extend(glosa_gates)
+
+        # Glosa 07: TRANSFER mechanism — admin/honorarios 5% caps
+        glosa07_gates = await check_glosa07_transfer_limits(ipr_id, db)
+        gates.extend(glosa07_gates)
 
         # Track-specific gates for F3→F4
         track_gates_f34 = await _check_track_amount_gates(ipr_id, f34_mechanism, "F3->F4", db)

@@ -199,6 +199,85 @@ async def _check_glosa03_prohibition(ipr_id: UUID, db: AsyncSession) -> list[dic
     return gates
 
 
+# Glosa 07 transfer limits: admin and honorarios capped at 5% each
+_GLOSA07_LIMITS = {
+    "glosa07_admin_max": {"items": {"BIENES_SERVICIOS_CONSUMO", "BIENES_SERVICIOS"}, "max_pct": 5.0,
+                          "label": "Glosa 07: Gasto administrativo"},
+    "glosa07_honorarios_max": {"items": {"HONORARIOS"}, "max_pct": 5.0,
+                               "label": "Glosa 07: Honorarios"},
+}
+
+
+async def check_glosa07_transfer_limits(ipr_id: UUID, db: AsyncSession) -> list[dict]:
+    """Glosa 07: TRANSFER mechanism IPRs have 5% caps on admin and honorarios."""
+    gates: list[dict] = []
+
+    # Only applies to TRANSFER mechanism
+    mech_row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+
+    if not mech_row or mech_row["mechanism_code"] != "TRANSFER":
+        return gates
+
+    # Get CDP item breakdown (same query as check_glosa_rules)
+    result = await db.execute(
+        text("""
+            SELECT item_cat.code AS item_code,
+                   COALESCE(SUM(bc.amount), 0) AS item_amount
+            FROM core.budget_commitment bc
+            JOIN core.budget_program bp ON bp.id = bc.budget_program_id
+            LEFT JOIN ref.category item_cat ON item_cat.id = bp.item_id
+            WHERE bc.ipr_id = :ipr_id AND bc.deleted_at IS NULL
+            GROUP BY item_cat.code
+        """),
+        {"ipr_id": str(ipr_id)},
+    )
+    rows = result.mappings().all()
+    if not rows:
+        return gates
+
+    item_amounts: dict[str, float] = {}
+    total_cdp = 0.0
+    for r in rows:
+        code = r["item_code"] or "SIN_ITEM"
+        amt = float(r["item_amount"])
+        item_amounts[code] = amt
+        total_cdp += amt
+
+    if total_cdp <= 0:
+        return gates
+
+    for gate_name, rule in _GLOSA07_LIMITS.items():
+        matching = sum(item_amounts.get(ic, 0) for ic in rule["items"])
+        actual_pct = (matching / total_cdp * 100)
+        max_pct = rule["max_pct"]
+
+        if actual_pct > max_pct:
+            gates.append({
+                "name": gate_name,
+                "met": False,
+                "detail": (
+                    f"{rule['label']}: {actual_pct:.1f}% excede tope de {max_pct:.0f}% "
+                    f"(${matching:,.0f} de ${total_cdp:,.0f} total CDPs)"
+                ),
+            })
+        else:
+            gates.append({
+                "name": gate_name,
+                "met": True,
+                "detail": f"{rule['label']}: {actual_pct:.1f}% dentro del tope {max_pct:.0f}%",
+            })
+
+    return gates
+
+
 async def _get_presupuesto_or_404(presupuesto_id: UUID, db: AsyncSession) -> dict:
     result = await db.execute(
         text("""

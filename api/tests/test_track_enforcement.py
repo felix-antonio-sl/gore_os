@@ -649,3 +649,124 @@ async def test_glosa_no_cdps_no_gates(
     assert resp.status_code == 200
     gate = _find_gate(resp.json(), "F4", "glosa_remuneraciones_max")
     assert gate is None, "No CDPs → no glosa gates"
+
+
+# ---------------------------------------------------------------------------
+# Wave H: Glosa 06 direct executor (3 tests)
+# ---------------------------------------------------------------------------
+
+async def _add_ipr_party(db: AsyncSession, ipr_id: str, org_code: str, role_code: str) -> None:
+    """Register an organization with a role on the IPR."""
+    org_id = (await db.execute(
+        text("SELECT id FROM core.organization WHERE code = :code AND deleted_at IS NULL"),
+        {"code": org_code},
+    )).scalar()
+    assert org_id, f"Organization {org_code} not found"
+    role_id = await _get_category_id(db, "ipr_party_role", role_code)
+    await db.execute(
+        text("""
+            INSERT INTO core.ipr_party (ipr_id, organization_id, party_role_id)
+            VALUES (CAST(:ipr_id AS uuid), CAST(:org_id AS uuid), CAST(:role_id AS uuid))
+        """),
+        {"ipr_id": ipr_id, "org_id": str(org_id), "role_id": role_id},
+    )
+    await db.commit()
+
+
+async def test_glosa06_executor_gore_passes(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 06: GORE-NUBLE as EJECUTOR should pass (no gate)."""
+    ipr_id = await _create_test_ipr(db, "INGRESADO", "F1", "GLOSA06")
+    await _merge_ipr_metadata(db, ipr_id, {"mml_purpose_count": 1})
+    await _add_ipr_party(db, ipr_id, "GORE-NUBLE", "EJECUTOR")
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F2", "glosa06_direct_executor")
+    assert gate is None, "GORE as executor should pass silently"
+
+
+async def test_glosa06_executor_missing_blocks(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 06: No EJECUTOR registered should block."""
+    ipr_id = await _create_test_ipr(db, "INGRESADO", "F1", "GLOSA06")
+    await _merge_ipr_metadata(db, ipr_id, {"mml_purpose_count": 1})
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F2", "glosa06_direct_executor")
+    if gate:
+        assert gate["met"] is False, "Missing EJECUTOR should block"
+        assert "GORE" in gate["detail"]
+
+
+async def test_glosa06_executor_non_gore_blocks(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 06: Third-party executor (not GORE) should block."""
+    ipr_id = await _create_test_ipr(db, "INGRESADO", "F1", "GLOSA06")
+    await _merge_ipr_metadata(db, ipr_id, {"mml_purpose_count": 1})
+    # Get any non-GORE organization
+    other_org = (await db.execute(
+        text("SELECT code FROM core.organization WHERE code != 'GORE-NUBLE' AND deleted_at IS NULL LIMIT 1"),
+    )).scalar()
+    assert other_org, "Need a non-GORE organization for this test"
+    await _add_ipr_party(db, ipr_id, other_org, "EJECUTOR")
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F2", "glosa06_direct_executor")
+    if gate:
+        assert gate["met"] is False, "Non-GORE executor should block"
+
+
+# ---------------------------------------------------------------------------
+# Wave I: Glosa 07 transfer limits (3 tests)
+# ---------------------------------------------------------------------------
+
+async def test_glosa07_admin_exceeds_5pct(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 07: TRANSFER IPR with admin > 5% should be flagged."""
+    ipr_id = await _create_test_ipr(db, "CDP_EMITIDO", "F3", "TRANSFER", monto=200_000_000)
+    # BIENES_SERVICIOS = 1M, PERSONAL = 9M → admin = 10% > 5%
+    await _create_cdp_with_item(db, ipr_id, "BIENES_SERVICIOS", 1_000_000)
+    await _create_cdp_with_item(db, ipr_id, "PERSONAL", 9_000_000)
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F4", "glosa07_admin_max")
+    if gate:
+        assert gate["met"] is False, "Admin at 10% should exceed 5% cap"
+
+
+async def test_glosa07_within_limits_passes(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 07: TRANSFER IPR with admin ≤ 5% should pass."""
+    ipr_id = await _create_test_ipr(db, "CDP_EMITIDO", "F3", "TRANSFER", monto=200_000_000)
+    # BIENES_SERVICIOS = 400K, PERSONAL = 9.6M → admin = ~4% < 5%
+    await _create_cdp_with_item(db, ipr_id, "BIENES_SERVICIOS", 400_000)
+    await _create_cdp_with_item(db, ipr_id, "PERSONAL", 9_600_000)
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F4", "glosa07_admin_max")
+    if gate:
+        assert gate["met"] is True, "Admin at 4% should be within 5% cap"
+
+
+async def test_glosa07_skips_non_transfer(
+    client: AsyncClient, regional_token: str, db: AsyncSession,
+):
+    """Glosa 07: Non-TRANSFER mechanism should not produce glosa07 gates."""
+    ipr_id = await _create_test_ipr(db, "CDP_EMITIDO", "F3", "FRIL", monto=200_000_000)
+    await _create_cdp_with_item(db, ipr_id, "BIENES_SERVICIOS", 5_000_000)
+    await _create_cdp_with_item(db, ipr_id, "PERSONAL", 5_000_000)
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    gate = _find_gate(resp.json(), "F4", "glosa07_admin_max")
+    assert gate is None, "Glosa 07 should not apply to non-TRANSFER mechanisms"
