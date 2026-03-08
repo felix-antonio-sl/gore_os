@@ -127,3 +127,26 @@ async def get_divisions_list(
         """)
     )
     return [dict(r) for r in result.mappings().all()]
+
+
+@router.get("/persons")
+async def get_persons_list(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    search: str | None = None,
+):
+    """Search persons by RUT, name, or surname. Used for kinship declarations."""
+    query = """
+        SELECT p.id, p.rut, p.names, p.paternal_surname, p.maternal_surname,
+               o.name AS organization_name
+        FROM core.person p
+        LEFT JOIN core.organization o ON p.organization_id = o.id
+        WHERE p.is_active = true
+    """
+    params: dict = {}
+    if search:
+        query += " AND (p.rut ILIKE :s OR p.names ILIKE :s OR p.paternal_surname ILIKE :s)"
+        params["s"] = f"%{search}%"
+    query += " ORDER BY p.paternal_surname, p.names LIMIT 50"
+    result = await db.execute(text(query), params)
+    return [dict(r) for r in result.mappings().all()]
