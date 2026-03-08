@@ -278,7 +278,8 @@ async def test_vencidas_endpoint(client, dgi_token, db):
     )
     await db.execute(text("ALTER TABLE core.rendition ENABLE TRIGGER trg_rendition_updated_at"))
     await db.commit()
-    resp = await client.get("/api/dgi/data/rendiciones/vencidas", headers=auth(dgi_token))
+    # Use max page_size to avoid stale renditions from prior runs pushing ours off page 1
+    resp = await client.get("/api/dgi/data/rendiciones/vencidas?page_size=100", headers=auth(dgi_token))
     assert resp.status_code == 200
     items = resp.json()["items"]
     ids = [i["id"] for i in items]

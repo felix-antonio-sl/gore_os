@@ -267,7 +267,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: 132 API endpoints, 305 tests (300 pass + 1 fail + 4 skip), 28 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: 132 API endpoints, 305 tests (301 pass + 4 skip), 28 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
 - HΩ-02 Parentesco 8% (kinship disqualification — not started)
