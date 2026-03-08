@@ -173,7 +173,9 @@ Test modules (28): `test_auth` (12), `test_compromisos` (16), `test_presupuesto`
 
 **Test architecture**: `conftest.py` creates a fresh `AsyncSession` per test against `goreos_test`, overrides `get_db` dependency, generates real JWT tokens for 5 roles (admin, regional, jefe, encargado, dgi). The `catalog` fixture pre-fetches common IDs (commitment types, problem types, agreement states, etc.).
 
-**Known issue**: `test_initiatives::test_move_to_en_curso` may fail if test DB has accumulated 5+ EN_CURSO initiatives from prior runs (WIP limit 5). Clean with `DELETE FROM core.dgi_initiative WHERE deleted_at IS NULL;` on `goreos_test`.
+**Known issues** (test data pollution — tests don't fully isolate inserted rows):
+- `test_initiatives::test_move_to_en_curso` may fail if test DB has accumulated 5+ EN_CURSO initiatives from prior runs (WIP limit 5). Clean with `DELETE FROM core.dgi_initiative WHERE deleted_at IS NULL;` on `goreos_test`.
+- `test_sisrec::test_vencidas_endpoint` may fail when stale renditions accumulate in `goreos_test`. Clean with `DELETE FROM core.rendition WHERE created_at > '2026-01-01';` on `goreos_test`.
 
 **DGI category schemes** (e.g., `dgi_initiative_status`) are NOT in `goreos_seed.sql` — they only exist in `goreos_model` and are copied to `goreos_test` via `COPY ref.category`. If adding new DGI schemes, insert them into production first.
 
@@ -265,7 +267,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~132 API endpoints, 305 tests (301 pass + 4 skip), 28 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: 132 API endpoints, 305 tests (300 pass + 1 fail + 4 skip), 28 modules, 15 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
 - HΩ-02 Parentesco 8% (kinship disqualification — not started)
