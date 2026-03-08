@@ -1178,6 +1178,55 @@ async def _check_morosos_sisrec(ipr_id: UUID, db: AsyncSession) -> dict | None:
     return None  # No overdue renditions — gate passes silently
 
 
+async def _check_kinship_declarations(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """HΩ-02: SUBV8 requires kinship declarations from evaluators/legal reps."""
+    row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+    if not row or row["mechanism_code"] != "SUBV8":
+        return None
+
+    # Check declarations exist and none declare conflict
+    decls = (await db.execute(
+        text("""
+            SELECT declares_no_conflict
+            FROM core.kinship_declaration
+            WHERE ipr_id = :id AND deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().all()
+
+    if not decls:
+        return {
+            "name": "kinship_declarations",
+            "met": False,
+            "detail": (
+                "SUBV8: requiere al menos una declaración jurada de parentesco. "
+                "Registre las declaraciones de evaluadores y/o representantes legales "
+                "en la pestaña Parentesco del IPR."
+            ),
+        }
+
+    conflicts = [d for d in decls if not d["declares_no_conflict"]]
+    if conflicts:
+        return {
+            "name": "kinship_declarations",
+            "met": False,
+            "detail": (
+                f"SUBV8: {len(conflicts)} declaración(es) de parentesco declara(n) conflicto "
+                f"con autoridades GORE. Inhabilidad por consanguinidad/afinidad."
+            ),
+        }
+
+    return None  # All declarations are clean — silent pass
+
+
 async def _evaluate_phase_gates(
     ipr_id: UUID, current_phase: str, target_phase: str, db: AsyncSession
 ) -> list[dict]:
@@ -1240,6 +1289,11 @@ async def _evaluate_phase_gates(
         glosa06_exec = await _check_glosa06_direct_executor(ipr_id, db)
         if glosa06_exec is not None:
             gates.append(glosa06_exec)
+
+        # HΩ-02: Kinship declarations for SUBV8
+        kinship_gate = await _check_kinship_declarations(ipr_id, db)
+        if kinship_gate is not None:
+            gates.append(kinship_gate)
 
     elif transition == "F2->F3":
         row = (await db.execute(
