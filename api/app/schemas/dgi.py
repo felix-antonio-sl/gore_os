@@ -264,6 +264,7 @@ class RendicionUpdate(BaseModel):
     submitted_at: datetime | None = None
     amount: float | None = None
     comment: str | None = None
+    metadata: dict | None = None  # External phase timestamps
 
 
 class RendicionCreate(BaseModel):
@@ -305,6 +306,52 @@ class RendicionPhaseEntry(BaseModel):
     exited_at: datetime | None = None
     duration_days: float | None = None
     sla_days: int | None = None
+    is_overdue: bool = False
+
+
+class RenditionPhaseDefinition(BaseModel):
+    """TP-06 parametric phase definition."""
+    id: UUID
+    ordinal: int
+    code: str
+    name: str
+    responsible_role: str
+    sla_days: int
+    escalation_action: str | None = None
+    is_internal: bool
+
+
+class EscalationItem(BaseModel):
+    """Rendition escalation record."""
+    id: UUID
+    rendition_id: UUID
+    phase_id: UUID
+    phase_code: str | None = None
+    phase_name: str | None = None
+    escalation_level: int
+    detected_at: datetime
+    alert_id: UUID | None = None
+    resolved_at: datetime | None = None
+
+
+class EscalationCheckResult(BaseModel):
+    """Result of check-escalations batch operation."""
+    checked: int
+    new_escalations: int
+    details: list[dict] = []
+
+
+class CicloPhaseStatus(BaseModel):
+    """Enhanced ciclo phase with TP-06 definition link."""
+    ordinal: int
+    code: str
+    name: str
+    responsible_role: str
+    sla_days: int
+    status: str  # completada | en_curso | pendiente | no_aplica
+    entered_at: datetime | None = None
+    exited_at: datetime | None = None
+    duration_days: float | None = None
     is_overdue: bool = False
 
 
