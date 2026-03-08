@@ -510,8 +510,12 @@ async def _check_fril_max_per_comuna(ipr_id: UUID, db: AsyncSession) -> dict | N
                   AND EXTRACT(YEAR FROM i.created_at) = :fiscal_year
                   AND i.deleted_at IS NULL
                   AND i.id != :ipr_id
-                  AND (i.metadata->>'fril_category' IS NULL
-                       OR i.metadata->>'fril_category' NOT IN ('A2', 'A3'))
+                  AND NOT EXISTS (
+                       SELECT 1 FROM core.fril_category fc
+                       WHERE fc.code = i.metadata->>'fril_category'
+                         AND fc.is_exempt_commune_limit = true
+                         AND fc.is_active = true
+                  )
             """),
             {
                 "territory_id": str(terr["territory_id"]),
@@ -533,7 +537,7 @@ async def _check_fril_max_per_comuna(ipr_id: UUID, db: AsyncSession) -> dict | N
                 "met": False,
                 "detail": (
                     f"Máximo {max_per_territory} FRIL por comuna/año: {terr_name} ya tiene "
-                    f"{existing} proyecto(s) FRIL en {fiscal_year} (excluye A2/A3)"
+                    f"{existing} proyecto(s) FRIL en {fiscal_year} (excluye categorías exentas)"
                 ),
             }
 
