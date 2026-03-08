@@ -360,15 +360,22 @@ async def test_vencidas_includes_visada_rtf(client, dgi_token, db):
     await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
     await _transition(client, dgi_token, rid, "VISADA_RTF", db)
     await _age_rendicion(db, rid, "3 days")
+    # Use large page_size and check across all pages to handle accumulated test data
     resp = await client.get("/api/dgi/data/rendiciones/vencidas?page_size=100", headers=auth(dgi_token))
     assert resp.status_code == 200
-    ids = [i["id"] for i in resp.json()["items"]]
-    assert rid in ids
+    data = resp.json()
+    all_ids = [i["id"] for i in data["items"]]
+    # If more than 100 overdue, fetch remaining pages
+    total_pages = data.get("total_pages", 1)
+    for p in range(2, total_pages + 1):
+        resp_p = await client.get(f"/api/dgi/data/rendiciones/vencidas?page_size=100&page={p}", headers=auth(dgi_token))
+        all_ids.extend([i["id"] for i in resp_p.json()["items"]])
+    assert rid in all_ids
 
 
 @pytest.mark.asyncio
 async def test_ciclo_endpoint(client, dgi_token, db):
-    """Ciclo endpoint returns phase timeline with SLA info."""
+    """Ciclo endpoint returns 8-phase timeline (TP-06 enhanced) with SLA info."""
     rid = await _create_rendicion(client, dgi_token, db)
     await _transition(client, dgi_token, rid, "EN_REVISION_RTF", db)
     await _transition(client, dgi_token, rid, "VISADA_RTF", db)
@@ -376,19 +383,16 @@ async def test_ciclo_endpoint(client, dgi_token, db):
     assert resp.status_code == 200
     data = resp.json()
     assert data["current_state"] == "VISADA_RTF"
-    assert len(data["phases"]) == 3  # PENDIENTE, EN_REVISION_RTF, VISADA_RTF
-    # Check phase structure
-    pendiente = data["phases"][0]
-    assert pendiente["phase_code"] == "PENDIENTE"
-    assert pendiente["exited_at"] is not None
-    assert pendiente["sla_days"] is None  # PENDIENTE has no SLA
-    rtf = data["phases"][1]
-    assert rtf["phase_code"] == "EN_REVISION_RTF"
+    assert len(data["phases"]) == 8  # TP-06: 3 external + 4 internal + archive
+    # Check internal phase structure (phases 4-7 map to internal states)
+    recepcion = next(p for p in data["phases"] if p["code"] == "RECEPCION_GORE")
+    assert recepcion["sla_days"] == 2
+    rtf = next(p for p in data["phases"] if p["code"] == "REVISION_RTF")
     assert rtf["sla_days"] == 7
-    visada = data["phases"][2]
-    assert visada["phase_code"] == "VISADA_RTF"
-    assert visada["sla_days"] == 1
-    assert visada["exited_at"] is None  # current phase
+    assert rtf["status"] == "completada"
+    aprobacion = next(p for p in data["phases"] if p["code"] == "APROBACION_DAF")
+    assert aprobacion["sla_days"] == 1
+    assert aprobacion["status"] == "en_curso"  # current phase (VISADA_RTF maps here)
 
 
 # ---------------------------------------------------------------------------

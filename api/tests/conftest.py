@@ -38,6 +38,8 @@ async def db():
 @pytest_asyncio.fixture(autouse=True)
 async def cleanup_test_artifacts(db: AsyncSession):
     """Remove persistent artifacts created by stateful integration tests."""
+    # Clean escalation test data (before rendition-related cleanup to avoid FK issues)
+    await db.execute(text("DELETE FROM core.rendition_escalation"))
     await db.execute(
         text("""
             DELETE FROM core.kinship_declaration
