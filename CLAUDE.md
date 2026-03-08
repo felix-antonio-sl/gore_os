@@ -267,7 +267,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~134 API endpoints, 326 tests (322 pass + 4 skip), 28 modules, 17 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
+**Coverage**: ~134 API endpoints, 326 tests (322 pass + 4 skip), 28 modules, 19 gate functions in `ipr.py`. HΩ findings: 12/15 implemented, 1 partial, 2 pending. Full audit: `docs/GORE_OS_Audit_v2.0.md`.
 
 **Open gaps**:
 - HΩ-02 Parentesco 8% (kinship disqualification — not started)
@@ -329,8 +329,9 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
     - **SNI**: `_check_sni_proporcionalidad` (F1→F2, 4 eval levels by UTM), `_check_rs_vigencia` (F3→F4, eval expiry per `rs_validity_years`)
     - **C33**: `_check_c33_conservation` (F1→F2, conservation/reposition ratio, informational)
     - **SUBV8**: `_check_pagare_notarial` (F2→F3, ≥100% monto, ≥18mo), `_check_directorio_certificate` (F2→F3, cert freshness), `_check_morosos_sisrec` (F3→F4+F4→F5, executor overdue renditions), `_check_ranking_persistence` (F2→F3, informational)
-    - **ALL**: `_check_evaluation_type_match` (F2→F3, informational), `_check_glosa06_single_purpose` (F1→F2, single MML purpose)
+    - **ALL**: `_check_evaluation_type_match` (F2→F3, informational), `_check_glosa06_single_purpose` (F1→F2, single MML purpose), `_check_glosa06_direct_executor` (F1→F2, GORE-NUBLE must be EJECUTOR for GLOSA06 mechanism)
+    - **TRANSFER**: `check_glosa07_transfer_limits` (F3→F4, admin/honorarios 5% caps via `_GLOSA07_LIMITS` dict in presupuesto.py)
 47. **CDP creation**: `POST /api/presupuesto/{id}/cdps` creates a budget commitment with advisory-locked sequential number (`CDP-{year}-{seq:04d}`). Validates `amount ≤ available balance` (current - committed). Auto-sets status to EMITIDO. Updates `committed_amount` on the program. Schema: `BudgetCommitmentCreate(amount, description?, ipr_id?, agreement_id?)`.
 48. **Bulk cuotas**: `POST /api/convenios/{id}/cuotas/bulk` generates N installments. Schema: `BulkCuotaRequest(total_amount, num_installments, start_date, frequency_months=1)`. Distributes evenly with remainder on first cuota. Auto-increments from max existing `installment_number`. Route registered BEFORE `/{id}/cuotas` to avoid path conflicts. `_add_months()` helper uses `calendar.monthrange` for end-of-month safety.
-49. **Rendition table schema**: `core.rendition` DDL has only `agreement_id` (NOT NULL), `renderer_id` (NOT NULL), `state_id`, `period_start/end`, `submitted_at`. Columns `amount` and `ipr_id` were added by migrations (`wave10_sisrec`, `rendition_coproduct`). Table has NO `code` column — use `LEFT(r.id::text, 8)` for display identifiers.
+49. **Rendition table schema**: `core.rendition` DDL base + 3 migrations. Added by migrations: `amount` (wave10_sisrec), `ipr_id` (rendition_coproduct), `phase_entered_at` + `responsible_id` (sisrec_phase_tracking). NO `code` column — use `LEFT(r.id::text, 8)`. `phase_entered_at` is the SLA-accurate timestamp (only resets on state transitions, NOT on any update). Use `COALESCE(r.phase_entered_at, r.updated_at)` in queries. `responsible_id` FK → `core.user` for reviewer assignment.
 50. **Responsive with Radix portals**: `DrawerPanel` (Radix Sheet) renders via portals outside the DOM tree — CSS `display:none` on parent does NOT prevent the Sheet from opening. Use `window.matchMedia` with `isMobile` state to conditionally render the Sheet component. See `/datos/page.tsx` for reference.
