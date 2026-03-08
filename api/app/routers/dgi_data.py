@@ -12,6 +12,7 @@ from app.schemas.dgi import (
     OrganizacionItem, PersonaItem, TerritorioItem, EventoItem,
     RendicionItem, RendicionDetail, RendicionCreate, RendicionUpdate,
     RendicionHistoryEntry, RendicionPhaseEntry,
+    RenditionPhaseDefinition, EscalationItem, EscalationCheckResult, CicloPhaseStatus,
 )
 from app.core.security import DGI_ROLES, WRITE_OPERATIONAL_ROLES
 
@@ -738,6 +739,144 @@ async def list_rendiciones(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/dgi/data/rendiciones/fases — TP-06 parametric phase definitions
+# ---------------------------------------------------------------------------
+
+@router.get("/rendiciones/fases")
+async def list_rendition_phases(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List all 8 CGR rendition phase definitions (TP-06 parametric table)."""
+    rows = (await db.execute(
+        text("""
+            SELECT id, ordinal, code, name, responsible_role,
+                   sla_days, escalation_action, is_internal
+            FROM core.rendition_phase
+            ORDER BY ordinal
+        """)
+    )).mappings().all()
+    return [RenditionPhaseDefinition(**dict(r)) for r in rows]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/data/rendiciones/check-escalations — Batch escalation check
+# ---------------------------------------------------------------------------
+
+@router.post("/rendiciones/check-escalations")
+async def check_escalations(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Detect overdue renditions and create escalation + alert entries."""
+    if user["role_code"] not in _RENDICION_WRITE_ROLES:
+        raise HTTPException(status_code=403, detail="Rol sin permiso")
+
+    rows = (await db.execute(
+        text("""
+            SELECT r.id, st.code AS state_code,
+                   EXTRACT(EPOCH FROM (NOW() - COALESCE(r.phase_entered_at, r.updated_at))) / 86400.0 AS days_in_state,
+                   a.agreement_number, ipr.codigo_bip
+            FROM core.rendition r
+            LEFT JOIN ref.category st ON st.id = r.state_id
+            LEFT JOIN core.agreement a ON a.id = r.agreement_id
+            LEFT JOIN core.ipr ipr ON ipr.id = r.ipr_id
+            WHERE r.deleted_at IS NULL
+              AND st.code IN ('EN_REVISION_RTF', 'VISADA_RTF', 'EN_REVISION_UCR')
+        """)
+    )).mappings().all()
+
+    phase_rows = (await db.execute(
+        text("SELECT id, code, sla_days FROM core.rendition_phase")
+    )).mappings().all()
+    phase_map = {p["code"]: {"id": str(p["id"]), "sla_days": p["sla_days"]} for p in phase_rows}
+
+    severity_id = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'alert_severity' AND code = 'ALTO'")
+    )).scalar()
+
+    checked = 0
+    new_escalations = 0
+    details = []
+
+    for r in rows:
+        checked += 1
+        phase_code = _STATE_TO_PHASE_CODE.get(r["state_code"])
+        if not phase_code or phase_code not in phase_map:
+            continue
+
+        phase_info = phase_map[phase_code]
+        sla = phase_info["sla_days"]
+        days = float(r["days_in_state"])
+
+        for level, multiplier in _ESCALATION_MULTIPLIERS.items():
+            threshold = sla * multiplier
+            if days <= threshold:
+                continue
+
+            existing = (await db.execute(
+                text("""
+                    SELECT 1 FROM core.rendition_escalation
+                    WHERE rendition_id = :rid AND phase_id = :pid
+                      AND escalation_level = :level AND resolved_at IS NULL
+                """),
+                {"rid": str(r["id"]), "pid": phase_info["id"], "level": level},
+            )).scalar()
+
+            if existing:
+                continue
+
+            alert_id = None
+            if severity_id:
+                alert_row = (await db.execute(
+                    text("""
+                        INSERT INTO core.alert (
+                            title, description, severity_id, subject_type, subject_id,
+                            created_at, updated_at
+                        ) VALUES (
+                            :title, :desc, :sev, 'core.rendition', :sid,
+                            NOW(), NOW()
+                        ) RETURNING id
+                    """),
+                    {
+                        "title": f"Escalamiento N{level}: rendición vencida en {phase_code}",
+                        "desc": f"Rendición {r.get('agreement_number') or str(r['id'])[:8]} "
+                                f"lleva {round(days, 1)}d en {r['state_code']} (SLA: {sla}d, "
+                                f"umbral N{level}: {threshold}d)",
+                        "sev": str(severity_id),
+                        "sid": str(r["id"]),
+                    },
+                )).mappings().first()
+                if alert_row:
+                    alert_id = str(alert_row["id"])
+
+            await db.execute(
+                text("""
+                    INSERT INTO core.rendition_escalation (
+                        rendition_id, phase_id, escalation_level, alert_id
+                    ) VALUES (:rid, :pid, :level, :aid)
+                """),
+                {
+                    "rid": str(r["id"]),
+                    "pid": phase_info["id"],
+                    "level": level,
+                    "aid": alert_id,
+                },
+            )
+            new_escalations += 1
+            details.append({
+                "rendition_id": str(r["id"]),
+                "phase_code": phase_code,
+                "level": level,
+                "days_in_state": round(days, 1),
+                "threshold": threshold,
+            })
+
+    await db.commit()
+    return EscalationCheckResult(checked=checked, new_escalations=new_escalations, details=details)
+
+
+# ---------------------------------------------------------------------------
 # GET /api/dgi/data/rendiciones/vencidas — Overdue renditions (SLA breach)
 # ---------------------------------------------------------------------------
 
@@ -815,10 +954,16 @@ async def list_rendiciones_vencidas(
 async def get_rendicion_ciclo(
     rendicion_id: UUID, user: CurrentUser, db: AsyncSession = Depends(get_db),
 ):
-    """Phase-by-phase cycle view of a rendition's lifecycle with SLA tracking."""
+    """Enhanced phase-by-phase cycle view with TP-06 phase definitions.
+
+    Maps state history to 8 CGR phases. Internal phases (4-7) derive from
+    rendition_history. External phases (1-3) from metadata timestamps.
+    Phase 8 from archived_at.
+    """
     row = (await db.execute(
         text("""
-            SELECT r.id, r.created_at, st.code AS state_code
+            SELECT r.id, r.created_at, r.archived_at, r.metadata,
+                   st.code AS state_code
             FROM core.rendition r
             LEFT JOIN ref.category st ON st.id = r.state_id
             WHERE r.id = :id AND r.deleted_at IS NULL
@@ -827,6 +972,11 @@ async def get_rendicion_ciclo(
     )).mappings().first()
     if not row:
         raise HTTPException(status_code=404, detail="Rendición no encontrada")
+
+    phase_defs = (await db.execute(
+        text("SELECT id, ordinal, code, name, responsible_role, sla_days FROM core.rendition_phase ORDER BY ordinal")
+    )).mappings().all()
+    phase_by_code = {p["code"]: dict(p) for p in phase_defs}
 
     history_rows = (await db.execute(
         text("""
@@ -842,62 +992,130 @@ async def get_rendicion_ciclo(
     )).mappings().all()
 
     now = datetime.now(timezone.utc)
+    metadata = row["metadata"] or {}
+    current_state = row["state_code"]
+
+    state_to_phase = {
+        "PENDIENTE": "RECEPCION_GORE",
+        "EN_REVISION_RTF": "REVISION_RTF",
+        "VISADA_RTF": "APROBACION_DAF",
+        "EN_REVISION_UCR": "CONTABILIZACION_UCR",
+    }
+
     phases: list[dict] = []
 
-    if history_rows:
-        # Phase 0: PENDIENTE from creation to first transition
-        first_ts = history_rows[0]["changed_at"]
-        d0 = (first_ts - row["created_at"]).total_seconds() / 86400.0
-        sla0 = _RENDICION_SLA_DAYS.get("PENDIENTE")
-        phases.append({
-            "phase_code": "PENDIENTE",
-            "phase_label": "Pendiente",
-            "entered_at": row["created_at"],
-            "exited_at": first_ts,
-            "duration_days": round(d0, 1),
-            "sla_days": sla0,
-            "is_overdue": sla0 is not None and d0 > sla0,
-        })
+    # --- External phases (1-3): from metadata timestamps ---
+    external_keys = [
+        ("PREPARACION_EJECUTOR", "fase1_preparacion_at"),
+        ("CERTIFICACION", "fase2_certificacion_at"),
+        ("FIRMA_ENCARGADO", "fase3_firma_at"),
+    ]
+    for phase_code, meta_key in external_keys:
+        pdef = phase_by_code.get(phase_code, {})
+        ts_str = metadata.get(meta_key)
+        if ts_str:
+            entered = datetime.fromisoformat(ts_str) if isinstance(ts_str, str) else ts_str
+            phases.append(CicloPhaseStatus(
+                ordinal=pdef.get("ordinal", 0), code=phase_code, name=pdef.get("name", ""),
+                responsible_role=pdef.get("responsible_role", ""), sla_days=pdef.get("sla_days", 0),
+                status="completada", entered_at=entered, duration_days=None, is_overdue=False,
+            ).model_dump())
+        else:
+            phases.append(CicloPhaseStatus(
+                ordinal=pdef.get("ordinal", 0), code=phase_code, name=pdef.get("name", ""),
+                responsible_role=pdef.get("responsible_role", ""), sla_days=pdef.get("sla_days", 0),
+                status="no_aplica",
+            ).model_dump())
 
+    # --- Internal phases (4-7): from state history ---
+    state_entries: list[dict] = []
+    if history_rows:
+        first_ts = history_rows[0]["changed_at"]
+        state_entries.append({
+            "state": "PENDIENTE", "entered": row["created_at"], "exited": first_ts,
+        })
         for i, h in enumerate(history_rows):
-            entered = h["changed_at"]
-            if i + 1 < len(history_rows):
-                exited = history_rows[i + 1]["changed_at"]
-                dur = (exited - entered).total_seconds() / 86400.0
-            else:
-                exited = None
-                dur = (now - entered).total_seconds() / 86400.0
-            sla = _RENDICION_SLA_DAYS.get(h["new_state"])
-            phases.append({
-                "phase_code": h["new_state"],
-                "phase_label": h["new_state_label"],
-                "entered_at": entered,
-                "exited_at": exited,
-                "duration_days": round(dur, 1),
-                "sla_days": sla,
-                "is_overdue": sla is not None and dur > sla,
+            exited = history_rows[i + 1]["changed_at"] if i + 1 < len(history_rows) else None
+            state_entries.append({
+                "state": h["new_state"], "entered": h["changed_at"], "exited": exited,
             })
     else:
-        # No transitions yet — still in PENDIENTE
-        dur = (now - row["created_at"]).total_seconds() / 86400.0
-        sla0 = _RENDICION_SLA_DAYS.get("PENDIENTE")
-        phases.append({
-            "phase_code": "PENDIENTE",
-            "phase_label": "Pendiente",
-            "entered_at": row["created_at"],
-            "exited_at": None,
-            "duration_days": round(dur, 1),
-            "sla_days": sla0,
-            "is_overdue": sla0 is not None and dur > sla0,
+        state_entries.append({
+            "state": "PENDIENTE", "entered": row["created_at"], "exited": None,
         })
 
+    internal_phase_codes = ["RECEPCION_GORE", "REVISION_RTF", "APROBACION_DAF", "CONTABILIZACION_UCR"]
+    for phase_code in internal_phase_codes:
+        pdef = phase_by_code.get(phase_code, {})
+        matching_states = [s for s in state_entries if state_to_phase.get(s["state"]) == phase_code]
+
+        if matching_states:
+            entered = matching_states[0]["entered"]
+            last = matching_states[-1]
+            exited = last["exited"]
+            if exited:
+                dur = (exited - entered).total_seconds() / 86400.0
+                p_status = "completada"
+            else:
+                dur = (now - entered).total_seconds() / 86400.0
+                p_status = "en_curso"
+            sla = pdef.get("sla_days", 0)
+            phases.append(CicloPhaseStatus(
+                ordinal=pdef.get("ordinal", 0), code=phase_code, name=pdef.get("name", ""),
+                responsible_role=pdef.get("responsible_role", ""), sla_days=sla,
+                status=p_status, entered_at=entered, exited_at=exited,
+                duration_days=round(dur, 1),
+                is_overdue=sla > 0 and dur > sla,
+            ).model_dump())
+        else:
+            current_phase_code = state_to_phase.get(current_state)
+            current_ordinal = phase_by_code.get(current_phase_code, {}).get("ordinal", 0) if current_phase_code else 99
+            phase_ordinal = pdef.get("ordinal", 0)
+            if current_state in ("APROBADA", "RECHAZADA"):
+                p_status = "completada" if phase_ordinal <= 7 else "pendiente"
+            elif current_ordinal > phase_ordinal:
+                p_status = "completada"
+            else:
+                p_status = "pendiente"
+            phases.append(CicloPhaseStatus(
+                ordinal=pdef.get("ordinal", 0), code=phase_code, name=pdef.get("name", ""),
+                responsible_role=pdef.get("responsible_role", ""), sla_days=pdef.get("sla_days", 0),
+                status=p_status,
+            ).model_dump())
+
+    # --- Phase 8 (ARCHIVO_CIERRE): from archived_at ---
+    pdef8 = phase_by_code.get("ARCHIVO_CIERRE", {})
+    if row["archived_at"]:
+        phases.append(CicloPhaseStatus(
+            ordinal=8, code="ARCHIVO_CIERRE", name=pdef8.get("name", "Archivo y Cierre"),
+            responsible_role=pdef8.get("responsible_role", "ARCHIVO"), sla_days=pdef8.get("sla_days", 1),
+            status="completada", entered_at=row["archived_at"],
+        ).model_dump())
+    elif current_state == "APROBADA":
+        phases.append(CicloPhaseStatus(
+            ordinal=8, code="ARCHIVO_CIERRE", name=pdef8.get("name", "Archivo y Cierre"),
+            responsible_role=pdef8.get("responsible_role", "ARCHIVO"), sla_days=pdef8.get("sla_days", 1),
+            status="en_curso",
+        ).model_dump())
+    else:
+        phases.append(CicloPhaseStatus(
+            ordinal=8, code="ARCHIVO_CIERRE", name=pdef8.get("name", "Archivo y Cierre"),
+            responsible_role=pdef8.get("responsible_role", "ARCHIVO"), sla_days=pdef8.get("sla_days", 1),
+            status="pendiente",
+        ).model_dump())
+
+    phases.sort(key=lambda p: p["ordinal"])
+
     total_elapsed = (now - row["created_at"]).total_seconds() / 86400.0
-    overdue_count = sum(1 for p in phases if p["is_overdue"])
+    overdue_count = sum(1 for p in phases if p.get("is_overdue"))
 
     return {
         "rendicion_id": rendicion_id,
-        "current_state": row["state_code"],
+        "current_state": current_state,
         "total_elapsed_days": round(total_elapsed, 1),
+        "cycle_target_days": _RENDICION_CYCLE_TARGET_DAYS,
+        "cycle_overdue": total_elapsed > _RENDICION_CYCLE_TARGET_DAYS,
+        "archived_at": row["archived_at"],
         "phases": phases,
         "overdue_count": overdue_count,
     }
@@ -961,6 +1179,78 @@ async def get_rendicion(rendicion_id: UUID, user: CurrentUser, db: AsyncSession 
         created_at=row["created_at"],
         history=[RendicionHistoryEntry(**h) for h in history],
     )
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/dgi/data/rendiciones/{rendicion_id}/archivar — Phase 8 closure
+# ---------------------------------------------------------------------------
+
+@router.patch("/rendiciones/{rendicion_id}/archivar")
+async def archive_rendicion(
+    rendicion_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Set archived_at on an APROBADA rendition (phase 8 closure)."""
+    if user["role_code"] not in _RENDICION_WRITE_ROLES:
+        raise HTTPException(status_code=403, detail="Rol sin permiso para archivar")
+
+    row = (await db.execute(
+        text("""
+            SELECT r.id, r.archived_at, st.code AS state_code
+            FROM core.rendition r
+            LEFT JOIN ref.category st ON st.id = r.state_id
+            WHERE r.id = :id AND r.deleted_at IS NULL
+        """),
+        {"id": str(rendicion_id)},
+    )).mappings().first()
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Rendición no encontrada")
+    if row["state_code"] != "APROBADA":
+        raise HTTPException(status_code=409, detail="Solo rendiciones APROBADA pueden archivarse")
+    if row["archived_at"]:
+        raise HTTPException(status_code=409, detail="Rendición ya archivada")
+
+    await db.execute(
+        text("UPDATE core.rendition SET archived_at = NOW() WHERE id = :id"),
+        {"id": str(rendicion_id)},
+    )
+    await db.commit()
+    return {"archived": True, "rendicion_id": str(rendicion_id)}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/rendiciones/{rendicion_id}/escalamientos
+# ---------------------------------------------------------------------------
+
+@router.get("/rendiciones/{rendicion_id}/escalamientos")
+async def list_rendicion_escalations(
+    rendicion_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """List escalation records for a rendition."""
+    exists = (await db.execute(
+        text("SELECT 1 FROM core.rendition WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(rendicion_id)},
+    )).scalar()
+    if not exists:
+        raise HTTPException(status_code=404, detail="Rendición no encontrada")
+
+    rows = (await db.execute(
+        text("""
+            SELECT e.id, e.rendition_id, e.phase_id, e.escalation_level,
+                   e.detected_at, e.alert_id, e.resolved_at,
+                   rp.code AS phase_code, rp.name AS phase_name
+            FROM core.rendition_escalation e
+            JOIN core.rendition_phase rp ON rp.id = e.phase_id
+            WHERE e.rendition_id = :rid
+            ORDER BY e.detected_at DESC
+        """),
+        {"rid": str(rendicion_id)},
+    )).mappings().all()
+    return [EscalationItem(**dict(r)) for r in rows]
 
 
 # ---------------------------------------------------------------------------
@@ -1040,10 +1330,18 @@ _RENDICION_SLA_DAYS: dict[str, int] = {
     "OBSERVADA": 15,
 }
 
-RENDICION_UPDATABLE = {"state_id", "responsible_id", "period_start", "period_end", "submitted_at", "amount"}
+RENDICION_UPDATABLE = {"state_id", "responsible_id", "period_start", "period_end", "submitted_at", "amount", "metadata"}
 
 # CGR institutional target: full rendition cycle should complete in 14 days
 _RENDICION_CYCLE_TARGET_DAYS = 14
+
+_STATE_TO_PHASE_CODE: dict[str, str] = {
+    "EN_REVISION_RTF": "REVISION_RTF",
+    "VISADA_RTF": "APROBACION_DAF",
+    "EN_REVISION_UCR": "CONTABILIZACION_UCR",
+}
+
+_ESCALATION_MULTIPLIERS = {1: 1.0, 2: 1.5, 3: 2.0}
 
 
 async def _get_rendition_history(rendition_id: UUID, db: AsyncSession) -> list[dict]:
@@ -1143,6 +1441,13 @@ async def patch_rendicion(
     # Build SET clause
     set_parts = []
     params: dict = {"id": str(rendicion_id), "user_id": user["id"]}
+
+    # Handle metadata as JSONB (asyncpg can't use ::jsonb syntax)
+    metadata_val = updates.pop("metadata", None)
+    if metadata_val is not None:
+        import json as _json
+        set_parts.append("metadata = CAST(:v_metadata AS jsonb)")
+        params["v_metadata"] = _json.dumps(metadata_val)
 
     for col, val in updates.items():
         param_name = f"v_{col}"
