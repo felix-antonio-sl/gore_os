@@ -19,6 +19,11 @@ from app.schemas.admin import (
     DivisionUpdate,
 )
 from app.schemas.threshold import ThresholdListItem, ThresholdCreate, ThresholdUpdate
+from app.schemas.parametric import (
+    Subv8FundItem, Subv8FundCreate, Subv8FundUpdate,
+    Subv8CeilingItem, Subv8CeilingCreate, Subv8CeilingUpdate,
+    FrilCategoryItem, FrilCategoryCreate, FrilCategoryUpdate,
+)
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -559,6 +564,41 @@ async def create_financing_track(
 
 
 # ---------------------------------------------------------------------------
+# GET /api/admin/financing-tracks/routing — Evaluator routing for an IPR
+# ---------------------------------------------------------------------------
+
+@router.get("/financing-tracks/routing")
+async def get_evaluator_routing(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+    ipr_id: UUID | None = None,
+):
+    """Given an IPR, returns its financing track evaluator info. Informational only."""
+    _require_admin(user)
+    if not ipr_id:
+        raise HTTPException(status_code=422, detail="ipr_id requerido")
+
+    row = (await db.execute(
+        text("""
+            SELECT ft.code AS track_code, ft.label AS track_label,
+                   ft.evaluator_code, ft.evaluator_label,
+                   ft.favorable_products, ft.sla_days, ft.rs_validity_years
+            FROM core.ipr i
+            JOIN core.financing_track ft ON ft.id = i.financing_track_id
+            WHERE i.id = :ipr_id AND i.deleted_at IS NULL AND ft.is_active = true
+        """),
+        {"ipr_id": str(ipr_id)},
+    )).mappings().first()
+
+    if not row:
+        raise HTTPException(
+            status_code=404,
+            detail="IPR no encontrado o sin track de financiamiento asignado",
+        )
+    return dict(row)
+
+
+# ---------------------------------------------------------------------------
 # PATCH /api/admin/financing-tracks/{id} — Update a financing track
 # ---------------------------------------------------------------------------
 
@@ -846,3 +886,402 @@ async def update_sni_level(
     )
     await db.commit()
     return {"message": "Nivel SNI actualizado"}
+
+
+# ===========================================================================
+# SUBVENCIÓN 8% FUNDS (TP-02)
+# ===========================================================================
+
+
+_SUBV8_FUND_FIELDS = {
+    "name", "budget_regular", "budget_special", "budget_total",
+    "is_exclusive", "sort_order", "is_active",
+}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/subv8-funds — List all subv8 funds
+# ---------------------------------------------------------------------------
+
+@router.get("/subv8-funds", response_model=list[Subv8FundItem])
+async def list_subv8_funds(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    result = await db.execute(
+        text("""
+            SELECT id, code, name, budget_regular, budget_special,
+                   budget_total, is_exclusive, sort_order, is_active
+            FROM core.subv8_fund
+            ORDER BY sort_order, code
+        """)
+    )
+    return [Subv8FundItem(**dict(r)) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/subv8-funds — Create a subv8 fund
+# ---------------------------------------------------------------------------
+
+@router.post("/subv8-funds", status_code=status.HTTP_201_CREATED)
+async def create_subv8_fund(
+    data: Subv8FundCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.subv8_fund (
+                    code, name, budget_regular, budget_special,
+                    budget_total, is_exclusive, sort_order
+                ) VALUES (
+                    :code, :name, :budget_regular, :budget_special,
+                    :budget_total, :is_exclusive, :sort_order
+                )
+                RETURNING id
+            """),
+            {
+                "code": data.code,
+                "name": data.name,
+                "budget_regular": data.budget_regular,
+                "budget_special": data.budget_special,
+                "budget_total": data.budget_total,
+                "is_exclusive": data.is_exclusive,
+                "sort_order": data.sort_order,
+            },
+        )
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"]), "code": data.code}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="Ya existe un fondo con ese código")
+    except Exception:
+        await db.rollback()
+        raise
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/subv8-funds/{fund_id} — Update a subv8 fund
+# ---------------------------------------------------------------------------
+
+@router.patch("/subv8-funds/{fund_id}")
+async def update_subv8_fund(
+    fund_id: UUID,
+    data: Subv8FundUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    existing = await db.execute(
+        text("SELECT id FROM core.subv8_fund WHERE id = :id"),
+        {"id": str(fund_id)},
+    )
+    if not existing.first():
+        raise HTTPException(status_code=404, detail="Fondo no encontrado")
+
+    updates = data.model_dump(exclude_unset=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    for key in updates:
+        if key not in _SUBV8_FUND_FIELDS:
+            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(fund_id)
+    await db.execute(
+        text(f"UPDATE core.subv8_fund SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+    return {"message": "Fondo actualizado"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/subv8-funds/{fund_id}/ceilings — List ceilings for a fund
+# ---------------------------------------------------------------------------
+
+@router.get("/subv8-funds/{fund_id}/ceilings", response_model=list[Subv8CeilingItem])
+async def list_fund_ceilings(
+    fund_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    # Verify fund exists
+    fund = await db.execute(
+        text("SELECT id FROM core.subv8_fund WHERE id = :id"),
+        {"id": str(fund_id)},
+    )
+    if not fund.first():
+        raise HTTPException(status_code=404, detail="Fondo no encontrado")
+
+    result = await db.execute(
+        text("""
+            SELECT c.id, c.fund_id, f.code AS fund_code, f.name AS fund_name,
+                   c.institution_type, c.area, c.max_amount, c.notes
+            FROM core.subv8_fund_ceiling c
+            JOIN core.subv8_fund f ON f.id = c.fund_id
+            WHERE c.fund_id = :fund_id
+            ORDER BY c.institution_type, c.area
+        """),
+        {"fund_id": str(fund_id)},
+    )
+    return [Subv8CeilingItem(**dict(r)) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/subv8-funds/{fund_id}/ceilings — Create a ceiling under a fund
+# ---------------------------------------------------------------------------
+
+@router.post("/subv8-funds/{fund_id}/ceilings", status_code=status.HTTP_201_CREATED)
+async def create_fund_ceiling(
+    fund_id: UUID,
+    data: Subv8CeilingCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    # Verify fund exists
+    fund = await db.execute(
+        text("SELECT id FROM core.subv8_fund WHERE id = :id"),
+        {"id": str(fund_id)},
+    )
+    if not fund.first():
+        raise HTTPException(status_code=404, detail="Fondo no encontrado")
+
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.subv8_fund_ceiling (
+                    fund_id, institution_type, area, max_amount, notes
+                ) VALUES (
+                    :fund_id, :institution_type, :area, :max_amount, :notes
+                )
+                RETURNING id
+            """),
+            {
+                "fund_id": str(fund_id),
+                "institution_type": data.institution_type,
+                "area": data.area,
+                "max_amount": data.max_amount,
+                "notes": data.notes,
+            },
+        )
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"]), "fund_id": str(fund_id)}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="Ya existe un tope para esa combinación fondo/tipo/área")
+    except Exception:
+        await db.rollback()
+        raise
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/subv8-fund-ceilings — List ALL ceilings flat (with fund info)
+# ---------------------------------------------------------------------------
+
+@router.get("/subv8-fund-ceilings", response_model=list[Subv8CeilingItem])
+async def list_all_ceilings(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    result = await db.execute(
+        text("""
+            SELECT c.id, c.fund_id, f.code AS fund_code, f.name AS fund_name,
+                   c.institution_type, c.area, c.max_amount, c.notes
+            FROM core.subv8_fund_ceiling c
+            JOIN core.subv8_fund f ON f.id = c.fund_id
+            ORDER BY f.sort_order, f.code, c.institution_type, c.area
+        """)
+    )
+    return [Subv8CeilingItem(**dict(r)) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/subv8-fund-ceilings/{ceiling_id} — Update a ceiling
+# ---------------------------------------------------------------------------
+
+_SUBV8_CEILING_FIELDS = {"institution_type", "area", "max_amount", "notes"}
+
+
+@router.patch("/subv8-fund-ceilings/{ceiling_id}")
+async def update_ceiling(
+    ceiling_id: UUID,
+    data: Subv8CeilingUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    existing = await db.execute(
+        text("SELECT id FROM core.subv8_fund_ceiling WHERE id = :id"),
+        {"id": str(ceiling_id)},
+    )
+    if not existing.first():
+        raise HTTPException(status_code=404, detail="Tope no encontrado")
+
+    updates = data.model_dump(exclude_unset=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    for key in updates:
+        if key not in _SUBV8_CEILING_FIELDS:
+            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(ceiling_id)
+    await db.execute(
+        text(f"UPDATE core.subv8_fund_ceiling SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+    return {"message": "Tope actualizado"}
+
+
+# ---------------------------------------------------------------------------
+# DELETE /api/admin/subv8-fund-ceilings/{ceiling_id} — Delete a ceiling
+# ---------------------------------------------------------------------------
+
+@router.delete("/subv8-fund-ceilings/{ceiling_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_ceiling(
+    ceiling_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    result = await db.execute(
+        text("DELETE FROM core.subv8_fund_ceiling WHERE id = :id RETURNING id"),
+        {"id": str(ceiling_id)},
+    )
+    if not result.first():
+        raise HTTPException(status_code=404, detail="Tope no encontrado")
+
+    await db.commit()
+
+
+# ===========================================================================
+# FRIL CATEGORIES (TP-04)
+# ===========================================================================
+
+
+_FRIL_CATEGORY_FIELDS = {
+    "name", "group_code", "group_name", "description", "examples",
+    "max_utm", "is_exempt_commune_limit", "is_active", "sort_order",
+}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/fril-categories — List all FRIL categories
+# ---------------------------------------------------------------------------
+
+@router.get("/fril-categories", response_model=list[FrilCategoryItem])
+async def list_fril_categories(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    result = await db.execute(
+        text("""
+            SELECT id, code, name, group_code, group_name, description,
+                   examples, max_utm, is_exempt_commune_limit, is_active, sort_order
+            FROM core.fril_category
+            ORDER BY sort_order, code
+        """)
+    )
+    return [FrilCategoryItem(**dict(r)) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/fril-categories — Create a FRIL category
+# ---------------------------------------------------------------------------
+
+@router.post("/fril-categories", status_code=status.HTTP_201_CREATED)
+async def create_fril_category(
+    data: FrilCategoryCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO core.fril_category (
+                    code, name, group_code, group_name, description,
+                    examples, max_utm, is_exempt_commune_limit, sort_order
+                ) VALUES (
+                    :code, :name, :group_code, :group_name, :description,
+                    :examples, :max_utm, :is_exempt_commune_limit, :sort_order
+                )
+                RETURNING id
+            """),
+            {
+                "code": data.code,
+                "name": data.name,
+                "group_code": data.group_code,
+                "group_name": data.group_name,
+                "description": data.description,
+                "examples": data.examples,
+                "max_utm": data.max_utm,
+                "is_exempt_commune_limit": data.is_exempt_commune_limit,
+                "sort_order": data.sort_order,
+            },
+        )
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"]), "code": data.code}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="Ya existe una categoría con ese código")
+    except Exception:
+        await db.rollback()
+        raise
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/fril-categories/{category_id} — Update a FRIL category
+# ---------------------------------------------------------------------------
+
+@router.patch("/fril-categories/{category_id}")
+async def update_fril_category(
+    category_id: UUID,
+    data: FrilCategoryUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    existing = await db.execute(
+        text("SELECT id FROM core.fril_category WHERE id = :id"),
+        {"id": str(category_id)},
+    )
+    if not existing.first():
+        raise HTTPException(status_code=404, detail="Categoría FRIL no encontrada")
+
+    updates = data.model_dump(exclude_unset=True)
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    for key in updates:
+        if key not in _FRIL_CATEGORY_FIELDS:
+            raise HTTPException(status_code=422, detail=f"Campo no permitido: {key}")
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(category_id)
+    await db.execute(
+        text(f"UPDATE core.fril_category SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+    return {"message": "Categoría FRIL actualizada"}
