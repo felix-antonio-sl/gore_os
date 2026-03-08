@@ -565,7 +565,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 
 | ID | Brecha | Estado | Detalle | Prioridad |
 |----|--------|--------|---------|:---------:|
-| HΩ-02 | Parentesco 8% | **ABIERTO** | Inhabilitacion por consanguinidad 3/4 grado -- no iniciado. Requiere tabla de parentesco y validacion contra directorio | **Alta** |
+| HΩ-02 | Parentesco 8% | **CERRADO** | `_check_kinship_declarations()` + `core.kinship_declaration` + CRUD + frontend tab. 10 tests. Ciclo 26 | **Alta** |
 | HΩ-14 | SISREC ciclo completo | **PARCIAL** | 4/4 SLA estados (RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d), `phase_entered_at`, `responsible_id`, ciclo endpoint, 14d target. Pendiente: formalidad CGR 8-phase completa (TP-06) | **Alta** |
 
 ### 5.5 Tabla Consolidada HΩ (15 hallazgos)
@@ -573,7 +573,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | ID | Hallazgo | Estado | Implementacion |
 |----|----------|:------:|----------------|
 | HΩ-01 | Fraccionamiento FRIL | CERRADO | `_check_fril_fraccionamiento()` -- sibling detection +-90d, Ciclo 22 |
-| HΩ-02 | Parentesco 8% | **ABIERTO** | No iniciado -- inhabilitacion por consanguinidad 3/4 grado |
+| HΩ-02 | Parentesco 8% | **CERRADO** | `_check_kinship_declarations()` F1→F2 SUBV8. `core.kinship_declaration` table + CRUD + tab Parentesco. Ciclo 26 |
 | HΩ-03 | Pagare 8% | CERRADO | `_check_pagare_notarial()` -- >=100% cobertura, >=18mo vigencia, Ciclo 24 |
 | HΩ-04 | Directorio <60d | CERRADO | `_check_directorio_certificate()` -- cert freshness check, Ciclo 24 |
 | HΩ-05 | RATE vigencia 3 anos | CERRADO | `_check_rs_vigencia()` -- rs_validity_years desde sni_level_config, Ciclo 23 |
@@ -809,7 +809,7 @@ De las 472 CQs: **~40-44% score estimado** (requiere re-audit para cifra exacta)
 
 De las 81+ reglas Omega: **~44 implementadas (54%), 6 parciales (7%), ~31 sin implementar (38%)**
 
-De los 15 hallazgos HΩ: **13 cerrados (87%), 1 parcial (HΩ-14), 1 abierto (HΩ-02)**
+De los 15 hallazgos HΩ: **14 cerrados (93%), 1 parcial (HΩ-14)**
 
 La frontera de valor se ha desplazado desde "compliance como codigo" (ya logrado en gran parte) hacia: (1) integraciones externas que desbloquean TDE, y (2) las 3 tablas parametricas restantes que completan el engine de tracks.
 

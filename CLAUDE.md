@@ -267,10 +267,10 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~139 API endpoints, 334 tests (330 pass + 4 skip), 28 modules, 19 gate functions in `ipr.py`. HΩ findings: 13/15 implemented, 1 partial, 1 pending. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
+**Coverage**: ~144 API endpoints, 344 tests (340 pass + 4 skip), 29 modules, 20 gate functions in `ipr.py`. HΩ findings: 14/15 implemented, 1 partial. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
 
 **Open gaps**:
-- HΩ-02 Parentesco 8% (kinship disqualification — not started)
+- HΩ-02 Parentesco 8% (kinship disqualification — implemented: kinship_declaration table + gate F1→F2 + CRUD + frontend tab)
 - HΩ-14 SISREC ciclo completo 13-14d (partial — only RTF 7d + UCR 2d of 8 phases)
 - HΩ-15 Budget Cycle Timeline T-1→T→T+1 (implemented — TP-05 with 17 milestones)
 - 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 4/6 levels
@@ -335,4 +335,5 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 48. **Bulk cuotas**: `POST /api/convenios/{id}/cuotas/bulk` generates N installments. Schema: `BulkCuotaRequest(total_amount, num_installments, start_date, frequency_months=1)`. Distributes evenly with remainder on first cuota. Auto-increments from max existing `installment_number`. Route registered BEFORE `/{id}/cuotas` to avoid path conflicts. `_add_months()` helper uses `calendar.monthrange` for end-of-month safety.
 49. **Rendition table schema**: `core.rendition` DDL base + 3 migrations. Added by migrations: `amount` (wave10_sisrec), `ipr_id` (rendition_coproduct), `phase_entered_at` + `responsible_id` (sisrec_phase_tracking). NO `code` column — use `LEFT(r.id::text, 8)`. `phase_entered_at` is the SLA-accurate timestamp (only resets on state transitions, NOT on any update). Use `COALESCE(r.phase_entered_at, r.updated_at)` in queries. `responsible_id` FK → `core.user` for reviewer assignment.
 50. **Responsive with Radix portals**: `DrawerPanel` (Radix Sheet) renders via portals outside the DOM tree — CSS `display:none` on parent does NOT prevent the Sheet from opening. Use `window.matchMedia` with `isMobile` state to conditionally render the Sheet component. See `/datos/page.tsx` for reference.
+52. **Kinship declarations (HΩ-02)**: `core.kinship_declaration` table with UNIQUE(ipr_id, person_id, declaration_type). CRUD via `/api/ipr/{id}/parentesco` (4 endpoints). Gate `_check_kinship_declarations()` at F1→F2 for SUBV8 only — blocks if no declarations or if any declares conflict. Authority roles: GOBERNADOR, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO, ADMIN_REGIONAL, JEFE_DIVISION. Declarations reference `core.person` via FK. Person search: `GET /api/catalogs/persons?search=`. Frontend: tab "Parentesco" (#12) in IPR detail.
 51. **Budget Cycle Timeline (TP-05)**: `core.budget_cycle_milestone` (17 seed rows, parametric) + `core.budget_cycle_tracking` (per fiscal year, operational). 5 endpoints on presupuesto router: `GET /ciclo/hitos`, `POST /ciclo/{year}` (initialize, idempotent 201/200), `GET /ciclo/{year}` (timeline), `GET /ciclo/{year}/resumen` (summary), `PATCH /ciclo/tracking/{id}` (update status). Statuses: PENDIENTE, EN_CURSO, COMPLETADO, OMITIDO. Auto-sets `completed_at`/`completed_by_id` on COMPLETADO. Frontend: `/presupuesto/ciclo` page with phase-grouped timeline. Sidebar: "Ciclo Ppto." nav item.
