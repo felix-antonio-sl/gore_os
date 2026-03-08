@@ -70,6 +70,10 @@ async def cleanup_test_artifacts(db: AsyncSession):
         text("DELETE FROM core.dgi_initiative WHERE name LIKE 'Test Initiative %'")
     )
     await db.execute(text("DELETE FROM core.budget_cycle_tracking WHERE fiscal_year IN (2025, 2026, 2027)"))
+    # Clean parametric test data
+    await db.execute(text("DELETE FROM core.subv8_fund_ceiling WHERE notes LIKE 'TEST-%'"))
+    await db.execute(text("DELETE FROM core.subv8_fund WHERE code LIKE 'TEST-%'"))
+    await db.execute(text("DELETE FROM core.fril_category WHERE code LIKE 'T%' AND LENGTH(code) > 2"))
     await db.commit()
 
 
