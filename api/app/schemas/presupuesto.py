@@ -87,3 +87,48 @@ class PresupuestoResumen(BaseModel):
     paid_amount: Decimal
     execution_pct: float
     program_count: int
+
+
+class BudgetCycleMilestoneItem(BaseModel):
+    id: UUID
+    phase: str
+    quarter: Optional[str] = None
+    ordinal: int
+    month_label: str
+    name: str
+    responsible: str
+    deliverable: Optional[str] = None
+
+
+class BudgetCycleTrackingItem(BaseModel):
+    id: UUID
+    milestone_id: UUID
+    ordinal: int
+    phase: str
+    quarter: Optional[str] = None
+    month_label: str
+    name: str
+    responsible: str
+    deliverable: Optional[str] = None
+    fiscal_year: int
+    status: str
+    planned_date: Optional[date] = None
+    completed_at: Optional[datetime] = None
+    completed_by_name: Optional[str] = None
+    notes: Optional[str] = None
+
+
+class BudgetCycleTrackingUpdate(BaseModel):
+    status: Optional[str] = None
+    planned_date: Optional[date] = None
+    notes: Optional[str] = None
+
+
+class BudgetCycleSummary(BaseModel):
+    fiscal_year: int
+    total_milestones: int
+    completed: int
+    en_curso: int
+    pendiente: int
+    omitido: int
+    completion_pct: float
