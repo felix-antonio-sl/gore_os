@@ -133,3 +133,108 @@ async def test_c33_gate_passes_favorable(
         headers=auth(regional_token),
     )
     assert resp.status_code == 200
+
+
+# ---------------------------------------------------------------------------
+# Endpoint tests
+# ---------------------------------------------------------------------------
+
+# ── GET status endpoint ──
+
+async def test_get_certification_status_empty(client: AsyncClient, regional_token: str, db: AsyncSession):
+    """GET returns empty status for IPR without certification."""
+    ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1", categoria="EDIFICACION")
+    resp = await client.get(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica",
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["categoria_c33"] == "EDIFICACION"
+    assert data["certifier_org"] == "SERVIU"
+    assert data["requested"] is False
+    assert data["resolved"] is False
+
+
+# ── POST solicitar endpoint ──
+
+async def test_solicitar_certification(client: AsyncClient, jefe_token: str, db: AsyncSession):
+    """JEFE_DIVISION can request certification."""
+    ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1", categoria="EDIFICACION")
+    resp = await client.post(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica/solicitar",
+        json={},
+        headers=auth(jefe_token),
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["certifier_org"] == "SERVIU"
+    assert data["requested_at"] is not None
+
+
+async def test_solicitar_no_categoria(client: AsyncClient, jefe_token: str, db: AsyncSession):
+    """POST solicitar fails if categoria_c33 not assigned."""
+    ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1")
+    resp = await client.post(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica/solicitar",
+        json={},
+        headers=auth(jefe_token),
+    )
+    assert resp.status_code == 409
+
+
+async def test_solicitar_wrong_role(client: AsyncClient, encargado_token: str, db: AsyncSession):
+    """ENCARGADO cannot request certification."""
+    ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1", categoria="EDIFICACION")
+    resp = await client.post(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica/solicitar",
+        json={},
+        headers=auth(encargado_token),
+    )
+    assert resp.status_code == 403
+
+
+# ── PATCH resolver endpoint ──
+
+async def test_resolver_favorable(client: AsyncClient, jefe_token: str, regional_token: str, db: AsyncSession):
+    """ADMIN_REGIONAL can register favorable result."""
+    ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1", categoria="VIALIDAD")
+    await client.post(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica/solicitar",
+        json={},
+        headers=auth(jefe_token),
+    )
+    resp = await client.patch(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica",
+        json={"favorable": True, "document_reference": "ORD. 123/2026"},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200
+    assert resp.json()["informe_tecnico_favorable"] is True
+
+
+async def test_resolver_without_request(client: AsyncClient, regional_token: str, db: AsyncSession):
+    """Cannot resolve without prior request."""
+    ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1", categoria="EDIFICACION")
+    resp = await client.patch(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica",
+        json={"favorable": True},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 409
+
+
+async def test_resolver_wrong_role(client: AsyncClient, jefe_token: str, db: AsyncSession):
+    """JEFE_DIVISION cannot resolve certification."""
+    ipr_id = await _create_c33_ipr(db, "EN_REVISION", "F1", categoria="EDIFICACION")
+    await client.post(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica/solicitar",
+        json={},
+        headers=auth(jefe_token),
+    )
+    resp = await client.patch(
+        f"/api/ipr/{ipr_id}/certificacion-tecnica",
+        json={"favorable": True},
+        headers=auth(jefe_token),
+    )
+    assert resp.status_code == 403

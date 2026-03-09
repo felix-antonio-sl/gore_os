@@ -1,3 +1,4 @@
+import json
 import math
 from datetime import timedelta
 from fastapi import APIRouter, Depends, Query, HTTPException, status
@@ -3267,3 +3268,240 @@ async def unverify_admissibility_item(
     if result.rowcount == 0:
         raise HTTPException(404, "Verificación no encontrada")
     return {"message": "Verificación desmarcada"}
+
+
+# ---------------------------------------------------------------------------
+# C33 Technical Certification
+# ---------------------------------------------------------------------------
+
+_CERT_REQUEST_ROLES = {"JEFE_DIVISION", "ADMIN_REGIONAL", "ADMIN_SISTEMA", "JEFE_DGI", "GOBERNADOR"}
+_CERT_RESOLVE_ROLES = {"ADMIN_REGIONAL", "ADMIN_SISTEMA"}
+
+
+@router.get("/{ipr_id}/certificacion-tecnica")
+async def get_certification_status(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Get C33 technical certification status for an IPR."""
+    row = (await db.execute(text("""
+        SELECT m.code AS mechanism_code,
+               i.metadata->>'categoria_c33' AS categoria_c33,
+               i.metadata->>'informe_tecnico_favorable' AS informe,
+               i.metadata->>'cert_requested_at' AS requested_at,
+               i.metadata->>'cert_requested_by_name' AS requested_by,
+               i.metadata->>'cert_certifier_org' AS certifier_org,
+               i.metadata->>'cert_resolved_at' AS resolved_at,
+               i.metadata->>'cert_resolved_by_name' AS resolved_by,
+               i.metadata->>'cert_document_reference' AS document_reference,
+               i.metadata->>'cert_notes' AS notes
+        FROM core.ipr i
+        LEFT JOIN ref.category m ON m.id = i.mechanism_id
+        WHERE i.id = CAST(:id AS uuid) AND i.deleted_at IS NULL
+    """), {"id": str(ipr_id)})).mappings().first()
+
+    if not row:
+        raise HTTPException(404, "IPR no encontrado")
+    if row["mechanism_code"] != "C33":
+        raise HTTPException(409, "Este IPR no es del track C33")
+
+    categoria = row["categoria_c33"]
+    certifier = row["certifier_org"]
+    if categoria and not certifier:
+        cert_row = (await db.execute(text("""
+            SELECT metadata->>'certifier_org_code' AS certifier
+            FROM ref.category
+            WHERE scheme = 'categoria_c33' AND code = :code AND deleted_at IS NULL
+        """), {"code": categoria})).mappings().first()
+        certifier = cert_row["certifier"] if cert_row else None
+
+    informe_raw = row["informe"]
+    informe_val = None
+    if informe_raw is not None:
+        informe_val = informe_raw == "true" or informe_raw is True
+
+    return {
+        "categoria_c33": categoria,
+        "certifier_org": certifier,
+        "requested": row["requested_at"] is not None,
+        "requested_at": row["requested_at"],
+        "requested_by": row["requested_by"],
+        "resolved": informe_raw is not None,
+        "informe_tecnico_favorable": informe_val,
+        "resolved_at": row["resolved_at"],
+        "resolved_by": row["resolved_by"],
+        "document_reference": row["document_reference"],
+        "notes": row["notes"],
+    }
+
+
+@router.post("/{ipr_id}/certificacion-tecnica/solicitar")
+async def solicitar_certification(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Request C33 technical certification from SERVIU/MOP."""
+    _require_roles(user, *_CERT_REQUEST_ROLES)
+
+    row = (await db.execute(text("""
+        SELECT m.code AS mechanism_code,
+               i.metadata->>'categoria_c33' AS categoria_c33,
+               i.metadata->>'cert_requested_at' AS already_requested,
+               i.metadata->>'informe_tecnico_favorable' AS already_resolved
+        FROM core.ipr i
+        LEFT JOIN ref.category m ON m.id = i.mechanism_id
+        WHERE i.id = CAST(:id AS uuid) AND i.deleted_at IS NULL
+    """), {"id": str(ipr_id)})).mappings().first()
+
+    if not row:
+        raise HTTPException(404, "IPR no encontrado")
+    if row["mechanism_code"] != "C33":
+        raise HTTPException(409, "Este IPR no es del track C33")
+    if not row["categoria_c33"]:
+        raise HTTPException(409, "Asignar categoría C33 antes de solicitar certificación")
+    if row["already_resolved"] is not None:
+        raise HTTPException(409, "Certificación ya tiene resultado registrado")
+
+    cert_row = (await db.execute(text("""
+        SELECT metadata->>'certifier_org_code' AS certifier
+        FROM ref.category
+        WHERE scheme = 'categoria_c33' AND code = :code AND deleted_at IS NULL
+    """), {"code": row["categoria_c33"]})).mappings().first()
+    certifier = cert_row["certifier"] if cert_row else "Organismo"
+
+    person_row = (await db.execute(text("""
+        SELECT p.names, p.paternal_surname
+        FROM core."user" u JOIN core.person p ON p.id = u.person_id
+        WHERE u.id = CAST(:uid AS uuid)
+    """), {"uid": user["id"]})).mappings().first()
+    requester_name = f"{person_row['names']} {person_row['paternal_surname']}" if person_row else "Unknown"
+
+    from datetime import datetime, timezone
+    now_iso = datetime.now(timezone.utc).isoformat()
+
+    await db.execute(text("""
+        UPDATE core.ipr
+        SET metadata = jsonb_set(
+                jsonb_set(
+                    jsonb_set(
+                        jsonb_set(
+                            COALESCE(metadata, '{}'),
+                            '{cert_requested_at}', CAST(:ts AS jsonb)
+                        ),
+                        '{cert_requested_by_id}', CAST(:uid AS jsonb)
+                    ),
+                    '{cert_requested_by_name}', CAST(:uname AS jsonb)
+                ),
+                '{cert_certifier_org}', CAST(:org AS jsonb)
+            ),
+            updated_at = NOW()
+        WHERE id = CAST(:id AS uuid)
+    """), {
+        "id": str(ipr_id),
+        "ts": json.dumps(now_iso),
+        "uid": json.dumps(str(user["id"])),
+        "uname": json.dumps(requester_name),
+        "org": json.dumps(certifier),
+    })
+    await db.commit()
+
+    return {
+        "message": f"Certificación técnica solicitada a {certifier}",
+        "certifier_org": certifier,
+        "requested_at": now_iso,
+        "requested_by": requester_name,
+    }
+
+
+@router.patch("/{ipr_id}/certificacion-tecnica")
+async def resolver_certification(
+    ipr_id: UUID,
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Register C33 technical certification result."""
+    _require_roles(user, *_CERT_RESOLVE_ROLES)
+
+    row = (await db.execute(text("""
+        SELECT m.code AS mechanism_code,
+               i.metadata->>'cert_requested_at' AS requested,
+               i.metadata->>'informe_tecnico_favorable' AS already_resolved
+        FROM core.ipr i
+        LEFT JOIN ref.category m ON m.id = i.mechanism_id
+        WHERE i.id = CAST(:id AS uuid) AND i.deleted_at IS NULL
+    """), {"id": str(ipr_id)})).mappings().first()
+
+    if not row:
+        raise HTTPException(404, "IPR no encontrado")
+    if row["mechanism_code"] != "C33":
+        raise HTTPException(409, "Este IPR no es del track C33")
+    if not row["requested"]:
+        raise HTTPException(409, "No existe solicitud de certificación previa")
+    if row["already_resolved"] is not None:
+        raise HTTPException(409, "Certificación ya tiene resultado registrado")
+
+    favorable = data.get("favorable")
+    if favorable is None:
+        raise HTTPException(422, "Campo 'favorable' es requerido (true/false)")
+
+    person_row = (await db.execute(text("""
+        SELECT p.names, p.paternal_surname
+        FROM core."user" u JOIN core.person p ON p.id = u.person_id
+        WHERE u.id = CAST(:uid AS uuid)
+    """), {"uid": user["id"]})).mappings().first()
+    resolver_name = f"{person_row['names']} {person_row['paternal_surname']}" if person_row else "Unknown"
+
+    from datetime import datetime, timezone
+    now_iso = datetime.now(timezone.utc).isoformat()
+
+    doc_ref = data.get("document_reference", "")
+    notes = data.get("notes", "")
+
+    await db.execute(text("""
+        UPDATE core.ipr
+        SET metadata = jsonb_set(
+                jsonb_set(
+                    jsonb_set(
+                        jsonb_set(
+                            jsonb_set(
+                                COALESCE(metadata, '{}'),
+                                '{informe_tecnico_favorable}', CAST(:favorable AS jsonb)
+                            ),
+                            '{cert_resolved_at}', CAST(:ts AS jsonb)
+                        ),
+                        '{cert_resolved_by_id}', CAST(:uid AS jsonb)
+                    ),
+                    '{cert_resolved_by_name}', CAST(:uname AS jsonb)
+                ),
+                '{cert_document_reference}', CAST(:doc AS jsonb)
+            ),
+            updated_at = NOW()
+        WHERE id = CAST(:id AS uuid)
+    """), {
+        "id": str(ipr_id),
+        "favorable": json.dumps(favorable),
+        "ts": json.dumps(now_iso),
+        "uid": json.dumps(str(user["id"])),
+        "uname": json.dumps(resolver_name),
+        "doc": json.dumps(doc_ref),
+    })
+
+    if notes:
+        await db.execute(text("""
+            UPDATE core.ipr
+            SET metadata = jsonb_set(COALESCE(metadata, '{}'), '{cert_notes}', CAST(:notes AS jsonb))
+            WHERE id = CAST(:id AS uuid)
+        """), {"id": str(ipr_id), "notes": json.dumps(notes)})
+
+    await db.commit()
+
+    return {
+        "message": "Resultado de certificación registrado",
+        "informe_tecnico_favorable": favorable,
+        "resolved_at": now_iso,
+        "resolved_by": resolver_name,
+        "document_reference": doc_ref,
+    }
