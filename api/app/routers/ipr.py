@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from uuid import UUID
 from typing import Optional
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
@@ -2999,3 +3000,135 @@ async def delete_kinship_declaration(
     if result.rowcount == 0:
         raise HTTPException(status_code=404, detail="Declaración no encontrada")
     await db.commit()
+
+
+# ---------------------------------------------------------------------------
+# Admissibility checklist (PRE_ADMISIBLE → ADMISIBLE)
+# ---------------------------------------------------------------------------
+
+
+@router.get("/{ipr_id}/admisibilidad")
+async def get_admissibility_checklist(
+    ipr_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    ipr = (await db.execute(text("""
+        SELECT i.id, i.mechanism_id,
+               m.code AS mechanism_code,
+               ft.id AS track_id, ft.code AS track_code
+        FROM core.ipr i
+        LEFT JOIN ref.category m ON m.id = i.mechanism_id
+        LEFT JOIN core.financing_track ft ON ft.code = m.code
+        WHERE i.id = :ipr_id
+    """), {"ipr_id": str(ipr_id)})).mappings().first()
+    if not ipr:
+        raise HTTPException(404, "IPR no encontrado")
+    if not ipr["track_id"]:
+        return {"track_code": None, "total_items": 0, "verified_count": 0, "pending_count": 0, "items": []}
+
+    rows = (await db.execute(text("""
+        SELECT ai.id AS item_id, ai.code, ai.label, ai.description,
+               ai.responsible_role, ai.is_required, ai.sort_order,
+               ac.verified_at, ac.notes,
+               COALESCE(p.names || ' ' || p.paternal_surname, '') AS verified_by
+        FROM core.admissibility_item ai
+        LEFT JOIN core.admissibility_check ac ON ac.item_id = ai.id AND ac.ipr_id = :ipr_id
+        LEFT JOIN core."user" u ON u.id = ac.verified_by_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE ai.financing_track_id = :track_id AND ai.deleted_at IS NULL
+        ORDER BY ai.sort_order, ai.code
+    """), {"ipr_id": str(ipr_id), "track_id": str(ipr["track_id"])})).mappings().all()
+
+    items = []
+    verified_count = 0
+    for r in rows:
+        verified = r["verified_at"] is not None
+        if verified:
+            verified_count += 1
+        items.append({
+            "item_id": str(r["item_id"]),
+            "code": r["code"],
+            "label": r["label"],
+            "description": r["description"],
+            "responsible_role": r["responsible_role"],
+            "is_required": r["is_required"],
+            "verified": verified,
+            "verified_by": r["verified_by"] if verified else None,
+            "verified_at": r["verified_at"].isoformat() if verified else None,
+            "notes": r["notes"],
+        })
+
+    total = len(items)
+    required_pending = sum(1 for i in items if i["is_required"] and not i["verified"])
+    return {
+        "track_code": ipr["track_code"],
+        "total_items": total,
+        "verified_count": verified_count,
+        "pending_count": required_pending,
+        "items": items,
+    }
+
+
+@router.post("/{ipr_id}/admisibilidad/{item_id}/verificar")
+async def verify_admissibility_item(
+    ipr_id: UUID,
+    item_id: UUID,
+    user: CurrentUser,
+    data: dict | None = None,
+    db: AsyncSession = Depends(get_db),
+):
+    if data is None:
+        data = {}
+    item = (await db.execute(text(
+        "SELECT id, responsible_role FROM core.admissibility_item WHERE id = :id AND deleted_at IS NULL"
+    ), {"id": str(item_id)})).mappings().first()
+    if not item:
+        raise HTTPException(404, "Ítem de admisibilidad no encontrado")
+
+    user_role = user.get("role_code", "")
+    if user_role != "ADMIN_SISTEMA" and user_role != item["responsible_role"]:
+        raise HTTPException(403, f"Solo {item['responsible_role']} puede verificar este ítem")
+
+    try:
+        row = (await db.execute(text("""
+            INSERT INTO core.admissibility_check (ipr_id, item_id, verified_by_id, notes)
+            VALUES (:ipr_id, :item_id, :user_id, :notes)
+            RETURNING id, verified_at
+        """), {
+            "ipr_id": str(ipr_id),
+            "item_id": str(item_id),
+            "user_id": user["id"],
+            "notes": data.get("notes"),
+        })).mappings().first()
+        await db.commit()
+        return {"message": "Ítem verificado", "verified_at": row["verified_at"].isoformat()}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(409, "Este ítem ya fue verificado para este IPR")
+
+
+@router.delete("/{ipr_id}/admisibilidad/{item_id}/verificar")
+async def unverify_admissibility_item(
+    ipr_id: UUID,
+    item_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    item = (await db.execute(text(
+        "SELECT responsible_role FROM core.admissibility_item WHERE id = :id AND deleted_at IS NULL"
+    ), {"id": str(item_id)})).mappings().first()
+    if not item:
+        raise HTTPException(404, "Ítem no encontrado")
+
+    user_role = user.get("role_code", "")
+    if user_role != "ADMIN_SISTEMA" and user_role != item["responsible_role"]:
+        raise HTTPException(403, f"Solo {item['responsible_role']} puede desmarcar este ítem")
+
+    result = await db.execute(text(
+        "DELETE FROM core.admissibility_check WHERE ipr_id = :ipr_id AND item_id = :item_id"
+    ), {"ipr_id": str(ipr_id), "item_id": str(item_id)})
+    await db.commit()
+    if result.rowcount == 0:
+        raise HTTPException(404, "Verificación no encontrada")
+    return {"message": "Verificación desmarcada"}

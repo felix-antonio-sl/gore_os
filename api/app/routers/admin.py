@@ -1386,3 +1386,114 @@ async def update_budget_program_code(
     )
     await db.commit()
     return {"message": "Actualizado"}
+
+
+# ===========================================================================
+# ADMISSIBILITY ITEMS CRUD (Admisibilidad sub-states)
+# ===========================================================================
+
+
+_ADMISSIBILITY_ITEM_FIELDS = {"label", "description", "responsible_role", "sort_order", "is_required"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/admissibility-items — List admissibility items
+# ---------------------------------------------------------------------------
+
+@router.get("/admissibility-items")
+async def list_admissibility_items(
+    user: CurrentUser,
+    track_id: UUID | None = None,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    sql = """
+        SELECT ai.id, ai.financing_track_id, ai.code, ai.label, ai.description,
+               ai.responsible_role, ai.sort_order, ai.is_required,
+               ft.code AS track_code
+        FROM core.admissibility_item ai
+        JOIN core.financing_track ft ON ft.id = ai.financing_track_id
+        WHERE ai.deleted_at IS NULL
+    """
+    params: dict = {}
+    if track_id:
+        sql += " AND ai.financing_track_id = :track_id"
+        params["track_id"] = str(track_id)
+    sql += " ORDER BY ai.sort_order, ai.code"
+    rows = (await db.execute(text(sql), params)).mappings().all()
+    return [dict(r) for r in rows]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/admissibility-items — Create an admissibility item
+# ---------------------------------------------------------------------------
+
+@router.post("/admissibility-items", status_code=201)
+async def create_admissibility_item(
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    required = {"financing_track_id", "code", "label", "responsible_role"}
+    missing = required - data.keys()
+    if missing:
+        raise HTTPException(400, f"Campos requeridos: {missing}")
+    try:
+        row = (await db.execute(
+            text("""
+                INSERT INTO core.admissibility_item
+                  (financing_track_id, code, label, description, responsible_role, sort_order, is_required)
+                VALUES (:financing_track_id, :code, :label, :description, :responsible_role, :sort_order, :is_required)
+                RETURNING id, financing_track_id, code, label, description, responsible_role, sort_order, is_required
+            """),
+            {
+                "financing_track_id": str(data["financing_track_id"]),
+                "code": data["code"],
+                "label": data["label"],
+                "description": data.get("description"),
+                "responsible_role": data["responsible_role"],
+                "sort_order": data.get("sort_order", 0),
+                "is_required": data.get("is_required", True),
+            },
+        )).mappings().first()
+        await db.commit()
+        return dict(row)
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(409, "Ya existe un ítem con ese código para este track")
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/admissibility-items/{item_id} — Update an admissibility item
+# ---------------------------------------------------------------------------
+
+@router.patch("/admissibility-items/{item_id}")
+async def update_admissibility_item(
+    item_id: UUID,
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    existing = await db.execute(
+        text("SELECT id FROM core.admissibility_item WHERE id = :id AND deleted_at IS NULL"),
+        {"id": str(item_id)},
+    )
+    if not existing.first():
+        raise HTTPException(404, "Ítem de admisibilidad no encontrado")
+    updates = {k: v for k, v in data.items() if k in _ADMISSIBILITY_ITEM_FIELDS}
+    if not updates:
+        return {"message": "Sin cambios"}
+    set_clause = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(item_id)
+    row = (await db.execute(
+        text(f"""
+            UPDATE core.admissibility_item SET {set_clause}, updated_at = NOW()
+            WHERE id = :id
+            RETURNING id, financing_track_id, code, label, description, responsible_role, sort_order, is_required
+        """),
+        updates,
+    )).mappings().first()
+    await db.commit()
+    return dict(row)
