@@ -156,3 +156,85 @@ async def test_unverify_item(client: AsyncClient, admin_token: str, jefe_token: 
     await client.post(f"/api/ipr/{ipr_id}/admisibilidad/{item_id}/verificar", json={}, headers=auth(jefe_token))
     resp = await client.delete(f"/api/ipr/{ipr_id}/admisibilidad/{item_id}/verificar", headers=auth(jefe_token))
     assert resp.status_code == 200
+
+
+# ── Gate tests ──
+
+async def test_transition_to_pre_admisible(client: AsyncClient, admin_token: str, regional_token: str, db):
+    """EN_REVISION → PRE_ADMISIBLE should work (no gate blocks it)."""
+    from sqlalchemy import text as sa_text
+    track_id = await _get_track_id(client, admin_token)
+    en_revision_id = str((await db.execute(sa_text(
+        "SELECT id FROM ref.category WHERE scheme='ipr_state' AND code='EN_REVISION'"
+    ))).scalar())
+    pre_admisible_id = str((await db.execute(sa_text(
+        "SELECT id FROM ref.category WHERE scheme='ipr_state' AND code='PRE_ADMISIBLE'"
+    ))).scalar())
+    # Get the mechanism category matching the track
+    mechanism_id = str((await db.execute(sa_text("""
+        SELECT c.id FROM ref.category c
+        JOIN core.financing_track ft ON ft.code = c.code
+        WHERE c.scheme = 'mechanism' AND ft.id = CAST(:track_id AS uuid)
+    """), {"track_id": track_id})).scalar())
+
+    code = f"ADM-GATE1-{uuid.uuid4().hex[:6]}"
+    ipr_id = str((await db.execute(sa_text("""
+        INSERT INTO core.ipr (codigo_bip, name, ipr_nature, status_id, mechanism_id)
+        VALUES (:code, 'Gate test', 'PROYECTO', CAST(:status AS uuid), CAST(:mech AS uuid))
+        RETURNING id
+    """), {"code": code, "status": en_revision_id, "mech": mechanism_id})).scalar())
+    await db.commit()
+
+    resp = await client.patch(
+        f"/api/ipr/{ipr_id}",
+        json={"status_id": pre_admisible_id},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200, resp.text
+
+
+async def test_admisible_blocked_incomplete(client: AsyncClient, admin_token: str, regional_token: str, db):
+    """PRE_ADMISIBLE → ADMISIBLE blocked when required checklist items not verified."""
+    from sqlalchemy import text as sa_text
+    track_id = await _get_track_id(client, admin_token)
+    await _create_item(client, admin_token, track_id, f"TEST-GATE-BLK-{uuid.uuid4().hex[:4]}", "JEFE_DIVISION")
+
+    admisible_id = str((await db.execute(sa_text(
+        "SELECT id FROM ref.category WHERE scheme='ipr_state' AND code='ADMISIBLE'"
+    ))).scalar())
+    ipr_id = await _create_ipr_pre_admisible(db, track_id)
+
+    resp = await client.patch(
+        f"/api/ipr/{ipr_id}",
+        json={"status_id": admisible_id},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 409, resp.text
+    assert "Checklist incompleto" in resp.json()["detail"]
+
+
+async def test_admisible_allowed_complete(client: AsyncClient, admin_token: str, jefe_token: str, regional_token: str, db):
+    """PRE_ADMISIBLE → ADMISIBLE allowed when all required items verified."""
+    from sqlalchemy import text as sa_text
+    track_id = await _get_track_id(client, admin_token)
+    item_id = await _create_item(client, admin_token, track_id, f"TEST-GATE-OK-{uuid.uuid4().hex[:4]}", "JEFE_DIVISION")
+
+    admisible_id = str((await db.execute(sa_text(
+        "SELECT id FROM ref.category WHERE scheme='ipr_state' AND code='ADMISIBLE'"
+    ))).scalar())
+    ipr_id = await _create_ipr_pre_admisible(db, track_id)
+
+    # Verify the item
+    resp_verify = await client.post(
+        f"/api/ipr/{ipr_id}/admisibilidad/{item_id}/verificar",
+        json={},
+        headers=auth(jefe_token),
+    )
+    assert resp_verify.status_code == 200, resp_verify.text
+
+    resp = await client.patch(
+        f"/api/ipr/{ipr_id}",
+        json={"status_id": admisible_id},
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200, resp.text

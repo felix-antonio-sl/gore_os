@@ -40,7 +40,7 @@ STATUS_PHASE_FIBER: dict[str, str] = {
     # F0: Formulación & Ingreso
     "INGRESADO": "F0",
     # F1: Admisibilidad
-    "EN_REVISION": "F1", "ADMISIBLE": "F1", "INADMISIBLE": "F1",
+    "EN_REVISION": "F1", "PRE_ADMISIBLE": "F1", "ADMISIBLE": "F1", "INADMISIBLE": "F1",
     # F2: Evaluación Técnica
     "EN_EVALUACION": "F2",
     "RS": "F2", "FI": "F2", "FC": "F2", "OT": "F2",
@@ -1241,6 +1241,31 @@ async def _check_kinship_declarations(ipr_id: UUID, db: AsyncSession) -> dict | 
     return None  # All declarations are clean — silent pass
 
 
+async def _check_admissibility_checklist(ipr_id: str, db) -> dict:
+    """Check if all required admissibility items are verified for this IPR."""
+    row = (await db.execute(text("""
+        SELECT COUNT(*) FILTER (WHERE ac.id IS NULL AND ai.is_required) AS pending,
+               COUNT(*) AS total
+        FROM core.admissibility_item ai
+        LEFT JOIN core.admissibility_check ac ON ac.item_id = ai.id AND ac.ipr_id = CAST(:ipr_id AS uuid)
+        WHERE ai.financing_track_id = (
+            SELECT ft.id FROM core.financing_track ft
+            JOIN ref.category m ON m.code = ft.code
+            JOIN core.ipr i ON i.mechanism_id = m.id
+            WHERE i.id = CAST(:ipr_id AS uuid)
+        )
+          AND ai.deleted_at IS NULL
+    """), {"ipr_id": ipr_id})).first()
+
+    pending = row[0] if row else 0
+    total = row[1] if row else 0
+    if total == 0:
+        return {"name": "checklist_complete", "met": True, "detail": "Sin ítems de admisibilidad configurados para este track"}
+    if pending > 0:
+        return {"name": "checklist_complete", "met": False, "detail": f"Checklist incompleto: {pending} ítem(s) requerido(s) pendiente(s) de verificación"}
+    return {"name": "checklist_complete", "met": True, "detail": f"Checklist completo: {total} ítem(s) verificados"}
+
+
 async def _evaluate_phase_gates(
     ipr_id: UUID, current_phase: str, target_phase: str, db: AsyncSession
 ) -> list[dict]:
@@ -2009,6 +2034,12 @@ async def update_ipr(
                 )).scalar()
                 if phase_id:
                     updates["mcd_phase_id"] = str(phase_id)
+
+            # Custom gate: PRE_ADMISIBLE → ADMISIBLE (same-phase, not caught by phase gates)
+            if current_code == "PRE_ADMISIBLE" and target_code == "ADMISIBLE":
+                gate = await _check_admissibility_checklist(str(ipr_id), db)
+                if not gate["met"]:
+                    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=gate["detail"])
 
     set_clauses = []
     params: dict = {"id": str(ipr_id), "user_id": str(user["id"])}
