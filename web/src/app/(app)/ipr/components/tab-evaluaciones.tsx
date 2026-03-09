@@ -17,13 +17,15 @@ import { Plus, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/format";
 import type { EvaluationAssignment, CategoryRef } from "@/types";
+import { C33CertificationSection } from "./c33-certification-section";
 
 interface TabEvaluacionesProps {
   iprId: string;
   canManage: boolean;
+  mechanismCode?: string | null;
 }
 
-export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
+export function TabEvaluaciones({ iprId, canManage, mechanismCode }: TabEvaluacionesProps) {
   const [evaluaciones, setEvaluaciones] = useState<EvaluationAssignment[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -124,6 +126,12 @@ export function TabEvaluaciones({ iprId, canManage }: TabEvaluacionesProps) {
 
   return (
     <div>
+      {mechanismCode === "C33" && (
+        <div className="mb-4">
+          <C33CertificationSection iprId={iprId} />
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-4">
         <p className="text-sm text-muted-foreground">
           {evaluaciones.length > 0 ? `${evaluaciones.length} evaluaciones` : ""}

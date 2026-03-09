@@ -557,7 +557,7 @@ export default function IprDetailPage() {
         </TabsContent>
 
         <TabsContent value="evaluaciones" className="mt-4">
-          <TabEvaluaciones iprId={id} canManage={!!canManageChildren} />
+          <TabEvaluaciones iprId={id} canManage={!!canManageChildren} mechanismCode={ipr?.mechanism} />
         </TabsContent>
 
         <TabsContent value="parentesco" className="mt-4">
