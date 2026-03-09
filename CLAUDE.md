@@ -267,10 +267,10 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~160 API endpoints, 369 tests (364 pass + 5 skip), 30 modules, 20 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
+**Coverage**: ~163 API endpoints, 374 tests (369 pass + 5 skip), 30 modules, 20 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Budget classifier: 5/6 levels. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
 
 **Open gaps**:
-- 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 4/6 levels
+- 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 5/6 levels
 - 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR)
 - 5 system roles with 0 users, IPR `sponsor_division_id`/`assignee_id` = 0% populated
 
