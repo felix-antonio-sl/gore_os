@@ -172,11 +172,11 @@ async def test_anulado_preserves_phase(client: AsyncClient, regional_token: str,
 
 
 async def test_transition_same_phase_no_gate(client: AsyncClient, regional_token: str, db: AsyncSession):
-    """Intra-fiber transition (e.g. EN_REVISION→ADMISIBLE, both F1) should not evaluate gates."""
+    """Intra-fiber transition (e.g. EN_REVISION→PRE_ADMISIBLE, both F1) should not evaluate gates."""
     # Create IPR in EN_REVISION (F1) with mechanism
     ipr_id = await _create_test_ipr(db, "EN_REVISION", "F1", mechanism=True)
 
-    target_status_id = await _get_status_id(db, "ADMISIBLE")
+    target_status_id = await _get_status_id(db, "PRE_ADMISIBLE")
     resp = await client.patch(
         f"/api/ipr/{ipr_id}",
         json={"status_id": target_status_id},
