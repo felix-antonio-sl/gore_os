@@ -268,3 +268,54 @@ async def test_cycle_summary(client, regional_token):
     assert data["fiscal_year"] == 2026
     assert data["total_milestones"] == 17
     assert data["completion_pct"] == 0.0
+
+
+# --- Admin CRUD: budget-program-codes ---
+
+
+async def test_admin_create_program_code(client, admin_token):
+    """Admin can create a budget program code."""
+    resp = await client.post(
+        "/api/admin/budget-program-codes",
+        json={"code": "TEST-P01", "label": "Test Programa 01", "sort_order": 1},
+        headers=auth(admin_token),
+    )
+    assert resp.status_code == 201, resp.text
+    data = resp.json()
+    assert data["code"] == "TEST-P01"
+    assert "id" in data
+
+
+async def test_admin_list_program_codes(client, admin_token):
+    """Admin can list budget program codes."""
+    await client.post(
+        "/api/admin/budget-program-codes",
+        json={"code": "TEST-P02", "label": "Test Programa 02", "sort_order": 2},
+        headers=auth(admin_token),
+    )
+    resp = await client.get("/api/admin/budget-program-codes", headers=auth(admin_token))
+    assert resp.status_code == 200
+    items = resp.json()
+    assert isinstance(items, list)
+    codes = [i["code"] for i in items]
+    assert "TEST-P02" in codes
+
+
+async def test_admin_update_program_code(client, admin_token):
+    """Admin can update a budget program code label."""
+    create_resp = await client.post(
+        "/api/admin/budget-program-codes",
+        json={"code": "TEST-P03", "label": "Original", "sort_order": 3},
+        headers=auth(admin_token),
+    )
+    pid = create_resp.json()["id"]
+    resp = await client.patch(
+        f"/api/admin/budget-program-codes/{pid}",
+        json={"label": "Actualizado"},
+        headers=auth(admin_token),
+    )
+    assert resp.status_code == 200
+
+    items = (await client.get("/api/admin/budget-program-codes", headers=auth(admin_token))).json()
+    match = [i for i in items if i["id"] == pid]
+    assert match[0]["label"] == "Actualizado"

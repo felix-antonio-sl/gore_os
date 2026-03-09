@@ -1285,3 +1285,104 @@ async def update_fril_category(
     )
     await db.commit()
     return {"message": "Categoría FRIL actualizada"}
+
+
+# ===========================================================================
+# BUDGET PROGRAM CODES (DIPRES Level 5) — CRUD on ref.category scheme
+# ===========================================================================
+
+
+_PROGRAM_CODE_FIELDS = {"label", "sort_order"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/admin/budget-program-codes — List all budget program codes
+# ---------------------------------------------------------------------------
+
+@router.get("/budget-program-codes")
+async def list_budget_program_codes(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    result = await db.execute(
+        text("""
+            SELECT id, code, label, sort_order, created_at, updated_at
+            FROM ref.category
+            WHERE scheme = 'budget_program_code' AND deleted_at IS NULL
+            ORDER BY sort_order, code
+        """)
+    )
+    return [dict(r) for r in result.mappings().all()]
+
+
+# ---------------------------------------------------------------------------
+# POST /api/admin/budget-program-codes — Create a budget program code
+# ---------------------------------------------------------------------------
+
+@router.post("/budget-program-codes", status_code=status.HTTP_201_CREATED)
+async def create_budget_program_code(
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+    required = {"code", "label"}
+    missing = required - set(data.keys())
+    if missing:
+        raise HTTPException(status_code=422, detail=f"Campos requeridos faltantes: {missing}")
+
+    try:
+        result = await db.execute(
+            text("""
+                INSERT INTO ref.category (scheme, code, label, sort_order, created_by_id)
+                VALUES ('budget_program_code', :code, :label, :sort_order, :user_id)
+                RETURNING id, code
+            """),
+            {
+                "code": data["code"],
+                "label": data["label"],
+                "sort_order": data.get("sort_order", 0),
+                "user_id": str(user["id"]),
+            },
+        )
+        row = result.mappings().first()
+        await db.commit()
+        return {"id": str(row["id"]), "code": row["code"]}
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail="Ya existe un código de programa con ese code")
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/admin/budget-program-codes/{code_id} — Update a budget program code
+# ---------------------------------------------------------------------------
+
+@router.patch("/budget-program-codes/{code_id}")
+async def update_budget_program_code(
+    code_id: UUID,
+    data: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_admin(user)
+
+    existing = await db.execute(
+        text("SELECT id FROM ref.category WHERE id = :id AND scheme = 'budget_program_code'"),
+        {"id": str(code_id)},
+    )
+    if not existing.first():
+        raise HTTPException(status_code=404, detail="Código de programa no encontrado")
+
+    updates = {k: v for k, v in data.items() if k in _PROGRAM_CODE_FIELDS}
+    if not updates:
+        return {"message": "Sin cambios"}
+
+    set_clauses = ", ".join(f"{k} = :{k}" for k in updates)
+    updates["id"] = str(code_id)
+    await db.execute(
+        text(f"UPDATE ref.category SET {set_clauses}, updated_at = NOW() WHERE id = :id"),
+        updates,
+    )
+    await db.commit()
+    return {"message": "Actualizado"}

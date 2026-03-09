@@ -74,6 +74,7 @@ async def cleanup_test_artifacts(db: AsyncSession):
     await db.execute(text("DELETE FROM core.subv8_fund_ceiling WHERE notes LIKE 'TEST-%'"))
     await db.execute(text("DELETE FROM core.subv8_fund WHERE code LIKE 'TEST-%'"))
     await db.execute(text("DELETE FROM core.fril_category WHERE code LIKE 'T%' AND LENGTH(code) > 2"))
+    await db.execute(text("DELETE FROM ref.category WHERE scheme = 'budget_program_code' AND code LIKE 'TEST-%'"))
     await db.commit()
 
 
