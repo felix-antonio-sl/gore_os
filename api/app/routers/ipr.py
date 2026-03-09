@@ -741,6 +741,75 @@ async def _check_c33_conservation(ipr_id: UUID, db: AsyncSession) -> dict | None
     }
 
 
+async def _check_c33_technical_certification(ipr_id: UUID, db: AsyncSession) -> dict | None:
+    """C33 technical certification gate (blocking, F1→F2).
+
+    Routes to SERVIU (edificación) or MOP (vialidad) based on categoria_c33.
+    Blocks if certification is missing or unfavorable.
+    """
+    ipr_row = (await db.execute(
+        text("""
+            SELECT m.code AS mechanism_code,
+                   i.metadata->>'categoria_c33' AS categoria_c33,
+                   i.metadata->>'informe_tecnico_favorable' AS informe
+            FROM core.ipr i
+            LEFT JOIN ref.category m ON m.id = i.mechanism_id
+            WHERE i.id = :id AND i.deleted_at IS NULL
+        """),
+        {"id": str(ipr_id)},
+    )).mappings().first()
+
+    if not ipr_row or ipr_row["mechanism_code"] != "C33":
+        return None
+
+    categoria = ipr_row["categoria_c33"]
+    informe = ipr_row["informe"]
+
+    # Look up certifier org from categoria_c33 scheme
+    certifier = None
+    if categoria:
+        cert_row = (await db.execute(
+            text("""
+                SELECT metadata->>'certifier_org_code' AS certifier
+                FROM ref.category
+                WHERE scheme = 'categoria_c33' AND code = :code AND deleted_at IS NULL
+            """),
+            {"code": categoria},
+        )).mappings().first()
+        certifier = cert_row["certifier"] if cert_row else None
+
+    if not categoria:
+        return {
+            "name": "c33_technical_certification",
+            "met": False,
+            "detail": "Asignar categoría C33 (EDIFICACION/VIALIDAD) antes de continuar",
+        }
+
+    if informe is None:
+        org_label = certifier or "organismo certificador"
+        return {
+            "name": "c33_technical_certification",
+            "met": False,
+            "detail": f"Certificación técnica pendiente — solicitar a {org_label}",
+        }
+
+    # metadata stores booleans as JSON strings
+    is_favorable = informe == "true" or informe is True
+    if not is_favorable:
+        org_label = certifier or "organismo certificador"
+        return {
+            "name": "c33_technical_certification",
+            "met": False,
+            "detail": f"Certificación técnica desfavorable de {org_label}",
+        }
+
+    return {
+        "name": "c33_technical_certification",
+        "met": True,
+        "detail": f"Certificación técnica favorable de {certifier or 'organismo'}",
+    }
+
+
 async def _check_sni_proporcionalidad(ipr_id: UUID, db: AsyncSession) -> dict | None:
     """HΩ-11: SNI proportionality levels by project amount.
 
@@ -1314,6 +1383,11 @@ async def _evaluate_phase_gates(
         c33_gate = await _check_c33_conservation(ipr_id, db)
         if c33_gate is not None:
             gates.append(c33_gate)
+
+        # C33 technical certification (blocking)
+        c33_cert = await _check_c33_technical_certification(ipr_id, db)
+        if c33_cert is not None:
+            gates.append(c33_cert)
 
         # HΩ-11: SNI proporcionalidad levels
         sni_gate = await _check_sni_proporcionalidad(ipr_id, db)
