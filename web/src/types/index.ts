@@ -180,6 +180,7 @@ export interface PresupuestoListItem {
   program_type_label: string | null;
   item_label: string | null;
   allocation_label: string | null;
+  program_code_label: string | null;
   initial_amount: number;
   current_amount: number | null;
   committed_amount: number;

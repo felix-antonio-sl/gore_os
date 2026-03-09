@@ -21,6 +21,7 @@ const CSV_COLUMNS = [
   { key: "division_name", label: "División" },
   { key: "name", label: "Programa" },
   { key: "program_type_label", label: "Tipo Programa" },
+  { key: "program_code_label", label: "Programa DIPRES" },
   { key: "item_label", label: "Ítem" },
   { key: "allocation_label", label: "Asignación" },
   { key: "initial_amount", label: "Presupuesto Inicial" },
@@ -254,6 +255,13 @@ export default function PresupuestoPage() {
       ),
     },
     {
+      key: "program_code_label",
+      label: "Programa",
+      render: (v: unknown) => (
+        <span className="text-xs text-muted-foreground">{String(v ?? "-")}</span>
+      ),
+    },
+    {
       key: "item_label",
       label: "Ítem",
       render: (v: unknown) => (
@@ -425,11 +433,14 @@ export default function PresupuestoPage() {
             )}
 
             {/* Clasificación */}
-            {(detail.subtitle_label || detail.item_label || detail.allocation_label) && (
+            {(detail.subtitle_label || detail.program_code_label || detail.item_label || detail.allocation_label) && (
               <div className="space-y-1 text-sm">
                 <p className="font-medium text-xs uppercase text-muted-foreground tracking-wide">Clasificación</p>
                 {detail.subtitle_label && (
                   <p><span className="text-muted-foreground">Subtítulo: </span>{detail.subtitle_label}</p>
+                )}
+                {detail.program_code_label && (
+                  <p><span className="text-muted-foreground">Programa: </span>{detail.program_code_label}</p>
                 )}
                 {detail.item_label && (
                   <p><span className="text-muted-foreground">Ítem: </span>{detail.item_label}</p>
