@@ -148,7 +148,7 @@ All passwords: `admin123`
 
 ## Testing
 
-**369 integration tests (364 pass + 5 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
+**382 integration tests (377 pass + 5 skip)** against real PostgreSQL (`goreos_test` DB). No mocks — tests exercise real SQL, JWT auth, and business logic.
 
 ```bash
 # Setup test DB (first time or to reset):
@@ -167,7 +167,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v
 docker compose exec api pip install pytest pytest-asyncio httpx
 ```
 
-Test modules (30): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (10), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (12), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (27), `test_thresholds` (18), `test_track_enforcement` (32), `test_track_rules` (18), `test_ciclo24` (22), `test_sisrec_8phase` (12), `test_parametric` (13).
+Test modules (31): `test_auth` (12), `test_compromisos` (16), `test_presupuesto` (10), `test_initiatives` (7), `test_problemas` (8), `test_convenios` (12), `test_dashboard` (6), `test_security_readonly` (12), `test_ipr_children` (14), `test_ipr_lifecycle` (6), `test_actos` (12), `test_admin` (11), `test_reuniones` (11), `test_search` (4), `test_catalogs` (8), `test_core_sessions` (10), `test_rendiciones` (5), `test_polyswitch` (14), `test_alertas` (6), `test_dgi_cockpit` (4), `test_dgi_reports` (4), `test_dgi_cartera` (12), `test_concurrency` (5), `test_sisrec` (27), `test_thresholds` (18), `test_track_enforcement` (32), `test_track_rules` (18), `test_ciclo24` (22), `test_sisrec_8phase` (12), `test_parametric` (13), `test_admissibility` (13).
 
 **Test DB setup** (`scripts/setup_test_db.sh`): clones schema via `pg_dump --schema-only` from `goreos_model`, copies all `ref.category` rows via `COPY`, seeds territory + test users. The DDL file has circular dependencies (functions defined after tables that use them), so never apply `goreos_ddl.sql` directly to a fresh DB — always use `pg_dump` from production.
 
@@ -267,7 +267,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~166 API endpoints, 374 tests (369 pass + 5 skip), 30 modules, 21 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Budget classifier: 5/6 levels. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
+**Coverage**: ~166 API endpoints, 382 tests (377 pass + 5 skip), 31 modules, 21 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Budget classifier: 5/6 levels. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
 
 **Open gaps**:
 - 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 5/6 levels

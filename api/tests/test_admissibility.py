@@ -238,3 +238,63 @@ async def test_admisible_allowed_complete(client: AsyncClient, admin_token: str,
         headers=auth(regional_token),
     )
     assert resp.status_code == 200, resp.text
+
+
+async def test_verify_rejects_non_pre_admisible(client: AsyncClient, admin_token: str, jefe_token: str, db):
+    """Verify endpoint rejects IPR not in PRE_ADMISIBLE state."""
+    from sqlalchemy import text as sa_text
+    track_id = await _get_track_id(client, admin_token)
+    item_id = await _create_item(client, admin_token, track_id, f"TEST-STATE-{uuid.uuid4().hex[:4]}", "JEFE_DIVISION")
+    # Create IPR in EN_REVISION (not PRE_ADMISIBLE)
+    en_revision_id = str((await db.execute(sa_text(
+        "SELECT id FROM ref.category WHERE scheme='ipr_state' AND code='EN_REVISION'"
+    ))).scalar())
+    mechanism_id = str((await db.execute(sa_text("""
+        SELECT c.id FROM ref.category c
+        JOIN core.financing_track ft ON ft.code = c.code
+        WHERE c.scheme = 'mechanism' AND ft.id = CAST(:track_id AS uuid)
+    """), {"track_id": track_id})).scalar())
+    code = f"ADM-NOPRE-{uuid.uuid4().hex[:6]}"
+    ipr_id = str((await db.execute(sa_text("""
+        INSERT INTO core.ipr (codigo_bip, name, ipr_nature, status_id, mechanism_id)
+        VALUES (:code, 'Not PRE', 'PROYECTO', CAST(:s AS uuid), CAST(:m AS uuid))
+        RETURNING id
+    """), {"code": code, "s": en_revision_id, "m": mechanism_id})).scalar())
+    await db.commit()
+
+    resp = await client.post(
+        f"/api/ipr/{ipr_id}/admisibilidad/{item_id}/verificar",
+        json={},
+        headers=auth(jefe_token),
+    )
+    assert resp.status_code == 409
+    assert "PRE_ADMISIBLE" in resp.json()["detail"]
+
+
+async def test_transitions_shows_admissibility_gate(client: AsyncClient, admin_token: str, regional_token: str, db):
+    """GET /api/ipr/{id}/transiciones shows checklist gate for PRE_ADMISIBLE → ADMISIBLE."""
+    track_id = await _get_track_id(client, admin_token)
+    await _create_item(client, admin_token, track_id, f"TEST-TRANS-{uuid.uuid4().hex[:4]}", "JEFE_DIVISION")
+    ipr_id = await _create_ipr_pre_admisible(db, track_id)
+
+    resp = await client.get(f"/api/ipr/{ipr_id}/transiciones", headers=auth(regional_token))
+    assert resp.status_code == 200
+    data = resp.json()
+    admisible = next((t for t in data if t["code"] == "ADMISIBLE"), None)
+    assert admisible is not None
+    assert admisible["blocked"] is True
+    assert any(g["name"] == "checklist_complete" for g in admisible["gates"])
+
+
+async def test_admin_can_verify_any_role(client: AsyncClient, admin_token: str, db):
+    """ADMIN_SISTEMA can verify items regardless of responsible_role."""
+    track_id = await _get_track_id(client, admin_token)
+    item_id = await _create_item(client, admin_token, track_id, f"TEST-ADM-{uuid.uuid4().hex[:4]}", "JEFE_DIVISION")
+    ipr_id = await _create_ipr_pre_admisible(db, track_id)
+
+    resp = await client.post(
+        f"/api/ipr/{ipr_id}/admisibilidad/{item_id}/verificar",
+        json={"notes": "Admin override"},
+        headers=auth(admin_token),
+    )
+    assert resp.status_code == 200, resp.text

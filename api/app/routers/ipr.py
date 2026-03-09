@@ -1259,6 +1259,7 @@ async def _check_admissibility_checklist(ipr_id: str, db) -> dict:
 
     pending = row[0] if row else 0
     total = row[1] if row else 0
+    # No items configured for this track → pass (admin must create items to enforce checklist)
     if total == 0:
         return {"name": "checklist_complete", "met": True, "detail": "Sin ítems de admisibilidad configurados para este track"}
     if pending > 0:
@@ -2105,6 +2106,7 @@ async def get_ipr_transitions(
         {"codes": valid_codes},
     )).mappings().all()
 
+    current_code = row["current_code"]
     result = []
     for d in dests:
         target_phase = STATUS_PHASE_FIBER.get(d["code"])
@@ -2117,6 +2119,11 @@ async def get_ipr_transitions(
         gates = []
         if phase_change:
             gates = await _evaluate_phase_gates(ipr_id, current_phase, target_phase, db)
+
+        # Custom gate: PRE_ADMISIBLE → ADMISIBLE (same-phase, not caught by phase gates)
+        if current_code == "PRE_ADMISIBLE" and d["code"] == "ADMISIBLE":
+            adm_gate = await _check_admissibility_checklist(str(ipr_id), db)
+            gates.append(adm_gate)
 
         blocked = any(not g["met"] for g in gates)
         result.append({
@@ -3111,6 +3118,18 @@ async def verify_admissibility_item(
 ):
     if data is None:
         data = {}
+
+    # Validate IPR exists and is in PRE_ADMISIBLE state
+    ipr_state = (await db.execute(text("""
+        SELECT c.code FROM core.ipr i
+        JOIN ref.category c ON c.id = i.status_id
+        WHERE i.id = CAST(:ipr_id AS uuid) AND i.deleted_at IS NULL
+    """), {"ipr_id": str(ipr_id)})).scalar()
+    if not ipr_state:
+        raise HTTPException(404, "IPR no encontrado")
+    if ipr_state != "PRE_ADMISIBLE":
+        raise HTTPException(409, "Solo se puede verificar ítems en estado PRE_ADMISIBLE")
+
     item = (await db.execute(text(
         "SELECT id, responsible_role FROM core.admissibility_item WHERE id = :id AND deleted_at IS NULL"
     ), {"id": str(item_id)})).mappings().first()
@@ -3146,6 +3165,17 @@ async def unverify_admissibility_item(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
+    # Validate IPR exists and is in PRE_ADMISIBLE state
+    ipr_state = (await db.execute(text("""
+        SELECT c.code FROM core.ipr i
+        JOIN ref.category c ON c.id = i.status_id
+        WHERE i.id = CAST(:ipr_id AS uuid) AND i.deleted_at IS NULL
+    """), {"ipr_id": str(ipr_id)})).scalar()
+    if not ipr_state:
+        raise HTTPException(404, "IPR no encontrado")
+    if ipr_state != "PRE_ADMISIBLE":
+        raise HTTPException(409, "Solo se puede modificar verificación en estado PRE_ADMISIBLE")
+
     item = (await db.execute(text(
         "SELECT responsible_role FROM core.admissibility_item WHERE id = :id AND deleted_at IS NULL"
     ), {"id": str(item_id)})).mappings().first()
