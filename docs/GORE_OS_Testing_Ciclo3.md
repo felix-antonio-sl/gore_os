@@ -1,8 +1,8 @@
 # GORE_OS — Documento de Testeo
 
-**Fecha**: 2026-03-03
-**Version**: 7.0 (Ciclo 1-6 + Tests + Confrontacion + Ciclo 19 SISREC)
-**Objetivo**: Guia completa para testeo funcional de GORE_OS incluyendo el workflow multi-rol SISREC del Ciclo 19.
+**Fecha**: 2026-03-09
+**Version**: 8.0 (Ciclo 1-6 + Tests + Confrontacion + Ciclo 19 SISREC + Parametric Tables + HΩ-02 + Budget Classifier L5 + SISREC 8-Phase)
+**Objetivo**: Guia completa para testeo funcional de GORE_OS incluyendo el workflow multi-rol SISREC, tablas parametricas, declaraciones de parentesco, clasificador presupuestario nivel 5 y ciclo CGR de 8 fases.
 
 ---
 
@@ -99,6 +99,15 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 | StatusBadge rendiciones | **Nuevo C19** | C19 | 6 badges para estados SISREC (RTF, UCR, observada, aprobada, rechazada) |
 | SLA rendiciones | **Nuevo C19** | C19 | Indicador de vencimiento + endpoint `/rendiciones/vencidas` |
 | Art. 18 CGR fix | **Nuevo C19** | C19 | Bloqueo de pago extendido a paid_amount/paid_at |
+| Tablas parametricas SUBV8 | **Nuevo TP-02** | C20+ | Admin CRUD fondos tematicos + topes por institucion |
+| Categorias FRIL | **Nuevo TP-04** | C20+ | Admin CRUD 12 categorias A1-D3, exencion comuna |
+| Routing tracks | **Nuevo TP-01** | C20+ | GET /api/admin/financing-tracks/routing?ipr_id= |
+| Ciclo presupuestario | **Nuevo TP-05** | C20+ | 17 hitos parametricos, timeline por año fiscal |
+| Parentesco HΩ-02 | **Nuevo HΩ** | C20+ | Declaraciones kinship, gate F1→F2 SUBV8 |
+| Clasificador L5 | **Nuevo** | C20+ | Programa DIPRES (5to nivel clasificacion presupuestaria) |
+| SISREC 8-Phase | **Nuevo TP-06** | C20+ | 8 fases CGR, escalations, archived_at |
+| DGI Cartera IPR | **Nuevo C25** | C25 | Portfolio control: salud IPR, cuotas vencidas, resumen |
+| Wave 2 UX funcional | **Nuevo UX** | UX2 | Form presupuesto, CDPs UI, bulk cuotas, Art.18 enriquecido |
 
 ### 2.5 Resumen de Nuevas Funcionalidades Ciclo 19 (SISREC Multi-Role Workflow)
 
@@ -711,6 +720,253 @@ docker exec -i goreos_db psql -U goreos -d goreos_model \
 2. Login como DGI → escribir "No cumple normativa" → click "Rechazar"
 3. **Esperado**: Estado RECHAZADA (badge rojo con X). No hay mas acciones. Estado terminal.
 
+### 4.10 Tablas Parametricas (Admin CRUD)
+
+#### TC-53: TP-02 — Fondos SUBV8
+```
+Test: Admin CRUD para fondos tematicos
+Rol: ADMIN_SISTEMA (admin@goreos.cl)
+
+Pasos:
+1. GET /api/admin/subv8-funds → Lista 7 fondos tematicos (CULTURA, SOCIAL, etc.)
+2. POST /api/admin/subv8-funds con body: {"code":"TEST-FUND","name":"Fondo Test","budget_regular":1000000,"budget_special":500000,"is_exclusive":false,"sort_order":99}
+3. PATCH /api/admin/subv8-funds/{id} → Actualizar nombre o presupuesto
+4. GET /api/admin/subv8-funds/{id}/ceilings → Lista topes por institucion
+5. POST /api/admin/subv8-funds/{id}/ceilings → Crear tope con institution_type + max_projects
+
+Verificar:
+- Solo ADMIN_SISTEMA puede acceder (403 para otros roles)
+- Codigo UNIQUE (409 si duplicado)
+- budget_total = budget_regular + budget_special (auto-calculado)
+```
+
+#### TC-54: TP-04 — Categorias FRIL
+```
+Test: Admin CRUD para 12 categorias FRIL (A1-D3)
+Rol: ADMIN_SISTEMA
+
+Pasos:
+1. GET /api/admin/fril-categories → Lista 12 categorias
+2. POST /api/admin/fril-categories → Crear con code, group_code, max_utm, is_exempt_commune_limit
+3. PATCH /api/admin/fril-categories/{id} → Actualizar max_utm
+
+Verificar:
+- is_exempt_commune_limit afecta gate _check_fril_max_per_comuna
+- group_code restringido a A/B/C/D
+```
+
+#### TC-55: TP-01 — Routing de Tracks
+```
+Test: Consulta de track por IPR
+Rol: Cualquier usuario autenticado
+
+Pasos:
+1. GET /api/admin/financing-tracks/routing?ipr_id={uuid} → Retorna track recomendado basado en monto + subtitulo + item
+2. Verificar que el routing refleja las reglas del track configurado
+
+Verificar:
+- Responde con track_code, track_name, reasoning
+- IPR sin monto → responde con fallback track
+```
+
+#### TC-56: TP-05 — Ciclo Presupuestario
+```
+Test: Timeline del ciclo presupuestario
+Rol: ADMIN_SISTEMA o ADMIN_REGIONAL
+
+Pasos:
+1. GET /api/presupuesto/ciclo/hitos → 17 hitos parametrizados (T-1, T, T+1)
+2. POST /api/presupuesto/ciclo/2026 → Inicializar año fiscal (idempotente: 201 primera vez, 200 si ya existe)
+3. GET /api/presupuesto/ciclo/2026 → Timeline con 17 tracking entries
+4. PATCH /api/presupuesto/ciclo/tracking/{id} con {"status":"COMPLETADO"} → Auto-set completed_at + completed_by_id
+5. GET /api/presupuesto/ciclo/2026/resumen → Summary con contadores por estado
+
+Verificar:
+- Statuses validos: PENDIENTE, EN_CURSO, COMPLETADO, OMITIDO
+- COMPLETADO auto-establece completed_at y completed_by_id
+- ENCARGADO no puede modificar (403)
+
+Frontend: /presupuesto/ciclo → Timeline agrupada por fase
+```
+
+### 4.11 HΩ-02 — Declaraciones de Parentesco
+
+#### TC-57: CRUD de Declaraciones de Parentesco
+```
+Test: CRUD de declaraciones de parentesco y gate F1→F2
+Rol: ADMIN_SISTEMA o ADMIN_REGIONAL
+
+Prerequisito: IPR existente con track SUBV8
+
+Pasos:
+1. GET /api/catalogs/persons?search=Juan → Buscar persona por nombre
+2. POST /api/ipr/{id}/parentesco con body:
+   {
+     "person_id": "{uuid}",
+     "declaration_type": "EVALUADOR",
+     "has_conflict": false,
+     "relationship_type": null,
+     "relationship_degree": null,
+     "related_authority_id": null
+   }
+3. GET /api/ipr/{id}/parentesco → Lista declaraciones (1+)
+4. DELETE /api/ipr/{id}/parentesco/{declaration_id}
+```
+
+#### TC-58: Gate Parentesco F1→F2 (SUBV8)
+```
+Test: Gate de parentesco en transicion F1→F2
+
+Pasos:
+1. Intentar transicion F1→F2 en IPR SUBV8 SIN declaraciones → HTTP 409 "Se requieren declaraciones de parentesco"
+2. Crear declaracion con has_conflict=true → F1→F2 bloqueado: "Existen conflictos de parentesco declarados"
+3. Crear declaracion con has_conflict=false → F1→F2 permitido
+
+Verificar:
+- declaration_type: EVALUADOR, REPRESENTANTE_LEGAL, PERSONAL_CONTRATADO
+- relationship_type: CONSANGUINIDAD, AFINIDAD (required when has_conflict=true)
+- relationship_degree: 1-4 (required when has_conflict=true)
+- UNIQUE(ipr_id, person_id, declaration_type)
+- Gate solo aplica a track SUBV8
+- Authority roles: GOBERNADOR, CONSEJERO_REGIONAL, SECRETARIO_EJECUTIVO, ADMIN_REGIONAL, JEFE_DIVISION
+
+Frontend: Tab "Parentesco" (#12) en detalle IPR (/ipr/{id})
+```
+
+### 4.12 Clasificador Presupuestario Nivel 5
+
+#### TC-59: Programa DIPRES (5to Nivel)
+```
+Test: Programa DIPRES (5to nivel de clasificacion presupuestaria)
+Rol: ADMIN_SISTEMA para CRUD, cualquier rol para consultar
+
+Admin CRUD:
+1. POST /api/admin/budget-program-codes con body: {"code":"01","label":"Funcionamiento"} → 201
+2. GET /api/admin/budget-program-codes → Lista codigos de programa
+3. PATCH /api/admin/budget-program-codes/{id} con {"label":"Funcionamiento Institucional"} → 200
+
+API Presupuesto:
+4. POST /api/presupuesto con program_code_id={uuid} → Asociar programa a codigo DIPRES
+5. GET /api/presupuesto?program_code=01 → Filtrar por codigo de programa
+6. Verificar que response incluye program_code_label
+
+Verificar:
+- program_code_id es ortogonal a program_type_id (coexisten)
+- Scheme: budget_program_code en ref.category
+- CHECK constraint: fn_validate_category_scheme(program_code_id, 'budget_program_code')
+- Nullable: existing programs keep NULL until admin assigns
+- Solo ADMIN_SISTEMA puede crear/editar codes (403 para otros)
+
+Frontend: Columna "Programa" en DataTable /presupuesto + detail drawer
+```
+
+### 4.13 SISREC 8-Phase CGR
+
+#### TC-60: Fases Completas del Ciclo CGR
+```
+Test: Fases completas del ciclo CGR de rendiciones
+Rol: Multiples (ESP_CONTROL_GESTION para RTF, ESP_PROCESOS no usado directamente)
+
+Prerequisito: Rendicion existente en algun estado
+
+Fases del ciclo (TP-06):
+1. RECEPCION (externa, metadata timestamp)
+2. ASIGNACION (externa, metadata timestamp)
+3. PREPARACION (externa, metadata timestamp)
+4. REVISION_RTF (estado EN_REVISION_RTF)
+5. APROBACION_DAF (estado VISADA_RTF)
+6. CONTABILIZACION_UCR (estado EN_REVISION_UCR)
+7. INFORMACION (estado APROBADA)
+8. ARCHIVO (archived_at timestamp, no es un estado nuevo)
+
+Pasos:
+1. GET /api/dgi/data/rendiciones/{id}/ciclo → Timeline completa de 8 fases
+   - Fases 1-3 muestran timestamps de metadata
+   - Fases 4-7 muestran datos de rendition_history (event sourcing)
+   - Fase 8 muestra archived_at
+
+2. GET /api/admin/rendition-phases → 8 filas TP-06 con SLA dias
+
+3. POST /api/dgi/data/rendiciones/check-escalations → Deteccion batch de SLA breaches
+   - Crea rendition_escalation con 3 niveles (1x, 1.5x, 2x SLA)
+   - Idempotente (no duplica si ya existe con resolved_at IS NULL)
+
+4. PATCH /api/dgi/data/rendiciones/{id} con {"archived_at":"2026-03-09T00:00:00"} → Marcar fase 8
+
+Verificar:
+- phase_entered_at se usa para SLA (NO updated_at)
+- SLA por estado: RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d
+- CGR cycle target: 14 dias desde created_at
+- Escalation levels: 1 (1x SLA), 2 (1.5x), 3 (2x)
+- APROBADA sigue siendo estado terminal — archived_at es metadata
+
+Test module: test_sisrec_8phase.py (12 tests)
+```
+
+### 4.14 Wave 2 Funcional (UX)
+
+#### TC-61: Formulario de Programa Presupuestario
+```
+Pasos:
+1. Navegar a /presupuesto → Click "Nuevo Programa"
+2. Completar: codigo, nombre, año fiscal, division, montos, clasificacion (subtitulo, item, asignacion, tipo programa)
+3. Submit → Redirige a /presupuesto
+
+Verificar:
+- Validacion de campos requeridos
+- Division carga desde GET /api/catalogs/divisions
+- Clasificacion carga esquemas ref.category
+```
+
+#### TC-62: Creacion de CDPs desde UI
+```
+Pasos:
+1. Abrir drawer de programa presupuestario → Seccion "Nuevo CDP" (expandible con ChevronDown)
+2. Ingresar monto + descripcion + IPR asociada (ComboboxAsync)
+3. Submit → CDP creado con numero secuencial CDP-{year}-{seq:04d}
+
+Verificar:
+- monto ≤ saldo disponible (current - committed)
+- Advisory lock previene race conditions
+- IPR asociada es opcional (ComboboxAsync busca en /api/catalogs/iprs)
+```
+
+#### TC-63: Generacion Bulk de Cuotas
+```
+Pasos:
+1. Abrir drawer de convenio → Click "Generar" junto a "+Cuota"
+2. Ingresar: monto total, cantidad cuotas, fecha inicio, frecuencia
+3. Preview: "{N} cuotas de ${monto} CLP"
+4. Submit → POST /api/convenios/{id}/cuotas/bulk
+
+Verificar:
+- Distribucion equitativa con remainder en primera cuota
+- Auto-incrementa desde max installment_number existente
+- Frecuencia en meses (1, 2, 3, 6, 12)
+```
+
+#### TC-64: Art. 18 Error Enriquecido
+```
+Pasos:
+1. Intentar registrar pago de cuota cuando ejecutor tiene rendiciones pendientes
+2. Verificar que el error muestra IDs especificos de rendiciones bloqueantes
+
+Verificar:
+- HTTP 409 incluye lista de rendition IDs en el mensaje
+- Error se muestra como toast (Sonner) con texto descriptivo
+```
+
+#### TC-65: /datos Responsive
+```
+Pasos:
+1. Abrir /datos en viewport < 768px
+2. Verificar layout de 1 columna (no 3 paneles superpuestos)
+
+Verificar:
+- DrawerPanel usa window.matchMedia para isMobile
+- Radix Sheet portals no se bloquean por CSS display:none del parent
+```
+
 ---
 
 ## 5. Endpoints API — Referencia Rapida
@@ -813,6 +1069,28 @@ POST   /api/admin/usuarios/{id}/reset-password Reset password
 GET    /api/admin/divisiones                Lista divisiones
 POST   /api/admin/divisiones                Crear division
 PATCH  /api/admin/divisiones/{id}           Editar division
+GET    /api/admin/financing-tracks          Lista tracks de financiamiento
+POST   /api/admin/financing-tracks          Crear track
+PATCH  /api/admin/financing-tracks/{id}     Editar track
+GET    /api/admin/financing-tracks/routing  Routing por IPR (?ipr_id=)
+GET    /api/admin/thresholds                Lista umbrales financieros
+POST   /api/admin/thresholds                Crear umbral
+PATCH  /api/admin/thresholds/{id}           Editar umbral
+GET    /api/admin/sni-levels                Lista niveles SNI
+POST   /api/admin/sni-levels                Crear nivel SNI
+PATCH  /api/admin/sni-levels/{id}           Editar nivel SNI
+GET    /api/admin/subv8-funds               Lista fondos SUBV8 (TP-02)
+POST   /api/admin/subv8-funds               Crear fondo
+PATCH  /api/admin/subv8-funds/{id}          Editar fondo
+GET    /api/admin/subv8-funds/{id}/ceilings Lista topes por institucion
+POST   /api/admin/subv8-funds/{id}/ceilings Crear tope
+GET    /api/admin/fril-categories           Lista categorias FRIL (TP-04)
+POST   /api/admin/fril-categories           Crear categoria
+PATCH  /api/admin/fril-categories/{id}      Editar categoria
+GET    /api/admin/rendition-phases          Lista fases rendicion (TP-06)
+GET    /api/admin/budget-program-codes      Lista codigos programa DIPRES
+POST   /api/admin/budget-program-codes      Crear codigo programa
+PATCH  /api/admin/budget-program-codes/{id} Editar codigo programa
 ```
 
 ### 5.11 Catalogos
@@ -822,6 +1100,9 @@ GET    /api/catalogs/commitment-types      Tipos de compromiso
 GET    /api/catalogs/users                 Usuarios activos
 GET    /api/catalogs/iprs                  IPRs (para selects)
 GET    /api/catalogs/divisions             Divisiones activas
+GET    /api/catalogs/persons?search=       Personas por nombre (HΩ-02)
+GET    /api/catalogs/organizations?search= Organizaciones por nombre
+GET    /api/catalogs/territories           Territorios (25 entries)
 ```
 
 ### 5.12 DGI
@@ -850,6 +1131,45 @@ PATCH  /api/dgi/data/rendiciones/{id}              Transicionar estado / actuali
 
 **Campos computados en respuesta**: `is_overdue` (bool), `days_in_state` (float), `history` (en detail).
 
+### 5.14 Presupuesto — Ciclo (Nuevo TP-05)
+```
+GET    /api/presupuesto/ciclo/hitos              17 hitos parametrizados
+POST   /api/presupuesto/ciclo/{year}             Inicializar año fiscal (idempotente)
+GET    /api/presupuesto/ciclo/{year}             Timeline con tracking entries
+GET    /api/presupuesto/ciclo/{year}/resumen     Summary por estado
+PATCH  /api/presupuesto/ciclo/tracking/{id}      Actualizar status tracking
+```
+
+### 5.15 Presupuesto — CDPs (Nuevo UX2)
+```
+POST   /api/presupuesto/{id}/cdps               Crear CDP (advisory-locked sequential)
+```
+
+### 5.16 Convenios — Bulk Cuotas (Nuevo UX2)
+```
+POST   /api/convenios/{id}/cuotas/bulk           Generar N cuotas (distribucion equitativa)
+```
+
+### 5.17 IPR — Parentesco (Nuevo HΩ-02)
+```
+GET    /api/ipr/{id}/parentesco                  Lista declaraciones kinship
+POST   /api/ipr/{id}/parentesco                  Crear declaracion
+DELETE /api/ipr/{id}/parentesco/{did}             Eliminar declaracion
+```
+
+### 5.18 DGI — Cartera IPR (Nuevo C25)
+```
+GET    /api/dgi/cartera                          Cartera paginada con health_signal post-filter
+GET    /api/dgi/cartera/resumen                  Summary cards (contadores por semaforo)
+GET    /api/dgi/cartera/cuotas-vencidas          Cuotas vencidas cross-portfolio
+```
+
+### 5.19 Rendiciones — 8 Phase CGR (Nuevo TP-06)
+```
+GET    /api/dgi/data/rendiciones/{id}/ciclo      Timeline completa 8 fases
+POST   /api/dgi/data/rendiciones/check-escalations  Deteccion batch SLA breaches
+```
+
 ---
 
 ## 6. Hoja de Ruta
@@ -863,16 +1183,22 @@ PATCH  /api/dgi/data/rendiciones/{id}              Transicionar estado / actuali
 | Ciclo 3 | Migracion para_titi: forms CRUD, IPR escritura, admin, dashboards, reuniones | Completado |
 | Ciclo 4 | UX Polish (CSV export, Bell notif, ⌘K search), Charts (recharts dashboard, DGI gauges), CRUD (IPR/Presupuesto/Convenios edit) | Completado |
 | Ciclo 5 | ComboboxAsync, Initiative CRUD, divisions filter, spec v1.0 | Completado |
-| Tests  | 71 integration tests (8 modulos), test DB setup, security readonly suite | Completado |
+| Tests  | 374 integration tests (31 modulos, 369 pass + 5 skip), test DB setup, security readonly suite | Completado |
 | Confrontacion | Migracion datos: org_type(+2), jerarquia 3 niveles, agreement_state(+3), roles(+5) | Completado |
 | Ciclo 6 | Auditoria ontologica: navegacion bidireccional (7), filtros API (3), CRUD completions (4) | Completado |
 | Ciclo 19 | SISREC multi-role: 8-state machine RTF→UCR, audit trail, SLA, Art. 18 fix, 18 tests | Completado |
+| Ciclo 20-25 | Track enforcement, financial thresholds, glosa engine, DGI Cartera IPR, parametric tables | Completado |
+| HΩ-02 | Declaraciones de parentesco: kinship CRUD, gate F1→F2 SUBV8, person catalog | Completado |
+| TP-01/02/04 | Tablas parametricas: subv8_fund, fril_category, financing-track routing, 13 tests | Completado |
+| TP-05 | Ciclo presupuestario: 17 hitos, timeline por año fiscal, 8 tests | Completado |
+| TP-06 | SISREC 8-Phase CGR: rendition_phase, escalations, archived_at, 12 tests | Completado |
+| UX Wave 2 | Art.18 enriquecido, form presupuesto, CDPs UI, bulk cuotas, responsive /datos | Completado |
 
 ### 6.2 Pendiente / Proximos Ciclos
 
 | Item | Prioridad | Descripcion |
 |------|-----------|-------------|
-| Tests automatizados | ~~Alta~~ | ~~71 tests backend completados~~ — Pendiente: E2E frontend |
+| Tests automatizados | ~~Alta~~ | ~~374 tests backend (31 modulos, 369 pass + 5 skip)~~ — Pendiente: E2E frontend |
 | Exportar a PDF | Media | Exportar reportes e informes DGI a PDF |
 | Auditoria de acciones | Media | Log de acciones de usuario (quien hizo que, cuando) |
 | Notificaciones email | Media | Notificaciones por email para alertas criticas y compromisos vencidos |
@@ -934,7 +1260,7 @@ PENDIENTE ──→ EN_REVISION_RTF ──→ VISADA_RTF ──→ EN_REVISION_U
 | EN_REVISION_UCR → OBSERVADA | Solo DGI |
 | OBSERVADA → EN_REVISION_RTF | Operativa + DGI (reenvio) |
 
-**SLA**: EN_REVISION_RTF = 7 dias, EN_REVISION_UCR = 2 dias.
+**SLA**: EN_REVISION_RTF = 7 dias, VISADA_RTF = 1 dia, EN_REVISION_UCR = 2 dias, OBSERVADA = 15 dias. CGR cycle target: 14 dias.
 
 ---
 
@@ -953,6 +1279,12 @@ Esquemas frecuentes para pruebas:
 | `alert_level` | CRITICO, ALTO, ATENCION, INFO | Severidad alerta |
 | `system_role` | ADMIN_SISTEMA, ADMIN_REGIONAL, JEFE_DIVISION, ENCARGADO, JEFE_DGI, ESP_CONTROL_GESTION, ESP_PROCESOS, ESP_TD | Roles del sistema |
 | `rendition_state` | PENDIENTE, EN_REVISION_RTF, VISADA_RTF, EN_REVISION_UCR, OBSERVADA, APROBADA, RECHAZADA (+EN_REVISION legacy) | Estado rendiciones SISREC |
+| `budget_program_code` | 01, 02, ... (codigos DIPRES) | Clasificador nivel 5 |
+| `session_type` | ORDINARIA, EXTRAORDINARIA | Tipo sesion CORE |
+| `vote_option` | A_FAVOR, EN_CONTRA, ABSTENCION | Opciones de voto |
+| `quorum_type` | SIMPLE, CALIFICADA | Tipo quorum CORE |
+| `dgi_decree_status` | Varios | Estado decretos DGI |
+| `dgi_source_status` | Varios | Estado fuentes datos |
 
 ---
 
@@ -983,3 +1315,21 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 | Programas presupuestarios | DEMO-BP-001..006 | 3 divisiones, ejecucion 30%-80% |
 | Convenios | DEMO-AGR-001..004 | 2 VIGENTE, 1 EN_MODIFICACION, 1 VENCIDO |
 | CDPs | DEMO-CDP-001..008 | Vinculados a IPRs reales |
+
+---
+
+## 10. Problemas Conocidos de Tests
+
+Los siguientes tests pueden fallar debido a contaminacion de datos entre ejecuciones:
+
+| Test | Problema | Solucion |
+|------|----------|----------|
+| `test_initiatives::test_move_to_en_curso` | WIP limit 5 alcanzado por datos acumulados | `UPDATE core.dgi_initiative SET deleted_at = NOW() WHERE deleted_at IS NULL;` en `goreos_test` |
+| `test_sisrec::test_vencidas_endpoint` | Rendiciones stale acumuladas | `DELETE FROM core.rendition WHERE created_at > '2026-01-01';` en `goreos_test` |
+| `test_parametric::test_routing_query` | Requiere seed data TP-01 | Verificar que existen filas en `core.financing_track` |
+| `test_parentesco::test_gate_blocks_without_declarations` | Requiere IPR con track SUBV8 | Sensible al estado de la DB de test; verificar track assignment |
+
+**Nota**: Los tests no aislan completamente sus datos insertados. Si multiples tests fallan, resetear la DB de test:
+```bash
+./scripts/setup_test_db.sh
+```
