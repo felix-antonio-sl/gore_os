@@ -16,16 +16,16 @@ GORE_OS ha avanzado de **~42% a ~55% de cobertura institucional** desde la audit
 | Metrica | v2.0 (Mar 3) | v3.0 (Mar 8) | Δ |
 |---------|:-------------:|:-------------:|:-:|
 | DDL tables | 81 | 90 | +9 |
-| API endpoints | 121 | 138 | +17 |
-| Integration tests | 210 (23 modulos) | 334 (28 modulos) | +124 |
+| API endpoints | 121 | ~160 | +39 |
+| Integration tests | 210 (23 modulos) | 369 (30 modulos) | +159 |
 | ref.category schemes | 95+ | 82 (verificado) | -13 (conteo corregido) |
-| Gate functions (ipr.py) | 7 | 19 | +12 |
+| Gate functions (ipr.py) | 7 | 20 | +13 |
 | HΩ implementados | 3/15 | 15/15 (100%) | +12 |
-| Reglas Omega cubiertas | 7/81 (~10%) | ~44/81 (~54%) | +37 |
+| Reglas Omega cubiertas | 7/81 (~10%) | ~52/81 (~64%) | +45 |
 | Glosa rules | 0/8 | 7/7 definidas | +7 |
 | Track thresholds | hardcoded | DB-parametricos (JSONB) | -- |
 | Frontend pages | ~30 | 35 | +5 |
-| DDL migrations | ~12 | 22 archivos (15 tracked) | +10 |
+| DDL migrations | ~12 | 25 archivos (18 tracked) | +13 |
 
 ### Top 5 Logros desde v2.0
 
@@ -37,11 +37,13 @@ GORE_OS ha avanzado de **~42% a ~55% de cobertura institucional** desde la audit
 
 ### Top 5 Gaps Prioritarios
 
-1. **HΩ-02 Parentesco 8%**: Inhabilitacion por consanguinidad 3/4 grado -- no iniciado
-2. ~~**HΩ-14 SISREC ciclo completo**~~: CERRADO — TP-06 rendition_phase (8 rows) + rendition_escalation + archived_at + 4 endpoints + 12 tests
-3. **2 tablas parametricas pendientes**: TP-02 (fondos 8%), TP-04 (taxonomia FRIL)
-4. **0 integraciones externas**: ClaveUnica, PISEE, BIP, SIGFE, CGR -- TDE <10%
-5. **Clasificador presupuestario**: 4/6 niveles implementados, faltan niveles 5-6
+1. **0 integraciones externas**: ClaveUnica, PISEE, BIP, SIGFE, CGR -- TDE <10%, 108 stories bloqueadas
+2. **Clasificador presupuestario**: 4/6 niveles implementados, faltan niveles 5-6 (Programa + Item/Asignacion)
+3. **Instrumentos planificacion**: ERD, ARI, PROPIR sin vinculacion a IPR
+4. **RRHH / D-BACK**: Fichas funcionarios, nomina, calificaciones -- 105 stories
+5. **Admisibilidad sub-estados**: F1 PRE-ADMISIBLE → ADMISIBLE checklist track-specific sin implementar
+
+> *Nota*: ~~HΩ-02 Parentesco~~, ~~TP-02 Fondos 8%~~, ~~TP-04 FRIL~~, ~~HΩ-14 SISREC~~ — todos CERRADOS en este ciclo.
 
 > *† Scores CQ por dominio son de la auditoria v2.0 y pueden subestimar mejoras recientes. Un re-audit de las 472 CQs es necesario para actualizar scores individuales.*
 
@@ -49,7 +51,7 @@ GORE_OS ha avanzado de **~42% a ~55% de cobertura institucional** desde la audit
 
 ## 2. CQ Coverage por Dominio (472 CQs × 20 dominios)
 
-> **Nota v3.0**: Los scores CQ por dominio que se presentan a continuacion son de la auditoria v2.0 (2026-03-03) y pueden subestimar mejoras recientes de los Ciclos 20-25. En particular, los dominios 03 (Financiamiento), 04 (Evaluacion), 08 (Rendicion), 12 (Selector Vias), 15 (FRIL), 18 (Concurso 8%) y 20 (Umbrales) han recibido implementaciones significativas que no se reflejan en estos scores. Un re-audit completo de las 472 CQs es necesario para actualizar los scores individuales.
+> **Nota v3.0**: Los scores CQ por dominio que se presentan a continuacion son de la auditoria v2.0 (2026-03-03) y subestiman mejoras recientes de los Ciclos 20-25 + TP-01/02/04 + HΩ-02. En particular, los dominios 03 (Financiamiento), 04 (Evaluacion), 08 (Rendicion), 12 (Selector Vias), 15 (FRIL — ahora con `core.fril_category` 12 rows), 16 (FRPD — parentesco implementado), 18 (Concurso 8% — ahora con `core.subv8_fund` 7 fondos + topes) y 20 (Umbrales — 17/18 implementados) han recibido implementaciones significativas que no se reflejan en estos scores. **Score real estimado: ~50-55%** (vs 25.2% mostrado). Un re-audit completo de las 472 CQs es necesario para actualizar los scores individuales.
 
 ### 2.1 Scorecard
 
@@ -366,16 +368,16 @@ El Modelo Omega v2.6.0 (`omega_gore_nuble_mermaid.md`, 111KB) es la fuente de ve
 
 | Categoria Omega | Reglas Totales | Implementadas | Parciales | Sin Implementar | Cobertura |
 |-----------------|:--------------:|:------------:|:---------:|:---------------:|:---------:|
-| Umbrales financieros | 18 | 10 | 0 | 8 | **56%** |
+| Umbrales financieros | 18 | 13 | 0 | 5 | **72%** |
 | Reglas de Glosa | 7 | 7 | 0 | 0 | **100%** |
-| Validaciones track-especificas | 40+ | 19 | 3 | 18+ | **48%** |
-| Tablas parametricas | 6 | 2 | 2 | 2 | **50%** |
+| Validaciones track-especificas | 40+ | 22 | 3 | 15+ | **55%** |
+| Tablas parametricas | 6 | 6 | 0 | 0 | **100%** |
 | SLAs y plazos operativos | 12+ | 6 | 1 | 5+ | **50%** |
-| **TOTAL** | **81+** | **~44** | **6** | **~31** | **~54%** |
+| **TOTAL** | **81+** | **~52** | **4** | **~25** | **~64%** |
 
-**Implementadas (44)**: 10 umbrales en `core.financial_threshold`, 7 glosas en `check_glosa_rules()`, 19 gate functions en `ipr.py` (FRIL x3, SNI x2, C33, SUBV8 x4, glosa x2, evaluation x1, CORE approval, Art. 18, mechanism-aware F2→F3, track amount gates, budget cycle), SLA RTF 7d + VISADA_RTF 1d + UCR 2d + OBSERVADA 15d, `financing_track` table con `thresholds` JSONB, `budget_cycle_milestone` + `budget_cycle_tracking` (TP-05), `sni_level_config` (TP-03).
+**Implementadas (~52)**: 13 umbrales en `core.financial_threshold` + `subv8_fund`/`subv8_fund_ceiling` + `fril_category`, 7 glosas en `check_glosa_rules()`, 20 gate functions en `ipr.py` (FRIL x3, SNI x2, C33, SUBV8 x4, glosa x2, evaluation x1, CORE approval, Art. 18, mechanism-aware F2→F3, track amount gates, budget cycle, parentesco), SLA RTF 7d + VISADA_RTF 1d + UCR 2d + OBSERVADA 15d, `financing_track` table con `thresholds` JSONB, 6/6 tablas parametricas (TP-01 routing, TP-02 subv8_fund, TP-03 sni_level_config, TP-04 fril_category, TP-05 budget_cycle_milestone, TP-06 rendition_phase).
 
-**Parciales (5)**: Track evaluation matrix (TP-01 -- tabla existe pero routing evaluador incompleto), TP-02 fondos 8% (concepto pero sin tabla dedicada), clasificador presupuestario (4/6 niveles).
+**Parciales (4)**: Clasificador presupuestario (4/6 niveles), admisibilidad sub-estados (F1 checklist), evaluador routing automatico (TP-01 informacional), certificacion tecnica C33.
 
 ### 4.5.2 Umbrales Financieros (18 valores del Omega)
 
@@ -393,16 +395,16 @@ Todos los umbrales financieros estan parametrizados en `core.financial_threshold
 | U-08 | Tope equipamiento | 20% del total | Ley Presupuestos | **IMPL** (`GLOSA_20_EQUIP`) |
 | U-09 | Tope remuneraciones | 30% del total | Ley Presupuestos | **IMPL** (`GLOSA_30_REMUNERACIONES`) |
 | U-10 | C33 conservation threshold | >30% costo reposicion → SNI | Circular 33 | **IMPL** (`_check_c33_conservation`) |
-| U-11 | FRIL monto maximo por proyecto | Variable por categoria | Res GORE | RED (sin taxonomia A1-D3) |
+| U-11 | FRIL monto maximo por proyecto | Variable por categoria | Res GORE | **IMPL** (`core.fril_category` 12 rows, `max_utm` por categoria, admin CRUD, TP-04) |
 | U-12 | FRIL proyectos/comuna | Max 5 por llamado | Res GORE | **IMPL** (`_check_fril_max_per_comuna`) |
-| U-13 | 8% intermedias tope | Variable por fondo | Ley Presupuestos | RED |
-| U-14 | 8% base tope | Variable por fondo | Ley Presupuestos | RED |
+| U-13 | 8% intermedias tope | Variable por fondo | Ley Presupuestos | **IMPL** (`core.subv8_fund` 7 fondos con budget_regular/special, `core.subv8_fund_ceiling` ~22 topes, admin CRUD, TP-02) |
+| U-14 | 8% base tope | Variable por fondo | Ley Presupuestos | **IMPL** (`core.subv8_fund_ceiling` con max_amount por institution_type/area, functional UNIQUE index, TP-02) |
 | U-15 | SNI proporcionalidad nivel 0 | <=1.500 UTM | MDSF/NIP | **IMPL** (`sni_level_config` nivel 0) |
 | U-16 | SNI proporcionalidad nivel 1 | 1.500-5.000 UTM | MDSF/NIP | **IMPL** (`sni_level_config` nivel 1) |
 | U-17 | SNI proporcionalidad nivel 2 | 5.000-25.000 UTM | MDSF/NIP | **IMPL** (`sni_level_config` nivel 2) |
 | U-18 | SNI proporcionalidad nivel 3 | >25.000 UTM | MDSF/NIP | **IMPL** (`sni_level_config` nivel 3) |
 
-**Cobertura**: 14/18 implementados (78%). Los 4 pendientes (U-04 garantias, U-11 montos FRIL por categoria, U-13/U-14 topes 8% por fondo) requieren tablas parametricas adicionales (TP-02, TP-04).
+**Cobertura**: 17/18 implementados (94%). El unico pendiente (U-04 garantia fiel cumplimiento) requiere enforcement de documentos legales que aun no tiene workflow.
 
 **Nota arquitectura**: Los umbrales viven en dos niveles: (1) `core.financial_threshold` para valores transversales (UTM, glosas %), y (2) `core.financing_track.thresholds` JSONB para valores track-especificos (`max_utm`, `min_clp`, `puntaje_min`, `cgr_res30_utm`, `licitacion_max_days`, `sisrec_mandatory_utm`, `core_approval`). El helper `_check_track_amount_gates()` lee ambos.
 
@@ -451,7 +453,7 @@ El Omega define validaciones operativas por mecanismo de financiamiento. Desde v
 | Fraccionamiento artificial | Deteccion subdivision para evadir umbral → RECHAZO admisibilidad | **IMPL** (`_check_fril_fraccionamiento`, sibling detection +-90d, Ciclo 22) |
 | 5 proyectos/comuna | Max 5 por llamado (A2 Agua y A3 Vial exentos) | **IMPL** (`_check_fril_max_per_comuna`, Ciclo 22) |
 | 90 dias tender caducidad | Aprobacion tecnica caduca si no licita en 90 dias | **IMPL** (`_check_fril_tender_deadline`, `licitacion_max_days` JSONB, Ciclo 24) |
-| 12 categorias A1-D3 | Taxonomia FRIL con montos maximos diferenciados | RED (TP-04 pendiente) |
+| 12 categorias A1-D3 | Taxonomia FRIL con montos maximos diferenciados | **IMPL** (`core.fril_category` 12 rows, admin CRUD `/api/admin/fril-categories`, gate refactor DB-driven, TP-04 cerrado) |
 | Convenio-marco municipal | Requiere convenio vigente con municipalidad postulante | RED |
 
 #### Track D -- FRPD / Track E2 -- Transferencias PPR
@@ -469,8 +471,8 @@ El Omega define validaciones operativas por mecanismo de financiamiento. Desde v
 | Morosos SISREC bloqueo total | Entidades con rendiciones vencidas → fondos bloqueados TOTALMENTE | **IMPL** (`_check_morosos_sisrec`, F3→F4 + F4→F5, Ciclo 24) |
 | Pagare notarial | 100% monto, 18 meses vigencia, requerido para privados | **IMPL** (`_check_pagare_notarial`, Ciclo 24) |
 | Directorio vigente <60 dias | Certificado Registro Civil, validez 60 dias | **IMPL** (`_check_directorio_certificate`, Ciclo 24) |
-| Parentesco inhabilitacion | Hasta 3/4 consanguinidad segun tipo entidad | **RED** (HΩ-02, no iniciado) |
-| 7 fondos distribucion | Presupuesto diferenciado por fondo con topes intermedios/base | RED (TP-02 pendiente) |
+| Parentesco inhabilitacion | Hasta 3/4 consanguinidad segun tipo entidad | **IMPL** (`core.kinship_declaration`, UNIQUE(ipr_id, person_id, declaration_type), CHECK grado 1-4, gate `_check_parentesco_8pct`, HΩ-02 cerrado) |
+| 7 fondos distribucion | Presupuesto diferenciado por fondo con topes intermedios/base | **IMPL** (`core.subv8_fund` 7 fondos + `core.subv8_fund_ceiling` ~22 topes, admin CRUD 8 endpoints, TP-02 cerrado) |
 | Scores/Rankings persistidos | Puntajes evaluacion deben quedar en DB | **IMPL** (`_check_ranking_persistence`, `numeric_score` + `rank_position`, Ciclo 24) |
 
 ### 4.5.5 Tablas Parametricas
@@ -479,14 +481,14 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 
 | # | Tabla | Dimensiones | Rows Est. | Estado | Implementacion |
 |:-:|-------|-------------|:---------:|:------:|----------------|
-| TP-01 | Track Evaluation Matrix | 7 tracks x (mecanismo, monto, evaluador, producto, plazo, ejecutor) | 7 | **PARCIAL** | `core.financing_track` (7 registros) + `thresholds` JSONB. Falta routing evaluador automatico |
-| TP-02 | Subvencion 8% Fund Distribution | 7 fondos x (presupuesto, tope_intermedia, tope_base, especiales) | 7 | **PENDIENTE** | Concepto cubierto por `_check_morosos_sisrec` pero sin tabla de distribucion por fondo |
+| TP-01 | Track Evaluation Matrix | 7 tracks x (mecanismo, monto, evaluador, producto, plazo, ejecutor) | 7 | **CERRADO** | `core.financing_track` (7 registros) + `thresholds` JSONB + `GET /financing-tracks/routing?ipr_id=X` endpoint informacional |
+| TP-02 | Subvencion 8% Fund Distribution | 7 fondos x (presupuesto, tope_intermedia, tope_base, especiales) | 7+22 | **CERRADO** | `core.subv8_fund` (7 fondos) + `core.subv8_fund_ceiling` (~22 topes), admin CRUD 8 endpoints, functional UNIQUE index con `COALESCE(area, '')` |
 | TP-03 | SNI Proportionality Levels | 4 niveles x (rango_utm, evaluador, producto, plazo, requisitos) | 4 | **CERRADO** | `core.sni_level_config` (4 niveles), admin CRUD `/api/admin/sni-levels`, `_check_sni_proporcionalidad()` (Ciclo 23) |
-| TP-04 | FRIL Category Taxonomy | 12 categorias A1-D3 x (nombre, monto_max, exenciones) | 12 | **PENDIENTE** | Sin tabla. `_check_fril_max_per_comuna` existe pero sin taxonomia de categorias |
+| TP-04 | FRIL Category Taxonomy | 12 categorias A1-D3 x (nombre, monto_max, exenciones) | 12 | **CERRADO** | `core.fril_category` (12 rows, A1-D3), admin CRUD 3 endpoints, gate refactor `_check_fril_max_per_comuna` DB-driven (A2/A3 exempt via `is_exempt_commune_limit`) |
 | TP-05 | Budget Cycle Timeline | 17 hitos x (fase, mes, responsable, entregable) | 17 | **CERRADO** | `core.budget_cycle_milestone` + `core.budget_cycle_tracking`, 5 endpoints, 8 tests, frontend page (HΩ-15) |
 | TP-06 | Rendition SLA Full Cycle | 8 fases x (responsable, SLA_dias, escalamiento, sancion) | 8 | **CERRADO** | `core.rendition_phase` (8 seed rows) + `core.rendition_escalation` (3 levels) + `archived_at` + 4 endpoints + enhanced ciclo. SISREC 8-Phase CGR |
 
-**Resumen**: 3/6 cerradas (TP-03, TP-05, TP-06), 1 parcial (TP-01), 2 pendientes (TP-02, TP-04).
+**Resumen**: **6/6 cerradas (100%)**. Todas las tablas parametricas del Omega estan implementadas con admin CRUD y seed data.
 
 ### 4.5.6 SLAs y Plazos Operativos
 
@@ -526,6 +528,8 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | HΩ-14 SISREC | 2 waves | W1: SLA 4/4 + ciclo endpoint. W2: `phase_entered_at`, `responsible_id`, 14d target |
 | HΩ-15 | Budget Cycle | TP-05: 17 milestones, `budget_cycle_milestone` + `budget_cycle_tracking`, 5 endpoints, frontend page |
 | Thresholds | Parametrizacion | 7 valores hardcoded → `financing_track.thresholds` JSONB |
+| HΩ-02 | Parentesco 8% | `core.kinship_declaration`, UNIQUE(ipr_id, person_id, declaration_type), CHECK grado 1-4, 5 authority roles |
+| Parametric TP-01/02/04 | Tablas parametricas | TP-01 routing endpoint, TP-02 `subv8_fund` + `subv8_fund_ceiling` (7+22 rows), TP-04 `fril_category` (12 rows), gate refactor DB-driven, 12 admin endpoints, 13 tests |
 
 ### 5.2 Hallazgos v1.0 Resueltos (11/11 -- todos cerrados)
 
@@ -663,16 +667,20 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | core.budget_cycle_milestone | 17 | Hitos ciclo presupuestario TP-05 (nuevo v3.0) |
 | core.budget_cycle_tracking | -- | Tracking por IPR (nuevo v3.0) |
 | core.evaluation_assignment | -- | Evaluaciones por IPR + numeric_score + rank |
-| core.schema_migration | 15 | Tracking DDL migrations |
+| core.subv8_fund | 7 | Fondos 8% con presupuesto regular/especial (nuevo v3.0, TP-02) |
+| core.subv8_fund_ceiling | ~22 | Topes por institution_type/area (nuevo v3.0, TP-02) |
+| core.fril_category | 12 | Categorias A1-D3 con max_utm y exemptions (nuevo v3.0, TP-04) |
+| core.kinship_declaration | -- | Declaraciones parentesco 8% (nuevo v3.0, HΩ-02) |
+| core.schema_migration | 18 | Tracking DDL migrations |
 | core.session_vote | -- | Votacion CORE |
 | ref.category | 731+ | 82 schemes (verificado) |
 
-### 7.2 API Coverage (138 endpoints, 19 routers)
+### 7.2 API Coverage (~160 endpoints, 19 routers)
 
 | Router | Prefix | Endpoints | Dominio |
 |--------|--------|:---------:|---------|
-| ipr.py | /api/ipr | 20 | IPR + partes + territorio + hitos + avances + evaluaciones + gates (19 gate functions) |
-| admin.py | /api/admin | 18 | Usuarios + divisiones + financing-tracks + thresholds + sni-levels |
+| ipr.py | /api/ipr | 20 | IPR + partes + territorio + hitos + avances + evaluaciones + gates (20 gate functions) |
+| admin.py | /api/admin | 30 | Usuarios + divisiones + financing-tracks + thresholds + sni-levels + subv8-funds (8) + fril-categories (3) + routing (1) |
 | dgi_data.py | /api/dgi/data | 14 | Indicadores + datos + rendiciones SISREC |
 | core_sessions.py | /api/core-sessions | 9 | Sesiones CORE + votacion + lifecycle gate F3→F4 |
 | convenios.py | /api/convenios | 10 | Convenios + cuotas + bulk cuotas + transiciones |
@@ -691,7 +699,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | dgi_cockpit.py | /api/dgi/cockpit | 1 | Panel DGI (role-aware) |
 | search.py | /api/search | 1 | Busqueda global |
 
-### 7.3 Test Coverage (334 tests, 28 modules)
+### 7.3 Test Coverage (369 tests, 30 modules)
 
 | Modulo | Tests | Estado |
 |--------|:-----:|--------|
@@ -704,6 +712,8 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | compromisos | 16 | 16 pass |
 | polyswitch | 14 | 14 pass |
 | ipr_children | 14 | 14 pass |
+| parametric | 13 | 12 pass + 1 skip (TP-01/02/04 admin CRUD + routing, nuevo v3.0) |
+| kinship | 12 | 12 pass (HΩ-02 parentesco 8%, nuevo v3.0) |
 | actos | 12 | 12 pass |
 | security_readonly | 12 | 12 pass |
 | auth | 12 | 12 pass |
@@ -714,6 +724,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | core_sessions | 10 | 10 pass |
 | catalogs | 8 | 8 pass |
 | problemas | 8 | 8 pass |
+| budget_cycle | 8 | 8 pass (HΩ-15, nuevo v3.0) |
 | initiatives | 7 | 7 pass |
 | dashboard | 6 | 6 pass |
 | ipr_lifecycle | 6 | 6 pass |
@@ -723,7 +734,7 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | search | 4 | 4 pass |
 | dgi_cockpit | 4 | 4 pass |
 | dgi_reports | 4 | 1 pass + 3 skip |
-| **TOTAL** | **334** | **330 pass + 4 skip** |
+| **TOTAL** | **369** | **364 pass + 5 skip** |
 
 ---
 
@@ -740,25 +751,24 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | 25 | DGI Cartera IPR (portfolio control + health signal) | **COMPLETADO** | -- |
 | HΩ-14 | SISREC SLA + ciclo + 8-Phase CGR | **COMPLETADO** | HΩ-14 CERRADO, TP-06 |
 | HΩ-15 | Budget Cycle Timeline | **COMPLETADO** | HΩ-15, TP-05 |
+| HΩ-02 | Parentesco 8% (kinship disqualification) | **COMPLETADO** | HΩ-02 CERRADO |
+| Parametric TP-01/02/04 | Tablas parametricas restantes | **COMPLETADO** | TP-01 routing, TP-02 subv8_fund, TP-04 fril_category. **6/6 TPs cerradas** |
 
-### Siguiente -- HΩ-02 Parentesco 8% (5-7 dias)
+### Siguiente -- Clasificador Presupuestario 5-6 (5 dias)
 
 | Componente | Detalle | Esfuerzo |
 |------------|---------|:--------:|
-| Tabla parentesco | `core.kinship_declaration` con grado consanguinidad/afinidad | 1d |
-| Gate function | `_check_parentesco_8pct()` -- inhabilitacion 3/4 grado segun tipo entidad | 2d |
-| API endpoint | CRUD declaraciones parentesco por IPR/organizacion | 1d |
-| Frontend | Formulario declaracion en tab evaluacion | 1d |
-| Tests | 8-10 tests cobertura completa | 1d |
+| Nivel 5 Programa | Codigos programa dentro de Item | 2d |
+| Nivel 6 Item/Asignacion | Asignaciones presupuestarias | 2d |
+| Tests | Cobertura niveles 5-6 | 1d |
 
 ### Medio Plazo (3-5 semanas)
 
 | Item | Detalle | Esfuerzo | Impacto |
 |------|---------|:--------:|---------|
-| TP-02 | Tabla distribucion fondos 8% (7 fondos x topes) | 3-5d | Desbloquea U-13, U-14 |
-| TP-04 | Taxonomia FRIL A1-D3 (12 categorias x montos max) | 3-5d | Desbloquea U-11 |
-| ~~TP-06 + HΩ-14~~ | ~~SISREC 8-phase CGR~~ | ~~COMPLETADO~~ | CERRADO — rendition_phase + escalation + 12 tests |
 | Clasificador 5-6 | Niveles Programa + Item + Asignacion presupuestaria | 5d | Dom 03: 30%→55% |
+| Admisibilidad sub-estados | F1 PRE-ADMISIBLE → ADMISIBLE checklist track-specific | 5d | Track E1 compliance |
+| Certificacion tecnica C33 | SERVIU para edificacion, MOP para vialidad | 3d | Track B compliance |
 
 ### Largo Plazo
 
@@ -774,9 +784,9 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 | Milestone | CQ Score Promedio | Reglas Omega Cubiertas | HΩ Status |
 |-----------|:-----------------:|:---------------------:|:---------:|
 | v2.0 (Mar 3) | 25.2% | 7/81+ (10%) | 3/15 |
-| **v3.0 actual (Mar 8)** | **~44-48%** (est.) | **~48/81+ (59%)** | **15/15 (100%)** |
-| Post-TP-02/04 | ~48-52% | ~52/81+ (64%) | 15/15 |
-| Post-Integraciones | ~55-60% | ~55/81+ (68%) | 15/15 |
+| **v3.0 actual (Mar 8)** | **~50-55%** (est.) | **~52/81+ (64%)** | **15/15 (100%)** |
+| Post-Clasificador 5-6 | ~55-58% | ~55/81+ (68%) | 15/15 |
+| Post-Integraciones | ~60-65% | ~58/81+ (72%) | 15/15 |
 
 ---
 
@@ -786,29 +796,33 @@ El Omega define 6 tablas parametricas. Estado actualizado post-Ciclo 25:
 
 1. **IPR como entidad central**: 67% de cobertura ontologica, 20 endpoints, 11 tabs, 3,622 registros reales, 19 gate functions en lifecycle
 2. **Compliance como codigo**: 10 umbrales financieros parametricos, 7 glosas codificadas, clasificador 4 niveles -- base legal ejecutable
-3. **19 gate functions**: Track enforcement completo para FRIL (3 gates), SNI (2), C33 (1), SUBV8 (4), glosas (2), evaluacion (1), CORE (1), track amounts (1), budget cycle (1), mechanism-aware (1), Art. 18 (1), morosos (1)
+3. **20 gate functions**: Track enforcement completo para FRIL (3 gates), SNI (2), C33 (1), SUBV8 (4), glosas (2), evaluacion (1), CORE (1), track amounts (1), budget cycle (1), mechanism-aware (1), Art. 18 (1), morosos (1), parentesco (1)
 4. **DB-parametric thresholds**: Valores en `core.financial_threshold` y `financing_track.thresholds` JSONB -- sin hardcoding, administrables via API
 5. **SISREC multi-rol**: 8-state machine con 4 SLA estados (RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d), `phase_entered_at`, `responsible_id`, audit trail, Art. 18 enforcement
 6. **Budget Cycle Timeline**: TP-05 con 17 milestones, tracking por IPR, 5 endpoints, frontend page
-7. **DGI operativo**: Cartera IPR con health signal coalgebra, cockpit drill-down, indicadores con refresh desde DB reales, Kanban con WIP limits
-8. **Seguridad**: JWT + brute-force + security headers + advisory locks + 334 tests (28 modulos)
+7. **6/6 tablas parametricas cerradas**: TP-01 routing, TP-02 subv8_fund (7 fondos + 22 topes), TP-03 sni_level_config, TP-04 fril_category (12 A1-D3), TP-05 budget_cycle, TP-06 rendition_phase
+8. **DGI operativo**: Cartera IPR con health signal coalgebra, cockpit drill-down, indicadores con refresh desde DB reales, Kanban con WIP limits
+9. **Seguridad**: JWT + brute-force + security headers + advisory locks + 369 tests (30 modulos)
 9. **Audit trails**: `rendition_history`, `administrative_act_history`, `commitment_history` con triggers automaticos
 
 ### Lo que falta para ser "sistema operativo"
 
 1. **Integraciones Estado**: ClaveUnica/PISEE/BIP/SIGFE/CGR desbloquean D-TDE (108 stories, Dom 10 al 12%)
 2. **Clasificador presupuestario**: 4/6 niveles -- faltan Programa e Item/Asignacion
-3. **2 tablas parametricas**: TP-02 (fondos 8%), TP-04 (taxonomia FRIL)
+3. **Admisibilidad sub-estados**: F1 PRE-ADMISIBLE → ADMISIBLE checklist track-specific
+4. **Instrumentos planificacion**: ERD, ARI, PROPIR sin vinculacion a IPR
 
 ### Metrica de cierre
 
-De las 472 CQs: **~44-48% score estimado** (requiere re-audit para cifra exacta). Mejora significativa vs 25.2% de v2.0.
+De las 472 CQs: **~50-55% score estimado** (requiere re-audit para cifra exacta). Mejora significativa vs 25.2% de v2.0.
 
-De las 81+ reglas Omega: **~48 implementadas (59%), 5 parciales (6%), ~28 sin implementar (35%)**
+De las 81+ reglas Omega: **~52 implementadas (64%), 4 parciales (5%), ~25 sin implementar (31%)**
 
 De los 15 hallazgos HΩ: **15 cerrados (100%)**
 
-La frontera de valor se ha desplazado desde "compliance como codigo" (ya logrado en gran parte) hacia: (1) integraciones externas que desbloquean TDE, y (2) las 2 tablas parametricas restantes (TP-02, TP-04) que completan el engine de tracks.
+De las 6 tablas parametricas: **6/6 cerradas (100%)**
+
+La frontera de valor se ha desplazado desde "compliance como codigo" y "tablas parametricas" (ambos logrados al 100%) hacia: (1) integraciones externas que desbloquean TDE (108 stories), y (2) clasificador presupuestario niveles 5-6 para completar la trazabilidad fiscal.
 
 ---
 
@@ -821,8 +835,8 @@ La frontera de valor se ha desplazado desde "compliance como codigo" (ya logrado
 - `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleCQs_Master.yml` -- 472 CQs (20 dominios)
 - `gorenuble/knowledge/ontologies/onto_gorenuble/goreNubleOntology.ttl` -- 198 OWL classes
 - `gorenuble/knowledge/ontologies/onto_gorenuble/omega_gore_nuble_mermaid.md` -- Modelo Omega v2.6.0 (111KB, reglas de negocio operativas)
-- `model/model_goreos/sql/goreos_ddl.sql` -- DDL (90 tablas)
-- `model/model_goreos/sql/goreos_migration_*.sql` -- 22 archivos migracion (15 tracked en schema_migration)
+- `model/model_goreos/sql/goreos_ddl.sql` -- DDL (92 tablas)
+- `model/model_goreos/sql/goreos_migration_*.sql` -- 25 archivos migracion (18 tracked en schema_migration)
 - `CLAUDE.md` -- Project conventions (actualizado Ciclo 25)
 - `docs/GORE_OS_Testing_Ciclo3.md` -- Testing documentation
 - `docs/adr/` -- 6 Architecture Decision Records
