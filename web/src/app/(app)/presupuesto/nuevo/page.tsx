@@ -35,6 +35,7 @@ export default function NuevoPresupuestoPage() {
   const [divisions, setDivisions] = useState<DivisionOption[]>([]);
   const [programTypes, setProgramTypes] = useState<CategoryOption[]>([]);
   const [subtitles, setSubtitles] = useState<CategoryOption[]>([]);
+  const [programCodes, setProgramCodes] = useState<CategoryOption[]>([]);
 
   const [fiscalYear, setFiscalYear] = useState(String(new Date().getFullYear()));
   const [divisionId, setDivisionId] = useState("");
@@ -42,6 +43,7 @@ export default function NuevoPresupuestoPage() {
   const [code, setCode] = useState("");
   const [programTypeId, setProgramTypeId] = useState("");
   const [subtitleId, setSubtitleId] = useState("");
+  const [programCodeId, setProgramCodeId] = useState("");
   const [initialBudget, setInitialBudget] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
@@ -53,6 +55,7 @@ export default function NuevoPresupuestoPage() {
     api.get<DivisionOption[]>("/api/catalogs/divisions").then(setDivisions).catch(() => {});
     api.get<CategoryOption[]>("/api/catalogs/categories/program_type").then(setProgramTypes).catch(() => {});
     api.get<CategoryOption[]>("/api/catalogs/categories/budget_subtitle").then(setSubtitles).catch(() => {});
+    api.get<CategoryOption[]>("/api/admin/budget-program-codes").then(setProgramCodes).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -74,6 +77,7 @@ export default function NuevoPresupuestoPage() {
         owner_division_id: divisionId || undefined,
         program_type_id: programTypeId || undefined,
         subtitle_id: subtitleId || undefined,
+        program_code_id: programCodeId || undefined,
         initial_amount: parseInt(initialBudget) || 0,
       });
       toast.success("Programa presupuestario creado");
@@ -187,6 +191,22 @@ export default function NuevoPresupuestoPage() {
                   </SelectContent>
                 </Select>
               </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Programa DIPRES</label>
+              <Select value={programCodeId} onValueChange={setProgramCodeId}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccionar programa DIPRES" />
+                </SelectTrigger>
+                <SelectContent>
+                  {programCodes.map((pc) => (
+                    <SelectItem key={pc.id} value={pc.id}>
+                      {pc.code} — {pc.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-1.5">

@@ -88,6 +88,7 @@ export default function PresupuestoPage() {
 
   // Division filter options
   const [divisionOptions, setDivisionOptions] = useState<{ value: string; label: string }[]>([]);
+  const [programCodeOptions, setProgramCodeOptions] = useState<{ value: string; label: string }[]>([]);
 
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
 
@@ -95,9 +96,10 @@ export default function PresupuestoPage() {
   const fiscal_year = searchParams.get("fiscal_year") ?? "";
   const subtitle = searchParams.get("subtitle") ?? "";
   const division_id = searchParams.get("division_id") ?? "";
+  const program_code = searchParams.get("program_code") ?? "";
   const search = searchParams.get("search") ?? "";
 
-  const filterValues: Record<string, string> = { fiscal_year, subtitle, division_id, search };
+  const filterValues: Record<string, string> = { fiscal_year, subtitle, division_id, program_code, search };
 
   const buildUrl = useCallback(
     (overrides: Record<string, string | number>) => {
@@ -122,6 +124,9 @@ export default function PresupuestoPage() {
     api.get<{ id: string; name: string }[]>("/api/catalogs/divisions").then((divs) => {
       setDivisionOptions(divs.map((d) => ({ value: d.id, label: d.name })));
     }).catch(() => {});
+    api.get<{ id: string; code: string; label: string }[]>("/api/admin/budget-program-codes").then((codes) => {
+      setProgramCodeOptions(codes.map((c) => ({ value: c.code, label: `${c.code} — ${c.label}` })));
+    }).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -131,6 +136,7 @@ export default function PresupuestoPage() {
     if (fiscal_year) params.set("fiscal_year", fiscal_year);
     if (subtitle) params.set("subtitle", subtitle);
     if (division_id) params.set("division_id", division_id);
+    if (program_code) params.set("program_code", program_code);
     if (search) params.set("search", search);
 
     setIsLoading(true);
@@ -139,7 +145,7 @@ export default function PresupuestoPage() {
       .then(setData)
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, fiscal_year, subtitle, division_id, search]);
+  }, [page, fiscal_year, subtitle, division_id, program_code, search]);
 
   const searchIprs = async (query: string): Promise<ComboboxOption[]> => {
     const results = await api.get<{ id: string; codigo_bip: string; name: string }[]>(
@@ -308,6 +314,7 @@ export default function PresupuestoPage() {
           { key: "fiscal_year", label: "Año", options: YEAR_OPTIONS },
           { key: "subtitle", label: "Subtítulo", options: SUBTITLE_OPTIONS },
           { key: "division_id", label: "División", options: divisionOptions },
+          { key: "program_code", label: "Programa", options: programCodeOptions },
         ]}
         values={filterValues}
         onChange={handleFilterChange}

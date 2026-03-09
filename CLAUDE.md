@@ -267,10 +267,10 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~169 API endpoints, 393 tests (388 pass + 5 skip), 32 modules, 22 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Budget classifier: 5/6 levels. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
+**Coverage**: ~169 API endpoints, 393 tests (388 pass + 5 skip), 32 modules, 22 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Budget classifier: 6/6 levels complete. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
 
 **Open gaps**:
-- 3/9 track thresholds pending, 2/8 glosas pending, budget classifier 5/6 levels
+- 3/9 track thresholds pending, 2/8 glosas pending
 - 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR)
 - 5 system roles with 0 users, IPR `sponsor_division_id`/`assignee_id` = 0% populated
 
@@ -318,7 +318,7 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 40. **SISREC workflow**: 8-state rendition machine with role-based transitions. `_RENDICION_TRANSITIONS` + `_RENDICION_TRANSITION_ROLES` maps. Operativa initiates/resubmits, DGI visas/approves/rejects. `core.rendition_history` trigger for audit. SLA 4 states: RTF 7d, VISADA_RTF 1d, UCR 2d, OBSERVADA 15d. `phase_entered_at` column tracks when current state was entered (more accurate than `updated_at` which resets on any field change). `responsible_id` FK assigns a reviewer. `GET /rendiciones/{id}/ciclo` returns phase timeline. CGR cycle target: 14 days (`_RENDICION_CYCLE_TARGET_DAYS`). Art. 18: `convenios.py` checks renditions on cuota payment updates.
 41. **Financial thresholds**: `core.financial_threshold` (10 rows: 4 UTM + 5 glosa% + UTM_VALUE). Helpers: `_get_utm_value(db)`, `_get_threshold(code, db)`, `_check_utm_threshold(ipr_id, code, db)`.
 42. **Glosa rules**: `check_glosa_rules(ipr_id, db)` evaluates 5 glosa limits + `_check_glosa03_prohibition()` blocks FNDR→PERSONAL. Integrated at F3→F4.
-43. **Budget classifier 5-level**: List endpoint accepts `item`, `allocation`, `program_type`, `program_code` filters. Levels 1-2 (Partida, Capítulo) are institutional constants. Level 5 (Programa) via `budget_program_code` scheme in `ref.category`.
+43. **Budget classifier 6-level complete**: DIPRES hierarchy fully surfaced. List endpoint accepts `item`, `allocation`, `program_type`, `program_code` filters. Create form includes `program_code_id` select. Levels 1-2 (Partida, Capítulo) are institutional constants. Level 3 (Programa) via `budget_program_code` scheme in `ref.category` with admin CRUD.
 44. **Track enforcement framework**: `_check_track_amount_gates()` reads `financing_track.thresholds` JSONB. Supports: `max_utm`, `min_clp`, `puntaje_min` (F2→F3), `cgr_res30_utm`, `licitacion_max_days` (F3→F4), `sisrec_mandatory_utm` (F4→F5), `core_approval` (overrides universal CORE). `_get_ipr_monto()` reads `metadata->>'monto_total'`.
 45. **Evaluation schema**: `numeric_score` NUMERIC(5,2) on `evaluation_assignment` (FRPD puntaje gate). `rank_position`, `rank_total`, `convocatoria_code` for competitive mechanisms. `core.sni_level_config` (4 levels, admin CRUD via `/api/admin/sni-levels`).
 46. **Track gate functions** (all in `ipr.py`, called by `_evaluate_phase_gates()`):
