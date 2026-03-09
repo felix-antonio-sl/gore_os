@@ -1368,7 +1368,7 @@ async def update_budget_program_code(
     _require_admin(user)
 
     existing = await db.execute(
-        text("SELECT id FROM ref.category WHERE id = :id AND scheme = 'budget_program_code'"),
+        text("SELECT id FROM ref.category WHERE id = :id AND scheme = 'budget_program_code' AND deleted_at IS NULL"),
         {"id": str(code_id)},
     )
     if not existing.first():
