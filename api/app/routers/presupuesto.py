@@ -305,6 +305,7 @@ async def _get_presupuesto_or_404(presupuesto_id: UUID, db: AsyncSession) -> dic
                 pt.label                       AS program_type_label,
                 item_cat.label                 AS item_label,
                 alloc_cat.label                AS allocation_label,
+                pc.label                       AS program_code_label,
                 bp.initial_amount,
                 bp.current_amount,
                 COALESCE(bp.committed_amount, 0) AS committed_amount,
@@ -319,6 +320,7 @@ async def _get_presupuesto_or_404(presupuesto_id: UUID, db: AsyncSession) -> dic
             LEFT JOIN ref.category pt   ON pt.id   = bp.program_type_id
             LEFT JOIN ref.category item_cat  ON item_cat.id  = bp.item_id
             LEFT JOIN ref.category alloc_cat ON alloc_cat.id = bp.allocation_id
+            LEFT JOIN ref.category pc ON pc.id = bp.program_code_id
             WHERE bp.id = :id AND bp.deleted_at IS NULL
         """),
         {"id": str(presupuesto_id)},
@@ -407,6 +409,7 @@ async def list_presupuesto(
     item: str | None = None,
     allocation: str | None = None,
     program_type: str | None = None,
+    program_code: str | None = None,
     search: str | None = None,
 ):
     role = user["role_code"]
@@ -442,6 +445,10 @@ async def list_presupuesto(
         conditions.append("pt.code = :program_type")
         params["program_type"] = program_type
 
+    if program_code:
+        conditions.append("pc.code = :program_code")
+        params["program_code"] = program_code
+
     if search:
         conditions.append("(bp.code ILIKE :search OR bp.name ILIKE :search)")
         params["search"] = f"%{search}%"
@@ -455,6 +462,7 @@ async def list_presupuesto(
         LEFT JOIN ref.category pt   ON pt.id   = bp.program_type_id
         LEFT JOIN ref.category item_cat  ON item_cat.id  = bp.item_id
         LEFT JOIN ref.category alloc_cat ON alloc_cat.id = bp.allocation_id
+        LEFT JOIN ref.category pc ON pc.id = bp.program_code_id
         WHERE {where_clause}
     """
 
@@ -478,6 +486,7 @@ async def list_presupuesto(
                 pt.label                           AS program_type_label,
                 item_cat.label                     AS item_label,
                 alloc_cat.label                    AS allocation_label,
+                pc.label                           AS program_code_label,
                 bp.initial_amount,
                 bp.current_amount,
                 COALESCE(bp.committed_amount, 0)   AS committed_amount,
@@ -503,6 +512,7 @@ async def list_presupuesto(
             program_type_label=r["program_type_label"],
             item_label=r["item_label"],
             allocation_label=r["allocation_label"],
+            program_code_label=r["program_code_label"],
             initial_amount=r["initial_amount"],
             current_amount=r["current_amount"],
             committed_amount=r["committed_amount"],
@@ -913,13 +923,13 @@ async def create_presupuesto(
         text("""
             INSERT INTO core.budget_program (
                 code, name, fiscal_year,
-                program_type_id, subtitle_id, item_id, allocation_id, owner_division_id,
+                program_type_id, subtitle_id, item_id, allocation_id, program_code_id, owner_division_id,
                 initial_amount, current_amount,
                 committed_amount, accrued_amount, paid_amount,
                 created_by_id, created_at, updated_at
             ) VALUES (
                 :code, :name, :fiscal_year,
-                :program_type_id, :subtitle_id, :item_id, :allocation_id, :owner_division_id,
+                :program_type_id, :subtitle_id, :item_id, :allocation_id, :program_code_id, :owner_division_id,
                 :initial_amount, :current_amount,
                 0, 0, 0,
                 :created_by_id, NOW(), NOW()
@@ -934,6 +944,7 @@ async def create_presupuesto(
             "subtitle_id": str(body.subtitle_id) if body.subtitle_id else None,
             "item_id": str(body.item_id) if body.item_id else None,
             "allocation_id": str(body.allocation_id) if body.allocation_id else None,
+            "program_code_id": str(body.program_code_id) if body.program_code_id else None,
             "owner_division_id": str(body.owner_division_id) if body.owner_division_id else None,
             "initial_amount": body.initial_amount,
             "current_amount": body.current_amount if body.current_amount is not None else body.initial_amount,
@@ -967,7 +978,7 @@ async def update_presupuesto(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
 
     # Allowlist: solo estas columnas son actualizables via PATCH
-    UPDATABLE_COLUMNS = {"initial_amount", "current_amount", "committed_amount", "accrued_amount", "paid_amount"}
+    UPDATABLE_COLUMNS = {"initial_amount", "current_amount", "committed_amount", "accrued_amount", "paid_amount", "program_code_id"}
 
     updates = {k: v for k, v in body.model_dump(exclude_none=True).items() if k in UPDATABLE_COLUMNS}
     if not updates:

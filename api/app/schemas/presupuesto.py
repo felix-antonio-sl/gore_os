@@ -32,6 +32,7 @@ class PresupuestoListItem(BaseModel):
     program_type_label: Optional[str]
     item_label: Optional[str] = None
     allocation_label: Optional[str] = None
+    program_code_label: Optional[str] = None
     initial_amount: Decimal
     current_amount: Optional[Decimal]
     committed_amount: Decimal
@@ -59,6 +60,7 @@ class PresupuestoCreate(BaseModel):
     subtitle_id: Optional[UUID] = None
     item_id: Optional[UUID] = None
     allocation_id: Optional[UUID] = None
+    program_code_id: Optional[UUID] = None
     owner_division_id: Optional[UUID] = None
     initial_amount: Decimal
     current_amount: Optional[Decimal] = None
@@ -77,6 +79,7 @@ class PresupuestoUpdate(BaseModel):
     committed_amount: Optional[Decimal] = None
     accrued_amount: Optional[Decimal] = None
     paid_amount: Optional[Decimal] = None
+    program_code_id: Optional[UUID] = None
 
 
 class PresupuestoResumen(BaseModel):

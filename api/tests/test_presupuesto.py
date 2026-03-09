@@ -319,3 +319,43 @@ async def test_admin_update_program_code(client, admin_token):
     items = (await client.get("/api/admin/budget-program-codes", headers=auth(admin_token))).json()
     match = [i for i in items if i["id"] == pid]
     assert match[0]["label"] == "Actualizado"
+
+
+# --- Program Code filter & association tests ---
+
+
+async def test_filter_by_program_code(client, admin_token, regional_token, catalog):
+    """Filter budget programs by program_code."""
+    pc_resp = await client.post(
+        "/api/admin/budget-program-codes",
+        json={"code": "TEST-FILTER-PC", "label": "Filtro Test"},
+        headers=auth(admin_token),
+    )
+    pc_id = pc_resp.json()["id"]
+
+    await _create_budget(client, regional_token, catalog, program_code_id=pc_id)
+
+    resp = await client.get(
+        "/api/presupuesto?program_code=TEST-FILTER-PC",
+        headers=auth(regional_token),
+    )
+    assert resp.status_code == 200
+    items = resp.json()["items"]
+    assert len(items) >= 1
+    assert all(i.get("program_code_label") == "Filtro Test" for i in items)
+
+
+async def test_create_with_program_code(client, admin_token, regional_token, catalog):
+    """Create budget program with program_code_id shows label in detail."""
+    pc_resp = await client.post(
+        "/api/admin/budget-program-codes",
+        json={"code": "TEST-CREATE-PC", "label": "Create Test"},
+        headers=auth(admin_token),
+    )
+    pc_id = pc_resp.json()["id"]
+
+    data = await _create_budget(client, regional_token, catalog, program_code_id=pc_id)
+
+    detail = await client.get(f"/api/presupuesto/{data['id']}", headers=auth(regional_token))
+    body = detail.json()
+    assert body.get("program_code_label") == "Create Test"
