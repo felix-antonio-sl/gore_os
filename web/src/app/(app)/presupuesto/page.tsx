@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Download, Plus, ChevronDown } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCLP, formatDate } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { toast } from "sonner";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
@@ -290,24 +291,22 @@ export default function PresupuestoPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Presupuesto</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Programas presupuestarios y ejecución financiera
-          </p>
-        </div>
-        <div className="flex gap-2">
-          {canEdit && (
-            <Button size="sm" onClick={() => router.push("/presupuesto/nuevo")}>
-              <Plus className="size-4 mr-1" />Nuevo Programa
+      <PageHeader
+        title="Presupuesto"
+        description="Programas presupuestarios y ejecución financiera"
+        actions={
+          <>
+            {canEdit && (
+              <Button size="sm" onClick={() => router.push("/presupuesto/nuevo")}>
+                <Plus className="size-4 mr-1" />Nuevo Programa
+              </Button>
+            )}
+            <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "presupuesto")}>
+              <Download className="size-4 mr-1" />CSV
             </Button>
-          )}
-          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "presupuesto")}>
-            <Download className="size-4 mr-1" />CSV
-          </Button>
-        </div>
-      </div>
+          </>
+        }
+      />
 
       <FilterBar
         filters={[

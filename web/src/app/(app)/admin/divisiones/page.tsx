@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
+import { PageHeader } from "@/components/page-header";
 
 interface DivisionItem {
   id: string;
@@ -130,18 +131,16 @@ export default function DivisionesPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Divisiones</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Administración de divisiones y unidades organizacionales
-          </p>
-        </div>
-        <Button onClick={() => setCreating(true)}>
-          <Plus className="size-4 mr-1" />
-          Nueva División
-        </Button>
-      </div>
+      <PageHeader
+        title="Divisiones"
+        description="Administración de divisiones y unidades organizacionales"
+        actions={
+          <Button onClick={() => setCreating(true)}>
+            <Plus className="size-4 mr-1" />
+            Nueva División
+          </Button>
+        }
+      />
 
       {/* Create inline form */}
       {creating && (

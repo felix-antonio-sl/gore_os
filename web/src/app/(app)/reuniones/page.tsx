@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, ReunionListItem } from "@/types";
 
 function StatusBadgeReunion({ status }: { status: string }) {
@@ -141,20 +142,18 @@ export default function ReunionesPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Reuniones de Crisis</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Sesiones del Comite de Crisis IPR
-          </p>
-        </div>
-        {canCreate && (
-          <Button onClick={() => router.push("/reuniones/nueva")}>
-            <Plus className="size-4 mr-1" />
-            Nueva Reunion
-          </Button>
-        )}
-      </div>
+      <PageHeader
+        title="Reuniones de Crisis"
+        description="Sesiones del Comite de Crisis IPR"
+        actions={
+          canCreate ? (
+            <Button onClick={() => router.push("/reuniones/nueva")}>
+              <Plus className="size-4 mr-1" />
+              Nueva Reunion
+            </Button>
+          ) : undefined
+        }
+      />
 
       <div className="flex gap-2">
         {["", "PROGRAMADA", "EN_CURSO", "FINALIZADA"].map((s) => (

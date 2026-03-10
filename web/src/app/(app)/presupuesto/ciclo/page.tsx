@@ -30,6 +30,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
+import { PageHeader } from "@/components/page-header";
 
 interface TrackingItem {
   id: string;
@@ -225,14 +226,10 @@ export default function CicloPresupuestarioPage() {
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Ciclo Presupuestario</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Timeline de hitos del ciclo presupuestario anual
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        title="Ciclo Presupuestario"
+        description="Timeline de hitos del ciclo presupuestario anual"
+      />
 
       {/* Year selector + summary */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">

@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Plus, Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, ProblemaListItem, CategoryRef } from "@/types";
 
 const CSV_COLUMNS = [
@@ -268,23 +269,21 @@ export default function ProblemasPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Problemas</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Registro de problemas e impedimentos en IPRs
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "problemas")}>
-            <Download className="size-4 mr-1" />CSV
-          </Button>
-          <Button onClick={() => router.push("/problemas/nuevo")} size="sm">
-            <Plus className="size-4 mr-1" />
-            Nuevo Problema
-          </Button>
-        </div>
-      </div>
+      <PageHeader
+        title="Problemas"
+        description="Registro de problemas e impedimentos en IPRs"
+        actions={
+          <>
+            <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "problemas")}>
+              <Download className="size-4 mr-1" />CSV
+            </Button>
+            <Button onClick={() => router.push("/problemas/nuevo")} size="sm">
+              <Plus className="size-4 mr-1" />
+              Nuevo Problema
+            </Button>
+          </>
+        }
+      />
 
       <FilterBar
         filters={[

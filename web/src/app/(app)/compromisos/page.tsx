@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { Plus, Download, UserCheck } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, CompromisoListItem, HistoryEntry } from "@/types";
 
 const CSV_COLUMNS = [
@@ -266,25 +267,23 @@ export default function CompromisosPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Compromisos</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Gestión de compromisos operativos
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "compromisos")}>
-            <Download className="size-4 mr-1" />CSV
-          </Button>
-          {canCreate && (
-            <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
-              <Plus className="size-4 mr-1" />
-              Nuevo Compromiso
+      <PageHeader
+        title="Compromisos"
+        description="Gestión de compromisos operativos"
+        actions={
+          <>
+            <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "compromisos")}>
+              <Download className="size-4 mr-1" />CSV
             </Button>
-          )}
-        </div>
-      </div>
+            {canCreate && (
+              <Button onClick={() => router.push("/compromisos/nuevo")} size="sm">
+                <Plus className="size-4 mr-1" />
+                Nuevo Compromiso
+              </Button>
+            )}
+          </>
+        }
+      />
 
       <FilterBar
         filters={[

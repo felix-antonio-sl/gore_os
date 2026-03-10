@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
+import { PageHeader } from "@/components/page-header";
 
 interface SniLevel {
   id: string;
@@ -170,17 +171,15 @@ export default function NivelesSniPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Niveles SNI</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Configuración de niveles de evaluación SNI por rango UTM
-          </p>
-        </div>
-        <Button size="sm" onClick={() => setShowCreate(!showCreate)}>
-          <Plus className="size-4 mr-1" />Nuevo Nivel
-        </Button>
-      </div>
+      <PageHeader
+        title="Niveles SNI"
+        description="Configuración de niveles de evaluación SNI por rango UTM"
+        actions={
+          <Button size="sm" onClick={() => setShowCreate(!showCreate)}>
+            <Plus className="size-4 mr-1" />Nuevo Nivel
+          </Button>
+        }
+      />
 
       {showCreate && (
         <form onSubmit={handleCreate} className="rounded-lg border p-4 space-y-3">

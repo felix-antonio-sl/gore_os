@@ -20,6 +20,7 @@ import {
 import { toast } from "sonner";
 import { Plus, KeyRound } from "lucide-react";
 import { formatDate } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, CategoryRef } from "@/types";
 
 interface UserListItem {
@@ -316,18 +317,16 @@ export default function UsuariosPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Usuarios</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Administración de usuarios del sistema
-          </p>
-        </div>
-        <Button onClick={() => router.push("/admin/usuarios/nuevo")}>
-          <Plus className="size-4 mr-1" />
-          Nuevo Usuario
-        </Button>
-      </div>
+      <PageHeader
+        title="Usuarios"
+        description="Administración de usuarios del sistema"
+        actions={
+          <Button onClick={() => router.push("/admin/usuarios/nuevo")}>
+            <Plus className="size-4 mr-1" />
+            Nuevo Usuario
+          </Button>
+        }
+      />
 
       <FilterBar
         filters={[

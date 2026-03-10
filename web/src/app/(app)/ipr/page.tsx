@@ -13,6 +13,7 @@ import { Plus, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCurrency } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, IPRListItem } from "@/types";
 
 const CSV_COLUMNS = [
@@ -277,25 +278,23 @@ export default function IprPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">IPR</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Intervenciones Públicas Regionales
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "ipr")}>
-            <Download className="size-4 mr-1" />CSV
-          </Button>
-          {canCreate && (
-            <Button onClick={() => router.push("/ipr/nuevo")} size="sm">
-              <Plus className="size-4 mr-1" />
-              Nueva IPR
+      <PageHeader
+        title="IPR"
+        description="Intervenciones Públicas Regionales"
+        actions={
+          <>
+            <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "ipr")}>
+              <Download className="size-4 mr-1" />CSV
             </Button>
-          )}
-        </div>
-      </div>
+            {canCreate && (
+              <Button onClick={() => router.push("/ipr/nuevo")} size="sm">
+                <Plus className="size-4 mr-1" />
+                Nueva IPR
+              </Button>
+            )}
+          </>
+        }
+      />
 
       <FilterBar
         filters={[

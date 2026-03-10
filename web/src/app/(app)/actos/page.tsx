@@ -20,6 +20,7 @@ import { useAuth } from "@/lib/auth";
 import { Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatDate, formatCLP } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import { TimelineHistory } from "@/components/timeline-history";
 import type {
   PaginatedResponse,
@@ -285,32 +286,30 @@ export default function ActosPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Actos Administrativos</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Resoluciones, decretos, oficios y otros actos institucionales
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() =>
-              exportCSV(CSV_COLUMNS, data?.items ?? [], "actos")
-            }
-          >
-            <Download className="size-4 mr-1" />
-            CSV
-          </Button>
-          {canCreate && (
-            <Button size="sm" onClick={() => router.push("/actos/nuevo")}>
-              <Plus className="size-4 mr-1" />
-              Nuevo Acto
+      <PageHeader
+        title="Actos Administrativos"
+        description="Resoluciones, decretos, oficios y otros actos institucionales"
+        actions={
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                exportCSV(CSV_COLUMNS, data?.items ?? [], "actos")
+              }
+            >
+              <Download className="size-4 mr-1" />
+              CSV
             </Button>
-          )}
-        </div>
-      </div>
+            {canCreate && (
+              <Button size="sm" onClick={() => router.push("/actos/nuevo")}>
+                <Plus className="size-4 mr-1" />
+                Nuevo Acto
+              </Button>
+            )}
+          </>
+        }
+      />
 
       <FilterBar
         filters={[

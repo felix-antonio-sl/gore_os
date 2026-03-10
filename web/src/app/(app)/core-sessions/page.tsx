@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, CoreSessionListItem } from "@/types";
 
 function StatusBadge({ status }: { status: string }) {
@@ -148,20 +149,18 @@ export default function CoreSessionsPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Sesiones CORE</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Sesiones del Consejo Regional de Nuble
-          </p>
-        </div>
-        {canCreate && (
-          <Button onClick={() => router.push("/core-sessions/nueva")}>
-            <Plus className="size-4 mr-1" />
-            Nueva Sesion
-          </Button>
-        )}
-      </div>
+      <PageHeader
+        title="Sesiones CORE"
+        description="Sesiones del Consejo Regional de Nuble"
+        actions={
+          canCreate ? (
+            <Button onClick={() => router.push("/core-sessions/nueva")}>
+              <Plus className="size-4 mr-1" />
+              Nueva Sesion
+            </Button>
+          ) : undefined
+        }
+      />
 
       <div className="flex gap-2">
         {["", "PROGRAMADA", "EN_CURSO", "FINALIZADA"].map((s) => (

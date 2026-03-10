@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatCLP } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 
 interface ThresholdItem {
   id: string;
@@ -140,12 +141,10 @@ export default function UmbralesPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold">Umbrales Financieros</h1>
-        <p className="text-muted-foreground text-sm mt-1">
-          Configuraci&oacute;n de l&iacute;mites de compliance financiero
-        </p>
-      </div>
+      <PageHeader
+        title="Umbrales Financieros"
+        description="Configuración de límites de compliance financiero"
+      />
 
       <div className="rounded-lg border">
         <Table>

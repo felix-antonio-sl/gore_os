@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import { formatCLP, formatDate } from "@/lib/format";
 import { exportCSV } from "@/lib/csv-export";
+import { PageHeader } from "@/components/page-header";
 import { DataTable } from "@/components/data-table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -354,27 +355,25 @@ export default function CarteraPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Control de Cartera IPR</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Vista unificada del portafolio de inversiones
-          </p>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() =>
-            exportCSV(
-              tab === "cuotas" ? CSV_CUOTAS : CSV_COLUMNS,
-              tab === "cuotas" ? (cuotas?.items ?? []) : (data?.items ?? []),
-              tab === "cuotas" ? "cuotas-vencidas" : "cartera-ipr"
-            )
-          }
-        >
-          <Download className="size-4 mr-1" />CSV
-        </Button>
-      </div>
+      <PageHeader
+        title="Control de Cartera IPR"
+        description="Vista unificada del portafolio de inversiones"
+        actions={
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              exportCSV(
+                tab === "cuotas" ? CSV_CUOTAS : CSV_COLUMNS,
+                tab === "cuotas" ? (cuotas?.items ?? []) : (data?.items ?? []),
+                tab === "cuotas" ? "cuotas-vencidas" : "cartera-ipr"
+              )
+            }
+          >
+            <Download className="size-4 mr-1" />CSV
+          </Button>
+        }
+      />
 
       {/* Summary cards */}
       {summary && (

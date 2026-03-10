@@ -32,6 +32,7 @@ import { toast } from "sonner";
 import { Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCLP, formatDate } from "@/lib/format";
+import { PageHeader } from "@/components/page-header";
 import type { PaginatedResponse, ConvenioListItem, ConvenioDetail, CategoryRef, InstallmentItem } from "@/types";
 
 const CSV_COLUMNS = [
@@ -386,25 +387,23 @@ export default function ConveniosPage() {
 
   return (
     <div className="p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Convenios</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Gestión de convenios y cuotas de pago
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "convenios")}>
-            <Download className="size-4 mr-1" />CSV
-          </Button>
-          {canEdit && (
-            <Button size="sm" onClick={() => router.push("/convenios/nuevo")}>
-              <Plus className="size-4 mr-1" />
-              Nuevo Convenio
+      <PageHeader
+        title="Convenios"
+        description="Gestión de convenios y cuotas de pago"
+        actions={
+          <>
+            <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "convenios")}>
+              <Download className="size-4 mr-1" />CSV
             </Button>
-          )}
-        </div>
-      </div>
+            {canEdit && (
+              <Button size="sm" onClick={() => router.push("/convenios/nuevo")}>
+                <Plus className="size-4 mr-1" />
+                Nuevo Convenio
+              </Button>
+            )}
+          </>
+        }
+      />
 
       <FilterBar
         filters={[
