@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus, MapPin, Trash2 } from "lucide-react";
+import { EmptyState } from "@/components/empty-state";
 import type { IprTerritoryItem, CategoryRef, TerritoryOption } from "@/types";
 
 interface TabTerritorioProps {
@@ -110,7 +111,7 @@ export function TabTerritorio({ iprId, canManage }: TabTerritorioProps) {
           ))}
         </div>
       ) : !territorios || territorios.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No hay territorios vinculados a este IPR.</p>
+        <EmptyState compact title="No hay territorios vinculados a este IPR." />
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {territorios.map((t) => (

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Inbox } from "lucide-react";
+import { EmptyState } from "@/components/empty-state";
 
 interface Column {
   key: string;
@@ -72,11 +72,7 @@ export function DataTable({
                   colSpan={columns.length}
                   className="py-12"
                 >
-                  <div className="flex flex-col items-center gap-2 text-muted-foreground">
-                    <Inbox className="h-10 w-10 stroke-1" />
-                    <p className="text-sm font-medium">Sin resultados</p>
-                    <p className="text-xs">Intente ajustar los filtros</p>
-                  </div>
+                  <EmptyState title="Sin resultados" description="Intente ajustar los filtros" />
                 </TableCell>
               </TableRow>
             ) : (

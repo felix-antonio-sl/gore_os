@@ -16,6 +16,7 @@ import {
 import { Plus, Flag, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/format";
+import { EmptyState } from "@/components/empty-state";
 import type { IprMilestoneItem, CategoryRef } from "@/types";
 
 interface TabHitosProps {
@@ -114,7 +115,7 @@ export function TabHitos({ iprId, canManage }: TabHitosProps) {
           ))}
         </div>
       ) : !hitos || hitos.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No hay hitos registrados para este IPR.</p>
+        <EmptyState compact title="No hay hitos registrados para este IPR." />
       ) : (
         <div className="space-y-3">
           {hitos.map((h) => {

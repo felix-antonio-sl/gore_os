@@ -7,6 +7,7 @@ import { DataTable } from "@/components/data-table";
 import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { Input } from "@/components/ui/input";
+import { EmptyState } from "@/components/empty-state";
 import type { KPICardData, CompromisoListItem } from "@/types";
 
 interface CompromisoGroup {
@@ -136,9 +137,9 @@ export default function MisCompromisosPage() {
                 )}
               </h2>
               {filtered.length === 0 ? (
-                <p className="text-sm text-muted-foreground py-2">
-                  No hay compromisos en esta categoría.
-                </p>
+                <div className="py-2">
+                  <EmptyState compact title="No hay compromisos en esta categoría." />
+                </div>
               ) : (
                 <DataTable
                   columns={columns}

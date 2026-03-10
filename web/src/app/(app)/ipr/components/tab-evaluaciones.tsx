@@ -16,6 +16,7 @@ import { DrawerPanel } from "@/components/drawer-panel";
 import { Plus, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/format";
+import { EmptyState } from "@/components/empty-state";
 import type { EvaluationAssignment, CategoryRef } from "@/types";
 import { C33CertificationSection } from "./c33-certification-section";
 
@@ -151,9 +152,7 @@ export function TabEvaluaciones({ iprId, canManage, mechanismCode }: TabEvaluaci
           ))}
         </div>
       ) : evaluaciones.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
-          No hay evaluaciones asignadas para este IPR.
-        </p>
+        <EmptyState compact title="No hay evaluaciones asignadas para este IPR." />
       ) : (
         <div className="space-y-3">
           {evaluaciones.map((ev) => (

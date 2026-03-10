@@ -15,6 +15,7 @@ import {
 import { Plus, Building2, Trash2 } from "lucide-react";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { formatDate } from "@/lib/format";
+import { EmptyState } from "@/components/empty-state";
 import type { IprPartyItem, CategoryRef } from "@/types";
 
 interface TabPartesProps {
@@ -115,7 +116,7 @@ export function TabPartes({ iprId, canManage }: TabPartesProps) {
           ))}
         </div>
       ) : !partes || partes.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No hay partes registradas para este IPR.</p>
+        <EmptyState compact title="No hay partes registradas para este IPR." />
       ) : (
         <div className="space-y-2">
           {partes.map((p) => (

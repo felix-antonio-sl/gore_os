@@ -20,6 +20,7 @@ import { SemaforoCard } from "@/components/semaforo-card";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EmptyState } from "@/components/empty-state";
 import type {
   DashboardData,
   CompromisoListItem,
@@ -332,7 +333,7 @@ function OperationalDashboard() {
             ))}
           </div>
         ) : data?.alerts.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No hay alertas activas.</p>
+          <EmptyState compact title="No hay alertas activas." />
         ) : (
           <div className="space-y-3">
             {data?.alerts.map((alert: AlertaListItem) => (

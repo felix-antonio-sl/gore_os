@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Circle, Shield } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
+import { EmptyState } from "@/components/empty-state";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
 
@@ -75,7 +76,7 @@ export function TabAdmisibilidad({ iprId, canManage }: Props) {
 
   if (loading) return <div className="text-sm text-muted-foreground">Cargando checklist...</div>;
   if (!data || data.total_items === 0) {
-    return <div className="text-sm text-muted-foreground">No hay items de admisibilidad configurados para este track.</div>;
+    return <EmptyState compact title="No hay items de admisibilidad configurados para este track." />;
   }
 
   const pct = data.total_items > 0 ? Math.round((data.verified_count / data.total_items) * 100) : 0;

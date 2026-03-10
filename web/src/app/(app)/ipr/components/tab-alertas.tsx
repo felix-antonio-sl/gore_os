@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { AlertCard } from "@/components/alert-card";
+import { EmptyState } from "@/components/empty-state";
 import type { PaginatedResponse, AlertaListItem } from "@/types";
 
 interface TabAlertasProps {
@@ -51,7 +52,7 @@ export function TabAlertas({ iprId }: TabAlertasProps) {
   }
 
   if (!alertas || alertas.items.length === 0) {
-    return <p className="text-sm text-muted-foreground">No hay alertas para este IPR.</p>;
+    return <EmptyState compact title="No hay alertas para este IPR." />;
   }
 
   return (

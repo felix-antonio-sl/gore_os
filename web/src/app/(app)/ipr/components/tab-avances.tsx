@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
 import { formatDate } from "@/lib/format";
+import { EmptyState } from "@/components/empty-state";
 
 interface ProgressReport {
   id: string;
@@ -138,7 +139,7 @@ export function TabAvances({ iprId, canManage }: TabAvancesProps) {
           ))}
         </div>
       ) : !avances || avances.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No hay reportes de avance para este IPR.</p>
+        <EmptyState compact title="No hay reportes de avance para este IPR." />
       ) : (
         <DataTable
           columns={avanceColumns}

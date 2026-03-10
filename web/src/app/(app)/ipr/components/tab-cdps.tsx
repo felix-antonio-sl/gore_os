@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { StatusBadge } from "@/components/status-badge";
 import { formatDate, formatCurrency } from "@/lib/format";
+import { EmptyState } from "@/components/empty-state";
 import type { BudgetCommitmentItem } from "@/types";
 
 interface TabCdpsProps {
@@ -51,7 +52,7 @@ export function TabCdps({ iprId }: TabCdpsProps) {
           ))}
         </div>
       ) : !cdps || cdps.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No hay CDPs vinculados a este IPR.</p>
+        <EmptyState compact title="No hay CDPs vinculados a este IPR." />
       ) : (
         <div className="space-y-2">
           {cdps.map((cdp) => (

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { StatusBadge } from "@/components/status-badge";
 import { formatCurrency } from "@/lib/format";
+import { EmptyState } from "@/components/empty-state";
 import type { ActoListItem } from "@/types";
 
 interface TabResolucionesProps {
@@ -54,7 +55,7 @@ export function TabResoluciones({ iprId }: TabResolucionesProps) {
           ))}
         </div>
       ) : !resoluciones || resoluciones.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No hay resoluciones vinculadas a este IPR.</p>
+        <EmptyState compact title="No hay resoluciones vinculadas a este IPR." />
       ) : (
         <div className="space-y-2">
           {resoluciones.map((acto) => (

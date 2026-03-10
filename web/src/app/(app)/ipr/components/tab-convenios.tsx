@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { IprConvenioDrawer } from "@/components/ipr-convenio-drawer";
 import { Plus } from "lucide-react";
+import { EmptyState } from "@/components/empty-state";
 import type { PaginatedResponse, ConvenioListItem } from "@/types";
 
 interface TabConveniosProps {
@@ -98,7 +99,7 @@ export function TabConvenios({ iprId, canCreate }: TabConveniosProps) {
           ))}
         </div>
       ) : !convenios || convenios.items.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No hay convenios para este IPR.</p>
+        <EmptyState compact title="No hay convenios para este IPR." />
       ) : (
         <DataTable
           columns={convenioColumns}

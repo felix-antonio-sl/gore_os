@@ -15,6 +15,7 @@ import { ComboboxAsync } from "@/components/combobox-async";
 import { Plus, CheckCircle2, XCircle, ShieldCheck, Trash2 } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { toast } from "sonner";
+import { EmptyState } from "@/components/empty-state";
 import type { KinshipDeclaration, PersonRef } from "@/types";
 
 interface TabParentescoProps {
@@ -248,7 +249,7 @@ export function TabParentesco({ iprId, canManage }: TabParentescoProps) {
       )}
 
       {declarations.length === 0 && !showForm && (
-        <p className="text-sm text-muted-foreground">No hay declaraciones registradas.</p>
+        <EmptyState compact title="No hay declaraciones registradas." />
       )}
 
       <div className="space-y-2">

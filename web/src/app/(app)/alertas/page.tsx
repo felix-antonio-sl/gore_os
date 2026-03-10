@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { Download } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { PageHeader } from "@/components/page-header";
+import { EmptyState } from "@/components/empty-state";
 import type { PaginatedResponse, AlertaListItem } from "@/types";
 
 const CSV_COLUMNS = [
@@ -170,7 +171,7 @@ export default function AlertasPage() {
         </div>
       ) : !data || data.items.length === 0 ? (
         <div className="rounded-xl border bg-card p-8 text-center">
-          <p className="text-muted-foreground">No hay alertas para los filtros seleccionados.</p>
+          <EmptyState compact title="No hay alertas para los filtros seleccionados." />
         </div>
       ) : (
         <div className="space-y-3">
