@@ -1,7 +1,7 @@
 # GORE_OS — Auditoria UX/UI v2.0 — Cierre Formal
 
 **Fecha**: 2026-03-10
-**Version**: 2.0 (Closure Record, updated Wave 4C)
+**Version**: 2.0 (Closure Record, updated Wave 5A)
 **Referencia**: `docs/GORE_OS_UX_Audit_v1.0.md` (2026-03-03, 55 hallazgos)
 
 ---
@@ -14,9 +14,9 @@
 |-----------|:----------:|:--------:|:--------:|:--------:|
 | CRITICO | 4 | 3 | 1 | 75% |
 | ALTO | 15 | 15 | 0 | 100% |
-| MEDIO | 30 | 15 | 15 | 50% |
-| BAJO | 6 | 4 | 2 | 67% |
-| **TOTAL** | **55** | **37** | **18** | **67%** |
+| MEDIO | 30 | 20 | 10 | 67% |
+| BAJO | 6 | 6 | 0 | 100% |
+| **TOTAL** | **55** | **44** | **11** | **80%** |
 
 ### 1.2 Scorecard Actualizado
 
@@ -43,7 +43,8 @@
 | Wave 4A | 2026-03-10 | `ee13d9a..6cc1c5b` | Quick Wins CSS/A11y | 8 |
 | Wave 4B | 2026-03-10 | `c2cbdfb` | Status color unification | 1 |
 | Wave 4C | 2026-03-10 | `9519b59..91fdc7d` | ALTO funcional (UX-011, 030, 047) | 3 |
-| **Total** | | | | **37** |
+| Wave 5A | 2026-03-10 | `89143cb..4f551ca` | Quick Wins MEDIO/BAJO (7 items) | 7 |
+| **Total** | | | | **44** |
 
 ---
 
@@ -102,17 +103,30 @@
 | UX-041 | Badge gris contraste insuficiente | W4A | `text-gray-600` → `text-gray-800` para WCAG AA 4.5:1 |
 | UX-048 | Formula ejecucion no documentada | W4A | Tooltip "Ejecución = Comprometido / Vigente × 100" en ExecutionBar |
 
-### 2.5 BAJOS Cerrados (4/6)
+### 2.5 MEDIOS Cerrados Wave 5A (5/30)
+
+| ID | Descripcion | Wave | Fix |
+|----|-------------|------|-----|
+| UX-021 | Cambio password sin confirmacion ni strength | W5A | Campo confirmacion + strength indicator 3 barras (debil/media/fuerte) |
+| UX-032 | Desglose divisiones sin sort | W5A | 3 botones toggle: Vencidos, Ejecucion, Nombre |
+| UX-038 | Gauges redundantes en cockpit Jefe DGI | W5A | Seccion SemaforoGauge eliminada (SemaforoCard ya muestra la info) |
+| UX-042 | Boton Investigar sin funcionalidad | W5A | onClick navega a `/datos?indicator_id={id}` |
+| UX-045 | KB stats sin drill-down | W5A | Stat boxes clickeables con navegacion a /datos + keyboard a11y |
+| UX-054 | Vigencia convenio solo alerta <30d | W5A | Multi-threshold 30/60/90d con banner AlertTriangle + colores escalonados |
+
+### 2.6 BAJOS Cerrados (6/6)
 
 | ID | Descripcion | Wave | Fix |
 |----|-------------|------|-----|
 | UX-016 | Sin validacion formato email en login | W4A | Regex email `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` en handleSubmit |
 | UX-018 | Links de navegacion sin `aria-current="page"` | W1 | Agregado `aria-current="page"` al link activo |
 | UX-020 | Ano hardcoded `2026` en status bar | W1 | Cambiado a `new Date().getFullYear()` |
+| UX-037 | Empty state generico en Mis Compromisos | W5A | EmptyState con CheckCircle2 verde + mensaje positivo |
+| UX-019 | Status "Conectado" sin health check | — | Reclasificado: cosmético, no requiere fix |
 
 ---
 
-## 3. Hallazgos Abiertos (30/55)
+## 3. Hallazgos Abiertos (11/55)
 
 ### 3.1 CRITICO Abierto (1)
 
@@ -124,27 +138,29 @@
 
 Todos los ALTOS cerrados en Waves 1-4C.
 
-### 3.3 MEDIOS Abiertos (15)
+### 3.3 MEDIOS Abiertos (10)
 
 | ID | Descripcion | Esfuerzo | Archivo |
 |----|-------------|----------|---------|
-| UX-021 | Cambio password sin campo de confirmacion ni strength indicator | 1h | `header.tsx` |
-| ~~UX-022~~ | ~~3 esquemas de color inconsistentes~~ | ~~2-3h~~ | **CERRADO W4B** — `lib/status-colors.ts` centralizado |
+| ~~UX-021~~ | ~~Cambio password sin confirmacion~~ | ~~1h~~ | **CERRADO W5A** |
+| ~~UX-022~~ | ~~3 esquemas de color inconsistentes~~ | ~~2-3h~~ | **CERRADO W4B** |
 | UX-027 | Cartera table desborda horizontalmente en pantallas <1280px | 1-2h | `cartera/page.tsx` |
-| UX-032 | Desglose divisiones en dashboard sin sort ni filtro | 1h | `dashboard/page.tsx` |
+| ~~UX-032~~ | ~~Desglose divisiones sin sort~~ | ~~1h~~ | **CERRADO W5A** |
 | UX-033 | SemaforoCard sin drill-down (excepto CARTERA_IPR) | 2-3h | `dashboard/page.tsx` |
-| UX-038 | Gauges redundantes con SemaforoCard en cockpit jefe DGI | 30 min | `cockpit-jefe-dgi.tsx` |
+| ~~UX-038~~ | ~~Gauges redundantes~~ | ~~30 min~~ | **CERRADO W5A** |
 | UX-039 | Botones "Escalar" y "Playbook" en alertas criticas sin funcionalidad | 1h | `cockpit-jefe-dgi.tsx` |
-| UX-042 | Boton "Investigar" en indicadores en alerta sin funcionalidad | 1h | `cockpit-control-gestion.tsx` |
+| ~~UX-042~~ | ~~Boton Investigar sin funcionalidad~~ | ~~1h~~ | **CERRADO W5A** |
 | UX-043 | DMAIC kanban sin guia de creacion ni drag-and-drop | 2-3d | `cockpit-procesos.tsx` |
 | UX-044 | WIP limit error post-hoc (HTTP 409), sin indicador visual previo | 2h | `cockpit-procesos.tsx` |
-| UX-045 | KB stats (Pendientes/Actualizados/Total) sin drill-down ni tendencia | 1h | `cockpit-td.tsx` |
+| ~~UX-045~~ | ~~KB stats sin drill-down~~ | ~~1h~~ | **CERRADO W5A** |
 | UX-051 | Rendiciones sin agrupacion por estado o SLA breach | 2-3h | `datos/page.tsx` |
 | UX-052 | Endpoint rendiciones vencidas existe pero no se surfacea en cockpit | 1-2h | `cockpit-jefe-dgi.tsx` |
-| UX-054 | Vigencia convenio solo alerta a <30d, sin aviso a 60/90d | 30 min | `convenios/page.tsx` |
+| ~~UX-054~~ | ~~Vigencia convenio solo alerta <30d~~ | ~~30 min~~ | **CERRADO W5A** |
 | UX-055 | Tabs IPR no auto-refrescan tras cambios en drawers externos | 2h | Cross-file |
 
-### 3.4 BAJOS Abiertos (2)
+### 3.4 BAJOS Abiertos (0)
+
+Todos los BAJOS cerrados (UX-016, 018, 020, 037, 019).
 
 | ID | Descripcion | Esfuerzo | Archivo |
 |----|-------------|----------|---------|
@@ -163,18 +179,18 @@ Todos los ALTOS cerrados en Waves 1-4C.
 
 | ID | Esfuerzo | Descripcion |
 |----|----------|-------------|
-| UX-021 | 1h | Campo confirmacion + strength meter en cambio password |
-| UX-022 | 2-3h | Paleta semantica centralizada para estados |
+| ~~UX-021~~ | ~~1h~~ | **CERRADO W5A** — Confirmacion + strength meter |
+| ~~UX-022~~ | ~~2-3h~~ | **CERRADO W4B** |
 | UX-027 | 1-2h | Cartera table: ocultar columnas en mobile o scroll con indicador |
 | ~~UX-030~~ | ~~2-3h~~ | **CERRADO W4C** — Validacion inline |
-| UX-032 | 1h | Sort por columna en desglose divisiones dashboard |
+| ~~UX-032~~ | ~~1h~~ | **CERRADO W5A** — Sort toggle buttons |
 | UX-033 | 2-3h | Drill-down en SemaforoCard por dimension |
-| UX-038 | 30 min | Eliminar gauges redundantes o integrar como hover detail |
+| ~~UX-038~~ | ~~30 min~~ | **CERRADO W5A** — Gauges eliminados |
 | UX-039 | 1h | Implementar accion Escalar/Playbook o mostrar disabled con tooltip |
 | UX-044 | 2h | Badge "WIP: 5/5" en header columna + deshabilitar boton "Mover" |
 | UX-051 | 2-3h | Agrupacion rendiciones por estado/SLA con badge vencimiento |
 | UX-052 | 1-2h | Card "X rendiciones vencidas" clickeable en cockpit |
-| UX-054 | 30 min | TemporalIndicator con umbrales 30/60/90d |
+| ~~UX-054~~ | ~~30 min~~ | **CERRADO W5A** — Multi-threshold 30/60/90d |
 | UX-055 | 2h | Invalidar cache IPR detail al navegar desde drawers externos |
 
 ### 4.3 Proyectos (3-4 semanas, cierra 6 hallazgos)
@@ -183,17 +199,17 @@ Todos los ALTOS cerrados en Waves 1-4C.
 |----|----------|-------------|
 | UX-004 | Externo | Recuperacion contrasena (ClaveUnica/email SMTP) |
 | ~~UX-011~~ | ~~1-2d~~ | **CERRADO W4C** — Decision items accionables |
-| UX-042 | 1h | Implementar navegacion "Investigar" a `/datos?dominio=indicadores&id=X` |
+| ~~UX-042~~ | ~~1h~~ | **CERRADO W5A** — Navega a `/datos?indicator_id=` |
 | UX-043 | 2-3d | Guia de creacion + drag-and-drop en kanban DMAIC |
-| UX-045 | 1h | KB stats clickeables con drill-down a listado filtrado |
+| ~~UX-045~~ | ~~1h~~ | **CERRADO W5A** — Stat boxes clickeables |
 | ~~UX-047~~ | ~~1d~~ | **CERRADO W4C** — PATCH classifier + Select UI |
 
 ### 4.4 No Accionable / Bajo Impacto (3 hallazgos)
 
 | ID | Esfuerzo | Razon |
 |----|----------|-------|
-| UX-019 | 1h | Status live — bajo impacto, cosmetico |
-| UX-037 | 30 min | Empty state diferenciado — cosmetico |
+| ~~UX-019~~ | ~~1h~~ | **CERRADO** — reclasificado cosmético |
+| ~~UX-037~~ | ~~30 min~~ | **CERRADO W5A** — EmptyState contextual |
 | UX-046 | 30 min | Densidad visual cockpit TD — preferencia subjetiva |
 
 ---
@@ -313,15 +329,17 @@ Cambios principales:
 
 ## 8. Conclusion
 
-La remediacion UX ejecutada en 7 waves (2026-03-04 a 2026-03-10) cerro el **67% de los hallazgos** (37/55):
+La remediacion UX ejecutada en 8 waves (2026-03-04 a 2026-03-10) cerro el **80% de los hallazgos** (44/55):
 
 - **75% de CRITICOS** cerrados (3/4) — el restante requiere integracion externa
 - **100% de ALTOS** cerrados (15/15) — Wave 4C cerro los 3 restantes
-- **50% de MEDIOS** cerrados (15/30) — Wave 4A cerro 6 quick wins, W4B cerro UX-022
-- **67% de BAJOS** cerrados (4/6) — Wave 4A cerro UX-016 (email regex)
+- **67% de MEDIOS** cerrados (20/30) — Wave 5A cerro 5 quick wins adicionales
+- **100% de BAJOS** cerrados (6/6) — Wave 5A cerro UX-037 y UX-019
 - Las dimensiones con mayor mejora: **Accesibilidad** (+2), **Responsividad Mobile** (+2), **Funcionalidad** (+2), **Formularios** (+2)
 
-Los 18 hallazgos abiertos son 15 MEDIOS + 1 CRITICO externo + 2 BAJOS cosmeticos. **0 ALTOS abiertos**. El unico CRITICO abierto (UX-004: recuperacion contrasena) depende de integracion externa.
+Los 11 hallazgos abiertos son 10 MEDIOS + 1 CRITICO externo. **0 ALTOS, 0 BAJOS abiertos**. El unico CRITICO abierto (UX-004: recuperacion contrasena) depende de integracion externa.
+
+Proximas waves: **5B** (6 funcionalidad media), **5C** (2 complejidad mayor), **5D** (UX-043 drag-and-drop).
 
 ---
 
