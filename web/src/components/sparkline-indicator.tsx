@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { LineChart, Line, ResponsiveContainer, Tooltip } from "recharts";
 import { api } from "@/lib/api";
+import { SIGNAL_HEX } from "@/lib/status-colors";
 
 interface SnapshotPoint {
   value: number | null;
@@ -14,12 +15,6 @@ interface SparklineIndicatorProps {
   indicatorId: string;
   days?: number;
 }
-
-const SIGNAL_COLORS: Record<string, string> = {
-  VERDE: "#22c55e",
-  AMARILLO: "#f59e0b",
-  ROJO: "#ef4444",
-};
 
 export function SparklineIndicator({ indicatorId, days = 90 }: SparklineIndicatorProps) {
   const [data, setData] = useState<SnapshotPoint[]>([]);
@@ -34,7 +29,7 @@ export function SparklineIndicator({ indicatorId, days = 90 }: SparklineIndicato
   if (data.length < 2) return null;
 
   const lastSignal = data[data.length - 1]?.signal ?? "VERDE";
-  const strokeColor = SIGNAL_COLORS[lastSignal] ?? "#6b7280";
+  const strokeColor = SIGNAL_HEX[lastSignal] ?? "#6b7280";
 
   return (
     <div className="h-8 w-24">

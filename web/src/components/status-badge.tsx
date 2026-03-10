@@ -15,7 +15,7 @@ export function StatusBadge({ status, size = "default" }: StatusBadgeProps) {
   switch (status) {
     case "PENDIENTE":
       return (
-        <Badge variant="outline" className={cn("border-gray-400 text-gray-600", sizeClass)}>
+        <Badge variant="outline" className={cn("border-gray-400 text-gray-800", sizeClass)}>
           Pendiente
         </Badge>
       );

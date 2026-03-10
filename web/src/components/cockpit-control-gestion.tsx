@@ -15,6 +15,7 @@ import { BarChart2, AlertCircle, TrendingUp, ClipboardList } from "lucide-react"
 import { ProgressBarIndicator } from "@/components/progress-bar-indicator";
 import { SparklineIndicator } from "@/components/sparkline-indicator";
 import { cn } from "@/lib/utils";
+import { SIGNAL_BADGE } from "@/lib/status-colors";
 import type { CockpitControlGestion, DGIDataSource } from "@/types";
 
 interface Props {
@@ -113,11 +114,6 @@ export function CockpitControlGestionView({ data }: Props) {
             ) : (
               <div className="space-y-2">
                 {indicators_alert.map((ind) => {
-                  const signalBadge: Record<string, string> = {
-                    ROJO: "bg-red-100 text-red-700 border-red-300",
-                    AMARILLO: "bg-amber-100 text-amber-700 border-amber-300",
-                    VERDE: "bg-green-100 text-green-700 border-green-300",
-                  };
                   return (
                     <div
                       key={ind.id}
@@ -136,7 +132,7 @@ export function CockpitControlGestionView({ data }: Props) {
                         {ind.signal && (
                           <Badge
                             variant="outline"
-                            className={cn("text-[10px] px-1.5 py-0 border", signalBadge[ind.signal])}
+                            className={cn("text-[10px] px-1.5 py-0 border", SIGNAL_BADGE[ind.signal])}
                           >
                             {ind.signal}
                           </Badge>
