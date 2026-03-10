@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Search, AlertTriangle, Info, KeyRound, Menu } from "lucide-react";
+import { Bell, Search, AlertTriangle, Info, KeyRound, Menu, Sun, Moon } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -67,6 +67,7 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
   const [pwdError, setPwdError] = useState("");
   const [pwdLoading, setPwdLoading] = useState(false);
   const [pwdSuccess, setPwdSuccess] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   const handleChangePassword = async () => {
     setPwdError("");
@@ -93,6 +94,8 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
     }
   };
 
+  const ALERT_REFRESH_MS = 60_000;
+
   const fetchAlerts = () => {
     api
       .get<{ items: AlertaListItem[]; total: number }>(
@@ -109,9 +112,22 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
 
   useEffect(() => {
     fetchAlerts();
-    const interval = setInterval(fetchAlerts, 60_000);
+    const interval = setInterval(fetchAlerts, ALERT_REFRESH_MS);
     return () => clearInterval(interval);
   }, []);
+
+  // Theme hydration
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    setTheme(isDark ? "dark" : "light");
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "light" ? "dark" : "light";
+    setTheme(next);
+    document.documentElement.classList.toggle("dark", next === "dark");
+    localStorage.setItem("goreos_theme", next);
+  };
 
   return (
     <header className="h-14 border-b bg-background flex items-center justify-between px-4">
@@ -122,16 +138,16 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
             <Menu className="size-5" />
           </Button>
         )}
-        <span className="text-lg font-bold tracking-tight">GORE_OS</span>
+        <span className="text-lg font-bold tracking-tight text-primary font-serif">GORE_OS</span>
         {isDgi && (
-          <Badge variant="secondary" className="text-xs">
+          <Badge className="text-xs bg-teal-100 text-teal-800 border-teal-200 dark:bg-teal-900 dark:text-teal-200 dark:border-teal-800">
             DGI
           </Badge>
         )}
       </div>
 
       {/* Right */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         {/* Search trigger */}
         <Button
           variant="outline"
@@ -147,10 +163,21 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
         </Button>
         <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
 
+        {/* Theme toggle */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+        >
+          {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
+        </Button>
+
         {/* Bell con popover de alertas */}
         <Popover open={bellOpen} onOpenChange={setBellOpen}>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative h-8 w-8">
+            <Button variant="ghost" size="icon" className="relative h-8 w-8" aria-label="Ver alertas">
               <Bell className="size-4" />
               {alertCount > 0 && (
                 <Badge className="absolute -top-0.5 -right-0.5 h-4 min-w-4 px-1 text-[10px]">

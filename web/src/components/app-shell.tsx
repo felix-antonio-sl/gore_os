@@ -48,13 +48,13 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar — desktop */}
-      <div className="hidden md:block">
+      <div className="hidden md:block shrink-0">
         <Sidebar />
       </div>
 
       {/* Sidebar — mobile */}
       <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
-        <SheetContent side="left" className="w-56 p-0">
+        <SheetContent side="left" className="w-56 p-0 bg-sidebar border-sidebar-border">
           <Sidebar onNavClick={() => setMobileNavOpen(false)} />
         </SheetContent>
       </Sheet>
@@ -72,12 +72,17 @@ export function AppShell({ children }: AppShellProps) {
         </main>
 
         {/* Status bar */}
-        <div className="h-8 border-t text-xs px-4 flex items-center gap-4 text-muted-foreground bg-background shrink-0">
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block size-2 rounded-full bg-green-500" />
-            Conectado
-          </span>
-          <span>Semana {weekNumber} / {new Date().getFullYear()}</span>
+        <div className="h-8 border-t text-xs px-4 flex items-center justify-between text-muted-foreground bg-background shrink-0">
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block size-2 rounded-full bg-green-500" />
+              Conectado
+            </span>
+            <span className="hidden sm:inline">
+              {user.role_label}
+            </span>
+          </div>
+          <span>Semana {weekNumber} · {new Date().getFullYear()}</span>
         </div>
       </div>
     </div>
