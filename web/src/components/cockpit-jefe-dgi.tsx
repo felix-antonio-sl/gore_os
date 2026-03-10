@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AlertTriangle, Users, FileText, CheckSquare, Receipt } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SemaforoCard } from "@/components/semaforo-card";
@@ -56,15 +57,25 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
               label={dim.label}
               signal={dim.signal}
               indicatorCount={dim.indicator_count}
-              onClick={
-                dim.dimension === "CARTERA_IPR"
-                  ? () => router.push(
-                      dim.signal === "VERDE"
-                        ? "/cartera"
-                        : `/cartera?health_signal=${dim.signal}`
-                    )
-                  : undefined
-              }
+              onClick={() => {
+                switch (dim.dimension) {
+                  case "CARTERA_IPR":
+                    router.push(dim.signal === "VERDE" ? "/cartera" : `/cartera?health_signal=${dim.signal}`);
+                    break;
+                  case "PRESUPUESTO":
+                    router.push("/presupuesto");
+                    break;
+                  case "CONVENIOS":
+                    router.push("/convenios");
+                    break;
+                  case "TDE":
+                    router.push("/datos");
+                    break;
+                  case "RIESGOS":
+                    router.push("/alertas");
+                    break;
+                }
+              }}
             />
           ))}
         </div>
@@ -179,12 +190,20 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
                   <p className="text-sm text-red-800">{alert.message}</p>
                 </div>
                 <div className="flex gap-2 shrink-0">
-                  <Button size="sm" variant="outline" className="h-7 text-xs border-red-300 text-red-700 hover:bg-red-100" disabled title="Próximamente">
+                  <Button size="sm" variant="outline" className="h-7 text-xs border-red-300 text-red-700 hover:bg-red-100"
+                    onClick={() => router.push("/alertas")}>
                     Escalar
                   </Button>
-                  <Button size="sm" variant="ghost" className="h-7 text-xs text-red-600" disabled title="Próximamente">
-                    Playbook
-                  </Button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button size="sm" variant="ghost" className="h-7 text-xs text-red-600">
+                          Playbook
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Procedimiento de escalamiento según protocolo institucional</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </div>
             ))}
@@ -265,9 +284,17 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
           <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
             <Receipt className="size-4 text-purple-600" />
             Rendiciones
-            <Badge variant="outline" className="ml-auto text-xs">
+            <Badge variant="outline" className="text-xs">
               {rendition_summary.total} total
             </Badge>
+            {rendition_summary.by_state.some((s) => s.code === "PENDIENTE" && s.count > 0) && (
+              <Badge className="bg-red-600 text-white text-xs">
+                {rendition_summary.by_state.find((s) => s.code === "PENDIENTE")?.count ?? 0} pendientes
+              </Badge>
+            )}
+            <Button size="sm" variant="outline" className="ml-auto h-7 text-xs" onClick={() => router.push("/rendiciones")}>
+              Ver rendiciones
+            </Button>
           </h2>
           <Card>
             <CardContent className="px-6 py-4">
