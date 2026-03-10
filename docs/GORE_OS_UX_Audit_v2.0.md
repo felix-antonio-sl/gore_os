@@ -1,7 +1,7 @@
 # GORE_OS — Auditoria UX/UI v2.0 — Cierre Formal
 
-**Fecha**: 2026-03-09
-**Version**: 2.0 (Closure Record)
+**Fecha**: 2026-03-10
+**Version**: 2.0 (Closure Record, updated Wave 4A)
 **Referencia**: `docs/GORE_OS_UX_Audit_v1.0.md` (2026-03-03, 55 hallazgos)
 
 ---
@@ -14,15 +14,15 @@
 |-----------|:----------:|:--------:|:--------:|:--------:|
 | CRITICO | 4 | 3 | 1 | 75% |
 | ALTO | 15 | 12 | 3 | 80% |
-| MEDIO | 30 | 8 | 22 | 27% |
-| BAJO | 6 | 2 | 4 | 33% |
-| **TOTAL** | **55** | **25** | **30** | **45%** |
+| MEDIO | 30 | 14 | 16 | 47% |
+| BAJO | 6 | 4 | 2 | 67% |
+| **TOTAL** | **55** | **33** | **22** | **60%** |
 
 ### 1.2 Scorecard Actualizado
 
 | Dimension | v1.0 | v2.0 | Delta |
 |-----------|------|------|-------|
-| Accesibilidad (WCAG 2.1 AA) | Bajo | Medio | +1 |
+| Accesibilidad (WCAG 2.1 AA) | Bajo | Medio-Alto | +2 |
 | Responsividad Mobile | Bajo | Medio-Alto | +2 |
 | Manejo de Errores | Medio-Bajo | Medio-Alto | +2 |
 | Consistencia Visual | Medio | Medio | = |
@@ -40,7 +40,8 @@
 | Wave 3 | 2026-03-04 | `a229ec0` | Errores + Funcional | 9 |
 | Wave 2 Func | 2026-03-05 | `49ef683` | Endpoints + UI | 5 |
 | Post-fix | 2026-03-06 | `35da37e` | Correcciones post-remediacion | 0 (estabilizacion) |
-| **Total** | | | | **25** |
+| Wave 4A | 2026-03-10 | `ee13d9a..6cc1c5b` | Quick Wins CSS/A11y | 8 |
+| **Total** | | | | **33** |
 
 ---
 
@@ -84,10 +85,23 @@
 | UX-035 | Vencidos en mi-division sin paginacion real | W3 | Paginacion real implementada |
 | UX-036 | Sin busqueda ni filtros en Mis Compromisos | W3 | Input de busqueda + filtros agregados |
 
-### 2.4 BAJOS Cerrados (2/6)
+### 2.4 MEDIOS Cerrados Wave 4A (6/30)
 
 | ID | Descripcion | Wave | Fix |
 |----|-------------|------|-----|
+| UX-013 | Login background hardcoded `#1e3a5f` | W4A | Reemplazado `text-[#031B5F]` por `text-slate-900` |
+| UX-015 | Abreviaciones sin tooltip en cockpit TD | W4A | Badges VIG/PAR/PEN envueltos en shadcn Tooltip con label completo |
+| UX-025 | Items de alerta en popover no focusables | W4A | Agregado `role="button" tabIndex={0} onKeyDown` a items del popover |
+| UX-031 | Reset password sin validacion longitud | W4A | `disabled={len < 8}` + helper text "Mínimo 8 caracteres" |
+| UX-040 | Sparklines ilegibles en mobile | W4A | Envueltas en `hidden md:inline-block` |
+| UX-041 | Badge gris contraste insuficiente | W4A | `text-gray-600` → `text-gray-800` para WCAG AA 4.5:1 |
+| UX-048 | Formula ejecucion no documentada | W4A | Tooltip "Ejecución = Comprometido / Vigente × 100" en ExecutionBar |
+
+### 2.5 BAJOS Cerrados (4/6)
+
+| ID | Descripcion | Wave | Fix |
+|----|-------------|------|-----|
+| UX-016 | Sin validacion formato email en login | W4A | Regex email `/^[^\s@]+@[^\s@]+\.[^\s@]+$/` en handleSubmit |
 | UX-018 | Links de navegacion sin `aria-current="page"` | W1 | Agregado `aria-current="page"` al link activo |
 | UX-020 | Ano hardcoded `2026` en status bar | W1 | Cambiado a `new Date().getFullYear()` |
 
@@ -109,58 +123,40 @@
 | UX-030 | Edit mode en drawer de usuario sin form validation library | 2-3h | Integrar react-hook-form o zod para validacion client-side |
 | UX-047 | Clasificacion presupuestaria (subtitulo, item, asignacion) no editable post-creacion | 1d | PATCH de campos de clasificacion con validacion de consistencia |
 
-### 3.3 MEDIOS Abiertos (22)
+### 3.3 MEDIOS Abiertos (16)
 
 | ID | Descripcion | Esfuerzo | Archivo |
 |----|-------------|----------|---------|
-| UX-013 | Login background hardcoded `#1e3a5f`, no respeta tema CSS | 10 min | `login/page.tsx` |
-| UX-015 | Abreviaciones sin tooltip en cockpit TD (VIG, PAR, PEN) | 30 min | `cockpit-td.tsx` |
 | UX-021 | Cambio password sin campo de confirmacion ni strength indicator | 1h | `header.tsx` |
 | UX-022 | 3 esquemas de color inconsistentes (StatusBadge, KpiCard, Cockpit TD) | 2-3h | `status-badge.tsx` + multiples |
-| UX-025 | Items de alerta en popover no focusables por teclado | 20 min | `header.tsx` |
 | UX-027 | Cartera table desborda horizontalmente en pantallas <1280px | 1-2h | `cartera/page.tsx` |
-| UX-031 | Reset password sin validacion de longitud minima en frontend | 15 min | `admin/usuarios/page.tsx` |
 | UX-032 | Desglose divisiones en dashboard sin sort ni filtro | 1h | `dashboard/page.tsx` |
 | UX-033 | SemaforoCard sin drill-down (excepto CARTERA_IPR) | 2-3h | `dashboard/page.tsx` |
 | UX-038 | Gauges redundantes con SemaforoCard en cockpit jefe DGI | 30 min | `cockpit-jefe-dgi.tsx` |
 | UX-039 | Botones "Escalar" y "Playbook" en alertas criticas sin funcionalidad | 1h | `cockpit-jefe-dgi.tsx` |
-| UX-040 | Sparklines ilegibles en mobile (~30px ancho) | 15 min | `cockpit-control-gestion.tsx` |
-| UX-041 | Badge gris SIN_DATOS con contraste insuficiente (~3.5:1 vs 4.5:1 WCAG AA) | 10 min | `cockpit-control-gestion.tsx` |
 | UX-042 | Boton "Investigar" en indicadores en alerta sin funcionalidad | 1h | `cockpit-control-gestion.tsx` |
 | UX-043 | DMAIC kanban sin guia de creacion ni drag-and-drop | 2-3d | `cockpit-procesos.tsx` |
 | UX-044 | WIP limit error post-hoc (HTTP 409), sin indicador visual previo | 2h | `cockpit-procesos.tsx` |
 | UX-045 | KB stats (Pendientes/Actualizados/Total) sin drill-down ni tendencia | 1h | `cockpit-td.tsx` |
-| UX-048 | Formula de ejecucion (pagado/vigente x 100) no documentada en UI | 15 min | `presupuesto/page.tsx` |
 | UX-051 | Rendiciones sin agrupacion por estado o SLA breach | 2-3h | `datos/page.tsx` |
 | UX-052 | Endpoint rendiciones vencidas existe pero no se surfacea en cockpit | 1-2h | `cockpit-jefe-dgi.tsx` |
 | UX-054 | Vigencia convenio solo alerta a <30d, sin aviso a 60/90d | 30 min | `convenios/page.tsx` |
 | UX-055 | Tabs IPR no auto-refrescan tras cambios en drawers externos | 2h | Cross-file |
 
-### 3.4 BAJOS Abiertos (4)
+### 3.4 BAJOS Abiertos (2)
 
 | ID | Descripcion | Esfuerzo | Archivo |
 |----|-------------|----------|---------|
-| UX-016 | Sin validacion de formato email en frontend (solo `type="email"` nativo) | 15 min | `login/page.tsx` |
 | UX-019 | Status "Conectado" con dot verde estatico, sin health check real | 1h | `app-shell.tsx` |
 | UX-037 | Empty state generico en Mis Compromisos sin sugerencia de accion | 30 min | `mis-compromisos/page.tsx` |
-| UX-046 | Velocidad de avance en cockpit TD con densidad visual excesiva | 30 min | `cockpit-td.tsx` |
 
 ---
 
 ## 4. Plan Residual
 
-### 4.1 Quick Wins (< 2h total, cierra 8 hallazgos)
+### 4.1 Quick Wins — CERRADOS (Wave 4A, 2026-03-10)
 
-| ID | Esfuerzo | Descripcion |
-|----|----------|-------------|
-| UX-013 | 10 min | Login background via clase Tailwind `bg-primary` |
-| UX-015 | 30 min | Tooltips en abreviaciones cockpit TD |
-| UX-016 | 15 min | Regex email en login frontend |
-| UX-025 | 20 min | Items alerta popover focusables con `tabIndex` |
-| UX-031 | 15 min | Validacion longitud minima en reset password |
-| UX-040 | 15 min | Ocultar sparklines en breakpoints `<md` |
-| UX-041 | 10 min | Oscurecer texto badge gris a `text-gray-800` |
-| UX-048 | 15 min | Tooltip "Ejecucion = Pagado / Vigente x 100" |
+8/8 cerrados. Commits: `ee13d9a..6cc1c5b`. Ver secciones 2.4 y 2.5.
 
 ### 4.2 Medio Plazo (1-2 semanas, cierra 13 hallazgos)
 
@@ -206,20 +202,21 @@
 ### 5.1 Accesibilidad (WCAG 2.1 AA)
 
 **v1.0**: 12 hallazgos, madurez Bajo.
-**v2.0**: 6 cerrados (UX-001, 006, 007, 018, 024, 029), 6 abiertos (UX-004, 016, 025, 041, 040, 046).
+**v2.0**: 10 cerrados (UX-001, 006, 007, 016, 018, 024, 025, 029, 040, 041), 2 abiertos (UX-004, 046).
 
 Principales logros:
 - Eliminada animacion peligrosa WCAG 2.3.1 (UX-001)
 - DataTable y KpiCard accesibles via teclado (UX-006, 007)
 - Navegacion anuncia pagina actual (UX-018)
 - Target tactil corregido (UX-029)
+- **W4A**: Badge gris contraste WCAG AA (UX-041), popover alertas keyboard (UX-025), email regex (UX-016), sparklines mobile (UX-040)
 
-Pendiente principal: contraste de badge gris (UX-041), popover alertas keyboard (UX-025).
+Pendiente: UX-004 (externo), UX-046 (cosmetico).
 
 ### 5.2 Responsividad Mobile
 
 **v1.0**: 8 hallazgos, madurez Bajo.
-**v2.0**: 5 cerrados (UX-003, 005, 017, 026, 035), 3 abiertos (UX-027, 040, 055).
+**v2.0**: 6 cerrados (UX-003, 005, 017, 026, 035, 040), 2 abiertos (UX-027, 055).
 
 Principales logros:
 - DrawerPanel, FilterBar y Sidebar completamente responsive (UX-003, 005, 017)
@@ -313,15 +310,17 @@ Cambios principales:
 
 ## 8. Conclusion
 
-La remediacion UX ejecutada en 4 waves (2026-03-04 a 2026-03-06) cerro el **45% de los hallazgos** (25/55), con enfasis en severidades altas:
+La remediacion UX ejecutada en 5 waves (2026-03-04 a 2026-03-10) cerro el **60% de los hallazgos** (33/55):
 
 - **75% de CRITICOS** cerrados (3/4) — el restante requiere integracion externa
 - **80% de ALTOS** cerrados (12/15) — los 3 restantes son de esfuerzo medio
-- Las dimensiones con mayor mejora son **Responsividad Mobile** (+2 niveles) y **Manejo de Errores** (+2 niveles)
+- **47% de MEDIOS** cerrados (14/30) — Wave 4A cerro 6 quick wins MEDIO
+- **67% de BAJOS** cerrados (4/6) — Wave 4A cerro UX-016 (email regex)
+- Las dimensiones con mayor mejora: **Accesibilidad** (+2), **Responsividad Mobile** (+2), **Manejo de Errores** (+2)
 
-Los 30 hallazgos abiertos son mayoritariamente MEDIOS (22) y BAJOS (4), con **8 Quick Wins** que pueden cerrarse en menos de 2 horas de trabajo. El unico CRITICO abierto (UX-004: recuperacion de contrasena) depende de integracion externa (ClaveUnica/SMTP) y no es resoluble internamente.
+Los 22 hallazgos abiertos son 16 MEDIOS + 3 ALTOS + 1 CRITICO externo + 2 BAJOS cosmeticos. El unico CRITICO abierto (UX-004: recuperacion contrasena) depende de integracion externa.
 
-La deuda UX residual no bloquea la operacion del sistema pero limita la experiencia en cockpits DGI (botones placeholder, drill-down faltante) y formularios de administracion (validacion client-side).
+Proximas waves planificadas: **4B** (status color unification, UX-022), **4C** (3 ALTO funcional: UX-011, 030, 047).
 
 ---
 
