@@ -17,6 +17,7 @@ import { PageHeader } from "@/components/page-header";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { toast } from "sonner";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const CSV_COLUMNS = [
   { key: "division_name", label: "División" },
@@ -54,7 +55,12 @@ function ExecutionBar({ pct }: { pct: number }) {
       <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
         <div className={`h-full rounded-full ${color}`} style={{ width: `${Math.min(pct, 100)}%` }} />
       </div>
-      <span className={`text-xs font-mono font-medium tabular-nums ${textColor}`}>{pct}%</span>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className={`text-xs font-mono font-medium tabular-nums cursor-help ${textColor}`}>{pct}%</span>
+        </TooltipTrigger>
+        <TooltipContent>Ejecución = Comprometido / Vigente × 100</TooltipContent>
+      </Tooltip>
     </div>
   );
 }
@@ -290,6 +296,7 @@ export default function PresupuestoPage() {
   ];
 
   return (
+    <TooltipProvider>
     <div className="p-6 space-y-4">
       <PageHeader
         title="Presupuesto"
@@ -576,5 +583,6 @@ export default function PresupuestoPage() {
         )}
       </DrawerPanel>
     </div>
+    </TooltipProvider>
   );
 }
