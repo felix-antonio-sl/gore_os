@@ -21,6 +21,18 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  useDroppable,
+  useDraggable,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { cn } from "@/lib/utils";
 import type { DGIInitiative } from "@/types";
 
 interface UserOption {
@@ -44,12 +56,69 @@ function getColumnIndex(col: WipColumn): number {
   return COLUMN_ORDER.indexOf(col);
 }
 
+function DroppableColumn({
+  id,
+  children,
+}: {
+  id: string;
+  children: React.ReactNode;
+}) {
+  const { setNodeRef, isOver } = useDroppable({ id });
+  return (
+    <div
+      ref={setNodeRef}
+      className={cn(
+        "min-h-[120px] rounded-xl border p-2 space-y-2 transition-colors",
+        isOver
+          ? "bg-blue-50 border-blue-300 border-dashed"
+          : "bg-gray-50 border-gray-200"
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+function DraggableCard({
+  id,
+  children,
+}: {
+  id: string;
+  children: React.ReactNode;
+}) {
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({ id });
+  const style: React.CSSProperties | undefined = transform
+    ? {
+        transform: `translate(${transform.x}px, ${transform.y}px)`,
+        zIndex: 50,
+      }
+    : undefined;
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      className={isDragging ? "opacity-30" : ""}
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function TableroPage() {
   const [initiatives, setInitiatives] = useState<DGIInitiative[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [moving, setMoving] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
+  );
 
   // Users catalog for responsable select
   const [users, setUsers] = useState<UserOption[]>([]);
@@ -147,6 +216,49 @@ export default function TableroPage() {
     }
   }
 
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(event.active.id as string);
+  }
+
+  async function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    setActiveId(null);
+    if (!over) return;
+
+    const initiativeId = active.id as string;
+    const targetColumn = over.id as WipColumn;
+    const initiative = initiatives.find((i) => i.id === initiativeId);
+    if (!initiative) return;
+
+    const currentColumn = (initiative.wip_column ?? "BACKLOG") as WipColumn;
+    if (currentColumn === targetColumn) return;
+
+    setMoving(initiativeId);
+    try {
+      await api.post<DGIInitiative>(
+        `/api/dgi/initiatives/${initiativeId}/move`,
+        { status: targetColumn }
+      );
+      setInitiatives((prev) =>
+        prev.map((ini) =>
+          ini.id === initiativeId
+            ? { ...ini, wip_column: targetColumn, status: targetColumn }
+            : ini
+        )
+      );
+    } catch (err) {
+      toast.error(
+        err instanceof Error ? err.message : "Error al mover iniciativa"
+      );
+    } finally {
+      setMoving(null);
+    }
+  }
+
+  const activeInitiative = activeId
+    ? initiatives.find((i) => i.id === activeId)
+    : null;
+
   const byColumn = (col: WipColumn) =>
     initiatives.filter((i) => (i.wip_column ?? "BACKLOG") === col);
 
@@ -189,67 +301,90 @@ export default function TableroPage() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 items-start">
-          {COLUMNS.map((col) => {
-            const colItems = byColumn(col.key);
-            const isOverWip = col.wipLimit !== undefined && colItems.length > col.wipLimit;
-            const isAtCapacity = col.wipLimit !== undefined && colItems.length === col.wipLimit;
+        <DndContext
+          sensors={sensors}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 items-start">
+            {COLUMNS.map((col) => {
+              const colItems = byColumn(col.key);
+              const isOverWip =
+                col.wipLimit !== undefined && colItems.length > col.wipLimit;
+              const isAtCapacity =
+                col.wipLimit !== undefined && colItems.length === col.wipLimit;
 
-            return (
-              <div key={col.key} className="flex flex-col gap-3">
-                {/* Column header */}
-                <div className="flex items-center gap-2 px-1">
-                  <h2 className="text-sm font-semibold">{col.label}</h2>
-                  <Badge
-                    variant="outline"
-                    className={
-                      isOverWip
-                        ? "border-red-400 text-red-600"
-                        : isAtCapacity
-                        ? "border-amber-400 text-amber-600"
-                        : "border-gray-300 text-gray-600"
-                    }
-                  >
-                    {colItems.length}
-                    {col.wipLimit !== undefined && `/${col.wipLimit}`}
-                  </Badge>
-                  {isOverWip && (
-                    <span className="text-xs text-red-600 font-medium">WIP excedido</span>
-                  )}
-                </div>
+              return (
+                <div key={col.key} className="flex flex-col gap-3">
+                  {/* Column header */}
+                  <div className="flex items-center gap-2 px-1">
+                    <h2 className="text-sm font-semibold">{col.label}</h2>
+                    <Badge
+                      variant="outline"
+                      className={
+                        isOverWip
+                          ? "border-red-400 text-red-600"
+                          : isAtCapacity
+                          ? "border-amber-400 text-amber-600"
+                          : "border-gray-300 text-gray-600"
+                      }
+                    >
+                      {colItems.length}
+                      {col.wipLimit !== undefined && `/${col.wipLimit}`}
+                    </Badge>
+                    {isOverWip && (
+                      <span className="text-xs text-red-600 font-medium">
+                        WIP excedido
+                      </span>
+                    )}
+                  </div>
 
-                {/* Column bg container */}
-                <div className="min-h-[120px] rounded-xl bg-gray-50 border border-gray-200 p-2 space-y-2">
-                  {colItems.length === 0 ? (
-                    <p className="text-xs text-muted-foreground text-center py-6 italic">
-                      Sin iniciativas
-                    </p>
-                  ) : (
-                    colItems.map((initiative) => (
-                      <div
-                        key={initiative.id}
-                        className={
-                          moving === initiative.id ? "opacity-50 pointer-events-none" : "cursor-pointer"
-                        }
-                        onClick={() => openEdit(initiative)}
-                      >
-                        <KanbanCard
-                          initiative={initiative}
-                          isFirst={col.key === "BACKLOG"}
-                          isLast={col.key === "COMPLETADO"}
-                          onMove={(direction) => {
-                            // Prevent card click when moving
-                            handleMove(initiative, direction);
-                          }}
-                        />
-                      </div>
-                    ))
-                  )}
+                  {/* Column container — droppable */}
+                  <DroppableColumn id={col.key}>
+                    {colItems.length === 0 ? (
+                      <p className="text-xs text-muted-foreground text-center py-6 italic">
+                        Sin iniciativas
+                      </p>
+                    ) : (
+                      colItems.map((initiative) => (
+                        <DraggableCard key={initiative.id} id={initiative.id}>
+                          <div
+                            className={
+                              moving === initiative.id
+                                ? "opacity-50 pointer-events-none"
+                                : "cursor-grab active:cursor-grabbing"
+                            }
+                            onClick={() => {
+                              if (!moving) openEdit(initiative);
+                            }}
+                          >
+                            <KanbanCard
+                              initiative={initiative}
+                              isFirst={col.key === "BACKLOG"}
+                              isLast={col.key === "COMPLETADO"}
+                              onMove={(direction) =>
+                                handleMove(initiative, direction)
+                              }
+                            />
+                          </div>
+                        </DraggableCard>
+                      ))
+                    )}
+                  </DroppableColumn>
                 </div>
+              );
+            })}
+          </div>
+
+          {/* Drag overlay — shows card being dragged */}
+          <DragOverlay>
+            {activeInitiative ? (
+              <div className="opacity-90 rotate-2 shadow-lg">
+                <KanbanCard initiative={activeInitiative} />
               </div>
-            );
-          })}
-        </div>
+            ) : null}
+          </DragOverlay>
+        </DndContext>
       )}
 
       {!isLoading && initiatives.length === 0 && (

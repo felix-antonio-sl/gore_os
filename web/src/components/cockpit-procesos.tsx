@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { GitBranch, FileCode, CalendarDays } from "lucide-react";
@@ -37,6 +38,7 @@ const KANBAN_GROUPS: { key: DmaicGroup; label: string }[] = [
 ];
 
 export function CockpitProcesosView({ data }: Props) {
+  const router = useRouter();
   const { initiatives, bpmn_models, today_agenda, portfolio_stats } = data;
 
   const byGroup = (group: DmaicGroup) =>
@@ -86,9 +88,17 @@ export function CockpitProcesosView({ data }: Props) {
                 </div>
                 <div className="min-h-[100px] rounded-xl bg-gray-50 border border-gray-200 p-2 space-y-2">
                   {items.length === 0 ? (
-                    <p className="text-xs text-muted-foreground text-center py-6 italic">
-                      Sin iniciativas
-                    </p>
+                    <div className="text-center py-6">
+                      <p className="text-xs text-muted-foreground italic">
+                        Sin iniciativas
+                      </p>
+                      <button
+                        className="text-[10px] text-blue-600 hover:underline mt-1"
+                        onClick={() => router.push("/tablero")}
+                      >
+                        Ir al tablero &rarr;
+                      </button>
+                    </div>
                   ) : (
                     items.map((ini) => (
                       <KanbanCard key={ini.id} initiative={ini} />
