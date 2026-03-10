@@ -26,12 +26,18 @@ import {
   DragEndEvent,
   DragOverlay,
   DragStartEvent,
-  useDroppable,
-  useDraggable,
   PointerSensor,
   useSensor,
   useSensors,
+  closestCorners,
+  useDroppable,
 } from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
 import { cn } from "@/lib/utils";
 import type { DGIInitiative } from "@/types";
 
@@ -56,6 +62,7 @@ function getColumnIndex(col: WipColumn): number {
   return COLUMN_ORDER.indexOf(col);
 }
 
+/* ── Droppable column wrapper ─────────────────────────────────────────── */
 function DroppableColumn({
   id,
   children,
@@ -79,30 +86,34 @@ function DroppableColumn({
   );
 }
 
-function DraggableCard({
+/* ── Sortable card wrapper ────────────────────────────────────────────── */
+function SortableCard({
   id,
   children,
 }: {
   id: string;
   children: React.ReactNode;
 }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({ id });
-  const style: React.CSSProperties | undefined = transform
-    ? {
-        transform: `translate(${transform.x}px, ${transform.y}px)`,
-        zIndex: 50,
-      }
-    : undefined;
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style: React.CSSProperties = {
+    transform: transform
+      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      : undefined,
+    transition,
+    zIndex: isDragging ? 50 : undefined,
+    opacity: isDragging ? 0.3 : 1,
+  };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      className={isDragging ? "opacity-30" : ""}
-    >
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       {children}
     </div>
   );
@@ -144,6 +155,11 @@ export default function TableroPage() {
   useEffect(() => {
     api.get<UserOption[]>("/api/catalogs/users").then(setUsers).catch(() => {});
   }, []);
+
+  const byColumn = (col: WipColumn) =>
+    initiatives
+      .filter((i) => (i.wip_column ?? "BACKLOG") === col)
+      .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
 
   function openCreate() {
     setEditingId(null);
@@ -202,18 +218,18 @@ export default function TableroPage() {
       await api.post<DGIInitiative>(`/api/dgi/initiatives/${initiative.id}/move`, {
         status: targetStatus,
       });
-      setInitiatives((prev) =>
-        prev.map((ini) =>
-          ini.id === initiative.id
-            ? { ...ini, wip_column: targetStatus, status: targetStatus }
-            : ini
-        )
-      );
+      setRefreshKey((k) => k + 1);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error al mover iniciativa");
     } finally {
       setMoving(null);
     }
+  }
+
+  /* ── Find which column an initiative belongs to ─────────────────────── */
+  function findColumn(id: string): WipColumn | null {
+    const ini = initiatives.find((i) => i.id === id);
+    return ini ? ((ini.wip_column ?? "BACKLOG") as WipColumn) : null;
   }
 
   function handleDragStart(event: DragStartEvent) {
@@ -225,42 +241,108 @@ export default function TableroPage() {
     setActiveId(null);
     if (!over) return;
 
-    const initiativeId = active.id as string;
-    const targetColumn = over.id as WipColumn;
-    const initiative = initiatives.find((i) => i.id === initiativeId);
-    if (!initiative) return;
+    const activeIdStr = active.id as string;
+    const overId = over.id as string;
 
-    const currentColumn = (initiative.wip_column ?? "BACKLOG") as WipColumn;
-    if (currentColumn === targetColumn) return;
+    const sourceColumn = findColumn(activeIdStr);
+    if (!sourceColumn) return;
 
-    setMoving(initiativeId);
-    try {
-      await api.post<DGIInitiative>(
-        `/api/dgi/initiatives/${initiativeId}/move`,
-        { status: targetColumn }
-      );
-      setInitiatives((prev) =>
-        prev.map((ini) =>
-          ini.id === initiativeId
-            ? { ...ini, wip_column: targetColumn, status: targetColumn }
-            : ini
-        )
-      );
-    } catch (err) {
-      toast.error(
-        err instanceof Error ? err.message : "Error al mover iniciativa"
-      );
-    } finally {
-      setMoving(null);
+    // Check if dropped on a column header or on another card
+    const isColumnDrop = COLUMN_ORDER.includes(overId as WipColumn);
+    const targetColumn = isColumnDrop
+      ? (overId as WipColumn)
+      : findColumn(overId);
+
+    if (!targetColumn) return;
+
+    if (sourceColumn === targetColumn) {
+      // ── Same column: reorder ───────────────────────────────────────
+      const colItems = byColumn(sourceColumn);
+      const oldIndex = colItems.findIndex((i) => i.id === activeIdStr);
+      const newIndex = colItems.findIndex((i) => i.id === overId);
+      if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) return;
+
+      const reordered = arrayMove(colItems, oldIndex, newIndex);
+
+      // Optimistic update
+      setInitiatives((prev) => {
+        const others = prev.filter(
+          (i) => (i.wip_column ?? "BACKLOG") !== sourceColumn
+        );
+        return [
+          ...others,
+          ...reordered.map((item, idx) => ({ ...item, sort_order: idx })),
+        ];
+      });
+
+      // Persist
+      try {
+        await api.post("/api/dgi/initiatives/reorder", {
+          initiative_ids: reordered.map((i) => i.id),
+        });
+      } catch (err) {
+        toast.error("Error al reordenar");
+        setRefreshKey((k) => k + 1);
+      }
+    } else {
+      // ── Different column: move + insert at position ────────────────
+      const movedItem = initiatives.find((i) => i.id === activeIdStr);
+      if (!movedItem) return;
+
+      const targetColItems = byColumn(targetColumn);
+
+      // Determine insertion index: drop on card → insert before it, drop on column → append
+      let insertIndex = targetColItems.length;
+      if (!isColumnDrop) {
+        const overIndex = targetColItems.findIndex((i) => i.id === overId);
+        if (overIndex !== -1) insertIndex = overIndex;
+      }
+
+      // Build new column order with the moved card inserted
+      const newOrder = [...targetColItems];
+      newOrder.splice(insertIndex, 0, {
+        ...movedItem,
+        wip_column: targetColumn,
+        status: targetColumn,
+      });
+
+      // Optimistic update: remove from source, insert in target
+      setInitiatives((prev) => {
+        const without = prev.filter(
+          (i) =>
+            i.id !== activeIdStr &&
+            (i.wip_column ?? "BACKLOG") !== targetColumn
+        );
+        return [
+          ...without,
+          ...newOrder.map((item, idx) => ({ ...item, sort_order: idx })),
+        ];
+      });
+
+      // Persist: move first (changes status), then reorder (fixes position)
+      setMoving(activeIdStr);
+      try {
+        await api.post<DGIInitiative>(
+          `/api/dgi/initiatives/${activeIdStr}/move`,
+          { status: targetColumn }
+        );
+        await api.post("/api/dgi/initiatives/reorder", {
+          initiative_ids: newOrder.map((i) => i.id),
+        });
+      } catch (err) {
+        toast.error(
+          err instanceof Error ? err.message : "Error al mover iniciativa"
+        );
+        setRefreshKey((k) => k + 1);
+      } finally {
+        setMoving(null);
+      }
     }
   }
 
   const activeInitiative = activeId
     ? initiatives.find((i) => i.id === activeId)
     : null;
-
-  const byColumn = (col: WipColumn) =>
-    initiatives.filter((i) => (i.wip_column ?? "BACKLOG") === col);
 
   if (error) {
     return (
@@ -303,6 +385,7 @@ export default function TableroPage() {
       ) : (
         <DndContext
           sensors={sensors}
+          collisionDetection={closestCorners}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
@@ -339,37 +422,42 @@ export default function TableroPage() {
                     )}
                   </div>
 
-                  {/* Column container — droppable */}
+                  {/* Column container — droppable + sortable */}
                   <DroppableColumn id={col.key}>
-                    {colItems.length === 0 ? (
-                      <p className="text-xs text-muted-foreground text-center py-6 italic">
-                        Sin iniciativas
-                      </p>
-                    ) : (
-                      colItems.map((initiative) => (
-                        <DraggableCard key={initiative.id} id={initiative.id}>
-                          <div
-                            className={
-                              moving === initiative.id
-                                ? "opacity-50 pointer-events-none"
-                                : "cursor-grab active:cursor-grabbing"
-                            }
-                            onClick={() => {
-                              if (!moving) openEdit(initiative);
-                            }}
-                          >
-                            <KanbanCard
-                              initiative={initiative}
-                              isFirst={col.key === "BACKLOG"}
-                              isLast={col.key === "COMPLETADO"}
-                              onMove={(direction) =>
-                                handleMove(initiative, direction)
+                    <SortableContext
+                      items={colItems.map((i) => i.id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      {colItems.length === 0 ? (
+                        <p className="text-xs text-muted-foreground text-center py-6 italic">
+                          Sin iniciativas
+                        </p>
+                      ) : (
+                        colItems.map((initiative) => (
+                          <SortableCard key={initiative.id} id={initiative.id}>
+                            <div
+                              className={
+                                moving === initiative.id
+                                  ? "opacity-50 pointer-events-none"
+                                  : "cursor-grab active:cursor-grabbing"
                               }
-                            />
-                          </div>
-                        </DraggableCard>
-                      ))
-                    )}
+                              onClick={() => {
+                                if (!moving) openEdit(initiative);
+                              }}
+                            >
+                              <KanbanCard
+                                initiative={initiative}
+                                isFirst={col.key === "BACKLOG"}
+                                isLast={col.key === "COMPLETADO"}
+                                onMove={(direction) =>
+                                  handleMove(initiative, direction)
+                                }
+                              />
+                            </div>
+                          </SortableCard>
+                        ))
+                      )}
+                    </SortableContext>
                   </DroppableColumn>
                 </div>
               );

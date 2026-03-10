@@ -52,6 +52,7 @@ class InitiativeItem(BaseModel):
     total_days: int | None
     progress: float
     wip_column: str | None
+    sort_order: int = 0
 
 
 class InitiativeCreate(BaseModel):
@@ -75,6 +76,10 @@ class InitiativeUpdate(BaseModel):
 
 class InitiativeMove(BaseModel):
     status: str  # target column
+
+
+class InitiativeReorder(BaseModel):
+    initiative_ids: list[UUID]  # ordered list of IDs in new position order
 
 
 # ---------------------------------------------------------------------------

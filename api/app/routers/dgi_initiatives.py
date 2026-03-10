@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
-from app.schemas.dgi import InitiativeItem, InitiativeCreate, InitiativeUpdate, InitiativeMove
+from app.schemas.dgi import InitiativeItem, InitiativeCreate, InitiativeUpdate, InitiativeMove, InitiativeReorder
 
 
 def _require_dgi(user: dict):
@@ -44,7 +44,8 @@ async def _get_initiative_row(initiative_id: str, db: AsyncSession) -> dict | No
             ini.current_day,
             ini.total_days,
             ini.progress,
-            ini.wip_column
+            ini.wip_column,
+            ini.sort_order
         FROM core.dgi_initiative ini
         JOIN ref.category st ON st.id = ini.status_id
         LEFT JOIN ref.category ph ON ph.id = ini.dmaic_phase_id
@@ -111,6 +112,7 @@ async def list_initiatives(
                 WHEN 'COMPLETADO' THEN 4
                 ELSE 5
             END,
+            ini.sort_order ASC,
             ini.target_date ASC NULLS LAST,
             ini.name
     """
@@ -130,7 +132,8 @@ async def list_initiatives(
             ini.current_day,
             ini.total_days,
             ini.progress,
-            ini.wip_column
+            ini.wip_column,
+            ini.sort_order
     """
 
     def _to_item(r: dict) -> InitiativeItem:
@@ -141,6 +144,7 @@ async def list_initiatives(
             division_name=r["division_name"], start_date=r["start_date"], target_date=r["target_date"],
             current_day=r["current_day"] or 0, total_days=r["total_days"],
             progress=r["progress"] or 0.0, wip_column=r["wip_column"],
+            sort_order=r.get("sort_order", 0),
         )
 
     # Paginated mode
@@ -238,6 +242,7 @@ async def create_initiative(
         division_name=row["division_name"], start_date=row["start_date"], target_date=row["target_date"],
         current_day=row["current_day"] or 0, total_days=row["total_days"],
         progress=row["progress"] or 0.0, wip_column=row["wip_column"],
+        sort_order=row.get("sort_order", 0),
     )
 
 
@@ -278,6 +283,7 @@ async def update_initiative(
             division_name=existing["division_name"], start_date=existing["start_date"], target_date=existing["target_date"],
             current_day=existing["current_day"] or 0, total_days=existing["total_days"],
             progress=existing["progress"] or 0.0, wip_column=existing["wip_column"],
+        sort_order=existing.get("sort_order", 0),
         )
 
     # Convert UUID fields to str for SQL
@@ -303,6 +309,7 @@ async def update_initiative(
         division_name=row["division_name"], start_date=row["start_date"], target_date=row["target_date"],
         current_day=row["current_day"] or 0, total_days=row["total_days"],
         progress=row["progress"] or 0.0, wip_column=row["wip_column"],
+        sort_order=row.get("sort_order", 0),
     )
 
 
@@ -401,18 +408,29 @@ async def move_initiative(
                 ),
             )
 
+    # ── Assign sort_order = max+1 in target column ──────────────────────
+    max_order = (await db.execute(
+        text("""
+            SELECT COALESCE(MAX(sort_order), -1) FROM core.dgi_initiative
+            WHERE wip_column = :col AND deleted_at IS NULL
+        """),
+        {"col": target_status},
+    )).scalar()
+
     # ── Apply move ────────────────────────────────────────────────────────
     await db.execute(
         text("""
             UPDATE core.dgi_initiative
             SET status_id  = :status_id,
-                wip_column = :wip_column
+                wip_column = :wip_column,
+                sort_order = :sort_order
             WHERE id = :id
         """),
         {
             "id": initiative_id_str,
             "status_id": str(target_status_id),
             "wip_column": target_status,
+            "sort_order": max_order + 1,
         },
     )
     await db.commit()
@@ -438,4 +456,34 @@ async def move_initiative(
         total_days=updated["total_days"],
         progress=updated["progress"] or 0.0,
         wip_column=updated["wip_column"],
+        sort_order=updated.get("sort_order", 0),
     )
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/initiatives/reorder — Reorder initiatives within a column
+# ---------------------------------------------------------------------------
+@router.post("/reorder")
+async def reorder_initiatives(
+    body: InitiativeReorder,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Persist new vertical order for initiatives within a single column.
+    Receives an ordered list of initiative UUIDs.
+    Updates sort_order = 0, 1, 2, ... in the given order.
+    """
+    _require_dgi(user)
+
+    if not body.initiative_ids:
+        return {"updated": 0}
+
+    for idx, ini_id in enumerate(body.initiative_ids):
+        await db.execute(
+            text("UPDATE core.dgi_initiative SET sort_order = :order WHERE id = :id"),
+            {"order": idx, "id": str(ini_id)},
+        )
+
+    await db.commit()
+    return {"updated": len(body.initiative_ids)}

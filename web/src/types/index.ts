@@ -314,6 +314,7 @@ export interface DGIInitiative {
   total_days: number | null;
   progress: number;
   wip_column: string | null;
+  sort_order: number;
 }
 
 export interface DGIReport {
