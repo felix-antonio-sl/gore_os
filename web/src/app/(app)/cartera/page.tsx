@@ -268,11 +268,13 @@ export default function CarteraPage() {
     {
       key: "physical_progress",
       label: "Av. Físico",
+      className: "hidden md:table-cell",
       render: (v: unknown) => <ProgressBar value={v as number | null} />,
     },
     {
       key: "financial_progress",
       label: "Av. Financiero",
+      className: "hidden md:table-cell",
       render: (v: unknown) => <ProgressBar value={v as number | null} />,
     },
     {
@@ -504,16 +506,18 @@ export default function CarteraPage() {
             </Select>
           </div>
 
-          <DataTable
-            columns={columns}
-            data={data?.items ?? []}
-            page={data?.page ?? 1}
-            totalPages={data?.total_pages ?? 1}
-            total={data?.total ?? 0}
-            onPageChange={setPage}
-            onRowClick={(row) => router.push(`/ipr/${(row as CarteraIPRItem).id}`)}
-            isLoading={loading}
-          />
+          <div className="overflow-x-auto">
+            <DataTable
+              columns={columns}
+              data={data?.items ?? []}
+              page={data?.page ?? 1}
+              totalPages={data?.total_pages ?? 1}
+              total={data?.total ?? 0}
+              onPageChange={setPage}
+              onRowClick={(row) => router.push(`/ipr/${(row as CarteraIPRItem).id}`)}
+              isLoading={loading}
+            />
+          </div>
         </TabsContent>
 
         {/* Tab: Cuotas Vencidas */}

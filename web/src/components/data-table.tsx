@@ -16,6 +16,7 @@ import { EmptyState } from "@/components/empty-state";
 interface Column {
   key: string;
   label: string;
+  className?: string;
   render?: (value: unknown, row: unknown) => ReactNode;
 }
 
@@ -61,7 +62,7 @@ export function DataTable({
           <TableHeader>
             <TableRow>
               {columns.map((col) => (
-                <TableHead key={col.key}>{col.label}</TableHead>
+                <TableHead key={col.key} className={col.className}>{col.label}</TableHead>
               ))}
             </TableRow>
           </TableHeader>
@@ -87,7 +88,7 @@ export function DataTable({
                   } : {})}
                 >
                   {columns.map((col) => (
-                    <TableCell key={col.key}>
+                    <TableCell key={col.key} className={col.className}>
                       {col.render
                         ? col.render((row as Record<string, unknown>)[col.key], row)
                         : String((row as Record<string, unknown>)[col.key] ?? "")}
