@@ -14,6 +14,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { TimelineHistory } from "@/components/timeline-history";
 import { X, Loader2, Plus, AlertTriangle } from "lucide-react";
 import { formatDate, formatCLP } from "@/lib/format";
+import { cn } from "@/lib/utils";
 import type { PaginatedResponse, CategoryRef, HistoryEntry } from "@/types";
 import type { DomainConfig } from "./types";
 
@@ -364,7 +365,22 @@ export const rendicionesConfig: DomainConfig = {
   label: "Rendiciones",
   paginationMode: "server",
   searchPlaceholder: "Buscar convenio, BIP o ejecutor...",
-  filters: [],
+  filters: [
+    {
+      key: "state",
+      label: "Estado",
+      options: [
+        { value: "PENDIENTE", label: "Pendiente" },
+        { value: "EN_REVISION_RTF", label: "En Revisión RTF" },
+        { value: "VISADA_RTF", label: "Visada RTF" },
+        { value: "EN_REVISION_UCR", label: "En Revisión UCR" },
+        { value: "OBSERVADA", label: "Observada" },
+        { value: "APROBADA", label: "Aprobada" },
+        { value: "RECHAZADA", label: "Rechazada" },
+        { value: "VENCIDAS", label: "\u26A0 Vencidas (SLA)" },
+      ],
+    },
+  ],
   columns: [
     { key: "ipr_codigo_bip", label: "BIP", render: (v) => <span className="text-[11px] font-mono text-muted-foreground">{String(v ?? "-")}</span> },
     { key: "agreement_number", label: "Convenio", render: (v) => <span className="text-[11px] font-mono text-muted-foreground">{String(v ?? "S/N")}</span> },
@@ -381,10 +397,42 @@ export const rendicionesConfig: DomainConfig = {
               <Badge variant="outline" className="text-[10px]">{r.state_label ?? "-"}</Badge>
             )}
             {r.is_overdue && (
-              <Badge variant="destructive" className="text-[10px] px-1 py-0">
+              <Badge variant="destructive" className="text-[10px] px-1 py-0 gap-0.5">
                 <AlertTriangle className="size-2.5" />
+                {r.days_in_state !== null && `${Math.floor(r.days_in_state)}d`}
               </Badge>
             )}
+          </div>
+        );
+      },
+    },
+    {
+      key: "days_in_state", label: "SLA",
+      render: (_, row) => {
+        const r = row as RendicionItem;
+        if (r.days_in_state === null || r.days_in_state === undefined) return <span className="text-muted-foreground">-</span>;
+        const days = Math.floor(r.days_in_state);
+        const slaMap: Record<string, number> = { EN_REVISION_RTF: 7, VISADA_RTF: 1, EN_REVISION_UCR: 2, OBSERVADA: 15 };
+        const sla = r.state_code ? slaMap[r.state_code] : undefined;
+        if (!sla) return <span className="text-xs text-muted-foreground tabular-nums">{days}d</span>;
+        const ratio = r.days_in_state / sla;
+        return (
+          <div className="flex items-center gap-1.5">
+            <div className="h-1.5 w-10 rounded-full bg-gray-200 overflow-hidden">
+              <div
+                className={cn(
+                  "h-full rounded-full transition-all",
+                  ratio >= 1 ? "bg-red-500" : ratio >= 0.7 ? "bg-amber-500" : "bg-green-500"
+                )}
+                style={{ width: `${Math.min(ratio * 100, 100)}%` }}
+              />
+            </div>
+            <span className={cn(
+              "text-[10px] tabular-nums font-mono",
+              ratio >= 1 ? "text-red-600 font-semibold" : ratio >= 0.7 ? "text-amber-600" : "text-muted-foreground"
+            )}>
+              {days}/{sla}d
+            </span>
           </div>
         );
       },
@@ -399,11 +447,23 @@ export const rendicionesConfig: DomainConfig = {
     { key: "amount", label: "Monto", render: (v) => <span className="text-xs font-mono tabular-nums">{v ? formatCLP(v as number) : "-"}</span> },
   ],
   fetchData: async (params) => {
+    const stateFilter = params.get("state");
+
+    // Special case: "VENCIDAS" uses dedicated endpoint
+    if (stateFilter === "VENCIDAS") {
+      const apiParams = new URLSearchParams();
+      apiParams.set("page", params.get("page") ?? "1");
+      apiParams.set("page_size", "25");
+      if (params.get("search")) apiParams.set("search", params.get("search")!);
+      const response = await api.get<PaginatedResponse<RendicionItem>>(`/api/dgi/data/rendiciones/vencidas?${apiParams.toString()}`);
+      return { items: response.items, total: response.total, totalPages: response.total_pages };
+    }
+
     const apiParams = new URLSearchParams();
     apiParams.set("page", params.get("page") ?? "1");
     apiParams.set("page_size", "25");
     if (params.get("search")) apiParams.set("search", params.get("search")!);
-
+    if (stateFilter) apiParams.set("state", stateFilter);
     const response = await api.get<PaginatedResponse<RendicionItem>>(`/api/dgi/data/rendiciones?${apiParams.toString()}`);
     return { items: response.items, total: response.total, totalPages: response.total_pages };
   },
