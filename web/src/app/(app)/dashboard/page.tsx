@@ -199,14 +199,17 @@ function OperationalDashboard() {
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {data?.kpis.map((kpi, i) => (
-            <KpiCard
-              key={i}
-              label={kpi.label}
-              value={kpi.value}
-              sublabel={kpi.sublabel}
-              color={kpi.color}
-              onClick={DRILLDOWNS[kpi.label] ? () => router.push(DRILLDOWNS[kpi.label]) : undefined}
-            />
+            <div key={i} className={`animate-in fade-in duration-300 fill-mode-both ${
+              i === 0 ? "" : i === 1 ? "delay-75" : i === 2 ? "delay-150" : "delay-200"
+            }`}>
+              <KpiCard
+                label={kpi.label}
+                value={kpi.value}
+                sublabel={kpi.sublabel}
+                color={kpi.color}
+                onClick={DRILLDOWNS[kpi.label] ? () => router.push(DRILLDOWNS[kpi.label]) : undefined}
+              />
+            </div>
           ))}
         </div>
       )}
