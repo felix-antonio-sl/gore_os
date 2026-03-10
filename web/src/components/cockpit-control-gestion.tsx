@@ -36,7 +36,7 @@ const sourceStatusConfig: Record<
   },
   SIN_DATOS: {
     label: "Sin datos",
-    badgeClass: "bg-gray-100 text-gray-600 border-gray-300",
+    badgeClass: "bg-gray-100 text-gray-800 border-gray-300",
     extraLabel: () => "?",
   },
 };
@@ -44,7 +44,7 @@ const sourceStatusConfig: Record<
 const priorityBadge: Record<string, string> = {
   ALTA: "bg-red-100 text-red-700 border-red-300",
   MEDIA: "bg-amber-100 text-amber-700 border-amber-300",
-  BAJA: "bg-gray-100 text-gray-600 border-gray-300",
+  BAJA: "bg-gray-100 text-gray-800 border-gray-300",
 };
 
 export function CockpitControlGestionView({ data }: Props) {
@@ -130,7 +130,9 @@ export function CockpitControlGestionView({ data }: Props) {
                         </p>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
-                        <SparklineIndicator indicatorId={ind.id} days={90} />
+                        <span className="hidden md:inline-block">
+                          <SparklineIndicator indicatorId={ind.id} days={90} />
+                        </span>
                         {ind.signal && (
                           <Badge
                             variant="outline"
