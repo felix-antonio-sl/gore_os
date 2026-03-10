@@ -48,7 +48,7 @@ export default function LoginPage() {
       {/* Content */}
       <div className="relative z-10 w-full max-w-sm px-4">
         {/* Logo & brand */}
-        <div className="flex flex-col items-center mb-8">
+        <div className="flex flex-col items-center mb-8 animate-in fade-in duration-300 fill-mode-both">
           <GoreMark className="size-16 mb-4 drop-shadow-lg" />
           <h1 className="text-3xl font-bold text-white tracking-tight font-serif">
             GORE_OS
@@ -59,7 +59,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login card */}
-        <div className="rounded-xl bg-white/[0.07] backdrop-blur-xl border border-white/[0.12] shadow-2xl p-6">
+        <div className="rounded-xl bg-white/[0.07] backdrop-blur-xl border border-white/[0.12] shadow-2xl p-6 animate-in fade-in duration-300 delay-150 fill-mode-both">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label htmlFor="email" className="text-sm font-medium text-white/80">
@@ -110,7 +110,7 @@ export default function LoginPage() {
       </div>
 
       {/* Footer */}
-      <p className="relative z-10 mt-8 text-xs text-white/40">
+      <p className="relative z-10 mt-8 text-xs text-white/40 animate-in fade-in duration-300 delay-300 fill-mode-both">
         Gobierno Regional de Ñuble · {new Date().getFullYear()}
       </p>
     </div>
