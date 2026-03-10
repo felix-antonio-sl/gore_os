@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Plus, AlertTriangle } from "lucide-react";
+import { Plus } from "lucide-react";
 import type { DGIInitiative } from "@/types";
 
 interface UserOption {
@@ -49,7 +49,6 @@ export default function TableroPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [moving, setMoving] = useState<string | null>(null);
-  const [moveError, setMoveError] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   // Users catalog for responsable select
@@ -130,7 +129,6 @@ export default function TableroPage() {
     const targetStatus = COLUMN_ORDER[targetIdx];
 
     setMoving(initiative.id);
-    setMoveError(null);
     try {
       await api.post<DGIInitiative>(`/api/dgi/initiatives/${initiative.id}/move`, {
         status: targetStatus,
@@ -143,7 +141,7 @@ export default function TableroPage() {
         )
       );
     } catch (err) {
-      setMoveError(err instanceof Error ? err.message : "Error al mover iniciativa");
+      toast.error(err instanceof Error ? err.message : "Error al mover iniciativa");
     } finally {
       setMoving(null);
     }
@@ -178,20 +176,6 @@ export default function TableroPage() {
         </Button>
       </div>
 
-      {/* WIP move error banner */}
-      {moveError && (
-        <div className="flex items-start gap-2 rounded-md bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
-          <AlertTriangle className="size-4 shrink-0 mt-0.5" />
-          <span>{moveError}</span>
-          <button
-            className="ml-auto text-amber-600 hover:text-amber-800"
-            onClick={() => setMoveError(null)}
-          >
-            ✕
-          </button>
-        </div>
-      )}
-
       {/* Kanban Board */}
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -209,6 +193,7 @@ export default function TableroPage() {
           {COLUMNS.map((col) => {
             const colItems = byColumn(col.key);
             const isOverWip = col.wipLimit !== undefined && colItems.length > col.wipLimit;
+            const isAtCapacity = col.wipLimit !== undefined && colItems.length === col.wipLimit;
 
             return (
               <div key={col.key} className="flex flex-col gap-3">
@@ -220,6 +205,8 @@ export default function TableroPage() {
                     className={
                       isOverWip
                         ? "border-red-400 text-red-600"
+                        : isAtCapacity
+                        ? "border-amber-400 text-amber-600"
                         : "border-gray-300 text-gray-600"
                     }
                   >
