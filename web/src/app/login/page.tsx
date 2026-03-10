@@ -16,6 +16,10 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Ingrese un correo electrónico válido");
+      return;
+    }
     setIsLoading(true);
     try {
       await login(email, password);
@@ -100,7 +104,7 @@ export default function LoginPage() {
             )}
             <Button
               type="submit"
-              className="w-full bg-white text-[#031B5F] hover:bg-white/90 font-semibold"
+              className="w-full bg-white text-slate-900 hover:bg-white/90 font-semibold"
               disabled={isLoading}
             >
               {isLoading ? "Ingresando..." : "Ingresar"}
