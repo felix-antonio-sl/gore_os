@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/status-badge";
 import { TemporalIndicator } from "@/components/temporal-indicator";
 import { Input } from "@/components/ui/input";
 import { EmptyState } from "@/components/empty-state";
+import { CheckCircle2 } from "lucide-react";
 import type { KPICardData, CompromisoListItem } from "@/types";
 
 interface CompromisoGroup {
@@ -138,7 +139,11 @@ export default function MisCompromisosPage() {
               </h2>
               {filtered.length === 0 ? (
                 <div className="py-2">
-                  <EmptyState compact title="No hay compromisos en esta categoría." />
+                  <EmptyState
+                    title="Sin compromisos en esta categoría"
+                    description="Todos tus compromisos están al día."
+                    icon={<CheckCircle2 className="size-10 stroke-1 text-green-500" />}
+                  />
                 </div>
               ) : (
                 <DataTable
