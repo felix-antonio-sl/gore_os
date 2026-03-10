@@ -18,6 +18,7 @@ import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async"
 import { toast } from "sonner";
 import type { PaginatedResponse, PresupuestoListItem, PresupuestoDetail } from "@/types";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const CSV_COLUMNS = [
   { key: "division_name", label: "División" },
@@ -86,6 +87,14 @@ export default function PresupuestoPage() {
   const [editPaid, setEditPaid] = useState("");
   const [editSubmitting, setEditSubmitting] = useState(false);
   const [editError, setEditError] = useState<string | null>(null);
+  const [editSubtitle, setEditSubtitle] = useState("");
+  const [editItem, setEditItem] = useState("");
+  const [editAllocation, setEditAllocation] = useState("");
+
+  // Catalog options for classifier selects
+  const [subtitleOptions, setSubtitleOptions] = useState<{id: string; label: string}[]>([]);
+  const [itemOptions, setItemOptions] = useState<{id: string; label: string}[]>([]);
+  const [allocationOptions, setAllocationOptions] = useState<{id: string; label: string}[]>([]);
 
   // CDP creation state
   const [showCdpForm, setShowCdpForm] = useState(false);
@@ -134,6 +143,9 @@ export default function PresupuestoPage() {
     api.get<{ id: string; code: string; label: string }[]>("/api/admin/budget-program-codes").then((codes) => {
       setProgramCodeOptions(codes.map((c) => ({ value: c.code, label: `${c.code} — ${c.label}` })));
     }).catch(() => {});
+    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/budget_subtitle").then(setSubtitleOptions).catch(() => {});
+    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/budget_item").then(setItemOptions).catch(() => {});
+    api.get<{ id: string; code: string; label: string }[]>("/api/catalogs/categories/budget_allocation").then(setAllocationOptions).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -212,6 +224,9 @@ export default function PresupuestoPage() {
     setEditCommitted(String(detail.committed_amount ?? ""));
     setEditAccrued(String(detail.accrued_amount ?? ""));
     setEditPaid(String(detail.paid_amount ?? ""));
+    setEditSubtitle(detail.subtitle_id ?? "");
+    setEditItem(detail.item_id ?? "");
+    setEditAllocation(detail.allocation_id ?? "");
     setEditError(null);
     setIsEditing(true);
   };
@@ -228,6 +243,9 @@ export default function PresupuestoPage() {
         committed_amount: editCommitted ? parseFloat(editCommitted) : undefined,
         accrued_amount: editAccrued ? parseFloat(editAccrued) : undefined,
         paid_amount: editPaid ? parseFloat(editPaid) : undefined,
+        subtitle_id: editSubtitle || undefined,
+        item_id: editItem || undefined,
+        allocation_id: editAllocation || undefined,
       });
       setIsEditing(false);
       // Refresh detail
@@ -397,6 +415,54 @@ export default function PresupuestoPage() {
                     />
                   </div>
                 ))}
+                <div className="border-t pt-2 mt-2 space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">Clasificador</p>
+                  {subtitleOptions.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs text-muted-foreground w-28 shrink-0">Subtítulo</label>
+                      <Select value={editSubtitle} onValueChange={setEditSubtitle}>
+                        <SelectTrigger className="h-8 text-xs flex-1">
+                          <SelectValue placeholder="Sin cambio" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {subtitleOptions.map((o) => (
+                            <SelectItem key={o.id} value={o.id}>{o.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                  {itemOptions.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs text-muted-foreground w-28 shrink-0">Ítem</label>
+                      <Select value={editItem} onValueChange={setEditItem}>
+                        <SelectTrigger className="h-8 text-xs flex-1">
+                          <SelectValue placeholder="Sin cambio" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {itemOptions.map((o) => (
+                            <SelectItem key={o.id} value={o.id}>{o.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                  {allocationOptions.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs text-muted-foreground w-28 shrink-0">Asignación</label>
+                      <Select value={editAllocation} onValueChange={setEditAllocation}>
+                        <SelectTrigger className="h-8 text-xs flex-1">
+                          <SelectValue placeholder="Sin cambio" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {allocationOptions.map((o) => (
+                            <SelectItem key={o.id} value={o.id}>{o.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
                 {editError && <p className="text-xs text-red-600">{editError}</p>}
                 <div className="flex gap-2 pt-1">
                   <Button type="submit" size="sm" disabled={editSubmitting}>

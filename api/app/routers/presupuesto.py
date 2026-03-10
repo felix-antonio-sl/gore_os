@@ -301,6 +301,9 @@ async def _get_presupuesto_or_404(presupuesto_id: UUID, db: AsyncSession) -> dic
                 bp.fiscal_year,
                 bp.owner_division_id          AS division_id,
                 org.name                       AS division_name,
+                bp.subtitle_id,
+                bp.item_id,
+                bp.allocation_id,
                 sub.label                      AS subtitle_label,
                 pt.label                       AS program_type_label,
                 item_cat.label                 AS item_label,
@@ -978,7 +981,7 @@ async def update_presupuesto(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
 
     # Allowlist: solo estas columnas son actualizables via PATCH
-    UPDATABLE_COLUMNS = {"initial_amount", "current_amount", "committed_amount", "accrued_amount", "paid_amount", "program_code_id"}
+    UPDATABLE_COLUMNS = {"initial_amount", "current_amount", "committed_amount", "accrued_amount", "paid_amount", "program_code_id", "subtitle_id", "item_id", "allocation_id"}
 
     updates = {k: v for k, v in body.model_dump(exclude_none=True).items() if k in UPDATABLE_COLUMNS}
     if not updates:

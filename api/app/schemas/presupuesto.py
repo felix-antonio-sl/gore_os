@@ -43,6 +43,9 @@ class PresupuestoListItem(BaseModel):
 
 class PresupuestoDetail(PresupuestoListItem):
     division_id: Optional[UUID]
+    subtitle_id: Optional[UUID] = None
+    item_id: Optional[UUID] = None
+    allocation_id: Optional[UUID] = None
     item_label: Optional[str]
     allocation_label: Optional[str]
     fndr_amount: Optional[Decimal]
@@ -80,6 +83,9 @@ class PresupuestoUpdate(BaseModel):
     accrued_amount: Optional[Decimal] = None
     paid_amount: Optional[Decimal] = None
     program_code_id: Optional[UUID] = None
+    subtitle_id: Optional[UUID] = None
+    item_id: Optional[UUID] = None
+    allocation_id: Optional[UUID] = None
 
 
 class PresupuestoResumen(BaseModel):

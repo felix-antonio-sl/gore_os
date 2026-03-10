@@ -207,6 +207,9 @@ export interface BudgetCommitmentItem {
 }
 
 export interface PresupuestoDetail extends PresupuestoListItem {
+  subtitle_id: string | null;
+  item_id: string | null;
+  allocation_id: string | null;
   item_label: string | null;
   allocation_label: string | null;
   fndr_amount: number | null;
@@ -366,9 +369,17 @@ export interface RenditionSummary {
   amount_at_risk: number | null;
 }
 
+export interface DecisionItem {
+  source: string;
+  id: string;
+  title: string;
+  severity: string;
+}
+
 export interface CockpitJefeDGI {
   semaforo: DGIDimensionSummary[];
   decisions_pending: number;
+  decision_items: DecisionItem[];
   team_status: { role: string; name: string; activity: string }[];
   critical_alerts: { id: string; message: string; severity: string }[];
   report_status: { title: string; status: string; due: string } | null;
