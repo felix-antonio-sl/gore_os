@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useRouter } from "next/navigation";
 import { BarChart2, AlertCircle, TrendingUp, ClipboardList } from "lucide-react";
 import { ProgressBarIndicator } from "@/components/progress-bar-indicator";
 import { SparklineIndicator } from "@/components/sparkline-indicator";
@@ -49,6 +50,7 @@ const priorityBadge: Record<string, string> = {
 };
 
 export function CockpitControlGestionView({ data }: Props) {
+  const router = useRouter();
   const { data_sources, indicators_alert, trends, work_queue } = data;
 
   return (
@@ -137,7 +139,8 @@ export function CockpitControlGestionView({ data }: Props) {
                             {ind.signal}
                           </Badge>
                         )}
-                        <Button size="sm" variant="outline" className="h-7 text-xs">
+                        <Button size="sm" variant="outline" className="h-7 text-xs"
+                          onClick={() => router.push(`/datos?indicator_id=${ind.id}`)}>
                           Investigar
                         </Button>
                       </div>
