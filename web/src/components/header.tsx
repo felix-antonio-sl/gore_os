@@ -63,16 +63,24 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
   const [bellOpen, setBellOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [pwdOpen, setPwdOpen] = useState(false);
-  const [pwdForm, setPwdForm] = useState({ current: "", next: "" });
+  const [pwdForm, setPwdForm] = useState({ current: "", next: "", confirm: "" });
   const [pwdError, setPwdError] = useState("");
   const [pwdLoading, setPwdLoading] = useState(false);
   const [pwdSuccess, setPwdSuccess] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
+  const pwdStrength = pwdForm.next.length === 0 ? null :
+    pwdForm.next.length < 8 ? "weak" :
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(pwdForm.next) ? "strong" : "medium";
+
   const handleChangePassword = async () => {
     setPwdError("");
     if (pwdForm.next.length < 8) {
       setPwdError("La nueva contraseña debe tener al menos 8 caracteres");
+      return;
+    }
+    if (pwdForm.next !== pwdForm.confirm) {
+      setPwdError("Las contraseñas no coinciden");
       return;
     }
     setPwdLoading(true);
@@ -85,7 +93,7 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
       setTimeout(() => {
         setPwdOpen(false);
         setPwdSuccess(false);
-        setPwdForm({ current: "", next: "" });
+        setPwdForm({ current: "", next: "", confirm: "" });
       }, 1500);
     } catch (err: unknown) {
       setPwdError(err instanceof Error ? err.message : "Error al cambiar contraseña");
@@ -271,7 +279,7 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
         </DropdownMenu>
 
         {/* Password change dialog */}
-        <Dialog open={pwdOpen} onOpenChange={(open) => { setPwdOpen(open); if (!open) { setPwdError(""); setPwdSuccess(false); setPwdForm({ current: "", next: "" }); } }}>
+        <Dialog open={pwdOpen} onOpenChange={(open) => { setPwdOpen(open); if (!open) { setPwdError(""); setPwdSuccess(false); setPwdForm({ current: "", next: "", confirm: "" }); } }}>
           <DialogContent className="sm:max-w-[380px]">
             <DialogHeader>
               <DialogTitle>Cambiar Contraseña</DialogTitle>
@@ -301,13 +309,34 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
                     onChange={(e) => setPwdForm((f) => ({ ...f, next: e.target.value }))}
                     placeholder="Mínimo 8 caracteres"
                   />
+                  {pwdStrength && (
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1 flex-1">
+                        <div className={`h-1 flex-1 rounded-full ${pwdStrength === "weak" ? "bg-red-400" : "bg-green-400"}`} />
+                        <div className={`h-1 flex-1 rounded-full ${pwdStrength === "strong" ? "bg-green-400" : pwdStrength === "medium" ? "bg-amber-400" : "bg-gray-200"}`} />
+                        <div className={`h-1 flex-1 rounded-full ${pwdStrength === "strong" ? "bg-green-400" : "bg-gray-200"}`} />
+                      </div>
+                      <span className={`text-xs ${pwdStrength === "weak" ? "text-red-600" : pwdStrength === "medium" ? "text-amber-600" : "text-green-600"}`}>
+                        {pwdStrength === "weak" ? "Débil" : pwdStrength === "medium" ? "Media" : "Fuerte"}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="grid gap-1.5">
+                  <label htmlFor="confirm-pwd" className="text-sm font-medium">Confirmar contraseña</label>
+                  <Input
+                    id="confirm-pwd"
+                    type="password"
+                    value={pwdForm.confirm}
+                    onChange={(e) => setPwdForm((f) => ({ ...f, confirm: e.target.value }))}
+                  />
                 </div>
                 {pwdError && <p className="text-sm text-destructive">{pwdError}</p>}
               </div>
             )}
             <DialogFooter>
               {!pwdSuccess && (
-                <Button onClick={handleChangePassword} disabled={pwdLoading || !pwdForm.current || !pwdForm.next}>
+                <Button onClick={handleChangePassword} disabled={pwdLoading || !pwdForm.current || !pwdForm.next || !pwdForm.confirm}>
                   {pwdLoading ? "Guardando..." : "Guardar"}
                 </Button>
               )}
