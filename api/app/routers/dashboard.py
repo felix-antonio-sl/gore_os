@@ -748,9 +748,11 @@ async def get_dashboard_ejecutivo(
                   AND bp.deleted_at IS NULL
             ), 0) AS ejecucion_pct
         FROM core.organization o
+        JOIN ref.category ot ON ot.id = o.org_type_id
         LEFT JOIN core.operational_commitment oc ON oc.division_id = o.id AND oc.deleted_at IS NULL
         LEFT JOIN ref.category sc ON sc.id = oc.state_id
         WHERE o.deleted_at IS NULL
+          AND ot.code IN ('DIVISION', 'GORE')
         GROUP BY o.id, o.name
         HAVING COUNT(oc.id) > 0
         ORDER BY o.name
@@ -766,6 +768,7 @@ async def get_dashboard_ejecutivo(
         FROM core.dgi_indicator i
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
+        WHERE i.deleted_at IS NULL
         ORDER BY dim.code
     """)
     ind_rows = (await db.execute(ind_sql)).mappings().all()

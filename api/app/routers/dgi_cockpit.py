@@ -70,6 +70,7 @@ async def _cockpit_jefe_dgi(user: dict, db: AsyncSession) -> CockpitJefeDGI:
         FROM core.dgi_indicator i
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
+        WHERE i.deleted_at IS NULL
         ORDER BY dim.code
     """)
     ind_rows = (await db.execute(ind_sql)).mappings().all()
@@ -333,6 +334,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
         JOIN ref.category dim ON dim.id = i.dimension_id
         JOIN ref.category sig ON sig.id = i.signal_id
         WHERE sig.code IN ('ROJO', 'AMARILLO')
+          AND i.deleted_at IS NULL
         ORDER BY
             CASE sig.code WHEN 'ROJO' THEN 1 WHEN 'AMARILLO' THEN 2 ELSE 3 END,
             i.name
@@ -372,6 +374,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
         FROM core.dgi_indicator i
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
+        WHERE i.deleted_at IS NULL
         ORDER BY dim.code, i.name
     """)
     trends_rows = (await db.execute(trends_sql)).mappings().all()
@@ -495,6 +498,7 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
         LEFT JOIN core.organization org ON org.id = ini.division_id
         LEFT JOIN core."user" u ON u.id = ini.responsible_id
         LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE ini.deleted_at IS NULL
         ORDER BY
             CASE st.code
                 WHEN 'EN_CURSO' THEN 1
@@ -538,6 +542,7 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
             b.description
         FROM core.dgi_bpmn_model b
         JOIN ref.category st ON st.id = b.status_id
+        WHERE b.deleted_at IS NULL
         ORDER BY b.process_name
     """)
     bpmn_rows = (await db.execute(bpmn_sql)).mappings().all()
@@ -563,7 +568,7 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
         SELECT cs.session_date
         FROM core.dgi_committee_session cs
         JOIN ref.category st ON st.id = cs.status_id
-        WHERE DATE(cs.session_date) = CURRENT_DATE AND st.code != 'CANCELADA'
+        WHERE DATE(cs.session_date) = CURRENT_DATE AND st.code != 'CANCELADA' AND cs.deleted_at IS NULL
         ORDER BY cs.session_date
     """)
     session_rows = (await db.execute(sessions_sql)).mappings().all()
@@ -575,7 +580,7 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
     bpmn_review_count = (await db.execute(text("""
         SELECT COUNT(*) FROM core.dgi_bpmn_model b
         JOIN ref.category st ON st.id = b.status_id
-        WHERE st.code = 'REVISION'
+        WHERE st.code = 'REVISION' AND b.deleted_at IS NULL
     """))).scalar() or 0
     if bpmn_review_count > 0:
         today_agenda.append(AgendaItem(
@@ -594,6 +599,7 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
             SUM(CASE WHEN st.code = 'COMPLETADO'               THEN 1 ELSE 0 END) AS completed
         FROM core.dgi_initiative ini
         JOIN ref.category st ON st.id = ini.status_id
+        WHERE ini.deleted_at IS NULL
     """)
     stats_row = (await db.execute(stats_sql)).mappings().first()
     portfolio_stats = PortfolioStats(
@@ -632,7 +638,7 @@ async def _cockpit_td(user: dict, db: AsyncSession) -> CockpitTD:
         FROM core.dgi_indicator i
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
-        WHERE dim.code = 'TDE'
+        WHERE dim.code = 'TDE' AND i.deleted_at IS NULL
         ORDER BY i.name
     """)
     tde_rows = (await db.execute(tde_sql)).mappings().all()

@@ -1240,9 +1240,9 @@ async def _check_morosos_sisrec(ipr_id: UUID, db: AsyncSession) -> dict | None:
               AND r.deleted_at IS NULL
               AND st.scheme = 'rendition_state'
               AND (
-                  (st.code = 'EN_REVISION_RTF' AND r.updated_at < NOW() - INTERVAL '7 days')
+                  (st.code = 'EN_REVISION_RTF' AND COALESCE(r.phase_entered_at, r.updated_at) < NOW() - INTERVAL '7 days')
                   OR
-                  (st.code = 'EN_REVISION_UCR' AND r.updated_at < NOW() - INTERVAL '2 days')
+                  (st.code = 'EN_REVISION_UCR' AND COALESCE(r.phase_entered_at, r.updated_at) < NOW() - INTERVAL '2 days')
               )
         """),
         {"executor_id": executor_id},
@@ -1893,7 +1893,7 @@ async def get_ipr(
             (
                 SELECT COUNT(*)
                 FROM core.alert a
-                WHERE a.subject_type = 'ipr'
+                WHERE a.subject_type = 'core.ipr'
                   AND a.subject_id = i.id
                   AND a.deleted_at IS NULL
             ) AS alert_count,

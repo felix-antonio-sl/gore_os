@@ -52,7 +52,7 @@ async def _get_initiative_row(initiative_id: str, db: AsyncSession) -> dict | No
         LEFT JOIN core.organization org ON org.id = ini.division_id
         LEFT JOIN core."user" u ON u.id = ini.responsible_id
         LEFT JOIN core.person p ON p.id = u.person_id
-        WHERE ini.id = :id
+        WHERE ini.id = :id AND ini.deleted_at IS NULL
     """)
     row = (await db.execute(sql, {"id": initiative_id})).mappings().first()
     return dict(row) if row else None
@@ -80,7 +80,7 @@ async def list_initiatives(
     Pagination: pass page + page_size for paginated response.
     Omit both for backward-compatible plain array.
     """
-    conditions = ["1=1"]
+    conditions = ["ini.deleted_at IS NULL"]
     params: dict = {}
 
     if status_filter:
@@ -209,7 +209,7 @@ async def create_initiative(
             dmaic_phase_id = str(ph_row["id"])
 
     # Auto-generate code
-    count_row = (await db.execute(text("SELECT COUNT(*) FROM core.dgi_initiative"))).scalar() or 0
+    count_row = (await db.execute(text("SELECT COUNT(*) FROM core.dgi_initiative WHERE deleted_at IS NULL"))).scalar() or 0
     code = f"INI-{count_row + 1:04d}"
 
     result = await db.execute(
@@ -393,6 +393,7 @@ async def move_initiative(
                 JOIN ref.category st ON st.id = ini.status_id
                 WHERE st.code = :target_status
                   AND ini.id != :initiative_id
+                  AND ini.deleted_at IS NULL
             """),
             {"target_status": target_status, "initiative_id": initiative_id_str},
         )

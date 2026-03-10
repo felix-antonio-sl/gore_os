@@ -110,17 +110,13 @@ async def list_problemas(
         conditions.append("p.description ILIKE :search")
         params["search"] = f"%{search}%"
 
-    # JEFE_DIVISION: filter problems of IPRs whose responsible division matches user's division
+    # JEFE_DIVISION: filter problems of IPRs whose sponsor division matches user's division
     if role == "JEFE_DIVISION" and user.get("division_id"):
         conditions.append("""
             p.ipr_id IN (
                 SELECT i.id FROM core.ipr i
-                JOIN core.ipr_party ip2 ON ip2.ipr_id = i.id
-                JOIN core."user" u2 ON ip2.party_id = u2.id
-                    AND ip2.party_role_id = (
-                        SELECT id FROM ref.category WHERE scheme = 'ipr_party_role' AND code = 'EJECUTOR'
-                    )
-                WHERE u2.division_id = :jefe_division_id
+                WHERE i.sponsor_division_id = :jefe_division_id
+                  AND i.deleted_at IS NULL
             )
         """)
         params["jefe_division_id"] = str(user["division_id"])

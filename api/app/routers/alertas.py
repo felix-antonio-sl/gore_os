@@ -102,16 +102,13 @@ async def list_alertas(
         params["alert_type"] = alert_type
 
     # Role-based IPR scope filters
+    # Canonical morphisms: ENCARGADO → ipr.assignee_id, JEFE_DIVISION → ipr.sponsor_division_id
     if role == "ENCARGADO":
-        # Alerts related to IPRs where the user is the responsible/ejecutor
         conditions.append("""
             (
                 (a.subject_type = 'core.ipr' AND a.subject_id IN (
-                    SELECT ip.ipr_id FROM core.ipr_party ip
-                    WHERE ip.party_id = :user_id
-                      AND ip.party_role_id = (
-                          SELECT id FROM ref.category WHERE scheme = 'ipr_party_role' AND code = 'EJECUTOR'
-                      )
+                    SELECT id FROM core.ipr
+                    WHERE assignee_id = :user_id AND deleted_at IS NULL
                 ))
                 OR
                 (a.subject_type = 'core.operational_commitment' AND a.subject_id IN (
@@ -128,16 +125,11 @@ async def list_alertas(
         params["user_id"] = str(user["id"])
 
     elif role == "JEFE_DIVISION" and user.get("division_id"):
-        # Alerts related to IPRs managed by users in the jefe's division
         conditions.append("""
             (
                 (a.subject_type = 'core.ipr' AND a.subject_id IN (
-                    SELECT ip.ipr_id FROM core.ipr_party ip
-                    JOIN core."user" u2 ON ip.party_id = u2.id
-                    WHERE u2.division_id = :div_id
-                      AND ip.party_role_id = (
-                          SELECT id FROM ref.category WHERE scheme = 'ipr_party_role' AND code = 'EJECUTOR'
-                      )
+                    SELECT id FROM core.ipr
+                    WHERE sponsor_division_id = :div_id AND deleted_at IS NULL
                 ))
                 OR
                 (a.subject_type = 'core.operational_commitment' AND a.subject_id IN (
@@ -148,12 +140,8 @@ async def list_alertas(
                 (a.subject_type = 'core.ipr_problem' AND a.subject_id IN (
                     SELECT pr.id FROM core.ipr_problem pr
                     JOIN core.ipr ipr2 ON pr.ipr_id = ipr2.id
-                    JOIN core.ipr_party ip2 ON ip2.ipr_id = ipr2.id
-                    JOIN core."user" u3 ON ip2.party_id = u3.id
-                    WHERE u3.division_id = :div_id AND pr.deleted_at IS NULL
-                      AND ip2.party_role_id = (
-                          SELECT id FROM ref.category WHERE scheme = 'ipr_party_role' AND code = 'EJECUTOR'
-                      )
+                    WHERE ipr2.sponsor_division_id = :div_id
+                      AND ipr2.deleted_at IS NULL AND pr.deleted_at IS NULL
                 ))
             )
         """)

@@ -29,8 +29,15 @@ CORE_COMMITTEE_NAME = "Consejo Regional de Ñuble"
 CORE_MEMBER_COUNT = 16
 QUORUM_SIMPLE = 9       # >50%
 QUORUM_CALIFICADA = 11  # ≥2/3
-UTM_VALUE = 67_294       # UTM feb 2026
 CORE_THRESHOLD_UTM = 7_000
+
+
+async def _get_utm_value(db: AsyncSession) -> int:
+    result = await db.execute(
+        text("SELECT value_utm FROM core.financial_threshold WHERE code = 'UTM_VALUE' AND is_active = TRUE")
+    )
+    row = result.mappings().first()
+    return int(row["value_utm"]) if row else 67_294
 
 _MANAGER_ROLES = {
     "ADMIN_SISTEMA", "ADMIN_REGIONAL", "SECRETARIO_EJECUTIVO", "GOBERNADOR",

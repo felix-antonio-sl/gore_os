@@ -172,7 +172,7 @@ LEFT JOIN LATERAL (
         ) AS agreement_latest_state,
         COUNT(ai2.id) FILTER (
             WHERE ai2.due_date < CURRENT_DATE
-              AND pst.code != 'PAGADA'
+              AND pst.code != 'PAGADO'
         ) AS overdue_installments
     FROM core.agreement a2
     LEFT JOIN core.agreement_installment ai2 ON ai2.agreement_id = a2.id

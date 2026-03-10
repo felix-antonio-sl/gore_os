@@ -84,7 +84,7 @@ async def _get_reunion_or_404(reunion_id: UUID, db: AsyncSession) -> dict:
             LEFT JOIN core."user" u ON u.id = cm.organizer_id
             LEFT JOIN core.person p ON p.id = u.person_id
             LEFT JOIN core.minute m ON m.session_id = s.id
-            WHERE cm.id = :id
+            WHERE cm.id = :id AND cm.deleted_at IS NULL
         """),
         {"id": str(reunion_id)},
     )
@@ -115,7 +115,7 @@ async def list_reuniones(
     status_filter: str | None = Query(None, alias="status"),
 ):
     params: dict = {}
-    conditions = ["1=1"]
+    conditions = ["cm.deleted_at IS NULL"]
 
     if status_filter:
         if status_filter == "FINALIZADA":
