@@ -87,6 +87,7 @@ export default function UsuariosPage() {
   const [editDivisionId, setEditDivisionId] = useState("");
   const [editPhone, setEditPhone] = useState("");
   const [editSaving, setEditSaving] = useState(false);
+  const [editErrors, setEditErrors] = useState<Record<string, string>>({});
 
   // Reset password state
   const [showResetPw, setShowResetPw] = useState(false);
@@ -189,10 +190,29 @@ export default function UsuariosPage() {
     setEditDivisionId(detail.division_id ?? "");
     setEditPhone(detail.phone ?? "");
     setEditing(true);
+    setEditErrors({});
+  };
+
+  const validateEditForm = (): Record<string, string> => {
+    const errors: Record<string, string> = {};
+    if (!editNames.trim()) errors.names = "Nombres es requerido";
+    if (!editPaternal.trim()) errors.paternal = "Apellido paterno es requerido";
+    if (!editEmail.trim()) {
+      errors.email = "Email es requerido";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editEmail)) {
+      errors.email = "Formato de email inválido";
+    }
+    return errors;
   };
 
   const handleSaveEdit = async () => {
     if (!detail) return;
+    const errors = validateEditForm();
+    if (Object.keys(errors).length > 0) {
+      setEditErrors(errors);
+      return;
+    }
+    setEditErrors({});
     setEditSaving(true);
     try {
       const body: Record<string, string | null> = {};
@@ -469,11 +489,13 @@ export default function UsuariosPage() {
                 <div className="space-y-3">
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium">Nombres</label>
-                    <Input value={editNames} onChange={(e) => setEditNames(e.target.value)} />
+                    <Input value={editNames} onChange={(e) => setEditNames(e.target.value)} className={editErrors.names ? "border-red-400" : ""} />
+                    {editErrors.names && <p className="text-xs text-red-600">{editErrors.names}</p>}
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium">Apellido paterno</label>
-                    <Input value={editPaternal} onChange={(e) => setEditPaternal(e.target.value)} />
+                    <Input value={editPaternal} onChange={(e) => setEditPaternal(e.target.value)} className={editErrors.paternal ? "border-red-400" : ""} />
+                    {editErrors.paternal && <p className="text-xs text-red-600">{editErrors.paternal}</p>}
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium">Apellido materno</label>
@@ -481,7 +503,8 @@ export default function UsuariosPage() {
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium">Email</label>
-                    <Input value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
+                    <Input value={editEmail} onChange={(e) => setEditEmail(e.target.value)} className={editErrors.email ? "border-red-400" : ""} />
+                    {editErrors.email && <p className="text-xs text-red-600">{editErrors.email}</p>}
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium">Rol</label>
