@@ -1,7 +1,7 @@
 # GORE_OS — Auditoria UX/UI v2.0 — Cierre Formal
 
 **Fecha**: 2026-03-10
-**Version**: 2.0 (Closure Record, updated Wave 5B)
+**Version**: 2.0 (Closure Record, updated Wave 5C+5D)
 **Referencia**: `docs/GORE_OS_UX_Audit_v1.0.md` (2026-03-03, 55 hallazgos)
 
 ---
@@ -14,9 +14,9 @@
 |-----------|:----------:|:--------:|:--------:|:--------:|
 | CRITICO | 4 | 3 | 1 | 75% |
 | ALTO | 15 | 15 | 0 | 100% |
-| MEDIO | 30 | 26 | 4 | 87% |
+| MEDIO | 30 | 30 | 0 | 100% |
 | BAJO | 6 | 6 | 0 | 100% |
-| **TOTAL** | **55** | **50** | **5** | **91%** |
+| **TOTAL** | **55** | **54** | **1** | **98%** |
 
 ### 1.2 Scorecard Actualizado
 
@@ -45,7 +45,8 @@
 | Wave 4C | 2026-03-10 | `9519b59..91fdc7d` | ALTO funcional (UX-011, 030, 047) | 3 |
 | Wave 5A | 2026-03-10 | `89143cb..4f551ca` | Quick Wins MEDIO/BAJO (7 items) | 7 |
 | Wave 5B | 2026-03-10 | `32e8cca..bb5541b` | Funcionalidad media (6 items) | 6 |
-| **Total** | | | | **50** |
+| Wave 5C+5D | 2026-03-10 | `4ad8710..bb610e7` | Densidad visual + SLA + Drag-and-drop (3 items) | 3 |
+| **Total** | | | | **54** |
 
 ---
 
@@ -126,6 +127,14 @@
 | UX-052 | Rendiciones vencidas no surfeceadas en cockpit | W5B | Badge "N pendientes" rojo + boton "Ver rendiciones" en seccion |
 | UX-055 | Tabs IPR no auto-refrescan tras cambios | W5B | `key={refreshKey}` en 13 tab components, incrementa al cerrar drawers |
 
+### 2.9 MEDIOS Cerrados Wave 5C+5D (3/30)
+
+| ID | Descripcion | Wave | Fix |
+|----|-------------|------|-----|
+| UX-043 | DMAIC kanban sin drag-and-drop | W5D | @dnd-kit/core drag-and-drop entre columnas + guia columna vacia en cockpit procesos |
+| UX-046 | Densidad visual cockpit TD velocidad | W5C | Velocidad split en 3 tarjetas escaneables con color por urgencia (rojo ≤3m, amber ≤6m) |
+| UX-051 | Rendiciones sin agrupacion por estado/SLA | W5C | Filtro por estado (7 estados + Vencidas SLA) + barra progreso SLA con colores |
+
 ### 2.8 BAJOS Cerrados (6/6)
 
 | ID | Descripcion | Wave | Fix |
@@ -138,7 +147,7 @@
 
 ---
 
-## 3. Hallazgos Abiertos (11/55)
+## 3. Hallazgos Abiertos (1/55)
 
 ### 3.1 CRITICO Abierto (1)
 
@@ -150,15 +159,11 @@
 
 Todos los ALTOS cerrados en Waves 1-4C.
 
-### 3.3 MEDIOS Abiertos (4)
+### 3.3 MEDIOS Abiertos (0)
 
-| ID | Descripcion | Esfuerzo | Archivo |
-|----|-------------|----------|---------|
-| UX-043 | DMAIC kanban sin guia de creacion ni drag-and-drop | 2-3d | `tablero/page.tsx` |
-| UX-046 | Densidad visual cockpit TD | 30 min | `cockpit-td.tsx` |
-| UX-051 | Rendiciones sin agrupacion por estado o SLA breach | 2-3h | `datos/page.tsx` |
+Todos los 30 MEDIOS cerrados. Ultimos 3 cerrados en Wave 5C+5D: UX-043 (W5D), UX-046 (W5C), UX-051 (W5C).
 
-Cerrados en waves anteriores (para trazabilidad): UX-021 (W5A), UX-022 (W4B), UX-027 (W5B), UX-032 (W5A), UX-033 (W5B), UX-038 (W5A), UX-039 (W5B), UX-042 (W5A), UX-044 (W5B), UX-045 (W5A), UX-052 (W5B), UX-054 (W5A), UX-055 (W5B).
+Cerrados en waves anteriores (para trazabilidad): UX-021 (W5A), UX-022 (W4B), UX-027 (W5B), UX-032 (W5A), UX-033 (W5B), UX-038 (W5A), UX-039 (W5B), UX-042 (W5A), UX-043 (W5D), UX-044 (W5B), UX-045 (W5A), UX-046 (W5C), UX-051 (W5C), UX-052 (W5B), UX-054 (W5A), UX-055 (W5B).
 
 ### 3.4 BAJOS Abiertos (0)
 
@@ -177,28 +182,28 @@ Todos los BAJOS cerrados (UX-016, 018, 020, 037, 019).
 
 8/8 cerrados. Commits: `ee13d9a..6cc1c5b`. Ver secciones 2.4 y 2.5.
 
-### 4.2 Medio Plazo — CERRADOS (Waves 4A-5B)
+### 4.2 Medio Plazo — CERRADOS (Waves 4A-5D)
 
-Todos los items de medio plazo cerrados excepto UX-043, UX-051. Closures:
-UX-021 (W5A), UX-022 (W4B), UX-027 (W5B), UX-030 (W4C), UX-032 (W5A), UX-033 (W5B), UX-038 (W5A), UX-039 (W5B), UX-044 (W5B), UX-052 (W5B), UX-054 (W5A), UX-055 (W5B).
+Todos los items de medio plazo cerrados. Closures:
+UX-021 (W5A), UX-022 (W4B), UX-027 (W5B), UX-030 (W4C), UX-032 (W5A), UX-033 (W5B), UX-038 (W5A), UX-039 (W5B), UX-043 (W5D), UX-044 (W5B), UX-051 (W5C), UX-052 (W5B), UX-054 (W5A), UX-055 (W5B).
 
-### 4.3 Proyectos (3-4 semanas, cierra 6 hallazgos)
+### 4.3 Proyectos — CERRADOS (excepto UX-004 externo)
 
 | ID | Esfuerzo | Descripcion |
 |----|----------|-------------|
-| UX-004 | Externo | Recuperacion contrasena (ClaveUnica/email SMTP) |
+| UX-004 | Externo | Recuperacion contrasena (ClaveUnica/email SMTP) — **unico hallazgo abierto** |
 | ~~UX-011~~ | ~~1-2d~~ | **CERRADO W4C** — Decision items accionables |
 | ~~UX-042~~ | ~~1h~~ | **CERRADO W5A** — Navega a `/datos?indicator_id=` |
-| UX-043 | 2-3d | Guia de creacion + drag-and-drop en kanban DMAIC (requiere @dnd-kit) |
-| UX-051 | 2-3h | Agrupacion rendiciones por estado/SLA con badge vencimiento |
+| ~~UX-043~~ | ~~2-3d~~ | **CERRADO W5D** — @dnd-kit drag-and-drop kanban |
+| ~~UX-051~~ | ~~2-3h~~ | **CERRADO W5C** — Filtro por estado + SLA progress bar |
 
-### 4.4 No Accionable / Bajo Impacto (3 hallazgos)
+### 4.4 No Accionable / Bajo Impacto — CERRADOS
 
 | ID | Esfuerzo | Razon |
 |----|----------|-------|
 | ~~UX-019~~ | ~~1h~~ | **CERRADO** — reclasificado cosmético |
 | ~~UX-037~~ | ~~30 min~~ | **CERRADO W5A** — EmptyState contextual |
-| UX-046 | 30 min | Densidad visual cockpit TD — preferencia subjetiva |
+| ~~UX-046~~ | ~~30 min~~ | **CERRADO W5C** — Velocidad split en 3 tarjetas |
 
 ---
 
@@ -207,7 +212,7 @@ UX-021 (W5A), UX-022 (W4B), UX-027 (W5B), UX-030 (W4C), UX-032 (W5A), UX-033 (W5
 ### 5.1 Accesibilidad (WCAG 2.1 AA)
 
 **v1.0**: 12 hallazgos, madurez Bajo.
-**v2.0**: 10 cerrados (UX-001, 006, 007, 016, 018, 024, 025, 029, 040, 041), 2 abiertos (UX-004, 046).
+**v2.0**: 11 cerrados (UX-001, 006, 007, 016, 018, 024, 025, 029, 040, 041, 046), 1 abierto (UX-004).
 
 Principales logros:
 - Eliminada animacion peligrosa WCAG 2.3.1 (UX-001)
@@ -215,8 +220,9 @@ Principales logros:
 - Navegacion anuncia pagina actual (UX-018)
 - Target tactil corregido (UX-029)
 - **W4A**: Badge gris contraste WCAG AA (UX-041), popover alertas keyboard (UX-025), email regex (UX-016), sparklines mobile (UX-040)
+- **W5C**: Velocidad cockpit TD en 3 tarjetas escaneables (UX-046)
 
-Pendiente: UX-004 (externo), UX-046 (cosmetico).
+Pendiente: UX-004 (externo, requiere ClaveUnica/SMTP).
 
 ### 5.2 Responsividad Mobile
 
@@ -251,7 +257,7 @@ Dimension completamente cerrada.
 ### 5.4 Funcionalidad Completa
 
 **v1.0**: 15 hallazgos, madurez Medio.
-**v2.0**: 14 cerrados (UX-008, 009, 011, 012, 014, 032, 033, 034, 036, 038, 045, 047, 049, 052), 1 abierto (UX-051).
+**v2.0**: 15 cerrados (UX-008, 009, 011, 012, 014, 032, 033, 034, 036, 038, 045, 047, 049, 051, 052), 0 abiertos.
 
 Principales logros:
 - Formulario creacion programas presupuestarios (UX-008)
@@ -262,6 +268,9 @@ Principales logros:
 - **W4C**: Cockpit decisiones con datos reales (UX-011), clasificador presupuestario editable (UX-047)
 - **W5A**: Sort divisiones (UX-032), gauges eliminados (UX-038), KB stats drill-down (UX-045)
 - **W5B**: SemaforoCard drill-down 5 dimensiones (UX-033), rendiciones vencidas en cockpit (UX-052)
+- **W5C**: Filtro por estado + SLA progress bar en rendiciones (UX-051)
+
+Dimension completamente cerrada.
 
 ---
 
@@ -322,18 +331,16 @@ Cambios principales:
 
 ## 8. Conclusion
 
-La remediacion UX ejecutada en 10 waves (2026-03-04 a 2026-03-10) cerro el **91% de los hallazgos** (50/55):
+La remediacion UX ejecutada en 12 waves (2026-03-04 a 2026-03-10) cerro el **98% de los hallazgos** (54/55):
 
 - **75% de CRITICOS** cerrados (3/4) — el restante requiere integracion externa
 - **100% de ALTOS** cerrados (15/15) — Wave 4C cerro los 3 restantes
-- **87% de MEDIOS** cerrados (26/30) — Wave 5B cerro 6 funcionalidad media
+- **100% de MEDIOS** cerrados (30/30) — Wave 5C+5D cerro los 3 ultimos
 - **100% de BAJOS** cerrados (6/6) — Wave 5A cerro UX-037 y UX-019
-- Las dimensiones **Responsividad Mobile** y **Manejo de Errores** quedan **100% cerradas**
+- Las dimensiones **Responsividad Mobile**, **Manejo de Errores** y **Funcionalidad Completa** quedan **100% cerradas**
 - Las dimensiones con mayor mejora: **Accesibilidad** (+2), **Responsividad** (+3), **Funcionalidad** (+3), **Formularios** (+2)
 
-Los 5 hallazgos abiertos son 4 MEDIOS + 1 CRITICO externo. **0 ALTOS, 0 BAJOS abiertos**. El unico CRITICO abierto (UX-004: recuperacion contrasena) depende de integracion externa.
-
-Pendientes: UX-043 (drag-and-drop kanban, requiere @dnd-kit), UX-046 (densidad visual, cosmetico), UX-051 (rendiciones agrupacion).
+El **unico hallazgo abierto** es UX-004 (CRITICO: recuperacion de contrasena), que depende de integracion externa (ClaveUnica o SMTP). **0 ALTOS, 0 MEDIOS, 0 BAJOS abiertos.**
 
 ---
 
