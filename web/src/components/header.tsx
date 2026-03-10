@@ -202,7 +202,11 @@ export function Header({ onMenuToggle }: HeaderProps = {}) {
                 recentAlerts.map((alert) => (
                   <div
                     key={alert.id}
-                    className="flex items-start gap-2 px-3 py-2 border-b last:border-0 hover:bg-muted/50"
+                    role="button"
+                    tabIndex={0}
+                    className="flex items-start gap-2 px-3 py-2 border-b last:border-0 hover:bg-muted/50 cursor-pointer focus:outline-none focus:bg-muted/50"
+                    onClick={() => { setBellOpen(false); window.location.href = "/alertas"; }}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setBellOpen(false); window.location.href = "/alertas"; } }}
                   >
                     <SeverityIcon severity={alert.severity} />
                     <div className="flex-1 min-w-0">
