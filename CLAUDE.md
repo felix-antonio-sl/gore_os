@@ -135,16 +135,28 @@ Key patterns:
 
 All passwords: `admin123`
 
-| Email | Role | Population |
-|-------|------|------------|
-| `regional@goreos.cl` | ADMIN_REGIONAL | operativa |
-| `jefe.daf@goreos.cl` | JEFE_DIVISION | operativa |
-| `encargado.daf@goreos.cl` | ENCARGADO | operativa |
-| `jefe.dgi@goreos.cl` | JEFE_DGI | dgi |
-| `control.gestion@goreos.cl` | ESP_CONTROL_GESTION | dgi |
-| `procesos@goreos.cl` | ESP_PROCESOS | dgi |
-| `td@goreos.cl` | ESP_TD | dgi |
-| `admin@goreos.cl` | ADMIN_SISTEMA | operativa |
+| Email | Role | Population | Division |
+|-------|------|------------|----------|
+| `admin@goreos.cl` | ADMIN_SISTEMA | operativa | — |
+| `regional@goreos.cl` | ADMIN_REGIONAL | operativa | — |
+| `gobernador@goreos.cl` | GOBERNADOR | operativa | — |
+| `secretario.core@goreos.cl` | SECRETARIO_EJECUTIVO | operativa | — |
+| `consejero1@goreos.cl` | CONSEJERO_REGIONAL | operativa | — |
+| `consejero2@goreos.cl` | CONSEJERO_REGIONAL | operativa | — |
+| `jefe.daf@goreos.cl` | JEFE_DIVISION | operativa | DAF |
+| `jefe.dideso@goreos.cl` | JEFE_DIVISION | operativa | DIDESO |
+| `jefe.difoi@goreos.cl` | JEFE_DIVISION | operativa | DIFOI |
+| `jefe.diiap@goreos.cl` | JEFE_DIVISION | operativa | DIIAP |
+| `jefe.dipir@goreos.cl` | JEFE_DIVISION | operativa | DIPIR |
+| `jefe.diplade@goreos.cl` | JEFE_DIVISION | operativa | DIPLADE |
+| `jefe.dit@goreos.cl` | JEFE_DIVISION | operativa | DIT |
+| `jefe.finanzas@goreos.cl` | JEFE_DEPARTAMENTO | operativa | DAF |
+| `jefe.ucr@goreos.cl` | JEFE_UNIDAD | operativa | DAF |
+| `encargado.daf@goreos.cl` | ENCARGADO | operativa | DAF |
+| `jefe.dgi@goreos.cl` | JEFE_DGI | dgi | DIDECO |
+| `control.gestion@goreos.cl` | ESP_CONTROL_GESTION | dgi | DIDECO |
+| `procesos@goreos.cl` | ESP_PROCESOS | dgi | DIDECO |
+| `td@goreos.cl` | ESP_TD | dgi | DIDECO |
 
 ## Testing
 
@@ -263,20 +275,18 @@ Modules: `enrich_persons` (Phase 1), `load_documents` (Phase 2), `load_admin_act
 
 **Migrations**: All in `model/model_goreos/sql/goreos_migration_*.sql` with matching `goreos_rollback_*.sql`. Tracked in `core.schema_migration`. Runner: `scripts/run_migrations.sh`.
 
-**Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_ARCHITECTURE_v1.0.md`, `docs/adr/` (6 ADRs)
+**Docs**: `docs/ONBOARDING.md`, `docs/GORE_OS_Testing_Ciclo3.md`, `docs/ETL_ARCHITECTURE_v1.0.md`, `docs/adr/` (7 ADRs)
 
 ## Known Gaps & Coverage
 
-**Coverage**: ~169 API endpoints, 393 tests (388 pass + 5 skip), 32 modules, 22 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Budget classifier: 6/6 levels complete. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
+**Coverage**: ~169 API endpoints, 393 tests (388 pass + 5 skip), 32 modules, 22 gate functions in `ipr.py`. HΩ findings: 15/15 implemented (100%). Parametric tables: 6/6 complete. Budget classifier: 6/6 levels complete. Categorical Univocity: 31+7=38 CHECK constraints + 4 scheme-validation triggers. Full audit: `docs/GORE_OS_Audit_v3.0.md`.
 
 **Open gaps**:
-- 3/9 track thresholds pending, 2/8 glosas pending
 - 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR)
-- 5 system roles with 0 users, IPR `sponsor_division_id`/`assignee_id` = 0% populated
 
 ## Critical Rules
 
-1. **Categorical Univocity**: Each FK column → exactly 1 `ref.category` scheme. Never mix dimensions.
+1. **Categorical Univocity**: Each FK column → exactly 1 `ref.category` scheme. Never mix dimensions. Enforced by 38 CHECK constraints (`fn_validate_category_scheme`) + 4 trigger functions. See `goreos_migration_categorical_univocity.sql`.
 2. **Person columns**: Use `names` and `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 3. **API consistency**: Operational endpoints use POST for state changes (e.g., `POST /compromisos/{id}/completar`). DGI list endpoints return plain arrays. Paginated endpoints return `{items, total, page, page_size, total_pages}`.
 4. **Alert subject_type**: DB stores fully-qualified names: `'core.ipr'`, `'core.operational_commitment'`, `'core.ipr_problem'`, `'core.organization'`. Always use the `core.` prefix in SQL — never the short form.

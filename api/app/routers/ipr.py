@@ -248,6 +248,7 @@ async def _check_track_amount_gates(
             gates.append({
                 "name": "track_cgr_res30",
                 "met": True,  # informational — never blocks
+                "type": "informational",
                 "detail": (
                     f"CGR Res.30 {mechanism_code}: monto ${monto:,.0f} "
                     f"{'supera' if exceeds else 'bajo'} "
@@ -670,6 +671,7 @@ async def _check_evaluation_type_match(ipr_id: UUID, db: AsyncSession) -> dict |
     return {
         "name": "eval_type_match",
         "met": True,  # Informational — never blocks
+        "type": "informational",
         "detail": (
             f"Advertencia: dictamen(es) {', '.join(mismatched)} no corresponde(n) "
             f"al track {ipr_row['mechanism_code']} "
@@ -705,6 +707,7 @@ async def _check_c33_conservation(ipr_id: UUID, db: AsyncSession) -> dict | None
         return {
             "name": "c33_conservation",
             "met": True,  # Informational
+            "type": "informational",
             "detail": "C33: Ingresar costo_conservacion y costo_reposicion en metadata para evaluar ratio de conservación",
         }
 
@@ -715,6 +718,7 @@ async def _check_c33_conservation(ipr_id: UUID, db: AsyncSession) -> dict | None
         return {
             "name": "c33_conservation",
             "met": True,
+            "type": "informational",
             "detail": "C33: Valores de costo inválidos en metadata",
         }
 
@@ -733,6 +737,7 @@ async def _check_c33_conservation(ipr_id: UUID, db: AsyncSession) -> dict | None
     return {
         "name": "c33_conservation",
         "met": True,  # Informational — never blocks
+        "type": "informational",
         "detail": (
             f"C33 conservación: ratio {ratio:.1f}% "
             f"(${cons:,.0f} / ${repo:,.0f}) "
@@ -863,6 +868,7 @@ async def _check_sni_proporcionalidad(ipr_id: UUID, db: AsyncSession) -> dict | 
     return {
         "name": "sni_proporcionalidad",
         "met": True,  # Informational — never blocks
+        "type": "informational",
         "detail": (
             f"SNI {matched_level['label']}: monto {monto_utm:,.0f} UTM "
             f"→ evaluador recomendado: {matched_level['evaluator_code']} ({ext_label})"

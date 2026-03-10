@@ -412,7 +412,7 @@ async def create_division(
     org_type_id = data.organization_type_id
     if not org_type_id:
         type_result = await db.execute(
-            text("SELECT id FROM ref.category WHERE scheme = 'organization_type' AND code = 'DIVISION'")
+            text("SELECT id FROM ref.category WHERE scheme = 'org_type' AND code = 'DIVISION'")
         )
         type_row = type_result.scalar()
         if not type_row:
