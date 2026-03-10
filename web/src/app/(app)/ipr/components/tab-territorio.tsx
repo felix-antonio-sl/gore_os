@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Plus, MapPin, Trash2 } from "lucide-react";
 import { EmptyState } from "@/components/empty-state";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import type { IprTerritoryItem, CategoryRef, TerritoryOption } from "@/types";
 
 interface TabTerritorioProps {
@@ -31,6 +32,7 @@ export function TabTerritorio({ iprId, canManage }: TabTerritorioProps) {
   const [terrImpactTypes, setTerrImpactTypes] = useState<CategoryRef[]>([]);
   const [terrSubmitting, setTerrSubmitting] = useState(false);
   const [terrError, setTerrError] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const loadTerritorios = () => {
     setLoading(true);
@@ -81,12 +83,15 @@ export function TabTerritorio({ iprId, canManage }: TabTerritorioProps) {
     }
   };
 
-  const handleDeleteTerritory = async (recordId: string) => {
+  const handleDeleteTerritory = async () => {
+    if (!deleteTarget) return;
     try {
-      await api.delete(`/api/ipr/${iprId}/territorio/${recordId}`);
+      await api.delete(`/api/ipr/${iprId}/territorio/${deleteTarget}`);
       loadTerritorios();
     } catch {
       // silent
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
@@ -131,7 +136,7 @@ export function TabTerritorio({ iprId, canManage }: TabTerritorioProps) {
                     size="sm"
                     variant="ghost"
                     className="size-7 p-0 text-muted-foreground hover:text-red-600"
-                    onClick={() => handleDeleteTerritory(t.id)}
+                    onClick={() => setDeleteTarget(t.id)}
                   >
                     <Trash2 className="size-3.5" />
                   </Button>
@@ -194,6 +199,14 @@ export function TabTerritorio({ iprId, canManage }: TabTerritorioProps) {
           </div>
         </form>
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}
+        title="Eliminar territorio"
+        description="¿Está seguro de que desea eliminar este registro territorial? Esta acción no se puede deshacer."
+        onConfirm={handleDeleteTerritory}
+      />
     </div>
   );
 }

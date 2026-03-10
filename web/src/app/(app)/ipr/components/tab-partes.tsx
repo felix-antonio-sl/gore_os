@@ -16,6 +16,7 @@ import { Plus, Building2, Trash2 } from "lucide-react";
 import { ComboboxAsync, type ComboboxOption } from "@/components/combobox-async";
 import { formatDate } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import type { IprPartyItem, CategoryRef } from "@/types";
 
 interface TabPartesProps {
@@ -32,6 +33,7 @@ export function TabPartes({ iprId, canManage }: TabPartesProps) {
   const [parteRoles, setParteRoles] = useState<CategoryRef[]>([]);
   const [parteSubmitting, setParteSubmitting] = useState(false);
   const [parteError, setParteError] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const loadPartes = () => {
     setLoading(true);
@@ -79,12 +81,15 @@ export function TabPartes({ iprId, canManage }: TabPartesProps) {
     }
   };
 
-  const handleDeleteParty = async (partyId: string) => {
+  const handleDeleteParty = async () => {
+    if (!deleteTarget) return;
     try {
-      await api.delete(`/api/ipr/${iprId}/partes/${partyId}`);
+      await api.delete(`/api/ipr/${iprId}/partes/${deleteTarget}`);
       loadPartes();
     } catch {
       // silent
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
@@ -139,7 +144,7 @@ export function TabPartes({ iprId, canManage }: TabPartesProps) {
                       size="sm"
                       variant="ghost"
                       className="size-7 p-0 text-muted-foreground hover:text-red-600"
-                      onClick={() => handleDeleteParty(p.id)}
+                      onClick={() => setDeleteTarget(p.id)}
                     >
                       <Trash2 className="size-3.5" />
                     </Button>
@@ -201,6 +206,14 @@ export function TabPartes({ iprId, canManage }: TabPartesProps) {
           </div>
         </form>
       </DrawerPanel>
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}
+        title="Eliminar parte"
+        description="¿Está seguro de que desea eliminar esta parte del IPR? Esta acción no se puede deshacer."
+        onConfirm={handleDeleteParty}
+      />
     </div>
   );
 }

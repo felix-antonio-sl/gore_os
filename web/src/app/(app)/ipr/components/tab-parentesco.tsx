@@ -16,6 +16,7 @@ import { Plus, CheckCircle2, XCircle, ShieldCheck, Trash2 } from "lucide-react";
 import { formatDate } from "@/lib/format";
 import { toast } from "sonner";
 import { EmptyState } from "@/components/empty-state";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import type { KinshipDeclaration, PersonRef } from "@/types";
 
 interface TabParentescoProps {
@@ -40,6 +41,7 @@ export function TabParentesco({ iprId, canManage }: TabParentescoProps) {
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   // Form state
   const [personId, setPersonId] = useState("");
@@ -131,13 +133,16 @@ export function TabParentesco({ iprId, canManage }: TabParentescoProps) {
     }
   };
 
-  const handleDelete = async (declId: string) => {
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
     try {
-      await api.delete(`/api/ipr/${iprId}/parentesco/${declId}`);
+      await api.delete(`/api/ipr/${iprId}/parentesco/${deleteTarget}`);
       loadDeclarations();
       toast.success("Declaracion eliminada");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error al eliminar");
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
@@ -296,7 +301,7 @@ export function TabParentesco({ iprId, canManage }: TabParentescoProps) {
                   size="sm"
                   variant="ghost"
                   className="text-red-600"
-                  onClick={() => handleDelete(d.id)}
+                  onClick={() => setDeleteTarget(d.id)}
                   title="Eliminar"
                 >
                   <Trash2 className="h-4 w-4" />
@@ -306,6 +311,14 @@ export function TabParentesco({ iprId, canManage }: TabParentescoProps) {
           </div>
         ))}
       </div>
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}
+        title="Eliminar declaración"
+        description="¿Está seguro de que desea eliminar esta declaración de parentesco? Esta acción no se puede deshacer."
+        onConfirm={handleDelete}
+      />
     </div>
   );
 }

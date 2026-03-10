@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, Circle, Shield } from "lucide-react";
 import { formatDateTime } from "@/lib/format";
 import { EmptyState } from "@/components/empty-state";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
 
@@ -42,6 +43,7 @@ export function TabAdmisibilidad({ iprId, canManage }: Props) {
   const { user } = useAuth();
   const [data, setData] = useState<ChecklistResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   const load = async () => {
     try {
@@ -65,12 +67,15 @@ export function TabAdmisibilidad({ iprId, canManage }: Props) {
     }
   };
 
-  const handleUnverify = async (itemId: string) => {
+  const handleUnverify = async () => {
+    if (!deleteTarget) return;
     try {
-      await api.delete(`/api/ipr/${iprId}/admisibilidad/${itemId}/verificar`);
+      await api.delete(`/api/ipr/${iprId}/admisibilidad/${deleteTarget}/verificar`);
       load();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Error al desmarcar");
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
@@ -134,7 +139,7 @@ export function TabAdmisibilidad({ iprId, canManage }: Props) {
                   </Button>
                 )}
                 {canVerify && item.verified && (
-                  <Button size="sm" variant="ghost" className="text-muted-foreground" onClick={() => handleUnverify(item.item_id)}>
+                  <Button size="sm" variant="ghost" className="text-muted-foreground" onClick={() => setDeleteTarget(item.item_id)}>
                     Desmarcar
                   </Button>
                 )}
@@ -143,6 +148,16 @@ export function TabAdmisibilidad({ iprId, canManage }: Props) {
           })}
         </div>
       </CardContent>
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}
+        title="Revertir verificación"
+        description="¿Está seguro de que desea revertir la verificación de este ítem?"
+        onConfirm={handleUnverify}
+        variant="default"
+        confirmLabel="Revertir"
+      />
     </Card>
   );
 }
