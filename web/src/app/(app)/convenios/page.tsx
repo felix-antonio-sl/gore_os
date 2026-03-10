@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/dialog";
 import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
-import { Download, Plus } from "lucide-react";
+import { AlertTriangle, Download, Plus } from "lucide-react";
 import { exportCSV } from "@/lib/csv-export";
 import { formatCLP, formatDate } from "@/lib/format";
 import { PageHeader } from "@/components/page-header";
@@ -569,9 +569,23 @@ export default function ConveniosPage() {
                 <span className="text-muted-foreground">Vigencia desde</span>
                 <span>{formatDate(detail.valid_from)}</span>
               </div>
+              {detail.days_to_expiry !== null && detail.days_to_expiry >= 0 && detail.days_to_expiry < 90 && (
+                <div className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-xs border mx-3 mb-1 ${
+                  detail.days_to_expiry < 30 ? "bg-red-50 border-red-200 text-red-800" :
+                  detail.days_to_expiry < 60 ? "bg-amber-50 border-amber-200 text-amber-800" :
+                  "bg-yellow-50 border-yellow-200 text-yellow-800"
+                }`}>
+                  <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                  Vigencia vence en {detail.days_to_expiry} dia{detail.days_to_expiry !== 1 ? "s" : ""}
+                </div>
+              )}
               <div className="flex justify-between px-3 py-2">
                 <span className="text-muted-foreground">Vigencia hasta</span>
-                <span className={detail.days_to_expiry !== null && detail.days_to_expiry < 30 ? "text-red-600 font-medium" : ""}>
+                <span className={
+                  detail.days_to_expiry !== null && detail.days_to_expiry >= 0 && detail.days_to_expiry < 30 ? "text-red-600 font-medium" :
+                  detail.days_to_expiry !== null && detail.days_to_expiry >= 0 && detail.days_to_expiry < 60 ? "text-amber-600 font-medium" :
+                  detail.days_to_expiry !== null && detail.days_to_expiry >= 0 && detail.days_to_expiry < 90 ? "text-yellow-700" : ""
+                }>
                   {formatDate(detail.valid_to)}
                   {detail.days_to_expiry !== null && detail.days_to_expiry >= 0 && (
                     <span className="text-xs text-muted-foreground ml-1">({detail.days_to_expiry}d)</span>
