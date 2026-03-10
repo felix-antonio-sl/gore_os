@@ -60,29 +60,34 @@ export function CockpitTDView({ data }: Props) {
               )}
             </div>
 
-            {/* Velocidad */}
+            {/* Velocidad de avance */}
             <Separator className="my-4" />
-            <div className="rounded-md bg-blue-50 border border-blue-200 px-4 py-2.5">
-              <p className="text-xs font-semibold text-blue-800 mb-1">Velocidad de avance</p>
-              <p className="text-sm text-blue-700 font-mono">
-                Vel. actual: <span className="font-bold">+{velocity.current}pp/mes</span>
-                {" | "}
-                Requerida: <span className="font-bold">+{velocity.required}pp/mes</span>
-                {" | "}
-                Meses restantes:{" "}
-                <span
-                  className={cn(
-                    "font-bold",
-                    velocity.months_remaining <= 3
-                      ? "text-red-700"
-                      : velocity.months_remaining <= 6
-                      ? "text-amber-700"
-                      : "text-blue-700"
-                  )}
-                >
+            <p className="text-xs font-semibold text-muted-foreground mb-2">Velocidad de avance</p>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="rounded-lg border bg-blue-50 border-blue-200 px-3 py-2.5 text-center">
+                <p className="text-lg font-bold font-mono text-blue-700">+{velocity.current}</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">pp/mes actual</p>
+              </div>
+              <div className="rounded-lg border bg-blue-50 border-blue-200 px-3 py-2.5 text-center">
+                <p className="text-lg font-bold font-mono text-blue-700">+{velocity.required}</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">pp/mes requerida</p>
+              </div>
+              <div className={cn(
+                "rounded-lg border px-3 py-2.5 text-center",
+                velocity.months_remaining <= 3 ? "bg-red-50 border-red-200" :
+                velocity.months_remaining <= 6 ? "bg-amber-50 border-amber-200" :
+                "bg-blue-50 border-blue-200"
+              )}>
+                <p className={cn(
+                  "text-lg font-bold font-mono",
+                  velocity.months_remaining <= 3 ? "text-red-700" :
+                  velocity.months_remaining <= 6 ? "text-amber-700" :
+                  "text-blue-700"
+                )}>
                   {velocity.months_remaining}
-                </span>
-              </p>
+                </p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">meses restantes</p>
+              </div>
             </div>
           </CardContent>
         </Card>
