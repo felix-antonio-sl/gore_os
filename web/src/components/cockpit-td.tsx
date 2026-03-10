@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -21,6 +22,7 @@ const decreeBadge: Record<string, { label: string; fullLabel: string; className:
 };
 
 export function CockpitTDView({ data }: Props) {
+  const router = useRouter();
   const { compliance_bars, velocity, decrees, kb_stats, committee, normative_alerts } = data;
 
   return (
@@ -142,19 +144,28 @@ export function CockpitTDView({ data }: Props) {
           </CardHeader>
           <CardContent className="pt-3 px-6">
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="rounded-lg border bg-amber-50 border-amber-200 py-3">
+              <div className="rounded-lg border bg-amber-50 border-amber-200 py-3 cursor-pointer hover:shadow-md transition-shadow"
+                role="button" tabIndex={0}
+                onClick={() => router.push("/datos")}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push("/datos"); } }}>
                 <p className="text-2xl font-bold text-amber-700">
                   {kb_stats.pending_publication}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">Pendientes</p>
               </div>
-              <div className="rounded-lg border bg-blue-50 border-blue-200 py-3">
+              <div className="rounded-lg border bg-blue-50 border-blue-200 py-3 cursor-pointer hover:shadow-md transition-shadow"
+                role="button" tabIndex={0}
+                onClick={() => router.push("/datos")}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push("/datos"); } }}>
                 <p className="text-2xl font-bold text-blue-700">
                   {kb_stats.recently_updated}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">Actualizados</p>
               </div>
-              <div className="rounded-lg border bg-gray-50 border-gray-200 py-3">
+              <div className="rounded-lg border bg-gray-50 border-gray-200 py-3 cursor-pointer hover:shadow-md transition-shadow"
+                role="button" tabIndex={0}
+                onClick={() => router.push("/datos")}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push("/datos"); } }}>
                 <p className="text-2xl font-bold text-gray-700">
                   {kb_stats.total}
                 </p>
