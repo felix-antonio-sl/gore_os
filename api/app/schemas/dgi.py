@@ -133,9 +133,17 @@ class CommitteeSessionItem(BaseModel):
 # ---------------------------------------------------------------------------
 # Cockpit Responses (role-specific)
 # ---------------------------------------------------------------------------
+class DecisionItem(BaseModel):
+    source: str  # "alert" | "rendition"
+    id: str
+    title: str
+    severity: str
+
+
 class CockpitJefeDGI(BaseModel):
     semaforo: list[DimensionSummary]
     decisions_pending: int
+    decision_items: list[DecisionItem] = []
     team_status: list[dict]
     critical_alerts: list[dict]
     report_status: dict | None

@@ -90,6 +90,40 @@ async def _cockpit_jefe_dgi(user: dict, db: AsyncSession) -> CockpitJefeDGI:
     decisions_row = (await db.execute(decisions_sql)).mappings().first()
     decisions_pending = decisions_row["total"] if decisions_row else 0
 
+    # ── Decision items: top 5 actionable items across sources ─────────────
+    decision_items_sql = text("""
+        (
+            SELECT 'alert' AS source, a.id::text AS id, a.message AS title,
+                   sev.code AS severity
+            FROM core.alert a
+            JOIN ref.category sev ON sev.id = a.severity_id
+            WHERE sev.code IN ('CRITICO', 'ALTO')
+              AND a.resolved_at IS NULL
+              AND a.action_taken IS NULL
+              AND a.deleted_at IS NULL
+            ORDER BY a.created_at DESC
+            LIMIT 3
+        )
+        UNION ALL
+        (
+            SELECT 'rendition' AS source, r.id::text AS id,
+                   'Rendición ' || LEFT(r.id::text, 8) || ' — ' || COALESCE(org.name, 'Sin ejecutor') AS title,
+                   CASE WHEN EXTRACT(EPOCH FROM NOW() - COALESCE(r.phase_entered_at, r.updated_at)) / 86400 > 7 THEN 'VENCIDA' ELSE 'PENDIENTE' END AS severity
+            FROM core.rendition r
+            LEFT JOIN core.organization org ON org.id = r.renderer_id
+            JOIN ref.category st ON st.id = r.state_id
+            WHERE st.code IN ('PENDIENTE', 'EN_REVISION_RTF')
+              AND r.deleted_at IS NULL
+            ORDER BY r.created_at ASC
+            LIMIT 2
+        )
+    """)
+    decision_rows = (await db.execute(decision_items_sql)).mappings().all()
+    decision_items = [
+        {"source": r["source"], "id": str(r["id"]), "title": r["title"], "severity": r["severity"]}
+        for r in decision_rows
+    ]
+
     # ── Team status: DGI specialists (hardcoded roles, dynamic users) ─────
     team_sql = text("""
         SELECT
@@ -226,6 +260,7 @@ async def _cockpit_jefe_dgi(user: dict, db: AsyncSession) -> CockpitJefeDGI:
     return CockpitJefeDGI(
         semaforo=semaforo,
         decisions_pending=int(decisions_pending),
+        decision_items=decision_items,
         team_status=team_status,
         critical_alerts=critical_alerts,
         report_status=report_status,

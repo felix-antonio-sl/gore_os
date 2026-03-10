@@ -31,7 +31,7 @@ const reportStatusBadge: Record<string, { label: string; className: string }> = 
 
 export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
   const router = useRouter();
-  const { semaforo, decisions_pending, team_status, critical_alerts, report_status, rendition_summary } = data;
+  const { semaforo, decisions_pending, decision_items, team_status, critical_alerts, report_status, rendition_summary } = data;
 
   return (
     <div className="space-y-6">
@@ -101,10 +101,40 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
             {decisions_pending === 0 ? (
               <p className="text-sm text-muted-foreground italic">Sin pendientes. Todo al día.</p>
             ) : (
-              <div className="rounded-md border px-3 py-3 bg-orange-50">
-                <p className="text-sm text-orange-800">
-                  {decisions_pending} decisión{decisions_pending !== 1 ? "es" : ""} pendiente{decisions_pending !== 1 ? "s" : ""} — revise alertas y compromisos
-                </p>
+              <div className="space-y-1.5">
+                {(decision_items ?? []).slice(0, 5).map((item) => (
+                  <div
+                    key={`${item.source}-${item.id}`}
+                    className="flex items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-muted/50 cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      if (item.source === "alert") router.push("/alertas");
+                      else if (item.source === "rendition") router.push("/rendiciones");
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        if (item.source === "alert") router.push("/alertas");
+                        else if (item.source === "rendition") router.push("/rendiciones");
+                      }
+                    }}
+                  >
+                    <span className={cn(
+                      "inline-block h-2 w-2 rounded-full shrink-0",
+                      item.severity === "CRITICO" || item.severity === "VENCIDA" ? "bg-red-500" : "bg-orange-500"
+                    )} />
+                    <span className="truncate flex-1">{item.title}</span>
+                    <Badge variant="outline" className="text-[10px] px-1.5 py-0 shrink-0">
+                      {item.source === "alert" ? "Alerta" : "Rendición"}
+                    </Badge>
+                  </div>
+                ))}
+                {decisions_pending > (decision_items ?? []).length && (
+                  <p className="text-xs text-muted-foreground pl-1">
+                    +{decisions_pending - (decision_items ?? []).length} más
+                  </p>
+                )}
               </div>
             )}
           </CardContent>
