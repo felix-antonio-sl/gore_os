@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ShieldCheck, BookOpen, CalendarDays, AlertTriangle } from "lucide-react";
 import { ProgressBarIndicator } from "@/components/progress-bar-indicator";
 import { cn } from "@/lib/utils";
@@ -13,16 +14,17 @@ interface Props {
   data: CockpitTD;
 }
 
-const decreeBadge: Record<string, { label: string; className: string }> = {
-  VIGENTE: { label: "VIG", className: "bg-green-100 text-green-700 border-green-300" },
-  PARCIAL: { label: "PAR", className: "bg-amber-100 text-amber-700 border-amber-300" },
-  PENDIENTE: { label: "PEN", className: "bg-red-100 text-red-700 border-red-300" },
+const decreeBadge: Record<string, { label: string; fullLabel: string; className: string }> = {
+  VIGENTE: { label: "VIG", fullLabel: "Vigente", className: "bg-green-100 text-green-700 border-green-300" },
+  PARCIAL: { label: "PAR", fullLabel: "Parcial", className: "bg-amber-100 text-amber-700 border-amber-300" },
+  PENDIENTE: { label: "PEN", fullLabel: "Pendiente", className: "bg-red-100 text-red-700 border-red-300" },
 };
 
 export function CockpitTDView({ data }: Props) {
   const { compliance_bars, velocity, decrees, kb_stats, committee, normative_alerts } = data;
 
   return (
+    <TooltipProvider>
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Cockpit Transformación Digital</h1>
@@ -104,15 +106,20 @@ export function CockpitTDView({ data }: Props) {
                     };
                   return (
                     <div key={i} className="flex items-center gap-3">
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          "text-[10px] px-1.5 py-0 w-10 justify-center shrink-0 border font-bold",
-                          badgeConfig.className
-                        )}
-                      >
-                        {badgeConfig.label}
-                      </Badge>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Badge
+                            variant="outline"
+                            className={cn(
+                              "text-[10px] px-1.5 py-0 w-10 justify-center shrink-0 border font-bold",
+                              badgeConfig.className
+                            )}
+                          >
+                            {badgeConfig.label}
+                          </Badge>
+                        </TooltipTrigger>
+                        <TooltipContent>{badgeConfig.fullLabel}</TooltipContent>
+                      </Tooltip>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-mono text-muted-foreground">{decree.code}</p>
                         <p className="text-sm truncate">{decree.name}</p>
@@ -235,5 +242,6 @@ export function CockpitTDView({ data }: Props) {
         </section>
       )}
     </div>
+    </TooltipProvider>
   );
 }
