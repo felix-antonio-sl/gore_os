@@ -55,7 +55,7 @@ export function DataTable({
   const endItem = Math.min(page * pageSize, total);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 animate-in fade-in duration-200">
       <div className="rounded-md border">
         <Table aria-label="Tabla de datos">
           <TableHeader>
