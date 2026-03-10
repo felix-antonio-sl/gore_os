@@ -453,7 +453,8 @@ export default function UsuariosPage() {
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Nueva contraseña"
                     />
-                    <Button size="sm" onClick={handleResetPassword} disabled={!newPassword}>
+                    <p className="text-xs text-muted-foreground">Mínimo 8 caracteres</p>
+                    <Button size="sm" onClick={handleResetPassword} disabled={!newPassword || newPassword.length < 8}>
                       Cambiar
                     </Button>
                     {resetMsg && (
