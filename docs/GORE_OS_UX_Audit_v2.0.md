@@ -1,7 +1,7 @@
 # GORE_OS — Auditoria UX/UI v2.0 — Cierre Formal
 
 **Fecha**: 2026-03-10
-**Version**: 2.0 (Closure Record, updated Wave 4A)
+**Version**: 2.0 (Closure Record, updated Wave 4C)
 **Referencia**: `docs/GORE_OS_UX_Audit_v1.0.md` (2026-03-03, 55 hallazgos)
 
 ---
@@ -13,10 +13,10 @@
 | Severidad | Total v1.0 | Cerrados | Abiertos | % Cierre |
 |-----------|:----------:|:--------:|:--------:|:--------:|
 | CRITICO | 4 | 3 | 1 | 75% |
-| ALTO | 15 | 12 | 3 | 80% |
+| ALTO | 15 | 15 | 0 | 100% |
 | MEDIO | 30 | 15 | 15 | 50% |
 | BAJO | 6 | 4 | 2 | 67% |
-| **TOTAL** | **55** | **34** | **21** | **62%** |
+| **TOTAL** | **55** | **37** | **18** | **67%** |
 
 ### 1.2 Scorecard Actualizado
 
@@ -25,10 +25,10 @@
 | Accesibilidad (WCAG 2.1 AA) | Bajo | Medio-Alto | +2 |
 | Responsividad Mobile | Bajo | Medio-Alto | +2 |
 | Manejo de Errores | Medio-Bajo | Medio-Alto | +2 |
-| Consistencia Visual | Medio | Medio | = |
+| Consistencia Visual | Medio | Medio-Alto | +1 |
 | Navegacion Cross-Entity | Medio-Alto | Medio-Alto | = |
-| Funcionalidad Completa | Medio | Medio-Alto | +1 |
-| Formularios y Validacion | Medio-Bajo | Medio | +1 |
+| Funcionalidad Completa | Medio | Alto | +2 |
+| Formularios y Validacion | Medio-Bajo | Medio-Alto | +2 |
 | Performance Percibida | Medio | Medio | = |
 
 ### 1.3 Waves de Remediacion Ejecutadas
@@ -42,7 +42,8 @@
 | Post-fix | 2026-03-06 | `35da37e` | Correcciones post-remediacion | 0 (estabilizacion) |
 | Wave 4A | 2026-03-10 | `ee13d9a..6cc1c5b` | Quick Wins CSS/A11y | 8 |
 | Wave 4B | 2026-03-10 | `c2cbdfb` | Status color unification | 1 |
-| **Total** | | | | **34** |
+| Wave 4C | 2026-03-10 | `9519b59..91fdc7d` | ALTO funcional (UX-011, 030, 047) | 3 |
+| **Total** | | | | **37** |
 
 ---
 
@@ -56,7 +57,7 @@
 | UX-002 | `alert()` nativo en admin usuarios para errores | W3 | Reemplazado por `toast.error()` via sonner |
 | UX-003 | DrawerPanel ancho fijo 400px rompe en mobile | W2 | Cambiado a `w-full sm:w-[400px]` |
 
-### 2.2 ALTOS Cerrados (12/15)
+### 2.2 ALTOS Cerrados (15/15)
 
 | ID | Descripcion | Wave | Fix |
 |----|-------------|------|-----|
@@ -72,6 +73,9 @@
 | UX-049 | Sin UI para crear CDPs (budget commitments) | W2F | Endpoint `POST /presupuesto/{id}/cdps` + formulario en drawer |
 | UX-050 | Error Art. 18 no muestra cuales rendiciones bloquean | W2F | Mensaje de error enriquecido con IDs especificos de rendiciones |
 | UX-053 | Pago de cuota sin confirmacion, single-click irreversible | W3 | Dialog de confirmacion agregado antes de registrar pago |
+| UX-011 | Cockpit "Requieren Mi Decision" con datos reales | W4C | Query compuesto alertas+rendiciones, items accionables con navegacion |
+| UX-030 | Form validation en edit usuario admin | W4C | Validacion inline required+email regex, red border + mensajes error |
+| UX-047 | Clasificacion presupuestaria editable post-creacion | W4C | PATCH allowlist + schema + 3 Select dropdowns en form edicion |
 
 ### 2.3 MEDIOS Cerrados (8/30)
 
@@ -116,15 +120,11 @@
 |----|-------------|:----------:|------|
 | UX-004 | Sin recuperacion de contrasena en login | Externo | Requiere integracion ClaveUnica o SMTP email. Dependencia externa, fuera de alcance de remediacion interna. |
 
-### 3.2 ALTOS Abiertos (3)
+### 3.2 ALTOS Abiertos (0)
 
-| ID | Descripcion | Esfuerzo | Nota |
-|----|-------------|----------|------|
-| UX-011 | Seccion "Requieren Mi Decision" en cockpit JEFE_DGI son placeholder sin datos reales | 1-2d | Necesita definir que datos alimentan las "decisiones" (iniciativas pendientes, informes por revisar) |
-| UX-030 | Edit mode en drawer de usuario sin form validation library | 2-3h | Integrar react-hook-form o zod para validacion client-side |
-| UX-047 | Clasificacion presupuestaria (subtitulo, item, asignacion) no editable post-creacion | 1d | PATCH de campos de clasificacion con validacion de consistencia |
+Todos los ALTOS cerrados en Waves 1-4C.
 
-### 3.3 MEDIOS Abiertos (16)
+### 3.3 MEDIOS Abiertos (15)
 
 | ID | Descripcion | Esfuerzo | Archivo |
 |----|-------------|----------|---------|
@@ -166,7 +166,7 @@
 | UX-021 | 1h | Campo confirmacion + strength meter en cambio password |
 | UX-022 | 2-3h | Paleta semantica centralizada para estados |
 | UX-027 | 1-2h | Cartera table: ocultar columnas en mobile o scroll con indicador |
-| UX-030 | 2-3h | react-hook-form o zod en edit usuario |
+| ~~UX-030~~ | ~~2-3h~~ | **CERRADO W4C** — Validacion inline |
 | UX-032 | 1h | Sort por columna en desglose divisiones dashboard |
 | UX-033 | 2-3h | Drill-down en SemaforoCard por dimension |
 | UX-038 | 30 min | Eliminar gauges redundantes o integrar como hover detail |
@@ -182,11 +182,11 @@
 | ID | Esfuerzo | Descripcion |
 |----|----------|-------------|
 | UX-004 | Externo | Recuperacion contrasena (ClaveUnica/email SMTP) |
-| UX-011 | 1-2d | Conectar decisiones cockpit con datos reales |
+| ~~UX-011~~ | ~~1-2d~~ | **CERRADO W4C** — Decision items accionables |
 | UX-042 | 1h | Implementar navegacion "Investigar" a `/datos?dominio=indicadores&id=X` |
 | UX-043 | 2-3d | Guia de creacion + drag-and-drop en kanban DMAIC |
 | UX-045 | 1h | KB stats clickeables con drill-down a listado filtrado |
-| UX-047 | 1d | PATCH clasificacion presupuestaria post-creacion |
+| ~~UX-047~~ | ~~1d~~ | **CERRADO W4C** — PATCH classifier + Select UI |
 
 ### 4.4 No Accionable / Bajo Impacto (3 hallazgos)
 
@@ -229,7 +229,7 @@ Pendiente principal: tabla cartera horizontal scroll (UX-027).
 ### 5.3 Manejo de Errores
 
 **v1.0**: 10 hallazgos, madurez Medio-Bajo.
-**v2.0**: 5 cerrados (UX-002, 010, 028, 050, 053), 5 abiertos (UX-021, 031, 039, 042, 044).
+**v2.0**: 6 cerrados (UX-002, 010, 028, 030, 050, 053), 4 abiertos (UX-021, 039, 042, 044).
 
 Principales logros:
 - `alert()` nativo eliminado (UX-002)
@@ -239,11 +239,12 @@ Principales logros:
 - Error Art. 18 enriquecido con IDs (UX-050)
 
 Pendiente principal: WIP visual pre-hoc (UX-044), botones muertos (UX-039, 042).
+- **W4C**: Form validation admin edit (UX-030)
 
 ### 5.4 Funcionalidad Completa
 
 **v1.0**: 15 hallazgos, madurez Medio.
-**v2.0**: 7 cerrados (UX-008, 009, 012, 014, 034, 036, 049), 8 abiertos.
+**v2.0**: 9 cerrados (UX-008, 009, 011, 012, 014, 034, 036, 047, 049), 6 abiertos.
 
 Principales logros:
 - Formulario creacion programas presupuestarios (UX-008)
@@ -251,6 +252,7 @@ Principales logros:
 - Creacion CDPs desde UI (UX-049)
 - Rendiciones en sidebar DGI (UX-012)
 - Paginacion y busqueda en Mis Compromisos (UX-014, 036)
+- **W4C**: Cockpit decisiones con datos reales (UX-011), clasificador presupuestario editable (UX-047)
 
 ---
 
@@ -311,17 +313,15 @@ Cambios principales:
 
 ## 8. Conclusion
 
-La remediacion UX ejecutada en 5 waves (2026-03-04 a 2026-03-10) cerro el **60% de los hallazgos** (33/55):
+La remediacion UX ejecutada en 7 waves (2026-03-04 a 2026-03-10) cerro el **67% de los hallazgos** (37/55):
 
 - **75% de CRITICOS** cerrados (3/4) — el restante requiere integracion externa
-- **80% de ALTOS** cerrados (12/15) — los 3 restantes son de esfuerzo medio
-- **47% de MEDIOS** cerrados (14/30) — Wave 4A cerro 6 quick wins MEDIO
+- **100% de ALTOS** cerrados (15/15) — Wave 4C cerro los 3 restantes
+- **50% de MEDIOS** cerrados (15/30) — Wave 4A cerro 6 quick wins, W4B cerro UX-022
 - **67% de BAJOS** cerrados (4/6) — Wave 4A cerro UX-016 (email regex)
-- Las dimensiones con mayor mejora: **Accesibilidad** (+2), **Responsividad Mobile** (+2), **Manejo de Errores** (+2)
+- Las dimensiones con mayor mejora: **Accesibilidad** (+2), **Responsividad Mobile** (+2), **Funcionalidad** (+2), **Formularios** (+2)
 
-Los 22 hallazgos abiertos son 16 MEDIOS + 3 ALTOS + 1 CRITICO externo + 2 BAJOS cosmeticos. El unico CRITICO abierto (UX-004: recuperacion contrasena) depende de integracion externa.
-
-Proximas waves planificadas: **4B** (status color unification, UX-022), **4C** (3 ALTO funcional: UX-011, 030, 047).
+Los 18 hallazgos abiertos son 15 MEDIOS + 1 CRITICO externo + 2 BAJOS cosmeticos. **0 ALTOS abiertos**. El unico CRITICO abierto (UX-004: recuperacion contrasena) depende de integracion externa.
 
 ---
 
