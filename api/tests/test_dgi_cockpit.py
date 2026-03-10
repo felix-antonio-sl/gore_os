@@ -42,10 +42,78 @@ async def test_control_gestion_cockpit(client, db):
     assert isinstance(body["data_sources"], list)
     assert isinstance(body["trends"], list)
     assert isinstance(body["work_queue"], list)
+    # Work queue deadlines include date context
+    for item in body["work_queue"]:
+        assert "deadline" in item
+        assert isinstance(item["deadline"], str)
 
 
 # ---------------------------------------------------------------------------
-# 3. Non-DGI role falls through to jefe_dgi view (no 403 — fallback by design)
+# 3. ESP_PROCESOS: typed agenda + portfolio stats
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_procesos_cockpit_typed(client, db):
+    """GET /api/dgi/cockpit with ESP_PROCESOS returns typed agenda and portfolio_stats."""
+    uid = await _get_user_id(db, "procesos@goreos.cl")
+    token = create_access_token({"sub": uid, "role": "ESP_PROCESOS"})
+
+    resp = await client.get("/api/dgi/cockpit", headers=auth(token))
+    assert resp.status_code == 200
+    body = resp.json()
+    assert "today_agenda" in body
+    assert "portfolio_stats" in body
+    # Agenda items are typed AgendaItem dicts
+    for item in body["today_agenda"]:
+        assert "time" in item
+        assert "activity" in item
+        assert "process" in item
+    # Portfolio stats has typed structure
+    ps = body["portfolio_stats"]
+    assert isinstance(ps["active"], int)
+    assert isinstance(ps["completed"], int)
+    assert isinstance(ps["target"], int)
+    assert ps["target"] == 5  # named constant _DGI_PORTFOLIO_TARGET
+
+
+# ---------------------------------------------------------------------------
+# 4. ESP_TD: typed decrees + velocity + kb_stats + normative_alerts
+# ---------------------------------------------------------------------------
+
+@pytest.mark.asyncio
+async def test_td_cockpit_typed(client, db):
+    """GET /api/dgi/cockpit with ESP_TD returns typed decree/velocity/kb/alerts."""
+    uid = await _get_user_id(db, "td@goreos.cl")
+    token = create_access_token({"sub": uid, "role": "ESP_TD"})
+
+    resp = await client.get("/api/dgi/cockpit", headers=auth(token))
+    assert resp.status_code == 200
+    body = resp.json()
+
+    # Velocity is typed VelocityStats
+    v = body["velocity"]
+    assert isinstance(v["current"], (int, float))
+    assert isinstance(v["required"], (int, float))
+    assert isinstance(v["months_remaining"], int)
+
+    # KB stats is placeholder
+    kb = body["kb_stats"]
+    assert kb["module_status"] == "pending"
+    assert "message" in kb
+
+    # Decrees come from DB (may be empty in test DB without migration)
+    assert isinstance(body["decrees"], list)
+    for d in body["decrees"]:
+        assert "id" in d
+        assert "code" in d
+        assert "status" in d
+
+    # Normative alerts derived from decrees
+    assert isinstance(body["normative_alerts"], list)
+
+
+# ---------------------------------------------------------------------------
+# 5. Non-DGI role falls through to jefe_dgi view (no 403 — fallback by design)
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
@@ -64,7 +132,7 @@ async def test_non_dgi_gets_fallback_view(client, regional_token):
 
 
 # ---------------------------------------------------------------------------
-# 4. Requires authentication
+# 6. Requires authentication
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio

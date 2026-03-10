@@ -44,6 +44,9 @@ docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/
 # Apply TP-02/TP-04 migration (subv8 funds + FRIL categories seed)
 docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_tp02_tp04.sql
 
+# Apply DGI Wave A migration (dgi_decree table + seed DS7-DS12)
+docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_dgi_wave_a.sql
+
 # Copy core parametric tables from production
 for tbl in core.financing_track core.financial_threshold core.sni_level_config; do
     docker exec goreos_db psql -U goreos -d goreos_model -c "COPY $tbl TO STDOUT" | \

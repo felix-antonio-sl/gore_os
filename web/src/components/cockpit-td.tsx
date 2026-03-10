@@ -109,6 +109,7 @@ export function CockpitTDView({ data }: Props) {
                   const badgeConfig =
                     decreeBadge[decree.status] ?? {
                       label: decree.status,
+                      fullLabel: decree.status,
                       className: "border-gray-300 text-gray-600",
                     };
                   return (
@@ -148,34 +149,8 @@ export function CockpitTDView({ data }: Props) {
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-3 px-6">
-            <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="rounded-lg border bg-amber-50 border-amber-200 py-3 cursor-pointer hover:shadow-md transition-shadow"
-                role="button" tabIndex={0}
-                onClick={() => router.push("/datos")}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push("/datos"); } }}>
-                <p className="text-2xl font-bold text-amber-700">
-                  {kb_stats.pending_publication}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">Pendientes</p>
-              </div>
-              <div className="rounded-lg border bg-blue-50 border-blue-200 py-3 cursor-pointer hover:shadow-md transition-shadow"
-                role="button" tabIndex={0}
-                onClick={() => router.push("/datos")}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push("/datos"); } }}>
-                <p className="text-2xl font-bold text-blue-700">
-                  {kb_stats.recently_updated}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">Actualizados</p>
-              </div>
-              <div className="rounded-lg border bg-gray-50 border-gray-200 py-3 cursor-pointer hover:shadow-md transition-shadow"
-                role="button" tabIndex={0}
-                onClick={() => router.push("/datos")}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); router.push("/datos"); } }}>
-                <p className="text-2xl font-bold text-gray-700">
-                  {kb_stats.total}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">Total</p>
-              </div>
+            <div className="rounded-lg border bg-gray-50 border-gray-200 px-4 py-6 text-center">
+              <p className="text-sm text-muted-foreground italic">{kb_stats.message}</p>
             </div>
           </CardContent>
         </Card>

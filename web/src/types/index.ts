@@ -393,20 +393,59 @@ export interface CockpitControlGestion {
   work_queue: { priority: string; task: string; status: string; deadline: string }[];
 }
 
+export interface AgendaItem {
+  time: string;
+  activity: string;
+  process: string;
+}
+
+export interface PortfolioStats {
+  active: number;
+  completed: number;
+  target: number;
+}
+
 export interface CockpitProcesos {
   initiatives: DGIInitiative[];
   bpmn_models: DGIBPMNModel[];
-  today_agenda: { time: string; activity: string; process: string }[];
-  portfolio_stats: { active: number; completed: number; target: number };
+  today_agenda: AgendaItem[];
+  portfolio_stats: PortfolioStats;
+}
+
+export interface DecreeItem {
+  id: string;
+  code: string;
+  name: string;
+  description: string | null;
+  status: string;
+  deadline: string | null;
+  days_until: number | null;
+}
+
+export interface NormativeAlertItem {
+  message: string;
+  days_until: number;
+  decree_code: string | null;
+}
+
+export interface VelocityStats {
+  current: number;
+  required: number;
+  months_remaining: number;
+}
+
+export interface KBStats {
+  module_status: string;
+  message: string;
 }
 
 export interface CockpitTD {
   compliance_bars: DGIIndicator[];
-  velocity: { current: number; required: number; months_remaining: number };
-  decrees: { code: string; name: string; status: string }[];
-  kb_stats: { pending_publication: number; recently_updated: number; total: number };
+  velocity: VelocityStats;
+  decrees: DecreeItem[];
+  kb_stats: KBStats;
   committee: DGICommitteeSession | null;
-  normative_alerts: { message: string; days_until: number }[];
+  normative_alerts: NormativeAlertItem[];
 }
 
 // ---------------------------------------------------------------------------

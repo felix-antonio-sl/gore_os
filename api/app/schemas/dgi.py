@@ -131,7 +131,7 @@ class CommitteeSessionItem(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Cockpit Responses (role-specific)
+# Cockpit typed sub-models
 # ---------------------------------------------------------------------------
 class DecisionItem(BaseModel):
     source: str  # "alert" | "rendition"
@@ -140,6 +140,54 @@ class DecisionItem(BaseModel):
     severity: str
 
 
+class DecreeItem(BaseModel):
+    id: UUID
+    code: str
+    name: str
+    description: str | None
+    status: str
+    deadline: date | None
+    days_until: int | None
+
+
+class DecreeUpdate(BaseModel):
+    status: str | None = None
+    deadline: date | None = None
+    description: str | None = None
+
+
+class NormativeAlertItem(BaseModel):
+    message: str
+    days_until: int
+    decree_code: str | None = None
+
+
+class VelocityStats(BaseModel):
+    current: float
+    required: float
+    months_remaining: int
+
+
+class KBStats(BaseModel):
+    module_status: str
+    message: str
+
+
+class AgendaItem(BaseModel):
+    time: str
+    activity: str
+    process: str
+
+
+class PortfolioStats(BaseModel):
+    active: int
+    completed: int
+    target: int
+
+
+# ---------------------------------------------------------------------------
+# Cockpit Responses (role-specific)
+# ---------------------------------------------------------------------------
 class CockpitJefeDGI(BaseModel):
     semaforo: list[DimensionSummary]
     decisions_pending: int
@@ -160,17 +208,17 @@ class CockpitControlGestion(BaseModel):
 class CockpitProcesos(BaseModel):
     initiatives: list[InitiativeItem]
     bpmn_models: list[BPMNModelItem]
-    today_agenda: list[dict]
-    portfolio_stats: dict
+    today_agenda: list[AgendaItem]
+    portfolio_stats: PortfolioStats
 
 
 class CockpitTD(BaseModel):
     compliance_bars: list[IndicatorItem]
-    velocity: dict
-    decrees: list[dict]
-    kb_stats: dict
+    velocity: VelocityStats
+    decrees: list[DecreeItem]
+    kb_stats: KBStats
     committee: CommitteeSessionItem | None
-    normative_alerts: list[dict]
+    normative_alerts: list[NormativeAlertItem]
 
 
 # ---------------------------------------------------------------------------

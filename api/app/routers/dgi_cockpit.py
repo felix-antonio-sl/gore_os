@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from datetime import date, timedelta
+
 from app.schemas.dgi import (
     CockpitJefeDGI,
     CockpitControlGestion,
@@ -16,6 +18,12 @@ from app.schemas.dgi import (
     BPMNModelItem,
     DataSourceItem,
     CommitteeSessionItem,
+    DecreeItem,
+    NormativeAlertItem,
+    VelocityStats,
+    KBStats,
+    AgendaItem,
+    PortfolioStats,
 )
 
 router = APIRouter(prefix="/api/dgi/cockpit", tags=["dgi"])
@@ -24,6 +32,13 @@ router = APIRouter(prefix="/api/dgi/cockpit", tags=["dgi"])
 # Signal priority helper: ROJO > AMARILLO > VERDE
 # ---------------------------------------------------------------------------
 _SIGNAL_PRIORITY = {"ROJO": 3, "AMARILLO": 2, "VERDE": 1}
+
+# Named constant: target number of active DGI initiatives (portfolio goal)
+_DGI_PORTFOLIO_TARGET = 5
+
+# Ley 21.180 compliance start date (for velocity computation)
+_LEY_21180_START = date(2024, 1, 1)
+_LEY_21180_DEADLINE = date(2027, 12, 31)
 
 DIMENSION_LABELS = {
     "PRESUPUESTO": "Presupuesto",
@@ -378,6 +393,11 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
     ]
 
     # ── Work queue: derivado de fuentes atrasadas + indicadores en alerta ──
+    _today = date.today()
+    _days_to_friday = (4 - _today.weekday()) % 7
+    _next_friday = _today + timedelta(days=_days_to_friday) if _days_to_friday > 0 else _today
+    _end_of_week = _today + timedelta(days=6 - _today.weekday())
+
     work_queue = []
 
     # Fuentes de datos atrasadas → tarea ALTA
@@ -388,7 +408,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
             "priority": "ALTA",
             "task": f"Validar {len(overdue_sources)} fuente(s) con datos atrasados: {names}",
             "status": "Pendiente",
-            "deadline": "Hoy",
+            "deadline": f"Hoy ({_today.strftime('%d/%m')})",
         })
 
     # Indicadores ROJO → tarea ALTA
@@ -399,7 +419,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
             "priority": "ALTA",
             "task": f"Investigar {len(rojo_inds)} indicador(es) en ROJO: {names_ind}",
             "status": "Pendiente",
-            "deadline": "Hoy",
+            "deadline": f"Hoy ({_today.strftime('%d/%m')})",
         })
 
     # Indicadores AMARILLO → tarea MEDIA
@@ -409,7 +429,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
             "priority": "MEDIA",
             "task": f"Monitorear {len(amarillo_inds)} indicador(es) en AMARILLO",
             "status": "En seguimiento",
-            "deadline": "Semana",
+            "deadline": f"Semana ({_end_of_week.strftime('%d/%m')})",
         })
 
     # Informe semanal pendiente → tarea MEDIA
@@ -426,7 +446,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
             "priority": "MEDIA",
             "task": "Generar borrador Informe Semanal",
             "status": "Pendiente",
-            "deadline": "Viernes",
+            "deadline": f"Vie {_next_friday.strftime('%d/%m')}",
         })
 
     # Si no hay nada urgente, agregar tarea base
@@ -435,7 +455,7 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
             "priority": "BAJA",
             "task": "Revisar tablero de indicadores y preparar reporte diario",
             "status": "Pendiente",
-            "deadline": "17:00",
+            "deadline": f"Hoy 17:00",
         })
 
     return CockpitControlGestion(
@@ -533,14 +553,39 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
         for r in bpmn_rows
     ]
 
-    # ── Today agenda: hardcoded schedule ──────────────────────────────────
-    today_agenda = [
-        {"time": "09:00", "activity": "Stand-up DGI (15 min)", "process": "Gestión DGI"},
-        {"time": "10:00", "activity": "Levantamiento proceso División Infraestructura", "process": "Ciclo Convenios"},
-        {"time": "12:00", "activity": "Revisión BPMN en REVISION con responsables", "process": "Gestión Oficios"},
-        {"time": "15:00", "activity": "Actualizar tablero Kanban iniciativas", "process": "Portfolio DGI"},
-        {"time": "16:30", "activity": "Documentar acuerdos en Comité DGI", "process": "Gestión DGI"},
+    # ── Today agenda: derived from DB + recurring items ──────────────────
+    today_agenda: list[AgendaItem] = [
+        AgendaItem(time="09:00", activity="Stand-up DGI (15 min)", process="Gestión DGI"),
     ]
+
+    # Committee sessions scheduled for today
+    sessions_sql = text("""
+        SELECT cs.session_date
+        FROM core.dgi_committee_session cs
+        JOIN ref.category st ON st.id = cs.status_id
+        WHERE DATE(cs.session_date) = CURRENT_DATE AND st.code != 'CANCELADA'
+        ORDER BY cs.session_date
+    """)
+    session_rows = (await db.execute(sessions_sql)).mappings().all()
+    for s in session_rows:
+        t = s["session_date"].strftime("%H:%M") if s["session_date"] else "10:00"
+        today_agenda.append(AgendaItem(time=t, activity="Sesión Comité DGI", process="Gestión DGI"))
+
+    # BPMN models in REVISION → suggest review task
+    bpmn_review_count = (await db.execute(text("""
+        SELECT COUNT(*) FROM core.dgi_bpmn_model b
+        JOIN ref.category st ON st.id = b.status_id
+        WHERE st.code = 'REVISION'
+    """))).scalar() or 0
+    if bpmn_review_count > 0:
+        today_agenda.append(AgendaItem(
+            time="12:00",
+            activity=f"Revisión {bpmn_review_count} modelo(s) BPMN en revisión",
+            process="Modelamiento",
+        ))
+
+    # Recurring: update Kanban board
+    today_agenda.append(AgendaItem(time="16:30", activity="Actualizar tablero Kanban iniciativas", process="Portfolio DGI"))
 
     # ── Portfolio stats ───────────────────────────────────────────────────
     stats_sql = text("""
@@ -551,11 +596,11 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
         JOIN ref.category st ON st.id = ini.status_id
     """)
     stats_row = (await db.execute(stats_sql)).mappings().first()
-    portfolio_stats = {
-        "active": int(stats_row["active"] or 0),
-        "completed": int(stats_row["completed"] or 0),
-        "target": 5,
-    }
+    portfolio_stats = PortfolioStats(
+        active=int(stats_row["active"] or 0),
+        completed=int(stats_row["completed"] or 0),
+        target=_DGI_PORTFOLIO_TARGET,
+    )
 
     return CockpitProcesos(
         initiatives=initiatives,
@@ -608,29 +653,55 @@ async def _cockpit_td(user: dict, db: AsyncSession) -> CockpitTD:
         for r in tde_rows
     ]
 
-    # ── Velocity: hardcoded per sprint cycle ─────────────────────────────
-    velocity = {
-        "current": 3,
-        "required": 5,
-        "months_remaining": 18,
-    }
+    # ── Velocity: derived from TDE indicators + Ley 21.180 deadline ──────
+    today = date.today()
+    months_elapsed = max((today.year - _LEY_21180_START.year) * 12 + today.month - _LEY_21180_START.month, 1)
+    months_remaining = max((_LEY_21180_DEADLINE.year - today.year) * 12 + _LEY_21180_DEADLINE.month - today.month, 1)
 
-    # ── Decrees checklist (DS7–DS12): hardcoded ───────────────────────────
+    avg_current = 0.0
+    avg_target = 100.0
+    if compliance_bars:
+        vals = [b.current_value for b in compliance_bars if b.current_value is not None]
+        tgts = [b.target_value for b in compliance_bars if b.target_value is not None]
+        avg_current = sum(vals) / len(vals) if vals else 0.0
+        avg_target = sum(tgts) / len(tgts) if tgts else 100.0
+
+    current_rate = round(avg_current / months_elapsed, 1)
+    required_rate = round(max(avg_target - avg_current, 0) / months_remaining, 1)
+
+    velocity = VelocityStats(
+        current=current_rate,
+        required=required_rate,
+        months_remaining=months_remaining,
+    )
+
+    # ── Decrees checklist (DS7–DS12): from core.dgi_decree ────────────────
+    decree_sql = text("""
+        SELECT d.id, d.code, d.name, d.description, st.code AS status, d.deadline
+        FROM core.dgi_decree d
+        JOIN ref.category st ON st.id = d.status_id
+        WHERE d.deleted_at IS NULL
+        ORDER BY d.code
+    """)
+    decree_rows = (await db.execute(decree_sql)).mappings().all()
     decrees = [
-        {"code": "DS7",  "name": "Decreto de Firma Electrónica",          "status": "VIGENTE"},
-        {"code": "DS8",  "name": "Decreto Interoperabilidad",              "status": "VIGENTE"},
-        {"code": "DS9",  "name": "Decreto Datos Abiertos",                 "status": "PENDIENTE"},
-        {"code": "DS10", "name": "Decreto Ciberseguridad",                 "status": "PENDIENTE"},
-        {"code": "DS11", "name": "Decreto Accesibilidad Digital",          "status": "PENDIENTE"},
-        {"code": "DS12", "name": "Decreto Gestión Documental Electrónica", "status": "PARCIAL"},
+        DecreeItem(
+            id=r["id"],
+            code=r["code"],
+            name=r["name"],
+            description=r["description"],
+            status=r["status"],
+            deadline=r["deadline"],
+            days_until=(r["deadline"] - today).days if r["deadline"] else None,
+        )
+        for r in decree_rows
     ]
 
-    # ── KB stats: hardcoded ────────────────────────────────────────────────
-    kb_stats = {
-        "pending_publication": 4,
-        "recently_updated": 12,
-        "total": 47,
-    }
+    # ── KB stats: placeholder (module pending implementation) ─────────────
+    kb_stats = KBStats(
+        module_status="pending",
+        message="Módulo pendiente de implementación",
+    )
 
     # ── Committee: next upcoming session ──────────────────────────────────
     committee_sql = text("""
@@ -660,12 +731,19 @@ async def _cockpit_td(user: dict, db: AsyncSession) -> CockpitTD:
             notes=committee_row["notes"],
         )
 
-    # ── Normative alerts: hardcoded ───────────────────────────────────────
-    normative_alerts = [
-        {"message": "DS10 Ciberseguridad vence en 35 días sin cumplimiento", "days_until": 35},
-        {"message": "DS11 Accesibilidad Digital vence en 127 días", "days_until": 127},
-        {"message": "DS9 Datos Abiertos vence en 127 días", "days_until": 127},
-    ]
+    # ── Normative alerts: derived from non-VIGENTE decrees with deadline ──
+    normative_alerts = []
+    for d in decrees:
+        if d.status == "VIGENTE" or d.days_until is None:
+            continue
+        if d.days_until < 0:
+            msg = f"{d.code} {d.name} venció hace {abs(d.days_until)} día(s)"
+        else:
+            msg = f"{d.code} {d.name} vence en {d.days_until} día(s)"
+        normative_alerts.append(NormativeAlertItem(
+            message=msg, days_until=d.days_until, decree_code=d.code,
+        ))
+    normative_alerts.sort(key=lambda a: a.days_until)
 
     return CockpitTD(
         compliance_bars=compliance_bars,

@@ -8,7 +8,7 @@ from app.core.database import get_db
 import math
 from datetime import datetime, timedelta, timezone
 from app.schemas.dgi import (
-    IndicatorItem, DataSourceItem,
+    IndicatorItem, DataSourceItem, DecreeItem, DecreeUpdate,
     OrganizacionItem, PersonaItem, TerritorioItem, EventoItem,
     RendicionItem, RendicionDetail, RendicionCreate, RendicionUpdate,
     RendicionHistoryEntry, RendicionPhaseEntry,
@@ -1487,3 +1487,89 @@ async def patch_rendicion(
     await db.commit()
 
     return {"message": "Rendición actualizada"}
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/decrees — List all decrees
+# ---------------------------------------------------------------------------
+
+@router.get("/decrees")
+async def list_decrees(user: CurrentUser, db: AsyncSession = Depends(get_db)):
+    """List all DGI decrees (Ley 21.180)."""
+    rows = (await db.execute(text("""
+        SELECT d.id, d.code, d.name, d.description, st.code AS status, d.deadline
+        FROM core.dgi_decree d
+        JOIN ref.category st ON st.id = d.status_id
+        WHERE d.deleted_at IS NULL
+        ORDER BY d.code
+    """))).mappings().all()
+    today = datetime.now(timezone.utc).date()
+    return [
+        DecreeItem(
+            id=r["id"], code=r["code"], name=r["name"], description=r["description"],
+            status=r["status"], deadline=r["deadline"],
+            days_until=(r["deadline"] - today).days if r["deadline"] else None,
+        )
+        for r in rows
+    ]
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/dgi/data/decrees/{code} — Update decree status
+# ---------------------------------------------------------------------------
+
+_DECREE_UPDATABLE = {"status", "deadline", "description"}
+
+
+@router.patch("/decrees/{code}")
+async def patch_decree(
+    code: str,
+    body: DecreeUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Update a decree's status, deadline, or description. DGI roles only."""
+    if user["role_code"] not in DGI_ROLES:
+        raise HTTPException(status_code=403, detail="Solo roles DGI pueden modificar decretos")
+
+    updates = body.model_dump(exclude_none=True)
+    invalid = set(updates.keys()) - _DECREE_UPDATABLE
+    if invalid:
+        raise HTTPException(status_code=400, detail=f"Campos no permitidos: {invalid}")
+    if not updates:
+        raise HTTPException(status_code=400, detail="No hay campos para actualizar")
+
+    row = (await db.execute(
+        text("SELECT id FROM core.dgi_decree WHERE code = :code AND deleted_at IS NULL"),
+        {"code": code},
+    )).mappings().first()
+    if not row:
+        raise HTTPException(status_code=404, detail=f"Decreto {code} no encontrado")
+
+    set_parts = ["updated_at = NOW()"]
+    params: dict = {"id": str(row["id"])}
+
+    if "status" in updates:
+        cat = (await db.execute(
+            text("SELECT id FROM ref.category WHERE scheme = 'dgi_decree_status' AND code = :code"),
+            {"code": updates["status"]},
+        )).scalar()
+        if not cat:
+            raise HTTPException(status_code=400, detail=f"Estado inválido: {updates['status']}")
+        set_parts.append("status_id = :sid")
+        params["sid"] = str(cat)
+
+    if "deadline" in updates:
+        set_parts.append("deadline = :deadline")
+        params["deadline"] = updates["deadline"]
+
+    if "description" in updates:
+        set_parts.append("description = :desc")
+        params["desc"] = updates["description"]
+
+    await db.execute(
+        text(f"UPDATE core.dgi_decree SET {', '.join(set_parts)} WHERE id = :id"),
+        params,
+    )
+    await db.commit()
+    return {"message": f"Decreto {code} actualizado"}
