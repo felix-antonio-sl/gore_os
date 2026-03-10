@@ -134,6 +134,9 @@ export default function IprDetailPage() {
   // Track info state (Poly-Switch)
   const [trackInfo, setTrackInfo] = useState<TrackInfo | null>(null);
 
+  // Refresh key — increment to remount tab components after drawer saves
+  const [refreshKey, setRefreshKey] = useState(0);
+
   const canAssign = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION"].includes(user.role_code);
   const canEdit = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
   const canTransition = user && ["ADMIN_SISTEMA", "ADMIN_REGIONAL"].includes(user.role_code);
@@ -181,6 +184,7 @@ export default function IprDetailPage() {
       setTransitions(null);
       setSelectedTransition("");
       loadTransitions();
+      setRefreshKey((k) => k + 1);
     } catch (err) {
       setTransError(err instanceof Error ? err.message : "Error al transicionar");
     } finally {
@@ -205,6 +209,7 @@ export default function IprDetailPage() {
     try {
       await api.patch(`/api/ipr/${id}`, { name: editName.trim() });
       setShowEdit(false);
+      setRefreshKey((k) => k + 1);
       // Refresh IPR data
       api.get<IprDetail>(`/api/ipr/${id}`).then(setIpr).catch(() => {});
     } catch (err) {
@@ -232,6 +237,7 @@ export default function IprDetailPage() {
     try {
       await api.patch(`/api/ipr/${id}`, { assignee_id: selectedAssignee });
       setShowAssignee(false);
+      setRefreshKey((k) => k + 1);
     } catch (err) {
       setAssigneeError(err instanceof Error ? err.message : "Error al asignar responsable");
     } finally {
@@ -517,55 +523,55 @@ export default function IprDetailPage() {
         </TabsList>
 
         <TabsContent value="compromisos" className="mt-4">
-          <TabCompromisos iprId={id} canCreate={!!canCreateCompromiso} />
+          <TabCompromisos key={refreshKey} iprId={id} canCreate={!!canCreateCompromiso} />
         </TabsContent>
 
         <TabsContent value="problemas" className="mt-4">
-          <TabProblemas iprId={id} canCreate={!!canCreateProblema} />
+          <TabProblemas key={refreshKey} iprId={id} canCreate={!!canCreateProblema} />
         </TabsContent>
 
         <TabsContent value="alertas" className="mt-4">
-          <TabAlertas iprId={id} />
+          <TabAlertas key={refreshKey} iprId={id} />
         </TabsContent>
 
         <TabsContent value="convenios" className="mt-4">
-          <TabConvenios iprId={id} canCreate={!!canCreateConvenio} />
+          <TabConvenios key={refreshKey} iprId={id} canCreate={!!canCreateConvenio} />
         </TabsContent>
 
         <TabsContent value="cdps" className="mt-4">
-          <TabCdps iprId={id} />
+          <TabCdps key={refreshKey} iprId={id} />
         </TabsContent>
 
         <TabsContent value="avances" className="mt-4">
-          <TabAvances iprId={id} canManage={!!canManageChildren} />
+          <TabAvances key={refreshKey} iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
         <TabsContent value="partes" className="mt-4">
-          <TabPartes iprId={id} canManage={!!canManageChildren} />
+          <TabPartes key={refreshKey} iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
         <TabsContent value="territorio" className="mt-4">
-          <TabTerritorio iprId={id} canManage={!!canManageChildren} />
+          <TabTerritorio key={refreshKey} iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
         <TabsContent value="hitos" className="mt-4">
-          <TabHitos iprId={id} canManage={!!canManageChildren} />
+          <TabHitos key={refreshKey} iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
         <TabsContent value="resoluciones" className="mt-4">
-          <TabResoluciones iprId={id} />
+          <TabResoluciones key={refreshKey} iprId={id} />
         </TabsContent>
 
         <TabsContent value="evaluaciones" className="mt-4">
-          <TabEvaluaciones iprId={id} canManage={!!canManageChildren} mechanismCode={ipr?.mechanism} />
+          <TabEvaluaciones key={refreshKey} iprId={id} canManage={!!canManageChildren} mechanismCode={ipr?.mechanism} />
         </TabsContent>
 
         <TabsContent value="parentesco" className="mt-4">
-          <TabParentesco iprId={id} canManage={!!canManageChildren} />
+          <TabParentesco key={refreshKey} iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
 
         <TabsContent value="admisibilidad" className="mt-4">
-          <TabAdmisibilidad iprId={id} canManage={!!canManageChildren} />
+          <TabAdmisibilidad key={refreshKey} iprId={id} canManage={!!canManageChildren} />
         </TabsContent>
       </Tabs>
 
