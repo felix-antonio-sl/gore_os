@@ -14,9 +14,9 @@
 |-----------|:----------:|:--------:|:--------:|:--------:|
 | CRITICO | 4 | 3 | 1 | 75% |
 | ALTO | 15 | 12 | 3 | 80% |
-| MEDIO | 30 | 14 | 16 | 47% |
+| MEDIO | 30 | 15 | 15 | 50% |
 | BAJO | 6 | 4 | 2 | 67% |
-| **TOTAL** | **55** | **33** | **22** | **60%** |
+| **TOTAL** | **55** | **34** | **21** | **62%** |
 
 ### 1.2 Scorecard Actualizado
 
@@ -41,7 +41,8 @@
 | Wave 2 Func | 2026-03-05 | `49ef683` | Endpoints + UI | 5 |
 | Post-fix | 2026-03-06 | `35da37e` | Correcciones post-remediacion | 0 (estabilizacion) |
 | Wave 4A | 2026-03-10 | `ee13d9a..6cc1c5b` | Quick Wins CSS/A11y | 8 |
-| **Total** | | | | **33** |
+| Wave 4B | 2026-03-10 | `c2cbdfb` | Status color unification | 1 |
+| **Total** | | | | **34** |
 
 ---
 
@@ -128,7 +129,7 @@
 | ID | Descripcion | Esfuerzo | Archivo |
 |----|-------------|----------|---------|
 | UX-021 | Cambio password sin campo de confirmacion ni strength indicator | 1h | `header.tsx` |
-| UX-022 | 3 esquemas de color inconsistentes (StatusBadge, KpiCard, Cockpit TD) | 2-3h | `status-badge.tsx` + multiples |
+| ~~UX-022~~ | ~~3 esquemas de color inconsistentes~~ | ~~2-3h~~ | **CERRADO W4B** — `lib/status-colors.ts` centralizado |
 | UX-027 | Cartera table desborda horizontalmente en pantallas <1280px | 1-2h | `cartera/page.tsx` |
 | UX-032 | Desglose divisiones en dashboard sin sort ni filtro | 1h | `dashboard/page.tsx` |
 | UX-033 | SemaforoCard sin drill-down (excepto CARTERA_IPR) | 2-3h | `dashboard/page.tsx` |
