@@ -19,6 +19,7 @@ import { CockpitTDView } from "@/components/cockpit-td";
 import { SemaforoCard } from "@/components/semaforo-card";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EmptyState } from "@/components/empty-state";
 import type {
@@ -105,6 +106,7 @@ function OperationalDashboard() {
   const [chartData, setChartData] = useState<ChartDataResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [divSort, setDivSort] = useState<"vencidos" | "ejecucion" | "name">("vencidos");
   const router = useRouter();
   const { user: authUser } = useAuth();
 
@@ -169,6 +171,12 @@ function OperationalDashboard() {
       render: (value: unknown) => <StatusBadge status={String(value ?? "")} size="sm" />,
     },
   ];
+
+  const sortedDivisions = (data?.divisions ?? []).slice().sort((a, b) => {
+    if (divSort === "vencidos") return b.vencidos - a.vencidos;
+    if (divSort === "ejecucion") return b.ejecucion_pct - a.ejecucion_pct;
+    return a.division_name.localeCompare(b.division_name);
+  });
 
   if (error) {
     return (
@@ -281,12 +289,18 @@ function OperationalDashboard() {
       {/* Division breakdown for executives */}
       {isExecutive && data?.divisions && data.divisions.length > 0 && (
         <Card>
-          <CardHeader>
+          <CardHeader className="flex-row items-center justify-between space-y-0">
             <CardTitle className="text-lg">Desglose por División</CardTitle>
+            <div className="flex gap-1">
+              {([["vencidos", "Vencidos"], ["ejecucion", "Ejecución"], ["name", "Nombre"]] as const).map(([key, label]) => (
+                <Button key={key} size="sm" variant={divSort === key ? "default" : "ghost"} className="h-7 text-xs"
+                  onClick={() => setDivSort(key)}>{label}</Button>
+              ))}
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {data.divisions.map((div) => (
+              {sortedDivisions.map((div) => (
                 <div
                   key={div.division_name}
                   className="flex items-center justify-between py-2 border-b last:border-0"
