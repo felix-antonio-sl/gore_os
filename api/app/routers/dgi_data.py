@@ -13,12 +13,19 @@ from app.schemas.dgi import (
     RendicionItem, RendicionDetail, RendicionCreate, RendicionUpdate,
     RendicionHistoryEntry, RendicionPhaseEntry,
     RenditionPhaseDefinition, EscalationItem, EscalationCheckResult, CicloPhaseStatus,
+    IndicatorCreate, IndicatorUpdate, IndicatorManualValue,
+    IndicatorLifecycleTransition, IndicatorLifecycleHistoryEntry,
 )
 from app.core.security import DGI_ROLES, WRITE_OPERATIONAL_ROLES
 
 _RENDICION_WRITE_ROLES = WRITE_OPERATIONAL_ROLES | DGI_ROLES
 
 router = APIRouter(prefix="/api/dgi/data", tags=["dgi"])
+
+
+def _require_roles(user: dict, *roles: str) -> None:
+    if user["role_code"] not in roles:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Sin permisos suficientes")
 
 
 # ---------------------------------------------------------------------------
@@ -107,6 +114,10 @@ async def _update_dimension_indicators(db: AsyncSession, dimension_code: str, ne
             SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_dimension' AND code = :dim LIMIT 1
         )
           AND deleted_at IS NULL
+          AND lifecycle_status_id = (
+              SELECT id FROM ref.category
+              WHERE scheme = 'dgi_indicator_lifecycle' AND code = 'VIGENTE' LIMIT 1
+          )
         RETURNING id
     """), {"val": new_value, "signal": signal_code, "dim": dimension_code})
     return len(result.fetchall())
@@ -176,12 +187,14 @@ async def list_indicators(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
     dimension: str | None = Query(None, description="Filter by dimension code (e.g. PRESUPUESTO, TDE)"),
+    lifecycle: str | None = Query(None, description="Filter by lifecycle status code (e.g. VIGENTE, BORRADOR)"),
 ):
     """
     List all DGI indicators.
 
-    Optional filter:
+    Optional filters:
     - dimension: filter by dgi_indicator_dimension code
+    - lifecycle: filter by dgi_indicator_lifecycle code
     """
     conditions = ["1=1"]
     params: dict = {}
@@ -189,6 +202,10 @@ async def list_indicators(
     if dimension:
         conditions.append("dim.code = :dimension")
         params["dimension"] = dimension.upper()
+
+    if lifecycle:
+        conditions.append("lc.code = :lifecycle")
+        params["lifecycle"] = lifecycle.upper()
 
     where_clause = " AND ".join(conditions)
 
@@ -204,10 +221,15 @@ async def list_indicators(
             sig.code        AS signal,
             i.trend,
             i.description,
-            i.last_updated_at
+            i.last_updated_at,
+            lc.code         AS lifecycle_status,
+            i.formula,
+            i.frequency,
+            i.source_type
         FROM core.dgi_indicator i
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
+        LEFT JOIN ref.category lc ON lc.id = i.lifecycle_status_id
         WHERE {where_clause}
         ORDER BY
             CASE sig.code
@@ -235,6 +257,10 @@ async def list_indicators(
             trend=r["trend"],
             description=r["description"],
             last_updated_at=r["last_updated_at"],
+            formula=r.get("formula"),
+            frequency=r.get("frequency"),
+            source_type=r.get("source_type"),
+            lifecycle_status=r.get("lifecycle_status"),
         )
         for r in rows
     ]
@@ -264,10 +290,15 @@ async def get_indicator(
             sig.code        AS signal,
             i.trend,
             i.description,
-            i.last_updated_at
+            i.last_updated_at,
+            lc.code         AS lifecycle_status,
+            i.formula,
+            i.frequency,
+            i.source_type
         FROM core.dgi_indicator i
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
+        LEFT JOIN ref.category lc ON lc.id = i.lifecycle_status_id
         WHERE i.id = :id
     """)
 
@@ -290,6 +321,10 @@ async def get_indicator(
         trend=row["trend"],
         description=row["description"],
         last_updated_at=row["last_updated_at"],
+        formula=row.get("formula"),
+        frequency=row.get("frequency"),
+        source_type=row.get("source_type"),
+        lifecycle_status=row.get("lifecycle_status"),
     )
 
 
@@ -319,6 +354,445 @@ async def get_indicator_history(
             "signal": r["signal"],
             "recorded_at": r["recorded_at"].isoformat(),
         }
+        for r in rows
+    ]
+
+
+# ---------------------------------------------------------------------------
+# Helper: fetch single indicator as IndicatorItem
+# ---------------------------------------------------------------------------
+
+_INDICATOR_SELECT = """
+    SELECT
+        i.id,
+        i.code,
+        i.name,
+        dim.code        AS dimension,
+        i.current_value,
+        i.target_value,
+        i.unit,
+        sig.code        AS signal,
+        i.trend,
+        i.description,
+        i.last_updated_at,
+        lc.code         AS lifecycle_status,
+        i.formula,
+        i.frequency,
+        i.source_type
+    FROM core.dgi_indicator i
+    JOIN ref.category dim ON dim.id = i.dimension_id
+    LEFT JOIN ref.category sig ON sig.id = i.signal_id
+    LEFT JOIN ref.category lc ON lc.id = i.lifecycle_status_id
+    WHERE i.id = :id
+"""
+
+
+async def _get_indicator_item(indicator_id: UUID, db: AsyncSession) -> IndicatorItem:
+    """Fetch a single indicator and return as IndicatorItem. Raises 404."""
+    row = (await db.execute(text(_INDICATOR_SELECT), {"id": str(indicator_id)})).mappings().first()
+    if not row:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Indicador no encontrado",
+        )
+    return IndicatorItem(
+        id=row["id"],
+        code=row["code"],
+        name=row["name"],
+        dimension=row["dimension"],
+        current_value=row["current_value"],
+        target_value=row["target_value"],
+        unit=row["unit"],
+        signal=row["signal"],
+        trend=row["trend"],
+        description=row["description"],
+        last_updated_at=row["last_updated_at"],
+        formula=row.get("formula"),
+        frequency=row.get("frequency"),
+        source_type=row.get("source_type"),
+        lifecycle_status=row.get("lifecycle_status"),
+    )
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/data/indicators — Create indicator
+# ---------------------------------------------------------------------------
+
+@router.post("/indicators", response_model=IndicatorItem, status_code=status.HTTP_201_CREATED)
+async def create_indicator(
+    body: IndicatorCreate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Create a new DGI indicator. JEFE_DGI only.
+    Auto-generates code as IND-{DIMENSION}-{seq:03d}.
+    Always starts in BORRADOR lifecycle.
+    """
+    _require_roles(user, "JEFE_DGI")
+
+    dim_upper = body.dimension.upper()
+
+    # Validate dimension exists
+    dim_row = (await db.execute(text("""
+        SELECT id FROM ref.category
+        WHERE scheme = 'dgi_indicator_dimension' AND code = :dim
+    """), {"dim": dim_upper})).mappings().first()
+    if not dim_row:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Dimensión '{dim_upper}' no existe en ref.category",
+        )
+
+    # Advisory lock + code generation
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('dgi_indicator_code'))"))
+
+    seq_row = (await db.execute(text("""
+        SELECT COALESCE(MAX(
+            CAST(SUBSTRING(code FROM '[0-9]+$') AS INTEGER)
+        ), 0) + 1 AS next_seq
+        FROM core.dgi_indicator
+        WHERE code LIKE :prefix
+    """), {"prefix": f"IND-{dim_upper}-%"})).mappings().first()
+    next_seq = seq_row["next_seq"] if seq_row else 1
+    code = f"IND-{dim_upper}-{next_seq:03d}"
+
+    # Insert
+    result = (await db.execute(text("""
+        INSERT INTO core.dgi_indicator (
+            code, name, description, dimension_id,
+            formula, frequency, source_type, unit, target_value,
+            division_id, source_description, lifecycle_status_id,
+            created_at, updated_at
+        ) VALUES (
+            :code, :name, :description,
+            (SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_dimension' AND code = :dim LIMIT 1),
+            :formula, :frequency, :source_type, :unit, :target_value,
+            :division_id, :source_description,
+            (SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_lifecycle' AND code = 'BORRADOR' LIMIT 1),
+            NOW(), NOW()
+        )
+        RETURNING id
+    """), {
+        "code": code,
+        "name": body.name,
+        "description": body.description,
+        "dim": dim_upper,
+        "formula": body.formula,
+        "frequency": body.frequency,
+        "source_type": body.source_type,
+        "unit": body.unit,
+        "target_value": body.target_value,
+        "division_id": str(body.division_id) if body.division_id else None,
+        "source_description": body.source_description,
+    })).mappings().first()
+
+    await db.commit()
+    return await _get_indicator_item(result["id"], db)
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/dgi/data/indicators/{id} — Edit indicator
+# ---------------------------------------------------------------------------
+
+_INDICATOR_FIELD_ALLOWLIST = {
+    "name", "description", "formula", "frequency", "source_type",
+    "unit", "target_value", "division_id", "source_description",
+}
+
+
+@router.patch("/indicators/{indicator_id}", response_model=IndicatorItem)
+async def update_indicator(
+    indicator_id: UUID,
+    body: IndicatorUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Edit an existing indicator. JEFE_DGI or ESP_CONTROL_GESTION.
+    Cannot edit if lifecycle is DEPRECADO.
+    """
+    _require_roles(user, "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    # Check indicator exists and is not DEPRECADO
+    check = (await db.execute(text("""
+        SELECT i.id, lc.code AS lifecycle_status
+        FROM core.dgi_indicator i
+        LEFT JOIN ref.category lc ON lc.id = i.lifecycle_status_id
+        WHERE i.id = :id
+    """), {"id": str(indicator_id)})).mappings().first()
+    if not check:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Indicador no encontrado")
+    if check["lifecycle_status"] == "DEPRECADO":
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="No se puede editar un indicador DEPRECADO",
+        )
+
+    # Build SET clause from provided fields
+    updates = body.model_dump(exclude_unset=True)
+    if not updates:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No se enviaron campos para actualizar")
+
+    invalid = set(updates.keys()) - _INDICATOR_FIELD_ALLOWLIST
+    if invalid:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Campos no permitidos: {', '.join(sorted(invalid))}",
+        )
+
+    set_parts = []
+    params: dict = {"id": str(indicator_id)}
+    for field, value in updates.items():
+        if field == "division_id":
+            set_parts.append(f"{field} = :p_{field}")
+            params[f"p_{field}"] = str(value) if value else None
+        else:
+            set_parts.append(f"{field} = :p_{field}")
+            params[f"p_{field}"] = value
+    set_parts.append("updated_at = NOW()")
+    set_clause = ", ".join(set_parts)
+
+    await db.execute(text(f"""
+        UPDATE core.dgi_indicator
+        SET {set_clause}
+        WHERE id = :id
+    """), params)
+
+    await db.commit()
+    return await _get_indicator_item(indicator_id, db)
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/data/indicators/{id}/value — Manual value entry
+# ---------------------------------------------------------------------------
+
+@router.post("/indicators/{indicator_id}/value", response_model=IndicatorItem)
+async def set_indicator_value(
+    indicator_id: UUID,
+    body: IndicatorManualValue,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Manually set the current value of an indicator.
+    Only for MANUAL or EXTERNAL source_type.
+    Captures a snapshot before updating.
+    Recalculates signal from metadata thresholds.
+    """
+    _require_roles(user, "JEFE_DGI", "ESP_CONTROL_GESTION")
+
+    # Fetch indicator to validate source_type
+    row = (await db.execute(text("""
+        SELECT i.id, i.source_type, i.current_value, i.signal_id, i.metadata
+        FROM core.dgi_indicator i
+        WHERE i.id = :id
+    """), {"id": str(indicator_id)})).mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Indicador no encontrado")
+
+    source_type = row["source_type"] or "MANUAL"
+    if source_type not in ("MANUAL", "EXTERNAL"):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Solo indicadores MANUAL o EXTERNAL aceptan valores manuales (actual: {source_type})",
+        )
+
+    # Capture snapshot of current value
+    if row["current_value"] is not None:
+        await db.execute(text("""
+            INSERT INTO core.dgi_indicator_snapshot (indicator_id, value, signal_id, recorded_at)
+            VALUES (:id, :val, :sig, NOW())
+        """), {
+            "id": str(indicator_id),
+            "val": row["current_value"],
+            "sig": str(row["signal_id"]) if row["signal_id"] else None,
+        })
+
+    # Recalculate signal from metadata thresholds
+    metadata = row["metadata"] if row["metadata"] else {}
+    rojo_threshold = metadata.get("rojo_threshold")
+    amarillo_threshold = metadata.get("amarillo_threshold")
+
+    new_value = body.value
+    if rojo_threshold is not None and amarillo_threshold is not None:
+        rojo_t = float(rojo_threshold)
+        amarillo_t = float(amarillo_threshold)
+        if new_value <= rojo_t:
+            signal_code = "ROJO"
+        elif new_value <= amarillo_t:
+            signal_code = "AMARILLO"
+        else:
+            signal_code = "VERDE"
+    else:
+        # No thresholds — keep existing signal
+        signal_code = None
+
+    if signal_code:
+        await db.execute(text("""
+            UPDATE core.dgi_indicator
+            SET current_value = :val,
+                signal_id = (SELECT id FROM ref.category WHERE scheme = 'dgi_signal' AND code = :signal LIMIT 1),
+                last_updated_at = NOW(),
+                updated_at = NOW()
+            WHERE id = :id
+        """), {"val": new_value, "signal": signal_code, "id": str(indicator_id)})
+    else:
+        await db.execute(text("""
+            UPDATE core.dgi_indicator
+            SET current_value = :val,
+                last_updated_at = NOW(),
+                updated_at = NOW()
+            WHERE id = :id
+        """), {"val": new_value, "id": str(indicator_id)})
+
+    await db.commit()
+    return await _get_indicator_item(indicator_id, db)
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/data/indicators/{id}/lifecycle — Lifecycle transition
+# ---------------------------------------------------------------------------
+
+_LIFECYCLE_TRANSITIONS = {
+    ("BORRADOR", "APROBADO"),
+    ("APROBADO", "VIGENTE"),
+    ("VIGENTE", "DEPRECADO"),
+    ("APROBADO", "BORRADOR"),
+    ("VIGENTE", "APROBADO"),
+}
+
+
+@router.post("/indicators/{indicator_id}/lifecycle", response_model=IndicatorItem)
+async def transition_indicator_lifecycle(
+    indicator_id: UUID,
+    body: IndicatorLifecycleTransition,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Transition an indicator to a new lifecycle status. JEFE_DGI only.
+    Valid transitions:
+      BORRADOR -> APROBADO
+      APROBADO -> VIGENTE
+      VIGENTE  -> DEPRECADO
+      APROBADO -> BORRADOR (revert)
+      VIGENTE  -> APROBADO (revert)
+    """
+    _require_roles(user, "JEFE_DGI")
+
+    target = body.target_status.upper()
+
+    # Get current lifecycle
+    row = (await db.execute(text("""
+        SELECT i.id, lc.code AS lifecycle_status, i.lifecycle_status_id
+        FROM core.dgi_indicator i
+        LEFT JOIN ref.category lc ON lc.id = i.lifecycle_status_id
+        WHERE i.id = :id
+    """), {"id": str(indicator_id)})).mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Indicador no encontrado")
+
+    current = row["lifecycle_status"] or "BORRADOR"
+
+    if (current, target) not in _LIFECYCLE_TRANSITIONS:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Transición no válida: {current} → {target}",
+        )
+
+    # Resolve target lifecycle category id
+    target_cat = (await db.execute(text("""
+        SELECT id FROM ref.category
+        WHERE scheme = 'dgi_indicator_lifecycle' AND code = :code
+    """), {"code": target})).mappings().first()
+    if not target_cat:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Estado lifecycle '{target}' no encontrado en ref.category",
+        )
+
+    # Insert lifecycle history
+    await db.execute(text("""
+        INSERT INTO core.dgi_indicator_lifecycle_history (
+            indicator_id, previous_lifecycle_id, new_lifecycle_id,
+            changed_by_id, comment, changed_at
+        ) VALUES (
+            :indicator_id,
+            :prev_id,
+            :new_id,
+            :user_id,
+            :comment,
+            NOW()
+        )
+    """), {
+        "indicator_id": str(indicator_id),
+        "prev_id": str(row["lifecycle_status_id"]) if row["lifecycle_status_id"] else None,
+        "new_id": str(target_cat["id"]),
+        "user_id": str(user["id"]),
+        "comment": body.comment,
+    })
+
+    # Update indicator
+    await db.execute(text("""
+        UPDATE core.dgi_indicator
+        SET lifecycle_status_id = :new_id, updated_at = NOW()
+        WHERE id = :id
+    """), {"new_id": str(target_cat["id"]), "id": str(indicator_id)})
+
+    await db.commit()
+    return await _get_indicator_item(indicator_id, db)
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/data/indicators/{id}/lifecycle-history — Audit log
+# ---------------------------------------------------------------------------
+
+@router.get(
+    "/indicators/{indicator_id}/lifecycle-history",
+    response_model=list[IndicatorLifecycleHistoryEntry],
+)
+async def get_indicator_lifecycle_history(
+    indicator_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Return the lifecycle transition audit log for an indicator. DGI roles only."""
+    _require_roles(user, *DGI_ROLES)
+
+    # Verify indicator exists
+    exists = (await db.execute(text(
+        "SELECT 1 FROM core.dgi_indicator WHERE id = :id"
+    ), {"id": str(indicator_id)})).first()
+    if not exists:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Indicador no encontrado")
+
+    rows = (await db.execute(text("""
+        SELECT
+            h.id,
+            prev.code   AS previous_lifecycle,
+            nxt.code    AS new_lifecycle,
+            CONCAT(p.names, ' ', p.paternal_surname) AS changed_by_name,
+            h.comment,
+            h.changed_at
+        FROM core.dgi_indicator_lifecycle_history h
+        LEFT JOIN ref.category prev ON prev.id = h.previous_lifecycle_id
+        JOIN ref.category nxt ON nxt.id = h.new_lifecycle_id
+        LEFT JOIN core."user" u ON u.id = h.changed_by_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE h.indicator_id = :id
+        ORDER BY h.changed_at DESC
+    """), {"id": str(indicator_id)})).mappings().all()
+
+    return [
+        IndicatorLifecycleHistoryEntry(
+            id=r["id"],
+            previous_lifecycle=r["previous_lifecycle"],
+            new_lifecycle=r["new_lifecycle"],
+            changed_by_name=r["changed_by_name"],
+            comment=r["comment"],
+            changed_at=r["changed_at"],
+        )
         for r in rows
     ]
 

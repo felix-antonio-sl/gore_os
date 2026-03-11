@@ -22,6 +22,8 @@ import {
   ShieldCheck,
   Layers,
   Receipt,
+  GitBranch,
+  SearchX,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -60,6 +62,8 @@ const dgiNav: NavItem[] = [
   { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
   { label: "Rendiciones", href: "/datos?dominio=rendiciones", icon: <Receipt className="size-4" /> },
   { label: "Tablero", href: "/tablero", icon: <KanbanSquare className="size-4" /> },
+  { label: "Procesos", href: "/procesos", icon: <GitBranch className="size-4" /> },
+  { label: "Cuellos Botella", href: "/cuellos-de-botella", icon: <SearchX className="size-4" /> },
   { label: "Datos", href: "/datos", icon: <Database className="size-4" /> },
   { label: "Informes", href: "/informes", icon: <FileText className="size-4" /> },
 ];

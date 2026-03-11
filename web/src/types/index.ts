@@ -289,6 +289,10 @@ export interface DGIIndicator {
   trend: "up" | "down" | "flat" | null;
   description: string | null;
   last_updated_at: string | null;
+  formula: string | null;
+  frequency: string | null;
+  source_type: "AUTO" | "MANUAL" | "EXTERNAL" | null;
+  lifecycle_status: "BORRADOR" | "APROBADO" | "VIGENTE" | "DEPRECADO" | null;
 }
 
 export interface DGIDimensionSummary {
@@ -775,4 +779,149 @@ export interface PersonRef {
   paternal_surname: string;
   maternal_surname: string | null;
   organization_name: string | null;
+}
+
+// ---------------------------------------------------------------------------
+// Process Catalog Types (DGI Wave A)
+// ---------------------------------------------------------------------------
+export interface ProcessListItem {
+  id: string;
+  code: string | null;
+  name: string;
+  description: string | null;
+  scope: string | null;
+  division_id: string | null;
+  division_name: string | null;
+  owner_id: string | null;
+  owner_name: string | null;
+  status: string;
+  criticality: string;
+  bpmn_count: number;
+}
+
+export interface ProcessDetail extends ProcessListItem {
+  created_at: string;
+  updated_at: string;
+  bpmn_models: Array<{
+    id: string;
+    code: string | null;
+    process_name: string;
+    version: string;
+    status: string;
+    description: string | null;
+  }>;
+}
+
+export interface ProcessActor {
+  id: string;
+  actor_type: string;
+  actor_name: string;
+  lane_label: string | null;
+  description: string | null;
+  created_at: string;
+}
+
+export interface ProcessRule {
+  id: string;
+  code: string;
+  description: string;
+  rule_type: string;
+  created_at: string;
+}
+
+export interface ProcessMetric {
+  id: string;
+  name: string;
+  value: number | null;
+  unit: string | null;
+  measured_at: string;
+  measurement_type: string;
+  source: string | null;
+  created_at: string;
+}
+
+export interface ProcessPainPoint {
+  id: string;
+  description: string;
+  impact: string;
+  bpmn_stage: string | null;
+  reported_by_name: string | null;
+  created_at: string;
+}
+
+export interface ImprovementOpportunity {
+  id: string;
+  dimension: string;
+  description: string;
+  impact: string;
+  effort: string;
+  status: string;
+  initiative_id: string | null;
+  initiative_code: string | null;
+  created_at: string;
+}
+
+export interface ProcessProgressItem {
+  division_name: string;
+  total: number;
+  identificado: number;
+  en_levantamiento: number;
+  modelado: number;
+  validado: number;
+  publicado: number;
+  suspendido: number;
+}
+
+// ---------------------------------------------------------------------------
+// Bottleneck Detection Types (DGI Wave A)
+// ---------------------------------------------------------------------------
+export interface BottleneckFinding {
+  finding_type: "ACUMULACION" | "CICLO_TIEMPO" | "PRESUPUESTO";
+  division_id: string | null;
+  division_name: string | null;
+  description: string;
+  detection_value: number;
+  detection_threshold: number;
+  severity: "ALTO" | "MEDIO";
+  pending_commitments?: number;
+  open_problems?: number;
+  current_avg_days?: number;
+  historical_avg_days?: number;
+  delta_pct?: number;
+  execution_pct?: number;
+  program_name?: string;
+}
+
+export interface BottleneckInvestigation {
+  id: string;
+  code: string | null;
+  status: string;
+  status_label: string | null;
+  division_id: string | null;
+  division_name: string | null;
+  detection_type: string;
+  detection_value: number | null;
+  detection_threshold: number | null;
+  problem: string | null;
+  detected_at: string;
+  closed_at: string | null;
+  created_by_name: string | null;
+  updated_at: string;
+}
+
+export interface BottleneckDetail extends BottleneckInvestigation {
+  indicator_id: string | null;
+  process_id: string | null;
+  verification: string | null;
+  root_cause_analysis: string | null;
+  proposal: string | null;
+  communication: string | null;
+  follow_up: string | null;
+}
+
+export interface BottleneckSummary {
+  total_active: number;
+  by_status: { code: string; label: string; count: number }[];
+  by_division: { division_name: string; count: number }[];
+  critical_count: number;
 }

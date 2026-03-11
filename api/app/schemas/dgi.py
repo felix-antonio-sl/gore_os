@@ -1,3 +1,4 @@
+from __future__ import annotations
 from pydantic import BaseModel
 from uuid import UUID
 from datetime import date, datetime
@@ -18,6 +19,10 @@ class IndicatorItem(BaseModel):
     trend: str | None  # up, down, flat
     description: str | None
     last_updated_at: datetime | None
+    formula: str | None = None
+    frequency: str | None = None
+    source_type: str | None = None
+    lifecycle_status: str | None = None
 
 
 class DimensionSummary(BaseModel):
@@ -208,6 +213,7 @@ class CockpitControlGestion(BaseModel):
     indicators_alert: list[IndicatorItem]
     trends: list[IndicatorItem]
     work_queue: list[dict]
+    bottleneck_summary: BottleneckSummary | None = None
 
 
 class CockpitProcesos(BaseModel):
@@ -431,3 +437,270 @@ class ReportSectionUpdate(BaseModel):
 
 class ReportStatusChange(BaseModel):
     status: str  # EN_REVISION, ENVIADO, BORRADOR
+
+
+# ---------------------------------------------------------------------------
+# Indicator Lifecycle (CG-001..009)
+# ---------------------------------------------------------------------------
+class IndicatorCreate(BaseModel):
+    code: str | None = None
+    name: str
+    dimension: str
+    description: str | None = None
+    formula: str | None = None
+    frequency: str | None = None
+    source_type: str = "MANUAL"
+    unit: str = "%"
+    target_value: float | None = None
+    division_id: UUID | None = None
+    source_description: str | None = None
+
+
+class IndicatorUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    formula: str | None = None
+    frequency: str | None = None
+    source_type: str | None = None
+    unit: str | None = None
+    target_value: float | None = None
+    division_id: UUID | None = None
+    source_description: str | None = None
+
+
+class IndicatorManualValue(BaseModel):
+    value: float
+    comment: str | None = None
+
+
+class IndicatorLifecycleTransition(BaseModel):
+    target_status: str
+    comment: str | None = None
+
+
+class IndicatorLifecycleHistoryEntry(BaseModel):
+    id: UUID
+    previous_lifecycle: str | None
+    new_lifecycle: str
+    changed_by_name: str | None
+    comment: str | None
+    changed_at: datetime
+
+
+# ---------------------------------------------------------------------------
+# Process Catalog (MP-001..013)
+# ---------------------------------------------------------------------------
+class ProcessItem(BaseModel):
+    id: UUID
+    code: str | None
+    name: str
+    description: str | None
+    scope: str | None
+    division_id: UUID | None
+    division_name: str | None
+    owner_id: UUID | None
+    owner_name: str | None
+    status: str
+    criticality: str
+    bpmn_count: int = 0
+
+
+class ProcessCreate(BaseModel):
+    name: str
+    description: str | None = None
+    scope: str | None = None
+    division_id: UUID | None = None
+    owner_id: UUID | None = None
+    status: str = "IDENTIFICADO"
+    criticality: str = "MEDIA"
+
+
+class ProcessUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    scope: str | None = None
+    division_id: UUID | None = None
+    owner_id: UUID | None = None
+    status: str | None = None
+    criticality: str | None = None
+
+
+class ProcessDetail(ProcessItem):
+    created_at: datetime
+    updated_at: datetime
+    bpmn_models: list[BPMNModelItem] = []
+
+
+class ProcessActorItem(BaseModel):
+    id: UUID
+    actor_type: str
+    actor_name: str
+    lane_label: str | None
+    description: str | None
+    created_at: datetime
+
+
+class ProcessActorCreate(BaseModel):
+    actor_type: str
+    actor_name: str
+    lane_label: str | None = None
+    description: str | None = None
+
+
+class ProcessRuleItem(BaseModel):
+    id: UUID
+    code: str
+    description: str
+    rule_type: str
+    created_at: datetime
+
+
+class ProcessRuleCreate(BaseModel):
+    code: str
+    description: str
+    rule_type: str
+
+
+class ProcessMetricItem(BaseModel):
+    id: UUID
+    name: str
+    value: float | None
+    unit: str | None
+    measured_at: date
+    measurement_type: str
+    source: str | None
+    created_at: datetime
+
+
+class ProcessMetricCreate(BaseModel):
+    name: str
+    value: float | None = None
+    unit: str | None = None
+    measured_at: date | None = None
+    measurement_type: str = "BASELINE"
+    source: str | None = None
+
+
+class ProcessPainPointItem(BaseModel):
+    id: UUID
+    description: str
+    impact: str
+    bpmn_stage: str | None
+    reported_by_name: str | None
+    created_at: datetime
+
+
+class ProcessPainPointCreate(BaseModel):
+    description: str
+    impact: str
+    bpmn_stage: str | None = None
+
+
+class ImprovementOpportunityItem(BaseModel):
+    id: UUID
+    dimension: str
+    description: str
+    impact: str
+    effort: str
+    status: str
+    initiative_id: UUID | None
+    initiative_code: str | None
+    created_at: datetime
+
+
+class ImprovementOpportunityCreate(BaseModel):
+    dimension: str
+    description: str
+    impact: str
+    effort: str
+    status: str = "PROPUESTA"
+
+
+class ImprovementOpportunityUpdate(BaseModel):
+    status: str | None = None
+    initiative_id: UUID | None = None
+
+
+class ProcessProgressItem(BaseModel):
+    division_name: str
+    total: int
+    identificado: int = 0
+    en_levantamiento: int = 0
+    modelado: int = 0
+    validado: int = 0
+    publicado: int = 0
+    suspendido: int = 0
+
+
+# ---------------------------------------------------------------------------
+# Bottleneck Detection (CG-019..023)
+# ---------------------------------------------------------------------------
+class BottleneckFinding(BaseModel):
+    finding_type: str
+    division_id: UUID | None
+    division_name: str | None
+    description: str
+    detection_value: float
+    detection_threshold: float
+    severity: str
+    pending_commitments: int | None = None
+    open_problems: int | None = None
+    current_avg_days: float | None = None
+    historical_avg_days: float | None = None
+    delta_pct: float | None = None
+    execution_pct: float | None = None
+    program_name: str | None = None
+
+
+class BottleneckInvestigationCreate(BaseModel):
+    division_id: UUID | None = None
+    indicator_id: UUID | None = None
+    process_id: UUID | None = None
+    detection_type: str
+    detection_value: float | None = None
+    detection_threshold: float | None = None
+    problem: str | None = None
+
+
+class BottleneckInvestigationUpdate(BaseModel):
+    status: str | None = None
+    problem: str | None = None
+    verification: str | None = None
+    root_cause_analysis: str | None = None
+    proposal: str | None = None
+    communication: str | None = None
+    follow_up: str | None = None
+
+
+class BottleneckInvestigationItem(BaseModel):
+    id: UUID
+    code: str | None
+    status: str
+    status_label: str | None = None
+    division_id: UUID | None
+    division_name: str | None
+    detection_type: str
+    detection_value: float | None
+    detection_threshold: float | None
+    problem: str | None
+    detected_at: datetime
+    closed_at: datetime | None
+    created_by_name: str | None = None
+    updated_at: datetime
+
+
+class BottleneckInvestigationDetail(BottleneckInvestigationItem):
+    indicator_id: UUID | None = None
+    process_id: UUID | None = None
+    verification: str | None = None
+    root_cause_analysis: str | None = None
+    proposal: str | None = None
+    communication: str | None = None
+    follow_up: str | None = None
+
+
+class BottleneckSummary(BaseModel):
+    total_active: int
+    by_status: list[dict] = []
+    by_division: list[dict] = []
+    critical_count: int = 0

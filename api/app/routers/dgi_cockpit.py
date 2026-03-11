@@ -71,6 +71,8 @@ async def _cockpit_jefe_dgi(user: dict, db: AsyncSession) -> CockpitJefeDGI:
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
         WHERE i.deleted_at IS NULL
+          AND (i.lifecycle_status_id IS NULL OR i.lifecycle_status_id IN (
+              SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_lifecycle' AND code = 'VIGENTE'))
         ORDER BY dim.code
     """)
     ind_rows = (await db.execute(ind_sql)).mappings().all()
@@ -335,6 +337,8 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
         JOIN ref.category sig ON sig.id = i.signal_id
         WHERE sig.code IN ('ROJO', 'AMARILLO')
           AND i.deleted_at IS NULL
+          AND (i.lifecycle_status_id IS NULL OR i.lifecycle_status_id IN (
+              SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_lifecycle' AND code = 'VIGENTE'))
         ORDER BY
             CASE sig.code WHEN 'ROJO' THEN 1 WHEN 'AMARILLO' THEN 2 ELSE 3 END,
             i.name
@@ -375,6 +379,8 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
         WHERE i.deleted_at IS NULL
+          AND (i.lifecycle_status_id IS NULL OR i.lifecycle_status_id IN (
+              SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_lifecycle' AND code = 'VIGENTE'))
         ORDER BY dim.code, i.name
     """)
     trends_rows = (await db.execute(trends_sql)).mappings().all()
@@ -461,11 +467,19 @@ async def _cockpit_control_gestion(user: dict, db: AsyncSession) -> CockpitContr
             "deadline": f"Hoy 17:00",
         })
 
+    # ── Bottleneck summary ────────────────────────────────────────────────
+    from app.routers.dgi_bottleneck import fetch_bottleneck_summary
+    try:
+        bottleneck_summary = await fetch_bottleneck_summary(db)
+    except Exception:
+        bottleneck_summary = None
+
     return CockpitControlGestion(
         data_sources=data_sources,
         indicators_alert=indicators_alert,
         trends=trends,
         work_queue=work_queue,
+        bottleneck_summary=bottleneck_summary,
     )
 
 
@@ -640,6 +654,8 @@ async def _cockpit_td(user: dict, db: AsyncSession) -> CockpitTD:
         JOIN ref.category dim ON dim.id = i.dimension_id
         LEFT JOIN ref.category sig ON sig.id = i.signal_id
         WHERE dim.code = 'TDE' AND i.deleted_at IS NULL
+          AND (i.lifecycle_status_id IS NULL OR i.lifecycle_status_id IN (
+              SELECT id FROM ref.category WHERE scheme = 'dgi_indicator_lifecycle' AND code = 'VIGENTE'))
         ORDER BY i.name
     """)
     tde_rows = (await db.execute(tde_sql)).mappings().all()
