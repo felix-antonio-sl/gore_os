@@ -853,8 +853,8 @@ export interface ImprovementOpportunity {
   id: string;
   dimension: string;
   description: string;
-  impact: string;
-  effort: string;
+  impact: string | null;
+  effort: string | null;
   status: string;
   initiative_id: string | null;
   initiative_code: string | null;
