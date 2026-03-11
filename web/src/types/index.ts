@@ -319,6 +319,9 @@ export interface DGIInitiative {
   progress: number;
   wip_column: string | null;
   sort_order: number;
+  started_at: string | null;
+  completed_at: string | null;
+  days_in_column: number | null;
 }
 
 export interface DGIReport {
@@ -924,4 +927,46 @@ export interface BottleneckSummary {
   by_status: { code: string; label: string; count: number }[];
   by_division: { division_name: string; count: number }[];
   critical_count: number;
+}
+
+// ---------------------------------------------------------------------------
+// DMAIC Types (Wave C)
+// ---------------------------------------------------------------------------
+export interface DMAICGateResult {
+  phase: string;
+  met: boolean;
+  detail: string;
+}
+
+export interface DMAICDetail {
+  initiative_id: string;
+  current_phase: string | null;
+  phases: Record<string, Record<string, string>>;
+  gates: DMAICGateResult[];
+}
+
+export interface LeanMetrics {
+  throughput_30d: number;
+  throughput_60d: number;
+  throughput_90d: number;
+  lead_time_avg: number | null;
+  cycle_time_avg: number | null;
+  wip_count: number;
+  aging: { id: string; name: string; days: number; column: string }[];
+}
+
+export interface MetricComparison {
+  name: string;
+  baseline_value: number | null;
+  post_mejora_value: number | null;
+  unit: string | null;
+  delta: number | null;
+  improved: boolean;
+}
+
+export interface ImpactEffortCell {
+  impact: string;
+  effort: string;
+  count: number;
+  opportunities: { id: string; description: string }[];
 }

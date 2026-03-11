@@ -58,6 +58,9 @@ class InitiativeItem(BaseModel):
     progress: float
     wip_column: str | None
     sort_order: int = 0
+    started_at: datetime | None = None
+    completed_at: datetime | None = None
+    days_in_column: int | None = None
 
 
 class InitiativeCreate(BaseModel):
@@ -704,3 +707,74 @@ class BottleneckSummary(BaseModel):
     by_status: list[dict] = []
     by_division: list[dict] = []
     critical_count: int = 0
+
+
+# ---------------------------------------------------------------------------
+# DMAIC Content (Wave C)
+# ---------------------------------------------------------------------------
+class DMAICGateResult(BaseModel):
+    phase: str
+    met: bool
+    detail: str
+
+
+class DMAICDetail(BaseModel):
+    initiative_id: UUID
+    current_phase: str | None
+    phases: dict  # {define: {...}, measure: {...}, ...}
+    gates: list[DMAICGateResult]
+
+
+class DMAICPhaseUpdate(BaseModel):
+    problem: str | None = None
+    scope: str | None = None
+    objectives: str | None = None
+    stakeholders: str | None = None
+    sponsor: str | None = None
+    baseline_summary: str | None = None
+    measurement_plan: str | None = None
+    data_sources: str | None = None
+    root_causes: str | None = None
+    analysis_method: str | None = None
+    prioritized_causes: str | None = None
+    solution_design: str | None = None
+    pilot_plan: str | None = None
+    pilot_result: str | None = None
+    risk_mitigation: str | None = None
+    verification_plan: str | None = None
+    verification_criteria: str | None = None
+    handoff_to: str | None = None
+    lessons_learned: str | None = None
+
+
+class DMAICTransition(BaseModel):
+    target_phase: str
+
+
+class LeanMetrics(BaseModel):
+    throughput_30d: int
+    throughput_60d: int
+    throughput_90d: int
+    lead_time_avg: float | None
+    cycle_time_avg: float | None
+    wip_count: int
+    aging: list[dict]
+
+
+# ---------------------------------------------------------------------------
+# Process Analytics (Wave C)
+# ---------------------------------------------------------------------------
+class MetricComparison(BaseModel):
+    name: str
+    baseline_value: float | None
+    post_mejora_value: float | None
+    unit: str | None
+    delta: float | None
+    improved: bool
+
+
+class ImpactEffortCell(BaseModel):
+    impact: str
+    effort: str
+    count: int
+    opportunities: list[dict]

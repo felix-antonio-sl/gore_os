@@ -14,9 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Trash2, Rocket } from "lucide-react";
+import { Plus, Trash2, Rocket, Grid3X3 } from "lucide-react";
 import { toast } from "sonner";
-import type { ImprovementOpportunity } from "@/types";
+import type { ImprovementOpportunity, ImpactEffortCell } from "@/types";
 
 interface TabOpportunitiesProps {
   processId: string;
@@ -46,6 +46,9 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [creatingInitiativeId, setCreatingInitiativeId] = useState<string | null>(null);
+  const [showMatrix, setShowMatrix] = useState(false);
+  const [matrix, setMatrix] = useState<ImpactEffortCell[]>([]);
+  const [loadingMatrix, setLoadingMatrix] = useState(false);
 
   const load = () => {
     setLoading(true);
@@ -54,6 +57,15 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
       .then(setItems)
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
+  };
+
+  const loadMatrix = () => {
+    setLoadingMatrix(true);
+    api
+      .get<ImpactEffortCell[]>("/api/dgi/processes/impact-effort")
+      .then(setMatrix)
+      .catch(() => setMatrix([]))
+      .finally(() => setLoadingMatrix(false));
   };
 
   useEffect(() => {
@@ -252,12 +264,26 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
       <div>
         <div className="flex items-center justify-between mb-4">
           <EmptyState compact title="Sin oportunidades de mejora registradas" />
-          {canEdit && (
-            <Button size="sm" onClick={() => setShowForm(true)}>
-              <Plus className="size-4 mr-1" />
-              Agregar Oportunidad
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant={showMatrix ? "secondary" : "outline"}
+              onClick={() => {
+                const next = !showMatrix;
+                setShowMatrix(next);
+                if (next) loadMatrix();
+              }}
+            >
+              <Grid3X3 className="size-4 mr-1" />
+              Matriz
             </Button>
-          )}
+            {canEdit && (
+              <Button size="sm" onClick={() => setShowForm(true)}>
+                <Plus className="size-4 mr-1" />
+                Agregar Oportunidad
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -269,12 +295,26 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
         <p className="text-sm text-muted-foreground">
           {items.length} {items.length === 1 ? "oportunidad" : "oportunidades"}
         </p>
-        {canEdit && (
-          <Button size="sm" onClick={() => { resetForm(); setShowForm(!showForm); }}>
-            <Plus className="size-4 mr-1" />
-            Agregar Oportunidad
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            variant={showMatrix ? "secondary" : "outline"}
+            onClick={() => {
+              const next = !showMatrix;
+              setShowMatrix(next);
+              if (next) loadMatrix();
+            }}
+          >
+            <Grid3X3 className="size-4 mr-1" />
+            Matriz
           </Button>
-        )}
+          {canEdit && (
+            <Button size="sm" onClick={() => { resetForm(); setShowForm(!showForm); }}>
+              <Plus className="size-4 mr-1" />
+              Agregar Oportunidad
+            </Button>
+          )}
+        </div>
       </div>
 
       {showForm && (
@@ -338,6 +378,58 @@ export function TabOpportunities({ processId, canEdit = false }: TabOpportunitie
             </Button>
           </div>
         </form>
+      )}
+
+      {showMatrix && (
+        <div className="mb-4 rounded-md border p-4">
+          <h4 className="text-sm font-medium mb-3">Matriz Impacto/Esfuerzo</h4>
+          {loadingMatrix ? (
+            <div className="h-40 bg-muted animate-pulse rounded" />
+          ) : (
+            <div className="grid grid-cols-4 gap-1 text-xs">
+              {/* Header row */}
+              <div />
+              <div className="text-center font-medium py-1">Bajo</div>
+              <div className="text-center font-medium py-1">Medio</div>
+              <div className="text-center font-medium py-1">Alto</div>
+              {/* Data rows */}
+              {["ALTO", "MEDIO", "BAJO"].map((impact) => (
+                <div key={`row-${impact}`} className="contents">
+                  <div className="font-medium py-2 flex items-center">
+                    {impact}
+                  </div>
+                  {["BAJO", "MEDIO", "ALTO"].map((effort) => {
+                    const cell = matrix.find((c) => c.impact === impact && c.effort === effort);
+                    const count = cell?.count ?? 0;
+                    const isQuickWin = impact === "ALTO" && effort === "BAJO";
+                    return (
+                      <div
+                        key={`${impact}-${effort}`}
+                        className={`rounded-md border p-2 text-center min-h-[48px] flex flex-col items-center justify-center ${
+                          isQuickWin && count > 0
+                            ? "bg-green-50 border-green-300"
+                            : count > 0
+                            ? "bg-blue-50 border-blue-200"
+                            : "bg-gray-50 border-gray-200"
+                        }`}
+                      >
+                        <span className="text-lg font-bold">{count}</span>
+                        {isQuickWin && count > 0 && (
+                          <span className="text-[10px] text-green-700 font-medium">Quick Win</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+              {/* Axis labels */}
+              <div className="col-span-4 text-center text-[10px] text-muted-foreground mt-1">
+                Esfuerzo &rarr;
+              </div>
+            </div>
+          )}
+          <div className="text-[10px] text-muted-foreground mt-1">&uarr; Impacto</div>
+        </div>
       )}
 
       <DataTable

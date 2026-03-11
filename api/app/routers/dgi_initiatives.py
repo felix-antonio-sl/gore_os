@@ -1,3 +1,4 @@
+import json
 import math
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
@@ -7,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
-from app.schemas.dgi import InitiativeItem, InitiativeCreate, InitiativeUpdate, InitiativeMove, InitiativeReorder
+from app.schemas.dgi import InitiativeItem, InitiativeCreate, InitiativeUpdate, InitiativeMove, InitiativeReorder, DMAICDetail, DMAICGateResult, DMAICPhaseUpdate, DMAICTransition, LeanMetrics
 
 
 def _require_dgi(user: dict):
@@ -45,7 +46,9 @@ async def _get_initiative_row(initiative_id: str, db: AsyncSession) -> dict | No
             ini.total_days,
             ini.progress,
             ini.wip_column,
-            ini.sort_order
+            ini.sort_order,
+            ini.started_at,
+            ini.completed_at
         FROM core.dgi_initiative ini
         JOIN ref.category st ON st.id = ini.status_id
         LEFT JOIN ref.category ph ON ph.id = ini.dmaic_phase_id
@@ -488,3 +491,370 @@ async def reorder_initiatives(
 
     await db.commit()
     return {"updated": len(body.initiative_ids)}
+
+
+# ---------------------------------------------------------------------------
+# DMAIC gate validation (informational, not blocking)
+# ---------------------------------------------------------------------------
+_DMAIC_PHASE_ORDER = ["DEFINE", "MEASURE", "ANALYZE", "IMPROVE", "VERIFY"]
+
+_DMAIC_GATE_CRITERIA: dict[str, list[tuple[str, str]]] = {
+    "DEFINE": [("problem", "Problema definido"), ("scope", "Alcance definido")],
+    "MEASURE": [("baseline_summary", "Línea base documentada")],
+    "ANALYZE": [("root_causes", "Causas raíz identificadas")],
+    "IMPROVE": [("solution_design", "Diseño de solución"), ("pilot_result", "Resultado del piloto")],
+    "VERIFY": [("verification_plan", "Plan de verificación definido")],
+}
+
+
+def _evaluate_dmaic_gates(phases: dict) -> list[DMAICGateResult]:
+    results = []
+    phase_key_map = {
+        "DEFINE": "define",
+        "MEASURE": "measure",
+        "ANALYZE": "analyze",
+        "IMPROVE": "improve",
+        "VERIFY": "verify",
+    }
+    for phase_code, criteria in _DMAIC_GATE_CRITERIA.items():
+        phase_data = phases.get(phase_key_map[phase_code], {})
+        all_met = True
+        missing = []
+        for field_key, field_label in criteria:
+            if not phase_data.get(field_key, "").strip():
+                all_met = False
+                missing.append(field_label)
+
+        detail = "Completo" if all_met else f"Pendiente: {', '.join(missing)}"
+        results.append(DMAICGateResult(phase=phase_code, met=all_met, detail=detail))
+    return results
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/initiatives/lean-metrics — Lean metrics dashboard
+# ---------------------------------------------------------------------------
+@router.get("/lean-metrics", response_model=LeanMetrics)
+async def get_lean_metrics(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Computes Lean/Kanban metrics: throughput, lead time, cycle time, WIP, aging."""
+    _require_dgi(user)
+
+    # Throughput: completed initiatives per period
+    throughput_sql = text("""
+        SELECT
+            COUNT(*) FILTER (WHERE completed_at >= NOW() - INTERVAL '30 days') AS t30,
+            COUNT(*) FILTER (WHERE completed_at >= NOW() - INTERVAL '60 days') AS t60,
+            COUNT(*) FILTER (WHERE completed_at >= NOW() - INTERVAL '90 days') AS t90
+        FROM core.dgi_initiative ini
+        JOIN ref.category st ON st.id = ini.status_id
+        WHERE st.code = 'COMPLETADO'
+          AND ini.deleted_at IS NULL
+          AND ini.completed_at IS NOT NULL
+    """)
+    t_row = (await db.execute(throughput_sql)).mappings().first()
+
+    # Lead time: avg days from created_at to completed_at
+    lead_time_sql = text("""
+        SELECT AVG(EXTRACT(EPOCH FROM (completed_at - created_at)) / 86400) AS avg_days
+        FROM core.dgi_initiative
+        WHERE completed_at IS NOT NULL AND deleted_at IS NULL
+    """)
+    lt_row = (await db.execute(lead_time_sql)).mappings().first()
+
+    # Cycle time: avg days from started_at to completed_at
+    cycle_time_sql = text("""
+        SELECT AVG(EXTRACT(EPOCH FROM (completed_at - started_at)) / 86400) AS avg_days
+        FROM core.dgi_initiative
+        WHERE completed_at IS NOT NULL AND started_at IS NOT NULL AND deleted_at IS NULL
+    """)
+    ct_row = (await db.execute(cycle_time_sql)).mappings().first()
+
+    # WIP: active initiatives (EN_CURSO + REVISION)
+    wip_sql = text("""
+        SELECT COUNT(*) AS wip
+        FROM core.dgi_initiative ini
+        JOIN ref.category st ON st.id = ini.status_id
+        WHERE st.code IN ('EN_CURSO', 'REVISION')
+          AND ini.deleted_at IS NULL
+    """)
+    wip_row = (await db.execute(wip_sql)).mappings().first()
+
+    # Aging: days since last status change for active initiatives
+    aging_sql = text("""
+        SELECT
+            ini.id,
+            ini.name,
+            st.code AS column,
+            EXTRACT(EPOCH FROM (NOW() - ini.updated_at)) / 86400 AS days
+        FROM core.dgi_initiative ini
+        JOIN ref.category st ON st.id = ini.status_id
+        WHERE st.code IN ('BACKLOG', 'EN_CURSO', 'REVISION')
+          AND ini.deleted_at IS NULL
+        ORDER BY days DESC
+    """)
+    aging_rows = (await db.execute(aging_sql)).mappings().all()
+
+    return LeanMetrics(
+        throughput_30d=t_row["t30"] if t_row else 0,
+        throughput_60d=t_row["t60"] if t_row else 0,
+        throughput_90d=t_row["t90"] if t_row else 0,
+        lead_time_avg=round(float(lt_row["avg_days"]), 1) if lt_row and lt_row["avg_days"] else None,
+        cycle_time_avg=round(float(ct_row["avg_days"]), 1) if ct_row and ct_row["avg_days"] else None,
+        wip_count=wip_row["wip"] if wip_row else 0,
+        aging=[
+            {
+                "id": str(r["id"]),
+                "name": r["name"],
+                "days": round(float(r["days"]), 1),
+                "column": r["column"],
+            }
+            for r in aging_rows
+        ],
+    )
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/initiatives/{id}/dmaic — DMAIC detail
+# ---------------------------------------------------------------------------
+@router.get("/{initiative_id}/dmaic", response_model=DMAICDetail)
+async def get_dmaic_detail(
+    initiative_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Returns DMAIC content, current phase, and gate validation status."""
+    _require_dgi(user)
+
+    sql = text("""
+        SELECT
+            ini.id,
+            ini.metadata,
+            ph.code AS dmaic_phase
+        FROM core.dgi_initiative ini
+        LEFT JOIN ref.category ph ON ph.id = ini.dmaic_phase_id
+        WHERE ini.id = :id AND ini.deleted_at IS NULL
+    """)
+    row = (await db.execute(sql, {"id": str(initiative_id)})).mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Iniciativa no encontrada")
+
+    metadata = row["metadata"] or {}
+    current_phase = row["dmaic_phase"]
+
+    # Extract DMAIC phase content from metadata
+    phases = {
+        "define": metadata.get("define", {}),
+        "measure": metadata.get("measure", {}),
+        "analyze": metadata.get("analyze", {}),
+        "improve": metadata.get("improve", {}),
+        "verify": metadata.get("verify", {}),
+    }
+
+    # Gate validation (informational)
+    gates = _evaluate_dmaic_gates(phases)
+
+    return DMAICDetail(
+        initiative_id=row["id"],
+        current_phase=current_phase,
+        phases=phases,
+        gates=gates,
+    )
+
+
+# ---------------------------------------------------------------------------
+# POST /api/dgi/initiatives/{id}/dmaic/transition — Advance DMAIC phase
+# ---------------------------------------------------------------------------
+@router.post("/{initiative_id}/dmaic/transition")
+async def transition_dmaic_phase(
+    initiative_id: UUID,
+    body: DMAICTransition,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Advance DMAIC phase with gate validation (informational, not blocking)."""
+    _require_dgi(user)
+
+    target_phase = body.target_phase.upper()
+    if target_phase not in _DMAIC_PHASE_ORDER:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Fase DMAIC inválida: {target_phase}. Use: {', '.join(_DMAIC_PHASE_ORDER)}",
+        )
+
+    initiative_id_str = str(initiative_id)
+
+    # Get current state
+    sql = text("""
+        SELECT ini.id, ini.metadata, ph.code AS current_phase
+        FROM core.dgi_initiative ini
+        LEFT JOIN ref.category ph ON ph.id = ini.dmaic_phase_id
+        WHERE ini.id = :id AND ini.deleted_at IS NULL
+    """)
+    row = (await db.execute(sql, {"id": initiative_id_str})).mappings().first()
+    if not row:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Iniciativa no encontrada")
+
+    current_phase = row["current_phase"]
+    metadata = row["metadata"] or {}
+
+    # Validate ordering (can only advance forward)
+    if current_phase:
+        current_idx = _DMAIC_PHASE_ORDER.index(current_phase) if current_phase in _DMAIC_PHASE_ORDER else -1
+        target_idx = _DMAIC_PHASE_ORDER.index(target_phase)
+        if target_idx <= current_idx:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"No se puede retroceder de {current_phase} a {target_phase}",
+            )
+
+    # Resolve target phase category id
+    phase_row = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'dgi_dmaic_phase' AND code = :code"),
+        {"code": target_phase},
+    )).mappings().first()
+    if not phase_row:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Fase DMAIC no encontrada en catálogo: {target_phase}")
+
+    # Update phase
+    await db.execute(
+        text("""
+            UPDATE core.dgi_initiative
+            SET dmaic_phase_id = :phase_id,
+                updated_at = NOW(),
+                updated_by_id = :user_id
+            WHERE id = :id
+        """),
+        {"id": initiative_id_str, "phase_id": str(phase_row["id"]), "user_id": str(user["id"])},
+    )
+    await db.commit()
+
+    # Evaluate gates for the result
+    phases = {
+        "define": metadata.get("define", {}),
+        "measure": metadata.get("measure", {}),
+        "analyze": metadata.get("analyze", {}),
+        "improve": metadata.get("improve", {}),
+        "verify": metadata.get("verify", {}),
+    }
+    gates = _evaluate_dmaic_gates(phases)
+
+    return {
+        "status": "ok",
+        "previous_phase": current_phase,
+        "new_phase": target_phase,
+        "gates": [g.model_dump() for g in gates],
+    }
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/initiatives/{id}/dmaic/history — DMAIC phase audit log
+# ---------------------------------------------------------------------------
+@router.get("/{initiative_id}/dmaic/history")
+async def get_dmaic_history(
+    initiative_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Returns DMAIC phase transition audit log from the initiative history trigger."""
+    _require_dgi(user)
+
+    initiative_id_str = str(initiative_id)
+
+    # Verify exists
+    existing = (await db.execute(
+        text("SELECT id FROM core.dgi_initiative WHERE id = :id AND deleted_at IS NULL"),
+        {"id": initiative_id_str},
+    )).mappings().first()
+    if not existing:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Iniciativa no encontrada")
+
+    # Check if history table exists
+    table_check = (await db.execute(
+        text("""
+            SELECT EXISTS (
+                SELECT 1 FROM information_schema.tables
+                WHERE table_schema = 'core' AND table_name = 'dgi_initiative_history'
+            )
+        """)
+    )).scalar()
+
+    if not table_check:
+        return []
+
+    sql = text("""
+        SELECT
+            h.id,
+            prev.code AS previous_phase,
+            new.code AS new_phase,
+            p.names || ' ' || p.paternal_surname AS changed_by_name,
+            h.changed_at
+        FROM core.dgi_initiative_history h
+        LEFT JOIN ref.category prev ON prev.id = h.previous_dmaic_phase_id
+        LEFT JOIN ref.category new ON new.id = h.new_dmaic_phase_id
+        LEFT JOIN core."user" u ON u.id = h.changed_by_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE h.initiative_id = :id
+          AND h.previous_dmaic_phase_id IS DISTINCT FROM h.new_dmaic_phase_id
+        ORDER BY h.changed_at DESC
+    """)
+    rows = (await db.execute(sql, {"id": initiative_id_str})).mappings().all()
+    return [dict(r) for r in rows]
+
+
+# ---------------------------------------------------------------------------
+# PATCH /api/dgi/initiatives/{id}/dmaic/{phase} — Update DMAIC phase content
+# ---------------------------------------------------------------------------
+@router.patch("/{initiative_id}/dmaic/{phase}")
+async def update_dmaic_phase(
+    initiative_id: UUID,
+    phase: str,
+    body: DMAICPhaseUpdate,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """Atomic jsonb_set update for one DMAIC phase section."""
+    _require_dgi(user)
+
+    phase_lower = phase.lower()
+    if phase_lower not in ("define", "measure", "analyze", "improve", "verify"):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Fase DMAIC inválida: {phase}")
+
+    initiative_id_str = str(initiative_id)
+
+    # Verify initiative exists
+    existing = (await db.execute(
+        text("SELECT id FROM core.dgi_initiative WHERE id = :id AND deleted_at IS NULL"),
+        {"id": initiative_id_str},
+    )).mappings().first()
+    if not existing:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Iniciativa no encontrada")
+
+    # Build phase content from non-None fields
+    phase_content = {k: v for k, v in body.model_dump().items() if v is not None}
+
+    # Atomic jsonb_set: merge into existing phase data
+    # Use ARRAY[...] instead of CAST for asyncpg text[] compatibility
+    await db.execute(
+        text("""
+            UPDATE core.dgi_initiative
+            SET metadata = jsonb_set(
+                COALESCE(metadata, '{}'),
+                ARRAY[:phase_key],
+                COALESCE(metadata->:phase_key, '{}') || CAST(:content AS jsonb)
+            ),
+            updated_at = NOW(),
+            updated_by_id = :user_id
+            WHERE id = :id
+        """),
+        {
+            "id": initiative_id_str,
+            "phase_key": phase_lower,
+            "content": json.dumps(phase_content),
+            "user_id": str(user["id"]),
+        },
+    )
+    await db.commit()
+
+    return {"status": "ok", "phase": phase_lower, "updated_fields": list(phase_content.keys())}

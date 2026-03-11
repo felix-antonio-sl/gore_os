@@ -20,7 +20,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Plus, BarChart3 } from "lucide-react";
+import { LeanMetricsPanel } from "./components/lean-metrics-panel";
 import {
   DndContext,
   DragEndEvent,
@@ -120,12 +122,14 @@ function SortableCard({
 }
 
 export default function TableroPage() {
+  const router = useRouter();
   const [initiatives, setInitiatives] = useState<DGIInitiative[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [moving, setMoving] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [metricsOpen, setMetricsOpen] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
@@ -364,11 +368,23 @@ export default function TableroPage() {
             Gestión visual de iniciativas DMAIC en curso
           </p>
         </div>
-        <Button size="sm" variant="outline" onClick={openCreate}>
-          <Plus className="size-4 mr-1" />
-          Nueva Iniciativa
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            variant={metricsOpen ? "default" : "outline"}
+            onClick={() => setMetricsOpen((v) => !v)}
+          >
+            <BarChart3 className="size-4 mr-1" />
+            Métricas
+          </Button>
+          <Button size="sm" variant="outline" onClick={openCreate}>
+            <Plus className="size-4 mr-1" />
+            Nueva Iniciativa
+          </Button>
+        </div>
       </div>
+
+      <LeanMetricsPanel open={metricsOpen} />
 
       {/* Kanban Board */}
       {isLoading ? (
@@ -442,7 +458,7 @@ export default function TableroPage() {
                                   : "cursor-grab active:cursor-grabbing"
                               }
                               onClick={() => {
-                                if (!moving) openEdit(initiative);
+                                if (!moving) router.push(`/tablero/${initiative.id}`);
                               }}
                             >
                               <KanbanCard

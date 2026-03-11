@@ -16,6 +16,7 @@ from app.schemas.dgi import (
     ImprovementOpportunityItem, ImprovementOpportunityCreate, ImprovementOpportunityUpdate,
     ProcessProgressItem,
     BPMNModelItem,
+    MetricComparison, ImpactEffortCell,
 )
 
 
@@ -127,6 +128,61 @@ async def get_process_progress(
             divisions[div][code_lower] = count
 
     return [ProcessProgressItem(**v) for v in divisions.values()]
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/processes/impact-effort — Impact/Effort matrix
+# REGISTERED BEFORE /{process_id} to avoid path conflict
+# ---------------------------------------------------------------------------
+@router.get("/impact-effort", response_model=list[ImpactEffortCell])
+async def get_impact_effort_matrix(
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Aggregated impact/effort matrix from all active opportunities.
+    Returns cells with counts and opportunity details.
+    """
+    _require_dgi(user)
+
+    sql = text("""
+        SELECT
+            opp.impact,
+            opp.effort,
+            opp.id,
+            opp.description
+        FROM core.dgi_improvement_opportunity opp
+        JOIN core.dgi_process proc ON proc.id = opp.process_id
+        WHERE opp.deleted_at IS NULL
+          AND proc.deleted_at IS NULL
+          AND opp.impact IS NOT NULL
+          AND opp.effort IS NOT NULL
+        ORDER BY opp.impact, opp.effort
+    """)
+    rows = (await db.execute(sql)).mappings().all()
+
+    # Group by impact x effort
+    cells: dict[tuple[str, str], list[dict]] = {}
+    for r in rows:
+        key = (r["impact"], r["effort"])
+        if key not in cells:
+            cells[key] = []
+        cells[key].append({"id": str(r["id"]), "description": r["description"]})
+
+    # Build all possible cells (3x3 grid)
+    result = []
+    for impact in ["ALTO", "MEDIO", "BAJO"]:
+        for effort in ["BAJO", "MEDIO", "ALTO"]:
+            key = (impact, effort)
+            opps = cells.get(key, [])
+            result.append(ImpactEffortCell(
+                impact=impact,
+                effort=effort,
+                count=len(opps),
+                opportunities=opps,
+            ))
+
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -733,6 +789,78 @@ async def delete_metric(
     if result.rowcount == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Métrica no encontrada")
     await db.commit()
+
+
+# ---------------------------------------------------------------------------
+# GET /api/dgi/processes/{process_id}/metrics/comparison — Before/After
+# ---------------------------------------------------------------------------
+@router.get("/{process_id}/metrics/comparison", response_model=list[MetricComparison])
+async def get_metrics_comparison(
+    process_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    MP-018: Before/after metric comparison.
+    Groups metrics by name, showing BASELINE vs POST_MEJORA values side by side.
+    """
+    _require_dgi(user)
+
+    process_id_str = str(process_id)
+
+    # Verify process exists
+    existing = (await db.execute(
+        text("SELECT id FROM core.dgi_process WHERE id = :id AND deleted_at IS NULL"),
+        {"id": process_id_str},
+    )).mappings().first()
+    if not existing:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Proceso no encontrado")
+
+    sql = text("""
+        SELECT
+            m.name,
+            m.value,
+            m.unit,
+            m.measurement_type
+        FROM core.dgi_process_metric m
+        WHERE m.process_id = :process_id
+          AND m.deleted_at IS NULL
+          AND m.measurement_type IN ('BASELINE', 'POST_MEJORA')
+        ORDER BY m.name, m.measurement_type
+    """)
+    rows = (await db.execute(sql, {"process_id": process_id_str})).mappings().all()
+
+    # Group by metric name
+    grouped: dict[str, dict] = {}
+    for r in rows:
+        name = r["name"]
+        if name not in grouped:
+            grouped[name] = {"name": name, "baseline_value": None, "post_mejora_value": None, "unit": r["unit"]}
+        if r["measurement_type"] == "BASELINE":
+            grouped[name]["baseline_value"] = float(r["value"]) if r["value"] is not None else None
+        elif r["measurement_type"] == "POST_MEJORA":
+            grouped[name]["post_mejora_value"] = float(r["value"]) if r["value"] is not None else None
+
+    # Compute deltas
+    result = []
+    for data in grouped.values():
+        baseline = data["baseline_value"]
+        post = data["post_mejora_value"]
+        delta = None
+        improved = False
+        if baseline is not None and post is not None:
+            delta = round(post - baseline, 2)
+            improved = post > baseline  # Higher is better by default
+        result.append(MetricComparison(
+            name=data["name"],
+            baseline_value=baseline,
+            post_mejora_value=post,
+            unit=data["unit"],
+            delta=delta,
+            improved=improved,
+        ))
+
+    return result
 
 
 # ===========================================================================

@@ -10,6 +10,8 @@ interface KanbanCardProps {
   onMove?: (direction: "left" | "right") => void;
   isFirst?: boolean;
   isLast?: boolean;
+  agingDays?: number;
+  onClick?: () => void;
 }
 
 const dmaicColor: Record<string, string> = {
@@ -27,24 +29,50 @@ function getProgressColor(progress: number): string {
   return "bg-gray-400";
 }
 
-export function KanbanCard({ initiative, onMove, isFirst = false, isLast = false }: KanbanCardProps) {
+export function KanbanCard({ initiative, onMove, isFirst = false, isLast = false, agingDays, onClick }: KanbanCardProps) {
   const { name, responsible_name, current_day, total_days, progress, dmaic_phase, division_name } = initiative;
   const progressColor = getProgressColor(progress);
   const dmaicClass = dmaic_phase ? (dmaicColor[dmaic_phase] ?? "bg-gray-100 text-gray-700 border-gray-300") : null;
 
   return (
-    <div className="rounded-lg border bg-white shadow-sm p-3 space-y-2 hover:shadow-md transition-shadow">
+    <div
+      className={cn(
+        "rounded-lg border bg-white shadow-sm p-3 space-y-2 hover:shadow-md transition-shadow",
+        onClick && "cursor-pointer"
+      )}
+      onClick={onClick}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onClick ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick(); } } : undefined}
+    >
       {/* Header row */}
       <div className="flex items-start justify-between gap-2">
         <p className="text-sm font-semibold leading-tight flex-1">{name}</p>
-        {dmaicClass && dmaic_phase && (
-          <Badge
-            variant="outline"
-            className={cn("text-[10px] px-1.5 py-0 shrink-0 border", dmaicClass)}
-          >
-            {dmaic_phase}
-          </Badge>
-        )}
+        <div className="flex items-center gap-1 shrink-0">
+          {dmaicClass && dmaic_phase && (
+            <Badge
+              variant="outline"
+              className={cn("text-[10px] px-1.5 py-0 shrink-0 border", dmaicClass)}
+            >
+              {dmaic_phase}
+            </Badge>
+          )}
+          {typeof agingDays === 'number' && (
+            <Badge
+              variant="outline"
+              className={cn(
+                "text-[10px] px-1.5 py-0 shrink-0 border",
+                agingDays < 7
+                  ? "bg-green-50 text-green-700 border-green-200"
+                  : agingDays < 14
+                  ? "bg-amber-50 text-amber-700 border-amber-200"
+                  : "bg-red-50 text-red-700 border-red-200"
+              )}
+            >
+              {Math.round(agingDays)}d
+            </Badge>
+          )}
+        </div>
       </div>
 
       {/* Meta info */}

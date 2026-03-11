@@ -15,10 +15,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { formatDate } from "@/lib/format";
-import type { ProcessMetric } from "@/types";
+import type { ProcessMetric, MetricComparison } from "@/types";
 
 interface TabMetricsProps {
   processId: string;
@@ -40,6 +40,9 @@ export function TabMetrics({ processId, canEdit = false }: TabMetricsProps) {
   const [submitting, setSubmitting] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
+  const [comparisons, setComparisons] = useState<MetricComparison[]>([]);
+  const [loadingComparison, setLoadingComparison] = useState(false);
 
   const load = () => {
     setLoading(true);
@@ -48,6 +51,15 @@ export function TabMetrics({ processId, canEdit = false }: TabMetricsProps) {
       .then(setItems)
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
+  };
+
+  const loadComparison = () => {
+    setLoadingComparison(true);
+    api
+      .get<MetricComparison[]>(`/api/dgi/processes/${processId}/metrics/comparison`)
+      .then(setComparisons)
+      .catch(() => setComparisons([]))
+      .finally(() => setLoadingComparison(false));
   };
 
   useEffect(() => {
@@ -165,12 +177,26 @@ export function TabMetrics({ processId, canEdit = false }: TabMetricsProps) {
       <div>
         <div className="flex items-center justify-between mb-4">
           <EmptyState compact title="Sin métricas registradas" />
-          {canEdit && (
-            <Button size="sm" onClick={() => setShowForm(true)}>
-              <Plus className="size-4 mr-1" />
-              Agregar Métrica
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant={showComparison ? "secondary" : "outline"}
+              onClick={() => {
+                const next = !showComparison;
+                setShowComparison(next);
+                if (next) loadComparison();
+              }}
+            >
+              <ArrowRight className="size-4 mr-1" />
+              Comparar
             </Button>
-          )}
+            {canEdit && (
+              <Button size="sm" onClick={() => setShowForm(true)}>
+                <Plus className="size-4 mr-1" />
+                Agregar Métrica
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -182,12 +208,26 @@ export function TabMetrics({ processId, canEdit = false }: TabMetricsProps) {
         <p className="text-sm text-muted-foreground">
           {items.length} {items.length === 1 ? "métrica" : "métricas"}
         </p>
-        {canEdit && (
-          <Button size="sm" onClick={() => { resetForm(); setShowForm(!showForm); }}>
-            <Plus className="size-4 mr-1" />
-            Agregar Métrica
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            variant={showComparison ? "secondary" : "outline"}
+            onClick={() => {
+              const next = !showComparison;
+              setShowComparison(next);
+              if (next) loadComparison();
+            }}
+          >
+            <ArrowRight className="size-4 mr-1" />
+            Comparar
           </Button>
-        )}
+          {canEdit && (
+            <Button size="sm" onClick={() => { resetForm(); setShowForm(!showForm); }}>
+              <Plus className="size-4 mr-1" />
+              Agregar Métrica
+            </Button>
+          )}
+        </div>
       </div>
 
       {showForm && (
@@ -260,6 +300,41 @@ export function TabMetrics({ processId, canEdit = false }: TabMetricsProps) {
             </Button>
           </div>
         </form>
+      )}
+
+      {showComparison && (
+        <div className="mb-4 rounded-md border p-4 space-y-2">
+          <h4 className="text-sm font-medium">Comparacion Antes/Despues</h4>
+          {loadingComparison ? (
+            <div className="h-20 bg-muted animate-pulse rounded" />
+          ) : comparisons.length === 0 ? (
+            <p className="text-xs text-muted-foreground">Sin metricas BASELINE y POST_MEJORA para comparar.</p>
+          ) : (
+            <div className="space-y-2">
+              {comparisons.map((c) => (
+                <div key={c.name} className="flex items-center gap-3 text-sm py-1.5 px-2 rounded hover:bg-muted/50">
+                  <span className="flex-1 font-medium">{c.name}</span>
+                  <span className="text-muted-foreground font-mono">
+                    {c.baseline_value !== null ? c.baseline_value : "\u2014"}
+                  </span>
+                  <ArrowRight className="size-3 text-muted-foreground" />
+                  <span className="font-mono font-medium">
+                    {c.post_mejora_value !== null ? c.post_mejora_value : "\u2014"}
+                  </span>
+                  {c.unit && <span className="text-xs text-muted-foreground">{c.unit}</span>}
+                  {c.delta !== null && (
+                    <Badge
+                      variant="outline"
+                      className={`text-xs ${c.improved ? "bg-green-50 text-green-700 border-green-200" : "bg-red-50 text-red-700 border-red-200"}`}
+                    >
+                      {c.delta > 0 ? "+" : ""}{c.delta}
+                    </Badge>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       )}
 
       <DataTable
