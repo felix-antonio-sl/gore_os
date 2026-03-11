@@ -48,7 +48,7 @@ Key files:
 - `core/deps.py` — `CurrentUser` dependency (user dict from JWT)
 - `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT
 - `middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
-- `routers/` — 19 routers: auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin (24 endpoints), reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, dgi_cartera, actos (5 + 7-step FSM), core_sessions (9 + voting + F3→F4)
+- `routers/` — 22 routers: auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin (24 endpoints), reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, dgi_cartera, dgi_processes (22 endpoints), dgi_bottleneck (7 endpoints), actos (5 + 7-step FSM), core_sessions (9 + voting + F3→F4)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware responses. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 
@@ -187,7 +187,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## Coverage
 
-~171 endpoints, 400 tests, 32 modules, 22 gate functions. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 92 CHECKs + 14 state triggers + 4 history triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 14 entities. 89 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
+~205 endpoints, 400 tests, 32 modules, 22 gate functions. 40 frontend pages. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 92 CHECKs + 14 state triggers + 4 history triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 14 entities. 89 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
 
 ## Critical Rules
 
@@ -269,3 +269,6 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 47. **Identity (Wave 1)**: GORE Ñuble branding. OKLCH palette (GOREAZUL #031B5F, GORECELESTE #196AB0). 3 fonts: Plus Jakarta Sans (body), Roboto Slab (headings, auto h1/h2), JetBrains Mono (mono). Dark sidebar always. Theme toggle with FOUC-prevention in `layout.tsx`. `GoreMark` SVG.
 48. **Motion (Wave 3)**: CSS-only fade-ins via tw-animate-css 1.4.0. Classes: `animate-in fade-in duration-{200,300}`. Stagger: `delay-{75,150,200,300}` + `fill-mode-both`. `prefers-reduced-motion` in globals.css. Applied: PageHeader, Dashboard KPIs (stagger), DataTable, Login (sequential). NOT: sidebar, DrawerPanel/Sheet (Radix-animated), skeletons.
 49. **IPR detail**: 13 tabs in `tab-*.tsx` — self-contained. Main page (~650 lines) retains hero, stepper, transitions, edit/assignee drawers.
+50. **Process Catalog (DGI)**: `/procesos` list (FilterBar status/criticality/search, DataTable 7 cols, DrawerPanel create) + `/procesos/[id]` detail (hero, 6-state FSM `PROCESS_FSM`, edit drawer, 5 tabs: actors, rules, metrics, pain-points, opportunities). All tabs accept `canEdit` prop. `tab-opportunities.tsx` bridges Process→Opportunity→Initiative (MP-013). API: `GET/POST /api/dgi/processes`, `PATCH /api/dgi/processes/{id}`, 5 satellite CRUD endpoints per process.
+51. **Bottleneck Detection (DGI)**: `/cuellos-de-botella` (scan cards + DataTable investigations) + `[id]` detail (linear 6-state FSM, 6 phase-gated textarea fields). `isFieldEditable()` excludes CERRADO. API: `GET /api/dgi/data/bottlenecks/scan`, `GET/POST /api/dgi/data/bottlenecks`, `PATCH /api/dgi/data/bottlenecks/{id}`.
+52. **Indicator Enhancement (DGI)**: `indicadores.tsx` domain config. 5 DGI dimensions (PRESUPUESTO/CARTERA_IPR/CONVENIOS/TDE/RIESGOS). Lifecycle filter+columns. `NuevoIndicadorAction` (JEFE_DGI). Manual value entry (MANUAL/EXTERNAL + VIGENTE). Lifecycle transitions with ConfirmDialog for Deprecar.
