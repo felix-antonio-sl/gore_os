@@ -79,7 +79,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 | `core` | Business entities — 71 tables (IPR, Agreement, Budget, User, DGI, compliance, parametric) |
 | `txn`  | Event sourcing (partitioned) |
 
-**Category Pattern**: each FK → exactly ONE scheme (Categorical Univocity). Enforced by 86 CHECK constraints (`fn_validate_category_scheme`) + 8 state transition triggers + 4 history triggers. 81 schemes. Only 6 FKs deferred (need new schemes: vehicle, risk prob/status, inventory status, planning instrument). Check before creating: `SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;`
+**Category Pattern**: each FK → exactly ONE scheme (Categorical Univocity). **100% coverage**: 92 CHECK constraints + 14 state transition triggers + 4 history triggers. 89 schemes. 0 unprotected FK→ref.category. Check before creating: `SELECT DISTINCT scheme FROM ref.category ORDER BY scheme;`
 
 **Schemes**: DGI (11): `dgi_initiative_status`, `dgi_indicator_dimension`, `dgi_signal`, `dgi_report_type`, `dgi_report_status`, `dgi_bpmn_status`, `dgi_dmaic_phase`, `dgi_session_status`, `dgi_alert_status`, `dgi_decree_status`, `dgi_source_status`. Governance (3): `session_type`, `vote_option`, `quorum_type`. Budget (10): `budget_item`(14), `budget_allocation`(15), `program_type`(5), `budget_commitment_status`(5), `budget_subtitle`(8), `funding_source`(11), `payment_status`(5), `agreement_type`(6), `agreement_state`(13 w/transitions incl. EN_REVISION_FINANCIERA, VISADO_INTERNO, TDR_PENDIENTE), `cgr_outcome`(7).
 
@@ -187,7 +187,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## Coverage
 
-~171 endpoints, 400 tests, 32 modules, 22 gate functions. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 86 CHECKs + 8 state triggers + 4 history triggers (6 FKs deferred). FSM DB-enforced: 8/23 entities. Schema truth: `goreos_ddl_production.sql` (pg_dump). Audit: `docs/GORE_OS_Audit_v3.0.md`. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
+~171 endpoints, 400 tests, 32 modules, 22 gate functions. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 92 CHECKs + 14 state triggers + 4 history triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 14 entities. 89 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
 
 ## Critical Rules
 
