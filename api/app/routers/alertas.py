@@ -8,6 +8,7 @@ from sqlalchemy import text
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import WRITE_OPERATIONAL_ROLES
+from app.core.audit import record_event
 from app.schemas.alerta import AlertaListItem, AlertaAttendRequest
 
 router = APIRouter(prefix="/api/alertas", tags=["alertas"])
@@ -245,5 +246,6 @@ async def attend_alerta(
             "action_taken": body.action_taken,
         },
     )
+    await record_event(db, "ALERT_ATTENDED", "core.alert", alerta_id, user["id"])
     await db.commit()
     return {"message": "Alerta atendida"}

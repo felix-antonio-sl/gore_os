@@ -1081,3 +1081,90 @@ class CalendarEvent(BaseModel):
     description: str | None
     entity_id: UUID | None = None
     severity: str | None = None  # rojo, amber, verde
+
+
+# ---------------------------------------------------------------------------
+# Risk Management (Wave E — E-1)
+# ---------------------------------------------------------------------------
+class RiskCreate(BaseModel):
+    name: str
+    risk_type_id: UUID | None = None
+    probability_id: UUID | None = None
+    impact_id: UUID | None = None
+    subject_type: str
+    subject_id: UUID
+    mitigation_plan: str | None = None
+    identified_at: date | None = None
+
+
+class RiskUpdate(BaseModel):
+    name: str | None = None
+    risk_type_id: UUID | None = None
+    probability_id: UUID | None = None
+    impact_id: UUID | None = None
+    status_id: str | None = None  # code for FSM transition
+    mitigation_plan: str | None = None
+    identified_at: date | None = None
+
+
+class RiskListItem(BaseModel):
+    id: UUID
+    code: str
+    name: str
+    risk_type: str | None = None
+    risk_type_label: str | None = None
+    probability: str | None = None
+    probability_label: str | None = None
+    impact: str | None = None
+    impact_label: str | None = None
+    status: str | None = None
+    status_label: str | None = None
+    subject_type: str
+    subject_id: UUID
+    subject_label: str | None = None
+    identified_at: date | None = None
+    created_at: datetime
+
+
+class RiskDetail(RiskListItem):
+    mitigation_plan: str | None = None
+    metadata: dict | None = None
+    created_by_name: str | None = None
+    updated_at: datetime | None = None
+
+
+class RiskSummary(BaseModel):
+    total: int
+    by_status: list[dict]
+    by_type: list[dict]
+    by_probability: list[dict]
+    high_risk_count: int
+
+
+class RiskMatrixCell(BaseModel):
+    probability: str
+    probability_label: str
+    impact: str
+    impact_label: str
+    count: int
+
+
+# ---------------------------------------------------------------------------
+# Command Center (Wave E — E-2)
+# ---------------------------------------------------------------------------
+class CommandCenterSummary(BaseModel):
+    escalations: dict
+    alerts: dict
+    risks: dict
+    decisions: dict
+    meetings: dict
+    sla_breaches: dict
+
+
+class TimelineEvent(BaseModel):
+    category: str  # ESCALATION | ALERT | RISK | DECISION | MEETING
+    ref_code: str
+    description: str
+    event_time: datetime
+    detail: str | None = None
+    entity_id: UUID | None = None

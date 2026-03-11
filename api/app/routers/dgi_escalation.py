@@ -16,6 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import CurrentUser
 from app.core.database import get_db
 from app.core.security import DGI_ROLES
+from app.core.audit import record_event
 
 from app.schemas.dgi import (
     EscalationCreate,
@@ -53,11 +54,20 @@ _LEVEL_DEFAULT_HOURS: dict[str, int] = {
 _FIELD_ALLOWLIST = {"situation", "impact", "recommendation", "resolved_description"}
 
 _WRITE_ROLES = {"JEFE_DGI", "ESP_CONTROL_GESTION"}
+_READ_ROLES = {*DGI_ROLES, "ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"}
 
 
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _require_read(user: dict) -> None:
+    if user.get("role_code") not in _READ_ROLES:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Sin permisos para ver escalamientos",
+        )
+
 
 def _require_dgi(user: dict) -> None:
     if user.get("role_code") not in DGI_ROLES:
@@ -224,7 +234,7 @@ async def get_active_escalations(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    _require_dgi(user)
+    _require_read(user)
 
     rows = (await db.execute(text(f"""
         SELECT {_LIST_COLS} {_LIST_FROM}
@@ -271,7 +281,7 @@ async def get_escalation_stats(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    _require_dgi(user)
+    _require_read(user)
 
     # Active count
     active_row = (await db.execute(text("""
@@ -324,7 +334,7 @@ async def list_escalations(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
 ):
-    _require_dgi(user)
+    _require_read(user)
 
     conditions = ["e.deleted_at IS NULL"]
     params: dict = {}
@@ -429,6 +439,8 @@ async def create_escalation(
             {"alert_id": alert_id, "id": new_id},
         )
 
+    await record_event(db, "ESCALATION_CREATED", "core.dgi_escalation", new_id, user["id"],
+                       {"code": code, "level": level_code})
     await db.commit()
 
     row = (await db.execute(
@@ -447,7 +459,7 @@ async def get_escalation(
     user: CurrentUser,
     db: AsyncSession = Depends(get_db),
 ):
-    _require_dgi(user)
+    _require_read(user)
 
     row = (await db.execute(
         text(f"SELECT {_LIST_COLS} {_LIST_FROM} WHERE e.id = :id AND e.deleted_at IS NULL"),
@@ -529,6 +541,12 @@ async def update_escalation(
         text(f"UPDATE core.dgi_escalation SET {set_clause} WHERE id = :id"),
         params,
     )
+
+    if body.status is not None:
+        await record_event(db, "ESCALATION_STATUS_CHANGE", "core.dgi_escalation",
+                           escalation_id, user["id"],
+                           {"old_status": current_status, "new_status": body.status.upper()})
+
     await db.commit()
 
     row = (await db.execute(

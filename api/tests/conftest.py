@@ -87,6 +87,9 @@ async def cleanup_test_artifacts(db: AsyncSession):
     await db.execute(text("DELETE FROM core.subv8_fund_ceiling WHERE notes LIKE 'TEST-%'"))
     await db.execute(text("DELETE FROM core.subv8_fund WHERE code LIKE 'TEST-%'"))
     await db.execute(text("DELETE FROM core.fril_category WHERE code LIKE 'T%' AND LENGTH(code) > 2"))
+    # Wave E cleanup
+    await db.execute(text("DELETE FROM core.risk"))
+    await db.execute(text("DELETE FROM txn.event"))
     # Wave B cleanup (order matters for FK constraints)
     await db.execute(text("DELETE FROM core.dgi_service_request"))
     await db.execute(text("DELETE FROM core.dgi_sla"))

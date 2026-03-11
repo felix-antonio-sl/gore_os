@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict M9QcQxgGT4g7R34JVEyuoQMB4CiYZ0r9OBhxmXXKtW0qm2mwxtpjblby73oZfQA
+\restrict OFrvKOIOIiuckJe77arhEFZwgdtCVDCWg5EhOFHYabvjYKEd8cErc1KLiIb4A2J
 
 -- Dumped from database version 16.11
 -- Dumped by pg_dump version 16.11
@@ -2003,6 +2003,7 @@ CREATE TABLE core.dgi_ar_decision (
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     created_by_id uuid,
     deleted_at timestamp with time zone,
+    source_session_id uuid,
     CONSTRAINT chk_ar_decision_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_ar_decision_status'::character varying)),
     CONSTRAINT chk_ar_decision_type CHECK (public.fn_validate_category_scheme(decision_type_id, 'dgi_ar_decision_type'::character varying))
 );
@@ -10860,6 +10861,14 @@ ALTER TABLE ONLY core.dgi_ar_decision
 
 
 --
+-- Name: dgi_ar_decision dgi_ar_decision_source_session_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_ar_decision
+    ADD CONSTRAINT dgi_ar_decision_source_session_id_fkey FOREIGN KEY (source_session_id) REFERENCES core.session(id);
+
+
+--
 -- Name: dgi_ar_decision dgi_ar_decision_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
 --
 
@@ -13703,5 +13712,5 @@ ALTER TABLE txn.magnitude
 -- PostgreSQL database dump complete
 --
 
-\unrestrict M9QcQxgGT4g7R34JVEyuoQMB4CiYZ0r9OBhxmXXKtW0qm2mwxtpjblby73oZfQA
+\unrestrict OFrvKOIOIiuckJe77arhEFZwgdtCVDCWg5EhOFHYabvjYKEd8cErc1KLiIb4A2J
 

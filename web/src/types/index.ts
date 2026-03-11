@@ -1145,3 +1145,89 @@ export interface CalendarEvent {
   entity_id: string | null;
   severity: "rojo" | "amber" | "verde" | null;
 }
+
+// ---------------------------------------------------------------------------
+// Risk Management (Wave E)
+// ---------------------------------------------------------------------------
+export interface RiskListItem {
+  id: string;
+  code: string;
+  name: string;
+  risk_type: string | null;
+  risk_type_label: string | null;
+  probability: string | null;
+  probability_label: string | null;
+  impact: string | null;
+  impact_label: string | null;
+  status: string | null;
+  status_label: string | null;
+  subject_type: string;
+  subject_id: string;
+  subject_label: string | null;
+  identified_at: string | null;
+  created_at: string;
+}
+
+export interface RiskDetail extends RiskListItem {
+  mitigation_plan: string | null;
+  metadata: Record<string, unknown> | null;
+  created_by_name: string | null;
+  updated_at: string;
+}
+
+export interface RiskSummary {
+  total: number;
+  by_status: { code: string; label: string; count: number }[];
+  by_type: { code: string; label: string; count: number }[];
+  by_probability: { code: string; label: string; count: number }[];
+  high_risk_count: number;
+}
+
+export interface RiskMatrixCell {
+  probability: string;
+  probability_label: string;
+  impact: string;
+  impact_label: string;
+  count: number;
+}
+
+// ---------------------------------------------------------------------------
+// Command Center (Wave E)
+// ---------------------------------------------------------------------------
+export interface CommandCenterSummary {
+  escalations: {
+    active: number;
+    by_level: { level: string; label: string; count: number }[];
+    top: { id: string; code: string; situation: string; deadline: string | null; level: string; level_label: string }[];
+  };
+  alerts: {
+    critical: number;
+    high: number;
+    top: { id: string; message: string; severity: string; severity_label: string; triggered_at: string }[];
+  };
+  risks: {
+    high_count: number;
+    total_active: number;
+    top: { id: string; code: string; name: string; probability: string; status: string }[];
+  };
+  decisions: {
+    pending: number;
+    top: { id: string; description: string; due_date: string | null; decision_type: string; status: string }[];
+  };
+  meetings: {
+    upcoming: number;
+    next: { id: string; scheduled_at: string; summary: string | null; organizer_name: string | null }[];
+  };
+  sla_breaches: {
+    count: number;
+  };
+}
+
+export interface TimelineEvent {
+  category: "ESCALATION" | "ALERT" | "RISK" | "DECISION" | "MEETING";
+  ref_code: string;
+  description: string;
+  event_time: string;
+  detail: string | null;
+  entity_id: string | null;
+}

@@ -26,6 +26,8 @@ import {
   SearchX,
   BarChart3,
   BookOpen,
+  Shield,
+  ShieldAlert,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -60,6 +62,7 @@ const adminOnlyNav: NavItem[] = [
 
 const dgiNav: NavItem[] = [
   { label: "Home", href: "/dashboard", icon: <LayoutDashboard className="size-4" /> },
+  { label: "Centro de Mando", href: "/centro-de-mando", icon: <Shield className="size-4" /> },
   { label: "Cartera", href: "/cartera", icon: <FolderKanban className="size-4" /> },
   { label: "Alertas", href: "/alertas", icon: <Bell className="size-4" /> },
   { label: "Rendiciones", href: "/datos?dominio=rendiciones", icon: <Receipt className="size-4" /> },
@@ -72,6 +75,7 @@ const dgiNav: NavItem[] = [
   { label: "Servicios", href: "/servicios", icon: <BookOpen className="size-4" /> },
   { label: "Comité TD", href: "/comite-td", icon: <Vote className="size-4" /> },
   { label: "Calendario", href: "/calendario", icon: <CalendarDays className="size-4" /> },
+  { label: "Riesgos", href: "/riesgos", icon: <ShieldAlert className="size-4" /> },
   { label: "Datos", href: "/datos", icon: <Database className="size-4" /> },
   { label: "Informes", href: "/informes", icon: <FileText className="size-4" /> },
 ];
@@ -103,6 +107,14 @@ export function Sidebar({ onNavClick }: SidebarProps = {}) {
       navItems = [
         ...navItems,
         { label: "Mis Compromisos", href: "/mis-compromisos", icon: <UserCheck className="size-4" /> },
+      ];
+    }
+    if (["ADMIN_REGIONAL", "GOBERNADOR", "ADMIN_SISTEMA"].includes(user.role_code)) {
+      navItems = [
+        navItems[0],  // Inicio
+        { label: "Centro de Mando", href: "/centro-de-mando", icon: <Shield className="size-4" /> },
+        { label: "Riesgos", href: "/riesgos", icon: <ShieldAlert className="size-4" /> },
+        ...navItems.slice(1),
       ];
     }
     if (user.role_code === "ADMIN_SISTEMA") {

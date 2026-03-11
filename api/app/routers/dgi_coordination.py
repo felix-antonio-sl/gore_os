@@ -13,6 +13,7 @@ from datetime import date, datetime, timedelta
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from app.core.audit import record_event
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -291,6 +292,8 @@ async def create_ar_decision(
         },
     )
     new_id = str(result.scalar())
+    await record_event(db, "DECISION_CREATED", "core.dgi_ar_decision", new_id, user["id"],
+                       {"decision_type": body.decision_type})
     await db.commit()
 
     row = (await db.execute(
@@ -357,6 +360,10 @@ async def update_ar_decision(
             text(f"UPDATE core.dgi_ar_decision SET {set_clause} WHERE id = :id"),
             params,
         )
+        if body.status is not None:
+            await record_event(db, "DECISION_STATUS_CHANGE", "core.dgi_ar_decision",
+                               decision_id, user["id"],
+                               {"old_status": existing["current_status"], "new_status": body.status.upper()})
         await db.commit()
     except Exception as e:
         await db.rollback()

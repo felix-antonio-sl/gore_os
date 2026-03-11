@@ -50,6 +50,9 @@ docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/
 # Apply budget cycle migration (TP-05: 17 milestone seeds + tracking table)
 docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_budget_cycle.sql
 
+# Apply Wave E migration (audit event_type codes + AR decision source_session_id)
+docker exec -i goreos_db psql -U goreos -d goreos_test < model/model_goreos/sql/goreos_migration_wave_e.sql
+
 # Copy core parametric tables from production
 for tbl in core.financing_track core.financial_threshold core.sni_level_config; do
     docker exec goreos_db psql -U goreos -d goreos_model -c "COPY $tbl TO STDOUT" | \

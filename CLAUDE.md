@@ -48,7 +48,8 @@ Key files:
 - `core/deps.py` — `CurrentUser` dependency (user dict from JWT)
 - `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT
 - `middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
-- `routers/` — 26 routers: auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin (24 endpoints), reuniones, search, dgi_cockpit, dgi_initiatives (+ 5 DMAIC + 1 lean-metrics), dgi_data, dgi_reports, dgi_cartera, dgi_processes (22 + 2 analytics endpoints), dgi_bottleneck (7 endpoints), actos (5 + 7-step FSM), core_sessions (9 + voting + F3→F4), dgi_coordination (10 + 1 calendar endpoint), dgi_escalation (7 endpoints: 4-level protocol + FSM + stats), dgi_services (12 endpoints: catalog + requests + SLAs + dashboard), dgi_td_sessions (6 endpoints: TD committee sessions + topics)
+- `core/audit.py` — `record_event()` functor de observación U: Crisis → txn.event
+- `routers/` — 28 routers: auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin (24 endpoints), reuniones (+ 2 crisis→decision bridge), search, dgi_cockpit, dgi_initiatives (+ 5 DMAIC + 1 lean-metrics), dgi_data, dgi_reports, dgi_cartera, dgi_processes (22 + 2 analytics endpoints), dgi_bottleneck (7 endpoints), actos (5 + 7-step FSM), core_sessions (9 + voting + F3→F4), dgi_coordination (10 + 1 calendar endpoint), dgi_escalation (7 endpoints: 4-level protocol + FSM + stats + cross-pop read), dgi_services (12 endpoints: catalog + requests + SLAs + dashboard), dgi_td_sessions (6 endpoints: TD committee sessions + topics), risk (8 endpoints: CRUD + FSM + summary + matrix + check-alerts), command_center (2 endpoints: summary + timeline)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware responses. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 
@@ -70,7 +71,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 
 ### Database
 
-**105 tables across 4 schemas** (85 logical + 20 txn partitions):
+**113 tables across 4 schemas** (89 core + 5 meta + 3 ref + 20 txn partitions):
 
 | Schema | Purpose |
 |--------|---------|
@@ -115,7 +116,7 @@ All passwords: `admin123`. All `@goreos.cl`.
 
 ## Testing
 
-**454 integration tests (454 pass + 5 skip)** against real PostgreSQL (`goreos_test`). No mocks.
+**487 integration tests (484 pass + 3 skip)** against real PostgreSQL (`goreos_test`). No mocks.
 
 ```bash
 ./scripts/setup_test_db.sh                                          # Setup test DB
@@ -125,7 +126,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v  # Sing
 docker compose exec api pip install pytest pytest-asyncio httpx     # Install deps (if rebuilt)
 ```
 
-34 modules: test_auth(12), test_compromisos(16), test_presupuesto(10), test_initiatives(7), test_problemas(8), test_convenios(12), test_dashboard(6), test_security_readonly(12), test_ipr_children(14), test_ipr_lifecycle(6), test_actos(12), test_admin(11), test_reuniones(11), test_search(4), test_catalogs(8), test_core_sessions(10), test_rendiciones(5), test_polyswitch(14), test_alertas(6), test_dgi_cockpit(4), test_dgi_reports(4), test_dgi_cartera(12), test_concurrency(5), test_sisrec(27), test_thresholds(18), test_track_enforcement(32), test_track_rules(18), test_ciclo24(22), test_sisrec_8phase(12), test_parametric(13), test_admissibility(13), test_c33_certification(11), test_dmaic(24), test_coordination(35).
+37 modules: test_auth(12), test_compromisos(16), test_presupuesto(10), test_initiatives(7), test_problemas(8), test_convenios(12), test_dashboard(6), test_security_readonly(12), test_ipr_children(14), test_ipr_lifecycle(6), test_actos(12), test_admin(11), test_reuniones(11), test_search(4), test_catalogs(8), test_core_sessions(10), test_rendiciones(5), test_polyswitch(14), test_alertas(6), test_dgi_cockpit(6), test_dgi_reports(4), test_dgi_cartera(12), test_concurrency(5), test_sisrec(27), test_thresholds(18), test_track_enforcement(32), test_track_rules(18), test_ciclo24(22), test_sisrec_8phase(12), test_parametric(13), test_admissibility(13), test_c33_certification(11), test_dmaic(24), test_coordination(35), test_risk(19), test_command_center(9), test_parentesco(10).
 
 **Test DB** (`scripts/setup_test_db.sh`): `pg_dump --schema-only` from `goreos_model` + `COPY ref.category` + territory + test users. Never apply `goreos_ddl.sql` directly (circular deps). Test users live in `goreos_seed_users.sql`.
 
@@ -177,6 +178,9 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 - **dgi_division_interaction**: Interaction log with divisions. JSONB: participants, topics, agreements. Matrix view: last/next interaction per division.
 - **dgi_td_sessions**: TD Committee sessions via `core.session` tables (committee `COMITE-TD`, auto-created). 6 endpoints: list/create/detail/action + topics CRUD. No voting/quorum — operational committee. FSM: PROGRAMADA→EN_CURSO→FINALIZADA. DGI_ROLES only.
 - **calendar** (consolidated): `GET /api/dgi/coordination/calendar` — UNION ALL across 5 sources (TD sessions, interactions, AR decisions, escalations, SLA breaches). Params: `from`, `to`, `type`. Returns `CalendarEvent[]` with severity semáforo.
+- **risk** (Wave E): Cross-population risk register. `risk.py` (8 endpoints). FSM: IDENTIFICADO→EN_EVALUACION→EN_MITIGACION→MITIGADO→CERRADO (+ ACEPTADO path). Advisory-locked code gen `RSK-{seq:04d}`. Auto-alert creation for ALTA/MUY_ALTA probability. Subject polymorphic (core.ipr, core.dgi_process). Role scoping: ENCARGADO→own IPRs, JEFE_DIVISION→division IPRs, DGI/ADMIN→all.
+- **command_center** (Wave E): Consolidated crisis dashboard. `command_center.py` (2 endpoints). Summary: 6 parallel queries (escalations, alerts, risks, AR decisions, meetings, SLA breaches). Timeline: UNION ALL of 5 sources with category filter + pagination. Roles: ADMIN_REGIONAL, GOBERNADOR, ADMIN_SISTEMA, JEFE_DGI.
+- **audit trail** (Wave E): `core/audit.py` `record_event()` populates `txn.event`. 10 event_type codes. 15 integration points across 5 routers (risk, escalation, alertas, coordination, reuniones). Graceful degradation on unknown event_type codes.
 
 ## Demo Data
 
@@ -195,7 +199,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## Coverage
 
-~249 endpoints, 454 tests, 35 modules, 22 gate functions. 52 frontend pages. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 98 CHECKs + 18 state triggers + 5 history/timing triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 18 entities. 97 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
+~259 endpoints, 487 tests, 37 modules, 22 gate functions. 55 frontend pages. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 98 CHECKs + 18 state triggers + 5 history/timing triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 18 entities. 98 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. Audit trail: `txn.event` populated via `record_event()` in 5 routers (15 integration points). **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
 
 ## Critical Rules
 
@@ -288,3 +292,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 58. **TD Committee (Wave D)**: `/comite-td` list (DataTable, status filters, create drawer) + detail panel inline (topics with agreements, add topic, iniciar/finalizar actions). `dgi_td_sessions.py` thin wrapper over `core.session` tables (committee `COMITE-TD`). No voting/quorum.
 59. **Consolidated Calendar (Wave D)**: `/calendario` agenda view (date range, type filter chips, cards grouped by date with severity semáforo). UNION ALL over 5 sources: sessions, interactions, decisions, escalations, SLAs. API: `GET /api/dgi/coordination/calendar`.
 60. **Demo Data Wave B**: `goreos_seed_demo_wave_b.sql` (3 AR decisions, 3 escalations, 4 services, 3 SLAs, 4 requests, 3 interactions). `goreos_unseed_demo_wave_b.sql` removes DEMO- records only.
+61. **Risk Register (Wave E)**: `/riesgos` list (status filter tabs, DataTable, create drawer with risk type/probability/impact selects + ComboboxAsync for subject, risk matrix toggle). `/riesgos/[id]` detail (hero card, 6-state FSM stepper, mitigation plan textarea gated by state, transition buttons with ConfirmDialog, subject link navigation). API: `risk.py` 8 endpoints.
+62. **Centro de Mando (Wave E)**: `/centro-de-mando` 3×2 KPI grid with semáforo (green/amber/red thresholds) + timeline section. Cards: Escalamientos, Alertas, Riesgos, Decisiones, Reuniones, SLA Vencidos — each clickable drill-down. Roles: ADMIN_REGIONAL, GOBERNADOR, ADMIN_SISTEMA, JEFE_DGI. Sidebar: both populations.
+63. **Crisis→Decision Bridge (Wave E)**: `POST /api/reuniones/{id}/decisiones` creates AR decision linked via `source_session_id`. `GET /api/reuniones/{id}/decisiones` lists decisions from meeting.
+64. **Demo Data Wave E**: `goreos_seed_demo_wave_e.sql` (5 DEMO-RSK risks, mixed statuses/types). `goreos_unseed_demo_wave_e.sql` removes DEMO- records only.

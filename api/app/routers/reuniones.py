@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app.core.deps import CurrentUser
 from app.core.database import get_db
+from app.core.audit import record_event
 from app.schemas.common import PaginatedResponse
 from app.schemas.reuniones import (
     ReunionListItem,
@@ -578,6 +579,7 @@ async def start_reunion(
         text("UPDATE core.session SET started_at = NOW(), updated_at = NOW() WHERE id = :sid"),
         {"sid": str(row["session_id"])},
     )
+    await record_event(db, "MEETING_STARTED", "core.crisis_meeting", reunion_id, user["id"])
     await db.commit()
     return {"message": "Reunion iniciada"}
 
@@ -614,5 +616,104 @@ async def finish_reunion(
         text("UPDATE core.session SET ended_at = NOW(), updated_at = NOW() WHERE id = :sid"),
         {"sid": str(row["session_id"])},
     )
+    await record_event(db, "MEETING_ENDED", "core.crisis_meeting", reunion_id, user["id"])
     await db.commit()
     return {"message": "Reunion finalizada"}
+
+
+# ---------------------------------------------------------------------------
+# E-3: POST /api/reuniones/{id}/decisiones — Create AR decision from meeting
+# ---------------------------------------------------------------------------
+
+@router.post("/{reunion_id}/decisiones", status_code=status.HTTP_201_CREATED)
+async def create_meeting_decision(
+    reunion_id: UUID,
+    body: dict,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    _require_manager(user)
+    row = await _get_reunion_or_404(reunion_id, db)
+    meeting_status = _compute_status(row)
+    if meeting_status not in ("EN_CURSO", "FINALIZADA"):
+        raise HTTPException(
+            status_code=400,
+            detail="Solo se pueden crear decisiones en reuniones EN_CURSO o FINALIZADAS",
+        )
+
+    session_id = row["session_id"]
+
+    # Resolve decision type
+    dt_row = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'dgi_ar_decision_type' AND code = :code"),
+        {"code": body.get("decision_type", "PRIORIDAD")},
+    )).mappings().first()
+    if not dt_row:
+        raise HTTPException(status_code=400, detail="Tipo de decisión inválido")
+
+    # Get PENDIENTE status
+    ds_row = (await db.execute(
+        text("SELECT id FROM ref.category WHERE scheme = 'dgi_ar_decision_status' AND code = 'PENDIENTE'"),
+    )).mappings().first()
+    if not ds_row:
+        raise HTTPException(status_code=400, detail="Estado PENDIENTE no encontrado")
+
+    result = await db.execute(
+        text("""
+            INSERT INTO core.dgi_ar_decision
+                (description, decision_type_id, status_id, due_date,
+                 responsible_id, context, source_session_id, created_by_id)
+            VALUES
+                (:description, :dt_id, :ds_id, :due_date,
+                 :responsible_id, :context, :source_session_id, :created_by_id)
+            RETURNING id
+        """),
+        {
+            "description": body["description"],
+            "dt_id": str(dt_row["id"]),
+            "ds_id": str(ds_row["id"]),
+            "due_date": body.get("due_date"),
+            "responsible_id": body.get("responsible_id"),
+            "context": body.get("context"),
+            "source_session_id": str(session_id),
+            "created_by_id": str(user["id"]),
+        },
+    )
+    decision_id = str(result.scalar())
+    await record_event(db, "DECISION_CREATED", "core.dgi_ar_decision", decision_id, user["id"],
+                       {"source": "crisis_meeting", "reunion_id": str(reunion_id)})
+    await db.commit()
+    return {"id": decision_id, "source_session_id": str(session_id)}
+
+
+# ---------------------------------------------------------------------------
+# E-3: GET /api/reuniones/{id}/decisiones — List decisions from meeting
+# ---------------------------------------------------------------------------
+
+@router.get("/{reunion_id}/decisiones")
+async def list_meeting_decisions(
+    reunion_id: UUID,
+    user: CurrentUser,
+    db: AsyncSession = Depends(get_db),
+):
+    row = await _get_reunion_or_404(reunion_id, db)
+    session_id = row["session_id"]
+
+    rows = (await db.execute(text("""
+        SELECT d.id, d.description,
+               dt.code AS decision_type, dt.label AS decision_type_label,
+               ds.code AS status, ds.label AS status_label,
+               d.due_date, d.context,
+               p.names || ' ' || p.paternal_surname AS responsible_name,
+               d.created_at
+        FROM core.dgi_ar_decision d
+        JOIN ref.category dt ON dt.id = d.decision_type_id
+        JOIN ref.category ds ON ds.id = d.status_id
+        LEFT JOIN core."user" u ON u.id = d.responsible_id
+        LEFT JOIN core.person p ON p.id = u.person_id
+        WHERE d.source_session_id = :session_id
+          AND d.deleted_at IS NULL
+        ORDER BY d.created_at ASC
+    """), {"session_id": str(session_id)})).mappings().all()
+
+    return [dict(r) for r in rows]
