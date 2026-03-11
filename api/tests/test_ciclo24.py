@@ -135,7 +135,7 @@ async def _create_evaluation_completed(
     result_id = None
     if result_code:
         result_row = (await db.execute(
-            text("SELECT id FROM ref.category WHERE scheme = 'ipr_state' AND code = :code"),
+            text("SELECT id FROM ref.category WHERE scheme = 'evaluation_result' AND code = :code"),
             {"code": result_code},
         )).mappings().first()
         result_id = str(result_row["id"]) if result_row else None
