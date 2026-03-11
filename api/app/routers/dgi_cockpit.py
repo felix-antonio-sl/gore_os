@@ -536,14 +536,15 @@ async def _cockpit_procesos(user: dict, db: AsyncSession) -> CockpitProcesos:
         SELECT
             b.id,
             b.code,
-            b.process_name,
+            p.name          AS process_name,
             b.version,
             st.code         AS status,
             b.description
         FROM core.dgi_bpmn_model b
+        JOIN core.dgi_process p ON p.id = b.process_id
         JOIN ref.category st ON st.id = b.status_id
         WHERE b.deleted_at IS NULL
-        ORDER BY b.process_name
+        ORDER BY p.name
     """)
     bpmn_rows = (await db.execute(bpmn_sql)).mappings().all()
     bpmn_models = [
