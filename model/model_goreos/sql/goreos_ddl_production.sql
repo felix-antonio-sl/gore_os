@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict wnKeXLgaBV9DHH0Ave44DDZHUYKULcYedQbT7LkIj7xG32v4YWyyFAzdUlouLdU
+\restrict M9QcQxgGT4g7R34JVEyuoQMB4CiYZ0r9OBhxmXXKtW0qm2mwxtpjblby73oZfQA
 
 -- Dumped from database version 16.11
 -- Dumped by pg_dump version 16.11
@@ -169,6 +169,172 @@ CREATE TYPE public.story_status_enum AS ENUM (
 
 
 ALTER TYPE public.story_status_enum OWNER TO goreos;
+
+--
+-- Name: trg_ar_decision_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_ar_decision_state_transition_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    old_code TEXT;
+    new_code TEXT;
+    allowed JSONB;
+BEGIN
+    IF NEW.status_id IS DISTINCT FROM OLD.status_id THEN
+        SELECT code, COALESCE(valid_transitions, '[]'::jsonb)
+        INTO old_code, allowed
+        FROM ref.category WHERE id = OLD.status_id AND scheme = 'dgi_ar_decision_status';
+
+        SELECT code INTO new_code
+        FROM ref.category WHERE id = NEW.status_id AND scheme = 'dgi_ar_decision_status';
+
+        IF NOT allowed ? new_code THEN
+            RAISE EXCEPTION 'Transición inválida de decisión AR: % → %', old_code, new_code;
+        END IF;
+
+        -- Auto-set resolved_at on COMPLETADA
+        IF new_code = 'COMPLETADA' THEN
+            NEW.resolved_at := NOW();
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_ar_decision_state_transition_fn() OWNER TO goreos;
+
+--
+-- Name: trg_escalation_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_escalation_state_transition_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    old_code TEXT;
+    new_code TEXT;
+    allowed JSONB;
+BEGIN
+    IF NEW.status_id IS DISTINCT FROM OLD.status_id THEN
+        SELECT code, COALESCE(valid_transitions, '[]'::jsonb)
+        INTO old_code, allowed
+        FROM ref.category WHERE id = OLD.status_id AND scheme = 'dgi_escalation_status';
+
+        SELECT code INTO new_code
+        FROM ref.category WHERE id = NEW.status_id AND scheme = 'dgi_escalation_status';
+
+        IF NOT allowed ? new_code THEN
+            RAISE EXCEPTION 'Transición inválida de escalamiento: % → %', old_code, new_code;
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_escalation_state_transition_fn() OWNER TO goreos;
+
+--
+-- Name: trg_initiative_timing_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_initiative_timing_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    new_status_code TEXT;
+BEGIN
+    -- Only fire on status_id change
+    IF NEW.status_id IS DISTINCT FROM OLD.status_id THEN
+        SELECT code INTO new_status_code
+        FROM ref.category
+        WHERE id = NEW.status_id AND scheme = 'dgi_initiative_status';
+
+        -- First move to EN_CURSO: set started_at
+        IF new_status_code = 'EN_CURSO' AND OLD.started_at IS NULL THEN
+            NEW.started_at := NOW();
+        END IF;
+
+        -- Move to COMPLETADO: set completed_at
+        IF new_status_code = 'COMPLETADO' THEN
+            NEW.completed_at := NOW();
+        END IF;
+
+        -- Move away from COMPLETADO: clear completed_at
+        IF new_status_code != 'COMPLETADO' AND OLD.completed_at IS NOT NULL THEN
+            NEW.completed_at := NULL;
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_initiative_timing_fn() OWNER TO goreos;
+
+--
+-- Name: trg_request_state_transition_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_request_state_transition_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    old_code TEXT;
+    new_code TEXT;
+    allowed JSONB;
+BEGIN
+    IF NEW.status_id IS DISTINCT FROM OLD.status_id THEN
+        SELECT code, COALESCE(valid_transitions, '[]'::jsonb)
+        INTO old_code, allowed
+        FROM ref.category WHERE id = OLD.status_id AND scheme = 'dgi_request_status';
+
+        SELECT code INTO new_code
+        FROM ref.category WHERE id = NEW.status_id AND scheme = 'dgi_request_status';
+
+        IF NOT allowed ? new_code THEN
+            RAISE EXCEPTION 'Transición inválida de solicitud: % → %', old_code, new_code;
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_request_state_transition_fn() OWNER TO goreos;
+
+--
+-- Name: trg_request_timing_fn(); Type: FUNCTION; Schema: core; Owner: goreos
+--
+
+CREATE FUNCTION core.trg_request_timing_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    new_code TEXT;
+BEGIN
+    IF NEW.status_id IS DISTINCT FROM OLD.status_id THEN
+        SELECT code INTO new_code
+        FROM ref.category WHERE id = NEW.status_id AND scheme = 'dgi_request_status';
+
+        IF new_code = 'EN_EJECUCION' AND OLD.started_at IS NULL THEN
+            NEW.started_at := NOW();
+        END IF;
+
+        IF new_code = 'COMPLETADA' THEN
+            NEW.completed_at := NOW();
+        END IF;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION core.trg_request_timing_fn() OWNER TO goreos;
 
 --
 -- Name: fn_act_history(); Type: FUNCTION; Schema: public; Owner: goreos
@@ -1221,6 +1387,8 @@ CREATE TABLE core.administrative_act (
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
     metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_act_cgr_outcome_scheme CHECK (((cgr_outcome_id IS NULL) OR public.fn_validate_category_scheme(cgr_outcome_id, 'cgr_outcome'::character varying))),
+    CONSTRAINT chk_act_state_scheme CHECK (((state_id IS NULL) OR public.fn_validate_category_scheme(state_id, 'act_state'::character varying))),
     CONSTRAINT chk_act_type_scheme CHECK (((act_type_id IS NULL) OR public.fn_validate_category_scheme(act_type_id, 'act_type'::character varying)))
 );
 
@@ -1245,7 +1413,9 @@ CREATE TABLE core.administrative_act_history (
     new_state_id uuid NOT NULL,
     changed_by_id uuid NOT NULL,
     comment text,
-    changed_at timestamp with time zone DEFAULT now()
+    changed_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT chk_act_hist_new_scheme CHECK (((new_state_id IS NULL) OR public.fn_validate_category_scheme(new_state_id, 'act_state'::character varying))),
+    CONSTRAINT chk_act_hist_prev_scheme CHECK (((previous_state_id IS NULL) OR public.fn_validate_category_scheme(previous_state_id, 'act_state'::character varying)))
 );
 
 
@@ -1279,7 +1449,9 @@ CREATE TABLE core.administrative_procedure (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_adm_proc_state_scheme CHECK (((state_id IS NULL) OR public.fn_validate_category_scheme(state_id, 'act_state'::character varying))),
+    CONSTRAINT chk_adm_proc_type_scheme CHECK (((procedure_type_id IS NULL) OR public.fn_validate_category_scheme(procedure_type_id, 'procedure_type'::character varying)))
 );
 
 
@@ -1372,7 +1544,9 @@ CREATE TABLE core.agreement (
     metadata jsonb DEFAULT '{}'::jsonb,
     technical_referent_id uuid,
     cgr_outcome_id uuid,
-    CONSTRAINT chk_agreement_cgr_outcome_scheme CHECK (((cgr_outcome_id IS NULL) OR public.fn_validate_category_scheme(cgr_outcome_id, 'cgr_outcome'::character varying)))
+    CONSTRAINT chk_agreement_cgr_outcome_scheme CHECK (((cgr_outcome_id IS NULL) OR public.fn_validate_category_scheme(cgr_outcome_id, 'cgr_outcome'::character varying))),
+    CONSTRAINT chk_agreement_state_scheme CHECK (((state_id IS NULL) OR public.fn_validate_category_scheme(state_id, 'agreement_state'::character varying))),
+    CONSTRAINT chk_agreement_type_scheme CHECK (((agreement_type_id IS NULL) OR public.fn_validate_category_scheme(agreement_type_id, 'agreement_type'::character varying)))
 );
 
 
@@ -1403,7 +1577,9 @@ CREATE TABLE core.agreement_history (
     new_state_id uuid NOT NULL,
     changed_by_id uuid NOT NULL,
     comment text,
-    changed_at timestamp with time zone DEFAULT now()
+    changed_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT chk_agreement_hist_new_scheme CHECK (((new_state_id IS NULL) OR public.fn_validate_category_scheme(new_state_id, 'agreement_state'::character varying))),
+    CONSTRAINT chk_agreement_hist_prev_scheme CHECK (((previous_state_id IS NULL) OR public.fn_validate_category_scheme(previous_state_id, 'agreement_state'::character varying)))
 );
 
 
@@ -1478,6 +1654,7 @@ CREATE TABLE core.alert (
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
     metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_alert_severity_scheme CHECK (((severity_id IS NULL) OR public.fn_validate_category_scheme(severity_id, 'alert_level'::character varying))),
     CONSTRAINT chk_alert_type_scheme CHECK (((alert_type_id IS NULL) OR public.fn_validate_category_scheme(alert_type_id, 'alert_type'::character varying)))
 );
 
@@ -1810,14 +1987,67 @@ CREATE TABLE core.crisis_meeting (
 ALTER TABLE core.crisis_meeting OWNER TO goreos;
 
 --
+-- Name: dgi_ar_decision; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_ar_decision (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    description text NOT NULL,
+    decision_type_id uuid NOT NULL,
+    status_id uuid NOT NULL,
+    due_date date,
+    context text,
+    responsible_id uuid,
+    resolved_at timestamp with time zone,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT chk_ar_decision_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_ar_decision_status'::character varying)),
+    CONSTRAINT chk_ar_decision_type CHECK (public.fn_validate_category_scheme(decision_type_id, 'dgi_ar_decision_type'::character varying))
+);
+
+
+ALTER TABLE core.dgi_ar_decision OWNER TO goreos;
+
+--
+-- Name: dgi_bottleneck_investigation; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_bottleneck_investigation (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    code text,
+    status_id uuid NOT NULL,
+    division_id uuid,
+    indicator_id uuid,
+    process_id uuid,
+    detection_type text NOT NULL,
+    detection_value numeric(10,2),
+    detection_threshold numeric(10,2),
+    problem text,
+    verification text,
+    root_cause_analysis text,
+    proposal text,
+    communication text,
+    follow_up text,
+    detected_at timestamp with time zone DEFAULT now() NOT NULL,
+    closed_at timestamp with time zone,
+    created_by_id uuid,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT ck_dgi_bottleneck_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_bottleneck_status'::character varying))
+);
+
+
+ALTER TABLE core.dgi_bottleneck_investigation OWNER TO goreos;
+
+--
 -- Name: dgi_bpmn_model; Type: TABLE; Schema: core; Owner: goreos
 --
 
 CREATE TABLE core.dgi_bpmn_model (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     code character varying(30),
-    process_name character varying(200) NOT NULL,
-    division_id uuid,
     version character varying(10) DEFAULT 'v1.0'::character varying,
     status_id uuid NOT NULL,
     description text,
@@ -1828,7 +2058,12 @@ CREATE TABLE core.dgi_bpmn_model (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    process_id uuid NOT NULL,
+    bpmn_type_id uuid,
+    CONSTRAINT chk_dgi_bpmn_model_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_bpmn_status'::character varying)),
+    CONSTRAINT chk_dgi_bpmn_model_type CHECK (((bpmn_type_id IS NULL) OR public.fn_validate_category_scheme(bpmn_type_id, 'dgi_bpmn_type'::character varying))),
+    CONSTRAINT chk_dgi_bpmn_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'dgi_bpmn_status'::character varying)))
 );
 
 
@@ -1859,7 +2094,9 @@ CREATE TABLE core.dgi_committee_session (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_dgi_committee_session_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_session_status'::character varying)),
+    CONSTRAINT chk_dgi_session_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'dgi_session_status'::character varying)))
 );
 
 
@@ -1890,7 +2127,9 @@ CREATE TABLE core.dgi_data_source_status (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_dgi_data_source_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_source_status'::character varying)),
+    CONSTRAINT chk_dgi_source_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'dgi_source_status'::character varying)))
 );
 
 
@@ -1924,6 +2163,88 @@ CREATE TABLE core.dgi_decree (
 ALTER TABLE core.dgi_decree OWNER TO goreos;
 
 --
+-- Name: dgi_division_interaction; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_division_interaction (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    division_id uuid NOT NULL,
+    interaction_type_id uuid NOT NULL,
+    interaction_date date DEFAULT CURRENT_DATE NOT NULL,
+    participants jsonb DEFAULT '[]'::jsonb,
+    topics jsonb DEFAULT '[]'::jsonb,
+    agreements jsonb DEFAULT '[]'::jsonb,
+    next_date date,
+    notes text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT chk_interaction_type CHECK (public.fn_validate_category_scheme(interaction_type_id, 'dgi_interaction_type'::character varying))
+);
+
+
+ALTER TABLE core.dgi_division_interaction OWNER TO goreos;
+
+--
+-- Name: dgi_escalation; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_escalation (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    code character varying(20) NOT NULL,
+    level_id uuid NOT NULL,
+    status_id uuid NOT NULL,
+    situation text NOT NULL,
+    impact text NOT NULL,
+    options jsonb DEFAULT '[]'::jsonb,
+    recommendation text,
+    deadline timestamp with time zone,
+    subject_type character varying(64),
+    subject_id uuid,
+    escalated_to character varying(32),
+    resolved_description text,
+    alert_id uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    resolved_at timestamp with time zone,
+    deleted_at timestamp with time zone,
+    CONSTRAINT chk_escalation_level CHECK (public.fn_validate_category_scheme(level_id, 'dgi_escalation_level'::character varying)),
+    CONSTRAINT chk_escalation_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_escalation_status'::character varying))
+);
+
+
+ALTER TABLE core.dgi_escalation OWNER TO goreos;
+
+--
+-- Name: dgi_improvement_opportunity; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_improvement_opportunity (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    process_id uuid NOT NULL,
+    initiative_id uuid,
+    dimension character varying(30) NOT NULL,
+    description text NOT NULL,
+    impact character varying(10) NOT NULL,
+    effort character varying(10) NOT NULL,
+    status character varying(20) DEFAULT 'PROPUESTA'::character varying NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    deleted_at timestamp with time zone,
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT dgi_improvement_opportunity_dimension_check CHECK (((dimension)::text = ANY ((ARRAY['VALOR'::character varying, 'DUPLICACION'::character varying, 'ESPERAS'::character varying, 'MOVIMIENTOS'::character varying, 'ERRORES'::character varying, 'AUTOMATIZACION'::character varying])::text[]))),
+    CONSTRAINT dgi_improvement_opportunity_effort_check CHECK (((effort)::text = ANY ((ARRAY['ALTO'::character varying, 'MEDIO'::character varying, 'BAJO'::character varying])::text[]))),
+    CONSTRAINT dgi_improvement_opportunity_impact_check CHECK (((impact)::text = ANY ((ARRAY['ALTO'::character varying, 'MEDIO'::character varying, 'BAJO'::character varying])::text[]))),
+    CONSTRAINT dgi_improvement_opportunity_status_check CHECK (((status)::text = ANY ((ARRAY['PROPUESTA'::character varying, 'VALIDADA'::character varying, 'EN_EJECUCION'::character varying, 'IMPLEMENTADA'::character varying, 'DESCARTADA'::character varying])::text[])))
+);
+
+
+ALTER TABLE core.dgi_improvement_opportunity OWNER TO goreos;
+
+--
 -- Name: dgi_indicator; Type: TABLE; Schema: core; Owner: goreos
 --
 
@@ -1948,6 +2269,16 @@ CREATE TABLE core.dgi_indicator (
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
     metadata jsonb DEFAULT '{}'::jsonb,
+    formula text,
+    frequency character varying(20),
+    source_type character varying(20) DEFAULT 'AUTO'::character varying,
+    lifecycle_status_id uuid,
+    CONSTRAINT chk_dgi_indicator_dimension CHECK (public.fn_validate_category_scheme(dimension_id, 'dgi_indicator_dimension'::character varying)),
+    CONSTRAINT chk_dgi_indicator_dimension_scheme CHECK (((dimension_id IS NULL) OR public.fn_validate_category_scheme(dimension_id, 'dgi_indicator_dimension'::character varying))),
+    CONSTRAINT chk_dgi_indicator_lifecycle CHECK (((lifecycle_status_id IS NULL) OR public.fn_validate_category_scheme(lifecycle_status_id, 'dgi_indicator_lifecycle'::character varying))),
+    CONSTRAINT chk_dgi_indicator_signal CHECK (((signal_id IS NULL) OR public.fn_validate_category_scheme(signal_id, 'dgi_signal'::character varying))),
+    CONSTRAINT chk_dgi_indicator_signal_scheme CHECK (((signal_id IS NULL) OR public.fn_validate_category_scheme(signal_id, 'dgi_signal'::character varying))),
+    CONSTRAINT chk_dgi_indicator_source_type CHECK (((source_type)::text = ANY ((ARRAY['AUTO'::character varying, 'MANUAL'::character varying, 'EXTERNAL'::character varying])::text[]))),
     CONSTRAINT dgi_indicator_trend_check CHECK (((trend)::text = ANY ((ARRAY['up'::character varying, 'down'::character varying, 'flat'::character varying])::text[])))
 );
 
@@ -1960,6 +2291,23 @@ ALTER TABLE core.dgi_indicator OWNER TO goreos;
 
 COMMENT ON TABLE core.dgi_indicator IS 'Indicadores institucionales del semáforo DGI';
 
+
+--
+-- Name: dgi_indicator_lifecycle_history; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_indicator_lifecycle_history (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    indicator_id uuid NOT NULL,
+    previous_lifecycle_id uuid,
+    new_lifecycle_id uuid NOT NULL,
+    changed_by_id uuid,
+    comment text,
+    changed_at timestamp with time zone DEFAULT now() NOT NULL
+);
+
+
+ALTER TABLE core.dgi_indicator_lifecycle_history OWNER TO goreos;
 
 --
 -- Name: dgi_indicator_snapshot; Type: TABLE; Schema: core; Owner: goreos
@@ -2003,7 +2351,13 @@ CREATE TABLE core.dgi_initiative (
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
     metadata jsonb DEFAULT '{}'::jsonb,
-    sort_order integer DEFAULT 0 NOT NULL
+    sort_order integer DEFAULT 0 NOT NULL,
+    started_at timestamp with time zone,
+    completed_at timestamp with time zone,
+    CONSTRAINT chk_dgi_initiative_dmaic_phase CHECK (((dmaic_phase_id IS NULL) OR public.fn_validate_category_scheme(dmaic_phase_id, 'dgi_dmaic_phase'::character varying))),
+    CONSTRAINT chk_dgi_initiative_dmaic_scheme CHECK (((dmaic_phase_id IS NULL) OR public.fn_validate_category_scheme(dmaic_phase_id, 'dgi_dmaic_phase'::character varying))),
+    CONSTRAINT chk_dgi_initiative_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_initiative_status'::character varying)),
+    CONSTRAINT chk_dgi_initiative_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'dgi_initiative_status'::character varying)))
 );
 
 
@@ -2015,6 +2369,122 @@ ALTER TABLE core.dgi_initiative OWNER TO goreos;
 
 COMMENT ON TABLE core.dgi_initiative IS 'Iniciativas de mejora DGI con tracking Kanban/DMAIC';
 
+
+--
+-- Name: COLUMN dgi_initiative.started_at; Type: COMMENT; Schema: core; Owner: goreos
+--
+
+COMMENT ON COLUMN core.dgi_initiative.started_at IS 'Auto-set on first move to EN_CURSO (cycle time start)';
+
+
+--
+-- Name: COLUMN dgi_initiative.completed_at; Type: COMMENT; Schema: core; Owner: goreos
+--
+
+COMMENT ON COLUMN core.dgi_initiative.completed_at IS 'Auto-set on move to COMPLETADA (cycle/lead time end)';
+
+
+--
+-- Name: dgi_process; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_process (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    code character varying(20),
+    name character varying(200) NOT NULL,
+    description text,
+    scope text,
+    division_id uuid,
+    owner_id uuid,
+    status_id uuid NOT NULL,
+    criticality character varying(10) DEFAULT 'MEDIA'::character varying,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    updated_by_id uuid,
+    deleted_at timestamp with time zone,
+    deleted_by_id uuid,
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_dgi_process_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_process_status'::character varying)),
+    CONSTRAINT dgi_process_criticality_check CHECK (((criticality)::text = ANY ((ARRAY['ALTA'::character varying, 'MEDIA'::character varying, 'BAJA'::character varying])::text[])))
+);
+
+
+ALTER TABLE core.dgi_process OWNER TO goreos;
+
+--
+-- Name: dgi_process_actor; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_process_actor (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    process_id uuid NOT NULL,
+    actor_type character varying(20) NOT NULL,
+    actor_name character varying(200) NOT NULL,
+    lane_label character varying(100),
+    description text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT dgi_process_actor_actor_type_check CHECK (((actor_type)::text = ANY ((ARRAY['ROL'::character varying, 'SISTEMA'::character varying, 'DIVISION'::character varying])::text[])))
+);
+
+
+ALTER TABLE core.dgi_process_actor OWNER TO goreos;
+
+--
+-- Name: dgi_process_metric; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_process_metric (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    process_id uuid NOT NULL,
+    name character varying(200) NOT NULL,
+    value numeric,
+    unit character varying(30),
+    measured_at date DEFAULT CURRENT_DATE NOT NULL,
+    measurement_type character varying(20) DEFAULT 'BASELINE'::character varying NOT NULL,
+    source text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    CONSTRAINT dgi_process_metric_measurement_type_check CHECK (((measurement_type)::text = ANY ((ARRAY['BASELINE'::character varying, 'POST_MEJORA'::character varying, 'PERIODICA'::character varying])::text[])))
+);
+
+
+ALTER TABLE core.dgi_process_metric OWNER TO goreos;
+
+--
+-- Name: dgi_process_pain_point; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_process_pain_point (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    process_id uuid NOT NULL,
+    description text NOT NULL,
+    impact character varying(10) NOT NULL,
+    bpmn_stage character varying(100),
+    reported_by_id uuid,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT dgi_process_pain_point_impact_check CHECK (((impact)::text = ANY ((ARRAY['ALTO'::character varying, 'MEDIO'::character varying, 'BAJO'::character varying])::text[])))
+);
+
+
+ALTER TABLE core.dgi_process_pain_point OWNER TO goreos;
+
+--
+-- Name: dgi_process_rule; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_process_rule (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    process_id uuid NOT NULL,
+    code character varying(20) NOT NULL,
+    description text NOT NULL,
+    rule_type character varying(20) NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    CONSTRAINT dgi_process_rule_rule_type_check CHECK (((rule_type)::text = ANY ((ARRAY['VALIDACION'::character varying, 'DECISION'::character varying, 'CALCULO'::character varying, 'RESTRICCION'::character varying])::text[])))
+);
+
+
+ALTER TABLE core.dgi_process_rule OWNER TO goreos;
 
 --
 -- Name: dgi_report; Type: TABLE; Schema: core; Owner: goreos
@@ -2039,7 +2509,11 @@ CREATE TABLE core.dgi_report (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_dgi_report_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_report_status'::character varying)),
+    CONSTRAINT chk_dgi_report_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'dgi_report_status'::character varying))),
+    CONSTRAINT chk_dgi_report_type CHECK (public.fn_validate_category_scheme(report_type_id, 'dgi_report_type'::character varying)),
+    CONSTRAINT chk_dgi_report_type_scheme CHECK (((report_type_id IS NULL) OR public.fn_validate_category_scheme(report_type_id, 'dgi_report_type'::character varying)))
 );
 
 
@@ -2051,6 +2525,82 @@ ALTER TABLE core.dgi_report OWNER TO goreos;
 
 COMMENT ON TABLE core.dgi_report IS 'Informes institucionales DGI (Flash, Semanal, Mensual, Temático)';
 
+
+--
+-- Name: dgi_service; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_service (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    code character varying(20) NOT NULL,
+    name text NOT NULL,
+    description text,
+    area character varying(4) NOT NULL,
+    status_id uuid NOT NULL,
+    sla_days integer,
+    how_to_request text,
+    deliverables text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT chk_service_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_service_status'::character varying))
+);
+
+
+ALTER TABLE core.dgi_service OWNER TO goreos;
+
+--
+-- Name: dgi_service_request; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_service_request (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    code character varying(20) NOT NULL,
+    service_id uuid NOT NULL,
+    status_id uuid NOT NULL,
+    requester_id uuid NOT NULL,
+    division_id uuid,
+    description text NOT NULL,
+    urgency character varying(8) DEFAULT 'NORMAL'::character varying,
+    assigned_to_id uuid,
+    started_at timestamp with time zone,
+    completed_at timestamp with time zone,
+    satisfaction_score integer,
+    feedback_text text,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    created_by_id uuid,
+    deleted_at timestamp with time zone,
+    CONSTRAINT chk_request_status CHECK (public.fn_validate_category_scheme(status_id, 'dgi_request_status'::character varying)),
+    CONSTRAINT chk_satisfaction_range CHECK (((satisfaction_score IS NULL) OR ((satisfaction_score >= 1) AND (satisfaction_score <= 5))))
+);
+
+
+ALTER TABLE core.dgi_service_request OWNER TO goreos;
+
+--
+-- Name: dgi_sla; Type: TABLE; Schema: core; Owner: goreos
+--
+
+CREATE TABLE core.dgi_sla (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    service_id uuid NOT NULL,
+    product_type_id uuid NOT NULL,
+    description text,
+    target_days integer NOT NULL,
+    target_hour time without time zone,
+    priority integer DEFAULT 0,
+    applies_to jsonb DEFAULT '[]'::jsonb,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
+    deleted_at timestamp with time zone,
+    CONSTRAINT chk_sla_product_type CHECK (public.fn_validate_category_scheme(product_type_id, 'dgi_sla_product_type'::character varying)),
+    CONSTRAINT chk_target_days_positive CHECK ((target_days > 0))
+);
+
+
+ALTER TABLE core.dgi_sla OWNER TO goreos;
 
 --
 -- Name: digital_platform; Type: TABLE; Schema: core; Owner: goreos
@@ -2070,7 +2620,8 @@ CREATE TABLE core.digital_platform (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_platform_type_scheme CHECK (((platform_type_id IS NULL) OR public.fn_validate_category_scheme(platform_type_id, 'platform_type'::character varying)))
 );
 
 
@@ -2104,7 +2655,8 @@ CREATE TABLE core.document (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_document_type_scheme CHECK (((document_type_id IS NULL) OR public.fn_validate_category_scheme(document_type_id, 'document_type'::character varying)))
 );
 
 
@@ -2150,7 +2702,8 @@ CREATE TABLE core.electronic_file (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_file_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'file_status'::character varying)))
 );
 
 
@@ -2189,7 +2742,9 @@ CREATE TABLE core.evaluation_assignment (
     numeric_score numeric(5,2),
     rank_position integer,
     rank_total integer,
-    convocatoria_code character varying(32)
+    convocatoria_code character varying(32),
+    CONSTRAINT chk_evaluation_result_scheme CHECK (((result_id IS NULL) OR public.fn_validate_category_scheme(result_id, 'evaluation_result'::character varying))),
+    CONSTRAINT chk_evaluator_type_scheme CHECK (((evaluator_type_id IS NULL) OR public.fn_validate_category_scheme(evaluator_type_id, 'evaluator_type'::character varying)))
 );
 
 
@@ -2357,7 +2912,9 @@ CREATE TABLE core.fund_program (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_fund_source_scheme CHECK (((fund_source_id IS NULL) OR public.fn_validate_category_scheme(fund_source_id, 'funding_source'::character varying))),
+    CONSTRAINT chk_fund_state_scheme CHECK (((state_id IS NULL) OR public.fn_validate_category_scheme(state_id, 'validity_status'::character varying)))
 );
 
 
@@ -2419,7 +2976,9 @@ CREATE TABLE core.inventory_item (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_asset_status_scheme CHECK (((current_status_id IS NULL) OR public.fn_validate_category_scheme(current_status_id, 'asset_status'::character varying))),
+    CONSTRAINT chk_inventory_type_scheme CHECK (((item_type_id IS NULL) OR public.fn_validate_category_scheme(item_type_id, 'inventory_type'::character varying)))
 );
 
 
@@ -2469,6 +3028,7 @@ CREATE TABLE core.ipr (
     investment_sector_id uuid,
     fund_category_id uuid,
     is_municipal_origin boolean DEFAULT false,
+    CONSTRAINT chk_alert_level_scheme CHECK (((alert_level_id IS NULL) OR public.fn_validate_category_scheme(alert_level_id, 'alert_level'::character varying))),
     CONSTRAINT chk_budget_subtitle_scheme CHECK (((budget_subtitle_id IS NULL) OR public.fn_validate_category_scheme(budget_subtitle_id, 'budget_subtitle'::character varying))),
     CONSTRAINT chk_fund_category_scheme CHECK (((fund_category_id IS NULL) OR public.fn_validate_category_scheme(fund_category_id, 'fondo_8pct'::character varying))),
     CONSTRAINT chk_funding_source_scheme CHECK (((funding_source_id IS NULL) OR public.fn_validate_category_scheme(funding_source_id, 'funding_source'::character varying))),
@@ -2590,7 +3150,8 @@ END) STORED,
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_milestone_type_scheme CHECK (((milestone_type_id IS NULL) OR public.fn_validate_category_scheme(milestone_type_id, 'milestone_type'::character varying)))
 );
 
 
@@ -2633,7 +3194,8 @@ CREATE TABLE core.ipr_party (
     deleted_by_id uuid,
     metadata jsonb DEFAULT '{}'::jsonb,
     agreement_id uuid,
-    sponsor_division_id uuid
+    sponsor_division_id uuid,
+    CONSTRAINT chk_party_role_scheme CHECK (((party_role_id IS NULL) OR public.fn_validate_category_scheme(party_role_id, 'ipr_party_role'::character varying)))
 );
 
 
@@ -2712,7 +3274,8 @@ CREATE TABLE core.ipr_territory (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_territory_impact_scheme CHECK (((impact_type_id IS NULL) OR public.fn_validate_category_scheme(impact_type_id, 'territory_impact'::character varying)))
 );
 
 
@@ -2806,7 +3369,8 @@ CREATE TABLE core.legal_mandate (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_legal_mandate_applies_scheme CHECK (((applies_to_id IS NULL) OR public.fn_validate_category_scheme(applies_to_id, 'org_type'::character varying)))
 );
 
 
@@ -2871,7 +3435,9 @@ CREATE TABLE core.operational_commitment (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_commitment_priority_scheme CHECK (((priority_id IS NULL) OR public.fn_validate_category_scheme(priority_id, 'work_item_priority'::character varying))),
+    CONSTRAINT chk_commitment_state_scheme CHECK (((state_id IS NULL) OR public.fn_validate_category_scheme(state_id, 'commitment_state'::character varying)))
 );
 
 
@@ -2953,7 +3519,8 @@ CREATE TABLE core.person (
     position_id uuid,
     qualification_id uuid,
     CONSTRAINT chk_estamento_scheme CHECK (((estamento_id IS NULL) OR public.fn_validate_category_scheme(estamento_id, 'estamento'::character varying))),
-    CONSTRAINT chk_person_type_scheme CHECK (((person_type_id IS NULL) OR public.fn_validate_category_scheme(person_type_id, 'person_type'::character varying)))
+    CONSTRAINT chk_person_type_scheme CHECK (((person_type_id IS NULL) OR public.fn_validate_category_scheme(person_type_id, 'person_type'::character varying))),
+    CONSTRAINT chk_qualification_scheme CHECK (((qualification_id IS NULL) OR public.fn_validate_category_scheme(qualification_id, 'professional_qualification'::character varying)))
 );
 
 
@@ -2992,7 +3559,8 @@ CREATE TABLE core.planning_instrument (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_instrument_type_scheme CHECK (((instrument_type_id IS NULL) OR public.fn_validate_category_scheme(instrument_type_id, 'instrument_type'::character varying)))
 );
 
 
@@ -3050,7 +3618,8 @@ CREATE TABLE core.procedure (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_procedure_type_scheme CHECK (((procedure_type_id IS NULL) OR public.fn_validate_category_scheme(procedure_type_id, 'procedure_type'::character varying)))
 );
 
 
@@ -3174,7 +3743,9 @@ CREATE TABLE core.rendition_history (
     new_state_id uuid NOT NULL,
     changed_by_id uuid NOT NULL,
     comment text,
-    changed_at timestamp with time zone DEFAULT now()
+    changed_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT chk_rendition_hist_new_scheme CHECK (((new_state_id IS NULL) OR public.fn_validate_category_scheme(new_state_id, 'rendition_state'::character varying))),
+    CONSTRAINT chk_rendition_hist_prev_scheme CHECK (((previous_state_id IS NULL) OR public.fn_validate_category_scheme(previous_state_id, 'rendition_state'::character varying)))
 );
 
 
@@ -3262,7 +3833,11 @@ CREATE TABLE core.risk (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_risk_impact_scheme CHECK (((impact_id IS NULL) OR public.fn_validate_category_scheme(impact_id, 'problem_impact'::character varying))),
+    CONSTRAINT chk_risk_probability_scheme CHECK (((probability_id IS NULL) OR public.fn_validate_category_scheme(probability_id, 'risk_probability'::character varying))),
+    CONSTRAINT chk_risk_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'risk_status'::character varying))),
+    CONSTRAINT chk_risk_type_scheme CHECK (((risk_type_id IS NULL) OR public.fn_validate_category_scheme(risk_type_id, 'risk_type'::character varying)))
 );
 
 
@@ -3359,7 +3934,8 @@ CREATE TABLE core.session_agreement (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_session_agreement_status_scheme CHECK (((status_id IS NULL) OR public.fn_validate_category_scheme(status_id, 'commitment_state'::character varying)))
 );
 
 
@@ -3375,7 +3951,8 @@ CREATE TABLE core.session_vote (
     voter_id uuid NOT NULL,
     vote_option_id uuid NOT NULL,
     recorded_at timestamp with time zone DEFAULT now(),
-    created_at timestamp with time zone DEFAULT now()
+    created_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT chk_vote_option_scheme CHECK (((vote_option_id IS NULL) OR public.fn_validate_category_scheme(vote_option_id, 'vote_option'::character varying)))
 );
 
 
@@ -3483,7 +4060,9 @@ CREATE TABLE core.territorial_indicator (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_terr_indicator_type_scheme CHECK (((indicator_type_id IS NULL) OR public.fn_validate_category_scheme(indicator_type_id, 'indicator_type'::character varying))),
+    CONSTRAINT chk_terr_indicator_unit_scheme CHECK (((unit_id IS NULL) OR public.fn_validate_category_scheme(unit_id, 'unit'::character varying)))
 );
 
 
@@ -3590,7 +4169,9 @@ CREATE TABLE core.vehicle (
     updated_by_id uuid,
     deleted_at timestamp with time zone,
     deleted_by_id uuid,
-    metadata jsonb DEFAULT '{}'::jsonb
+    metadata jsonb DEFAULT '{}'::jsonb,
+    CONSTRAINT chk_fuel_type_scheme CHECK (((fuel_type_id IS NULL) OR public.fn_validate_category_scheme(fuel_type_id, 'fuel_type'::character varying))),
+    CONSTRAINT chk_vehicle_type_scheme CHECK (((vehicle_type_id IS NULL) OR public.fn_validate_category_scheme(vehicle_type_id, 'vehicle_type'::character varying)))
 );
 
 
@@ -5108,6 +5689,30 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
+-- Name: dgi_ar_decision dgi_ar_decision_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_ar_decision
+    ADD CONSTRAINT dgi_ar_decision_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_bottleneck_investigation
+    ADD CONSTRAINT dgi_bottleneck_investigation_code_key UNIQUE (code);
+
+
+--
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_bottleneck_investigation
+    ADD CONSTRAINT dgi_bottleneck_investigation_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: dgi_bpmn_model dgi_bpmn_model_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
 --
 
@@ -5156,11 +5761,51 @@ ALTER TABLE ONLY core.dgi_decree
 
 
 --
+-- Name: dgi_division_interaction dgi_division_interaction_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_division_interaction
+    ADD CONSTRAINT dgi_division_interaction_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_escalation dgi_escalation_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_escalation
+    ADD CONSTRAINT dgi_escalation_code_key UNIQUE (code);
+
+
+--
+-- Name: dgi_escalation dgi_escalation_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_escalation
+    ADD CONSTRAINT dgi_escalation_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_improvement_opportunity dgi_improvement_opportunity_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_improvement_opportunity
+    ADD CONSTRAINT dgi_improvement_opportunity_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: dgi_indicator dgi_indicator_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
 --
 
 ALTER TABLE ONLY core.dgi_indicator
     ADD CONSTRAINT dgi_indicator_code_key UNIQUE (code);
+
+
+--
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
+    ADD CONSTRAINT dgi_indicator_lifecycle_history_pkey PRIMARY KEY (id);
 
 
 --
@@ -5196,6 +5841,62 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
+-- Name: dgi_process_actor dgi_process_actor_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_actor
+    ADD CONSTRAINT dgi_process_actor_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_process dgi_process_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process
+    ADD CONSTRAINT dgi_process_code_key UNIQUE (code);
+
+
+--
+-- Name: dgi_process_metric dgi_process_metric_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_metric
+    ADD CONSTRAINT dgi_process_metric_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_process_pain_point dgi_process_pain_point_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_pain_point
+    ADD CONSTRAINT dgi_process_pain_point_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_process dgi_process_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process
+    ADD CONSTRAINT dgi_process_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_process_rule dgi_process_rule_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_rule
+    ADD CONSTRAINT dgi_process_rule_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_process_rule dgi_process_rule_process_id_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_rule
+    ADD CONSTRAINT dgi_process_rule_process_id_code_key UNIQUE (process_id, code);
+
+
+--
 -- Name: dgi_report dgi_report_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
 --
 
@@ -5209,6 +5910,54 @@ ALTER TABLE ONLY core.dgi_report
 
 ALTER TABLE ONLY core.dgi_report
     ADD CONSTRAINT dgi_report_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_service dgi_service_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service
+    ADD CONSTRAINT dgi_service_code_key UNIQUE (code);
+
+
+--
+-- Name: dgi_service dgi_service_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service
+    ADD CONSTRAINT dgi_service_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_code_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_code_key UNIQUE (code);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_sla dgi_sla_pkey; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_sla
+    ADD CONSTRAINT dgi_sla_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dgi_sla dgi_sla_service_id_product_type_id_key; Type: CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_sla
+    ADD CONSTRAINT dgi_sla_service_id_product_type_id_key UNIQUE (service_id, product_type_id);
 
 
 --
@@ -5801,14 +6550,6 @@ ALTER TABLE ONLY core.admissibility_check
 
 ALTER TABLE ONLY core.admissibility_item
     ADD CONSTRAINT uq_admissibility_item_track_code UNIQUE (financing_track_id, code);
-
-
---
--- Name: ipr_party uq_ipr_party_role; Type: CONSTRAINT; Schema: core; Owner: goreos
---
-
-ALTER TABLE ONLY core.ipr_party
-    ADD CONSTRAINT uq_ipr_party_role UNIQUE (ipr_id, organization_id, party_role_id);
 
 
 --
@@ -6545,6 +7286,27 @@ CREATE INDEX idx_commitment_state ON core.operational_commitment USING btree (st
 
 
 --
+-- Name: idx_dgi_bottleneck_division; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_bottleneck_division ON core.dgi_bottleneck_investigation USING btree (division_id) WHERE (deleted_at IS NULL);
+
+
+--
+-- Name: idx_dgi_bottleneck_status; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_bottleneck_status ON core.dgi_bottleneck_investigation USING btree (status_id);
+
+
+--
+-- Name: idx_dgi_bpmn_model_process; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_bpmn_model_process ON core.dgi_bpmn_model USING btree (process_id);
+
+
+--
 -- Name: idx_dgi_decree_status; Type: INDEX; Schema: core; Owner: goreos
 --
 
@@ -6559,6 +7321,20 @@ CREATE INDEX idx_dgi_indicator_dimension ON core.dgi_indicator USING btree (dime
 
 
 --
+-- Name: idx_dgi_indicator_lifecycle; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_indicator_lifecycle ON core.dgi_indicator USING btree (lifecycle_status_id);
+
+
+--
+-- Name: idx_dgi_indicator_lifecycle_history_ind; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_indicator_lifecycle_history_ind ON core.dgi_indicator_lifecycle_history USING btree (indicator_id);
+
+
+--
 -- Name: idx_dgi_initiative_responsible; Type: INDEX; Schema: core; Owner: goreos
 --
 
@@ -6570,6 +7346,69 @@ CREATE INDEX idx_dgi_initiative_responsible ON core.dgi_initiative USING btree (
 --
 
 CREATE INDEX idx_dgi_initiative_status ON core.dgi_initiative USING btree (status_id);
+
+
+--
+-- Name: idx_dgi_opportunity_initiative; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_opportunity_initiative ON core.dgi_improvement_opportunity USING btree (initiative_id);
+
+
+--
+-- Name: idx_dgi_opportunity_process; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_opportunity_process ON core.dgi_improvement_opportunity USING btree (process_id);
+
+
+--
+-- Name: idx_dgi_process_actor_process; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_process_actor_process ON core.dgi_process_actor USING btree (process_id);
+
+
+--
+-- Name: idx_dgi_process_division; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_process_division ON core.dgi_process USING btree (division_id);
+
+
+--
+-- Name: idx_dgi_process_metric_process; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_process_metric_process ON core.dgi_process_metric USING btree (process_id);
+
+
+--
+-- Name: idx_dgi_process_owner; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_process_owner ON core.dgi_process USING btree (owner_id);
+
+
+--
+-- Name: idx_dgi_process_pain_point_process; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_process_pain_point_process ON core.dgi_process_pain_point USING btree (process_id);
+
+
+--
+-- Name: idx_dgi_process_rule_process; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_process_rule_process ON core.dgi_process_rule USING btree (process_id);
+
+
+--
+-- Name: idx_dgi_process_status; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE INDEX idx_dgi_process_status ON core.dgi_process USING btree (status_id);
 
 
 --
@@ -7032,6 +7871,13 @@ CREATE INDEX idx_territory_parent ON core.territory USING btree (parent_id, terr
 --
 
 CREATE INDEX idx_user_active ON core."user" USING btree (is_active, system_role_id) WHERE ((is_active = true) AND (deleted_at IS NULL));
+
+
+--
+-- Name: uq_ipr_party_role; Type: INDEX; Schema: core; Owner: goreos
+--
+
+CREATE UNIQUE INDEX uq_ipr_party_role ON core.ipr_party USING btree (ipr_id, organization_id, party_role_id) WHERE (deleted_at IS NULL);
 
 
 --
@@ -8799,10 +9645,24 @@ CREATE TRIGGER trg_alert_updated_at BEFORE UPDATE ON core.alert FOR EACH ROW EXE
 
 
 --
+-- Name: dgi_ar_decision trg_ar_decision_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_ar_decision_state_transition BEFORE UPDATE ON core.dgi_ar_decision FOR EACH ROW EXECUTE FUNCTION core.trg_ar_decision_state_transition_fn();
+
+
+--
 -- Name: budget_carryover trg_budget_carryover_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
 CREATE TRIGGER trg_budget_carryover_updated_at BEFORE UPDATE ON core.budget_carryover FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
+
+
+--
+-- Name: budget_commitment trg_budget_commitment_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_budget_commitment_status_transition BEFORE UPDATE ON core.budget_commitment FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
@@ -8827,6 +9687,20 @@ CREATE TRIGGER trg_budget_program_updated_at BEFORE UPDATE ON core.budget_progra
 
 
 --
+-- Name: operational_commitment trg_commitment_history; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_commitment_history BEFORE UPDATE ON core.operational_commitment FOR EACH ROW EXECUTE FUNCTION public.fn_commitment_history();
+
+
+--
+-- Name: operational_commitment trg_commitment_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_commitment_state_transition BEFORE UPDATE ON core.operational_commitment FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
+
+
+--
 -- Name: committee_member trg_committee_member_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
@@ -8838,6 +9712,34 @@ CREATE TRIGGER trg_committee_member_updated_at BEFORE UPDATE ON core.committee_m
 --
 
 CREATE TRIGGER trg_committee_updated_at BEFORE UPDATE ON core.committee FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
+
+
+--
+-- Name: dgi_bpmn_model trg_dgi_bpmn_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_bpmn_status_transition BEFORE UPDATE ON core.dgi_bpmn_model FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
+
+
+--
+-- Name: dgi_initiative trg_dgi_initiative_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_initiative_status_transition BEFORE UPDATE ON core.dgi_initiative FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
+
+
+--
+-- Name: dgi_report trg_dgi_report_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_report_status_transition BEFORE UPDATE ON core.dgi_report FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
+
+
+--
+-- Name: dgi_committee_session trg_dgi_session_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_dgi_session_status_transition BEFORE UPDATE ON core.dgi_committee_session FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
@@ -8862,6 +9764,13 @@ CREATE TRIGGER trg_electronic_file_updated_at BEFORE UPDATE ON core.electronic_f
 
 
 --
+-- Name: dgi_escalation trg_escalation_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_escalation_state_transition BEFORE UPDATE ON core.dgi_escalation FOR EACH ROW EXECUTE FUNCTION core.trg_escalation_state_transition_fn();
+
+
+--
 -- Name: electronic_file trg_file_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
@@ -8873,6 +9782,13 @@ CREATE TRIGGER trg_file_status_transition BEFORE UPDATE OF status_id ON core.ele
 --
 
 CREATE TRIGGER trg_fund_program_updated_at BEFORE UPDATE ON core.fund_program FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
+
+
+--
+-- Name: dgi_initiative trg_initiative_timing; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_initiative_timing BEFORE UPDATE ON core.dgi_initiative FOR EACH ROW EXECUTE FUNCTION core.trg_initiative_timing_fn();
 
 
 --
@@ -9016,6 +9932,13 @@ CREATE TRIGGER trg_planning_instrument_updated_at BEFORE UPDATE ON core.planning
 
 
 --
+-- Name: ipr_problem trg_problem_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_problem_state_transition BEFORE UPDATE ON core.ipr_problem FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
+
+
+--
 -- Name: procedure trg_procedure_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
@@ -9037,6 +9960,13 @@ CREATE TRIGGER trg_rendition_history AFTER UPDATE ON core.rendition FOR EACH ROW
 
 
 --
+-- Name: rendition trg_rendition_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_rendition_state_transition BEFORE UPDATE ON core.rendition FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('state_id');
+
+
+--
 -- Name: rendition trg_rendition_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
@@ -9044,10 +9974,31 @@ CREATE TRIGGER trg_rendition_updated_at BEFORE UPDATE ON core.rendition FOR EACH
 
 
 --
+-- Name: dgi_service_request trg_request_state_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_request_state_transition BEFORE UPDATE ON core.dgi_service_request FOR EACH ROW EXECUTE FUNCTION core.trg_request_state_transition_fn();
+
+
+--
+-- Name: dgi_service_request trg_request_timing; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_request_timing BEFORE UPDATE ON core.dgi_service_request FOR EACH ROW EXECUTE FUNCTION core.trg_request_timing_fn();
+
+
+--
 -- Name: resolution trg_resolution_updated_at; Type: TRIGGER; Schema: core; Owner: goreos
 --
 
 CREATE TRIGGER trg_resolution_updated_at BEFORE UPDATE ON core.resolution FOR EACH ROW EXECUTE FUNCTION public.fn_update_timestamp();
+
+
+--
+-- Name: risk trg_risk_status_transition; Type: TRIGGER; Schema: core; Owner: goreos
+--
+
+CREATE TRIGGER trg_risk_status_transition BEFORE UPDATE ON core.risk FOR EACH ROW EXECUTE FUNCTION public.fn_validate_state_transition('status_id');
 
 
 --
@@ -9885,6 +10836,78 @@ ALTER TABLE ONLY core.crisis_meeting
 
 
 --
+-- Name: dgi_ar_decision dgi_ar_decision_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_ar_decision
+    ADD CONSTRAINT dgi_ar_decision_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_ar_decision dgi_ar_decision_decision_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_ar_decision
+    ADD CONSTRAINT dgi_ar_decision_decision_type_id_fkey FOREIGN KEY (decision_type_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_ar_decision dgi_ar_decision_responsible_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_ar_decision
+    ADD CONSTRAINT dgi_ar_decision_responsible_id_fkey FOREIGN KEY (responsible_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_ar_decision dgi_ar_decision_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_ar_decision
+    ADD CONSTRAINT dgi_ar_decision_status_id_fkey FOREIGN KEY (status_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_bottleneck_investigation
+    ADD CONSTRAINT dgi_bottleneck_investigation_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_bottleneck_investigation
+    ADD CONSTRAINT dgi_bottleneck_investigation_division_id_fkey FOREIGN KEY (division_id) REFERENCES core.organization(id);
+
+
+--
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_bottleneck_investigation
+    ADD CONSTRAINT dgi_bottleneck_investigation_indicator_id_fkey FOREIGN KEY (indicator_id) REFERENCES core.dgi_indicator(id);
+
+
+--
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_bottleneck_investigation
+    ADD CONSTRAINT dgi_bottleneck_investigation_process_id_fkey FOREIGN KEY (process_id) REFERENCES core.dgi_process(id);
+
+
+--
+-- Name: dgi_bottleneck_investigation dgi_bottleneck_investigation_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_bottleneck_investigation
+    ADD CONSTRAINT dgi_bottleneck_investigation_status_id_fkey FOREIGN KEY (status_id) REFERENCES ref.category(id);
+
+
+--
 -- Name: dgi_bpmn_model dgi_bpmn_model_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
 --
 
@@ -9901,11 +10924,11 @@ ALTER TABLE ONLY core.dgi_bpmn_model
 
 
 --
--- Name: dgi_bpmn_model dgi_bpmn_model_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+-- Name: dgi_bpmn_model dgi_bpmn_model_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
 --
 
 ALTER TABLE ONLY core.dgi_bpmn_model
-    ADD CONSTRAINT dgi_bpmn_model_division_id_fkey FOREIGN KEY (division_id) REFERENCES core.organization(id);
+    ADD CONSTRAINT dgi_bpmn_model_process_id_fkey FOREIGN KEY (process_id) REFERENCES core.dgi_process(id);
 
 
 --
@@ -10005,6 +11028,78 @@ ALTER TABLE ONLY core.dgi_decree
 
 
 --
+-- Name: dgi_division_interaction dgi_division_interaction_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_division_interaction
+    ADD CONSTRAINT dgi_division_interaction_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_division_interaction dgi_division_interaction_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_division_interaction
+    ADD CONSTRAINT dgi_division_interaction_division_id_fkey FOREIGN KEY (division_id) REFERENCES core.organization(id);
+
+
+--
+-- Name: dgi_division_interaction dgi_division_interaction_interaction_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_division_interaction
+    ADD CONSTRAINT dgi_division_interaction_interaction_type_id_fkey FOREIGN KEY (interaction_type_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_escalation dgi_escalation_alert_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_escalation
+    ADD CONSTRAINT dgi_escalation_alert_id_fkey FOREIGN KEY (alert_id) REFERENCES core.alert(id);
+
+
+--
+-- Name: dgi_escalation dgi_escalation_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_escalation
+    ADD CONSTRAINT dgi_escalation_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_escalation dgi_escalation_level_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_escalation
+    ADD CONSTRAINT dgi_escalation_level_id_fkey FOREIGN KEY (level_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_escalation dgi_escalation_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_escalation
+    ADD CONSTRAINT dgi_escalation_status_id_fkey FOREIGN KEY (status_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_improvement_opportunity dgi_improvement_opportunity_initiative_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_improvement_opportunity
+    ADD CONSTRAINT dgi_improvement_opportunity_initiative_id_fkey FOREIGN KEY (initiative_id) REFERENCES core.dgi_initiative(id) ON DELETE SET NULL;
+
+
+--
+-- Name: dgi_improvement_opportunity dgi_improvement_opportunity_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_improvement_opportunity
+    ADD CONSTRAINT dgi_improvement_opportunity_process_id_fkey FOREIGN KEY (process_id) REFERENCES core.dgi_process(id) ON DELETE CASCADE;
+
+
+--
 -- Name: dgi_indicator dgi_indicator_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
 --
 
@@ -10034,6 +11129,46 @@ ALTER TABLE ONLY core.dgi_indicator
 
 ALTER TABLE ONLY core.dgi_indicator
     ADD CONSTRAINT dgi_indicator_division_id_fkey FOREIGN KEY (division_id) REFERENCES core.organization(id);
+
+
+--
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_changed_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
+    ADD CONSTRAINT dgi_indicator_lifecycle_history_changed_by_id_fkey FOREIGN KEY (changed_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_indicator_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
+    ADD CONSTRAINT dgi_indicator_lifecycle_history_indicator_id_fkey FOREIGN KEY (indicator_id) REFERENCES core.dgi_indicator(id) ON DELETE CASCADE;
+
+
+--
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_new_lifecycle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
+    ADD CONSTRAINT dgi_indicator_lifecycle_history_new_lifecycle_id_fkey FOREIGN KEY (new_lifecycle_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_indicator_lifecycle_history dgi_indicator_lifecycle_history_previous_lifecycle_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_indicator_lifecycle_history
+    ADD CONSTRAINT dgi_indicator_lifecycle_history_previous_lifecycle_id_fkey FOREIGN KEY (previous_lifecycle_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_indicator dgi_indicator_lifecycle_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_indicator
+    ADD CONSTRAINT dgi_indicator_lifecycle_status_id_fkey FOREIGN KEY (lifecycle_status_id) REFERENCES ref.category(id);
 
 
 --
@@ -10125,6 +11260,62 @@ ALTER TABLE ONLY core.dgi_initiative
 
 
 --
+-- Name: dgi_process_actor dgi_process_actor_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_actor
+    ADD CONSTRAINT dgi_process_actor_process_id_fkey FOREIGN KEY (process_id) REFERENCES core.dgi_process(id) ON DELETE CASCADE;
+
+
+--
+-- Name: dgi_process dgi_process_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process
+    ADD CONSTRAINT dgi_process_division_id_fkey FOREIGN KEY (division_id) REFERENCES core.organization(id);
+
+
+--
+-- Name: dgi_process_metric dgi_process_metric_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_metric
+    ADD CONSTRAINT dgi_process_metric_process_id_fkey FOREIGN KEY (process_id) REFERENCES core.dgi_process(id) ON DELETE CASCADE;
+
+
+--
+-- Name: dgi_process dgi_process_owner_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process
+    ADD CONSTRAINT dgi_process_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_process_pain_point dgi_process_pain_point_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_pain_point
+    ADD CONSTRAINT dgi_process_pain_point_process_id_fkey FOREIGN KEY (process_id) REFERENCES core.dgi_process(id) ON DELETE CASCADE;
+
+
+--
+-- Name: dgi_process_pain_point dgi_process_pain_point_reported_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_pain_point
+    ADD CONSTRAINT dgi_process_pain_point_reported_by_id_fkey FOREIGN KEY (reported_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_process_rule dgi_process_rule_process_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_process_rule
+    ADD CONSTRAINT dgi_process_rule_process_id_fkey FOREIGN KEY (process_id) REFERENCES core.dgi_process(id) ON DELETE CASCADE;
+
+
+--
 -- Name: dgi_report dgi_report_approved_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
 --
 
@@ -10178,6 +11369,86 @@ ALTER TABLE ONLY core.dgi_report
 
 ALTER TABLE ONLY core.dgi_report
     ADD CONSTRAINT dgi_report_updated_by_id_fkey FOREIGN KEY (updated_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_service dgi_service_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service
+    ADD CONSTRAINT dgi_service_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_assigned_to_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_assigned_to_id_fkey FOREIGN KEY (assigned_to_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_created_by_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_division_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_division_id_fkey FOREIGN KEY (division_id) REFERENCES core.organization(id);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_requester_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_requester_id_fkey FOREIGN KEY (requester_id) REFERENCES core."user"(id);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_service_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_service_id_fkey FOREIGN KEY (service_id) REFERENCES core.dgi_service(id);
+
+
+--
+-- Name: dgi_service_request dgi_service_request_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service_request
+    ADD CONSTRAINT dgi_service_request_status_id_fkey FOREIGN KEY (status_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_service dgi_service_status_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_service
+    ADD CONSTRAINT dgi_service_status_id_fkey FOREIGN KEY (status_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_sla dgi_sla_product_type_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_sla
+    ADD CONSTRAINT dgi_sla_product_type_id_fkey FOREIGN KEY (product_type_id) REFERENCES ref.category(id);
+
+
+--
+-- Name: dgi_sla dgi_sla_service_id_fkey; Type: FK CONSTRAINT; Schema: core; Owner: goreos
+--
+
+ALTER TABLE ONLY core.dgi_sla
+    ADD CONSTRAINT dgi_sla_service_id_fkey FOREIGN KEY (service_id) REFERENCES core.dgi_service(id);
 
 
 --
@@ -12432,5 +13703,5 @@ ALTER TABLE txn.magnitude
 -- PostgreSQL database dump complete
 --
 
-\unrestrict wnKeXLgaBV9DHH0Ave44DDZHUYKULcYedQbT7LkIj7xG32v4YWyyFAzdUlouLdU
+\unrestrict M9QcQxgGT4g7R34JVEyuoQMB4CiYZ0r9OBhxmXXKtW0qm2mwxtpjblby73oZfQA
 

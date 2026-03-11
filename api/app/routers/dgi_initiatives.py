@@ -211,9 +211,12 @@ async def create_initiative(
         if ph_row:
             dmaic_phase_id = str(ph_row["id"])
 
-    # Auto-generate code
-    count_row = (await db.execute(text("SELECT COUNT(*) FROM core.dgi_initiative WHERE deleted_at IS NULL"))).scalar() or 0
-    code = f"INI-{count_row + 1:04d}"
+    # Auto-generate code (advisory lock + MAX pattern)
+    await db.execute(text("SELECT pg_advisory_xact_lock(hashtext('initiative_code'))"))
+    max_seq = (await db.execute(text(
+        "SELECT COALESCE(MAX(CAST(SUBSTRING(code FROM 5) AS INTEGER)), 0) FROM core.dgi_initiative WHERE code ~ '^INI-[0-9]+$'"
+    ))).scalar() or 0
+    code = f"INI-{max_seq + 1:04d}"
 
     result = await db.execute(
         text("""
