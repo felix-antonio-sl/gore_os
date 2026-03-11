@@ -25,6 +25,7 @@ import {
   GitBranch,
   SearchX,
   BarChart3,
+  BookOpen,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -66,6 +67,11 @@ const dgiNav: NavItem[] = [
   { label: "Procesos", href: "/procesos", icon: <GitBranch className="size-4" /> },
   { label: "Progreso", href: "/procesos/progreso", icon: <BarChart3 className="size-4" /> },
   { label: "Cuellos Botella", href: "/cuellos-de-botella", icon: <SearchX className="size-4" /> },
+  { label: "Coordinación", href: "/coordinacion", icon: <Users className="size-4" /> },
+  { label: "Escalamiento", href: "/escalamiento", icon: <AlertTriangle className="size-4" /> },
+  { label: "Servicios", href: "/servicios", icon: <BookOpen className="size-4" /> },
+  { label: "Comité TD", href: "/comite-td", icon: <Vote className="size-4" /> },
+  { label: "Calendario", href: "/calendario", icon: <CalendarDays className="size-4" /> },
   { label: "Datos", href: "/datos", icon: <Database className="size-4" /> },
   { label: "Informes", href: "/informes", icon: <FileText className="size-4" /> },
 ];

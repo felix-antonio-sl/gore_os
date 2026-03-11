@@ -778,3 +778,306 @@ class ImpactEffortCell(BaseModel):
     effort: str
     count: int
     opportunities: list[dict]
+
+
+# ---------------------------------------------------------------------------
+# AR Coordination (Wave B)
+# ---------------------------------------------------------------------------
+class ARDecisionCreate(BaseModel):
+    description: str
+    decision_type: str  # code: PRIORIDAD, RECURSO, ESCALAMIENTO, ESTRATEGIA
+    due_date: date | None = None
+    context: str | None = None
+    responsible_id: UUID | None = None
+
+
+class ARDecisionUpdate(BaseModel):
+    description: str | None = None
+    status: str | None = None  # code for transition
+    due_date: date | None = None
+    context: str | None = None
+    responsible_id: UUID | None = None
+
+
+class ARDecisionItem(BaseModel):
+    id: UUID
+    description: str
+    decision_type: str
+    decision_type_label: str
+    status: str
+    status_label: str
+    due_date: date | None
+    context: str | None
+    responsible_name: str | None
+    resolved_at: datetime | None
+    created_at: datetime
+
+
+# ---------------------------------------------------------------------------
+# Escalation Protocol (Wave B)
+# ---------------------------------------------------------------------------
+class EscalationCreate(BaseModel):
+    level: str  # code: NIVEL_1..NIVEL_4
+    situation: str
+    impact: str
+    options: list[dict] | None = None  # [{option, pros, cons}]
+    recommendation: str | None = None
+    deadline: datetime | None = None
+    subject_type: str | None = None
+    subject_id: UUID | None = None
+
+
+class EscalationUpdate(BaseModel):
+    status: str | None = None
+    situation: str | None = None
+    impact: str | None = None
+    options: list[dict] | None = None
+    recommendation: str | None = None
+    resolved_description: str | None = None
+
+
+class EscalationItemWaveB(BaseModel):
+    id: UUID
+    code: str
+    level: str
+    level_label: str
+    status: str
+    status_label: str
+    situation: str
+    impact: str
+    options: list[dict]
+    recommendation: str | None
+    deadline: datetime | None
+    subject_type: str | None
+    subject_id: UUID | None
+    escalated_to: str | None
+    resolved_description: str | None
+    resolved_at: datetime | None
+    alert_id: UUID | None
+    created_at: datetime
+    created_by_name: str | None = None
+
+
+class EscalationStats(BaseModel):
+    total_active: int
+    by_level: list[dict]
+    avg_resolution_hours: float | None
+    resolved_count: int
+
+
+# ---------------------------------------------------------------------------
+# Service Catalog + Requests (Wave B)
+# ---------------------------------------------------------------------------
+class ServiceCreate(BaseModel):
+    name: str
+    description: str | None = None
+    area: str  # CG, MP, TD, KC
+    sla_days: int | None = None
+    how_to_request: str | None = None
+    deliverables: str | None = None
+
+
+class ServiceUpdate(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    area: str | None = None
+    status: str | None = None
+    sla_days: int | None = None
+    how_to_request: str | None = None
+    deliverables: str | None = None
+
+
+class ServiceItem(BaseModel):
+    id: UUID
+    code: str
+    name: str
+    description: str | None
+    area: str
+    status: str
+    status_label: str
+    sla_days: int | None
+    how_to_request: str | None
+    deliverables: str | None
+
+
+class ServiceRequestCreate(BaseModel):
+    service_id: UUID
+    description: str
+    urgency: str = "NORMAL"
+
+
+class ServiceRequestUpdate(BaseModel):
+    status: str | None = None
+    assigned_to_id: UUID | None = None
+    satisfaction_score: int | None = None
+    feedback_text: str | None = None
+
+
+class ServiceRequestItem(BaseModel):
+    id: UUID
+    code: str
+    service_id: UUID
+    service_name: str
+    status: str
+    status_label: str
+    requester_name: str
+    division_name: str | None
+    description: str
+    urgency: str
+    assigned_to_name: str | None
+    started_at: datetime | None
+    completed_at: datetime | None
+    satisfaction_score: int | None
+    days_elapsed: float | None
+    sla_days: int | None
+    is_overdue: bool = False
+    created_at: datetime
+
+
+class SLACreate(BaseModel):
+    product_type: str  # code from dgi_sla_product_type
+    description: str | None = None
+    target_days: int
+    target_hour: str | None = None  # HH:MM format
+    priority: int = 0
+
+
+class SLAUpdate(BaseModel):
+    description: str | None = None
+    target_days: int | None = None
+    target_hour: str | None = None
+    priority: int | None = None
+
+
+class SLAItem(BaseModel):
+    id: UUID
+    service_id: UUID
+    product_type: str
+    product_type_label: str
+    description: str | None
+    target_days: int
+    target_hour: str | None
+    priority: int
+
+
+class SLADashboardItem(BaseModel):
+    service_id: UUID
+    service_name: str
+    area: str
+    total_requests: int
+    completed: int
+    completion_rate: float
+    avg_days: float | None
+    breaches: int
+
+
+class SLADashboardSummary(BaseModel):
+    global_completion_rate: float
+    active_requests: int
+    avg_resolution_days: float | None
+    avg_satisfaction: float | None
+    by_service: list[SLADashboardItem]
+
+
+# ---------------------------------------------------------------------------
+# Division Interactions (Wave B)
+# ---------------------------------------------------------------------------
+class InteractionCreate(BaseModel):
+    division_id: UUID
+    interaction_type: str  # code from dgi_interaction_type
+    interaction_date: date | None = None
+    participants: list[dict] | None = None  # [{name, role}]
+    topics: list[str] | None = None
+    agreements: list[dict] | None = None  # [{description, responsible, due_date, status}]
+    next_date: date | None = None
+    notes: str | None = None
+
+
+class InteractionUpdate(BaseModel):
+    interaction_type: str | None = None
+    interaction_date: date | None = None
+    participants: list[dict] | None = None
+    topics: list[str] | None = None
+    agreements: list[dict] | None = None
+    next_date: date | None = None
+    notes: str | None = None
+
+
+class InteractionItem(BaseModel):
+    id: UUID
+    division_id: UUID
+    division_name: str
+    interaction_type: str
+    interaction_type_label: str
+    interaction_date: date
+    participants: list[dict]
+    topics: list[str]
+    agreements: list[dict]
+    next_date: date | None
+    notes: str | None
+    created_at: datetime
+
+
+class InteractionMatrixRow(BaseModel):
+    division_id: UUID
+    division_name: str
+    last_interaction: date | None
+    next_planned: date | None
+    interaction_count: int
+    pending_agreements: int
+    dominant_type: str | None
+
+
+# ---------------------------------------------------------------------------
+# TD Committee Sessions (Wave D — CI-016)
+# ---------------------------------------------------------------------------
+class TDSessionCreate(BaseModel):
+    scheduled_at: datetime
+    description: str | None = None
+    location: str | None = None
+
+
+class TDSessionListItem(BaseModel):
+    id: UUID
+    session_number: int
+    scheduled_at: datetime
+    started_at: datetime | None
+    ended_at: datetime | None
+    description: str | None
+    status: str
+    topic_count: int
+    pending_agreements: int
+
+
+class TDTopicItem(BaseModel):
+    id: UUID
+    topic_number: int
+    subject: str
+    agreement: str | None
+    created_at: datetime
+
+
+class TDTopicCreate(BaseModel):
+    subject: str
+
+
+class TDTopicUpdate(BaseModel):
+    subject: str | None = None
+    agreement: str | None = None
+
+
+class TDSessionDetail(TDSessionListItem):
+    location: str | None
+    topics: list[TDTopicItem] = []
+
+
+# ---------------------------------------------------------------------------
+# Consolidated Calendar (Wave D — CI-019)
+# ---------------------------------------------------------------------------
+class CalendarEvent(BaseModel):
+    event_date: datetime
+    event_type: str  # SESSION, INTERACTION, DECISION, ESCALATION, SLA
+    title: str
+    description: str | None
+    entity_id: UUID | None = None
+    severity: str | None = None  # rojo, amber, verde

@@ -1,16 +1,18 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { AlertTriangle, Users, FileText, CheckSquare, Receipt } from "lucide-react";
+import { AlertTriangle, Users, FileText, CheckSquare, Receipt, ShieldAlert, Timer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { SemaforoCard } from "@/components/semaforo-card";
 import { cn } from "@/lib/utils";
 import { formatCLP } from "@/lib/format";
-import type { CockpitJefeDGI } from "@/types";
+import { api } from "@/lib/api";
+import type { CockpitJefeDGI, EscalationStats, SLADashboardSummary } from "@/types";
 
 interface CockpitJefeDGIProps {
   data: CockpitJefeDGI;
@@ -32,6 +34,14 @@ const reportStatusBadge: Record<string, { label: string; className: string }> = 
 export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
   const router = useRouter();
   const { semaforo, decisions_pending, decision_items, team_status, critical_alerts, report_status, rendition_summary } = data;
+
+  const [escalationStats, setEscalationStats] = useState<EscalationStats | null>(null);
+  const [slaSummary, setSlaSummary] = useState<SLADashboardSummary | null>(null);
+
+  useEffect(() => {
+    api.get<EscalationStats>("/api/dgi/escalations/stats").then(setEscalationStats).catch(() => {});
+    api.get<SLADashboardSummary>("/api/dgi/services/sla-dashboard").then(setSlaSummary).catch(() => {});
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -164,6 +174,74 @@ export function CockpitJefeDGIView({ data }: CockpitJefeDGIProps) {
                   </div>
                 ))}
               </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Escalamientos + SLA */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Escalamientos Activos */}
+        <Card className="cursor-pointer hover:border-orange-300 transition-colors" onClick={() => router.push("/escalamiento")}>
+          <CardHeader className="pb-0">
+            <CardTitle className="text-sm font-semibold flex items-center gap-2">
+              <ShieldAlert className="size-4 text-orange-600" />
+              Escalamientos Activos
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-3 px-6">
+            {escalationStats ? (
+              <div className="flex items-baseline gap-4">
+                <span className="text-3xl font-bold tabular-nums">{escalationStats.total_active}</span>
+                <div className="flex gap-2">
+                  {(escalationStats.by_level ?? []).map((item) => (
+                    item.count > 0 && (
+                      <Badge key={item.level} variant="outline" className={cn(
+                        "text-[10px] px-1.5 py-0",
+                        item.level === "NIVEL_4" ? "border-red-400 text-red-600" :
+                        item.level === "NIVEL_3" ? "border-orange-400 text-orange-600" :
+                        item.level === "NIVEL_2" ? "border-amber-400 text-amber-600" :
+                        "border-blue-400 text-blue-600"
+                      )}>
+                        {item.level.replace("NIVEL_", "N")}: {item.count}
+                      </Badge>
+                    )
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="h-8 w-16 bg-muted animate-pulse rounded" />
+            )}
+          </CardContent>
+        </Card>
+
+        {/* SLA Cumplimiento */}
+        <Card className="cursor-pointer hover:border-blue-300 transition-colors" onClick={() => router.push("/servicios")}>
+          <CardHeader className="pb-0">
+            <CardTitle className="text-sm font-semibold flex items-center gap-2">
+              <Timer className="size-4 text-blue-600" />
+              SLA Cumplimiento
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-3 px-6">
+            {slaSummary ? (
+              <div className="flex items-baseline gap-4">
+                <span className={cn(
+                  "text-3xl font-bold tabular-nums",
+                  slaSummary.global_completion_rate >= 90 ? "text-green-600" :
+                  slaSummary.global_completion_rate >= 70 ? "text-amber-600" : "text-red-600"
+                )}>
+                  {slaSummary.global_completion_rate}%
+                </span>
+                <div className="flex gap-3 text-xs text-muted-foreground">
+                  <span>{slaSummary.active_requests} activas</span>
+                  {slaSummary.avg_satisfaction != null && (
+                    <span>{slaSummary.avg_satisfaction}/5 satisfacción</span>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="h-8 w-16 bg-muted animate-pulse rounded" />
             )}
           </CardContent>
         </Card>

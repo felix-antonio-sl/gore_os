@@ -970,3 +970,178 @@ export interface ImpactEffortCell {
   count: number;
   opportunities: { id: string; description: string }[];
 }
+
+// ---------------------------------------------------------------------------
+// Wave B: Coordinación Institucional
+// ---------------------------------------------------------------------------
+export interface ARDecision {
+  id: string;
+  description: string;
+  decision_type: string;
+  decision_type_label: string;
+  status: string;
+  status_label: string;
+  due_date: string | null;
+  context: string | null;
+  responsible_name: string | null;
+  resolved_at: string | null;
+  created_at: string;
+}
+
+export interface Escalation {
+  id: string;
+  code: string;
+  level: string;
+  level_label: string;
+  status: string;
+  status_label: string;
+  situation: string;
+  impact: string;
+  options: { option: string; pros: string; cons: string }[];
+  recommendation: string | null;
+  deadline: string | null;
+  subject_type: string | null;
+  subject_id: string | null;
+  escalated_to: string | null;
+  resolved_description: string | null;
+  resolved_at: string | null;
+  alert_id: string | null;
+  created_at: string;
+  created_by_name: string | null;
+}
+
+export interface EscalationStats {
+  total_active: number;
+  by_level: { level: string; label: string; count: number }[];
+  avg_resolution_hours: number | null;
+  resolved_count: number;
+}
+
+export interface DGIService {
+  id: string;
+  code: string;
+  name: string;
+  description: string | null;
+  area: string;
+  status: string;
+  status_label: string;
+  sla_days: number | null;
+  how_to_request: string | null;
+  deliverables: string | null;
+}
+
+export interface ServiceRequest {
+  id: string;
+  code: string;
+  service_id: string;
+  service_name: string;
+  status: string;
+  status_label: string;
+  requester_name: string;
+  division_name: string | null;
+  description: string;
+  urgency: string;
+  assigned_to_name: string | null;
+  started_at: string | null;
+  completed_at: string | null;
+  satisfaction_score: number | null;
+  days_elapsed: number | null;
+  sla_days: number | null;
+  is_overdue: boolean;
+  created_at: string;
+}
+
+export interface SLADefinition {
+  id: string;
+  service_id: string;
+  product_type: string;
+  product_type_label: string;
+  description: string | null;
+  target_days: number;
+  target_hour: string | null;
+  priority: number;
+}
+
+export interface SLADashboardItem {
+  service_id: string;
+  service_name: string;
+  area: string;
+  total_requests: number;
+  completed: number;
+  completion_rate: number;
+  avg_days: number | null;
+  breaches: number;
+}
+
+export interface SLADashboardSummary {
+  global_completion_rate: number;
+  active_requests: number;
+  avg_resolution_days: number | null;
+  avg_satisfaction: number | null;
+  by_service: SLADashboardItem[];
+}
+
+export interface DivisionInteraction {
+  id: string;
+  division_id: string;
+  division_name: string;
+  interaction_type: string;
+  interaction_type_label: string;
+  interaction_date: string;
+  participants: { name: string; role: string }[];
+  topics: string[];
+  agreements: { description: string; responsible: string; due_date: string; status: string }[];
+  next_date: string | null;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface InteractionMatrixRow {
+  division_id: string;
+  division_name: string;
+  last_interaction: string | null;
+  next_planned: string | null;
+  interaction_count: number;
+  pending_agreements: number;
+  dominant_type: string | null;
+}
+
+// ---------------------------------------------------------------------------
+// TD Committee Sessions (Wave D — CI-016)
+// ---------------------------------------------------------------------------
+export interface TDSessionListItem {
+  id: string;
+  session_number: number;
+  scheduled_at: string;
+  started_at: string | null;
+  ended_at: string | null;
+  description: string | null;
+  status: "PROGRAMADA" | "EN_CURSO" | "FINALIZADA";
+  topic_count: number;
+  pending_agreements: number;
+}
+
+export interface TDTopicItem {
+  id: string;
+  topic_number: number;
+  subject: string;
+  agreement: string | null;
+  created_at: string;
+}
+
+export interface TDSessionDetail extends TDSessionListItem {
+  location: string | null;
+  topics: TDTopicItem[];
+}
+
+// ---------------------------------------------------------------------------
+// Consolidated Calendar (Wave D — CI-019)
+// ---------------------------------------------------------------------------
+export interface CalendarEvent {
+  event_date: string;
+  event_type: "SESSION" | "INTERACTION" | "DECISION" | "ESCALATION" | "SLA";
+  title: string;
+  description: string | null;
+  entity_id: string | null;
+  severity: "rojo" | "amber" | "verde" | null;
+}
