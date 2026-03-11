@@ -86,7 +86,7 @@ Next.js 16 (App Router, Turbopack), TypeScript, TailwindCSS v4, shadcn/ui (Radix
 
 **Org types**: `org_type` (14). Internal: GORE(1), DIVISION(8), DEPARTAMENTO(6), UNIDAD(8), STAFF_UNIT(7), ADVISORY_BODY(3). External: MUNICIPALIDAD, SERVICIO, MINISTERIO, UNIVERSIDAD, ONG, EMPRESA, ORG_COMUNITARIA, COMUNITARIA. Hierarchy 3-level via `parent_id`: GORE-NUBLE → Divisions → Departamentos → Unidades.
 
-**System roles** (13): GOBERNADOR(0), ADMIN_SISTEMA(1), ADMIN_REGIONAL(2), JEFE_DIVISION(3), ENCARGADO(4), JEFE_DGI(5), ESP_CONTROL_GESTION(6), ESP_PROCESOS(7), ESP_TD(8), CONSEJERO_REGIONAL(9), SECRETARIO_EJECUTIVO(10), JEFE_DEPARTAMENTO(11), JEFE_UNIDAD(12).
+**System roles** (16): GOBERNADOR(0), ADMIN_SISTEMA(1), ADMIN_REGIONAL(2), JEFE_DIVISION(3), ENCARGADO(4), JEFE_DGI(5), ESP_CONTROL_GESTION(6), ESP_PROCESOS(7), ESP_TD(8), CONSEJERO_REGIONAL(9), SECRETARIO_EJECUTIVO(10), JEFE_DEPARTAMENTO(11), JEFE_UNIDAD(12), ANALISTA(13), RTF(14), ASESOR_JURIDICO(15).
 
 ## Test Users
 
@@ -99,6 +99,10 @@ All passwords: `admin123`. All `@goreos.cl`.
 | gobernador | GOBERNADOR | op | — |
 | secretario.core | SECRETARIO_EJECUTIVO | op | — |
 | consejero1, consejero2 | CONSEJERO_REGIONAL | op | — |
+| analista.dipir | ANALISTA | op | DIPIR |
+| analista.diplade | ANALISTA | op | DIPLADE |
+| rtf.daf | RTF | op | DAF |
+| juridico | ASESOR_JURIDICO | op | — |
 | jefe.daf | JEFE_DIVISION | op | DAF |
 | jefe.dideso | JEFE_DIVISION | op | DIDESO |
 | jefe.difoi | JEFE_DIVISION | op | DIFOI |
@@ -126,11 +130,11 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v  # Sing
 docker compose exec api pip install pytest pytest-asyncio httpx     # Install deps (if rebuilt)
 ```
 
-37 modules: test_auth(12), test_compromisos(16), test_presupuesto(10), test_initiatives(7), test_problemas(8), test_convenios(12), test_dashboard(6), test_security_readonly(12), test_ipr_children(14), test_ipr_lifecycle(6), test_actos(12), test_admin(11), test_reuniones(11), test_search(4), test_catalogs(8), test_core_sessions(10), test_rendiciones(5), test_polyswitch(14), test_alertas(6), test_dgi_cockpit(6), test_dgi_reports(4), test_dgi_cartera(12), test_concurrency(5), test_sisrec(27), test_thresholds(18), test_track_enforcement(32), test_track_rules(18), test_ciclo24(22), test_sisrec_8phase(12), test_parametric(13), test_admissibility(13), test_c33_certification(11), test_dmaic(24), test_coordination(35), test_risk(19), test_command_center(9), test_parentesco(10).
+38 modules: test_auth(12), test_compromisos(16), test_presupuesto(10), test_initiatives(7), test_problemas(8), test_convenios(12), test_dashboard(6), test_security_readonly(12), test_ipr_children(14), test_ipr_lifecycle(6), test_actos(12), test_admin(11), test_reuniones(11), test_search(4), test_catalogs(8), test_core_sessions(10), test_rendiciones(5), test_polyswitch(14), test_alertas(6), test_dgi_cockpit(6), test_dgi_reports(4), test_dgi_cartera(12), test_concurrency(5), test_sisrec(27), test_thresholds(18), test_track_enforcement(32), test_track_rules(18), test_ciclo24(22), test_sisrec_8phase(12), test_parametric(13), test_admissibility(13), test_c33_certification(11), test_dmaic(24), test_coordination(35), test_risk(19), test_command_center(9), test_parentesco(10), test_new_roles(21).
 
 **Test DB** (`scripts/setup_test_db.sh`): `pg_dump --schema-only` from `goreos_model` + `COPY ref.category` + territory + test users. Never apply `goreos_ddl.sql` directly (circular deps). Test users live in `goreos_seed_users.sql`.
 
-**conftest.py**: fresh `AsyncSession` per test, overrides `get_db`, real JWT for 5 roles (admin, regional, jefe, encargado, dgi). `catalog` fixture pre-fetches common IDs.
+**conftest.py**: fresh `AsyncSession` per test, overrides `get_db`, real JWT for 8 roles (admin, regional, jefe, encargado, dgi, analista, rtf, juridico). `catalog` fixture pre-fetches common IDs.
 
 **Known issues** (test data pollution):
 - `test_initiatives::test_move_to_en_curso` — WIP limit. Clean: `DELETE FROM core.dgi_initiative WHERE deleted_at IS NULL;`

@@ -26,6 +26,9 @@ export type RoleCode =
   | "SECRETARIO_EJECUTIVO"
   | "JEFE_DEPARTAMENTO"
   | "JEFE_UNIDAD"
+  | "ANALISTA"
+  | "RTF"
+  | "ASESOR_JURIDICO"
   | "JEFE_DGI"
   | "ESP_CONTROL_GESTION"
   | "ESP_PROCESOS"
@@ -41,6 +44,9 @@ export const OPERATIONAL_ROLES: RoleCode[] = [
   "SECRETARIO_EJECUTIVO",
   "JEFE_DEPARTAMENTO",
   "JEFE_UNIDAD",
+  "ANALISTA",
+  "RTF",
+  "ASESOR_JURIDICO",
 ];
 
 export const WRITE_OPERATIONAL_ROLES: RoleCode[] = [
@@ -51,6 +57,9 @@ export const WRITE_OPERATIONAL_ROLES: RoleCode[] = [
   "GOBERNADOR",
   "SECRETARIO_EJECUTIVO",
   "JEFE_DEPARTAMENTO",
+  "ANALISTA",
+  "RTF",
+  "ASESOR_JURIDICO",
 ];
 
 export const DGI_ROLES: RoleCode[] = [

@@ -29,8 +29,8 @@ _ADMIN_ROLES = {
     "JEFE_DGI", "ESP_CONTROL_GESTION", "ESP_TD", "ESP_PROCESOS",
 }
 
-_CREATE_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR"}
-_ASSIGN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "JEFE_DEPARTAMENTO"}
+_CREATE_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "GOBERNADOR", "ANALISTA"}
+_ASSIGN_ROLES = {"ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "GOBERNADOR", "JEFE_DEPARTAMENTO", "ANALISTA"}
 
 # ---------------------------------------------------------------------------
 # Fibración categórica: ipr_state → mcd_phase
@@ -2384,7 +2384,7 @@ async def create_ipr_party(
     db: AsyncSession = Depends(get_db),
 ):
     """Add an organization-role pair to an IPR. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
 
     # Verify IPR exists
     check = await db.execute(
@@ -2448,7 +2448,7 @@ async def delete_ipr_party(
     db: AsyncSession = Depends(get_db),
 ):
     """Soft-delete an IPR party. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
 
     result = await db.execute(
         text("""
@@ -2512,7 +2512,7 @@ async def create_ipr_territory(
     db: AsyncSession = Depends(get_db),
 ):
     """Associate a territory with an IPR. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -2566,7 +2566,7 @@ async def delete_ipr_territory(
     db: AsyncSession = Depends(get_db),
 ):
     """Soft-delete an IPR territory association. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
 
     result = await db.execute(
         text("""
@@ -2635,7 +2635,7 @@ async def create_ipr_milestone(
     db: AsyncSession = Depends(get_db),
 ):
     """Create a new milestone for an IPR. Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
 
     check = await db.execute(
         text("SELECT id FROM core.ipr WHERE id = :id AND deleted_at IS NULL"),
@@ -2679,7 +2679,7 @@ async def update_ipr_milestone(
     db: AsyncSession = Depends(get_db),
 ):
     """Update milestone (mark as completed with actual_date). Admin roles only."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
 
     updates = body.model_dump(exclude_none=True)
     if not updates:
@@ -2754,7 +2754,7 @@ async def create_evaluation(
     db: AsyncSession = Depends(get_db),
 ):
     """Create an evaluation assignment. Auto-assigns evaluator_type from financing_track DB if omitted."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "ANALISTA")
 
     # Verify IPR exists
     ipr_row = (await db.execute(
@@ -2849,7 +2849,7 @@ async def update_evaluation(
     db: AsyncSession = Depends(get_db),
 ):
     """Update an evaluation assignment (result, observations, completion)."""
-    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION")
+    _require_roles(user, "ADMIN_SISTEMA", "ADMIN_REGIONAL", "JEFE_DIVISION", "ANALISTA")
 
     set_clauses = ["updated_at = NOW()", "updated_by_id = CAST(:user_id AS uuid)"]
     params: dict = {"id": str(eval_id), "ipr_id": str(ipr_id), "user_id": str(user["id"])}

@@ -1785,10 +1785,13 @@ _RENDICION_TRANSITIONS = {
 }
 
 # Role-based transition authorization: (from, to) → allowed role set
+# RTF can review in EN_REVISION_RTF phase (visar/observar) — ontological RTF role
+_RTF_REVIEW_ROLES = DGI_ROLES | {"RTF"}
+
 _RENDICION_TRANSITION_ROLES: dict[tuple[str, str], set[str]] = {
     ("PENDIENTE", "EN_REVISION_RTF"):       _RENDICION_WRITE_ROLES,
-    ("EN_REVISION_RTF", "OBSERVADA"):       DGI_ROLES,
-    ("EN_REVISION_RTF", "VISADA_RTF"):      DGI_ROLES,
+    ("EN_REVISION_RTF", "OBSERVADA"):       _RTF_REVIEW_ROLES,
+    ("EN_REVISION_RTF", "VISADA_RTF"):      _RTF_REVIEW_ROLES,
     ("VISADA_RTF", "EN_REVISION_UCR"):      DGI_ROLES,
     ("EN_REVISION_UCR", "OBSERVADA"):       DGI_ROLES,
     ("EN_REVISION_UCR", "APROBADA"):        DGI_ROLES,

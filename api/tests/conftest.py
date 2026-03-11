@@ -104,6 +104,13 @@ async def cleanup_test_artifacts(db: AsyncSession):
         )
     """))
     await db.execute(text("DELETE FROM ref.category WHERE scheme = 'budget_program_code' AND code LIKE 'TEST-%'"))
+    # New roles test cleanup (renditions created by RTF tests, then IPRs)
+    await db.execute(text("""
+        DELETE FROM core.rendition WHERE ipr_id IN (
+            SELECT id FROM core.ipr WHERE codigo_bip LIKE 'ROLE-%'
+        )
+    """))
+    await db.execute(text("DELETE FROM core.ipr WHERE codigo_bip LIKE 'ROLE-%'"))
     await db.commit()
 
 
@@ -177,6 +184,24 @@ async def consejero_token(db):
     return create_access_token({"sub": uid, "role": "CONSEJERO_REGIONAL"})
 
 
+@pytest_asyncio.fixture
+async def analista_token(db):
+    uid = await _get_user_id(db, "analista.dipir@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ANALISTA"})
+
+
+@pytest_asyncio.fixture
+async def rtf_token(db):
+    uid = await _get_user_id(db, "rtf.daf@goreos.cl")
+    return create_access_token({"sub": uid, "role": "RTF"})
+
+
+@pytest_asyncio.fixture
+async def juridico_token(db):
+    uid = await _get_user_id(db, "juridico@goreos.cl")
+    return create_access_token({"sub": uid, "role": "ASESOR_JURIDICO"})
+
+
 # ---------------------------------------------------------------------------
 # Auth header helpers
 # ---------------------------------------------------------------------------
@@ -245,6 +270,7 @@ async def catalog(db):
         "admin@goreos.cl", "regional@goreos.cl",
         "jefe.daf@goreos.cl", "encargado.daf@goreos.cl",
         "jefe.dgi@goreos.cl",
+        "analista.dipir@goreos.cl", "rtf.daf@goreos.cl", "juridico@goreos.cl",
     ]:
         result = await db.execute(
             text('SELECT id, division_id FROM core."user" WHERE email = :e'),
