@@ -48,7 +48,7 @@ Key files:
 - `core/deps.py` — `CurrentUser` dependency (user dict from JWT)
 - `core/security.py` — `OPERATIONAL_ROLES`/`DGI_ROLES` sets, hashing, JWT
 - `middleware/security.py` — `SecurityHeadersMiddleware` (X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy)
-- `routers/` — 22 routers: auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin (24 endpoints), reuniones, search, dgi_cockpit, dgi_initiatives, dgi_data, dgi_reports, dgi_cartera, dgi_processes (22 endpoints), dgi_bottleneck (7 endpoints), actos (5 + 7-step FSM), core_sessions (9 + voting + F3→F4)
+- `routers/` — 22 routers: auth, ipr, compromisos, problemas, alertas, dashboard, catalogs, presupuesto, convenios, admin (24 endpoints), reuniones, search, dgi_cockpit, dgi_initiatives (+ 5 DMAIC + 1 lean-metrics), dgi_data, dgi_reports, dgi_cartera, dgi_processes (22 + 2 analytics endpoints), dgi_bottleneck (7 endpoints), actos (5 + 7-step FSM), core_sessions (9 + voting + F3→F4)
 
 Conventions: `/api/` prefix. Paginated → `{items, total, page, page_size, total_pages}`. DGI lists → plain arrays (initiatives: optional pagination via `?page=1&page_size=N`). Dashboard/cockpit → role-aware responses. PATCH → allowlisted columns matching DB names. Person columns: `names`, `paternal_surname` (NOT `nombre`/`apellido_paterno`). User FK: `system_role_id` (NOT `role_id`).
 
@@ -115,7 +115,7 @@ All passwords: `admin123`. All `@goreos.cl`.
 
 ## Testing
 
-**393 integration tests (388 pass + 5 skip)** against real PostgreSQL (`goreos_test`). No mocks.
+**424 integration tests (413 pass + 5 skip)** against real PostgreSQL (`goreos_test`). No mocks.
 
 ```bash
 ./scripts/setup_test_db.sh                                          # Setup test DB
@@ -125,7 +125,7 @@ docker compose exec api pytest tests/test_auth.py::test_login_success -v  # Sing
 docker compose exec api pip install pytest pytest-asyncio httpx     # Install deps (if rebuilt)
 ```
 
-32 modules: test_auth(12), test_compromisos(16), test_presupuesto(10), test_initiatives(7), test_problemas(8), test_convenios(12), test_dashboard(6), test_security_readonly(12), test_ipr_children(14), test_ipr_lifecycle(6), test_actos(12), test_admin(11), test_reuniones(11), test_search(4), test_catalogs(8), test_core_sessions(10), test_rendiciones(5), test_polyswitch(14), test_alertas(6), test_dgi_cockpit(4), test_dgi_reports(4), test_dgi_cartera(12), test_concurrency(5), test_sisrec(27), test_thresholds(18), test_track_enforcement(32), test_track_rules(18), test_ciclo24(22), test_sisrec_8phase(12), test_parametric(13), test_admissibility(13), test_c33_certification(11).
+33 modules: test_auth(12), test_compromisos(16), test_presupuesto(10), test_initiatives(7), test_problemas(8), test_convenios(12), test_dashboard(6), test_security_readonly(12), test_ipr_children(14), test_ipr_lifecycle(6), test_actos(12), test_admin(11), test_reuniones(11), test_search(4), test_catalogs(8), test_core_sessions(10), test_rendiciones(5), test_polyswitch(14), test_alertas(6), test_dgi_cockpit(4), test_dgi_reports(4), test_dgi_cartera(12), test_concurrency(5), test_sisrec(27), test_thresholds(18), test_track_enforcement(32), test_track_rules(18), test_ciclo24(22), test_sisrec_8phase(12), test_parametric(13), test_admissibility(13), test_c33_certification(11), test_dmaic(24).
 
 **Test DB** (`scripts/setup_test_db.sh`): `pg_dump --schema-only` from `goreos_model` + `COPY ref.category` + territory + test users. Never apply `goreos_ddl.sql` directly (circular deps). Test users live in `goreos_seed_users.sql`.
 
@@ -187,7 +187,7 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 
 ## Coverage
 
-~205 endpoints, 400 tests, 32 modules, 22 gate functions. 40 frontend pages. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 92 CHECKs + 14 state triggers + 4 history triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 14 entities. 89 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
+~213 endpoints, 424 tests, 33 modules, 22 gate functions. 43 frontend pages. HΩ: 15/15. Parametric: 6/6. Budget classifier: 6/6. Categorical Univocity: 92 CHECKs + 14 state triggers + 4 history triggers (**100% FK coverage, 0 unprotected**). FSM DB-enforced: 14 entities. 89 schemes. Schema truth: `goreos_ddl_production.sql` (pg_dump). All migrations have rollbacks. **Gap**: 0 external integrations (ClaveÚnica, PISEE, BIP, SIGFE, CGR).
 
 ## Critical Rules
 
@@ -272,3 +272,5 @@ Central: **IPR** — polymorphic (8 types: INFRAESTRUCTURA, EQUIPAMIENTO, CONSER
 50. **Process Catalog (DGI)**: `/procesos` list (FilterBar status/criticality/search, DataTable 7 cols, DrawerPanel create) + `/procesos/[id]` detail (hero, 6-state FSM `PROCESS_FSM`, edit drawer, 5 tabs: actors, rules, metrics, pain-points, opportunities). All tabs accept `canEdit` prop. `tab-opportunities.tsx` bridges Process→Opportunity→Initiative (MP-013). API: `GET/POST /api/dgi/processes`, `PATCH /api/dgi/processes/{id}`, 5 satellite CRUD endpoints per process.
 51. **Bottleneck Detection (DGI)**: `/cuellos-de-botella` (scan cards + DataTable investigations) + `[id]` detail (linear 6-state FSM, 6 phase-gated textarea fields). `isFieldEditable()` excludes CERRADO. API: `GET /api/dgi/data/bottlenecks/scan`, `GET/POST /api/dgi/data/bottlenecks`, `PATCH /api/dgi/data/bottlenecks/{id}`.
 52. **Indicator Enhancement (DGI)**: `indicadores.tsx` domain config. 5 DGI dimensions (PRESUPUESTO/CARTERA_IPR/CONVENIOS/TDE/RIESGOS). Lifecycle filter+columns. `NuevoIndicadorAction` (JEFE_DGI). Manual value entry (MANUAL/EXTERNAL + VIGENTE). Lifecycle transitions with ConfirmDialog for Deprecar.
+53. **DMAIC Structured Improvement (Wave C)**: `/tablero/[id]` detail page with 5-phase stepper (DEFINE/MEASURE/ANALYZE/IMPROVE/VERIFY). DMAIC content stored in `dgi_initiative.metadata` JSONB via atomic `jsonb_set`. Phase-gated editing (same pattern as bottleneck). Gate validation (informational). API: `GET/PATCH /api/dgi/initiatives/{id}/dmaic/{phase}`, `POST /dmaic/transition`, `GET /dmaic/history`. Lean metrics panel on `/tablero`: throughput, lead/cycle time, WIP, aging. `GET /api/dgi/initiatives/lean-metrics`. DB: `started_at`/`completed_at` auto-set by `trg_initiative_timing` trigger.
+54. **Process Analytics (Wave C)**: `/procesos/progreso` dashboard (process status by division + DMAIC pipeline KPIs). `tab-metrics.tsx` "Comparar" toggle (BASELINE↔POST_MEJORA). `tab-opportunities.tsx` "Matriz" toggle (3×3 impact/effort grid, Quick Wins highlight). API: `GET /api/dgi/processes/impact-effort`, `GET /api/dgi/processes/{id}/metrics/comparison`. KanbanCard: `agingDays` badge (green <7d, amber 7-14d, red >14d), click→detail navigation.
