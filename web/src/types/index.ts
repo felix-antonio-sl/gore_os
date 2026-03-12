@@ -1240,3 +1240,70 @@ export interface TimelineEvent {
   detail: string | null;
   entity_id: string | null;
 }
+
+// --- Dashboard Response Types (existing endpoints) ---
+
+export interface TeamMemberLoad {
+  user_id: string;
+  name: string;
+  pendientes: number;
+  en_progreso: number;
+  completados: number;
+  vencidos: number;
+  total: number;
+}
+
+export interface MiDivisionResponse {
+  kpis: KPICardData[];
+  team: TeamMemberLoad[];
+  commitments: CompromisoListItem[];
+}
+
+export interface MisCompromisosResponse {
+  kpis: KPICardData[];
+  groups: Array<{ label: string; count: number; items: CompromisoListItem[] }>;
+}
+
+export interface DivisionBreakdown {
+  division_name: string;
+  vencidos: number;
+  total_compromisos: number;
+  problemas_abiertos: number;
+  ejecucion_pct: number;
+}
+
+export interface SemaforoItem {
+  dimension: string;
+  label: string;
+  signal: string;
+  indicator_count: number;
+}
+
+export interface DashboardExecutivoResponse extends DashboardData {
+  divisions: DivisionBreakdown[];
+  semaforo: SemaforoItem[];
+}
+
+// --- Action Items (Centro de Comando Personal) ---
+
+export interface ActionItem {
+  id: string;
+  category: "COMPROMISO" | "ALERTA" | "DECISION" | "ESCALAMIENTO" | "SLA" | "RIESGO";
+  title: string;
+  subtitle: string | null;
+  deadline: string | null;
+  days_remaining: number | null;
+  temporal: "VENCIDO" | "HOY" | "ESTA_SEMANA" | "FUTURO" | null;
+  severity: "CRITICO" | "ALTO" | "MEDIO" | "BAJO";
+  priority: number;
+  action_label: string;
+  action_route: string;
+}
+
+export interface ActionItemsResponse {
+  greeting_name: string;
+  today: string;
+  summary: string;
+  items: ActionItem[];
+  counts: Record<string, number>;
+}
