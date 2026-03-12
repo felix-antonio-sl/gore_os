@@ -40,6 +40,7 @@ import { TabEvaluaciones } from "../components/tab-evaluaciones";
 import { TabParentesco } from "../components/tab-parentesco";
 import { TabAdmisibilidad } from "../components/tab-admisibilidad";
 import { TabModificaciones } from "../components/tab-modificaciones";
+import { TabCierre } from "../components/tab-cierre";
 import { TabEvaluacionExpost } from "../components/tab-evaluacion-expost";
 
 interface UserOption {
@@ -271,6 +272,7 @@ function IprDetailPageInner() {
           <TabsTrigger value="parentesco">Parentesco</TabsTrigger>
           <TabsTrigger value="admisibilidad">Admisibilidad</TabsTrigger>
           <TabsTrigger value="modificaciones">Modificaciones</TabsTrigger>
+          <TabsTrigger value="cierre">Cierre</TabsTrigger>
           <TabsTrigger value="evaluacion-expost">Ex-Post</TabsTrigger>
         </TabsList>
 
@@ -328,6 +330,10 @@ function IprDetailPageInner() {
 
         <TabsContent value="modificaciones" className="mt-4">
           <TabModificaciones key={refreshKey} iprId={id} canManage={!!canManageChildren} />
+        </TabsContent>
+
+        <TabsContent value="cierre" className="mt-4">
+          <TabCierre key={refreshKey} iprId={id} canManage={!!canManageChildren} iprStatus={ipr?.status} />
         </TabsContent>
 
         <TabsContent value="evaluacion-expost" className="mt-4">

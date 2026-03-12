@@ -9,8 +9,60 @@ interface StatusBadgeProps {
   size?: "sm" | "default";
 }
 
+// IPR states — color by phase (F0=slate, F1=blue, F2=cyan, F3=purple, F4=green, F5=gray)
+const IPR_STATE_CONFIG: Record<string, { label: string; className: string }> = {
+  // F0
+  INGRESADO: { label: "Ingresado", className: "border-slate-400 text-slate-700 bg-slate-50" },
+  // F1
+  EN_REVISION: { label: "En Revisión", className: "border-blue-400 text-blue-700 bg-blue-50" },
+  PRE_ADMISIBLE: { label: "Pre-Admisible", className: "border-blue-400 text-blue-700 bg-blue-50" },
+  ADMISIBLE: { label: "Admisible", className: "border-blue-500 text-blue-800 bg-blue-50" },
+  INADMISIBLE: { label: "Inadmisible", className: "border-red-400 text-red-700 bg-red-50" },
+  // F2
+  EN_EVALUACION: { label: "En Evaluación", className: "border-cyan-400 text-cyan-700 bg-cyan-50" },
+  RS: { label: "RS", className: "border-cyan-500 text-cyan-800 bg-cyan-50" },
+  FI: { label: "FI", className: "border-cyan-500 text-cyan-800 bg-cyan-50" },
+  FC: { label: "FC", className: "border-cyan-500 text-cyan-800 bg-cyan-50" },
+  OT: { label: "OT", className: "border-cyan-500 text-cyan-800 bg-cyan-50" },
+  AD: { label: "AD", className: "border-cyan-500 text-cyan-800 bg-cyan-50" },
+  RF: { label: "RF", className: "border-cyan-500 text-cyan-800 bg-cyan-50" },
+  ITF: { label: "ITF", className: "border-cyan-400 text-cyan-700 bg-cyan-50" },
+  AT: { label: "AT", className: "border-cyan-400 text-cyan-700 bg-cyan-50" },
+  // F3
+  CDP_EMITIDO: { label: "CDP Emitido", className: "border-purple-400 text-purple-700 bg-purple-50" },
+  // F4
+  EN_FORMALIZACION: { label: "En Formalización", className: "border-green-400 text-green-700 bg-green-50" },
+  FORMALIZADO: { label: "Formalizado", className: "border-green-500 text-green-800 bg-green-50" },
+  EN_LICITACION: { label: "En Licitación", className: "border-green-400 text-green-700 bg-green-50" },
+  ADJUDICADO: { label: "Adjudicado", className: "border-green-500 text-green-800 bg-green-50" },
+  CONTRATO_FIRMADO: { label: "Contrato Firmado", className: "border-green-600 text-green-800 bg-green-50" },
+  EN_EJECUCION: { label: "En Ejecución", className: "border-emerald-500 text-emerald-800 bg-emerald-50" },
+  EN_OBRA: { label: "En Obra", className: "border-emerald-500 text-emerald-800 bg-emerald-50" },
+  RECEPCION_PROVISORIA: { label: "Recepción Provisoria", className: "border-teal-400 text-teal-700 bg-teal-50" },
+  RECEPCION_DEFINITIVA: { label: "Recepción Definitiva", className: "border-teal-500 text-teal-800 bg-teal-50" },
+  SUSPENDIDO: { label: "Suspendido", className: "border-amber-500 text-amber-800 bg-amber-50" },
+  // F5
+  EN_RENDICION: { label: "En Rendición", className: "border-gray-400 text-gray-700 bg-gray-50" },
+  RENDICION_APROBADA: { label: "Rendición Aprobada", className: "border-gray-500 text-gray-800 bg-gray-50" },
+  EN_CIERRE_ADMINISTRATIVO: { label: "En Cierre Administrativo", className: "border-gray-500 text-gray-800 bg-gray-50" },
+  CERRADO: { label: "Cerrado", className: "border-gray-600 text-gray-900 bg-gray-100" },
+  // Terminales cross-cutting
+  ANULADO: { label: "Anulado", className: "border-red-500 text-red-700 bg-red-50" },
+  TERMINADO_ANTICIPADAMENTE: { label: "Terminado Anticipadamente", className: "border-orange-500 text-orange-800 bg-orange-50" },
+};
+
 export function StatusBadge({ status, size = "default" }: StatusBadgeProps) {
   const sizeClass = size === "sm" ? "text-[10px] px-1.5 py-0" : "";
+
+  // Check IPR states first (most common use case)
+  const iprConfig = IPR_STATE_CONFIG[status];
+  if (iprConfig) {
+    return (
+      <Badge variant="outline" className={cn(iprConfig.className, sizeClass)}>
+        {iprConfig.label}
+      </Badge>
+    );
+  }
 
   switch (status) {
     case "PENDIENTE":
