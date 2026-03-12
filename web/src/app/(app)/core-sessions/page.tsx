@@ -152,6 +152,7 @@ export default function CoreSessionsPage() {
       <PageHeader
         title="Sesiones CORE"
         description="Sesiones del Consejo Regional de Nuble"
+        accentColor="violet"
         actions={
           canCreate ? (
             <Button onClick={() => router.push("/core-sessions/nueva")}>

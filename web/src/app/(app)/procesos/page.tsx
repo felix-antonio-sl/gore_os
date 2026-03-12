@@ -208,6 +208,7 @@ export default function ProcesosPage() {
       <PageHeader
         title="Catalogo de Procesos"
         description="Gestion del catalogo de procesos institucionales"
+        accentColor="cyan"
         actions={
           canCreate ? (
             <Button size="sm" onClick={openCreateDrawer}>

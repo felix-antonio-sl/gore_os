@@ -391,6 +391,7 @@ export default function ConveniosPage() {
       <PageHeader
         title="Convenios"
         description="Gestión de convenios y cuotas de pago"
+        accentColor="emerald"
         actions={
           <>
             <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "convenios")}>

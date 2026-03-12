@@ -229,6 +229,7 @@ export default function CicloPresupuestarioPage() {
       <PageHeader
         title="Ciclo Presupuestario"
         description="Timeline de hitos del ciclo presupuestario anual"
+        accentColor="emerald"
       />
 
       {/* Year selector + summary */}

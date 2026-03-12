@@ -181,6 +181,7 @@ export default function EscalamientoPage() {
       <PageHeader
         title="Escalamientos"
         description="Protocolo de escalamiento institucional — 4 niveles"
+        accentColor="rose"
         actions={
           canCreate ? (
             <Button size="sm" onClick={() => setDrawerOpen(true)}>

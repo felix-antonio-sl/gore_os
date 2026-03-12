@@ -272,6 +272,7 @@ export default function CompromisosPage() {
       <PageHeader
         title="Compromisos"
         description="Gestión de compromisos operativos"
+        accentColor="amber"
         actions={
           <>
             <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "compromisos")}>

@@ -320,6 +320,7 @@ export default function PresupuestoPage() {
       <PageHeader
         title="Presupuesto"
         description="Programas presupuestarios y ejecución financiera"
+        accentColor="emerald"
         actions={
           <>
             {canEdit && (

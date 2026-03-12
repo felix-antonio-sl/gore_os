@@ -105,6 +105,7 @@ export default function ServiciosPage() {
       <PageHeader
         title="Catálogo de Servicios DGI"
         description="Servicios disponibles para todas las divisiones del GORE"
+        accentColor="teal"
         actions={
           isJefeDGI ? (
             <Button size="sm" onClick={() => setDrawerOpen(true)}>
@@ -137,7 +138,7 @@ export default function ServiciosPage() {
           ))}
         </div>
       ) : services.length === 0 ? (
-        <EmptyState title="Sin servicios" description="No hay servicios registrados" />
+        <EmptyState title="Sin servicios" description="El catálogo de servicios DGI aparecerá aquí" />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((svc) => (

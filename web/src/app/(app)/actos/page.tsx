@@ -289,6 +289,7 @@ export default function ActosPage() {
       <PageHeader
         title="Actos Administrativos"
         description="Resoluciones, decretos, oficios y otros actos institucionales"
+        accentColor="violet"
         actions={
           <>
             <Button

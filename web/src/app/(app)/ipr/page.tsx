@@ -36,10 +36,44 @@ const IPR_TYPE_OPTIONS = [
 ];
 
 const STATUS_OPTIONS = [
-  { value: "EN_FORMULACION", label: "En Formulación" },
-  { value: "EN_EJECUCION", label: "En Ejecución" },
-  { value: "TERMINADO", label: "Terminado" },
-  { value: "CERRADO", label: "Cerrado" },
+  // F0
+  { value: "INGRESADO", label: "F0 · Ingresado" },
+  // F1
+  { value: "EN_REVISION", label: "F1 · En Revisión" },
+  { value: "PRE_ADMISIBLE", label: "F1 · Pre-Admisible" },
+  { value: "ADMISIBLE", label: "F1 · Admisible" },
+  { value: "INADMISIBLE", label: "F1 · Inadmisible" },
+  // F2
+  { value: "EN_EVALUACION", label: "F2 · En Evaluación" },
+  { value: "RS", label: "F2 · RS" },
+  { value: "FI", label: "F2 · FI" },
+  { value: "FC", label: "F2 · FC" },
+  { value: "OT", label: "F2 · OT" },
+  { value: "AD", label: "F2 · AD" },
+  { value: "RF", label: "F2 · RF" },
+  { value: "ITF", label: "F2 · ITF" },
+  { value: "AT", label: "F2 · AT" },
+  // F3
+  { value: "CDP_EMITIDO", label: "F3 · CDP Emitido" },
+  // F4
+  { value: "EN_FORMALIZACION", label: "F4 · En Formalización" },
+  { value: "FORMALIZADO", label: "F4 · Formalizado" },
+  { value: "EN_LICITACION", label: "F4 · En Licitación" },
+  { value: "ADJUDICADO", label: "F4 · Adjudicado" },
+  { value: "CONTRATO_FIRMADO", label: "F4 · Contrato Firmado" },
+  { value: "EN_EJECUCION", label: "F4 · En Ejecución" },
+  { value: "EN_OBRA", label: "F4 · En Obra" },
+  { value: "RECEPCION_PROVISORIA", label: "F4 · Recepción Provisoria" },
+  { value: "RECEPCION_DEFINITIVA", label: "F4 · Recepción Definitiva" },
+  { value: "SUSPENDIDO", label: "F4 · Suspendido" },
+  // F5
+  { value: "EN_RENDICION", label: "F5 · En Rendición" },
+  { value: "RENDICION_APROBADA", label: "F5 · Rendición Aprobada" },
+  { value: "EN_CIERRE_ADMINISTRATIVO", label: "F5 · En Cierre Administrativo" },
+  { value: "CERRADO", label: "F5 · Cerrado" },
+  // Terminales
+  { value: "ANULADO", label: "Anulado" },
+  { value: "TERMINADO_ANTICIPADAMENTE", label: "Terminado Anticipadamente" },
 ];
 
 const SECTOR_OPTIONS = [
@@ -281,6 +315,7 @@ export default function IprPage() {
       <PageHeader
         title="IPR"
         description="Intervenciones Públicas Regionales"
+        accentColor="indigo"
         actions={
           <>
             <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "ipr")}>

@@ -272,6 +272,7 @@ export default function ProblemasPage() {
       <PageHeader
         title="Problemas"
         description="Registro de problemas e impedimentos en IPRs"
+        accentColor="amber"
         actions={
           <>
             <Button variant="outline" size="sm" onClick={() => exportCSV(CSV_COLUMNS, data?.items ?? [], "problemas")}>

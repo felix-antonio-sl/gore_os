@@ -145,6 +145,7 @@ export default function ReunionesPage() {
       <PageHeader
         title="Reuniones de Crisis"
         description="Sesiones del Comite de Crisis IPR"
+        accentColor="violet"
         actions={
           canCreate ? (
             <Button onClick={() => router.push("/reuniones/nueva")}>

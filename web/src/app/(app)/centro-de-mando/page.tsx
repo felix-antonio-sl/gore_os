@@ -154,6 +154,7 @@ function CentroMandoContent() {
       <PageHeader
         title="Centro de Mando"
         description="Vista consolidada de crisis y contingencias"
+        accentColor="rose"
         actions={
           <div className="flex items-center gap-2">
             <Shield className="size-5 text-muted-foreground" />

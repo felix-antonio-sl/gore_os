@@ -237,6 +237,7 @@ export default function RiesgosPage() {
       <PageHeader
         title="Registro de Riesgos"
         description="Riesgos identificados en IPRs y procesos institucionales"
+        accentColor="rose"
         actions={
           <div className="flex gap-2">
             <Button

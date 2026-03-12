@@ -360,6 +360,7 @@ export default function CarteraPage() {
       <PageHeader
         title="Control de Cartera IPR"
         description="Vista unificada del portafolio de inversiones"
+        accentColor="indigo"
         actions={
           <Button
             variant="outline"
